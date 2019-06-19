@@ -1,5 +1,9 @@
 # Saleor Dashboard
 
+![1 copy 2x](https://user-images.githubusercontent.com/5421321/47799917-8afd7a00-dd2b-11e8-88c7-63588e25bcea.png)
+
+A GraphQL-powered, single-page dashboard application for [Saleor](https://github.com/mirumee/saleor/).
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
