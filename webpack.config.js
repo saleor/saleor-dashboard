@@ -43,7 +43,8 @@ module.exports = (env, argv) => {
     output = {
       path: resolve("build/dashboard/"),
       filename: "[name].js",
-      chunkFilename: "[name].js"
+      chunkFilename: "[name].js",
+      publicPath: "/"
     };
     fileLoaderPath = "file-loader?name=[name].[ext]";
   }
@@ -52,6 +53,7 @@ module.exports = (env, argv) => {
     devServer: {
       contentBase: path.join(__dirname, "build/dashboard/"),
       compress: true,
+      historyApiFallback: true,
       hot: true,
       port: 9000
     },
