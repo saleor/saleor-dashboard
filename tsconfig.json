@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react",
+    "lib": ["es2017", "dom", "esnext"],
+    "sourceMap": true,
+    "target": "es5",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "paths": {
+      "@assets/*": ["./assets/*"],
+      "@saleor/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
