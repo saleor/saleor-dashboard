@@ -14,19 +14,19 @@ These instructions will get you a copy of the project up and running on your loc
 Clone the repository:
 
 ```
-git clone git@github.com:mirumee/saleor-dashboard.git
+$ git clone git@github.com:mirumee/saleor-dashboard.git
 ```
 
 Enter the project directory:
 
 ```
-cd saleor-dashboard
+$ cd saleor-dashboard
 ```
 
 Install NPM dependencies:
 
 ```
-npm i
+$ npm i
 ```
 
 ### Configuration
@@ -45,7 +45,7 @@ There are two environment variables available for configuration:
 To start the development server run:
 
 ```
-npm start
+$ npm start
 ```
 
 ### Production
@@ -53,5 +53,5 @@ npm start
 To build the application bundle run:
 
 ```
-npm run build
+$ npm run build
 ```
