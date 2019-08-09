@@ -5,8 +5,8 @@ import AssignProductDialog, {
   AssignProductDialogProps
 } from "@saleor/components/AssignProductDialog";
 import { products } from "@saleor/products/fixtures";
-import placeholderImage from "../@assets/images/placeholder60x60.png";
 import Decorator from "../../Decorator";
+import placeholderImage from "../@assets/images/placeholder60x60.png";
 
 const props: AssignProductDialogProps = {
   confirmButtonState: "default",

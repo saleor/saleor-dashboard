@@ -7,8 +7,8 @@ import ProductUpdatePage, {
   ProductUpdatePageProps
 } from "@saleor/products/components/ProductUpdatePage";
 import { product as productFixture } from "@saleor/products/fixtures";
-import placeholderImage from "../@assets/images/placeholder255x255.png";
 import Decorator from "../../Decorator";
+import placeholderImage from "../@assets/images/placeholder255x255.png";
 
 const product = productFixture(placeholderImage);
 

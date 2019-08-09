@@ -10,8 +10,8 @@ import React from "react";
 import SVG from "react-inlinesvg";
 import { matchPath } from "react-router";
 
-import useTheme from "@saleor/hooks/useTheme";
 import configureIcon from "@assets/images/menu-configure-icon.svg";
+import useTheme from "@saleor/hooks/useTheme";
 import { User } from "../../auth/types/User";
 import { configurationMenu, configurationMenuUrl } from "../../configuration";
 import i18n from "../../i18n";

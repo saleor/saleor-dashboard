@@ -8,7 +8,6 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import placeholderImg from "../@assets/images/placeholder255x255.png";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
 import SearchCategories from "../../../containers/SearchCategories";
 import SearchCollections from "../../../containers/SearchCollections";
@@ -33,6 +32,7 @@ import {
   productVariantAddUrl,
   productVariantEditUrl
 } from "../../urls";
+import placeholderImg from "../@assets/images/placeholder255x255.png";
 import {
   createImageReorderHandler,
   createImageUploadHandler,

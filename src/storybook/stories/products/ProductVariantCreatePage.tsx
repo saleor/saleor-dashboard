@@ -2,10 +2,10 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { formError } from "@saleor/storybook/misc";
-import placeholderImage from "../@assets/images/placeholder255x255.png";
 import ProductVariantCreatePage from "../../../products/components/ProductVariantCreatePage";
 import { product as productFixture } from "../../../products/fixtures";
 import Decorator from "../../Decorator";
+import placeholderImage from "../@assets/images/placeholder255x255.png";
 
 const product = productFixture(placeholderImage);
 

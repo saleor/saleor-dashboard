@@ -3,7 +3,6 @@ import React from "react";
 
 import { defaultListSettings } from "@saleor/config";
 import { ListViews } from "@saleor/types";
-import placeholderImage from "../@assets/images/placeholder255x255.png";
 import { category as categoryFixture } from "../../../categories/fixtures";
 import {
   filterPageProps,
@@ -15,6 +14,7 @@ import ProductListPage, {
   ProductListPageProps
 } from "../../../products/components/ProductListPage";
 import Decorator from "../../Decorator";
+import placeholderImage from "../@assets/images/placeholder255x255.png";
 
 const products = categoryFixture(placeholderImage).products.edges.map(
   edge => edge.node
