@@ -15,6 +15,7 @@
 !.plop
 !.pylintrc
 !.travis*
+!.testcafe
 !.tx
 *.css
 *.log
