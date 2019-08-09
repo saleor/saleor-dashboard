@@ -2,7 +2,7 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import * as placeholderImage from "@assets/images/placeholder60x60.png";
+import placeholderImage from "../@assets/images/placeholder60x60.png";
 import HomePage, { HomePageProps } from "../../../home/components/HomePage";
 import { shop as shopFixture } from "../../../home/fixtures";
 import Decorator from "../../Decorator";

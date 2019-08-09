@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import * as moment from "moment-timezone";
+import moment from "moment-timezone";
 import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";

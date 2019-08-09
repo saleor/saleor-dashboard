@@ -9,8 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import SVG from "react-inlinesvg";
 
-import * as notFoundImage from "@assets/images/not-found-404.svg";
-import i18n from "../../i18n";
+import notFoundImage from "@assets/images/not-found-404.svg";
+import i18n from "@saleor/i18n";
 
 const styles = (theme: Theme) =>
   createStyles({

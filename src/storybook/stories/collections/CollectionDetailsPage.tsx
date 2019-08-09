@@ -2,8 +2,8 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import * as placeholderCollectionImage from "@assets/images/block1.jpg";
-import * as placeholderProductImage from "@assets/images/placeholder60x60.png";
+import placeholderCollectionImage from "../@assets/images/block1.jpg";
+import placeholderProductImage from "../@assets/images/placeholder60x60.png";
 import CollectionDetailsPage, {
   CollectionDetailsPageProps
 } from "../../../collections/components/CollectionDetailsPage";

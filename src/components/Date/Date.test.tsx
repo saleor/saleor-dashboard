@@ -1,5 +1,5 @@
 import React from "react";
-import * as renderer from "react-test-renderer";
+import renderer from "react-test-renderer";
 
 import { TimezoneProvider } from "../Timezone";
 import Date from "./Date";

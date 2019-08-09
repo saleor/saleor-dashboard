@@ -11,9 +11,21 @@ export enum AddressTypeEnum {
   SHIPPING = "SHIPPING",
 }
 
+export enum AttributeInputTypeEnum {
+  DROPDOWN = "DROPDOWN",
+  MULTISELECT = "MULTISELECT",
+}
+
 export enum AttributeTypeEnum {
   PRODUCT = "PRODUCT",
   VARIANT = "VARIANT",
+}
+
+export enum AttributeValueType {
+  COLOR = "COLOR",
+  GRADIENT = "GRADIENT",
+  STRING = "STRING",
+  URL = "URL",
 }
 
 export enum AuthorizationKeyType {
@@ -40,6 +52,7 @@ export enum LanguageCodeEnum {
   CS = "CS",
   DA = "DA",
   DE = "DE",
+  EL = "EL",
   EN = "EN",
   ES = "ES",
   ES_CO = "ES_CO",
@@ -50,6 +63,7 @@ export enum LanguageCodeEnum {
   HU = "HU",
   HY = "HY",
   ID = "ID",
+  IS = "IS",
   IT = "IT",
   JA = "JA",
   KO = "KO",
@@ -143,6 +157,7 @@ export enum PaymentChargeStatusEnum {
 export enum PermissionEnum {
   IMPERSONATE_USERS = "IMPERSONATE_USERS",
   MANAGE_DISCOUNTS = "MANAGE_DISCOUNTS",
+  MANAGE_GIFT_CARD = "MANAGE_GIFT_CARD",
   MANAGE_MENUS = "MANAGE_MENUS",
   MANAGE_ORDERS = "MANAGE_ORDERS",
   MANAGE_PAGES = "MANAGE_PAGES",
@@ -197,24 +212,13 @@ export enum TaxRateType {
   WINE = "WINE",
 }
 
-export enum VoucherDiscountValueType {
-  FIXED = "FIXED",
-  PERCENTAGE = "PERCENTAGE",
-}
-
-export enum VoucherType {
-  CATEGORY = "CATEGORY",
-  COLLECTION = "COLLECTION",
-  PRODUCT = "PRODUCT",
-  SHIPPING = "SHIPPING",
-  VALUE = "VALUE",
-}
-
 export enum VoucherTypeEnum {
   CATEGORY = "CATEGORY",
   COLLECTION = "COLLECTION",
+  ENTIRE_ORDER = "ENTIRE_ORDER",
   PRODUCT = "PRODUCT",
   SHIPPING = "SHIPPING",
+  SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
   VALUE = "VALUE",
 }
 
@@ -239,9 +243,23 @@ export interface AddressInput {
   phone?: string | null;
 }
 
+export interface AttributeAssignInput {
+  id: string;
+  type: AttributeTypeEnum;
+}
+
 export interface AttributeCreateInput {
+  inputType?: AttributeInputTypeEnum | null;
   name: string;
+  slug?: string | null;
   values?: (AttributeValueCreateInput | null)[] | null;
+  valueRequired?: boolean | null;
+  isVariantOnly?: boolean | null;
+  visibleInStorefront?: boolean | null;
+  filterableInStorefront?: boolean | null;
+  filterableInDashboard?: boolean | null;
+  storefrontSearchPosition?: number | null;
+  availableInGrid?: boolean | null;
 }
 
 export interface AttributeInput {
@@ -251,8 +269,16 @@ export interface AttributeInput {
 
 export interface AttributeUpdateInput {
   name?: string | null;
+  slug?: string | null;
   removeValues?: (string | null)[] | null;
   addValues?: (AttributeValueCreateInput | null)[] | null;
+  valueRequired?: boolean | null;
+  isVariantOnly?: boolean | null;
+  visibleInStorefront?: boolean | null;
+  filterableInStorefront?: boolean | null;
+  filterableInDashboard?: boolean | null;
+  storefrontSearchPosition?: number | null;
+  availableInGrid?: boolean | null;
 }
 
 export interface AttributeValueCreateInput {
@@ -261,8 +287,10 @@ export interface AttributeValueCreateInput {
 }
 
 export interface AttributeValueInput {
-  slug: string;
-  value: string;
+  id?: string | null;
+  name?: string | null;
+  slug?: string | null;
+  values: (string | null)[];
 }
 
 export interface AuthorizationKeyInput {
@@ -357,12 +385,12 @@ export interface FulfillmentUpdateTrackingInput {
 }
 
 export interface MenuCreateInput {
-  name?: string | null;
+  name: string;
   items?: (MenuItemInput | null)[] | null;
 }
 
 export interface MenuItemCreateInput {
-  name?: string | null;
+  name: string;
   url?: string | null;
   category?: string | null;
   collection?: string | null;
@@ -462,6 +490,7 @@ export interface ProductTypeInput {
   isDigital?: boolean | null;
   weight?: any | null;
   taxRate?: TaxRateType | null;
+  taxCode?: string | null;
 }
 
 export interface ProductVariantInput {
@@ -472,6 +501,11 @@ export interface ProductVariantInput {
   quantity?: number | null;
   trackInventory?: boolean | null;
   weight?: any | null;
+}
+
+export interface ReorderInput {
+  id: string;
+  sortOrder?: number | null;
 }
 
 export interface SaleInput {
@@ -575,7 +609,11 @@ export interface VoucherInput {
   collections?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   minAmountSpent?: any | null;
+  minCheckoutItemsQuantity?: number | null;
   countries?: (string | null)[] | null;
+  applyOncePerOrder?: boolean | null;
+  applyOncePerCustomer?: boolean | null;
+  usageLimit?: number | null;
 }
 
 //==============================================================

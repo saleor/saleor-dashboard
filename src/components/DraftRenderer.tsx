@@ -1,5 +1,5 @@
 import { RawDraftContentState } from "draft-js";
-import * as draftToHtml from "draftjs-to-html";
+import draftToHtml from "draftjs-to-html";
 import React from "react";
 
 interface DraftRendererProps {

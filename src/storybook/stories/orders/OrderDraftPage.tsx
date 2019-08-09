@@ -2,7 +2,7 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import * as placeholderImage from "@assets/images/placeholder60x60.png";
+import placeholderImage from "../@assets/images/placeholder60x60.png";
 import OrderDraftPage, {
   OrderDraftPageProps
 } from "../../../orders/components/OrderDraftPage";

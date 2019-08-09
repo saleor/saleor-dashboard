@@ -1,7 +1,7 @@
 import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import * as colors from "@material-ui/core/colors";
+import colors from "@material-ui/core/colors";
 import {
   createStyles,
   Theme,
@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PersonIcon from "@material-ui/icons/Person";
-import * as CRC from "crc-32";
+import CRC from "crc-32";
 import React from "react";
 
 import { DateTime } from "../Date";

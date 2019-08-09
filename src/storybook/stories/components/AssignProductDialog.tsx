@@ -5,7 +5,7 @@ import AssignProductDialog, {
   AssignProductDialogProps
 } from "@saleor/components/AssignProductDialog";
 import { products } from "@saleor/products/fixtures";
-import placeholderImage from "../../../../images/placeholder60x60.png";
+import placeholderImage from "../@assets/images/placeholder60x60.png";
 import Decorator from "../../Decorator";
 
 const props: AssignProductDialogProps = {

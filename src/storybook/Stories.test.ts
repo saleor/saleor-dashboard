@@ -1,4 +1,5 @@
 import createGenerateClassName from "@material-ui/core/styles/createGenerateClassName";
+import createHookGenerateClassName from "@material-ui/styles/createGenerateClassName";
 import initStoryshots from "@storybook/addon-storyshots";
 // tslint:disable no-submodule-imports
 import generateRandomKey from "draft-js/lib/generateRandomKey";
@@ -15,11 +16,18 @@ jest.mock("@material-ui/core/styles/createGenerateClassName");
   }
 );
 
+jest.mock("@material-ui/styles/createGenerateClassName");
+(createHookGenerateClassName as any).mockImplementation(
+  () => (rule, stylesheet) => {
+    return [stylesheet.options.meta, rule.key, "id"].join("-");
+  }
+);
+
 jest.mock("draft-js/lib/generateRandomKey");
 (generateRandomKey as any).mockImplementation(() => "testKey");
 
 initStoryshots({
-  configPath: "src/storybook/",
+  configPath: "saleor/static/dashboard-next/storybook/",
   test({ story }) {
     const result = render(story.render() as any);
     expect(toJSON(result)).toMatchSnapshot();

@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import SVG from "react-inlinesvg";
 
-import * as notFoundImage from "@assets/images/what.svg";
+import notFoundImage from "@assets/images/what.svg";
 import i18n from "../../i18n";
 
 export interface ErrorPageProps extends WithStyles<typeof styles> {

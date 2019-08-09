@@ -16,7 +16,7 @@ import i18n from "../../../i18n";
 import { getUserInitials, maybe } from "../../../misc";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 
-import * as photoIcon from "@assets/images/photo-icon.svg";
+import photoIcon from "../@assets/images/photo-icon.svg";
 
 const styles = (theme: Theme) =>
   createStyles({
