@@ -27,7 +27,7 @@ jest.mock("draft-js/lib/generateRandomKey");
 (generateRandomKey as any).mockImplementation(() => "testKey");
 
 initStoryshots({
-  configPath: "saleor/static/dashboard-next/storybook/",
+  configPath: "src/storybook/",
   test({ story }) {
     const result = render(story.render() as any);
     expect(toJSON(result)).toMatchSnapshot();

@@ -3,6 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
 
+import placeholderImg from "@assets/images/placeholder255x255.png";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -32,7 +33,6 @@ import {
   productVariantAddUrl,
   productVariantEditUrl
 } from "../../urls";
-import placeholderImg from "../@assets/images/placeholder255x255.png";
 import {
   createImageReorderHandler,
   createImageUploadHandler,

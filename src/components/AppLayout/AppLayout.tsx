@@ -19,9 +19,9 @@ import React from "react";
 import SVG from "react-inlinesvg";
 import { RouteComponentProps, withRouter } from "react-router";
 
-import saleorDarkLogoSmall from "@assets/logo-dark-small.svg";
-import saleorDarkLogo from "@assets/logo-dark.svg";
-import menuArrowIcon from "@assets/menu-arrow-icon.svg";
+import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
+import saleorDarkLogo from "@assets/images/logo-dark.svg";
+import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import AppProgressProvider from "@saleor/components/AppProgress";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
