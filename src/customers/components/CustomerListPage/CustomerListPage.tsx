@@ -1,11 +1,11 @@
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
-import * as React from "react";
+import React from "react";
 
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import i18n from "../../../i18n";
-import { ListActions, PageListProps } from "../../../types";
+import i18n from "@saleor/i18n";
+import { ListActions, PageListProps } from "@saleor/types";
 import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
 import CustomerList from "../CustomerList/CustomerList";
 

@@ -1,7 +1,7 @@
 // FIXME: https://github.com/mirumee/saleor/issues/4174
 import OldMuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import MuiThemeProvider from "@material-ui/styles/ThemeProvider";
-import * as React from "react";
+import React from "react";
 
 import Baseline from "../../Baseline";
 import createTheme, { IThemeColors } from "../../theme";
@@ -14,17 +14,21 @@ const dark: IThemeColors = {
   },
   error: "#C22D74",
   font: {
+    button: "#202124",
     default: "#FCFCFC",
-    gray: "#9E9D9D"
+    gray: "#9E9D9D",
+    textButton: "#FFFFFF"
   },
   gray: {
     default: "#202124",
     disabled: "rgba(32, 33, 36, 0.6)"
   },
   input: {
+    border: "#9d9d9d",
     default: "#25262A",
-    disabled: "#292A2D",
-    focused: "#25262A"
+    disabled: "none",
+    text: "#FCFCFC",
+    textHover: "#616161"
   },
   paperBorder: "#252728",
   primary: "#13BEBB",
@@ -38,20 +42,24 @@ const light: IThemeColors = {
   },
   error: "#C22D74",
   font: {
+    button: "#FFFFFF",
     default: "#3D3D3D",
-    gray: "#616161"
+    gray: "#616161",
+    textButton: "#06847B"
   },
   gray: {
     default: "#C8C8C8",
     disabled: "rgba(216, 216, 216, 0.3)"
   },
   input: {
-    default: "#F1F6F6",
+    border: "#616161",
+    default: "#FFFFFF",
     disabled: "#EAEAEA",
-    focused: "#DCEBEB"
+    text: "#3D3D3D",
+    textHover: "#616161"
   },
   paperBorder: "#EAEAEA",
-  primary: "#13BEBB",
+  primary: "#06847B",
   secondary: "#21125E"
 };
 

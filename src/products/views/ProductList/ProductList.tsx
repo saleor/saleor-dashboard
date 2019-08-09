@@ -2,14 +2,16 @@ import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import * as React from "react";
+import React from "react";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { defaultListSettings, ProductListColumns } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useListSettings from "@saleor/hooks/useListSettings";
 import useLocale from "@saleor/hooks/useLocale";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -17,10 +19,10 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import { PAGINATE_BY } from "../../../config";
-import i18n from "../../../i18n";
-import { getMutationState, maybe } from "../../../misc";
-import ProductListCard from "../../components/ProductListCard";
+import i18n from "@saleor/i18n";
+import { getMutationState, maybe } from "@saleor/misc";
+import { ListViews } from "@saleor/types";
+import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
   TypedProductBulkPublishMutation
@@ -62,7 +64,9 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
-
+  const { updateListSettings, settings } = useListSettings<ProductListColumns>(
+    ListViews.PRODUCT_LIST
+  );
   const tabs = getFilterTabs();
 
   const currentTab =
@@ -128,14 +132,14 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
     handleTabChange(tabs.length + 1);
   };
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  const paginationState = createPaginationState(settings.rowNumber, params);
   const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
 
   return (
@@ -193,9 +197,13 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
 
                   return (
                     <>
-                      <ProductListCard
+                      <ProductListPage
                         currencySymbol={currencySymbol}
                         currentTab={currentTab}
+                        defaultSettings={
+                          defaultListSettings[ListViews.PRODUCT_LIST]
+                        }
+                        settings={settings}
                         filtersList={createFilterChips(
                           params,
                           {
@@ -211,6 +219,7 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                         )}
                         onNextPage={loadNextPage}
                         onPreviousPage={loadPreviousPage}
+                        onUpdateListSettings={updateListSettings}
                         pageInfo={pageInfo}
                         onRowClick={id => () => navigate(productUrl(id))}
                         onAll={() =>
@@ -261,7 +270,9 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                         confirmButtonState={bulkDeleteMutationState}
                         onClose={closeModal}
                         onConfirm={() =>
-                          productBulkDelete({ variables: { ids: params.ids } })
+                          productBulkDelete({
+                            variables: { ids: params.ids }
+                          })
                         }
                         title={i18n.t("Remove products")}
                         variant="delete"

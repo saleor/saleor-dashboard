@@ -5,14 +5,15 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import * as React from "react";
+import React from "react";
 
-import { AddressTypeInput } from "../../customers/types";
-import i18n from "../../i18n";
-import { maybe } from "../../misc";
-import { FormErrors } from "../../types";
+import { AddressTypeInput } from "@saleor/customers/types";
+import i18n from "@saleor/i18n";
+import { FormErrors } from "@saleor/types";
 import FormSpacer from "../FormSpacer";
-import SingleAutocompleteSelectField from "../SingleAutocompleteSelectField";
+import SingleAutocompleteSelectField, {
+  SingleAutocompleteChoiceType
+} from "../SingleAutocompleteSelectField";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -24,24 +25,25 @@ const styles = (theme: Theme) =>
   });
 
 interface AddressEditProps extends WithStyles<typeof styles> {
-  countries?: Array<{
-    code: string;
-    label: string;
-  }>;
+  countries: SingleAutocompleteChoiceType[];
+  countryDisplayValue: string;
   data: AddressTypeInput;
   disabled?: boolean;
   errors: FormErrors<keyof AddressTypeInput>;
   onChange(event: React.ChangeEvent<any>);
+  onCountryChange(event: React.ChangeEvent<any>);
 }
 
 const AddressEdit = withStyles(styles, { name: "AddressEdit" })(
   ({
     classes,
     countries,
+    countryDisplayValue,
     data,
     disabled,
     errors,
-    onChange
+    onChange,
+    onCountryChange
   }: AddressEditProps) => (
     <>
       <div className={classes.root}>
@@ -152,16 +154,14 @@ const AddressEdit = withStyles(styles, { name: "AddressEdit" })(
         <div>
           <SingleAutocompleteSelectField
             disabled={disabled}
+            displayValue={countryDisplayValue}
             error={!!errors.country}
             helperText={errors.country}
             label={i18n.t("Country")}
             name="country"
-            onChange={onChange}
+            onChange={onCountryChange}
             value={data.country}
-            choices={maybe(
-              () => countries.map(c => ({ ...c, value: c.code })),
-              []
-            )}
+            choices={countries}
             InputProps={{
               autoComplete: "off"
             }}

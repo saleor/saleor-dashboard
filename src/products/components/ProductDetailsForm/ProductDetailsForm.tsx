@@ -7,16 +7,13 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import * as React from "react";
+import { RawDraftContentState } from "draft-js";
+import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import i18n from "../../../i18n";
-import { maybe } from "../../../misc";
-import { ProductDetails_product } from "../../types/ProductDetails";
-import { FormData as CreateFormData } from "../ProductCreatePage";
-import { FormData as UpdateFormData } from "../ProductUpdatePage";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -28,10 +25,16 @@ const styles = (theme: Theme) =>
   });
 
 interface ProductDetailsFormProps extends WithStyles<typeof styles> {
-  data: CreateFormData & UpdateFormData;
+  data: {
+    description: RawDraftContentState;
+    name: string;
+  };
   disabled?: boolean;
   errors: { [key: string]: string };
-  product?: ProductDetails_product;
+  // Draftail isn't controlled - it needs only initial input
+  // because it's autosaving on its own.
+  // Ref https://github.com/mirumee/saleor/issues/4470
+  initialDescription: RawDraftContentState;
   onChange(event: any);
 }
 
@@ -43,7 +46,7 @@ export const ProductDetailsForm = withStyles(styles, {
     data,
     disabled,
     errors,
-    product,
+    initialDescription,
     onChange
   }: ProductDetailsFormProps) => (
     <Card>
@@ -67,7 +70,7 @@ export const ProductDetailsForm = withStyles(styles, {
           disabled={disabled}
           error={!!errors.descriptionJson}
           helperText={errors.descriptionJson}
-          initial={maybe(() => JSON.parse(product.descriptionJson), null)}
+          initial={initialDescription}
           label={i18n.t("Description")}
           name="description"
           onChange={onChange}

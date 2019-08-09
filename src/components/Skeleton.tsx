@@ -5,7 +5,7 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import classNames from "classnames";
-import * as React from "react";
+import React from "react";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -15,6 +15,11 @@ const styles = (theme: Theme) =>
       },
       "100%": {
         opacity: 1
+      }
+    },
+    primary: {
+      "&$skeleton": {
+        background: theme.palette.primary.main
       }
     },
     skeleton: {
@@ -29,12 +34,18 @@ const styles = (theme: Theme) =>
 
 interface SkeletonProps extends WithStyles<typeof styles> {
   className?: string;
+  primary?: boolean;
   style?: React.CSSProperties;
 }
 
 const Skeleton = withStyles(styles, { name: "Skeleton" })(
-  ({ className, classes, style }: SkeletonProps) => (
-    <span className={classNames(classes.skeleton, className)} style={style}>
+  ({ className, classes, primary, style }: SkeletonProps) => (
+    <span
+      className={classNames(classes.skeleton, className, {
+        [classes.primary]: primary
+      })}
+      style={style}
+    >
       &zwnj;
     </span>
   )

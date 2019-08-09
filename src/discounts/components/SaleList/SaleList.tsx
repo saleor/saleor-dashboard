@@ -10,7 +10,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import * as React from "react";
+import React from "react";
 
 import Checkbox from "@saleor/components/Checkbox";
 import Date from "@saleor/components/Date";
@@ -19,10 +19,10 @@ import Percent from "@saleor/components/Percent";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "../../../i18n";
-import { maybe, renderCollection } from "../../../misc";
-import { ListActions, ListProps } from "../../../types";
-import { SaleType } from "../../../types/globalTypes";
+import i18n from "@saleor/i18n";
+import { maybe, renderCollection } from "@saleor/misc";
+import { ListActions, ListProps } from "@saleor/types";
+import { SaleType } from "@saleor/types/globalTypes";
 import { SaleList_sales_edges_node } from "../../types/SaleList";
 
 export interface SaleListProps extends ListProps, ListActions {
@@ -59,15 +59,19 @@ const styles = (theme: Theme) =>
     }
   });
 
+const numberOfColumns = 5;
+
 const SaleList = withStyles(styles, {
   name: "SaleList"
 })(
   ({
     classes,
+    settings,
     defaultCurrency,
     disabled,
     onNextPage,
     onPreviousPage,
+    onUpdateListSettings,
     onRowClick,
     pageInfo,
     sales,
@@ -80,6 +84,7 @@ const SaleList = withStyles(styles, {
     <Card>
       <Table>
         <TableHead
+          colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
           items={sales}
@@ -110,9 +115,11 @@ const SaleList = withStyles(styles, {
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={5}
+              colSpan={numberOfColumns}
+              settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
+              onUpdateListSettings={onUpdateListSettings}
               hasPreviousPage={
                 pageInfo && !disabled ? pageInfo.hasPreviousPage : false
               }
@@ -138,6 +145,7 @@ const SaleList = withStyles(styles, {
                     <Checkbox
                       checked={isSelected}
                       disabled={disabled}
+                      disableClickPropagation
                       onChange={() => toggle(sale.id)}
                     />
                   </TableCell>
@@ -184,7 +192,9 @@ const SaleList = withStyles(styles, {
             },
             () => (
               <TableRow>
-                <TableCell colSpan={5}>{i18n.t("No sales found")}</TableCell>
+                <TableCell colSpan={numberOfColumns}>
+                  {i18n.t("No sales found")}
+                </TableCell>
               </TableRow>
             )
           )}

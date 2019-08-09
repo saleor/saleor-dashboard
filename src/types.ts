@@ -9,15 +9,42 @@ export interface UserError {
   message: string;
 }
 
-export interface ListProps {
+export interface ListSettings<TColumn extends string = string> {
+  columns?: TColumn[];
+  rowNumber: number;
+}
+
+export enum ListViews {
+  ATTRIBUTE_LIST = "ATTRIBUTE_LIST",
+  CATEGORY_LIST = "CATEGORY_LIST",
+  COLLECTION_LIST = "COLLECTION_LIST",
+  CUSTOMER_LIST = "CUSTOMER_LIST",
+  DRAFT_LIST = "DRAFT_LIST",
+  NAVIGATION_LIST = "NAVIGATION_LIST",
+  ORDER_LIST = "ORDER_LIST",
+  PAGES_LIST = "PAGES_LIST",
+  PRODUCT_LIST = "PRODUCT_LIST",
+  SALES_LIST = "SALES_LIST",
+  SHIPPING_METHODS_LIST = "SHIPPING_METHODS_LIST",
+  STAFF_MEMBERS_LIST = "STAFF_MEMBERS_LIST",
+  VOUCHER_LIST = "VOUCHER_LIST"
+}
+
+export interface ListProps<TColumns extends string = string> {
   disabled: boolean;
   pageInfo?: {
     hasNextPage: boolean;
     hasPreviousPage: boolean;
   };
+  settings?: ListSettings<TColumns>;
   onNextPage: () => void;
   onPreviousPage: () => void;
   onRowClick: (id: string) => () => void;
+  onUpdateListSettings?: (
+    key: keyof ListSettings<TColumns>,
+    value: any
+  ) => void;
+  onListSettingsReset?: () => void;
 }
 export interface ListActionsWithoutToolbar {
   toggle: (id: string) => void;
@@ -32,7 +59,9 @@ export type TabListActions<
 export interface ListActions extends ListActionsWithoutToolbar {
   toolbar: React.ReactNode | React.ReactNodeArray;
 }
-export interface PageListProps extends ListProps {
+export interface PageListProps<TColumns extends string = string>
+  extends ListProps<TColumns> {
+  defaultSettings?: ListSettings<TColumns>;
   onAdd: () => void;
 }
 export interface FilterPageProps<TUrlFilters> {
@@ -88,3 +117,16 @@ export type SingleAction = Partial<{
 export type BulkAction = Partial<{
   ids: string[];
 }>;
+
+export interface ReorderEvent {
+  oldIndex: number;
+  newIndex: number;
+}
+export type ReorderAction = (event: ReorderEvent) => void;
+
+export interface FetchMoreProps<TData = string> {
+  loading: boolean;
+  hasMore: boolean;
+  onFetch: (value: TData) => void;
+  onFetchMore: () => void;
+}

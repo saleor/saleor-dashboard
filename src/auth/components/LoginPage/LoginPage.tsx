@@ -7,17 +7,17 @@ import {
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import * as React from "react";
+import React from "react";
 import SVG from "react-inlinesvg";
 
-import * as backgroundArt from "@assets/images/login-background.svg";
-import * as saleorDarkLogo from "@assets/images/logo-dark.svg";
-import * as saleorLightLogo from "@assets/images/logo-light.svg";
+import backgroundArt from "@assets/images/login-background.svg";
+import saleorDarkLogo from "@assets/images/logo-dark.svg";
+import saleorLightLogo from "@assets/images/logo-light.svg";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import useTheme from "@saleor/hooks/useTheme";
-import i18n from "../../../i18n";
+import i18n from "@saleor/i18n";
 
 export interface FormData {
   email: string;

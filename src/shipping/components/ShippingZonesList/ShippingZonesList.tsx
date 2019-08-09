@@ -13,17 +13,17 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import * as React from "react";
+import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "../../../i18n";
-import { maybe, renderCollection } from "../../../misc";
-import { ICONBUTTON_SIZE } from "../../../theme";
-import { ListActions, ListProps } from "../../../types";
+import i18n from "@saleor/i18n";
+import { maybe, renderCollection } from "@saleor/misc";
+import { ICONBUTTON_SIZE } from "@saleor/theme";
+import { ListActions, ListProps } from "@saleor/types";
 import { ShippingZoneFragment } from "../../types/ShippingZoneFragment";
 
 export interface ShippingZonesListProps extends ListProps, ListActions {
@@ -50,14 +50,19 @@ const styles = (theme: Theme) =>
       cursor: "pointer"
     }
   });
+
+const numberOfColumns = 4;
+
 const ShippingZonesList = withStyles(styles, { name: "ShippingZonesList" })(
   ({
     classes,
     disabled,
+    settings,
     onAdd,
     onNextPage,
     onPreviousPage,
     onRemove,
+    onUpdateListSettings,
     onRowClick,
     pageInfo,
     shippingZones,
@@ -81,6 +86,7 @@ const ShippingZonesList = withStyles(styles, { name: "ShippingZonesList" })(
       />
       <Table>
         <TableHead
+          colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
           items={shippingZones}
@@ -93,13 +99,16 @@ const ShippingZonesList = withStyles(styles, { name: "ShippingZonesList" })(
           <TableCell className={classes.colCountries}>
             {i18n.t("Countries", { context: "object" })}
           </TableCell>
+          <TableCell />
         </TableHead>
         <TableFooter>
           <TableRow>
             <TablePagination
               colSpan={4}
+              settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
+              onUpdateListSettings={onUpdateListSettings}
               hasPreviousPage={
                 pageInfo && !disabled ? pageInfo.hasPreviousPage : false
               }
@@ -127,6 +136,7 @@ const ShippingZonesList = withStyles(styles, { name: "ShippingZonesList" })(
                     <Checkbox
                       checked={isSelected}
                       disabled={disabled}
+                      disableClickPropagation
                       onChange={() => toggle(shippingZone.id)}
                     />
                   </TableCell>
@@ -159,7 +169,7 @@ const ShippingZonesList = withStyles(styles, { name: "ShippingZonesList" })(
             },
             () => (
               <TableRow>
-                <TableCell colSpan={4}>
+                <TableCell colSpan={numberOfColumns}>
                   {i18n.t("No shipping zones found")}
                 </TableCell>
               </TableRow>

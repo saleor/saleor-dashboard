@@ -10,16 +10,16 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import * as React from "react";
+import React from "react";
 
 import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "../../../i18n";
-import { maybe, renderCollection } from "../../../misc";
-import { ListActions, ListProps } from "../../../types";
+import i18n from "@saleor/i18n";
+import { maybe, renderCollection } from "@saleor/misc";
+import { ListActions, ListProps } from "@saleor/types";
 import { PageList_pages_edges_node } from "../../types/PageList";
 
 export interface PageListProps extends ListProps, ListActions {
@@ -44,14 +44,19 @@ const styles = (theme: Theme) =>
       cursor: "pointer"
     }
   });
+
+const numberOfColumns = 4;
+
 const PageList = withStyles(styles, { name: "PageList" })(
   ({
     classes,
+    settings,
     pages,
     disabled,
     onNextPage,
     pageInfo,
     onRowClick,
+    onUpdateListSettings,
     onPreviousPage,
     isChecked,
     selected,
@@ -62,6 +67,7 @@ const PageList = withStyles(styles, { name: "PageList" })(
     <Card>
       <Table>
         <TableHead
+          colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
           items={pages}
@@ -81,9 +87,11 @@ const PageList = withStyles(styles, { name: "PageList" })(
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={4}
+              colSpan={numberOfColumns}
+              settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
+              onUpdateListSettings={onUpdateListSettings}
               hasPreviousPage={
                 pageInfo && !disabled ? pageInfo.hasPreviousPage : false
               }
@@ -109,6 +117,7 @@ const PageList = withStyles(styles, { name: "PageList" })(
                     <Checkbox
                       checked={isSelected}
                       disabled={disabled}
+                      disableClickPropagation
                       onChange={() => toggle(page.id)}
                     />
                   </TableCell>
@@ -138,7 +147,9 @@ const PageList = withStyles(styles, { name: "PageList" })(
             },
             () => (
               <TableRow>
-                <TableCell colSpan={4}>{i18n.t("No pages found")}</TableCell>
+                <TableCell colSpan={numberOfColumns}>
+                  {i18n.t("No pages found")}
+                </TableCell>
               </TableRow>
             )
           )}

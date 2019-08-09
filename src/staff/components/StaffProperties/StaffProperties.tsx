@@ -8,15 +8,14 @@ import {
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import * as React from "react";
+import React from "react";
 import SVG from "react-inlinesvg";
 
+import photoIcon from "@assets/images/photo-icon.svg";
 import CardTitle from "@saleor/components/CardTitle";
 import i18n from "../../../i18n";
 import { getUserInitials, maybe } from "../../../misc";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
-
-import * as photoIcon from "@assets/images/photo-icon.svg";
 
 const styles = (theme: Theme) =>
   createStyles({

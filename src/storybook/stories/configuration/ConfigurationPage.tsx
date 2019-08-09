@@ -1,6 +1,6 @@
 import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
+import React from "react";
 
 import { configurationMenu } from "../../../configuration";
 import ConfigurationPage, {
@@ -11,6 +11,10 @@ import Decorator from "../../Decorator";
 
 const user = {
   __typename: staffMember.__typename,
+  avatar: {
+    __typename: staffMember.avatar.__typename,
+    url: staffMember.avatar.url
+  },
   email: staffMember.email,
   firstName: "Adam Evan",
   id: staffMember.id,

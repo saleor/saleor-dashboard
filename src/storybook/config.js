@@ -6,10 +6,13 @@ function loadStories() {
   require("./stories/components/ActionDialog");
   require("./stories/components/AddressEdit");
   require("./stories/components/AddressFormatter");
+  require("./stories/components/AssignAttributeDialog");
+  require("./stories/components/AssignProductDialog");
   require("./stories/components/AutocompleteSelectMenu");
   require("./stories/components/CardMenu");
   require("./stories/components/Checkbox");
   require("./stories/components/Chip");
+  require("./stories/components/ColumnPicker");
   require("./stories/components/Date");
   require("./stories/components/DateTime");
   require("./stories/components/DeleteFilterTabDialog");
@@ -44,8 +47,15 @@ function loadStories() {
   require("./stories/auth/LoginPage");
   require("./stories/auth/LoginLoading");
 
+  // Attributes
+  require("./stories/attributes/AttributeBulkDeleteDialog");
+  require("./stories/attributes/AttributeDeleteDialog");
+  require("./stories/attributes/AttributeListPage");
+  require("./stories/attributes/AttributePage");
+  require("./stories/attributes/AttributeValueDeleteDialog");
+  require("./stories/attributes/AttributeValueEditDialog");
+
   // Categories
-  require("./stories/categories/CategoryProducts");
   require("./stories/categories/CategoryCreatePage");
   require("./stories/categories/CategoryUpdatePage");
   require("./stories/categories/CategoryListPage");
@@ -94,7 +104,7 @@ function loadStories() {
   // Products
   require("./stories/products/ProductCreatePage");
   require("./stories/products/ProductImagePage");
-  require("./stories/products/ProductListCard");
+  require("./stories/products/ProductListPage");
   require("./stories/products/ProductUpdatePage");
   require("./stories/products/ProductVariantCreatePage");
   require("./stories/products/ProductVariantImageSelectDialog");
@@ -123,8 +133,10 @@ function loadStories() {
   require("./stories/orders/OrderShippingMethodEditDialog");
 
   // Product types
-  require("./stories/productTypes/ProductTypeAttributeEditDialog");
+  require("./stories/productTypes/ProductTypeAttributeUnassignDialog");
+  require("./stories/productTypes/ProductTypeBulkAttributeUnassignDialog");
   require("./stories/productTypes/ProductTypeCreatePage");
+  require("./stories/productTypes/ProductTypeDeleteDialog");
   require("./stories/productTypes/ProductTypeDetailsPage");
   require("./stories/productTypes/ProductTypeListPage");
 

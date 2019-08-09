@@ -8,8 +8,7 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import classNames from "classnames";
-import * as React from "react";
-import { stopPropagation } from "../../misc";
+import React from "react";
 
 export type CheckboxProps = Omit<
   MuiCheckboxProps,
@@ -19,7 +18,9 @@ export type CheckboxProps = Omit<
   | "indeterminateIcon"
   | "classes"
   | "onChange"
+  | "onClick"
 > & {
+  disableClickPropagation?: boolean;
   onChange?: (event: React.ChangeEvent<any>) => void;
 };
 
@@ -45,7 +46,6 @@ const styles = (theme: Theme) =>
       },
       "&:before": {
         background: "rgba(0, 0, 0, 0)",
-        borderRadius: 2,
         content: '""',
         height: 8,
         left: 2,
@@ -56,7 +56,6 @@ const styles = (theme: Theme) =>
       },
       WebkitAppearance: "none",
       border: `1px solid ${theme.palette.grey[500]}`,
-      borderRadius: 4,
       boxSizing: "border-box",
       cursor: "pointer",
       height: 14,
@@ -84,21 +83,31 @@ const Checkbox = withStyles(styles, { name: "Checkbox" })(
     className,
     classes,
     disabled,
+    disableClickPropagation,
     indeterminate,
     onChange,
-    onClick,
     value,
     name,
     ...props
   }: CheckboxProps & WithStyles<typeof styles>) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
+    const handleClick = React.useCallback(
+      disableClickPropagation
+        ? event => {
+            event.stopPropagation();
+            inputRef.current.click();
+          }
+        : () => inputRef.current.click(),
+      []
+    );
+
     return (
       <ButtonBase
         {...props}
         centerRipple
         className={classNames(classes.root, className)}
         disabled={disabled}
-        onClick={stopPropagation(() => inputRef.current.click())}
+        onClick={handleClick}
       >
         <input
           className={classNames(classes.box, {

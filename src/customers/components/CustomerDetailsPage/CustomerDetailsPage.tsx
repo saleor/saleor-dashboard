@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
@@ -55,11 +55,11 @@ const CustomerDetailsPage: React.StatelessComponent<
   <Form
     errors={errors}
     initial={{
-      email: maybe(() => customer.email),
-      firstName: maybe(() => customer.firstName),
+      email: maybe(() => customer.email, ""),
+      firstName: maybe(() => customer.firstName, ""),
       isActive: maybe(() => customer.isActive, false),
-      lastName: maybe(() => customer.lastName),
-      note: maybe(() => customer.note)
+      lastName: maybe(() => customer.lastName, ""),
+      note: maybe(() => customer.note, "")
     }}
     onSubmit={onSubmit}
     confirmLeave

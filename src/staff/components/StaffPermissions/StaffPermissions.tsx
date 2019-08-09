@@ -7,7 +7,7 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import * as React from "react";
+import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
@@ -21,7 +21,7 @@ const styles = (theme: Theme) =>
       marginTop: theme.spacing.unit
     },
     hr: {
-      backgroundColor: "#eaeaea",
+      backgroundColor: theme.overrides.MuiCard.root.borderColor,
       border: "none",
       height: 1,
       marginBottom: 0,

@@ -12,19 +12,19 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import * as classNames from "classnames";
-import * as React from "react";
+import classNames from "classnames";
+import React from "react";
 
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "../../../i18n";
+import i18n from "@saleor/i18n";
 import {
   getUserInitials,
   getUserName,
   maybe,
   renderCollection
-} from "../../../misc";
-import { ListProps } from "../../../types";
+} from "@saleor/misc";
+import { ListProps } from "@saleor/types";
 import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 
 const styles = (theme: Theme) =>
@@ -72,9 +72,11 @@ interface StaffListProps extends ListProps, WithStyles<typeof styles> {
 const StaffList = withStyles(styles, { name: "StaffList" })(
   ({
     classes,
+    settings,
     disabled,
     onNextPage,
     onPreviousPage,
+    onUpdateListSettings,
     onRowClick,
     pageInfo,
     staffMembers
@@ -95,10 +97,12 @@ const StaffList = withStyles(styles, { name: "StaffList" })(
           <TableRow>
             <TablePagination
               colSpan={3}
+              settings={settings}
               hasNextPage={
                 pageInfo && !disabled ? pageInfo.hasNextPage : undefined
               }
               onNextPage={onNextPage}
+              onUpdateListSettings={onUpdateListSettings}
               hasPreviousPage={
                 pageInfo && !disabled ? pageInfo.hasPreviousPage : undefined
               }

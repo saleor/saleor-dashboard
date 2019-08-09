@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import * as React from "react";
+import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
@@ -96,6 +96,9 @@ const SalePricing = withStyles(styles, {
           label={i18n.t("Start Date")}
           value={data.startDate}
           type="date"
+          InputLabelProps={{
+            shrink: true
+          }}
           fullWidth
         />
         <TextField
@@ -107,6 +110,9 @@ const SalePricing = withStyles(styles, {
           label={i18n.t("End Date")}
           value={data.endDate}
           type="date"
+          InputLabelProps={{
+            shrink: true
+          }}
           fullWidth
         />
       </CardContent>

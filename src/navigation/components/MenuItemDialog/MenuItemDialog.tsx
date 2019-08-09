@@ -4,20 +4,24 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
-import * as isUrl from "is-url";
-import * as React from "react";
+import Typography from "@material-ui/core/Typography";
+import isUrl from "is-url";
+import React from "react";
 
 import AutocompleteSelectMenu from "@saleor/components/AutocompleteSelectMenu";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { SearchCategories_categories_edges_node } from "../../../containers/SearchCategories/types/SearchCategories";
-import { SearchCollections_collections_edges_node } from "../../../containers/SearchCollections/types/SearchCollections";
-import { SearchPages_pages_edges_node } from "../../../containers/SearchPages/types/SearchPages";
-import i18n from "../../../i18n";
-import { getMenuItemByValue, IMenu } from "../../../utils/menu";
+import { SearchCategories_categories_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
+import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
+import { SearchPages_pages_edges_node } from "@saleor/containers/SearchPages/types/SearchPages";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import i18n from "@saleor/i18n";
+import { UserError } from "@saleor/types";
+import { getErrors, getFieldError } from "@saleor/utils/errors";
+import { getMenuItemByValue, IMenu } from "@saleor/utils/menu";
 
 export type MenuItemType = "category" | "collection" | "link" | "page";
 export interface MenuItemData {
@@ -32,6 +36,7 @@ export interface MenuItemDialogFormData extends MenuItemData {
 export interface MenuItemDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
+  errors: UserError[];
   initial?: MenuItemDialogFormData;
   initialDisplayValue?: string;
   loading: boolean;
@@ -69,6 +74,7 @@ function getDisplayValue(menu: IMenu, value: string): string {
 const MenuItemDialog: React.StatelessComponent<MenuItemDialogProps> = ({
   confirmButtonState,
   disabled,
+  errors: apiErrors,
   initial,
   initialDisplayValue,
   loading,
@@ -80,8 +86,12 @@ const MenuItemDialog: React.StatelessComponent<MenuItemDialogProps> = ({
   collections,
   pages
 }) => {
+  const errors = useModalDialogErrors(apiErrors, open);
   const [displayValue, setDisplayValue] = React.useState(
     initialDisplayValue || ""
+  );
+  const [data, setData] = useStateFromProps<MenuItemDialogFormData>(
+    initial || defaultInitial
   );
   const [url, setUrl] = React.useState<string>(undefined);
 
@@ -95,6 +105,8 @@ const MenuItemDialog: React.StatelessComponent<MenuItemDialogProps> = ({
     setDisplayValue(initialDisplayValue);
     setUrl(undefined);
   }, [open]);
+
+  const mutationErrors = getErrors(errors);
 
   let options: IMenu = [];
 
@@ -177,6 +189,23 @@ const MenuItemDialog: React.StatelessComponent<MenuItemDialogProps> = ({
     onQueryChange(query);
   };
 
+  const handleSelectChange = (event: React.ChangeEvent<any>) => {
+    const value = event.target.value;
+    const menuItemData = getMenuItemData(value);
+
+    setData(value => ({
+      ...value,
+      ...menuItemData
+    }));
+    setDisplayValue(getDisplayValue(options, value));
+  };
+
+  const handleSubmit = () => onSubmit(data);
+
+  const idError = ["category", "collection", "page", "url"]
+    .map(field => getFieldError(errors, field))
+    .reduce((acc, err) => acc || err);
+
   return (
     <Dialog
       onClose={onClose}
@@ -188,79 +217,68 @@ const MenuItemDialog: React.StatelessComponent<MenuItemDialogProps> = ({
       }}
     >
       <DialogTitle>
-        {i18n.t("Add Item", {
-          context: "create new menu item"
-        })}
+        {!!initial
+          ? i18n.t("Edit Item", {
+              context: "edit menu item"
+            })
+          : i18n.t("Add Item", {
+              context: "create new menu item"
+            })}
       </DialogTitle>
-      <Form initial={initial || defaultInitial} onSubmit={onSubmit}>
-        {({ change, data, submit }) => {
-          const handleSelectChange = (event: React.ChangeEvent<any>) => {
-            const value = event.target.value;
-            const menuItemData = getMenuItemData(value);
-            change(
-              {
-                target: {
-                  name: "id",
-                  value: menuItemData.id
-                }
-              } as any,
-              () =>
-                change(
-                  {
-                    target: {
-                      name: "type",
-                      value: menuItemData.type
-                    }
-                  } as any,
-                  () => setDisplayValue(getDisplayValue(options, value))
-                )
-            );
-          };
-
-          return (
-            <>
-              <DialogContent style={{ overflowY: "visible" }}>
-                <TextField
-                  disabled={disabled}
-                  label={i18n.t("Name")}
-                  fullWidth
-                  value={data.name}
-                  onChange={change}
-                  name={"name" as keyof MenuItemDialogFormData}
-                  helperText=""
-                />
-                <FormSpacer />
-                <AutocompleteSelectMenu
-                  disabled={disabled}
-                  onChange={handleSelectChange}
-                  name={"id" as keyof MenuItemDialogFormData}
-                  helperText=""
-                  label={i18n.t("Link")}
-                  displayValue={displayValue}
-                  loading={loading}
-                  error={false}
-                  options={options}
-                  placeholder={i18n.t("Start typing to begin search...")}
-                  onInputChange={handleQueryChange}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={onClose}>
-                  {i18n.t("Cancel", { context: "button" })}
-                </Button>
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  color="primary"
-                  variant="contained"
-                  onClick={submit}
-                >
-                  {i18n.t("Submit", { context: "button" })}
-                </ConfirmButton>
-              </DialogActions>
-            </>
-          );
-        }}
-      </Form>
+      <DialogContent style={{ overflowY: "visible" }}>
+        <TextField
+          disabled={disabled}
+          label={i18n.t("Name")}
+          fullWidth
+          value={data.name}
+          onChange={event =>
+            setData(value => ({
+              ...value,
+              name: event.target.value
+            }))
+          }
+          name="name"
+          error={!!getFieldError(errors, "name")}
+          helperText={getFieldError(errors, "name")}
+        />
+        <FormSpacer />
+        <AutocompleteSelectMenu
+          disabled={disabled}
+          onChange={handleSelectChange}
+          name="id"
+          label={i18n.t("Link")}
+          displayValue={displayValue}
+          loading={loading}
+          options={options}
+          error={!!idError}
+          helperText={idError}
+          placeholder={i18n.t("Start typing to begin search...")}
+          onInputChange={handleQueryChange}
+        />
+        {mutationErrors.length > 0 && (
+          <>
+            <FormSpacer />
+            {mutationErrors.map(err => (
+              <Typography key={err} color="error">
+                {err}
+              </Typography>
+            ))}
+          </>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>
+          {i18n.t("Cancel", { context: "button" })}
+        </Button>
+        <ConfirmButton
+          transitionState={confirmButtonState}
+          color="primary"
+          variant="contained"
+          onClick={handleSubmit}
+        >
+          {i18n.t("Submit", { context: "button" })}
+        </ConfirmButton>
+      </DialogActions>
     </Dialog>
   );
 };

@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import * as React from "react";
+import React from "react";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
@@ -287,14 +287,12 @@ export const CollectionDetails: React.StatelessComponent<
                         open={params.action === "assign"}
                         onFetch={search}
                         loading={result.loading}
-                        onClose={() => navigate(collectionUrl(id), true, true)}
-                        onSubmit={formData =>
+                        onClose={closeModal}
+                        onSubmit={products =>
                           assignProduct.mutate({
                             ...paginationState,
                             collectionId: id,
-                            productIds: formData.products.map(
-                              product => product.id
-                            )
+                            productIds: products.map(product => product.id)
                           })
                         }
                         products={maybe(() =>

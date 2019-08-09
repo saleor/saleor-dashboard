@@ -1,9 +1,11 @@
 import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
+import React from "react";
 
+import { formError } from "@saleor/storybook/misc";
 import ProductTypeCreatePage, {
-  ProductTypeCreatePageProps
+  ProductTypeCreatePageProps,
+  ProductTypeForm
 } from "../../../productTypes/components/ProductTypeCreatePage";
 import { WeightUnitsEnum } from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
@@ -15,7 +17,8 @@ const props: Omit<ProductTypeCreatePageProps, "classes"> = {
   onBack: () => undefined,
   onSubmit: () => undefined,
   pageTitle: "Create product type",
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
+  taxTypes: []
 };
 
 storiesOf("Views / Product types / Create product type", module)
@@ -23,4 +26,10 @@ storiesOf("Views / Product types / Create product type", module)
   .add("default", () => <ProductTypeCreatePage {...props} />)
   .add("loading", () => (
     <ProductTypeCreatePage {...props} disabled={true} pageTitle={undefined} />
+  ))
+  .add("form errors", () => (
+    <ProductTypeCreatePage
+      {...props}
+      errors={(["name"] as Array<keyof ProductTypeForm>).map(formError)}
+    />
   ));

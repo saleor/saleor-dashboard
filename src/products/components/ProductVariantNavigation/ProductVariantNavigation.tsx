@@ -10,8 +10,8 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import * as classNames from "classnames";
-import * as React from "react";
+import classNames from "classnames";
+import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
@@ -68,35 +68,27 @@ const ProductVariantNavigation = withStyles(styles, {
       <CardTitle title={i18n.t("Variants")} />
       <Table>
         <TableBody>
-          {renderCollection(
-            variants,
-            variant => (
-              <TableRow
-                hover={!!variant}
-                key={variant ? variant.id : "skeleton"}
-                className={classes.link}
-                onClick={variant ? () => onRowClick(variant.id) : undefined}
-              >
-                <TableCellAvatar
-                  className={classNames({
-                    [classes.tabActive]: variant && variant.id === current
-                  })}
-                  thumbnail={maybe(
-                    () => variant.images[0].url,
-                    fallbackThumbnail
-                  )}
-                />
-                <TableCell className={classes.textLeft}>
-                  {variant ? variant.name || variant.sku : <Skeleton />}
-                </TableCell>
-              </TableRow>
-            ),
-            () => (
-              <TableRow>
-                <TableCell>{i18n.t("This product has no variants")}</TableCell>
-              </TableRow>
-            )
-          )}
+          {renderCollection(variants, variant => (
+            <TableRow
+              hover={!!variant}
+              key={variant ? variant.id : "skeleton"}
+              className={classes.link}
+              onClick={variant ? () => onRowClick(variant.id) : undefined}
+            >
+              <TableCellAvatar
+                className={classNames({
+                  [classes.tabActive]: variant && variant.id === current
+                })}
+                thumbnail={maybe(
+                  () => variant.images[0].url,
+                  fallbackThumbnail
+                )}
+              />
+              <TableCell className={classes.textLeft}>
+                {variant ? variant.name || variant.sku : <Skeleton />}
+              </TableCell>
+            </TableRow>
+          ))}
           {onAdd ? (
             <TableRow>
               <TableCell colSpan={2}>

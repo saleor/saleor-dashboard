@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -67,14 +67,8 @@ export const CustomerCreate: React.StatelessComponent<{}> = () => {
                   createCustomer({
                     variables: {
                       input: {
-                        defaultBillingAddress: {
-                          ...address,
-                          country: address.country.value
-                        },
-                        defaultShippingAddress: {
-                          ...address,
-                          country: address.country.value
-                        },
+                        defaultBillingAddress: address,
+                        defaultShippingAddress: address,
                         email: formData.email,
                         firstName: formData.customerFirstName,
                         lastName: formData.customerLastName,

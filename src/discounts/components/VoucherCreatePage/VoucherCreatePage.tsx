@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -11,22 +11,33 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import i18n from "../../../i18n";
 import { UserError } from "../../../types";
 import {
-  VoucherDiscountValueType,
-  VoucherType
+  DiscountValueTypeEnum,
+  VoucherTypeEnum
 } from "../../../types/globalTypes";
+import { RequirementsPicker } from "../../types";
+import VoucherDates from "../VoucherDates";
 import VoucherInfo from "../VoucherInfo";
-import VoucherOptions from "../VoucherOptions";
+import VoucherLimits from "../VoucherLimits";
+import VoucherRequirements from "../VoucherRequirements";
+import VoucherTypes from "../VoucherTypes";
 
+import VoucherValue from "../VoucherValue";
 export interface FormData {
+  applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
   code: string;
-  discountType: VoucherDiscountValueType;
+  discountType: DiscountValueTypeEnum;
   endDate: string;
-  minAmountSpent: number;
-  name: string;
+  endTime: string;
+  hasEndDate: boolean;
+  hasUsageLimit: boolean;
+  minAmountSpent: string;
+  minCheckoutItemsQuantity: string;
+  requirementsPicker: RequirementsPicker;
   startDate: string;
-  type: VoucherType;
-  usageLimit: number;
+  startTime: string;
+  type: VoucherTypeEnum;
+  usageLimit: string;
   value: number;
 }
 
@@ -48,15 +59,21 @@ const VoucherCreatePage: React.StatelessComponent<VoucherCreatePageProps> = ({
   onSubmit
 }) => {
   const initialForm: FormData = {
+    applyOncePerCustomer: false,
     applyOncePerOrder: false,
     code: "",
-    discountType: VoucherDiscountValueType.FIXED,
+    discountType: DiscountValueTypeEnum.FIXED,
     endDate: "",
-    minAmountSpent: 0,
-    name: "",
+    endTime: "",
+    hasEndDate: false,
+    hasUsageLimit: false,
+    minAmountSpent: "0",
+    minCheckoutItemsQuantity: "0",
+    requirementsPicker: RequirementsPicker.NONE,
     startDate: "",
-    type: VoucherType.VALUE,
-    usageLimit: 0,
+    startTime: "",
+    type: VoucherTypeEnum.ENTIRE_ORDER,
+    usageLimit: "0",
     value: 0
   };
 
@@ -72,11 +89,28 @@ const VoucherCreatePage: React.StatelessComponent<VoucherCreatePageProps> = ({
                 data={data}
                 errors={formErrors}
                 disabled={disabled}
-                variant="create"
                 onChange={change}
+                variant="create"
               />
               <CardSpacer />
-              <VoucherOptions
+              <VoucherTypes
+                data={data}
+                disabled={disabled}
+                errors={formErrors}
+                onChange={change}
+              />
+              {data.discountType.toString() !== "SHIPPING" ? (
+                <VoucherValue
+                  data={data}
+                  disabled={disabled}
+                  defaultCurrency={defaultCurrency}
+                  errors={formErrors}
+                  onChange={change}
+                  variant="create"
+                />
+              ) : null}
+              <CardSpacer />
+              <VoucherRequirements
                 data={data}
                 disabled={disabled}
                 defaultCurrency={defaultCurrency}
@@ -84,6 +118,21 @@ const VoucherCreatePage: React.StatelessComponent<VoucherCreatePageProps> = ({
                 onChange={change}
               />
               <CardSpacer />
+              <VoucherLimits
+                data={data}
+                disabled={disabled}
+                defaultCurrency={defaultCurrency}
+                errors={formErrors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <VoucherDates
+                data={data}
+                disabled={disabled}
+                defaultCurrency={defaultCurrency}
+                errors={formErrors}
+                onChange={change}
+              />
             </div>
           </Grid>
           <SaveButtonBar

@@ -7,6 +7,12 @@
     "no-console": [true, "log"],
     "no-implicit-dependencies": false,
     "no-shadowed-variable": false,
-    "no-submodule-imports": [true, "@material-ui", "@assets", "@saleor"]
+    "no-submodule-imports": [
+      true,
+      "@material-ui",
+      "lodash-es",
+      "@assets",
+      "@saleor"
+    ]
   }
 }

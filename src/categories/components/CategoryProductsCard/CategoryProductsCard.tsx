@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import * as React from "react";
+import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";
 import ProductList from "@saleor/components/ProductList";
@@ -40,6 +40,10 @@ export const CategoryProductsCard: React.StatelessComponent<
       }
     />
     <ProductList
+      settings={{
+        columns: ["isPublished", "price", "productType"],
+        rowNumber: undefined
+      }}
       products={products}
       disabled={disabled}
       pageInfo={pageInfo}

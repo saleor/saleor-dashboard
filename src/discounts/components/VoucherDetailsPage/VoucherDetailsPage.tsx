@@ -1,5 +1,5 @@
 import Typography from "@material-ui/core/Typography";
-import * as React from "react";
+import React from "react";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -11,26 +11,32 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
+import { RequirementsPicker } from "@saleor/discounts/types";
 import i18n from "../../../i18n";
-import { maybe } from "../../../misc";
+import { maybe, splitDateTime } from "../../../misc";
 import { ListProps, TabListActions, UserError } from "../../../types";
 import {
-  VoucherDiscountValueType,
-  VoucherType
+  DiscountValueTypeEnum,
+  VoucherTypeEnum
 } from "../../../types/globalTypes";
 import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountProducts from "../DiscountProducts";
+import VoucherDates from "../VoucherDates";
 import VoucherInfo from "../VoucherInfo";
-import VoucherOptions from "../VoucherOptions";
+import VoucherLimits from "../VoucherLimits";
+import VoucherRequirements from "../VoucherRequirements";
 import VoucherSummary from "../VoucherSummary";
+import VoucherTypes from "../VoucherTypes";
+import VoucherValue from "../VoucherValue";
 
 export enum VoucherDetailsPageTab {
   categories = "categories",
   collections = "collections",
   products = "products"
 }
+
 export function voucherDetailsPageTab(tab: string): VoucherDetailsPageTab {
   return tab === VoucherDetailsPageTab.products
     ? VoucherDetailsPageTab.products
@@ -40,15 +46,21 @@ export function voucherDetailsPageTab(tab: string): VoucherDetailsPageTab {
 }
 
 export interface FormData {
+  applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
   code: string;
-  discountType: VoucherDiscountValueType;
+  discountType: DiscountValueTypeEnum;
   endDate: string;
-  minAmountSpent: number;
-  name: string;
+  endTime: string;
+  hasEndDate: boolean;
+  hasUsageLimit: boolean;
+  minAmountSpent: string;
+  minCheckoutItemsQuantity: string;
+  requirementsPicker: RequirementsPicker;
   startDate: string;
-  type: VoucherType;
-  usageLimit: number;
+  startTime: string;
+  type: VoucherTypeEnum;
+  usageLimit: string;
   value: number;
 }
 
@@ -116,19 +128,37 @@ const VoucherDetailsPage: React.StatelessComponent<VoucherDetailsPageProps> = ({
   collectionListToolbar,
   productListToolbar
 }) => {
+  let requirementsPickerInitValue;
+  if (maybe(() => voucher.minAmountSpent.amount) > 0) {
+    requirementsPickerInitValue = RequirementsPicker.ORDER;
+  } else if (maybe(() => voucher.minCheckoutItemsQuantity) > 0) {
+    requirementsPickerInitValue = RequirementsPicker.ITEM;
+  } else {
+    requirementsPickerInitValue = RequirementsPicker.NONE;
+  }
+
   const initialForm: FormData = {
+    applyOncePerCustomer: maybe(() => voucher.applyOncePerCustomer, false),
     applyOncePerOrder: maybe(() => voucher.applyOncePerOrder, false),
     code: maybe(() => voucher.code, ""),
     discountType: maybe(
       () => voucher.discountValueType,
-      VoucherDiscountValueType.FIXED
+      DiscountValueTypeEnum.FIXED
     ),
-    endDate: maybe(() => voucher.endDate, ""),
-    minAmountSpent: maybe(() => voucher.minAmountSpent.amount, 0),
-    name: maybe(() => voucher.name, ""),
-    startDate: maybe(() => voucher.startDate, ""),
-    type: maybe(() => voucher.type, VoucherType.VALUE),
-    usageLimit: maybe(() => voucher.usageLimit || 0, 0),
+    endDate: splitDateTime(maybe(() => voucher.endDate, "")).date,
+    endTime: splitDateTime(maybe(() => voucher.endDate, "")).time,
+    hasEndDate: maybe(() => !!voucher.endDate),
+    hasUsageLimit: maybe(() => !!voucher.usageLimit),
+    minAmountSpent: maybe(() => voucher.minAmountSpent.amount.toString(), "0"),
+    minCheckoutItemsQuantity: maybe(
+      () => voucher.minCheckoutItemsQuantity.toString(),
+      "0"
+    ),
+    requirementsPicker: requirementsPickerInitValue,
+    startDate: splitDateTime(maybe(() => voucher.startDate, "")).date,
+    startTime: splitDateTime(maybe(() => voucher.startDate, "")).time,
+    type: maybe(() => voucher.type, VoucherTypeEnum.ENTIRE_ORDER),
+    usageLimit: maybe(() => voucher.usageLimit.toString(), "0"),
     value: maybe(() => voucher.discountValue, 0)
   };
 
@@ -137,28 +167,37 @@ const VoucherDetailsPage: React.StatelessComponent<VoucherDetailsPageProps> = ({
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>{i18n.t("Vouchers")}</AppHeader>
-          <PageHeader title={maybe(() => voucher.name)} />
+          <PageHeader title={maybe(() => voucher.code)} />
           <Grid>
             <div>
               <VoucherInfo
                 data={data}
                 disabled={disabled}
                 errors={formErrors}
-                variant="update"
                 onChange={change}
+                variant="update"
               />
               <CardSpacer />
-              <VoucherOptions
+              <VoucherTypes
                 data={data}
                 disabled={disabled}
-                defaultCurrency={defaultCurrency}
                 errors={formErrors}
                 onChange={change}
               />
               <CardSpacer />
-              {data.type === VoucherType.CATEGORY ||
-              data.type === VoucherType.COLLECTION ||
-              data.type === VoucherType.PRODUCT ? (
+              {data.discountType.toString() !== "SHIPPING" ? (
+                <VoucherValue
+                  data={data}
+                  disabled={disabled}
+                  defaultCurrency={defaultCurrency}
+                  errors={formErrors}
+                  onChange={change}
+                  variant="update"
+                />
+              ) : null}
+              <CardSpacer />
+              {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
+              data.discountType.toString() !== "SHIPPING" ? (
                 <>
                   <TabContainer>
                     <CategoriesTab
@@ -246,16 +285,16 @@ const VoucherDetailsPage: React.StatelessComponent<VoucherDetailsPageProps> = ({
                     />
                   )}
                 </>
-              ) : data.type === VoucherType.SHIPPING ? (
+              ) : null}
+              <CardSpacer />
+              {data.discountType.toString() === "SHIPPING" ? (
                 <CountryList
                   countries={maybe(() => voucher.countries)}
                   disabled={disabled}
                   emptyText={i18n.t("Voucher applies to all countries")}
                   title={
                     <>
-                      {i18n.t("Countries assigned to {{ voucherName }}", {
-                        voucherName: maybe(() => voucher.name)
-                      })}
+                      {i18n.t("Countries")}
                       <Typography variant="caption">
                         {i18n.t("Vouchers limited to these countries")}
                       </Typography>
@@ -265,6 +304,30 @@ const VoucherDetailsPage: React.StatelessComponent<VoucherDetailsPageProps> = ({
                   onCountryUnassign={onCountryUnassign}
                 />
               ) : null}
+              <CardSpacer />
+              <VoucherRequirements
+                data={data}
+                disabled={disabled}
+                defaultCurrency={defaultCurrency}
+                errors={formErrors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <VoucherLimits
+                data={data}
+                disabled={disabled}
+                defaultCurrency={defaultCurrency}
+                errors={formErrors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <VoucherDates
+                data={data}
+                disabled={disabled}
+                defaultCurrency={defaultCurrency}
+                errors={formErrors}
+                onChange={change}
+              />
             </div>
             <div>
               <VoucherSummary

@@ -1,15 +1,15 @@
 import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
+import React from "react";
 
-import * as placeholderCollectionImage from "@assets/images/block1.jpg";
-import * as placeholderProductImage from "@assets/images/placeholder60x60.png";
 import CollectionDetailsPage, {
   CollectionDetailsPageProps
 } from "../../../collections/components/CollectionDetailsPage";
 import { collection as collectionFixture } from "../../../collections/fixtures";
 import { listActionsProps, pageListProps } from "../../../fixtures";
 import Decorator from "../../Decorator";
+import placeholderCollectionImage from "../@assets/images/block1.jpg";
+import placeholderProductImage from "../@assets/images/placeholder60x60.png";
 
 const collection = collectionFixture(
   placeholderCollectionImage,

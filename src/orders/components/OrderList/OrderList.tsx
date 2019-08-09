@@ -9,7 +9,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import * as React from "react";
+import React from "react";
 
 import Checkbox from "@saleor/components/Checkbox";
 import { DateTime } from "@saleor/components/Date";
@@ -18,14 +18,14 @@ import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "../../../i18n";
+import i18n from "@saleor/i18n";
 import {
   maybe,
   renderCollection,
   transformOrderStatus,
   transformPaymentStatus
-} from "../../../misc";
-import { ListActions, ListProps } from "../../../types";
+} from "@saleor/misc";
+import { ListActions, ListProps } from "@saleor/types";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
 
 const styles = (theme: Theme) =>
@@ -66,14 +66,18 @@ interface OrderListProps
   orders: OrderList_orders_edges_node[];
 }
 
+const numberOfColumns = 7;
+
 export const OrderList = withStyles(styles, { name: "OrderList" })(
   ({
     classes,
     disabled,
+    settings,
     orders,
     pageInfo,
     onPreviousPage,
     onNextPage,
+    onUpdateListSettings,
     onRowClick,
     isChecked,
     selected,
@@ -91,6 +95,7 @@ export const OrderList = withStyles(styles, { name: "OrderList" })(
     return (
       <Table>
         <TableHead
+          colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
           items={orders}
@@ -119,9 +124,11 @@ export const OrderList = withStyles(styles, { name: "OrderList" })(
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={7}
+              colSpan={numberOfColumns}
+              settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
+              onUpdateListSettings={onUpdateListSettings}
               hasPreviousPage={
                 pageInfo && !disabled ? pageInfo.hasPreviousPage : false
               }
@@ -147,6 +154,7 @@ export const OrderList = withStyles(styles, { name: "OrderList" })(
                     <Checkbox
                       checked={isSelected}
                       disabled={disabled}
+                      disableClickPropagation
                       onChange={() => toggle(order.id)}
                     />
                   </TableCell>
@@ -211,7 +219,9 @@ export const OrderList = withStyles(styles, { name: "OrderList" })(
             },
             () => (
               <TableRow>
-                <TableCell colSpan={7}>{i18n.t("No orders found")}</TableCell>
+                <TableCell colSpan={numberOfColumns}>
+                  {i18n.t("No orders found")}
+                </TableCell>
               </TableRow>
             )
           )}

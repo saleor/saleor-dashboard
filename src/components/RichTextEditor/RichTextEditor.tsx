@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
-import * as classNames from "classnames";
+import classNames from "classnames";
 import { RawDraftContentState } from "draft-js";
 import {
   BLOCK_TYPE,
@@ -14,7 +14,8 @@ import {
   ENTITY_TYPE,
   INLINE_STYLE
 } from "draftail";
-import * as React from "react";
+import isEqual from "lodash-es/isEqual";
+import React from "react";
 
 import BoldIcon from "../../icons/BoldIcon";
 import HeaderOne from "../../icons/HeaderOne";
@@ -29,6 +30,7 @@ import UnorderedListIcon from "../../icons/UnorderedListIcon";
 
 // import ImageEntity from "./ImageEntity";
 // import ImageSource from "./ImageSource";
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import LinkEntity from "./LinkEntity";
 import LinkSource from "./LinkSource";
 
@@ -45,22 +47,6 @@ export interface RichTextEditorProps {
 
 const styles = (theme: Theme) =>
   createStyles({
-    "@keyframes focus": {
-      from: {
-        transform: "scaleX(0) scaleY(1)"
-      },
-      to: {
-        transform: "scaleX(1) scaleY(1)"
-      }
-    },
-    "@keyframes hover": {
-      from: {
-        transform: "scaleX(1) scaleY(0)"
-      },
-      to: {
-        transform: "scaleX(1) scaleY(1)"
-      }
-    },
     error: {
       color: theme.palette.error.main
     },
@@ -68,21 +54,13 @@ const styles = (theme: Theme) =>
       marginTop: theme.spacing.unit * 0.75
     },
     input: {
-      "&:hover": {
-        borderBottomColor: theme.palette.primary.main
-      },
-      backgroundColor: theme.overrides.MuiFilledInput.root.backgroundColor,
-      borderBottom: `1px rgba(0, 0, 0, 0) solid`,
-      borderTopLeftRadius: 4,
-      borderTopRightRadius: 4,
-      padding: "27px 12px 10px",
-      position: "relative",
-      transition: theme.transitions.duration.shortest + "ms"
+      position: "relative"
     },
     label: {
       fontSize: theme.typography.caption.fontSize,
-      marginBottom: theme.spacing.unit * 2,
-      marginTop: -21
+      left: 12,
+      position: "absolute",
+      top: 9
     },
     linkIcon: {
       marginTop: 2
@@ -97,8 +75,6 @@ const styles = (theme: Theme) =>
             color: theme.palette.primary.light
           },
           "&:after": {
-            animationDuration: theme.transitions.duration.shortest + "ms",
-            animationFillMode: "both",
             background: theme.palette.getContrastText(
               theme.palette.background.default
             ),
@@ -120,16 +96,19 @@ const styles = (theme: Theme) =>
       "& .Draftail": {
         "&-Editor": {
           "&--focus": {
-            "& .DraftEditor": {
-              "&-editorContainer": {
-                "&:after": {
-                  animationName: "focus !important",
-                  background: theme.palette.primary.main,
-                  transform: "scaleX(0) scaleY(1)"
-                }
-              }
-            }
-          }
+            boxShadow: `inset 0px 0px 0px 2px ${theme.palette.primary.main}`
+          },
+          "&:hover": {
+            borderColor: theme.palette.primary.main
+          },
+          border: `1px ${
+            theme.overrides.MuiOutlinedInput.root.borderColor
+          } solid`,
+          borderTopLeftRadius: 4,
+          borderTopRightRadius: 4,
+          padding: "27px 12px 10px",
+          position: "relative",
+          transition: theme.transitions.duration.shortest + "ms"
         },
         "&-Toolbar": {
           "&Button": {
@@ -190,6 +169,7 @@ const styles = (theme: Theme) =>
           display: "inline-flex",
           flexWrap: "wrap",
           marginBottom: theme.spacing.unit,
+          marginTop: 10,
           [theme.breakpoints.down(460)]: {
             width: "min-content"
           }
@@ -205,24 +185,7 @@ const styles = (theme: Theme) =>
       "&$error": {
         "& .Draftail": {
           "&-Editor": {
-            "& .DraftEditor": {
-              "&-editorContainer": {
-                "&:after": {
-                  animationName: "none",
-                  background: theme.palette.error.main,
-                  transform: "scaleX(1) scaleY(1)"
-                }
-              }
-            },
-            "&--focus": {
-              "& .DraftEditor": {
-                "&-editorContainer": {
-                  "&:after": {
-                    animationName: "none !important"
-                  }
-                }
-              }
-            }
+            borderColor: theme.palette.error.main
           }
         }
       }
@@ -240,6 +203,23 @@ const styles = (theme: Theme) =>
       marginLeft: 10
     }
   });
+
+function handleSave(
+  value: any,
+  initial: any,
+  name: string,
+  onChange: (event: ChangeEvent) => void
+) {
+  if (value && !isEqual(value, initial)) {
+    onChange({
+      target: {
+        name,
+        value
+      }
+    });
+  }
+}
+
 const RichTextEditor = withStyles(styles, { name: "RichTextEditor" })(
   ({
     classes,
@@ -267,14 +247,7 @@ const RichTextEditor = withStyles(styles, { name: "RichTextEditor" })(
           rawContentState={
             initial && Object.keys(initial).length > 0 ? initial : null
           }
-          onSave={value =>
-            onChange({
-              target: {
-                name,
-                value
-              }
-            } as any)
-          }
+          onSave={value => handleSave(value, initial, name, onChange)}
           blockTypes={[
             {
               icon: <HeaderOne />,

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "esModuleInterop": true,
     "jsx": "react",
     "lib": ["es2017", "dom", "esnext"],
     "sourceMap": true,
@@ -8,8 +9,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@assets/*": ["./assets/*"],
-      "@saleor/*": ["./src/*"]
+      "@assets/*": ["assets/*"],
+      "@saleor/*": ["src/*"]
     }
   },
   "exclude": ["node_modules"]

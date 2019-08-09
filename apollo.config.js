@@ -1,14 +1,11 @@
 module.exports = {
   client: {
     addTypename: true,
-    includes: [
-      'saleor/static/dashboard-next/**/*.ts',
-      'saleor/static/dashboard-next/**/*.tsx'
-    ],
-    name: 'storefront',
+    includes: ["src/**/*.ts", "src/**/*.tsx"],
+    name: "dashboard",
     service: {
-      localSchemaFile: 'saleor/graphql/schema.graphql',
-      name: 'saleor'
+      endpoint: "localhost:8000/graphql/",
+      name: "saleor"
     }
   }
 };

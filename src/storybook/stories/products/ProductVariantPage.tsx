@@ -1,7 +1,8 @@
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
+import React from "react";
 
-import * as placeholderImage from "@assets/images/placeholder60x60.png";
+import placeholderImage from "@assets/images/placeholder60x60.png";
+import { formError } from "@saleor/storybook/misc";
 import ProductVariantPage from "../../../products/components/ProductVariantPage";
 import { variant as variantFixture } from "../../../products/fixtures";
 import Decorator from "../../Decorator";
@@ -37,5 +38,19 @@ storiesOf("Views / Products / Product variant details", module)
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
       saveButtonBarState="default"
+    />
+  ))
+  .add("attribute errors", () => (
+    <ProductVariantPage
+      header={variant.name || variant.sku}
+      variant={variant}
+      onAdd={() => undefined}
+      onBack={() => undefined}
+      onDelete={undefined}
+      onImageSelect={() => undefined}
+      onSubmit={() => undefined}
+      onVariantClick={() => undefined}
+      saveButtonBarState="default"
+      errors={["attributes:Borders", "attributes:Legacy"].map(formError)}
     />
   ));

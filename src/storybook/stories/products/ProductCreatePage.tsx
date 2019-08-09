@@ -1,8 +1,8 @@
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
+import React from "react";
 
 import ProductCreatePage, {
-  FormData
+  ProductCreatePageSubmitData
 } from "../../../products/components/ProductCreatePage";
 
 import { formError } from "../../misc";
@@ -54,8 +54,8 @@ storiesOf("Views / Products / Create product", module)
       currency="USD"
       disabled={false}
       errors={(["name", "productType", "category", "sku"] as Array<
-        keyof FormData
-      >).map(field => formError(field))}
+        keyof ProductCreatePageSubmitData
+      >).map(formError)}
       header="Add product"
       collections={product.collections}
       fetchCategories={() => undefined}

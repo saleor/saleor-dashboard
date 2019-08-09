@@ -11,16 +11,16 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import * as React from "react";
+import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "../../../i18n";
-import { renderCollection } from "../../../misc";
-import { ListActions, ListProps } from "../../../types";
+import i18n from "@saleor/i18n";
+import { renderCollection } from "@saleor/misc";
+import { ListActions, ListProps } from "@saleor/types";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -67,11 +67,14 @@ interface CategoryListProps
   onAdd?();
 }
 
+const numberOfColumns = 4;
+
 const CategoryList = withStyles(styles, { name: "CategoryList" })(
   ({
     categories,
     classes,
     disabled,
+    settings,
     isRoot,
     pageInfo,
     isChecked,
@@ -82,6 +85,7 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
     onAdd,
     onNextPage,
     onPreviousPage,
+    onUpdateListSettings,
     onRowClick
   }: CategoryListProps) => (
     <Card>
@@ -97,6 +101,7 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
       )}
       <Table>
         <TableHead
+          colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
           items={categories}
@@ -116,9 +121,11 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={4}
+              colSpan={numberOfColumns}
+              settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
+              onUpdateListSettings={onUpdateListSettings}
               hasPreviousPage={
                 pageInfo && !disabled ? pageInfo.hasPreviousPage : false
               }
@@ -144,6 +151,7 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
                     <Checkbox
                       checked={isSelected}
                       disabled={disabled}
+                      disableClickPropagation
                       onChange={() => toggle(category.id)}
                     />
                   </TableCell>
@@ -173,7 +181,7 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
             },
             () => (
               <TableRow>
-                <TableCell colSpan={4}>
+                <TableCell colSpan={numberOfColumns}>
                   {isRoot
                     ? i18n.t("No categories found")
                     : i18n.t("No subcategories found")}

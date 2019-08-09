@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -567,15 +567,13 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
                                       onClose={closeModal}
                                       onFetch={variantSearch}
                                       onFetchMore={fetchMore}
-                                      onSubmit={formData =>
+                                      onSubmit={variants =>
                                         orderLinesAdd.mutate({
                                           id,
-                                          input: formData.variants.map(
-                                            variant => ({
-                                              quantity: 1,
-                                              variantId: variant.id
-                                            })
-                                          )
+                                          input: variants.map(variant => ({
+                                            quantity: 1,
+                                            variantId: variant.id
+                                          }))
                                         })
                                       }
                                     />
@@ -608,14 +606,11 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
                             open={params.action === "edit-shipping-address"}
                             variant="shipping"
                             onClose={closeModal}
-                            onConfirm={variables =>
+                            onConfirm={shippingAddress =>
                               orderUpdate.mutate({
                                 id,
                                 input: {
-                                  shippingAddress: {
-                                    ...variables,
-                                    country: variables.country.value
-                                  }
+                                  shippingAddress
                                 }
                               })
                             }
@@ -644,14 +639,11 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
                             open={params.action === "edit-billing-address"}
                             variant="billing"
                             onClose={closeModal}
-                            onConfirm={variables =>
+                            onConfirm={billingAddress =>
                               orderUpdate.mutate({
                                 id,
                                 input: {
-                                  billingAddress: {
-                                    ...variables,
-                                    country: variables.country.value
-                                  }
+                                  billingAddress
                                 }
                               })
                             }

@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import * as React from "react";
+import React from "react";
 
 import { makeStyles } from "@material-ui/styles";
 import i18n from "../../i18n";
@@ -47,7 +47,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
 }) => {
   const [menuValue, setMenuValue] = React.useState<string>("");
   const [filterValue, setFilterValue] = React.useState<string | string[]>("");
-  const classes = useStyles();
+  const classes = useStyles({});
 
   const activeMenu = menuValue
     ? getMenuItemByValue(filters, menuValue)

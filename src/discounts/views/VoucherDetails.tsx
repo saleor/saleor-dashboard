@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import * as React from "react";
+import React from "react";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
@@ -21,11 +21,11 @@ import SearchCategories from "../../containers/SearchCategories";
 import SearchCollections from "../../containers/SearchCollections";
 import SearchProducts from "../../containers/SearchProducts";
 import i18n from "../../i18n";
-import { decimal, getMutationState, maybe } from "../../misc";
+import { decimal, getMutationState, joinDateTime, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import {
   DiscountValueTypeEnum,
-  VoucherDiscountValueType
+  VoucherTypeEnum
 } from "../../types/globalTypes";
 import DiscountCountrySelectDialog from "../components/DiscountCountrySelectDialog";
 import VoucherDetailsPage, {
@@ -38,6 +38,7 @@ import {
   TypedVoucherUpdate
 } from "../mutations";
 import { TypedVoucherDetails } from "../queries";
+import { RequirementsPicker } from "../types";
 import { VoucherCataloguesAdd } from "../types/VoucherCataloguesAdd";
 import { VoucherCataloguesRemove } from "../types/VoucherCataloguesRemove";
 import { VoucherDelete } from "../types/VoucherDelete";
@@ -52,14 +53,6 @@ import {
 interface VoucherDetailsProps {
   id: string;
   params: VoucherUrlQueryParams;
-}
-
-function discountValueTypeEnum(
-  type: VoucherDiscountValueType
-): DiscountValueTypeEnum {
-  return type.toString() === DiscountValueTypeEnum.FIXED
-    ? DiscountValueTypeEnum.FIXED
-    : DiscountValueTypeEnum.PERCENTAGE;
 }
 
 export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
@@ -323,19 +316,51 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                                   variables: {
                                     id,
                                     input: {
-                                      discountValue: decimal(formData.value),
-                                      discountValueType: discountValueTypeEnum(
-                                        formData.discountType
+                                      applyOncePerCustomer:
+                                        formData.applyOncePerCustomer,
+                                      applyOncePerOrder:
+                                        formData.applyOncePerOrder,
+                                      discountValue:
+                                        formData.discountType.toString() ===
+                                        "SHIPPING"
+                                          ? 100
+                                          : decimal(formData.value),
+                                      discountValueType:
+                                        formData.discountType.toString() ===
+                                        "SHIPPING"
+                                          ? DiscountValueTypeEnum.PERCENTAGE
+                                          : formData.discountType,
+                                      endDate: formData.hasEndDate
+                                        ? joinDateTime(
+                                            formData.endDate,
+                                            formData.endTime
+                                          )
+                                        : null,
+                                      minAmountSpent:
+                                        formData.requirementsPicker !==
+                                        RequirementsPicker.ORDER
+                                          ? 0
+                                          : parseFloat(formData.minAmountSpent),
+                                      minCheckoutItemsQuantity:
+                                        formData.requirementsPicker !==
+                                        RequirementsPicker.ITEM
+                                          ? 0
+                                          : parseFloat(
+                                              formData.minCheckoutItemsQuantity
+                                            ),
+                                      startDate: joinDateTime(
+                                        formData.startDate,
+                                        formData.startTime
                                       ),
-                                      endDate:
-                                        formData.endDate === ""
-                                          ? null
-                                          : formData.endDate,
-                                      name: formData.name,
-                                      startDate:
-                                        formData.startDate === ""
-                                          ? null
-                                          : formData.startDate
+                                      type:
+                                        formData.discountType.toString() ===
+                                        "SHIPPING"
+                                          ? VoucherTypeEnum.SHIPPING
+                                          : formData.type,
+                                      usageLimit: parseInt(
+                                        formData.usageLimit,
+                                        10
+                                      )
                                     }
                                   }
                                 })
@@ -401,13 +426,13 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                                   onFetch={searchCategories}
                                   loading={searchCategoriesOpts.loading}
                                   onClose={closeModal}
-                                  onSubmit={formData =>
+                                  onSubmit={categories =>
                                     voucherCataloguesAdd({
                                       variables: {
                                         ...paginationState,
                                         id,
                                         input: {
-                                          categories: formData.categories.map(
+                                          categories: categories.map(
                                             product => product.id
                                           )
                                         }
@@ -438,13 +463,13 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                                   onFetch={searchCollections}
                                   loading={searchCollectionsOpts.loading}
                                   onClose={closeModal}
-                                  onSubmit={formData =>
+                                  onSubmit={collections =>
                                     voucherCataloguesAdd({
                                       variables: {
                                         ...paginationState,
                                         id,
                                         input: {
-                                          collections: formData.collections.map(
+                                          collections: collections.map(
                                             product => product.id
                                           )
                                         }
@@ -490,13 +515,13 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                                   onFetch={searchProducts}
                                   loading={searchProductsOpts.loading}
                                   onClose={closeModal}
-                                  onSubmit={formData =>
+                                  onSubmit={products =>
                                     voucherCataloguesAdd({
                                       variables: {
                                         ...paginationState,
                                         id,
                                         input: {
-                                          products: formData.products.map(
+                                          products: products.map(
                                             product => product.id
                                           )
                                         }
@@ -597,10 +622,10 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                               <DialogContentText
                                 dangerouslySetInnerHTML={{
                                   __html: i18n.t(
-                                    "Are you sure you want to remove <strong>{{ voucherName }}</strong>?",
+                                    "Are you sure you want to remove <strong>{{ voucherCode }}</strong>?",
                                     {
-                                      voucherName: maybe(
-                                        () => data.voucher.name,
+                                      voucherCode: maybe(
+                                        () => data.voucher.code,
                                         "..."
                                       )
                                     }

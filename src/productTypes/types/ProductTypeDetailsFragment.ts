@@ -2,17 +2,14 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { TaxRateType } from "./../../types/globalTypes";
-
 // ====================================================
 // GraphQL fragment: ProductTypeDetailsFragment
 // ====================================================
 
-export interface ProductTypeDetailsFragment_productAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
+export interface ProductTypeDetailsFragment_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
 }
 
 export interface ProductTypeDetailsFragment_productAttributes {
@@ -20,14 +17,9 @@ export interface ProductTypeDetailsFragment_productAttributes {
   id: string;
   name: string | null;
   slug: string | null;
-  values: (ProductTypeDetailsFragment_productAttributes_values | null)[] | null;
-}
-
-export interface ProductTypeDetailsFragment_variantAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
+  visibleInStorefront: boolean;
+  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
 }
 
 export interface ProductTypeDetailsFragment_variantAttributes {
@@ -35,7 +27,9 @@ export interface ProductTypeDetailsFragment_variantAttributes {
   id: string;
   name: string | null;
   slug: string | null;
-  values: (ProductTypeDetailsFragment_variantAttributes_values | null)[] | null;
+  visibleInStorefront: boolean;
+  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
 }
 
 export interface ProductTypeDetailsFragment_weight {
@@ -50,7 +44,7 @@ export interface ProductTypeDetailsFragment {
   name: string;
   hasVariants: boolean;
   isShippingRequired: boolean;
-  taxRate: TaxRateType | null;
+  taxType: ProductTypeDetailsFragment_taxType | null;
   productAttributes: (ProductTypeDetailsFragment_productAttributes | null)[] | null;
   variantAttributes: (ProductTypeDetailsFragment_variantAttributes | null)[] | null;
   weight: ProductTypeDetailsFragment_weight | null;

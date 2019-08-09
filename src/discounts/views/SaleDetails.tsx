@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import * as React from "react";
+import React from "react";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
@@ -339,13 +339,13 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                                   onFetch={searchProducts}
                                   loading={searchProductsOpts.loading}
                                   onClose={closeModal}
-                                  onSubmit={formData =>
+                                  onSubmit={products =>
                                     saleCataloguesAdd({
                                       variables: {
                                         ...paginationState,
                                         id,
                                         input: {
-                                          products: formData.products.map(
+                                          products: products.map(
                                             product => product.id
                                           )
                                         }
@@ -383,13 +383,13 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                                   onFetch={searchCategories}
                                   loading={searchCategoriesOpts.loading}
                                   onClose={closeModal}
-                                  onSubmit={formData =>
+                                  onSubmit={categories =>
                                     saleCataloguesAdd({
                                       variables: {
                                         ...paginationState,
                                         id,
                                         input: {
-                                          categories: formData.categories.map(
+                                          categories: categories.map(
                                             product => product.id
                                           )
                                         }
@@ -420,13 +420,13 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                                   onFetch={searchCollections}
                                   loading={searchCollectionsOpts.loading}
                                   onClose={closeModal}
-                                  onSubmit={formData =>
+                                  onSubmit={collections =>
                                     saleCataloguesAdd({
                                       variables: {
                                         ...paginationState,
                                         id,
                                         input: {
-                                          collections: formData.collections.map(
+                                          collections: collections.map(
                                             product => product.id
                                           )
                                         }

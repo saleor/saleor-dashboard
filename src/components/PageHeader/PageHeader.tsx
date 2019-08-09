@@ -5,13 +5,16 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import * as React from "react";
+import React from "react";
 
 import ExtendedPageHeader from "../ExtendedPageHeader";
 import Skeleton from "../Skeleton";
 
 const styles = (theme: Theme) =>
   createStyles({
+    root: {
+      display: "flex"
+    },
     title: {
       flex: 1,
       fontSize: 24,
@@ -35,7 +38,7 @@ const PageHeader = withStyles(styles)(
         </Typography>
       }
     >
-      {children}
+      <div className={classes.root}>{children}</div>
     </ExtendedPageHeader>
   )
 );

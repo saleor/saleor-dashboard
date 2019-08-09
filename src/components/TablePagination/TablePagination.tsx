@@ -9,8 +9,11 @@ import {
 } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import Toolbar from "@material-ui/core/Toolbar";
-import * as React from "react";
+import React from "react";
 
+import RowNumberSelect from "@saleor/components/RowNumberSelect";
+import { maybe } from "@saleor/misc";
+import { ListSettings } from "../../types";
 import TablePaginationActions from "./TablePaginationActions";
 
 const styles = (theme: Theme) =>
@@ -50,6 +53,7 @@ const styles = (theme: Theme) =>
     toolbar: {
       height: 56,
       minHeight: 56,
+      paddingLeft: 2,
       paddingRight: 2
     }
   });
@@ -59,11 +63,13 @@ interface TablePaginationProps extends WithStyles<typeof styles> {
   backIconButtonProps?: Partial<IconButtonProps>;
   colSpan: number;
   component?: string | typeof TableCell;
+  settings?: ListSettings;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   nextIconButtonProps?: Partial<IconButtonProps>;
   onNextPage(event);
   onPreviousPage(event);
+  onUpdateListSettings?(key: keyof ListSettings, value: any): void;
 }
 
 const TablePagination = withStyles(styles, { name: "TablePagination" })(
@@ -73,11 +79,13 @@ const TablePagination = withStyles(styles, { name: "TablePagination" })(
     classes,
     colSpan: colSpanProp,
     component: Component,
+    settings,
     hasNextPage,
     hasPreviousPage,
     nextIconButtonProps,
     onNextPage,
     onPreviousPage,
+    onUpdateListSettings,
     ...other
   }: TablePaginationProps) => {
     let colSpan;
@@ -89,7 +97,15 @@ const TablePagination = withStyles(styles, { name: "TablePagination" })(
     return (
       <Component className={classes.root} colSpan={colSpan} {...other}>
         <Toolbar className={classes.toolbar}>
-          <div className={classes.spacer} />
+          <div className={classes.spacer}>
+            {maybe(() => settings.rowNumber) && (
+              <RowNumberSelect
+                choices={[20, 30, 50, 100]}
+                settings={settings}
+                onChange={onUpdateListSettings}
+              />
+            )}
+          </div>
           <Actions
             backIconButtonProps={backIconButtonProps}
             hasNextPage={hasNextPage}

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -9,14 +9,16 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import i18n from "../../../i18n";
-import { maybe } from "../../../misc";
+import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import i18n from "@saleor/i18n";
+import { maybe } from "@saleor/misc";
+import { ListActions, ReorderEvent, UserError } from "@saleor/types";
+import { AttributeTypeEnum, WeightUnitsEnum } from "@saleor/types/globalTypes";
 import {
-  AttributeTypeEnum,
-  TaxRateType,
-  WeightUnitsEnum
-} from "../../../types/globalTypes";
-import { ProductTypeDetails_productType } from "../../types/ProductTypeDetails";
+  ProductTypeDetails_productType,
+  ProductTypeDetails_taxTypes
+} from "../../types/ProductTypeDetails";
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
@@ -31,28 +33,41 @@ export interface ProductTypeForm {
   name: string;
   hasVariants: boolean;
   isShippingRequired: boolean;
-  taxRate: TaxRateType;
+  taxType: string;
   productAttributes: ChoiceType[];
   variantAttributes: ChoiceType[];
   weight: number;
 }
 
 export interface ProductTypeDetailsPageProps {
-  errors: Array<{
-    field: string;
-    message: string;
-  }>;
+  errors: UserError[];
   productType: ProductTypeDetails_productType;
   defaultWeightUnit: WeightUnitsEnum;
   disabled: boolean;
   pageTitle: string;
+  productAttributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
+  taxTypes: ProductTypeDetails_taxTypes[];
+  variantAttributeList: ListActions;
   onAttributeAdd: (type: AttributeTypeEnum) => void;
-  onAttributeDelete: (id: string, event: React.MouseEvent<any>) => void;
-  onAttributeUpdate: (id: string) => void;
+  onAttributeClick: (id: string) => void;
+  onAttributeReorder: (event: ReorderEvent, type: AttributeTypeEnum) => void;
+  onAttributeUnassign: (id: string) => void;
   onBack: () => void;
   onDelete: () => void;
   onSubmit: (data: ProductTypeForm) => void;
+}
+
+function handleTaxTypeChange(
+  event: ChangeEvent,
+  taxTypes: ProductTypeDetails_taxTypes[],
+  formChange: FormChange,
+  displayChange: (name: string) => void
+) {
+  formChange(event);
+  displayChange(
+    taxTypes.find(taxType => taxType.taxCode === event.target.value).description
+  );
 }
 
 const ProductTypeDetailsPage: React.StatelessComponent<
@@ -63,14 +78,21 @@ const ProductTypeDetailsPage: React.StatelessComponent<
   errors,
   pageTitle,
   productType,
+  productAttributeList,
   saveButtonBarState,
+  taxTypes,
+  variantAttributeList,
   onAttributeAdd,
-  onAttributeDelete,
-  onAttributeUpdate,
+  onAttributeUnassign,
+  onAttributeReorder,
+  onAttributeClick,
   onBack,
   onDelete,
   onSubmit
 }) => {
+  const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps(
+    maybe(() => productType.taxType.description)
+  );
   const formInitialData: ProductTypeForm = {
     hasVariants:
       maybe(() => productType.hasVariants) !== undefined
@@ -88,10 +110,7 @@ const ProductTypeDetailsPage: React.StatelessComponent<
             value: attribute.id
           }))
         : [],
-    taxRate:
-      maybe(() => productType.taxRate) !== undefined
-        ? productType.taxRate
-        : null,
+    taxType: maybe(() => productType.taxType.taxCode, ""),
     variantAttributes:
       maybe(() => productType.variantAttributes) !== undefined
         ? productType.variantAttributes.map(attribute => ({
@@ -108,7 +127,7 @@ const ProductTypeDetailsPage: React.StatelessComponent<
       onSubmit={onSubmit}
       confirmLeave
     >
-      {({ change, data, hasChanged, submit }) => (
+      {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>{i18n.t("Product Types")}</AppHeader>
           <PageHeader title={pageTitle} />
@@ -117,15 +136,36 @@ const ProductTypeDetailsPage: React.StatelessComponent<
               <ProductTypeDetails
                 data={data}
                 disabled={disabled}
+                errors={formErrors}
                 onChange={change}
+              />
+              <CardSpacer />
+              <ProductTypeTaxes
+                disabled={disabled}
+                data={data}
+                taxTypes={taxTypes}
+                taxTypeDisplayName={taxTypeDisplayName}
+                onChange={event =>
+                  handleTaxTypeChange(
+                    event,
+                    taxTypes,
+                    change,
+                    setTaxTypeDisplayName
+                  )
+                }
               />
               <CardSpacer />
               <ProductTypeAttributes
                 attributes={maybe(() => productType.productAttributes)}
+                disabled={disabled}
                 type={AttributeTypeEnum.PRODUCT}
-                onAttributeAdd={onAttributeAdd}
-                onAttributeDelete={onAttributeDelete}
-                onAttributeUpdate={onAttributeUpdate}
+                onAttributeAssign={onAttributeAdd}
+                onAttributeClick={onAttributeClick}
+                onAttributeReorder={(event: ReorderEvent) =>
+                  onAttributeReorder(event, AttributeTypeEnum.PRODUCT)
+                }
+                onAttributeUnassign={onAttributeUnassign}
+                {...productAttributeList}
               />
               <CardSpacer />
               <ControlledCheckbox
@@ -140,10 +180,15 @@ const ProductTypeDetailsPage: React.StatelessComponent<
                   <CardSpacer />
                   <ProductTypeAttributes
                     attributes={maybe(() => productType.variantAttributes)}
+                    disabled={disabled}
                     type={AttributeTypeEnum.VARIANT}
-                    onAttributeAdd={onAttributeAdd}
-                    onAttributeDelete={onAttributeDelete}
-                    onAttributeUpdate={onAttributeUpdate}
+                    onAttributeAssign={onAttributeAdd}
+                    onAttributeClick={onAttributeClick}
+                    onAttributeReorder={(event: ReorderEvent) =>
+                      onAttributeReorder(event, AttributeTypeEnum.VARIANT)
+                    }
+                    onAttributeUnassign={onAttributeUnassign}
+                    {...variantAttributeList}
                   />
                 </>
               )}
@@ -153,12 +198,6 @@ const ProductTypeDetailsPage: React.StatelessComponent<
                 disabled={disabled}
                 data={data}
                 defaultWeightUnit={defaultWeightUnit}
-                onChange={change}
-              />
-              <CardSpacer />
-              <ProductTypeTaxes
-                disabled={disabled}
-                data={data}
                 onChange={change}
               />
             </div>

@@ -1,5 +1,5 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
-import * as React from "react";
+import React from "react";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -44,6 +44,7 @@ import {
 } from "./successHandlers";
 import {
   getInitialDisplayValue,
+  getMenuItemCreateInputData,
   getMenuItemInputData,
   getMoves,
   getRemoveIds
@@ -262,10 +263,10 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                                         data: MenuItemDialogFormData
                                       ) => {
                                         const variables: MenuItemCreateVariables = {
-                                          input: {
-                                            menu: id,
-                                            ...getMenuItemInputData(data)
-                                          }
+                                          input: getMenuItemCreateInputData(
+                                            id,
+                                            data
+                                          )
                                         };
 
                                         menuItemCreate({ variables });
@@ -286,6 +287,12 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                                           open={params.action === "add-item"}
                                           categories={categories}
                                           collections={collections}
+                                          errors={maybe(
+                                            () =>
+                                              menuItemCreateOpts.data
+                                                .menuItemCreate.errors,
+                                            []
+                                          )}
                                           pages={pages}
                                           loading={
                                             categorySearch.result.loading ||
@@ -355,6 +362,12 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                                           open={params.action === "edit-item"}
                                           categories={categories}
                                           collections={collections}
+                                          errors={maybe(
+                                            () =>
+                                              menuItemUpdateOpts.data
+                                                .menuItemUpdate.errors,
+                                            []
+                                          )}
                                           pages={pages}
                                           initial={initialFormData}
                                           initialDisplayValue={getInitialDisplayValue(

@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
+import React from "react";
 
 import OrderCustomerEditDialog from "../../../orders/components/OrderCustomerEditDialog";
 import { clients as users } from "../../../orders/fixtures";
@@ -17,10 +17,8 @@ storiesOf("Orders / OrderCustomerEditDialog", module)
       onClose={undefined}
       onConfirm={undefined}
       open={true}
-      user={{
-        label: user.email,
-        value: user.id
-      }}
+      user={user.id}
+      userDisplayValue={user.email}
       users={users}
     />
   ));

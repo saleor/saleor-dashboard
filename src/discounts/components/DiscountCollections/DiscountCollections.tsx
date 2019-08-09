@@ -13,7 +13,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import * as React from "react";
+import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -50,6 +50,9 @@ const styles = (theme: Theme) =>
       width: "60%"
     }
   });
+
+const numberOfColumns = 4;
+
 const DiscountCollections = withStyles(styles, {
   name: "DiscountCollections"
 })(
@@ -71,9 +74,7 @@ const DiscountCollections = withStyles(styles, {
   }: DiscountCollectionsProps & WithStyles<typeof styles>) => (
     <Card>
       <CardTitle
-        title={i18n.t("Collections assigned to {{ saleName }}", {
-          saleName: maybe(() => sale.name)
-        })}
+        title={i18n.t("Eligible Collections")}
         toolbar={
           <Button color="primary" onClick={onCollectionAssign}>
             {i18n.t("Assign collections")}
@@ -82,6 +83,7 @@ const DiscountCollections = withStyles(styles, {
       />
       <Table>
         <TableHead
+          colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
           items={maybe(() => sale.collections.edges.map(edge => edge.node))}
@@ -94,11 +96,12 @@ const DiscountCollections = withStyles(styles, {
           <TableCell className={classes.textRight}>
             {i18n.t("Products")}
           </TableCell>
+          <TableCell />
         </TableHead>
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={4}
+              colSpan={numberOfColumns}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
               hasPreviousPage={
@@ -125,6 +128,7 @@ const DiscountCollections = withStyles(styles, {
                     <Checkbox
                       checked={isSelected}
                       disabled={disabled}
+                      disableClickPropagation
                       onChange={() => toggle(collection.id)}
                     />
                   </TableCell>
@@ -156,7 +160,7 @@ const DiscountCollections = withStyles(styles, {
             },
             () => (
               <TableRow>
-                <TableCell colSpan={4}>
+                <TableCell colSpan={numberOfColumns}>
                   {i18n.t("No collections found")}
                 </TableCell>
               </TableRow>

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductTypeInput, TaxRateType } from "./../../types/globalTypes";
+import { ProductTypeInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductTypeUpdate
@@ -14,11 +14,10 @@ export interface ProductTypeUpdate_productTypeUpdate_errors {
   message: string | null;
 }
 
-export interface ProductTypeUpdate_productTypeUpdate_productType_productAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
+export interface ProductTypeUpdate_productTypeUpdate_productType_taxType {
+  __typename: "TaxType";
+  description: string | null;
+  taxCode: string | null;
 }
 
 export interface ProductTypeUpdate_productTypeUpdate_productType_productAttributes {
@@ -26,14 +25,9 @@ export interface ProductTypeUpdate_productTypeUpdate_productType_productAttribut
   id: string;
   name: string | null;
   slug: string | null;
-  values: (ProductTypeUpdate_productTypeUpdate_productType_productAttributes_values | null)[] | null;
-}
-
-export interface ProductTypeUpdate_productTypeUpdate_productType_variantAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
+  visibleInStorefront: boolean;
+  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
 }
 
 export interface ProductTypeUpdate_productTypeUpdate_productType_variantAttributes {
@@ -41,7 +35,9 @@ export interface ProductTypeUpdate_productTypeUpdate_productType_variantAttribut
   id: string;
   name: string | null;
   slug: string | null;
-  values: (ProductTypeUpdate_productTypeUpdate_productType_variantAttributes_values | null)[] | null;
+  visibleInStorefront: boolean;
+  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
 }
 
 export interface ProductTypeUpdate_productTypeUpdate_productType_weight {
@@ -56,7 +52,7 @@ export interface ProductTypeUpdate_productTypeUpdate_productType {
   name: string;
   hasVariants: boolean;
   isShippingRequired: boolean;
-  taxRate: TaxRateType | null;
+  taxType: ProductTypeUpdate_productTypeUpdate_productType_taxType | null;
   productAttributes: (ProductTypeUpdate_productTypeUpdate_productType_productAttributes | null)[] | null;
   variantAttributes: (ProductTypeUpdate_productTypeUpdate_productType_variantAttributes | null)[] | null;
   weight: ProductTypeUpdate_productTypeUpdate_productType_weight | null;
