@@ -3,9 +3,7 @@ language: node_js
 sudo: false
 
 node_js:
-  - "10"
   - "11.15"
-  - "latest"
 
 branches:
   only:
@@ -14,9 +12,12 @@ branches:
 
 script:
   - npm run build
-  - npm test
+  - npm test -- --ci --coverage
 
 env:
   global:
     - APP_MOUNT_URI="/"
     - API_URI="/graphql/"
+
+after_success:
+  - codecov

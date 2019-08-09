@@ -24,6 +24,8 @@ const environmentPlugin = new webpack.EnvironmentPlugin([
   "API_URI"
 ]);
 
+const dashboardBuildPath = "build/dashboard/";
+
 module.exports = (env, argv) => {
   const devMode = argv.mode !== "production";
 
@@ -33,7 +35,7 @@ module.exports = (env, argv) => {
   if (!devMode) {
     const publicPath = process.env.STATIC_URL || "/static/";
     output = {
-      path: resolve("build/dashboard/"),
+      path: resolve(dashboardBuildPath),
       filename: "[name].[chunkhash].js",
       chunkFilename: "[name].[chunkhash].js",
       publicPath
@@ -41,7 +43,7 @@ module.exports = (env, argv) => {
     fileLoaderPath = "file-loader?name=[name].[hash].[ext]";
   } else {
     output = {
-      path: resolve("build/dashboard/"),
+      path: resolve(dashboardBuildPath),
       filename: "[name].js",
       chunkFilename: "[name].js",
       publicPath: "/"
@@ -51,7 +53,7 @@ module.exports = (env, argv) => {
 
   return {
     devServer: {
-      contentBase: path.join(__dirname, "build/dashboard/"),
+      contentBase: path.join(__dirname, dashboardBuildPath),
       compress: true,
       historyApiFallback: true,
       hot: true,
