@@ -6,7 +6,7 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import * as React from "react";
+import React from "react";
 import SVG from "react-inlinesvg";
 
 import * as notFoundImage from "@assets/images/not-found-404.svg";

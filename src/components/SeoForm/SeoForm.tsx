@@ -10,7 +10,7 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import * as classNames from "classnames";
-import * as React from "react";
+import React from "react";
 
 import i18n from "../../i18n";
 import CardTitle from "../CardTitle";

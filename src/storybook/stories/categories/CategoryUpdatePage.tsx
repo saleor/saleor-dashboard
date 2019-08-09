@@ -1,7 +1,7 @@
 import * as placeholderImage from "@assets/images/placeholder255x255.png";
 import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
+import React from "react";
 
 import { category as categoryFixture } from "../../../categories/fixtures";
 

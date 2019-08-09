@@ -1,5 +1,5 @@
 import * as moment from "moment-timezone";
-import * as React from "react";
+import React from "react";
 
 import { DateContext } from "@saleor/components/Date/DateContext";
 import { FieldType, IFilter } from "@saleor/components/Filter";

@@ -5,7 +5,7 @@ import { BatchHttpLink } from "apollo-link-batch-http";
 import { setContext } from "apollo-link-context";
 import { ErrorResponse, onError } from "apollo-link-error";
 import { createUploadLink } from "apollo-upload-client";
-import * as React from "react";
+import React from "react";
 import { ApolloProvider } from "react-apollo";
 import { render } from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";

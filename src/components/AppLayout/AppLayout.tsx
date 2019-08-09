@@ -13,7 +13,7 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import * as classNames from "classnames";
-import * as React from "react";
+import React from "react";
 import SVG from "react-inlinesvg";
 import { RouteComponentProps, withRouter } from "react-router";
 

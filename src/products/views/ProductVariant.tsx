@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import * as placeholderImg from "@assets/images/placeholder255x255.png";
 import { WindowTitle } from "@saleor/components/WindowTitle";

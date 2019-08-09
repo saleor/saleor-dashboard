@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import * as classNames from "classnames";
-import * as React from "react";
+import React from "react";
 
 const styles = (theme: Theme) =>
   createStyles({

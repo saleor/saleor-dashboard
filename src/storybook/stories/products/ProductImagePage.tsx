@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
+import React from "react";
 
 import * as placeholder from "@assets/images/placeholder1080x1080.png";
 import ProductImagePage from "../../../products/components/ProductImagePage";

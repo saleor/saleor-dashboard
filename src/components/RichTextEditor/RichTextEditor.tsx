@@ -14,7 +14,7 @@ import {
   ENTITY_TYPE,
   INLINE_STYLE
 } from "draftail";
-import * as React from "react";
+import React from "react";
 
 import BoldIcon from "../../icons/BoldIcon";
 import HeaderOne from "../../icons/HeaderOne";

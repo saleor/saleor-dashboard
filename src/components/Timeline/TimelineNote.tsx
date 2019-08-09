@@ -11,7 +11,7 @@ import {
 import Typography from "@material-ui/core/Typography";
 import PersonIcon from "@material-ui/icons/Person";
 import * as CRC from "crc-32";
-import * as React from "react";
+import React from "react";
 
 import { DateTime } from "../Date";
 import Hr from "../Hr";

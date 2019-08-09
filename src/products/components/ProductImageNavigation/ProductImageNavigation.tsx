@@ -7,7 +7,7 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import * as classNames from "classnames";
-import * as React from "react";
+import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";

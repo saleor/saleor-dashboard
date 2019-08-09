@@ -9,7 +9,7 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import * as moment from "moment-timezone";
-import * as React from "react";
+import React from "react";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";

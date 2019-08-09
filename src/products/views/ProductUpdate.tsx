@@ -1,7 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import * as React from "react";
+import React from "react";
 import { arrayMove } from "react-sortable-hoc";
 
 import * as placeholderImg from "@assets/images/placeholder255x255.png";
