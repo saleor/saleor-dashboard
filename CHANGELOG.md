@@ -5,3 +5,4 @@ All notable, unreleased changes to this project will be documented in this file.
 ## [Unreleased]
 
 - Add changelog and github issue/PR templates - #97 by @dominik-zeglen
+- Update dependencies to suppress storybook build errors - #98 by @dominik-zeglen

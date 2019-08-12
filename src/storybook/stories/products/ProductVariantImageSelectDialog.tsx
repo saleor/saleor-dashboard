@@ -1,12 +1,12 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import placeholderImage from "@assets/images/placeholder255x255.png";
 import ProductVariantImageSelectDialog from "../../../products/components/ProductVariantImageSelectDialog";
 import {
   variantImages as variantImagesFixture,
   variantProductImages as variantProductImagesFixture
 } from "../../../products/fixtures";
-import placeholderImage from "../@assets/images/placeholder255x255.png";
 
 const variantImages = variantImagesFixture(placeholderImage);
 const variantProductImages = variantProductImagesFixture(placeholderImage);

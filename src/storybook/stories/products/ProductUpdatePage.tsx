@@ -1,6 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import placeholderImage from "@assets/images/placeholder255x255.png";
 import { collections } from "@saleor/collections/fixtures";
 import { listActionsProps } from "@saleor/fixtures";
 import ProductUpdatePage, {
@@ -8,7 +9,6 @@ import ProductUpdatePage, {
 } from "@saleor/products/components/ProductUpdatePage";
 import { product as productFixture } from "@saleor/products/fixtures";
 import Decorator from "../../Decorator";
-import placeholderImage from "../@assets/images/placeholder255x255.png";
 
 const product = productFixture(placeholderImage);
 

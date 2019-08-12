@@ -2,12 +2,12 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import placeholderImage from "@assets/images/placeholder60x60.png";
 import OrderFulfillmentDialog, {
   OrderFulfillmentDialogProps
 } from "../../../orders/components/OrderFulfillmentDialog";
 import { order as orderFixture } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
-import placeholderImage from "../@assets/images/placeholder60x60.png";
 
 const order = orderFixture(placeholderImage);
 

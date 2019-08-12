@@ -2,6 +2,7 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import placeholderImage from "@assets/images/placeholder60x60.png";
 import OrderDetailsPage, {
   OrderDetailsPageProps
 } from "../../../orders/components/OrderDetailsPage";
@@ -12,7 +13,6 @@ import {
   PaymentChargeStatusEnum
 } from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
-import placeholderImage from "../@assets/images/placeholder60x60.png";
 
 const order = orderFixture(placeholderImage);
 
