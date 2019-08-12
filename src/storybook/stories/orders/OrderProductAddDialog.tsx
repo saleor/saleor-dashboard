@@ -1,10 +1,10 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import placeholderImage from "@assets/images/placeholder60x60.png";
 import OrderProductAddDialog from "../../../orders/components/OrderProductAddDialog";
 import { orderLineSearch } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
-import placeholderImage from "../@assets/images/placeholder60x60.png";
 
 storiesOf("Orders / OrderProductAddDialog", module)
   .addDecorator(Decorator)

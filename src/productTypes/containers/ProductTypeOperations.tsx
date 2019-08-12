@@ -1,5 +1,5 @@
 import React from "react";
-import { MutationFn } from "react-apollo";
+import { MutationFunction } from "react-apollo";
 
 import { AttributeTypeEnum, ReorderInput } from "@saleor/types/globalTypes";
 import { getMutationProviderData } from "../../misc";
@@ -119,7 +119,7 @@ const ProductTypeOperations: React.StatelessComponent<
                         reorderAttributeMutation,
                         reorderAttributeMutationResult
                       ) => {
-                        const reorderAttributeMutationFn: MutationFn<
+                        const reorderAttributeMutationFn: MutationFunction<
                           ProductTypeAttributeReorder,
                           ProductTypeAttributeReorderVariables
                         > = opts => {

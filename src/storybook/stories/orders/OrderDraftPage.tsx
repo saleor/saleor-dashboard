@@ -2,12 +2,12 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import placeholderImage from "@assets/images/placeholder60x60.png";
 import OrderDraftPage, {
   OrderDraftPageProps
 } from "../../../orders/components/OrderDraftPage";
 import { clients, countries, draftOrder } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
-import placeholderImage from "../@assets/images/placeholder60x60.png";
 
 const order = draftOrder(placeholderImage);
 

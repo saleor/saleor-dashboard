@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import { MutationFn, MutationResult } from "react-apollo";
+import { MutationFunction, MutationResult } from "react-apollo";
 import urlJoin from "url-join";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
@@ -189,7 +189,7 @@ export function getMutationState(
 }
 
 export function getMutationProviderData<TData, TVariables>(
-  mutateFn: MutationFn<TData, TVariables>,
+  mutateFn: MutationFunction<TData, TVariables>,
   opts: MutationResult<TData>
 ): PartialMutationProviderOutput<TData, TVariables> {
   return {
