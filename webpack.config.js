@@ -62,7 +62,7 @@ module.exports = (env, argv) => {
     entry: {
       dashboard: "./src/index.tsx"
     },
-    output: output,
+    output,
     module: {
       rules: [
         {
@@ -85,7 +85,8 @@ module.exports = (env, argv) => {
           include: [
             resolve("node_modules"),
             resolve("assets/fonts"),
-            resolve("assets/images")
+            resolve("assets/images"),
+            resolve("assets/favicons")
           ]
         }
       ]
