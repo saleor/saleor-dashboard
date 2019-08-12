@@ -125,9 +125,8 @@ export interface ReorderEvent {
 }
 export type ReorderAction = (event: ReorderEvent) => void;
 
-export interface FetchMoreProps<TData = string> {
+export interface FetchMoreProps {
   loading: boolean;
   hasMore: boolean;
-  onFetch: (value: TData) => void;
   onFetchMore: () => void;
 }
