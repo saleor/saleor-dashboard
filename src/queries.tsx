@@ -1,9 +1,9 @@
+import { ApolloQueryResult } from "apollo-client";
 import { DocumentNode } from "graphql";
 import gql from "graphql-tag";
 import React from "react";
 import { Query, QueryResult } from "react-apollo";
 
-import { ApolloQueryResult } from "apollo-client";
 import AppProgress from "./components/AppProgress";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import useNavigator from "./hooks/useNavigator";
@@ -62,98 +62,82 @@ class QueryProgress extends React.Component<QueryProgressProps, {}> {
   }
 }
 
+// For some reason Query returns () => Element instead of () => ReactNode
 export function TypedQuery<TData, TVariables>(
   query: DocumentNode
 ): React.FC<TypedQueryInnerProps<TData, TVariables>> {
-  class StrictTypedQuery extends Query<TData, TVariables> {}
-  return props => {
+  return ({ children, displayLoader, skip, variables, require }) => {
     const navigate = useNavigator();
     const pushMessage = useNotifier();
 
     return (
       <AppProgress>
-        {({ setProgressState }) => {
-          // Obviously, this is workaround to the problem described here:
-          // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/32588
-          const {
-            children,
-            displayLoader,
-            skip,
-            variables,
-            require
-          } = props as JSX.LibraryManagedAttributes<
-            typeof StrictTypedQuery,
-            typeof props
-          >;
-          return (
-            <StrictTypedQuery
-              fetchPolicy="cache-and-network"
-              query={query}
-              variables={variables}
-              skip={skip}
-              context={{ useBatching: true }}
-            >
-              {queryData => {
-                if (queryData.error) {
-                  const msg = i18n.t("Something went wrong: {{ message }}", {
-                    message: queryData.error.message
-                  });
-                  pushMessage({ text: msg });
-                }
-
-                const loadMore = (
-                  mergeFunc: (
-                    previousResults: TData,
-                    fetchMoreResult: TData
-                  ) => TData,
-                  extraVariables: RequireAtLeastOne<TVariables>
-                ) =>
-                  queryData.fetchMore({
-                    query,
-                    updateQuery: (previousResults, { fetchMoreResult }) => {
-                      if (!fetchMoreResult) {
-                        return previousResults;
-                      }
-                      return mergeFunc(previousResults, fetchMoreResult);
-                    },
-                    variables: { ...variables, ...extraVariables }
-                  });
-
-                let childrenOrNotFound = children({
-                  ...queryData,
-                  loadMore
+        {({ setProgressState }) => (
+          <Query
+            fetchPolicy="cache-and-network"
+            query={query}
+            variables={variables}
+            skip={skip}
+            context={{ useBatching: true }}
+          >
+            {queryData => {
+              if (queryData.error) {
+                const msg = i18n.t("Something went wrong: {{ message }}", {
+                  message: queryData.error.message
                 });
-                if (
-                  !queryData.loading &&
-                  require &&
-                  queryData.data &&
-                  !require.reduce(
-                    (acc, key) => acc && queryData.data[key] !== null,
-                    true
-                  )
-                ) {
-                  childrenOrNotFound = (
-                    <ErrorPage onBack={() => navigate("/")} />
-                  );
-                }
+                pushMessage({ text: msg });
+              }
 
-                if (displayLoader) {
-                  return (
-                    <QueryProgress
-                      loading={queryData.loading}
-                      onCompleted={() => setProgressState(false)}
-                      onLoading={() => setProgressState(true)}
-                    >
-                      {childrenOrNotFound}
-                    </QueryProgress>
-                  );
-                }
+              const loadMore = (
+                mergeFunc: (
+                  previousResults: TData,
+                  fetchMoreResult: TData
+                ) => TData,
+                extraVariables: RequireAtLeastOne<TVariables>
+              ) =>
+                queryData.fetchMore({
+                  query,
+                  updateQuery: (previousResults, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) {
+                      return previousResults;
+                    }
+                    return mergeFunc(previousResults, fetchMoreResult);
+                  },
+                  variables: { ...variables, ...extraVariables }
+                });
 
-                return childrenOrNotFound;
-              }}
-            </StrictTypedQuery>
-          );
-        }}
+              let childrenOrNotFound = children({
+                ...queryData,
+                loadMore
+              });
+              if (
+                !queryData.loading &&
+                require &&
+                queryData.data &&
+                !require.reduce(
+                  (acc, key) => acc && queryData.data[key] !== null,
+                  true
+                )
+              ) {
+                childrenOrNotFound = <ErrorPage onBack={() => navigate("/")} />;
+              }
+
+              if (displayLoader) {
+                return (
+                  <QueryProgress
+                    loading={queryData.loading}
+                    onCompleted={() => setProgressState(false)}
+                    onLoading={() => setProgressState(true)}
+                  >
+                    {childrenOrNotFound}
+                  </QueryProgress>
+                );
+              }
+
+              return <>{childrenOrNotFound}</>;
+            }}
+          </Query>
+        )}
       </AppProgress>
     );
   };

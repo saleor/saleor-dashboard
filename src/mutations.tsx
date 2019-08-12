@@ -1,19 +1,14 @@
-import { ApolloError } from "apollo-client";
+import { ApolloError, MutationUpdaterFn } from "apollo-client";
 import { DocumentNode } from "graphql";
 import React from "react";
-import {
-  Mutation,
-  MutationFn,
-  MutationResult,
-  MutationUpdaterFn
-} from "react-apollo";
+import { Mutation, MutationFunction, MutationResult } from "react-apollo";
 
 import useNotifier from "./hooks/useNotifier";
 import i18n from "./i18n";
 
 export interface TypedMutationInnerProps<TData, TVariables> {
   children: (
-    mutateFn: MutationFn<TData, TVariables>,
+    mutateFn: MutationFunction<TData, TVariables>,
     result: MutationResult<TData>
   ) => React.ReactNode;
   onCompleted?: (data: TData) => void;
@@ -21,26 +16,17 @@ export interface TypedMutationInnerProps<TData, TVariables> {
   variables?: TVariables;
 }
 
+// For some reason Mutation returns () => Element instead of () => ReactNode
 export function TypedMutation<TData, TVariables>(
   mutation: DocumentNode,
   update?: MutationUpdaterFn<TData>
 ) {
-  class StrictTypedMutation extends Mutation<TData, TVariables> {}
   return (props: TypedMutationInnerProps<TData, TVariables>) => {
     const notify = useNotifier();
-    // Obviously, this is workaround to the problem described here:
-    // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/32588
-    const {
-      children,
-      onCompleted,
-      onError,
-      variables
-    } = props as JSX.LibraryManagedAttributes<
-      typeof StrictTypedMutation,
-      typeof props
-    >;
+    const { children, onCompleted, onError, variables } = props;
+
     return (
-      <StrictTypedMutation
+      <Mutation
         mutation={mutation}
         onCompleted={onCompleted}
         onError={err => {
@@ -55,8 +41,8 @@ export function TypedMutation<TData, TVariables>(
         variables={variables}
         update={update}
       >
-        {children}
-      </StrictTypedMutation>
+        {(mutateFn, result) => <>{children(mutateFn, result)}</>}
+      </Mutation>
     );
   };
 }
