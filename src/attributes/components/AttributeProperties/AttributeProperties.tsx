@@ -105,6 +105,21 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
         }
         onChange={onChange}
       />
+      <FormSpacer />
+      <ControlledSwitch
+        name={"availableInGrid" as keyof AttributePageFormData}
+        checked={data.availableInGrid}
+        disabled={disabled}
+        label={i18n.t("Add to Column Options")}
+        secondLabel={
+          <Typography variant="caption">
+            {i18n.t(
+              "If enable this attribute can be used as a column in product table."
+            )}
+          </Typography>
+        }
+        onChange={onChange}
+      />
     </CardContent>
   </Card>
 );

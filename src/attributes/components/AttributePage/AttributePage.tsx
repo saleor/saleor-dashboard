@@ -37,6 +37,7 @@ export interface AttributePageProps {
 }
 
 export interface AttributePageFormData {
+  availableInGrid: boolean;
   filterableInDashboard: boolean;
   inputType: AttributeInputTypeEnum;
   filterableInStorefront: boolean;
@@ -64,6 +65,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   const initialForm: AttributePageFormData =
     attribute === null
       ? {
+          availableInGrid: true,
           filterableInDashboard: true,
           filterableInStorefront: true,
           inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -74,6 +76,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
           visibleInStorefront: true
         }
       : {
+          availableInGrid: maybe(() => attribute.availableInGrid, true),
           filterableInDashboard: maybe(
             () => attribute.filterableInDashboard,
             true
