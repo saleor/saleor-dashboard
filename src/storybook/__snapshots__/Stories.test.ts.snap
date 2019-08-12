@@ -7058,6 +7058,57 @@ exports[`Storyshots Views / Attributes / Attribute details create 1`] = `
                   </div>
                 </span>
               </label>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <label
+                class="MuiFormControlLabel-root-id"
+              >
+                <span
+                  class="MuiSwitch-root-id"
+                >
+                  <span
+                    class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiSwitch-checked-id"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <span
+                        class="MuiSwitch-icon-id MuiSwitch-iconChecked-id"
+                      />
+                      <input
+                        checked=""
+                        class="MuiPrivateSwitchBase-input-id"
+                        name="availableInGrid"
+                        type="checkbox"
+                      />
+                    </span>
+                  </span>
+                  <span
+                    class="MuiSwitch-bar-id"
+                  />
+                </span>
+                <span
+                  class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                >
+                  <div
+                    class="ControlledSwitch-label-id"
+                  >
+                    <span
+                      class="ControlledSwitch-labelText-id"
+                    >
+                      Add to Column Options
+                    </span>
+                    <div>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-caption-id"
+                      >
+                        If enable this attribute can be used as a column in product table.
+                      </span>
+                    </div>
+                  </div>
+                </span>
+              </label>
             </div>
           </div>
         </div>
@@ -7736,6 +7787,57 @@ exports[`Storyshots Views / Attributes / Attribute details default 1`] = `
                         class="MuiTypography-root-id MuiTypography-caption-id"
                       >
                         If enabled, you’ll be able to use this attribute to filter products in product list.
+                      </span>
+                    </div>
+                  </div>
+                </span>
+              </label>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <label
+                class="MuiFormControlLabel-root-id"
+              >
+                <span
+                  class="MuiSwitch-root-id"
+                >
+                  <span
+                    class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiSwitch-checked-id"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <span
+                        class="MuiSwitch-icon-id MuiSwitch-iconChecked-id"
+                      />
+                      <input
+                        checked=""
+                        class="MuiPrivateSwitchBase-input-id"
+                        name="availableInGrid"
+                        type="checkbox"
+                      />
+                    </span>
+                  </span>
+                  <span
+                    class="MuiSwitch-bar-id"
+                  />
+                </span>
+                <span
+                  class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                >
+                  <div
+                    class="ControlledSwitch-label-id"
+                  >
+                    <span
+                      class="ControlledSwitch-labelText-id"
+                    >
+                      Add to Column Options
+                    </span>
+                    <div>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-caption-id"
+                      >
+                        If enable this attribute can be used as a column in product table.
                       </span>
                     </div>
                   </div>
@@ -8434,6 +8536,57 @@ exports[`Storyshots Views / Attributes / Attribute details form errors 1`] = `
                   </div>
                 </span>
               </label>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <label
+                class="MuiFormControlLabel-root-id"
+              >
+                <span
+                  class="MuiSwitch-root-id"
+                >
+                  <span
+                    class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiSwitch-checked-id"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <span
+                        class="MuiSwitch-icon-id MuiSwitch-iconChecked-id"
+                      />
+                      <input
+                        checked=""
+                        class="MuiPrivateSwitchBase-input-id"
+                        name="availableInGrid"
+                        type="checkbox"
+                      />
+                    </span>
+                  </span>
+                  <span
+                    class="MuiSwitch-bar-id"
+                  />
+                </span>
+                <span
+                  class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                >
+                  <div
+                    class="ControlledSwitch-label-id"
+                  >
+                    <span
+                      class="ControlledSwitch-labelText-id"
+                    >
+                      Add to Column Options
+                    </span>
+                    <div>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-caption-id"
+                      >
+                        If enable this attribute can be used as a column in product table.
+                      </span>
+                    </div>
+                  </div>
+                </span>
+              </label>
             </div>
           </div>
         </div>
@@ -9056,6 +9209,59 @@ exports[`Storyshots Views / Attributes / Attribute details loading 1`] = `
                         class="MuiTypography-root-id MuiTypography-caption-id"
                       >
                         If enabled, you’ll be able to use this attribute to filter products in product list.
+                      </span>
+                    </div>
+                  </div>
+                </span>
+              </label>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <label
+                class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id"
+              >
+                <span
+                  class="MuiSwitch-root-id"
+                >
+                  <span
+                    class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiSwitch-checked-id MuiPrivateSwitchBase-disabled-id MuiSwitch-disabled-id"
+                    tabindex="-1"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <span
+                        class="MuiSwitch-icon-id MuiSwitch-iconChecked-id"
+                      />
+                      <input
+                        checked=""
+                        class="MuiPrivateSwitchBase-input-id"
+                        disabled=""
+                        name="availableInGrid"
+                        type="checkbox"
+                      />
+                    </span>
+                  </span>
+                  <span
+                    class="MuiSwitch-bar-id"
+                  />
+                </span>
+                <span
+                  class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                >
+                  <div
+                    class="ControlledSwitch-label-id"
+                  >
+                    <span
+                      class="ControlledSwitch-labelText-id"
+                    >
+                      Add to Column Options
+                    </span>
+                    <div>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-caption-id"
+                      >
+                        If enable this attribute can be used as a column in product table.
                       </span>
                     </div>
                   </div>
@@ -9744,6 +9950,57 @@ exports[`Storyshots Views / Attributes / Attribute details multiple select input
                   </div>
                 </span>
               </label>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <label
+                class="MuiFormControlLabel-root-id"
+              >
+                <span
+                  class="MuiSwitch-root-id"
+                >
+                  <span
+                    class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiSwitch-checked-id"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <span
+                        class="MuiSwitch-icon-id MuiSwitch-iconChecked-id"
+                      />
+                      <input
+                        checked=""
+                        class="MuiPrivateSwitchBase-input-id"
+                        name="availableInGrid"
+                        type="checkbox"
+                      />
+                    </span>
+                  </span>
+                  <span
+                    class="MuiSwitch-bar-id"
+                  />
+                </span>
+                <span
+                  class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                >
+                  <div
+                    class="ControlledSwitch-label-id"
+                  >
+                    <span
+                      class="ControlledSwitch-labelText-id"
+                    >
+                      Add to Column Options
+                    </span>
+                    <div>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-caption-id"
+                      >
+                        If enable this attribute can be used as a column in product table.
+                      </span>
+                    </div>
+                  </div>
+                </span>
+              </label>
             </div>
           </div>
         </div>
@@ -10350,6 +10607,57 @@ exports[`Storyshots Views / Attributes / Attribute details no values 1`] = `
                         class="MuiTypography-root-id MuiTypography-caption-id"
                       >
                         If enabled, you’ll be able to use this attribute to filter products in product list.
+                      </span>
+                    </div>
+                  </div>
+                </span>
+              </label>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <label
+                class="MuiFormControlLabel-root-id"
+              >
+                <span
+                  class="MuiSwitch-root-id"
+                >
+                  <span
+                    class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiSwitch-checked-id"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <span
+                        class="MuiSwitch-icon-id MuiSwitch-iconChecked-id"
+                      />
+                      <input
+                        checked=""
+                        class="MuiPrivateSwitchBase-input-id"
+                        name="availableInGrid"
+                        type="checkbox"
+                      />
+                    </span>
+                  </span>
+                  <span
+                    class="MuiSwitch-bar-id"
+                  />
+                </span>
+                <span
+                  class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                >
+                  <div
+                    class="ControlledSwitch-label-id"
+                  >
+                    <span
+                      class="ControlledSwitch-labelText-id"
+                    >
+                      Add to Column Options
+                    </span>
+                    <div>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-caption-id"
+                      >
+                        If enable this attribute can be used as a column in product table.
                       </span>
                     </div>
                   </div>
