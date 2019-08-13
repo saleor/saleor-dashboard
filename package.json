@@ -56,6 +56,7 @@
     "react-helmet": "^5.2.1",
     "react-infinite-scroller": "^1.2.4",
     "react-inlinesvg": "^0.8.4",
+    "react-intl": "^3.1.7",
     "react-jss": "^8.6.1",
     "react-moment": "^0.7.9",
     "react-router": "^5.0.1",
