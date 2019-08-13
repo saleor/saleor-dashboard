@@ -33,10 +33,14 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
   const {
     className,
     columns,
+    hasMore,
     initial = false,
+    loading,
     selectedColumns,
+    total,
     onCancel,
     onColumnToggle,
+    onFetchMore,
     onReset,
     onSave
   } = props;
@@ -86,9 +90,13 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
             >
               <ColumnPickerContent
                 columns={columns}
+                hasMore={hasMore}
+                loading={loading}
                 selectedColumns={selectedColumns}
+                total={total}
                 onCancel={handleCancel}
                 onColumnToggle={onColumnToggle}
+                onFetchMore={onFetchMore}
                 onReset={onReset}
                 onSave={handleSave}
               />

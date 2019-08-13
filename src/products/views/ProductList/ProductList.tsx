@@ -20,6 +20,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import ProductListPage from "../../components/ProductListPage";
@@ -27,7 +28,10 @@ import {
   TypedProductBulkDeleteMutation,
   TypedProductBulkPublishMutation
 } from "../../mutations";
-import { TypedProductListQuery } from "../../queries";
+import {
+  AvailableInGridAttributesQuery,
+  TypedProductListQuery
+} from "../../queries";
 import { productBulkDelete } from "../../types/productBulkDelete";
 import { productBulkPublish } from "../../types/productBulkPublish";
 import {
@@ -145,21 +149,21 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
   );
 
   return (
-    <TypedProductListQuery displayLoader variables={queryVariables}>
-      {({ data, loading, refetch }) => {
-        const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-          maybe(() => data.products.pageInfo),
-          paginationState,
-          params
-        );
+    <AvailableInGridAttributesQuery variables={{ first: 6 }}>
+      {gridAttributes => (
+        <TypedProductListQuery displayLoader variables={queryVariables}>
+          {({ data, loading, refetch }) => {
+            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+              maybe(() => data.products.pageInfo),
+              paginationState,
+              params
+            );
 
         const handleBulkDelete = (data: productBulkDelete) => {
           if (data.productBulkDelete.errors.length === 0) {
             closeModal();
             notify({
-              text: intl.formatMessage({
-                defaultMessage: "Products removed"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             reset();
             refetch();
@@ -170,37 +174,38 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
           if (data.productBulkPublish.errors.length === 0) {
             closeModal();
             notify({
-              text: intl.formatMessage({
-                defaultMessage: "Changed publication status",
-                description: "product status update notification"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             reset();
             refetch();
           }
         };
 
-        return (
-          <TypedProductBulkDeleteMutation onCompleted={handleBulkDelete}>
-            {(productBulkDelete, productBulkDeleteOpts) => (
-              <TypedProductBulkPublishMutation onCompleted={handleBulkPublish}>
-                {(productBulkPublish, productBulkPublishOpts) => {
-                  const bulkDeleteMutationState = getMutationState(
-                    productBulkDeleteOpts.called,
-                    productBulkDeleteOpts.loading,
-                    maybe(
-                      () => productBulkDeleteOpts.data.productBulkDelete.errors
-                    )
-                  );
+            return (
+              <TypedProductBulkDeleteMutation onCompleted={handleBulkDelete}>
+                {(productBulkDelete, productBulkDeleteOpts) => (
+                  <TypedProductBulkPublishMutation
+                    onCompleted={handleBulkPublish}
+                  >
+                    {(productBulkPublish, productBulkPublishOpts) => {
+                      const bulkDeleteMutationState = getMutationState(
+                        productBulkDeleteOpts.called,
+                        productBulkDeleteOpts.loading,
+                        maybe(
+                          () =>
+                            productBulkDeleteOpts.data.productBulkDelete.errors
+                        )
+                      );
 
-                  const bulkPublishMutationState = getMutationState(
-                    productBulkPublishOpts.called,
-                    productBulkPublishOpts.loading,
-                    maybe(
-                      () =>
-                        productBulkPublishOpts.data.productBulkPublish.errors
-                    )
-                  );
+                      const bulkPublishMutationState = getMutationState(
+                        productBulkPublishOpts.called,
+                        productBulkPublishOpts.loading,
+                        maybe(
+                          () =>
+                            productBulkPublishOpts.data.productBulkPublish
+                              .errors
+                        )
+                      );
 
                   return (
                     <>
@@ -210,7 +215,25 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                         defaultSettings={
                           defaultListSettings[ListViews.PRODUCT_LIST]
                         }
+                        gridAttributes={maybe(
+                          () =>
+                            gridAttributes.data.attributes.edges.map(
+                              edge => edge.node
+                            ),
+                          []
+                        )}
+                        totalGridAttributes={maybe(
+                          () => gridAttributes.data.attributes.totalCount,
+                          0
+                        )}
                         settings={settings}
+                        loading={gridAttributes.loading}
+                            hasMore={maybe(
+                              () =>
+                                gridAttributes.data.attributes.pageInfo
+                                  .hasNextPage,
+                              false
+                            )}
                         filtersList={createFilterChips(
                           params,
                           {
@@ -225,6 +248,34 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                         products={maybe(() =>
                           data.products.edges.map(edge => edge.node)
                         )}
+                        onFetchMore={() =>
+                          gridAttributes.loadMore(
+                            (prev, next) => {
+                              if (
+                                prev.attributes.pageInfo.endCursor ===
+                                next.attributes.pageInfo.endCursor
+                              ) {
+                                return prev;
+                              }
+                              return {
+                                ...prev,
+                                attributes: {
+                                  ...prev.attributes,
+                                  edges: [
+                                    ...prev.attributes.edges,
+                                    ...next.attributes.edges
+                                  ],
+                                  pageInfo: next.attributes.pageInfo
+                                }
+                              };
+                            },
+                            {
+                              after:
+                                gridAttributes.data.attributes.pageInfo
+                                  .endCursor
+                            }
+                          )
+                        }
                         onNextPage={loadNextPage}
                         onPreviousPage={loadPreviousPage}
                         onUpdateListSettings={updateListSettings}

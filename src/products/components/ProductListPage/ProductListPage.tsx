@@ -16,7 +16,13 @@ import ProductList from "@saleor/components/ProductList";
 import { ProductListColumns } from "@saleor/config";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { FilterPageProps, ListActions, PageListProps } from "@saleor/types";
+import { AvailableInGridAttributes_attributes_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
+import {
+  FetchMoreProps,
+  FilterPageProps,
+  ListActions,
+  PageListProps
+} from "@saleor/types";
 import { toggle } from "@saleor/utils/lists";
 import { ProductListUrlFilters } from "../../urls";
 import ProductListFilter from "../ProductListFilter";
@@ -24,8 +30,11 @@ import ProductListFilter from "../ProductListFilter";
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
-    FilterPageProps<ProductListUrlFilters> {
+    FilterPageProps<ProductListUrlFilters>,
+    FetchMoreProps {
   currencySymbol: string;
+  gridAttributes: AvailableInGridAttributes_attributes_edges_node[];
+  totalGridAttributes: number;
   products: CategoryDetails_category_products_edges_node[];
 }
 
@@ -42,10 +51,15 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     defaultSettings,
     filtersList,
     filterTabs,
+    gridAttributes,
+    hasMore,
     initialSearch,
+    loading,
     settings,
+    totalGridAttributes,
     onAdd,
     onAll,
+    onFetchMore,
     onSearchChange,
     onFilterAdd,
     onFilterSave,
@@ -95,7 +109,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         description: "product type"
       }),
       value: "productType" as ProductListColumns
-    }
+    },
+    ...gridAttributes.map(attribute => ({
+      label: attribute.name,
+      value: `attribute:${attribute.id}`
+    }))
   ];
 
   return (
@@ -104,9 +122,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         <ColumnPicker
           className={classes.columnPicker}
           columns={columns}
+          hasMore={hasMore}
+          loading={loading}
           selectedColumns={selectedColumns}
+          total={columns.length + totalGridAttributes}
           onColumnToggle={handleColumnToggle}
           onCancel={handleCancel}
+          onFetchMore={onFetchMore}
           onReset={handleReset}
           onSave={handleSave}
         />

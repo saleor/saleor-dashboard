@@ -42,4 +42,12 @@ storiesOf("Generics / Column picker", module)
   ))
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
-  .add("default", () => <ColumnPicker {...props} />);
+  .add("default", () => <ColumnPicker {...props} />)
+  .add("loading", () => (
+    <ColumnPicker
+      {...props}
+      loading={true}
+      hasMore={true}
+      onFetchMore={() => undefined}
+    />
+  ));

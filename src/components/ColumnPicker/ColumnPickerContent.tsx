@@ -1,15 +1,18 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/styles/makeStyles";
 import classNames from "classnames";
 import React from "react";
+import InfiniteScroll from "react-infinite-scroller";
 import { FormattedMessage } from "react-intl";
 
 import useElementScroll from "@saleor/hooks/useElementScroll";
 import { buttonMessages } from "@saleor/intl";
+import { FetchMoreProps } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import ControlledCheckbox from "../ControlledCheckbox";
 import Hr from "../Hr";
@@ -18,9 +21,10 @@ export interface ColumnPickerChoice {
   label: string;
   value: string;
 }
-export interface ColumnPickerContentProps {
+export interface ColumnPickerContentProps extends Partial<FetchMoreProps> {
   columns: ColumnPickerChoice[];
   selectedColumns: string[];
+  total?: number;
   onCancel: () => void;
   onColumnToggle: (column: string) => void;
   onReset: () => void;
@@ -50,15 +54,26 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   dropShadow: {
     boxShadow: `0px -5px 10px 0px ${theme.overrides.MuiCard.root.borderColor}`
+  },
+  loadMoreLoaderContainer: {
+    alignItems: "center",
+    display: "flex",
+    gridColumnEnd: "span 3",
+    height: theme.spacing.unit * 3,
+    justifyContent: "center"
   }
 }));
 
 const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
   const {
     columns,
+    hasMore,
+    loading,
     selectedColumns,
+    total,
     onCancel,
     onColumnToggle,
+    onFetchMore,
     onReset,
     onSave
   } = props;
@@ -80,28 +95,61 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
             description="pick columns to display"
             values={{
               numberOfSelected: selectedColumns.length,
-              numberOfTotal: columns.length
+              numberOfTotal: total || columns.length
             }}
           />
         </Typography>
       </CardContent>
       <Hr />
-      <CardContent className={classes.contentContainer}>
-        <div className={classes.content} ref={anchor}>
-          {columns.map(column => (
-            <ControlledCheckbox
-              checked={isSelected(
-                column.value,
-                selectedColumns,
-                (a, b) => a === b
+      {hasMore && onFetchMore ? (
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={onFetchMore}
+          hasMore={hasMore}
+          useWindow={false}
+          threshold={100}
+          key="infinite-scroll"
+        >
+          <CardContent className={classes.contentContainer}>
+            <div className={classes.content} ref={anchor}>
+              {columns.map(column => (
+                <ControlledCheckbox
+                  checked={isSelected(
+                    column.value,
+                    selectedColumns,
+                    (a, b) => a === b
+                  )}
+                  name={column.value}
+                  label={column.label}
+                  onChange={() => onColumnToggle(column.value)}
+                />
+              ))}
+              {loading && (
+                <div className={classes.loadMoreLoaderContainer}>
+                  <CircularProgress size={16} />
+                </div>
               )}
-              name={column.value}
-              label={column.label}
-              onChange={() => onColumnToggle(column.value)}
-            />
-          ))}
-        </div>
-      </CardContent>
+            </div>
+          </CardContent>
+        </InfiniteScroll>
+      ) : (
+        <CardContent className={classes.contentContainer}>
+          <div className={classes.content} ref={anchor}>
+            {columns.map(column => (
+              <ControlledCheckbox
+                checked={isSelected(
+                  column.value,
+                  selectedColumns,
+                  (a, b) => a === b
+                )}
+                name={column.value}
+                label={column.label}
+                onChange={() => onColumnToggle(column.value)}
+              />
+            ))}
+          </div>
+        </CardContent>
+      )}
       <Hr />
       <CardContent
         className={classNames(classes.actionBarContainer, {
