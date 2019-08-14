@@ -19,7 +19,6 @@
 !.tx
 *.css
 *.log
-*.pot
 *.pyc
 local_settings.py
 __pycache__/

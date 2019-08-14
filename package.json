@@ -56,7 +56,7 @@
     "react-helmet": "^5.2.1",
     "react-infinite-scroller": "^1.2.4",
     "react-inlinesvg": "^0.8.4",
-    "react-intl": "^3.1.7",
+    "react-intl": "^3.1.8",
     "react-jss": "^8.6.1",
     "react-moment": "^0.7.9",
     "react-router": "^5.0.1",
@@ -71,12 +71,14 @@
     "use-react-router": "^1.0.7"
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.4",
     "@babel/plugin-proposal-class-properties": "^7.5.0",
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
     "@babel/runtime": "^7.5.4",
     "@storybook/addon-storyshots": "^5.1.9",
     "@storybook/react": "^5.1.9",
@@ -105,6 +107,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-react-intl": "^4.1.12",
     "codecov": "^3.5.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
@@ -115,8 +118,10 @@
     "jest": "^24.8.0",
     "jest-file": "^1.0.0",
     "plop": "^2.4.0",
+    "react-intl-po": "^2.2.2",
     "react-test-renderer": "^16.8.6",
     "regenerator-runtime": "^0.11.1",
+    "rimraf": "^2.7.0",
     "testcafe": "^1.3.3",
     "ts-jest": "^23.10.5",
     "ts-loader": "^5.4.5",
@@ -130,22 +135,6 @@
   },
   "optionalDependencies": {
     "fsevents": "^1.2.9"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-class-properties",
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "decoratorsBeforeExport": true
-        }
-      ],
-      "@babel/plugin-proposal-object-rest-spread"
-    ]
   },
   "jest": {
     "globals": {
@@ -174,6 +163,7 @@
   },
   "scripts": {
     "build": "webpack -p",
+    "build-messages": "babel src/**/*.{ts,tsx} -o build/dashboard.bundle.js && rip json2pot \"build/locale/**/*.json\" -c id -o locale/messages.pot",
     "build-types": "apollo client:codegen --target=typescript types --globalTypesFile=src/types/globalTypes.ts",
     "generate-component": "plop --plopfile .plop/plopfile.js",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
