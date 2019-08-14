@@ -5,6 +5,7 @@
     "@babel/preset-typescript"
   ],
   "plugins": [
+    "@babel/plugin-proposal-numeric-separator",
     "@babel/plugin-proposal-class-properties",
     [
       "@babel/plugin-proposal-decorators",
@@ -16,8 +17,10 @@
     [
       "react-intl",
       {
+        "extractFromFormatMessageCall": true,
         "messagesDir": "build/locale/"
       }
     ]
-  ]
+  ],
+  "ignore": ["**/*.test.ts", "**/*.test.tsx", "src/storybook"]
 }
