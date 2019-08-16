@@ -5,13 +5,14 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import i18n from "@saleor/i18n";
+import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
 import { AttributeDetails_attribute_values } from "../../types/AttributeDetails";
@@ -40,6 +41,7 @@ const AttributeValueEditDialog: React.StatelessComponent<
   onSubmit,
   open
 }) => {
+  const intl = useIntl();
   const initialForm: AttributeValueEditDialogFormData = {
     name: maybe(() => attributeValue.name, "")
   };
@@ -48,13 +50,19 @@ const AttributeValueEditDialog: React.StatelessComponent<
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle>
-        {attributeValue === null
-          ? i18n.t("Add Value", {
-              context: "add attribute value"
-            })
-          : i18n.t("Edit Value", {
-              context: "edit attribute value"
-            })}
+        {attributeValue === null ? (
+          <FormattedMessage
+            defaultMessage="Add Value"
+            description="add attribute value"
+            id="attributeValueEditDialogTitleNewValue"
+          />
+        ) : (
+          <FormattedMessage
+            defaultMessage="Edit Value"
+            description="edit attribute value"
+            id="attributeValueEditDialogTitle"
+          />
+        )}
       </DialogTitle>
       <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
         {({ change, data, errors: formErrors, submit }) => (
@@ -67,8 +75,10 @@ const AttributeValueEditDialog: React.StatelessComponent<
                 fullWidth
                 helperText={formErrors.name}
                 name={"name" as keyof AttributeValueEditDialogFormData}
-                label={i18n.t("Name", {
-                  context: "attribute name"
+                label={intl.formatMessage({
+                  defaultMessage: "Name",
+                  description: "attribute name",
+                  id: "attributeValueEditDialogNameField"
                 })}
                 value={data.name}
                 onChange={change}
@@ -76,7 +86,7 @@ const AttributeValueEditDialog: React.StatelessComponent<
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>
-                {i18n.t("Cancel", { context: "button" })}
+                <FormattedMessage {...commonMessages.cancel} />
               </Button>
               <ConfirmButton
                 transitionState={confirmButtonState}
@@ -84,7 +94,7 @@ const AttributeValueEditDialog: React.StatelessComponent<
                 variant="contained"
                 onClick={submit}
               >
-                {i18n.t("Save")}
+                <FormattedMessage {...commonMessages.save} />
               </ConfirmButton>
             </DialogActions>
           </>

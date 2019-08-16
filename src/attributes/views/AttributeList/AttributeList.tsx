@@ -1,6 +1,7 @@
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -9,7 +10,6 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { PAGINATE_BY } from "../../../config";
 import useBulkActions from "../../../hooks/useBulkActions";
-import i18n from "../../../i18n";
 import { getMutationState, maybe } from "../../../misc";
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
@@ -35,6 +35,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
+  const intl = useIntl();
 
   const closeModal = () =>
     navigate(
@@ -71,7 +72,11 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
           if (data.attributeBulkDelete.errors.length === 0) {
             closeModal();
             notify({
-              text: i18n.t("Attributes removed")
+              text: intl.formatMessage({
+                defaultMessage: "Attributes successfully removed",
+                description: "remove multiple attributes",
+                id: "attributeListAttributesRemoved"
+              })
             });
             reset();
             refetch();
@@ -116,12 +121,15 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
                   />
                   <AttributeBulkDeleteDialog
                     confirmButtonState={bulkDeleteMutationState}
-                    open={params.action === "remove"}
+                    open={
+                      params.action === "remove" &&
+                      maybe(() => params.ids.length > 0)
+                    }
                     onConfirm={() =>
                       attributeBulkDelete({ variables: { ids: params.ids } })
                     }
                     onClose={closeModal}
-                    quantity={maybe(() => params.ids.length.toString(), "...")}
+                    quantity={maybe(() => params.ids.length)}
                   />
                 </>
               );
