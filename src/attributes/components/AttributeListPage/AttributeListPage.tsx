@@ -2,10 +2,11 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import AddIcon from "@material-ui/icons/Add";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import { sectionNames } from "@saleor/intl";
 import Container from "../../../components/Container";
 import PageHeader from "../../../components/PageHeader";
-import i18n from "../../../i18n";
 import { ListActions, PageListProps } from "../../../types";
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 import AttributeList from "../AttributeList/AttributeList";
@@ -17,17 +18,28 @@ export interface AttributeListPageProps extends PageListProps, ListActions {
 const AttributeListPage: React.FC<AttributeListPageProps> = ({
   onAdd,
   ...listProps
-}) => (
-  <Container>
-    <PageHeader title={i18n.t("Attributes")}>
-      <Button onClick={onAdd} color="primary" variant="contained">
-        {i18n.t("Add attribute")} <AddIcon />
-      </Button>
-    </PageHeader>
-    <Card>
-      <AttributeList {...listProps} />
-    </Card>
-  </Container>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <Container>
+      <PageHeader
+        title={intl.formatMessage(sectionNames.attributes)}
+      >
+        <Button onClick={onAdd} color="primary" variant="contained">
+          <FormattedMessage
+            defaultMessage="New attribute"
+            description="button"
+            id="attributeListPageNewAttribute"
+          />
+          <AddIcon />
+        </Button>
+      </PageHeader>
+      <Card>
+        <AttributeList {...listProps} />
+      </Card>
+    </Container>
+  );
+};
 AttributeListPage.displayName = "AttributeListPage";
 export default AttributeListPage;

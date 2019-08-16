@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import slugify from "slugify";
 
 import AppHeader from "@saleor/components/AppHeader";
@@ -9,7 +10,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import i18n from "@saleor/i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ReorderAction, UserError } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
@@ -62,6 +63,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   onValueReorder,
   onValueUpdate
 }) => {
+  const intl = useIntl();
   const initialForm: AttributePageFormData =
     attribute === null
       ? {
@@ -109,12 +111,16 @@ const AttributePage: React.FC<AttributePageProps> = ({
     <Form errors={errors} initial={initialForm} onSubmit={handleSubmit}>
       {({ change, errors: formErrors, data, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Attributes")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.attributes)}
+          </AppHeader>
           <PageHeader
             title={
               attribute === null
-                ? i18n.t("Create New Attribute", {
-                    context: "page title"
+                ? intl.formatMessage({
+                    defaultMessage: "Create New Attribute",
+                    description: "page title",
+                    id: "attributePageTitle"
                   })
                 : maybe(() => attribute.name)
             }

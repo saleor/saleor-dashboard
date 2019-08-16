@@ -1,9 +1,9 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import slugify from "slugify";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "@saleor/i18n";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ReorderEvent, UserError } from "@saleor/types";
 import {
@@ -42,6 +42,7 @@ function areValuesEqual(
 const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const [values, setValues] = React.useState<
     AttributeValueEditDialogFormData[]
@@ -75,7 +76,12 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   };
   const handleCreate = (data: AttributeCreate) => {
     if (data.attributeCreate.errors.length === 0) {
-      notify({ text: i18n.t("Successfully created attribute") });
+      notify({
+        text: intl.formatMessage({
+          defaultMessage: "Successfully created attribute",
+          id: "attributeCreateAttributeCreateSuccess"
+        })
+      });
       navigate(attributeUrl(data.attributeCreate.attribute.id));
     }
   };
@@ -84,10 +90,16 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       setValueErrors([
         {
           field: "name",
-          message: i18n.t("A value named {{ name }} already exists", {
-            context: "value edit error",
-            name: input.name
-          })
+          message: intl.formatMessage(
+            {
+              defaultMessage: "A value named { name } already exists",
+              description: "attribute value edit error",
+              id: "attributeCreateErrorExists"
+            },
+            {
+              name: input.name
+            }
+          )
         }
       ]);
     } else {
@@ -100,10 +112,16 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       setValueErrors([
         {
           field: "name",
-          message: i18n.t("A value named {{ name }} already exists", {
-            context: "value edit error",
-            name: input.name
-          })
+          message: intl.formatMessage(
+            {
+              defaultMessage: "A value named { name } already exists",
+              description: "attribute value edit error",
+              id: "attributeCreateErrorExists"
+            },
+            {
+              name: input.name
+            }
+          )
         }
       ]);
     } else {

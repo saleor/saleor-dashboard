@@ -3,13 +3,14 @@ import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import i18n from "@saleor/i18n";
+import { commonMessages } from "@saleor/intl";
 import { FormErrors } from "@saleor/types";
 import { AttributePageFormData } from "../AttributePage";
 
@@ -25,103 +26,136 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
   errors,
   disabled,
   onChange
-}) => (
-  <Card>
-    <CardTitle title={i18n.t("Properties")} />
-    <CardContent>
-      {/* <Typography variant="subtitle1">
-        {i18n.t("General Properties")}
-      </Typography>
-      <Hr />
-      <CardSpacer />
-      <ControlledSwitch
-        name={"" as keyof AttributePageFormData}
-        checked={false}
-        disabled={disabled}
-        label={
-          <>
-            <span>{i18n.t("Variant Attribute")}</span>
-            <Typography variant="caption">
-              {i18n.t(
-                "If enabled, you'll be able to use this attribute to create product variants"
-              )}
-            </Typography>
-          </>
-        }
-        onChange={onChange}
-      /> */}
+}) => {
+  const intl = useIntl();
 
-      <Typography variant="subtitle1">
-        {i18n.t("Storefront Properties")}
-      </Typography>
-      <Hr />
-      <ControlledSwitch
-        name={"filterableInStorefront" as keyof AttributePageFormData}
-        checked={data.filterableInStorefront}
-        disabled={disabled}
-        label={i18n.t("Use in faceted navigation")}
-        onChange={onChange}
-      />
-      {data.filterableInStorefront && (
-        <TextField
+  return (
+    <Card>
+      <CardTitle title={intl.formatMessage(commonMessages.properties)} />
+      <CardContent>
+        {/* <Typography variant="subtitle1">
+          <FormattedMessage
+            defaultMessage="General Properties"
+            description="attribute general properties section"
+            id="attributePropertiesGeneralSectionTitle"
+          />
+        </Typography>
+        <Hr />
+        <CardSpacer />
+        <ControlledSwitch
+          name={"" as keyof AttributePageFormData}
+          checked={false}
           disabled={disabled}
-          error={!!errors.storefrontSearchPosition}
-          fullWidth
-          helperText={errors.storefrontSearchPosition}
-          name={"storefrontSearchPosition" as keyof AttributePageFormData}
-          label={i18n.t("Position in faceted navigation")}
-          value={data.storefrontSearchPosition}
+          label={
+            <>
+              <FormattedMessage
+                defaultMessage="Variant Attribute"
+                description="attribute is variant-only"
+                id="attributePropertiesVariantOnly"
+              />
+              <Typography variant="caption">
+                <FormattedMessage
+                  defaultMessage="If enabled, you'll be able to use this attribute to create product variants"
+                  id="attributePropertiesVariantOnlyHelperText"
+                />
+              </Typography>
+            </>
+          }
+          onChange={onChange}
+        /> */}
+
+        <Typography variant="subtitle1">
+          <FormattedMessage
+            defaultMessage="Storefront Properties"
+            description="attribute properties regarding storefront"
+            id="attributePropertiesStorefront"
+          />
+        </Typography>
+        <Hr />
+        <ControlledSwitch
+          name={"filterableInStorefront" as keyof AttributePageFormData}
+          checked={data.filterableInStorefront}
+          disabled={disabled}
+          label={intl.formatMessage({
+            defaultMessage: "Use in faceted navigation",
+            description: "attribute is filterable in storefront",
+            id: "attributePropertiesUseInFacetedNavigation"
+          })}
           onChange={onChange}
         />
-      )}
-      <FormSpacer />
-      <ControlledSwitch
-        name={"visibleInStorefront" as keyof AttributePageFormData}
-        checked={data.visibleInStorefront}
-        disabled={disabled}
-        label={i18n.t("Visible on Product Page in Storefront", {
-          context: "attribute"
-        })}
-        onChange={onChange}
-      />
-      <CardSpacer />
-
-      <Typography variant="subtitle1">
-        {i18n.t("Dashboard Properties")}
-      </Typography>
-      <Hr />
-      <CardSpacer />
-      <ControlledSwitch
-        name={"filterableInDashboard" as keyof AttributePageFormData}
-        checked={data.filterableInDashboard}
-        disabled={disabled}
-        label={i18n.t("Use in Filtering")}
-        secondLabel={
-          <Typography variant="caption">
-            {i18n.t(
-              "If enabled, you’ll be able to use this attribute to filter products in product list."
-            )}
-          </Typography>
-        }
-        onChange={onChange}
-      />
-      <FormSpacer />
-      <ControlledSwitch
-        name={"availableInGrid" as keyof AttributePageFormData}
-        checked={data.availableInGrid}
-        disabled={disabled}
-        label={i18n.t("Add to Column Options")}
-        secondLabel={
-          <Typography variant="caption">
-            {i18n.t(
-              "If enable this attribute can be used as a column in product table."
-            )}
-          </Typography>
-        }
-        onChange={onChange}
-      />
-    </CardContent>
-  </Card>
-);
+        {data.filterableInStorefront && (
+          <TextField
+            disabled={disabled}
+            error={!!errors.storefrontSearchPosition}
+            fullWidth
+            helperText={errors.storefrontSearchPosition}
+            name={"storefrontSearchPosition" as keyof AttributePageFormData}
+            label={intl.formatMessage({
+              defaultMessage: "Position in faceted navigation",
+              description: "attribute position in storefront filters",
+              id: "attributePropertiesFacetedNavigationPosition"
+            })}
+            value={data.storefrontSearchPosition}
+            onChange={onChange}
+          />
+        )}
+        <FormSpacer />
+        <ControlledSwitch
+          name={"visibleInStorefront" as keyof AttributePageFormData}
+          checked={data.visibleInStorefront}
+          disabled={disabled}
+          label={intl.formatMessage({
+            defaultMessage: "Visible on Product Page in Storefront",
+            description: "attribute",
+            id: "attributePropertiesVisibility"
+          })}
+          onChange={onChange}
+        />
+        <CardSpacer />
+        <Typography variant="subtitle1">
+          <FormattedMessage
+            defaultMessage="Dashboard Properties"
+            description="attribute properties regarding dashboard"
+            id="attributePropertiesDashboard"
+          />
+        </Typography>
+        <Hr />
+        <CardSpacer />
+        <ControlledSwitch
+          name={"filterableInDashboard" as keyof AttributePageFormData}
+          checked={data.filterableInDashboard}
+          disabled={disabled}
+          label={intl.formatMessage({
+            defaultMessage: "Use in Filtering",
+            description: "use attribute in filtering",
+            id: "attributePropertiesDashboardFiltering"
+          })}
+          secondLabel={
+            <Typography variant="caption">
+              <FormattedMessage defaultMessage="If enabled, you’ll be able to use this attribute to filter products in product list." />
+            </Typography>
+          }
+          onChange={onChange}
+        />
+        <FormSpacer />
+        <ControlledSwitch
+          name={"availableInGrid" as keyof AttributePageFormData}
+          checked={data.availableInGrid}
+          disabled={disabled}
+          label={intl.formatMessage({
+            defaultMessage: "Add to Column Options",
+            description: "add attribute as column in product list table"
+          })}
+          secondLabel={
+            <Typography variant="caption">
+              <FormattedMessage defaultMessage="If enable this attribute can be used as a column in product table." />
+            </Typography>
+          }
+          onChange={onChange}
+        />
+      </CardContent>
+    </Card>
+  );
+};
 AttributeProperties.displayName = "AttributeProperties";
 export default AttributeProperties;
