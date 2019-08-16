@@ -1,0 +1,408 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2019-08-16T11:48:21.991Z\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"MIME-Version: 1.0\n"
+"X-Generator: react-intl-po\n"
+
+
+#: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
+#. [attributeCreateErrorExists] - attribute value edit error
+#. defaultMessage is:
+#. A value named {name} already exists
+msgctxt "attribute value edit error"
+msgid "A value named {name} already exists"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
+#. [attributeValueEditDialogTitleNewValue] - add attribute value
+#. defaultMessage is:
+#. Add Value
+msgctxt "add attribute value"
+msgid "Add Value"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
+#. [attributeValuesAddButton] - add attribute value button
+#. defaultMessage is:
+#. Add value
+msgctxt "add attribute value button"
+msgid "Add value"
+msgstr ""
+
+#: build/locale/src/attributes/views/AttributeDetails/AttributeDetails.json
+#. [attributeDetailsAttributeValueCreateSuccess] - added new attribute value
+#. defaultMessage is:
+#. Added new value
+msgctxt "added new attribute value"
+msgid "Added new value"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
+#. [attributeValuesSlugColumnHeader] - attribute values list: slug column header
+#. defaultMessage is:
+#. Admin
+msgctxt "attribute values list: slug column header"
+msgid "Admin"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
+#. [attributeValueDeleteDialogContentWithoutAttributeName] - remove attribute value
+#. defaultMessage is:
+#. Are you sure you want to remove "{name}" value?
+msgctxt "remove attribute value"
+msgid "Are you sure you want to remove \"{name}\" value?"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
+#. [attributeValueDeleteDialogContentWithAttributeName]
+#. defaultMessage is:
+#. Are you sure you want to remove "{name}" value? If you remove it you won’t be able to assign it to any of the products with "{attributeName}" attribute.
+msgctxt "description"
+msgid "Are you sure you want to remove \"{name}\" value? If you remove it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeBulkDeleteDialog/AttributeBulkDeleteDialog.json
+#. [attributeBulkDeleteDialogContent] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to remove {counter,plural,one{this attribute} other{{displayQuantity} attributes}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to remove {counter,plural,one{this attribute} other{{displayQuantity} attributes}}?"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeDeleteDialog/AttributeDeleteDialog.json
+#. [attributeDeleteDialogContent] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to remove {name}?
+msgctxt "dialog content"
+msgid "Are you sure you want to remove {name}?"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
+#. [attributeDetailsSlugInputLabel] - attribute slug input field
+#. defaultMessage is:
+#. Attribute Code
+msgctxt "attribute slug input field"
+msgid "Attribute Code"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeList/AttributeList.json
+#. [attributeListSlugColumnHeader] - attribute list: slug column header
+#. defaultMessage is:
+#. Attribute Code
+msgctxt "attribute list: slug column header"
+msgid "Attribute Code"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
+#. [attributeValuesHeader] - section header
+#. defaultMessage is:
+#. Attribute Values
+msgctxt "section header"
+msgid "Attribute Values"
+msgstr ""
+
+#: build/locale/src/attributes/views/AttributeDetails/AttributeDetails.json
+#. [attributeDetailsAttributeRemoveSuccess]
+#. defaultMessage is:
+#. Attribute removed
+msgctxt "description"
+msgid "Attribute removed"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [attributes] - attributes section name
+#. defaultMessage is:
+#. Attributes
+msgctxt "attributes section name"
+msgid "Attributes"
+msgstr ""
+
+#: build/locale/src/attributes/views/AttributeList/AttributeList.json
+#. [attributeListAttributesRemoved] - remove multiple attributes
+#. defaultMessage is:
+#. Attributes successfully removed
+msgctxt "remove multiple attributes"
+msgid "Attributes successfully removed"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [cancel]
+#. defaultMessage is:
+#. Cancel
+msgctxt "description"
+msgid "Cancel"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
+#. [attributeDetailsInputTypeField] - attribute editor component type select field label
+#. defaultMessage is:
+#. Catalog Input type for Store Owner
+msgctxt "attribute editor component type select field label"
+msgid "Catalog Input type for Store Owner"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [confirm]
+#. defaultMessage is:
+#. Confirm
+msgctxt "description"
+msgid "Confirm"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributePage/AttributePage.json
+#. [attributePageTitle] - page title
+#. defaultMessage is:
+#. Create New Attribute
+msgctxt "page title"
+msgid "Create New Attribute"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
+#. [attributePropertiesDashboard] - attribute properties regarding dashboard
+#. defaultMessage is:
+#. Dashboard Properties
+msgctxt "attribute properties regarding dashboard"
+msgid "Dashboard Properties"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
+#. [attributeDetailsNameInputLabel] - attribute label input field
+#. defaultMessage is:
+#. Default Label
+msgctxt "attribute label input field"
+msgid "Default Label"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeList/AttributeList.json
+#. [attributeListNameColumnHeader] - attribute list: name column header
+#. defaultMessage is:
+#. Default Label
+msgctxt "attribute list: name column header"
+msgid "Default Label"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
+#. [attributeValuesNameColumnHeader] - attribute values list: name column header
+#. defaultMessage is:
+#. Default Store View
+msgctxt "attribute values list: name column header"
+msgid "Default Store View"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
+#. [attributeDetailsInputTypeDropdown] - attribute editor component type
+#. defaultMessage is:
+#. Dropdown
+msgctxt "attribute editor component type"
+msgid "Dropdown"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
+#. [attributeValueEditDialogTitle] - edit attribute value
+#. defaultMessage is:
+#. Edit Value
+msgctxt "edit attribute value"
+msgid "Edit Value"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [generalInformations]
+#. defaultMessage is:
+#. General Informations
+msgctxt "description"
+msgid "General Informations"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
+#. [attributePropertiesDashboardFilteringHelperText]
+#. defaultMessage is:
+#. If enabled, you’ll be able to use this attribute to filter products in product list.
+msgctxt "description"
+msgid "If enabled, you’ll be able to use this attribute to filter products in product list."
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
+#. [attributeDetailsInputTypeMultiselect] - attribute editor component type
+#. defaultMessage is:
+#. Multiple Select
+msgctxt "attribute editor component type"
+msgid "Multiple Select"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
+#. [attributeValueEditDialogNameField] - attribute name
+#. defaultMessage is:
+#. Name
+msgctxt "attribute name"
+msgid "Name"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeListPage/AttributeListPage.json
+#. [attributeListPageNewAttribute] - button
+#. defaultMessage is:
+#. New attribute
+msgctxt "button"
+msgid "New attribute"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeList/AttributeList.json
+#. [AttributeListNoAttributes] - no attributes found with present filters
+#. defaultMessage is:
+#. No attributes found
+msgctxt "no attributes found with present filters"
+msgid "No attributes found"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
+#. [attributeValuesNotFound] - No attribute values found
+#. defaultMessage is:
+#. No values found
+msgctxt "No attribute values found"
+msgid "No values found"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
+#. [attributePropertiesFacetedNavigationPosition] - attribute position in storefront filters
+#. defaultMessage is:
+#. Position in faceted navigation
+msgctxt "attribute position in storefront filters"
+msgid "Position in faceted navigation"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [properties]
+#. defaultMessage is:
+#. Properties
+msgctxt "description"
+msgid "Properties"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeDeleteDialog/AttributeDeleteDialog.json
+#. [attributeDeleteDialogTitle] - dialog title
+#. defaultMessage is:
+#. Remove attribute
+msgctxt "dialog title"
+msgid "Remove attribute"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
+#. [attributeValueDeleteDialogTitle] - dialog title
+#. defaultMessage is:
+#. Remove attribute value
+msgctxt "dialog title"
+msgid "Remove attribute value"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeBulkDeleteDialog/AttributeBulkDeleteDialog.json
+#. [attributeBulkDeleteDialogTitle] - dialog title
+#. defaultMessage is:
+#. Remove attributes
+msgctxt "dialog title"
+msgid "Remove attributes"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [savedChanges]
+#. defaultMessage is:
+#. Saved changes
+msgctxt "description"
+msgid "Saved changes"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeList/AttributeList.json
+#. [attributeListSearchableColumnHeader] - attribute list: attribute can be searched in dashboard column header
+#. defaultMessage is:
+#. Searchable
+msgctxt "attribute list: attribute can be searched in dashboard column header"
+msgid "Searchable"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
+#. [attributePropertiesStorefront] - attribute properties regarding storefront
+#. defaultMessage is:
+#. Storefront Properties
+msgctxt "attribute properties regarding storefront"
+msgid "Storefront Properties"
+msgstr ""
+
+#: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
+#. [attributeCreateAttributeCreateSuccess]
+#. defaultMessage is:
+#. Successfully created attribute
+msgctxt "description"
+msgid "Successfully created attribute"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
+#. [attributeDetailsNameInputHelperText] - attribute slug input field helper text
+#. defaultMessage is:
+#. This is used internally. Make sure you don’t use spaces
+msgctxt "attribute slug input field helper text"
+msgid "This is used internally. Make sure you don’t use spaces"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
+#. [attributePropertiesDashboardFiltering] - use attribute in filtering
+#. defaultMessage is:
+#. Use in Filtering
+msgctxt "use attribute in filtering"
+msgid "Use in Filtering"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
+#. [attributePropertiesUseInFacetedNavigation] - attribute is filterable in storefront
+#. defaultMessage is:
+#. Use in faceted navigation
+msgctxt "attribute is filterable in storefront"
+msgid "Use in faceted navigation"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeList/AttributeList.json
+#. [attributeListFacetedColumnHeader] - attribute list: attribute can be searched in storefront column header
+#. defaultMessage is:
+#. Use in faceted search
+msgctxt "attribute list: attribute can be searched in storefront column header"
+msgid "Use in faceted search"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
+#. [attributeDetailsValueRequiredInputLabel] - check to require attribute to have value
+#. defaultMessage is:
+#. Value Required
+msgctxt "check to require attribute to have value"
+msgid "Value Required"
+msgstr ""
+
+#: build/locale/src/attributes/views/AttributeDetails/AttributeDetails.json
+#. [attributeDetailsAttributeValueRemoveSuccess] - attribute value removed
+#. defaultMessage is:
+#. Value removed
+msgctxt "attribute value removed"
+msgid "Value removed"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeList/AttributeList.json
+#. [attributeListVisibilityColumnHeader] - attribute list: visibility column header
+#. defaultMessage is:
+#. Visible
+msgctxt "attribute list: visibility column header"
+msgid "Visible"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
+#. [attributePropertiesVisibility] - attribute
+#. defaultMessage is:
+#. Visible on Product Page in Storefront
+msgctxt "attribute"
+msgid "Visible on Product Page in Storefront"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [save]
+#. defaultMessage is:
+#. save
+msgctxt "description"
+msgid "save"
+msgstr ""
