@@ -10,7 +10,7 @@ import Form from "@saleor/components/Form";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import { commonMessages, sectionNames } from "@saleor/intl";
+import { sectionNames } from "@saleor/intl";
 import { UserError } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 

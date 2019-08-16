@@ -1,6 +1,6 @@
 import { RawDraftContentState } from "draft-js";
 import React from "react";
-import { useIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
@@ -11,6 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { Tab, TabContainer } from "@saleor/components/Tab";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { TabListActions, UserError } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
@@ -121,7 +122,9 @@ export const CategoryUpdatePage: React.StatelessComponent<
     >
       {({ data, change, errors, submit, hasChanged }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Categories")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.categories)}
+          </AppHeader>
           <PageHeader title={category ? category.name : undefined} />
           <CategoryDetailsForm
             category={category}
