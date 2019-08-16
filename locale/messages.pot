@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-16T13:04:24.401Z\n"
+"POT-Creation-Date: 2019-08-16T19:32:53.076Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -31,6 +31,46 @@ msgctxt "button"
 msgid "Add attribute"
 msgstr ""
 
+#: build/locale/src/categories/components/CategoryListPage/CategoryListPage.json
+#. [categoryListPageAddCategoryButton] - button
+#. defaultMessage is:
+#. Add category
+msgctxt "button"
+msgid "Add category"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+#. [categoryProductsAddProductButton] - button
+#. defaultMessage is:
+#. Add product
+#: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
+#. [categoryProductsCardAddProductButton] - button
+#. defaultMessage is:
+#. Add product
+msgctxt "button"
+msgid "Add product"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryCreatePage/CategoryCreatePage.json
+#. [categoryCreatePageSeo]
+#. defaultMessage is:
+#. Add search engine title and description to make this category easier to find
+#: build/locale/src/categories/components/CategoryUpdatePage/CategoryUpdatePage.json
+#. [categoryUpdatePageSeo]
+#. defaultMessage is:
+#. Add search engine title and description to make this category easier to find
+msgctxt "description"
+msgid "Add search engine title and description to make this category easier to find"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryList/CategoryList.json
+#. [categoryListAddSubcategoryButton] - button
+#. defaultMessage is:
+#. Add subcategory
+msgctxt "button"
+msgid "Add subcategory"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
 #. [attributeValuesAddButton] - add attribute value button
 #. defaultMessage is:
@@ -53,6 +93,14 @@ msgstr ""
 #. Admin
 msgctxt "attribute values list: slug column header"
 msgid "Admin"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryList/CategoryList.json
+#. [categoryListSubcategoriesSectionHeader] - section header
+#. defaultMessage is:
+#. All Subcategories
+msgctxt "section header"
+msgid "All Subcategories"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
@@ -85,6 +133,42 @@ msgstr ""
 #. Are you sure you want to remove {name}?
 msgctxt "dialog content"
 msgid "Are you sure you want to remove {name}?"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryDeleteDialog/CategoryDeleteDialog.json
+#. [<categoryDeleteDialogContent<] - delete category
+#. defaultMessage is:
+#. Are you sure you want to remove {name}?
+msgctxt "delete category"
+msgid "Are you sure you want to remove {name}?"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsDeleteCategoryDialogContent] - remove category
+#. defaultMessage is:
+#. Are you sure you want to remove {name}?
+msgctxt "remove category"
+msgid "Are you sure you want to remove {name}?"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsDeleteCategoriesDialogContent]
+#. defaultMessage is:
+#. Are you sure you want to remove {number} categories?
+#: build/locale/src/categories/views/CategoryList.json
+#. [categoryListDeleteCategoriesDialogContent]
+#. defaultMessage is:
+#. Are you sure you want to remove {number} categories?
+msgctxt "description"
+msgid "Are you sure you want to remove {number} categories?"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsDeleteProductsDialogContent]
+#. defaultMessage is:
+#. Are you sure you want to remove {number} products?
+msgctxt "description"
+msgid "Are you sure you want to remove {number} products?"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -135,6 +219,14 @@ msgctxt "remove multiple attributes"
 msgid "Attributes successfully removed"
 msgstr ""
 
+#: build/locale/src/categories/components/CategoryBackground/CategoryBackground.json
+#. [categoryBackgroundHeader] - section header
+#. defaultMessage is:
+#. Background image (optional)
+msgctxt "section header"
+msgid "Background image (optional)"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [cancel]
 #. defaultMessage is:
@@ -152,6 +244,46 @@ msgid "Catalog Input type for Store Owner"
 msgstr ""
 
 #: build/locale/src/intl.json
+#. [categories] - categories section name
+#. defaultMessage is:
+#. Categories
+msgctxt "categories section name"
+msgid "Categories"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsCategoriesRemoved]
+#. defaultMessage is:
+#. Categories removed
+msgctxt "description"
+msgid "Categories removed"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryList/CategoryList.json
+#. [categoryListNameColumnHeader] - category list: name column header
+#. defaultMessage is:
+#. Category Name
+msgctxt "category list: name column header"
+msgid "Category Name"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryCreate.json
+#. [categoryCreateCategoryCreated]
+#. defaultMessage is:
+#. Category created
+msgctxt "description"
+msgid "Category created"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsCategoryDeleted]
+#. defaultMessage is:
+#. Category deleted
+msgctxt "description"
+msgid "Category deleted"
+msgstr ""
+
+#: build/locale/src/intl.json
 #. [confirm]
 #. defaultMessage is:
 #. Confirm
@@ -165,6 +297,22 @@ msgstr ""
 #. Create New Attribute
 msgctxt "page title"
 msgid "Create New Attribute"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryCreatePage/CategoryCreatePage.json
+#. [categoryCreatePageHeader] - page header
+#. defaultMessage is:
+#. Create New Category
+msgctxt "page header"
+msgid "Create New Category"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryCreate.json
+#. [categoryCreateWindowTitle] - window title
+#. defaultMessage is:
+#. Create category
+msgctxt "window title"
+msgid "Create category"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
@@ -197,6 +345,26 @@ msgstr ""
 #. Default Store View
 msgctxt "attribute values list: name column header"
 msgid "Default Store View"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryDeleteDialog/CategoryDeleteDialog.json
+#. [categoryDeleteDialogTitle] - dialog title
+#. defaultMessage is:
+#. Delete category
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsDeleteCategoryDialogTitle] - dialog title
+#. defaultMessage is:
+#. Delete category
+msgctxt "dialog title"
+msgid "Delete category"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [description]
+#. defaultMessage is:
+#. Description
+msgctxt "description"
+msgid "Description"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -247,12 +415,52 @@ msgctxt "attribute name"
 msgid "Name"
 msgstr ""
 
+#: build/locale/src/categories/components/CategoryDetailsForm/CategoryDetailsForm.json
+#. [categoryDetailsFormNameInputLabel] - category name
+#. defaultMessage is:
+#. Name
+msgctxt "category name"
+msgid "Name"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+#. [categoryProductsNameHeader] - product list: product name column header
+#. defaultMessage is:
+#. Name
+msgctxt "product list: product name column header"
+msgid "Name"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
 #. [AttributeListNoAttributes] - no attributes found with present filters
 #. defaultMessage is:
 #. No attributes found
 msgctxt "no attributes found with present filters"
 msgid "No attributes found"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryList/CategoryList.json
+#. [categoryListNoCategories]
+#. defaultMessage is:
+#. No categories found
+msgctxt "description"
+msgid "No categories found"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+#. [categoryProductsNoProducts]
+#. defaultMessage is:
+#. No products found
+msgctxt "description"
+msgid "No products found"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryList/CategoryList.json
+#. [categoryListNoSubcategories]
+#. defaultMessage is:
+#. No subcategories found
+msgctxt "description"
+msgid "No subcategories found"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
@@ -263,6 +471,22 @@ msgctxt "No attribute values found"
 msgid "No values found"
 msgstr ""
 
+#: build/locale/src/categories/components/CategoryList/CategoryList.json
+#. [categoryListNumberOfProductsColumnHeader] - category list: number of products column header
+#. defaultMessage is:
+#. No. Products
+msgctxt "category list: number of products column header"
+msgid "No. Products"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [optionalField] - field is optional
+#. defaultMessage is:
+#. Optional
+msgctxt "field is optional"
+msgid "Optional"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [attributePropertiesFacetedNavigationPosition] - attribute position in storefront filters
 #. defaultMessage is:
@@ -271,12 +495,60 @@ msgctxt "attribute position in storefront filters"
 msgid "Position in faceted navigation"
 msgstr ""
 
+#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+#. [categoryProductsHeader] - section header
+#. defaultMessage is:
+#. Products
+msgctxt "section header"
+msgid "Products"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryUpdatePage/CategoryUpdatePage.json
+#. [categoryUpdatePageProductsColumnHeader] - category list: number of products column header
+#. defaultMessage is:
+#. Products
+msgctxt "category list: number of products column header"
+msgid "Products"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
+#. [categoryProductsCardHeader] - products in category section header
+#. defaultMessage is:
+#. Products in {name}
+msgctxt "products in category section header"
+msgid "Products in {name}"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsProductsRemoved]
+#. defaultMessage is:
+#. Products removed
+msgctxt "description"
+msgid "Products removed"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [properties]
 #. defaultMessage is:
 #. Properties
 msgctxt "description"
 msgid "Properties"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsDeleteCategoryDialogContentAdditionalText]
+#. defaultMessage is:
+#. Remember that this will also remove all products assigned to this category.
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsDeleteCategoriesDialogContentAdditionalText]
+#. defaultMessage is:
+#. Remember that this will also remove all products assigned to this category.
+#: build/locale/src/categories/views/CategoryList.json
+#. [categoryListDeleteCategoriesDialogContentAdditionalText]
+#. defaultMessage is:
+#. Remember that this will also remove all products assigned to this category.
+msgctxt "description"
+msgid "Remember that this will also remove all products assigned to this category."
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDeleteDialog/AttributeDeleteDialog.json
@@ -303,6 +575,26 @@ msgctxt "dialog title"
 msgid "Remove attributes"
 msgstr ""
 
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsDeleteSubcategoriesDialogTitle] - dialog title
+#. defaultMessage is:
+#. Remove categories
+#: build/locale/src/categories/views/CategoryList.json
+#. [categoryListDeleteSubcategoriesDialogTitle] - dialog title
+#. defaultMessage is:
+#. Remove categories
+msgctxt "dialog title"
+msgid "Remove categories"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [categoryDetailsDeleteProductsDialogTitle] - dialog title
+#. defaultMessage is:
+#. Remove products
+msgctxt "dialog title"
+msgid "Remove products"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [savedChanges]
 #. defaultMessage is:
@@ -327,6 +619,22 @@ msgctxt "attribute properties regarding storefront"
 msgid "Storefront Properties"
 msgstr ""
 
+#: build/locale/src/categories/components/CategoryList/CategoryList.json
+#. [categoryListSubcategoriesColumnHeader] - category list: subcategories column header
+#. defaultMessage is:
+#. Subcategories
+msgctxt "category list: subcategories column header"
+msgid "Subcategories"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryUpdatePage/CategoryUpdatePage.json
+#. [categoryUpdatePageSubcategoriesColumnHeader] - category list: number of subcategories column header
+#. defaultMessage is:
+#. Subcategories
+msgctxt "category list: number of subcategories column header"
+msgid "Subcategories"
+msgstr ""
+
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
 #. [attributeCreateAttributeCreateSuccess]
 #. defaultMessage is:
@@ -341,6 +649,22 @@ msgstr ""
 #. This is used internally. Make sure you don’t use spaces
 msgctxt "attribute slug input field helper text"
 msgid "This is used internally. Make sure you don’t use spaces"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+#. [categoryProductsTypeHeader] - product list: product type column header
+#. defaultMessage is:
+#. Type
+msgctxt "product list: product type column header"
+msgid "Type"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [uploadImage] - button
+#. defaultMessage is:
+#. Upload image
+msgctxt "button"
+msgid "Upload image"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
