@@ -6,9 +6,9 @@ import urlJoin from "url-join";
 export type LocaleContextType = string;
 export const LocaleContext = React.createContext<LocaleContextType>("en");
 
-const { Consumer: LocaleConsumer, Provider } = LocaleContext;
+const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 
-const LocaleProvider = ({ children }) => {
+const LocaleProvider: React.FC = ({ children }) => {
   const [localeIndex, setLocaleIndex] = React.useState(0);
   const [messages, setMessages] = React.useState({});
 
@@ -34,9 +34,9 @@ const LocaleProvider = ({ children }) => {
 
   return (
     <IntlProvider locale={locale} messages={messages} key={locale}>
-      <Provider value={locale}>{children}</Provider>
+      <RawLocaleProvider value={locale}>{children}</RawLocaleProvider>
     </IntlProvider>
   );
 };
 
-export { LocaleConsumer, LocaleProvider };
+export { LocaleConsumer, LocaleProvider, RawLocaleProvider };

@@ -28,9 +28,9 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
       >
         <Button onClick={onAdd} color="primary" variant="contained">
           <FormattedMessage
-            defaultMessage="New attribute"
+            defaultMessage="Add attribute"
             description="button"
-            id="attributeListPageNewAttribute"
+            id="attributeListPageAddAttribute"
           />
           <AddIcon />
         </Button>
