@@ -6,3 +6,4 @@ All notable, unreleased changes to this project will be documented in this file.
 
 - Add changelog and github issue/PR templates - #97 by @dominik-zeglen
 - Update dependencies to suppress storybook build errors - #98 by @dominik-zeglen
+- Use react-intl - #105 by @dominik-zeglen
