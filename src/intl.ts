@@ -9,11 +9,20 @@ export const commonMessages = defineMessages({
     defaultMessage: "Confirm",
     id: "confirm"
   },
-  generalInformations:{
-    defaultMessage: "General Informations",
-    id:"generalInformations"
+  description: {
+    defaultMessage: "Description",
+    id: "description"
   },
-  properties:{
+  generalInformations: {
+    defaultMessage: "General Informations",
+    id: "generalInformations"
+  },
+  optionalField: {
+    defaultMessage: "Optional",
+    description: "field is optional",
+    id: "optionalField"
+  },
+  properties: {
     defaultMessage: "Properties",
     id: "properties"
   },
@@ -24,6 +33,11 @@ export const commonMessages = defineMessages({
   savedChanges: {
     defaultMessage: "Saved changes",
     id: "savedChanges"
+  },
+  uploadImage: {
+    defaultMessage: "Upload image",
+    description: "button",
+    id: "uploadImage"
   }
 });
 
@@ -32,5 +46,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Attributes",
     description: "attributes section name",
     id: "attributes"
+  },
+  categories: {
+    defaultMessage: "Categories",
+    description: "categories section name",
+    id: "categories"
   }
 });
