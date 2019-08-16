@@ -13,13 +13,13 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "../../../i18n";
-import { maybe, renderCollection } from "../../../misc";
+import { maybe, renderCollection } from "@saleor/misc";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -61,76 +61,103 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
     onNextPage,
     onPreviousPage,
     onRowClick
-  }: ProductListProps) => (
-    <Card>
-      <CardTitle
-        title={i18n.t("Products")}
-        toolbar={
-          <Button variant="text" color="primary" onClick={onAddProduct}>
-            {i18n.t("Add product")}
-          </Button>
-        }
-      />
-      <Table>
-        <TableHead>
-          <TableRow>
-            {(products === undefined || products.length > 0) && <TableCell />}
-            <TableCell className={classes.textLeft}>
-              {i18n.t("Name", { context: "object" })}
-            </TableCell>
-            <TableCell>{i18n.t("Type", { context: "object" })}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              colSpan={3}
-              hasNextPage={hasNextPage}
-              onNextPage={onNextPage}
-              hasPreviousPage={hasPreviousPage}
-              onPreviousPage={onPreviousPage}
-            />
-          </TableRow>
-        </TableFooter>
-        <TableBody>
-          {renderCollection(
-            products,
-            product => (
-              <TableRow key={product ? product.id : "skeleton"}>
-                <TableCellAvatar
-                  thumbnail={maybe(() => product.thumbnail.url)}
+  }: ProductListProps) => {
+    const intl = useIntl();
+
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Products",
+            description: "section header",
+            id: "categoryProductsHeader"
+          })}
+          toolbar={
+            <Button variant="text" color="primary" onClick={onAddProduct}>
+              <FormattedMessage
+                defaultMessage="Add product"
+                description="button"
+                id="categoryProductsAddProductButton"
+              />
+            </Button>
+          }
+        />
+        <Table>
+          <TableHead>
+            <TableRow>
+              {(products === undefined || products.length > 0) && <TableCell />}
+              <TableCell className={classes.textLeft}>
+                <FormattedMessage
+                  defaultMessage="Name"
+                  description="product list: product name column header"
+                  id="categoryProductsNameHeader"
                 />
-                <TableCell className={classes.textLeft}>
-                  {product ? (
-                    <span
-                      onClick={onRowClick && onRowClick(product.id)}
-                      className={classes.link}
-                    >
-                      {product.name}
-                    </span>
-                  ) : (
-                    <Skeleton />
-                  )}
-                </TableCell>
-                <TableCell>
-                  {product && product.productType ? (
-                    product.productType.name
-                  ) : (
-                    <Skeleton />
-                  )}
-                </TableCell>
-              </TableRow>
-            ),
-            () => (
-              <TableRow>
-                <TableCell colSpan={3}>{i18n.t("No products found")}</TableCell>
-              </TableRow>
-            )
-          )}
-        </TableBody>
-      </Table>
-    </Card>
-  )
+              </TableCell>
+              <TableCell>
+                <FormattedMessage
+                  defaultMessage="Type"
+                  description="product list: product type column header"
+                  id="categoryProductsTypeHeader"
+                />
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                colSpan={3}
+                hasNextPage={hasNextPage}
+                onNextPage={onNextPage}
+                hasPreviousPage={hasPreviousPage}
+                onPreviousPage={onPreviousPage}
+              />
+            </TableRow>
+          </TableFooter>
+          <TableBody>
+            {renderCollection(
+              products,
+              product => (
+                <TableRow key={product ? product.id : "skeleton"}>
+                  <TableCellAvatar
+                    thumbnail={maybe(() => product.thumbnail.url)}
+                  />
+                  <TableCell className={classes.textLeft}>
+                    {product ? (
+                      <span
+                        onClick={onRowClick && onRowClick(product.id)}
+                        className={classes.link}
+                      >
+                        {product.name}
+                      </span>
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {product && product.productType ? (
+                      product.productType.name
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                </TableRow>
+              ),
+              () => (
+                <TableRow>
+                  <TableCell colSpan={3}>
+                    <FormattedMessage
+                      defaultMessage="No products found"
+                      id="categoryProductsNoProducts"
+                    />
+                  </TableCell>
+                </TableRow>
+              )
+            )}
+          </TableBody>
+        </Table>
+      </Card>
+    );
+  }
 );
 ProductList.displayName = "CategoryProductList";
 export default ProductList;

@@ -4,11 +4,12 @@ import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { RawDraftContentState } from "draft-js";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { CategoryDetails_category } from "../../types/CategoryDetails";
 
@@ -40,15 +41,23 @@ export const CategoryDetailsForm = withStyles(styles, {
     onChange,
     errors
   }: CategoryDetailsFormProps) => {
+    const intl = useIntl();
+
     return (
       <Card>
-        <CardTitle title={i18n.t("General information")} />
+        <CardTitle
+          title={intl.formatMessage(commonMessages.generalInformations)}
+        />
         <CardContent>
           <>
             <div>
               <TextField
                 classes={{ root: classes.root }}
-                label={i18n.t("Name")}
+                label={intl.formatMessage({
+                  defaultMessage: "Name",
+                  description: "category name",
+                  id: "categoryDetailsFormNameInputLabel"
+                })}
                 name="name"
                 disabled={disabled}
                 value={data && data.name}
@@ -62,7 +71,7 @@ export const CategoryDetailsForm = withStyles(styles, {
               disabled={disabled}
               error={!!errors.descriptionJson}
               helperText={errors.descriptionJson}
-              label={i18n.t("Description")}
+              label={intl.formatMessage(commonMessages.description)}
               initial={maybe(() => JSON.parse(category.descriptionJson))}
               name="description"
               onChange={onChange}
