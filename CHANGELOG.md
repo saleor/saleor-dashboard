@@ -9,3 +9,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix configure menu section - #109 by @benekex2
 - Add switch to make attribute available in product list as a column - #99 by @dominik-zeglen
 - Add tc tags for E2E testing - #134 by @dominik-zeglen
+- Use react-intl - #105 by @dominik-zeglen
