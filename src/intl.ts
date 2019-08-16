@@ -9,6 +9,14 @@ export const commonMessages = defineMessages({
     defaultMessage: "Confirm",
     id: "confirm"
   },
+  generalInformations:{
+    defaultMessage: "General Informations",
+    id:"generalInformations"
+  },
+  properties:{
+    defaultMessage: "Properties",
+    id: "properties"
+  },
   save: {
     defaultMessage: "save",
     id: "save"
@@ -21,7 +29,7 @@ export const commonMessages = defineMessages({
 
 export const sectionNames = defineMessages({
   attributes: {
-    defaultMessage: "attributes",
+    defaultMessage: "Attributes",
     description: "attributes section name",
     id: "attributes"
   }
