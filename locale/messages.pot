@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-16T11:48:21.991Z\n"
+"POT-Creation-Date: 2019-08-16T13:04:24.401Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -21,6 +21,14 @@ msgstr ""
 #. Add Value
 msgctxt "add attribute value"
 msgid "Add Value"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeListPage/AttributeListPage.json
+#. [attributeListPageAddAttribute] - button
+#. defaultMessage is:
+#. Add attribute
+msgctxt "button"
+msgid "Add attribute"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
@@ -237,14 +245,6 @@ msgstr ""
 #. Name
 msgctxt "attribute name"
 msgid "Name"
-msgstr ""
-
-#: build/locale/src/attributes/components/AttributeListPage/AttributeListPage.json
-#. [attributeListPageNewAttribute] - button
-#. defaultMessage is:
-#. New attribute
-msgctxt "button"
-msgid "New attribute"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json

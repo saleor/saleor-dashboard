@@ -6427,7 +6427,7 @@ exports[`Storyshots Views / Attributes / Attribute details create 1`] = `
               <span
                 class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
               >
-                General Information
+                General Informations
               </span>
               <div
                 class="CardTitle-toolbar-id"
@@ -7163,7 +7163,7 @@ exports[`Storyshots Views / Attributes / Attribute details default 1`] = `
               <span
                 class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
               >
-                General Information
+                General Informations
               </span>
               <div
                 class="CardTitle-toolbar-id"
@@ -7897,7 +7897,7 @@ exports[`Storyshots Views / Attributes / Attribute details form errors 1`] = `
               <span
                 class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
               >
-                General Information
+                General Informations
               </span>
               <div
                 class="CardTitle-toolbar-id"
@@ -8646,7 +8646,7 @@ exports[`Storyshots Views / Attributes / Attribute details loading 1`] = `
               <span
                 class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
               >
-                General Information
+                General Informations
               </span>
               <div
                 class="CardTitle-toolbar-id"
@@ -9321,7 +9321,7 @@ exports[`Storyshots Views / Attributes / Attribute details multiple select input
               <span
                 class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
               >
-                General Information
+                General Informations
               </span>
               <div
                 class="CardTitle-toolbar-id"
@@ -10055,7 +10055,7 @@ exports[`Storyshots Views / Attributes / Attribute details no values 1`] = `
               <span
                 class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
               >
-                General Information
+                General Informations
               </span>
               <div
                 class="CardTitle-toolbar-id"
@@ -10709,7 +10709,7 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             <span
               class="MuiButton-label-id"
             >
-              Add attribute 
+              Add attribute
               <svg
                 aria-hidden="true"
                 class="MuiSvgIcon-root-id"
@@ -11434,7 +11434,7 @@ exports[`Storyshots Views / Attributes / Attribute list loading 1`] = `
             <span
               class="MuiButton-label-id"
             >
-              Add attribute 
+              Add attribute
               <svg
                 aria-hidden="true"
                 class="MuiSvgIcon-root-id"
@@ -11700,7 +11700,7 @@ exports[`Storyshots Views / Attributes / Attribute list no data 1`] = `
             <span
               class="MuiButton-label-id"
             >
-              Add attribute 
+              Add attribute
               <svg
                 aria-hidden="true"
                 class="MuiSvgIcon-root-id"
