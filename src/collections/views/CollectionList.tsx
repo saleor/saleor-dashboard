@@ -3,6 +3,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -12,7 +13,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import i18n from "@saleor/i18n";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import CollectionListPage from "../components/CollectionListPage/CollectionListPage";
@@ -47,6 +47,7 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
   const { updateListSettings, settings } = useListSettings(
     ListViews.COLLECTION_LIST
   );
+  const intl = useIntl();
 
   const closeModal = () =>
     navigate(
@@ -79,7 +80,10 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
         const handleCollectionBulkDelete = (data: CollectionBulkDelete) => {
           if (data.collectionBulkDelete.errors.length === 0) {
             notify({
-              text: i18n.t("Removed collections")
+              text: intl.formatMessage({
+                defaultMessage: "Removed collections",
+                id: "collectionListRemovedCollections"
+              })
             });
             refetch();
             reset();
@@ -90,7 +94,10 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
         const handleCollectionBulkPublish = (data: CollectionBulkPublish) => {
           if (data.collectionBulkPublish.errors.length === 0) {
             notify({
-              text: i18n.t("Changed publication status")
+              text: intl.formatMessage({
+                defaultMessage: "Changed publication status",
+                id: "collectionListChangedPublication"
+              })
             });
             refetch();
             reset();
@@ -147,13 +154,21 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                                 openModal("unpublish", listElements)
                               }
                             >
-                              {i18n.t("Unpublish")}
+                              <FormattedMessage
+                                defaultMessage="Unpublish"
+                                description="unpublish collections"
+                                id="collectionListUnpublish"
+                              />
                             </Button>
                             <Button
                               color="primary"
                               onClick={() => openModal("publish", listElements)}
                             >
-                              {i18n.t("Publish")}
+                              <FormattedMessage
+                                defaultMessage="Publish"
+                                description="publish collections"
+                                id="collectionListPublish"
+                              />
                             </Button>
                             <IconButton
                               color="primary"
@@ -169,7 +184,10 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                         toggleAll={toggleAll}
                       />
                       <ActionDialog
-                        open={params.action === "publish"}
+                        open={
+                          params.action === "publish" &&
+                          maybe(() => params.ids.length > 0)
+                        }
                         onClose={closeModal}
                         confirmButtonState={bulkPublishTransitionState}
                         onConfirm={() =>
@@ -181,24 +199,27 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                           })
                         }
                         variant="default"
-                        title={i18n.t("Publish collections")}
+                        title={intl.formatMessage({
+                          defaultMessage: "Publish collections",
+                          description: "dialog title",
+                          id: "collectionListPublishCollectionsDialogTitle"
+                        })}
                       >
-                        <DialogContentText
-                          dangerouslySetInnerHTML={{
-                            __html: i18n.t(
-                              "Are you sure you want to publish <strong>{{ number }}</strong> collections?",
-                              {
-                                number: maybe(
-                                  () => params.ids.length.toString(),
-                                  "..."
-                                )
-                              }
-                            )
-                          }}
-                        />
+                        <DialogContentText>
+                          <FormattedMessage
+                            defaultMessage="Are you sure you want to publish {number} collections?"
+                            id="collectionListPublishCollectionsDialogContent"
+                            values={{
+                              number: params.ids.length
+                            }}
+                          />
+                        </DialogContentText>
                       </ActionDialog>
                       <ActionDialog
-                        open={params.action === "unpublish"}
+                        open={
+                          params.action === "unpublish" &&
+                          maybe(() => params.ids.length > 0)
+                        }
                         onClose={closeModal}
                         confirmButtonState={bulkPublishTransitionState}
                         onConfirm={() =>
@@ -210,24 +231,27 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                           })
                         }
                         variant="default"
-                        title={i18n.t("Unpublish collections")}
+                        title={intl.formatMessage({
+                          defaultMessage: "Unpublish collections",
+                          description: "dialog title",
+                          id: "collectionListUnpublishCollectionsDialogTitle"
+                        })}
                       >
-                        <DialogContentText
-                          dangerouslySetInnerHTML={{
-                            __html: i18n.t(
-                              "Are you sure you want to unpublish <strong>{{ number }}</strong> collections?",
-                              {
-                                number: maybe(
-                                  () => params.ids.length.toString(),
-                                  "..."
-                                )
-                              }
-                            )
-                          }}
-                        />
+                        <DialogContentText>
+                          <FormattedMessage
+                            defaultMessage="Are you sure you want to unpublish {number} collections?"
+                            id="collectionListUnpublishCollectionsDialogContent"
+                            values={{
+                              number: params.ids.length
+                            }}
+                          />
+                        </DialogContentText>
                       </ActionDialog>
                       <ActionDialog
-                        open={params.action === "remove"}
+                        open={
+                          params.action === "remove" &&
+                          maybe(() => params.ids.length > 0)
+                        }
                         onClose={closeModal}
                         confirmButtonState={bulkDeleteTransitionState}
                         onConfirm={() =>
@@ -238,21 +262,21 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                           })
                         }
                         variant="delete"
-                        title={i18n.t("Remove collections")}
+                        title={intl.formatMessage({
+                          defaultMessage: "Remove collections",
+                          description: "dialog title",
+                          id: "collectionListRemoveCollectionsDialogTitle"
+                        })}
                       >
-                        <DialogContentText
-                          dangerouslySetInnerHTML={{
-                            __html: i18n.t(
-                              "Are you sure you want to remove <strong>{{ number }}</strong> collections?",
-                              {
-                                number: maybe(
-                                  () => params.ids.length.toString(),
-                                  "..."
-                                )
-                              }
-                            )
-                          }}
-                        />
+                        <DialogContentText>
+                          <FormattedMessage
+                            defaultMessage="Are you sure you want to remove {number} collections?"
+                            id="collectionListRemoveCollectionsDialogContent"
+                            values={{
+                              number: params.ids.length
+                            }}
+                          />
+                        </DialogContentText>
                       </ActionDialog>
                     </>
                   );

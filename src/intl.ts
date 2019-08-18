@@ -1,6 +1,10 @@
 import { defineMessages } from "react-intl";
 
 export const commonMessages = defineMessages({
+  availability: {
+    defaultMessage: "Availability",
+    id: "availability"
+  },
   cancel: {
     defaultMessage: "Cancel",
     id: "cancel"
@@ -17,6 +21,10 @@ export const commonMessages = defineMessages({
     defaultMessage: "General Informations",
     id: "generalInformations"
   },
+  notPublished: {
+    defaultMessage: "Not published",
+    id: "notPublished"
+  },
   optionalField: {
     defaultMessage: "Optional",
     description: "field is optional",
@@ -25,6 +33,10 @@ export const commonMessages = defineMessages({
   properties: {
     defaultMessage: "Properties",
     id: "properties"
+  },
+  published: {
+    defaultMessage: "Published",
+    id: "published"
   },
   save: {
     defaultMessage: "save",
@@ -51,5 +63,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Categories",
     description: "categories section name",
     id: "categories"
+  },
+  collections: {
+    defaultMessage: "Collections",
+    description: "collections section name",
+    id: "collections"
   }
 });
