@@ -327,6 +327,7 @@ export const CollectionDetails: React.StatelessComponent<
                     <DialogContentText>
                       <FormattedMessage
                         defaultMessage="Are you sure you want to remove {name}?"
+                        description="remove image"
                         id="collectionDetailsRemoveCollectionDialogContent"
                         values={{
                           name: (
