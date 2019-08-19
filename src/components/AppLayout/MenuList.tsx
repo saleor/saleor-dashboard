@@ -317,12 +317,12 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
                   src={configureIcon}
                 />
                 <Typography
-                  aria-label="configure"
+                  aria-label="configuration"
                   className={classNames(classes.menuListItemText, {
                     [classes.menuListItemTextHide]: !isMenuSmall
                   })}
                 >
-                  {i18n.t("Configure")}
+                  {i18n.t("Configuration")}
                 </Typography>
               </div>
             </a>
