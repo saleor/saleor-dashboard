@@ -25807,7 +25807,7 @@ exports[`Storyshots Views / Configuration default 1`] = `
       <h5
         class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
       >
-        Configure
+        Configuration
       </h5>
       <div
         class="ExtendedPageHeader-action-id"
@@ -26308,7 +26308,7 @@ exports[`Storyshots Views / Configuration partial access 1`] = `
       <h5
         class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
       >
-        Configure
+        Configuration
       </h5>
       <div
         class="ExtendedPageHeader-action-id"
