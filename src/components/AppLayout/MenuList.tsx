@@ -307,7 +307,7 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
             <a
               className={classes.menuListItem}
               href={createHref(configurationMenuUrl)}
-              onClick={event => onMenuItemClick(configurationMenuUrl, event)}
+              onClick={event => closeSubMenu(configurationMenuUrl, event)}
             >
               <div className={classes.menuItemHover}>
                 <SVG
