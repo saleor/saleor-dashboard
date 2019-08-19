@@ -8,11 +8,11 @@ import {
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import i18n from "../../../i18n";
 import { maybe, renderCollection } from "../../../misc";
 import { AddressTypeEnum } from "../../../types/globalTypes";
 import { CustomerAddresses_user } from "../../types/CustomerAddresses";
@@ -62,28 +62,45 @@ const CustomerAddressListPage = withStyles(styles, {
     onRemove,
     onSetAsDefault
   }: CustomerAddressListPageProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
+
     const isEmpty = maybe(() => customer.addresses.length) === 0;
+    const fullName = maybe(
+      () => [customer.firstName, customer.lastName].join(" "),
+      "..."
+    );
+
     return (
       <Container>
         <AppHeader onBack={onBack}>
-          {i18n.t("Customer Info", {
-            context: "navigation"
-          })}
+          <FormattedMessage
+            defaultMessage="{fullName} Details"
+            description="header"
+            id="customerAddressListPageAppHeader"
+            values={{
+              fullName
+            }}
+          />
         </AppHeader>
         {!isEmpty && (
           <PageHeader
-            title={maybe(() =>
-              i18n.t("{{ firstName }} {{ lastName }} Address Book", {
-                context: "customer address book",
-                firstName: customer.firstName,
-                lastName: customer.lastName
-              })
+            title={intl.formatMessage(
+              {
+                defaultMessage: "{fullName}'s Address Book",
+                description: "header",
+                id: "customerAddressListPageHeader"
+              },
+              {
+                fullName
+              }
             )}
           >
             <Button color="primary" variant="contained" onClick={onAdd}>
-              {i18n.t("Add address", {
-                context: "add customer address"
-              })}
+              <FormattedMessage
+                defaultMessage="Add address"
+                description="button"
+                id="customerAddressListPageAddAddress"
+              />
               <AddIcon />
             </Button>
           </PageHeader>
@@ -91,12 +108,16 @@ const CustomerAddressListPage = withStyles(styles, {
         {isEmpty ? (
           <div className={classes.empty}>
             <Typography variant="h5">
-              {i18n.t("There is no address to show for this customer")}
+              <FormattedMessage
+                defaultMessage="There is no address to show for this customer"
+                id="customerAddressListPageNoAddresses"
+              />
             </Typography>
             <Typography className={classes.description}>
-              {i18n.t(
-                "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
-              )}
+              <FormattedMessage
+                defaultMessage="This customer doesn’t have any adresses added to his address book. You can add address using the button below."
+                id="customerAddressListPageNoAddressesAdditionalText"
+              />
             </Typography>
             <Button
               className={classes.addButton}
@@ -104,9 +125,11 @@ const CustomerAddressListPage = withStyles(styles, {
               variant="contained"
               onClick={onAdd}
             >
-              {i18n.t("Add address", {
-                context: "add customer address"
-              })}
+              <FormattedMessage
+                defaultMessage="Add address"
+                description="button"
+                id="customerAddressListPageAddAddress"
+              />
               <AddIcon />
             </Button>
           </div>

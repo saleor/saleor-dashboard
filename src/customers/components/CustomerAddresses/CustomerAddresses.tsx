@@ -9,11 +9,12 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AddressFormatter from "@saleor/components/AddressFormatter";
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
@@ -37,66 +38,92 @@ const CustomerAddresses = withStyles(styles, { name: "CustomerAddresses" })(
     customer,
     disabled,
     onAddressManageClick
-  }: CustomerAddressesProps) => (
-    <Card>
-      <CardTitle
-        title={i18n.t("Address Information")}
-        toolbar={
-          <Button
-            color="primary"
-            disabled={disabled}
-            variant="text"
-            onClick={onAddressManageClick}
-          >
-            {i18n.t("Manage", { context: "button" })}
-          </Button>
-        }
-      />
-      {maybe(() => customer.defaultBillingAddress.id) !==
-      maybe(() => customer.defaultShippingAddress.id) ? (
-        <>
-          {maybe(() => customer.defaultBillingAddress) !== null && (
-            <CardContent>
-              <Typography className={classes.label}>
-                {i18n.t("Billing address")}
-              </Typography>
-              <AddressFormatter
-                address={maybe(() => customer.defaultBillingAddress)}
+  }: CustomerAddressesProps) => {
+    const intl = useIntl();
+
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Address Information",
+            description: "header",
+            id: "customerAddressesHeader"
+          })}
+          toolbar={
+            <Button
+              color="primary"
+              disabled={disabled}
+              variant="text"
+              onClick={onAddressManageClick}
+            >
+              <FormattedMessage {...buttonMessages.manage} />
+            </Button>
+          }
+        />
+        {maybe(() => customer.defaultBillingAddress.id) !==
+        maybe(() => customer.defaultShippingAddress.id) ? (
+          <>
+            {maybe(() => customer.defaultBillingAddress) !== null && (
+              <CardContent>
+                <Typography className={classes.label}>
+                  <FormattedMessage
+                    defaultMessage="Billing address"
+                    description="subsection header"
+                    id="customerAddressesBillingAddressSectionHeader"
+                  />
+                </Typography>
+                <AddressFormatter
+                  address={maybe(() => customer.defaultBillingAddress)}
+                />
+              </CardContent>
+            )}
+            {maybe(
+              () =>
+                customer.defaultBillingAddress &&
+                customer.defaultShippingAddress
+            ) && <Hr />}
+            {maybe(() => customer.defaultShippingAddress) && (
+              <CardContent>
+                <Typography className={classes.label}>
+                  <FormattedMessage
+                    defaultMessage="Shipping address"
+                    description="subsection header"
+                    id="customerAddressesShippingAddressSectionHeader"
+                  />
+                </Typography>
+                <AddressFormatter
+                  address={maybe(() => customer.defaultShippingAddress)}
+                />
+              </CardContent>
+            )}
+          </>
+        ) : maybe(() => customer.defaultBillingAddress) === null &&
+          maybe(() => customer.defaultShippingAddress) === null ? (
+          <CardContent>
+            <Typography>
+              <FormattedMessage
+                defaultMessage="This customer has no addresses yet"
+                id="customerAddressesNoAddresses"
               />
-            </CardContent>
-          )}
-          {maybe(
-            () =>
-              customer.defaultBillingAddress && customer.defaultShippingAddress
-          ) && <Hr />}
-          {maybe(() => customer.defaultShippingAddress) && (
-            <CardContent>
-              <Typography className={classes.label}>
-                {i18n.t("Shipping address")}
-              </Typography>
-              <AddressFormatter
-                address={maybe(() => customer.defaultShippingAddress)}
+            </Typography>
+          </CardContent>
+        ) : (
+          <CardContent>
+            <Typography className={classes.label}>
+              <FormattedMessage
+                defaultMessage="Address"
+                description="subsection header"
+                id="customerAddressesAddressSectionHeader"
               />
-            </CardContent>
-          )}
-        </>
-      ) : maybe(() => customer.defaultBillingAddress) === null &&
-        maybe(() => customer.defaultShippingAddress) === null ? (
-        <CardContent>
-          <Typography>
-            {i18n.t("This customer has no addresses yet")}
-          </Typography>
-        </CardContent>
-      ) : (
-        <CardContent>
-          <Typography className={classes.label}>{i18n.t("Address")}</Typography>
-          <AddressFormatter
-            address={maybe(() => customer.defaultBillingAddress)}
-          />
-        </CardContent>
-      )}
-    </Card>
-  )
+            </Typography>
+            <AddressFormatter
+              address={maybe(() => customer.defaultBillingAddress)}
+            />
+          </CardContent>
+        )}
+      </Card>
+    );
+  }
 );
 CustomerAddresses.displayName = "CustomerAddresses";
 export default CustomerAddresses;

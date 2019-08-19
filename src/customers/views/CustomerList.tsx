@@ -2,6 +2,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -11,7 +12,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import i18n from "@saleor/i18n";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import CustomerListPage from "../components/CustomerListPage";
@@ -41,6 +41,7 @@ export const CustomerList: React.StatelessComponent<CustomerListProps> = ({
   const { updateListSettings, settings } = useListSettings(
     ListViews.CUSTOMER_LIST
   );
+  const intl = useIntl();
 
   const closeModal = () =>
     navigate(
@@ -66,7 +67,10 @@ export const CustomerList: React.StatelessComponent<CustomerListProps> = ({
         const handleBulkCustomerDelete = (data: BulkRemoveCustomers) => {
           if (data.customerBulkDelete.errors.length === 0) {
             notify({
-              text: i18n.t("Customers removed")
+              text: intl.formatMessage({
+                defaultMessage: "Customers removed",
+                id: "customerListRemovedCustomers"
+              })
             });
             reset();
             refetch();
@@ -120,7 +124,10 @@ export const CustomerList: React.StatelessComponent<CustomerListProps> = ({
                     toggleAll={toggleAll}
                   />
                   <ActionDialog
-                    open={params.action === "remove"}
+                    open={
+                      params.action === "remove" &&
+                      maybe(() => params.ids.length > 0)
+                    }
                     onClose={closeModal}
                     confirmButtonState={removeTransitionState}
                     onConfirm={() =>
@@ -131,21 +138,21 @@ export const CustomerList: React.StatelessComponent<CustomerListProps> = ({
                       })
                     }
                     variant="delete"
-                    title={i18n.t("Remove customers")}
+                    title={intl.formatMessage({
+                      defaultMessage: "Remove customers",
+                      description: "dialog header",
+                      id: "customerListRemoveCustomersDialogHeader"
+                    })}
                   >
-                    <DialogContentText
-                      dangerouslySetInnerHTML={{
-                        __html: i18n.t(
-                          "Are you sure you want to remove <strong>{{ number }}</strong> customers?",
-                          {
-                            number: maybe(
-                              () => params.ids.length.toString(),
-                              "..."
-                            )
-                          }
-                        )
-                      }}
-                    />
+                    <DialogContentText>
+                      <FormattedMessage
+                        defaultMessage="Are you sure you want to remove {number} customers?"
+                        id="customerListRemoveCustomersDialogContent"
+                        values={{
+                          number: params.ids.length
+                        }}
+                      />
+                    </DialogContentText>
                   </ActionDialog>
                 </>
               );
