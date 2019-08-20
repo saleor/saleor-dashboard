@@ -85,35 +85,34 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
         <TableCell className={classes.colSlug}>
           <FormattedMessage
             defaultMessage="Attribute Code"
-            description="attribute list: slug column header"
             id="attributeListSlugColumnHeader"
           />
         </TableCell>
         <TableCell className={classes.colName}>
           <FormattedMessage
             defaultMessage="Default Label"
-            description="attribute list: name column header"
+            description="attribute's label'"
             id="attributeListNameColumnHeader"
           />
         </TableCell>
         <TableCell className={classes.colVisible}>
           <FormattedMessage
             defaultMessage="Visible"
-            description="attribute list: visibility column header"
+            description="attribute is visible"
             id="attributeListVisibilityColumnHeader"
           />
         </TableCell>
         <TableCell className={classes.colSearchable}>
           <FormattedMessage
             defaultMessage="Searchable"
-            description="attribute list: attribute can be searched in dashboard column header"
+            description="attribute can be searched in dashboard"
             id="attributeListSearchableColumnHeader"
           />
         </TableCell>
         <TableCell className={classes.colFaceted}>
           <FormattedMessage
             defaultMessage="Use in faceted search"
-            description="attribute list: attribute can be searched in storefront column header"
+            description="attribute can be searched in storefront"
             id="attributeListFacetedColumnHeader"
           />
         </TableCell>
@@ -188,7 +187,6 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage
                   defaultMessage="No attributes found"
-                  description="no attributes found with present filters"
                   id="AttributeListNoAttributes"
                 />
               </TableCell>
