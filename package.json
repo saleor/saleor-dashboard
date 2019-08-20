@@ -172,7 +172,7 @@
     "generate-component": "plop --plopfile .plop/plopfile.js",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
     "lint-fix": "tslint 'src/**/*.{ts,tsx}' --fix",
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server --open -d",
     "storybook": "start-storybook -p 3000 -c src/storybook/",
     "build-storybook": "build-storybook -c src/storybook/ -o build/storybook",
     "test": "jest src/",
