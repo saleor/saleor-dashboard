@@ -34,7 +34,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
     {
       label: intl.formatMessage({
         defaultMessage: "Dropdown",
-        description: "attribute editor component type",
+        description: "product attribute type",
         id: "attributeDetailsInputTypeDropdown"
       }),
       value: AttributeInputTypeEnum.DROPDOWN
@@ -42,7 +42,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
     {
       label: intl.formatMessage({
         defaultMessage: "Multiple Select",
-        description: "attribute editor component type",
+        description: "product attribute type",
         id: "attributeDetailsInputTypeMultiselect"
       }),
       value: AttributeInputTypeEnum.MULTISELECT
@@ -52,9 +52,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
   return (
     <Card>
       <CardTitle
-        title={
-          intl.formatMessage(commonMessages.generalInformations)
-        }
+        title={intl.formatMessage(commonMessages.generalInformations)}
       />
       <CardContent>
         <TextField
@@ -62,7 +60,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
           error={!!errors.name}
           label={intl.formatMessage({
             defaultMessage: "Default Label",
-            description: "attribute label input field",
+            description: "attribute's label",
             id: "attributeDetailsNameInputLabel"
           })}
           name={"name" as keyof AttributePageFormData}
@@ -77,7 +75,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
           error={!!errors.slug}
           label={intl.formatMessage({
             defaultMessage: "Attribute Code",
-            description: "attribute slug input field",
+            description: "attribute's slug short code label",
             id: "attributeDetailsSlugInputLabel"
           })}
           name={"slug" as keyof AttributePageFormData}
@@ -103,7 +101,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
           hint={errors.inputType}
           label={intl.formatMessage({
             defaultMessage: "Catalog Input type for Store Owner",
-            description: "attribute editor component type select field label",
+            description: "attribute's editor component",
             id: "attributeDetailsInputTypeField"
           })}
           name="inputType"
