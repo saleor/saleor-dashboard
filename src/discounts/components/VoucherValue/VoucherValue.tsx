@@ -2,6 +2,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
@@ -9,7 +10,6 @@ import { FormSpacer } from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import TextFieldWithChoice from "@saleor/components/TextFieldWithChoice";
-import i18n from "../../../i18n";
 import { FormErrors } from "../../../types";
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { translateVoucherTypes } from "../../translations";
@@ -37,6 +37,8 @@ const VoucherValue = ({
   variant,
   onChange
 }: VoucherValueProps) => {
+  const intl = useIntl();
+
   const translatedVoucherTypes = translateVoucherTypes();
   const voucherTypeChoices = Object.values(VoucherType).map(type => ({
     label: translatedVoucherTypes[type],
@@ -45,7 +47,12 @@ const VoucherValue = ({
 
   return (
     <Card>
-      <CardTitle title={i18n.t("Value")} />
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Value",
+          description: "section header"
+        })}
+      />
       <CardContent>
         <TextFieldWithChoice
           disabled={disabled}
@@ -61,7 +68,9 @@ const VoucherValue = ({
           helperText={errors.discountValue}
           name={"value" as keyof FormData}
           onChange={onChange}
-          label={i18n.t("Discount Value")}
+          label={intl.formatMessage({
+            defaultMessage: "Discount Value"
+          })}
           value={data.value}
           type="number"
           fullWidth
@@ -77,7 +86,9 @@ const VoucherValue = ({
               disabled={disabled}
               error={!!errors.type}
               hint={errors.type}
-              label={i18n.t("Discount Specific Information")}
+              label={intl.formatMessage({
+                defaultMessage: "Discount Specific Information"
+              })}
               name={"type" as keyof FormData}
               value={data.type}
               onChange={onChange}
@@ -91,13 +102,12 @@ const VoucherValue = ({
           checked={data.applyOncePerOrder}
           label={
             <>
-              {i18n.t("Only once per order", {
-                context: "voucher application"
-              })}
+              <FormattedMessage
+                defaultMessage="Only once per order"
+                description="voucher application, switch button"
+              />
               <Typography variant="caption">
-                {i18n.t(
-                  "If this option is disabled, discount will be counted for every eligible product"
-                )}
+                <FormattedMessage defaultMessage="If this option is disabled, discount will be counted for every eligible product" />
               </Typography>
             </>
           }

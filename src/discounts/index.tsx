@@ -1,9 +1,10 @@
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
-import i18n from "../i18n";
 import { saleDetailsPageTab } from "./components/SaleDetailsPage";
 import { voucherDetailsPageTab } from "./components/VoucherDetailsPage";
 import {
@@ -73,17 +74,21 @@ const VoucherDetailsView: React.StatelessComponent<
   );
 };
 
-export const DiscountSection: React.StatelessComponent<{}> = () => (
-  <>
-    <WindowTitle title={i18n.t("Discounts")} />
-    <Switch>
-      <Route exact path={saleListPath} component={SaleListView} />
-      <Route exact path={saleAddPath} component={SaleCreateView} />
-      <Route exact path={voucherAddPath} component={VoucherCreateView} />
-      <Route path={salePath(":id")} component={SaleDetailsView} />
-      <Route exact path={voucherListPath} component={VoucherListView} />
-      <Route path={voucherPath(":id")} component={VoucherDetailsView} />
-    </Switch>
-  </>
-);
+export const DiscountSection: React.StatelessComponent<{}> = () => {
+  const intl = useIntl();
+
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
+      <Switch>
+        <Route exact path={saleListPath} component={SaleListView} />
+        <Route exact path={saleAddPath} component={SaleCreateView} />
+        <Route exact path={voucherAddPath} component={VoucherCreateView} />
+        <Route path={salePath(":id")} component={SaleDetailsView} />
+        <Route exact path={voucherListPath} component={VoucherListView} />
+        <Route path={voucherPath(":id")} component={VoucherDetailsView} />
+      </Switch>
+    </>
+  );
+};
 export default DiscountSection;

@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -9,7 +10,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { ListProps, TabListActions, UserError } from "../../../types";
 import { SaleType } from "../../../types/globalTypes";
@@ -102,6 +103,8 @@ const SaleDetailsPage: React.StatelessComponent<SaleDetailsPageProps> = ({
   toggle,
   toggleAll
 }) => {
+  const intl = useIntl();
+
   const initialForm: FormData = {
     endDate: maybe(() => (sale.endDate ? sale.endDate : ""), ""),
     name: maybe(() => sale.name, ""),
@@ -113,7 +116,9 @@ const SaleDetailsPage: React.StatelessComponent<SaleDetailsPageProps> = ({
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Sales")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.sales)}
+          </AppHeader>
           <PageHeader title={maybe(() => sale.name)} />
           <Grid>
             <div>
@@ -137,34 +142,55 @@ const SaleDetailsPage: React.StatelessComponent<SaleDetailsPageProps> = ({
                   isActive={activeTab === SaleDetailsPageTab.categories}
                   changeTab={onTabClick}
                 >
-                  {i18n.t("Categories ({{ number }})", {
-                    number: maybe(
-                      () => sale.categories.totalCount.toString(),
-                      "…"
-                    )
-                  })}
+                  {intl.formatMessage(
+                    {
+                      defaultMessage: "Categories ({quantity})",
+                      description: "number of categories",
+                      id: "saleDetailsPageCategoriesQuantity"
+                    },
+                    {
+                      quantity: maybe(
+                        () => sale.categories.totalCount.toString(),
+                        "…"
+                      )
+                    }
+                  )}
                 </CategoriesTab>
                 <CollectionsTab
                   isActive={activeTab === SaleDetailsPageTab.collections}
                   changeTab={onTabClick}
                 >
-                  {i18n.t("Collections ({{ number }})", {
-                    number: maybe(
-                      () => sale.collections.totalCount.toString(),
-                      "…"
-                    )
-                  })}
+                  {intl.formatMessage(
+                    {
+                      defaultMessage: "Collections ({quantity})",
+                      description: "number of collections",
+                      id: "saleDetailsPageCollectionsQuantity"
+                    },
+                    {
+                      quantity: maybe(
+                        () => sale.collections.totalCount.toString(),
+                        "…"
+                      )
+                    }
+                  )}
                 </CollectionsTab>
                 <ProductsTab
                   isActive={activeTab === SaleDetailsPageTab.products}
                   changeTab={onTabClick}
                 >
-                  {i18n.t("Products ({{ number }})", {
-                    number: maybe(
-                      () => sale.products.totalCount.toString(),
-                      "…"
-                    )
-                  })}
+                  {intl.formatMessage(
+                    {
+                      defaultMessage: "Products ({quantity})",
+                      description: "number of products",
+                      id: "saleDetailsPageProductsQuantity"
+                    },
+                    {
+                      quantity: maybe(
+                        () => sale.products.totalCount.toString(),
+                        "…"
+                      )
+                    }
+                  )}
                 </ProductsTab>
               </TabContainer>
               <CardSpacer />
