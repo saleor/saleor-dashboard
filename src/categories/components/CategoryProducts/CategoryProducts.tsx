@@ -89,14 +89,14 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               <TableCell className={classes.textLeft}>
                 <FormattedMessage
                   defaultMessage="Name"
-                  description="product list: product name column header"
+                  description="product name"
                   id="categoryProductsNameHeader"
                 />
               </TableCell>
               <TableCell>
                 <FormattedMessage
                   defaultMessage="Type"
-                  description="product list: product type column header"
+                  description="product type"
                   id="categoryProductsTypeHeader"
                 />
               </TableCell>
