@@ -66,8 +66,8 @@ export const CategoryDetails: React.StatelessComponent<
     if (data.categoryDelete.errors.length === 0) {
       notify({
         text: intl.formatMessage({
-          defaultMessage: "Category removed",
-          id: "categoryDetailsCategoryRemoved"
+          defaultMessage: "Category deleted",
+          id: "categoryDetailsCategoryDeleted"
         })
       });
       navigate(categoryListUrl());
@@ -332,8 +332,8 @@ export const CategoryDetails: React.StatelessComponent<
                                   >
                                     <DialogContentText>
                                       <FormattedMessage
-                                        defaultMessage="Are you sure you want to remove {name}?"
-                                        description="remove category"
+                                        defaultMessage="Are you sure you want to delete {name}?"
+                                        description="delete category"
                                         id="categoryDetailsDeleteCategoryDialogContent"
                                         values={{
                                           name: (
@@ -349,7 +349,7 @@ export const CategoryDetails: React.StatelessComponent<
                                     </DialogContentText>
                                     <DialogContentText>
                                       <FormattedMessage
-                                        defaultMessage="Remember that this will also remove all products assigned to this category."
+                                        defaultMessage="Remember that this will also delete all products assigned to this category."
                                         id="categoryDetailsDeleteCategoryDialogContentAdditionalText"
                                       />
                                     </DialogContentText>
@@ -369,7 +369,7 @@ export const CategoryDetails: React.StatelessComponent<
                                       })
                                     }
                                     title={intl.formatMessage({
-                                      defaultMessage: "Remove categories",
+                                      defaultMessage: "Delete categories",
                                       description: "dialog title",
                                       id:
                                         "categoryDetailsDeleteSubcategoriesDialogTitle"
@@ -378,7 +378,7 @@ export const CategoryDetails: React.StatelessComponent<
                                   >
                                     <DialogContentText>
                                       <FormattedMessage
-                                        defaultMessage="Are you sure you want to remove {counter, plural,
+                                        defaultMessage="Are you sure you want to delete {counter, plural,
                                           one {this attribute}
                                           other {{displayQuantity} categories}
                                         }?"
@@ -393,7 +393,7 @@ export const CategoryDetails: React.StatelessComponent<
                                     </DialogContentText>
                                     <DialogContentText>
                                       <FormattedMessage
-                                        defaultMessage="Remember that this will also remove all products assigned to this category."
+                                        defaultMessage="Remember that this will also delete all products assigned to this category."
                                         id="categoryDetailsDeleteCategoriesDialogContentAdditionalText"
                                       />
                                     </DialogContentText>
@@ -410,7 +410,7 @@ export const CategoryDetails: React.StatelessComponent<
                                       })
                                     }
                                     title={intl.formatMessage({
-                                      defaultMessage: "Remove products",
+                                      defaultMessage: "Delete products",
                                       description: "dialog title",
                                       id:
                                         "categoryDetailsDeleteProductsDialogTitle"
@@ -420,7 +420,7 @@ export const CategoryDetails: React.StatelessComponent<
                                     {" "}
                                     <DialogContentText>
                                       <FormattedMessage
-                                        defaultMessage="Are you sure you want to remove {counter, plural,
+                                        defaultMessage="Are you sure you want to delete {counter, plural,
                                           one {this attribute}
                                           other {{displayQuantity} products}
                                         }?"
