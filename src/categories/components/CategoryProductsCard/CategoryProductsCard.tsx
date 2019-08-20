@@ -37,7 +37,7 @@ export const CategoryProductsCard: React.StatelessComponent<
         title={intl.formatMessage(
           {
             defaultMessage: "Products in {name}",
-            description: "products in category section header",
+            description: "products in category, section header",
             id: "categoryProductsCardHeader"
           },
           {

@@ -12,6 +12,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import { commonMessages } from "@saleor/intl";
 import { PAGINATE_BY } from "../../config";
 import { getMutationState, maybe } from "../../misc";
 import { TypedProductBulkDeleteMutation } from "../../products/mutations";
@@ -65,8 +66,8 @@ export const CategoryDetails: React.StatelessComponent<
     if (data.categoryDelete.errors.length === 0) {
       notify({
         text: intl.formatMessage({
-          defaultMessage: "Category deleted",
-          id: "categoryDetailsCategoryDeleted"
+          defaultMessage: "Category removed",
+          id: "categoryDetailsCategoryRemoved"
         })
       });
       navigate(categoryListUrl());
@@ -142,10 +143,7 @@ export const CategoryDetails: React.StatelessComponent<
                     if (data.categoryBulkDelete.errors.length === 0) {
                       closeModal();
                       notify({
-                        text: intl.formatMessage({
-                          defaultMessage: "Categories removed",
-                          id: "categoryDetailsCategoriesRemoved"
-                        })
+                        text: intl.formatMessage(commonMessages.savedChanges)
                       });
                       refetch();
                       reset();
@@ -156,10 +154,7 @@ export const CategoryDetails: React.StatelessComponent<
                     if (data.productBulkDelete.errors.length === 0) {
                       closeModal();
                       notify({
-                        text: intl.formatMessage({
-                          defaultMessage: "Products removed",
-                          id: "categoryDetailsProductsRemoved"
-                        })
+                        text: intl.formatMessage(commonMessages.savedChanges)
                       });
                       refetch();
                       reset();

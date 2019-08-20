@@ -122,21 +122,20 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
             <TableCell className={classes.colName}>
               <FormattedMessage
                 defaultMessage="Category Name"
-                description="category list: name column header"
                 id="categoryListNameColumnHeader"
               />
             </TableCell>
             <TableCell className={classes.colSubcategories}>
               <FormattedMessage
                 defaultMessage="Subcategories"
-                description="category list: subcategories column header"
+                description="number of subcategories"
                 id="categoryListSubcategoriesColumnHeader"
               />
             </TableCell>
             <TableCell className={classes.colProducts}>
               <FormattedMessage
                 defaultMessage="No. Products"
-                description="category list: number of products column header"
+                description="number of products in category"
                 id="categoryListNumberOfProductsColumnHeader"
               />
             </TableCell>

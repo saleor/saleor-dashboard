@@ -164,7 +164,7 @@ export const CategoryUpdatePage: React.StatelessComponent<
             >
               <FormattedMessage
                 defaultMessage="Subcategories"
-                description="category list: number of subcategories column header"
+                description="number of subcategories in category"
                 id="categoryUpdatePageSubcategoriesColumnHeader"
               />
             </CategoriesTab>
@@ -174,7 +174,7 @@ export const CategoryUpdatePage: React.StatelessComponent<
             >
               <FormattedMessage
                 defaultMessage="Products"
-                description="category list: number of products column header"
+                description="number of products in category"
                 id="categoryUpdatePageProductsColumnHeader"
               />
             </ProductsTab>
