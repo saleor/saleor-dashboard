@@ -383,10 +383,14 @@ export const CategoryDetails: React.StatelessComponent<
                                   >
                                     <DialogContentText>
                                       <FormattedMessage
-                                        defaultMessage="Are you sure you want to remove {number} categories?"
+                                        defaultMessage="Are you sure you want to remove {counter, plural,
+                                          one {this attribute}
+                                          other {{displayQuantity} categories}
+                                        }?"
                                         id="categoryDetailsDeleteCategoriesDialogContent"
                                         values={{
-                                          number: (
+                                          counter: params.ids.length,
+                                          displayQuantity: (
                                             <strong>{params.ids.length}</strong>
                                           )
                                         }}
@@ -421,10 +425,14 @@ export const CategoryDetails: React.StatelessComponent<
                                     {" "}
                                     <DialogContentText>
                                       <FormattedMessage
-                                        defaultMessage="Are you sure you want to remove {number} products?"
+                                        defaultMessage="Are you sure you want to remove {counter, plural,
+                                          one {this attribute}
+                                          other {{displayQuantity} products}
+                                        }?"
                                         id="categoryDetailsDeleteProductsDialogContent"
                                         values={{
-                                          number: (
+                                          counter: params.ids.length,
+                                          displayQuantity: (
                                             <strong>{params.ids.length}</strong>
                                           )
                                         }}

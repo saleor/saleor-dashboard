@@ -134,10 +134,14 @@ export const CategoryList: React.StatelessComponent<CategoryListProps> = ({
                     variant="delete"
                   >
                     <FormattedMessage
-                      defaultMessage="Are you sure you want to remove {number} categories?"
+                      defaultMessage="Are you sure you want to remove {counter, plural,
+                        one {this attribute}
+                        other {{displayQuantity} categories}
+                      }?"
                       id="categoryListDeleteCategoriesDialogContent"
                       values={{
-                        number: <strong>{params.ids.length}</strong>
+                        counter: params.ids.length,
+                        displayQuantity: <strong>{params.ids.length}</strong>
                       }}
                     />
                     <DialogContentText>
