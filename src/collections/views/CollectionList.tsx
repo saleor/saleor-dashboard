@@ -13,6 +13,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import CollectionListPage from "../components/CollectionListPage/CollectionListPage";
@@ -80,10 +81,7 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
         const handleCollectionBulkDelete = (data: CollectionBulkDelete) => {
           if (data.collectionBulkDelete.errors.length === 0) {
             notify({
-              text: intl.formatMessage({
-                defaultMessage: "Removed collections",
-                id: "collectionListRemovedCollections"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             refetch();
             reset();
@@ -94,10 +92,7 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
         const handleCollectionBulkPublish = (data: CollectionBulkPublish) => {
           if (data.collectionBulkPublish.errors.length === 0) {
             notify({
-              text: intl.formatMessage({
-                defaultMessage: "Changed publication status",
-                id: "collectionListChangedPublication"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             refetch();
             reset();
@@ -207,7 +202,10 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                       >
                         <DialogContentText>
                           <FormattedMessage
-                            defaultMessage="Are you sure you want to publish {number} collections?"
+                            defaultMessage="Are you sure you want to publish {counter, plural,
+                              one {this collection}
+                              other {{displayQuantity} collections}
+                            }?"
                             id="collectionListPublishCollectionsDialogContent"
                             values={{
                               number: params.ids.length
@@ -239,7 +237,10 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                       >
                         <DialogContentText>
                           <FormattedMessage
-                            defaultMessage="Are you sure you want to unpublish {number} collections?"
+                            defaultMessage="Are you sure you want to unpublish {counter, plural,
+                              one {this collection}
+                              other {{displayQuantity} collections}
+                            }?"
                             id="collectionListUnpublishCollectionsDialogContent"
                             values={{
                               number: params.ids.length
@@ -263,15 +264,18 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                         }
                         variant="delete"
                         title={intl.formatMessage({
-                          defaultMessage: "Remove collections",
+                          defaultMessage: "Delete collections",
                           description: "dialog title",
-                          id: "collectionListRemoveCollectionsDialogTitle"
+                          id: "collectionListDeleteCollectionsDialogTitle"
                         })}
                       >
                         <DialogContentText>
                           <FormattedMessage
-                            defaultMessage="Are you sure you want to remove {number} collections?"
-                            id="collectionListRemoveCollectionsDialogContent"
+                            defaultMessage="Are you sure you want to delete {counter, plural,
+                              one {this collection}
+                              other {{displayQuantity} collections}
+                            }?"
+                            id="collectionListDeleteCollectionsDialogContent"
                             values={{
                               number: params.ids.length
                             }}

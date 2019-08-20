@@ -86,21 +86,19 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
             <TableCell className={classes.colName}>
               <FormattedMessage
                 defaultMessage="Category Name"
-                description="collection list: name column header"
                 id="collectionListNameColumnHeader"
               />
             </TableCell>
             <TableCell className={classes.colProducts}>
               <FormattedMessage
-                defaultMessage="No. Products"
-                description="collection list: number of products column header"
+                defaultMessage="No. of Products"
                 id="collectionListProductsColumnHeader"
               />
             </TableCell>
             <TableCell className={classes.colAvailability}>
               <FormattedMessage
                 defaultMessage="Availability"
-                description="collection list: availability column header"
+                description="collection availability"
                 id="collectionListAvailabilityColumnHeader"
               />
             </TableCell>

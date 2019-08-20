@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
-import { useIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
@@ -12,6 +12,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import { commonMessages } from "@saleor/intl";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "../../config";
 import SearchProducts from "../../containers/SearchProducts";
 import { getMutationState, maybe } from "../../misc";
@@ -78,10 +79,7 @@ export const CollectionDetails: React.StatelessComponent<
         const handleCollectionUpdate = (data: CollectionUpdate) => {
           if (data.collectionUpdate.errors.length === 0) {
             notify({
-              text: intl.formatMessage({
-                defaultMessage: "Updated collection",
-                id: "collectionDetailsUpdatedCollection"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(collectionUrl(id));
           } else {
@@ -113,8 +111,8 @@ export const CollectionDetails: React.StatelessComponent<
           if (data.collectionRemoveProducts.errors.length === 0) {
             notify({
               text: intl.formatMessage({
-                defaultMessage: "Removed product from collection",
-                id: "collectionDetailsRemovedProduct"
+                defaultMessage: "Deleted product from collection",
+                id: "collectionDetailsDeletedProduct"
               })
             });
             reset();
@@ -126,8 +124,8 @@ export const CollectionDetails: React.StatelessComponent<
           if (data.collectionDelete.errors.length === 0) {
             notify({
               text: intl.formatMessage({
-                defaultMessage: "Removed collection",
-                id: "collectionDetailsRemovedCollection"
+                defaultMessage: "Deleted collection",
+                id: "collectionDetailsDeletedCollection"
               })
             });
             navigate(collectionListUrl());
@@ -279,7 +277,7 @@ export const CollectionDetails: React.StatelessComponent<
                       >
                         <FormattedMessage
                           defaultMessage="Unassign"
-                          description="unassign product from collection button"
+                          description="unassign product from collection, button"
                           id="collectionDetailsUnassignButton"
                         />
                       </Button>
@@ -318,19 +316,18 @@ export const CollectionDetails: React.StatelessComponent<
                     onConfirm={() => removeCollection.mutate({ id })}
                     open={params.action === "remove"}
                     title={intl.formatMessage({
-                      defaultMessage: "Remove Collection",
+                      defaultMessage: "Delete Collection",
                       description: "dialog title",
-                      id: "collectionDetailsRemoveCollectionDialogTitle"
+                      id: "collectionDetailsDeleteCollectionDialogTitle"
                     })}
                     variant="delete"
                   >
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Are you sure you want to remove {name}?"
-                        description="remove image"
-                        id="collectionDetailsRemoveCollectionDialogContent"
+                        defaultMessage="Are you sure you want to delete {collectionName}?"
+                        id="collectionDetailsDeleteCollectionDialogContent"
                         values={{
-                          name: (
+                          collectionName: (
                             <strong>
                               {maybe(() => data.collection.name, "...")}
                             </strong>
@@ -358,7 +355,10 @@ export const CollectionDetails: React.StatelessComponent<
                   >
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Are you sure you want to unassign {number} products?"
+                        defaultMessage="Are you sure you want to unassign {counter, plural,
+                          one {this product}
+                          other {{displayQuantity} products}
+                        }?"
                         id="collectionDetailsUnassignProductsDialogContent"
                         values={{
                           number: <strong>{params.ids.length}</strong>
@@ -379,16 +379,16 @@ export const CollectionDetails: React.StatelessComponent<
                     }
                     open={params.action === "removeImage"}
                     title={intl.formatMessage({
-                      defaultMessage: "Remove image",
+                      defaultMessage: "Delete image",
                       description: "dialog title",
-                      id: "collectionDetailsRemoveImageTitle"
+                      id: "collectionDetailsDeleteImageTitle"
                     })}
                     variant="delete"
                   >
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Are you sure you want to remove collection's image?"
-                        id="collectionDetailsRemoveImageContent"
+                        defaultMessage="Are you sure you want to delete collection's image?"
+                        id="collectionDetailsDeleteImageContent"
                       />
                     </DialogContentText>
                   </ActionDialog>

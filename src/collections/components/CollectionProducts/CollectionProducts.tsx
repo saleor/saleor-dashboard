@@ -131,7 +131,7 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
               <span className={classes.colNameLabel}>
                 <FormattedMessage
                   defaultMessage="Name"
-                  description="product list: product name column header"
+                  description="product name"
                   id="collectionProductsNameColumnHeader"
                 />
               </span>
@@ -139,14 +139,14 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
             <TableCell className={classes.colType}>
               <FormattedMessage
                 defaultMessage="Type"
-                description="product list: product type column header"
+                description="product type"
                 id="collectionProductsTypeProductList"
               />
             </TableCell>
             <TableCell className={classes.colPublished}>
               <FormattedMessage
                 defaultMessage="Published"
-                description="product list: published column header"
+                description="product is published"
                 id="collectionPublishedColumnHeader"
               />
             </TableCell>
