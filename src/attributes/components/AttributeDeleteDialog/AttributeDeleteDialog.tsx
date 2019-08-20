@@ -37,11 +37,11 @@ const AttributeDeleteDialog: React.FC<AttributeDeleteDialogProps> = ({
     >
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="Are you sure you want to delete {name}?"
+          defaultMessage="Are you sure you want to delete {attributeName}?"
           description="dialog content"
           id="attributeDeleteDialogContent"
           values={{
-            name: <strong>{name}</strong>
+            attributeName: <strong>{name}</strong>
           }}
         />
       </DialogContentText>
