@@ -134,18 +134,18 @@ export const CustomerDetailsView: React.StatelessComponent<
                       onClose={() => navigate(customerUrl(id), true)}
                       onConfirm={() => removeCustomer()}
                       title={intl.formatMessage({
-                        defaultMessage: "Remove customer",
+                        defaultMessage: "Delete customer",
                         description: "dialog header",
-                        id: "customerDetailsRemoveCustomerDialogHeader"
+                        id: "customerDetailsDeleteCustomerDialogHeader"
                       })}
                       variant="delete"
                       open={params.action === "remove"}
                     >
                       <DialogContentText>
                         <FormattedMessage
-                          defaultMessage="Are you sure you want to remove {email}?"
-                          description="remove customer dialog content"
-                          id="customerDetailsRemoveCustomerDialogContent"
+                          defaultMessage="Are you sure you want to delete {email}?"
+                          description="delete customer, dialog content"
+                          id="customerDetailsDeleteCustomerDialogContent"
                           values={{
                             email: (
                               <strong>

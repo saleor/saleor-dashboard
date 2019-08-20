@@ -1,6 +1,6 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
-import { useIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -211,9 +211,9 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                               open={params.action === "remove"}
                               variant="delete"
                               title={intl.formatMessage({
-                                defaultMessage: "Remove Address",
+                                defaultMessage: "Delete Address",
                                 description: "dialog header",
-                                id: "customerAddressesRemoveAddressDialogHeader"
+                                id: "customerAddressesDeleteAddressDialogHeader"
                               })}
                               confirmButtonState={removeAddressTransitionState}
                               onClose={closeModal}
@@ -227,8 +227,8 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                             >
                               <DialogContentText>
                                 <FormattedMessage
-                                  defaultMessage="Are you sure you want to remove this address from users address book?"
-                                  id="customerAddressesRemoveAddressDialogContent"
+                                  defaultMessage="Are you sure you want to delete this address from users address book?"
+                                  id="customerAddressesDeleteAddressDialogContent"
                                 />
                               </DialogContentText>
                             </ActionDialog>

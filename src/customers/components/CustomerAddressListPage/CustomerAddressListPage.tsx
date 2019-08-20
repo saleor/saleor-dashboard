@@ -75,7 +75,7 @@ const CustomerAddressListPage = withStyles(styles, {
         <AppHeader onBack={onBack}>
           <FormattedMessage
             defaultMessage="{fullName} Details"
-            description="header"
+            description="customer details, header"
             id="customerAddressListPageAppHeader"
             values={{
               fullName
@@ -87,7 +87,7 @@ const CustomerAddressListPage = withStyles(styles, {
             title={intl.formatMessage(
               {
                 defaultMessage: "{fullName}'s Address Book",
-                description: "header",
+                description: "customer's address book, header",
                 id: "customerAddressListPageHeader"
               },
               {

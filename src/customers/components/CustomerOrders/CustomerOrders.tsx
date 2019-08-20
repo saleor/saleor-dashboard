@@ -75,28 +75,28 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
               <TableCell padding="dense">
                 <FormattedMessage
                   defaultMessage="No. of Order"
-                  description="customer's order list: number of order column header"
+                  description="number of order"
                   id="customerOrdersNoOfOrderColumnHeader"
                 />
               </TableCell>
               <TableCell padding="dense">
                 <FormattedMessage
                   defaultMessage="Date"
-                  description="customer's order list: order date column header"
+                  description="order placement date"
                   id="customerOrdersDateColumnHeader"
                 />
               </TableCell>
               <TableCell padding="dense">
                 <FormattedMessage
                   defaultMessage="Status"
-                  description="customer's order list: status column header"
+                  description="order status"
                   id="customerOrdersStatusColumnHeader"
                 />
               </TableCell>
               <TableCell className={classes.textRight} padding="dense">
                 <FormattedMessage
                   defaultMessage="Total"
-                  description="customer's order list: total amount column header"
+                  description="order total amount"
                   id="customerOrdersTotalColumnHeader"
                 />
               </TableCell>

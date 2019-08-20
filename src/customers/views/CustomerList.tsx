@@ -12,6 +12,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import CustomerListPage from "../components/CustomerListPage";
@@ -67,10 +68,7 @@ export const CustomerList: React.StatelessComponent<CustomerListProps> = ({
         const handleBulkCustomerDelete = (data: BulkRemoveCustomers) => {
           if (data.customerBulkDelete.errors.length === 0) {
             notify({
-              text: intl.formatMessage({
-                defaultMessage: "Customers removed",
-                id: "customerListRemovedCustomers"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             reset();
             refetch();
@@ -139,17 +137,21 @@ export const CustomerList: React.StatelessComponent<CustomerListProps> = ({
                     }
                     variant="delete"
                     title={intl.formatMessage({
-                      defaultMessage: "Remove customers",
+                      defaultMessage: "Delete customers",
                       description: "dialog header",
-                      id: "customerListRemoveCustomersDialogHeader"
+                      id: "customerListDeleteCustomersDialogHeader"
                     })}
                   >
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Are you sure you want to remove {number} customers?"
-                        id="customerListRemoveCustomersDialogContent"
+                        defaultMessage="Are you sure you want to delete {counter, plural,
+                          one {this customer}
+                          other {{displayQuantity} customers}
+                        }?"
+                        id="customerListDeleteCustomersDialogContent"
                         values={{
-                          number: params.ids.length
+                          counter: params.ids.length,
+                          displayQuantity: <strong>{params.ids.length}</strong>
                         }}
                       />
                     </DialogContentText>

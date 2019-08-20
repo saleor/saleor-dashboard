@@ -79,21 +79,18 @@ const CustomerList = withStyles(styles, { name: "CustomerList" })(
           <TableCell className={classes.colName}>
             <FormattedMessage
               defaultMessage="Customer Name"
-              description="customer list: column header"
               id="customerListCustomerNameColumnHeader"
             />
           </TableCell>
           <TableCell className={classes.colEmail}>
             <FormattedMessage
               defaultMessage="Customer Email"
-              description="customer list: column header"
               id="customerListCustomerEmailColumnHeader"
             />
           </TableCell>
           <TableCell className={classes.colOrders}>
             <FormattedMessage
-              defaultMessage="No. Orders"
-              description="customer list: column header"
+              defaultMessage="No. of Orders"
               id="customerListOrdersColumnHeader"
             />
           </TableCell>

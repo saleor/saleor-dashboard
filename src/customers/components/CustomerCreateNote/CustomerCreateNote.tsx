@@ -53,7 +53,7 @@ const CustomerCreateNote: React.StatelessComponent<CustomerCreateNoteProps> = ({
           helperText={errors.note}
           label={intl.formatMessage({
             defaultMessage: "Note",
-            description: "note about customer input label",
+            description: "note about customer",
             id: "customerCreateNoteInputLabel"
           })}
           value={data.note}
