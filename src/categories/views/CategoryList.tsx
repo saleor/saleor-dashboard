@@ -146,7 +146,7 @@ export const CategoryList: React.StatelessComponent<CategoryListProps> = ({
                     />
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Remember that this will also delete all products assigned to this category."
+                        defaultMessage="Remember this will also delete all products assigned to this category."
                         id="categoryListDeleteCategoriesDialogContentAdditionalText"
                       />
                     </DialogContentText>

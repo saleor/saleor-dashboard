@@ -47,11 +47,11 @@ const CategoryDeleteDialog = withStyles(styles, {
     <DialogContent>
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="Are you sure you want to remove {name}?"
+          defaultMessage="Are you sure you want to delete {categoryName}?"
           description="delete category"
-          id="<categoryDeleteDialogContent<"
+          id="categoryDeleteDialogContent"
           values={{
-            name: <strong>{name}</strong>
+            categoryName: <strong>{name}</strong>
           }}
         />
       </DialogContentText>
