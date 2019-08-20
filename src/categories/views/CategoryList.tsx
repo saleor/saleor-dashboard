@@ -127,14 +127,14 @@ export const CategoryList: React.StatelessComponent<CategoryListProps> = ({
                     }
                     open={params.action === "delete"}
                     title={intl.formatMessage({
-                      defaultMessage: "Remove categories",
+                      defaultMessage: "Delete categories",
                       description: "dialog title",
                       id: "categoryListDeleteSubcategoriesDialogTitle"
                     })}
                     variant="delete"
                   >
                     <FormattedMessage
-                      defaultMessage="Are you sure you want to remove {counter, plural,
+                      defaultMessage="Are you sure you want to delete {counter, plural,
                         one {this attribute}
                         other {{displayQuantity} categories}
                       }?"
@@ -146,7 +146,7 @@ export const CategoryList: React.StatelessComponent<CategoryListProps> = ({
                     />
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Remember that this will also remove all products assigned to this category."
+                        defaultMessage="Remember that this will also delete all products assigned to this category."
                         id="categoryListDeleteCategoriesDialogContentAdditionalText"
                       />
                     </DialogContentText>
