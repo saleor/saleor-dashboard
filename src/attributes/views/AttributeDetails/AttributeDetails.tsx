@@ -67,7 +67,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     if (data.attributeDelete.errors.length === 0) {
       notify({
         text: intl.formatMessage({
-          defaultMessage: "Attribute removed",
+          defaultMessage: "Attribute deleted",
           id: "attributeDetailsAttributeRemoveSuccess"
         })
       });
@@ -78,9 +78,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     if (data.attributeValueDelete.errors.length === 0) {
       notify({
         text: intl.formatMessage({
-          defaultMessage: "Value removed",
-          description: "attribute value removed",
-          id: "attributeDetailsAttributeValueRemoveSuccess"
+          defaultMessage: "Value deleted",
+          description: "attribute value deleted",
+          id: "attributeDetailsAttributeValueDeleteSuccess"
         })
       });
       closeModal();
