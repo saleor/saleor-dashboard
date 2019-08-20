@@ -54,8 +54,7 @@ export const CategoryDetailsForm = withStyles(styles, {
               <TextField
                 classes={{ root: classes.root }}
                 label={intl.formatMessage({
-                  defaultMessage: "Name",
-                  description: "category name",
+                  defaultMessage: "Category Name",
                   id: "categoryDetailsFormNameInputLabel"
                 })}
                 name="name"
@@ -71,7 +70,10 @@ export const CategoryDetailsForm = withStyles(styles, {
               disabled={disabled}
               error={!!errors.descriptionJson}
               helperText={errors.descriptionJson}
-              label={intl.formatMessage(commonMessages.description)}
+              label={intl.formatMessage({
+                defaultMessage: "Category Description",
+                id: "categoryDetailsFormDescriptionInputLabel"
+              })}
               initial={maybe(() => JSON.parse(category.descriptionJson))}
               name="description"
               onChange={onChange}

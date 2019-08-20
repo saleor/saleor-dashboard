@@ -134,8 +134,8 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
             </TableCell>
             <TableCell className={classes.colProducts}>
               <FormattedMessage
-                defaultMessage="No. Products"
-                description="number of products in category"
+                defaultMessage="No. of Products"
+                description="number of products"
                 id="categoryListNumberOfProductsColumnHeader"
               />
             </TableCell>

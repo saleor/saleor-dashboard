@@ -31,17 +31,18 @@ export const CategoryProductsCard: React.StatelessComponent<
   toolbar
 }) => {
   const intl = useIntl();
+
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage(
           {
-            defaultMessage: "Products in {name}",
-            description: "products in category, section header",
+            defaultMessage: "Products in {categoryName}",
+            description: "section header",
             id: "categoryProductsCardHeader"
           },
           {
-            name: categoryName
+            categoryName
           }
         )}
         toolbar={

@@ -332,11 +332,10 @@ export const CategoryDetails: React.StatelessComponent<
                                   >
                                     <DialogContentText>
                                       <FormattedMessage
-                                        defaultMessage="Are you sure you want to delete {name}?"
-                                        description="delete category"
+                                        defaultMessage="Are you sure you want to delete {categoryName}?"
                                         id="categoryDetailsDeleteCategoryDialogContent"
                                         values={{
-                                          name: (
+                                          categoryName: (
                                             <strong>
                                               {maybe(
                                                 () => data.category.name,
@@ -349,7 +348,7 @@ export const CategoryDetails: React.StatelessComponent<
                                     </DialogContentText>
                                     <DialogContentText>
                                       <FormattedMessage
-                                        defaultMessage="Remember that this will also delete all products assigned to this category."
+                                        defaultMessage="Remember this will also delete all products assigned to this category."
                                         id="categoryDetailsDeleteCategoryDialogContentAdditionalText"
                                       />
                                     </DialogContentText>
@@ -393,7 +392,7 @@ export const CategoryDetails: React.StatelessComponent<
                                     </DialogContentText>
                                     <DialogContentText>
                                       <FormattedMessage
-                                        defaultMessage="Remember that this will also delete all products assigned to this category."
+                                        defaultMessage="Remember this will also delete all products assigned to this category."
                                         id="categoryDetailsDeleteCategoriesDialogContentAdditionalText"
                                       />
                                     </DialogContentText>
