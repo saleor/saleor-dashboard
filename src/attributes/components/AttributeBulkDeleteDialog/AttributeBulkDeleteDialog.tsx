@@ -25,7 +25,7 @@ const AttributeBulkDeleteDialog: React.StatelessComponent<
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        defaultMessage: "Remove attributes",
+        defaultMessage: "Delete attributes",
         description: "dialog title",
         id: "attributeBulkDeleteDialogTitle"
       })}
@@ -33,7 +33,7 @@ const AttributeBulkDeleteDialog: React.StatelessComponent<
     >
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="Are you sure you want to remove {counter, plural,
+          defaultMessage="Are you sure you want to delete {counter, plural,
             one {this attribute}
             other {{displayQuantity} attributes}
           }?"

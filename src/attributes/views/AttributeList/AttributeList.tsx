@@ -73,9 +73,9 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
             closeModal();
             notify({
               text: intl.formatMessage({
-                defaultMessage: "Attributes successfully removed",
-                description: "remove multiple attributes",
-                id: "attributeListAttributesRemoved"
+                defaultMessage: "Attributes successfully delete",
+                description: "deleted multiple attributes",
+                id: "attributeListAttributesDeleted"
               })
             });
             reset();

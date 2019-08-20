@@ -34,7 +34,7 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
       onConfirm={onConfirm}
       variant="delete"
       title={intl.formatMessage({
-        defaultMessage: "Remove attribute value",
+        defaultMessage: "Delete attribute value",
         description: "dialog title",
         id: "attributeValueDeleteDialogTitle"
       })}
@@ -42,7 +42,7 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
       <DialogContentText>
         {useName ? (
           <FormattedMessage
-            defaultMessage='Are you sure you want to remove "{ name }" value? If you remove it you won’t be able to assign it to any of the products with "{ attributeName }" attribute.'
+            defaultMessage='Are you sure you want to delete "{ name }" value? If you remove it you won’t be able to assign it to any of the products with "{ attributeName }" attribute.'
             id="attributeValueDeleteDialogContentWithAttributeName"
             values={{
               attributeName,
@@ -51,8 +51,8 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
           />
         ) : (
           <FormattedMessage
-            defaultMessage='Are you sure you want to remove "{ name }" value?'
-            description="remove attribute value"
+            defaultMessage='Are you sure you want to delete "{ name }" value?'
+            description="delete attribute value"
             id="attributeValueDeleteDialogContentWithoutAttributeName"
             values={{
               name
