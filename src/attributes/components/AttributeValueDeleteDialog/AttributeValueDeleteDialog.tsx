@@ -1,9 +1,9 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import i18n from "@saleor/i18n";
 
 export interface AttributeValueDeleteDialogProps {
   attributeName: string;
@@ -23,30 +23,46 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
   onClose,
   onConfirm,
   open
-}) => (
-  <ActionDialog
-    open={open}
-    onClose={onClose}
-    confirmButtonState={confirmButtonState}
-    onConfirm={onConfirm}
-    variant="delete"
-    title={i18n.t("Remove attribute value")}
-  >
-    <DialogContentText>
-      {useName
-        ? i18n.t(
-            'Are you sure you want to remove "{{ name }}" value? If you remove it you won’t be able to assign it to any of the products with "{{ attributeName }}" attribute.',
-            {
+}) => {
+  const intl = useIntl();
+
+  return (
+    <ActionDialog
+      open={open}
+      onClose={onClose}
+      confirmButtonState={confirmButtonState}
+      onConfirm={onConfirm}
+      variant="delete"
+      title={intl.formatMessage({
+        defaultMessage: "Remove attribute value",
+        description: "dialog title",
+        id: "attributeValueDeleteDialogTitle"
+      })}
+    >
+      <DialogContentText>
+        {useName ? (
+          <FormattedMessage
+            defaultMessage='Are you sure you want to remove "{ name }" value? If you remove it you won’t be able to assign it to any of the products with "{ attributeName }" attribute.'
+            id="attributeValueDeleteDialogContentWithAttributeName"
+            values={{
               attributeName,
               name
-            }
-          )
-        : i18n.t('Are you sure you want to remove "{{ name }}" value?', {
-            name
-          })}
-    </DialogContentText>
-  </ActionDialog>
-);
+            }}
+          />
+        ) : (
+          <FormattedMessage
+            defaultMessage='Are you sure you want to remove "{ name }" value?'
+            description="remove attribute value"
+            id="attributeValueDeleteDialogContentWithoutAttributeName"
+            values={{
+              name
+            }}
+          />
+        )}
+      </DialogContentText>
+    </ActionDialog>
+  );
+};
 
 AttributeValueDeleteDialog.displayName = "AttributeValueDeleteDialog";
 export default AttributeValueDeleteDialog;

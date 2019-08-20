@@ -20,6 +20,7 @@
 *.css
 *.log
 *.pyc
+*.mo
 local_settings.py
 __pycache__/
 build/

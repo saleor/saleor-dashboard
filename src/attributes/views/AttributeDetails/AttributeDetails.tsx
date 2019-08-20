@@ -1,8 +1,9 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "@saleor/i18n";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
@@ -40,6 +41,7 @@ interface AttributeDetailsProps {
 const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const closeModal = () =>
     navigate(
@@ -63,39 +65,54 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
   const handleDelete = (data: AttributeDelete) => {
     if (data.attributeDelete.errors.length === 0) {
-      notify({ text: i18n.t("Attribute removed") });
+      notify({
+        text: intl.formatMessage({
+          defaultMessage: "Attribute removed",
+          id: "attributeDetailsAttributeRemoveSuccess"
+        })
+      });
       navigate(attributeListUrl());
     }
   };
   const handleValueDelete = (data: AttributeValueDelete) => {
     if (data.attributeValueDelete.errors.length === 0) {
-      notify({ text: i18n.t("Value removed") });
+      notify({
+        text: intl.formatMessage({
+          defaultMessage: "Value removed",
+          description: "attribute value removed",
+          id: "attributeDetailsAttributeValueRemoveSuccess"
+        })
+      });
       closeModal();
     }
   };
   const handleUpdate = (data: AttributeUpdate) => {
     if (data.attributeUpdate.errors.length === 0) {
-      notify({ text: i18n.t("Saved changes") });
+      notify({ text: intl.formatMessage(commonMessages.savedChanges) });
     }
   };
   const handleValueUpdate = (data: AttributeValueUpdate) => {
     if (data.attributeValueUpdate.errors.length === 0) {
-      notify({ text: i18n.t("Saved changes") });
+      notify({ text: intl.formatMessage(commonMessages.savedChanges) });
       closeModal();
     }
   };
   const handleValueCreate = (data: AttributeValueCreate) => {
     if (data.attributeValueCreate.errors.length === 0) {
-      notify({ text: i18n.t("Added new value") });
+      notify({
+        text: intl.formatMessage({
+          defaultMessage: "Added new value",
+          description: "added new attribute value",
+          id: "attributeDetailsAttributeValueCreateSuccess"
+        })
+      });
       closeModal();
     }
   };
   const handleValueReorderMutation = (data: AttributeValueReorder) => {
     if (data.attributeReorderValues.errors.length !== 0) {
       notify({
-        text: i18n.t("Error: {{ errorMessage }}", {
-          errorMessage: data.attributeReorderValues.errors[0].message
-        })
+        text: data.attributeReorderValues.errors[0].message
       });
     }
   };

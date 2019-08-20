@@ -1,9 +1,9 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import i18n from "@saleor/i18n";
 
 export interface AttributeDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -19,27 +19,35 @@ const AttributeDeleteDialog: React.FC<AttributeDeleteDialogProps> = ({
   onClose,
   onConfirm,
   open
-}) => (
-  <ActionDialog
-    open={open}
-    onClose={onClose}
-    confirmButtonState={confirmButtonState}
-    onConfirm={onConfirm}
-    variant="delete"
-    title={i18n.t("Remove attribute")}
-  >
-    <DialogContentText
-      dangerouslySetInnerHTML={{
-        __html: i18n.t(
-          "Are you sure you want to remove <strong>{{ name }}</strong>?",
-          {
-            name
-          }
-        )
-      }}
-    />
-  </ActionDialog>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <ActionDialog
+      open={open}
+      onClose={onClose}
+      confirmButtonState={confirmButtonState}
+      onConfirm={onConfirm}
+      variant="delete"
+      title={intl.formatMessage({
+        defaultMessage: "Remove attribute",
+        description: "dialog title",
+        id: "attributeDeleteDialogTitle"
+      })}
+    >
+      <DialogContentText>
+        <FormattedMessage
+          defaultMessage="Are you sure you want to remove {name}?"
+          description="dialog content"
+          id="attributeDeleteDialogContent"
+          values={{
+            name: <strong>{name}</strong>
+          }}
+        />
+      </DialogContentText>
+    </ActionDialog>
+  );
+};
 
 AttributeDeleteDialog.displayName = "AttributeDeleteDialog";
 export default AttributeDeleteDialog;
