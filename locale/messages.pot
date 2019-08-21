@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T14:03:17.364Z\n"
+"POT-Creation-Date: 2019-08-26T14:18:06.591Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -2587,36 +2587,36 @@ msgctxt "vouchers section name"
 msgid "Vouchers"
 msgstr ""
 
+#: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
+#. [homeProductListCardOrders] - number of ordered products
+#. defaultMessage is:
+#. {amount,plural,one{One ordered} other{{amount} Ordered}}
+msgctxt "number of ordered products"
+msgid "{amount,plural,one{One ordered} other{{amount} Ordered}}"
+msgstr ""
+
 #: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
 #. [homeNotificationTableOrders]
 #. defaultMessage is:
-#. {amount} Orders are ready to fulfill
+#. {amount,plural,one{One order} other{{amount} Orders}} are ready to fulfill
 msgctxt "description"
-msgid "{amount} Orders are ready to fulfill"
+msgid "{amount,plural,one{One order} other{{amount} Orders}} are ready to fulfill"
 msgstr ""
 
 #: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
 #. [homeNotificationTablePayments]
 #. defaultMessage is:
-#. {amount} Payments to capture
+#. {amount,plural,one{One payment} other{{amount} Payments}} to capture
 msgctxt "description"
-msgid "{amount} Payments to capture"
+msgid "{amount,plural,one{One payment} other{{amount} Payments}} to capture"
 msgstr ""
 
 #: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
 #. [homeNotificationTableProducts]
 #. defaultMessage is:
-#. {amount} Products out of stock
+#. {amount,plural,one{One product} other{{amount} Products}} out of stock
 msgctxt "description"
-msgid "{amount} Products out of stock"
-msgstr ""
-
-#: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
-#. [homeProductListCardOrders] - number of variant orders
-#. defaultMessage is:
-#. {count} Orders
-msgctxt "number of variant orders"
-msgid "{count} Orders"
+msgid "{amount,plural,one{One product} other{{amount} Products}} out of stock"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
