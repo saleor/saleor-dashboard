@@ -78,7 +78,7 @@ export const ConfigurationPage = withStyles(styles, {
   name: "ConfigurationPage"
 })(({ classes, menu, user, onSectionClick }: ConfigurationPageProps) => (
   <Container>
-    <PageHeader title={i18n.t("Configure")} />
+    <PageHeader title={i18n.t("Configuration")} />
     <div className={classes.root}>
       {menu
         .filter(menuItem =>

@@ -307,7 +307,7 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
             <a
               className={classes.menuListItem}
               href={createHref(configurationMenuUrl)}
-              onClick={event => onMenuItemClick(configurationMenuUrl, event)}
+              onClick={event => closeSubMenu(configurationMenuUrl, event)}
             >
               <div className={classes.menuItemHover}>
                 <SVG
@@ -317,12 +317,12 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
                   src={configureIcon}
                 />
                 <Typography
-                  aria-label="configure"
+                  aria-label="configuration"
                   className={classNames(classes.menuListItemText, {
                     [classes.menuListItemTextHide]: !isMenuSmall
                   })}
                 >
-                  {i18n.t("Configure")}
+                  {i18n.t("Configuration")}
                 </Typography>
               </div>
             </a>
