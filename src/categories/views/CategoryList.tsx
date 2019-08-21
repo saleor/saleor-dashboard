@@ -140,8 +140,10 @@ export const CategoryList: React.StatelessComponent<CategoryListProps> = ({
                       }?"
                       id="categoryListDeleteCategoriesDialogContent"
                       values={{
-                        counter: params.ids.length,
-                        displayQuantity: <strong>{params.ids.length}</strong>
+                        counter: maybe(() => params.ids.length),
+                        displayQuantity: (
+                          <strong>{maybe(() => params.ids.length)}</strong>
+                        )
                       }}
                     />
                     <DialogContentText>

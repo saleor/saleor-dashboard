@@ -361,7 +361,10 @@ export const CollectionDetails: React.StatelessComponent<
                         }?"
                         id="collectionDetailsUnassignProductsDialogContent"
                         values={{
-                          number: <strong>{params.ids.length}</strong>
+                          counter: maybe(() => params.ids.length),
+                          displayQuantity: (
+                            <strong>{maybe(() => params.ids.length)}</strong>
+                          )
                         }}
                       />
                     </DialogContentText>

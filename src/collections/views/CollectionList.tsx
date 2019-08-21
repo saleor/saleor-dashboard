@@ -208,7 +208,12 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                             }?"
                             id="collectionListPublishCollectionsDialogContent"
                             values={{
-                              number: params.ids.length
+                              counter: maybe(() => params.ids.length),
+                              displayQuantity: (
+                                <strong>
+                                  {maybe(() => params.ids.length)}
+                                </strong>
+                              )
                             }}
                           />
                         </DialogContentText>
@@ -243,7 +248,12 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                             }?"
                             id="collectionListUnpublishCollectionsDialogContent"
                             values={{
-                              number: params.ids.length
+                              counter: maybe(() => params.ids.length),
+                              displayQuantity: (
+                                <strong>
+                                  {maybe(() => params.ids.length)}
+                                </strong>
+                              )
                             }}
                           />
                         </DialogContentText>
@@ -277,7 +287,12 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                             }?"
                             id="collectionListDeleteCollectionsDialogContent"
                             values={{
-                              number: params.ids.length
+                              counter: maybe(() => params.ids.length),
+                              displayQuantity: (
+                                <strong>
+                                  {maybe(() => params.ids.length)}
+                                </strong>
+                              )
                             }}
                           />
                         </DialogContentText>
