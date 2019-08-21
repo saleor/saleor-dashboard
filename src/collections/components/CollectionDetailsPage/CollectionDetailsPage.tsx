@@ -1,5 +1,6 @@
 import { RawDraftContentState } from "draft-js";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
@@ -12,7 +13,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { ListActions, PageListProps } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
@@ -57,6 +58,8 @@ const CollectionDetailsPage: React.StatelessComponent<
   onSubmit,
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
+  const intl = useIntl();
+
   return (
     <Form
       initial={{
@@ -74,7 +77,9 @@ const CollectionDetailsPage: React.StatelessComponent<
     >
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Collections")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.collections)}
+          </AppHeader>
           <PageHeader title={maybe(() => collection.name)} />
           <Grid>
             <div>
@@ -104,12 +109,11 @@ const CollectionDetailsPage: React.StatelessComponent<
                 description={data.seoDescription}
                 disabled={disabled}
                 descriptionPlaceholder=""
-                helperText={i18n.t(
-                  "Add search engine title and description to make this collection easier to find",
-                  {
-                    context: "help text"
-                  }
-                )}
+                helperText={intl.formatMessage({
+                  defaultMessage:
+                    "Add search engine title and description to make this collection easier to find",
+                  id: "collectionSeo"
+                })}
                 title={data.seoTitle}
                 titlePlaceholder={maybe(() => collection.name)}
                 onChange={change}
@@ -128,8 +132,10 @@ const CollectionDetailsPage: React.StatelessComponent<
                     disabled={disabled}
                     name="isFeatured"
                     onChange={change}
-                    label={i18n.t("Feature on Homepage", {
-                      context: "button"
+                    label={intl.formatMessage({
+                      defaultMessage: "Feature on Homepage",
+                      description: "switch button",
+                      id: "collectionDetailsPageFeatureInputLabel"
                     })}
                   />
                 </VisibilityCard>

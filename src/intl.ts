@@ -1,6 +1,10 @@
 import { defineMessages } from "react-intl";
 
 export const commonMessages = defineMessages({
+  availability: {
+    defaultMessage: "Availability",
+    id: "availability"
+  },
   cancel: {
     defaultMessage: "Cancel",
     id: "cancel"
@@ -51,5 +55,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Categories",
     description: "categories section name",
     id: "categories"
+  },
+  collections: {
+    defaultMessage: "Collections",
+    description: "collections section name",
+    id: "collections"
   }
 });
