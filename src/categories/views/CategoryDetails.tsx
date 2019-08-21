@@ -383,9 +383,13 @@ export const CategoryDetails: React.StatelessComponent<
                                         }?"
                                         id="categoryDetailsDeleteCategoriesDialogContent"
                                         values={{
-                                          counter: params.ids.length,
+                                          counter: maybe(
+                                            () => params.ids.length
+                                          ),
                                           displayQuantity: (
-                                            <strong>{params.ids.length}</strong>
+                                            <strong>
+                                              {maybe(() => params.ids.length)}
+                                            </strong>
                                           )
                                         }}
                                       />
@@ -425,9 +429,13 @@ export const CategoryDetails: React.StatelessComponent<
                                         }?"
                                         id="categoryDetailsDeleteProductsDialogContent"
                                         values={{
-                                          counter: params.ids.length,
+                                          counter: maybe(
+                                            () => params.ids.length
+                                          ),
                                           displayQuantity: (
-                                            <strong>{params.ids.length}</strong>
+                                            <strong>
+                                              {maybe(() => params.ids.length)}
+                                            </strong>
                                           )
                                         }}
                                       />
