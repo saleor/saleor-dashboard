@@ -31,6 +31,7 @@ export interface AttributeValueCreate_attributeValueCreate_attribute {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;

@@ -25,6 +25,7 @@ export interface AttributeDetailsFragment {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;

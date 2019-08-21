@@ -4,7 +4,7 @@ module.exports = {
     includes: ["src/**/*.ts", "src/**/*.tsx"],
     name: "dashboard",
     service: {
-      endpoint: "localhost:8000/graphql/",
+      localSchemaFile: "schema.graphql",
       name: "saleor"
     }
   }

@@ -22,6 +22,7 @@ export const attributeDetailsFragment = gql`
   ${attributeFragment}
   fragment AttributeDetailsFragment on Attribute {
     ...AttributeFragment
+    availableInGrid
     inputType
     storefrontSearchPosition
     valueRequired
