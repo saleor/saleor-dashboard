@@ -25,7 +25,6 @@ import TableCellAvatar, {
 } from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { commonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, PageListProps } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
@@ -203,10 +202,16 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
                           <StatusLabel
                             label={
                               product.isPublished
-                                ? intl.formatMessage(commonMessages.published)
-                                : intl.formatMessage(
-                                    commonMessages.notPublished
-                                  )
+                                ? intl.formatMessage({
+                                    defaultMessage: "Published",
+                                    description: "product is published",
+                                    id: "collectionProductsPublished"
+                                  })
+                                : intl.formatMessage({
+                                    defaultMessage: "Not published",
+                                    description: "product is not published",
+                                    id: "collectionProductsNotPublished"
+                                  })
                             }
                             status={product.isPublished ? "success" : "error"}
                           />

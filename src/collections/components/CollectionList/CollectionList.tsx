@@ -18,7 +18,6 @@ import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { commonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { CollectionList_collections_edges_node } from "../../types/CollectionList";
@@ -164,10 +163,16 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
                             }
                             label={
                               collection.isPublished
-                                ? intl.formatMessage(commonMessages.published)
-                                : intl.formatMessage(
-                                    commonMessages.notPublished
-                                  )
+                                ? intl.formatMessage({
+                                    defaultMessage: "Published",
+                                    description: "collection is published",
+                                    id: "collectionListPublished"
+                                  })
+                                : intl.formatMessage({
+                                    defaultMessage: "Not published",
+                                    description: "collection is not published",
+                                    id: "collectionListNotPublished"
+                                  })
                             }
                           />
                         ),

@@ -21,10 +21,6 @@ export const commonMessages = defineMessages({
     defaultMessage: "General Informations",
     id: "generalInformations"
   },
-  notPublished: {
-    defaultMessage: "Not published",
-    id: "notPublished"
-  },
   optionalField: {
     defaultMessage: "Optional",
     description: "field is optional",
@@ -33,10 +29,6 @@ export const commonMessages = defineMessages({
   properties: {
     defaultMessage: "Properties",
     id: "properties"
-  },
-  published: {
-    defaultMessage: "Published",
-    id: "published"
   },
   save: {
     defaultMessage: "save",
