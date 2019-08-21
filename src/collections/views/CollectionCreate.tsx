@@ -1,9 +1,9 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../i18n";
 import { getMutationState, maybe } from "../../misc";
 import { CollectionCreateInput } from "../../types/globalTypes";
 import CollectionCreatePage from "../components/CollectionCreatePage/CollectionCreatePage";
@@ -11,15 +11,17 @@ import { TypedCollectionCreateMutation } from "../mutations";
 import { CreateCollection } from "../types/CreateCollection";
 import { collectionListUrl, collectionUrl } from "../urls";
 
-export const CollectionCreate: React.StatelessComponent<{}> = () => {
+export const CollectionCreate: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const handleCollectionCreateSuccess = (data: CreateCollection) => {
     if (data.collectionCreate.errors.length === 0) {
       notify({
-        text: i18n.t("Created collection", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Created collection",
+          id: "collectionCreateCreatedCollection"
         })
       });
       navigate(collectionUrl(data.collectionCreate.collection.id));
@@ -45,7 +47,13 @@ export const CollectionCreate: React.StatelessComponent<{}> = () => {
         );
         return (
           <>
-            <WindowTitle title={i18n.t("Create collection")} />
+            <WindowTitle
+              title={intl.formatMessage({
+                defaultMessage: "Create collection",
+                description: "window title",
+                id: "collectionCreateWindowTitle"
+              })}
+            />
             <CollectionCreatePage
               errors={maybe(() => data.collectionCreate.errors, [])}
               onBack={() => navigate(collectionListUrl())}

@@ -6,6 +6,7 @@ import {
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -15,7 +16,7 @@ import Hr from "@saleor/components/Hr";
 import ImageTile from "@saleor/components/ImageTile";
 import ImageUpload from "@saleor/components/ImageUpload";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { CollectionDetails_collection_backgroundImage } from "../../types/CollectionDetails";
 
 const styles = (theme: Theme) =>
@@ -51,7 +52,7 @@ const styles = (theme: Theme) =>
     }
   });
 
-export interface CollectionImageProps extends WithStyles<typeof styles> {
+export interface CollectionImageProps {
   data: {
     backgroundImageAlt: string;
   };
@@ -62,80 +63,79 @@ export interface CollectionImageProps extends WithStyles<typeof styles> {
 }
 
 export const CollectionImage = withStyles(styles)(
-  class CollectionImageComponent extends React.Component<
-    CollectionImageProps,
-    {}
-  > {
-    imgInputAnchor = React.createRef<HTMLInputElement>();
+  ({
+    classes,
+    data,
+    onImageUpload,
+    image,
+    onChange,
+    onImageDelete
+  }: CollectionImageProps & WithStyles<typeof styles>) => {
+    const anchor = React.useRef<HTMLInputElement>();
+    const intl = useIntl();
 
-    clickImgInput = () => this.imgInputAnchor.current.click();
+    const handleImageUploadButtonClick = () => anchor.current.click();
 
-    render() {
-      const {
-        classes,
-        data,
-        onImageUpload,
-        image,
-        onChange,
-        onImageDelete
-      } = this.props;
-      return (
-        <Card>
-          <CardTitle
-            title={i18n.t("Background image (optional)")}
-            toolbar={
-              <>
-                <Button
-                  variant="text"
-                  color="primary"
-                  onClick={this.clickImgInput}
-                >
-                  {i18n.t("Upload image")}
-                </Button>
-                <input
-                  className={classes.fileField}
-                  id="fileUpload"
-                  onChange={event => onImageUpload(event.target.files[0])}
-                  type="file"
-                  ref={this.imgInputAnchor}
-                />
-              </>
-            }
-          />
-          {image === undefined ? (
-            <CardContent>
-              <div>
-                <div className={classes.imageContainer}>
-                  <Skeleton />
-                </div>
-              </div>
-            </CardContent>
-          ) : image === null ? (
-            <ImageUpload onImageUpload={onImageUpload} />
-          ) : (
-            <CardContent>
-              <ImageTile image={image} onImageDelete={onImageDelete} />
-            </CardContent>
-          )}
-          {image && (
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Background image (optional)",
+            description: "section header",
+            id: "collectionImageHeader"
+          })}
+          toolbar={
             <>
-              <Hr />
-              <CardContent>
-                <TextField
-                  name="backgroundImageAlt"
-                  label={i18n.t("Description")}
-                  helperText={i18n.t("Optional")}
-                  value={data.backgroundImageAlt}
-                  onChange={onChange}
-                  fullWidth
-                  multiline
-                />
-              </CardContent>
+              <Button
+                variant="text"
+                color="primary"
+                onClick={handleImageUploadButtonClick}
+              >
+                <FormattedMessage {...commonMessages.uploadImage} />
+              </Button>
+              <input
+                className={classes.fileField}
+                id="fileUpload"
+                onChange={event => onImageUpload(event.target.files[0])}
+                type="file"
+                ref={anchor}
+              />
             </>
-          )}
-        </Card>
-      );
-    }
+          }
+        />
+        {image === undefined ? (
+          <CardContent>
+            <div>
+              <div className={classes.imageContainer}>
+                <Skeleton />
+              </div>
+            </div>
+          </CardContent>
+        ) : image === null ? (
+          <ImageUpload onImageUpload={onImageUpload} />
+        ) : (
+          <CardContent>
+            <ImageTile image={image} onImageDelete={onImageDelete} />
+          </CardContent>
+        )}
+        {image && (
+          <>
+            <Hr />
+            <CardContent>
+              <TextField
+                name="backgroundImageAlt"
+                label={intl.formatMessage(commonMessages.description)}
+                helperText={intl.formatMessage(commonMessages.optionalField)}
+                value={data.backgroundImageAlt}
+                onChange={onChange}
+                fullWidth
+                multiline
+              />
+            </CardContent>
+          </>
+        )}
+      </Card>
+    );
   }
 );
 CollectionImage.displayName = "CollectionImage";
