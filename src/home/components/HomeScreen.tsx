@@ -2,11 +2,11 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import i18n from "../../i18n";
 
 interface HomeScreenProps {
   user: {
@@ -16,25 +16,44 @@ interface HomeScreenProps {
 
 export const HomeScreen: React.StatelessComponent<HomeScreenProps> = ({
   user
-}) => (
-  <Container>
-    <PageHeader
-      title={i18n.t("Hello there, {{userName}}", { userName: user.email })}
-    />
-    <Card>
-      <CardTitle title={i18n.t("Disclaimer")} />
-      <CardContent>
-        <Typography>
-          {i18n.t(
-            "The new dashboard and the GraphQL API are preview-quality software."
-          )}
-        </Typography>
-        <Typography>
-          {i18n.t(
-            "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
-          )}
-        </Typography>
-      </CardContent>
-    </Card>
-  </Container>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <Container>
+      <PageHeader
+        title={intl.formatMessage(
+          {
+            defaultMessage: "Hello there, {userName}",
+            description: "header",
+            id: "homeScreenHeader"
+          },
+          { userName: user.email }
+        )}
+      />
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Disclaimer",
+            description: "header",
+            id: "homeScreenDisclaimer"
+          })}
+        />
+        <CardContent>
+          <Typography>
+            <FormattedMessage
+              defaultMessage="The new dashboard and the GraphQL API are preview-quality software."
+              id="homeScreenDisclaimerText1"
+            />
+          </Typography>
+          <Typography>
+            <FormattedMessage
+              defaultMessage="The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
+              id="homeScreenDisclaimerText2"
+            />
+          </Typography>
+        </CardContent>
+      </Card>
+    </Container>
+  );
+};

@@ -12,9 +12,9 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -47,6 +47,8 @@ const HomeNotificationTable = withStyles(styles, {
     ordersToFulfill,
     productsOutOfStock
   }: HomeNotificationTableProps) => {
+    const intl = useIntl();
+
     return (
       <Card>
         <Table>
@@ -57,17 +59,19 @@ const HomeNotificationTable = withStyles(styles, {
                   <Skeleton />
                 ) : ordersToFulfill === 0 ? (
                   <Typography>
-                    {i18n.t("No orders ready to fulfill")}
+                    <FormattedMessage
+                      defaultMessage="No orders ready to fulfill"
+                      id="homeNotificationTableNoOrders"
+                    />
                   </Typography>
                 ) : (
-                  <Typography
-                    dangerouslySetInnerHTML={{
-                      __html: i18n.t(
-                        "<b>{{ amount }} Orders</b> are ready to fulfill",
-                        { amount: ordersToFulfill }
-                      )
-                    }}
-                  />
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="{amount} Orders are ready to fulfill"
+                      id="homeNotificationTableOrders"
+                      values={{ amount: ordersToFulfill }}
+                    />
+                  </Typography>
                 )}
               </TableCell>
               <TableCell className={classes.arrowIcon}>
@@ -80,17 +84,18 @@ const HomeNotificationTable = withStyles(styles, {
                   <Skeleton />
                 ) : ordersToCapture === 0 ? (
                   <Typography>
-                    {i18n.t("No payments waiting for capture")}
+                    <FormattedMessage
+                      defaultMessage="No payments waiting for capture"
+                      id="homeNotificationsNoPayments"
+                    />
                   </Typography>
                 ) : (
-                  <Typography
-                    dangerouslySetInnerHTML={{
-                      __html: i18n.t(
-                        "<b>{{ amount }} Payments</b> to capture",
-                        { amount: ordersToCapture }
-                      )
-                    }}
-                  />
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="{amount} Payments to capture"
+                      id="homeNotificationTablePayments"
+                    />
+                  </Typography>
                 )}
               </TableCell>
               <TableCell className={classes.arrowIcon}>
@@ -102,16 +107,19 @@ const HomeNotificationTable = withStyles(styles, {
                 {productsOutOfStock === undefined ? (
                   <Skeleton />
                 ) : productsOutOfStock === 0 ? (
-                  <Typography>{i18n.t("No products out of stock")}</Typography>
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="No products out of stock"
+                      id="homeNotificationsTableNoProducts"
+                    />
+                  </Typography>
                 ) : (
-                  <Typography
-                    dangerouslySetInnerHTML={{
-                      __html: i18n.t(
-                        "<b>{{ amount }} Products</b> out of stock",
-                        { amount: productsOutOfStock }
-                      )
-                    }}
-                  />
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="{amount} Products out of stock"
+                      id="homeNotificationTableProducts"
+                    />
+                  </Typography>
                 )}
               </TableCell>
               <TableCell className={classes.arrowIcon}>
