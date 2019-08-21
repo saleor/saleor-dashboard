@@ -105,7 +105,10 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
             <TextField
               name="backgroundImageAlt"
               label={intl.formatMessage(commonMessages.description)}
-              helperText={intl.formatMessage(commonMessages.optionalField)}
+              helperText={intl.formatMessage({
+                defaultMessage: "(Optional)",
+                description: "field is optional"
+              })}
               value={data.backgroundImageAlt}
               onChange={onChange}
               fullWidth

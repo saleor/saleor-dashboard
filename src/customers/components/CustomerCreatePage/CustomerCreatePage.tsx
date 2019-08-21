@@ -90,8 +90,7 @@ const CustomerCreatePage: React.StatelessComponent<CustomerCreatePageProps> = ({
             <PageHeader
               title={intl.formatMessage({
                 defaultMessage: "Add customer",
-                description: "page header",
-                id: "customerCreatePageHeader"
+                description: "page header"
               })}
             />
             <Grid>

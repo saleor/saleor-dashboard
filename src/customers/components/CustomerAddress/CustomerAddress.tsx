@@ -64,7 +64,6 @@ const CustomerAddress = withStyles(styles, { name: "CustomerAddress" })(
                 <FormattedMessage
                   defaultMessage="Address {addressNumber}"
                   description="addres card header"
-                  id="customerAddressHeader"
                   values={{
                     addressNumber
                   }}
@@ -72,18 +71,15 @@ const CustomerAddress = withStyles(styles, { name: "CustomerAddress" })(
                 <Typography variant="caption">
                   {isDefaultBillingAddress && isDefaultShippingAddress
                     ? intl.formatMessage({
-                        defaultMessage: "Default Address",
-                        id: "customerAddressSubheaderDefaultAddress"
+                        defaultMessage: "Default Address"
                       })
                     : isDefaultShippingAddress
                     ? intl.formatMessage({
-                        defaultMessage: "Default Shipping Address",
-                        id: "customerAddressSubheaderDefaultShippingAddress"
+                        defaultMessage: "Default Shipping Address"
                       })
                     : isDefaultBillingAddress
                     ? intl.formatMessage({
-                        defaultMessage: "Default Billing Address",
-                        id: "customerAddressSubheaderDefaultBillingAddress"
+                        defaultMessage: "Default Billing Address"
                       })
                     : null}
                 </Typography>
@@ -100,16 +96,14 @@ const CustomerAddress = withStyles(styles, { name: "CustomerAddress" })(
                 {
                   label: intl.formatMessage({
                     defaultMessage: "Set as default shipping address",
-                    description: "button",
-                    id: "customerAddressSetAsDefaultShipping"
+                    description: "button"
                   }),
                   onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING)
                 },
                 {
                   label: intl.formatMessage({
                     defaultMessage: "Set as default billing address",
-                    description: "button",
-                    id: "customerAddressSetAsDefaultBilling"
+                    description: "button"
                   }),
                   onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING)
                 }

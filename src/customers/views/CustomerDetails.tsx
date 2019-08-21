@@ -47,8 +47,7 @@ export const CustomerDetailsView: React.StatelessComponent<
     if (data.customerDelete.errors.length === 0) {
       notify({
         text: intl.formatMessage({
-          defaultMessage: "Customer Removed",
-          id: "customerDetailsRemoveCustomerSuccess"
+          defaultMessage: "Customer Removed"
         })
       });
       navigate(customerListUrl());
@@ -135,8 +134,7 @@ export const CustomerDetailsView: React.StatelessComponent<
                       onConfirm={() => removeCustomer()}
                       title={intl.formatMessage({
                         defaultMessage: "Delete customer",
-                        description: "dialog header",
-                        id: "customerDetailsDeleteCustomerDialogHeader"
+                        description: "dialog header"
                       })}
                       variant="delete"
                       open={params.action === "remove"}
@@ -145,7 +143,6 @@ export const CustomerDetailsView: React.StatelessComponent<
                         <FormattedMessage
                           defaultMessage="Are you sure you want to delete {email}?"
                           description="delete customer, dialog content"
-                          id="customerDetailsDeleteCustomerDialogContent"
                           values={{
                             email: (
                               <strong>

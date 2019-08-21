@@ -46,8 +46,7 @@ const CustomerAddresses = withStyles(styles, { name: "CustomerAddresses" })(
         <CardTitle
           title={intl.formatMessage({
             defaultMessage: "Address Information",
-            description: "header",
-            id: "customerAddressesHeader"
+            description: "header"
           })}
           toolbar={
             <Button
@@ -69,7 +68,6 @@ const CustomerAddresses = withStyles(styles, { name: "CustomerAddresses" })(
                   <FormattedMessage
                     defaultMessage="Billing address"
                     description="subsection header"
-                    id="customerAddressesBillingAddressSectionHeader"
                   />
                 </Typography>
                 <AddressFormatter
@@ -88,7 +86,6 @@ const CustomerAddresses = withStyles(styles, { name: "CustomerAddresses" })(
                   <FormattedMessage
                     defaultMessage="Shipping address"
                     description="subsection header"
-                    id="customerAddressesShippingAddressSectionHeader"
                   />
                 </Typography>
                 <AddressFormatter
@@ -101,10 +98,7 @@ const CustomerAddresses = withStyles(styles, { name: "CustomerAddresses" })(
           maybe(() => customer.defaultShippingAddress) === null ? (
           <CardContent>
             <Typography>
-              <FormattedMessage
-                defaultMessage="This customer has no addresses yet"
-                id="customerAddressesNoAddresses"
-              />
+              <FormattedMessage defaultMessage="This customer has no addresses yet" />
             </Typography>
           </CardContent>
         ) : (
@@ -113,7 +107,6 @@ const CustomerAddresses = withStyles(styles, { name: "CustomerAddresses" })(
               <FormattedMessage
                 defaultMessage="Address"
                 description="subsection header"
-                id="customerAddressesAddressSectionHeader"
               />
             </Typography>
             <AddressFormatter

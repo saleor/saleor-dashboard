@@ -48,16 +48,12 @@ const CustomerCreateAddress = withStyles(styles, {
         <CardTitle
           title={intl.formatMessage({
             defaultMessage: "Primary address",
-            description: "page header",
-            id: "customerCreateAddressHeader"
+            description: "page header"
           })}
         />
         <CardContent className={classes.overflow}>
           <Typography>
-            <FormattedMessage
-              defaultMessage="The primary address of this customer."
-              id="customerCreateAddressContent"
-            />
+            <FormattedMessage defaultMessage="The primary address of this customer." />
           </Typography>
           <FormSpacer />
           <AddressEdit

@@ -52,8 +52,7 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
         <CardTitle
           title={intl.formatMessage({
             defaultMessage: "Recent orders",
-            description: "section header",
-            id: "customerOrdersHeader"
+            description: "section header"
           })}
           toolbar={
             <Button
@@ -64,7 +63,6 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
               <FormattedMessage
                 defaultMessage="View all orders"
                 description="button"
-                id="customerOrdersViewAllOrders"
               />
             </Button>
           }
@@ -76,28 +74,24 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
                 <FormattedMessage
                   defaultMessage="No. of Order"
                   description="number of order"
-                  id="customerOrdersNoOfOrderColumnHeader"
                 />
               </TableCell>
               <TableCell padding="dense">
                 <FormattedMessage
                   defaultMessage="Date"
                   description="order placement date"
-                  id="customerOrdersDateColumnHeader"
                 />
               </TableCell>
               <TableCell padding="dense">
                 <FormattedMessage
                   defaultMessage="Status"
                   description="order status"
-                  id="customerOrdersStatusColumnHeader"
                 />
               </TableCell>
               <TableCell className={classes.textRight} padding="dense">
                 <FormattedMessage
                   defaultMessage="Total"
                   description="order total amount"
-                  id="customerOrdersTotalColumnHeader"
                 />
               </TableCell>
             </TableRow>
@@ -150,10 +144,7 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
               () => (
                 <TableRow>
                   <TableCell colSpan={6}>
-                    <FormattedMessage
-                      defaultMessage="No orders found"
-                      id="customerOrdersNoOrders"
-                    />
+                    <FormattedMessage defaultMessage="No orders found" />
                   </TableCell>
                 </TableRow>
               )

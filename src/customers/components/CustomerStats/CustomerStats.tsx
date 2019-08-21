@@ -41,15 +41,13 @@ const CustomerStats = withStyles(styles, { name: "CustomerStats" })(
           title={intl.formatMessage({
             defaultMessage: "Customer History",
             description: "section header",
-            id: "customerStatsHeader"
+             
           })}
         />
         <CardContent>
           <Typography className={classes.label} variant="caption">
-            <FormattedMessage
-              defaultMessage="Last login"
-              id="customerStatsLastLogin"
-            />
+            <FormattedMessage defaultMessage="Last login"
+               />
           </Typography>
           {maybe(
             () => (
@@ -67,10 +65,8 @@ const CustomerStats = withStyles(styles, { name: "CustomerStats" })(
         <Hr />
         <CardContent>
           <Typography className={classes.label} variant="caption">
-            <FormattedMessage
-              defaultMessage="Last order"
-              id="customerStatsLastOrder"
-            />
+            <FormattedMessage defaultMessage="Last order"
+               />
           </Typography>
           {maybe(
             () => (

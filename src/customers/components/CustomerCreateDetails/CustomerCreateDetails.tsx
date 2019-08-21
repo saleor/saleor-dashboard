@@ -49,8 +49,7 @@ const CustomerCreateDetails = withStyles(styles, {
         <CardTitle
           title={intl.formatMessage({
             defaultMessage: "Customer overview",
-            description: "header",
-            id: "customerCreateDetailsHeader"
+            description: "header"
           })}
         />
         <CardContent>

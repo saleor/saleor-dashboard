@@ -138,8 +138,7 @@ export const CustomerList: React.StatelessComponent<CustomerListProps> = ({
                     variant="delete"
                     title={intl.formatMessage({
                       defaultMessage: "Delete customers",
-                      description: "dialog header",
-                      id: "customerListDeleteCustomersDialogHeader"
+                      description: "dialog header"
                     })}
                   >
                     <DialogContentText>
@@ -148,10 +147,11 @@ export const CustomerList: React.StatelessComponent<CustomerListProps> = ({
                           one {this customer}
                           other {{displayQuantity} customers}
                         }?"
-                        id="customerListDeleteCustomersDialogContent"
                         values={{
-                          counter: params.ids.length,
-                          displayQuantity: <strong>{params.ids.length}</strong>
+                          counter: maybe(() => params.ids.length),
+                          displayQuantity: (
+                            <strong>{maybe(() => params.ids.length)}</strong>
+                          )
                         }}
                       />
                     </DialogContentText>

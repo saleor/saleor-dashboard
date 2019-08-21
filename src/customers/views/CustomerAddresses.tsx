@@ -212,8 +212,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                               variant="delete"
                               title={intl.formatMessage({
                                 defaultMessage: "Delete Address",
-                                description: "dialog header",
-                                id: "customerAddressesDeleteAddressDialogHeader"
+                                description: "dialog header"
                               })}
                               confirmButtonState={removeAddressTransitionState}
                               onClose={closeModal}
@@ -226,10 +225,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                               }
                             >
                               <DialogContentText>
-                                <FormattedMessage
-                                  defaultMessage="Are you sure you want to delete this address from users address book?"
-                                  id="customerAddressesDeleteAddressDialogContent"
-                                />
+                                <FormattedMessage defaultMessage="Are you sure you want to delete this address from users address book?" />
                               </DialogContentText>
                             </ActionDialog>
                           </>

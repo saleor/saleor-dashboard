@@ -74,7 +74,6 @@ const CustomerDetails = withStyles(styles, { name: "CustomerDetails" })(
                   <FormattedMessage
                     defaultMessage="Customer since: {date}"
                     description="section subheader"
-                    id="customerDetailsSubheader"
                     values={{
                       date: moment(customer.dateJoined).format("MMM YYYY")
                     }}
@@ -92,8 +91,7 @@ const CustomerDetails = withStyles(styles, { name: "CustomerDetails" })(
             disabled={disabled}
             label={intl.formatMessage({
               defaultMessage: "User account active",
-              description: "check to mark this account as active",
-              id: "customerDetailsAccountActive"
+              description: "check to mark this account as active"
             })}
             name="isActive"
             onChange={onChange}
@@ -145,8 +143,7 @@ const CustomerDetails = withStyles(styles, { name: "CustomerDetails" })(
             name="note"
             label={intl.formatMessage({
               defaultMessage: "Note",
-              description: "note about customer",
-              id: "customerDetailsNoteInputLabel"
+              description: "note about customer"
             })}
             value={data.note}
             onChange={onChange}

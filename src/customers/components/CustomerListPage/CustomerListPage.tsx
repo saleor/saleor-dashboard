@@ -34,7 +34,6 @@ const CustomerListPage: React.StatelessComponent<CustomerListPageProps> = ({
           <FormattedMessage
             defaultMessage="Add customer"
             description="button"
-            id="customerListPageAddCustomer"
           />
           <AddIcon />
         </Button>

@@ -102,13 +102,11 @@ const CustomerAddressDialog = withStyles(styles, {})(
                     <FormattedMessage
                       defaultMessage="Add Address"
                       description="dialog title"
-                      id="customerAddressDialogAddAddress"
                     />
                   ) : (
                     <FormattedMessage
                       defaultMessage="Edit Address"
                       description="dialog title"
-                      id="customerAddressDialogEditAddress"
                     />
                   )}
                 </DialogTitle>
@@ -134,7 +132,7 @@ const CustomerAddressDialog = withStyles(styles, {})(
                     type="submit"
                   >
                     <FormattedMessage {...buttonMessages.save} />
-                    <AddIcon />
+                    {variant === "create" && <AddIcon />}
                   </ConfirmButton>
                 </DialogActions>
               </>

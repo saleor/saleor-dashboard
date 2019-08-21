@@ -32,16 +32,12 @@ const CustomerCreateNote: React.StatelessComponent<CustomerCreateNoteProps> = ({
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Notes",
-          description: "notes about customer header",
-          id: "customerCreateNoteHeader"
+          description: "notes about customer header"
         })}
       />
       <CardContent>
         <Typography>
-          <FormattedMessage
-            defaultMessage="Enter any extra infotmation regarding this customer."
-            id="customerCreateNoteContent"
-          />
+          <FormattedMessage defaultMessage="Enter any extra infotmation regarding this customer." />
         </Typography>
         <FormSpacer />
         <TextField
@@ -53,8 +49,7 @@ const CustomerCreateNote: React.StatelessComponent<CustomerCreateNoteProps> = ({
           helperText={errors.note}
           label={intl.formatMessage({
             defaultMessage: "Note",
-            description: "note about customer",
-            id: "customerCreateNoteInputLabel"
+            description: "note about customer"
           })}
           value={data.note}
           onChange={onChange}

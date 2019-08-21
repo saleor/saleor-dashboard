@@ -20,8 +20,7 @@ export const CustomerCreate: React.StatelessComponent<{}> = () => {
     if (data.customerCreate.errors.length === 0) {
       notify({
         text: intl.formatMessage({
-          defaultMessage: "Customer created",
-          id: "customerCreateSuccess"
+          defaultMessage: "Customer created"
         })
       });
       navigate(customerUrl(data.customerCreate.user.id));
@@ -36,8 +35,7 @@ export const CustomerCreate: React.StatelessComponent<{}> = () => {
               <WindowTitle
                 title={intl.formatMessage({
                   defaultMessage: "Create customer",
-                  description: "window title",
-                  id: "customerCreateWindowTitle"
+                  description: "window title"
                 })}
               />
               <CustomerCreatePage

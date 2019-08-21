@@ -76,7 +76,6 @@ const CustomerAddressListPage = withStyles(styles, {
           <FormattedMessage
             defaultMessage="{fullName} Details"
             description="customer details, header"
-            id="customerAddressListPageAppHeader"
             values={{
               fullName
             }}
@@ -87,8 +86,7 @@ const CustomerAddressListPage = withStyles(styles, {
             title={intl.formatMessage(
               {
                 defaultMessage: "{fullName}'s Address Book",
-                description: "customer's address book, header",
-                id: "customerAddressListPageHeader"
+                description: "customer's address book, header"
               },
               {
                 fullName
@@ -99,7 +97,6 @@ const CustomerAddressListPage = withStyles(styles, {
               <FormattedMessage
                 defaultMessage="Add address"
                 description="button"
-                id="customerAddressListPageAddAddress"
               />
               <AddIcon />
             </Button>
@@ -108,16 +105,10 @@ const CustomerAddressListPage = withStyles(styles, {
         {isEmpty ? (
           <div className={classes.empty}>
             <Typography variant="h5">
-              <FormattedMessage
-                defaultMessage="There is no address to show for this customer"
-                id="customerAddressListPageNoAddresses"
-              />
+              <FormattedMessage defaultMessage="There is no address to show for this customer" />
             </Typography>
             <Typography className={classes.description}>
-              <FormattedMessage
-                defaultMessage="This customer doesn’t have any adresses added to his address book. You can add address using the button below."
-                id="customerAddressListPageNoAddressesAdditionalText"
-              />
+              <FormattedMessage defaultMessage="This customer doesn’t have any adresses added to his address book. You can add address using the button below." />
             </Typography>
             <Button
               className={classes.addButton}
@@ -128,7 +119,6 @@ const CustomerAddressListPage = withStyles(styles, {
               <FormattedMessage
                 defaultMessage="Add address"
                 description="button"
-                id="customerAddressListPageAddAddress"
               />
               <AddIcon />
             </Button>

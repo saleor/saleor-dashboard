@@ -77,22 +77,13 @@ const CustomerList = withStyles(styles, { name: "CustomerList" })(
           toolbar={toolbar}
         >
           <TableCell className={classes.colName}>
-            <FormattedMessage
-              defaultMessage="Customer Name"
-              id="customerListCustomerNameColumnHeader"
-            />
+            <FormattedMessage defaultMessage="Customer Name" />
           </TableCell>
           <TableCell className={classes.colEmail}>
-            <FormattedMessage
-              defaultMessage="Customer Email"
-              id="customerListCustomerEmailColumnHeader"
-            />
+            <FormattedMessage defaultMessage="Customer Email" />
           </TableCell>
           <TableCell className={classes.colOrders}>
-            <FormattedMessage
-              defaultMessage="No. of Orders"
-              id="customerListOrdersColumnHeader"
-            />
+            <FormattedMessage defaultMessage="No. of Orders" />
           </TableCell>
         </TableHead>
         <TableFooter>
@@ -150,10 +141,7 @@ const CustomerList = withStyles(styles, { name: "CustomerList" })(
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage
-                    defaultMessage="No customers found"
-                    id="customerListNoCustomers"
-                  />
+                  <FormattedMessage defaultMessage="No customers found" />
                 </TableCell>
               </TableRow>
             )
