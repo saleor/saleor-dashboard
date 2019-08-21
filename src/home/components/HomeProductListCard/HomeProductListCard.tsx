@@ -96,9 +96,15 @@ export const HomeProductList = withStyles(styles, { name: "HomeProductList" })(
                         </Typography>
                         <Typography color={"textSecondary"}>
                           <FormattedMessage
-                            defaultMessage="{count} Orders"
-                            description="number of variant orders"
+                            defaultMessage="{amount, plural,
+                              one {One ordered}
+                              other {{amount} Ordered}
+                            }"
+                            description="number of ordered products"
                             id="homeProductListCardOrders"
+                            values={{
+                              amount: variant.quantityOrdered
+                            }}
                           />
                         </Typography>
                       </>

@@ -67,9 +67,14 @@ const HomeNotificationTable = withStyles(styles, {
                 ) : (
                   <Typography>
                     <FormattedMessage
-                      defaultMessage="{amount} Orders are ready to fulfill"
+                      defaultMessage="{amount, plural,
+                        one {One order}
+                        other {{amount} Orders}
+                      } are ready to fulfill"
                       id="homeNotificationTableOrders"
-                      values={{ amount: ordersToFulfill }}
+                      values={{
+                        amount: ordersToFulfill
+                      }}
                     />
                   </Typography>
                 )}
@@ -92,8 +97,14 @@ const HomeNotificationTable = withStyles(styles, {
                 ) : (
                   <Typography>
                     <FormattedMessage
-                      defaultMessage="{amount} Payments to capture"
+                      defaultMessage="{amount, plural,
+                        one {One payment}
+                        other {{amount} Payments}
+                      } to capture"
                       id="homeNotificationTablePayments"
+                      values={{
+                        amount: ordersToCapture
+                      }}
                     />
                   </Typography>
                 )}
@@ -116,8 +127,14 @@ const HomeNotificationTable = withStyles(styles, {
                 ) : (
                   <Typography>
                     <FormattedMessage
-                      defaultMessage="{amount} Products out of stock"
+                      defaultMessage="{amount, plural,
+                        one {One product}
+                        other {{amount} Products}
+                      } out of stock"
                       id="homeNotificationTableProducts"
+                      values={{
+                        amount: productsOutOfStock
+                      }}
                     />
                   </Typography>
                 )}
