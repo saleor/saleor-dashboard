@@ -58,8 +58,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
                 helperText={formErrors.name}
                 label={intl.formatMessage({
                   defaultMessage: "Menu Title",
-                  description: "",
-                  id: ""
+                  id: "menuCreateDialogMenuTitleLabel"
                 })}
                 name={"name" as keyof MenuCreateDialogFormData}
                 value={data.name}
