@@ -1,5 +1,6 @@
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -8,7 +9,7 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { MenuDetails_menu } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
@@ -47,6 +48,8 @@ const MenuDetailsPage: React.StatelessComponent<MenuDetailsPageProps> = ({
   onItemEdit,
   onSubmit
 }) => {
+  const intl = useIntl();
+
   const initialForm: MenuDetailsFormData = {
     name: maybe(() => menu.name, "")
   };
@@ -76,14 +79,19 @@ const MenuDetailsPage: React.StatelessComponent<MenuDetailsPageProps> = ({
     <Form initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Navigation")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.navigation)}
+          </AppHeader>
           <Grid variant="inverted">
             <div>
-              <Typography variant="h5">{i18n.t("Navigation")}</Typography>
+              <Typography variant="h5">
+                {intl.formatMessage(sectionNames.navigation)}
+              </Typography>
               <Typography>
-                {i18n.t(
-                  "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
-                )}
+                <FormattedMessage
+                  defaultMessage="Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
+                  id="menuDetailsPageHelperText"
+                />
               </Typography>
             </div>
             <div>

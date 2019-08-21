@@ -1,5 +1,6 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -10,7 +11,6 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
 import SearchCategories from "../../../containers/SearchCategories";
 import SearchCollections from "../../../containers/SearchCollections";
 import SearchPages from "../../../containers/SearchPages";
-import i18n from "../../../i18n";
 import { getMutationState, maybe } from "../../../misc";
 import { pageUrl } from "../../../pages/urls";
 import MenuDetailsPage, {
@@ -58,6 +58,7 @@ interface MenuDetailsProps {
 const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const closeModal = () =>
     navigate(
@@ -236,21 +237,28 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                                       menuDelete({ variables: { id } })
                                     }
                                     variant="delete"
-                                    title={i18n.t("Remove menu")}
+                                    title={intl.formatMessage({
+                                      defaultMessage: "Delete menu",
+                                      description: "dialog header",
+                                      id: "menuDetailsDeleteMenuHeader"
+                                    })}
                                   >
-                                    <DialogContentText
-                                      dangerouslySetInnerHTML={{
-                                        __html: i18n.t(
-                                          "Are you sure you want to remove menu <strong>{{ name }}</strong>?",
-                                          {
-                                            name: maybe(
-                                              () => data.menu.name,
-                                              "..."
-                                            )
-                                          }
-                                        )
-                                      }}
-                                    />
+                                    <DialogContentText>
+                                      <FormattedMessage
+                                        defaultMessage="Are you sure you want to delete menu {menuName}?"
+                                        id="menuDetailsDeleteMenuContent"
+                                        values={{
+                                          menuName: (
+                                            <strong>
+                                              {maybe(
+                                                () => data.menu.name,
+                                                "..."
+                                              )}
+                                            </strong>
+                                          )
+                                        }}
+                                      />
+                                    </DialogContentText>
                                   </ActionDialog>
 
                                   <MenuItemCreateMutation
