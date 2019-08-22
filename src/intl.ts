@@ -2,63 +2,50 @@ import { defineMessages } from "react-intl";
 
 export const commonMessages = defineMessages({
   availability: {
-    defaultMessage: "Availability",
-    id: "availability"
+    defaultMessage: "Availability"
   },
   cancel: {
-    defaultMessage: "Cancel",
-    id: "cancel"
+    defaultMessage: "Cancel"
   },
   confirm: {
-    defaultMessage: "Confirm",
-    id: "confirm"
+    defaultMessage: "Confirm"
   },
   description: {
-    defaultMessage: "Description",
-    id: "description"
+    defaultMessage: "Description"
   },
   generalInformations: {
-    defaultMessage: "General Informations",
-    id: "generalInformations"
+    defaultMessage: "General Informations"
   },
   optionalField: {
     defaultMessage: "Optional",
-    description: "field is optional",
-    id: "optionalField"
+    description: "field is optional"
   },
   properties: {
-    defaultMessage: "Properties",
-    id: "properties"
+    defaultMessage: "Properties"
   },
   save: {
-    defaultMessage: "save",
-    id: "save"
+    defaultMessage: "save"
   },
   savedChanges: {
-    defaultMessage: "Saved changes",
-    id: "savedChanges"
+    defaultMessage: "Saved changes"
   },
   uploadImage: {
     defaultMessage: "Upload image",
-    description: "button",
-    id: "uploadImage"
+    description: "button"
   }
 });
 
 export const sectionNames = defineMessages({
   attributes: {
     defaultMessage: "Attributes",
-    description: "attributes section name",
-    id: "attributes"
+    description: "attributes section name"
   },
   categories: {
     defaultMessage: "Categories",
-    description: "categories section name",
-    id: "categories"
+    description: "categories section name"
   },
   collections: {
     defaultMessage: "Collections",
-    description: "collections section name",
-    id: "collections"
+    description: "collections section name"
   }
 });

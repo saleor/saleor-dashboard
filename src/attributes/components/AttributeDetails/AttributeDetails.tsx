@@ -32,19 +32,15 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
   const intl = useIntl();
   const inputTypeChoices = [
     {
-      label: intl.formatMessage({
-        defaultMessage: "Dropdown",
+      label: intl.formatMessage({defaultMessage: "Dropdown",
         description: "product attribute type",
-        id: "attributeDetailsInputTypeDropdown"
-      }),
+        }),
       value: AttributeInputTypeEnum.DROPDOWN
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "Multiple Select",
+      label: intl.formatMessage({defaultMessage: "Multiple Select",
         description: "product attribute type",
-        id: "attributeDetailsInputTypeMultiselect"
-      }),
+        }),
       value: AttributeInputTypeEnum.MULTISELECT
     }
   ];
@@ -58,11 +54,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
         <TextField
           disabled={disabled}
           error={!!errors.name}
-          label={intl.formatMessage({
-            defaultMessage: "Default Label",
+          label={intl.formatMessage({defaultMessage: "Default Label",
             description: "attribute's label",
-            id: "attributeDetailsNameInputLabel"
-          })}
+            })}
           name={"name" as keyof AttributePageFormData}
           fullWidth
           helperText={errors.name}
@@ -73,22 +67,18 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
         <TextField
           disabled={disabled}
           error={!!errors.slug}
-          label={intl.formatMessage({
-            defaultMessage: "Attribute Code",
+          label={intl.formatMessage({defaultMessage: "Attribute Code",
             description: "attribute's slug short code label",
-            id: "attributeDetailsSlugInputLabel"
-          })}
+            })}
           name={"slug" as keyof AttributePageFormData}
           placeholder={slugify(data.name).toLowerCase()}
           fullWidth
           helperText={
             errors.slug ||
-            intl.formatMessage({
-              defaultMessage:
+            intl.formatMessage({defaultMessage:
                 "This is used internally. Make sure you don’t use spaces",
               description: "attribute slug input field helper text",
-              id: "attributeDetailsNameInputHelperText"
-            })
+              })
           }
           value={data.slug}
           onChange={onChange}
@@ -99,11 +89,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
           disabled={disabled || !canChangeType}
           error={!!errors.inputType}
           hint={errors.inputType}
-          label={intl.formatMessage({
-            defaultMessage: "Catalog Input type for Store Owner",
+          label={intl.formatMessage({defaultMessage: "Catalog Input type for Store Owner",
             description: "attribute's editor component",
-            id: "attributeDetailsInputTypeField"
-          })}
+            })}
           name="inputType"
           onChange={onChange}
           value={data.inputType}
@@ -111,11 +99,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
         <FormSpacer />
         <ControlledSwitch
           checked={data.valueRequired}
-          label={intl.formatMessage({
-            defaultMessage: "Value Required",
+          label={intl.formatMessage({defaultMessage: "Value Required",
             description: "check to require attribute to have value",
-            id: "attributeDetailsValueRequiredInputLabel"
-          })}
+            })}
           name={"valueRequired" as keyof AttributePageFormData}
           onChange={onChange}
         />

@@ -70,14 +70,14 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
           title={intl.formatMessage({
             defaultMessage: "Products",
             description: "section header",
-            id: "categoryProductsHeader"
+             
           })}
           toolbar={
             <Button variant="text" color="primary" onClick={onAddProduct}>
               <FormattedMessage
                 defaultMessage="Add product"
                 description="button"
-                id="categoryProductsAddProductButton"
+                
               />
             </Button>
           }
@@ -90,15 +90,13 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                 <FormattedMessage
                   defaultMessage="Name"
                   description="product name"
-                  id="categoryProductsNameHeader"
+                  
                 />
               </TableCell>
               <TableCell>
-                <FormattedMessage
-                  defaultMessage="Type"
+                <FormattedMessage defaultMessage="Type"
                   description="product type"
-                  id="categoryProductsTypeHeader"
-                />
+                   />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -145,10 +143,8 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               () => (
                 <TableRow>
                   <TableCell colSpan={3}>
-                    <FormattedMessage
-                      defaultMessage="No products found"
-                      id="categoryProductsNoProducts"
-                    />
+                    <FormattedMessage defaultMessage="No products found"
+                       />
                   </TableCell>
                 </TableRow>
               )

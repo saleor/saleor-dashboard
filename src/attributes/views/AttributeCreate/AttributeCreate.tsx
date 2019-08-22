@@ -78,8 +78,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     if (data.attributeCreate.errors.length === 0) {
       notify({
         text: intl.formatMessage({
-          defaultMessage: "Successfully created attribute",
-          id: "attributeCreateAttributeCreateSuccess"
+          defaultMessage: "Successfully created attribute"
         })
       });
       navigate(attributeUrl(data.attributeCreate.attribute.id));
@@ -93,8 +92,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           message: intl.formatMessage(
             {
               defaultMessage: "A value named { name } already exists",
-              description: "attribute value edit error",
-              id: "attributeCreateErrorExists"
+              description: "attribute value edit error"
             },
             {
               name: input.name
@@ -115,8 +113,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           message: intl.formatMessage(
             {
               defaultMessage: "A value named { name } already exists",
-              description: "attribute value edit error",
-              id: "attributeCreateErrorExists"
+              description: "attribute value edit error"
             },
             {
               name: input.name

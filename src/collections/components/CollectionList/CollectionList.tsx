@@ -83,23 +83,17 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
             toolbar={toolbar}
           >
             <TableCell className={classes.colName}>
-              <FormattedMessage
-                defaultMessage="Category Name"
-                id="collectionListNameColumnHeader"
-              />
+              <FormattedMessage defaultMessage="Category Name"
+                 />
             </TableCell>
             <TableCell className={classes.colProducts}>
-              <FormattedMessage
-                defaultMessage="No. of Products"
-                id="collectionListProductsColumnHeader"
-              />
+              <FormattedMessage defaultMessage="No. of Products"
+                 />
             </TableCell>
             <TableCell className={classes.colAvailability}>
-              <FormattedMessage
-                defaultMessage="Availability"
+              <FormattedMessage defaultMessage="Availability"
                 description="collection availability"
-                id="collectionListAvailabilityColumnHeader"
-              />
+                 />
             </TableCell>
           </TableHead>
           <TableFooter>
@@ -166,12 +160,12 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
                                 ? intl.formatMessage({
                                     defaultMessage: "Published",
                                     description: "collection is published",
-                                    id: "collectionListPublished"
+                                     
                                   })
                                 : intl.formatMessage({
                                     defaultMessage: "Not published",
                                     description: "collection is not published",
-                                    id: "collectionListNotPublished"
+                                     
                                   })
                             }
                           />
@@ -185,10 +179,8 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      defaultMessage="No collections found"
-                      id="collectionListNoCollections"
-                    />
+                    <FormattedMessage defaultMessage="No collections found"
+                       />
                   </TableCell>
                 </TableRow>
               )

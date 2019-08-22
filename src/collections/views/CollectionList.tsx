@@ -152,7 +152,6 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                               <FormattedMessage
                                 defaultMessage="Unpublish"
                                 description="unpublish collections"
-                                id="collectionListUnpublish"
                               />
                             </Button>
                             <Button
@@ -162,7 +161,6 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                               <FormattedMessage
                                 defaultMessage="Publish"
                                 description="publish collections"
-                                id="collectionListPublish"
                               />
                             </Button>
                             <IconButton
@@ -196,8 +194,7 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                         variant="default"
                         title={intl.formatMessage({
                           defaultMessage: "Publish collections",
-                          description: "dialog title",
-                          id: "collectionListPublishCollectionsDialogTitle"
+                          description: "dialog title"
                         })}
                       >
                         <DialogContentText>
@@ -206,7 +203,6 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                               one {this collection}
                               other {{displayQuantity} collections}
                             }?"
-                            id="collectionListPublishCollectionsDialogContent"
                             values={{
                               counter: maybe(() => params.ids.length),
                               displayQuantity: (
@@ -236,8 +232,7 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                         variant="default"
                         title={intl.formatMessage({
                           defaultMessage: "Unpublish collections",
-                          description: "dialog title",
-                          id: "collectionListUnpublishCollectionsDialogTitle"
+                          description: "dialog title"
                         })}
                       >
                         <DialogContentText>
@@ -246,7 +241,6 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                               one {this collection}
                               other {{displayQuantity} collections}
                             }?"
-                            id="collectionListUnpublishCollectionsDialogContent"
                             values={{
                               counter: maybe(() => params.ids.length),
                               displayQuantity: (
@@ -275,8 +269,7 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                         variant="delete"
                         title={intl.formatMessage({
                           defaultMessage: "Delete collections",
-                          description: "dialog title",
-                          id: "collectionListDeleteCollectionsDialogTitle"
+                          description: "dialog title"
                         })}
                       >
                         <DialogContentText>
@@ -285,7 +278,6 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                               one {this collection}
                               other {{displayQuantity} collections}
                             }?"
-                            id="collectionListDeleteCollectionsDialogContent"
                             values={{
                               counter: maybe(() => params.ids.length),
                               displayQuantity: (

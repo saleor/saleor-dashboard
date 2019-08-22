@@ -82,7 +82,7 @@ export const CollectionImage = withStyles(styles)(
           title={intl.formatMessage({
             defaultMessage: "Background image (optional)",
             description: "section header",
-            id: "collectionImageHeader"
+             
           })}
           toolbar={
             <>
