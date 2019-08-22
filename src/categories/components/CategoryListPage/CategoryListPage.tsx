@@ -46,7 +46,6 @@ export const CategoryListPage: React.StatelessComponent<CategoryTableProps> = ({
           <FormattedMessage
             defaultMessage="Add category"
             description="button"
-            
           />
           <AddIcon />
         </Button>

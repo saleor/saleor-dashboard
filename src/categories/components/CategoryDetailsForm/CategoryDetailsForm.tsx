@@ -54,8 +54,7 @@ export const CategoryDetailsForm = withStyles(styles, {
               <TextField
                 classes={{ root: classes.root }}
                 label={intl.formatMessage({
-                  defaultMessage: "Category Name",
-                   
+                  defaultMessage: "Category Name"
                 })}
                 name="name"
                 disabled={disabled}
@@ -71,8 +70,7 @@ export const CategoryDetailsForm = withStyles(styles, {
               error={!!errors.descriptionJson}
               helperText={errors.descriptionJson}
               label={intl.formatMessage({
-                defaultMessage: "Category Description",
-                 
+                defaultMessage: "Category Description"
               })}
               initial={maybe(() => JSON.parse(category.descriptionJson))}
               name="description"

@@ -119,8 +119,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
               attribute === null
                 ? intl.formatMessage({
                     defaultMessage: "Create New Attribute",
-                    description: "page title",
-                     
+                    description: "page title"
                   })
                 : maybe(() => attribute.name)
             }

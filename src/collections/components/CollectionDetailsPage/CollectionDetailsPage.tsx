@@ -111,8 +111,7 @@ const CollectionDetailsPage: React.StatelessComponent<
                 descriptionPlaceholder=""
                 helperText={intl.formatMessage({
                   defaultMessage:
-                    "Add search engine title and description to make this collection easier to find",
-                   
+                    "Add search engine title and description to make this collection easier to find"
                 })}
                 title={data.seoTitle}
                 titlePlaceholder={maybe(() => collection.name)}
@@ -134,8 +133,7 @@ const CollectionDetailsPage: React.StatelessComponent<
                     onChange={change}
                     label={intl.formatMessage({
                       defaultMessage: "Feature on Homepage",
-                      description: "switch button",
-                       
+                      description: "switch button"
                     })}
                   />
                 </VisibilityCard>

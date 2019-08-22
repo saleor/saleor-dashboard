@@ -69,15 +69,13 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
         <CardTitle
           title={intl.formatMessage({
             defaultMessage: "Products",
-            description: "section header",
-             
+            description: "section header"
           })}
           toolbar={
             <Button variant="text" color="primary" onClick={onAddProduct}>
               <FormattedMessage
                 defaultMessage="Add product"
                 description="button"
-                
               />
             </Button>
           }
@@ -90,13 +88,13 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                 <FormattedMessage
                   defaultMessage="Name"
                   description="product name"
-                  
                 />
               </TableCell>
               <TableCell>
-                <FormattedMessage defaultMessage="Type"
+                <FormattedMessage
+                  defaultMessage="Type"
                   description="product type"
-                   />
+                />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -143,8 +141,7 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               () => (
                 <TableRow>
                   <TableCell colSpan={3}>
-                    <FormattedMessage defaultMessage="No products found"
-                       />
+                    <FormattedMessage defaultMessage="No products found" />
                   </TableCell>
                 </TableRow>
               )

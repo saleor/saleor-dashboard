@@ -83,37 +83,30 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
         toolbar={toolbar}
       >
         <TableCell className={classes.colSlug}>
-          <FormattedMessage
-            defaultMessage="Attribute Code"
-            
-          />
+          <FormattedMessage defaultMessage="Attribute Code" />
         </TableCell>
         <TableCell className={classes.colName}>
           <FormattedMessage
             defaultMessage="Default Label"
             description="attribute's label'"
-            
           />
         </TableCell>
         <TableCell className={classes.colVisible}>
           <FormattedMessage
             defaultMessage="Visible"
             description="attribute is visible"
-            
           />
         </TableCell>
         <TableCell className={classes.colSearchable}>
           <FormattedMessage
             defaultMessage="Searchable"
             description="attribute can be searched in dashboard"
-            
           />
         </TableCell>
         <TableCell className={classes.colFaceted}>
           <FormattedMessage
             defaultMessage="Use in faceted search"
             description="attribute can be searched in storefront"
-            
           />
         </TableCell>
       </TableHead>
@@ -185,10 +178,7 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage
-                  defaultMessage="No attributes found"
-                  
-                />
+                <FormattedMessage defaultMessage="No attributes found" />
               </TableCell>
             </TableRow>
           )
