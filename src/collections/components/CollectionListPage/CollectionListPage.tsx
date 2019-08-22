@@ -30,9 +30,10 @@ const CollectionListPage: React.StatelessComponent<CollectionListPageProps> = ({
           variant="contained"
           onClick={onAdd}
         >
-          <FormattedMessage defaultMessage="Add collection"
+          <FormattedMessage
+            defaultMessage="Add collection"
             description="button"
-             />
+          />
           <AddIcon />
         </Button>
       </PageHeader>

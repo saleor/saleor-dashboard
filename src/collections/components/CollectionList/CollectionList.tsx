@@ -83,17 +83,16 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
             toolbar={toolbar}
           >
             <TableCell className={classes.colName}>
-              <FormattedMessage defaultMessage="Category Name"
-                 />
+              <FormattedMessage defaultMessage="Category Name" />
             </TableCell>
             <TableCell className={classes.colProducts}>
-              <FormattedMessage defaultMessage="No. of Products"
-                 />
+              <FormattedMessage defaultMessage="No. of Products" />
             </TableCell>
             <TableCell className={classes.colAvailability}>
-              <FormattedMessage defaultMessage="Availability"
+              <FormattedMessage
+                defaultMessage="Availability"
                 description="collection availability"
-                 />
+              />
             </TableCell>
           </TableHead>
           <TableFooter>
@@ -159,13 +158,11 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
                               collection.isPublished
                                 ? intl.formatMessage({
                                     defaultMessage: "Published",
-                                    description: "collection is published",
-                                     
+                                    description: "collection is published"
                                   })
                                 : intl.formatMessage({
                                     defaultMessage: "Not published",
-                                    description: "collection is not published",
-                                     
+                                    description: "collection is not published"
                                   })
                             }
                           />
@@ -179,8 +176,7 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No collections found"
-                       />
+                    <FormattedMessage defaultMessage="No collections found" />
                   </TableCell>
                 </TableRow>
               )

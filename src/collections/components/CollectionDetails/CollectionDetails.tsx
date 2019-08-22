@@ -52,8 +52,7 @@ const CollectionDetails = withStyles(styles, { name: "CollectionDetails" })(
             classes={{ root: classes.name }}
             label={intl.formatMessage({
               defaultMessage: "Name",
-              description: "collection name",
-               
+              description: "collection name"
             })}
             name="name"
             disabled={disabled}

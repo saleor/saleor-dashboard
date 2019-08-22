@@ -29,9 +29,10 @@ const AttributeDeleteDialog: React.FC<AttributeDeleteDialogProps> = ({
       confirmButtonState={confirmButtonState}
       onConfirm={onConfirm}
       variant="delete"
-      title={intl.formatMessage({defaultMessage: "Delete attribute",
-        description: "dialog title",
-        })}
+      title={intl.formatMessage({
+        defaultMessage: "Delete attribute",
+        description: "dialog title"
+      })}
     >
       <DialogContentText>
         <FormattedMessage

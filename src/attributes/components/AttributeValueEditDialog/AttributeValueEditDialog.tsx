@@ -54,13 +54,11 @@ const AttributeValueEditDialog: React.StatelessComponent<
           <FormattedMessage
             defaultMessage="Add Value"
             description="add attribute value"
-            
           />
         ) : (
           <FormattedMessage
             defaultMessage="Edit Value"
             description="edit attribute value"
-            
           />
         )}
       </DialogTitle>
@@ -77,8 +75,7 @@ const AttributeValueEditDialog: React.StatelessComponent<
                 name={"name" as keyof AttributeValueEditDialogFormData}
                 label={intl.formatMessage({
                   defaultMessage: "Name",
-                  description: "attribute name",
-                   
+                  description: "attribute name"
                 })}
                 value={data.name}
                 onChange={change}

@@ -31,30 +31,28 @@ import {
 } from "../types/UnassignCollectionProduct";
 
 interface CollectionUpdateOperationsProps {
-  children: (
-    props: {
-      updateCollectionWithHomepage: PartialMutationProviderOutput<
-        CollectionUpdateWithHomepage,
-        CollectionUpdateWithHomepageVariables
-      >;
-      assignProduct: PartialMutationProviderOutput<
-        CollectionAssignProduct,
-        CollectionAssignProductVariables
-      >;
-      unassignProduct: PartialMutationProviderOutput<
-        UnassignCollectionProduct,
-        UnassignCollectionProductVariables
-      >;
-      updateCollection: PartialMutationProviderOutput<
-        CollectionUpdate,
-        CollectionUpdateVariables
-      >;
-      removeCollection: PartialMutationProviderOutput<
-        RemoveCollection,
-        RemoveCollectionVariables
-      >;
-    }
-  ) => React.ReactNode;
+  children: (props: {
+    updateCollectionWithHomepage: PartialMutationProviderOutput<
+      CollectionUpdateWithHomepage,
+      CollectionUpdateWithHomepageVariables
+    >;
+    assignProduct: PartialMutationProviderOutput<
+      CollectionAssignProduct,
+      CollectionAssignProductVariables
+    >;
+    unassignProduct: PartialMutationProviderOutput<
+      UnassignCollectionProduct,
+      UnassignCollectionProductVariables
+    >;
+    updateCollection: PartialMutationProviderOutput<
+      CollectionUpdate,
+      CollectionUpdateVariables
+    >;
+    removeCollection: PartialMutationProviderOutput<
+      RemoveCollection,
+      RemoveCollectionVariables
+    >;
+  }) => React.ReactNode;
   onUpdate: (data: CollectionUpdate) => void;
   onProductAssign: (data: CollectionAssignProduct) => void;
   onProductUnassign: (data: UnassignCollectionProduct) => void;

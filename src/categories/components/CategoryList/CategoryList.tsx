@@ -96,15 +96,13 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
           <CardTitle
             title={intl.formatMessage({
               defaultMessage: "All Subcategories",
-              description: "section header",
-               
+              description: "section header"
             })}
             toolbar={
               <Button color="primary" variant="text" onClick={onAdd}>
                 <FormattedMessage
                   defaultMessage="Add subcategory"
                   description="button"
-                  
                 />
               </Button>
             }
@@ -120,23 +118,18 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
             toolbar={toolbar}
           >
             <TableCell className={classes.colName}>
-              <FormattedMessage
-                defaultMessage="Category Name"
-                
-              />
+              <FormattedMessage defaultMessage="Category Name" />
             </TableCell>
             <TableCell className={classes.colSubcategories}>
               <FormattedMessage
                 defaultMessage="Subcategories"
                 description="number of subcategories"
-                
               />
             </TableCell>
             <TableCell className={classes.colProducts}>
               <FormattedMessage
                 defaultMessage="No. of Products"
                 description="number of products"
-                
               />
             </TableCell>
           </TableHead>
@@ -207,15 +200,9 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
                     {isRoot ? (
-                      <FormattedMessage
-                        defaultMessage="No categories found"
-                        
-                      />
+                      <FormattedMessage defaultMessage="No categories found" />
                     ) : (
-                      <FormattedMessage
-                        defaultMessage="No subcategories found"
-                        
-                      />
+                      <FormattedMessage defaultMessage="No subcategories found" />
                     )}
                   </TableCell>
                 </TableRow>
