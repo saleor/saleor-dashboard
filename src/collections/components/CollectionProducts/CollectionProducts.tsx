@@ -93,8 +93,7 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
             !!collection ? (
               intl.formatMessage({
                 defaultMessage: "Products in {name}",
-                description: "products in collection",
-                id: "collectionProductsHeader"
+                description: "products in collection"
               })
             ) : (
               <Skeleton />
@@ -110,7 +109,6 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
               <FormattedMessage
                 defaultMessage="Assign product"
                 description="button"
-                id="collectionProductsAssignProductButton"
               />
             </Button>
           }
@@ -131,7 +129,6 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
                 <FormattedMessage
                   defaultMessage="Name"
                   description="product name"
-                  id="collectionProductsNameColumnHeader"
                 />
               </span>
             </TableCell>
@@ -139,14 +136,12 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
               <FormattedMessage
                 defaultMessage="Type"
                 description="product type"
-                id="collectionProductsTypeProductList"
               />
             </TableCell>
             <TableCell className={classes.colPublished}>
               <FormattedMessage
                 defaultMessage="Published"
                 description="product is published"
-                id="collectionPublishedColumnHeader"
               />
             </TableCell>
             <TableCell className={classes.colActions} />
@@ -204,13 +199,11 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
                               product.isPublished
                                 ? intl.formatMessage({
                                     defaultMessage: "Published",
-                                    description: "product is published",
-                                    id: "collectionProductsPublished"
+                                    description: "product is published"
                                   })
                                 : intl.formatMessage({
                                     defaultMessage: "Not published",
-                                    description: "product is not published",
-                                    id: "collectionProductsNotPublished"
+                                    description: "product is not published"
                                   })
                             }
                             status={product.isPublished ? "success" : "error"}
@@ -234,10 +227,7 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
                 <TableRow>
                   <TableCell />
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      defaultMessage="No products found"
-                      id="collectionProductsNoProducts"
-                    />
+                    <FormattedMessage defaultMessage="No products found" />
                   </TableCell>
                 </TableRow>
               )

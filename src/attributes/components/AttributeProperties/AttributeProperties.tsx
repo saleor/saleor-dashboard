@@ -37,7 +37,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           <FormattedMessage
             defaultMessage="General Properties"
             description="attribute general properties section"
-            id="attributePropertiesGeneralSectionTitle"
+            
           />
         </Typography>
         <Hr />
@@ -51,12 +51,12 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
               <FormattedMessage
                 defaultMessage="Variant Attribute"
                 description="attribute is variant-only"
-                id="attributePropertiesVariantOnly"
+                
               />
               <Typography variant="caption">
                 <FormattedMessage
                   defaultMessage="If enabled, you'll be able to use this attribute to create product variants"
-                  id="attributePropertiesVariantOnlyHelperText"
+                  
                 />
               </Typography>
             </>
@@ -68,7 +68,6 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           <FormattedMessage
             defaultMessage="Storefront Properties"
             description="attribute properties regarding storefront"
-            id="attributePropertiesStorefront"
           />
         </Typography>
         <Hr />
@@ -78,8 +77,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           disabled={disabled}
           label={intl.formatMessage({
             defaultMessage: "Use in faceted navigation",
-            description: "attribute is filterable in storefront",
-            id: "attributePropertiesUseInFacetedNavigation"
+            description: "attribute is filterable in storefront"
           })}
           onChange={onChange}
         />
@@ -92,8 +90,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
             name={"storefrontSearchPosition" as keyof AttributePageFormData}
             label={intl.formatMessage({
               defaultMessage: "Position in faceted navigation",
-              description: "attribute position in storefront filters",
-              id: "attributePropertiesFacetedNavigationPosition"
+              description: "attribute position in storefront filters"
             })}
             value={data.storefrontSearchPosition}
             onChange={onChange}
@@ -106,8 +103,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           disabled={disabled}
           label={intl.formatMessage({
             defaultMessage: "Visible on Product Page in Storefront",
-            description: "attribute",
-            id: "attributePropertiesVisibility"
+            description: "attribute"
           })}
           onChange={onChange}
         />
@@ -116,7 +112,6 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           <FormattedMessage
             defaultMessage="Dashboard Properties"
             description="attribute properties regarding dashboard"
-            id="attributePropertiesDashboard"
           />
         </Typography>
         <Hr />
@@ -127,8 +122,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           disabled={disabled}
           label={intl.formatMessage({
             defaultMessage: "Use in Filtering",
-            description: "use attribute in filtering",
-            id: "attributePropertiesDashboardFiltering"
+            description: "use attribute in filtering"
           })}
           secondLabel={
             <Typography variant="caption">

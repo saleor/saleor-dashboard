@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-20T12:12:53.399Z\n"
+"POT-Creation-Date: 2019-08-22T16:11:26.423Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -8,7 +8,7 @@ msgstr ""
 
 
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
-#. [attributeCreateErrorExists] - attribute value edit error
+#. [src.attributes.views.AttributeCreate.2348058468] - attribute value edit error
 #. defaultMessage is:
 #. A value named {name} already exists
 msgctxt "attribute value edit error"
@@ -16,7 +16,7 @@ msgid "A value named {name} already exists"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
-#. [attributeValueEditDialogTitleNewValue] - add attribute value
+#. [src.attributes.components.AttributeValueEditDialog.1841790893] - add attribute value
 #. defaultMessage is:
 #. Add Value
 msgctxt "add attribute value"
@@ -24,7 +24,7 @@ msgid "Add Value"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeListPage/AttributeListPage.json
-#. [attributeListPageAddAttribute] - button
+#. [src.attributes.components.AttributeListPage.350498821] - button
 #. defaultMessage is:
 #. Add attribute
 msgctxt "button"
@@ -32,7 +32,7 @@ msgid "Add attribute"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryListPage/CategoryListPage.json
-#. [categoryListPageAddCategoryButton] - button
+#. [src.categories.components.CategoryListPage.228151782] - button
 #. defaultMessage is:
 #. Add category
 msgctxt "button"
@@ -40,7 +40,7 @@ msgid "Add category"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
-#. [collectionCreatePageHeader] - page header
+#. [src.collections.components.CollectionCreatePage.3958681866] - page header
 #. defaultMessage is:
 #. Add collection
 msgctxt "page header"
@@ -48,7 +48,7 @@ msgid "Add collection"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionListPage/CollectionListPage.json
-#. [collectionListPageAddCollectionButton] - button
+#. [src.collections.components.CollectionListPage.3958681866] - button
 #. defaultMessage is:
 #. Add collection
 msgctxt "button"
@@ -56,11 +56,11 @@ msgid "Add collection"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#. [categoryProductsAddProductButton] - button
+#. [src.categories.components.CategoryProducts.3554578821] - button
 #. defaultMessage is:
 #. Add product
 #: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
-#. [categoryProductsCardAddProductButton] - button
+#. [src.categories.components.CategoryProductsCard.3554578821] - button
 #. defaultMessage is:
 #. Add product
 msgctxt "button"
@@ -68,11 +68,11 @@ msgid "Add product"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryCreatePage/CategoryCreatePage.json
-#. [categoryCreatePageSeo]
+#. [src.categories.components.CategoryCreatePage.2563994280]
 #. defaultMessage is:
 #. Add search engine title and description to make this category easier to find
 #: build/locale/src/categories/components/CategoryUpdatePage/CategoryUpdatePage.json
-#. [categoryUpdatePageSeo]
+#. [src.categories.components.CategoryUpdatePage.2563994280]
 #. defaultMessage is:
 #. Add search engine title and description to make this category easier to find
 msgctxt "description"
@@ -80,11 +80,11 @@ msgid "Add search engine title and description to make this category easier to f
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
-#. [collectionSeo]
+#. [src.collections.components.CollectionCreatePage.946315389]
 #. defaultMessage is:
 #. Add search engine title and description to make this collection easier to find
 #: build/locale/src/collections/components/CollectionDetailsPage/CollectionDetailsPage.json
-#. [collectionSeo]
+#. [src.collections.components.CollectionDetailsPage.946315389]
 #. defaultMessage is:
 #. Add search engine title and description to make this collection easier to find
 msgctxt "description"
@@ -92,7 +92,7 @@ msgid "Add search engine title and description to make this collection easier to
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
-#. [categoryListAddSubcategoryButton] - button
+#. [src.categories.components.CategoryList.435697837] - button
 #. defaultMessage is:
 #. Add subcategory
 msgctxt "button"
@@ -100,7 +100,7 @@ msgid "Add subcategory"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
-#. [attributeValuesAddButton] - add attribute value button
+#. [src.attributes.components.AttributeValues.254756045] - add attribute value button
 #. defaultMessage is:
 #. Add value
 msgctxt "add attribute value button"
@@ -108,7 +108,7 @@ msgid "Add value"
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeDetails/AttributeDetails.json
-#. [attributeDetailsAttributeValueCreateSuccess] - added new attribute value
+#. [src.attributes.views.AttributeDetails.634268988] - added new attribute value
 #. defaultMessage is:
 #. Added new value
 msgctxt "added new attribute value"
@@ -116,7 +116,7 @@ msgid "Added new value"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsAddedProduct]
+#. [src.collections.views.2001540731]
 #. defaultMessage is:
 #. Added product to collection
 msgctxt "description"
@@ -124,7 +124,7 @@ msgid "Added product to collection"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
-#. [attributeValuesSlugColumnHeader] - attribute values list: slug column header
+#. [src.attributes.components.AttributeValues.1565474525] - attribute values list: slug column header
 #. defaultMessage is:
 #. Admin
 msgctxt "attribute values list: slug column header"
@@ -132,7 +132,7 @@ msgid "Admin"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
-#. [categoryListSubcategoriesSectionHeader] - section header
+#. [src.categories.components.CategoryList.3229914152] - section header
 #. defaultMessage is:
 #. All Subcategories
 msgctxt "section header"
@@ -140,7 +140,7 @@ msgid "All Subcategories"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
-#. [attributeValueDeleteDialogContentWithoutAttributeName] - delete attribute value
+#. [src.attributes.components.AttributeValueDeleteDialog.273524270] - delete attribute value
 #. defaultMessage is:
 #. Are you sure you want to delete "{name}" value?
 msgctxt "delete attribute value"
@@ -148,15 +148,23 @@ msgid "Are you sure you want to delete \"{name}\" value?"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
-#. [attributeValueDeleteDialogContentWithAttributeName]
+#. [src.attributes.components.AttributeValueDeleteDialog.1934550550]
 #. defaultMessage is:
 #. Are you sure you want to delete "{name}" value? If you delete it you won’t be able to assign it to any of the products with "{attributeName}" attribute.
 msgctxt "description"
 msgid "Are you sure you want to delete \"{name}\" value? If you delete it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
 msgstr ""
 
+#: build/locale/src/collections/views/CollectionDetails.json
+#. [src.collections.views.2402899582]
+#. defaultMessage is:
+#. Are you sure you want to delete collection's image?
+msgctxt "description"
+msgid "Are you sure you want to delete collection's image?"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDeleteDialog/AttributeDeleteDialog.json
-#. [attributeDeleteDialogContent] - dialog content
+#. [src.attributes.components.AttributeDeleteDialog.3738429348] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {attributeName}?
 msgctxt "dialog content"
@@ -164,7 +172,7 @@ msgid "Are you sure you want to delete {attributeName}?"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryDeleteDialog/CategoryDeleteDialog.json
-#. [categoryDeleteDialogContent] - delete category
+#. [src.categories.components.CategoryDeleteDialog.847492725] - delete category
 #. defaultMessage is:
 #. Are you sure you want to delete {categoryName}?
 msgctxt "delete category"
@@ -172,15 +180,23 @@ msgid "Are you sure you want to delete {categoryName}?"
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [categoryDetailsDeleteCategoryDialogContent]
+#. [src.categories.views.847492725]
 #. defaultMessage is:
 #. Are you sure you want to delete {categoryName}?
 msgctxt "description"
 msgid "Are you sure you want to delete {categoryName}?"
 msgstr ""
 
+#: build/locale/src/collections/views/CollectionDetails.json
+#. [src.collections.views.523939418]
+#. defaultMessage is:
+#. Are you sure you want to delete {collectionName}?
+msgctxt "description"
+msgid "Are you sure you want to delete {collectionName}?"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeBulkDeleteDialog/AttributeBulkDeleteDialog.json
-#. [attributeBulkDeleteDialogContent] - dialog content
+#. [src.attributes.components.AttributeBulkDeleteDialog.2916860383] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} attributes}}?
 msgctxt "dialog content"
@@ -188,11 +204,11 @@ msgid "Are you sure you want to delete {counter,plural,one{this attribute} other
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [categoryDetailsDeleteCategoriesDialogContent]
+#. [src.categories.views.299584400]
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} categories}}?
 #: build/locale/src/categories/views/CategoryList.json
-#. [categoryListDeleteCategoriesDialogContent]
+#. [src.categories.views.844574071]
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} categories}}?
 msgctxt "description"
@@ -200,7 +216,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this attribute} other
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [categoryDetailsDeleteProductsDialogContent]
+#. [src.categories.views.3231188861]
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} products}}?
 msgctxt "description"
@@ -208,55 +224,39 @@ msgid "Are you sure you want to delete {counter,plural,one{this attribute} other
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
-#. [collectionListPublishCollectionsDialogContent]
+#. [src.collections.views.2497542455]
 #. defaultMessage is:
-#. Are you sure you want to publish {number} collections?
+#. Are you sure you want to delete {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "description"
-msgid "Are you sure you want to publish {number} collections?"
-msgstr ""
-
-#: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsRemoveImageContent]
-#. defaultMessage is:
-#. Are you sure you want to remove collection's image?
-msgctxt "description"
-msgid "Are you sure you want to remove collection's image?"
-msgstr ""
-
-#: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsRemoveCollectionDialogContent] - remove image
-#. defaultMessage is:
-#. Are you sure you want to remove {name}?
-msgctxt "remove image"
-msgid "Are you sure you want to remove {name}?"
+msgid "Are you sure you want to delete {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
-#. [collectionListRemoveCollectionsDialogContent]
+#. [src.collections.views.1348793822]
 #. defaultMessage is:
-#. Are you sure you want to remove {number} collections?
+#. Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "description"
-msgid "Are you sure you want to remove {number} collections?"
+msgid "Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsUnassignProductsDialogContent]
+#. [src.collections.views.1908998638]
 #. defaultMessage is:
-#. Are you sure you want to unassign {number} products?
+#. Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?
 msgctxt "description"
-msgid "Are you sure you want to unassign {number} products?"
+msgid "Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
-#. [collectionListUnpublishCollectionsDialogContent]
+#. [src.collections.views.3944356444]
 #. defaultMessage is:
-#. Are you sure you want to unpublish {number} collections?
+#. Are you sure you want to unpublish {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "description"
-msgid "Are you sure you want to unpublish {number} collections?"
+msgid "Are you sure you want to unpublish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
-#. [collectionProductsAssignProductButton] - button
+#. [src.collections.components.CollectionProducts.460524544] - button
 #. defaultMessage is:
 #. Assign product
 msgctxt "button"
@@ -264,7 +264,7 @@ msgid "Assign product"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
-#. [attributeDetailsSlugInputLabel] - attribute's slug short code label
+#. [src.attributes.components.AttributeDetails.3605174225] - attribute's slug short code label
 #. defaultMessage is:
 #. Attribute Code
 msgctxt "attribute's slug short code label"
@@ -272,7 +272,7 @@ msgid "Attribute Code"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
-#. [attributeListSlugColumnHeader]
+#. [src.attributes.components.AttributeList.3605174225]
 #. defaultMessage is:
 #. Attribute Code
 msgctxt "description"
@@ -280,7 +280,7 @@ msgid "Attribute Code"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
-#. [attributeValuesHeader] - section header
+#. [src.attributes.components.AttributeValues.224159874] - section header
 #. defaultMessage is:
 #. Attribute Values
 msgctxt "section header"
@@ -288,7 +288,7 @@ msgid "Attribute Values"
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeDetails/AttributeDetails.json
-#. [attributeDetailsAttributeRemoveSuccess]
+#. [src.attributes.views.AttributeDetails.499456739]
 #. defaultMessage is:
 #. Attribute deleted
 msgctxt "description"
@@ -296,7 +296,7 @@ msgid "Attribute deleted"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [attributes] - attributes section name
+#. [src.attributes] - attributes section name
 #. defaultMessage is:
 #. Attributes
 msgctxt "attributes section name"
@@ -304,7 +304,7 @@ msgid "Attributes"
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeList/AttributeList.json
-#. [attributeListAttributesDeleted] - deleted multiple attributes
+#. [src.attributes.views.AttributeList.3218248395] - deleted multiple attributes
 #. defaultMessage is:
 #. Attributes successfully delete
 msgctxt "deleted multiple attributes"
@@ -312,15 +312,15 @@ msgid "Attributes successfully delete"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionList/CollectionList.json
-#. [collectionListAvailabilityColumnHeader] - collection list: availability column header
+#. [src.collections.components.CollectionList.3326160357] - collection availability
 #. defaultMessage is:
 #. Availability
-msgctxt "collection list: availability column header"
+msgctxt "collection availability"
 msgid "Availability"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [availability]
+#. [src.availability]
 #. defaultMessage is:
 #. Availability
 msgctxt "description"
@@ -328,11 +328,11 @@ msgid "Availability"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryBackground/CategoryBackground.json
-#. [categoryBackgroundHeader] - section header
+#. [src.categories.components.CategoryBackground.1849089820] - section header
 #. defaultMessage is:
 #. Background image (optional)
 #: build/locale/src/collections/components/CollectionImage/CollectionImage.json
-#. [collectionImageHeader] - section header
+#. [src.collections.components.CollectionImage.1849089820] - section header
 #. defaultMessage is:
 #. Background image (optional)
 msgctxt "section header"
@@ -340,7 +340,7 @@ msgid "Background image (optional)"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [cancel]
+#. [src.cancel]
 #. defaultMessage is:
 #. Cancel
 msgctxt "description"
@@ -348,7 +348,7 @@ msgid "Cancel"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
-#. [attributeDetailsInputTypeField] - attribute's editor component
+#. [src.attributes.components.AttributeDetails.1005562666] - attribute's editor component
 #. defaultMessage is:
 #. Catalog Input type for Store Owner
 msgctxt "attribute's editor component"
@@ -356,7 +356,7 @@ msgid "Catalog Input type for Store Owner"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [categories] - categories section name
+#. [src.categories] - categories section name
 #. defaultMessage is:
 #. Categories
 msgctxt "categories section name"
@@ -364,7 +364,7 @@ msgid "Categories"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryDetailsForm/CategoryDetailsForm.json
-#. [categoryDetailsFormDescriptionInputLabel]
+#. [src.categories.components.CategoryDetailsForm.4037703468]
 #. defaultMessage is:
 #. Category Description
 msgctxt "description"
@@ -372,27 +372,23 @@ msgid "Category Description"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryDetailsForm/CategoryDetailsForm.json
-#. [categoryDetailsFormNameInputLabel]
+#. [src.categories.components.CategoryDetailsForm.1214235329]
 #. defaultMessage is:
 #. Category Name
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
-#. [categoryListNameColumnHeader]
+#. [src.categories.components.CategoryList.1214235329]
+#. defaultMessage is:
+#. Category Name
+#: build/locale/src/collections/components/CollectionList/CollectionList.json
+#. [src.collections.components.CollectionList.1214235329]
 #. defaultMessage is:
 #. Category Name
 msgctxt "description"
 msgid "Category Name"
 msgstr ""
 
-#: build/locale/src/collections/components/CollectionList/CollectionList.json
-#. [collectionListNameColumnHeader] - collection list: name column header
-#. defaultMessage is:
-#. Category Name
-msgctxt "collection list: name column header"
-msgid "Category Name"
-msgstr ""
-
 #: build/locale/src/categories/views/CategoryCreate.json
-#. [categoryCreateCategoryCreated]
+#. [src.categories.views.1754466114]
 #. defaultMessage is:
 #. Category created
 msgctxt "description"
@@ -400,23 +396,15 @@ msgid "Category created"
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [categoryDetailsCategoryDeleted]
+#. [src.categories.views.2189424032]
 #. defaultMessage is:
 #. Category deleted
 msgctxt "description"
 msgid "Category deleted"
 msgstr ""
 
-#: build/locale/src/collections/views/CollectionList.json
-#. [collectionListChangedPublication]
-#. defaultMessage is:
-#. Changed publication status
-msgctxt "description"
-msgid "Changed publication status"
-msgstr ""
-
 #: build/locale/src/intl.json
-#. [collections] - collections section name
+#. [src.collections] - collections section name
 #. defaultMessage is:
 #. Collections
 msgctxt "collections section name"
@@ -424,7 +412,7 @@ msgid "Collections"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [confirm]
+#. [src.confirm]
 #. defaultMessage is:
 #. Confirm
 msgctxt "description"
@@ -432,7 +420,7 @@ msgid "Confirm"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributePage/AttributePage.json
-#. [attributePageTitle] - page title
+#. [src.attributes.components.AttributePage.2855501559] - page title
 #. defaultMessage is:
 #. Create New Attribute
 msgctxt "page title"
@@ -440,7 +428,7 @@ msgid "Create New Attribute"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryCreatePage/CategoryCreatePage.json
-#. [categoryCreatePageHeader] - page header
+#. [src.categories.components.CategoryCreatePage.236319840] - page header
 #. defaultMessage is:
 #. Create New Category
 msgctxt "page header"
@@ -448,7 +436,7 @@ msgid "Create New Category"
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryCreate.json
-#. [categoryCreateWindowTitle] - window title
+#. [src.categories.views.1140231710] - window title
 #. defaultMessage is:
 #. Create category
 msgctxt "window title"
@@ -456,7 +444,7 @@ msgid "Create category"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionCreate.json
-#. [collectionCreateWindowTitle] - window title
+#. [src.collections.views.686910896] - window title
 #. defaultMessage is:
 #. Create collection
 msgctxt "window title"
@@ -464,7 +452,7 @@ msgid "Create collection"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionCreate.json
-#. [collectionCreateCreatedCollection]
+#. [src.collections.views.1597339737]
 #. defaultMessage is:
 #. Created collection
 msgctxt "description"
@@ -472,7 +460,7 @@ msgid "Created collection"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
-#. [attributePropertiesDashboard] - attribute properties regarding dashboard
+#. [src.attributes.components.AttributeProperties.26409543] - attribute properties regarding dashboard
 #. defaultMessage is:
 #. Dashboard Properties
 msgctxt "attribute properties regarding dashboard"
@@ -480,7 +468,7 @@ msgid "Dashboard Properties"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
-#. [attributeDetailsNameInputLabel] - attribute's label
+#. [src.attributes.components.AttributeDetails.691600601] - attribute's label
 #. defaultMessage is:
 #. Default Label
 msgctxt "attribute's label"
@@ -488,7 +476,7 @@ msgid "Default Label"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
-#. [attributeListNameColumnHeader] - attribute's label'
+#. [src.attributes.components.AttributeList.691600601] - attribute's label'
 #. defaultMessage is:
 #. Default Label
 msgctxt "attribute's label'"
@@ -496,15 +484,23 @@ msgid "Default Label"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
-#. [attributeValuesNameColumnHeader] - attribute values list: name column header
+#. [src.attributes.components.AttributeValues.1397696159] - attribute values list: name column header
 #. defaultMessage is:
 #. Default Store View
 msgctxt "attribute values list: name column header"
 msgid "Default Store View"
 msgstr ""
 
+#: build/locale/src/collections/views/CollectionDetails.json
+#. [src.collections.views.699514132] - dialog title
+#. defaultMessage is:
+#. Delete Collection
+msgctxt "dialog title"
+msgid "Delete Collection"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDeleteDialog/AttributeDeleteDialog.json
-#. [attributeDeleteDialogTitle] - dialog title
+#. [src.attributes.components.AttributeDeleteDialog.1889602489] - dialog title
 #. defaultMessage is:
 #. Delete attribute
 msgctxt "dialog title"
@@ -512,7 +508,7 @@ msgid "Delete attribute"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
-#. [attributeValueDeleteDialogTitle] - dialog title
+#. [src.attributes.components.AttributeValueDeleteDialog.203246037] - dialog title
 #. defaultMessage is:
 #. Delete attribute value
 msgctxt "dialog title"
@@ -520,7 +516,7 @@ msgid "Delete attribute value"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeBulkDeleteDialog/AttributeBulkDeleteDialog.json
-#. [attributeBulkDeleteDialogTitle] - dialog title
+#. [src.attributes.components.AttributeBulkDeleteDialog.1655187315] - dialog title
 #. defaultMessage is:
 #. Delete attributes
 msgctxt "dialog title"
@@ -528,11 +524,11 @@ msgid "Delete attributes"
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [categoryDetailsDeleteSubcategoriesDialogTitle] - dialog title
+#. [src.categories.views.712767046] - dialog title
 #. defaultMessage is:
 #. Delete categories
 #: build/locale/src/categories/views/CategoryList.json
-#. [categoryListDeleteSubcategoriesDialogTitle] - dialog title
+#. [src.categories.views.712767046] - dialog title
 #. defaultMessage is:
 #. Delete categories
 msgctxt "dialog title"
@@ -540,27 +536,59 @@ msgid "Delete categories"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryDeleteDialog/CategoryDeleteDialog.json
-#. [categoryDeleteDialogTitle] - dialog title
+#. [src.categories.components.CategoryDeleteDialog.2004894945] - dialog title
 #. defaultMessage is:
 #. Delete category
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [categoryDetailsDeleteCategoryDialogTitle] - dialog title
+#. [src.categories.views.2004894945] - dialog title
 #. defaultMessage is:
 #. Delete category
 msgctxt "dialog title"
 msgid "Delete category"
 msgstr ""
 
+#: build/locale/src/collections/views/CollectionList.json
+#. [src.collections.views.3817188998] - dialog title
+#. defaultMessage is:
+#. Delete collections
+msgctxt "dialog title"
+msgid "Delete collections"
+msgstr ""
+
+#: build/locale/src/collections/views/CollectionDetails.json
+#. [src.collections.views.942133001] - dialog title
+#. defaultMessage is:
+#. Delete image
+msgctxt "dialog title"
+msgid "Delete image"
+msgstr ""
+
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [categoryDetailsDeleteProductsDialogTitle] - dialog title
+#. [src.categories.views.2507763081] - dialog title
 #. defaultMessage is:
 #. Delete products
 msgctxt "dialog title"
 msgid "Delete products"
 msgstr ""
 
+#: build/locale/src/collections/views/CollectionDetails.json
+#. [src.collections.views.1152429477]
+#. defaultMessage is:
+#. Deleted collection
+msgctxt "description"
+msgid "Deleted collection"
+msgstr ""
+
+#: build/locale/src/collections/views/CollectionDetails.json
+#. [src.collections.views.3482612628]
+#. defaultMessage is:
+#. Deleted product from collection
+msgctxt "description"
+msgid "Deleted product from collection"
+msgstr ""
+
 #: build/locale/src/intl.json
-#. [description]
+#. [src.description]
 #. defaultMessage is:
 #. Description
 msgctxt "description"
@@ -568,7 +596,7 @@ msgid "Description"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
-#. [attributeDetailsInputTypeDropdown] - product attribute type
+#. [src.attributes.components.AttributeDetails.1336738461] - product attribute type
 #. defaultMessage is:
 #. Dropdown
 msgctxt "product attribute type"
@@ -576,7 +604,7 @@ msgid "Dropdown"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
-#. [attributeValueEditDialogTitle] - edit attribute value
+#. [src.attributes.components.AttributeValueEditDialog.1395607402] - edit attribute value
 #. defaultMessage is:
 #. Edit Value
 msgctxt "edit attribute value"
@@ -584,7 +612,7 @@ msgid "Edit Value"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionDetailsPage/CollectionDetailsPage.json
-#. [collectionDetailsPageFeatureInputLabel] - switch button
+#. [src.collections.components.CollectionDetailsPage.2906897537] - switch button
 #. defaultMessage is:
 #. Feature on Homepage
 msgctxt "switch button"
@@ -592,7 +620,7 @@ msgid "Feature on Homepage"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [generalInformations]
+#. [src.generalInformations]
 #. defaultMessage is:
 #. General Informations
 msgctxt "description"
@@ -600,7 +628,7 @@ msgid "General Informations"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
-#. [attributePropertiesDashboardFilteringHelperText]
+#. [src.attributes.components.AttributeProperties.787251583]
 #. defaultMessage is:
 #. If enabled, you’ll be able to use this attribute to filter products in product list.
 msgctxt "description"
@@ -608,7 +636,7 @@ msgid "If enabled, you’ll be able to use this attribute to filter products in 
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
-#. [attributeDetailsInputTypeMultiselect] - product attribute type
+#. [src.attributes.components.AttributeDetails.3334509011] - product attribute type
 #. defaultMessage is:
 #. Multiple Select
 msgctxt "product attribute type"
@@ -616,7 +644,7 @@ msgid "Multiple Select"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
-#. [attributeValueEditDialogNameField] - attribute name
+#. [src.attributes.components.AttributeValueEditDialog.636461959] - attribute name
 #. defaultMessage is:
 #. Name
 msgctxt "attribute name"
@@ -624,7 +652,11 @@ msgid "Name"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#. [categoryProductsNameHeader] - product name
+#. [src.categories.components.CategoryProducts.636461959] - product name
+#. defaultMessage is:
+#. Name
+#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
+#. [src.collections.components.CollectionProducts.636461959] - product name
 #. defaultMessage is:
 #. Name
 msgctxt "product name"
@@ -632,23 +664,15 @@ msgid "Name"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionDetails/CollectionDetails.json
-#. [collectionDetailsNameInputLabel] - collection name
+#. [src.collections.components.CollectionDetails.636461959] - collection name
 #. defaultMessage is:
 #. Name
 msgctxt "collection name"
 msgid "Name"
 msgstr ""
 
-#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
-#. [collectionProductsNameColumnHeader] - product list: product name column header
-#. defaultMessage is:
-#. Name
-msgctxt "product list: product name column header"
-msgid "Name"
-msgstr ""
-
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
-#. [AttributeListNoAttributes]
+#. [src.attributes.components.AttributeList.1192828581]
 #. defaultMessage is:
 #. No attributes found
 msgctxt "description"
@@ -656,7 +680,7 @@ msgid "No attributes found"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
-#. [categoryListNoCategories]
+#. [src.categories.components.CategoryList.2054128296]
 #. defaultMessage is:
 #. No categories found
 msgctxt "description"
@@ -664,7 +688,7 @@ msgid "No categories found"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionList/CollectionList.json
-#. [collectionListNoCollections]
+#. [src.collections.components.CollectionList.2137803833]
 #. defaultMessage is:
 #. No collections found
 msgctxt "description"
@@ -672,11 +696,11 @@ msgid "No collections found"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#. [categoryProductsNoProducts]
+#. [src.categories.components.CategoryProducts.1657559629]
 #. defaultMessage is:
 #. No products found
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
-#. [collectionProductsNoProducts]
+#. [src.collections.components.CollectionProducts.1657559629]
 #. defaultMessage is:
 #. No products found
 msgctxt "description"
@@ -684,7 +708,7 @@ msgid "No products found"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
-#. [categoryListNoSubcategories]
+#. [src.categories.components.CategoryList.2155313053]
 #. defaultMessage is:
 #. No subcategories found
 msgctxt "description"
@@ -692,39 +716,47 @@ msgid "No subcategories found"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
-#. [attributeValuesNotFound] - No attribute values found
+#. [src.attributes.components.AttributeValues.2054206599] - No attribute values found
 #. defaultMessage is:
 #. No values found
 msgctxt "No attribute values found"
 msgid "No values found"
 msgstr ""
 
-#: build/locale/src/collections/components/CollectionList/CollectionList.json
-#. [collectionListProductsColumnHeader] - collection list: number of products column header
-#. defaultMessage is:
-#. No. Products
-msgctxt "collection list: number of products column header"
-msgid "No. Products"
-msgstr ""
-
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
-#. [categoryListNumberOfProductsColumnHeader] - number of products
+#. [src.categories.components.CategoryList.2527742754] - number of products
 #. defaultMessage is:
 #. No. of Products
 msgctxt "number of products"
 msgid "No. of Products"
 msgstr ""
 
-#: build/locale/src/intl.json
-#. [notPublished]
+#: build/locale/src/collections/components/CollectionList/CollectionList.json
+#. [src.collections.components.CollectionList.2527742754]
+#. defaultMessage is:
+#. No. of Products
+msgctxt "description"
+msgid "No. of Products"
+msgstr ""
+
+#: build/locale/src/collections/components/CollectionList/CollectionList.json
+#. [src.collections.components.CollectionList.2341910657] - collection is not published
 #. defaultMessage is:
 #. Not published
-msgctxt "description"
+msgctxt "collection is not published"
+msgid "Not published"
+msgstr ""
+
+#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
+#. [src.collections.components.CollectionProducts.2341910657] - product is not published
+#. defaultMessage is:
+#. Not published
+msgctxt "product is not published"
 msgid "Not published"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [optionalField] - field is optional
+#. [src.optionalField] - field is optional
 #. defaultMessage is:
 #. Optional
 msgctxt "field is optional"
@@ -732,7 +764,7 @@ msgid "Optional"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
-#. [attributePropertiesFacetedNavigationPosition] - attribute position in storefront filters
+#. [src.attributes.components.AttributeProperties.3590282519] - attribute position in storefront filters
 #. defaultMessage is:
 #. Position in faceted navigation
 msgctxt "attribute position in storefront filters"
@@ -740,7 +772,7 @@ msgid "Position in faceted navigation"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#. [categoryProductsHeader] - section header
+#. [src.categories.components.CategoryProducts.2968663655] - section header
 #. defaultMessage is:
 #. Products
 msgctxt "section header"
@@ -748,7 +780,7 @@ msgid "Products"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryUpdatePage/CategoryUpdatePage.json
-#. [categoryUpdatePageProductsColumnHeader] - number of products in category
+#. [src.categories.components.CategoryUpdatePage.2968663655] - number of products in category
 #. defaultMessage is:
 #. Products
 msgctxt "number of products in category"
@@ -756,7 +788,7 @@ msgid "Products"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
-#. [categoryProductsCardHeader] - section header
+#. [src.categories.components.CategoryProductsCard.4164156574] - section header
 #. defaultMessage is:
 #. Products in {categoryName}
 msgctxt "section header"
@@ -764,7 +796,7 @@ msgid "Products in {categoryName}"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
-#. [collectionProductsHeader] - products in collection
+#. [src.collections.components.CollectionProducts.4114667680] - products in collection
 #. defaultMessage is:
 #. Products in {name}
 msgctxt "products in collection"
@@ -772,7 +804,7 @@ msgid "Products in {name}"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [properties]
+#. [src.properties]
 #. defaultMessage is:
 #. Properties
 msgctxt "description"
@@ -780,7 +812,7 @@ msgid "Properties"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
-#. [collectionListPublish] - publish collections
+#. [src.collections.views.1547167026] - publish collections
 #. defaultMessage is:
 #. Publish
 msgctxt "publish collections"
@@ -788,95 +820,43 @@ msgid "Publish"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
-#. [collectionListPublishCollectionsDialogTitle] - dialog title
+#. [src.collections.views.2823425739] - dialog title
 #. defaultMessage is:
 #. Publish collections
 msgctxt "dialog title"
 msgid "Publish collections"
 msgstr ""
 
+#: build/locale/src/collections/components/CollectionList/CollectionList.json
+#. [src.collections.components.CollectionList.3640454975] - collection is published
+#. defaultMessage is:
+#. Published
+msgctxt "collection is published"
+msgid "Published"
+msgstr ""
+
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
-#. [collectionPublishedColumnHeader] - product list: published column header
+#. [src.collections.components.CollectionProducts.3640454975] - product is published
 #. defaultMessage is:
 #. Published
-msgctxt "product list: published column header"
-msgid "Published"
-msgstr ""
-
-#: build/locale/src/intl.json
-#. [published]
-#. defaultMessage is:
-#. Published
-msgctxt "description"
+msgctxt "product is published"
 msgid "Published"
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [categoryDetailsDeleteCategoryDialogContentAdditionalText]
-#. defaultMessage is:
-#. Remember this will also delete all products assigned to this category.
-#: build/locale/src/categories/views/CategoryDetails.json
-#. [categoryDetailsDeleteCategoriesDialogContentAdditionalText]
+#. [src.categories.views.3488150607]
 #. defaultMessage is:
 #. Remember this will also delete all products assigned to this category.
 #: build/locale/src/categories/views/CategoryList.json
-#. [categoryListDeleteCategoriesDialogContentAdditionalText]
+#. [src.categories.views.3488150607]
 #. defaultMessage is:
 #. Remember this will also delete all products assigned to this category.
 msgctxt "description"
 msgid "Remember this will also delete all products assigned to this category."
 msgstr ""
 
-#: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsRemoveCollectionDialogTitle] - dialog title
-#. defaultMessage is:
-#. Remove Collection
-msgctxt "dialog title"
-msgid "Remove Collection"
-msgstr ""
-
-#: build/locale/src/collections/views/CollectionList.json
-#. [collectionListRemoveCollectionsDialogTitle] - dialog title
-#. defaultMessage is:
-#. Remove collections
-msgctxt "dialog title"
-msgid "Remove collections"
-msgstr ""
-
-#: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsRemoveImageTitle] - dialog title
-#. defaultMessage is:
-#. Remove image
-msgctxt "dialog title"
-msgid "Remove image"
-msgstr ""
-
-#: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsRemovedCollection]
-#. defaultMessage is:
-#. Removed collection
-msgctxt "description"
-msgid "Removed collection"
-msgstr ""
-
-#: build/locale/src/collections/views/CollectionList.json
-#. [collectionListRemovedCollections]
-#. defaultMessage is:
-#. Removed collections
-msgctxt "description"
-msgid "Removed collections"
-msgstr ""
-
-#: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsRemovedProduct]
-#. defaultMessage is:
-#. Removed product from collection
-msgctxt "description"
-msgid "Removed product from collection"
-msgstr ""
-
 #: build/locale/src/intl.json
-#. [savedChanges]
+#. [src.savedChanges]
 #. defaultMessage is:
 #. Saved changes
 msgctxt "description"
@@ -884,7 +864,7 @@ msgid "Saved changes"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
-#. [attributeListSearchableColumnHeader] - attribute can be searched in dashboard
+#. [src.attributes.components.AttributeList.2235596452] - attribute can be searched in dashboard
 #. defaultMessage is:
 #. Searchable
 msgctxt "attribute can be searched in dashboard"
@@ -892,7 +872,7 @@ msgid "Searchable"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
-#. [attributePropertiesStorefront] - attribute properties regarding storefront
+#. [src.attributes.components.AttributeProperties.1877630205] - attribute properties regarding storefront
 #. defaultMessage is:
 #. Storefront Properties
 msgctxt "attribute properties regarding storefront"
@@ -900,7 +880,7 @@ msgid "Storefront Properties"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
-#. [categoryListSubcategoriesColumnHeader] - number of subcategories
+#. [src.categories.components.CategoryList.2159874182] - number of subcategories
 #. defaultMessage is:
 #. Subcategories
 msgctxt "number of subcategories"
@@ -908,7 +888,7 @@ msgid "Subcategories"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryUpdatePage/CategoryUpdatePage.json
-#. [categoryUpdatePageSubcategoriesColumnHeader] - number of subcategories in category
+#. [src.categories.components.CategoryUpdatePage.2159874182] - number of subcategories in category
 #. defaultMessage is:
 #. Subcategories
 msgctxt "number of subcategories in category"
@@ -916,7 +896,7 @@ msgid "Subcategories"
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
-#. [attributeCreateAttributeCreateSuccess]
+#. [src.attributes.views.AttributeCreate.11941964]
 #. defaultMessage is:
 #. Successfully created attribute
 msgctxt "description"
@@ -924,7 +904,7 @@ msgid "Successfully created attribute"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
-#. [attributeDetailsNameInputHelperText] - attribute slug input field helper text
+#. [src.attributes.components.AttributeDetails.4107478955] - attribute slug input field helper text
 #. defaultMessage is:
 #. This is used internally. Make sure you don’t use spaces
 msgctxt "attribute slug input field helper text"
@@ -932,31 +912,27 @@ msgid "This is used internally. Make sure you don’t use spaces"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#. [categoryProductsTypeHeader] - product type
+#. [src.categories.components.CategoryProducts.1952810469] - product type
+#. defaultMessage is:
+#. Type
+#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
+#. [src.collections.components.CollectionProducts.1952810469] - product type
 #. defaultMessage is:
 #. Type
 msgctxt "product type"
 msgid "Type"
 msgstr ""
 
-#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
-#. [collectionProductsTypeProductList] - product list: product type column header
-#. defaultMessage is:
-#. Type
-msgctxt "product list: product type column header"
-msgid "Type"
-msgstr ""
-
 #: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsUnassignButton] - unassign product from collection button
+#. [src.collections.views.870815507] - unassign product from collection, button
 #. defaultMessage is:
 #. Unassign
-msgctxt "unassign product from collection button"
+msgctxt "unassign product from collection, button"
 msgid "Unassign"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsUnassignProductsDialogTitle] - dialog title
+#. [src.collections.views.3791354625] - dialog title
 #. defaultMessage is:
 #. Unassign products from collection
 msgctxt "dialog title"
@@ -964,7 +940,7 @@ msgid "Unassign products from collection"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
-#. [collectionListUnpublish] - unpublish collections
+#. [src.collections.views.2237014112] - unpublish collections
 #. defaultMessage is:
 #. Unpublish
 msgctxt "unpublish collections"
@@ -972,23 +948,15 @@ msgid "Unpublish"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
-#. [collectionListUnpublishCollectionsDialogTitle] - dialog title
+#. [src.collections.views.2637364047] - dialog title
 #. defaultMessage is:
 #. Unpublish collections
 msgctxt "dialog title"
 msgid "Unpublish collections"
 msgstr ""
 
-#: build/locale/src/collections/views/CollectionDetails.json
-#. [collectionDetailsUpdatedCollection]
-#. defaultMessage is:
-#. Updated collection
-msgctxt "description"
-msgid "Updated collection"
-msgstr ""
-
 #: build/locale/src/intl.json
-#. [uploadImage] - button
+#. [src.uploadImage] - button
 #. defaultMessage is:
 #. Upload image
 msgctxt "button"
@@ -996,7 +964,7 @@ msgid "Upload image"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
-#. [attributePropertiesDashboardFiltering] - use attribute in filtering
+#. [src.attributes.components.AttributeProperties.714335445] - use attribute in filtering
 #. defaultMessage is:
 #. Use in Filtering
 msgctxt "use attribute in filtering"
@@ -1004,7 +972,7 @@ msgid "Use in Filtering"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
-#. [attributePropertiesUseInFacetedNavigation] - attribute is filterable in storefront
+#. [src.attributes.components.AttributeProperties.1564730914] - attribute is filterable in storefront
 #. defaultMessage is:
 #. Use in faceted navigation
 msgctxt "attribute is filterable in storefront"
@@ -1012,7 +980,7 @@ msgid "Use in faceted navigation"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
-#. [attributeListFacetedColumnHeader] - attribute can be searched in storefront
+#. [src.attributes.components.AttributeList.2186555805] - attribute can be searched in storefront
 #. defaultMessage is:
 #. Use in faceted search
 msgctxt "attribute can be searched in storefront"
@@ -1020,7 +988,7 @@ msgid "Use in faceted search"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
-#. [attributeDetailsValueRequiredInputLabel] - check to require attribute to have value
+#. [src.attributes.components.AttributeDetails.2592224946] - check to require attribute to have value
 #. defaultMessage is:
 #. Value Required
 msgctxt "check to require attribute to have value"
@@ -1028,7 +996,7 @@ msgid "Value Required"
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeDetails/AttributeDetails.json
-#. [attributeDetailsAttributeValueDeleteSuccess] - attribute value deleted
+#. [src.attributes.views.AttributeDetails.423042761] - attribute value deleted
 #. defaultMessage is:
 #. Value deleted
 msgctxt "attribute value deleted"
@@ -1036,7 +1004,7 @@ msgid "Value deleted"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
-#. [attributeListVisibilityColumnHeader] - attribute is visible
+#. [src.attributes.components.AttributeList.643174786] - attribute is visible
 #. defaultMessage is:
 #. Visible
 msgctxt "attribute is visible"
@@ -1044,7 +1012,7 @@ msgid "Visible"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
-#. [attributePropertiesVisibility] - attribute
+#. [src.attributes.components.AttributeProperties.3876764312] - attribute
 #. defaultMessage is:
 #. Visible on Product Page in Storefront
 msgctxt "attribute"
@@ -1052,7 +1020,7 @@ msgid "Visible on Product Page in Storefront"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [save]
+#. [src.save]
 #. defaultMessage is:
 #. save
 msgctxt "description"

@@ -62,7 +62,7 @@ export const CategoryCreatePage: React.StatelessComponent<
             title={intl.formatMessage({
               defaultMessage: "Create New Category",
               description: "page header",
-              id: "categoryCreatePageHeader"
+               
             })}
           />
           <div>
@@ -77,7 +77,7 @@ export const CategoryCreatePage: React.StatelessComponent<
               helperText={intl.formatMessage({
                 defaultMessage:
                   "Add search engine title and description to make this category easier to find",
-                id: "categoryCreatePageSeo"
+                 
               })}
               title={data.seoTitle}
               titlePlaceholder={data.name}

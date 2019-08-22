@@ -99,8 +99,7 @@ export const CollectionDetails: React.StatelessComponent<
           if (data.collectionAddProducts.errors.length === 0) {
             notify({
               text: intl.formatMessage({
-                defaultMessage: "Added product to collection",
-                id: "collectionDetailsAddedProduct"
+                defaultMessage: "Added product to collection"
               })
             });
             navigate(collectionUrl(id), true);
@@ -111,8 +110,7 @@ export const CollectionDetails: React.StatelessComponent<
           if (data.collectionRemoveProducts.errors.length === 0) {
             notify({
               text: intl.formatMessage({
-                defaultMessage: "Deleted product from collection",
-                id: "collectionDetailsDeletedProduct"
+                defaultMessage: "Deleted product from collection"
               })
             });
             reset();
@@ -124,8 +122,7 @@ export const CollectionDetails: React.StatelessComponent<
           if (data.collectionDelete.errors.length === 0) {
             notify({
               text: intl.formatMessage({
-                defaultMessage: "Deleted collection",
-                id: "collectionDetailsDeletedCollection"
+                defaultMessage: "Deleted collection"
               })
             });
             navigate(collectionListUrl());
@@ -278,7 +275,6 @@ export const CollectionDetails: React.StatelessComponent<
                         <FormattedMessage
                           defaultMessage="Unassign"
                           description="unassign product from collection, button"
-                          id="collectionDetailsUnassignButton"
                         />
                       </Button>
                     }
@@ -317,15 +313,13 @@ export const CollectionDetails: React.StatelessComponent<
                     open={params.action === "remove"}
                     title={intl.formatMessage({
                       defaultMessage: "Delete Collection",
-                      description: "dialog title",
-                      id: "collectionDetailsDeleteCollectionDialogTitle"
+                      description: "dialog title"
                     })}
                     variant="delete"
                   >
                     <DialogContentText>
                       <FormattedMessage
                         defaultMessage="Are you sure you want to delete {collectionName}?"
-                        id="collectionDetailsDeleteCollectionDialogContent"
                         values={{
                           collectionName: (
                             <strong>
@@ -349,8 +343,7 @@ export const CollectionDetails: React.StatelessComponent<
                     open={params.action === "unassign"}
                     title={intl.formatMessage({
                       defaultMessage: "Unassign products from collection",
-                      description: "dialog title",
-                      id: "collectionDetailsUnassignProductsDialogTitle"
+                      description: "dialog title"
                     })}
                   >
                     <DialogContentText>
@@ -359,7 +352,6 @@ export const CollectionDetails: React.StatelessComponent<
                           one {this product}
                           other {{displayQuantity} products}
                         }?"
-                        id="collectionDetailsUnassignProductsDialogContent"
                         values={{
                           counter: maybe(() => params.ids.length),
                           displayQuantity: (
@@ -383,16 +375,12 @@ export const CollectionDetails: React.StatelessComponent<
                     open={params.action === "removeImage"}
                     title={intl.formatMessage({
                       defaultMessage: "Delete image",
-                      description: "dialog title",
-                      id: "collectionDetailsDeleteImageTitle"
+                      description: "dialog title"
                     })}
                     variant="delete"
                   >
                     <DialogContentText>
-                      <FormattedMessage
-                        defaultMessage="Are you sure you want to delete collection's image?"
-                        id="collectionDetailsDeleteImageContent"
-                      />
+                      <FormattedMessage defaultMessage="Are you sure you want to delete collection's image?" />
                     </DialogContentText>
                   </ActionDialog>
                 </>

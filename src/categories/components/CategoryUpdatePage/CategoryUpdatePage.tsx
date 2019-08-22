@@ -146,7 +146,7 @@ export const CategoryUpdatePage: React.StatelessComponent<
             helperText={intl.formatMessage({
               defaultMessage:
                 "Add search engine title and description to make this category easier to find",
-              id: "categoryUpdatePageSeo"
+               
             })}
             title={data.seoTitle}
             titlePlaceholder={data.name}
@@ -162,21 +162,17 @@ export const CategoryUpdatePage: React.StatelessComponent<
               isActive={currentTab === CategoryPageTab.categories}
               changeTab={changeTab}
             >
-              <FormattedMessage
-                defaultMessage="Subcategories"
+              <FormattedMessage defaultMessage="Subcategories"
                 description="number of subcategories in category"
-                id="categoryUpdatePageSubcategoriesColumnHeader"
-              />
+                 />
             </CategoriesTab>
             <ProductsTab
               isActive={currentTab === CategoryPageTab.products}
               changeTab={changeTab}
             >
-              <FormattedMessage
-                defaultMessage="Products"
+              <FormattedMessage defaultMessage="Products"
                 description="number of products in category"
-                id="categoryUpdatePageProductsColumnHeader"
-              />
+                 />
             </ProductsTab>
           </TabContainer>
           <CardSpacer />

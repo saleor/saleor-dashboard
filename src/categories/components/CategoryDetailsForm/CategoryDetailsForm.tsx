@@ -55,7 +55,7 @@ export const CategoryDetailsForm = withStyles(styles, {
                 classes={{ root: classes.root }}
                 label={intl.formatMessage({
                   defaultMessage: "Category Name",
-                  id: "categoryDetailsFormNameInputLabel"
+                   
                 })}
                 name="name"
                 disabled={disabled}
@@ -72,7 +72,7 @@ export const CategoryDetailsForm = withStyles(styles, {
               helperText={errors.descriptionJson}
               label={intl.formatMessage({
                 defaultMessage: "Category Description",
-                id: "categoryDetailsFormDescriptionInputLabel"
+                 
               })}
               initial={maybe(() => JSON.parse(category.descriptionJson))}
               name="description"

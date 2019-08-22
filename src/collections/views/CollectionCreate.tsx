@@ -21,7 +21,7 @@ export const CollectionCreate: React.FC = () => {
       notify({
         text: intl.formatMessage({
           defaultMessage: "Created collection",
-          id: "collectionCreateCreatedCollection"
+           
         })
       });
       navigate(collectionUrl(data.collectionCreate.collection.id));
@@ -51,7 +51,7 @@ export const CollectionCreate: React.FC = () => {
               title={intl.formatMessage({
                 defaultMessage: "Create collection",
                 description: "window title",
-                id: "collectionCreateWindowTitle"
+                 
               })}
             />
             <CollectionCreatePage

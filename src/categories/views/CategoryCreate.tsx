@@ -26,7 +26,7 @@ export const CategoryCreateView: React.StatelessComponent<
       notify({
         text: intl.formatMessage({
           defaultMessage: "Category created",
-          id: "categoryCreateCategoryCreated"
+           
         })
       });
       navigate(categoryUrl(data.categoryCreate.category.id));
@@ -52,7 +52,7 @@ export const CategoryCreateView: React.StatelessComponent<
               title={intl.formatMessage({
                 defaultMessage: "Create category",
                 description: "window title",
-                id: "categoryCreateWindowTitle"
+                 
               })}
             />
             <CategoryCreatePage

@@ -78,7 +78,7 @@ const CollectionCreatePage: React.StatelessComponent<
             title={intl.formatMessage({
               defaultMessage: "Add collection",
               description: "page header",
-              id: "collectionCreatePageHeader"
+               
             })}
           />
           <Grid>
@@ -133,7 +133,7 @@ const CollectionCreatePage: React.StatelessComponent<
                 helperText={intl.formatMessage({
                   defaultMessage:
                     "Add search engine title and description to make this collection easier to find",
-                  id: "collectionSeo"
+                   
                 })}
                 title={data.seoTitle}
                 titlePlaceholder={data.name}
