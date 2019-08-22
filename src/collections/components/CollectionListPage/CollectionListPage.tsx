@@ -33,7 +33,6 @@ const CollectionListPage: React.StatelessComponent<CollectionListPageProps> = ({
           <FormattedMessage
             defaultMessage="Add collection"
             description="button"
-            id="collectionListPageAddCollectionButton"
           />
           <AddIcon />
         </Button>

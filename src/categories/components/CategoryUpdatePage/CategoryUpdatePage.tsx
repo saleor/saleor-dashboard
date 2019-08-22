@@ -145,8 +145,7 @@ export const CategoryUpdatePage: React.StatelessComponent<
           <SeoForm
             helperText={intl.formatMessage({
               defaultMessage:
-                "Add search engine title and description to make this category easier to find",
-              id: "categoryUpdatePageSeo"
+                "Add search engine title and description to make this category easier to find"
             })}
             title={data.seoTitle}
             titlePlaceholder={data.name}
@@ -165,7 +164,6 @@ export const CategoryUpdatePage: React.StatelessComponent<
               <FormattedMessage
                 defaultMessage="Subcategories"
                 description="number of subcategories in category"
-                id="categoryUpdatePageSubcategoriesColumnHeader"
               />
             </CategoriesTab>
             <ProductsTab
@@ -175,7 +173,6 @@ export const CategoryUpdatePage: React.StatelessComponent<
               <FormattedMessage
                 defaultMessage="Products"
                 description="number of products in category"
-                id="categoryUpdatePageProductsColumnHeader"
               />
             </ProductsTab>
           </TabContainer>

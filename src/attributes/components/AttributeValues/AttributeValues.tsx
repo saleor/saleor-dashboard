@@ -70,15 +70,13 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Attribute Values",
-          description: "section header",
-          id: "attributeValuesHeader"
+          description: "section header"
         })}
         toolbar={
           <Button color="primary" variant="text" onClick={onValueAdd}>
             <FormattedMessage
               defaultMessage="Add value"
               description="add attribute value button"
-              id="attributeValuesAddButton"
             />
           </Button>
         }
@@ -91,14 +89,12 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
               <FormattedMessage
                 defaultMessage="Admin"
                 description="attribute values list: slug column header"
-                id="attributeValuesSlugColumnHeader"
               />
             </TableCell>
             <TableCell className={classes.columnStore}>
               <FormattedMessage
                 defaultMessage="Default Store View"
                 description="attribute values list: name column header"
-                id="attributeValuesNameColumnHeader"
               />
             </TableCell>
             <TableCell />
@@ -137,7 +133,6 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                   <FormattedMessage
                     defaultMessage="No values found"
                     description="No attribute values found"
-                    id="attributeValuesNotFound"
                   />
                 </TableCell>
               </TableRow>

@@ -20,8 +20,7 @@ export const CollectionCreate: React.FC = () => {
     if (data.collectionCreate.errors.length === 0) {
       notify({
         text: intl.formatMessage({
-          defaultMessage: "Created collection",
-          id: "collectionCreateCreatedCollection"
+          defaultMessage: "Created collection"
         })
       });
       navigate(collectionUrl(data.collectionCreate.collection.id));
@@ -50,8 +49,7 @@ export const CollectionCreate: React.FC = () => {
             <WindowTitle
               title={intl.formatMessage({
                 defaultMessage: "Create collection",
-                description: "window title",
-                id: "collectionCreateWindowTitle"
+                description: "window title"
               })}
             />
             <CollectionCreatePage

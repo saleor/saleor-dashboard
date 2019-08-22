@@ -38,8 +38,7 @@ export const CategoryProductsCard: React.StatelessComponent<
         title={intl.formatMessage(
           {
             defaultMessage: "Products in {categoryName}",
-            description: "section header",
-            id: "categoryProductsCardHeader"
+            description: "section header"
           },
           {
             categoryName
@@ -50,7 +49,6 @@ export const CategoryProductsCard: React.StatelessComponent<
             <FormattedMessage
               defaultMessage="Add product"
               description="button"
-              id="categoryProductsCardAddProductButton"
             />
           </Button>
         }
