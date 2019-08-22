@@ -33,7 +33,7 @@ module.exports = (env, argv) => {
   let output;
 
   if (!devMode) {
-    const publicPath = process.env.STATIC_URL || "/static/";
+    const publicPath = process.env.STATIC_URL || "/";
     output = {
       path: resolve(dashboardBuildPath),
       filename: "[name].[chunkhash].js",
