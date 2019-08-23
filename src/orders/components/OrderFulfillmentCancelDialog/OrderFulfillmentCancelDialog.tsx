@@ -11,13 +11,14 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 
 export interface FormData {
   restock: boolean;
@@ -50,43 +51,56 @@ const OrderFulfillmentCancelDialog = withStyles(styles, {
     open,
     onConfirm,
     onClose
-  }: OrderFulfillmentCancelDialogProps) => (
-    <Dialog onClose={onClose} open={open}>
-      <Form initial={{ restock: true }} onSubmit={onConfirm}>
-        {({ change, data, submit }) => (
-          <>
-            <DialogTitle>
-              {i18n.t("Cancel fulfillment", { context: "title" })}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                {i18n.t("Are you sure you want to cancel this fulfillment?")}
-              </DialogContentText>
-              <ControlledCheckbox
-                checked={data.restock}
-                label={i18n.t("Restock items?")}
-                name="restock"
-                onChange={change}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={onClose}>
-                {i18n.t("Back", { context: "button" })}
-              </Button>
-              <ConfirmButton
-                transitionState={confirmButtonState}
-                className={classes.deleteButton}
-                variant="contained"
-                onClick={submit}
-              >
-                {i18n.t("Cancel fulfillment", { context: "button" })}
-              </ConfirmButton>
-            </DialogActions>
-          </>
-        )}
-      </Form>
-    </Dialog>
-  )
+  }: OrderFulfillmentCancelDialogProps) => {
+    const intl = useIntl();
+
+    return (
+      <Dialog onClose={onClose} open={open}>
+        <Form initial={{ restock: true }} onSubmit={onConfirm}>
+          {({ change, data, submit }) => (
+            <>
+              <DialogTitle>
+                <FormattedMessage
+                  defaultMessage="Cancel Fulfillment"
+                  description="dialog header"
+                />
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  <FormattedMessage defaultMessage="Are you sure you want to cancel this fulfillment?" />
+                </DialogContentText>
+                <ControlledCheckbox
+                  checked={data.restock}
+                  label={intl.formatMessage({
+                    defaultMessage: "Restock items?",
+                    description: "switch button"
+                  })}
+                  name="restock"
+                  onChange={change}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={onClose}>
+                  <FormattedMessage {...buttonMessages.back} />
+                </Button>
+                <ConfirmButton
+                  transitionState={confirmButtonState}
+                  className={classes.deleteButton}
+                  variant="contained"
+                  onClick={submit}
+                >
+                  <FormattedMessage
+                    defaultMessage="Cancel fulfillment"
+                    description="button"
+                  />
+                </ConfirmButton>
+              </DialogActions>
+            </>
+          )}
+        </Form>
+      </Dialog>
+    );
+  }
 );
 OrderFulfillmentCancelDialog.displayName = "OrderFulfillmentCancelDialog";
 export default OrderFulfillmentCancelDialog;

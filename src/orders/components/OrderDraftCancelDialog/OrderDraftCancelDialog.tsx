@@ -1,9 +1,9 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import i18n from "../../../i18n";
 
 export interface OrderDraftCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -15,29 +15,31 @@ export interface OrderDraftCancelDialogProps {
 
 const OrderDraftCancelDialog: React.StatelessComponent<
   OrderDraftCancelDialogProps
-> = ({ confirmButtonState, onClose, onConfirm, open, orderNumber }) => (
-  <ActionDialog
-    confirmButtonState={confirmButtonState}
-    onClose={onClose}
-    onConfirm={onConfirm}
-    open={open}
-    title={i18n.t("Remove draft order", {
-      context: "modal title"
-    })}
-    variant="delete"
-  >
-    <DialogContentText
-      dangerouslySetInnerHTML={{
-        __html: i18n.t(
-          "Are you sure you want to remove draft <strong>#{{ number }}</strong>?",
-          {
-            context: "modal",
-            number: orderNumber
-          }
-        )
-      }}
-    />
-  </ActionDialog>
-);
+> = ({ confirmButtonState, onClose, onConfirm, open, orderNumber }) => {
+  const intl = useIntl();
+
+  return (
+    <ActionDialog
+      confirmButtonState={confirmButtonState}
+      onClose={onClose}
+      onConfirm={onConfirm}
+      open={open}
+      title={intl.formatMessage({
+        defaultMessage: "Remove draft order",
+        description: "dialog header"
+      })}
+      variant="delete"
+    >
+      <DialogContentText>
+        <FormattedMessage
+          defaultMessage="Are you sure you want to remove draft #{number}?"
+          values={{
+            orderNumber
+          }}
+        />
+      </DialogContentText>
+    </ActionDialog>
+  );
+};
 OrderDraftCancelDialog.displayName = "OrderDraftCancelDialog";
 export default OrderDraftCancelDialog;

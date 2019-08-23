@@ -10,12 +10,13 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import { SingleAutocompleteSelectField } from "@saleor/components/SingleAutocompleteSelectField";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -76,7 +77,12 @@ const OrderCustomerEditDialog = withStyles(styles, {
         : [];
     return (
       <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
-        <DialogTitle>{i18n.t("Edit customer details")}</DialogTitle>
+        <DialogTitle>
+          <FormattedMessage
+            defaultMessage="Edit customer details"
+            description="dialog header"
+          />
+        </DialogTitle>
         <DialogContent className={classes.root}>
           <SingleAutocompleteSelectField
             choices={choices}
@@ -91,7 +97,7 @@ const OrderCustomerEditDialog = withStyles(styles, {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>
-            {i18n.t("Cancel", { context: "button" })}
+            <FormattedMessage {...buttonMessages.cancel} />
           </Button>
           <ConfirmButton
             transitionState={confirmButtonState}
@@ -99,7 +105,7 @@ const OrderCustomerEditDialog = withStyles(styles, {
             variant="contained"
             onClick={onConfirm}
           >
-            {i18n.t("Confirm", { context: "button" })}
+            <FormattedMessage {...buttonMessages.confirm} />
           </ConfirmButton>
         </DialogActions>
       </Dialog>

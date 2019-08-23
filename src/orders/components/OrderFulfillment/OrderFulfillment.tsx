@@ -14,6 +14,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardMenu from "@saleor/components/CardMenu";
 import CardTitle from "@saleor/components/CardTitle";
@@ -23,7 +24,6 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
-import i18n from "../../../i18n";
 import { maybe, renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
@@ -81,8 +81,14 @@ const OrderFulfillment = withStyles(styles, { name: "OrderFulfillment" })(
     onOrderFulfillmentCancel,
     onTrackingCodeAdd
   }: OrderFulfillmentProps) => {
+    const intl = useIntl();
+
     const lines = maybe(() => fulfillment.lines);
     const status = maybe(() => fulfillment.status);
+    const quantity = lines
+      .map(line => line.quantity)
+      .reduce((prev, curr) => prev + curr, 0);
+
     return (
       <Card>
         <CardTitle
@@ -92,16 +98,24 @@ const OrderFulfillment = withStyles(styles, { name: "OrderFulfillment" })(
                 label={
                   <>
                     {status === FulfillmentStatus.FULFILLED
-                      ? i18n.t("Fulfilled ({{ quantity }})", {
-                          quantity: lines
-                            .map(line => line.quantity)
-                            .reduce((prev, curr) => prev + curr, 0)
-                        })
-                      : i18n.t("Cancelled ({{ quantity }})", {
-                          quantity: lines
-                            .map(line => line.quantity)
-                            .reduce((prev, curr) => prev + curr, 0)
-                        })}
+                      ? intl.formatMessage(
+                          {
+                            defaultMessage: "Fulfilled ({quantity})",
+                            description: "section header"
+                          },
+                          {
+                            quantity
+                          }
+                        )
+                      : intl.formatMessage(
+                          {
+                            defaultMessage: "Fulfilled ({quantity})",
+                            description: "section header"
+                          },
+                          {
+                            quantity
+                          }
+                        )}
                     <Typography className={classes.orderNumber} variant="body2">
                       {maybe(
                         () => `#${orderNumber}-${fulfillment.fulfillmentOrder}`
@@ -122,8 +136,9 @@ const OrderFulfillment = withStyles(styles, { name: "OrderFulfillment" })(
               <CardMenu
                 menuItems={[
                   {
-                    label: i18n.t("Cancel shipment", {
-                      context: "button"
+                    label: intl.formatMessage({
+                      defaultMessage: "Cancel shipment",
+                      description: "button"
                     }),
                     onSelect: onOrderFulfillmentCancel
                   }
@@ -137,17 +152,29 @@ const OrderFulfillment = withStyles(styles, { name: "OrderFulfillment" })(
             <TableRow>
               <TableCell className={classes.colName}>
                 <span className={classes.colNameLabel}>
-                  {i18n.t("Product")}
+                  <FormattedMessage
+                    defaultMessage="Product"
+                    description="product name"
+                  />
                 </span>
               </TableCell>
               <TableCell className={classes.colQuantity}>
-                {i18n.t("Quantity")}
+                <FormattedMessage
+                  defaultMessage="Quantity"
+                  description="ordered product quantity"
+                />
               </TableCell>
               <TableCell className={classes.colPrice}>
-                {i18n.t("Price")}
+                <FormattedMessage
+                  defaultMessage="Price"
+                  description="product price"
+                />
               </TableCell>
               <TableCell className={classes.colTotal}>
-                {i18n.t("Total")}
+                <FormattedMessage
+                  defaultMessage="Total"
+                  description="order line total price"
+                />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -194,9 +221,12 @@ const OrderFulfillment = withStyles(styles, { name: "OrderFulfillment" })(
             {maybe(() => fulfillment.trackingNumber) && (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("Tracking Number: {{ trackingNumber }}", {
-                    trackingNumber: fulfillment.trackingNumber
-                  })}
+                  <FormattedMessage
+                    defaultMessage="Tracking Number: {trackingNumber}"
+                    values={{
+                      trackingNumber: fulfillment.trackingNumber
+                    }}
+                  />
                 </TableCell>
               </TableRow>
             )}
@@ -205,7 +235,10 @@ const OrderFulfillment = withStyles(styles, { name: "OrderFulfillment" })(
         {status === FulfillmentStatus.FULFILLED && !fulfillment.trackingNumber && (
           <CardActions>
             <Button color="primary" onClick={onTrackingCodeAdd}>
-              {i18n.t("Add tracking")}
+              <FormattedMessage
+                defaultMessage="Add tracking"
+                description="fulfillment group tracking number"
+              />
             </Button>
           </CardActions>
         )}

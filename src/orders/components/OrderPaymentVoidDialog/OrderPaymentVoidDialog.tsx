@@ -5,11 +5,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 
 interface OrderPaymentVoidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -22,21 +23,28 @@ const OrderPaymentVoidDialog: React.StatelessComponent<
   OrderPaymentVoidDialogProps
 > = ({ confirmButtonState, open, onConfirm, onClose }) => (
   <Dialog onClose={onClose} open={open}>
-    <DialogTitle>{i18n.t("Void payment", { context: "title" })}</DialogTitle>
+    <DialogTitle>
+      <FormattedMessage
+        defaultMessage="Void Payment"
+        description="dialog header"
+      />
+    </DialogTitle>
     <DialogContent>
       <DialogContentText>
-        {i18n.t("Are you sure you want to void this payment?")}
+        <FormattedMessage defaultMessage="Are you sure you want to void this payment?" />
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button onClick={onClose}>{i18n.t("Back", { context: "button" })}</Button>
+      <Button onClick={onClose}>
+        <FormattedMessage {...buttonMessages.back} />
+      </Button>
       <ConfirmButton
         transitionState={confirmButtonState}
         color="primary"
         variant="contained"
         onClick={onConfirm}
       >
-        {i18n.t("Confirm", { context: "button" })}
+        <FormattedMessage {...buttonMessages.confirm} />
       </ConfirmButton>
     </DialogActions>
   </Dialog>

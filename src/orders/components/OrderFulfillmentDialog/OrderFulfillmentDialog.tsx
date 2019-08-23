@@ -16,6 +16,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -25,7 +26,7 @@ import { FormSpacer } from "@saleor/components/FormSpacer";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 
@@ -83,125 +84,143 @@ const OrderFulfillmentDialog = withStyles(styles, {
     lines,
     onClose,
     onSubmit
-  }: OrderFulfillmentDialogProps) => (
-    <Dialog onClose={onClose} open={open}>
-      <Form
-        initial={{
-          lines: maybe(
-            () =>
-              lines.map(
-                product => product.quantity - product.quantityFulfilled
-              ),
-            []
-          ),
-          trackingNumber: ""
-        }}
-        onSubmit={onSubmit}
-      >
-        {({ data, change }) => {
-          const handleQuantityChange = (
-            productIndex: number,
-            event: React.ChangeEvent<any>
-          ) => {
-            const newData = data.lines;
-            newData[productIndex] = event.target.value;
-            change({
-              target: {
-                name: "lines",
-                value: newData
-              }
-            } as any);
-          };
-          return (
-            <>
-              <DialogTitle>{i18n.t("Fulfill products")}</DialogTitle>
-              <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.colName}>
-                      <span className={classes.colNameLabel}>
-                        {i18n.t("Product name")}
-                      </span>
-                    </TableCell>
-                    <TableCell className={classes.colSku}>
-                      {i18n.t("SKU")}
-                    </TableCell>
-                    <TableCell className={classes.colQuantity}>
-                      {i18n.t("Quantity")}
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {lines.map((product, productIndex) => {
-                    const remainingQuantity =
-                      product.quantity - product.quantityFulfilled;
-                    return (
-                      <TableRow key={product.id}>
-                        <TableCellAvatar
-                          className={classes.colName}
-                          thumbnail={maybe(() => product.thumbnail.url)}
-                        >
-                          {product.productName}
-                        </TableCellAvatar>
-                        <TableCell className={classes.colSku}>
-                          {product.productSku}
-                        </TableCell>
-                        <TableCell className={classes.colQuantity}>
-                          <div className={classes.colQuantityContent}>
-                            <TextField
-                              type="number"
-                              inputProps={{
-                                max: remainingQuantity,
-                                style: { textAlign: "right" }
-                              }}
-                              className={classes.quantityInput}
-                              value={data.lines[productIndex]}
-                              onChange={event =>
-                                handleQuantityChange(productIndex, event)
-                              }
-                              error={
-                                remainingQuantity < data.lines[productIndex]
-                              }
-                            />
-                            <div className={classes.remainingQuantity}>
-                              / {remainingQuantity}
+  }: OrderFulfillmentDialogProps) => {
+    const intl = useIntl();
+
+    return (
+      <Dialog onClose={onClose} open={open}>
+        <Form
+          initial={{
+            lines: maybe(
+              () =>
+                lines.map(
+                  product => product.quantity - product.quantityFulfilled
+                ),
+              []
+            ),
+            trackingNumber: ""
+          }}
+          onSubmit={onSubmit}
+        >
+          {({ data, change }) => {
+            const handleQuantityChange = (
+              productIndex: number,
+              event: React.ChangeEvent<any>
+            ) => {
+              const newData = data.lines;
+              newData[productIndex] = event.target.value;
+              change({
+                target: {
+                  name: "lines",
+                  value: newData
+                }
+              } as any);
+            };
+            return (
+              <>
+                <DialogTitle>
+                  <FormattedMessage
+                    defaultMessage="Fulfill products"
+                    description="dialog header"
+                  />
+                </DialogTitle>
+                <Table className={classes.table}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell className={classes.colName}>
+                        <span className={classes.colNameLabel}>
+                          <FormattedMessage defaultMessage="Product name" />
+                        </span>
+                      </TableCell>
+                      <TableCell className={classes.colSku}>
+                        <FormattedMessage
+                          defaultMessage="SKU"
+                          description="product's sku"
+                        />
+                      </TableCell>
+                      <TableCell className={classes.colQuantity}>
+                        <FormattedMessage
+                          defaultMessage="Quantity"
+                          description="quantity of fulfilled products"
+                        />
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {lines.map((product, productIndex) => {
+                      const remainingQuantity =
+                        product.quantity - product.quantityFulfilled;
+                      return (
+                        <TableRow key={product.id}>
+                          <TableCellAvatar
+                            className={classes.colName}
+                            thumbnail={maybe(() => product.thumbnail.url)}
+                          >
+                            {product.productName}
+                          </TableCellAvatar>
+                          <TableCell className={classes.colSku}>
+                            {product.productSku}
+                          </TableCell>
+                          <TableCell className={classes.colQuantity}>
+                            <div className={classes.colQuantityContent}>
+                              <TextField
+                                type="number"
+                                inputProps={{
+                                  max: remainingQuantity,
+                                  style: { textAlign: "right" }
+                                }}
+                                className={classes.quantityInput}
+                                value={data.lines[productIndex]}
+                                onChange={event =>
+                                  handleQuantityChange(productIndex, event)
+                                }
+                                error={
+                                  remainingQuantity < data.lines[productIndex]
+                                }
+                              />
+                              <div className={classes.remainingQuantity}>
+                                / {remainingQuantity}
+                              </div>
                             </div>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-              <DialogContent>
-                <FormSpacer />
-                <TextField
-                  fullWidth
-                  label={i18n.t("Tracking number")}
-                  name="trackingNumber"
-                  value={data.trackingNumber}
-                  onChange={change}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={onClose}>
-                  {i18n.t("Cancel", { context: "button" })}
-                </Button>
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                >
-                  {i18n.t("Confirm", { context: "button" })}
-                </ConfirmButton>
-              </DialogActions>
-            </>
-          );
-        }}
-      </Form>
-    </Dialog>
-  )
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+                <DialogContent>
+                  <FormSpacer />
+                  <TextField
+                    fullWidth
+                    label={intl.formatMessage({
+                      defaultMessage: "Tracking number",
+                      description: "fulfillment group"
+                    })}
+                    name="trackingNumber"
+                    value={data.trackingNumber}
+                    onChange={change}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={onClose}>
+                    <FormattedMessage {...buttonMessages.cancel} />
+                  </Button>
+                  <ConfirmButton
+                    transitionState={confirmButtonState}
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                  >
+                    <FormattedMessage {...buttonMessages.confirm} />
+                  </ConfirmButton>
+                </DialogActions>
+              </>
+            );
+          }}
+        </Form>
+      </Dialog>
+    );
+  }
 );
 OrderFulfillmentDialog.displayName = "OrderFulfillmentDialog";
 export default OrderFulfillmentDialog;

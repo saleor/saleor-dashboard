@@ -1,8 +1,8 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../../i18n";
 import { maybe } from "../../../misc";
 import { OrderAddNote } from "../../types/OrderAddNote";
 import { OrderCancel } from "../../types/OrderCancel";
@@ -52,55 +52,65 @@ export const OrderDetailsMessages: React.StatelessComponent<
 > = ({ children }) => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
+  const intl = useIntl();
 
   const handlePaymentCapture = (data: OrderCapture) => {
     if (!maybe(() => data.orderCapture.errors.length)) {
       pushMessage({
-        text: i18n.t("Payment successfully captured", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Payment successfully captured"
         })
       });
     } else {
       pushMessage({
-        text: i18n.t("Payment not captured: {{ errorMessage }}", {
-          context: "notification",
-          errorMessage: data.orderCapture.errors.filter(
-            error => error.field === "payment"
-          )[0].message
-        })
+        text: intl.formatMessage(
+          {
+            defaultMessage: "Payment not captured: {errorMessage}"
+          },
+          {
+            errorMessage: data.orderCapture.errors.find(
+              error => error.field === "payment"
+            ).message
+          }
+        )
       });
     }
   };
   const handlePaymentRefund = (data: OrderRefund) => {
     if (!maybe(() => data.orderRefund.errors.length)) {
       pushMessage({
-        text: i18n.t("Payment successfully refunded", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Payment successfully refunded"
         })
       });
     } else {
       pushMessage({
-        text: i18n.t("Payment not refunded: {{ errorMessage }}", {
-          context: "notification",
-          errorMessage: data.orderRefund.errors.filter(
-            error => error.field === "payment"
-          )[0].message
-        })
+        text: intl.formatMessage(
+          {
+            defaultMessage: "Payment not refunded: {errorMessage}",
+            description: "notification"
+          },
+          {
+            errorMessage: data.orderRefund.errors.find(
+              error => error.field === "payment"
+            ).message
+          }
+        )
       });
     }
   };
   const handleOrderFulfillmentCreate = (data: OrderCreateFulfillment) => {
     if (!maybe(() => data.orderFulfillmentCreate.errors.length)) {
       pushMessage({
-        text: i18n.t("Items successfully fulfilled", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Items successfully fulfilled"
         })
       });
       navigate(orderUrl(data.orderFulfillmentCreate.order.id), true);
     } else {
       pushMessage({
-        text: i18n.t("Could not fulfill items", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Could not fulfill items"
         })
       });
     }
@@ -108,53 +118,53 @@ export const OrderDetailsMessages: React.StatelessComponent<
   const handleOrderMarkAsPaid = (data: OrderMarkAsPaid) => {
     if (!maybe(() => data.orderMarkAsPaid.errors.length)) {
       pushMessage({
-        text: i18n.t("Order marked as paid", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Order marked as paid"
         })
       });
       navigate(orderUrl(data.orderMarkAsPaid.order.id), true);
     } else {
       pushMessage({
-        text: i18n.t("Could not mark order as paid", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Could not mark order as paid"
         })
       });
     }
   };
   const handleOrderCancel = (data: OrderCancel) => {
     pushMessage({
-      text: i18n.t("Order successfully cancelled", {
-        context: "notification"
+      text: intl.formatMessage({
+        defaultMessage: "Order successfully cancelled"
       })
     });
     navigate(orderUrl(data.orderCancel.order.id), true);
   };
   const handleDraftCancel = () => {
     pushMessage({
-      text: i18n.t("Order successfully cancelled", {
-        context: "notification"
+      text: intl.formatMessage({
+        defaultMessage: "Order successfully cancelled"
       })
     });
     navigate(orderListUrl(), true);
   };
   const handleOrderVoid = () => {
     pushMessage({
-      text: i18n.t("Order payment successfully voided", {
-        context: "notification"
+      text: intl.formatMessage({
+        defaultMessage: "Order payment successfully voided"
       })
     });
   };
   const handleNoteAdd = (data: OrderAddNote) => {
     if (!maybe(() => data.orderAddNote.errors.length)) {
       pushMessage({
-        text: i18n.t("Note successfully added", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Note successfully added"
         })
       });
     } else {
       pushMessage({
-        text: i18n.t("Could not add note", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Could not add note"
         })
       });
     }
@@ -162,8 +172,8 @@ export const OrderDetailsMessages: React.StatelessComponent<
   const handleUpdate = (data: OrderUpdate) => {
     if (!maybe(() => data.orderUpdate.errors.length)) {
       pushMessage({
-        text: i18n.t("Order successfully updated", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Order successfully updated"
         })
       });
       navigate(orderUrl(data.orderUpdate.order.id), true);
@@ -172,8 +182,8 @@ export const OrderDetailsMessages: React.StatelessComponent<
   const handleDraftUpdate = (data: OrderDraftUpdate) => {
     if (!maybe(() => data.draftOrderUpdate.errors.length)) {
       pushMessage({
-        text: i18n.t("Order successfully updated", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Order successfully updated"
         })
       });
       navigate(orderUrl(data.draftOrderUpdate.order.id), true);
@@ -182,14 +192,14 @@ export const OrderDetailsMessages: React.StatelessComponent<
   const handleShippingMethodUpdate = (data: OrderShippingMethodUpdate) => {
     if (!maybe(() => data.orderUpdateShipping.errors.length)) {
       pushMessage({
-        text: i18n.t("Shipping method successfully updated", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Shipping method successfully updated"
         })
       });
     } else {
       pushMessage({
-        text: i18n.t("Could not update shipping method", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Could not update shipping method"
         })
       });
     }
@@ -198,14 +208,14 @@ export const OrderDetailsMessages: React.StatelessComponent<
   const handleOrderLineDelete = (data: OrderLineDelete) => {
     if (!maybe(() => data.draftOrderLineDelete.errors.length)) {
       pushMessage({
-        text: i18n.t("Order line deleted", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Order line deleted"
         })
       });
     } else {
       pushMessage({
-        text: i18n.t("Could not delete order line", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Could not delete order line"
         })
       });
     }
@@ -213,15 +223,15 @@ export const OrderDetailsMessages: React.StatelessComponent<
   const handleOrderLinesAdd = (data: OrderLinesAdd) => {
     if (!maybe(() => data.draftOrderLinesCreate.errors.length)) {
       pushMessage({
-        text: i18n.t("Order line added", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Order line added"
         })
       });
       navigate(orderUrl(data.draftOrderLinesCreate.order.id), true);
     } else {
       pushMessage({
-        text: i18n.t("Could not create order line", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Could not create order line"
         })
       });
     }
@@ -229,14 +239,14 @@ export const OrderDetailsMessages: React.StatelessComponent<
   const handleOrderLineUpdate = (data: OrderLineUpdate) => {
     if (!maybe(() => data.draftOrderLineUpdate.errors.length)) {
       pushMessage({
-        text: i18n.t("Order line updated", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Order line updated"
         })
       });
     } else {
       pushMessage({
-        text: i18n.t("Could not update order line", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Could not update order line"
         })
       });
     }
@@ -244,15 +254,15 @@ export const OrderDetailsMessages: React.StatelessComponent<
   const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancel) => {
     if (!maybe(() => data.orderFulfillmentCancel.errors.length)) {
       pushMessage({
-        text: i18n.t("Fulfillment successfully cancelled", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Fulfillment successfully cancelled"
         })
       });
       navigate(orderUrl(data.orderFulfillmentCancel.order.id), true);
     } else {
       pushMessage({
-        text: i18n.t("Could not cancel fulfillment", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Could not cancel fulfillment"
         })
       });
     }
@@ -262,15 +272,15 @@ export const OrderDetailsMessages: React.StatelessComponent<
   ) => {
     if (!maybe(() => data.orderFulfillmentUpdateTracking.errors.length)) {
       pushMessage({
-        text: i18n.t("Fulfillment successfully updated", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Fulfillment successfully updated"
         })
       });
       navigate(orderUrl(data.orderFulfillmentUpdateTracking.order.id), true);
     } else {
       pushMessage({
-        text: i18n.t("Could not update fulfillment", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Could not update fulfillment"
         })
       });
     }
@@ -278,15 +288,15 @@ export const OrderDetailsMessages: React.StatelessComponent<
   const handleDraftFinalize = (data: OrderDraftFinalize) => {
     if (!maybe(() => data.draftOrderComplete.errors.length)) {
       pushMessage({
-        text: i18n.t("Draft order successfully finalized", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Draft order successfully finalized"
         })
       });
       navigate(orderUrl(data.draftOrderComplete.order.id), true);
     } else {
       pushMessage({
-        text: i18n.t("Could not finalize draft", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Could not finalize draft"
         })
       });
     }

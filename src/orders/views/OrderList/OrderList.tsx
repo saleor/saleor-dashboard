@@ -1,5 +1,6 @@
 import Button from "@material-ui/core/Button";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -14,7 +15,6 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import i18n from "@saleor/i18n";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import OrderBulkCancelDialog from "../../components/OrderBulkCancelDialog";
@@ -62,6 +62,7 @@ export const OrderList: React.StatelessComponent<OrderListProps> = ({
   const { updateListSettings, settings } = useListSettings(
     ListViews.ORDER_LIST
   );
+  const intl = useIntl();
 
   const tabs = getFilterTabs();
 
@@ -133,7 +134,9 @@ export const OrderList: React.StatelessComponent<OrderListProps> = ({
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
     notify({
-      text: i18n.t("Order draft succesfully created")
+      text: intl.formatMessage({
+        defaultMessage: "Order draft succesfully created"
+      })
     });
     navigate(orderUrl(data.draftOrderCreate.order.id));
   };
@@ -160,8 +163,8 @@ export const OrderList: React.StatelessComponent<OrderListProps> = ({
             const handleOrderBulkCancel = (data: OrderBulkCancel) => {
               if (data.orderBulkCancel.errors.length === 0) {
                 notify({
-                  text: i18n.t("Orders cancelled", {
-                    context: "notification"
+                  text: intl.formatMessage({
+                    defaultMessage: "Orders cancelled"
                   })
                 });
                 reset();
@@ -218,9 +221,10 @@ export const OrderList: React.StatelessComponent<OrderListProps> = ({
                             color="primary"
                             onClick={() => openModal("cancel", listElements)}
                           >
-                            {i18n.t("Cancel", {
-                              context: "cancel orders"
-                            })}
+                            <FormattedMessage
+                              defaultMessage="Cancel"
+                              description="cancel orders, button"
+                            />
                           </Button>
                         }
                         onSearchChange={email => changeFilterField({ email })}
