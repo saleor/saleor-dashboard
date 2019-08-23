@@ -6,6 +6,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import AddressEdit from "@saleor/components/AddressEdit";
 import ConfirmButton, {
@@ -13,7 +14,7 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import i18n from "@saleor/i18n";
+import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -97,9 +98,17 @@ const CustomerAddressDialog = withStyles(styles, {})(
             return (
               <>
                 <DialogTitle>
-                  {variant === "create"
-                    ? i18n.t("Add Address")
-                    : i18n.t("Edit Address")}
+                  {variant === "create" ? (
+                    <FormattedMessage
+                      defaultMessage="Add Address"
+                      description="dialog title"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      defaultMessage="Edit Address"
+                      description="dialog title"
+                    />
+                  )}
                 </DialogTitle>
                 <DialogContent className={classes.overflow}>
                   <AddressEdit
@@ -113,7 +122,7 @@ const CustomerAddressDialog = withStyles(styles, {})(
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={onClose}>
-                    {i18n.t("Cancel", { context: "button" })}
+                    <FormattedMessage {...buttonMessages.cancel} />
                   </Button>
                   <ConfirmButton
                     transitionState={confirmButtonState}
@@ -122,8 +131,8 @@ const CustomerAddressDialog = withStyles(styles, {})(
                     onClick={submit}
                     type="submit"
                   >
-                    {i18n.t("Save Address", { context: "button" })}
-                    <AddIcon />
+                    <FormattedMessage {...buttonMessages.save} />
+                    {variant === "create" && <AddIcon />}
                   </ConfirmButton>
                 </DialogActions>
               </>

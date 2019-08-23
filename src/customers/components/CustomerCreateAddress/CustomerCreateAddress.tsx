@@ -3,12 +3,12 @@ import CardContent from "@material-ui/core/CardContent";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AddressEdit from "@saleor/components/AddressEdit";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import i18n from "../../../i18n";
 import { FormErrors } from "../../../types";
 import { AddressTypeInput } from "../../types";
 
@@ -40,26 +40,35 @@ const CustomerCreateAddress = withStyles(styles, {
     errors,
     onChange,
     onCountryChange
-  }: CustomerCreateAddressProps) => (
-    <Card className={classes.overflow}>
-      <CardTitle title={i18n.t("Primary address")} />
-      <CardContent className={classes.overflow}>
-        <Typography>
-          {i18n.t("The primary address of this customer.")}
-        </Typography>
-        <FormSpacer />
-        <AddressEdit
-          countries={countries}
-          data={data}
-          disabled={disabled}
-          countryDisplayValue={countryDisplayName}
-          errors={errors}
-          onChange={onChange}
-          onCountryChange={onCountryChange}
+  }: CustomerCreateAddressProps) => {
+    const intl = useIntl();
+
+    return (
+      <Card className={classes.overflow}>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Primary address",
+            description: "page header"
+          })}
         />
-      </CardContent>
-    </Card>
-  )
+        <CardContent className={classes.overflow}>
+          <Typography>
+            <FormattedMessage defaultMessage="The primary address of this customer." />
+          </Typography>
+          <FormSpacer />
+          <AddressEdit
+            countries={countries}
+            data={data}
+            disabled={disabled}
+            countryDisplayValue={countryDisplayName}
+            errors={errors}
+            onChange={onChange}
+            onCountryChange={onCountryChange}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
 );
 CustomerCreateAddress.displayName = "CustomerCreateAddress";
 export default CustomerCreateAddress;

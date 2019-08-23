@@ -1,11 +1,12 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "../../misc";
 import { orderListUrl, orderUrl } from "../../orders/urls";
 import CustomerDetailsPage from "../components/CustomerDetailsPage/CustomerDetailsPage";
@@ -33,21 +34,20 @@ export const CustomerDetailsView: React.StatelessComponent<
 > = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const handleCustomerUpdateSuccess = (data: UpdateCustomer) => {
     if (data.customerUpdate.errors.length === 0) {
       notify({
-        text: i18n.t("Customer updated", {
-          context: "notification"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
   };
   const handleCustomerRemoveSuccess = (data: RemoveCustomer) => {
     if (data.customerDelete.errors.length === 0) {
       notify({
-        text: i18n.t("Customer removed", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Customer Removed"
         })
       });
       navigate(customerListUrl());
@@ -132,26 +132,29 @@ export const CustomerDetailsView: React.StatelessComponent<
                       confirmButtonState={removeTransitionState}
                       onClose={() => navigate(customerUrl(id), true)}
                       onConfirm={() => removeCustomer()}
-                      title={i18n.t("Remove customer", {
-                        context: "modal title"
+                      title={intl.formatMessage({
+                        defaultMessage: "Delete customer",
+                        description: "dialog header"
                       })}
                       variant="delete"
                       open={params.action === "remove"}
                     >
-                      <DialogContentText
-                        dangerouslySetInnerHTML={{
-                          __html: i18n.t(
-                            "Are you sure you want to remove <strong>{{ email }}</strong>?",
-                            {
-                              context: "modal content",
-                              email: maybe(
-                                () => customerDetails.data.user.email,
-                                "..."
-                              )
-                            }
-                          )
-                        }}
-                      />
+                      <DialogContentText>
+                        <FormattedMessage
+                          defaultMessage="Are you sure you want to delete {email}?"
+                          description="delete customer, dialog content"
+                          values={{
+                            email: (
+                              <strong>
+                                {maybe(
+                                  () => customerDetails.data.user.email,
+                                  "..."
+                                )}
+                              </strong>
+                            )
+                          }}
+                        />
+                      </DialogContentText>
                     </ActionDialog>
                   </>
                 );

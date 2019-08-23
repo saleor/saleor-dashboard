@@ -7,13 +7,13 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { DateTime } from "@saleor/components/Date";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
-import i18n from "../../../i18n";
 import { maybe, renderCollection, transformPaymentStatus } from "../../../misc";
 import { CustomerDetails_user_orders_edges_node } from "../../types/CustomerDetails";
 
@@ -39,6 +39,8 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
     onRowClick,
     onViewAllOrdersClick
   }: CustomerOrdersProps) => {
+    const intl = useIntl();
+
     const orderList = orders
       ? orders.map(order => ({
           ...order,
@@ -48,14 +50,20 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
     return (
       <Card>
         <CardTitle
-          title={i18n.t("Recent orders")}
+          title={intl.formatMessage({
+            defaultMessage: "Recent orders",
+            description: "section header"
+          })}
           toolbar={
             <Button
               variant="text"
               color="primary"
               onClick={onViewAllOrdersClick}
             >
-              {i18n.t("View all orders")}
+              <FormattedMessage
+                defaultMessage="View all orders"
+                description="button"
+              />
             </Button>
           }
         />
@@ -63,16 +71,28 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
           <TableHead>
             <TableRow>
               <TableCell padding="dense">
-                {i18n.t("No. of Order", { context: "table header" })}
+                <FormattedMessage
+                  defaultMessage="No. of Order"
+                  description="number of order"
+                />
               </TableCell>
               <TableCell padding="dense">
-                {i18n.t("Date", { context: "table header" })}
+                <FormattedMessage
+                  defaultMessage="Date"
+                  description="order placement date"
+                />
               </TableCell>
               <TableCell padding="dense">
-                {i18n.t("Status", { context: "table header" })}
+                <FormattedMessage
+                  defaultMessage="Status"
+                  description="order status"
+                />
               </TableCell>
               <TableCell className={classes.textRight} padding="dense">
-                {i18n.t("Total", { context: "table header" })}
+                <FormattedMessage
+                  defaultMessage="Total"
+                  description="order total amount"
+                />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -123,7 +143,9 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
               ),
               () => (
                 <TableRow>
-                  <TableCell colSpan={6}>{i18n.t("No orders found")}</TableCell>
+                  <TableCell colSpan={6}>
+                    <FormattedMessage defaultMessage="No orders found" />
+                  </TableCell>
                 </TableRow>
               )
             )}

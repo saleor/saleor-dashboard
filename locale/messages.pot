@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-22T16:11:26.423Z\n"
+"POT-Creation-Date: 2019-08-23T12:11:14.694Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -15,12 +15,28 @@ msgctxt "attribute value edit error"
 msgid "A value named {name} already exists"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerAddressDialog/CustomerAddressDialog.json
+#. [customerAddressDialogAddAddress] - dialog title
+#. defaultMessage is:
+#. Add Address
+msgctxt "dialog title"
+msgid "Add Address"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
 #. [src.attributes.components.AttributeValueEditDialog.1841790893] - add attribute value
 #. defaultMessage is:
 #. Add Value
 msgctxt "add attribute value"
 msgid "Add Value"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
+#. [customerAddressListPageAddAddress] - button
+#. defaultMessage is:
+#. Add address
+msgctxt "button"
+msgid "Add address"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeListPage/AttributeListPage.json
@@ -53,6 +69,22 @@ msgstr ""
 #. Add collection
 msgctxt "button"
 msgid "Add collection"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
+#. [customerCreatePageHeader] - page header
+#. defaultMessage is:
+#. Add customer
+msgctxt "page header"
+msgid "Add customer"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerListPage/CustomerListPage.json
+#. [customerListPageAddCustomer] - button
+#. defaultMessage is:
+#. Add customer
+msgctxt "button"
+msgid "Add customer"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
@@ -121,6 +153,30 @@ msgstr ""
 #. Added product to collection
 msgctxt "description"
 msgid "Added product to collection"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
+#. [customerAddressesAddressSectionHeader] - subsection header
+#. defaultMessage is:
+#. Address
+msgctxt "subsection header"
+msgid "Address"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
+#. [customerAddressesHeader] - header
+#. defaultMessage is:
+#. Address Information
+msgctxt "header"
+msgid "Address Information"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
+#. [customerAddressHeader] - addres card header
+#. defaultMessage is:
+#. Address {addressNumber}
+msgctxt "addres card header"
+msgid "Address {addressNumber}"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
@@ -239,6 +295,30 @@ msgctxt "description"
 msgid "Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
 msgstr ""
 
+#: build/locale/src/customers/views/CustomerAddresses.json
+#. [customerAddressesRemoveAddressDialogContent]
+#. defaultMessage is:
+#. Are you sure you want to remove this address from users address book?
+msgctxt "description"
+msgid "Are you sure you want to remove this address from users address book?"
+msgstr ""
+
+#: build/locale/src/customers/views/CustomerDetails.json
+#. [customerDetailsRemoveCustomerDialogContent] - remove customer dialog content
+#. defaultMessage is:
+#. Are you sure you want to remove {email}?
+msgctxt "remove customer dialog content"
+msgid "Are you sure you want to remove {email}?"
+msgstr ""
+
+#: build/locale/src/customers/views/CustomerList.json
+#. [customerListRemoveCustomersDialogContent]
+#. defaultMessage is:
+#. Are you sure you want to remove {number} customers?
+msgctxt "description"
+msgid "Are you sure you want to remove {number} customers?"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionDetails.json
 #. [src.collections.views.1908998638]
 #. defaultMessage is:
@@ -339,11 +419,19 @@ msgctxt "section header"
 msgid "Background image (optional)"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
+#. [customerAddressesBillingAddressSectionHeader] - subsection header
+#. defaultMessage is:
+#. Billing address
+msgctxt "subsection header"
+msgid "Billing address"
+msgstr ""
+
 #: build/locale/src/intl.json
-#. [src.cancel]
+#. [src.cancel] - button
 #. defaultMessage is:
 #. Cancel
-msgctxt "description"
+msgctxt "button"
 msgid "Cancel"
 msgstr ""
 
@@ -412,10 +500,18 @@ msgid "Collections"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [src.confirm]
+#. [src.configuration] - configuration section name
+#. defaultMessage is:
+#. Configuration
+msgctxt "configuration section name"
+msgid "Configuration"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.confirm] - button
 #. defaultMessage is:
 #. Confirm
-msgctxt "description"
+msgctxt "button"
 msgid "Confirm"
 msgstr ""
 
@@ -451,6 +547,14 @@ msgctxt "window title"
 msgid "Create collection"
 msgstr ""
 
+#: build/locale/src/customers/views/CustomerCreate.json
+#. [customerCreateWindowTitle] - window title
+#. defaultMessage is:
+#. Create customer
+msgctxt "window title"
+msgid "Create customer"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionCreate.json
 #. [src.collections.views.1597339737]
 #. defaultMessage is:
@@ -459,12 +563,116 @@ msgctxt "description"
 msgid "Created collection"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerList/CustomerList.json
+#. [customerListCustomerEmailColumnHeader] - customer list: column header
+#. defaultMessage is:
+#. Customer Email
+msgctxt "customer list: column header"
+msgid "Customer Email"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerStats/CustomerStats.json
+#. [customerStatsHeader] - section header
+#. defaultMessage is:
+#. Customer History
+msgctxt "section header"
+msgid "Customer History"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerList/CustomerList.json
+#. [customerListCustomerNameColumnHeader] - customer list: column header
+#. defaultMessage is:
+#. Customer Name
+msgctxt "customer list: column header"
+msgid "Customer Name"
+msgstr ""
+
+#: build/locale/src/customers/views/CustomerDetails.json
+#. [customerDetailsRemoveCustomerSuccess]
+#. defaultMessage is:
+#. Customer Removed
+msgctxt "description"
+msgid "Customer Removed"
+msgstr ""
+
+#: build/locale/src/customers/views/CustomerCreate.json
+#. [customerCreateSuccess]
+#. defaultMessage is:
+#. Customer created
+msgctxt "description"
+msgid "Customer created"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerCreateDetails/CustomerCreateDetails.json
+#. [customerCreateDetailsHeader] - header
+#. defaultMessage is:
+#. Customer overview
+msgctxt "header"
+msgid "Customer overview"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
+#. [customerDetailsSubheader] - section subheader
+#. defaultMessage is:
+#. Customer since: {date}
+msgctxt "section subheader"
+msgid "Customer since: {date}"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.customers] - customers section name
+#. defaultMessage is:
+#. Customers
+msgctxt "customers section name"
+msgid "Customers"
+msgstr ""
+
+#: build/locale/src/customers/views/CustomerList.json
+#. [customerListRemovedCustomers]
+#. defaultMessage is:
+#. Customers removed
+msgctxt "description"
+msgid "Customers removed"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.dashboard]
+#. defaultMessage is:
+#. Dashboard
+msgctxt "description"
+msgid "Dashboard"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.26409543] - attribute properties regarding dashboard
 #. defaultMessage is:
 #. Dashboard Properties
 msgctxt "attribute properties regarding dashboard"
 msgid "Dashboard Properties"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
+#. [customerOrdersDateColumnHeader] - customer's order list: order date column header
+#. defaultMessage is:
+#. Date
+msgctxt "customer's order list: order date column header"
+msgid "Date"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
+#. [customerAddressSubheaderDefaultAddress]
+#. defaultMessage is:
+#. Default Address
+msgctxt "description"
+msgid "Default Address"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
+#. [customerAddressSubheaderDefaultBillingAddress]
+#. defaultMessage is:
+#. Default Billing Address
+msgctxt "description"
+msgid "Default Billing Address"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -481,6 +689,14 @@ msgstr ""
 #. Default Label
 msgctxt "attribute's label'"
 msgid "Default Label"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
+#. [customerAddressSubheaderDefaultShippingAddress]
+#. defaultMessage is:
+#. Default Shipping Address
+msgctxt "description"
+msgid "Default Shipping Address"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
@@ -603,6 +819,30 @@ msgctxt "product attribute type"
 msgid "Dropdown"
 msgstr ""
 
+#: build/locale/src/intl.json
+#. [src.email]
+#. defaultMessage is:
+#. E-mail Address
+msgctxt "description"
+msgid "E-mail Address"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.edit] - button
+#. defaultMessage is:
+#. Edit
+msgctxt "button"
+msgid "Edit"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddressDialog/CustomerAddressDialog.json
+#. [customerAddressDialogEditAddress] - dialog title
+#. defaultMessage is:
+#. Edit Address
+msgctxt "dialog title"
+msgid "Edit Address"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
 #. [src.attributes.components.AttributeValueEditDialog.1395607402] - edit attribute value
 #. defaultMessage is:
@@ -611,12 +851,28 @@ msgctxt "edit attribute value"
 msgid "Edit Value"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerCreateNote/CustomerCreateNote.json
+#. [customerCreateNoteContent]
+#. defaultMessage is:
+#. Enter any extra infotmation regarding this customer.
+msgctxt "description"
+msgid "Enter any extra infotmation regarding this customer."
+msgstr ""
+
 #: build/locale/src/collections/components/CollectionDetailsPage/CollectionDetailsPage.json
 #. [src.collections.components.CollectionDetailsPage.2906897537] - switch button
 #. defaultMessage is:
 #. Feature on Homepage
 msgctxt "switch button"
 msgid "Feature on Homepage"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.firstName]
+#. defaultMessage is:
+#. First Name
+msgctxt "description"
+msgid "First Name"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -633,6 +889,38 @@ msgstr ""
 #. If enabled, you’ll be able to use this attribute to filter products in product list.
 msgctxt "description"
 msgid "If enabled, you’ll be able to use this attribute to filter products in product list."
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.lastName]
+#. defaultMessage is:
+#. Last Name
+msgctxt "description"
+msgid "Last Name"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerStats/CustomerStats.json
+#. [customerStatsLastLogin]
+#. defaultMessage is:
+#. Last login
+msgctxt "description"
+msgid "Last login"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerStats/CustomerStats.json
+#. [customerStatsLastOrder]
+#. defaultMessage is:
+#. Last order
+msgctxt "description"
+msgid "Last order"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.manage] - button
+#. defaultMessage is:
+#. Manage
+msgctxt "button"
+msgid "Manage"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -671,6 +959,14 @@ msgctxt "collection name"
 msgid "Name"
 msgstr ""
 
+#: build/locale/src/intl.json
+#. [src.navigation] - navigation section name
+#. defaultMessage is:
+#. Navigation
+msgctxt "navigation section name"
+msgid "Navigation"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
 #. [src.attributes.components.AttributeList.1192828581]
 #. defaultMessage is:
@@ -693,6 +989,22 @@ msgstr ""
 #. No collections found
 msgctxt "description"
 msgid "No collections found"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerList/CustomerList.json
+#. [customerListNoCustomers]
+#. defaultMessage is:
+#. No customers found
+msgctxt "description"
+msgid "No customers found"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
+#. [customerOrdersNoOrders]
+#. defaultMessage is:
+#. No orders found
+msgctxt "description"
+msgid "No orders found"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
@@ -721,6 +1033,22 @@ msgstr ""
 #. No values found
 msgctxt "No attribute values found"
 msgid "No values found"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerList/CustomerList.json
+#. [customerListOrdersColumnHeader] - customer list: column header
+#. defaultMessage is:
+#. No. Orders
+msgctxt "customer list: column header"
+msgid "No. Orders"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
+#. [customerOrdersNoOfOrderColumnHeader] - customer's order list: number of order column header
+#. defaultMessage is:
+#. No. of Order
+msgctxt "customer's order list: number of order column header"
+msgid "No. of Order"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
@@ -755,6 +1083,30 @@ msgctxt "product is not published"
 msgid "Not published"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerCreateNote/CustomerCreateNote.json
+#. [customerCreateNoteInputLabel] - note about customer input label
+#. defaultMessage is:
+#. Note
+msgctxt "note about customer input label"
+msgid "Note"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
+#. [customerDetailsNoteInputLabel] - note about customer
+#. defaultMessage is:
+#. Note
+msgctxt "note about customer"
+msgid "Note"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerCreateNote/CustomerCreateNote.json
+#. [customerCreateNoteHeader] - notes about customer header
+#. defaultMessage is:
+#. Notes
+msgctxt "notes about customer header"
+msgid "Notes"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.optionalField] - field is optional
 #. defaultMessage is:
@@ -763,12 +1115,36 @@ msgctxt "field is optional"
 msgid "Optional"
 msgstr ""
 
+#: build/locale/src/intl.json
+#. [src.pages] - pages section name
+#. defaultMessage is:
+#. Pages
+msgctxt "pages section name"
+msgid "Pages"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.3590282519] - attribute position in storefront filters
 #. defaultMessage is:
 #. Position in faceted navigation
 msgctxt "attribute position in storefront filters"
 msgid "Position in faceted navigation"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerCreateAddress/CustomerCreateAddress.json
+#. [customerCreateAddressHeader] - page header
+#. defaultMessage is:
+#. Primary address
+msgctxt "page header"
+msgid "Primary address"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.productTypes] - product types section name
+#. defaultMessage is:
+#. Product Types
+msgctxt "product types section name"
+msgid "Product Types"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
@@ -843,6 +1219,14 @@ msgctxt "product is published"
 msgid "Published"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
+#. [customerOrdersHeader] - section header
+#. defaultMessage is:
+#. Recent orders
+msgctxt "section header"
+msgid "Recent orders"
+msgstr ""
+
 #: build/locale/src/categories/views/CategoryDetails.json
 #. [src.categories.views.3488150607]
 #. defaultMessage is:
@@ -853,6 +1237,46 @@ msgstr ""
 #. Remember this will also delete all products assigned to this category.
 msgctxt "description"
 msgid "Remember this will also delete all products assigned to this category."
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.remove] - button
+#. defaultMessage is:
+#. Remove
+msgctxt "button"
+msgid "Remove"
+msgstr ""
+
+#: build/locale/src/customers/views/CustomerAddresses.json
+#. [customerAddressesRemoveAddressDialogHeader] - dialog header
+#. defaultMessage is:
+#. Remove Address
+msgctxt "dialog header"
+msgid "Remove Address"
+msgstr ""
+
+#: build/locale/src/customers/views/CustomerDetails.json
+#. [customerDetailsRemoveCustomerDialogHeader] - dialog header
+#. defaultMessage is:
+#. Remove customer
+msgctxt "dialog header"
+msgid "Remove customer"
+msgstr ""
+
+#: build/locale/src/customers/views/CustomerList.json
+#. [customerListRemoveCustomersDialogHeader] - dialog header
+#. defaultMessage is:
+#. Remove customers
+msgctxt "dialog header"
+msgid "Remove customers"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.save] - button
+#. defaultMessage is:
+#. Save
+msgctxt "button"
+msgid "Save"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -869,6 +1293,62 @@ msgstr ""
 #. Searchable
 msgctxt "attribute can be searched in dashboard"
 msgid "Searchable"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
+#. [customerAddressSetAsDefaultBilling] - button
+#. defaultMessage is:
+#. Set as default billing address
+msgctxt "button"
+msgid "Set as default billing address"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
+#. [customerAddressSetAsDefaultShipping] - button
+#. defaultMessage is:
+#. Set as default shipping address
+msgctxt "button"
+msgid "Set as default shipping address"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.shipping] - shipping section name
+#. defaultMessage is:
+#. Shipping Methods
+msgctxt "shipping section name"
+msgid "Shipping Methods"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
+#. [customerAddressesShippingAddressSectionHeader] - subsection header
+#. defaultMessage is:
+#. Shipping address
+msgctxt "subsection header"
+msgid "Shipping address"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.siteSettings] - site settings section name
+#. defaultMessage is:
+#. Site Settings
+msgctxt "site settings section name"
+msgid "Site Settings"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.staff] - staff section name
+#. defaultMessage is:
+#. Staff Members
+msgctxt "staff section name"
+msgid "Staff Members"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
+#. [customerOrdersStatusColumnHeader] - customer's order list: status column header
+#. defaultMessage is:
+#. Status
+msgctxt "customer's order list: status column header"
+msgid "Status"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
@@ -903,12 +1383,60 @@ msgctxt "description"
 msgid "Successfully created attribute"
 msgstr ""
 
+#: build/locale/src/intl.json
+#. [src.taxes] - taxes section name
+#. defaultMessage is:
+#. Taxes
+msgctxt "taxes section name"
+msgid "Taxes"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerCreateAddress/CustomerCreateAddress.json
+#. [customerCreateAddressContent]
+#. defaultMessage is:
+#. The primary address of this customer.
+msgctxt "description"
+msgid "The primary address of this customer."
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
+#. [customerAddressListPageNoAddresses]
+#. defaultMessage is:
+#. There is no address to show for this customer
+msgctxt "description"
+msgid "There is no address to show for this customer"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
+#. [customerAddressListPageNoAddressesAdditionalText]
+#. defaultMessage is:
+#. This customer doesn’t have any adresses added to his address book. You can add address using the button below.
+msgctxt "description"
+msgid "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
+#. [customerAddressesNoAddresses]
+#. defaultMessage is:
+#. This customer has no addresses yet
+msgctxt "description"
+msgid "This customer has no addresses yet"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
 #. [src.attributes.components.AttributeDetails.4107478955] - attribute slug input field helper text
 #. defaultMessage is:
 #. This is used internally. Make sure you don’t use spaces
 msgctxt "attribute slug input field helper text"
 msgid "This is used internally. Make sure you don’t use spaces"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
+#. [customerOrdersTotalColumnHeader] - customer's order list: total amount column header
+#. defaultMessage is:
+#. Total
+msgctxt "customer's order list: total amount column header"
+msgid "Total"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
@@ -987,6 +1515,14 @@ msgctxt "attribute can be searched in storefront"
 msgid "Use in faceted search"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
+#. [customerDetailsAccountActive] - check to mark this account as active
+#. defaultMessage is:
+#. User account active
+msgctxt "check to mark this account as active"
+msgid "User account active"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
 #. [src.attributes.components.AttributeDetails.2592224946] - check to require attribute to have value
 #. defaultMessage is:
@@ -1001,6 +1537,14 @@ msgstr ""
 #. Value deleted
 msgctxt "attribute value deleted"
 msgid "Value deleted"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
+#. [customerOrdersViewAllOrders] - button
+#. defaultMessage is:
+#. View all orders
+msgctxt "button"
+msgid "View all orders"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
@@ -1019,10 +1563,18 @@ msgctxt "attribute"
 msgid "Visible on Product Page in Storefront"
 msgstr ""
 
-#: build/locale/src/intl.json
-#. [src.save]
+#: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
+#. [customerAddressListPageAppHeader] - header
 #. defaultMessage is:
-#. save
-msgctxt "description"
-msgid "save"
+#. {fullName} Details
+msgctxt "header"
+msgid "{fullName} Details"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
+#. [customerAddressListPageHeader] - header
+#. defaultMessage is:
+#. {fullName}'s Address Book
+msgctxt "header"
+msgid "{fullName}'s Address Book"
 msgstr ""

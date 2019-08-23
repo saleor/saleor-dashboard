@@ -13,7 +13,7 @@ import {
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { commonMessages } from "@saleor/intl";
+import { buttonMessages } from "@saleor/intl";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -56,14 +56,14 @@ const CategoryDeleteDialog = withStyles(styles, {
     </DialogContent>
     <DialogActions>
       <Button onClick={onClose}>
-        <FormattedMessage {...commonMessages.cancel} />
+        <FormattedMessage {...buttonMessages.cancel} />
       </Button>
       <Button
         className={classes.deleteButton}
         variant="contained"
         onClick={onConfirm}
       >
-        <FormattedMessage {...commonMessages.save} />
+        <FormattedMessage {...buttonMessages.save} />
       </Button>
     </DialogActions>
   </Dialog>
