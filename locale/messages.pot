@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T17:42:51.721Z\n"
+"POT-Creation-Date: 2019-08-26T17:47:33.625Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -73,6 +73,14 @@ msgstr ""
 #. Add Menu
 msgctxt "button"
 msgid "Add Menu"
+msgstr ""
+
+#: build/locale/src/pages/components/PageDetailsPage/PageDetailsPage.json
+#. [src.pages.components.PageDetailsPage.755314116] - page header
+#. defaultMessage is:
+#. Add Page
+msgctxt "page header"
+msgid "Add Page"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
@@ -171,6 +179,14 @@ msgctxt "description"
 msgid "Add new menu item to begin creating menu"
 msgstr ""
 
+#: build/locale/src/pages/components/PageListPage/PageListPage.json
+#. [src.pages.components.PageListPage.1767905232] - button
+#. defaultMessage is:
+#. Add page
+msgctxt "button"
+msgid "Add page"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
 #. [src.categories.components.CategoryProducts.3554578821] - button
 #. defaultMessage is:
@@ -213,6 +229,14 @@ msgstr ""
 #. Add search engine title and description to make this collection easier to find
 msgctxt "description"
 msgid "Add search engine title and description to make this collection easier to find"
+msgstr ""
+
+#: build/locale/src/pages/components/PageDetailsPage/PageDetailsPage.json
+#. [src.pages.components.PageDetailsPage.1996767833]
+#. defaultMessage is:
+#. Add search engine title and description to make this page easier to find
+msgctxt "description"
+msgid "Add search engine title and description to make this page easier to find"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftDetailsSummary/OrderDraftDetailsSummary.json
@@ -507,6 +531,14 @@ msgctxt "dialog content"
 msgid "Are you sure you want to delete {counter,plural,one{this order draft} other{{displayQuantity} orderDrafts}}?"
 msgstr ""
 
+#: build/locale/src/pages/views/PageList.json
+#. [src.pages.views.3382708469] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this page} other{{displayQuantity} pages}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to delete {counter,plural,one{this page} other{{displayQuantity} pages}}?"
+msgstr ""
+
 #: build/locale/src/discounts/views/SaleList.json
 #. [src.discounts.views.2516361175] - dialog content
 #. defaultMessage is:
@@ -547,6 +579,14 @@ msgctxt "dialog content"
 msgid "Are you sure you want to delete {saleName}?"
 msgstr ""
 
+#: build/locale/src/pages/views/PageDetails.json
+#. [src.pages.views.754348000] - delete page
+#. defaultMessage is:
+#. Are you sure you want to delete {title}?
+msgctxt "delete page"
+msgid "Are you sure you want to delete {title}?"
+msgstr ""
+
 #: build/locale/src/discounts/views/VoucherDetails.json
 #. [src.discounts.views.3261917848] - dialog content
 #. defaultMessage is:
@@ -577,6 +617,14 @@ msgstr ""
 #. Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "description"
 msgid "Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
+msgstr ""
+
+#: build/locale/src/pages/views/PageList.json
+#. [src.pages.views.504298570] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to publish {counter,plural,one{this page} other{{displayQuantity} pages}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to publish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
@@ -637,6 +685,14 @@ msgstr ""
 #. Are you sure you want to unpublish {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "description"
 msgid "Are you sure you want to unpublish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
+msgstr ""
+
+#: build/locale/src/pages/views/PageList.json
+#. [src.pages.views.691980200] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to unpublish {counter,plural,one{this page} other{{displayQuantity} pages}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to unpublish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderPaymentVoidDialog/OrderPaymentVoidDialog.json
@@ -1035,6 +1091,14 @@ msgctxt "subheader"
 msgid "Contact information"
 msgstr ""
 
+#: build/locale/src/pages/components/PageInfo/PageInfo.json
+#. [src.pages.components.PageInfo.1116746286] - page content
+#. defaultMessage is:
+#. Content
+msgctxt "page content"
+msgid "Content"
+msgstr ""
+
 #: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
 #. [src.orders.views.OrderDetails.2714957902]
 #. defaultMessage is:
@@ -1197,6 +1261,14 @@ msgstr ""
 #. Create order
 msgctxt "button"
 msgid "Create order"
+msgstr ""
+
+#: build/locale/src/pages/views/PageCreate.json
+#. [src.pages.views.3785394515] - header
+#. defaultMessage is:
+#. Create page
+msgctxt "header"
+msgid "Create page"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionCreate.json
@@ -1445,6 +1517,22 @@ msgstr ""
 #. Delete Order Drafts
 msgctxt "dialog header"
 msgid "Delete Order Drafts"
+msgstr ""
+
+#: build/locale/src/pages/views/PageDetails.json
+#. [src.pages.views.3246254285] - dialog header
+#. defaultMessage is:
+#. Delete Page
+msgctxt "dialog header"
+msgid "Delete Page"
+msgstr ""
+
+#: build/locale/src/pages/views/PageList.json
+#. [src.pages.views.2782958373] - dialog header
+#. defaultMessage is:
+#. Delete Pages
+msgctxt "dialog header"
+msgid "Delete Pages"
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
@@ -2039,6 +2127,14 @@ msgctxt "subheader"
 msgid "Here is some information we gathered about your store"
 msgstr ""
 
+#: build/locale/src/pages/components/PageSlug/PageSlug.json
+#. [src.pages.components.PageSlug.4210828158]
+#. defaultMessage is:
+#. If empty, URL will be autogenerated from Page Name
+msgctxt "description"
+msgid "If empty, URL will be autogenerated from Page Name"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.787251583]
 #. defaultMessage is:
@@ -2479,6 +2575,14 @@ msgctxt "description"
 msgid "No orders ready to fulfill"
 msgstr ""
 
+#: build/locale/src/pages/components/PageList/PageList.json
+#. [src.pages.components.PageList.2489163252]
+#. defaultMessage is:
+#. No pages found
+msgctxt "description"
+msgid "No pages found"
+msgstr ""
+
 #: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
 #. [homeNotificationsNoPayments]
 #. defaultMessage is:
@@ -2623,6 +2727,14 @@ msgctxt "voucher has no requirements"
 msgid "None"
 msgstr ""
 
+#: build/locale/src/pages/components/PageList/PageList.json
+#. [src.pages.components.PageList.3767550649] - page status
+#. defaultMessage is:
+#. Not Published
+msgctxt "page status"
+msgid "Not Published"
+msgstr ""
+
 #: build/locale/src/collections/components/CollectionList/CollectionList.json
 #. [src.collections.components.CollectionList.2341910657] - collection is not published
 #. defaultMessage is:
@@ -2717,6 +2829,14 @@ msgstr ""
 #. Only once per order
 msgctxt "voucher application, switch button"
 msgid "Only once per order"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.optionalField] - field is optional
+#. defaultMessage is:
+#. Optional
+msgctxt "field is optional"
+msgid "Optional"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftDetails/OrderDraftDetails.json
@@ -3183,6 +3303,22 @@ msgctxt "publish collections"
 msgid "Publish"
 msgstr ""
 
+#: build/locale/src/pages/views/PageList.json
+#. [src.pages.views.1547167026] - publish page, button
+#. defaultMessage is:
+#. Publish
+msgctxt "publish page, button"
+msgid "Publish"
+msgstr ""
+
+#: build/locale/src/pages/views/PageList.json
+#. [src.pages.views.2321087286] - dialog header
+#. defaultMessage is:
+#. Publish Pages
+msgctxt "dialog header"
+msgid "Publish Pages"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionList.json
 #. [src.collections.views.2823425739] - dialog title
 #. defaultMessage is:
@@ -3209,6 +3345,22 @@ msgstr ""
 #. Published
 msgctxt "product is published"
 msgid "Published"
+msgstr ""
+
+#: build/locale/src/pages/components/PageList/PageList.json
+#. [src.pages.components.PageList.3640454975] - page status
+#. defaultMessage is:
+#. Published
+msgctxt "page status"
+msgid "Published"
+msgstr ""
+
+#: build/locale/src/pages/views/PageList.json
+#. [src.pages.views.2543350562] - notification
+#. defaultMessage is:
+#. Published pages
+msgctxt "notification"
+msgid "Published pages"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
@@ -3325,6 +3477,22 @@ msgstr ""
 #. Removed draft orders
 msgctxt "description"
 msgid "Removed draft orders"
+msgstr ""
+
+#: build/locale/src/pages/views/PageDetails.json
+#. [src.pages.views.1457312643]
+#. defaultMessage is:
+#. Removed page
+msgctxt "description"
+msgid "Removed page"
+msgstr ""
+
+#: build/locale/src/pages/views/PageList.json
+#. [src.pages.views.1080715663] - notification
+#. defaultMessage is:
+#. Removed pages
+msgctxt "notification"
+msgid "Removed pages"
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
@@ -3559,6 +3727,18 @@ msgctxt "site settings section name"
 msgid "Site Settings"
 msgstr ""
 
+#: build/locale/src/pages/components/PageList/PageList.json
+#. [src.pages.components.PageList.3478065224] - page internal name
+#. defaultMessage is:
+#. Slug
+#: build/locale/src/pages/components/PageSlug/PageSlug.json
+#. [src.pages.components.PageSlug.3478065224] - page internal name
+#. defaultMessage is:
+#. Slug
+msgctxt "page internal name"
+msgid "Slug"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
 #. [src.orders.components.OrderDraftFinalizeDialog.2968256006]
 #. defaultMessage is:
@@ -3687,6 +3867,14 @@ msgctxt "description"
 msgid "Successfully created attribute"
 msgstr ""
 
+#: build/locale/src/pages/views/PageCreate.json
+#. [src.pages.views.2680158037]
+#. defaultMessage is:
+#. Successfully created new page
+msgctxt "description"
+msgid "Successfully created new page"
+msgstr ""
+
 #: build/locale/src/discounts/views/SaleCreate.json
 #. [src.discounts.views.3707049729]
 #. defaultMessage is:
@@ -3807,6 +3995,22 @@ msgctxt "time during which sale is active"
 msgid "Time Frame"
 msgstr ""
 
+#: build/locale/src/pages/components/PageInfo/PageInfo.json
+#. [src.pages.components.PageInfo.1124600214] - page title
+#. defaultMessage is:
+#. Title
+msgctxt "page title"
+msgid "Title"
+msgstr ""
+
+#: build/locale/src/pages/components/PageList/PageList.json
+#. [src.pages.components.PageList.1124600214] - dialog header
+#. defaultMessage is:
+#. Title
+msgctxt "dialog header"
+msgid "Title"
+msgstr ""
+
 #: build/locale/src/home/components/HomeAnalyticsCard/HomeAnalyticsCard.json
 #. [homeAnalyticsCardHeader]
 #. defaultMessage is:
@@ -3917,6 +4121,14 @@ msgstr ""
 #. Type
 msgctxt "product type"
 msgid "Type"
+msgstr ""
+
+#: build/locale/src/pages/components/PageSlug/PageSlug.json
+#. [src.pages.components.PageSlug.1324178587]
+#. defaultMessage is:
+#. URL
+msgctxt "description"
+msgid "URL"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
@@ -4061,6 +4273,22 @@ msgstr ""
 #. Unpublish
 msgctxt "unpublish collections"
 msgid "Unpublish"
+msgstr ""
+
+#: build/locale/src/pages/views/PageList.json
+#. [src.pages.views.2237014112] - unpublish page, button
+#. defaultMessage is:
+#. Unpublish
+msgctxt "unpublish page, button"
+msgid "Unpublish"
+msgstr ""
+
+#: build/locale/src/pages/views/PageList.json
+#. [src.pages.views.158565417] - dialog header
+#. defaultMessage is:
+#. Unpublish Pages
+msgctxt "dialog header"
+msgid "Unpublish Pages"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
@@ -4221,6 +4449,14 @@ msgstr ""
 #. View and update your site settings
 msgctxt "description"
 msgid "View and update your site settings"
+msgstr ""
+
+#: build/locale/src/pages/components/PageList/PageList.json
+#. [src.pages.components.PageList.1459686496] - page status
+#. defaultMessage is:
+#. Visibility
+msgctxt "page status"
+msgid "Visibility"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json

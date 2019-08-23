@@ -1,9 +1,9 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../i18n";
 import { getMutationState, maybe } from "../../misc";
 import PageDetailsPage from "../components/PageDetailsPage";
 import { TypedPageCreate } from "../mutations";
@@ -17,12 +17,13 @@ export interface PageCreateProps {
 export const PageCreate: React.StatelessComponent<PageCreateProps> = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const handlePageCreate = (data: PageCreateData) => {
     if (data.pageCreate.errors.length === 0) {
       notify({
-        text: i18n.t("Successfully created new page", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Successfully created new page"
         })
       });
       navigate(pageUrl(data.pageCreate.page.id));
@@ -40,7 +41,12 @@ export const PageCreate: React.StatelessComponent<PageCreateProps> = () => {
 
         return (
           <>
-            <WindowTitle title={i18n.t("Create page")} />
+            <WindowTitle
+              title={intl.formatMessage({
+                defaultMessage: "Create page",
+                description: "header"
+              })}
+            />
             <PageDetailsPage
               disabled={pageCreateOpts.loading}
               errors={maybe(() => pageCreateOpts.data.pageCreate.errors, [])}
