@@ -1,9 +1,10 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import i18n from "../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "../../misc";
 import ShippingZoneCreatePage from "../components/ShippingZoneCreatePage";
 import { TypedCreateShippingZone } from "../mutations";
@@ -14,13 +15,12 @@ const ShippingZoneCreate: React.StatelessComponent<{}> = () => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
   const shop = useShop();
+  const intl = useIntl();
 
   const onShippingZoneCreate = (data: CreateShippingZone) => {
     if (data.shippingZoneCreate.errors.length === 0) {
       pushMessage({
-        text: i18n.t("Successfully created new shipping zone", {
-          context: "notification"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(shippingZoneUrl(data.shippingZoneCreate.shippingZone.id));
     }

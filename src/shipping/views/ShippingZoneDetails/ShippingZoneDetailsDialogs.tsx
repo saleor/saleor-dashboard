@@ -1,11 +1,11 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
-import i18n from "../../../i18n";
 import { maybe } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import ShippingZoneCountriesAssignDialog from "../../components/ShippingZoneCountriesAssignDialog";
@@ -43,6 +43,7 @@ const ShippingZoneDetailsDialogs: React.StatelessComponent<
 }) => {
   const navigate = useNavigator();
   const shop = useShop();
+  const intl = useIntl();
 
   const closeModal = () => navigate(shippingZoneUrl(id), true);
 
@@ -92,20 +93,22 @@ const ShippingZoneDetailsDialogs: React.StatelessComponent<
           })
         }
         open={params.action === "remove-rate"}
-        title={i18n.t("Delete Shipping Method")}
+        title={intl.formatMessage({
+          defaultMessage: "Delete Shipping Method",
+          description: "dialog header"
+        })}
         variant="delete"
       >
-        <DialogContentText
-          dangerouslySetInnerHTML={{
-            __html: i18n.t(
-              "Are you sure you want to delete <strong>{{ name }}</strong>?",
-              {
-                context: "remove shipping method",
-                name: maybe(() => rate.name, "...")
-              }
-            )
-          }}
-        />
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="Are you sure you want to delete {name}?"
+            description="delete shipping method"
+            id="shippingZoneDetailsDialogsDeleteShippingMethod"
+            values={{
+              name: maybe(() => rate.name, "...")
+            }}
+          />
+        </DialogContentText>
       </ActionDialog>
       <ShippingZoneRateDialog
         action="create"
@@ -165,20 +168,22 @@ const ShippingZoneDetailsDialogs: React.StatelessComponent<
           })
         }
         open={params.action === "remove"}
-        title={i18n.t("Delete Shipping Zone")}
+        title={intl.formatMessage({
+          defaultMessage: "Delete Shipping Zone",
+          description: "dialog header"
+        })}
         variant="delete"
       >
-        <DialogContentText
-          dangerouslySetInnerHTML={{
-            __html: i18n.t(
-              "Are you sure you want to delete <strong>{{ name }}</strong>?",
-              {
-                context: "remove shipping zone",
-                name: maybe(() => shippingZone.name)
-              }
-            )
-          }}
-        />
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="Are you sure you want to delete {name}?"
+            description="delete shipping zone"
+            id="shippingZoneDetailsDialogsDeleteShippingZone"
+            values={{
+              name: <strong>{maybe(() => shippingZone.name, "...")}</strong>
+            }}
+          />
+        </DialogContentText>
       </ActionDialog>
       <ShippingZoneCountriesAssignDialog
         confirmButtonState={assignCountryTransitionState}
@@ -214,25 +219,31 @@ const ShippingZoneDetailsDialogs: React.StatelessComponent<
           })
         }
         open={params.action === "unassign-country"}
-        title={i18n.t("Remove from shipping zone")}
+        title={intl.formatMessage({
+          defaultMessage: "Remove from shipping zone",
+          description: "unassign country, dialog header"
+        })}
         variant="delete"
       >
-        <DialogContentText
-          dangerouslySetInnerHTML={{
-            __html: i18n.t(
-              "Are you sure you want to remove <strong>{{ name }}</strong> from this shipping zone?",
-              {
-                context: "unassign country",
-                name: maybe(
-                  () =>
-                    shippingZone.countries.find(
-                      country => country.code === params.id
-                    ).country
-                )
-              }
-            )
-          }}
-        />
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="Are you sure you want to remove {countryName} from this shipping zone?"
+            description="unassign country"
+            values={{
+              countryName: (
+                <strong>
+                  {maybe(
+                    () =>
+                      shippingZone.countries.find(
+                        country => country.code === params.id
+                      ).country,
+                    "..."
+                  )}
+                </strong>
+              )
+            }}
+          />
+        </DialogContentText>
       </ActionDialog>
     </>
   );

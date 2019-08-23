@@ -1,8 +1,9 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
@@ -30,15 +31,14 @@ const ShippingZoneDetails: React.StatelessComponent<
 > = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const closeModal = () => navigate(shippingZoneUrl(id));
 
   const onShippingRateCreate = (data: CreateShippingRate) => {
     if (data.shippingPriceCreate.errors.length === 0) {
       notify({
-        text: i18n.t("Successfully created rate", {
-          context: "shipping method"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();
     }
@@ -47,9 +47,7 @@ const ShippingZoneDetails: React.StatelessComponent<
   const onShippingRateUpdate = (data: UpdateShippingRate) => {
     if (data.shippingPriceUpdate.errors.length === 0) {
       notify({
-        text: i18n.t("Successfully updated rate", {
-          context: "shipping method"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();
     }
@@ -58,9 +56,7 @@ const ShippingZoneDetails: React.StatelessComponent<
   const onShippingRateDelete = (data: DeleteShippingRate) => {
     if (data.shippingPriceDelete.errors.length === 0) {
       notify({
-        text: i18n.t("Successfully deleted rate", {
-          context: "shipping method"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();
     }
@@ -69,7 +65,7 @@ const ShippingZoneDetails: React.StatelessComponent<
   const onShippingZoneDelete = (data: DeleteShippingZone) => {
     if (data.shippingZoneDelete.errors.length === 0) {
       notify({
-        text: i18n.t("Successfully deleted shipping zone")
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(shippingZonesListUrl(), true);
     }
@@ -78,7 +74,7 @@ const ShippingZoneDetails: React.StatelessComponent<
   const onShippingZoneUpdate = (data: UpdateShippingZone) => {
     if (data.shippingZoneUpdate.errors.length === 0) {
       notify({
-        text: i18n.t("Successfully updated shipping zone")
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();
     }

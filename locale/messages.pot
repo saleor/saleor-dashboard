@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T17:55:41.507Z\n"
+"POT-Creation-Date: 2019-08-26T17:58:55.558Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -91,6 +91,14 @@ msgctxt "page header"
 msgid "Add Page"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.2892088870] - dialog header
+#. defaultMessage is:
+#. Add Price Rate
+msgctxt "dialog header"
+msgid "Add Price Rate"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
 #. [src.orders.components.OrderProductAddDialog.2775402904] - dialog header
 #. defaultMessage is:
@@ -129,6 +137,14 @@ msgstr ""
 #. Add Variant
 msgctxt "header"
 msgid "Add Variant"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.1397795758] - add weight based shipping method, dialog header
+#. defaultMessage is:
+#. Add Weight Rate
+msgctxt "add weight based shipping method, dialog header"
+msgid "Add Weight Rate"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
@@ -239,6 +255,14 @@ msgctxt "button"
 msgid "Add products"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneRates/ShippingZoneRates.json
+#. [src.shipping.components.ShippingZoneRates.352297149] - button
+#. defaultMessage is:
+#. Add rate
+msgctxt "button"
+msgid "Add rate"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryCreatePage/CategoryCreatePage.json
 #. [src.categories.components.CategoryCreatePage.2563994280]
 #. defaultMessage is:
@@ -285,6 +309,14 @@ msgstr ""
 #. Add shipping carrier
 msgctxt "button"
 msgid "Add shipping carrier"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZonesList/ShippingZonesList.json
+#. [src.shipping.components.ShippingZonesList.2474410767] - button
+#. defaultMessage is:
+#. Add shipping zone
+msgctxt "button"
+msgid "Add shipping zone"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
@@ -647,6 +679,14 @@ msgctxt "dialog content"
 msgid "Are you sure you want to delete {counter,plural,one{this sale} other{{displayQuantity} sales}}?"
 msgstr ""
 
+#: build/locale/src/shipping/views/ShippingZonesList.json
+#. [src.shipping.views.3698270769] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this shipping zone} other{{displayQuantity} shipping zones}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to delete {counter,plural,one{this shipping zone} other{{displayQuantity} shipping zones}}?"
+msgstr ""
+
 #: build/locale/src/products/views/ProductUpdate/ProductUpdate.json
 #. [src.products.views.ProductUpdate.2446451819] - dialog content
 #. defaultMessage is:
@@ -703,12 +743,36 @@ msgctxt "delete product type"
 msgid "Are you sure you want to delete {name}?"
 msgstr ""
 
+#: build/locale/src/shipping/views/ShippingZoneDetails/ShippingZoneDetailsDialogs.json
+#. [shippingZoneDetailsDialogsDeleteShippingMethod] - delete shipping method
+#. defaultMessage is:
+#. Are you sure you want to delete {name}?
+msgctxt "delete shipping method"
+msgid "Are you sure you want to delete {name}?"
+msgstr ""
+
+#: build/locale/src/shipping/views/ShippingZoneDetails/ShippingZoneDetailsDialogs.json
+#. [shippingZoneDetailsDialogsDeleteShippingZone] - delete shipping zone
+#. defaultMessage is:
+#. Are you sure you want to delete {name}?
+msgctxt "delete shipping zone"
+msgid "Are you sure you want to delete {name}?"
+msgstr ""
+
 #: build/locale/src/discounts/views/SaleDetails.json
 #. [src.discounts.views.1457489953] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {saleName}?
 msgctxt "dialog content"
 msgid "Are you sure you want to delete {saleName}?"
+msgstr ""
+
+#: build/locale/src/shipping/views/ShippingZonesList.json
+#. [src.shipping.views.1005071028]
+#. defaultMessage is:
+#. Are you sure you want to delete {shippingZoneName} shipping zone?
+msgctxt "description"
+msgid "Are you sure you want to delete {shippingZoneName} shipping zone?"
 msgstr ""
 
 #: build/locale/src/pages/views/PageDetails.json
@@ -781,6 +845,14 @@ msgstr ""
 #. Are you sure you want to remove this image?
 msgctxt "description"
 msgid "Are you sure you want to remove this image?"
+msgstr ""
+
+#: build/locale/src/shipping/views/ShippingZoneDetails/ShippingZoneDetailsDialogs.json
+#. [src.shipping.views.ShippingZoneDetails.1790261672] - unassign country
+#. defaultMessage is:
+#. Are you sure you want to remove {countryName} from this shipping zone?
+msgctxt "unassign country"
+msgid "Are you sure you want to remove {countryName} from this shipping zone?"
 msgstr ""
 
 #: build/locale/src/productTypes/components/ProductTypeAttributeUnassignDialog/ProductTypeAttributeUnassignDialog.json
@@ -887,6 +959,10 @@ msgstr ""
 #. [src.discounts.components.DiscountCountrySelectDialog.1585396479] - dialog header
 #. defaultMessage is:
 #. Assign Countries
+#: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
+#. [src.shipping.components.ShippingZoneCountriesAssignDialog.1585396479] - dialog header
+#. defaultMessage is:
+#. Assign Countries
 msgctxt "dialog header"
 msgid "Assign Countries"
 msgstr ""
@@ -925,6 +1001,10 @@ msgstr ""
 
 #: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
 #. [src.discounts.components.DiscountCountrySelectDialog.2747492886] - button
+#. defaultMessage is:
+#. Assign countries
+#: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
+#. [src.shipping.components.ShippingZoneCountriesAssignDialog.2747492886] - button
 #. defaultMessage is:
 #. Assign countries
 msgctxt "button"
@@ -1287,6 +1367,14 @@ msgctxt "description"
 msgid "Charge taxes for this item"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
+#. [src.shipping.components.ShippingZoneCountriesAssignDialog.2404264158]
+#. defaultMessage is:
+#. Choose countries you want to add to shipping zone from list below
+msgctxt "description"
+msgid "Choose countries you want to add to shipping zone from list below"
+msgstr ""
+
 #: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
 #. [src.discounts.components.DiscountCountrySelectDialog.2177165134]
 #. defaultMessage is:
@@ -1499,8 +1587,28 @@ msgctxt "voucher country range"
 msgid "Countries"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneCreatePage/ShippingZoneCreatePage.json
+#. [src.shipping.components.ShippingZoneCreatePage.3109712047]
+#. defaultMessage is:
+#. Countries
+#: build/locale/src/shipping/components/ShippingZoneDetailsPage/ShippingZoneDetailsPage.json
+#. [src.shipping.components.ShippingZoneDetailsPage.3109712047]
+#. defaultMessage is:
+#. Countries
+#: build/locale/src/shipping/components/ShippingZonesList/ShippingZonesList.json
+#. [src.shipping.components.ShippingZonesList.3109712047]
+#. defaultMessage is:
+#. Countries
+msgctxt "description"
+msgid "Countries"
+msgstr ""
+
 #: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
 #. [src.discounts.components.DiscountCountrySelectDialog.2777439857] - country selection
+#. defaultMessage is:
+#. Countries A to Z
+#: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
+#. [src.shipping.components.ShippingZoneCountriesAssignDialog.2777439857] - country selection
 #. defaultMessage is:
 #. Countries A to Z
 msgctxt "country selection"
@@ -1521,6 +1629,14 @@ msgstr ""
 #. Create New Category
 msgctxt "page header"
 msgid "Create New Category"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneCreatePage/ShippingZoneCreatePage.json
+#. [src.shipping.components.ShippingZoneCreatePage.4049462680] - header
+#. defaultMessage is:
+#. Create New Shipping Zone
+msgctxt "header"
+msgid "Create New Shipping Zone"
 msgstr ""
 
 #: build/locale/src/products/views/ProductCreate.json
@@ -1615,6 +1731,14 @@ msgctxt "header"
 msgid "Create page"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.16061680] - button
+#. defaultMessage is:
+#. Create rate
+msgctxt "button"
+msgid "Create rate"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionCreate.json
 #. [src.collections.views.1597339737]
 #. defaultMessage is:
@@ -1637,6 +1761,18 @@ msgstr ""
 #. Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy
 msgctxt "description"
 msgid "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneCreatePage/ShippingZoneCreatePage.json
+#. [src.shipping.components.ShippingZoneCreatePage.2364051773]
+#. defaultMessage is:
+#. Currently, there are no countries assigned to this shipping zone
+#: build/locale/src/shipping/components/ShippingZoneDetailsPage/ShippingZoneDetailsPage.json
+#. [src.shipping.components.ShippingZoneDetailsPage.2364051773]
+#. defaultMessage is:
+#. Currently, there are no countries assigned to this shipping zone
+msgctxt "description"
+msgid "Currently, there are no countries assigned to this shipping zone"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
@@ -1933,6 +2069,34 @@ msgstr ""
 #. Delete Sales
 msgctxt "dialog header"
 msgid "Delete Sales"
+msgstr ""
+
+#: build/locale/src/shipping/views/ShippingZoneDetails/ShippingZoneDetailsDialogs.json
+#. [src.shipping.views.ShippingZoneDetails.1502359905] - dialog header
+#. defaultMessage is:
+#. Delete Shipping Method
+msgctxt "dialog header"
+msgid "Delete Shipping Method"
+msgstr ""
+
+#: build/locale/src/shipping/views/ShippingZoneDetails/ShippingZoneDetailsDialogs.json
+#. [src.shipping.views.ShippingZoneDetails.1010705153] - dialog header
+#. defaultMessage is:
+#. Delete Shipping Zone
+#: build/locale/src/shipping/views/ShippingZonesList.json
+#. [src.shipping.views.1010705153] - dialog header
+#. defaultMessage is:
+#. Delete Shipping Zone
+msgctxt "dialog header"
+msgid "Delete Shipping Zone"
+msgstr ""
+
+#: build/locale/src/shipping/views/ShippingZonesList.json
+#. [src.shipping.views.1711385401] - dialog header
+#. defaultMessage is:
+#. Delete Shipping Zones
+msgctxt "dialog header"
+msgid "Delete Shipping Zones"
 msgstr ""
 
 #: build/locale/src/products/components/ProductVariantCreatePage/ProductVariantCreatePage.json
@@ -2255,6 +2419,14 @@ msgctxt "header"
 msgid "Edit Photo"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.3934114933] - dialog header
+#. defaultMessage is:
+#. Edit Price Rate
+msgctxt "dialog header"
+msgid "Edit Price Rate"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderShippingMethodEditDialog/OrderShippingMethodEditDialog.json
 #. [src.orders.components.OrderShippingMethodEditDialog.3369240294] - dialog header
 #. defaultMessage is:
@@ -2269,6 +2441,14 @@ msgstr ""
 #. Edit Value
 msgctxt "edit attribute value"
 msgid "Edit Value"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.4152709923] - edit weight based shipping method, dialog header
+#. defaultMessage is:
+#. Edit Weight Rate
+msgctxt "edit weight based shipping method, dialog header"
+msgid "Edit Weight Rate"
 msgstr ""
 
 #: build/locale/src/products/components/ProductVariants/ProductVariants.json
@@ -2583,6 +2763,14 @@ msgctxt "description"
 msgid "If enabled, you’ll be able to use this attribute to filter products in product list."
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
+#. [src.shipping.components.ShippingZoneCountriesAssignDialog.1818089229]
+#. defaultMessage is:
+#. If selected, this will add all of the countries not selected to other shipping zones
+msgctxt "description"
+msgid "If selected, this will add all of the countries not selected to other shipping zones"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
 #. [src.discounts.components.VoucherValue.4189095909]
 #. defaultMessage is:
@@ -2819,6 +3007,22 @@ msgctxt "order history message"
 msgid "Marked order as paid"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.3463567334]
+#. defaultMessage is:
+#. Maximal Order Value
+msgctxt "description"
+msgid "Maximal Order Value"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.3659741519]
+#. defaultMessage is:
+#. Maximal Order Weight
+msgctxt "description"
+msgid "Maximal Order Weight"
+msgstr ""
+
 #: build/locale/src/navigation/components/MenuItems/MenuItems.json
 #. [menuItemsHeader] - header
 #. defaultMessage is:
@@ -2857,6 +3061,22 @@ msgstr ""
 #. Min. Spent
 msgctxt "minimum amount of spent money to activate voucher"
 msgid "Min. Spent"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.1337705349]
+#. defaultMessage is:
+#. Minimal Order Value
+msgctxt "description"
+msgid "Minimal Order Value"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.1878009504]
+#. defaultMessage is:
+#. Minimal Order Weight
+msgctxt "description"
+msgid "Minimal Order Weight"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherRequirements/VoucherRequirements.json
@@ -2952,6 +3172,22 @@ msgstr ""
 #. defaultMessage is:
 #. Name
 msgctxt "product variant name"
+msgid "Name"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRates/ShippingZoneRates.json
+#. [src.shipping.components.ShippingZoneRates.636461959] - shipping method name
+#. defaultMessage is:
+#. Name
+msgctxt "shipping method name"
+msgid "Name"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZonesList/ShippingZonesList.json
+#. [src.shipping.components.ShippingZonesList.636461959] - shipping zone
+#. defaultMessage is:
+#. Name
+msgctxt "shipping zone"
 msgid "Name"
 msgstr ""
 
@@ -3181,6 +3417,22 @@ msgstr ""
 #. No shipping address
 msgctxt "description"
 msgid "No shipping address"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRates/ShippingZoneRates.json
+#. [src.shipping.components.ShippingZoneRates.1961493435]
+#. defaultMessage is:
+#. No shipping rates found
+msgctxt "description"
+msgid "No shipping rates found"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZonesList/ShippingZonesList.json
+#. [src.shipping.components.ShippingZonesList.655374584]
+#. defaultMessage is:
+#. No shipping zones found
+msgctxt "description"
+msgid "No shipping zones found"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
@@ -3775,6 +4027,22 @@ msgctxt "product variant price"
 msgid "Price"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneRates/ShippingZoneRates.json
+#. [src.shipping.components.ShippingZoneRates.1134347598] - shipping method price
+#. defaultMessage is:
+#. Price
+msgctxt "shipping method price"
+msgid "Price"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRates/ShippingZoneRates.json
+#. [src.shipping.components.ShippingZoneRates.2542194565] - price based shipping methods, section header
+#. defaultMessage is:
+#. Price Based Rates
+msgctxt "price based shipping methods, section header"
+msgid "Price Based Rates"
+msgstr ""
+
 #: build/locale/src/discounts/components/SalePricing/SalePricing.json
 #. [src.discounts.components.SalePricing.1099355007] - sale pricing, header
 #. defaultMessage is:
@@ -4127,6 +4395,14 @@ msgctxt "ordered products"
 msgid "Quantity"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
+#. [src.shipping.components.ShippingZoneCountriesAssignDialog.1440682557]
+#. defaultMessage is:
+#. Quick Pick
+msgctxt "description"
+msgid "Quick Pick"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
 #. [src.orders.components.OrderListFilter.2545228781]
 #. defaultMessage is:
@@ -4137,6 +4413,30 @@ msgstr ""
 #. Range
 msgctxt "description"
 msgid "Range"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.3213611593] - shipping method
+#. defaultMessage is:
+#. Rate
+msgctxt "shipping method"
+msgid "Rate"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.382595300] - shipping method name
+#. defaultMessage is:
+#. Rate Name
+msgctxt "shipping method name"
+msgid "Rate Name"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.1403365734] - shipping method price
+#. defaultMessage is:
+#. Rate Price
+msgctxt "shipping method price"
+msgid "Rate Price"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
@@ -4215,6 +4515,14 @@ msgctxt "dialog header"
 msgid "Remove draft order"
 msgstr ""
 
+#: build/locale/src/shipping/views/ShippingZoneDetails/ShippingZoneDetailsDialogs.json
+#. [src.shipping.views.ShippingZoneDetails.254167659] - unassign country, dialog header
+#. defaultMessage is:
+#. Remove from shipping zone
+msgctxt "unassign country, dialog header"
+msgid "Remove from shipping zone"
+msgstr ""
+
 #: build/locale/src/orders/views/OrderDraftList.json
 #. [src.orders.views.3880993240]
 #. defaultMessage is:
@@ -4245,6 +4553,14 @@ msgstr ""
 #. Removed sale
 msgctxt "description"
 msgid "Removed sale"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
+#. [src.shipping.components.ShippingZoneCountriesAssignDialog.1003092716]
+#. defaultMessage is:
+#. Rest of the World
+msgctxt "description"
+msgid "Rest of the World"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderFulfillmentCancelDialog/OrderFulfillmentCancelDialog.json
@@ -4347,6 +4663,14 @@ msgctxt "description"
 msgid "Search Attributes"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
+#. [src.shipping.components.ShippingZoneCountriesAssignDialog.3510295703]
+#. defaultMessage is:
+#. Search Countries
+msgctxt "description"
+msgid "Search Countries"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 #. [src.orders.components.OrderCustomer.2433460203]
 #. defaultMessage is:
@@ -4392,6 +4716,14 @@ msgstr ""
 #. defaultMessage is:
 #. Search by country name
 msgctxt "search box placeholder"
+msgid "Search by country name"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
+#. [src.shipping.components.ShippingZoneCountriesAssignDialog.2110418881]
+#. defaultMessage is:
+#. Search by country name
+msgctxt "description"
 msgid "Search by country name"
 msgstr ""
 
@@ -4483,6 +4815,22 @@ msgctxt "product type shipping settings, section header"
 msgid "Shipping"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneDetailsPage/ShippingZoneDetailsPage.json
+#. [src.shipping.components.ShippingZoneDetailsPage.1325966144]
+#. defaultMessage is:
+#. Shipping
+msgctxt "description"
+msgid "Shipping"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZonesListPage/ShippingZonesListPage.json
+#. [src.shipping.components.ShippingZonesListPage.1325966144] - header
+#. defaultMessage is:
+#. Shipping
+msgctxt "header"
+msgid "Shipping"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 #. [src.orders.components.OrderCustomer.2758581442]
 #. defaultMessage is:
@@ -4499,12 +4847,36 @@ msgctxt "shipping section name"
 msgid "Shipping Methods"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingWeightUnitForm/ShippingWeightUnitForm.json
+#. [src.shipping.components.ShippingWeightUnitForm.549146363]
+#. defaultMessage is:
+#. Shipping Weight Unit
+msgctxt "description"
+msgid "Shipping Weight Unit"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneInfo/ShippingZoneInfo.json
+#. [src.shipping.components.ShippingZoneInfo.1109610983]
+#. defaultMessage is:
+#. Shipping Zone Name
+msgctxt "description"
+msgid "Shipping Zone Name"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
 #. [src.customers.components.CustomerAddresses.3517722732] - subsection header
 #. defaultMessage is:
 #. Shipping address
 msgctxt "subsection header"
 msgid "Shipping address"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZonesList/ShippingZonesList.json
+#. [src.shipping.components.ShippingZonesList.2942726079] - sort shipping methods by zone, section header
+#. defaultMessage is:
+#. Shipping by zone
+msgctxt "sort shipping methods by zone, section header"
+msgid "Shipping by zone"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
@@ -4883,6 +5255,14 @@ msgctxt "description"
 msgid "There are missing or incorrect informations about this order:"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.882649212] - shipping method has no value limits
+#. defaultMessage is:
+#. There are no value limits
+msgctxt "shipping method has no value limits"
+msgid "There are no value limits"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
 #. [src.customers.components.CustomerAddressListPage.1484733755]
 #. defaultMessage is:
@@ -4907,6 +5287,26 @@ msgctxt "description"
 msgid "This customer has no addresses yet"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneCreatePage/ShippingZoneCreatePage.json
+#. [src.shipping.components.ShippingZoneCreatePage.4270729636]
+#. defaultMessage is:
+#. This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones
+#: build/locale/src/shipping/components/ShippingZoneDetailsPage/ShippingZoneDetailsPage.json
+#. [src.shipping.components.ShippingZoneDetailsPage.4270729636]
+#. defaultMessage is:
+#. This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones
+msgctxt "description"
+msgid "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.2215090771] - shipping method, switch button
+#. defaultMessage is:
+#. This is free shipping
+msgctxt "shipping method, switch button"
+msgid "This is free shipping"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
 #. [src.attributes.components.AttributeDetails.4107478955] - attribute slug input field helper text
 #. defaultMessage is:
@@ -4929,6 +5329,38 @@ msgstr ""
 #. This product type has variants
 msgctxt "switch button"
 msgid "This product type has variants"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.4226393146]
+#. defaultMessage is:
+#. This rate will apply to all orders of all prices
+msgctxt "description"
+msgid "This rate will apply to all orders of all prices"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.1388947267]
+#. defaultMessage is:
+#. This rate will apply to all orders of all weights
+msgctxt "description"
+msgid "This rate will apply to all orders of all weights"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingWeightUnitForm/ShippingWeightUnitForm.json
+#. [src.shipping.components.ShippingWeightUnitForm.2863708228]
+#. defaultMessage is:
+#. This unit will be used as default shipping weight
+msgctxt "description"
+msgid "This unit will be used as default shipping weight"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.1486599614]
+#. defaultMessage is:
+#. This will be shown to customers at checkout
+msgctxt "description"
+msgid "This will be shown to customers at checkout"
 msgstr ""
 
 #: build/locale/src/discounts/components/SalePricing/SalePricing.json
@@ -5311,6 +5743,14 @@ msgctxt "dialog title"
 msgid "Unpublish collections"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.1542600502] - button
+#. defaultMessage is:
+#. Update rate
+msgctxt "button"
+msgid "Update rate"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
 #. [src.orders.components.OrderHistory.4265697648] - order history message
 #. defaultMessage is:
@@ -5447,6 +5887,14 @@ msgctxt "attribute value"
 msgid "Value"
 msgstr ""
 
+#: build/locale/src/shipping/components/ShippingZoneRates/ShippingZoneRates.json
+#. [src.shipping.components.ShippingZoneRates.1923873558] - shipping method price range
+#. defaultMessage is:
+#. Value Range
+msgctxt "shipping method price range"
+msgid "Value Range"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
 #. [src.attributes.components.AttributeDetails.2592224946] - check to require attribute to have value
 #. defaultMessage is:
@@ -5461,6 +5909,14 @@ msgstr ""
 #. Value deleted
 msgctxt "attribute value deleted"
 msgid "Value deleted"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.2533614652] - order price range
+#. defaultMessage is:
+#. Value range
+msgctxt "order price range"
+msgid "Value range"
 msgstr ""
 
 #: build/locale/src/products/components/ProductAttributes/ProductAttributes.json
@@ -5609,6 +6065,30 @@ msgstr ""
 #. Weight
 msgctxt "description"
 msgid "Weight"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRates/ShippingZoneRates.json
+#. [src.shipping.components.ShippingZoneRates.383202459] - weight based shipping methods, section header
+#. defaultMessage is:
+#. Weight Based Rates
+msgctxt "weight based shipping methods, section header"
+msgid "Weight Based Rates"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRates/ShippingZoneRates.json
+#. [src.shipping.components.ShippingZoneRates.2600677138] - shipping method weight range
+#. defaultMessage is:
+#. Weight Range
+msgctxt "shipping method weight range"
+msgid "Weight Range"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
+#. [src.shipping.components.ShippingZoneRateDialog.2324036635] - order weight range
+#. defaultMessage is:
+#. Weight range
+msgctxt "order weight range"
+msgid "Weight range"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json
