@@ -67,18 +67,9 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.(jsx?|tsx?)$/,
           exclude: /node_modules/,
           loader: "babel-loader"
-        },
-        {
-          test: /\.tsx?$/,
-          exclude: /node_modules/,
-          loader: "ts-loader",
-          options: {
-            experimentalWatchApi: true,
-            transpileOnly: true
-          }
         },
         {
           test: /\.(eot|otf|png|svg|jpg|ttf|woff|woff2)(\?v=[0-9.]+)?$/,
