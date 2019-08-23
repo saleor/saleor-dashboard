@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T14:24:42.452Z\n"
+"POT-Creation-Date: 2019-08-26T17:42:51.721Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -73,6 +73,14 @@ msgstr ""
 #. Add Menu
 msgctxt "button"
 msgid "Add Menu"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
+#. [src.orders.components.OrderProductAddDialog.2775402904] - dialog header
+#. defaultMessage is:
+#. Add Product
+msgctxt "dialog header"
+msgid "Add Product"
 msgstr ""
 
 #: build/locale/src/discounts/components/SaleListPage/SaleListPage.json
@@ -175,6 +183,14 @@ msgctxt "button"
 msgid "Add product"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftDetails/OrderDraftDetails.json
+#. [src.orders.components.OrderDraftDetails.2528459381] - button
+#. defaultMessage is:
+#. Add products
+msgctxt "button"
+msgid "Add products"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryCreatePage/CategoryCreatePage.json
 #. [src.categories.components.CategoryCreatePage.2563994280]
 #. defaultMessage is:
@@ -199,12 +215,36 @@ msgctxt "description"
 msgid "Add search engine title and description to make this collection easier to find"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftDetailsSummary/OrderDraftDetailsSummary.json
+#. [src.orders.components.OrderDraftDetailsSummary.2429341469] - button
+#. defaultMessage is:
+#. Add shipping carrier
+msgctxt "button"
+msgid "Add shipping carrier"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
 #. [src.categories.components.CategoryList.435697837] - button
 #. defaultMessage is:
 #. Add subcategory
 msgctxt "button"
 msgid "Add subcategory"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#. [src.orders.components.OrderFulfillment.1119771899] - fulfillment group tracking number
+#. defaultMessage is:
+#. Add tracking
+msgctxt "fulfillment group tracking number"
+msgid "Add tracking"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog.json
+#. [src.orders.components.OrderFulfillmentTrackingDialog.3680864271] - dialog header
+#. defaultMessage is:
+#. Add tracking code
+msgctxt "dialog header"
+msgid "Add tracking code"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
@@ -271,6 +311,14 @@ msgctxt "attribute values list: slug column header"
 msgid "Admin"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderListPage/OrderListPage.json
+#. [src.orders.components.OrderListPage.875489544] - tab name
+#. defaultMessage is:
+#. All Orders
+msgctxt "tab name"
+msgid "All Orders"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
 #. [src.categories.components.CategoryList.3229914152] - section header
 #. defaultMessage is:
@@ -279,12 +327,52 @@ msgctxt "section header"
 msgid "All Subcategories"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderPaymentDialog/OrderPaymentDialog.json
+#. [src.orders.components.OrderPaymentDialog.75546233] - amount of refunded money
+#. defaultMessage is:
+#. Amount
+msgctxt "amount of refunded money"
+msgid "Amount"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [src.orders.components.OrderCustomer.4172383244]
+#. defaultMessage is:
+#. Anonymous user
+msgctxt "description"
+msgid "Anonymous user"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherSummary/VoucherSummary.json
 #. [src.discounts.components.VoucherSummary.2735425668] - voucher
 #. defaultMessage is:
 #. Applies to
 msgctxt "voucher"
 msgid "Applies to"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
+#. [src.orders.components.OrderCancelDialog.3981375672]
+#. defaultMessage is:
+#. Are you sure you want to cancel order #{orderNumber}?
+msgctxt "description"
+msgid "Are you sure you want to cancel order #{orderNumber}?"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillmentCancelDialog/OrderFulfillmentCancelDialog.json
+#. [src.orders.components.OrderFulfillmentCancelDialog.2569854889]
+#. defaultMessage is:
+#. Are you sure you want to cancel this fulfillment?
+msgctxt "description"
+msgid "Are you sure you want to cancel this fulfillment?"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderBulkCancelDialog/OrderBulkCancelDialog.json
+#. [src.orders.components.OrderBulkCancelDialog.276130122]
+#. defaultMessage is:
+#. Are you sure you want to cancel {counter,plural,one{this order} other{{displayQuantity} orders}}?
+msgctxt "description"
+msgid "Are you sure you want to cancel {counter,plural,one{this order} other{{displayQuantity} orders}}?"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
@@ -411,6 +499,14 @@ msgctxt "description"
 msgid "Are you sure you want to delete {counter,plural,one{this menu} other{{displayQuantity} menus}}?"
 msgstr ""
 
+#: build/locale/src/orders/views/OrderDraftList.json
+#. [src.orders.views.1389231130] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this order draft} other{{displayQuantity} orderDrafts}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to delete {counter,plural,one{this order draft} other{{displayQuantity} orderDrafts}}?"
+msgstr ""
+
 #: build/locale/src/discounts/views/SaleList.json
 #. [src.discounts.views.2516361175] - dialog content
 #. defaultMessage is:
@@ -459,12 +555,36 @@ msgctxt "dialog content"
 msgid "Are you sure you want to delete {voucherCode}?"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.1489195029]
+#. defaultMessage is:
+#. Are you sure you want to finalize draft #{number}?
+msgctxt "description"
+msgid "Are you sure you want to finalize draft #{number}?"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog.json
+#. [src.orders.components.OrderMarkAsPaidDialog.2823153104]
+#. defaultMessage is:
+#. Are you sure you want to mark this order as paid?
+msgctxt "description"
+msgid "Are you sure you want to mark this order as paid?"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionList.json
 #. [src.collections.views.1348793822]
 #. defaultMessage is:
 #. Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "description"
 msgid "Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
+#. [src.orders.components.OrderDraftCancelDialog.3199827590]
+#. defaultMessage is:
+#. Are you sure you want to remove draft #{number}?
+msgctxt "description"
+msgid "Are you sure you want to remove draft #{number}?"
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
@@ -517,6 +637,14 @@ msgstr ""
 #. Are you sure you want to unpublish {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "description"
 msgid "Are you sure you want to unpublish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPaymentVoidDialog/OrderPaymentVoidDialog.json
+#. [src.orders.components.OrderPaymentVoidDialog.2217048637]
+#. defaultMessage is:
+#. Are you sure you want to void this payment?
+msgctxt "description"
+msgid "Are you sure you want to void this payment?"
 msgstr ""
 
 #: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
@@ -631,6 +759,14 @@ msgctxt "description"
 msgid "Availability"
 msgstr ""
 
+#: build/locale/src/intl.json
+#. [src.back] - button
+#. defaultMessage is:
+#. Back
+msgctxt "button"
+msgid "Back"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryBackground/CategoryBackground.json
 #. [src.categories.components.CategoryBackground.1849089820] - section header
 #. defaultMessage is:
@@ -643,6 +779,14 @@ msgctxt "section header"
 msgid "Background image (optional)"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [src.orders.components.OrderCustomer.4282475982]
+#. defaultMessage is:
+#. Billing Address
+msgctxt "description"
+msgid "Billing Address"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
 #. [src.customers.components.CustomerAddresses.2428885633] - subsection header
 #. defaultMessage is:
@@ -652,11 +796,95 @@ msgid "Billing address"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [cancel] - button
+#. [src.cancel] - button
 #. defaultMessage is:
 #. Cancel
 msgctxt "button"
 msgid "Cancel"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderList/OrderList.json
+#. [src.orders.views.OrderList.3528672691] - cancel orders, button
+#. defaultMessage is:
+#. Cancel
+msgctxt "cancel orders, button"
+msgid "Cancel"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillmentCancelDialog/OrderFulfillmentCancelDialog.json
+#. [src.orders.components.OrderFulfillmentCancelDialog.732594284] - dialog header
+#. defaultMessage is:
+#. Cancel Fulfillment
+msgctxt "dialog header"
+msgid "Cancel Fulfillment"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderBulkCancelDialog/OrderBulkCancelDialog.json
+#. [src.orders.components.OrderBulkCancelDialog.1528036340] - dialog header
+#. defaultMessage is:
+#. Cancel Orders
+msgctxt "dialog header"
+msgid "Cancel Orders"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillmentCancelDialog/OrderFulfillmentCancelDialog.json
+#. [src.orders.components.OrderFulfillmentCancelDialog.675709443] - button
+#. defaultMessage is:
+#. Cancel fulfillment
+msgctxt "button"
+msgid "Cancel fulfillment"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
+#. [src.orders.components.OrderCancelDialog.1854613983] - dialog header
+#. defaultMessage is:
+#. Cancel order
+msgctxt "dialog header"
+msgid "Cancel order"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDetailsPage/OrderDetailsPage.json
+#. [src.orders.components.OrderDetailsPage.1854613983] - button
+#. defaultMessage is:
+#. Cancel order
+#: build/locale/src/orders/components/OrderDraftPage/OrderDraftPage.json
+#. [src.orders.components.OrderDraftPage.1854613983] - button
+#. defaultMessage is:
+#. Cancel order
+msgctxt "button"
+msgid "Cancel order"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#. [src.orders.components.OrderFulfillment.662203348] - button
+#. defaultMessage is:
+#. Cancel shipment
+msgctxt "button"
+msgid "Cancel shipment"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.4211710217] - capture payment, button
+#. defaultMessage is:
+#. Capture
+msgctxt "capture payment, button"
+msgid "Capture"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPaymentDialog/OrderPaymentDialog.json
+#. [src.orders.components.OrderPaymentDialog.1466130374] - dialog header
+#. defaultMessage is:
+#. Capture Payment
+msgctxt "dialog header"
+msgid "Capture Payment"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.2320183694] - order payment
+#. defaultMessage is:
+#. Captured amount
+msgctxt "order payment"
+msgid "Captured amount"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -792,11 +1020,99 @@ msgid "Configuration"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [confirm] - button
+#. [src.confirm] - button
 #. defaultMessage is:
 #. Confirm
 msgctxt "button"
 msgid "Confirm"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [src.orders.components.OrderCustomer.1111991638] - subheader
+#. defaultMessage is:
+#. Contact information
+msgctxt "subheader"
+msgid "Contact information"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.2714957902]
+#. defaultMessage is:
+#. Could not add note
+msgctxt "description"
+msgid "Could not add note"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.4199953867]
+#. defaultMessage is:
+#. Could not cancel fulfillment
+msgctxt "description"
+msgid "Could not cancel fulfillment"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.562214451]
+#. defaultMessage is:
+#. Could not create order line
+msgctxt "description"
+msgid "Could not create order line"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.2205960666]
+#. defaultMessage is:
+#. Could not delete order line
+msgctxt "description"
+msgid "Could not delete order line"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.149745214]
+#. defaultMessage is:
+#. Could not finalize draft
+msgctxt "description"
+msgid "Could not finalize draft"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.1096896329]
+#. defaultMessage is:
+#. Could not fulfill items
+msgctxt "description"
+msgid "Could not fulfill items"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.1852833563]
+#. defaultMessage is:
+#. Could not mark order as paid
+msgctxt "description"
+msgid "Could not mark order as paid"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.553600482]
+#. defaultMessage is:
+#. Could not update fulfillment
+msgctxt "description"
+msgid "Could not update fulfillment"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.487150696]
+#. defaultMessage is:
+#. Could not update order line
+msgctxt "description"
+msgid "Could not update order line"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.1708579411]
+#. defaultMessage is:
+#. Could not update shipping method
+msgctxt "description"
+msgid "Could not update shipping method"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
@@ -871,6 +1187,18 @@ msgctxt "window title"
 msgid "Create customer"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftListPage/OrderDraftListPage.json
+#. [src.orders.components.OrderDraftListPage.2826235371] - button
+#. defaultMessage is:
+#. Create order
+#: build/locale/src/orders/components/OrderListPage/OrderListPage.json
+#. [src.orders.components.OrderListPage.2826235371] - button
+#. defaultMessage is:
+#. Create order
+msgctxt "button"
+msgid "Create order"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionCreate.json
 #. [src.collections.views.1597339737]
 #. defaultMessage is:
@@ -893,6 +1221,30 @@ msgstr ""
 #. Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy
 msgctxt "description"
 msgid "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [src.orders.components.OrderCustomer.3426593715] - section header
+#. defaultMessage is:
+#. Customer
+msgctxt "section header"
+msgid "Customer"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftList/OrderDraftList.json
+#. [src.orders.components.OrderDraftList.3426593715]
+#. defaultMessage is:
+#. Customer
+msgctxt "description"
+msgid "Customer"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderList/OrderList.json
+#. [src.orders.components.OrderList.3426593715] - e-mail or full name
+#. defaultMessage is:
+#. Customer
+msgctxt "e-mail or full name"
+msgid "Customer"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerList/CustomerList.json
@@ -983,6 +1335,30 @@ msgctxt "order placement date"
 msgid "Date"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftList/OrderDraftList.json
+#. [src.orders.components.OrderDraftList.4205493358] - order draft creation date
+#. defaultMessage is:
+#. Date
+msgctxt "order draft creation date"
+msgid "Date"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderList/OrderList.json
+#. [src.orders.components.OrderList.4205493358] - date when order was placed
+#. defaultMessage is:
+#. Date
+msgctxt "date when order was placed"
+msgid "Date"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.4205493358]
+#. defaultMessage is:
+#. Date
+msgctxt "description"
+msgid "Date"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
 #. [src.customers.components.CustomerAddress.1224809208]
 #. defaultMessage is:
@@ -1061,6 +1437,14 @@ msgstr ""
 #. Delete Collection
 msgctxt "dialog title"
 msgid "Delete Collection"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDraftList.json
+#. [src.orders.views.1161115149] - dialog header
+#. defaultMessage is:
+#. Delete Order Drafts
+msgctxt "dialog header"
+msgid "Delete Order Drafts"
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
@@ -1295,6 +1679,30 @@ msgctxt "description"
 msgid "Discount Value"
 msgstr ""
 
+#: build/locale/src/intl.json
+#. [src.draftOrders] - draft orders section name
+#. defaultMessage is:
+#. Draft Orders
+msgctxt "draft orders section name"
+msgid "Draft Orders"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.1435191432]
+#. defaultMessage is:
+#. Draft order successfully finalized
+msgctxt "description"
+msgid "Draft order successfully finalized"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.3095247195] - order history message
+#. defaultMessage is:
+#. Draft order was created
+msgctxt "order history message"
+msgid "Draft order was created"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
 #. [src.attributes.components.AttributeDetails.1336738461] - product attribute type
 #. defaultMessage is:
@@ -1312,7 +1720,7 @@ msgid "E-mail Address"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [edit] - button
+#. [src.edit] - button
 #. defaultMessage is:
 #. Edit
 msgctxt "button"
@@ -1335,12 +1743,44 @@ msgctxt "edit menu item, header"
 msgid "Edit Item"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderShippingMethodEditDialog/OrderShippingMethodEditDialog.json
+#. [src.orders.components.OrderShippingMethodEditDialog.3369240294] - dialog header
+#. defaultMessage is:
+#. Edit Shipping Method
+msgctxt "dialog header"
+msgid "Edit Shipping Method"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
 #. [src.attributes.components.AttributeValueEditDialog.1395607402] - edit attribute value
 #. defaultMessage is:
 #. Edit Value
 msgctxt "edit attribute value"
 msgid "Edit Value"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
+#. [src.orders.components.OrderAddressEditDialog.2935008093] - dialog header
+#. defaultMessage is:
+#. Edit billing address
+msgctxt "dialog header"
+msgid "Edit billing address"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCustomerEditDialog/OrderCustomerEditDialog.json
+#. [src.orders.components.OrderCustomerEditDialog.1411666943] - dialog header
+#. defaultMessage is:
+#. Edit customer details
+msgctxt "dialog header"
+msgid "Edit customer details"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
+#. [src.orders.components.OrderAddressEditDialog.462765358] - dialog header
+#. defaultMessage is:
+#. Edit shipping address
+msgctxt "dialog header"
+msgid "Edit shipping address"
 msgstr ""
 
 #: build/locale/src/discounts/components/DiscountCategories/DiscountCategories.json
@@ -1423,6 +1863,34 @@ msgctxt "search box label"
 msgid "Filter Countries"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.2725265632] - button
+#. defaultMessage is:
+#. Finalize
+#: build/locale/src/orders/components/OrderDraftPage/OrderDraftPage.json
+#. [src.orders.components.OrderDraftPage.2725265632] - button
+#. defaultMessage is:
+#. Finalize
+msgctxt "button"
+msgid "Finalize"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.678764806] - button
+#. defaultMessage is:
+#. Finalize anyway
+msgctxt "button"
+msgid "Finalize anyway"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.845440998] - dialog header
+#. defaultMessage is:
+#. Finalize draft order
+msgctxt "dialog header"
+msgid "Finalize draft order"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.firstName]
 #. defaultMessage is:
@@ -1445,6 +1913,94 @@ msgstr ""
 #. Free Shipping
 msgctxt "voucher discount type"
 msgid "Free Shipping"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderUnfulfilledItems/OrderUnfulfilledItems.json
+#. [src.orders.components.OrderUnfulfilledItems.2095687440] - button
+#. defaultMessage is:
+#. Fulfill
+msgctxt "button"
+msgid "Fulfill"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillmentDialog/OrderFulfillmentDialog.json
+#. [src.orders.components.OrderFulfillmentDialog.3236546219] - dialog header
+#. defaultMessage is:
+#. Fulfill products
+msgctxt "dialog header"
+msgid "Fulfill products"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.1712863026] - order fulfillment status
+#. defaultMessage is:
+#. Fulfilled
+msgctxt "order fulfillment status"
+msgid "Fulfilled"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#. [src.orders.components.OrderFulfillment.3494686506] - section header
+#. defaultMessage is:
+#. Fulfilled ({quantity})
+msgctxt "section header"
+msgid "Fulfilled ({quantity})"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.1521936480] - order history message
+#. defaultMessage is:
+#. Fulfilled {quantity} items
+msgctxt "order history message"
+msgid "Fulfilled {quantity} items"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.2943502192] - order
+#. defaultMessage is:
+#. Fulfillment Status
+msgctxt "order"
+msgid "Fulfillment Status"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.3081292385] - order history message
+#. defaultMessage is:
+#. Fulfillment confirmation was sent to customer
+msgctxt "order history message"
+msgid "Fulfillment confirmation was sent to customer"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderList/OrderList.json
+#. [src.orders.components.OrderList.1198046928]
+#. defaultMessage is:
+#. Fulfillment status
+msgctxt "description"
+msgid "Fulfillment status"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.927945225]
+#. defaultMessage is:
+#. Fulfillment successfully cancelled
+msgctxt "description"
+msgid "Fulfillment successfully cancelled"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.1475565380]
+#. defaultMessage is:
+#. Fulfillment successfully updated
+msgctxt "description"
+msgid "Fulfillment successfully updated"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.1527620381] - order history message
+#. defaultMessage is:
+#. Fulfillment was cancelled
+msgctxt "order history message"
+msgid "Fulfillment was cancelled"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -1507,12 +2063,44 @@ msgctxt "number of menu items"
 msgid "Items"
 msgstr ""
 
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.4245651107]
+#. defaultMessage is:
+#. Items successfully fulfilled
+msgctxt "description"
+msgid "Items successfully fulfilled"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.714411029]
+#. defaultMessage is:
+#. Last 30 Days
+msgctxt "description"
+msgid "Last 30 Days"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.3053702458]
+#. defaultMessage is:
+#. Last 7 Days
+msgctxt "description"
+msgid "Last 7 Days"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.lastName]
 #. defaultMessage is:
 #. Last Name
 msgctxt "description"
 msgid "Last Name"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.2292505663]
+#. defaultMessage is:
+#. Last Year
+msgctxt "description"
+msgid "Last Year"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerStats/CustomerStats.json
@@ -1571,8 +2159,16 @@ msgctxt "add link to navigation"
 msgid "Link to: {url}"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.1867847329] - order history message
+#. defaultMessage is:
+#. Links to the order's digital goods were sent
+msgctxt "order history message"
+msgid "Links to the order's digital goods were sent"
+msgstr ""
+
 #: build/locale/src/intl.json
-#. [manage] - button
+#. [src.manage] - button
 #. defaultMessage is:
 #. Manage
 msgctxt "button"
@@ -1609,6 +2205,30 @@ msgstr ""
 #. Manage your employees and their permissions
 msgctxt "description"
 msgid "Manage your employees and their permissions"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog.json
+#. [src.orders.components.OrderMarkAsPaidDialog.4196844912] - dialog header
+#. defaultMessage is:
+#. Mark Order as Paid
+msgctxt "dialog header"
+msgid "Mark Order as Paid"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.3500506678] - order, button
+#. defaultMessage is:
+#. Mark as paid
+msgctxt "order, button"
+msgid "Mark as paid"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.3328124376] - order history message
+#. defaultMessage is:
+#. Marked order as paid
+msgctxt "order history message"
+msgid "Marked order as paid"
 msgstr ""
 
 #: build/locale/src/navigation/components/MenuItems/MenuItems.json
@@ -1743,6 +2363,14 @@ msgctxt "navigation section name"
 msgid "Navigation"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
+#. [src.orders.components.OrderDraftDetailsProducts.546865199]
+#. defaultMessage is:
+#. No Products added to Order
+msgctxt "description"
+msgid "No Products added to Order"
+msgstr ""
+
 #: build/locale/src/home/components/HomeActivityCard/HomeActivityCard.json
 #. [homeActivityCardNoActivities]
 #. defaultMessage is:
@@ -1751,12 +2379,28 @@ msgctxt "description"
 msgid "No activities found"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftDetailsSummary/OrderDraftDetailsSummary.json
+#. [src.orders.components.OrderDraftDetailsSummary.3594442178]
+#. defaultMessage is:
+#. No applicable shipping carriers
+msgctxt "description"
+msgid "No applicable shipping carriers"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
 #. [src.attributes.components.AttributeList.1192828581]
 #. defaultMessage is:
 #. No attributes found
 msgctxt "description"
 msgid "No attributes found"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.115822814]
+#. defaultMessage is:
+#. No billing address
+msgctxt "description"
+msgid "No billing address"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
@@ -1791,6 +2435,14 @@ msgctxt "description"
 msgid "No customers found"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftList/OrderDraftList.json
+#. [src.orders.components.OrderDraftList.2177368638]
+#. defaultMessage is:
+#. No draft orders found
+msgctxt "description"
+msgid "No draft orders found"
+msgstr ""
+
 #: build/locale/src/navigation/components/MenuList/MenuList.json
 #. [menuListNoMenus]
 #. defaultMessage is:
@@ -1799,8 +2451,20 @@ msgctxt "description"
 msgid "No menus found"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderCustomerNote/OrderCustomerNote.json
+#. [src.orders.components.OrderCustomerNote.1505053535]
+#. defaultMessage is:
+#. No notes from customer
+msgctxt "description"
+msgid "No notes from customer"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
 #. [src.customers.components.CustomerOrders.898333473]
+#. defaultMessage is:
+#. No orders found
+#: build/locale/src/orders/components/OrderList/OrderList.json
+#. [src.orders.components.OrderList.898333473]
 #. defaultMessage is:
 #. No orders found
 msgctxt "description"
@@ -1843,6 +2507,14 @@ msgctxt "description"
 msgid "No products found"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
+#. [src.orders.components.OrderProductAddDialog.353369701]
+#. defaultMessage is:
+#. No products matching given query
+msgctxt "description"
+msgid "No products matching given query"
+msgstr ""
+
 #: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
 #. [homeNotificationsTableNoProducts]
 #. defaultMessage is:
@@ -1859,12 +2531,28 @@ msgctxt "description"
 msgid "No sales found"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.2430492151]
+#. defaultMessage is:
+#. No shipping address
+msgctxt "description"
+msgid "No shipping address"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
 #. [src.categories.components.CategoryList.2155313053]
 #. defaultMessage is:
 #. No subcategories found
 msgctxt "description"
 msgid "No subcategories found"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.1297434244]
+#. defaultMessage is:
+#. No user information
+msgctxt "description"
+msgid "No user information"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
@@ -1888,6 +2576,18 @@ msgstr ""
 #. defaultMessage is:
 #. No. of Order
 msgctxt "number of order"
+msgid "No. of Order"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftList/OrderDraftList.json
+#. [src.orders.components.OrderDraftList.2889196282]
+#. defaultMessage is:
+#. No. of Order
+#: build/locale/src/orders/components/OrderList/OrderList.json
+#. [src.orders.components.OrderList.2889196282]
+#. defaultMessage is:
+#. No. of Order
+msgctxt "description"
 msgid "No. of Order"
 msgstr ""
 
@@ -1943,6 +2643,30 @@ msgctxt "product is not published"
 msgid "Not published"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [orderCustomerCustomerNotSet] - customer is not set in draft order
+#. defaultMessage is:
+#. Not set
+msgctxt "customer is not set in draft order"
+msgid "Not set"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [orderCustomerShippingAddressNotSet] - shipping address is not set in draft order
+#. defaultMessage is:
+#. Not set
+msgctxt "shipping address is not set in draft order"
+msgid "Not set"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [orderCustomerBillingAddressNotSet] - no address is set in draft order
+#. defaultMessage is:
+#. Not set
+msgctxt "no address is set in draft order"
+msgid "Not set"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerCreateNote/CustomerCreateNote.json
 #. [src.customers.components.CustomerCreateNote.577013340] - note about customer
 #. defaultMessage is:
@@ -1955,11 +2679,35 @@ msgctxt "note about customer"
 msgid "Note"
 msgstr ""
 
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.3178394068]
+#. defaultMessage is:
+#. Note successfully added
+msgctxt "description"
+msgid "Note successfully added"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.2304318421] - order history message
+#. defaultMessage is:
+#. Note was added to the order
+msgctxt "order history message"
+msgid "Note was added to the order"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerCreateNote/CustomerCreateNote.json
 #. [src.customers.components.CustomerCreateNote.1520756907] - notes about customer header
 #. defaultMessage is:
 #. Notes
 msgctxt "notes about customer header"
+msgid "Notes"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCustomerNote/OrderCustomerNote.json
+#. [src.orders.components.OrderCustomerNote.1520756907] - notes about customer, header
+#. defaultMessage is:
+#. Notes
+msgctxt "notes about customer, header"
 msgid "Notes"
 msgstr ""
 
@@ -1971,12 +2719,264 @@ msgctxt "voucher application, switch button"
 msgid "Only once per order"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftDetails/OrderDraftDetails.json
+#. [src.orders.components.OrderDraftDetails.2343989342] - section header
+#. defaultMessage is:
+#. Order Details
+msgctxt "section header"
+msgid "Order Details"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.3990160018]
+#. defaultMessage is:
+#. Order History
+msgctxt "description"
+msgid "Order History"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.1230178536] - order history message
+#. defaultMessage is:
+#. Order address was updated
+msgctxt "order history message"
+msgid "Order address was updated"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.2369495522] - order history message
+#. defaultMessage is:
+#. Order confirmation was sent to customer
+msgctxt "order history message"
+msgid "Order confirmation was sent to customer"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDraftList.json
+#. [src.orders.views.1872939752]
+#. defaultMessage is:
+#. Order draft succesfully created
+#: build/locale/src/orders/views/OrderList/OrderList.json
+#. [src.orders.views.OrderList.1872939752]
+#. defaultMessage is:
+#. Order draft succesfully created
+msgctxt "description"
+msgid "Order draft succesfully created"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.1999598492]
+#. defaultMessage is:
+#. Order line added
+msgctxt "description"
+msgid "Order line added"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.1468420349]
+#. defaultMessage is:
+#. Order line deleted
+msgctxt "description"
+msgid "Order line deleted"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.1632861387]
+#. defaultMessage is:
+#. Order line updated
+msgctxt "description"
+msgid "Order line updated"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.1636370257]
+#. defaultMessage is:
+#. Order marked as paid
+msgctxt "description"
+msgid "Order marked as paid"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.3280942553]
+#. defaultMessage is:
+#. Order payment successfully voided
+msgctxt "description"
+msgid "Order payment successfully voided"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.2808777264]
+#. defaultMessage is:
+#. Order successfully cancelled
+msgctxt "description"
+msgid "Order successfully cancelled"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.3367579693]
+#. defaultMessage is:
+#. Order successfully updated
+msgctxt "description"
+msgid "Order successfully updated"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.950782935] - order history message
+#. defaultMessage is:
+#. Order was cancelled
+msgctxt "order history message"
+msgid "Order was cancelled"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.1964864749] - order history message
+#. defaultMessage is:
+#. Order was created from draft
+msgctxt "order history message"
+msgid "Order was created from draft"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.2655541129] - order history message
+#. defaultMessage is:
+#. Order was fully paid
+msgctxt "order history message"
+msgid "Order was fully paid"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.184692906] - order history message
+#. defaultMessage is:
+#. Order was placed
+msgctxt "order history message"
+msgid "Order was placed"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.orders] - orders section name
+#. defaultMessage is:
+#. Orders
+msgctxt "orders section name"
+msgid "Orders"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderList/OrderList.json
+#. [src.orders.views.OrderList.1136302661]
+#. defaultMessage is:
+#. Orders cancelled
+msgctxt "description"
+msgid "Orders cancelled"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.353147224] - order payment
+#. defaultMessage is:
+#. Outstanding Balance
+msgctxt "order payment"
+msgid "Outstanding Balance"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.4015160303] - order history message
+#. defaultMessage is:
+#. Oversold {quantity} items
+msgctxt "order history message"
+msgid "Oversold {quantity} items"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.pages] - pages section name
 #. defaultMessage is:
 #. Pages
 msgctxt "pages section name"
 msgid "Pages"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.210276526] - order fulfillment status
+#. defaultMessage is:
+#. Partially Fulfilled
+msgctxt "order fulfillment status"
+msgid "Partially Fulfilled"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderList/OrderList.json
+#. [src.orders.components.OrderList.2743232155] - payment status
+#. defaultMessage is:
+#. Payment
+msgctxt "payment status"
+msgid "Payment"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.2020753264] - order history message
+#. defaultMessage is:
+#. Payment confirmation was sent to customer
+msgctxt "order history message"
+msgid "Payment confirmation was sent to customer"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.4266665081] - order history message
+#. defaultMessage is:
+#. Payment failed
+msgctxt "order history message"
+msgid "Payment failed"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.557535634]
+#. defaultMessage is:
+#. Payment not captured: {errorMessage}
+msgctxt "description"
+msgid "Payment not captured: {errorMessage}"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.3991286734] - notification
+#. defaultMessage is:
+#. Payment not refunded: {errorMessage}
+msgctxt "notification"
+msgid "Payment not refunded: {errorMessage}"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.1056718390]
+#. defaultMessage is:
+#. Payment successfully captured
+msgctxt "description"
+msgid "Payment successfully captured"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.667274681]
+#. defaultMessage is:
+#. Payment successfully refunded
+msgctxt "description"
+msgid "Payment successfully refunded"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.2770854455] - order history message
+#. defaultMessage is:
+#. Payment was captured
+msgctxt "order history message"
+msgid "Payment was captured"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.348557206] - order history message
+#. defaultMessage is:
+#. Payment was refunded
+msgctxt "order history message"
+msgid "Payment was refunded"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.2566971846] - order history message
+#. defaultMessage is:
+#. Payment was voided
+msgctxt "order history message"
+msgid "Payment was voided"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
@@ -1995,6 +2995,38 @@ msgctxt "attribute position in storefront filters"
 msgid "Position in faceted navigation"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.3768782744] - order payment
+#. defaultMessage is:
+#. Preauthorized amount
+msgctxt "order payment"
+msgid "Preauthorized amount"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
+#. [src.orders.components.OrderDraftDetailsProducts.1134347598] - price or ordered products
+#. defaultMessage is:
+#. Price
+msgctxt "price or ordered products"
+msgid "Price"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#. [src.orders.components.OrderFulfillment.1134347598] - product price
+#. defaultMessage is:
+#. Price
+msgctxt "product price"
+msgid "Price"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderUnfulfilledItems/OrderUnfulfilledItems.json
+#. [src.orders.components.OrderUnfulfilledItems.1134347598] - product unit price
+#. defaultMessage is:
+#. Price
+msgctxt "product unit price"
+msgid "Price"
+msgstr ""
+
 #: build/locale/src/discounts/components/SalePricing/SalePricing.json
 #. [src.discounts.components.SalePricing.1099355007] - sale pricing, header
 #. defaultMessage is:
@@ -2009,6 +3041,26 @@ msgstr ""
 #. Primary address
 msgctxt "page header"
 msgid "Primary address"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
+#. [src.orders.components.OrderDraftDetailsProducts.1895667608]
+#. defaultMessage is:
+#. Product
+msgctxt "description"
+msgid "Product"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#. [src.orders.components.OrderFulfillment.1895667608] - product name
+#. defaultMessage is:
+#. Product
+#: build/locale/src/orders/components/OrderUnfulfilledItems/OrderUnfulfilledItems.json
+#. [src.orders.components.OrderUnfulfilledItems.1895667608] - product name
+#. defaultMessage is:
+#. Product
+msgctxt "product name"
+msgid "Product"
 msgstr ""
 
 #: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
@@ -2033,6 +3085,14 @@ msgstr ""
 #. Product Types
 msgctxt "product types section name"
 msgid "Product Types"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillmentDialog/OrderFulfillmentDialog.json
+#. [src.orders.components.OrderFulfillmentDialog.4046223826]
+#. defaultMessage is:
+#. Product name
+msgctxt "description"
+msgid "Product name"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
@@ -2091,6 +3151,22 @@ msgctxt "products in collection"
 msgid "Products in {name}"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.3506022286] - order history message
+#. defaultMessage is:
+#. Products were added to draft order
+msgctxt "order history message"
+msgid "Products were added to draft order"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.2574162126] - order history message
+#. defaultMessage is:
+#. Products were removed from draft order
+msgctxt "order history message"
+msgid "Products were removed from draft order"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.properties]
 #. defaultMessage is:
@@ -2135,12 +3211,84 @@ msgctxt "product is published"
 msgid "Published"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
+#. [src.orders.components.OrderDraftDetailsProducts.2796503714] - quantity of ordered products
+#. defaultMessage is:
+#. Quantity
+msgctxt "quantity of ordered products"
+msgid "Quantity"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#. [src.orders.components.OrderFulfillment.2796503714] - ordered product quantity
+#. defaultMessage is:
+#. Quantity
+msgctxt "ordered product quantity"
+msgid "Quantity"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillmentDialog/OrderFulfillmentDialog.json
+#. [src.orders.components.OrderFulfillmentDialog.2796503714] - quantity of fulfilled products
+#. defaultMessage is:
+#. Quantity
+msgctxt "quantity of fulfilled products"
+msgid "Quantity"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderUnfulfilledItems/OrderUnfulfilledItems.json
+#. [src.orders.components.OrderUnfulfilledItems.2796503714] - ordered products
+#. defaultMessage is:
+#. Quantity
+msgctxt "ordered products"
+msgid "Quantity"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.2545228781]
+#. defaultMessage is:
+#. Range
+msgctxt "description"
+msgid "Range"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
 #. [src.customers.components.CustomerOrders.3878642352] - section header
 #. defaultMessage is:
 #. Recent orders
 msgctxt "section header"
 msgid "Recent orders"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.2845258362] - button
+#. defaultMessage is:
+#. Refund
+msgctxt "button"
+msgid "Refund"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPaymentDialog/OrderPaymentDialog.json
+#. [src.orders.components.OrderPaymentDialog.250371749] - dialog header
+#. defaultMessage is:
+#. Refund Payment
+msgctxt "dialog header"
+msgid "Refund Payment"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderBulkCancelDialog/OrderBulkCancelDialog.json
+#. [src.orders.components.OrderBulkCancelDialog.187921539] - switch button
+#. defaultMessage is:
+#. Release all stock allocated to these orders
+msgctxt "switch button"
+msgid "Release all stock allocated to these orders"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
+#. [src.orders.components.OrderCancelDialog.944150063] - switch button
+#. defaultMessage is:
+#. Release all stock allocated to this order
+msgctxt "switch button"
+msgid "Release all stock allocated to this order"
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
@@ -2156,11 +3304,27 @@ msgid "Remember this will also delete all products assigned to this category."
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [remove] - button
+#. [src.remove] - button
 #. defaultMessage is:
 #. Remove
 msgctxt "button"
 msgid "Remove"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
+#. [src.orders.components.OrderDraftCancelDialog.500287069] - dialog header
+#. defaultMessage is:
+#. Remove draft order
+msgctxt "dialog header"
+msgid "Remove draft order"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDraftList.json
+#. [src.orders.views.3880993240]
+#. defaultMessage is:
+#. Removed draft orders
+msgctxt "description"
+msgid "Removed draft orders"
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
@@ -2171,6 +3335,38 @@ msgctxt "description"
 msgid "Removed sale"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderFulfillmentCancelDialog/OrderFulfillmentCancelDialog.json
+#. [src.orders.components.OrderFulfillmentCancelDialog.3515223857] - switch button
+#. defaultMessage is:
+#. Restock items?
+msgctxt "switch button"
+msgid "Restock items?"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.2027649178] - order history message
+#. defaultMessage is:
+#. Restocked {quantity} items
+msgctxt "order history message"
+msgid "Restocked {quantity} items"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillmentDialog/OrderFulfillmentDialog.json
+#. [src.orders.components.OrderFulfillmentDialog.693960049] - product's sku
+#. defaultMessage is:
+#. SKU
+msgctxt "product's sku"
+msgid "SKU"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
+#. [src.orders.components.OrderProductAddDialog.2272209368] - variant sku
+#. defaultMessage is:
+#. SKU {sku}
+msgctxt "variant sku"
+msgid "SKU {sku}"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.sales] - sales section name
 #. defaultMessage is:
@@ -2179,8 +3375,16 @@ msgctxt "sales section name"
 msgid "Sales"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [src.orders.components.OrderCustomer.3912924864] - billing address
+#. defaultMessage is:
+#. Same as shipping address
+msgctxt "billing address"
+msgid "Same as shipping address"
+msgstr ""
+
 #: build/locale/src/intl.json
-#. [save] - button
+#. [src.save] - button
 #. defaultMessage is:
 #. Save
 msgctxt "button"
@@ -2195,6 +3399,30 @@ msgctxt "description"
 msgid "Saved changes"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [src.orders.components.OrderCustomer.2433460203]
+#. defaultMessage is:
+#. Search Customers
+msgctxt "description"
+msgid "Search Customers"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListPage/OrderListPage.json
+#. [src.orders.components.OrderListPage.355376157]
+#. defaultMessage is:
+#. Search Orders...
+msgctxt "description"
+msgid "Search Orders..."
+msgstr ""
+
+#: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
+#. [src.orders.components.OrderProductAddDialog.2850255786]
+#. defaultMessage is:
+#. Search Products
+msgctxt "description"
+msgid "Search Products"
+msgstr ""
+
 #: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
 #. [src.discounts.components.DiscountCountrySelectDialog.2110418881] - search box placeholder
 #. defaultMessage is:
@@ -2203,12 +3431,28 @@ msgctxt "search box placeholder"
 msgid "Search by country name"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
+#. [src.orders.components.OrderProductAddDialog.2336947364]
+#. defaultMessage is:
+#. Search by product name, attribute, product type etc...
+msgctxt "description"
+msgid "Search by product name, attribute, product type etc..."
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
 #. [src.attributes.components.AttributeList.2235596452] - attribute can be searched in dashboard
 #. defaultMessage is:
 #. Searchable
 msgctxt "attribute can be searched in dashboard"
 msgid "Searchable"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListPage/OrderListPage.json
+#. [src.orders.components.OrderListPage.3524904717]
+#. defaultMessage is:
+#. Select all orders where:
+msgctxt "description"
+msgid "Select all orders where:"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
@@ -2235,6 +3479,22 @@ msgctxt "voucher end date, switch button"
 msgid "Set end date"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.1325966144] - order shipping method name
+#. defaultMessage is:
+#. Shipping
+msgctxt "order shipping method name"
+msgid "Shipping"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [src.orders.components.OrderCustomer.2758581442]
+#. defaultMessage is:
+#. Shipping Address
+msgctxt "description"
+msgid "Shipping Address"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.shipping] - shipping section name
 #. defaultMessage is:
@@ -2251,8 +3511,40 @@ msgctxt "subsection header"
 msgid "Shipping address"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.651019008] - order history message
+#. defaultMessage is:
+#. Shipping details was sent to customer
+msgctxt "order history message"
+msgid "Shipping details was sent to customer"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.2824936338]
+#. defaultMessage is:
+#. Shipping method provided, but no product requires it
+msgctxt "description"
+msgid "Shipping method provided, but no product requires it"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
+#. [src.orders.views.OrderDetails.617145655]
+#. defaultMessage is:
+#. Shipping method successfully updated
+msgctxt "description"
+msgid "Shipping method successfully updated"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.3453124210] - order history message
+#. defaultMessage is:
+#. Shipping tracking number was sent to customer
+msgctxt "order history message"
+msgid "Shipping tracking number was sent to customer"
+msgstr ""
+
 #: build/locale/src/intl.json
-#. [show] - button
+#. [src.show] - button
 #. defaultMessage is:
 #. Show
 msgctxt "button"
@@ -2265,6 +3557,22 @@ msgstr ""
 #. Site Settings
 msgctxt "site settings section name"
 msgid "Site Settings"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.2968256006]
+#. defaultMessage is:
+#. Some products require shipping, but no method provided
+msgctxt "description"
+msgid "Some products require shipping, but no method provided"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.789263812]
+#. defaultMessage is:
+#. Specific Date
+msgctxt "description"
+msgid "Specific Date"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -2323,6 +3631,14 @@ msgctxt "order status"
 msgid "Status"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.1756106276] - order fulfillment status
+#. defaultMessage is:
+#. Status
+msgctxt "order fulfillment status"
+msgid "Status"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.1877630205] - attribute properties regarding storefront
 #. defaultMessage is:
@@ -2345,6 +3661,22 @@ msgstr ""
 #. Subcategories
 msgctxt "number of subcategories in category"
 msgid "Subcategories"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftDetailsSummary/OrderDraftDetailsSummary.json
+#. [src.orders.components.OrderDraftDetailsSummary.781550514] - subtotal price or an order
+#. defaultMessage is:
+#. Subtotal
+msgctxt "subtotal price or an order"
+msgid "Subtotal"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.781550514] - order subtotal price
+#. defaultMessage is:
+#. Subtotal
+msgctxt "order subtotal price"
+msgid "Subtotal"
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
@@ -2387,6 +3719,22 @@ msgctxt "taxes section name"
 msgid "Taxes"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.3955023266]
+#. defaultMessage is:
+#. Taxes
+msgctxt "description"
+msgid "Taxes"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftDetailsSummary/OrderDraftDetailsSummary.json
+#. [src.orders.components.OrderDraftDetailsSummary.3202709354]
+#. defaultMessage is:
+#. Taxes (VAT included)
+msgctxt "description"
+msgid "Taxes (VAT included)"
+msgstr ""
+
 #: build/locale/src/home/components/HomeScreen.json
 #. [homeScreenDisclaimerText2]
 #. defaultMessage is:
@@ -2409,6 +3757,14 @@ msgstr ""
 #. The primary address of this customer.
 msgctxt "description"
 msgid "The primary address of this customer."
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.1472924390]
+#. defaultMessage is:
+#. There are missing or incorrect informations about this order:
+msgctxt "description"
+msgid "There are missing or incorrect informations about this order:"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
@@ -2473,6 +3829,82 @@ msgstr ""
 #. Total
 msgctxt "order total amount"
 msgid "Total"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
+#. [src.orders.components.OrderDraftDetailsProducts.878013594] - total price of ordered products
+#. defaultMessage is:
+#. Total
+msgctxt "total price of ordered products"
+msgid "Total"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftDetailsSummary/OrderDraftDetailsSummary.json
+#. [src.orders.components.OrderDraftDetailsSummary.878013594] - total price of an order
+#. defaultMessage is:
+#. Total
+msgctxt "total price of an order"
+msgid "Total"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftList/OrderDraftList.json
+#. [src.orders.components.OrderDraftList.878013594] - order draft total price
+#. defaultMessage is:
+#. Total
+msgctxt "order draft total price"
+msgid "Total"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#. [src.orders.components.OrderFulfillment.878013594] - order line total price
+#. defaultMessage is:
+#. Total
+#: build/locale/src/orders/components/OrderUnfulfilledItems/OrderUnfulfilledItems.json
+#. [src.orders.components.OrderUnfulfilledItems.878013594] - order line total price
+#. defaultMessage is:
+#. Total
+msgctxt "order line total price"
+msgid "Total"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderList/OrderList.json
+#. [src.orders.components.OrderList.878013594] - total order price
+#. defaultMessage is:
+#. Total
+msgctxt "total order price"
+msgid "Total"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.878013594] - order total price
+#. defaultMessage is:
+#. Total
+msgctxt "order total price"
+msgid "Total"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#. [src.orders.components.OrderFulfillment.3254150098]
+#. defaultMessage is:
+#. Tracking Number: {trackingNumber}
+msgctxt "description"
+msgid "Tracking Number: {trackingNumber}"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillmentDialog/OrderFulfillmentDialog.json
+#. [src.orders.components.OrderFulfillmentDialog.3252172269] - fulfillment group
+#. defaultMessage is:
+#. Tracking number
+msgctxt "fulfillment group"
+msgid "Tracking number"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog.json
+#. [src.orders.components.OrderFulfillmentTrackingDialog.3252172269]
+#. defaultMessage is:
+#. Tracking number
+msgctxt "description"
+msgid "Tracking number"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
@@ -2600,11 +4032,27 @@ msgid "Unassign products from collection"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [undo] - button
+#. [src.undo] - button
 #. defaultMessage is:
 #. Undo
 msgctxt "button"
 msgid "Undo"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.1751787272] - order fulfillment status
+#. defaultMessage is:
+#. Unfulfilled
+msgctxt "order fulfillment status"
+msgid "Unfulfilled"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderUnfulfilledItems/OrderUnfulfilledItems.json
+#. [src.orders.components.OrderUnfulfilledItems.2886647373] - section header
+#. defaultMessage is:
+#. Unfulfilled ({quantity})
+msgctxt "section header"
+msgid "Unfulfilled ({quantity})"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
@@ -2621,6 +4069,14 @@ msgstr ""
 #. Unpublish collections
 msgctxt "dialog title"
 msgid "Unpublish collections"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderHistory/OrderHistory.json
+#. [src.orders.components.OrderHistory.4265697648] - order history message
+#. defaultMessage is:
+#. Updated fulfillment group's tracking number
+msgctxt "order history message"
+msgid "Updated fulfillment group's tracking number"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -2687,6 +4143,14 @@ msgctxt "voucher uses"
 msgid "Uses"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.1817306106] - vat included in order price
+#. defaultMessage is:
+#. VAT included
+msgctxt "vat included in order price"
+msgid "VAT included"
+msgstr ""
+
 #: build/locale/src/discounts/components/SaleList/SaleList.json
 #. [src.discounts.components.SaleList.1148029984] - sale value
 #. defaultMessage is:
@@ -2735,6 +4199,14 @@ msgctxt "attribute value deleted"
 msgid "Value deleted"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
+#. [src.orders.components.OrderCustomer.2672803871] - link
+#. defaultMessage is:
+#. View Profile
+msgctxt "link"
+msgid "View Profile"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
 #. [src.customers.components.CustomerOrders.3029139173] - button
 #. defaultMessage is:
@@ -2767,6 +4239,22 @@ msgctxt "attribute"
 msgid "Visible on Product Page in Storefront"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.2444197639] - void payment, button
+#. defaultMessage is:
+#. Void
+msgctxt "void payment, button"
+msgid "Void"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPaymentVoidDialog/OrderPaymentVoidDialog.json
+#. [src.orders.components.OrderPaymentVoidDialog.3089049828] - dialog header
+#. defaultMessage is:
+#. Void Payment
+msgctxt "dialog header"
+msgid "Void Payment"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
 #. [src.discounts.components.VoucherDetailsPage.2071139683]
 #. defaultMessage is:
@@ -2789,6 +4277,38 @@ msgstr ""
 #. Vouchers
 msgctxt "vouchers section name"
 msgid "Vouchers"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [orderPaymentVATDoesNotApply] - vat not included in order price
+#. defaultMessage is:
+#. does not apply
+msgctxt "vat not included in order price"
+msgid "does not apply"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [orderPaymentShippingDoesNotApply] - order does not require shipping
+#. defaultMessage is:
+#. does not apply
+msgctxt "order does not require shipping"
+msgid "does not apply"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.3477667254]
+#. defaultMessage is:
+#. equals
+msgctxt "description"
+msgid "equals"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.1438173764] - date is set as
+#. defaultMessage is:
+#. is set as
+msgctxt "date is set as"
+msgid "is set as"
 msgstr ""
 
 #: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
@@ -2837,4 +4357,12 @@ msgstr ""
 #. {fullName}'s Address Book
 msgctxt "customer's address book, header"
 msgid "{fullName}'s Address Book"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderPayment/OrderPayment.json
+#. [src.orders.components.OrderPayment.2183023165] - ordered products
+#. defaultMessage is:
+#. {quantity} items
+msgctxt "ordered products"
+msgid "{quantity} items"
 msgstr ""
