@@ -3,9 +3,9 @@ declare module "react-intl" {
   export * from "node_modules/react-intl";
 
   export interface MessageDescriptor {
-    id?: string;
     description?: string;
     defaultMessage: string;
+    id?: string;
   }
   type Messages<Names extends keyof any = string> = Record<
     Names,
