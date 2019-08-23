@@ -1,12 +1,13 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useUser from "@saleor/hooks/useUser";
-import i18n from "../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "../../misc";
 import StaffDetailsPage from "../components/StaffDetailsPage/StaffDetailsPage";
 import {
@@ -38,6 +39,7 @@ export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const user = useUser();
+  const intl = useIntl();
 
   return (
     <TypedStaffMemberDetailsQuery
@@ -49,14 +51,14 @@ export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
         const handleStaffMemberUpdate = (data: StaffMemberUpdate) => {
           if (!maybe(() => data.staffUpdate.errors.length !== 0)) {
             notify({
-              text: i18n.t("Succesfully updated staff member account")
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
         };
         const handleStaffMemberDelete = (data: StaffMemberDelete) => {
           if (!maybe(() => data.staffDelete.errors.length !== 0)) {
             notify({
-              text: i18n.t("Succesfully removed staff member")
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(staffListUrl());
           }
@@ -64,14 +66,14 @@ export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
         const handleStaffMemberAvatarUpdate = (data: StaffAvatarUpdate) => {
           if (!maybe(() => data.userAvatarUpdate.errors.length !== 0)) {
             notify({
-              text: i18n.t("Succesfully updated staff member avatar")
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
         };
         const handleStaffMemberAvatarDelete = (data: StaffAvatarDelete) => {
           if (!maybe(() => data.userAvatarDelete.errors.length !== 0)) {
             notify({
-              text: i18n.t("Succesfully removed staff member avatar")
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(staffMemberDetailsUrl(id));
           }
@@ -167,7 +169,10 @@ export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
                               />
                               <ActionDialog
                                 open={params.action === "remove"}
-                                title={i18n.t("Remove staff user")}
+                                title={intl.formatMessage({
+                                  defaultMessage: "remove Staff User",
+                                  description: "dialog header"
+                                })}
                                 confirmButtonState={deleteTransitionState}
                                 variant="delete"
                                 onClose={() =>
@@ -175,20 +180,21 @@ export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
                                 }
                                 onConfirm={deleteStaffMember}
                               >
-                                <DialogContentText
-                                  dangerouslySetInnerHTML={{
-                                    __html: i18n.t(
-                                      "Are you sure you want to remove <strong>{{ email }}</strong> from staff members?",
-                                      {
-                                        email: maybe(() => data.user.email)
-                                      }
-                                    )
-                                  }}
-                                />
+                                <DialogContentText>
+                                  <FormattedMessage
+                                    defaultMessage="Are you sure you want to remove {email} from staff members?"
+                                    values={{
+                                      email: maybe(() => data.user.email, "...")
+                                    }}
+                                  />
+                                </DialogContentText>
                               </ActionDialog>
                               <ActionDialog
                                 open={params.action === "remove-avatar"}
-                                title={i18n.t("Remove staff user avatar")}
+                                title={intl.formatMessage({
+                                  defaultMessage: "Delete Staff User Avatar",
+                                  description: "dialog header"
+                                })}
                                 confirmButtonState={deleteAvatarTransitionState}
                                 variant="delete"
                                 onClose={() =>
@@ -196,16 +202,18 @@ export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
                                 }
                                 onConfirm={deleteStaffAvatar}
                               >
-                                <DialogContentText
-                                  dangerouslySetInnerHTML={{
-                                    __html: i18n.t(
-                                      "Are you sure you want to remove <strong>{{ email }}</strong> avatar?",
-                                      {
-                                        email: maybe(() => data.user.email)
-                                      }
-                                    )
-                                  }}
-                                />
+                                <DialogContentText>
+                                  <FormattedMessage
+                                    defaultMessage="Are you sure you want to remove {email} avatar?"
+                                    values={{
+                                      email: (
+                                        <strong>
+                                          {maybe(() => data.user.email, "...")}
+                                        </strong>
+                                      )
+                                    }}
+                                  />
+                                </DialogContentText>
                               </ActionDialog>
                             </>
                           );

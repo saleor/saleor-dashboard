@@ -12,6 +12,7 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -19,7 +20,7 @@ import ConfirmButton, {
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import i18n from "../../../i18n";
+import { buttonMessages, commonMessages } from "@saleor/intl";
 import { UserError } from "../../../types";
 
 export interface FormData {
@@ -74,81 +75,93 @@ const StaffAddMemberDialog = withStyles(styles, {
     open,
     onClose,
     onConfirm
-  }: StaffAddMemberDialogProps) => (
-    <Dialog onClose={onClose} open={open}>
-      <Form errors={errors} initial={initialForm} onSubmit={onConfirm}>
-        {({ change, data, errors: formErrors, hasChanged }) => (
-          <>
-            <DialogTitle>{i18n.t("Add Staff Member")}</DialogTitle>
-            <DialogContent>
-              <div className={classes.textFieldGrid}>
+  }: StaffAddMemberDialogProps) => {
+    const intl = useIntl();
+
+    return (
+      <Dialog onClose={onClose} open={open}>
+        <Form errors={errors} initial={initialForm} onSubmit={onConfirm}>
+          {({ change, data, errors: formErrors, hasChanged }) => (
+            <>
+              <DialogTitle>
+                <FormattedMessage
+                  defaultMessage="Add Staff Member"
+                  description="dialog header"
+                />
+              </DialogTitle>
+              <DialogContent>
+                <div className={classes.textFieldGrid}>
+                  <TextField
+                    error={!!formErrors.firstName}
+                    helperText={formErrors.firstName}
+                    label={intl.formatMessage(commonMessages.firstName)}
+                    name="firstName"
+                    type="text"
+                    value={data.firstName}
+                    onChange={change}
+                  />
+                  <TextField
+                    error={!!formErrors.lastName}
+                    helperText={formErrors.lastName}
+                    label={intl.formatMessage(commonMessages.lastName)}
+                    name="lastName"
+                    type="text"
+                    value={data.lastName}
+                    onChange={change}
+                  />
+                </div>
+                <FormSpacer />
                 <TextField
-                  error={!!formErrors.firstName}
-                  helperText={formErrors.firstName}
-                  label={i18n.t("First Name")}
-                  name="firstName"
-                  type="text"
-                  value={data.firstName}
+                  error={!!formErrors.email}
+                  fullWidth
+                  helperText={formErrors.email}
+                  label={intl.formatMessage(commonMessages.email)}
+                  name="email"
+                  type="email"
+                  value={data.email}
                   onChange={change}
                 />
-                <TextField
-                  error={!!formErrors.lastName}
-                  helperText={formErrors.lastName}
-                  label={i18n.t("Last Name")}
-                  name="lastName"
-                  type="text"
-                  value={data.lastName}
+              </DialogContent>
+              <hr className={classes.hr} />
+              <DialogContent>
+                <Typography className={classes.sectionTitle}>
+                  <FormattedMessage defaultMessage="Permissions" />
+                </Typography>
+                <Typography>
+                  <FormattedMessage defaultMessage="Expand or restrict user’s permissions to access certain part of saleor system." />
+                </Typography>
+                <ControlledCheckbox
+                  checked={data.fullAccess}
+                  label={intl.formatMessage({
+                    defaultMessage: "User has full access"
+                  })}
+                  name="fullAccess"
                   onChange={change}
                 />
-              </div>
-              <FormSpacer />
-              <TextField
-                error={!!formErrors.email}
-                fullWidth
-                helperText={formErrors.email}
-                label={i18n.t("Email address")}
-                name="email"
-                type="email"
-                value={data.email}
-                onChange={change}
-              />
-            </DialogContent>
-            <hr className={classes.hr} />
-            <DialogContent>
-              <Typography className={classes.sectionTitle}>
-                {i18n.t("Permissions")}
-              </Typography>
-              <Typography>
-                {i18n.t(
-                  "Expand or restrict user’s permissions to access certain part of saleor system."
-                )}
-              </Typography>
-              <ControlledCheckbox
-                checked={data.fullAccess}
-                label={i18n.t("User has full access")}
-                name="fullAccess"
-                onChange={change}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={onClose}>
-                {i18n.t("Cancel", { context: "button" })}
-              </Button>
-              <ConfirmButton
-                color="primary"
-                disabled={!hasChanged}
-                variant="contained"
-                type="submit"
-                transitionState={confirmButtonState}
-              >
-                {i18n.t("Send invite", { context: "button" })}
-              </ConfirmButton>
-            </DialogActions>
-          </>
-        )}
-      </Form>
-    </Dialog>
-  )
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={onClose}>
+                  <FormattedMessage {...buttonMessages.cancel} />
+                </Button>
+                <ConfirmButton
+                  color="primary"
+                  disabled={!hasChanged}
+                  variant="contained"
+                  type="submit"
+                  transitionState={confirmButtonState}
+                >
+                  <FormattedMessage
+                    defaultMessage="Send invite"
+                    description="button"
+                  />
+                </ConfirmButton>
+              </DialogActions>
+            </>
+          )}
+        </Form>
+      </Dialog>
+    );
+  }
 );
 StaffAddMemberDialog.displayName = "StaffAddMemberDialog";
 export default StaffAddMemberDialog;
