@@ -1,6 +1,13 @@
 {
   "presets": [
-    "@babel/preset-env",
+    [
+      "@babel/preset-env",
+      {
+        "corejs": "3.2.1",
+        "modules": false,
+        "useBuiltIns": "usage"
+      }
+    ],
     "@babel/preset-react",
     "@babel/preset-typescript"
   ],
