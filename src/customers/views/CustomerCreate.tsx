@@ -1,9 +1,9 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../i18n";
 import { maybe } from "../../misc";
 import CustomerCreatePage from "../components/CustomerCreatePage";
 import { TypedCreateCustomerMutation } from "../mutations";
@@ -14,12 +14,13 @@ import { customerListUrl, customerUrl } from "../urls";
 export const CustomerCreate: React.StatelessComponent<{}> = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const handleCreateCustomerSuccess = (data: CreateCustomer) => {
     if (data.customerCreate.errors.length === 0) {
       notify({
-        text: i18n.t("Customer created", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Customer created"
         })
       });
       navigate(customerUrl(data.customerCreate.user.id));
@@ -31,7 +32,12 @@ export const CustomerCreate: React.StatelessComponent<{}> = () => {
         <TypedCreateCustomerMutation onCompleted={handleCreateCustomerSuccess}>
           {(createCustomer, createCustomerOpts) => (
             <>
-              <WindowTitle title={i18n.t("Create customer")} />
+              <WindowTitle
+                title={intl.formatMessage({
+                  defaultMessage: "Create customer",
+                  description: "window title"
+                })}
+              />
               <CustomerCreatePage
                 countries={maybe(() => data.shop.countries, [])}
                 disabled={loading || createCustomerOpts.loading}

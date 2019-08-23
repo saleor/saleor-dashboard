@@ -11,12 +11,12 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
 import { getUserName, maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
@@ -77,13 +77,13 @@ const CustomerList = withStyles(styles, { name: "CustomerList" })(
           toolbar={toolbar}
         >
           <TableCell className={classes.colName}>
-            {i18n.t("Customer Name", { context: "table header" })}
+            <FormattedMessage defaultMessage="Customer Name" />
           </TableCell>
           <TableCell className={classes.colEmail}>
-            {i18n.t("Customer e-mail", { context: "table header" })}
+            <FormattedMessage defaultMessage="Customer Email" />
           </TableCell>
           <TableCell className={classes.colOrders}>
-            {i18n.t("Orders", { context: "table header" })}
+            <FormattedMessage defaultMessage="No. of Orders" />
           </TableCell>
         </TableHead>
         <TableFooter>
@@ -141,7 +141,7 @@ const CustomerList = withStyles(styles, { name: "CustomerList" })(
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("No customers found")}
+                  <FormattedMessage defaultMessage="No customers found" />
                 </TableCell>
               </TableRow>
             )

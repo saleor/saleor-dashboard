@@ -12,7 +12,7 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import { commonMessages } from "@saleor/intl";
+import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
 import { AttributeDetails_attribute_values } from "../../types/AttributeDetails";
@@ -83,7 +83,7 @@ const AttributeValueEditDialog: React.StatelessComponent<
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>
-                <FormattedMessage {...commonMessages.cancel} />
+                <FormattedMessage {...buttonMessages.cancel} />
               </Button>
               <ConfirmButton
                 transitionState={confirmButtonState}
@@ -91,7 +91,7 @@ const AttributeValueEditDialog: React.StatelessComponent<
                 variant="contained"
                 onClick={submit}
               >
-                <FormattedMessage {...commonMessages.save} />
+                <FormattedMessage {...buttonMessages.save} />
               </ConfirmButton>
             </DialogActions>
           </>
