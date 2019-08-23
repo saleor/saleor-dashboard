@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
@@ -23,7 +24,7 @@ import ConfirmButton, {
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import i18n from "@saleor/i18n";
+import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
 import { SearchAttributes_productType_availableAttributes_edges_node } from "../../containers/SearchAttributes/types/SearchAttributes";
@@ -73,6 +74,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
   onSubmit,
   onToggle
 }: AssignAttributeDialogProps) => {
+  const intl = useIntl();
   const classes = useStyles({});
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
   const errors = useModalDialogErrors(apiErrors, open);
@@ -84,17 +86,22 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <DialogTitle>{i18n.t("Assign Attribute")}</DialogTitle>
+      <DialogTitle>
+        <FormattedMessage
+          defaultMessage="Assign Attribute"
+          description="dialog header"
+        />
+      </DialogTitle>
       <DialogContent>
         <TextField
           name="query"
           value={query}
           onChange={onQueryChange}
-          label={i18n.t("Search Attributes", {
-            context: "attribute search input label"
+          label={intl.formatMessage({
+            defaultMessage: "Search Attributes"
           })}
-          placeholder={i18n.t("Search by attribute name", {
-            context: "attribute search input placeholder"
+          placeholder={intl.formatMessage({
+            defaultMessage: "Search by attribute name"
           })}
           fullWidth
           InputProps={{
@@ -153,7 +160,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                   !loading && (
                     <TableRow>
                       <TableCell colSpan={2}>
-                        {i18n.t("No results found")}
+                        <FormattedMessage defaultMessage="No results found" />
                       </TableCell>
                     </TableRow>
                   )
@@ -173,7 +180,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
       )}
       <DialogActions>
         <Button onClick={onClose}>
-          {i18n.t("Cancel", { context: "button" })}
+          <FormattedMessage {...buttonMessages.cancel} />
         </Button>
         <ConfirmButton
           transitionState={confirmButtonState}
@@ -182,7 +189,10 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           type="submit"
           onClick={onSubmit}
         >
-          {i18n.t("Assign attributes", { context: "button" })}
+          <FormattedMessage
+            defaultMessage="Assign attributes"
+            description="button"
+          />
         </ConfirmButton>
       </DialogActions>
     </Dialog>
