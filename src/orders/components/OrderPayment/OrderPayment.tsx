@@ -124,7 +124,8 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
                   ) : (
                     intl.formatMessage({
                       defaultMessage: "does not apply",
-                      description: "vat not included in order price"
+                      description: "vat not included in order price",
+                      id: "orderPaymentVATDoesNotApply"
                     })
                   )}
                 </td>
@@ -150,7 +151,8 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
                   ) : order.shippingMethodName === null ? (
                     intl.formatMessage({
                       defaultMessage: "does not apply",
-                      description: "order does not require shipping"
+                      description: "order does not require shipping",
+                      id: "orderPaymentShippingDoesNotApply"
                     })
                   ) : (
                     order.shippingMethodName

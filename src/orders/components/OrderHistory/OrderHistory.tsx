@@ -88,15 +88,25 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
         description: "order history message"
       });
     case OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS:
-      return intl.formatMessage({
-        defaultMessage: "Fulfilled {{ quantity }} items",
-        description: "order history message"
-      });
+      return intl.formatMessage(
+        {
+          defaultMessage: "Fulfilled {quantity} items",
+          description: "order history message"
+        },
+        {
+          quantity: event.quantity
+        }
+      );
     case OrderEventsEnum.FULFILLMENT_RESTOCKED_ITEMS:
-      return intl.formatMessage({
-        defaultMessage: "Restocked {{ quantity }} items",
-        description: "order history message"
-      });
+      return intl.formatMessage(
+        {
+          defaultMessage: "Restocked {quantity} items",
+          description: "order history message"
+        },
+        {
+          quantity: event.quantity
+        }
+      );
     case OrderEventsEnum.NOTE_ADDED:
       return intl.formatMessage({
         defaultMessage: "Note was added to the order",
@@ -115,10 +125,15 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
     case OrderEventsEnum.OTHER:
       return event.message;
     case OrderEventsEnum.OVERSOLD_ITEMS:
-      return intl.formatMessage({
-        defaultMessage: "Oversold {{ quantity }} items",
-        description: "order history message"
-      });
+      return intl.formatMessage(
+        {
+          defaultMessage: "Oversold {quantity} items",
+          description: "order history message"
+        },
+        {
+          quantity: event.quantity
+        }
+      );
     case OrderEventsEnum.PAYMENT_CAPTURED:
       return intl.formatMessage({
         defaultMessage: "Payment was captured",

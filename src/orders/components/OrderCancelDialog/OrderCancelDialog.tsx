@@ -101,10 +101,7 @@ const OrderCancelDialog = withStyles(styles, { name: "OrderCancelDialog" })(
                     variant="contained"
                     type="submit"
                   >
-                    <FormattedMessage
-                      defaultMessage="Cancel order"
-                      description="button"
-                    />
+                    <FormattedMessage {...buttonMessages.cancel} />
                   </ConfirmButton>
                 </DialogActions>
               </>

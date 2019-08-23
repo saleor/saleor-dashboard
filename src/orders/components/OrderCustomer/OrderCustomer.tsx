@@ -200,6 +200,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
               <FormattedMessage
                 defaultMessage="Not set"
                 description="customer is not set in draft order"
+                id="orderCustomerCustomerNotSet"
               />
             </Typography>
           ) : (
@@ -237,6 +238,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
               <FormattedMessage
                 defaultMessage="Not set"
                 description="shipping address is not set in draft order"
+                id="orderCustomerShippingAddressNotSet"
               />
             </Typography>
           ) : (
@@ -295,6 +297,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
               <FormattedMessage
                 defaultMessage="Not set"
                 description="no address is set in draft order"
+                id="orderCustomerBillingAddressNotSet"
               />
             </Typography>
           ) : maybe(() => shippingAddress.id) === billingAddress.id ? (
