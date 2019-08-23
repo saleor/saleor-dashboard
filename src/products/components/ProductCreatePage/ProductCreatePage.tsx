@@ -1,5 +1,6 @@
 import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -16,6 +17,7 @@ import { SearchCategories_categories_edges_node } from "@saleor/containers/Searc
 import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { sectionNames } from "@saleor/intl";
 import {
   getChoices,
   ProductAttributeValueChoices,
@@ -23,7 +25,6 @@ import {
 } from "@saleor/products/utils/data";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import i18n from "../../../i18n";
 import { UserError } from "../../../types";
 import { ProductCreateData_productTypes_edges_node_productAttributes } from "../../types/ProductCreateData";
 import {
@@ -96,6 +97,8 @@ export const ProductCreatePage: React.StatelessComponent<
   onBack,
   onSubmit
 }: ProductCreatePageProps) => {
+  const intl = useIntl();
+
   // Form values
   const {
     change: changeAttributeData,
@@ -200,7 +203,9 @@ export const ProductCreatePage: React.StatelessComponent<
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>{i18n.t("Products")}</AppHeader>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.products)}
+            </AppHeader>
             <PageHeader title={header} />
             <Grid>
               <div>
@@ -239,9 +244,10 @@ export const ProductCreatePage: React.StatelessComponent<
                   </>
                 )}
                 <SeoForm
-                  helperText={i18n.t(
-                    "Add search engine title and description to make this product easier to find"
-                  )}
+                  helperText={intl.formatMessage({
+                    defaultMessage:
+                      "Add search engine title and description to make this product easier to find"
+                  })}
                   title={data.seoTitle}
                   titlePlaceholder={data.name}
                   description={data.seoDescription}

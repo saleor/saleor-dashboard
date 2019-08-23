@@ -14,6 +14,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -21,7 +22,6 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
-import i18n from "../../../i18n";
 import { renderCollection } from "../../../misc";
 import { ListActions } from "../../../types";
 import { ProductDetails_product_variants } from "../../types/ProductDetails";
@@ -88,120 +88,152 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
     toggle,
     toggleAll,
     toolbar
-  }: ProductVariantsProps) => (
-    <Card>
-      <CardTitle
-        title={i18n.t("Variants")}
-        toolbar={
-          <>
-            <Button onClick={onAttributesEdit} variant="text" color="primary">
-              {i18n.t("Edit attributes")}
-            </Button>
-            <Button onClick={onVariantAdd} variant="text" color="primary">
-              {i18n.t("Add variant")}
-            </Button>
-          </>
-        }
-      />
-      <CardContent>
-        <Typography>
-          {i18n.t(
-            "Use variants for products that come in a variety of versions for example different sizes or colors"
-          )}
-        </Typography>
-      </CardContent>
-      <Table className={classes.denseTable}>
-        <TableHead
-          colSpan={numberOfColumns}
-          selected={selected}
-          disabled={disabled}
-          items={variants}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-        >
-          <TableCell className={classes.colName}>{i18n.t("Name")}</TableCell>
-          <TableCell className={classes.colStatus}>
-            {i18n.t("Status")}
-          </TableCell>
-          <TableCell className={classes.colSku}>{i18n.t("SKU")}</TableCell>
-          <Hidden smDown>
-            <TableCell className={classes.colPrice}>
-              {i18n.t("Price")}
-            </TableCell>
-          </Hidden>
-        </TableHead>
-        <TableBody>
-          {renderCollection(
-            variants,
-            variant => {
-              const isSelected = variant ? isChecked(variant.id) : false;
+  }: ProductVariantsProps) => {
+    const intl = useIntl();
 
-              return (
-                <TableRow
-                  selected={isSelected}
-                  hover={!!variant}
-                  onClick={onRowClick(variant.id)}
-                  key={variant ? variant.id : "skeleton"}
-                  className={classes.link}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(variant.id)}
-                    />
-                  </TableCell>
-                  <TableCell className={classes.colName}>
-                    {variant ? variant.name || variant.sku : <Skeleton />}
-                  </TableCell>
-                  <TableCell className={classes.colStatus}>
-                    {variant ? (
-                      <StatusLabel
-                        status={variant.stockQuantity > 0 ? "success" : "error"}
-                        label={
-                          variant.stockQuantity > 0
-                            ? i18n.t("Available")
-                            : i18n.t("Unavailable")
-                        }
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Variants",
+            description: "section header"
+          })}
+          toolbar={
+            <>
+              <Button onClick={onAttributesEdit} variant="text" color="primary">
+                <FormattedMessage
+                  defaultMessage="Edit attributes"
+                  description="product variant attributes, button"
+                />
+              </Button>
+              <Button onClick={onVariantAdd} variant="text" color="primary">
+                <FormattedMessage
+                  defaultMessage="Add variant"
+                  description="button"
+                />
+              </Button>
+            </>
+          }
+        />
+        <CardContent>
+          <Typography>
+            <FormattedMessage defaultMessage="Use variants for products that come in a variety of versions for example different sizes or colors" />
+          </Typography>
+        </CardContent>
+        <Table className={classes.denseTable}>
+          <TableHead
+            colSpan={numberOfColumns}
+            selected={selected}
+            disabled={disabled}
+            items={variants}
+            toggleAll={toggleAll}
+            toolbar={toolbar}
+          >
+            <TableCell className={classes.colName}>
+              <FormattedMessage
+                defaultMessage="Name"
+                description="product variant name"
+              />
+            </TableCell>
+            <TableCell className={classes.colStatus}>
+              <FormattedMessage
+                defaultMessage="Status"
+                description="product variant status"
+              />
+            </TableCell>
+            <TableCell className={classes.colSku}>
+              <FormattedMessage defaultMessage="SKU" />
+            </TableCell>
+            <Hidden smDown>
+              <TableCell className={classes.colPrice}>
+                <FormattedMessage
+                  defaultMessage="Price"
+                  description="product variant price"
+                />
+              </TableCell>
+            </Hidden>
+          </TableHead>
+          <TableBody>
+            {renderCollection(
+              variants,
+              variant => {
+                const isSelected = variant ? isChecked(variant.id) : false;
+
+                return (
+                  <TableRow
+                    selected={isSelected}
+                    hover={!!variant}
+                    onClick={onRowClick(variant.id)}
+                    key={variant ? variant.id : "skeleton"}
+                    className={classes.link}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isSelected}
+                        disabled={disabled}
+                        disableClickPropagation
+                        onChange={() => toggle(variant.id)}
                       />
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.colSku}>
-                    {variant ? variant.sku : <Skeleton />}
-                  </TableCell>
-                  <Hidden smDown>
-                    <TableCell className={classes.colPrice}>
+                    </TableCell>
+                    <TableCell className={classes.colName}>
+                      {variant ? variant.name || variant.sku : <Skeleton />}
+                    </TableCell>
+                    <TableCell className={classes.colStatus}>
                       {variant ? (
-                        variant.priceOverride ? (
-                          <Money money={variant.priceOverride} />
-                        ) : fallbackPrice ? (
-                          <Money money={fallbackPrice} />
-                        ) : (
-                          <Skeleton />
-                        )
+                        <StatusLabel
+                          status={
+                            variant.stockQuantity > 0 ? "success" : "error"
+                          }
+                          label={
+                            variant.stockQuantity > 0
+                              ? intl.formatMessage({
+                                  defaultMessage: "Available",
+                                  description: "product variant status"
+                                })
+                              : intl.formatMessage({
+                                  defaultMessage: "Unavailable",
+                                  description: "product variant status"
+                                })
+                          }
+                        />
                       ) : (
                         <Skeleton />
                       )}
                     </TableCell>
-                  </Hidden>
+                    <TableCell className={classes.colSku}>
+                      {variant ? variant.sku : <Skeleton />}
+                    </TableCell>
+                    <Hidden smDown>
+                      <TableCell className={classes.colPrice}>
+                        {variant ? (
+                          variant.priceOverride ? (
+                            <Money money={variant.priceOverride} />
+                          ) : fallbackPrice ? (
+                            <Money money={fallbackPrice} />
+                          ) : (
+                            <Skeleton />
+                          )
+                        ) : (
+                          <Skeleton />
+                        )}
+                      </TableCell>
+                    </Hidden>
+                  </TableRow>
+                );
+              },
+              () => (
+                <TableRow>
+                  <TableCell colSpan={numberOfColumns}>
+                    <FormattedMessage defaultMessage="This product has no variants" />
+                  </TableCell>
                 </TableRow>
-              );
-            },
-            () => (
-              <TableRow>
-                <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("This product has no variants")}
-                </TableCell>
-              </TableRow>
-            )
-          )}
-        </TableBody>
-      </Table>
-    </Card>
-  )
+              )
+            )}
+          </TableBody>
+        </Table>
+      </Card>
+    );
+  }
 );
 ProductVariants.displayName = "ProductVariants";
 export default ProductVariants;

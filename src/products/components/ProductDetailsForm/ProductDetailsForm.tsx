@@ -9,11 +9,12 @@ import {
 import TextField from "@material-ui/core/TextField";
 import { RawDraftContentState } from "draft-js";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -48,36 +49,45 @@ export const ProductDetailsForm = withStyles(styles, {
     errors,
     initialDescription,
     onChange
-  }: ProductDetailsFormProps) => (
-    <Card>
-      <CardTitle title={i18n.t("General information")} />
-      <CardContent>
-        <div className={classes.root}>
-          <TextField
-            error={!!errors.name}
-            helperText={errors.name}
+  }: ProductDetailsFormProps) => {
+    const intl = useIntl();
+
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage(commonMessages.generalInformations)}
+        />
+        <CardContent>
+          <div className={classes.root}>
+            <TextField
+              error={!!errors.name}
+              helperText={errors.name}
+              disabled={disabled}
+              fullWidth
+              label={intl.formatMessage({
+                defaultMessage: "Name",
+                description: "product name"
+              })}
+              name="name"
+              rows={5}
+              value={data.name}
+              onChange={onChange}
+            />
+          </div>
+          <FormSpacer />
+          <RichTextEditor
             disabled={disabled}
-            fullWidth
-            label={i18n.t("Name")}
-            name="name"
-            rows={5}
-            value={data.name}
+            error={!!errors.descriptionJson}
+            helperText={errors.descriptionJson}
+            initial={initialDescription}
+            label={intl.formatMessage(commonMessages.description)}
+            name="description"
             onChange={onChange}
           />
-        </div>
-        <FormSpacer />
-        <RichTextEditor
-          disabled={disabled}
-          error={!!errors.descriptionJson}
-          helperText={errors.descriptionJson}
-          initial={initialDescription}
-          label={i18n.t("Description")}
-          name="description"
-          onChange={onChange}
-        />
-      </CardContent>
-    </Card>
-  )
+        </CardContent>
+      </Card>
+    );
+  }
 );
 ProductDetailsForm.displayName = "ProductDetailsForm";
 export default ProductDetailsForm;

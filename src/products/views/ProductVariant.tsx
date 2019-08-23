@@ -1,10 +1,11 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { decimal, getMutationState, maybe } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage, {
@@ -33,6 +34,7 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   return (
     <TypedProductVariantQuery
@@ -44,12 +46,16 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
         const variant = data ? data.productVariant : undefined;
         const handleBack = () => navigate(productUrl(productId));
         const handleDelete = () => {
-          notify({ text: i18n.t("Variant removed") });
+          notify({
+            text: intl.formatMessage({
+              defaultMessage: "Variant removed"
+            })
+          });
           navigate(productUrl(productId));
         };
         const handleUpdate = (data: VariantUpdate) => {
           if (!maybe(() => data.productVariantUpdate.errors.length)) {
-            notify({ text: i18n.t("Changes saved") });
+            notify({ text: intl.formatMessage(commonMessages.savedChanges) });
           }
         };
 

@@ -4,6 +4,7 @@ import { Theme } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryDetails_category_products_edges_node } from "@saleor/categories/types/CategoryDetails";
 import ColumnPicker, {
@@ -14,7 +15,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import ProductList from "@saleor/components/ProductList";
 import { ProductListColumns } from "@saleor/config";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import i18n from "@saleor/i18n";
+import { sectionNames } from "@saleor/intl";
 import { FilterPageProps, ListActions, PageListProps } from "@saleor/types";
 import { toggle } from "@saleor/utils/lists";
 import { ProductListUrlFilters } from "../../urls";
@@ -53,6 +54,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onUpdateListSettings,
     ...listProps
   } = props;
+  const intl = useIntl();
   const classes = useStyles(props);
   const [selectedColumns, setSelectedColumns] = useStateFromProps(
     settings.columns
@@ -74,22 +76,31 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   const columns: ColumnPickerChoice[] = [
     {
-      label: i18n.t("Published"),
+      label: intl.formatMessage({
+        defaultMessage: "Published",
+        description: "product status"
+      }),
       value: "isPublished" as ProductListColumns
     },
     {
-      label: i18n.t("Price"),
+      label: intl.formatMessage({
+        defaultMessage: "Price",
+        description: "product price"
+      }),
       value: "price" as ProductListColumns
     },
     {
-      label: i18n.t("Type"),
+      label: intl.formatMessage({
+        defaultMessage: "Type",
+        description: "product type"
+      }),
       value: "productType" as ProductListColumns
     }
   ];
 
   return (
     <Container>
-      <PageHeader title={i18n.t("Products")}>
+      <PageHeader title={intl.formatMessage(sectionNames.products)}>
         <ColumnPicker
           className={classes.columnPicker}
           columns={columns}
@@ -100,19 +111,27 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onSave={handleSave}
         />
         <Button onClick={onAdd} color="primary" variant="contained">
-          {i18n.t("Add product")} <AddIcon />
+          <FormattedMessage defaultMessage="Add Product" description="button" />
+          <AddIcon />
         </Button>
       </PageHeader>
       <Card>
         <ProductListFilter
-          allTabLabel={i18n.t("All Products")}
+          allTabLabel={intl.formatMessage({
+            defaultMessage: "All Products",
+            description: "tab name"
+          })}
           currencySymbol={currencySymbol}
           currentTab={currentTab}
-          filterLabel={i18n.t("Select all products where:")}
+          filterLabel={intl.formatMessage({
+            defaultMessage: "Select all products where:"
+          })}
           filterTabs={filterTabs}
           filtersList={filtersList}
           initialSearch={initialSearch}
-          searchPlaceholder={i18n.t("Search Products...")}
+          searchPlaceholder={intl.formatMessage({
+            defaultMessage: "Search Products..."
+          })}
           onAll={onAll}
           onSearchChange={onSearchChange}
           onFilterAdd={onFilterAdd}

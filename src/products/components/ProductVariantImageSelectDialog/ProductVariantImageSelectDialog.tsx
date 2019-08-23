@@ -11,8 +11,9 @@ import {
 } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import { ProductImage } from "../../types/ProductImage";
 
 const styles = (theme: Theme) =>
@@ -72,7 +73,10 @@ const ProductVariantImageSelectDialog = withStyles(styles, {
   }: ProductVariantImageSelectDialogProps) => (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
-        {i18n.t("Image selection", { context: "title" })}
+        <FormattedMessage
+          defaultMessage="Image Selection"
+          description="dialog header"
+        />
       </DialogTitle>
       <DialogContent>
         <div className={classes.root}>
@@ -97,7 +101,7 @@ const ProductVariantImageSelectDialog = withStyles(styles, {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>
-          {i18n.t("Close", { context: "button" })}
+          <FormattedMessage {...buttonMessages.back} />
         </Button>
       </DialogActions>
     </Dialog>

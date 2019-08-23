@@ -1,10 +1,10 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../i18n";
 import { getMutationState, maybe } from "../../misc";
 import ProductImagePage from "../components/ProductImagePage";
 import {
@@ -32,6 +32,7 @@ export const ProductImage: React.StatelessComponent<ProductImageProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const handleBack = () => navigate(productUrl(productId));
   const handleUpdateSuccess = (data: ProductImageUpdate) => {
@@ -103,19 +104,15 @@ export const ProductImage: React.StatelessComponent<ProductImageProps> = ({
                         }
                         onConfirm={handleDelete}
                         open={params.action === "remove"}
-                        title={i18n.t("Remove image", {
-                          context: "modal title"
+                        title={intl.formatMessage({
+                          defaultMessage: "Remove Image",
+                          description: "dialog header"
                         })}
                         variant="delete"
                         confirmButtonState={deleteTransitionState}
                       >
                         <DialogContentText>
-                          {i18n.t(
-                            "Are you sure you want to remove this image?",
-                            {
-                              context: "modal content"
-                            }
-                          )}
+                          <FormattedMessage defaultMessage="Are you sure you want to remove this image?" />
                         </DialogContentText>
                       </ActionDialog>
                     </>

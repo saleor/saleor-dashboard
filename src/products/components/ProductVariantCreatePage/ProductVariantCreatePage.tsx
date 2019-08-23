@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -16,7 +17,6 @@ import {
   getVariantAttributeErrors,
   getVariantAttributeInputFromProduct
 } from "@saleor/products/utils/data";
-import i18n from "../../../i18n";
 import { maybe } from "../../../misc";
 import { UserError } from "../../../types";
 import { ProductVariantCreateData_product } from "../../types/ProductVariantCreateData";
@@ -63,6 +63,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   onSubmit,
   onVariantClick
 }) => {
+  const intl = useIntl();
   const attributeInput = React.useMemo(
     () => getVariantAttributeInputFromProduct(product),
     [product]
@@ -150,8 +151,14 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
             <SaveButtonBar
               disabled={loading || !onSubmit || !hasChanged}
               labels={{
-                delete: i18n.t("Remove variant"),
-                save: i18n.t("Save variant")
+                delete: intl.formatMessage({
+                  defaultMessage: "Delete Variant",
+                  description: "button"
+                }),
+                save: intl.formatMessage({
+                  defaultMessage: "Save variant",
+                  description: "button"
+                })
               }}
               state={saveButtonBarState}
               onCancel={onBack}
