@@ -5,11 +5,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Form, { FormProps } from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import { translatedAuthorizationKeyTypes } from "../../../misc";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 
@@ -31,16 +32,19 @@ export interface SiteSettingsKeyDialogProps
 const SiteSettingsKeyDialog: React.StatelessComponent<
   SiteSettingsKeyDialogProps
 > = ({ errors, initial, open, onClose, onSubmit }) => {
+  const intl = useIntl();
   const keyTypes = translatedAuthorizationKeyTypes();
+
   return (
     <Dialog onClose={onClose} maxWidth="xs" open={open}>
       <Form initial={initial} onSubmit={onSubmit} errors={errors}>
         {({ change, data, errors }) => (
           <>
             <DialogTitle>
-              {i18n.t("Add New Authorization Key", {
-                context: "modal title"
-              })}
+              <FormattedMessage
+                defaultMessage="Add New Authorization Key"
+                description="dialog header"
+              />
             </DialogTitle>
             <DialogContent>
               <SingleSelectField
@@ -49,8 +53,9 @@ const SiteSettingsKeyDialog: React.StatelessComponent<
                   value: key
                 }))}
                 error={!!errors.keyType}
-                label={i18n.t("Authentication type", {
-                  context: "input label"
+                label={intl.formatMessage({
+                  defaultMessage: "Authentication type",
+                  description: "authentication provider name"
                 })}
                 hint={errors.keyType}
                 name="type"
@@ -61,8 +66,9 @@ const SiteSettingsKeyDialog: React.StatelessComponent<
               <TextField
                 error={!!errors.key}
                 fullWidth
-                label={i18n.t("Key", {
-                  context: "input label"
+                label={intl.formatMessage({
+                  defaultMessage: "Key",
+                  description: "authentication provider API key"
                 })}
                 helperText={errors.key}
                 name="key"
@@ -73,8 +79,8 @@ const SiteSettingsKeyDialog: React.StatelessComponent<
               <TextField
                 error={!!errors.password}
                 fullWidth
-                label={i18n.t("Password", {
-                  context: "input label"
+                label={intl.formatMessage({
+                  defaultMessage: "Password"
                 })}
                 helperText={errors.password}
                 name="password"
@@ -84,12 +90,13 @@ const SiteSettingsKeyDialog: React.StatelessComponent<
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>
-                {i18n.t("Cancel", { context: "button" })}
+                <FormattedMessage {...buttonMessages.cancel} />
               </Button>
               <Button color="primary" type="submit" variant="contained">
-                {i18n.t("Add authentication", {
-                  context: "button"
-                })}
+                <FormattedMessage
+                  defaultMessage="Add authentication"
+                  description="button"
+                />
               </Button>
             </DialogActions>
           </>

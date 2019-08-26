@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T17:58:55.558Z\n"
+"POT-Creation-Date: 2019-08-26T21:32:40.783Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -83,6 +83,14 @@ msgctxt "button"
 msgid "Add Menu"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
+#. [src.siteSettings.components.SiteSettingsKeyDialog.1238948746] - dialog header
+#. defaultMessage is:
+#. Add New Authorization Key
+msgctxt "dialog header"
+msgid "Add New Authorization Key"
+msgstr ""
+
 #: build/locale/src/pages/components/PageDetailsPage/PageDetailsPage.json
 #. [src.pages.components.PageDetailsPage.755314116] - page header
 #. defaultMessage is:
@@ -163,6 +171,14 @@ msgctxt "button"
 msgid "Add attribute"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
+#. [src.siteSettings.components.SiteSettingsKeyDialog.50561933] - button
+#. defaultMessage is:
+#. Add authentication
+msgctxt "button"
+msgid "Add authentication"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryListPage/CategoryListPage.json
 #. [src.categories.components.CategoryListPage.228151782] - button
 #. defaultMessage is:
@@ -201,6 +217,14 @@ msgstr ""
 #. Add customer
 msgctxt "button"
 msgid "Add customer"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsKeys/SiteSettingsKeys.json
+#. [src.siteSettings.components.SiteSettingsKeys.1114030884] - button
+#. defaultMessage is:
+#. Add key
+msgctxt "button"
+msgid "Add key"
 msgstr ""
 
 #: build/locale/src/navigation/components/MenuItems/MenuItems.json
@@ -401,6 +425,22 @@ msgstr ""
 #. Address Information
 msgctxt "header"
 msgid "Address Information"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.1363074570]
+#. defaultMessage is:
+#. Address line 1
+msgctxt "description"
+msgid "Address line 1"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.3121963259]
+#. defaultMessage is:
+#. Address line 2
+msgctxt "description"
+msgid "Address line 2"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
@@ -1103,6 +1143,38 @@ msgctxt "deleted multiple attributes"
 msgid "Attributes successfully delete"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsKeys/SiteSettingsKeys.json
+#. [src.siteSettings.components.SiteSettingsKeys.226491688] - section header
+#. defaultMessage is:
+#. Authentication Keys
+msgctxt "section header"
+msgid "Authentication Keys"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsKeys/SiteSettingsKeys.json
+#. [src.siteSettings.components.SiteSettingsKeys.1270286507] - authentication provider name
+#. defaultMessage is:
+#. Authentication Type
+msgctxt "authentication provider name"
+msgid "Authentication Type"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
+#. [src.siteSettings.components.SiteSettingsPage.2824577864]
+#. defaultMessage is:
+#. Authentication keys
+msgctxt "description"
+msgid "Authentication keys"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
+#. [src.siteSettings.components.SiteSettingsKeyDialog.3039841202] - authentication provider name
+#. defaultMessage is:
+#. Authentication type
+msgctxt "authentication provider name"
+msgid "Authentication type"
+msgstr ""
+
 #: build/locale/src/collections/components/CollectionList/CollectionList.json
 #. [src.collections.components.CollectionList.3326160357] - collection availability
 #. defaultMessage is:
@@ -1391,6 +1463,14 @@ msgctxt "button"
 msgid "Choose photos"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.253031977]
+#. defaultMessage is:
+#. City
+msgctxt "description"
+msgid "City"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherList/VoucherList.json
 #. [src.discounts.components.VoucherList.78726751] - voucher code
 #. defaultMessage is:
@@ -1441,6 +1521,22 @@ msgstr ""
 #. Collections ({quantity})
 msgctxt "number of collections"
 msgid "Collections ({quantity})"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.3570415321]
+#. defaultMessage is:
+#. Company
+msgctxt "description"
+msgid "Company"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
+#. [src.siteSettings.components.SiteSettingsPage.3817101936]
+#. defaultMessage is:
+#. Company information
+msgctxt "description"
+msgid "Company information"
 msgstr ""
 
 #: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
@@ -1521,6 +1617,14 @@ msgstr ""
 #. Could not create order line
 msgctxt "description"
 msgid "Could not create order line"
+msgstr ""
+
+#: build/locale/src/siteSettings/views/index.json
+#. [src.siteSettings.views.2276194921]
+#. defaultMessage is:
+#. Could not delete authorization key: {errorMessage}
+msgctxt "description"
+msgid "Could not delete authorization key: {errorMessage}"
 msgstr ""
 
 #: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
@@ -1613,6 +1717,22 @@ msgstr ""
 #. Countries A to Z
 msgctxt "country selection"
 msgid "Countries A to Z"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.1139500589]
+#. defaultMessage is:
+#. Country
+msgctxt "description"
+msgid "Country"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.944851093]
+#. defaultMessage is:
+#. Country area
+msgctxt "description"
+msgid "Country area"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributePage/AttributePage.json
@@ -2847,6 +2967,18 @@ msgctxt "description"
 msgid "Items successfully fulfilled"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
+#. [src.siteSettings.components.SiteSettingsKeyDialog.2446088470] - authentication provider API key
+#. defaultMessage is:
+#. Key
+#: build/locale/src/siteSettings/components/SiteSettingsKeys/SiteSettingsKeys.json
+#. [src.siteSettings.components.SiteSettingsKeys.2446088470] - authentication provider API key
+#. defaultMessage is:
+#. Key
+msgctxt "authentication provider API key"
+msgid "Key"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
 #. [src.orders.components.OrderListFilter.714411029]
 #. defaultMessage is:
@@ -3191,6 +3323,22 @@ msgctxt "shipping zone"
 msgid "Name"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
+#. [src.siteSettings.components.SiteSettingsDetails.2286355060]
+#. defaultMessage is:
+#. Name of your store
+msgctxt "description"
+msgid "Name of your store"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
+#. [src.siteSettings.components.SiteSettingsDetails.1008586926]
+#. defaultMessage is:
+#. Name of your store is shown on tab in web browser
+msgctxt "description"
+msgid "Name of your store is shown on tab in web browser"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.navigation] - navigation section name
 #. defaultMessage is:
@@ -3297,6 +3445,14 @@ msgstr ""
 #. No draft orders found
 msgctxt "description"
 msgid "No draft orders found"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsKeys/SiteSettingsKeys.json
+#. [src.siteSettings.components.SiteSettingsKeys.3981699144] - no authentication provider API keys
+#. defaultMessage is:
+#. No keys
+msgctxt "no authentication provider API keys"
+msgid "No keys"
 msgstr ""
 
 #: build/locale/src/navigation/components/MenuList/MenuList.json
@@ -3851,6 +4007,14 @@ msgctxt "order fulfillment status"
 msgid "Partially Fulfilled"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
+#. [src.siteSettings.components.SiteSettingsKeyDialog.2237029987]
+#. defaultMessage is:
+#. Password
+msgctxt "description"
+msgid "Password"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderList/OrderList.json
 #. [src.orders.components.OrderList.2743232155] - payment status
 #. defaultMessage is:
@@ -3937,6 +4101,14 @@ msgstr ""
 #. Percentage
 msgctxt "voucher discount type"
 msgid "Percentage"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.1271289966]
+#. defaultMessage is:
+#. Phone
+msgctxt "description"
+msgid "Phone"
 msgstr ""
 
 #: build/locale/src/products/components/ProductImagePage/ProductImagePage.json
@@ -5091,6 +5263,30 @@ msgctxt "description"
 msgid "Stock quantity"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
+#. [src.siteSettings.components.SiteSettingsDetails.1987367127]
+#. defaultMessage is:
+#. Store Description
+msgctxt "description"
+msgid "Store Description"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
+#. [src.siteSettings.components.SiteSettingsDetails.529433178]
+#. defaultMessage is:
+#. Store description is shown on taskbar after your store name
+msgctxt "description"
+msgid "Store description is shown on taskbar after your store name"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.1150975268] - section header
+#. defaultMessage is:
+#. Store information
+msgctxt "section header"
+msgid "Store information"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.1877630205] - attribute properties regarding storefront
 #. defaultMessage is:
@@ -5525,6 +5721,14 @@ msgstr ""
 #. URL
 msgctxt "description"
 msgid "URL"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
+#. [src.siteSettings.components.SiteSettingsDetails.3808773492]
+#. defaultMessage is:
+#. URL of your online store
+msgctxt "description"
+msgid "URL of your online store"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
@@ -6089,6 +6293,14 @@ msgstr ""
 #. Weight range
 msgctxt "order weight range"
 msgid "Weight range"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.2965971965]
+#. defaultMessage is:
+#. ZIP / Postal code
+msgctxt "description"
+msgid "ZIP / Postal code"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json
