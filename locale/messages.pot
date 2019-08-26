@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T17:47:33.625Z\n"
+"POT-Creation-Date: 2019-08-26T17:50:42.071Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,14 @@ msgstr ""
 #. (Optional)
 msgctxt "field is optional"
 msgid "(Optional)"
+msgstr ""
+
+#: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
+#. [src.products.components.ProductOrganization.2805838453] - field is optional
+#. defaultMessage is:
+#. *Optional. Adding product to collection helps users find it.
+msgctxt "field is optional"
+msgid "*Optional. Adding product to collection helps users find it."
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
@@ -91,6 +99,14 @@ msgctxt "dialog header"
 msgid "Add Product"
 msgstr ""
 
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#. [src.products.components.ProductListPage.2775402904] - button
+#. defaultMessage is:
+#. Add Product
+msgctxt "button"
+msgid "Add Product"
+msgstr ""
+
 #: build/locale/src/discounts/components/SaleListPage/SaleListPage.json
 #. [src.discounts.components.SaleListPage.1742771332] - button
 #. defaultMessage is:
@@ -105,6 +121,14 @@ msgstr ""
 #. Add Value
 msgctxt "add attribute value"
 msgid "Add Value"
+msgstr ""
+
+#: build/locale/src/products/views/ProductVariantCreate.json
+#. [src.products.views.2178905289] - header
+#. defaultMessage is:
+#. Add Variant
+msgctxt "header"
+msgid "Add Variant"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
@@ -239,6 +263,14 @@ msgctxt "description"
 msgid "Add search engine title and description to make this page easier to find"
 msgstr ""
 
+#: build/locale/src/products/components/ProductCreatePage/ProductCreatePage.json
+#. [src.products.components.ProductCreatePage.2706108815]
+#. defaultMessage is:
+#. Add search engine title and description to make this product easier to find
+msgctxt "description"
+msgid "Add search engine title and description to make this product easier to find"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderDraftDetailsSummary/OrderDraftDetailsSummary.json
 #. [src.orders.components.OrderDraftDetailsSummary.2429341469] - button
 #. defaultMessage is:
@@ -277,6 +309,18 @@ msgstr ""
 #. Add value
 msgctxt "add attribute value button"
 msgid "Add value"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantNavigation/ProductVariantNavigation.json
+#. [src.products.components.ProductVariantNavigation.2845381934] - button
+#. defaultMessage is:
+#. Add variant
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.2845381934] - button
+#. defaultMessage is:
+#. Add variant
+msgctxt "button"
+msgid "Add variant"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherListPage/VoucherListPage.json
@@ -343,12 +387,44 @@ msgctxt "tab name"
 msgid "All Orders"
 msgstr ""
 
+#: build/locale/src/products/components/ProductImageNavigation/ProductImageNavigation.json
+#. [src.products.components.ProductImageNavigation.3060635772] - section header
+#. defaultMessage is:
+#. All Photos
+msgctxt "section header"
+msgid "All Photos"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#. [src.products.components.ProductListPage.821159718] - tab name
+#. defaultMessage is:
+#. All Products
+msgctxt "tab name"
+msgid "All Products"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
 #. [src.categories.components.CategoryList.3229914152] - section header
 #. defaultMessage is:
 #. All Subcategories
 msgctxt "section header"
 msgid "All Subcategories"
+msgstr ""
+
+#: build/locale/src/products/components/ProductStock/ProductStock.json
+#. [src.products.components.ProductStock.1680952454] - allocated product stock
+#. defaultMessage is:
+#. Allocated: {quantity}
+msgctxt "allocated product stock"
+msgid "Allocated: {quantity}"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantStock/ProductVariantStock.json
+#. [src.products.components.ProductVariantStock.1680952454] - variant allocated stock
+#. defaultMessage is:
+#. Allocated: {quantity}
+msgctxt "variant allocated stock"
+msgid "Allocated: {quantity}"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderPaymentDialog/OrderPaymentDialog.json
@@ -539,12 +615,28 @@ msgctxt "dialog content"
 msgid "Are you sure you want to delete {counter,plural,one{this page} other{{displayQuantity} pages}}?"
 msgstr ""
 
+#: build/locale/src/products/views/ProductList/ProductList.json
+#. [src.products.views.ProductList.2742463171] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this product} other{{displayQuantity} products}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to delete {counter,plural,one{this product} other{{displayQuantity} products}}?"
+msgstr ""
+
 #: build/locale/src/discounts/views/SaleList.json
 #. [src.discounts.views.2516361175] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this sale} other{{displayQuantity} sales}}?
 msgctxt "dialog content"
 msgid "Are you sure you want to delete {counter,plural,one{this sale} other{{displayQuantity} sales}}?"
+msgstr ""
+
+#: build/locale/src/products/views/ProductUpdate/ProductUpdate.json
+#. [src.products.views.ProductUpdate.2446451819] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this variant} other{{displayQuantity} variants}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to delete {counter,plural,one{this variant} other{{displayQuantity} variants}}?"
 msgstr ""
 
 #: build/locale/src/discounts/views/VoucherList.json
@@ -569,6 +661,22 @@ msgstr ""
 #. Are you sure you want to delete {menuName}?
 msgctxt "description"
 msgid "Are you sure you want to delete {menuName}?"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantDeleteDialog/ProductVariantDeleteDialog.json
+#. [src.products.components.ProductVariantDeleteDialog.2297471173] - delete product variant
+#. defaultMessage is:
+#. Are you sure you want to delete {name}?
+msgctxt "delete product variant"
+msgid "Are you sure you want to delete {name}?"
+msgstr ""
+
+#: build/locale/src/products/views/ProductUpdate/ProductUpdate.json
+#. [src.products.views.ProductUpdate.2297471173] - delete product
+#. defaultMessage is:
+#. Are you sure you want to delete {name}?
+msgctxt "delete product"
+msgid "Are you sure you want to delete {name}?"
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
@@ -627,12 +735,28 @@ msgctxt "dialog content"
 msgid "Are you sure you want to publish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
 msgstr ""
 
+#: build/locale/src/products/views/ProductList/ProductList.json
+#. [src.products.views.ProductList.740606822] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to publish {counter,plural,one{this product} other{{displayQuantity} products}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to publish {counter,plural,one{this product} other{{displayQuantity} products}}?"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
 #. [src.orders.components.OrderDraftCancelDialog.3199827590]
 #. defaultMessage is:
 #. Are you sure you want to remove draft #{number}?
 msgctxt "description"
 msgid "Are you sure you want to remove draft #{number}?"
+msgstr ""
+
+#: build/locale/src/products/views/ProductImage.json
+#. [src.products.views.672103788]
+#. defaultMessage is:
+#. Are you sure you want to remove this image?
+msgctxt "description"
+msgid "Are you sure you want to remove this image?"
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
@@ -693,6 +817,14 @@ msgstr ""
 #. Are you sure you want to unpublish {counter,plural,one{this page} other{{displayQuantity} pages}}?
 msgctxt "dialog content"
 msgid "Are you sure you want to unpublish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
+msgstr ""
+
+#: build/locale/src/products/views/ProductList/ProductList.json
+#. [src.products.views.ProductList.193914731] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to unpublish {counter,plural,one{this product} other{{displayQuantity} products}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to unpublish {counter,plural,one{this product} other{{displayQuantity} products}}?"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderPaymentVoidDialog/OrderPaymentVoidDialog.json
@@ -791,6 +923,14 @@ msgctxt "attributes section name"
 msgid "Attributes"
 msgstr ""
 
+#: build/locale/src/products/components/ProductAttributes/ProductAttributes.json
+#. [src.products.components.ProductAttributes.4153345096] - product attributes, section header
+#. defaultMessage is:
+#. Attributes
+msgctxt "product attributes, section header"
+msgid "Attributes"
+msgstr ""
+
 #: build/locale/src/attributes/views/AttributeList/AttributeList.json
 #. [src.attributes.views.AttributeList.3218248395] - deleted multiple attributes
 #. defaultMessage is:
@@ -813,6 +953,22 @@ msgstr ""
 #. Availability
 msgctxt "description"
 msgid "Availability"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.2157131639] - product status
+#. defaultMessage is:
+#. Available
+msgctxt "product status"
+msgid "Available"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.2157131639] - product variant status
+#. defaultMessage is:
+#. Available
+msgctxt "product variant status"
+msgid "Available"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -971,6 +1127,18 @@ msgctxt "number of categories"
 msgid "Categories ({quantity})"
 msgstr ""
 
+#: build/locale/src/products/components/ProductCategoryAndCollectionsForm/ProductCategoryAndCollectionsForm.json
+#. [src.products.components.ProductCategoryAndCollectionsForm.1755013298]
+#. defaultMessage is:
+#. Category
+#: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
+#. [src.products.components.ProductOrganization.1755013298]
+#. defaultMessage is:
+#. Category
+msgctxt "description"
+msgid "Category"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryDetailsForm/CategoryDetailsForm.json
 #. [src.categories.components.CategoryDetailsForm.4037703468]
 #. defaultMessage is:
@@ -1019,12 +1187,36 @@ msgctxt "description"
 msgid "Category name"
 msgstr ""
 
+#: build/locale/src/products/views/ProductList/ProductList.json
+#. [src.products.views.ProductList.224127438] - product status update notification
+#. defaultMessage is:
+#. Changed publication status
+msgctxt "product status update notification"
+msgid "Changed publication status"
+msgstr ""
+
+#: build/locale/src/products/components/ProductPricing/ProductPricing.json
+#. [src.products.components.ProductPricing.3015886868]
+#. defaultMessage is:
+#. Charge taxes for this item
+msgctxt "description"
+msgid "Charge taxes for this item"
+msgstr ""
+
 #: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
 #. [src.discounts.components.DiscountCountrySelectDialog.2177165134]
 #. defaultMessage is:
 #. Choose countries, you want voucher to be limited to, from the list below
 msgctxt "description"
 msgid "Choose countries, you want voucher to be limited to, from the list below"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantImages/ProductVariantImages.json
+#. [src.products.components.ProductVariantImages.989683980] - button
+#. defaultMessage is:
+#. Choose photos
+msgctxt "button"
+msgid "Choose photos"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherList/VoucherList.json
@@ -1055,6 +1247,18 @@ msgctxt "collections section name"
 msgid "Collections"
 msgstr ""
 
+#: build/locale/src/products/components/ProductCategoryAndCollectionsForm/ProductCategoryAndCollectionsForm.json
+#. [src.products.components.ProductCategoryAndCollectionsForm.222873645]
+#. defaultMessage is:
+#. Collections
+#: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
+#. [src.products.components.ProductOrganization.222873645]
+#. defaultMessage is:
+#. Collections
+msgctxt "description"
+msgid "Collections"
+msgstr ""
+
 #: build/locale/src/discounts/components/SaleDetailsPage/SaleDetailsPage.json
 #. [saleDetailsPageCollectionsQuantity] - number of collections
 #. defaultMessage is:
@@ -1065,6 +1269,14 @@ msgstr ""
 #. Collections ({quantity})
 msgctxt "number of collections"
 msgid "Collections ({quantity})"
+msgstr ""
+
+#: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
+#. [src.products.components.ProductOrganization.2754779425] - product is configurable
+#. defaultMessage is:
+#. Configurable
+msgctxt "product is configurable"
+msgid "Configurable"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -1097,6 +1309,14 @@ msgstr ""
 #. Content
 msgctxt "page content"
 msgid "Content"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantPrice/ProductVariantPrice.json
+#. [src.products.components.ProductVariantPrice.1416480328]
+#. defaultMessage is:
+#. Cost price override
+msgctxt "description"
+msgid "Cost price override"
 msgstr ""
 
 #: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
@@ -1211,12 +1431,28 @@ msgctxt "page header"
 msgid "Create New Category"
 msgstr ""
 
+#: build/locale/src/products/views/ProductCreate.json
+#. [src.products.views.1542417144] - window title
+#. defaultMessage is:
+#. Create Product
+msgctxt "window title"
+msgid "Create Product"
+msgstr ""
+
 #: build/locale/src/discounts/components/SaleCreatePage/SaleCreatePage.json
 #. [src.discounts.components.SaleCreatePage.3866518732] - page header
 #. defaultMessage is:
 #. Create Sale
 msgctxt "page header"
 msgid "Create Sale"
+msgstr ""
+
+#: build/locale/src/products/views/ProductVariantCreate.json
+#. [src.products.views.2362587265] - window title
+#. defaultMessage is:
+#. Create Variant
+msgctxt "window title"
+msgid "Create Variant"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherCreatePage/VoucherCreatePage.json
@@ -1535,6 +1771,30 @@ msgctxt "dialog header"
 msgid "Delete Pages"
 msgstr ""
 
+#: build/locale/src/products/views/ProductUpdate/ProductUpdate.json
+#. [src.products.views.ProductUpdate.879305849] - dialog header
+#. defaultMessage is:
+#. Delete Product
+msgctxt "dialog header"
+msgid "Delete Product"
+msgstr ""
+
+#: build/locale/src/products/views/ProductUpdate/ProductUpdate.json
+#. [src.products.views.ProductUpdate.1454532689] - dialog header
+#. defaultMessage is:
+#. Delete Product Variants
+msgctxt "dialog header"
+msgid "Delete Product Variants"
+msgstr ""
+
+#: build/locale/src/products/views/ProductList/ProductList.json
+#. [src.products.views.ProductList.400629795] - dialog header
+#. defaultMessage is:
+#. Delete Products
+msgctxt "dialog header"
+msgid "Delete Products"
+msgstr ""
+
 #: build/locale/src/discounts/views/SaleDetails.json
 #. [src.discounts.views.506030254] - dialog header
 #. defaultMessage is:
@@ -1549,6 +1809,22 @@ msgstr ""
 #. Delete Sales
 msgctxt "dialog header"
 msgid "Delete Sales"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreatePage/ProductVariantCreatePage.json
+#. [src.products.components.ProductVariantCreatePage.3726089650] - button
+#. defaultMessage is:
+#. Delete Variant
+msgctxt "button"
+msgid "Delete Variant"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantDeleteDialog/ProductVariantDeleteDialog.json
+#. [src.products.components.ProductVariantDeleteDialog.3726089650] - dialog header
+#. defaultMessage is:
+#. Delete Variant
+msgctxt "dialog header"
+msgid "Delete Variant"
 msgstr ""
 
 #: build/locale/src/discounts/views/VoucherDetails.json
@@ -1673,6 +1949,14 @@ msgstr ""
 #. Delete products
 msgctxt "dialog title"
 msgid "Delete products"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantDeleteDialog/ProductVariantDeleteDialog.json
+#. [src.products.components.ProductVariantDeleteDialog.1583616500] - button
+#. defaultMessage is:
+#. Delete variant
+msgctxt "button"
+msgid "Delete variant"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
@@ -1831,6 +2115,14 @@ msgctxt "edit menu item, header"
 msgid "Edit Item"
 msgstr ""
 
+#: build/locale/src/products/components/ProductImagePage/ProductImagePage.json
+#. [src.products.components.ProductImagePage.2546267317] - header
+#. defaultMessage is:
+#. Edit Photo
+msgctxt "header"
+msgid "Edit Photo"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderShippingMethodEditDialog/OrderShippingMethodEditDialog.json
 #. [src.orders.components.OrderShippingMethodEditDialog.3369240294] - dialog header
 #. defaultMessage is:
@@ -1845,6 +2137,14 @@ msgstr ""
 #. Edit Value
 msgctxt "edit attribute value"
 msgid "Edit Value"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.1703363919] - product variant attributes, button
+#. defaultMessage is:
+#. Edit attributes
+msgctxt "product variant attributes, button"
+msgid "Edit attributes"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
@@ -2127,6 +2427,14 @@ msgctxt "subheader"
 msgid "Here is some information we gathered about your store"
 msgstr ""
 
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.77815154] - product is hidden
+#. defaultMessage is:
+#. Hidden
+msgctxt "product is hidden"
+msgid "Hidden"
+msgstr ""
+
 #: build/locale/src/pages/components/PageSlug/PageSlug.json
 #. [src.pages.components.PageSlug.4210828158]
 #. defaultMessage is:
@@ -2149,6 +2457,50 @@ msgstr ""
 #. If this option is disabled, discount will be counted for every eligible product
 msgctxt "description"
 msgid "If this option is disabled, discount will be counted for every eligible product"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantImageSelectDialog/ProductVariantImageSelectDialog.json
+#. [src.products.components.ProductVariantImageSelectDialog.3196043669] - dialog header
+#. defaultMessage is:
+#. Image Selection
+msgctxt "dialog header"
+msgid "Image Selection"
+msgstr ""
+
+#: build/locale/src/products/components/ProductImages/ProductImages.json
+#. [src.products.components.ProductImages.3240888698] - section header
+#. defaultMessage is:
+#. Images
+#: build/locale/src/products/components/ProductVariantImages/ProductVariantImages.json
+#. [src.products.components.ProductVariantImages.3240888698] - section header
+#. defaultMessage is:
+#. Images
+msgctxt "section header"
+msgid "Images"
+msgstr ""
+
+#: build/locale/src/products/components/ProductStock/ProductStock.json
+#. [productStockHeader] - product stock, section header
+#. defaultMessage is:
+#. Inventory
+msgctxt "product stock, section header"
+msgid "Inventory"
+msgstr ""
+
+#: build/locale/src/products/components/ProductStock/ProductStock.json
+#. [prodictStockInventoryLabel] - product stock
+#. defaultMessage is:
+#. Inventory
+msgctxt "product stock"
+msgid "Inventory"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantStock/ProductVariantStock.json
+#. [src.products.components.ProductVariantStock.3490038570] - product variant stock
+#. defaultMessage is:
+#. Inventory
+msgctxt "product variant stock"
+msgid "Inventory"
 msgstr ""
 
 #: build/locale/src/navigation/components/MenuList/MenuList.json
@@ -2415,6 +2767,10 @@ msgstr ""
 #. [src.collections.components.CollectionProducts.636461959] - product name
 #. defaultMessage is:
 #. Name
+#: build/locale/src/products/components/ProductDetailsForm/ProductDetailsForm.json
+#. [src.products.components.ProductDetailsForm.636461959] - product name
+#. defaultMessage is:
+#. Name
 msgctxt "product name"
 msgid "Name"
 msgstr ""
@@ -2451,12 +2807,36 @@ msgctxt "menu item name"
 msgid "Name"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.636461959] - product variant name
+#. defaultMessage is:
+#. Name
+msgctxt "product variant name"
+msgid "Name"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.navigation] - navigation section name
 #. defaultMessage is:
 #. Navigation
 msgctxt "navigation section name"
 msgid "Navigation"
+msgstr ""
+
+#: build/locale/src/products/views/ProductCreate.json
+#. [src.products.views.1591632382] - page header
+#. defaultMessage is:
+#. New Product
+msgctxt "page header"
+msgid "New Product"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantNavigation/ProductVariantNavigation.json
+#. [src.products.components.ProductVariantNavigation.3185562157] - variant name
+#. defaultMessage is:
+#. New Variant
+msgctxt "variant name"
+msgid "New Variant"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
@@ -2835,7 +3215,23 @@ msgstr ""
 #. [src.optionalField] - field is optional
 #. defaultMessage is:
 #. Optional
+#: build/locale/src/products/components/ProductImagePage/ProductImagePage.json
+#. [src.products.components.ProductImagePage.1905082483] - field is optional
+#. defaultMessage is:
+#. Optional
 msgctxt "field is optional"
+msgid "Optional"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantPrice/ProductVariantPrice.json
+#. [productVariantPriceOptionalPriceOverrideField] - optional field
+#. defaultMessage is:
+#. Optional
+#: build/locale/src/products/components/ProductVariantPrice/ProductVariantPrice.json
+#. [productVariantPriceOptionalCostPriceField] - optional field
+#. defaultMessage is:
+#. Optional
+msgctxt "optional field"
 msgid "Optional"
 msgstr ""
 
@@ -2987,6 +3383,30 @@ msgctxt "description"
 msgid "Orders cancelled"
 msgstr ""
 
+#: build/locale/src/products/components/ProductCategoryAndCollectionsForm/ProductCategoryAndCollectionsForm.json
+#. [src.products.components.ProductCategoryAndCollectionsForm.3829816432] - product organization, header
+#. defaultMessage is:
+#. Organization
+msgctxt "product organization, header"
+msgid "Organization"
+msgstr ""
+
+#: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
+#. [src.products.components.ProductOrganization.2364184433] - section header
+#. defaultMessage is:
+#. Organize Product
+msgctxt "section header"
+msgid "Organize Product"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.1640493122] - product status
+#. defaultMessage is:
+#. Out Of Stock
+msgctxt "product status"
+msgid "Out Of Stock"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json
 #. [src.orders.components.OrderPayment.353147224] - order payment
 #. defaultMessage is:
@@ -3107,6 +3527,22 @@ msgctxt "voucher discount type"
 msgid "Percentage"
 msgstr ""
 
+#: build/locale/src/products/components/ProductImagePage/ProductImagePage.json
+#. [src.products.components.ProductImagePage.3822382625] - section header
+#. defaultMessage is:
+#. Photo Information
+msgctxt "section header"
+msgid "Photo Information"
+msgstr ""
+
+#: build/locale/src/products/components/ProductImagePage/ProductImagePage.json
+#. [src.products.components.ProductImagePage.367472710] - section header
+#. defaultMessage is:
+#. Photo View
+msgctxt "section header"
+msgid "Photo View"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.3590282519] - attribute position in storefront filters
 #. defaultMessage is:
@@ -3135,6 +3571,14 @@ msgstr ""
 #. [src.orders.components.OrderFulfillment.1134347598] - product price
 #. defaultMessage is:
 #. Price
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#. [src.products.components.ProductListPage.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#: build/locale/src/products/components/ProductPricing/ProductPricing.json
+#. [src.products.components.ProductPricing.1134347598] - product price
+#. defaultMessage is:
+#. Price
 msgctxt "product price"
 msgid "Price"
 msgstr ""
@@ -3147,11 +3591,43 @@ msgctxt "product unit price"
 msgid "Price"
 msgstr ""
 
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.1134347598]
+#. defaultMessage is:
+#. Price
+msgctxt "description"
+msgid "Price"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.1134347598] - product variant price
+#. defaultMessage is:
+#. Price
+msgctxt "product variant price"
+msgid "Price"
+msgstr ""
+
 #: build/locale/src/discounts/components/SalePricing/SalePricing.json
 #. [src.discounts.components.SalePricing.1099355007] - sale pricing, header
 #. defaultMessage is:
 #. Pricing
 msgctxt "sale pricing, header"
+msgid "Pricing"
+msgstr ""
+
+#: build/locale/src/products/components/ProductPricing/ProductPricing.json
+#. [src.products.components.ProductPricing.1099355007] - product pricing
+#. defaultMessage is:
+#. Pricing
+msgctxt "product pricing"
+msgid "Pricing"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantPrice/ProductVariantPrice.json
+#. [src.products.components.ProductVariantPrice.1099355007] - product pricing, section header
+#. defaultMessage is:
+#. Pricing
+msgctxt "product pricing, section header"
 msgid "Pricing"
 msgstr ""
 
@@ -3195,6 +3671,10 @@ msgstr ""
 #. [src.discounts.components.DiscountProducts.4257289053]
 #. defaultMessage is:
 #. Product Type
+#: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
+#. [src.products.components.ProductOrganization.4257289053]
+#. defaultMessage is:
+#. Product Type
 msgctxt "description"
 msgid "Product Type"
 msgstr ""
@@ -3207,12 +3687,32 @@ msgctxt "product types section name"
 msgid "Product Types"
 msgstr ""
 
+#: build/locale/src/products/views/ProductCreate.json
+#. [src.products.views.2899821092]
+#. defaultMessage is:
+#. Product created
+#: build/locale/src/products/views/ProductVariantCreate.json
+#. [src.products.views.2899821092]
+#. defaultMessage is:
+#. Product created
+msgctxt "description"
+msgid "Product created"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderFulfillmentDialog/OrderFulfillmentDialog.json
 #. [src.orders.components.OrderFulfillmentDialog.4046223826]
 #. defaultMessage is:
 #. Product name
 msgctxt "description"
 msgid "Product name"
+msgstr ""
+
+#: build/locale/src/products/views/ProductUpdate/ProductUpdate.json
+#. [src.products.views.ProductUpdate.4108890645]
+#. defaultMessage is:
+#. Product removed
+msgctxt "description"
+msgid "Product removed"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
@@ -3243,6 +3743,14 @@ msgctxt "number of products"
 msgid "Products"
 msgstr ""
 
+#: build/locale/src/intl.json
+#. [src.products] - products section name
+#. defaultMessage is:
+#. Products
+msgctxt "products section name"
+msgid "Products"
+msgstr ""
+
 #: build/locale/src/discounts/components/SaleDetailsPage/SaleDetailsPage.json
 #. [saleDetailsPageProductsQuantity] - number of products
 #. defaultMessage is:
@@ -3269,6 +3777,14 @@ msgstr ""
 #. Products in {name}
 msgctxt "products in collection"
 msgid "Products in {name}"
+msgstr ""
+
+#: build/locale/src/products/views/ProductList/ProductList.json
+#. [src.products.views.ProductList.1694086800]
+#. defaultMessage is:
+#. Products removed
+msgctxt "description"
+msgid "Products removed"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
@@ -3311,12 +3827,28 @@ msgctxt "publish page, button"
 msgid "Publish"
 msgstr ""
 
+#: build/locale/src/products/views/ProductList/ProductList.json
+#. [src.products.views.ProductList.1547167026] - publish product, button
+#. defaultMessage is:
+#. Publish
+msgctxt "publish product, button"
+msgid "Publish"
+msgstr ""
+
 #: build/locale/src/pages/views/PageList.json
 #. [src.pages.views.2321087286] - dialog header
 #. defaultMessage is:
 #. Publish Pages
 msgctxt "dialog header"
 msgid "Publish Pages"
+msgstr ""
+
+#: build/locale/src/products/views/ProductList/ProductList.json
+#. [src.products.views.ProductList.2946646245] - dialog header
+#. defaultMessage is:
+#. Publish Products
+msgctxt "dialog header"
+msgid "Publish Products"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
@@ -3352,6 +3884,14 @@ msgstr ""
 #. defaultMessage is:
 #. Published
 msgctxt "page status"
+msgid "Published"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#. [src.products.components.ProductListPage.3640454975] - product status
+#. defaultMessage is:
+#. Published
+msgctxt "product status"
 msgid "Published"
 msgstr ""
 
@@ -3397,6 +3937,10 @@ msgstr ""
 
 #: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
 #. [src.orders.components.OrderListFilter.2545228781]
+#. defaultMessage is:
+#. Range
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.2545228781]
 #. defaultMessage is:
 #. Range
 msgctxt "description"
@@ -3463,6 +4007,14 @@ msgctxt "button"
 msgid "Remove"
 msgstr ""
 
+#: build/locale/src/products/views/ProductImage.json
+#. [src.products.views.490753666] - dialog header
+#. defaultMessage is:
+#. Remove Image
+msgctxt "dialog header"
+msgid "Remove Image"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
 #. [src.orders.components.OrderDraftCancelDialog.500287069] - dialog header
 #. defaultMessage is:
@@ -3527,6 +4079,26 @@ msgctxt "product's sku"
 msgid "SKU"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.693960049]
+#. defaultMessage is:
+#. SKU
+msgctxt "description"
+msgid "SKU"
+msgstr ""
+
+#: build/locale/src/products/components/ProductStock/ProductStock.json
+#. [src.products.components.ProductStock.2585918415]
+#. defaultMessage is:
+#. SKU (Stock Keeping Unit)
+#: build/locale/src/products/components/ProductVariantStock/ProductVariantStock.json
+#. [src.products.components.ProductVariantStock.2585918415]
+#. defaultMessage is:
+#. SKU (Stock Keeping Unit)
+msgctxt "description"
+msgid "SKU (Stock Keeping Unit)"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
 #. [src.orders.components.OrderProductAddDialog.2272209368] - variant sku
 #. defaultMessage is:
@@ -3557,6 +4129,14 @@ msgstr ""
 #. Save
 msgctxt "button"
 msgid "Save"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreatePage/ProductVariantCreatePage.json
+#. [src.products.components.ProductVariantCreatePage.2853608829] - button
+#. defaultMessage is:
+#. Save variant
+msgctxt "button"
+msgid "Save variant"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -3591,6 +4171,14 @@ msgctxt "description"
 msgid "Search Products"
 msgstr ""
 
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#. [src.products.components.ProductListPage.3550330425]
+#. defaultMessage is:
+#. Search Products...
+msgctxt "description"
+msgid "Search Products..."
+msgstr ""
+
 #: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
 #. [src.discounts.components.DiscountCountrySelectDialog.2110418881] - search box placeholder
 #. defaultMessage is:
@@ -3615,12 +4203,36 @@ msgctxt "attribute can be searched in dashboard"
 msgid "Searchable"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariantImages/ProductVariantImages.json
+#. [src.products.components.ProductVariantImages.3449133076]
+#. defaultMessage is:
+#. Select a specific variant image from product images
+msgctxt "description"
+msgid "Select a specific variant image from product images"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderListPage/OrderListPage.json
 #. [src.orders.components.OrderListPage.3524904717]
 #. defaultMessage is:
 #. Select all orders where:
 msgctxt "description"
 msgid "Select all orders where:"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#. [src.products.components.ProductListPage.1421689426]
+#. defaultMessage is:
+#. Select all products where:
+msgctxt "description"
+msgid "Select all products where:"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantPrice/ProductVariantPrice.json
+#. [src.products.components.ProductVariantPrice.2238565650]
+#. defaultMessage is:
+#. Selling price override
+msgctxt "description"
+msgid "Selling price override"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
@@ -3719,6 +4331,14 @@ msgctxt "button"
 msgid "Show"
 msgstr ""
 
+#: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
+#. [src.products.components.ProductOrganization.150865454] - product is not configurable
+#. defaultMessage is:
+#. Simple
+msgctxt "product is not configurable"
+msgid "Simple"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.siteSettings] - site settings section name
 #. defaultMessage is:
@@ -3753,6 +4373,14 @@ msgstr ""
 #. Specific Date
 msgctxt "description"
 msgid "Specific Date"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.2844426531]
+#. defaultMessage is:
+#. Specific Price
+msgctxt "description"
+msgid "Specific Price"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -3817,6 +4445,46 @@ msgstr ""
 #. Status
 msgctxt "order fulfillment status"
 msgid "Status"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.1756106276] - product status
+#. defaultMessage is:
+#. Status
+msgctxt "product status"
+msgid "Status"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.1756106276] - product variant status
+#. defaultMessage is:
+#. Status
+msgctxt "product variant status"
+msgid "Status"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.3841616483] - product stock
+#. defaultMessage is:
+#. Stock
+msgctxt "product stock"
+msgid "Stock"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantStock/ProductVariantStock.json
+#. [src.products.components.ProductVariantStock.3841616483] - product variant stock, section header
+#. defaultMessage is:
+#. Stock
+msgctxt "product variant stock, section header"
+msgid "Stock"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.3645081351]
+#. defaultMessage is:
+#. Stock quantity
+msgctxt "description"
+msgid "Stock quantity"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
@@ -3987,6 +4655,14 @@ msgctxt "attribute slug input field helper text"
 msgid "This is used internally. Make sure you don’t use spaces"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.3156701241]
+#. defaultMessage is:
+#. This product has no variants
+msgctxt "description"
+msgid "This product has no variants"
+msgstr ""
+
 #: build/locale/src/discounts/components/SalePricing/SalePricing.json
 #. [src.discounts.components.SalePricing.2503204759] - time during which sale is active
 #. defaultMessage is:
@@ -4119,6 +4795,10 @@ msgstr ""
 #. [src.collections.components.CollectionProducts.1952810469] - product type
 #. defaultMessage is:
 #. Type
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#. [src.products.components.ProductListPage.1952810469] - product type
+#. defaultMessage is:
+#. Type
 msgctxt "product type"
 msgid "Type"
 msgstr ""
@@ -4243,6 +4923,14 @@ msgctxt "dialog title"
 msgid "Unassign products from collection"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.1033175132] - product variant status
+#. defaultMessage is:
+#. Unavailable
+msgctxt "product variant status"
+msgid "Unavailable"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.undo] - button
 #. defaultMessage is:
@@ -4283,12 +4971,28 @@ msgctxt "unpublish page, button"
 msgid "Unpublish"
 msgstr ""
 
+#: build/locale/src/products/views/ProductList/ProductList.json
+#. [src.products.views.ProductList.2237014112] - unpublish product, button
+#. defaultMessage is:
+#. Unpublish
+msgctxt "unpublish product, button"
+msgid "Unpublish"
+msgstr ""
+
 #: build/locale/src/pages/views/PageList.json
 #. [src.pages.views.158565417] - dialog header
 #. defaultMessage is:
 #. Unpublish Pages
 msgctxt "dialog header"
 msgid "Unpublish Pages"
+msgstr ""
+
+#: build/locale/src/products/views/ProductList/ProductList.json
+#. [src.products.views.ProductList.3362608461] - dialog header
+#. defaultMessage is:
+#. Unpublish Products
+msgctxt "dialog header"
+msgid "Unpublish Products"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
@@ -4355,6 +5059,14 @@ msgctxt "attribute can be searched in storefront"
 msgid "Use in faceted search"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.277989856]
+#. defaultMessage is:
+#. Use variants for products that come in a variety of versions for example different sizes or colors
+msgctxt "description"
+msgid "Use variants for products that come in a variety of versions for example different sizes or colors"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
 #. [src.customers.components.CustomerDetails.2968565128] - check to mark this account as active
 #. defaultMessage is:
@@ -4411,6 +5123,14 @@ msgctxt "section header"
 msgid "Value"
 msgstr ""
 
+#: build/locale/src/products/components/ProductAttributes/ProductAttributes.json
+#. [src.products.components.ProductAttributes.1148029984] - attribute value
+#. defaultMessage is:
+#. Value
+msgctxt "attribute value"
+msgid "Value"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
 #. [src.attributes.components.AttributeDetails.2592224946] - check to require attribute to have value
 #. defaultMessage is:
@@ -4425,6 +5145,34 @@ msgstr ""
 #. Value deleted
 msgctxt "attribute value deleted"
 msgid "Value deleted"
+msgstr ""
+
+#: build/locale/src/products/components/ProductAttributes/ProductAttributes.json
+#. [src.products.components.ProductAttributes.1207761269] - attribute values
+#. defaultMessage is:
+#. Values
+msgctxt "attribute values"
+msgid "Values"
+msgstr ""
+
+#: build/locale/src/products/views/ProductVariant.json
+#. [src.products.views.2279302139]
+#. defaultMessage is:
+#. Variant removed
+msgctxt "description"
+msgid "Variant removed"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantNavigation/ProductVariantNavigation.json
+#. [src.products.components.ProductVariantNavigation.2153006789] - section header
+#. defaultMessage is:
+#. Variants
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.2153006789] - section header
+#. defaultMessage is:
+#. Variants
+msgctxt "section header"
+msgid "Variants"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
@@ -4459,11 +5207,27 @@ msgctxt "page status"
 msgid "Visibility"
 msgstr ""
 
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.1459686496] - product visibility
+#. defaultMessage is:
+#. Visibility
+msgctxt "product visibility"
+msgid "Visibility"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
 #. [src.attributes.components.AttributeList.643174786] - attribute is visible
 #. defaultMessage is:
 #. Visible
 msgctxt "attribute is visible"
+msgid "Visible"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.643174786] - product is visible
+#. defaultMessage is:
+#. Visible
+msgctxt "product is visible"
 msgid "Visible"
 msgstr ""
 
@@ -4539,11 +5303,27 @@ msgctxt "description"
 msgid "equals"
 msgstr ""
 
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.3477667254] - product price
+#. defaultMessage is:
+#. equals
+msgctxt "product price"
+msgid "equals"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
 #. [src.orders.components.OrderListFilter.1438173764] - date is set as
 #. defaultMessage is:
 #. is set as
 msgctxt "date is set as"
+msgid "is set as"
+msgstr ""
+
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.1438173764] - product status is set as
+#. defaultMessage is:
+#. is set as
+msgctxt "product status is set as"
 msgid "is set as"
 msgstr ""
 
@@ -4593,6 +5373,14 @@ msgstr ""
 #. {fullName}'s Address Book
 msgctxt "customer's address book, header"
 msgid "{fullName}'s Address Book"
+msgstr ""
+
+#: build/locale/src/products/components/ProductAttributes/ProductAttributes.json
+#. [src.products.components.ProductAttributes.1071548120] - number of product attributes
+#. defaultMessage is:
+#. {number} Attributes
+msgctxt "number of product attributes"
+msgid "{number} Attributes"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json

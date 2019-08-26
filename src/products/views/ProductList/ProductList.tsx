@@ -3,6 +3,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
@@ -19,7 +20,6 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import i18n from "@saleor/i18n";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import ProductListPage from "../../components/ProductListPage";
@@ -67,6 +67,8 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST
   );
+  const intl = useIntl();
+
   const tabs = getFilterTabs();
 
   const currentTab =
@@ -155,7 +157,9 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
           if (data.productBulkDelete.errors.length === 0) {
             closeModal();
             notify({
-              text: i18n.t("Products removed")
+              text: intl.formatMessage({
+                defaultMessage: "Products removed"
+              })
             });
             reset();
             refetch();
@@ -166,7 +170,10 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
           if (data.productBulkPublish.errors.length === 0) {
             closeModal();
             notify({
-              text: i18n.t("Changed publication status")
+              text: intl.formatMessage({
+                defaultMessage: "Changed publication status",
+                description: "product status update notification"
+              })
             });
             reset();
             refetch();
@@ -235,13 +242,19 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                                 openModal("unpublish", listElements)
                               }
                             >
-                              {i18n.t("Unpublish")}
+                              <FormattedMessage
+                                defaultMessage="Unpublish"
+                                description="unpublish product, button"
+                              />
                             </Button>
                             <Button
                               color="primary"
                               onClick={() => openModal("publish", listElements)}
                             >
-                              {i18n.t("Publish")}
+                              <FormattedMessage
+                                defaultMessage="Publish"
+                                description="publish product, button"
+                              />
                             </Button>
                             <IconButton
                               color="primary"
@@ -274,22 +287,29 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                             variables: { ids: params.ids }
                           })
                         }
-                        title={i18n.t("Remove products")}
+                        title={intl.formatMessage({
+                          defaultMessage: "Delete Products",
+                          description: "dialog header"
+                        })}
                         variant="delete"
                       >
-                        <DialogContentText
-                          dangerouslySetInnerHTML={{
-                            __html: i18n.t(
-                              "Are you sure you want to remove <strong>{{ number }}</strong> products?",
-                              {
-                                number: maybe(
-                                  () => params.ids.length.toString(),
-                                  "..."
-                                )
-                              }
-                            )
-                          }}
-                        />
+                        <DialogContentText>
+                          <FormattedMessage
+                            defaultMessage="Are you sure you want to delete {counter, plural,
+            one {this product}
+            other {{displayQuantity} products}
+          }?"
+                            description="dialog content"
+                            values={{
+                              counter: maybe(() => params.ids.length),
+                              displayQuantity: (
+                                <strong>
+                                  {maybe(() => params.ids.length)}
+                                </strong>
+                              )
+                            }}
+                          />
+                        </DialogContentText>
                       </ActionDialog>
                       <ActionDialog
                         open={params.action === "publish"}
@@ -303,21 +323,28 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                             }
                           })
                         }
-                        title={i18n.t("Publish products")}
+                        title={intl.formatMessage({
+                          defaultMessage: "Publish Products",
+                          description: "dialog header"
+                        })}
                       >
-                        <DialogContentText
-                          dangerouslySetInnerHTML={{
-                            __html: i18n.t(
-                              "Are you sure you want to publish <strong>{{ number }}</strong> products?",
-                              {
-                                number: maybe(
-                                  () => params.ids.length.toString(),
-                                  "..."
-                                )
-                              }
-                            )
-                          }}
-                        />
+                        <DialogContentText>
+                          <FormattedMessage
+                            defaultMessage="Are you sure you want to publish {counter, plural,
+            one {this product}
+            other {{displayQuantity} products}
+          }?"
+                            description="dialog content"
+                            values={{
+                              counter: maybe(() => params.ids.length),
+                              displayQuantity: (
+                                <strong>
+                                  {maybe(() => params.ids.length)}
+                                </strong>
+                              )
+                            }}
+                          />
+                        </DialogContentText>
                       </ActionDialog>
                       <ActionDialog
                         open={params.action === "unpublish"}
@@ -331,21 +358,28 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                             }
                           })
                         }
-                        title={i18n.t("Unpublish products")}
+                        title={intl.formatMessage({
+                          defaultMessage: "Unpublish Products",
+                          description: "dialog header"
+                        })}
                       >
-                        <DialogContentText
-                          dangerouslySetInnerHTML={{
-                            __html: i18n.t(
-                              "Are you sure you want to unpublish <strong>{{ number }}</strong> products?",
-                              {
-                                number: maybe(
-                                  () => params.ids.length.toString(),
-                                  "..."
-                                )
-                              }
-                            )
-                          }}
-                        />
+                        <DialogContentText>
+                          <FormattedMessage
+                            defaultMessage="Are you sure you want to unpublish {counter, plural,
+            one {this product}
+            other {{displayQuantity} products}
+          }?"
+                            description="dialog content"
+                            values={{
+                              counter: maybe(() => params.ids.length),
+                              displayQuantity: (
+                                <strong>
+                                  {maybe(() => params.ids.length)}
+                                </strong>
+                              )
+                            }}
+                          />
+                        </DialogContentText>
                       </ActionDialog>
                       <SaveFilterTabDialog
                         open={params.action === "save-search"}

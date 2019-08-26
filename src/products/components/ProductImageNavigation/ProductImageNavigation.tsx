@@ -8,10 +8,10 @@ import {
 } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -64,31 +64,41 @@ const ProductImageNavigation = withStyles(styles, {
     highlighted,
     images,
     onRowClick
-  }: ProductImageNavigationProps) => (
-    <Card className={classes.card}>
-      <CardTitle title={i18n.t("All photos")} />
-      <CardContent>
-        {images === undefined ? (
-          <Skeleton />
-        ) : (
-          <div className={classes.root}>
-            {images.map(image => (
-              <div
-                className={classNames({
-                  [classes.imageContainer]: true,
-                  [classes.highlightedImageContainer]: image.id === highlighted
-                })}
-                onClick={onRowClick(image.id)}
-                key={image.id}
-              >
-                <img className={classes.image} src={image.url} />
-              </div>
-            ))}
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  )
+  }: ProductImageNavigationProps) => {
+    const intl = useIntl();
+
+    return (
+      <Card className={classes.card}>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "All Photos",
+            description: "section header"
+          })}
+        />
+        <CardContent>
+          {images === undefined ? (
+            <Skeleton />
+          ) : (
+            <div className={classes.root}>
+              {images.map(image => (
+                <div
+                  className={classNames({
+                    [classes.imageContainer]: true,
+                    [classes.highlightedImageContainer]:
+                      image.id === highlighted
+                  })}
+                  onClick={onRowClick(image.id)}
+                  key={image.id}
+                >
+                  <img className={classes.image} src={image.url} />
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    );
+  }
 );
 ProductImageNavigation.displayName = "ProductImageNavigation";
 export default ProductImageNavigation;

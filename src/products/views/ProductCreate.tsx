@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -7,7 +8,6 @@ import useShop from "@saleor/hooks/useShop";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "../../config";
 import SearchCategories from "../../containers/SearchCategories";
 import SearchCollections from "../../containers/SearchCollections";
-import i18n from "../../i18n";
 import { decimal, getMutationState, maybe } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
@@ -27,6 +27,7 @@ export const ProductUpdate: React.StatelessComponent<
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
+  const intl = useIntl();
 
   const handleAttributesEdit = undefined;
   const handleBack = () => navigate(productListUrl());
@@ -41,7 +42,9 @@ export const ProductUpdate: React.StatelessComponent<
                 const handleSuccess = (data: ProductCreate) => {
                   if (data.productCreate.errors.length === 0) {
                     notify({
-                      text: i18n.t("Product created")
+                      text: intl.formatMessage({
+                        defaultMessage: "Product created"
+                      })
                     });
                     navigate(productUrl(data.productCreate.product.id));
                   } else {
@@ -109,7 +112,12 @@ export const ProductUpdate: React.StatelessComponent<
                       );
                       return (
                         <>
-                          <WindowTitle title={i18n.t("Create product")} />
+                          <WindowTitle
+                            title={intl.formatMessage({
+                              defaultMessage: "Create Product",
+                              description: "window title"
+                            })}
+                          />
                           <ProductCreatePage
                             currency={maybe(() => shop.defaultCurrency)}
                             categories={maybe(
@@ -127,7 +135,10 @@ export const ProductUpdate: React.StatelessComponent<
                             )}
                             fetchCategories={searchCategory}
                             fetchCollections={searchCollection}
-                            header={i18n.t("New Product")}
+                            header={intl.formatMessage({
+                              defaultMessage: "New Product",
+                              description: "page header"
+                            })}
                             productTypes={maybe(() =>
                               data.productTypes.edges.map(edge => edge.node)
                             )}

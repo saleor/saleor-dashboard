@@ -7,11 +7,11 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import PriceField from "@saleor/components/PriceField";
-import i18n from "../../../i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -33,31 +33,45 @@ interface ProductPricingProps extends WithStyles<typeof styles> {
 }
 
 const ProductPricing = withStyles(styles, { name: "ProductPricing" })(
-  ({ classes, currency, data, disabled, onChange }: ProductPricingProps) => (
-    <Card>
-      <CardTitle title={i18n.t("Pricing")}>
-        <ControlledCheckbox
-          name="chargeTaxes"
-          label={i18n.t("Charge taxes for this item")}
-          checked={data.chargeTaxes}
-          onChange={onChange}
-          disabled={disabled}
-        />
-      </CardTitle>
-      <CardContent>
-        <div className={classes.root}>
-          <PriceField
-            disabled={disabled}
-            label={i18n.t("Price")}
-            name="basePrice"
-            value={data.basePrice}
-            currencySymbol={currency}
+  ({ classes, currency, data, disabled, onChange }: ProductPricingProps) => {
+    const intl = useIntl();
+
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Pricing",
+            description: "product pricing"
+          })}
+        >
+          <ControlledCheckbox
+            name="chargeTaxes"
+            label={intl.formatMessage({
+              defaultMessage: "Charge taxes for this item"
+            })}
+            checked={data.chargeTaxes}
             onChange={onChange}
+            disabled={disabled}
           />
-        </div>
-      </CardContent>
-    </Card>
-  )
+        </CardTitle>
+        <CardContent>
+          <div className={classes.root}>
+            <PriceField
+              disabled={disabled}
+              label={intl.formatMessage({
+                defaultMessage: "Price",
+                description: "product price"
+              })}
+              name="basePrice"
+              value={data.basePrice}
+              currencySymbol={currency}
+              onChange={onChange}
+            />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 );
 ProductPricing.displayName = "ProductPricing";
 export default ProductPricing;
