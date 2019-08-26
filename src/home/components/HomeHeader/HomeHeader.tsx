@@ -6,9 +6,9 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -32,14 +32,25 @@ const HomeOrdersCard = withStyles(styles, { name: "HomeOrdersCard" })(
     <div className={classes.headerContainer} data-tc="home-header">
       <Typography className={classes.pageHeader} variant="h4">
         {userName ? (
-          i18n.t("Hello there, {{userName}}", { userName })
+          <FormattedMessage
+            defaultMessage="Hello there, {userName}"
+            description="header"
+            id="homeHeaderText"
+            values={{
+              userName
+            }}
+          />
         ) : (
           <Skeleton style={{ width: "10em" }} />
         )}
       </Typography>
       <Typography className={classes.subtitle}>
         {userName ? (
-          i18n.t("Here is some information we gathered about your store")
+          <FormattedMessage
+            defaultMessage="Here is some information we gathered about your store"
+            description="subheader"
+            id="homeHeaderTextCaption"
+          />
         ) : (
           <Skeleton style={{ width: "10em" }} />
         )}

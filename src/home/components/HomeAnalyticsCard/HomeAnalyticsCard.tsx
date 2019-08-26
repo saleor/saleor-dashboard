@@ -9,8 +9,7 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-
-import i18n from "../../../i18n";
+import { FormattedMessage } from "react-intl";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -74,7 +73,10 @@ const HomeAnalyticsCard = withStyles(styles, { name: "HomeAnalyticsCard" })(
             variant="caption"
             color="textSecondary"
           >
-            {i18n.t("Today")}
+            <FormattedMessage
+              defaultMessage="Today"
+              id="homeAnalyticsCardHeader"
+            />
           </Typography>
           <Typography
             className={classes.value}

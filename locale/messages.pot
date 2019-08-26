@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T13:08:05.181Z\n"
+"POT-Creation-Date: 2019-08-26T14:18:06.591Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -33,6 +33,14 @@ msgstr ""
 #. Active Dates
 msgctxt "time during voucher is active, header"
 msgid "Active Dates"
+msgstr ""
+
+#: build/locale/src/home/components/HomeActivityCard/HomeActivityCard.json
+#. [homeActivityCardHeader] - header
+#. defaultMessage is:
+#. Activity
+msgctxt "header"
+msgid "Activity"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddressDialog/CustomerAddressDialog.json
@@ -1135,6 +1143,14 @@ msgctxt "description"
 msgid "Determine attributes used to create product types"
 msgstr ""
 
+#: build/locale/src/home/components/HomeScreen.json
+#. [homeScreenDisclaimer] - header
+#. defaultMessage is:
+#. Disclaimer
+msgctxt "header"
+msgid "Disclaimer"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherInfo/VoucherInfo.json
 #. [src.discounts.components.VoucherInfo.1262795626]
 #. defaultMessage is:
@@ -1329,6 +1345,26 @@ msgstr ""
 #. Generate Code
 msgctxt "voucher code, button"
 msgid "Generate Code"
+msgstr ""
+
+#: build/locale/src/home/components/HomeHeader/HomeHeader.json
+#. [homeHeaderText] - header
+#. defaultMessage is:
+#. Hello there, {userName}
+#: build/locale/src/home/components/HomeScreen.json
+#. [homeScreenHeader] - header
+#. defaultMessage is:
+#. Hello there, {userName}
+msgctxt "header"
+msgid "Hello there, {userName}"
+msgstr ""
+
+#: build/locale/src/home/components/HomeHeader/HomeHeader.json
+#. [homeHeaderTextCaption] - subheader
+#. defaultMessage is:
+#. Here is some information we gathered about your store
+msgctxt "subheader"
+msgid "Here is some information we gathered about your store"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
@@ -1535,6 +1571,14 @@ msgctxt "navigation section name"
 msgid "Navigation"
 msgstr ""
 
+#: build/locale/src/home/components/HomeActivityCard/HomeActivityCard.json
+#. [homeActivityCardNoActivities]
+#. defaultMessage is:
+#. No activities found
+msgctxt "description"
+msgid "No activities found"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
 #. [src.attributes.components.AttributeList.1192828581]
 #. defaultMessage is:
@@ -1583,6 +1627,22 @@ msgctxt "description"
 msgid "No orders found"
 msgstr ""
 
+#: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
+#. [homeNotificationTableNoOrders]
+#. defaultMessage is:
+#. No orders ready to fulfill
+msgctxt "description"
+msgid "No orders ready to fulfill"
+msgstr ""
+
+#: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
+#. [homeNotificationsNoPayments]
+#. defaultMessage is:
+#. No payments waiting for capture
+msgctxt "description"
+msgid "No payments waiting for capture"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
 #. [src.categories.components.CategoryProducts.1657559629]
 #. defaultMessage is:
@@ -1595,8 +1655,20 @@ msgstr ""
 #. [src.discounts.components.DiscountProducts.1657559629]
 #. defaultMessage is:
 #. No products found
+#: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
+#. [homeProductsListCardNoProducts]
+#. defaultMessage is:
+#. No products found
 msgctxt "description"
 msgid "No products found"
+msgstr ""
+
+#: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
+#. [homeNotificationsTableNoProducts]
+#. defaultMessage is:
+#. No products out of stock
+msgctxt "description"
+msgid "No products out of stock"
 msgstr ""
 
 #: build/locale/src/discounts/components/SaleList/SaleList.json
@@ -2119,6 +2191,22 @@ msgctxt "taxes section name"
 msgid "Taxes"
 msgstr ""
 
+#: build/locale/src/home/components/HomeScreen.json
+#. [homeScreenDisclaimerText2]
+#. defaultMessage is:
+#. The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing.
+msgctxt "description"
+msgid "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
+msgstr ""
+
+#: build/locale/src/home/components/HomeScreen.json
+#. [homeScreenDisclaimerText1]
+#. defaultMessage is:
+#. The new dashboard and the GraphQL API are preview-quality software.
+msgctxt "description"
+msgid "The new dashboard and the GraphQL API are preview-quality software."
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerCreateAddress/CustomerCreateAddress.json
 #. [src.customers.components.CustomerCreateAddress.401345057]
 #. defaultMessage is:
@@ -2165,6 +2253,22 @@ msgstr ""
 #. Time Frame
 msgctxt "time during which sale is active"
 msgid "Time Frame"
+msgstr ""
+
+#: build/locale/src/home/components/HomeAnalyticsCard/HomeAnalyticsCard.json
+#. [homeAnalyticsCardHeader]
+#. defaultMessage is:
+#. Today
+msgctxt "description"
+msgid "Today"
+msgstr ""
+
+#: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
+#. [homeProductsListCardHeader] - header
+#. defaultMessage is:
+#. Top products
+msgctxt "header"
+msgid "Top products"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
@@ -2481,6 +2585,38 @@ msgstr ""
 #. Vouchers
 msgctxt "vouchers section name"
 msgid "Vouchers"
+msgstr ""
+
+#: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
+#. [homeProductListCardOrders] - number of ordered products
+#. defaultMessage is:
+#. {amount,plural,one{One ordered} other{{amount} Ordered}}
+msgctxt "number of ordered products"
+msgid "{amount,plural,one{One ordered} other{{amount} Ordered}}"
+msgstr ""
+
+#: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
+#. [homeNotificationTableOrders]
+#. defaultMessage is:
+#. {amount,plural,one{One order} other{{amount} Orders}} are ready to fulfill
+msgctxt "description"
+msgid "{amount,plural,one{One order} other{{amount} Orders}} are ready to fulfill"
+msgstr ""
+
+#: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
+#. [homeNotificationTablePayments]
+#. defaultMessage is:
+#. {amount,plural,one{One payment} other{{amount} Payments}} to capture
+msgctxt "description"
+msgid "{amount,plural,one{One payment} other{{amount} Payments}} to capture"
+msgstr ""
+
+#: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
+#. [homeNotificationTableProducts]
+#. defaultMessage is:
+#. {amount,plural,one{One product} other{{amount} Products}} out of stock
+msgctxt "description"
+msgid "{amount,plural,one{One product} other{{amount} Products}} out of stock"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
