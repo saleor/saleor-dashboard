@@ -6,6 +6,7 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
@@ -16,8 +17,8 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
+import { sectionNames } from "@saleor/intl";
 import { SearchCustomers_customers_edges_node } from "../../../containers/SearchCustomers/types/SearchCustomers";
-import i18n from "../../../i18n";
 import { maybe } from "../../../misc";
 import { DraftOrderInput } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
@@ -87,69 +88,83 @@ const OrderDraftPage = withStyles(styles, { name: "OrderDraftPage" })(
     order,
     users,
     usersLoading
-  }: OrderDraftPageProps) => (
-    <Container>
-      <AppHeader onBack={onBack}>{i18n.t("Orders")}</AppHeader>
-      <PageHeader
-        className={classes.header}
-        title={maybe(() => order.number) ? "#" + order.number : undefined}
-      >
-        <CardMenu
-          menuItems={[
-            {
-              label: i18n.t("Cancel order", { context: "button" }),
-              onSelect: onDraftRemove
-            }
-          ]}
+  }: OrderDraftPageProps) => {
+    const intl = useIntl();
+
+    return (
+      <Container>
+        <AppHeader onBack={onBack}>
+          {intl.formatMessage(sectionNames.draftOrders)}
+        </AppHeader>
+        <PageHeader
+          className={classes.header}
+          title={maybe(() => order.number) ? "#" + order.number : undefined}
+        >
+          <CardMenu
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Cancel order",
+                  description: "button"
+                }),
+                onSelect: onDraftRemove
+              }
+            ]}
+          />
+        </PageHeader>
+        <div className={classes.date}>
+          {order && order.created ? (
+            <Typography variant="caption">
+              <DateTime date={order.created} />
+            </Typography>
+          ) : (
+            <Skeleton style={{ width: "10em" }} />
+          )}
+        </div>
+        <Grid>
+          <div>
+            <OrderDraftDetails
+              order={order}
+              onOrderLineAdd={onOrderLineAdd}
+              onOrderLineChange={onOrderLineChange}
+              onOrderLineRemove={onOrderLineRemove}
+              onShippingMethodEdit={onShippingMethodEdit}
+            />
+            <OrderHistory
+              history={maybe(() => order.events)}
+              onNoteAdd={onNoteAdd}
+            />
+          </div>
+          <div>
+            <OrderCustomer
+              canEditAddresses={true}
+              canEditCustomer={true}
+              order={order}
+              users={users}
+              loading={usersLoading}
+              fetchUsers={fetchUsers}
+              onBillingAddressEdit={onBillingAddressEdit}
+              onCustomerEdit={onCustomerEdit}
+              onShippingAddressEdit={onShippingAddressEdit}
+              onProfileView={onProfileView}
+            />
+          </div>
+        </Grid>
+        <SaveButtonBar
+          state={saveButtonBarState}
+          disabled={disabled || !maybe(() => order.canFinalize)}
+          onCancel={onBack}
+          onSave={onDraftFinalize}
+          labels={{
+            save: intl.formatMessage({
+              defaultMessage: "Finalize",
+              description: "button"
+            })
+          }}
         />
-      </PageHeader>
-      <div className={classes.date}>
-        {order && order.created ? (
-          <Typography variant="caption">
-            <DateTime date={order.created} />
-          </Typography>
-        ) : (
-          <Skeleton style={{ width: "10em" }} />
-        )}
-      </div>
-      <Grid>
-        <div>
-          <OrderDraftDetails
-            order={order}
-            onOrderLineAdd={onOrderLineAdd}
-            onOrderLineChange={onOrderLineChange}
-            onOrderLineRemove={onOrderLineRemove}
-            onShippingMethodEdit={onShippingMethodEdit}
-          />
-          <OrderHistory
-            history={maybe(() => order.events)}
-            onNoteAdd={onNoteAdd}
-          />
-        </div>
-        <div>
-          <OrderCustomer
-            canEditAddresses={true}
-            canEditCustomer={true}
-            order={order}
-            users={users}
-            loading={usersLoading}
-            fetchUsers={fetchUsers}
-            onBillingAddressEdit={onBillingAddressEdit}
-            onCustomerEdit={onCustomerEdit}
-            onShippingAddressEdit={onShippingAddressEdit}
-            onProfileView={onProfileView}
-          />
-        </div>
-      </Grid>
-      <SaveButtonBar
-        state={saveButtonBarState}
-        disabled={disabled || !maybe(() => order.canFinalize)}
-        onCancel={onBack}
-        onSave={onDraftFinalize}
-        labels={{ save: i18n.t("Finalize", { context: "button" }) }}
-      />
-    </Container>
-  )
+      </Container>
+    );
+  }
 );
 OrderDraftPage.displayName = "OrderDraftPage";
 export default OrderDraftPage;

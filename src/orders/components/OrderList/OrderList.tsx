@@ -10,6 +10,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import { DateTime } from "@saleor/components/Date";
@@ -18,7 +19,6 @@ import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
 import {
   maybe,
   renderCollection,
@@ -103,22 +103,34 @@ export const OrderList = withStyles(styles, { name: "OrderList" })(
           toolbar={toolbar}
         >
           <TableCell padding="dense" className={classes.colNumber}>
-            {i18n.t("No. of Order", { context: "table header" })}
+            <FormattedMessage defaultMessage="No. of Order" />
           </TableCell>
           <TableCell padding="dense" className={classes.colDate}>
-            {i18n.t("Date", { context: "table header" })}
+            <FormattedMessage
+              defaultMessage="Date"
+              description="date when order was placed"
+            />
           </TableCell>
           <TableCell padding="dense" className={classes.colCustomer}>
-            {i18n.t("Customer", { context: "table header" })}
+            <FormattedMessage
+              defaultMessage="Customer"
+              description="e-mail or full name"
+            />
           </TableCell>
           <TableCell padding="dense" className={classes.colPayment}>
-            {i18n.t("Payment", { context: "table header" })}
+            <FormattedMessage
+              defaultMessage="Payment"
+              description="payment status"
+            />
           </TableCell>
           <TableCell padding="dense" className={classes.colFulfillment}>
-            {i18n.t("Fulfillment status", { context: "table header" })}
+            <FormattedMessage defaultMessage="Fulfillment status" />
           </TableCell>
           <TableCell className={classes.colTotal} padding="dense">
-            {i18n.t("Total", { context: "table header" })}
+            <FormattedMessage
+              defaultMessage="Total"
+              description="total order price"
+            />
           </TableCell>
         </TableHead>
         <TableFooter>
@@ -220,7 +232,7 @@ export const OrderList = withStyles(styles, { name: "OrderList" })(
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("No orders found")}
+                  <FormattedMessage defaultMessage="No orders found" />
                 </TableCell>
               </TableRow>
             )
