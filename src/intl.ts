@@ -50,45 +50,41 @@ export const commonMessages = defineMessages({
 });
 
 export const buttonMessages = defineMessages({
+  back: {
+    defaultMessage: "Back",
+    description: "button"
+  },
   cancel: {
     defaultMessage: "Cancel",
-    description: "button",
-    id: "cancel"
+    description: "button"
   },
   confirm: {
     defaultMessage: "Confirm",
-    description: "button",
-    id: "confirm"
+    description: "button"
   },
   edit: {
     defaultMessage: "Edit",
-    description: "button",
-    id: "edit"
+    description: "button"
   },
   manage: {
     defaultMessage: "Manage",
-    description: "button",
-    id: "manage"
+    description: "button"
   },
   remove: {
     defaultMessage: "Remove",
-    description: "button",
-    id: "remove"
+    description: "button"
   },
   save: {
     defaultMessage: "Save",
-    description: "button",
-    id: "save"
+    description: "button"
   },
   show: {
     defaultMessage: "Show",
-    description: "button",
-    id: "show"
+    description: "button"
   },
   undo: {
     defaultMessage: "Undo",
-    description: "button",
-    id: "undo"
+    description: "button"
   }
 });
 
@@ -113,9 +109,17 @@ export const sectionNames = defineMessages({
     defaultMessage: "Customers",
     description: "customers section name"
   },
+  draftOrders: {
+    defaultMessage: "Draft Orders",
+    description: "draft orders section name"
+  },
   navigation: {
     defaultMessage: "Navigation",
     description: "navigation section name"
+  },
+  orders: {
+    defaultMessage: "Orders",
+    description: "orders section name"
   },
   pages: {
     defaultMessage: "Pages",

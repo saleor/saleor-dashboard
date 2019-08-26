@@ -9,13 +9,13 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
 import Money, { subtractMoney } from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
-import i18n from "../../../i18n";
 import { maybe, transformPaymentStatus } from "../../../misc";
 import { OrderAction, OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
@@ -52,6 +52,8 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
     onRefund,
     onVoid
   }: OrderPaymentProps) => {
+    const intl = useIntl();
+
     const canCapture = maybe(() => order.actions, []).includes(
       OrderAction.CAPTURE
     );
@@ -78,16 +80,25 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
           <table className={classes.root}>
             <tbody>
               <tr>
-                <td>{i18n.t("Subtotal")}</td>
+                <td>
+                  <FormattedMessage
+                    defaultMessage="Subtotal"
+                    description="order subtotal price"
+                  />
+                </td>
                 <td>
                   {maybe(() => order.lines) === undefined ? (
                     <Skeleton />
                   ) : (
-                    i18n.t("{{ quantity }} items", {
-                      quantity: order.lines
-                        .map(line => line.quantity)
-                        .reduce((curr, prev) => prev + curr, 0)
-                    })
+                    <FormattedMessage
+                      defaultMessage="{quantity} items"
+                      description="ordered products"
+                      values={{
+                        quantity: order.lines
+                          .map(line => line.quantity)
+                          .reduce((curr, prev) => prev + curr, 0)
+                      }}
+                    />
                   )}
                 </td>
                 <td className={classes.textRight}>
@@ -99,14 +110,23 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
                 </td>
               </tr>
               <tr>
-                <td>{i18n.t("Taxes")}</td>
+                <td>
+                  <FormattedMessage defaultMessage="Taxes" />
+                </td>
                 <td>
                   {maybe(() => order.total.tax) === undefined ? (
                     <Skeleton />
                   ) : order.total.tax.amount > 0 ? (
-                    i18n.t("VAT included")
+                    intl.formatMessage({
+                      defaultMessage: "VAT included",
+                      description: "vat included in order price"
+                    })
                   ) : (
-                    i18n.t("does not apply")
+                    intl.formatMessage({
+                      defaultMessage: "does not apply",
+                      description: "vat not included in order price",
+                      id: "orderPaymentVATDoesNotApply"
+                    })
                   )}
                 </td>
                 <td className={classes.textRight}>
@@ -118,13 +138,22 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
                 </td>
               </tr>
               <tr>
-                <td>{i18n.t("Shipping")}</td>
+                <td>
+                  <FormattedMessage
+                    defaultMessage="Shipping"
+                    description="order shipping method name"
+                  />
+                </td>
                 <td>
                   {maybe(() => order.shippingMethodName) === undefined &&
                   maybe(() => order.shippingPrice) === undefined ? (
                     <Skeleton />
                   ) : order.shippingMethodName === null ? (
-                    i18n.t("does not apply")
+                    intl.formatMessage({
+                      defaultMessage: "does not apply",
+                      description: "order does not require shipping",
+                      id: "orderPaymentShippingDoesNotApply"
+                    })
                   ) : (
                     order.shippingMethodName
                   )}
@@ -138,7 +167,12 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
                 </td>
               </tr>
               <tr className={classes.totalRow}>
-                <td>{i18n.t("Total")}</td>
+                <td>
+                  <FormattedMessage
+                    defaultMessage="Total"
+                    description="order total price"
+                  />
+                </td>
                 <td />
                 <td className={classes.textRight}>
                   {maybe(() => order.total.gross) === undefined ? (
@@ -156,7 +190,12 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
           <table className={classes.root}>
             <tbody>
               <tr>
-                <td>{i18n.t("Preauthorized amount")}</td>
+                <td>
+                  <FormattedMessage
+                    defaultMessage="Preauthorized amount"
+                    description="order payment"
+                  />
+                </td>
                 <td className={classes.textRight}>
                   {maybe(() => order.totalAuthorized.amount) === undefined ? (
                     <Skeleton />
@@ -166,7 +205,12 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
                 </td>
               </tr>
               <tr>
-                <td>{i18n.t("Captured amount")}</td>
+                <td>
+                  <FormattedMessage
+                    defaultMessage="Captured amount"
+                    description="order payment"
+                  />
+                </td>
                 <td className={classes.textRight}>
                   {maybe(() => order.totalCaptured.amount) === undefined ? (
                     <Skeleton />
@@ -176,7 +220,12 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
                 </td>
               </tr>
               <tr className={classes.totalRow}>
-                <td>{i18n.t("Outstanding Balance")}</td>
+                <td>
+                  <FormattedMessage
+                    defaultMessage="Outstanding Balance"
+                    description="order payment"
+                  />
+                </td>
                 <td className={classes.textRight}>
                   {maybe(
                     () => order.total.gross.amount && order.totalCaptured.amount
@@ -202,22 +251,34 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
               <CardActions>
                 {canCapture && (
                   <Button color="primary" variant="text" onClick={onCapture}>
-                    {i18n.t("Capture", { context: "button" })}
+                    <FormattedMessage
+                      defaultMessage="Capture"
+                      description="capture payment, button"
+                    />
                   </Button>
                 )}
                 {canRefund && (
                   <Button color="primary" variant="text" onClick={onRefund}>
-                    {i18n.t("Refund", { context: "button" })}
+                    <FormattedMessage
+                      defaultMessage="Refund"
+                      description="button"
+                    />
                   </Button>
                 )}
                 {canVoid && (
                   <Button color="primary" variant="text" onClick={onVoid}>
-                    {i18n.t("Void", { context: "button" })}
+                    <FormattedMessage
+                      defaultMessage="Void"
+                      description="void payment, button"
+                    />
                   </Button>
                 )}
                 {canMarkAsPaid && (
                   <Button color="primary" variant="text" onClick={onMarkAsPaid}>
-                    {i18n.t("Mark as paid", { context: "button" })}
+                    <FormattedMessage
+                      defaultMessage="Mark as paid"
+                      description="order, button"
+                    />
                   </Button>
                 )}
               </CardActions>

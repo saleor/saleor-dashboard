@@ -10,6 +10,7 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -17,7 +18,7 @@ import ConfirmButton, {
 import Form from "@saleor/components/Form";
 import Money from "@saleor/components/Money";
 import { SingleSelectField } from "@saleor/components/SingleSelectField";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import { OrderDetails_order_availableShippingMethods } from "../../types/OrderDetails";
 
 export interface FormData {
@@ -85,7 +86,10 @@ const OrderShippingMethodEditDialog = withStyles(styles, {
     return (
       <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
         <DialogTitle>
-          {i18n.t("Edit shipping method", { context: "title" })}
+          <FormattedMessage
+            defaultMessage="Edit Shipping Method"
+            description="dialog header"
+          />
         </DialogTitle>
         <Form initial={initialForm} onSubmit={onSubmit}>
           {({ change, data }) => (
@@ -100,7 +104,7 @@ const OrderShippingMethodEditDialog = withStyles(styles, {
               </DialogContent>
               <DialogActions>
                 <Button onClick={onClose}>
-                  {i18n.t("Cancel", { context: "button" })}
+                  <FormattedMessage {...buttonMessages.cancel} />
                 </Button>
                 <ConfirmButton
                   transitionState={confirmButtonState}
@@ -108,7 +112,7 @@ const OrderShippingMethodEditDialog = withStyles(styles, {
                   variant="contained"
                   type="submit"
                 >
-                  {i18n.t("Confirm", { context: "button" })}
+                  <FormattedMessage {...buttonMessages.confirm} />
                 </ConfirmButton>
               </DialogActions>
             </>

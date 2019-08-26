@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import ExternalLink from "@saleor/components/ExternalLink";
@@ -18,10 +19,10 @@ import Link from "@saleor/components/Link";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { buttonMessages } from "@saleor/intl";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { SearchCustomers_customers_edges_node } from "../../../containers/SearchCustomers/types/SearchCustomers";
 import { customerUrl } from "../../../customers/urls";
-import i18n from "../../../i18n";
 import { createHref, maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
 
@@ -74,6 +75,8 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
     onProfileView,
     onShippingAddressEdit
   }: OrderCustomerProps) => {
+    const intl = useIntl();
+
     const user = maybe(() => order.user);
 
     const [userDisplayName, setUserDisplayName] = useStateFromProps(
@@ -88,7 +91,10 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
     return (
       <Card>
         <CardTitle
-          title={i18n.t("Customer")}
+          title={intl.formatMessage({
+            defaultMessage: "Customer",
+            description: "section header"
+          })}
           toolbar={
             !!canEditCustomer && (
               <Button
@@ -97,7 +103,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
                 disabled={!onCustomerEdit}
                 onClick={toggleEditMode}
               >
-                {i18n.t("Edit")}
+                {intl.formatMessage(buttonMessages.edit)}
               </Button>
             )
           }
@@ -133,7 +139,9 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
                     displayValue={userDisplayName}
                     fetchChoices={fetchUsers}
                     loading={loading}
-                    placeholder={i18n.t("Search Customers")}
+                    placeholder={intl.formatMessage({
+                      defaultMessage: "Search Customers"
+                    })}
                     onChange={handleUserChange}
                     name="query"
                     value={data.query}
@@ -142,7 +150,9 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
               }}
             </Form>
           ) : user === null ? (
-            <Typography>{i18n.t("Anonymous user")}</Typography>
+            <Typography>
+              <FormattedMessage defaultMessage="Anonymous user" />
+            </Typography>
           ) : (
             <>
               <Typography className={classes.userEmail}>
@@ -154,14 +164,21 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
                   href={createHref(customerUrl(user.id))}
                   onClick={onProfileView}
                 >
-                  {i18n.t("View Profile")}
+                  <FormattedMessage
+                    defaultMessage="View Profile"
+                    description="link"
+                  />
                 </Link>
               </div>
               {/* TODO: Uncomment it after adding ability to filter
                     orders by customer */}
               {/* <div>
-                    <Link underline={false} href={}>{i18n.t("View Orders")}</Link>
-                  </div> */}
+                <Link underline={false} href={}>
+                  <FormattedMessage defaultMessage="View Orders"
+                    description="link"
+                     />
+                </Link>
+              </div> */}
             </>
           )}
         </CardContent>
@@ -169,14 +186,23 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
         <CardContent>
           <div className={classes.sectionHeader}>
             <Typography className={classes.sectionHeaderTitle}>
-              {i18n.t("Contact information")}
+              <FormattedMessage
+                defaultMessage="Contact information"
+                description="subheader"
+              />
             </Typography>
           </div>
 
           {maybe(() => order.userEmail) === undefined ? (
             <Skeleton />
           ) : order.userEmail === null ? (
-            <Typography>{i18n.t("Not set")}</Typography>
+            <Typography>
+              <FormattedMessage
+                defaultMessage="Not set"
+                description="customer is not set in draft order"
+                id="orderCustomerCustomerNotSet"
+              />
+            </Typography>
           ) : (
             <ExternalLink
               href={`mailto:${maybe(() => order.userEmail)}`}
@@ -190,7 +216,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
         <CardContent>
           <div className={classes.sectionHeader}>
             <Typography className={classes.sectionHeaderTitle}>
-              {i18n.t("Shipping Address")}
+              <FormattedMessage defaultMessage="Shipping Address" />
             </Typography>
             {canEditAddresses && (
               <div className={classes.sectionHeaderToolbar}>
@@ -200,7 +226,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
                   onClick={onShippingAddressEdit}
                   disabled={!onShippingAddressEdit && user === undefined}
                 >
-                  {i18n.t("Edit")}
+                  <FormattedMessage {...buttonMessages.edit} />
                 </Button>
               </div>
             )}
@@ -208,7 +234,13 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
           {shippingAddress === undefined ? (
             <Skeleton />
           ) : shippingAddress === null ? (
-            <Typography>{i18n.t("Not set")}</Typography>
+            <Typography>
+              <FormattedMessage
+                defaultMessage="Not set"
+                description="shipping address is not set in draft order"
+                id="orderCustomerShippingAddressNotSet"
+              />
+            </Typography>
           ) : (
             <>
               {shippingAddress.companyName && (
@@ -243,7 +275,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
         <CardContent>
           <div className={classes.sectionHeader}>
             <Typography className={classes.sectionHeaderTitle}>
-              {i18n.t("Billing Address")}
+              <FormattedMessage defaultMessage="Billing Address" />
             </Typography>
             {canEditAddresses && (
               <div className={classes.sectionHeaderToolbar}>
@@ -253,7 +285,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
                   onClick={onBillingAddressEdit}
                   disabled={!onBillingAddressEdit && user === undefined}
                 >
-                  {i18n.t("Edit")}
+                  <FormattedMessage {...buttonMessages.edit} />
                 </Button>
               </div>
             )}
@@ -261,9 +293,20 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
           {billingAddress === undefined ? (
             <Skeleton />
           ) : billingAddress === null ? (
-            <Typography>{i18n.t("Not set")}</Typography>
+            <Typography>
+              <FormattedMessage
+                defaultMessage="Not set"
+                description="no address is set in draft order"
+                id="orderCustomerBillingAddressNotSet"
+              />
+            </Typography>
           ) : maybe(() => shippingAddress.id) === billingAddress.id ? (
-            <Typography>{i18n.t("Same as shipping address")}</Typography>
+            <Typography>
+              <FormattedMessage
+                defaultMessage="Same as shipping address"
+                description="billing address"
+              />
+            </Typography>
           ) : (
             <>
               {billingAddress.companyName && (

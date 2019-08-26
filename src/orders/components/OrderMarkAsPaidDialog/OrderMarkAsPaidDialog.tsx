@@ -1,9 +1,9 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import i18n from "../../../i18n";
 
 export interface OrderMarkAsPaidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -14,20 +14,25 @@ export interface OrderMarkAsPaidDialogProps {
 
 const OrderMarkAsPaidDialog: React.StatelessComponent<
   OrderMarkAsPaidDialogProps
-> = ({ confirmButtonState, onClose, onConfirm, open }) => (
-  <ActionDialog
-    confirmButtonState={confirmButtonState}
-    open={open}
-    title={i18n.t("Mark order as paid")}
-    onClose={onClose}
-    onConfirm={onConfirm}
-  >
-    <DialogContentText>
-      {i18n.t("Are you sure you want to mark this order as paid?", {
-        context: "modal content"
+> = ({ confirmButtonState, onClose, onConfirm, open }) => {
+  const intl = useIntl();
+
+  return (
+    <ActionDialog
+      confirmButtonState={confirmButtonState}
+      open={open}
+      title={intl.formatMessage({
+        defaultMessage: "Mark Order as Paid",
+        description: "dialog header"
       })}
-    </DialogContentText>
-  </ActionDialog>
-);
+      onClose={onClose}
+      onConfirm={onConfirm}
+    >
+      <DialogContentText>
+        <FormattedMessage defaultMessage="Are you sure you want to mark this order as paid?" />
+      </DialogContentText>
+    </ActionDialog>
+  );
+};
 OrderMarkAsPaidDialog.displayName = "OrderMarkAsPaidDialog";
 export default OrderMarkAsPaidDialog;

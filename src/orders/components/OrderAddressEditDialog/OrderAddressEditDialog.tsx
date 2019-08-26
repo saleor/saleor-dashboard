@@ -5,6 +5,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AddressEdit from "@saleor/components/AddressEdit";
 import ConfirmButton, {
@@ -12,10 +13,10 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { AddressTypeInput } from "../../../customers/types";
-import i18n from "../../../i18n";
 import { UserError } from "../../../types";
 
 const styles = createStyles({
@@ -52,6 +53,7 @@ const OrderAddressEditDialog = withStyles(styles, {
     onClose,
     onConfirm
   }: OrderAddressEditDialogProps) => {
+    const intl = useIntl();
     const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
       maybe(
         () => countries.find(country => address.country === country.code).label
@@ -80,8 +82,14 @@ const OrderAddressEditDialog = withStyles(styles, {
               <>
                 <DialogTitle>
                   {variant === "billing"
-                    ? i18n.t("Edit billing address", { context: "title" })
-                    : i18n.t("Edit shipping address", { context: "title" })}
+                    ? intl.formatMessage({
+                        defaultMessage: "Edit billing address",
+                        description: "dialog header"
+                      })
+                    : intl.formatMessage({
+                        defaultMessage: "Edit shipping address",
+                        description: "dialog header"
+                      })}
                 </DialogTitle>
                 <DialogContent className={classes.overflow}>
                   <AddressEdit
@@ -95,7 +103,7 @@ const OrderAddressEditDialog = withStyles(styles, {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={onClose}>
-                    {i18n.t("Cancel", { context: "button" })}
+                    <FormattedMessage {...buttonMessages.cancel} />
                   </Button>
                   <ConfirmButton
                     transitionState={confirmButtonState}
@@ -104,7 +112,7 @@ const OrderAddressEditDialog = withStyles(styles, {
                     onClick={submit}
                     type="submit"
                   >
-                    {i18n.t("Confirm", { context: "button" })}
+                    <FormattedMessage {...buttonMessages.confirm} />
                   </ConfirmButton>
                 </DialogActions>
               </>

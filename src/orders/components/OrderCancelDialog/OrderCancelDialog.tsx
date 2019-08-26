@@ -11,13 +11,14 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 
 export interface FormData {
   restock: boolean;
@@ -50,55 +51,66 @@ const OrderCancelDialog = withStyles(styles, { name: "OrderCancelDialog" })(
     open,
     onSubmit,
     onClose
-  }: OrderCancelDialogProps) => (
-    <Dialog onClose={onClose} open={open}>
-      <Form
-        initial={{
-          restock: true
-        }}
-        onSubmit={onSubmit}
-      >
-        {({ data, change }) => {
-          return (
-            <>
-              <DialogTitle>
-                {i18n.t("Cancel order", { context: "title" })}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText
-                  dangerouslySetInnerHTML={{
-                    __html: i18n.t(
-                      "Are you sure you want to cancel order <strong>{{ orderNumber }}</strong>?",
-                      { orderNumber }
-                    )
-                  }}
-                />
-                <ControlledCheckbox
-                  checked={data.restock}
-                  label={i18n.t("Release all stock allocated to this order")}
-                  name="restock"
-                  onChange={change}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={onClose}>
-                  {i18n.t("Back", { context: "button" })}
-                </Button>
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  className={classes.deleteButton}
-                  variant="contained"
-                  type="submit"
-                >
-                  {i18n.t("Cancel order", { context: "button" })}
-                </ConfirmButton>
-              </DialogActions>
-            </>
-          );
-        }}
-      </Form>
-    </Dialog>
-  )
+  }: OrderCancelDialogProps) => {
+    const intl = useIntl();
+
+    return (
+      <Dialog onClose={onClose} open={open}>
+        <Form
+          initial={{
+            restock: true
+          }}
+          onSubmit={onSubmit}
+        >
+          {({ data, change }) => {
+            return (
+              <>
+                <DialogTitle>
+                  <FormattedMessage
+                    defaultMessage="Cancel order"
+                    description="dialog header"
+                  />
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    <FormattedMessage
+                      defaultMessage="Are you sure you want to cancel order #{orderNumber}?"
+                      values={{
+                        orderNumber
+                      }}
+                    />
+                    <ControlledCheckbox
+                      checked={data.restock}
+                      label={intl.formatMessage({
+                        defaultMessage:
+                          "Release all stock allocated to this order",
+                        description: "switch button"
+                      })}
+                      name="restock"
+                      onChange={change}
+                    />
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={onClose}>
+                    <FormattedMessage {...buttonMessages.back} />
+                  </Button>
+                  <ConfirmButton
+                    transitionState={confirmButtonState}
+                    className={classes.deleteButton}
+                    variant="contained"
+                    type="submit"
+                  >
+                    <FormattedMessage {...buttonMessages.cancel} />
+                  </ConfirmButton>
+                </DialogActions>
+              </>
+            );
+          }}
+        </Form>
+      </Dialog>
+    );
+  }
 );
 OrderCancelDialog.displayName = "OrderCancelDialog";
 export default OrderCancelDialog;
