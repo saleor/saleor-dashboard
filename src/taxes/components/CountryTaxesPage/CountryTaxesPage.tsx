@@ -6,13 +6,14 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe, renderCollection, translatedTaxRates } from "../../../misc";
 import { CountryList_shop_countries_vat_reducedRates } from "../../types/CountryList";
 
@@ -35,17 +36,26 @@ const CountryTaxesPage = withStyles(styles, { name: "CountryTaxesPage" })(
     taxCategories,
     onBack
   }: CountryTaxesPageProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
+
     const taxRates = translatedTaxRates();
     return (
       <Container>
-        <AppHeader onBack={onBack}>{i18n.t("Taxes")}</AppHeader>
+        <AppHeader onBack={onBack}>
+          {intl.formatMessage(sectionNames.taxes)}
+        </AppHeader>
         <PageHeader
           title={
             countryName
-              ? i18n.t("Tax Rates in {{ countryName }}", {
-                  context: "page title",
-                  countryName
-                })
+              ? intl.formatMessage(
+                  {
+                    defaultMessage: "Tax Rates in {countryName}",
+                    description: "header"
+                  },
+                  {
+                    countryName
+                  }
+                )
               : undefined
           }
         />
@@ -56,10 +66,10 @@ const CountryTaxesPage = withStyles(styles, { name: "CountryTaxesPage" })(
                 <TableHead>
                   <TableRow>
                     <TableCell className={classes.wideColumn}>
-                      {i18n.t("Category", { context: "object" })}
+                      <FormattedMessage defaultMessage="Category" />
                     </TableCell>
                     <TableCell>
-                      {i18n.t("Tax Rate", { context: "object" })}
+                      <FormattedMessage defaultMessage="Tax Rate" />
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -87,7 +97,7 @@ const CountryTaxesPage = withStyles(styles, { name: "CountryTaxesPage" })(
                     () => (
                       <TableRow>
                         <TableCell colSpan={2}>
-                          {i18n.t("No reduced tax categories found")}
+                          <FormattedMessage defaultMessage="No reduced tax categories found" />
                         </TableCell>
                       </TableRow>
                     )
