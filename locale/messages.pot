@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T21:41:35.304Z\n"
+"POT-Creation-Date: 2019-08-26T21:45:05.243Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -521,6 +521,14 @@ msgstr ""
 #. All Subcategories
 msgctxt "section header"
 msgid "All Subcategories"
+msgstr ""
+
+#: build/locale/src/taxes/components/TaxConfiguration/TaxConfiguration.json
+#. [src.taxes.components.TaxConfiguration.142803418]
+#. defaultMessage is:
+#. All products prices are entered with tax included
+msgctxt "description"
+msgid "All products prices are entered with tax included"
 msgstr ""
 
 #: build/locale/src/products/components/ProductStock/ProductStock.json
@@ -1419,6 +1427,10 @@ msgstr ""
 #. [src.products.components.ProductOrganization.1755013298]
 #. defaultMessage is:
 #. Category
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.1755013298]
+#. defaultMessage is:
+#. Category
 msgctxt "description"
 msgid "Category"
 msgstr ""
@@ -1493,6 +1505,14 @@ msgstr ""
 #. Charge taxes for this item
 msgctxt "description"
 msgid "Charge taxes for this item"
+msgstr ""
+
+#: build/locale/src/taxes/components/TaxConfiguration/TaxConfiguration.json
+#. [src.taxes.components.TaxConfiguration.2654711891]
+#. defaultMessage is:
+#. Charge taxes on shipping rates
+msgctxt "description"
+msgid "Charge taxes on shipping rates"
 msgstr ""
 
 #: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
@@ -1781,6 +1801,22 @@ msgstr ""
 #. Country
 msgctxt "description"
 msgid "Country"
+msgstr ""
+
+#: build/locale/src/taxes/components/CountryList/CountryList.json
+#. [src.taxes.components.CountryList.4039455144]
+#. defaultMessage is:
+#. Country Code
+msgctxt "description"
+msgid "Country Code"
+msgstr ""
+
+#: build/locale/src/taxes/components/CountryList/CountryList.json
+#. [src.taxes.components.CountryList.577035076]
+#. defaultMessage is:
+#. Country Name
+msgctxt "description"
+msgid "Country Name"
 msgstr ""
 
 #: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
@@ -2771,6 +2807,14 @@ msgctxt "switch button"
 msgid "Feature on Homepage"
 msgstr ""
 
+#: build/locale/src/taxes/components/TaxConfiguration/TaxConfiguration.json
+#. [src.taxes.components.TaxConfiguration.3375540052] - button
+#. defaultMessage is:
+#. Fetch taxes
+msgctxt "button"
+msgid "Fetch taxes"
+msgstr ""
+
 #: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
 #. [src.discounts.components.DiscountCountrySelectDialog.2566713432] - search box label
 #. defaultMessage is:
@@ -3551,6 +3595,14 @@ msgctxt "description"
 msgid "No collections found"
 msgstr ""
 
+#: build/locale/src/taxes/components/CountryList/CountryList.json
+#. [src.taxes.components.CountryList.110033143]
+#. defaultMessage is:
+#. No countries found
+msgctxt "description"
+msgid "No countries found"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerList/CustomerList.json
 #. [src.customers.components.CustomerList.2239722559]
 #. defaultMessage is:
@@ -3669,6 +3721,14 @@ msgstr ""
 #. No products out of stock
 msgctxt "description"
 msgid "No products out of stock"
+msgstr ""
+
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.3066312070]
+#. defaultMessage is:
+#. No reduced tax categories found
+msgctxt "description"
+msgid "No reduced tax categories found"
 msgstr ""
 
 #: build/locale/src/productTypes/components/AssignAttributeDialog/AssignAttributeDialog.json
@@ -4763,6 +4823,14 @@ msgctxt "section header"
 msgid "Recent orders"
 msgstr ""
 
+#: build/locale/src/taxes/components/CountryList/CountryList.json
+#. [src.taxes.components.CountryList.3154586635]
+#. defaultMessage is:
+#. Reduced Tax Rates
+msgctxt "description"
+msgid "Reduced Tax Rates"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json
 #. [src.orders.components.OrderPayment.2845258362] - button
 #. defaultMessage is:
@@ -5243,6 +5311,14 @@ msgctxt "button"
 msgid "Show"
 msgstr ""
 
+#: build/locale/src/taxes/components/TaxConfiguration/TaxConfiguration.json
+#. [src.taxes.components.TaxConfiguration.2102582640]
+#. defaultMessage is:
+#. Show gross prices to customers in the storefront
+msgctxt "description"
+msgid "Show gross prices to customers in the storefront"
+msgstr ""
+
 #: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
 #. [src.products.components.ProductOrganization.150865454] - product is not configurable
 #. defaultMessage is:
@@ -5543,6 +5619,22 @@ msgctxt "tax rate for a product type"
 msgid "Tax"
 msgstr ""
 
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2022558114]
+#. defaultMessage is:
+#. Tax Rate
+msgctxt "description"
+msgid "Tax Rate"
+msgstr ""
+
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2737618795] - header
+#. defaultMessage is:
+#. Tax Rates in {countryName}
+msgctxt "header"
+msgid "Tax Rates in {countryName}"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.taxes] - taxes section name
 #. defaultMessage is:
@@ -5568,6 +5660,14 @@ msgstr ""
 #. defaultMessage is:
 #. Taxes
 msgctxt "section header"
+msgid "Taxes"
+msgstr ""
+
+#: build/locale/src/taxes/components/CountryListPage/CountryListPage.json
+#. [src.taxes.components.CountryListPage.3955023266] - header
+#. defaultMessage is:
+#. Taxes
+msgctxt "header"
 msgid "Taxes"
 msgstr ""
 

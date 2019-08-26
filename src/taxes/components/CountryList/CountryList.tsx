@@ -7,9 +7,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import classNames from "classnames";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
 import { maybe, renderCollection } from "../../../misc";
 import { CountryList_shop_countries } from "../../types/CountryList";
 
@@ -34,13 +34,13 @@ const CountryList = withStyles(styles, { name: "CountryList" })(
         <TableHead>
           <TableRow>
             <TableCell>
-              {i18n.t("Country Code", { context: "object" })}
+              <FormattedMessage defaultMessage="Country Code" />
             </TableCell>
             <TableCell>
-              {i18n.t("Country Name", { context: "object" })}
+              <FormattedMessage defaultMessage="Country Name" />
             </TableCell>
             <TableCell className={classes.textRight}>
-              {i18n.t("Reduced Tax Rates", { context: "object" })}
+              <FormattedMessage defaultMessage="Reduced Tax Rates" />
             </TableCell>
           </TableRow>
         </TableHead>
@@ -73,7 +73,7 @@ const CountryList = withStyles(styles, { name: "CountryList" })(
             () => (
               <TableRow>
                 <TableCell colSpan={3}>
-                  {i18n.t("No countries found")}
+                  <FormattedMessage defaultMessage="No countries found" />
                 </TableCell>
               </TableRow>
             )
