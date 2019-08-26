@@ -1,9 +1,9 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import i18n from "@saleor/i18n";
 
 export interface ProductTypeAttributeUnassignDialogProps {
   attributeName: string;
@@ -23,27 +23,32 @@ const ProductTypeAttributeUnassignDialog: React.FC<
   productTypeName,
   onClose,
   onConfirm
-}) => (
-  <ActionDialog
-    confirmButtonState={confirmButtonState}
-    open={open}
-    onClose={onClose}
-    onConfirm={onConfirm}
-    title={i18n.t("Unassign attribute from product type")}
-  >
-    <DialogContentText
-      dangerouslySetInnerHTML={{
-        __html: i18n.t(
-          "Are you sure you want to unassign <strong>{{ attributeName }}</strong> from <strong>{{ productTypeName }}</strong>?",
-          {
-            attributeName,
-            productTypeName
-          }
-        )
-      }}
-    />
-  </ActionDialog>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <ActionDialog
+      confirmButtonState={confirmButtonState}
+      open={open}
+      onClose={onClose}
+      onConfirm={onConfirm}
+      title={intl.formatMessage({
+        defaultMessage: "Unassign Attribute From Product Type",
+        description: "dialog header"
+      })}
+    >
+      <DialogContentText>
+        <FormattedMessage
+          defaultMessage="Are you sure you want to unassign {attributeName} from {productTypeName}?"
+          values={{
+            attributeName: <strong>{attributeName}</strong>,
+            productTypeName: <strong>{productTypeName}</strong>
+          }}
+        />
+      </DialogContentText>
+    </ActionDialog>
+  );
+};
 ProductTypeAttributeUnassignDialog.displayName =
   "ProductTypeAttributeUnassignDialog";
 export default ProductTypeAttributeUnassignDialog;

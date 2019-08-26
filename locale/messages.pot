@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T17:50:42.071Z\n"
+"POT-Creation-Date: 2019-08-26T17:55:41.507Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -221,6 +221,14 @@ msgstr ""
 #. Add product
 msgctxt "button"
 msgid "Add product"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeListPage/ProductTypeListPage.json
+#. [src.productTypes.components.ProductTypeListPage.889729490] - button
+#. defaultMessage is:
+#. Add product type
+msgctxt "button"
+msgid "Add product type"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftDetails/OrderDraftDetails.json
@@ -615,6 +623,14 @@ msgctxt "dialog content"
 msgid "Are you sure you want to delete {counter,plural,one{this page} other{{displayQuantity} pages}}?"
 msgstr ""
 
+#: build/locale/src/productTypes/views/ProductTypeList.json
+#. [src.productTypes.views.2294091098] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this product type} other{{displayQuantity} product types}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to delete {counter,plural,one{this product type} other{{displayQuantity} product types}}?"
+msgstr ""
+
 #: build/locale/src/products/views/ProductList/ProductList.json
 #. [src.products.views.ProductList.2742463171] - dialog content
 #. defaultMessage is:
@@ -676,6 +692,14 @@ msgstr ""
 #. defaultMessage is:
 #. Are you sure you want to delete {name}?
 msgctxt "delete product"
+msgid "Are you sure you want to delete {name}?"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeDeleteDialog/ProductTypeDeleteDialog.json
+#. [src.productTypes.components.ProductTypeDeleteDialog.2297471173] - delete product type
+#. defaultMessage is:
+#. Are you sure you want to delete {name}?
+msgctxt "delete product type"
 msgid "Are you sure you want to delete {name}?"
 msgstr ""
 
@@ -759,6 +783,22 @@ msgctxt "description"
 msgid "Are you sure you want to remove this image?"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeAttributeUnassignDialog/ProductTypeAttributeUnassignDialog.json
+#. [src.productTypes.components.ProductTypeAttributeUnassignDialog.722498450]
+#. defaultMessage is:
+#. Are you sure you want to unassign {attributeName} from {productTypeName}?
+msgctxt "description"
+msgid "Are you sure you want to unassign {attributeName} from {productTypeName}?"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeBulkAttributeUnassignDialog/ProductTypeBulkAttributeUnassignDialog.json
+#. [src.productTypes.components.ProductTypeBulkAttributeUnassignDialog.2500510112] - unassign multiple attributes from product type
+#. defaultMessage is:
+#. Are you sure you want to unassign {counter,plural,one{this attribute} other{{displayQuantity} attributes}} from {productTypeName}?
+msgctxt "unassign multiple attributes from product type"
+msgid "Are you sure you want to unassign {counter,plural,one{this attribute} other{{displayQuantity} attributes}} from {productTypeName}?"
+msgstr ""
+
 #: build/locale/src/discounts/views/SaleDetails.json
 #. [src.discounts.views.376977560] - dialog content
 #. defaultMessage is:
@@ -835,12 +875,36 @@ msgctxt "description"
 msgid "Are you sure you want to void this payment?"
 msgstr ""
 
+#: build/locale/src/productTypes/components/AssignAttributeDialog/AssignAttributeDialog.json
+#. [src.productTypes.components.AssignAttributeDialog.3922579741] - dialog header
+#. defaultMessage is:
+#. Assign Attribute
+msgctxt "dialog header"
+msgid "Assign Attribute"
+msgstr ""
+
 #: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
 #. [src.discounts.components.DiscountCountrySelectDialog.1585396479] - dialog header
 #. defaultMessage is:
 #. Assign Countries
 msgctxt "dialog header"
 msgid "Assign Countries"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
+#. [src.productTypes.components.ProductTypeAttributes.1656462109] - button
+#. defaultMessage is:
+#. Assign attribute
+msgctxt "button"
+msgid "Assign attribute"
+msgstr ""
+
+#: build/locale/src/productTypes/components/AssignAttributeDialog/AssignAttributeDialog.json
+#. [src.productTypes.components.AssignAttributeDialog.2173976534] - button
+#. defaultMessage is:
+#. Assign attributes
+msgctxt "button"
+msgid "Assign attributes"
 msgstr ""
 
 #: build/locale/src/discounts/components/DiscountCategories/DiscountCategories.json
@@ -913,6 +977,26 @@ msgstr ""
 #. Attribute deleted
 msgctxt "description"
 msgid "Attribute deleted"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeAttributeEditDialog/ProductTypeAttributeEditDialog.json
+#. [src.productTypes.components.ProductTypeAttributeEditDialog.1228425832]
+#. defaultMessage is:
+#. Attribute name
+#: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
+#. [src.productTypes.components.ProductTypeAttributes.1228425832]
+#. defaultMessage is:
+#. Attribute name
+msgctxt "description"
+msgid "Attribute name"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeAttributeEditDialog/ProductTypeAttributeEditDialog.json
+#. [src.productTypes.components.ProductTypeAttributeEditDialog.335542212]
+#. defaultMessage is:
+#. Attribute values
+msgctxt "description"
+msgid "Attribute values"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -1279,6 +1363,14 @@ msgctxt "product is configurable"
 msgid "Configurable"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
+#. [src.productTypes.components.ProductTypeList.2754779425] - product type
+#. defaultMessage is:
+#. Configurable
+msgctxt "product type"
+msgid "Configurable"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.configuration] - configuration section name
 #. defaultMessage is:
@@ -1437,6 +1529,22 @@ msgstr ""
 #. Create Product
 msgctxt "window title"
 msgid "Create Product"
+msgstr ""
+
+#: build/locale/src/productTypes/views/ProductTypeCreate.json
+#. [productTypeCreateHeader] - window title
+#. defaultMessage is:
+#. Create Product Type
+msgctxt "window title"
+msgid "Create Product Type"
+msgstr ""
+
+#: build/locale/src/productTypes/views/ProductTypeCreate.json
+#. [productTypeCreatePageHeader] - header
+#. defaultMessage is:
+#. Create Product Type
+msgctxt "header"
+msgid "Create Product Type"
 msgstr ""
 
 #: build/locale/src/discounts/components/SaleCreatePage/SaleCreatePage.json
@@ -1779,6 +1887,22 @@ msgctxt "dialog header"
 msgid "Delete Product"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeDeleteDialog/ProductTypeDeleteDialog.json
+#. [src.productTypes.components.ProductTypeDeleteDialog.924066985] - dialog header
+#. defaultMessage is:
+#. Delete Product Type
+msgctxt "dialog header"
+msgid "Delete Product Type"
+msgstr ""
+
+#: build/locale/src/productTypes/views/ProductTypeList.json
+#. [src.productTypes.views.4080551769] - dialog header
+#. defaultMessage is:
+#. Delete Product Types
+msgctxt "dialog header"
+msgid "Delete Product Types"
+msgstr ""
+
 #: build/locale/src/products/views/ProductUpdate/ProductUpdate.json
 #. [src.products.views.ProductUpdate.1454532689] - dialog header
 #. defaultMessage is:
@@ -2005,6 +2129,14 @@ msgstr ""
 #. Determine attributes used to create product types
 msgctxt "description"
 msgid "Determine attributes used to create product types"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
+#. [src.productTypes.components.ProductTypeList.881286562] - product type
+#. defaultMessage is:
+#. Digital
+msgctxt "product type"
+msgid "Digital"
 msgstr ""
 
 #: build/locale/src/home/components/HomeScreen.json
@@ -2503,6 +2635,14 @@ msgctxt "product variant stock"
 msgid "Inventory"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeShipping/ProductTypeShipping.json
+#. [src.productTypes.components.ProductTypeShipping.2143413921] - switch button
+#. defaultMessage is:
+#. Is this product shippable?
+msgctxt "switch button"
+msgid "Is this product shippable?"
+msgstr ""
+
 #: build/locale/src/navigation/components/MenuList/MenuList.json
 #. [menuListItems] - number of menu items
 #. defaultMessage is:
@@ -2867,6 +3007,10 @@ msgstr ""
 #. [src.attributes.components.AttributeList.1192828581]
 #. defaultMessage is:
 #. No attributes found
+#: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
+#. [src.productTypes.components.ProductTypeAttributes.1192828581]
+#. defaultMessage is:
+#. No attributes found
 msgctxt "description"
 msgid "No attributes found"
 msgstr ""
@@ -2971,6 +3115,14 @@ msgctxt "description"
 msgid "No payments waiting for capture"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
+#. [src.productTypes.components.ProductTypeList.1126553969]
+#. defaultMessage is:
+#. No product types found
+msgctxt "description"
+msgid "No product types found"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
 #. [src.categories.components.CategoryProducts.1657559629]
 #. defaultMessage is:
@@ -3005,6 +3157,14 @@ msgstr ""
 #. No products out of stock
 msgctxt "description"
 msgid "No products out of stock"
+msgstr ""
+
+#: build/locale/src/productTypes/components/AssignAttributeDialog/AssignAttributeDialog.json
+#. [src.productTypes.components.AssignAttributeDialog.4205644805]
+#. defaultMessage is:
+#. No results found
+msgctxt "description"
+msgid "No results found"
 msgstr ""
 
 #: build/locale/src/discounts/components/SaleList/SaleList.json
@@ -3543,6 +3703,14 @@ msgctxt "section header"
 msgid "Photo View"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
+#. [src.productTypes.components.ProductTypeList.966610541] - product type
+#. defaultMessage is:
+#. Physical
+msgctxt "product type"
+msgid "Physical"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.3590282519] - attribute position in storefront filters
 #. defaultMessage is:
@@ -3659,6 +3827,14 @@ msgctxt "product name"
 msgid "Product"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
+#. [src.productTypes.components.ProductTypeAttributes.3559259966] - section header
+#. defaultMessage is:
+#. Product Attributes
+msgctxt "section header"
+msgid "Product Attributes"
+msgstr ""
+
 #: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
 #. [src.discounts.components.DiscountProducts.2697405188]
 #. defaultMessage is:
@@ -3677,6 +3853,14 @@ msgstr ""
 #. Product Type
 msgctxt "description"
 msgid "Product Type"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeDetails/ProductTypeDetails.json
+#. [src.productTypes.components.ProductTypeDetails.1007996279]
+#. defaultMessage is:
+#. Product Type Name
+msgctxt "description"
+msgid "Product Type Name"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -3713,6 +3897,14 @@ msgstr ""
 #. Product removed
 msgctxt "description"
 msgid "Product removed"
+msgstr ""
+
+#: build/locale/src/productTypes/views/ProductTypeUpdate/index.json
+#. [src.productTypes.views.ProductTypeUpdate.3512959355]
+#. defaultMessage is:
+#. Product type deleted
+msgctxt "description"
+msgid "Product type deleted"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
@@ -4147,6 +4339,14 @@ msgctxt "description"
 msgid "Saved changes"
 msgstr ""
 
+#: build/locale/src/productTypes/components/AssignAttributeDialog/AssignAttributeDialog.json
+#. [src.productTypes.components.AssignAttributeDialog.902296540]
+#. defaultMessage is:
+#. Search Attributes
+msgctxt "description"
+msgid "Search Attributes"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 #. [src.orders.components.OrderCustomer.2433460203]
 #. defaultMessage is:
@@ -4177,6 +4377,14 @@ msgstr ""
 #. Search Products...
 msgctxt "description"
 msgid "Search Products..."
+msgstr ""
+
+#: build/locale/src/productTypes/components/AssignAttributeDialog/AssignAttributeDialog.json
+#. [src.productTypes.components.AssignAttributeDialog.524117994]
+#. defaultMessage is:
+#. Search by attribute name
+msgctxt "description"
+msgid "Search by attribute name"
 msgstr ""
 
 #: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
@@ -4267,6 +4475,14 @@ msgctxt "order shipping method name"
 msgid "Shipping"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeShipping/ProductTypeShipping.json
+#. [src.productTypes.components.ProductTypeShipping.1325966144] - product type shipping settings, section header
+#. defaultMessage is:
+#. Shipping
+msgctxt "product type shipping settings, section header"
+msgid "Shipping"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 #. [src.orders.components.OrderCustomer.2758581442]
 #. defaultMessage is:
@@ -4339,6 +4555,14 @@ msgctxt "product is not configurable"
 msgid "Simple"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
+#. [src.productTypes.components.ProductTypeList.1211157042] - product type
+#. defaultMessage is:
+#. Simple product
+msgctxt "product type"
+msgid "Simple product"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.siteSettings] - site settings section name
 #. defaultMessage is:
@@ -4356,6 +4580,14 @@ msgstr ""
 #. defaultMessage is:
 #. Slug
 msgctxt "page internal name"
+msgid "Slug"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
+#. [src.productTypes.components.ProductTypeAttributes.3478065224] - attribute internal name
+#. defaultMessage is:
+#. Slug
+msgctxt "attribute internal name"
 msgid "Slug"
 msgstr ""
 
@@ -4543,6 +4775,14 @@ msgctxt "description"
 msgid "Successfully created new page"
 msgstr ""
 
+#: build/locale/src/productTypes/views/ProductTypeCreate.json
+#. [src.productTypes.views.3822478981]
+#. defaultMessage is:
+#. Successfully created product type
+msgctxt "description"
+msgid "Successfully created product type"
+msgstr ""
+
 #: build/locale/src/discounts/views/SaleCreate.json
 #. [src.discounts.views.3707049729]
 #. defaultMessage is:
@@ -4567,6 +4807,14 @@ msgctxt "description"
 msgid "Summary"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
+#. [src.productTypes.components.ProductTypeList.1240292548] - tax rate for a product type
+#. defaultMessage is:
+#. Tax
+msgctxt "tax rate for a product type"
+msgid "Tax"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.taxes] - taxes section name
 #. defaultMessage is:
@@ -4579,7 +4827,19 @@ msgstr ""
 #. [src.orders.components.OrderPayment.3955023266]
 #. defaultMessage is:
 #. Taxes
+#: build/locale/src/productTypes/components/ProductTypeTaxes/ProductTypeTaxes.json
+#. [productTypeTaxesInputLabel]
+#. defaultMessage is:
+#. Taxes
 msgctxt "description"
+msgid "Taxes"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeTaxes/ProductTypeTaxes.json
+#. [productTypeTaxesHeader] - section header
+#. defaultMessage is:
+#. Taxes
+msgctxt "section header"
 msgid "Taxes"
 msgstr ""
 
@@ -4661,6 +4921,14 @@ msgstr ""
 #. This product has no variants
 msgctxt "description"
 msgid "This product has no variants"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeDetailsPage/ProductTypeDetailsPage.json
+#. [src.productTypes.components.ProductTypeDetailsPage.1756957616] - switch button
+#. defaultMessage is:
+#. This product type has variants
+msgctxt "switch button"
+msgid "This product type has variants"
 msgstr ""
 
 #: build/locale/src/discounts/components/SalePricing/SalePricing.json
@@ -4803,6 +5071,22 @@ msgctxt "product type"
 msgid "Type"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
+#. [src.productTypes.components.ProductTypeList.1952810469] - product type is either simple or configurable
+#. defaultMessage is:
+#. Type
+msgctxt "product type is either simple or configurable"
+msgid "Type"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
+#. [src.productTypes.components.ProductTypeList.2253986440] - product type name
+#. defaultMessage is:
+#. Type Name
+msgctxt "product type name"
+msgid "Type Name"
+msgstr ""
+
 #: build/locale/src/pages/components/PageSlug/PageSlug.json
 #. [src.pages.components.PageSlug.1324178587]
 #. defaultMessage is:
@@ -4865,6 +5149,30 @@ msgstr ""
 #. Unassign
 msgctxt "unassign product from voucher, button"
 msgid "Unassign"
+msgstr ""
+
+#: build/locale/src/productTypes/views/ProductTypeUpdate/index.json
+#. [src.productTypes.views.ProductTypeUpdate.870815507] - unassign attribute from product type, button
+#. defaultMessage is:
+#. Unassign
+msgctxt "unassign attribute from product type, button"
+msgid "Unassign"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeAttributeUnassignDialog/ProductTypeAttributeUnassignDialog.json
+#. [src.productTypes.components.ProductTypeAttributeUnassignDialog.404238501] - dialog header
+#. defaultMessage is:
+#. Unassign Attribute From Product Type
+msgctxt "dialog header"
+msgid "Unassign Attribute From Product Type"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeBulkAttributeUnassignDialog/ProductTypeBulkAttributeUnassignDialog.json
+#. [src.productTypes.components.ProductTypeBulkAttributeUnassignDialog.766918870] - dialog header
+#. defaultMessage is:
+#. Unassign Attribute from Product Type
+msgctxt "dialog header"
+msgid "Unassign Attribute from Product Type"
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
@@ -5067,6 +5375,14 @@ msgctxt "description"
 msgid "Use variants for products that come in a variety of versions for example different sizes or colors"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeShipping/ProductTypeShipping.json
+#. [src.productTypes.components.ProductTypeShipping.2927891783]
+#. defaultMessage is:
+#. Used to calculate rates for shipping for products of this product type, when specific weight is not given
+msgctxt "description"
+msgid "Used to calculate rates for shipping for products of this product type, when specific weight is not given"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
 #. [src.customers.components.CustomerDetails.2968565128] - check to mark this account as active
 #. defaultMessage is:
@@ -5153,6 +5469,14 @@ msgstr ""
 #. Values
 msgctxt "attribute values"
 msgid "Values"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
+#. [src.productTypes.components.ProductTypeAttributes.888493112] - section header
+#. defaultMessage is:
+#. Variant Attributes
+msgctxt "section header"
+msgid "Variant Attributes"
 msgstr ""
 
 #: build/locale/src/products/views/ProductVariant.json
@@ -5277,6 +5601,14 @@ msgstr ""
 #. Vouchers
 msgctxt "vouchers section name"
 msgid "Vouchers"
+msgstr ""
+
+#: build/locale/src/productTypes/components/ProductTypeShipping/ProductTypeShipping.json
+#. [src.productTypes.components.ProductTypeShipping.746695941]
+#. defaultMessage is:
+#. Weight
+msgctxt "description"
+msgid "Weight"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json

@@ -7,7 +7,7 @@ import ProductTypeBulkAttributeUnassignDialog, {
 import Decorator from "../../Decorator";
 
 const props: ProductTypeBulkAttributeUnassignDialogProps = {
-  attributeQuantity: "4",
+  attributeQuantity: 4,
   confirmButtonState: "default",
   onClose: () => undefined,
   onConfirm: () => undefined,

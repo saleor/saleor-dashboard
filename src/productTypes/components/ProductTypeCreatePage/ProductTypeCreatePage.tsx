@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -10,7 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import i18n from "@saleor/i18n";
+import { sectionNames } from "@saleor/intl";
 import { ProductTypeDetails_taxTypes } from "@saleor/productTypes/types/ProductTypeDetails";
 import { UserError } from "@saleor/types";
 import { WeightUnitsEnum } from "@saleor/types/globalTypes";
@@ -67,6 +68,7 @@ const ProductTypeCreatePage: React.StatelessComponent<
   onBack,
   onSubmit
 }: ProductTypeCreatePageProps) => {
+  const intl = useIntl();
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps("");
 
   return (
@@ -78,7 +80,9 @@ const ProductTypeCreatePage: React.StatelessComponent<
     >
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Product Types")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.productTypes)}
+          </AppHeader>
           <PageHeader title={pageTitle} />
           <Grid>
             <div>

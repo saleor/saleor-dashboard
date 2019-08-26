@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -11,7 +12,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import i18n from "@saleor/i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListActions, ReorderEvent, UserError } from "@saleor/types";
 import { AttributeTypeEnum, WeightUnitsEnum } from "@saleor/types/globalTypes";
@@ -90,6 +91,7 @@ const ProductTypeDetailsPage: React.StatelessComponent<
   onDelete,
   onSubmit
 }) => {
+  const intl = useIntl();
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps(
     maybe(() => productType.taxType.description)
   );
@@ -129,7 +131,9 @@ const ProductTypeDetailsPage: React.StatelessComponent<
     >
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Product Types")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.productTypes)}
+          </AppHeader>
           <PageHeader title={pageTitle} />
           <Grid>
             <div>
@@ -171,7 +175,10 @@ const ProductTypeDetailsPage: React.StatelessComponent<
               <ControlledCheckbox
                 checked={data.hasVariants}
                 disabled={disabled}
-                label={i18n.t("This product type has variants")}
+                label={intl.formatMessage({
+                  defaultMessage: "This product type has variants",
+                  description: "switch button"
+                })}
                 name="hasVariants"
                 onChange={change}
               />

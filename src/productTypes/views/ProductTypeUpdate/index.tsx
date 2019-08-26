@@ -1,12 +1,13 @@
 import Button from "@material-ui/core/Button";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { attributeUrl } from "@saleor/attributes/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "@saleor/i18n";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import AssignAttributeDialog from "@saleor/productTypes/components/AssignAttributeDialog";
 import { ReorderEvent } from "@saleor/types";
@@ -44,6 +45,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   const notify = useNotifier();
   const productAttributeListActions = useBulkActions();
   const variantAttributeListActions = useBulkActions();
+  const intl = useIntl();
 
   return (
     <ProductTypeUpdateErrors>
@@ -59,9 +61,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             const handleAttributeAssignSuccess = (data: AssignAttribute) => {
               if (data.attributeAssign.errors.length === 0) {
                 notify({
-                  text: i18n.t("Attributes assigned", {
-                    context: "notification"
-                  })
+                  text: intl.formatMessage(commonMessages.savedChanges)
                 });
                 closeModal();
               } else if (
@@ -76,9 +76,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             ) => {
               if (data.attributeUnassign.errors.length === 0) {
                 notify({
-                  text: i18n.t("Attribute unassigned", {
-                    context: "notification"
-                  })
+                  text: intl.formatMessage(commonMessages.savedChanges)
                 });
                 closeModal();
                 productAttributeListActions.reset();
@@ -90,8 +88,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             ) => {
               if (deleteData.productTypeDelete.errors.length === 0) {
                 notify({
-                  text: i18n.t("Product type deleted", {
-                    context: "notification"
+                  text: intl.formatMessage({
+                    defaultMessage: "Product type deleted"
                   })
                 });
                 navigate(productTypeListUrl(), true);
@@ -105,9 +103,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                 updateData.productTypeUpdate.errors.length === 0
               ) {
                 notify({
-                  text: i18n.t("Product type updated", {
-                    context: "notification"
-                  })
+                  text: intl.formatMessage(commonMessages.savedChanges)
                 });
               } else if (
                 updateData.productTypeUpdate.errors !== null &&
@@ -290,9 +286,10 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                                 )
                               }
                             >
-                              {i18n.t("Unassign", {
-                                context: "unassign attribute from product type"
-                              })}
+                              <FormattedMessage
+                                defaultMessage="Unassign"
+                                description="unassign attribute from product type, button"
+                              />
                             </Button>
                           )
                         }}
@@ -315,9 +312,10 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                                 )
                               }
                             >
-                              {i18n.t("Unassign", {
-                                context: "unassign attribute from product type"
-                              })}
+                              <FormattedMessage
+                                defaultMessage="Unassign"
+                                description="unassign attribute from product type, button"
+                              />
                             </Button>
                           )
                         }}
@@ -433,10 +431,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                         onConfirm={handleProductTypeDelete}
                       />
                       <ProductTypeBulkAttributeUnassignDialog
-                        attributeQuantity={maybe(
-                          () => params.ids.length.toString(),
-                          "..."
-                        )}
+                        attributeQuantity={maybe(() => params.ids.length)}
                         confirmButtonState={unassignTransactionState}
                         onClose={closeModal}
                         onConfirm={handleBulkAttributeUnassign}
