@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T21:45:05.243Z\n"
+"POT-Creation-Date: 2019-08-26T21:49:04.020Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1139,6 +1139,14 @@ msgctxt "description"
 msgid "Attribute Code"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsProductTypesPage/TranslationsProductTypesPage.json
+#. [src.translations.components.TranslationsProductTypesPage.2642976392]
+#. defaultMessage is:
+#. Attribute Name
+msgctxt "description"
+msgid "Attribute Name"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
 #. [src.attributes.components.AttributeValues.224159874] - section header
 #. defaultMessage is:
@@ -1407,6 +1415,14 @@ msgctxt "categories section name"
 msgid "Categories"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
+#. [src.translations.components.TranslationsEntitiesListPage.3583204912]
+#. defaultMessage is:
+#. Categories
+msgctxt "description"
+msgid "Categories"
+msgstr ""
+
 #: build/locale/src/discounts/components/SaleDetailsPage/SaleDetailsPage.json
 #. [saleDetailsPageCategoriesQuantity] - number of categories
 #. defaultMessage is:
@@ -1453,6 +1469,10 @@ msgstr ""
 #. Category Name
 #: build/locale/src/collections/components/CollectionList/CollectionList.json
 #. [src.collections.components.CollectionList.1214235329]
+#. defaultMessage is:
+#. Category Name
+#: build/locale/src/translations/components/TranslationsCategoriesPage/TranslationsCategoriesPage.json
+#. [src.translations.components.TranslationsCategoriesPage.1214235329]
 #. defaultMessage is:
 #. Category Name
 msgctxt "description"
@@ -1559,6 +1579,14 @@ msgctxt "voucher code"
 msgid "Code"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsCollectionsPage/TranslationsCollectionsPage.json
+#. [src.translations.components.TranslationsCollectionsPage.2759199473]
+#. defaultMessage is:
+#. Collection Name
+msgctxt "description"
+msgid "Collection Name"
+msgstr ""
+
 #: build/locale/src/discounts/components/DiscountCollections/DiscountCollections.json
 #. [src.discounts.components.DiscountCollections.3011396316]
 #. defaultMessage is:
@@ -1581,6 +1609,10 @@ msgstr ""
 #. Collections
 #: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
 #. [src.products.components.ProductOrganization.222873645]
+#. defaultMessage is:
+#. Collections
+#: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
+#. [src.translations.components.TranslationsEntitiesListPage.222873645]
 #. defaultMessage is:
 #. Collections
 msgctxt "description"
@@ -1613,6 +1645,14 @@ msgstr ""
 #. Company information
 msgctxt "description"
 msgid "Company information"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsEntitiesList/TranslationsEntitiesList.json
+#. [src.translations.components.TranslationsEntitiesList.49462429]
+#. defaultMessage is:
+#. Completed Translations
+msgctxt "description"
+msgid "Completed Translations"
 msgstr ""
 
 #: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
@@ -1657,6 +1697,10 @@ msgstr ""
 
 #: build/locale/src/pages/components/PageInfo/PageInfo.json
 #. [src.pages.components.PageInfo.1116746286] - page content
+#. defaultMessage is:
+#. Content
+#: build/locale/src/translations/components/TranslationsPagesPage/TranslationsPagesPage.json
+#. [src.translations.components.TranslationsPagesPage.1116746286] - page content
 #. defaultMessage is:
 #. Content
 msgctxt "page content"
@@ -2511,6 +2555,10 @@ msgstr ""
 #. [src.description]
 #. defaultMessage is:
 #. Description
+#: build/locale/src/translations/components/TranslationsProductsPage/TranslationsProductsPage.json
+#. [src.translations.components.TranslationsProductsPage.3374163063]
+#. defaultMessage is:
+#. Description
 msgctxt "description"
 msgid "Description"
 msgstr ""
@@ -2529,6 +2577,14 @@ msgstr ""
 #. Digital
 msgctxt "product type"
 msgid "Digital"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationFields/TranslationFieldsSave.json
+#. [src.translations.components.TranslationFields.363646127] - button
+#. defaultMessage is:
+#. Discard
+msgctxt "button"
+msgid "Discard"
 msgstr ""
 
 #: build/locale/src/home/components/HomeScreen.json
@@ -3135,6 +3191,26 @@ msgctxt "authentication provider API key"
 msgid "Key"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsLanguageList/TranslationsLanguageList.json
+#. [src.translations.components.TranslationsLanguageList.604081953]
+#. defaultMessage is:
+#. Language
+msgctxt "description"
+msgid "Language"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
+#. [src.translations.components.TranslationsEntitiesListPage.1163855804]
+#. defaultMessage is:
+#. Languages
+#: build/locale/src/translations/components/TranslationsLanguageListPage/TranslationsLanguageListPage.json
+#. [src.translations.components.TranslationsLanguageListPage.1163855804]
+#. defaultMessage is:
+#. Languages
+msgctxt "description"
+msgid "Languages"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
 #. [src.orders.components.OrderListFilter.714411029]
 #. defaultMessage is:
@@ -3487,6 +3563,14 @@ msgctxt "staff member full name"
 msgid "Name"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsEntitiesList/TranslationsEntitiesList.json
+#. [src.translations.components.TranslationsEntitiesList.636461959] - entity (product, collection, shipping method) name
+#. defaultMessage is:
+#. Name
+msgctxt "entity (product, collection, shipping method) name"
+msgid "Name"
+msgstr ""
+
 #: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
 #. [src.siteSettings.components.SiteSettingsDetails.2286355060]
 #. defaultMessage is:
@@ -3625,6 +3709,14 @@ msgstr ""
 #. No keys
 msgctxt "no authentication provider API keys"
 msgid "No keys"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsLanguageList/TranslationsLanguageList.json
+#. [src.translations.components.TranslationsLanguageList.2966651157]
+#. defaultMessage is:
+#. No languages found
+msgctxt "description"
+msgid "No languages found"
 msgstr ""
 
 #: build/locale/src/navigation/components/MenuList/MenuList.json
@@ -3785,6 +3877,30 @@ msgstr ""
 #. No subcategories found
 msgctxt "description"
 msgid "No subcategories found"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsEntitiesList/TranslationsEntitiesList.json
+#. [src.translations.components.TranslationsEntitiesList.4176487406]
+#. defaultMessage is:
+#. No translatable entities found
+msgctxt "description"
+msgid "No translatable entities found"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationFields/TranslationFieldsLong.json
+#. [src.translations.components.TranslationFields.3793796047]
+#. defaultMessage is:
+#. No translation yet
+#: build/locale/src/translations/components/TranslationFields/TranslationFieldsRich.json
+#. [src.translations.components.TranslationFields.3793796047]
+#. defaultMessage is:
+#. No translation yet
+#: build/locale/src/translations/components/TranslationFields/TranslationFieldsShort.json
+#. [src.translations.components.TranslationFields.3793796047]
+#. defaultMessage is:
+#. No translation yet
+msgctxt "description"
+msgid "No translation yet"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
@@ -4155,6 +4271,14 @@ msgctxt "section header"
 msgid "Organize Product"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationFields/TranslationFields.json
+#. [src.translations.components.TranslationFields.1348655672]
+#. defaultMessage is:
+#. Original String
+msgctxt "description"
+msgid "Original String"
+msgstr ""
+
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.1640493122] - product status
 #. defaultMessage is:
@@ -4179,11 +4303,27 @@ msgctxt "order history message"
 msgid "Oversold {quantity} items"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsPagesPage/TranslationsPagesPage.json
+#. [src.translations.components.TranslationsPagesPage.432157284]
+#. defaultMessage is:
+#. Page Title
+msgctxt "description"
+msgid "Page Title"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.pages] - pages section name
 #. defaultMessage is:
 #. Pages
 msgctxt "pages section name"
+msgid "Pages"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
+#. [src.translations.components.TranslationsEntitiesListPage.3287512325]
+#. defaultMessage is:
+#. Pages
+msgctxt "description"
 msgid "Pages"
 msgstr ""
 
@@ -4471,6 +4611,14 @@ msgctxt "product name"
 msgid "Product"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsProductTypesPage/TranslationsProductTypesPage.json
+#. [src.translations.components.TranslationsProductTypesPage.2510190956] - header
+#. defaultMessage is:
+#. Product Attribute ({attributeName})
+msgctxt "header"
+msgid "Product Attribute ({attributeName})"
+msgstr ""
+
 #: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
 #. [src.productTypes.components.ProductTypeAttributes.3559259966] - section header
 #. defaultMessage is:
@@ -4481,6 +4629,10 @@ msgstr ""
 
 #: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
 #. [src.discounts.components.DiscountProducts.2697405188]
+#. defaultMessage is:
+#. Product Name
+#: build/locale/src/translations/components/TranslationsProductsPage/TranslationsProductsPage.json
+#. [src.translations.components.TranslationsProductsPage.2697405188]
 #. defaultMessage is:
 #. Product Name
 msgctxt "description"
@@ -4512,6 +4664,14 @@ msgstr ""
 #. defaultMessage is:
 #. Product Types
 msgctxt "product types section name"
+msgid "Product Types"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
+#. [src.translations.components.TranslationsEntitiesListPage.765385638]
+#. defaultMessage is:
+#. Product Types
+msgctxt "description"
 msgid "Product Types"
 msgstr ""
 
@@ -4584,6 +4744,14 @@ msgstr ""
 #. defaultMessage is:
 #. Products
 msgctxt "products section name"
+msgid "Products"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
+#. [src.translations.components.TranslationsEntitiesListPage.2968663655]
+#. defaultMessage is:
+#. Products
+msgctxt "description"
 msgid "Products"
 msgstr ""
 
@@ -4999,11 +5167,27 @@ msgctxt "variant sku"
 msgid "SKU {sku}"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsSalesPage/TranslationsSalesPage.json
+#. [src.translations.components.TranslationsSalesPage.898281424]
+#. defaultMessage is:
+#. Sale Name
+msgctxt "description"
+msgid "Sale Name"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.sales] - sales section name
 #. defaultMessage is:
 #. Sales
 msgctxt "sales section name"
+msgid "Sales"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
+#. [src.translations.components.TranslationsEntitiesListPage.487083593]
+#. defaultMessage is:
+#. Sales
+msgctxt "description"
 msgid "Sales"
 msgstr ""
 
@@ -5061,6 +5245,66 @@ msgstr ""
 #. Search Customers
 msgctxt "description"
 msgid "Search Customers"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsCategoriesPage/TranslationsCategoriesPage.json
+#. [src.translations.components.TranslationsCategoriesPage.1406947243]
+#. defaultMessage is:
+#. Search Engine Description
+#: build/locale/src/translations/components/TranslationsCollectionsPage/TranslationsCollectionsPage.json
+#. [src.translations.components.TranslationsCollectionsPage.1406947243]
+#. defaultMessage is:
+#. Search Engine Description
+#: build/locale/src/translations/components/TranslationsPagesPage/TranslationsPagesPage.json
+#. [src.translations.components.TranslationsPagesPage.1406947243]
+#. defaultMessage is:
+#. Search Engine Description
+#: build/locale/src/translations/components/TranslationsProductsPage/TranslationsProductsPage.json
+#. [src.translations.components.TranslationsProductsPage.1406947243]
+#. defaultMessage is:
+#. Search Engine Description
+msgctxt "description"
+msgid "Search Engine Description"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsCategoriesPage/TranslationsCategoriesPage.json
+#. [src.translations.components.TranslationsCategoriesPage.3468022343]
+#. defaultMessage is:
+#. Search Engine Preview
+#: build/locale/src/translations/components/TranslationsCollectionsPage/TranslationsCollectionsPage.json
+#. [src.translations.components.TranslationsCollectionsPage.3468022343]
+#. defaultMessage is:
+#. Search Engine Preview
+#: build/locale/src/translations/components/TranslationsPagesPage/TranslationsPagesPage.json
+#. [src.translations.components.TranslationsPagesPage.3468022343]
+#. defaultMessage is:
+#. Search Engine Preview
+#: build/locale/src/translations/components/TranslationsProductsPage/TranslationsProductsPage.json
+#. [src.translations.components.TranslationsProductsPage.3468022343]
+#. defaultMessage is:
+#. Search Engine Preview
+msgctxt "description"
+msgid "Search Engine Preview"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsCategoriesPage/TranslationsCategoriesPage.json
+#. [src.translations.components.TranslationsCategoriesPage.2496919463]
+#. defaultMessage is:
+#. Search Engine Title
+#: build/locale/src/translations/components/TranslationsCollectionsPage/TranslationsCollectionsPage.json
+#. [src.translations.components.TranslationsCollectionsPage.2496919463]
+#. defaultMessage is:
+#. Search Engine Title
+#: build/locale/src/translations/components/TranslationsPagesPage/TranslationsPagesPage.json
+#. [src.translations.components.TranslationsPagesPage.2496919463]
+#. defaultMessage is:
+#. Search Engine Title
+#: build/locale/src/translations/components/TranslationsProductsPage/TranslationsProductsPage.json
+#. [src.translations.components.TranslationsProductsPage.2496919463]
+#. defaultMessage is:
+#. Search Engine Title
+msgctxt "description"
+msgid "Search Engine Title"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderListPage/OrderListPage.json
@@ -5943,6 +6187,102 @@ msgctxt "description"
 msgid "Tracking number"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationFields/TranslationFields.json
+#. [src.translations.components.TranslationFields.2481190613] - Translated Name
+#. defaultMessage is:
+#. Translation
+msgctxt "Translated Name"
+msgid "Translation"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationFields/TranslationFieldsLong.json
+#. [src.translations.components.TranslationFields.2481190613]
+#. defaultMessage is:
+#. Translation
+#: build/locale/src/translations/components/TranslationFields/TranslationFieldsRich.json
+#. [src.translations.components.TranslationFields.2481190613]
+#. defaultMessage is:
+#. Translation
+#: build/locale/src/translations/components/TranslationFields/TranslationFieldsShort.json
+#. [src.translations.components.TranslationFields.2481190613]
+#. defaultMessage is:
+#. Translation
+msgctxt "description"
+msgid "Translation"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsCategoriesPage/TranslationsCategoriesPage.json
+#. [src.translations.components.TranslationsCategoriesPage.2043581404]
+#. defaultMessage is:
+#. Translation Category "{categoryNane}" - {languageCode}
+msgctxt "description"
+msgid "Translation Category \"{categoryNane}\" - {languageCode}"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsCollectionsPage/TranslationsCollectionsPage.json
+#. [src.translations.components.TranslationsCollectionsPage.3055443821] - header
+#. defaultMessage is:
+#. Translation Collection "{collectionName}" - {languageCode}
+msgctxt "header"
+msgid "Translation Collection \"{collectionName}\" - {languageCode}"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsPagesPage/TranslationsPagesPage.json
+#. [src.translations.components.TranslationsPagesPage.2806429775] - header
+#. defaultMessage is:
+#. Translation Page "{pageName}" - {languageCode}
+msgctxt "header"
+msgid "Translation Page \"{pageName}\" - {languageCode}"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsProductsPage/TranslationsProductsPage.json
+#. [src.translations.components.TranslationsProductsPage.2713974050] - header
+#. defaultMessage is:
+#. Translation Product "{productName}" - {languageCode}
+msgctxt "header"
+msgid "Translation Product \"{productName}\" - {languageCode}"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsProductTypesPage/TranslationsProductTypesPage.json
+#. [src.translations.components.TranslationsProductTypesPage.1281101905] - header
+#. defaultMessage is:
+#. Translation Product Type "{productTypeName}" - {languageCode}
+msgctxt "header"
+msgid "Translation Product Type \"{productTypeName}\" - {languageCode}"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsSalesPage/TranslationsSalesPage.json
+#. [src.translations.components.TranslationsSalesPage.3731955064] - header
+#. defaultMessage is:
+#. Translation Sale "{saleName}" - {languageCode}
+msgctxt "header"
+msgid "Translation Sale \"{saleName}\" - {languageCode}"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsVouchersPage/TranslationsVouchersPage.json
+#. [src.translations.components.TranslationsVouchersPage.2447510181] - header
+#. defaultMessage is:
+#. Translation Voucher "{voucherName}" - {languageCode}
+msgctxt "header"
+msgid "Translation Voucher \"{voucherName}\" - {languageCode}"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.translations] - translations section name
+#. defaultMessage is:
+#. Translations
+msgctxt "translations section name"
+msgid "Translations"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
+#. [src.translations.components.TranslationsEntitiesListPage.2460580333] - header
+#. defaultMessage is:
+#. Translations to {language}
+msgctxt "header"
+msgid "Translations to {language}"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
 #. [src.categories.components.CategoryProducts.1952810469] - product type
 #. defaultMessage is:
@@ -6407,12 +6747,28 @@ msgctxt "order price range"
 msgid "Value range"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsProductTypesPage/TranslationsProductTypesPage.json
+#. [src.translations.components.TranslationsProductTypesPage.1567737068] - attribute values
+#. defaultMessage is:
+#. Value {number}
+msgctxt "attribute values"
+msgid "Value {number}"
+msgstr ""
+
 #: build/locale/src/products/components/ProductAttributes/ProductAttributes.json
 #. [src.products.components.ProductAttributes.1207761269] - attribute values
 #. defaultMessage is:
 #. Values
 msgctxt "attribute values"
 msgid "Values"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsProductTypesPage/TranslationsProductTypesPage.json
+#. [src.translations.components.TranslationsProductTypesPage.3538502409] - header
+#. defaultMessage is:
+#. Variant Attribute ({attributeName})
+msgctxt "header"
+msgid "Variant Attribute ({attributeName})"
 msgstr ""
 
 #: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
@@ -6523,6 +6879,14 @@ msgctxt "dialog header"
 msgid "Void Payment"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsVouchersPage/TranslationsVouchersPage.json
+#. [src.translations.components.TranslationsVouchersPage.2599922713]
+#. defaultMessage is:
+#. Voucher Name
+msgctxt "description"
+msgid "Voucher Name"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
 #. [src.discounts.components.VoucherDetailsPage.2071139683]
 #. defaultMessage is:
@@ -6544,6 +6908,14 @@ msgstr ""
 #. defaultMessage is:
 #. Vouchers
 msgctxt "vouchers section name"
+msgid "Vouchers"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
+#. [src.translations.components.TranslationsEntitiesListPage.749185240]
+#. defaultMessage is:
+#. Vouchers
+msgctxt "description"
 msgid "Vouchers"
 msgstr ""
 
@@ -6675,6 +7047,14 @@ msgctxt "description"
 msgid "{amount,plural,one{One product} other{{amount} Products}} out of stock"
 msgstr ""
 
+#: build/locale/src/translations/components/TranslationsEntitiesList/TranslationsEntitiesList.json
+#. [src.translations.components.TranslationsEntitiesList.1136143456] - translation progress
+#. defaultMessage is:
+#. {current} of {max}
+msgctxt "translation progress"
+msgid "{current} of {max}"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
 #. [src.customers.components.CustomerAddressListPage.489918044] - customer details, header
 #. defaultMessage is:
@@ -6689,6 +7069,14 @@ msgstr ""
 #. {fullName}'s Address Book
 msgctxt "customer's address book, header"
 msgid "{fullName}'s Address Book"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationFields/TranslationFields.json
+#. [src.translations.components.TranslationFields.282734765]
+#. defaultMessage is:
+#. {numberOFields} Translations, {numberOfTranslatedFields} Completed
+msgctxt "description"
+msgid "{numberOFields} Translations, {numberOfTranslatedFields} Completed"
 msgstr ""
 
 #: build/locale/src/products/components/ProductAttributes/ProductAttributes.json

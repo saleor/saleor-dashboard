@@ -157,6 +157,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Taxes",
     description: "taxes section name"
   },
+  translations: {
+    defaultMessage: "Translations",
+    description: "translations section name"
+  },
   vouchers: {
     defaultMessage: "Vouchers",
     description: "vouchers section name"
