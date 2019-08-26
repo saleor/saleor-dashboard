@@ -3,11 +3,12 @@ import CardContent from "@material-ui/core/CardContent";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { FormErrors } from "../../../types";
 import { PageDetails_page } from "../../types/PageDetails";
@@ -37,33 +38,45 @@ const PageInfo = withStyles(styles, {
     errors,
     page,
     onChange
-  }: PageInfoProps & WithStyles<typeof styles>) => (
-    <Card className={classes.root}>
-      <CardTitle title={i18n.t("General Information")} />
-      <CardContent>
-        <TextField
-          disabled={disabled}
-          error={!!errors.title}
-          fullWidth
-          helperText={errors.title}
-          label={i18n.t("Title")}
-          name={"title" as keyof FormData}
-          value={data.title}
-          onChange={onChange}
+  }: PageInfoProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
+
+    return (
+      <Card className={classes.root}>
+        <CardTitle
+          title={intl.formatMessage(commonMessages.generalInformations)}
         />
-        <FormSpacer />
-        <RichTextEditor
-          disabled={disabled}
-          error={!!errors.contentJson}
-          helperText={errors.contentJson}
-          initial={maybe(() => JSON.parse(page.contentJson))}
-          label={i18n.t("Content")}
-          name={"content" as keyof FormData}
-          onChange={onChange}
-        />
-      </CardContent>
-    </Card>
-  )
+        <CardContent>
+          <TextField
+            disabled={disabled}
+            error={!!errors.title}
+            fullWidth
+            helperText={errors.title}
+            label={intl.formatMessage({
+              defaultMessage: "Title",
+              description: "page title"
+            })}
+            name={"title" as keyof FormData}
+            value={data.title}
+            onChange={onChange}
+          />
+          <FormSpacer />
+          <RichTextEditor
+            disabled={disabled}
+            error={!!errors.contentJson}
+            helperText={errors.contentJson}
+            initial={maybe(() => JSON.parse(page.contentJson))}
+            label={intl.formatMessage({
+              defaultMessage: "Content",
+              description: "page content"
+            })}
+            name={"content" as keyof FormData}
+            onChange={onChange}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
 );
 PageInfo.displayName = "PageInfo";
 export default PageInfo;

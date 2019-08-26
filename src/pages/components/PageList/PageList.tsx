@@ -11,13 +11,13 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { PageList_pages_edges_node } from "../../types/PageList";
@@ -63,100 +63,121 @@ const PageList = withStyles(styles, { name: "PageList" })(
     toggle,
     toggleAll,
     toolbar
-  }: PageListProps & WithStyles<typeof styles>) => (
-    <Card>
-      <Table>
-        <TableHead
-          colSpan={numberOfColumns}
-          selected={selected}
-          disabled={disabled}
-          items={pages}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-        >
-          <TableCell className={classes.colTitle} padding="dense">
-            {i18n.t("Title", { context: "table header" })}
-          </TableCell>
-          <TableCell className={classes.colSlug} padding="dense">
-            {i18n.t("Slug", { context: "table header" })}
-          </TableCell>
-          <TableCell className={classes.colVisibility} padding="dense">
-            {i18n.t("Visibility", { context: "table header" })}
-          </TableCell>
-        </TableHead>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              settings={settings}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
-              onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
-            />
-          </TableRow>
-        </TableFooter>
-        <TableBody>
-          {renderCollection(
-            pages,
-            page => {
-              const isSelected = page ? isChecked(page.id) : false;
+  }: PageListProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
 
-              return (
-                <TableRow
-                  hover={!!page}
-                  className={!!page ? classes.link : undefined}
-                  onClick={page ? onRowClick(page.id) : undefined}
-                  key={page ? page.id : "skeleton"}
-                  selected={isSelected}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(page.id)}
-                    />
-                  </TableCell>
-                  <TableCell className={classes.colTitle}>
-                    {maybe<React.ReactNode>(() => page.title, <Skeleton />)}
-                  </TableCell>
-                  <TableCell className={classes.colSlug}>
-                    {maybe<React.ReactNode>(() => page.slug, <Skeleton />)}
-                  </TableCell>
-                  <TableCell className={classes.colVisibility}>
-                    {maybe<React.ReactNode>(
-                      () => (
-                        <StatusLabel
-                          label={
-                            page.isPublished
-                              ? i18n.t("Published")
-                              : i18n.t("Not Published")
-                          }
-                          status={page.isPublished ? "success" : "error"}
-                        />
-                      ),
-                      <Skeleton />
-                    )}
+    return (
+      <Card>
+        <Table>
+          <TableHead
+            colSpan={numberOfColumns}
+            selected={selected}
+            disabled={disabled}
+            items={pages}
+            toggleAll={toggleAll}
+            toolbar={toolbar}
+          >
+            <TableCell className={classes.colTitle} padding="dense">
+              <FormattedMessage
+                defaultMessage="Title"
+                description="dialog header"
+              />
+            </TableCell>
+            <TableCell className={classes.colSlug} padding="dense">
+              <FormattedMessage
+                defaultMessage="Slug"
+                description="page internal name"
+              />
+            </TableCell>
+            <TableCell className={classes.colVisibility} padding="dense">
+              <FormattedMessage
+                defaultMessage="Visibility"
+                description="page status"
+              />
+            </TableCell>
+          </TableHead>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                colSpan={numberOfColumns}
+                settings={settings}
+                hasNextPage={
+                  pageInfo && !disabled ? pageInfo.hasNextPage : false
+                }
+                onNextPage={onNextPage}
+                onUpdateListSettings={onUpdateListSettings}
+                hasPreviousPage={
+                  pageInfo && !disabled ? pageInfo.hasPreviousPage : false
+                }
+                onPreviousPage={onPreviousPage}
+              />
+            </TableRow>
+          </TableFooter>
+          <TableBody>
+            {renderCollection(
+              pages,
+              page => {
+                const isSelected = page ? isChecked(page.id) : false;
+
+                return (
+                  <TableRow
+                    hover={!!page}
+                    className={!!page ? classes.link : undefined}
+                    onClick={page ? onRowClick(page.id) : undefined}
+                    key={page ? page.id : "skeleton"}
+                    selected={isSelected}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isSelected}
+                        disabled={disabled}
+                        disableClickPropagation
+                        onChange={() => toggle(page.id)}
+                      />
+                    </TableCell>
+                    <TableCell className={classes.colTitle}>
+                      {maybe<React.ReactNode>(() => page.title, <Skeleton />)}
+                    </TableCell>
+                    <TableCell className={classes.colSlug}>
+                      {maybe<React.ReactNode>(() => page.slug, <Skeleton />)}
+                    </TableCell>
+                    <TableCell className={classes.colVisibility}>
+                      {maybe<React.ReactNode>(
+                        () => (
+                          <StatusLabel
+                            label={
+                              page.isPublished
+                                ? intl.formatMessage({
+                                    defaultMessage: "Published",
+                                    description: "page status"
+                                  })
+                                : intl.formatMessage({
+                                    defaultMessage: "Not Published",
+                                    description: "page status"
+                                  })
+                            }
+                            status={page.isPublished ? "success" : "error"}
+                          />
+                        ),
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                  </TableRow>
+                );
+              },
+              () => (
+                <TableRow>
+                  <TableCell colSpan={numberOfColumns}>
+                    <FormattedMessage defaultMessage="No pages found" />
                   </TableCell>
                 </TableRow>
-              );
-            },
-            () => (
-              <TableRow>
-                <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("No pages found")}
-                </TableCell>
-              </TableRow>
-            )
-          )}
-        </TableBody>
-      </Table>
-    </Card>
-  )
+              )
+            )}
+          </TableBody>
+        </Table>
+      </Card>
+    );
+  }
 );
 PageList.displayName = "PageList";
 export default PageList;

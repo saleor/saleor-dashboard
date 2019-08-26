@@ -1,11 +1,11 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../i18n";
 import { getMutationState, maybe } from "../../misc";
 import { PageInput } from "../../types/globalTypes";
 import PageDetailsPage, { FormData } from "../components/PageDetailsPage";
@@ -45,12 +45,13 @@ export const PageDetails: React.StatelessComponent<PageDetailsProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const handlePageRemove = (data: PageRemove) => {
     if (data.pageDelete.errors.length === 0) {
       notify({
-        text: i18n.t("Removed page", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Removed page"
         })
       });
       navigate(pageListUrl());
@@ -107,25 +108,30 @@ export const PageDetails: React.StatelessComponent<PageDetailsProps> = ({
                     <ActionDialog
                       open={params.action === "remove"}
                       confirmButtonState={removeTransitionState}
-                      title={i18n.t("Remove Page")}
+                      title={intl.formatMessage({
+                        defaultMessage: "Delete Page",
+                        description: "dialog header"
+                      })}
                       onClose={() => navigate(pageUrl(id))}
                       onConfirm={pageRemove}
                       variant="delete"
                     >
-                      <DialogContentText
-                        dangerouslySetInnerHTML={{
-                          __html: i18n.t(
-                            "Are you sure you want to remove <strong>{{ title }}</strong>?",
-                            {
-                              context: "page remove",
-                              title: maybe(
-                                () => pageDetails.data.page.title,
-                                "..."
-                              )
-                            }
-                          )
-                        }}
-                      />
+                      <DialogContentText>
+                        <FormattedMessage
+                          defaultMessage="Are you sure you want to delete {title}?"
+                          description="delete page"
+                          values={{
+                            title: (
+                              <strong>
+                                {maybe(
+                                  () => pageDetails.data.page.title,
+                                  "..."
+                                )}
+                              </strong>
+                            )
+                          }}
+                        />
+                      </DialogContentText>
                     </ActionDialog>
                   </>
                 );

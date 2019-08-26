@@ -5,6 +5,7 @@ import {
   RawDraftContentState
 } from "draft-js";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -16,7 +17,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { UserError } from "../../../types";
 import { PageDetails_page } from "../../types/PageDetails";
@@ -52,6 +53,8 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
   onRemove,
   onSubmit
 }) => {
+  const intl = useIntl();
+
   const initialForm: FormData = {
     content: maybe(
       () => JSON.parse(page.contentJson),
@@ -68,12 +71,15 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Pages")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.pages)}
+          </AppHeader>
           <PageHeader
             title={
               page === null
-                ? i18n.t("Add Page", {
-                    context: "header"
+                ? intl.formatMessage({
+                    defaultMessage: "Add Page",
+                    description: "page header"
                   })
                 : maybe(() => page.title)
             }
@@ -99,9 +105,10 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
                 onChange={change}
                 title={data.seoTitle}
                 titlePlaceholder={data.title}
-                helperText={i18n.t(
-                  "Add search engine title and description to make this page easier to find"
-                )}
+                helperText={intl.formatMessage({
+                  defaultMessage:
+                    "Add search engine title and description to make this page easier to find"
+                })}
               />
             </div>
             <div>

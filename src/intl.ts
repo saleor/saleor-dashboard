@@ -28,6 +28,10 @@ export const commonMessages = defineMessages({
   lastName: {
     defaultMessage: "Last Name"
   },
+  optionalField: {
+    defaultMessage: "Optional",
+    description: "field is optional"
+  },
   properties: {
     defaultMessage: "Properties"
   },
