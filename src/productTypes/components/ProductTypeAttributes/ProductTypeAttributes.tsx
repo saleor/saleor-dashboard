@@ -12,6 +12,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -21,7 +22,6 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import i18n from "@saleor/i18n";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
@@ -81,105 +81,123 @@ const ProductTypeAttributes = withStyles(styles, {
     onAttributeClick,
     onAttributeReorder,
     onAttributeUnassign
-  }: ProductTypeAttributesProps & WithStyles<typeof styles>) => (
-    <Card>
-      <CardTitle
-        title={
-          type === AttributeTypeEnum.PRODUCT
-            ? i18n.t("Product Attributes")
-            : i18n.t("Variant Attributes")
-        }
-        toolbar={
-          <Button
-            color="primary"
-            variant="text"
-            onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
-          >
-            {i18n.t("Assign attribute", { context: "button" })}
-          </Button>
-        }
-      />
-      <Table>
-        <TableHead
-          colSpan={numberOfColumns}
-          disabled={disabled}
-          dragRows
-          selected={selected}
-          items={attributes}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-        >
-          <TableCell className={classes.colName}>
-            {i18n.t("Attribute name")}
-          </TableCell>
-          <TableCell className={classes.colName}>{i18n.t("Slug")}</TableCell>
-          <TableCell />
-        </TableHead>
-        <SortableTableBody onSortEnd={onAttributeReorder}>
-          {renderCollection(
-            attributes,
-            (attribute, attributeIndex) => {
-              const isSelected = attribute ? isChecked(attribute.id) : false;
+  }: ProductTypeAttributesProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
 
-              return (
-                <SortableTableRow
-                  selected={isSelected}
-                  className={!!attribute ? classes.link : undefined}
-                  hover={!!attribute}
-                  onClick={
-                    !!attribute
-                      ? () => onAttributeClick(attribute.id)
-                      : undefined
-                  }
-                  key={maybe(() => attribute.id)}
-                  index={attributeIndex || 0}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(attribute.id)}
-                    />
-                  </TableCell>
-                  <TableCell className={classes.colName}>
-                    {maybe(() => attribute.name) ? (
-                      attribute.name
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.colSlug}>
-                    {maybe(() => attribute.slug) ? (
-                      attribute.slug
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.iconCell}>
-                    <IconButton
-                      onClick={stopPropagation(() =>
-                        onAttributeUnassign(attribute.id)
+    return (
+      <Card>
+        <CardTitle
+          title={
+            type === AttributeTypeEnum.PRODUCT
+              ? intl.formatMessage({
+                  defaultMessage: "Product Attributes",
+                  description: "section header"
+                })
+              : intl.formatMessage({
+                  defaultMessage: "Variant Attributes",
+                  description: "section header"
+                })
+          }
+          toolbar={
+            <Button
+              color="primary"
+              variant="text"
+              onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
+            >
+              <FormattedMessage
+                defaultMessage="Assign attribute"
+                description="button"
+              />
+            </Button>
+          }
+        />
+        <Table>
+          <TableHead
+            colSpan={numberOfColumns}
+            disabled={disabled}
+            dragRows
+            selected={selected}
+            items={attributes}
+            toggleAll={toggleAll}
+            toolbar={toolbar}
+          >
+            <TableCell className={classes.colName}>
+              <FormattedMessage defaultMessage="Attribute name" />
+            </TableCell>
+            <TableCell className={classes.colName}>
+              <FormattedMessage
+                defaultMessage="Slug"
+                description="attribute internal name"
+              />
+            </TableCell>
+            <TableCell />
+          </TableHead>
+          <SortableTableBody onSortEnd={onAttributeReorder}>
+            {renderCollection(
+              attributes,
+              (attribute, attributeIndex) => {
+                const isSelected = attribute ? isChecked(attribute.id) : false;
+
+                return (
+                  <SortableTableRow
+                    selected={isSelected}
+                    className={!!attribute ? classes.link : undefined}
+                    hover={!!attribute}
+                    onClick={
+                      !!attribute
+                        ? () => onAttributeClick(attribute.id)
+                        : undefined
+                    }
+                    key={maybe(() => attribute.id)}
+                    index={attributeIndex || 0}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isSelected}
+                        disabled={disabled}
+                        disableClickPropagation
+                        onChange={() => toggle(attribute.id)}
+                      />
+                    </TableCell>
+                    <TableCell className={classes.colName}>
+                      {maybe(() => attribute.name) ? (
+                        attribute.name
+                      ) : (
+                        <Skeleton />
                       )}
-                    >
-                      <DeleteIcon color="primary" />
-                    </IconButton>
+                    </TableCell>
+                    <TableCell className={classes.colSlug}>
+                      {maybe(() => attribute.slug) ? (
+                        attribute.slug
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell className={classes.iconCell}>
+                      <IconButton
+                        onClick={stopPropagation(() =>
+                          onAttributeUnassign(attribute.id)
+                        )}
+                      >
+                        <DeleteIcon color="primary" />
+                      </IconButton>
+                    </TableCell>
+                  </SortableTableRow>
+                );
+              },
+              () => (
+                <TableRow>
+                  <TableCell colSpan={numberOfColumns}>
+                    <FormattedMessage defaultMessage="No attributes found" />
                   </TableCell>
-                </SortableTableRow>
-              );
-            },
-            () => (
-              <TableRow>
-                <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("No attributes found")}
-                </TableCell>
-              </TableRow>
-            )
-          )}
-        </SortableTableBody>
-      </Table>
-    </Card>
-  )
+                </TableRow>
+              )
+            )}
+          </SortableTableBody>
+        </Table>
+      </Card>
+    );
+  }
 );
 ProductTypeAttributes.displayName = "ProductTypeAttributes";
 export default ProductTypeAttributes;

@@ -1,9 +1,10 @@
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
-import i18n from "../i18n";
 import {
   productTypeAddPath,
   productTypeListPath,
@@ -40,17 +41,19 @@ const ProductTypeUpdate: React.StatelessComponent<
   );
 };
 
-export const ProductTypeRouter: React.StatelessComponent<
-  RouteComponentProps<any>
-> = () => (
-  <>
-    <WindowTitle title={i18n.t("Product types")} />
-    <Switch>
-      <Route exact path={productTypeListPath} component={ProductTypeList} />
-      <Route exact path={productTypeAddPath} component={ProductTypeCreate} />
-      <Route path={productTypePath(":id")} component={ProductTypeUpdate} />
-    </Switch>
-  </>
-);
+export const ProductTypeRouter: React.FC = () => {
+  const intl = useIntl();
+
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(sectionNames.productTypes)} />
+      <Switch>
+        <Route exact path={productTypeListPath} component={ProductTypeList} />
+        <Route exact path={productTypeAddPath} component={ProductTypeCreate} />
+        <Route path={productTypePath(":id")} component={ProductTypeUpdate} />
+      </Switch>
+    </>
+  );
+};
 ProductTypeRouter.displayName = "ProductTypeRouter";
 export default ProductTypeRouter;

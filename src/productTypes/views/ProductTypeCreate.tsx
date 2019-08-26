@@ -1,9 +1,9 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../i18n";
 import { getMutationState, maybe } from "../../misc";
 import ProductTypeCreatePage, {
   ProductTypeForm
@@ -16,11 +16,14 @@ import { productTypeListUrl, productTypeUrl } from "../urls";
 export const ProductTypeCreate: React.StatelessComponent = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const handleCreateSuccess = (updateData: ProductTypeCreateMutation) => {
     if (updateData.productTypeCreate.errors.length === 0) {
       notify({
-        text: i18n.t("Successfully created product type")
+        text: intl.formatMessage({
+          defaultMessage: "Successfully created product type"
+        })
       });
       navigate(productTypeUrl(updateData.productTypeCreate.productType.id));
     }
@@ -48,7 +51,13 @@ export const ProductTypeCreate: React.StatelessComponent = () => {
           <TypedProductTypeCreateDataQuery displayLoader>
             {({ data, loading }) => (
               <>
-                <WindowTitle title={i18n.t("Create product type")} />
+                <WindowTitle
+                  title={intl.formatMessage({
+                    defaultMessage: "Create Product Type",
+                    description: "window title",
+                    id: "productTypeCreateHeader"
+                  })}
+                />
                 <ProductTypeCreatePage
                   defaultWeightUnit={maybe(() => data.shop.defaultWeightUnit)}
                   disabled={loading}
@@ -57,8 +66,10 @@ export const ProductTypeCreate: React.StatelessComponent = () => {
                       ? createProductTypeData.productTypeCreate.errors
                       : undefined
                   }
-                  pageTitle={i18n.t("Create Product Type", {
-                    context: "page title"
+                  pageTitle={intl.formatMessage({
+                    defaultMessage: "Create Product Type",
+                    description: "header",
+                    id: "productTypeCreatePageHeader"
                   })}
                   saveButtonBarState={formTransitionState}
                   taxTypes={maybe(() => data.taxTypes, [])}

@@ -2,6 +2,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -10,9 +11,9 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import { commonMessages } from "@saleor/intl";
 import { PAGINATE_BY } from "../../config";
 import { configurationMenuUrl } from "../../configuration";
-import i18n from "../../i18n";
 import { getMutationState, maybe } from "../../misc";
 import ProductTypeListPage from "../components/ProductTypeListPage";
 import { TypedProductTypeBulkDeleteMutation } from "../mutations";
@@ -38,6 +39,7 @@ export const ProductTypeList: React.StatelessComponent<
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
+  const intl = useIntl();
 
   const closeModal = () => navigate(productTypeListUrl(), true);
 
@@ -54,7 +56,7 @@ export const ProductTypeList: React.StatelessComponent<
         const handleProductTypeBulkDelete = (data: ProductTypeBulkDelete) => {
           if (data.productTypeBulkDelete.errors.length === 0) {
             notify({
-              text: i18n.t("Removed product types")
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             reset();
             refetch();
@@ -126,22 +128,27 @@ export const ProductTypeList: React.StatelessComponent<
                     onClose={closeModal}
                     onConfirm={onProductTypeBulkDelete}
                     open={params.action === "remove"}
-                    title={i18n.t("Remove Product Types")}
+                    title={intl.formatMessage({
+                      defaultMessage: "Delete Product Types",
+                      description: "dialog header"
+                    })}
                     variant="delete"
                   >
-                    <DialogContentText
-                      dangerouslySetInnerHTML={{
-                        __html: i18n.t(
-                          "Are you sure you want to remove <strong>{{ number }}</strong> product types?",
-                          {
-                            number: maybe(
-                              () => params.ids.length.toString(),
-                              "..."
-                            )
-                          }
-                        )
-                      }}
-                    />
+                    <DialogContentText>
+                      <FormattedMessage
+                        defaultMessage="Are you sure you want to delete {counter, plural,
+            one {this product type}
+            other {{displayQuantity} product types}
+          }?"
+                        description="dialog content"
+                        values={{
+                          counter: maybe(() => params.ids.length),
+                          displayQuantity: (
+                            <strong>{maybe(() => params.ids.length)}</strong>
+                          )
+                        }}
+                      />
+                    </DialogContentText>
                   </ActionDialog>
                 </>
               );
