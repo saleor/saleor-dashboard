@@ -1,5 +1,6 @@
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -9,10 +10,10 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { UserError } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
-import i18n from "../../../i18n";
 import { maybe } from "../../../misc";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 import { SiteSettings_shop } from "../../types/SiteSettings";
@@ -59,6 +60,7 @@ const SiteSettingsPage: React.StatelessComponent<SiteSettingsPageProps> = ({
   onKeyRemove,
   onSubmit
 }) => {
+  const intl = useIntl();
   const [displayCountry, setDisplayCountry] = useStateFromProps(
     maybe(() => shop.companyAddress.country.code, "")
   );
@@ -96,14 +98,16 @@ const SiteSettingsPage: React.StatelessComponent<SiteSettingsPageProps> = ({
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>{i18n.t("Configuration")}</AppHeader>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.configuration)}
+            </AppHeader>
             <PageHeader
-              title={i18n.t("General Information", {
-                context: "page header"
-              })}
+              title={intl.formatMessage(commonMessages.generalInformations)}
             />
             <Grid variant="inverted">
-              <Typography variant="h6">{i18n.t("Site Settings")}</Typography>
+              <Typography variant="h6">
+                {intl.formatMessage(sectionNames.siteSettings)}
+              </Typography>
               <SiteSettingsDetails
                 data={data}
                 errors={formErrors}
@@ -111,7 +115,7 @@ const SiteSettingsPage: React.StatelessComponent<SiteSettingsPageProps> = ({
                 onChange={change}
               />
               <Typography variant="h6">
-                {i18n.t("Company information")}
+                <FormattedMessage defaultMessage="Company information" />
               </Typography>
               <SiteSettingsAddress
                 data={data}
@@ -123,7 +127,7 @@ const SiteSettingsPage: React.StatelessComponent<SiteSettingsPageProps> = ({
                 onCountryChange={handleCountryChange}
               />
               <Typography variant="h6">
-                {i18n.t("Authentication keys")}
+                <FormattedMessage defaultMessage="Authentication keys" />
               </Typography>
               <SiteSettingsKeys
                 disabled={disabled}
