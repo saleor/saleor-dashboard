@@ -10,10 +10,11 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import SVG from "react-inlinesvg";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import photoIcon from "@assets/images/photo-icon.svg";
 import CardTitle from "@saleor/components/CardTitle";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { getUserInitials, maybe } from "../../../misc";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 
@@ -120,11 +121,19 @@ const StaffProperties = withStyles(styles, { name: "StaffProperties" })(
     onImageDelete,
     onImageUpload
   }: StaffPropertiesProps) => {
+    const intl = useIntl();
     const imgInputAnchor = React.createRef<HTMLInputElement>();
+
     const clickImgInput = () => imgInputAnchor.current.click();
+
     return (
       <Card className={className}>
-        <CardTitle title={i18n.t("Staff Member Information")} />
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Staff Member Information",
+            description: "section header"
+          })}
+        />
         <CardContent>
           <div className={classes.root}>
             <div>
@@ -143,10 +152,16 @@ const StaffProperties = withStyles(styles, { name: "StaffProperties" })(
                   <div className={classes.avatarHover}>
                     <SVG src={photoIcon} />
                     <Typography onClick={clickImgInput}>
-                      {i18n.t("Change photo")}
+                      <FormattedMessage
+                        defaultMessage="Change photo"
+                        description="button"
+                      />
                     </Typography>
                     <Typography onClick={onImageDelete}>
-                      {i18n.t("Delete photo")}
+                      <FormattedMessage
+                        defaultMessage="Delete photo"
+                        description="button"
+                      />
                     </Typography>
                     <input
                       className={classes.fileField}
@@ -163,7 +178,7 @@ const StaffProperties = withStyles(styles, { name: "StaffProperties" })(
               <div className={classes.propGrid}>
                 <div className={classes.prop}>
                   <TextField
-                    label={i18n.t("First Name")}
+                    label={intl.formatMessage(commonMessages.firstName)}
                     value={data.firstName}
                     name="firstName"
                     onChange={onChange}
@@ -172,7 +187,7 @@ const StaffProperties = withStyles(styles, { name: "StaffProperties" })(
                 </div>
                 <div className={classes.prop}>
                   <TextField
-                    label={i18n.t("Last Name")}
+                    label={intl.formatMessage(commonMessages.lastName)}
                     value={data.lastName}
                     name="lastName"
                     onChange={onChange}
@@ -181,7 +196,7 @@ const StaffProperties = withStyles(styles, { name: "StaffProperties" })(
                 </div>
                 <div className={classes.prop}>
                   <TextField
-                    label={i18n.t("E-mail")}
+                    label={intl.formatMessage(commonMessages.email)}
                     value={data.email}
                     name="email"
                     onChange={onChange}
