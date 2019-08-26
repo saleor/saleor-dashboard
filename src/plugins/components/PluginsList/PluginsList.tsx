@@ -49,7 +49,7 @@ const styles = (theme: Theme) =>
 
 const numberOfColumns = 4;
 
-const PluginList = withStyles(styles, { name: "PageList" })(
+const PluginList = withStyles(styles, { name: "PluginList" })(
   ({
     classes,
     settings,
@@ -66,7 +66,6 @@ const PluginList = withStyles(styles, { name: "PageList" })(
     toggleAll,
     toolbar
   }: PluginListProps & WithStyles<typeof styles>) => {
-    console.log(plugins);
     return (
       <Card>
         <Table>

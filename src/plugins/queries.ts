@@ -13,19 +13,19 @@ export const pluginsFragment = gql`
   }
 `;
 
-// export const pluginsDetailsFragment = gql`
-//   ${pluginsFragment}
-//   fragment pluginsDetailsFragment on PluginConfiguration {
-//     ...pluginFragment
-//     configuration {
-//       name
-//       type
-//       value
-//       helpText
-//       label
-//     }
-//   }
-// `;
+export const pluginsDetailsFragment = gql`
+  ${pluginsFragment}
+  fragment pluginsDetailsFragment on PluginConfiguration {
+    ...pluginFragment
+    configuration {
+      name
+      type
+      value
+      helpText
+      label
+    }
+  }
+`;
 
 const pluginsList = gql`
   ${pluginsFragment}
@@ -54,15 +54,15 @@ export const TypedPluginsListQuery = TypedQuery<
   PluginsListVariables
 >(pluginsList);
 
-// const pluginsDetails = gql`
-//   ${pluginsDetailsFragment}
-//   query pluginConfiguration($id: ID!) {
-//     page(id: $id) {
-//       ...pluginsDetailsFragment
-//     }
-//   }
-// `;
-// export const TypedPluginsDetailsQuery = TypedQuery<
-//   PluginDetails,
-//   PluginDetailsVariables
-// >(pluginsDetails);
+const pluginsDetails = gql`
+  ${pluginsDetailsFragment}
+  query pluginConfiguration($id: ID!) {
+    pluginConfiguration(id: $id) {
+      ...pluginsDetailsFragment
+    }
+  }
+`;
+export const TypedPluginsDetailsQuery = TypedQuery<
+  PluginDetails,
+  PluginDetailsVariables
+>(pluginsDetails);

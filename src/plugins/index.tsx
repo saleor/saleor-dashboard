@@ -20,26 +20,26 @@ const PluginList: React.StatelessComponent<RouteComponentProps<any>> = ({
   return <PluginsListComponent params={params} />;
 };
 
-// const PageDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
-//   match
-// }) => {
-//   const qs = parseQs(location.search.substr(1));
-//   const params: PluginsListUrlQueryParams = qs;
+const PageDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
+  match
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: PluginsListUrlQueryParams = qs;
 
-//   return (
-//     <PluginsDetailsComponent
-//       id={decodeURIComponent(match.params.id)}
-//       params={params}
-//     />
-//   );
-// };
+  return (
+    <PluginsDetailsComponent
+      id={decodeURIComponent(match.params.id)}
+      params={params}
+    />
+  );
+};
 
 const Component = () => (
   <>
     <WindowTitle title={i18n.t("Plugins")} />
     <Switch>
       <Route exact path={pluginsListPath} component={PluginList} />
-      {/* <Route path={pluginsPath(":id")} component={PageDetails} /> */}
+      <Route path={pluginsPath(":id")} component={PageDetails} />
     </Switch>
   </>
 );
