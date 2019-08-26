@@ -33,6 +33,11 @@ export enum AuthorizationKeyType {
   GOOGLE_OAUTH2 = "GOOGLE_OAUTH2",
 }
 
+export enum ConfigurationTypeFieldEnum {
+  BOOLEAN = "BOOLEAN",
+  STRING = "STRING",
+}
+
 export enum DiscountValueTypeEnum {
   FIXED = "FIXED",
   PERCENTAGE = "PERCENTAGE",
@@ -340,6 +345,11 @@ export interface CollectionInput {
   publicationDate?: any | null;
 }
 
+export interface ConfigurationItemInput {
+  name: string;
+  value: string;
+}
+
 export interface CustomerInput {
   defaultBillingAddress?: AddressInput | null;
   defaultShippingAddress?: AddressInput | null;
@@ -464,6 +474,11 @@ export interface PageTranslationInput {
   title?: string | null;
   content?: string | null;
   contentJson?: any | null;
+}
+
+export interface PluginConfigurationUpdateInput {
+  active?: boolean | null;
+  configuration?: (ConfigurationItemInput | null)[] | null;
 }
 
 export interface PriceRangeInput {
