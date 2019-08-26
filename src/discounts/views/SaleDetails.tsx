@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
@@ -14,13 +15,13 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "../../config";
 import SearchCategories from "../../containers/SearchCategories";
 import SearchCollections from "../../containers/SearchCollections";
 import SearchProducts from "../../containers/SearchProducts";
-import i18n from "../../i18n";
 import { decimal, getMutationState, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { DiscountValueTypeEnum, SaleType } from "../../types/globalTypes";
@@ -67,6 +68,7 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
+  const intl = useIntl();
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const changeTab = (tab: SaleDetailsPageTab) => {
@@ -81,8 +83,8 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
   const handleSaleDelete = (data: SaleDelete) => {
     if (data.saleDelete.errors.length === 0) {
       notify({
-        text: i18n.t("Removed sale", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Removed sale"
         })
       });
       navigate(saleListUrl(), true);
@@ -92,9 +94,7 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
   const handleSaleUpdate = (data: SaleUpdate) => {
     if (data.saleUpdate.errors.length === 0) {
       notify({
-        text: i18n.t("Updated sale", {
-          context: "notification"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
   };
@@ -130,6 +130,8 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
       reset();
     }
   };
+
+  const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
   return (
     <TypedSaleCataloguesRemove onCompleted={handleCatalogueRemove}>
@@ -222,7 +224,9 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
 
                         return (
                           <>
-                            <WindowTitle title={i18n.t("Sales")} />
+                            <WindowTitle
+                              title={intl.formatMessage(sectionNames.sales)}
+                            />
                             <SaleDetailsPage
                               defaultCurrency={maybe(
                                 () => shop.defaultCurrency
@@ -295,7 +299,11 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                                     openModal("unassign-category", listElements)
                                   }
                                 >
-                                  {i18n.t("Unassign")}
+                                  <FormattedMessage
+                                    defaultMessage="Unassign"
+                                    description="unassign category from sale, button"
+                                    id="saleDetailsUnassignCategory"
+                                  />
                                 </Button>
                               }
                               collectionListToolbar={
@@ -308,7 +316,11 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                                     )
                                   }
                                 >
-                                  {i18n.t("Unassign")}
+                                  <FormattedMessage
+                                    defaultMessage="Unassign"
+                                    description="unassign collection from sale, button"
+                                    id="saleDetailsUnassignCollection"
+                                  />
                                 </Button>
                               }
                               productListToolbar={
@@ -318,7 +330,11 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                                     openModal("unassign-product", listElements)
                                   }
                                 >
-                                  {i18n.t("Unassign")}
+                                  <FormattedMessage
+                                    defaultMessage="Unassign"
+                                    description="unassign product from sale, button"
+                                    id="saleDetailsUnassignProduct"
+                                  />
                                 </Button>
                               }
                               isChecked={isSelected}
@@ -437,77 +453,111 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                               )}
                             </SearchCollections>
                             <ActionDialog
-                              open={params.action === "unassign-category"}
-                              title={i18n.t("Unassign Categories From Sale")}
+                              open={
+                                params.action === "unassign-category" &&
+                                canOpenBulkActionDialog
+                              }
+                              title={intl.formatMessage({
+                                defaultMessage: "Unassign Categories From Sale",
+                                description: "dialog header"
+                              })}
                               confirmButtonState={unassignTransitionState}
                               onClose={closeModal}
                               onConfirm={() =>
                                 handleCategoriesUnassign(params.ids)
                               }
                             >
-                              <DialogContentText
-                                dangerouslySetInnerHTML={{
-                                  __html: i18n.t(
-                                    "Are you sure you want to unassign <strong>{{ saleName }}</strong> categories?",
-                                    {
-                                      saleName: maybe(
-                                        () => params.ids.length.toString(),
-                                        "..."
+                              {canOpenBulkActionDialog && (
+                                <DialogContentText>
+                                  <FormattedMessage
+                                    defaultMessage="Are you sure you want to unassign {counter, plural,
+                                    one {this category}
+                                    other {{displayQuantity} categories}
+                                  }?"
+                                    description="dialog content"
+                                    values={{
+                                      counter: params.ids.length,
+                                      displayQuantity: (
+                                        <strong>{params.ids.length}</strong>
                                       )
-                                    }
-                                  )
-                                }}
-                              />
+                                    }}
+                                  />
+                                </DialogContentText>
+                              )}
                             </ActionDialog>
                             <ActionDialog
-                              open={params.action === "unassign-collection"}
-                              title={i18n.t("Unassign Collections From Sale")}
+                              open={
+                                params.action === "unassign-collection" &&
+                                canOpenBulkActionDialog
+                              }
+                              title={intl.formatMessage({
+                                defaultMessage:
+                                  "Unassign Collections From Sale",
+                                description: "dialog header"
+                              })}
                               confirmButtonState={unassignTransitionState}
                               onClose={closeModal}
                               onConfirm={() =>
                                 handleCollectionsUnassign(params.ids)
                               }
                             >
-                              <DialogContentText
-                                dangerouslySetInnerHTML={{
-                                  __html: i18n.t(
-                                    "Are you sure you want to unassign <strong>{{ saleName }}</strong> collections?",
-                                    {
-                                      saleName: maybe(
-                                        () => params.ids.length.toString(),
-                                        "..."
+                              {canOpenBulkActionDialog && (
+                                <DialogContentText>
+                                  <FormattedMessage
+                                    defaultMessage="Are you sure you want to unassign {counter, plural,
+                                    one {this collection}
+                                    other {{displayQuantity} collections}
+                                  }?"
+                                    description="dialog content"
+                                    values={{
+                                      counter: params.ids.length,
+                                      displayQuantity: (
+                                        <strong>{params.ids.length}</strong>
                                       )
-                                    }
-                                  )
-                                }}
-                              />
+                                    }}
+                                  />
+                                </DialogContentText>
+                              )}
                             </ActionDialog>
                             <ActionDialog
-                              open={params.action === "unassign-product"}
-                              title={i18n.t("Unassign Products From Sale")}
+                              open={
+                                params.action === "unassign-product" &&
+                                canOpenBulkActionDialog
+                              }
+                              title={intl.formatMessage({
+                                defaultMessage: "Unassign Products From Sale",
+                                description: "dialog header"
+                              })}
                               confirmButtonState={unassignTransitionState}
                               onClose={closeModal}
                               onConfirm={() =>
                                 handleProductsUnassign(params.ids)
                               }
                             >
-                              <DialogContentText
-                                dangerouslySetInnerHTML={{
-                                  __html: i18n.t(
-                                    "Are you sure you want to unassign <strong>{{ saleName }}</strong> products?",
-                                    {
-                                      saleName: maybe(
-                                        () => params.ids.length.toString(),
-                                        "..."
+                              {canOpenBulkActionDialog && (
+                                <DialogContentText>
+                                  <FormattedMessage
+                                    defaultMessage="Are you sure you want to unassign {counter, plural,
+                                    one {this product}
+                                    other {{displayQuantity} products}
+                                  }?"
+                                    description="dialog content"
+                                    values={{
+                                      counter: params.ids.length,
+                                      displayQuantity: (
+                                        <strong>{params.ids.length}</strong>
                                       )
-                                    }
-                                  )
-                                }}
-                              />
+                                    }}
+                                  />
+                                </DialogContentText>
+                              )}
                             </ActionDialog>
                             <ActionDialog
                               open={params.action === "remove"}
-                              title={i18n.t("Remove Sale")}
+                              title={intl.formatMessage({
+                                defaultMessage: "Delete Sale",
+                                description: "dialog header"
+                              })}
                               confirmButtonState={removeTransitionState}
                               onClose={closeModal}
                               variant="delete"
@@ -517,19 +567,19 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                                 })
                               }
                             >
-                              <DialogContentText
-                                dangerouslySetInnerHTML={{
-                                  __html: i18n.t(
-                                    "Are you sure you want to remove <strong>{{ saleName }}</strong>?",
-                                    {
-                                      saleName: maybe(
-                                        () => data.sale.name,
-                                        "..."
-                                      )
-                                    }
-                                  )
-                                }}
-                              />
+                              <DialogContentText>
+                                <FormattedMessage
+                                  defaultMessage="Are you sure you want to delete {saleName}?"
+                                  description="dialog content"
+                                  values={{
+                                    saleName: (
+                                      <strong>
+                                        {maybe(() => data.sale.name, "...")}
+                                      </strong>
+                                    )
+                                  }}
+                                />
+                              </DialogContentText>
                             </ActionDialog>
                           </>
                         );

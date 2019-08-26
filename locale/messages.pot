@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T12:14:21.560Z\n"
+"POT-Creation-Date: 2019-08-26T13:08:05.181Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -27,12 +27,28 @@ msgctxt "attribute value edit error"
 msgid "A value named {name} already exists"
 msgstr ""
 
+#: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
+#. [src.discounts.components.VoucherDates.1662220323] - time during voucher is active, header
+#. defaultMessage is:
+#. Active Dates
+msgctxt "time during voucher is active, header"
+msgid "Active Dates"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerAddressDialog/CustomerAddressDialog.json
 #. [src.customers.components.CustomerAddressDialog.3769321414] - dialog title
 #. defaultMessage is:
 #. Add Address
 msgctxt "dialog title"
 msgid "Add Address"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleListPage/SaleListPage.json
+#. [src.discounts.components.SaleListPage.1742771332] - button
+#. defaultMessage is:
+#. Add Sale
+msgctxt "button"
+msgid "Add Sale"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
@@ -151,6 +167,14 @@ msgctxt "add attribute value button"
 msgid "Add value"
 msgstr ""
 
+#: build/locale/src/discounts/components/VoucherListPage/VoucherListPage.json
+#. [src.discounts.components.VoucherListPage.1536809153] - button
+#. defaultMessage is:
+#. Add voucher
+msgctxt "button"
+msgid "Add voucher"
+msgstr ""
+
 #: build/locale/src/attributes/views/AttributeDetails/AttributeDetails.json
 #. [src.attributes.views.AttributeDetails.634268988] - added new attribute value
 #. defaultMessage is:
@@ -205,6 +229,14 @@ msgstr ""
 #. All Subcategories
 msgctxt "section header"
 msgid "All Subcategories"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherSummary/VoucherSummary.json
+#. [src.discounts.components.VoucherSummary.2735425668] - voucher
+#. defaultMessage is:
+#. Applies to
+msgctxt "voucher"
+msgid "Applies to"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
@@ -315,12 +347,44 @@ msgctxt "description"
 msgid "Are you sure you want to delete {counter,plural,one{this customer} other{{displayQuantity} customers}}?"
 msgstr ""
 
+#: build/locale/src/discounts/views/SaleList.json
+#. [src.discounts.views.2516361175] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this sale} other{{displayQuantity} sales}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to delete {counter,plural,one{this sale} other{{displayQuantity} sales}}?"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherList.json
+#. [src.discounts.views.1791926983] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this voucher} other{{displayQuantity} vouchers}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to delete {counter,plural,one{this voucher} other{{displayQuantity} vouchers}}?"
+msgstr ""
+
 #: build/locale/src/customers/views/CustomerDetails.json
 #. [src.customers.views.1927691511] - delete customer, dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {email}?
 msgctxt "delete customer, dialog content"
 msgid "Are you sure you want to delete {email}?"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [src.discounts.views.1457489953] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to delete {saleName}?
+msgctxt "dialog content"
+msgid "Are you sure you want to delete {saleName}?"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [src.discounts.views.3261917848] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to delete {voucherCode}?
+msgctxt "dialog content"
+msgid "Are you sure you want to delete {voucherCode}?"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
@@ -331,11 +395,47 @@ msgctxt "description"
 msgid "Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
 msgstr ""
 
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [src.discounts.views.376977560] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to unassign {counter,plural,one{this category} other{{displayQuantity} categories}}?
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [src.discounts.views.376977560] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to unassign {counter,plural,one{this category} other{{displayQuantity} categories}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to unassign {counter,plural,one{this category} other{{displayQuantity} categories}}?"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [src.discounts.views.396618268] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to unassign {counter,plural,one{this collection} other{{displayQuantity} collections}}?
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [src.discounts.views.396618268] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to unassign {counter,plural,one{this collection} other{{displayQuantity} collections}}?
+msgctxt "dialog content"
+msgid "Are you sure you want to unassign {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionDetails.json
 #. [src.collections.views.1908998638]
 #. defaultMessage is:
 #. Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?
 msgctxt "description"
+msgid "Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [src.discounts.views.786949385] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [src.discounts.views.786949385] - dialog content
+#. defaultMessage is:
+#. Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?
+msgctxt "dialog content"
 msgid "Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?"
 msgstr ""
 
@@ -347,12 +447,52 @@ msgctxt "description"
 msgid "Are you sure you want to unpublish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
 msgstr ""
 
+#: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
+#. [src.discounts.components.DiscountCountrySelectDialog.1585396479] - dialog header
+#. defaultMessage is:
+#. Assign Countries
+msgctxt "dialog header"
+msgid "Assign Countries"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountCategories/DiscountCategories.json
+#. [src.discounts.components.DiscountCategories.3973677075] - button
+#. defaultMessage is:
+#. Assign categories
+msgctxt "button"
+msgid "Assign categories"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountCollections/DiscountCollections.json
+#. [src.discounts.components.DiscountCollections.1035511604] - button
+#. defaultMessage is:
+#. Assign collections
+msgctxt "button"
+msgid "Assign collections"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
+#. [src.discounts.components.DiscountCountrySelectDialog.2747492886] - button
+#. defaultMessage is:
+#. Assign countries
+msgctxt "button"
+msgid "Assign countries"
+msgstr ""
+
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 #. [src.collections.components.CollectionProducts.460524544] - button
 #. defaultMessage is:
 #. Assign product
 msgctxt "button"
 msgid "Assign product"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
+#. [src.discounts.components.DiscountProducts.2100305525] - button
+#. defaultMessage is:
+#. Assign products
+msgctxt "button"
+msgid "Assign products"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -463,6 +603,18 @@ msgctxt "categories section name"
 msgid "Categories"
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleDetailsPage/SaleDetailsPage.json
+#. [saleDetailsPageCategoriesQuantity] - number of categories
+#. defaultMessage is:
+#. Categories ({quantity})
+#: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
+#. [src.discounts.components.VoucherDetailsPage.346170541] - number of categories
+#. defaultMessage is:
+#. Categories ({quantity})
+msgctxt "number of categories"
+msgid "Categories ({quantity})"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryDetailsForm/CategoryDetailsForm.json
 #. [src.categories.components.CategoryDetailsForm.4037703468]
 #. defaultMessage is:
@@ -503,12 +655,60 @@ msgctxt "description"
 msgid "Category deleted"
 msgstr ""
 
+#: build/locale/src/discounts/components/DiscountCategories/DiscountCategories.json
+#. [src.discounts.components.DiscountCategories.1567318211]
+#. defaultMessage is:
+#. Category name
+msgctxt "description"
+msgid "Category name"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
+#. [src.discounts.components.DiscountCountrySelectDialog.2177165134]
+#. defaultMessage is:
+#. Choose countries, you want voucher to be limited to, from the list below
+msgctxt "description"
+msgid "Choose countries, you want voucher to be limited to, from the list below"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherList/VoucherList.json
+#. [src.discounts.components.VoucherList.78726751] - voucher code
+#. defaultMessage is:
+#. Code
+#: build/locale/src/discounts/components/VoucherSummary/VoucherSummary.json
+#. [src.discounts.components.VoucherSummary.78726751] - voucher code
+#. defaultMessage is:
+#. Code
+msgctxt "voucher code"
+msgid "Code"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountCollections/DiscountCollections.json
+#. [src.discounts.components.DiscountCollections.3011396316]
+#. defaultMessage is:
+#. Collection name
+msgctxt "description"
+msgid "Collection name"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.collections] - collections section name
 #. defaultMessage is:
 #. Collections
 msgctxt "collections section name"
 msgid "Collections"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleDetailsPage/SaleDetailsPage.json
+#. [saleDetailsPageCollectionsQuantity] - number of collections
+#. defaultMessage is:
+#. Collections ({quantity})
+#: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
+#. [src.discounts.components.VoucherDetailsPage.3673147015] - number of collections
+#. defaultMessage is:
+#. Collections ({quantity})
+msgctxt "number of collections"
+msgid "Collections ({quantity})"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -527,6 +727,22 @@ msgctxt "button"
 msgid "Confirm"
 msgstr ""
 
+#: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
+#. [src.discounts.components.VoucherDetailsPage.3109712047] - voucher country range
+#. defaultMessage is:
+#. Countries
+msgctxt "voucher country range"
+msgid "Countries"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
+#. [src.discounts.components.DiscountCountrySelectDialog.2777439857] - country selection
+#. defaultMessage is:
+#. Countries A to Z
+msgctxt "country selection"
+msgid "Countries A to Z"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributePage/AttributePage.json
 #. [src.attributes.components.AttributePage.2855501559] - page title
 #. defaultMessage is:
@@ -541,6 +757,22 @@ msgstr ""
 #. Create New Category
 msgctxt "page header"
 msgid "Create New Category"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleCreatePage/SaleCreatePage.json
+#. [src.discounts.components.SaleCreatePage.3866518732] - page header
+#. defaultMessage is:
+#. Create Sale
+msgctxt "page header"
+msgid "Create Sale"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherCreatePage/VoucherCreatePage.json
+#. [src.discounts.components.VoucherCreatePage.1357216572] - page header
+#. defaultMessage is:
+#. Create Voucher
+msgctxt "page header"
+msgid "Create Voucher"
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryCreate.json
@@ -743,6 +975,38 @@ msgctxt "dialog title"
 msgid "Delete Collection"
 msgstr ""
 
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [src.discounts.views.506030254] - dialog header
+#. defaultMessage is:
+#. Delete Sale
+msgctxt "dialog header"
+msgid "Delete Sale"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleList.json
+#. [src.discounts.views.2809303671] - dialog header
+#. defaultMessage is:
+#. Delete Sales
+msgctxt "dialog header"
+msgid "Delete Sales"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [src.discounts.views.895379508] - dialog header
+#. defaultMessage is:
+#. Delete Voucher
+msgctxt "dialog header"
+msgid "Delete Voucher"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherList.json
+#. [src.discounts.views.367317371] - dialog header
+#. defaultMessage is:
+#. Delete Vouchers
+msgctxt "dialog header"
+msgid "Delete Vouchers"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDeleteDialog/AttributeDeleteDialog.json
 #. [src.attributes.components.AttributeDeleteDialog.1889602489] - dialog title
 #. defaultMessage is:
@@ -847,6 +1111,14 @@ msgctxt "description"
 msgid "Deleted product from collection"
 msgstr ""
 
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [src.discounts.views.1162257691]
+#. defaultMessage is:
+#. Deleted voucher
+msgctxt "description"
+msgid "Deleted voucher"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.description]
 #. defaultMessage is:
@@ -861,6 +1133,42 @@ msgstr ""
 #. Determine attributes used to create product types
 msgctxt "description"
 msgid "Determine attributes used to create product types"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherInfo/VoucherInfo.json
+#. [src.discounts.components.VoucherInfo.1262795626]
+#. defaultMessage is:
+#. Discount Code
+msgctxt "description"
+msgid "Discount Code"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
+#. [src.discounts.components.VoucherValue.1971417066]
+#. defaultMessage is:
+#. Discount Specific Information
+msgctxt "description"
+msgid "Discount Specific Information"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
+#. [src.discounts.components.VoucherTypes.3216816841] - header
+#. defaultMessage is:
+#. Discount Type
+msgctxt "header"
+msgid "Discount Type"
+msgstr ""
+
+#: build/locale/src/discounts/components/SalePricing/SalePricing.json
+#. [src.discounts.components.SalePricing.1205967018]
+#. defaultMessage is:
+#. Discount Value
+#: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
+#. [src.discounts.components.VoucherValue.1205967018]
+#. defaultMessage is:
+#. Discount Value
+msgctxt "description"
+msgid "Discount Value"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -903,6 +1211,62 @@ msgctxt "edit attribute value"
 msgid "Edit Value"
 msgstr ""
 
+#: build/locale/src/discounts/components/DiscountCategories/DiscountCategories.json
+#. [src.discounts.components.DiscountCategories.1681512341] - section header
+#. defaultMessage is:
+#. Eligible Categories
+msgctxt "section header"
+msgid "Eligible Categories"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountCollections/DiscountCollections.json
+#. [src.discounts.components.DiscountCollections.452750900] - section header
+#. defaultMessage is:
+#. Eligible Collections
+msgctxt "section header"
+msgid "Eligible Collections"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
+#. [src.discounts.components.DiscountProducts.919175218] - section header
+#. defaultMessage is:
+#. Eligible Products
+msgctxt "section header"
+msgid "Eligible Products"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.endDate]
+#. defaultMessage is:
+#. End Date
+msgctxt "description"
+msgid "End Date"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.endHour]
+#. defaultMessage is:
+#. End Hour
+msgctxt "description"
+msgid "End Hour"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleList/SaleList.json
+#. [src.discounts.components.SaleList.3715522424] - sale end date
+#. defaultMessage is:
+#. Ends
+msgctxt "sale end date"
+msgid "Ends"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherList/VoucherList.json
+#. [src.discounts.components.VoucherList.3715522424] - voucher is active until date
+#. defaultMessage is:
+#. Ends
+msgctxt "voucher is active until date"
+msgid "Ends"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerCreateNote/CustomerCreateNote.json
 #. [src.customers.components.CustomerCreateNote.932844352]
 #. defaultMessage is:
@@ -919,12 +1283,36 @@ msgctxt "switch button"
 msgid "Feature on Homepage"
 msgstr ""
 
+#: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
+#. [src.discounts.components.DiscountCountrySelectDialog.2566713432] - search box label
+#. defaultMessage is:
+#. Filter Countries
+msgctxt "search box label"
+msgid "Filter Countries"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.firstName]
 #. defaultMessage is:
 #. First Name
 msgctxt "description"
 msgid "First Name"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
+#. [src.discounts.components.VoucherTypes.46415128] - voucher discount type
+#. defaultMessage is:
+#. Fixed Amount
+msgctxt "voucher discount type"
+msgid "Fixed Amount"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
+#. [src.discounts.components.VoucherTypes.3289659291] - voucher discount type
+#. defaultMessage is:
+#. Free Shipping
+msgctxt "voucher discount type"
+msgid "Free Shipping"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -935,12 +1323,28 @@ msgctxt "description"
 msgid "General Informations"
 msgstr ""
 
+#: build/locale/src/discounts/components/VoucherInfo/VoucherInfo.json
+#. [src.discounts.components.VoucherInfo.1944363009] - voucher code, button
+#. defaultMessage is:
+#. Generate Code
+msgctxt "voucher code, button"
+msgid "Generate Code"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.787251583]
 #. defaultMessage is:
 #. If enabled, you’ll be able to use this attribute to filter products in product list.
 msgctxt "description"
 msgid "If enabled, you’ll be able to use this attribute to filter products in product list."
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
+#. [src.discounts.components.VoucherValue.4189095909]
+#. defaultMessage is:
+#. If this option is disabled, discount will be counted for every eligible product
+msgctxt "description"
+msgid "If this option is disabled, discount will be counted for every eligible product"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -965,6 +1369,30 @@ msgstr ""
 #. Last order
 msgctxt "description"
 msgid "Last order"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherLimits/VoucherLimits.json
+#. [src.discounts.components.VoucherLimits.2215544659]
+#. defaultMessage is:
+#. Limit number of times this discount can be used in total
+msgctxt "description"
+msgid "Limit number of times this discount can be used in total"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherLimits/VoucherLimits.json
+#. [src.discounts.components.VoucherLimits.557552777] - voucher
+#. defaultMessage is:
+#. Limit of Uses
+msgctxt "voucher"
+msgid "Limit of Uses"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherLimits/VoucherLimits.json
+#. [src.discounts.components.VoucherLimits.3459612469] - limit voucher
+#. defaultMessage is:
+#. Limit to one use per customer
+msgctxt "limit voucher"
+msgid "Limit to one use per customer"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -1007,6 +1435,46 @@ msgctxt "description"
 msgid "Manage your employees and their permissions"
 msgstr ""
 
+#: build/locale/src/discounts/components/VoucherSummary/VoucherSummary.json
+#. [src.discounts.components.VoucherSummary.1836123577] - voucher value requirement
+#. defaultMessage is:
+#. Min. Order Value
+msgctxt "voucher value requirement"
+msgid "Min. Order Value"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherList/VoucherList.json
+#. [src.discounts.components.VoucherList.2427377316] - minimum amount of spent money to activate voucher
+#. defaultMessage is:
+#. Min. Spent
+msgctxt "minimum amount of spent money to activate voucher"
+msgid "Min. Spent"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherRequirements/VoucherRequirements.json
+#. [src.discounts.components.VoucherRequirements.653777456] - voucher requirement
+#. defaultMessage is:
+#. Minimal order value
+msgctxt "voucher requirement"
+msgid "Minimal order value"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherRequirements/VoucherRequirements.json
+#. [src.discounts.components.VoucherRequirements.2746532349] - voucher requirements, header
+#. defaultMessage is:
+#. Minimum Requirements
+msgctxt "voucher requirements, header"
+msgid "Minimum Requirements"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherRequirements/VoucherRequirements.json
+#. [src.discounts.components.VoucherRequirements.3740704788] - voucher requirement
+#. defaultMessage is:
+#. Minimum quantity of items
+msgctxt "voucher requirement"
+msgid "Minimum quantity of items"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
 #. [src.attributes.components.AttributeDetails.3334509011] - product attribute type
 #. defaultMessage is:
@@ -1043,6 +1511,22 @@ msgctxt "collection name"
 msgid "Name"
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleInfo/SaleInfo.json
+#. [src.discounts.components.SaleInfo.636461959] - sale name
+#. defaultMessage is:
+#. Name
+#: build/locale/src/discounts/components/SaleList/SaleList.json
+#. [src.discounts.components.SaleList.636461959] - sale name
+#. defaultMessage is:
+#. Name
+#: build/locale/src/discounts/components/SaleSummary/SaleSummary.json
+#. [src.discounts.components.SaleSummary.636461959] - sale name
+#. defaultMessage is:
+#. Name
+msgctxt "sale name"
+msgid "Name"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.navigation] - navigation section name
 #. defaultMessage is:
@@ -1063,12 +1547,20 @@ msgstr ""
 #. [src.categories.components.CategoryList.2054128296]
 #. defaultMessage is:
 #. No categories found
+#: build/locale/src/discounts/components/DiscountCategories/DiscountCategories.json
+#. [src.discounts.components.DiscountCategories.2054128296]
+#. defaultMessage is:
+#. No categories found
 msgctxt "description"
 msgid "No categories found"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionList/CollectionList.json
 #. [src.collections.components.CollectionList.2137803833]
+#. defaultMessage is:
+#. No collections found
+#: build/locale/src/discounts/components/DiscountCollections/DiscountCollections.json
+#. [src.discounts.components.DiscountCollections.2137803833]
 #. defaultMessage is:
 #. No collections found
 msgctxt "description"
@@ -1099,8 +1591,20 @@ msgstr ""
 #. [src.collections.components.CollectionProducts.1657559629]
 #. defaultMessage is:
 #. No products found
+#: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
+#. [src.discounts.components.DiscountProducts.1657559629]
+#. defaultMessage is:
+#. No products found
 msgctxt "description"
 msgid "No products found"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleList/SaleList.json
+#. [src.discounts.components.SaleList.4101565527]
+#. defaultMessage is:
+#. No sales found
+msgctxt "description"
+msgid "No sales found"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
@@ -1117,6 +1621,14 @@ msgstr ""
 #. No values found
 msgctxt "No attribute values found"
 msgid "No values found"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherList/VoucherList.json
+#. [src.discounts.components.VoucherList.79160621]
+#. defaultMessage is:
+#. No vouchers found
+msgctxt "description"
+msgid "No vouchers found"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
@@ -1151,6 +1663,14 @@ msgctxt "description"
 msgid "No. of Products"
 msgstr ""
 
+#: build/locale/src/discounts/components/VoucherRequirements/VoucherRequirements.json
+#. [src.discounts.components.VoucherRequirements.3069107721] - voucher has no requirements
+#. defaultMessage is:
+#. None
+msgctxt "voucher has no requirements"
+msgid "None"
+msgstr ""
+
 #: build/locale/src/collections/components/CollectionList/CollectionList.json
 #. [src.collections.components.CollectionList.2341910657] - collection is not published
 #. defaultMessage is:
@@ -1161,6 +1681,10 @@ msgstr ""
 
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 #. [src.collections.components.CollectionProducts.2341910657] - product is not published
+#. defaultMessage is:
+#. Not published
+#: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
+#. [src.discounts.components.DiscountProducts.2341910657] - product is not published
 #. defaultMessage is:
 #. Not published
 msgctxt "product is not published"
@@ -1187,12 +1711,28 @@ msgctxt "notes about customer header"
 msgid "Notes"
 msgstr ""
 
+#: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
+#. [src.discounts.components.VoucherValue.1492866942] - voucher application, switch button
+#. defaultMessage is:
+#. Only once per order
+msgctxt "voucher application, switch button"
+msgid "Only once per order"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.pages] - pages section name
 #. defaultMessage is:
 #. Pages
 msgctxt "pages section name"
 msgid "Pages"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
+#. [src.discounts.components.VoucherTypes.3688224049] - voucher discount type
+#. defaultMessage is:
+#. Percentage
+msgctxt "voucher discount type"
+msgid "Percentage"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
@@ -1203,12 +1743,36 @@ msgctxt "attribute position in storefront filters"
 msgid "Position in faceted navigation"
 msgstr ""
 
+#: build/locale/src/discounts/components/SalePricing/SalePricing.json
+#. [src.discounts.components.SalePricing.1099355007] - sale pricing, header
+#. defaultMessage is:
+#. Pricing
+msgctxt "sale pricing, header"
+msgid "Pricing"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerCreateAddress/CustomerCreateAddress.json
 #. [src.customers.components.CustomerCreateAddress.1922654050] - page header
 #. defaultMessage is:
 #. Primary address
 msgctxt "page header"
 msgid "Primary address"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
+#. [src.discounts.components.DiscountProducts.2697405188]
+#. defaultMessage is:
+#. Product Name
+msgctxt "description"
+msgid "Product Name"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
+#. [src.discounts.components.DiscountProducts.4257289053]
+#. defaultMessage is:
+#. Product Type
+msgctxt "description"
+msgid "Product Type"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -1233,6 +1797,30 @@ msgstr ""
 #. Products
 msgctxt "number of products in category"
 msgid "Products"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountCategories/DiscountCategories.json
+#. [src.discounts.components.DiscountCategories.2968663655] - number of products
+#. defaultMessage is:
+#. Products
+#: build/locale/src/discounts/components/DiscountCollections/DiscountCollections.json
+#. [src.discounts.components.DiscountCollections.2968663655] - number of products
+#. defaultMessage is:
+#. Products
+msgctxt "number of products"
+msgid "Products"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleDetailsPage/SaleDetailsPage.json
+#. [saleDetailsPageProductsQuantity] - number of products
+#. defaultMessage is:
+#. Products ({quantity})
+#: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
+#. [src.discounts.components.VoucherDetailsPage.846927739] - number of products
+#. defaultMessage is:
+#. Products ({quantity})
+msgctxt "number of products"
+msgid "Products ({quantity})"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
@@ -1287,6 +1875,10 @@ msgstr ""
 #. [src.collections.components.CollectionProducts.3640454975] - product is published
 #. defaultMessage is:
 #. Published
+#: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
+#. [src.discounts.components.DiscountProducts.3640454975] - product is published
+#. defaultMessage is:
+#. Published
 msgctxt "product is published"
 msgid "Published"
 msgstr ""
@@ -1319,6 +1911,22 @@ msgctxt "button"
 msgid "Remove"
 msgstr ""
 
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [src.discounts.views.2534378844]
+#. defaultMessage is:
+#. Removed sale
+msgctxt "description"
+msgid "Removed sale"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.sales] - sales section name
+#. defaultMessage is:
+#. Sales
+msgctxt "sales section name"
+msgid "Sales"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.save] - button
 #. defaultMessage is:
@@ -1333,6 +1941,14 @@ msgstr ""
 #. Saved changes
 msgctxt "description"
 msgid "Saved changes"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog.json
+#. [src.discounts.components.DiscountCountrySelectDialog.2110418881] - search box placeholder
+#. defaultMessage is:
+#. Search by country name
+msgctxt "search box placeholder"
+msgid "Search by country name"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
@@ -1357,6 +1973,14 @@ msgstr ""
 #. Set as default shipping address
 msgctxt "button"
 msgid "Set as default shipping address"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
+#. [src.discounts.components.VoucherDates.1596226028] - voucher end date, switch button
+#. defaultMessage is:
+#. Set end date
+msgctxt "voucher end date, switch button"
+msgid "Set end date"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -1389,6 +2013,38 @@ msgstr ""
 #. Staff Members
 msgctxt "staff section name"
 msgid "Staff Members"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.startDate]
+#. defaultMessage is:
+#. Start Date
+msgctxt "description"
+msgid "Start Date"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.startHour]
+#. defaultMessage is:
+#. Start Hour
+msgctxt "description"
+msgid "Start Hour"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleList/SaleList.json
+#. [src.discounts.components.SaleList.47059407] - sale start date
+#. defaultMessage is:
+#. Starts
+msgctxt "sale start date"
+msgid "Starts"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherList/VoucherList.json
+#. [src.discounts.components.VoucherList.47059407] - voucher is active from date
+#. defaultMessage is:
+#. Starts
+msgctxt "voucher is active from date"
+msgid "Starts"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
@@ -1429,6 +2085,30 @@ msgstr ""
 #. Successfully created attribute
 msgctxt "description"
 msgid "Successfully created attribute"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleCreate.json
+#. [src.discounts.views.3707049729]
+#. defaultMessage is:
+#. Successfully created sale
+msgctxt "description"
+msgid "Successfully created sale"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherCreate.json
+#. [src.discounts.views.655651329]
+#. defaultMessage is:
+#. Successfully created voucher
+msgctxt "description"
+msgid "Successfully created voucher"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.summary]
+#. defaultMessage is:
+#. Summary
+msgctxt "description"
+msgid "Summary"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -1479,6 +2159,14 @@ msgctxt "attribute slug input field helper text"
 msgid "This is used internally. Make sure you don’t use spaces"
 msgstr ""
 
+#: build/locale/src/discounts/components/SalePricing/SalePricing.json
+#. [src.discounts.components.SalePricing.2503204759] - time during which sale is active
+#. defaultMessage is:
+#. Time Frame
+msgctxt "time during which sale is active"
+msgid "Time Frame"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
 #. [src.customers.components.CustomerOrders.878013594] - order total amount
 #. defaultMessage is:
@@ -1505,6 +2193,102 @@ msgstr ""
 #. Unassign
 msgctxt "unassign product from collection, button"
 msgid "Unassign"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [saleDetailsUnassignCategory] - unassign category from sale, button
+#. defaultMessage is:
+#. Unassign
+msgctxt "unassign category from sale, button"
+msgid "Unassign"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [saleDetailsUnassignCollection] - unassign collection from sale, button
+#. defaultMessage is:
+#. Unassign
+msgctxt "unassign collection from sale, button"
+msgid "Unassign"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [saleDetailsUnassignProduct] - unassign product from sale, button
+#. defaultMessage is:
+#. Unassign
+msgctxt "unassign product from sale, button"
+msgid "Unassign"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [voucherDetailsUnassignCategory] - unassign category from voucher, button
+#. defaultMessage is:
+#. Unassign
+msgctxt "unassign category from voucher, button"
+msgid "Unassign"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [voucherDetailsUnassignCollection] - unassign collection from voucher, button
+#. defaultMessage is:
+#. Unassign
+msgctxt "unassign collection from voucher, button"
+msgid "Unassign"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [voucherDetailsUnassignProduct] - unassign product from voucher, button
+#. defaultMessage is:
+#. Unassign
+msgctxt "unassign product from voucher, button"
+msgid "Unassign"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [src.discounts.views.1827854264] - dialog header
+#. defaultMessage is:
+#. Unassign Categories From Sale
+msgctxt "dialog header"
+msgid "Unassign Categories From Sale"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [src.discounts.views.2669520431] - dialog header
+#. defaultMessage is:
+#. Unassign Categories From Voucher
+msgctxt "dialog header"
+msgid "Unassign Categories From Voucher"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [src.discounts.views.1952217501] - dialog header
+#. defaultMessage is:
+#. Unassign Collections From Sale
+msgctxt "dialog header"
+msgid "Unassign Collections From Sale"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [src.discounts.views.1402402714] - dialog header
+#. defaultMessage is:
+#. Unassign Collections From Voucher
+msgctxt "dialog header"
+msgid "Unassign Collections From Voucher"
+msgstr ""
+
+#: build/locale/src/discounts/views/SaleDetails.json
+#. [src.discounts.views.3395246518] - dialog header
+#. defaultMessage is:
+#. Unassign Products From Sale
+msgctxt "dialog header"
+msgid "Unassign Products From Sale"
+msgstr ""
+
+#: build/locale/src/discounts/views/VoucherDetails.json
+#. [src.discounts.views.2072403265] - dialog header
+#. defaultMessage is:
+#. Unassign Products From Voucher
+msgctxt "dialog header"
+msgid "Unassign Products From Voucher"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
@@ -1539,6 +2323,22 @@ msgctxt "button"
 msgid "Upload image"
 msgstr ""
 
+#: build/locale/src/discounts/components/VoucherLimits/VoucherLimits.json
+#. [src.discounts.components.VoucherLimits.3751756157] - voucher usage limit, header
+#. defaultMessage is:
+#. Usage Limit
+msgctxt "voucher usage limit, header"
+msgid "Usage Limit"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherSummary/VoucherSummary.json
+#. [src.discounts.components.VoucherSummary.3751756157] - voucher value requirement
+#. defaultMessage is:
+#. Usage Limit
+msgctxt "voucher value requirement"
+msgid "Usage Limit"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.714335445] - use attribute in filtering
 #. defaultMessage is:
@@ -1569,6 +2369,46 @@ msgstr ""
 #. User account active
 msgctxt "check to mark this account as active"
 msgid "User account active"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherList/VoucherList.json
+#. [src.discounts.components.VoucherList.3917820600] - voucher uses
+#. defaultMessage is:
+#. Uses
+msgctxt "voucher uses"
+msgid "Uses"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleList/SaleList.json
+#. [src.discounts.components.SaleList.1148029984] - sale value
+#. defaultMessage is:
+#. Value
+#: build/locale/src/discounts/components/SaleSummary/SaleSummary.json
+#. [src.discounts.components.SaleSummary.1148029984] - sale value
+#. defaultMessage is:
+#. Value
+msgctxt "sale value"
+msgid "Value"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherList/VoucherList.json
+#. [src.discounts.components.VoucherList.1148029984] - voucher value
+#. defaultMessage is:
+#. Value
+#: build/locale/src/discounts/components/VoucherSummary/VoucherSummary.json
+#. [src.discounts.components.VoucherSummary.1148029984] - voucher value
+#. defaultMessage is:
+#. Value
+msgctxt "voucher value"
+msgid "Value"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
+#. [src.discounts.components.VoucherValue.1148029984] - section header
+#. defaultMessage is:
+#. Value
+msgctxt "section header"
+msgid "Value"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -1617,6 +2457,30 @@ msgstr ""
 #. Visible on Product Page in Storefront
 msgctxt "attribute"
 msgid "Visible on Product Page in Storefront"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
+#. [src.discounts.components.VoucherDetailsPage.2071139683]
+#. defaultMessage is:
+#. Voucher applies to all countries
+msgctxt "description"
+msgid "Voucher applies to all countries"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
+#. [src.discounts.components.VoucherDetailsPage.2102960822]
+#. defaultMessage is:
+#. Voucher is limited to these countries
+msgctxt "description"
+msgid "Voucher is limited to these countries"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.vouchers] - vouchers section name
+#. defaultMessage is:
+#. Vouchers
+msgctxt "vouchers section name"
+msgid "Vouchers"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json

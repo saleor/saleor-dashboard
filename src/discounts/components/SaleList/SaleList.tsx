@@ -11,6 +11,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import Date from "@saleor/components/Date";
@@ -19,7 +20,6 @@ import Percent from "@saleor/components/Percent";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { SaleType } from "@saleor/types/globalTypes";
@@ -92,24 +92,22 @@ const SaleList = withStyles(styles, {
           toolbar={toolbar}
         >
           <TableCell className={classes.colName}>
-            {i18n.t("Name", {
-              context: "sale list table header"
-            })}
+            <FormattedMessage defaultMessage="Name" description="sale name" />
           </TableCell>
           <TableCell className={classes.colStart}>
-            {i18n.t("Starts", {
-              context: "sale list table header"
-            })}
+            <FormattedMessage
+              defaultMessage="Starts"
+              description="sale start date"
+            />
           </TableCell>
           <TableCell className={classes.colEnd}>
-            {i18n.t("Ends", {
-              context: "sale list table header"
-            })}
+            <FormattedMessage
+              defaultMessage="Ends"
+              description="sale end date"
+            />
           </TableCell>
           <TableCell className={classes.colValue}>
-            {i18n.t("Value", {
-              context: "sale list table header"
-            })}
+            <FormattedMessage defaultMessage="Value" description="sale value" />
           </TableCell>
         </TableHead>
         <TableFooter>
@@ -193,7 +191,7 @@ const SaleList = withStyles(styles, {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("No sales found")}
+                  <FormattedMessage defaultMessage="No sales found" />
                 </TableCell>
               </TableRow>
             )

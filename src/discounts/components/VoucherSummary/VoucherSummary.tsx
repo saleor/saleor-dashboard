@@ -2,6 +2,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -11,7 +12,7 @@ import Hr from "@saleor/components/Hr";
 import Money from "@saleor/components/Money";
 import Percent from "@saleor/components/Percent";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { translateVoucherTypes } from "../../translations";
@@ -26,19 +27,25 @@ const VoucherSummary: React.StatelessComponent<VoucherSummaryProps> = ({
   defaultCurrency,
   voucher
 }) => {
+  const intl = useIntl();
+
   const translatedVoucherTypes = translateVoucherTypes();
 
   return (
     <Card>
-      <CardTitle title={i18n.t("Summary")} />
+      <CardTitle title={intl.formatMessage(commonMessages.summary)} />
       <CardContent>
-        <Typography variant="caption">{i18n.t("Code")}</Typography>
+        <Typography variant="caption">
+          <FormattedMessage defaultMessage="Code" description="voucher code" />
+        </Typography>
         <Typography>
           {maybe<React.ReactNode>(() => voucher.code, <Skeleton />)}
         </Typography>
         <FormSpacer />
 
-        <Typography variant="caption">{i18n.t("Applies to")}</Typography>
+        <Typography variant="caption">
+          <FormattedMessage defaultMessage="Applies to" description="voucher" />
+        </Typography>
         <Typography>
           {maybe<React.ReactNode>(
             () => translatedVoucherTypes[voucher.type],
@@ -47,7 +54,12 @@ const VoucherSummary: React.StatelessComponent<VoucherSummaryProps> = ({
         </Typography>
         <FormSpacer />
 
-        <Typography variant="caption">{i18n.t("Value")}</Typography>
+        <Typography variant="caption">
+          <FormattedMessage
+            defaultMessage="Value"
+            description="voucher value"
+          />
+        </Typography>
         <Typography>
           {maybe<React.ReactNode>(
             () =>
@@ -69,7 +81,9 @@ const VoucherSummary: React.StatelessComponent<VoucherSummaryProps> = ({
         <Hr />
         <CardSpacer />
 
-        <Typography variant="caption">{i18n.t("Start Date")}</Typography>
+        <Typography variant="caption">
+          {intl.formatMessage(commonMessages.startDate)}
+        </Typography>
         <Typography>
           {maybe<React.ReactNode>(
             () => (
@@ -80,7 +94,9 @@ const VoucherSummary: React.StatelessComponent<VoucherSummaryProps> = ({
         </Typography>
         <FormSpacer />
 
-        <Typography variant="caption">{i18n.t("End Date")}</Typography>
+        <Typography variant="caption">
+          {intl.formatMessage(commonMessages.endDate)}
+        </Typography>
         <Typography>
           {maybe<React.ReactNode>(
             () =>
@@ -97,7 +113,12 @@ const VoucherSummary: React.StatelessComponent<VoucherSummaryProps> = ({
         <Hr />
         <CardSpacer />
 
-        <Typography variant="caption">{i18n.t("Min. Order Value")}</Typography>
+        <Typography variant="caption">
+          <FormattedMessage
+            defaultMessage="Min. Order Value"
+            description="voucher value requirement"
+          />
+        </Typography>
         <Typography>
           {maybe<React.ReactNode>(
             () =>
@@ -111,7 +132,12 @@ const VoucherSummary: React.StatelessComponent<VoucherSummaryProps> = ({
         </Typography>
         <FormSpacer />
 
-        <Typography variant="caption">{i18n.t("Usage Limit")}</Typography>
+        <Typography variant="caption">
+          <FormattedMessage
+            defaultMessage="Usage Limit"
+            description="voucher value requirement"
+          />
+        </Typography>
         <Typography>
           {maybe<React.ReactNode>(
             () => (voucher.usageLimit === null ? "-" : voucher.usageLimit),

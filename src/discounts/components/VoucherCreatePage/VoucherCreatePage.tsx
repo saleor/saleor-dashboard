@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -8,7 +9,6 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import i18n from "../../../i18n";
 import { UserError } from "../../../types";
 import {
   DiscountValueTypeEnum,
@@ -21,6 +21,7 @@ import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
 import VoucherTypes from "../VoucherTypes";
 
+import { sectionNames } from "@saleor/intl";
 import VoucherValue from "../VoucherValue";
 export interface FormData {
   applyOncePerCustomer: boolean;
@@ -58,6 +59,8 @@ const VoucherCreatePage: React.StatelessComponent<VoucherCreatePageProps> = ({
   onBack,
   onSubmit
 }) => {
+  const intl = useIntl();
+
   const initialForm: FormData = {
     applyOncePerCustomer: false,
     applyOncePerOrder: false,
@@ -81,8 +84,15 @@ const VoucherCreatePage: React.StatelessComponent<VoucherCreatePageProps> = ({
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Vouchers")}</AppHeader>
-          <PageHeader title={i18n.t("Create Voucher")} />
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.vouchers)}
+          </AppHeader>
+          <PageHeader
+            title={intl.formatMessage({
+              defaultMessage: "Create Voucher",
+              description: "page header"
+            })}
+          />
           <Grid>
             <div>
               <VoucherInfo

@@ -17,6 +17,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { filter } from "fuzzaldrin";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
@@ -27,7 +28,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 // tslint:disable no-submodule-imports
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 
 interface FormData {
   allCountries: boolean;
@@ -72,6 +73,8 @@ const DiscountCountrySelectDialog = withStyles(styles, {
     initial,
     onConfirm
   }: DiscountCountrySelectDialogProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
+
     const initialForm: FormData = {
       allCountries: true,
       countries: initial,
@@ -90,23 +93,28 @@ const DiscountCountrySelectDialog = withStyles(styles, {
 
             return (
               <>
-                <DialogTitle>{i18n.t("Assign Countries")}</DialogTitle>
+                <DialogTitle>
+                  <FormattedMessage
+                    defaultMessage="Assign Countries"
+                    description="dialog header"
+                  />
+                </DialogTitle>
                 <DialogContent>
                   <Typography>
-                    {i18n.t(
-                      "Choose countries, you want voucher to be limited to, from the list below"
-                    )}
+                    <FormattedMessage defaultMessage="Choose countries, you want voucher to be limited to, from the list below" />
                   </Typography>
                   <FormSpacer />
                   <TextField
                     name="query"
                     value={data.query}
                     onChange={event => change(event, () => fetch(data.query))}
-                    label={i18n.t("Search Countries", {
-                      context: "country search input label"
+                    label={intl.formatMessage({
+                      defaultMessage: "Filter Countries",
+                      description: "search box label"
                     })}
-                    placeholder={i18n.t("Search by country name", {
-                      context: "country search input placeholder"
+                    placeholder={intl.formatMessage({
+                      defaultMessage: "Search by country name",
+                      description: "search box placeholder"
                     })}
                     fullWidth
                   />
@@ -114,9 +122,10 @@ const DiscountCountrySelectDialog = withStyles(styles, {
                 <Hr />
                 <DialogContent className={classes.container}>
                   <Typography className={classes.heading} variant="subtitle1">
-                    {i18n.t("Countries A to Z", {
-                      context: "country selection"
-                    })}
+                    <FormattedMessage
+                      defaultMessage="Countries A to Z"
+                      description="country selection"
+                    />
                   </Typography>
                   <Table>
                     <TableBody>
@@ -167,7 +176,7 @@ const DiscountCountrySelectDialog = withStyles(styles, {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={onClose}>
-                    {i18n.t("Cancel", { context: "button" })}
+                    <FormattedMessage {...buttonMessages.cancel} />
                   </Button>
                   <ConfirmButton
                     transitionState={confirmButtonState}
@@ -175,7 +184,10 @@ const DiscountCountrySelectDialog = withStyles(styles, {
                     variant="contained"
                     type="submit"
                   >
-                    {i18n.t("Assign countries", { context: "button" })}
+                    <FormattedMessage
+                      defaultMessage="Assign countries"
+                      description="button"
+                    />
                   </ConfirmButton>
                 </DialogActions>
               </>
