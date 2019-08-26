@@ -6,11 +6,12 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 
 interface TranslationFieldsSaveProps {
   saveButtonState: ConfirmButtonTransitionState;
@@ -45,9 +46,11 @@ const TranslationFieldsSave = withStyles(styles, {
         transitionState={saveButtonState}
         onClick={onSave}
       >
-        {i18n.t("Save")}
+        <FormattedMessage {...buttonMessages.save} />
       </ConfirmButton>
-      <Button onClick={onDiscard}>{i18n.t("Discard")}</Button>
+      <Button onClick={onDiscard}>
+        <FormattedMessage defaultMessage="Discard" description="button" />
+      </Button>
     </div>
   )
 );

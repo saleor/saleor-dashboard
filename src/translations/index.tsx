@@ -1,9 +1,10 @@
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
-import i18n from "../i18n";
 import { LanguageCodeEnum } from "../types/globalTypes";
 import {
   languageEntitiesPath,
@@ -174,85 +175,89 @@ const TranslationsProductTypes: React.FC<TranslationsEntityRouteProps> = ({
   );
 };
 
-const TranslationsRouter: React.FC = () => (
-  <>
-    <WindowTitle title={i18n.t("Translations")} />
-    <Switch>
-      <Route
-        exact
-        path={languageListPath}
-        component={TranslationsLanguageList}
-      />
-      <Route
-        exact
-        path={languageEntitiesPath(":languageCode")}
-        component={TranslationsEntities}
-      />
-      <Route
-        exact
-        path={languageEntityPath(
-          ":languageCode",
-          TranslatableEntities.products,
-          ":id"
-        )}
-        component={TranslationsProducts}
-      />
-      <Route
-        exact
-        path={languageEntityPath(
-          ":languageCode",
-          TranslatableEntities.categories,
-          ":id"
-        )}
-        component={TranslationsCategories}
-      />
-      <Route
-        exact
-        path={languageEntityPath(
-          ":languageCode",
-          TranslatableEntities.collections,
-          ":id"
-        )}
-        component={TranslationsCollections}
-      />
-      <Route
-        exact
-        path={languageEntityPath(
-          ":languageCode",
-          TranslatableEntities.sales,
-          ":id"
-        )}
-        component={TranslationsSales}
-      />
-      <Route
-        exact
-        path={languageEntityPath(
-          ":languageCode",
-          TranslatableEntities.vouchers,
-          ":id"
-        )}
-        component={TranslationsVouchers}
-      />
-      <Route
-        exact
-        path={languageEntityPath(
-          ":languageCode",
-          TranslatableEntities.pages,
-          ":id"
-        )}
-        component={TranslationsPages}
-      />
-      <Route
-        exact
-        path={languageEntityPath(
-          ":languageCode",
-          TranslatableEntities.productTypes,
-          ":id"
-        )}
-        component={TranslationsProductTypes}
-      />
-    </Switch>
-  </>
-);
+const TranslationsRouter: React.FC = () => {
+  const intl = useIntl();
+
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(sectionNames.translations)} />
+      <Switch>
+        <Route
+          exact
+          path={languageListPath}
+          component={TranslationsLanguageList}
+        />
+        <Route
+          exact
+          path={languageEntitiesPath(":languageCode")}
+          component={TranslationsEntities}
+        />
+        <Route
+          exact
+          path={languageEntityPath(
+            ":languageCode",
+            TranslatableEntities.products,
+            ":id"
+          )}
+          component={TranslationsProducts}
+        />
+        <Route
+          exact
+          path={languageEntityPath(
+            ":languageCode",
+            TranslatableEntities.categories,
+            ":id"
+          )}
+          component={TranslationsCategories}
+        />
+        <Route
+          exact
+          path={languageEntityPath(
+            ":languageCode",
+            TranslatableEntities.collections,
+            ":id"
+          )}
+          component={TranslationsCollections}
+        />
+        <Route
+          exact
+          path={languageEntityPath(
+            ":languageCode",
+            TranslatableEntities.sales,
+            ":id"
+          )}
+          component={TranslationsSales}
+        />
+        <Route
+          exact
+          path={languageEntityPath(
+            ":languageCode",
+            TranslatableEntities.vouchers,
+            ":id"
+          )}
+          component={TranslationsVouchers}
+        />
+        <Route
+          exact
+          path={languageEntityPath(
+            ":languageCode",
+            TranslatableEntities.pages,
+            ":id"
+          )}
+          component={TranslationsPages}
+        />
+        <Route
+          exact
+          path={languageEntityPath(
+            ":languageCode",
+            TranslatableEntities.productTypes,
+            ":id"
+          )}
+          component={TranslationsProductTypes}
+        />
+      </Switch>
+    </>
+  );
+};
 TranslationsRouter.displayName = "TranslationsRouter";
 export default TranslationsRouter;

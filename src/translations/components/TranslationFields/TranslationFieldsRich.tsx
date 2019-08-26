@@ -1,11 +1,11 @@
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import DraftRenderer from "@saleor/components/DraftRenderer";
 import Form from "@saleor/components/Form";
 import RichTextEditor from "@saleor/components/RichTextEditor";
-import i18n from "../../../i18n";
 import TranslationFieldsSave from "./TranslationFieldsSave";
 
 interface TranslationFieldsRichProps {
@@ -24,8 +24,10 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
   saveButtonState,
   onDiscard,
   onSubmit
-}) =>
-  edit ? (
+}) => {
+  const intl = useIntl();
+
+  return edit ? (
     <Form
       initial={{ translation: initial }}
       onSubmit={data => onSubmit(data.translation)}
@@ -37,7 +39,9 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
             error={undefined}
             helperText={undefined}
             initial={JSON.parse(initial)}
-            label={i18n.t("Translation")}
+            label={intl.formatMessage({
+              defaultMessage: "Translation"
+            })}
             name="translation"
             onChange={change}
           />
@@ -51,12 +55,13 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     </Form>
   ) : initial === null ? (
     <Typography color="textSecondary">
-      {i18n.t("No translation yet")}
+      <FormattedMessage defaultMessage="No translation yet" />
     </Typography>
   ) : (
     <Typography>
       <DraftRenderer content={JSON.parse(initial)} />
     </Typography>
   );
+};
 TranslationFieldsRich.displayName = "TranslationFieldsRich";
 export default TranslationFieldsRich;

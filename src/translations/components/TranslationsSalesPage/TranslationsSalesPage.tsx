@@ -1,10 +1,11 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
-import i18n from "../../../i18n";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { LanguageCodeEnum } from "../../../types/globalTypes";
 import { SaleTranslationFragment } from "../../types/SaleTranslationFragment";
@@ -34,44 +35,57 @@ const TranslationsSalesPage: React.StatelessComponent<
   onEdit,
   onLanguageChange,
   onSubmit
-}) => (
-  <Container>
-    <AppHeader onBack={onBack}>{i18n.t("Translations")}</AppHeader>
-    <PageHeader
-      title={i18n.t('Translation Sale "{{ saleName }}" - {{ languageCode }}', {
-        context: "sale translation page title",
-        languageCode,
-        saleName: maybe(() => sale.name, "...")
-      })}
-    >
-      <LanguageSwitch
-        currentLanguage={LanguageCodeEnum[languageCode]}
-        languages={languages}
-        onLanguageChange={onLanguageChange}
+}) => {
+  const intl = useIntl();
+
+  return (
+    <Container>
+      <AppHeader onBack={onBack}>
+        {intl.formatMessage(sectionNames.translations)}
+      </AppHeader>
+      <PageHeader
+        title={intl.formatMessage(
+          {
+            defaultMessage: 'Translation Sale "{saleName}" - {languageCode}',
+            description: "header"
+          },
+          {
+            languageCode,
+            saleName: maybe(() => sale.name, "...")
+          }
+        )}
+      >
+        <LanguageSwitch
+          currentLanguage={LanguageCodeEnum[languageCode]}
+          languages={languages}
+          onLanguageChange={onLanguageChange}
+        />
+      </PageHeader>
+      <TranslationFields
+        activeField={activeField}
+        disabled={disabled}
+        initialState={true}
+        title={intl.formatMessage(commonMessages.generalInformations)}
+        fields={[
+          {
+            displayName: intl.formatMessage({
+              defaultMessage: "Sale Name"
+            }),
+            name: fieldNames.name,
+            translation: maybe(() =>
+              sale.translation ? sale.translation.name : null
+            ),
+            type: "short" as "short",
+            value: maybe(() => sale.name)
+          }
+        ]}
+        saveButtonState={saveButtonState}
+        onEdit={onEdit}
+        onDiscard={onDiscard}
+        onSubmit={onSubmit}
       />
-    </PageHeader>
-    <TranslationFields
-      activeField={activeField}
-      disabled={disabled}
-      initialState={true}
-      title={i18n.t("General Information")}
-      fields={[
-        {
-          displayName: i18n.t("Sale Name"),
-          name: fieldNames.name,
-          translation: maybe(() =>
-            sale.translation ? sale.translation.name : null
-          ),
-          type: "short" as "short",
-          value: maybe(() => sale.name)
-        }
-      ]}
-      saveButtonState={saveButtonState}
-      onEdit={onEdit}
-      onDiscard={onDiscard}
-      onSubmit={onSubmit}
-    />
-  </Container>
-);
+    </Container>
+  );
+};
 TranslationsSalesPage.displayName = "TranslationsSalesPage";
 export default TranslationsSalesPage;

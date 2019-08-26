@@ -1,10 +1,10 @@
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
-import i18n from "../../../i18n";
 import TranslationFieldsSave from "./TranslationFieldsSave";
 
 interface TranslationFieldsShortProps {
@@ -23,8 +23,10 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
   saveButtonState,
   onDiscard,
   onSubmit
-}) =>
-  edit ? (
+}) => {
+  const intl = useIntl();
+
+  return edit ? (
     <Form
       initial={{ translation: initial }}
       onSubmit={data => onSubmit(data.translation)}
@@ -34,7 +36,9 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
           <TextField
             disabled={disabled}
             fullWidth
-            label={i18n.t("Translation")}
+            label={intl.formatMessage({
+              defaultMessage: "Translation"
+            })}
             name="translation"
             value={data.translation}
             onChange={change}
@@ -49,10 +53,11 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
     </Form>
   ) : initial === null ? (
     <Typography color="textSecondary">
-      {i18n.t("No translation yet")}
+      <FormattedMessage defaultMessage="No translation yet" />
     </Typography>
   ) : (
     <Typography>{initial}</Typography>
   );
+};
 TranslationFieldsShort.displayName = "TranslationFieldsShort";
 export default TranslationFieldsShort;
