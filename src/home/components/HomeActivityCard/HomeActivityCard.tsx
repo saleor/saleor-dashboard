@@ -5,11 +5,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { DateTime } from "@saleor/components/Date";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
 import { renderCollection } from "../../../misc";
 import { Home_activities_edges_node } from "../../types/Home";
 import { getActivityMessage } from "./activityMessages";
@@ -25,15 +25,23 @@ const styles = createStyles({
   }
 });
 
-interface HomeProductListCardProps extends WithStyles<typeof styles> {
+interface HomeActivityCardProps extends WithStyles<typeof styles> {
   activities: Home_activities_edges_node[];
 }
 
-const HomeProductListCard = withStyles(styles, { name: "HomeProductListCard" })(
-  ({ classes, activities }: HomeProductListCardProps) => {
+const HomeActivityCard = withStyles(styles, { name: "HomeActivityCard" })(
+  ({ classes, activities }: HomeActivityCardProps) => {
+    const intl = useIntl();
+
     return (
       <Card>
-        <CardTitle title={i18n.t("Activity")} />
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Activity",
+            description: "header",
+            id: "homeActivityCardHeader"
+          })}
+        />
         <List dense={true}>
           {renderCollection(
             activities,
@@ -59,7 +67,12 @@ const HomeProductListCard = withStyles(styles, { name: "HomeProductListCard" })(
               <ListItem className={classes.noProducts}>
                 <ListItemText
                   primary={
-                    <Typography>{i18n.t("No activities found")}</Typography>
+                    <Typography>
+                      <FormattedMessage
+                        defaultMessage="No activities found"
+                        id="homeActivityCardNoActivities"
+                      />
+                    </Typography>
                   }
                 />
               </ListItem>
@@ -70,5 +83,5 @@ const HomeProductListCard = withStyles(styles, { name: "HomeProductListCard" })(
     );
   }
 );
-HomeProductListCard.displayName = "HomeProductListCard";
-export default HomeProductListCard;
+HomeActivityCard.displayName = "HomeActivityCard";
+export default HomeActivityCard;
