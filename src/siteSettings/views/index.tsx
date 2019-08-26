@@ -3,8 +3,10 @@ import React from "react";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { commonMessages, sectionNames } from "@saleor/intl";
+import { useIntl } from "react-intl";
+
 import { configurationMenuUrl } from "../../configuration";
-import i18n from "../../i18n";
 import { getMutationState, maybe } from "../../misc";
 import { AuthorizationKeyType } from "../../types/globalTypes";
 import SiteSettingsKeyDialog, {
@@ -33,13 +35,12 @@ export const SiteSettings: React.StatelessComponent<SiteSettingsProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const handleAddKeySuccess = (data: AuthorizationKeyAdd) => {
     if (!maybe(() => data.authorizationKeyAdd.errors.length)) {
       notify({
-        text: i18n.t("Authorization key added", {
-          context: "notification"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(siteSettingsUrl());
     }
@@ -47,16 +48,18 @@ export const SiteSettings: React.StatelessComponent<SiteSettingsProps> = ({
   const handleDeleteKeySuccess = (data: AuthorizationKeyDelete) => {
     if (!maybe(() => data.authorizationKeyDelete.errors.length)) {
       notify({
-        text: i18n.t("Authorization key deleted", {
-          context: "notification"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
     } else {
       notify({
-        text: i18n.t("Could not delete authorization key: {{ message }}", {
-          context: "notification",
-          message: data.authorizationKeyDelete.errors[0].message
-        })
+        text: intl.formatMessage(
+          {
+            defaultMessage: "Could not delete authorization key: {errorMessage}"
+          },
+          {
+            errorMessage: data.authorizationKeyDelete.errors[0].message
+          }
+        )
       });
     }
   };
@@ -70,9 +73,7 @@ export const SiteSettings: React.StatelessComponent<SiteSettingsProps> = ({
         data.shopAddressUpdate.errors.length === 0)
     ) {
       notify({
-        text: i18n.t("Site settings updated", {
-          context: "notification"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
   };
@@ -166,7 +167,9 @@ export const SiteSettings: React.StatelessComponent<SiteSettingsProps> = ({
 
                     return (
                       <>
-                        <WindowTitle title={i18n.t("Site settings")} />
+                        <WindowTitle
+                          title={intl.formatMessage(sectionNames.siteSettings)}
+                        />
                         <SiteSettingsPage
                           disabled={loading}
                           errors={errors}
