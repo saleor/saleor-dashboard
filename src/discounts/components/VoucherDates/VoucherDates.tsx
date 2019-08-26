@@ -2,11 +2,12 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Grid from "@saleor/components/Grid";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { FormErrors } from "../../../types";
 import { FormData } from "../VoucherDetailsPage";
 
@@ -24,9 +25,16 @@ const VoucherDates = ({
   errors,
   onChange
 }: VoucherDatesProps) => {
+  const intl = useIntl();
+
   return (
     <Card>
-      <CardTitle title={i18n.t("Active Dates")} />
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Active Dates",
+          description: "time during voucher is active, header"
+        })}
+      />
       <CardContent>
         <Grid variant="uniform">
           <TextField
@@ -35,7 +43,7 @@ const VoucherDates = ({
             helperText={errors.startDate}
             name={"startDate" as keyof FormData}
             onChange={onChange}
-            label={i18n.t("Start Date")}
+            label={intl.formatMessage(commonMessages.startDate)}
             value={data.startDate}
             type="date"
             InputLabelProps={{
@@ -49,7 +57,7 @@ const VoucherDates = ({
             helperText={errors.startDate}
             name={"startTime" as keyof FormData}
             onChange={onChange}
-            label={i18n.t("Start Hour")}
+            label={intl.formatMessage(commonMessages.startHour)}
             value={data.startTime}
             type="time"
             InputLabelProps={{
@@ -60,7 +68,10 @@ const VoucherDates = ({
         </Grid>
         <ControlledCheckbox
           checked={data.hasEndDate}
-          label={i18n.t("Set end date")}
+          label={intl.formatMessage({
+            defaultMessage: "Set end date",
+            description: "voucher end date, switch button"
+          })}
           name={"hasEndDate" as keyof FormData}
           onChange={onChange}
         />
@@ -72,7 +83,7 @@ const VoucherDates = ({
               helperText={errors.endDate}
               name={"endDate" as keyof FormData}
               onChange={onChange}
-              label={i18n.t("End Date")}
+              label={intl.formatMessage(commonMessages.endDate)}
               value={data.endDate}
               type="date"
               InputLabelProps={{
@@ -86,7 +97,7 @@ const VoucherDates = ({
               helperText={errors.endDate}
               name={"endTime" as keyof FormData}
               onChange={onChange}
-              label={i18n.t("End Hour")}
+              label={intl.formatMessage(commonMessages.endHour)}
               value={data.endTime}
               type="time"
               InputLabelProps={{

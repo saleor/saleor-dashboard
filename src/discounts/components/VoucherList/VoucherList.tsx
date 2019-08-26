@@ -11,6 +11,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import Date from "@saleor/components/Date";
@@ -19,7 +20,6 @@ import Percent from "@saleor/components/Percent";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
@@ -107,34 +107,40 @@ const VoucherList = withStyles(styles, {
           toolbar={toolbar}
         >
           <TableCell className={classes.colName}>
-            {i18n.t("Code", {
-              context: "voucher list table header"
-            })}
+            <FormattedMessage
+              defaultMessage="Code"
+              description="voucher code"
+            />
           </TableCell>
           <TableCell className={classes.colMinSpent}>
-            {i18n.t("Min. Spent", {
-              context: "voucher list table header"
-            })}
+            <FormattedMessage
+              defaultMessage="Min. Spent"
+              description="minimum amount of spent money to activate voucher"
+            />
           </TableCell>
           <TableCell className={classes.colStart}>
-            {i18n.t("Starts", {
-              context: "voucher list table header"
-            })}
+            <FormattedMessage
+              defaultMessage="Starts"
+              description="voucher is active from date"
+            />
           </TableCell>
           <TableCell className={classes.colEnd}>
-            {i18n.t("Ends", {
-              context: "voucher list table header"
-            })}
+            <FormattedMessage
+              defaultMessage="Ends"
+              description="voucher is active until date"
+            />
           </TableCell>
           <TableCell className={classes.colValue}>
-            {i18n.t("Value", {
-              context: "voucher list table header"
-            })}
+            <FormattedMessage
+              defaultMessage="Value"
+              description="voucher value"
+            />
           </TableCell>
           <TableCell className={classes.colUses}>
-            {i18n.t("Uses", {
-              context: "voucher list table header"
-            })}
+            <FormattedMessage
+              defaultMessage="Uses"
+              description="voucher uses"
+            />
           </TableCell>
         </TableHead>
         <TableFooter>
@@ -239,7 +245,7 @@ const VoucherList = withStyles(styles, {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("No vouchers found")}
+                  <FormattedMessage defaultMessage="No vouchers found" />
                 </TableCell>
               </TableRow>
             )

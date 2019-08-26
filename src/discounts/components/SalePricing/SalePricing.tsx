@@ -9,11 +9,12 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import TextFieldWithChoice from "@saleor/components/TextFieldWithChoice";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { FormErrors } from "../../../types";
 import { SaleType } from "../../../types/globalTypes";
 import { FormData } from "../SaleDetailsPage";
@@ -49,75 +50,89 @@ const SalePricing = withStyles(styles, {
     disabled,
     errors,
     onChange
-  }: SalePricingProps & WithStyles<typeof styles>) => (
-    <Card>
-      <CardTitle title={i18n.t("Pricing")} />
-      <CardContent className={classes.root}>
-        <TextFieldWithChoice
-          disabled={disabled}
-          ChoiceProps={{
-            label: data.type === SaleType.FIXED ? defaultCurrency : "%",
-            name: "type",
-            values: [
-              {
-                label: defaultCurrency,
-                value: SaleType.FIXED
-              },
-              {
-                label: "%",
-                value: SaleType.PERCENTAGE
-              }
-            ]
-          }}
-          error={!!errors.value}
-          helperText={errors.value}
-          name={"value" as keyof FormData}
-          onChange={onChange}
-          label={i18n.t("Discount Value")}
-          value={data.value}
-          type="number"
-          fullWidth
-          inputProps={{
-            min: 0
-          }}
+  }: SalePricingProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
+
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Pricing",
+            description: "sale pricing, header"
+          })}
         />
-      </CardContent>
-      <Hr />
-      <CardContent className={classes.root}>
-        <Typography className={classes.subheading} variant="subtitle1">
-          {i18n.t("Time Frame")}
-        </Typography>
-        <TextField
-          disabled={disabled}
-          error={!!errors.startDate}
-          helperText={errors.startDate}
-          name={"startDate" as keyof FormData}
-          onChange={onChange}
-          label={i18n.t("Start Date")}
-          value={data.startDate}
-          type="date"
-          InputLabelProps={{
-            shrink: true
-          }}
-          fullWidth
-        />
-        <TextField
-          disabled={disabled}
-          error={!!errors.endDate}
-          helperText={errors.endDate}
-          name={"endDate" as keyof FormData}
-          onChange={onChange}
-          label={i18n.t("End Date")}
-          value={data.endDate}
-          type="date"
-          InputLabelProps={{
-            shrink: true
-          }}
-          fullWidth
-        />
-      </CardContent>
-    </Card>
-  )
+        <CardContent className={classes.root}>
+          <TextFieldWithChoice
+            disabled={disabled}
+            ChoiceProps={{
+              label: data.type === SaleType.FIXED ? defaultCurrency : "%",
+              name: "type",
+              values: [
+                {
+                  label: defaultCurrency,
+                  value: SaleType.FIXED
+                },
+                {
+                  label: "%",
+                  value: SaleType.PERCENTAGE
+                }
+              ]
+            }}
+            error={!!errors.value}
+            helperText={errors.value}
+            name={"value" as keyof FormData}
+            onChange={onChange}
+            label={intl.formatMessage({
+              defaultMessage: "Discount Value"
+            })}
+            value={data.value}
+            type="number"
+            fullWidth
+            inputProps={{
+              min: 0
+            }}
+          />
+        </CardContent>
+        <Hr />
+        <CardContent className={classes.root}>
+          <Typography className={classes.subheading} variant="subtitle1">
+            <FormattedMessage
+              defaultMessage="Time Frame"
+              description="time during which sale is active"
+            />
+          </Typography>
+          <TextField
+            disabled={disabled}
+            error={!!errors.startDate}
+            helperText={errors.startDate}
+            name={"startDate" as keyof FormData}
+            onChange={onChange}
+            label={intl.formatMessage(commonMessages.startDate)}
+            value={data.startDate}
+            type="date"
+            InputLabelProps={{
+              shrink: true
+            }}
+            fullWidth
+          />
+          <TextField
+            disabled={disabled}
+            error={!!errors.endDate}
+            helperText={errors.endDate}
+            name={"endDate" as keyof FormData}
+            onChange={onChange}
+            label={intl.formatMessage(commonMessages.endDate)}
+            value={data.endDate}
+            type="date"
+            InputLabelProps={{
+              shrink: true
+            }}
+            fullWidth
+          />
+        </CardContent>
+      </Card>
+    );
+  }
 );
 SalePricing.displayName = "SalePricing";
 export default SalePricing;

@@ -13,6 +13,12 @@ export const commonMessages = defineMessages({
   email: {
     defaultMessage: "E-mail Address"
   },
+  endDate: {
+    defaultMessage: "End Date"
+  },
+  endHour: {
+    defaultMessage: "End Hour"
+  },
   firstName: {
     defaultMessage: "First Name"
   },
@@ -27,6 +33,15 @@ export const commonMessages = defineMessages({
   },
   savedChanges: {
     defaultMessage: "Saved changes"
+  },
+  startDate: {
+    defaultMessage: "Start Date"
+  },
+  startHour: {
+    defaultMessage: "Start Hour"
+  },
+  summary: {
+    defaultMessage: "Summary"
   },
   uploadImage: {
     defaultMessage: "Upload image",
@@ -94,6 +109,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Product Types",
     description: "product types section name"
   },
+  sales: {
+    defaultMessage: "Sales",
+    description: "sales section name"
+  },
   shipping: {
     defaultMessage: "Shipping Methods",
     description: "shipping section name"
@@ -109,5 +128,9 @@ export const sectionNames = defineMessages({
   taxes: {
     defaultMessage: "Taxes",
     description: "taxes section name"
+  },
+  vouchers: {
+    defaultMessage: "Vouchers",
+    description: "vouchers section name"
   }
 });

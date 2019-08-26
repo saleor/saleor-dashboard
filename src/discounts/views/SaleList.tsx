@@ -2,6 +2,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -13,7 +14,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import i18n from "@saleor/i18n";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import SaleListPage from "../components/SaleListPage";
@@ -44,10 +45,12 @@ export const SaleList: React.StatelessComponent<SaleListProps> = ({
   const { updateListSettings, settings } = useListSettings(
     ListViews.SALES_LIST
   );
+  const intl = useIntl();
 
   const closeModal = () => navigate(saleListUrl(), true);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
   return (
     <TypedSaleList displayLoader variables={paginationState}>
@@ -61,7 +64,7 @@ export const SaleList: React.StatelessComponent<SaleListProps> = ({
         const handleSaleBulkDelete = (data: SaleBulkDelete) => {
           if (data.saleBulkDelete.errors.length === 0) {
             notify({
-              text: i18n.t("Removed sales")
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             reset();
             closeModal();
@@ -86,7 +89,7 @@ export const SaleList: React.StatelessComponent<SaleListProps> = ({
 
               return (
                 <>
-                  <WindowTitle title={i18n.t("Sales")} />
+                  <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
                   <SaleListPage
                     defaultCurrency={maybe(() => shop.defaultCurrency)}
                     sales={maybe(() => data.sales.edges.map(edge => edge.node))}
@@ -122,23 +125,30 @@ export const SaleList: React.StatelessComponent<SaleListProps> = ({
                     confirmButtonState={bulkRemoveTransitionState}
                     onClose={closeModal}
                     onConfirm={onSaleBulkDelete}
-                    open={params.action === "remove"}
-                    title={i18n.t("Remove Sales")}
+                    open={params.action === "remove" && canOpenBulkActionDialog}
+                    title={intl.formatMessage({
+                      defaultMessage: "Delete Sales",
+                      description: "dialog header"
+                    })}
                     variant="delete"
                   >
-                    <DialogContentText
-                      dangerouslySetInnerHTML={{
-                        __html: i18n.t(
-                          "Are you sure you want to remove <strong>{{ number }}</strong> sales?",
-                          {
-                            number: maybe(
-                              () => params.ids.length.toString(),
-                              "..."
+                    {canOpenBulkActionDialog && (
+                      <DialogContentText>
+                        <FormattedMessage
+                          defaultMessage="Are you sure you want to delete {counter, plural,
+                                    one {this sale}
+                                    other {{displayQuantity} sales}
+                                  }?"
+                          description="dialog content"
+                          values={{
+                            counter: params.ids.length,
+                            displayQuantity: (
+                              <strong>{params.ids.length}</strong>
                             )
-                          }
-                        )
-                      }}
-                    />
+                          }}
+                        />
+                      </DialogContentText>
+                    )}
                   </ActionDialog>
                 </>
               );

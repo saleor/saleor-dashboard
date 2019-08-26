@@ -1,5 +1,6 @@
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -12,7 +13,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { RequirementsPicker } from "@saleor/discounts/types";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe, splitDateTime } from "../../../misc";
 import { ListProps, TabListActions, UserError } from "../../../types";
 import {
@@ -128,6 +129,8 @@ const VoucherDetailsPage: React.StatelessComponent<VoucherDetailsPageProps> = ({
   collectionListToolbar,
   productListToolbar
 }) => {
+  const intl = useIntl();
+
   let requirementsPickerInitValue;
   if (maybe(() => voucher.minAmountSpent.amount) > 0) {
     requirementsPickerInitValue = RequirementsPicker.ORDER;
@@ -166,7 +169,9 @@ const VoucherDetailsPage: React.StatelessComponent<VoucherDetailsPageProps> = ({
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Vouchers")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.vouchers)}
+          </AppHeader>
           <PageHeader title={maybe(() => voucher.code)} />
           <Grid>
             <div>
@@ -204,34 +209,52 @@ const VoucherDetailsPage: React.StatelessComponent<VoucherDetailsPageProps> = ({
                       isActive={activeTab === VoucherDetailsPageTab.categories}
                       changeTab={onTabClick}
                     >
-                      {i18n.t("Categories ({{ number }})", {
-                        number: maybe(
-                          () => voucher.categories.totalCount.toString(),
-                          "…"
-                        )
-                      })}
+                      {intl.formatMessage(
+                        {
+                          defaultMessage: "Categories ({quantity})",
+                          description: "number of categories"
+                        },
+                        {
+                          quantity: maybe(
+                            () => voucher.categories.totalCount.toString(),
+                            "…"
+                          )
+                        }
+                      )}
                     </CategoriesTab>
                     <CollectionsTab
                       isActive={activeTab === VoucherDetailsPageTab.collections}
                       changeTab={onTabClick}
                     >
-                      {i18n.t("Collections ({{ number }})", {
-                        number: maybe(
-                          () => voucher.collections.totalCount.toString(),
-                          "…"
-                        )
-                      })}
+                      {intl.formatMessage(
+                        {
+                          defaultMessage: "Collections ({quantity})",
+                          description: "number of collections"
+                        },
+                        {
+                          quantity: maybe(
+                            () => voucher.collections.totalCount.toString(),
+                            "…"
+                          )
+                        }
+                      )}
                     </CollectionsTab>
                     <ProductsTab
                       isActive={activeTab === VoucherDetailsPageTab.products}
                       changeTab={onTabClick}
                     >
-                      {i18n.t("Products ({{ number }})", {
-                        number: maybe(
-                          () => voucher.products.totalCount.toString(),
-                          "…"
-                        )
-                      })}
+                      {intl.formatMessage(
+                        {
+                          defaultMessage: "Products ({quantity})",
+                          description: "number of products"
+                        },
+                        {
+                          quantity: maybe(
+                            () => voucher.products.totalCount.toString(),
+                            "…"
+                          )
+                        }
+                      )}
                     </ProductsTab>
                   </TabContainer>
                   <CardSpacer />
@@ -291,12 +314,17 @@ const VoucherDetailsPage: React.StatelessComponent<VoucherDetailsPageProps> = ({
                 <CountryList
                   countries={maybe(() => voucher.countries)}
                   disabled={disabled}
-                  emptyText={i18n.t("Voucher applies to all countries")}
+                  emptyText={intl.formatMessage({
+                    defaultMessage: "Voucher applies to all countries"
+                  })}
                   title={
                     <>
-                      {i18n.t("Countries")}
+                      {intl.formatMessage({
+                        defaultMessage: "Countries",
+                        description: "voucher country range"
+                      })}
                       <Typography variant="caption">
-                        {i18n.t("Vouchers limited to these countries")}
+                        <FormattedMessage defaultMessage="Voucher is limited to these countries" />
                       </Typography>
                     </>
                   }

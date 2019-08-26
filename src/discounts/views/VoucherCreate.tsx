@@ -1,10 +1,11 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import i18n from "../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { decimal, getMutationState, joinDateTime, maybe } from "../../misc";
 import {
   DiscountValueTypeEnum,
@@ -20,12 +21,13 @@ export const VoucherDetails: React.StatelessComponent = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
+  const intl = useIntl();
 
   const handleVoucherCreate = (data: VoucherCreate) => {
     if (data.voucherCreate.errors.length === 0) {
       notify({
-        text: i18n.t("Successfully created voucher", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Successfully created voucher"
         })
       });
       navigate(voucherUrl(data.voucherCreate.voucher.id), true);
@@ -43,7 +45,7 @@ export const VoucherDetails: React.StatelessComponent = () => {
 
         return (
           <>
-            <WindowTitle title={i18n.t("Vouchers")} />
+            <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
             <VoucherCreatePage
               defaultCurrency={maybe(() => shop.defaultCurrency)}
               disabled={voucherCreateOpts.loading}
