@@ -3,12 +3,13 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Form from "@saleor/components/Form";
 import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
-import i18n from "../../../i18n";
+import { buttonMessages, sectionNames } from "@saleor/intl";
 import { WeightUnitsEnum } from "../../../types/globalTypes";
 
 export interface FormData {
@@ -24,6 +25,7 @@ export interface ShippingWeightUnitFormProps {
 const ShippingWeightUnitForm: React.StatelessComponent<
   ShippingWeightUnitFormProps
 > = ({ defaultWeightUnit, disabled, onSubmit }) => {
+  const intl = useIntl();
   const initialForm: FormData = {
     unit: defaultWeightUnit
   };
@@ -31,11 +33,7 @@ const ShippingWeightUnitForm: React.StatelessComponent<
     <Form initial={initialForm} onSubmit={formData => onSubmit(formData.unit)}>
       {({ change, data, submit }) => (
         <Card>
-          <CardTitle
-            title={i18n.t("Configuration", {
-              context: "header"
-            })}
-          />
+          <CardTitle title={intl.formatMessage(sectionNames.configuration)} />
           <CardContent>
             <SingleSelectField
               disabled={disabled}
@@ -43,15 +41,13 @@ const ShippingWeightUnitForm: React.StatelessComponent<
                 label: WeightUnitsEnum[unit],
                 value: WeightUnitsEnum[unit]
               }))}
-              label={i18n.t("Shipping Weight Unit", {
-                context: "input label"
+              label={intl.formatMessage({
+                defaultMessage: "Shipping Weight Unit"
               })}
-              hint={i18n.t(
-                "This unit will be used as default shipping weight",
-                {
-                  context: "input help text"
-                }
-              )}
+              hint={intl.formatMessage({
+                defaultMessage:
+                  "This unit will be used as default shipping weight"
+              })}
               name={"unit" as keyof FormData}
               value={data.unit}
               onChange={change}
@@ -60,9 +56,7 @@ const ShippingWeightUnitForm: React.StatelessComponent<
           <Hr />
           <CardActions>
             <Button color="primary" onClick={submit}>
-              {i18n.t("Save", {
-                context: "button"
-              })}
+              <FormattedMessage {...buttonMessages.save} />
             </Button>
           </CardActions>
         </Card>

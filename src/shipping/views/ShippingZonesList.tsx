@@ -2,6 +2,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
@@ -13,7 +14,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import i18n from "@saleor/i18n";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import ShippingZonesListPage from "../components/ShippingZonesListPage";
@@ -50,6 +51,7 @@ export const ShippingZonesList: React.StatelessComponent<
   const { updateListSettings, settings } = useListSettings(
     ListViews.SHIPPING_METHODS_LIST
   );
+  const intl = useIntl();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
 
@@ -61,9 +63,7 @@ export const ShippingZonesList: React.StatelessComponent<
         ) => {
           if (data.shopSettingsUpdate.errors.length === 0) {
             notify({
-              text: i18n.t("Updated default weight unit", {
-                context: "notification"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
         };
@@ -81,9 +81,7 @@ export const ShippingZonesList: React.StatelessComponent<
         const handleShippingZoneDelete = (data: DeleteShippingZone) => {
           if (data.shippingZoneDelete.errors.length === 0) {
             notify({
-              text: i18n.t("Updated default weight unit", {
-                context: "notification"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             closeModal();
             refetch();
@@ -93,9 +91,7 @@ export const ShippingZonesList: React.StatelessComponent<
         const handleBulkDeleteShippingZone = (data: BulkDeleteShippingZone) => {
           if (data.shippingZoneBulkDelete.errors.length === 0) {
             notify({
-              text: i18n.t("Removed shipping zones", {
-                context: "notification"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             closeModal();
             reset();
@@ -205,8 +201,9 @@ export const ShippingZonesList: React.StatelessComponent<
                             open={params.action === "remove"}
                             confirmButtonState={deleteTransitionState}
                             variant="delete"
-                            title={i18n.t("Delete Shipping Zone", {
-                              context: "modal title"
+                            title={intl.formatMessage({
+                              defaultMessage: "Delete Shipping Zone",
+                              description: "dialog header"
                             })}
                             onClose={closeModal}
                             onConfirm={() =>
@@ -215,30 +212,32 @@ export const ShippingZonesList: React.StatelessComponent<
                               })
                             }
                           >
-                            <DialogContentText
-                              dangerouslySetInnerHTML={{
-                                __html: i18n.t(
-                                  "Are you sure you want to remove <strong>{{ name }}</strong> shipping zone?",
-                                  {
-                                    context: "shipping zone removal",
-                                    name: maybe(
-                                      () =>
-                                        data.shippingZones.edges.find(
-                                          edge => edge.node.id === params.id
-                                        ).node.name,
-                                      "..."
-                                    )
-                                  }
-                                )
-                              }}
-                            />
+                            <DialogContentText>
+                              <FormattedMessage
+                                defaultMessage="Are you sure you want to delete {shippingZoneName} shipping zone?"
+                                values={{
+                                  shippingZoneName: (
+                                    <strong>
+                                      {maybe(
+                                        () =>
+                                          data.shippingZones.edges.find(
+                                            edge => edge.node.id === params.id
+                                          ).node.name,
+                                        "..."
+                                      )}
+                                    </strong>
+                                  )
+                                }}
+                              />
+                            </DialogContentText>
                           </ActionDialog>
                           <ActionDialog
                             open={params.action === "remove-many"}
                             confirmButtonState={bulkDeleteTransitionState}
                             variant="delete"
-                            title={i18n.t("Delete Shipping Zones", {
-                              context: "modal title"
+                            title={intl.formatMessage({
+                              defaultMessage: "Delete Shipping Zones",
+                              description: "dialog header"
                             })}
                             onClose={closeModal}
                             onConfirm={() =>
@@ -247,19 +246,23 @@ export const ShippingZonesList: React.StatelessComponent<
                               })
                             }
                           >
-                            <DialogContentText
-                              dangerouslySetInnerHTML={{
-                                __html: i18n.t(
-                                  "Are you sure you want to remove <strong>{{ number }}</strong> shipping zones?",
-                                  {
-                                    number: maybe(
-                                      () => params.ids.length.toString(),
-                                      "..."
-                                    )
-                                  }
-                                )
-                              }}
-                            />
+                            <DialogContentText>
+                              <FormattedMessage
+                                defaultMessage="Are you sure you want to delete {counter, plural,
+            one {this shipping zone}
+            other {{displayQuantity} shipping zones}
+          }?"
+                                description="dialog content"
+                                values={{
+                                  counter: maybe(() => params.ids.length),
+                                  displayQuantity: (
+                                    <strong>
+                                      {maybe(() => params.ids.length)}
+                                    </strong>
+                                  )
+                                }}
+                              />
+                            </DialogContentText>
                           </ActionDialog>
                         </>
                       );

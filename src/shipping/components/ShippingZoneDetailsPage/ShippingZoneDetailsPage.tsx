@@ -1,4 +1,5 @@
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -9,7 +10,6 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import i18n from "../../../i18n";
 import { maybe } from "../../../misc";
 import { UserError } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
@@ -56,6 +56,8 @@ const ShippingZoneDetailsPage: React.StatelessComponent<
   saveButtonBarState,
   shippingZone
 }) => {
+  const intl = useIntl();
+
   const initialForm: FormData = {
     name: maybe(() => shippingZone.name, "")
   };
@@ -63,7 +65,9 @@ const ShippingZoneDetailsPage: React.StatelessComponent<
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Shipping")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            <FormattedMessage defaultMessage="Shipping" />
+          </AppHeader>
           <PageHeader title={maybe(() => shippingZone.name)} />
           <Grid>
             <div>
@@ -79,17 +83,21 @@ const ShippingZoneDetailsPage: React.StatelessComponent<
                 emptyText={maybe(
                   () =>
                     shippingZone.default
-                      ? i18n.t(
-                          "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-                        )
-                      : i18n.t(
-                          "Currently, there are no countries assigned to this shipping zone"
-                        ),
+                      ? intl.formatMessage({
+                          defaultMessage:
+                            "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
+                        })
+                      : intl.formatMessage({
+                          defaultMessage:
+                            "Currently, there are no countries assigned to this shipping zone"
+                        }),
                   "..."
                 )}
                 onCountryAssign={onCountryAdd}
                 onCountryUnassign={onCountryRemove}
-                title={i18n.t("Countries")}
+                title={intl.formatMessage({
+                  defaultMessage: "Countries"
+                })}
               />
               <CardSpacer />
               <ShippingZoneRates
