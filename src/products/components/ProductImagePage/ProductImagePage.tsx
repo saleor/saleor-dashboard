@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardTitle from "@saleor/components/CardTitle";
@@ -18,7 +19,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 import ProductImageNavigation from "../ProductImageNavigation";
 
 const styles = (theme: Theme) =>
@@ -69,68 +70,90 @@ const ProductImagePage = withStyles(styles, { name: "ProductImagePage" })(
     onDelete,
     onRowClick,
     onSubmit
-  }: ProductImagePageProps) => (
-    <Form
-      initial={{ description: image ? image.alt : "" }}
-      onSubmit={onSubmit}
-      confirmLeave
-    >
-      {({ change, data, hasChanged, submit }) => {
-        return (
-          <Container>
-            <AppHeader onBack={onBack}>{product}</AppHeader>
-            <PageHeader title={i18n.t("Edit Photo")} />
-            <Grid variant="inverted">
-              <div>
-                <ProductImageNavigation
-                  disabled={disabled}
-                  images={images}
-                  highlighted={image ? image.id : undefined}
-                  onRowClick={onRowClick}
-                />
-                <Card>
-                  <CardTitle title={i18n.t("Photo Information")} />
-                  <CardContent>
-                    <TextField
-                      name="description"
-                      label={i18n.t("Description")}
-                      helperText={i18n.t("Optional")}
-                      disabled={disabled}
-                      onChange={change}
-                      value={data.description}
-                      multiline
-                      fullWidth
+  }: ProductImagePageProps) => {
+    const intl = useIntl();
+
+    return (
+      <Form
+        initial={{ description: image ? image.alt : "" }}
+        onSubmit={onSubmit}
+        confirmLeave
+      >
+        {({ change, data, hasChanged, submit }) => {
+          return (
+            <Container>
+              <AppHeader onBack={onBack}>{product}</AppHeader>
+              <PageHeader
+                title={intl.formatMessage({
+                  defaultMessage: "Edit Photo",
+                  description: "header"
+                })}
+              />
+              <Grid variant="inverted">
+                <div>
+                  <ProductImageNavigation
+                    disabled={disabled}
+                    images={images}
+                    highlighted={image ? image.id : undefined}
+                    onRowClick={onRowClick}
+                  />
+                  <Card>
+                    <CardTitle
+                      title={intl.formatMessage({
+                        defaultMessage: "Photo Information",
+                        description: "section header"
+                      })}
                     />
-                  </CardContent>
-                </Card>
-              </div>
-              <div>
-                <Card>
-                  <CardTitle title={i18n.t("Photo View")} />
-                  <CardContent>
-                    {!!image ? (
-                      <div className={classes.imageContainer}>
-                        <img src={image.url} className={classes.image} />
-                      </div>
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </CardContent>
-                </Card>
-              </div>
-            </Grid>
-            <SaveButtonBar
-              disabled={disabled || !onSubmit || !hasChanged}
-              state={saveButtonBarState}
-              onCancel={onBack}
-              onDelete={onDelete}
-              onSave={submit}
-            />
-          </Container>
-        );
-      }}
-    </Form>
-  )
+                    <CardContent>
+                      <TextField
+                        name="description"
+                        label={intl.formatMessage(commonMessages.description)}
+                        helperText={intl.formatMessage({
+                          defaultMessage: "Optional",
+                          description: "field is optional"
+                        })}
+                        disabled={disabled}
+                        onChange={change}
+                        value={data.description}
+                        multiline
+                        fullWidth
+                      />
+                    </CardContent>
+                  </Card>
+                </div>
+                <div>
+                  <Card>
+                    <CardTitle
+                      title={intl.formatMessage({
+                        defaultMessage: "Photo View",
+                        description: "section header"
+                      })}
+                    />
+                    <CardContent>
+                      {!!image ? (
+                        <div className={classes.imageContainer}>
+                          <img src={image.url} className={classes.image} />
+                        </div>
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
+              </Grid>
+              <SaveButtonBar
+                disabled={disabled || !onSubmit || !hasChanged}
+                state={saveButtonBarState}
+                onCancel={onBack}
+                onDelete={onDelete}
+                onSave={submit}
+              />
+            </Container>
+          );
+        }}
+      </Form>
+    );
+  }
 );
 ProductImagePage.displayName = "ProductImagePage";
 export default ProductImagePage;

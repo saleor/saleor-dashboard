@@ -1,6 +1,7 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
@@ -9,7 +10,7 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import i18n from "../../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { ProductVariant_attributes_attribute_values } from "../../types/ProductVariant";
 
 export interface VariantAttributeInputData {
@@ -67,39 +68,45 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   disabled,
   errors,
   onChange
-}) => (
-  <Card>
-    <CardTitle title={i18n.t("General Information")} />
-    <CardContent>
-      <Grid variant="uniform">
-        {attributes === undefined ? (
-          <Skeleton />
-        ) : (
-          attributes.map((attribute, attributeIndex) => {
-            return (
-              <SingleAutocompleteSelectField
-                key={attributeIndex}
-                disabled={disabled}
-                displayValue={getAttributeDisplayValue(
-                  attribute.id,
-                  attribute.value,
-                  attributes
-                )}
-                error={!!errors[attribute.id]}
-                helperText={errors[attribute.id]}
-                label={attribute.label}
-                name={`attribute:${attribute.id}`}
-                onChange={event => onChange(attribute.id, event.target.value)}
-                value={getAttributeValue(attribute.id, attributes)}
-                choices={getAttributeValueChoices(attribute.id, attributes)}
-                allowCustomValues
-              />
-            );
-          })
-        )}
-      </Grid>
-    </CardContent>
-  </Card>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage(commonMessages.generalInformations)}
+      />
+      <CardContent>
+        <Grid variant="uniform">
+          {attributes === undefined ? (
+            <Skeleton />
+          ) : (
+            attributes.map((attribute, attributeIndex) => {
+              return (
+                <SingleAutocompleteSelectField
+                  key={attributeIndex}
+                  disabled={disabled}
+                  displayValue={getAttributeDisplayValue(
+                    attribute.id,
+                    attribute.value,
+                    attributes
+                  )}
+                  error={!!errors[attribute.id]}
+                  helperText={errors[attribute.id]}
+                  label={attribute.label}
+                  name={`attribute:${attribute.id}`}
+                  onChange={event => onChange(attribute.id, event.target.value)}
+                  value={getAttributeValue(attribute.id, attributes)}
+                  choices={getAttributeValueChoices(attribute.id, attributes)}
+                  allowCustomValues
+                />
+              );
+            })
+          )}
+        </Grid>
+      </CardContent>
+    </Card>
+  );
+};
 ProductVariantAttributes.displayName = "ProductVariantAttributes";
 export default ProductVariantAttributes;

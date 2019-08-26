@@ -1,5 +1,6 @@
 import { convertFromRaw, RawDraftContentState } from "draft-js";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -15,7 +16,7 @@ import { SearchCategories_categories_edges_node } from "@saleor/containers/Searc
 import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import i18n from "@saleor/i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListActions, UserError } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
@@ -107,6 +108,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   toggleAll,
   toolbar
 }) => {
+  const intl = useIntl();
   const attributeInput = React.useMemo(
     () => getAttributeInputFromProduct(product),
     [product]
@@ -188,7 +190,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         return (
           <>
             <Container>
-              <AppHeader onBack={onBack}>{i18n.t("Products")}</AppHeader>
+              <AppHeader onBack={onBack}>
+                {intl.formatMessage(sectionNames.products)}
+              </AppHeader>
               <PageHeader title={header} />
               <Grid>
                 <div>

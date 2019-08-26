@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -20,7 +21,6 @@ import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import i18n from "@saleor/i18n";
 import { maybe } from "@saleor/misc";
 import { FormErrors } from "@saleor/types";
 
@@ -86,76 +86,99 @@ const ProductOrganization = withStyles(styles, { name: "ProductOrganization" })(
     onCategoryChange,
     onCollectionChange,
     onProductTypeChange
-  }: ProductOrganizationProps) => (
-    <Card className={classes.card}>
-      <CardTitle title={i18n.t("Organize Product")} />
-      <CardContent>
-        {canChangeType ? (
-          <SingleAutocompleteSelectField
-            displayValue={productTypeInputDisplayValue}
-            error={!!errors.productType}
-            helperText={errors.productType}
-            name="productType"
-            disabled={disabled}
-            label={i18n.t("Product Type")}
-            choices={productTypes}
-            value={data.productType}
-            onChange={onProductTypeChange}
-          />
-        ) : (
-          <>
-            <Typography className={classes.label} variant="caption">
-              {i18n.t("Product Type")}
-            </Typography>
-            <Typography>{maybe(() => productType.name, "...")}</Typography>
-            <CardSpacer />
-            <Typography className={classes.label} variant="caption">
-              {i18n.t("Product Type")}
-            </Typography>
-            <Typography>
-              {maybe(
-                () =>
-                  productType.hasVariants
-                    ? i18n.t("Configurable")
-                    : i18n.t("Simple"),
-                "..."
-              )}
-            </Typography>
-          </>
-        )}
-        <FormSpacer />
-        <Hr />
-        <FormSpacer />
-        <SingleAutocompleteSelectField
-          displayValue={categoryInputDisplayValue}
-          error={!!errors.category}
-          helperText={errors.category}
-          disabled={disabled}
-          label={i18n.t("Category")}
-          choices={disabled ? [] : categories}
-          name="category"
-          value={data.category}
-          onChange={onCategoryChange}
-          fetchChoices={fetchCategories}
+  }: ProductOrganizationProps) => {
+    const intl = useIntl();
+
+    return (
+      <Card className={classes.card}>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Organize Product",
+            description: "section header"
+          })}
         />
-        <FormSpacer />
-        <Hr />
-        <FormSpacer />
-        <MultiAutocompleteSelectField
-          displayValues={collectionsInputDisplayValue}
-          label={i18n.t("Collections")}
-          choices={disabled ? [] : collections}
-          name="collections"
-          value={data.collections}
-          helperText={i18n.t(
-            "*Optional. Adding product to collection helps users find it."
+        <CardContent>
+          {canChangeType ? (
+            <SingleAutocompleteSelectField
+              displayValue={productTypeInputDisplayValue}
+              error={!!errors.productType}
+              helperText={errors.productType}
+              name="productType"
+              disabled={disabled}
+              label={intl.formatMessage({
+                defaultMessage: "Product Type"
+              })}
+              choices={productTypes}
+              value={data.productType}
+              onChange={onProductTypeChange}
+            />
+          ) : (
+            <>
+              <Typography className={classes.label} variant="caption">
+                <FormattedMessage defaultMessage="Product Type" />
+              </Typography>
+              <Typography>{maybe(() => productType.name, "...")}</Typography>
+              <CardSpacer />
+              <Typography className={classes.label} variant="caption">
+                <FormattedMessage defaultMessage="Product Type" />
+              </Typography>
+              <Typography>
+                {maybe(
+                  () =>
+                    productType.hasVariants
+                      ? intl.formatMessage({
+                          defaultMessage: "Configurable",
+                          description: "product is configurable"
+                        })
+                      : intl.formatMessage({
+                          defaultMessage: "Simple",
+                          description: "product is not configurable"
+                        }),
+                  "..."
+                )}
+              </Typography>
+            </>
           )}
-          onChange={onCollectionChange}
-          fetchChoices={fetchCollections}
-        />
-      </CardContent>
-    </Card>
-  )
+          <FormSpacer />
+          <Hr />
+          <FormSpacer />
+          <SingleAutocompleteSelectField
+            displayValue={categoryInputDisplayValue}
+            error={!!errors.category}
+            helperText={errors.category}
+            disabled={disabled}
+            label={intl.formatMessage({
+              defaultMessage: "Category"
+            })}
+            choices={disabled ? [] : categories}
+            name="category"
+            value={data.category}
+            onChange={onCategoryChange}
+            fetchChoices={fetchCategories}
+          />
+          <FormSpacer />
+          <Hr />
+          <FormSpacer />
+          <MultiAutocompleteSelectField
+            displayValues={collectionsInputDisplayValue}
+            label={intl.formatMessage({
+              defaultMessage: "Collections"
+            })}
+            choices={disabled ? [] : collections}
+            name="collections"
+            value={data.collections}
+            helperText={intl.formatMessage({
+              defaultMessage:
+                "*Optional. Adding product to collection helps users find it.",
+              description: "field is optional"
+            })}
+            onChange={onCollectionChange}
+            fetchChoices={fetchCollections}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
 );
 ProductOrganization.displayName = "ProductOrganization";
 export default ProductOrganization;

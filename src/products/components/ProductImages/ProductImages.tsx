@@ -2,6 +2,7 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import classNames from "classnames";
+import { useIntl } from "react-intl";
 
 import {
   createStyles,
@@ -12,10 +13,10 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import ImageTile from "@saleor/components/ImageTile";
 import ImageUpload from "@saleor/components/ImageUpload";
+import { commonMessages } from "@saleor/intl";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
-import i18n from "../../../i18n";
 import { ProductDetails_product_images } from "../../types/ProductDetails";
 
 const styles = (theme: Theme) =>
@@ -181,74 +182,82 @@ const ProductImages = withStyles(styles, { name: "ProductImages" })(
     onImageDelete,
     onImageReorder,
     onImageUpload
-  }: ProductImagesProps) => (
-    <Card className={classes.card}>
-      <CardTitle
-        title={i18n.t("Images")}
-        toolbar={
-          <>
-            <Button
-              onClick={() => this.upload.click()}
-              disabled={loading}
-              variant="text"
-              color="primary"
-            >
-              {i18n.t("Upload image")}
-            </Button>
-            <input
-              className={classes.fileField}
-              id="fileUpload"
-              onChange={event => onImageUpload(event.target.files[0])}
-              type="file"
-              ref={ref => (this.upload = ref)}
-            />
-          </>
-        }
-      />
-      <div className={classes.imageGridContainer}>
-        {images === undefined ? (
-          <CardContent>
-            <div className={classes.root}>
-              <div className={classes.imageContainer}>
-                <img className={classes.image} src={placeholderImage} />
+  }: ProductImagesProps) => {
+    const intl = useIntl();
+    const upload = React.useRef(null);
+
+    return (
+      <Card className={classes.card}>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Images",
+            description: "section header"
+          })}
+          toolbar={
+            <>
+              <Button
+                onClick={() => upload.current.click()}
+                disabled={loading}
+                variant="text"
+                color="primary"
+              >
+                {intl.formatMessage(commonMessages.uploadImage)}
+              </Button>
+              <input
+                className={classes.fileField}
+                id="fileUpload"
+                onChange={event => onImageUpload(event.target.files[0])}
+                type="file"
+                ref={upload}
+              />
+            </>
+          }
+        />
+        <div className={classes.imageGridContainer}>
+          {images === undefined ? (
+            <CardContent>
+              <div className={classes.root}>
+                <div className={classes.imageContainer}>
+                  <img className={classes.image} src={placeholderImage} />
+                </div>
               </div>
-            </div>
-          </CardContent>
-        ) : images.length > 0 ? (
-          <>
-            <ImageUpload
-              className={classes.imageUpload}
-              isActiveClassName={classes.imageUploadActive}
-              disableClick={true}
-              iconContainerClassName={classes.imageUploadIcon}
-              iconContainerActiveClassName={classes.imageUploadIconActive}
-              onImageUpload={onImageUpload}
-            >
-              {({ isDragActive }) => (
-                <CardContent>
-                  <ImageListContainer
-                    distance={20}
-                    helperClass="dragged"
-                    axis="xy"
-                    items={images}
-                    onSortEnd={onImageReorder}
-                    className={classNames({
-                      [classes.root]: true,
-                      [classes.rootDragActive]: isDragActive
-                    })}
-                    onImageDelete={onImageDelete}
-                    onImageEdit={onImageEdit}
-                  />
-                </CardContent>
-              )}
-            </ImageUpload>
-          </>
-        ) : (
-          <ImageUpload onImageUpload={onImageUpload} />
-        )}
-      </div>
-    </Card>
-  )
+            </CardContent>
+          ) : images.length > 0 ? (
+            <>
+              <ImageUpload
+                className={classes.imageUpload}
+                isActiveClassName={classes.imageUploadActive}
+                disableClick={true}
+                iconContainerClassName={classes.imageUploadIcon}
+                iconContainerActiveClassName={classes.imageUploadIconActive}
+                onImageUpload={onImageUpload}
+              >
+                {({ isDragActive }) => (
+                  <CardContent>
+                    <ImageListContainer
+                      distance={20}
+                      helperClass="dragged"
+                      axis="xy"
+                      items={images}
+                      onSortEnd={onImageReorder}
+                      className={classNames({
+                        [classes.root]: true,
+                        [classes.rootDragActive]: isDragActive
+                      })}
+                      onImageDelete={onImageDelete}
+                      onImageEdit={onImageEdit}
+                    />
+                  </CardContent>
+                )}
+              </ImageUpload>
+            </>
+          ) : (
+            <ImageUpload onImageUpload={onImageUpload} />
+          )}
+        </div>
+      </Card>
+    );
+  }
 );
 ProductImages.displayName = "ProductImages";
 export default ProductImages;

@@ -8,9 +8,9 @@ import {
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import i18n from "../../../i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -42,48 +42,67 @@ const ProductVariantStock = withStyles(styles, { name: "ProductVariantStock" })(
     stockAllocated,
     loading,
     onChange
-  }: ProductVariantStockProps) => (
-    <Card>
-      <CardTitle title={i18n.t("Stock")} />
-      <CardContent>
-        <div className={classes.grid}>
-          <div>
-            <TextField
-              error={!!errors.quantity}
-              name="quantity"
-              value={quantity}
-              label={i18n.t("Inventory")}
-              helperText={
-                errors.quantity
-                  ? errors.quantity
-                  : !!stockAllocated
-                  ? i18n.t("Allocated: {{ quantity }}", {
-                      context: "variant allocated stock",
-                      quantity: stockAllocated
-                    })
-                  : undefined
-              }
-              onChange={onChange}
-              disabled={loading}
-              fullWidth
-            />
+  }: ProductVariantStockProps) => {
+    const intl = useIntl();
+
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Stock",
+            description: "product variant stock, section header"
+          })}
+        />
+        <CardContent>
+          <div className={classes.grid}>
+            <div>
+              <TextField
+                error={!!errors.quantity}
+                name="quantity"
+                value={quantity}
+                label={intl.formatMessage({
+                  defaultMessage: "Inventory",
+                  description: "product variant stock"
+                })}
+                helperText={
+                  errors.quantity
+                    ? errors.quantity
+                    : !!stockAllocated
+                    ? intl.formatMessage(
+                        {
+                          defaultMessage: "Allocated: {quantity}",
+                          description: "variant allocated stock"
+                        },
+                        {
+                          quantity: stockAllocated
+                        }
+                      )
+                    : undefined
+                }
+                onChange={onChange}
+                disabled={loading}
+                fullWidth
+              />
+            </div>
+            <div>
+              <TextField
+                error={!!errors.sku}
+                helperText={errors.sku}
+                name="sku"
+                value={sku}
+                label={intl.formatMessage({
+                  defaultMessage: "SKU (Stock Keeping Unit)"
+                })}
+                onChange={onChange}
+                disabled={loading}
+                fullWidth
+              />
+            </div>
           </div>
-          <div>
-            <TextField
-              error={!!errors.sku}
-              helperText={errors.sku}
-              name="sku"
-              value={sku}
-              label={i18n.t("SKU (Stock Keeping Unit)")}
-              onChange={onChange}
-              disabled={loading}
-              fullWidth
-            />
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
+        </CardContent>
+      </Card>
+    );
+  }
 );
 ProductVariantStock.displayName = "ProductVariantStock";
 export default ProductVariantStock;

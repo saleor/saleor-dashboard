@@ -1,9 +1,10 @@
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
-import i18n from "../i18n";
 import {
   productAddPath,
   productImagePath,
@@ -86,28 +87,32 @@ const ProductVariantCreate: React.StatelessComponent<
   );
 };
 
-const Component = () => (
-  <>
-    <WindowTitle title={i18n.t("Products")} />
-    <Switch>
-      <Route exact path={productListPath} component={ProductList} />
-      <Route exact path={productAddPath} component={ProductCreate} />
-      <Route
-        exact
-        path={productVariantAddPath(":id")}
-        component={ProductVariantCreate}
-      />
-      <Route
-        path={productVariantEditPath(":productId", ":variantId")}
-        component={ProductVariant}
-      />
-      <Route
-        path={productImagePath(":productId", ":imageId")}
-        component={ProductImage}
-      />
-      <Route path={productPath(":id")} component={ProductUpdate} />
-    </Switch>
-  </>
-);
+const Component = () => {
+  const intl = useIntl();
+
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(sectionNames.products)} />
+      <Switch>
+        <Route exact path={productListPath} component={ProductList} />
+        <Route exact path={productAddPath} component={ProductCreate} />
+        <Route
+          exact
+          path={productVariantAddPath(":id")}
+          component={ProductVariantCreate}
+        />
+        <Route
+          path={productVariantEditPath(":productId", ":variantId")}
+          component={ProductVariant}
+        />
+        <Route
+          path={productImagePath(":productId", ":imageId")}
+          component={ProductImage}
+        />
+        <Route path={productPath(":id")} component={ProductUpdate} />
+      </Switch>
+    </>
+  );
+};
 
 export default Component;
