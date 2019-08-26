@@ -8,12 +8,13 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { IconProps } from "@material-ui/core/Icon";
+import { sectionNames } from "@saleor/intl";
 import { User } from "../auth/types/User";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
-import i18n from "../i18n";
 import { PermissionEnum } from "../types/globalTypes";
 
 export interface MenuItem {
@@ -68,7 +69,7 @@ const styles = (theme: Theme) =>
     }
   });
 
-export interface ConfigurationPageProps extends WithStyles<typeof styles> {
+export interface ConfigurationPageProps {
   menu: MenuItem[];
   user: User;
   onSectionClick: (sectionName: string) => void;
@@ -76,35 +77,51 @@ export interface ConfigurationPageProps extends WithStyles<typeof styles> {
 
 export const ConfigurationPage = withStyles(styles, {
   name: "ConfigurationPage"
-})(({ classes, menu, user, onSectionClick }: ConfigurationPageProps) => (
-  <Container>
-    <PageHeader title={i18n.t("Configuration")} />
-    <div className={classes.root}>
-      {menu
-        .filter(menuItem =>
-          user.permissions.map(perm => perm.code).includes(menuItem.permission)
-        )
-        .map((menuItem, menuItemIndex) => (
-          <Card
-            className={menuItem.url ? classes.card : classes.cardDisabled}
-            onClick={() => onSectionClick(menuItem.url)}
-            key={menuItemIndex}
-          >
-            <CardContent className={classes.cardContent}>
-              <div className={classes.icon}>{menuItem.icon}</div>
-              <div>
-                <Typography className={classes.sectionTitle} color="primary">
-                  {menuItem.title}
-                </Typography>
-                <Typography className={classes.sectionDescription}>
-                  {menuItem.description}
-                </Typography>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-    </div>
-  </Container>
-));
+})(
+  ({
+    classes,
+    menu,
+    user,
+    onSectionClick
+  }: ConfigurationPageProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
+
+    return (
+      <Container>
+        <PageHeader title={intl.formatMessage(sectionNames.configuration)} />
+        <div className={classes.root}>
+          {menu
+            .filter(menuItem =>
+              user.permissions
+                .map(perm => perm.code)
+                .includes(menuItem.permission)
+            )
+            .map((menuItem, menuItemIndex) => (
+              <Card
+                className={menuItem.url ? classes.card : classes.cardDisabled}
+                onClick={() => onSectionClick(menuItem.url)}
+                key={menuItemIndex}
+              >
+                <CardContent className={classes.cardContent}>
+                  <div className={classes.icon}>{menuItem.icon}</div>
+                  <div>
+                    <Typography
+                      className={classes.sectionTitle}
+                      color="primary"
+                    >
+                      {menuItem.title}
+                    </Typography>
+                    <Typography className={classes.sectionDescription}>
+                      {menuItem.description}
+                    </Typography>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+        </div>
+      </Container>
+    );
+  }
+);
 ConfigurationPage.displayName = "ConfigurationPage";
 export default ConfigurationPage;
