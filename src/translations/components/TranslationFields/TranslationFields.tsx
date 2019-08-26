@@ -17,7 +17,9 @@ import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import classNames from "classnames";
 import React from "react";
-import i18n from "../../../i18n";
+import { FormattedMessage } from "react-intl";
+
+import { buttonMessages } from "@saleor/intl";
 import TranslationFieldsLong from "./TranslationFieldsLong";
 import TranslationFieldsRich from "./TranslationFieldsRich";
 import TranslationFieldsShort from "./TranslationFieldsShort";
@@ -138,12 +140,13 @@ const TranslationFields = withStyles(styles, { name: "TranslationFields" })(
           <CardContent className={classes.cardContent}>
             <Grid className={classes.grid} variant="uniform">
               <Typography className={classes.columnHeader} variant="body2">
-                {i18n.t("Original String")}
+                <FormattedMessage defaultMessage="Original String" />
               </Typography>
               <Typography className={classes.columnHeader} variant="body2">
-                {i18n.t("Translation", {
-                  context: "translation to language"
-                })}
+                <FormattedMessage
+                  defaultMessage="Translation"
+                  description="Translated Name"
+                />
               </Typography>
               {fields.map(field => (
                 <React.Fragment key={field.name}>
@@ -153,7 +156,7 @@ const TranslationFields = withStyles(styles, { name: "TranslationFields" })(
                   </Typography>
                   <div className={classes.editButtonContainer}>
                     <Button color="primary" onClick={() => onEdit(field.name)}>
-                      {i18n.t("Edit")}
+                      <FormattedMessage {...buttonMessages.edit} />
                     </Button>
                   </div>
                   <div className={classes.content}>
@@ -231,16 +234,16 @@ const TranslationFields = withStyles(styles, { name: "TranslationFields" })(
         ) : (
           <CardContent>
             <Typography className={classes.cardCaption} variant="caption">
-              {i18n.t(
-                "{{ fieldQuantity }} Translations, {{ translatedFieldQuantity }} Completed",
-                {
-                  fieldQuantity: fields.length,
-                  translatedFieldQuantity: fields.reduce(
+              <FormattedMessage
+                defaultMessage="{numberOFields} Translations, {numberOfTranslatedFields} Completed"
+                values={{
+                  numberOfFields: fields.length,
+                  numberOfTranslatedFields: fields.reduce(
                     (acc, field) => acc + +(field.translation !== null),
                     0
                   )
-                }
-              )}
+                }}
+              />
             </Typography>
           </CardContent>
         )}

@@ -1,11 +1,12 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { LanguageCodeEnum } from "../../../types/globalTypes";
 import { ProductTypeTranslationFragment } from "../../types/ProductTypeTranslationFragment";
@@ -36,125 +37,164 @@ const TranslationsProductTypesPage: React.StatelessComponent<
   onEdit,
   onLanguageChange,
   onSubmit
-}) => (
-  <Container>
-    <AppHeader onBack={onBack}>{i18n.t("Translations")}</AppHeader>
-    <PageHeader
-      title={i18n.t(
-        'Translation Product Type "{{ productTypeName }}" - {{ languageCode }}',
-        {
-          context: "productType translation page title",
-          languageCode,
-          productTypeName: maybe(() => productType.name, "...")
-        }
-      )}
-    >
-      <LanguageSwitch
-        currentLanguage={LanguageCodeEnum[languageCode]}
-        languages={languages}
-        onLanguageChange={onLanguageChange}
-      />
-    </PageHeader>
-    {maybe(() => productType.productAttributes, []).map(
-      (attribute, attributeIndex) => (
-        <>
-          <TranslationFields
-            activeField={activeField}
-            disabled={disabled}
-            initialState={false}
-            title={i18n.t("Product Attribute ({{ attributeName }})", {
-              attributeName: attribute.name
-            })}
-            fields={[
-              {
-                displayName: i18n.t("Attribute Name"),
-                name: fieldNames.attribute + ":" + attribute.id,
-                translation: maybe(() =>
-                  attribute.translation ? attribute.translation.name : null
-                ),
-                type: "short" as "short",
-                value: maybe(() => attribute.name)
-              },
-              ...attribute.values.map(
-                (attributeValue, attributeValueIndex) => ({
-                  displayName: i18n.t("Value {{ number }}", {
-                    number: attributeValueIndex + 1
+}) => {
+  const intl = useIntl();
+
+  return (
+    <Container>
+      <AppHeader onBack={onBack}>
+        {intl.formatMessage(sectionNames.translations)}
+      </AppHeader>
+      <PageHeader
+        title={intl.formatMessage(
+          {
+            defaultMessage:
+              'Translation Product Type "{productTypeName}" - {languageCode}',
+            description: "header"
+          },
+          {
+            languageCode,
+            productTypeName: maybe(() => productType.name, "...")
+          }
+        )}
+      >
+        <LanguageSwitch
+          currentLanguage={LanguageCodeEnum[languageCode]}
+          languages={languages}
+          onLanguageChange={onLanguageChange}
+        />
+      </PageHeader>
+      {maybe(() => productType.productAttributes, []).map(
+        (attribute, attributeIndex) => (
+          <>
+            <TranslationFields
+              activeField={activeField}
+              disabled={disabled}
+              initialState={false}
+              title={intl.formatMessage(
+                {
+                  defaultMessage: "Product Attribute ({attributeName})",
+                  description: "header"
+                },
+                {
+                  attributeName: attribute.name
+                }
+              )}
+              fields={[
+                {
+                  displayName: intl.formatMessage({
+                    defaultMessage: "Attribute Name"
                   }),
-                  name: fieldNames.value + ":" + attributeValue.id,
+                  name: fieldNames.attribute + ":" + attribute.id,
                   translation: maybe(() =>
-                    attributeValue.translation
-                      ? attributeValue.translation.name
-                      : null
+                    attribute.translation ? attribute.translation.name : null
                   ),
                   type: "short" as "short",
-                  value: maybe(() => attributeValue.name)
-                })
-              )
-            ]}
-            saveButtonState={saveButtonState}
-            onEdit={onEdit}
-            onDiscard={onDiscard}
-            onSubmit={onSubmit}
-          />
-          {attributeIndex < productType.productAttributes.length - 1 && (
-            <CardSpacer />
-          )}
-        </>
-      )
-    )}
-    {
-      <>
-        <CardSpacer />
-        {maybe(() => productType.variantAttributes, []).map(
-          (attribute, attributeIndex) => (
-            <>
-              <TranslationFields
-                activeField={activeField}
-                disabled={disabled}
-                initialState={false}
-                title={i18n.t("Variant Attribute ({{ attributeName }})", {
-                  attributeName: attribute.name
-                })}
-                fields={[
-                  {
-                    displayName: i18n.t("Attribute Name"),
-                    name: fieldNames.attribute + ":" + attribute.id,
+                  value: maybe(() => attribute.name)
+                },
+                ...attribute.values.map(
+                  (attributeValue, attributeValueIndex) => ({
+                    displayName: intl.formatMessage(
+                      {
+                        defaultMessage: "Value {number}",
+                        description: "attribute values"
+                      },
+                      {
+                        number: attributeValueIndex + 1
+                      }
+                    ),
+                    name: fieldNames.value + ":" + attributeValue.id,
                     translation: maybe(() =>
-                      attribute.translation ? attribute.translation.name : null
+                      attributeValue.translation
+                        ? attributeValue.translation.name
+                        : null
                     ),
                     type: "short" as "short",
-                    value: maybe(() => attribute.name)
-                  },
-                  ...attribute.values.map(
-                    (attributeValue, attributeValueIndex) => ({
-                      displayName: i18n.t("Value {{ number }}", {
-                        number: attributeValueIndex + 1
+                    value: maybe(() => attributeValue.name)
+                  })
+                )
+              ]}
+              saveButtonState={saveButtonState}
+              onEdit={onEdit}
+              onDiscard={onDiscard}
+              onSubmit={onSubmit}
+            />
+            {attributeIndex < productType.productAttributes.length - 1 && (
+              <CardSpacer />
+            )}
+          </>
+        )
+      )}
+      {
+        <>
+          <CardSpacer />
+          {maybe(() => productType.variantAttributes, []).map(
+            (attribute, attributeIndex) => (
+              <>
+                <TranslationFields
+                  activeField={activeField}
+                  disabled={disabled}
+                  initialState={false}
+                  title={intl.formatMessage(
+                    {
+                      defaultMessage: "Variant Attribute ({attributeName})",
+                      description: "header"
+                    },
+                    {
+                      attributeName: attribute.name
+                    }
+                  )}
+                  fields={[
+                    {
+                      displayName: intl.formatMessage({
+                        defaultMessage: "Attribute Name"
                       }),
-                      name: fieldNames.value + ":" + attributeValue.id,
+                      name: fieldNames.attribute + ":" + attribute.id,
                       translation: maybe(() =>
-                        attributeValue.translation
-                          ? attributeValue.translation.name
+                        attribute.translation
+                          ? attribute.translation.name
                           : null
                       ),
                       type: "short" as "short",
-                      value: maybe(() => attributeValue.name)
-                    })
-                  )
-                ]}
-                saveButtonState={saveButtonState}
-                onEdit={onEdit}
-                onDiscard={onDiscard}
-                onSubmit={onSubmit}
-              />
-              {attributeIndex < productType.variantAttributes.length - 1 && (
-                <CardSpacer />
-              )}
-            </>
-          )
-        )}
-      </>
-    }
-  </Container>
-);
+                      value: maybe(() => attribute.name)
+                    },
+                    ...attribute.values.map(
+                      (attributeValue, attributeValueIndex) => ({
+                        displayName: intl.formatMessage(
+                          {
+                            defaultMessage: "Value {number}",
+                            description: "attribute values"
+                          },
+                          {
+                            number: attributeValueIndex + 1
+                          }
+                        ),
+                        name: fieldNames.value + ":" + attributeValue.id,
+                        translation: maybe(() =>
+                          attributeValue.translation
+                            ? attributeValue.translation.name
+                            : null
+                        ),
+                        type: "short" as "short",
+                        value: maybe(() => attributeValue.name)
+                      })
+                    )
+                  ]}
+                  saveButtonState={saveButtonState}
+                  onEdit={onEdit}
+                  onDiscard={onDiscard}
+                  onSubmit={onSubmit}
+                />
+                {attributeIndex < productType.variantAttributes.length - 1 && (
+                  <CardSpacer />
+                )}
+              </>
+            )
+          )}
+        </>
+      }
+    </Container>
+  );
+};
 TranslationsProductTypesPage.displayName = "TranslationsProductTypesPage";
 export default TranslationsProductTypesPage;
