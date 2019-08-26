@@ -5,8 +5,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import i18n from "../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import ConfirmButton, { ConfirmButtonTransitionState } from "../ConfirmButton";
 import Form from "../Form";
 
@@ -31,6 +32,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
   onSubmit,
   open
 }) => {
+  const intl = useIntl();
   const [errors, setErrors] = React.useState(false);
   const handleErrors = data => {
     if (data.name.length) {
@@ -44,9 +46,10 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle>
-        {i18n.t("Save Custom Search", {
-          context: "save filter tab"
-        })}
+        <FormattedMessage
+          defaultMessage="Save Custom Search"
+          description="save filter tab, header"
+        />
       </DialogTitle>
       <Form initial={initialForm} onSubmit={handleErrors}>
         {({ change, data, submit }) => (
@@ -54,8 +57,9 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
             <DialogContent>
               <TextField
                 fullWidth
-                label={i18n.t("Search Name", {
-                  context: "save search"
+                label={intl.formatMessage({
+                  defaultMessage: "Search Name",
+                  description: "save search tab"
                 })}
                 name={"name" as keyof SaveFilterTabDialogFormData}
                 value={data.name}
@@ -66,7 +70,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>
-                {i18n.t("Cancel", { context: "button" })}
+                <FormattedMessage {...buttonMessages.cancel} />
               </Button>
               <ConfirmButton
                 transitionState={confirmButtonState}
@@ -74,7 +78,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
                 variant="contained"
                 onClick={submit}
               >
-                {i18n.t("Save")}
+                <FormattedMessage {...buttonMessages.save} />
               </ConfirmButton>
             </DialogActions>
           </>

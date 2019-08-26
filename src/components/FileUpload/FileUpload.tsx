@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import i18n from "../../i18n";
+import { FormattedMessage } from "react-intl";
 
 const styles = createStyles({
   fileUploadField: {
@@ -42,7 +42,10 @@ const FileUpload = withStyles(styles, { name: "FileUpload" })(
         value={value}
       />
       <Button disabled={disabled} onClick={() => this.upload.click()}>
-        {i18n.t("Upload")}
+        <FormattedMessage
+          defaultMessage="Upload"
+          description="upload file, button"
+        />
       </Button>
     </div>
   )

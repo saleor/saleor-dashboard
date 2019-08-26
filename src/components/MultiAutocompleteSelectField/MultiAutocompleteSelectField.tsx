@@ -13,12 +13,12 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import { compareTwoStrings } from "string-similarity";
 
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Checkbox from "@saleor/components/Checkbox";
 import Debounce, { DebounceProps } from "@saleor/components/Debounce";
-import i18n from "@saleor/i18n";
 import ArrowDropdownIcon from "@saleor/icons/ArrowDropdown";
 import Hr from "../Hr";
 
@@ -244,10 +244,13 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
                             data-tc="multiautocomplete-select-option"
                           >
                             <span className={classes.menuItemLabel}>
-                              {i18n.t("Add new value: {{ value }}", {
-                                context: "add custom option",
-                                value: inputValue
-                              })}
+                              <FormattedMessage
+                                defaultMessage="Add new value: {value}"
+                                description="add custom option to select input"
+                                values={{
+                                  value: inputValue
+                                }}
+                              />
                             </span>
                           </MenuItem>
                         )}
@@ -259,7 +262,7 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
                         component="div"
                         data-tc="multiautocomplete-select-no-options"
                       >
-                        {i18n.t("No results found")}
+                        <FormattedMessage defaultMessage="No results found" />
                       </MenuItem>
                     )
                   )}

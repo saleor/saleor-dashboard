@@ -14,8 +14,9 @@ import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { ContentState } from "draft-js";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import i18n from "../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import Link from "../Link";
 
 interface LinkEntityProps {
@@ -107,7 +108,7 @@ const LinkEntity = withStyles(styles, {
                         }}
                         color="primary"
                       >
-                        {i18n.t("Edit")}
+                        <FormattedMessage {...buttonMessages.edit} />
                       </Button>
                       <IconButton onClick={() => onRemove(entityKey)}>
                         <DeleteIcon color="primary" />

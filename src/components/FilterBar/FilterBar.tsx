@@ -1,6 +1,6 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
-import i18n from "../../i18n";
 import { FilterProps } from "../../types";
 import Debounce from "../Debounce";
 import { IFilter } from "../Filter/types";
@@ -28,6 +28,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
   onTabChange,
   onFilterDelete
 }) => {
+  const intl = useIntl();
   const [search, setSearch] = React.useState(initialSearch);
   React.useEffect(() => setSearch(initialSearch), [currentTab, initialSearch]);
 
@@ -47,7 +48,9 @@ const FilterBar: React.FC<FilterBarProps> = ({
         {isCustom && (
           <FilterTab
             onClick={() => undefined}
-            label={i18n.t("Custom Filter")}
+            label={intl.formatMessage({
+              defaultMessage: "Custom Filter"
+            })}
           />
         )}
       </FilterTabs>

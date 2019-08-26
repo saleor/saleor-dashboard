@@ -11,8 +11,7 @@ import {
 import TextField from "@material-ui/core/TextField";
 import PersonIcon from "@material-ui/icons/Person";
 import React from "react";
-
-import i18n from "../../i18n";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -70,37 +69,44 @@ export const Timeline = withStyles(styles, { name: "Timeline" })(
 );
 
 export const TimelineAddNote = withStyles(styles, { name: "TimelineAddNote" })(
-  ({ classes, message, onChange, onSubmit }: TimelineAddNoteProps) => (
-    <div className={classes.noteRoot}>
-      <CardContent className={classes.noteTitle}>
-        <Avatar
-          style={{ background: deepPurple[500] }}
-          className={classes.avatar}
-        >
-          <PersonIcon />
-        </Avatar>
-        <TextField
-          className={classes.input}
-          placeholder={i18n.t("Leave your note here...")}
-          onChange={onChange}
-          value={message}
-          name="message"
-          fullWidth
-          multiline
-          InputProps={{
-            endAdornment: (
-              <Button color="primary" onClick={onSubmit}>
-                {i18n.t("Send", {
-                  context: "add order note"
-                })}
-              </Button>
-            )
-          }}
-          variant="standard"
-        />
-      </CardContent>
-    </div>
-  )
+  ({ classes, message, onChange, onSubmit }: TimelineAddNoteProps) => {
+    const intl = useIntl();
+
+    return (
+      <div className={classes.noteRoot}>
+        <CardContent className={classes.noteTitle}>
+          <Avatar
+            style={{ background: deepPurple[500] }}
+            className={classes.avatar}
+          >
+            <PersonIcon />
+          </Avatar>
+          <TextField
+            className={classes.input}
+            placeholder={intl.formatMessage({
+              defaultMessage: "Leave your note here..."
+            })}
+            onChange={onChange}
+            value={message}
+            name="message"
+            fullWidth
+            multiline
+            InputProps={{
+              endAdornment: (
+                <Button color="primary" onClick={onSubmit}>
+                  <FormattedMessage
+                    defaultMessage="Send"
+                    description="add order note, button"
+                  />
+                </Button>
+              )
+            }}
+            variant="standard"
+          />
+        </CardContent>
+      </div>
+    );
+  }
 );
 Timeline.displayName = "Timeline";
 export default Timeline;

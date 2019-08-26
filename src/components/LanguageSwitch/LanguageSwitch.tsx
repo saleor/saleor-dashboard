@@ -15,8 +15,8 @@ import Typography from "@material-ui/core/Typography";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import classNames from "classnames";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import i18n from "../../i18n";
 import { LanguageCodeEnum } from "../../types/globalTypes";
 import { ShopInfo_shop_languages } from "../Shop/types/ShopInfo";
 
@@ -110,11 +110,14 @@ const LanguageSwitch = withStyles(styles, { name: "LanguageSwitch" })(
                           onLanguageChange(lang.code);
                         }}
                       >
-                        {i18n.t("{{ languageName }} - {{ languageCode }}", {
-                          context: "button",
-                          languageCode: lang.code,
-                          languageName: lang.language
-                        })}
+                        <FormattedMessage
+                          defaultMessage="{languageName} - {languageCode}"
+                          description="button"
+                          values={{
+                            languageCode: lang.code,
+                            languageName: lang.language
+                          }}
+                        />
                       </MenuItem>
                     </Menu>
                   ))}

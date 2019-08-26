@@ -8,9 +8,9 @@ import {
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import SVG from "react-inlinesvg";
+import { FormattedMessage } from "react-intl";
 
 import notFoundImage from "@assets/images/not-found-404.svg";
-import i18n from "@saleor/i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -65,12 +65,14 @@ const NotFoundPage = withStyles(styles, { name: "NotFoundPage" })(
         <div className={classes.innerContainer}>
           <div>
             <Typography className={classes.header} variant="h3">
-              {i18n.t("Ooops!...")}
+              <FormattedMessage defaultMessage="Ooops!..." />
             </Typography>
             <Typography className={classes.header} variant="h4">
-              {i18n.t("Something's missing")}
+              <FormattedMessage defaultMessage="Something's missing" />
             </Typography>
-            <Typography>{i18n.t("Sorry, the page was not found")}</Typography>
+            <Typography>
+              <FormattedMessage defaultMessage="Sorry, the page was not found" />
+            </Typography>
           </div>
           <div>
             <Button
@@ -79,7 +81,10 @@ const NotFoundPage = withStyles(styles, { name: "NotFoundPage" })(
               variant="contained"
               onClick={onBack}
             >
-              {i18n.t("Go back to dashboard", { context: "button" })}
+              <FormattedMessage
+                defaultMessage="Go back to dashboard"
+                description="button"
+              />
             </Button>
           </div>
         </div>

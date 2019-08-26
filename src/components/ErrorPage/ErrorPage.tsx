@@ -8,9 +8,9 @@ import {
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import SVG from "react-inlinesvg";
+import { FormattedMessage } from "react-intl";
 
 import notFoundImage from "@assets/images/what.svg";
-import i18n from "../../i18n";
 
 export interface ErrorPageProps extends WithStyles<typeof styles> {
   onBack: () => void;
@@ -68,14 +68,16 @@ const ErrorPage = withStyles(styles, { name: "NotFoundPage" })(
         <div className={classes.innerContainer}>
           <div>
             <Typography className={classes.upperHeader} variant="h4">
-              {i18n.t("Ooops!...")}
+              <FormattedMessage defaultMessage="Ooops!..." />
             </Typography>
             <Typography className={classes.bottomHeader} variant="h3">
-              {i18n.t("Error")}
+              <FormattedMessage defaultMessage="Error" />
             </Typography>
-            <Typography>{i18n.t("We've encountered a problem...")}</Typography>
             <Typography>
-              {i18n.t("Don't worry, everything is gonna be fine")}
+              <FormattedMessage defaultMessage="We've encountered a problem..." />
+            </Typography>
+            <Typography>
+              <FormattedMessage defaultMessage="Don't worry, everything is gonna be fine" />
             </Typography>
           </div>
           <div>
@@ -85,7 +87,10 @@ const ErrorPage = withStyles(styles, { name: "NotFoundPage" })(
               variant="contained"
               onClick={onBack}
             >
-              {i18n.t("Back to home", { context: "button" })}
+              <FormattedMessage
+                defaultMessage="Back to home"
+                description="button"
+              />
             </Button>
           </div>
         </div>

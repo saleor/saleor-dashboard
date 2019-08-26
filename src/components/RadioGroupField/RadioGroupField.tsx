@@ -8,8 +8,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
-
-import i18n from "../../i18n";
+import { FormattedMessage } from "react-intl";
 
 const styles = createStyles({
   formControl: {
@@ -83,7 +82,9 @@ export const RadioGroupField = withStyles(styles, {
               />
             ))
           ) : (
-            <MenuItem disabled={true}>{i18n.t("No results found")}</MenuItem>
+            <MenuItem disabled={true}>
+              <FormattedMessage defaultMessage="No results found" />
+            </MenuItem>
           )}
         </RadioGroup>
         {hint && <FormHelperText>{hint}</FormHelperText>}
