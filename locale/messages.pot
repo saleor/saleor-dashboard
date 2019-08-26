@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T14:18:06.591Z\n"
+"POT-Creation-Date: 2019-08-26T14:24:42.452Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -49,6 +49,30 @@ msgstr ""
 #. Add Address
 msgctxt "dialog title"
 msgid "Add Address"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
+#. [menuItemDialogAddItem] - create new menu item, header
+#. defaultMessage is:
+#. Add Item
+msgctxt "create new menu item, header"
+msgid "Add Item"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuCreateDialog/MenuCreateDialog.json
+#. [menuCreateDialogHeader] - dialog header
+#. defaultMessage is:
+#. Add Menu
+msgctxt "dialog header"
+msgid "Add Menu"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuListPage/MenuListPage.json
+#. [menuListPageAddMenu] - button
+#. defaultMessage is:
+#. Add Menu
+msgctxt "button"
+msgid "Add Menu"
 msgstr ""
 
 #: build/locale/src/discounts/components/SaleListPage/SaleListPage.json
@@ -121,6 +145,22 @@ msgstr ""
 #. Add customer
 msgctxt "button"
 msgid "Add customer"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuItems/MenuItems.json
+#. [menuItemsAddItem] - add new menu item
+#. defaultMessage is:
+#. Add new item
+msgctxt "add new menu item"
+msgid "Add new item"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuItems/MenuItems.json
+#. [menuItemsPlaceholder]
+#. defaultMessage is:
+#. Add new menu item to begin creating menu
+msgctxt "description"
+msgid "Add new menu item to begin creating menu"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
@@ -271,6 +311,14 @@ msgctxt "description"
 msgid "Are you sure you want to delete collection's image?"
 msgstr ""
 
+#: build/locale/src/navigation/views/MenuDetails/index.json
+#. [menuDetailsDeleteMenuContent]
+#. defaultMessage is:
+#. Are you sure you want to delete menu {menuName}?
+msgctxt "description"
+msgid "Are you sure you want to delete menu {menuName}?"
+msgstr ""
+
 #: build/locale/src/customers/views/CustomerAddresses.json
 #. [src.customers.views.3689332763]
 #. defaultMessage is:
@@ -355,6 +403,14 @@ msgctxt "description"
 msgid "Are you sure you want to delete {counter,plural,one{this customer} other{{displayQuantity} customers}}?"
 msgstr ""
 
+#: build/locale/src/navigation/views/MenuList.json
+#. [menuListDeleteMenusContent]
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this menu} other{{displayQuantity} menus}}?
+msgctxt "description"
+msgid "Are you sure you want to delete {counter,plural,one{this menu} other{{displayQuantity} menus}}?"
+msgstr ""
+
 #: build/locale/src/discounts/views/SaleList.json
 #. [src.discounts.views.2516361175] - dialog content
 #. defaultMessage is:
@@ -377,6 +433,14 @@ msgstr ""
 #. Are you sure you want to delete {email}?
 msgctxt "delete customer, dialog content"
 msgid "Are you sure you want to delete {email}?"
+msgstr ""
+
+#: build/locale/src/navigation/views/MenuList.json
+#. [menuListDeleteMenuContent]
+#. defaultMessage is:
+#. Are you sure you want to delete {menuName}?
+msgctxt "description"
+msgid "Are you sure you want to delete {menuName}?"
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
@@ -588,7 +652,7 @@ msgid "Billing address"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [src.cancel] - button
+#. [cancel] - button
 #. defaultMessage is:
 #. Cancel
 msgctxt "button"
@@ -728,7 +792,7 @@ msgid "Configuration"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [src.confirm] - button
+#. [confirm] - button
 #. defaultMessage is:
 #. Confirm
 msgctxt "button"
@@ -813,6 +877,22 @@ msgstr ""
 #. Created collection
 msgctxt "description"
 msgid "Created collection"
+msgstr ""
+
+#: build/locale/src/navigation/views/MenuList.json
+#. [menuListCreatedMenu]
+#. defaultMessage is:
+#. Created menu
+msgctxt "description"
+msgid "Created menu"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuDetailsPage/MenuDetailsPage.json
+#. [menuDetailsPageHelperText]
+#. defaultMessage is:
+#. Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy
+msgctxt "description"
+msgid "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerList/CustomerList.json
@@ -1095,6 +1175,26 @@ msgctxt "dialog title"
 msgid "Delete image"
 msgstr ""
 
+#: build/locale/src/navigation/views/MenuDetails/index.json
+#. [menuDetailsDeleteMenuHeader] - dialog header
+#. defaultMessage is:
+#. Delete menu
+#: build/locale/src/navigation/views/MenuList.json
+#. [menuListDeleteMenuHeader] - dialog header
+#. defaultMessage is:
+#. Delete menu
+msgctxt "dialog header"
+msgid "Delete menu"
+msgstr ""
+
+#: build/locale/src/navigation/views/MenuList.json
+#. [menuListDeleteMenusHeader] - dialog header
+#. defaultMessage is:
+#. Delete menus
+msgctxt "dialog header"
+msgid "Delete menus"
+msgstr ""
+
 #: build/locale/src/categories/views/CategoryDetails.json
 #. [src.categories.views.2507763081] - dialog title
 #. defaultMessage is:
@@ -1109,6 +1209,14 @@ msgstr ""
 #. Deleted collection
 msgctxt "description"
 msgid "Deleted collection"
+msgstr ""
+
+#: build/locale/src/navigation/views/MenuList.json
+#. [menuListDeletedMenu]
+#. defaultMessage is:
+#. Deleted menu
+msgctxt "description"
+msgid "Deleted menu"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
@@ -1204,7 +1312,7 @@ msgid "E-mail Address"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [src.edit] - button
+#. [edit] - button
 #. defaultMessage is:
 #. Edit
 msgctxt "button"
@@ -1217,6 +1325,14 @@ msgstr ""
 #. Edit Address
 msgctxt "dialog title"
 msgid "Edit Address"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
+#. [menuItemDialogEditItem] - edit menu item, header
+#. defaultMessage is:
+#. Edit Item
+msgctxt "edit menu item, header"
+msgid "Edit Item"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
@@ -1383,6 +1499,14 @@ msgctxt "description"
 msgid "If this option is disabled, discount will be counted for every eligible product"
 msgstr ""
 
+#: build/locale/src/navigation/components/MenuList/MenuList.json
+#. [menuListItems] - number of menu items
+#. defaultMessage is:
+#. Items
+msgctxt "number of menu items"
+msgid "Items"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.lastName]
 #. defaultMessage is:
@@ -1431,8 +1555,24 @@ msgctxt "limit voucher"
 msgid "Limit to one use per customer"
 msgstr ""
 
+#: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
+#. [menuItemDialogLinkLabel] - label
+#. defaultMessage is:
+#. Link
+msgctxt "label"
+msgid "Link"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
+#. [menuItemDialogAddLink] - add link to navigation
+#. defaultMessage is:
+#. Link to: {url}
+msgctxt "add link to navigation"
+msgid "Link to: {url}"
+msgstr ""
+
 #: build/locale/src/intl.json
-#. [src.manage] - button
+#. [manage] - button
 #. defaultMessage is:
 #. Manage
 msgctxt "button"
@@ -1469,6 +1609,30 @@ msgstr ""
 #. Manage your employees and their permissions
 msgctxt "description"
 msgid "Manage your employees and their permissions"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuItems/MenuItems.json
+#. [menuItemsHeader] - header
+#. defaultMessage is:
+#. Menu Items
+msgctxt "header"
+msgid "Menu Items"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuCreateDialog/MenuCreateDialog.json
+#. [menuCreateDialogMenuTitleLabel]
+#. defaultMessage is:
+#. Menu Title
+#: build/locale/src/navigation/components/MenuList/MenuList.json
+#. [menuListMenutitle]
+#. defaultMessage is:
+#. Menu Title
+#: build/locale/src/navigation/components/MenuProperties/MenuProperties.json
+#. [menuPropertiesMenuTitle]
+#. defaultMessage is:
+#. Menu Title
+msgctxt "description"
+msgid "Menu Title"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherSummary/VoucherSummary.json
@@ -1563,6 +1727,14 @@ msgctxt "sale name"
 msgid "Name"
 msgstr ""
 
+#: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
+#. [menuItemDialogNameLabel] - menu item name
+#. defaultMessage is:
+#. Name
+msgctxt "menu item name"
+msgid "Name"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.navigation] - navigation section name
 #. defaultMessage is:
@@ -1617,6 +1789,14 @@ msgstr ""
 #. No customers found
 msgctxt "description"
 msgid "No customers found"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuList/MenuList.json
+#. [menuListNoMenus]
+#. defaultMessage is:
+#. No menus found
+msgctxt "description"
+msgid "No menus found"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
@@ -1976,7 +2156,7 @@ msgid "Remember this will also delete all products assigned to this category."
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [src.remove] - button
+#. [remove] - button
 #. defaultMessage is:
 #. Remove
 msgctxt "button"
@@ -2000,7 +2180,7 @@ msgid "Sales"
 msgstr ""
 
 #: build/locale/src/intl.json
-#. [src.save] - button
+#. [save] - button
 #. defaultMessage is:
 #. Save
 msgctxt "button"
@@ -2072,6 +2252,14 @@ msgid "Shipping address"
 msgstr ""
 
 #: build/locale/src/intl.json
+#. [show] - button
+#. defaultMessage is:
+#. Show
+msgctxt "button"
+msgid "Show"
+msgstr ""
+
+#: build/locale/src/intl.json
 #. [src.siteSettings] - site settings section name
 #. defaultMessage is:
 #. Site Settings
@@ -2101,6 +2289,14 @@ msgstr ""
 #. Start Hour
 msgctxt "description"
 msgid "Start Hour"
+msgstr ""
+
+#: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
+#. [menuItemDialogLinkPlaceholder]
+#. defaultMessage is:
+#. Start typing to begin search...
+msgctxt "description"
+msgid "Start typing to begin search..."
 msgstr ""
 
 #: build/locale/src/discounts/components/SaleList/SaleList.json
@@ -2401,6 +2597,14 @@ msgstr ""
 #. Unassign products from collection
 msgctxt "dialog title"
 msgid "Unassign products from collection"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [undo] - button
+#. defaultMessage is:
+#. Undo
+msgctxt "button"
+msgid "Undo"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json

@@ -12,13 +12,13 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import IconButtonTableCell from "@saleor/components/IconButtonTableCell";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { MenuList_menus_edges_node } from "../../types/MenuList";
@@ -76,10 +76,17 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
           toolbar={toolbar}
         >
           <TableCell className={classes.colTitle}>
-            {i18n.t("Menu Title", { context: "object" })}
+            <FormattedMessage
+              defaultMessage="Menu Title"
+              id="menuListMenutitle"
+            />
           </TableCell>
           <TableCell className={classes.colItems}>
-            {i18n.t("Items", { context: "number of menu items" })}
+            <FormattedMessage
+              defaultMessage="Items"
+              description="number of menu items"
+              id="menuListItems"
+            />
           </TableCell>
         </TableHead>
         <TableFooter>
@@ -140,7 +147,10 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("No menus found")}
+                  <FormattedMessage
+                    defaultMessage="No menus found"
+                    id="menuListNoMenus"
+                  />
                 </TableCell>
               </TableRow>
             )
