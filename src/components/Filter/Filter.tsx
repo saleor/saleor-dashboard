@@ -13,9 +13,9 @@ import Typography from "@material-ui/core/Typography";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import classNames from "classnames";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import { FilterContent } from ".";
-import i18n from "../../i18n";
 import { FilterContentSubmitData } from "./FilterContent";
 import { IFilter } from "./types";
 
@@ -103,7 +103,10 @@ const Filter = withStyles(styles, { name: "Filter" })(
           onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
         >
           <Typography className={classes.addFilterText}>
-            {i18n.t("Add Filter")}
+            <FormattedMessage
+              defaultMessage="Add Filter"
+              description="button"
+            />
           </Typography>
           <ArrowDropDownIcon
             color="primary"

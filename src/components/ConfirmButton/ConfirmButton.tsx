@@ -8,10 +8,10 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/Check";
+import { buttonMessages } from "@saleor/intl";
 import classNames from "classnames";
 import React from "react";
-
-import i18n from "../../i18n";
+import { FormattedMessage } from "react-intl";
 
 export type ConfirmButtonTransitionState =
   | "loading"
@@ -170,14 +170,11 @@ const ConfirmButton = withStyles(styles)(
                 displayCompletedActionState
             })}
           >
-            {transitionState === "error" && displayCompletedActionState
-              ? i18n.t("Error", {
-                  context: "button"
-                })
-              : children ||
-                i18n.t("Confirm", {
-                  context: "button"
-                })}
+            {transitionState === "error" && displayCompletedActionState ? (
+              <FormattedMessage defaultMessage="Error" description="button" />
+            ) : (
+              children || <FormattedMessage {...buttonMessages.confirm} />
+            )}
           </span>
         </Button>
       );

@@ -13,10 +13,10 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Downshift from "downshift";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import { compareTwoStrings } from "string-similarity";
 
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import i18n from "../../i18n";
 import ArrowDropdownIcon from "../../icons/ArrowDropdown";
 import Debounce, { DebounceProps } from "../Debounce";
 
@@ -175,7 +175,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                               })}
                             >
                               <Typography color="textSecondary">
-                                {i18n.t("None")}
+                                <FormattedMessage defaultMessage="None" />
                               </Typography>
                             </MenuItem>
                           )}
@@ -216,16 +216,19 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                                   item: inputValue
                                 })}
                               >
-                                {i18n.t("Add new value: {{ value }}", {
-                                  context: "add custom option",
-                                  value: inputValue
-                                })}
+                                <FormattedMessage
+                                  defaultMessage="Add new value: {value}"
+                                  description="add custom select input option"
+                                  values={{
+                                    value: inputValue
+                                  }}
+                                />
                               </MenuItem>
                             )}
                         </>
                       ) : (
                         <MenuItem disabled={true} component="div">
-                          {i18n.t("No results found")}
+                          <FormattedMessage defaultMessage="No results found" />
                         </MenuItem>
                       )}
                     </Paper>

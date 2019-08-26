@@ -5,8 +5,7 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import makeStyles from "@material-ui/styles/makeStyles";
 import classNames from "classnames";
 import React from "react";
-
-import i18n from "@saleor/i18n";
+import { FormattedMessage } from "react-intl";
 
 interface ColumnPickerButtonProps {
   active: boolean;
@@ -51,9 +50,10 @@ const ColumnPickerButton: React.FC<ColumnPickerButtonProps> = props => {
       onClick={onClick}
       variant="outlined"
     >
-      {i18n.t("Columns", {
-        context: "select visible columns button"
-      })}
+      <FormattedMessage
+        defaultMessage="Columns"
+        description="select visible columns button"
+      />
       <ArrowDropDownIcon
         color="primary"
         className={classNames(classes.icon, {

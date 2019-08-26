@@ -8,9 +8,10 @@ import {
 } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import useWindowScroll from "@saleor/hooks/useWindowScroll";
-import i18n from "../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import { maybe } from "../../misc";
 import AppActionContext from "../AppLayout/AppActionContext";
 import ConfirmButton, {
@@ -82,6 +83,7 @@ export const SaveButtonBar = withStyles(styles, { name: "SaveButtonBar" })(
     onSave,
     ...props
   }: SaveButtonBarProps) => {
+    const intl = useIntl();
     const scrollPosition = useWindowScroll();
     const scrolledToBottom =
       scrollPosition.y + window.innerHeight >= document.body.scrollHeight;
@@ -106,7 +108,7 @@ export const SaveButtonBar = withStyles(styles, { name: "SaveButtonBar" })(
                     >
                       {labels && labels.delete
                         ? labels.delete
-                        : i18n.t("Remove")}
+                        : intl.formatMessage(buttonMessages.delete)}
                     </Button>
                   )}
                   <div className={classes.spacer} />
@@ -117,9 +119,7 @@ export const SaveButtonBar = withStyles(styles, { name: "SaveButtonBar" })(
                   >
                     {maybe(
                       () => labels.cancel,
-                      i18n.t("Cancel", {
-                        context: "button"
-                      })
+                      intl.formatMessage(buttonMessages.cancel)
                     )}
                   </Button>
                   <ConfirmButton
@@ -129,9 +129,7 @@ export const SaveButtonBar = withStyles(styles, { name: "SaveButtonBar" })(
                   >
                     {maybe(
                       () => labels.save,
-                      i18n.t("Save", {
-                        context: "button"
-                      })
+                      intl.formatMessage(buttonMessages.save)
                     )}
                   </ConfirmButton>
                 </Container>

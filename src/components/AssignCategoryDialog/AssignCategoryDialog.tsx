@@ -11,14 +11,15 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
+import { buttonMessages } from "@saleor/intl";
 import { SearchCategories_categories_edges_node } from "../../containers/SearchCategories/types/SearchCategories";
-import i18n from "../../i18n";
 import Checkbox from "../Checkbox";
 
 export interface FormData {
@@ -85,6 +86,7 @@ const AssignCategoriesDialog = withStyles(styles, {
     onFetch,
     onSubmit
   }: AssignCategoriesDialogProps) => {
+    const intl = useIntl();
     const [query, onQueryChange] = useSearchQuery(onFetch);
     const [selectedCategories, setSelectedCategories] = React.useState<
       SearchCategories_categories_edges_node[]
@@ -100,17 +102,22 @@ const AssignCategoriesDialog = withStyles(styles, {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle>{i18n.t("Assign Categories")}</DialogTitle>
+        <DialogTitle>
+          <FormattedMessage
+            defaultMessage="Assign Categories"
+            description="dialog header"
+          />
+        </DialogTitle>
         <DialogContent className={classes.overflow}>
           <TextField
             name="query"
             value={query}
             onChange={onQueryChange}
-            label={i18n.t("Search Categories", {
-              context: "category search input label"
+            label={intl.formatMessage({
+              defaultMessage: "Search Categories"
             })}
-            placeholder={i18n.t("Search by category name, etc...", {
-              context: "category search input placeholder"
+            placeholder={intl.formatMessage({
+              defaultMessage: "Search by category name, etc..."
             })}
             fullWidth
             InputProps={{
@@ -156,7 +163,7 @@ const AssignCategoriesDialog = withStyles(styles, {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>
-            {i18n.t("Cancel", { context: "button" })}
+            <FormattedMessage {...buttonMessages.cancel} />
           </Button>
           <ConfirmButton
             transitionState={confirmButtonState}
@@ -165,7 +172,10 @@ const AssignCategoriesDialog = withStyles(styles, {
             type="submit"
             onClick={handleSubmit}
           >
-            {i18n.t("Assign categories", { context: "button" })}
+            <FormattedMessage
+              defaultMessage="Assign categories"
+              description="button"
+            />
           </ConfirmButton>
         </DialogActions>
       </Dialog>

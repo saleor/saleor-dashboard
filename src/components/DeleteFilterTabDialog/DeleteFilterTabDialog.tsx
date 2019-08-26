@@ -1,7 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import i18n from "../../i18n";
 import ActionDialog from "../ActionDialog";
 import { ConfirmButtonTransitionState } from "../ConfirmButton";
 
@@ -19,28 +19,31 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
   onSubmit,
   open,
   tabName
-}) => (
-  <ActionDialog
-    open={open}
-    confirmButtonState={confirmButtonState}
-    onClose={onClose}
-    onConfirm={onSubmit}
-    title={i18n.t("Delete Search", {
-      context: "modal title custom search delete"
-    })}
-    variant="delete"
-  >
-    <DialogContentText
-      dangerouslySetInnerHTML={{
-        __html: i18n.t(
-          "Are you sure you want to delete <strong>{{ name }}</strong> search tab?",
-          {
-            name: tabName
-          }
-        )
-      }}
-    />
-  </ActionDialog>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <ActionDialog
+      open={open}
+      confirmButtonState={confirmButtonState}
+      onClose={onClose}
+      onConfirm={onSubmit}
+      title={intl.formatMessage({
+        defaultMessage: "Delete Search",
+        description: "custom search delete, dialog header"
+      })}
+      variant="delete"
+    >
+      <DialogContentText>
+        <FormattedMessage
+          defaultMessage="Are you sure you want to delete {name} search tab?"
+          values={{
+            name: <strong>{tabName}</strong>
+          }}
+        />
+      </DialogContentText>
+    </ActionDialog>
+  );
+};
 DeleteFilterTabDialog.displayName = "DeleteFilterTabDialog";
 export default DeleteFilterTabDialog;

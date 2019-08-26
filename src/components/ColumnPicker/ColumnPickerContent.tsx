@@ -6,9 +6,10 @@ import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/styles/makeStyles";
 import classNames from "classnames";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import useElementScroll from "@saleor/hooks/useElementScroll";
-import i18n from "@saleor/i18n";
+import { buttonMessages } from "@saleor/intl";
 import { isSelected } from "@saleor/utils/lists";
 import ControlledCheckbox from "../ControlledCheckbox";
 import Hr from "../Hr";
@@ -74,14 +75,14 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
     <Card>
       <CardContent>
         <Typography color="textSecondary">
-          {i18n.t(
-            "{{ numberOfSelected }} columns selected out of {{ numberOfTotal }}",
-            {
-              context: "pick columns to display",
+          <FormattedMessage
+            defaultMessage="{numberOfSelected} columns selected out of {numberOfTotal}"
+            description="pick columns to display"
+            values={{
               numberOfSelected: selectedColumns.length,
               numberOfTotal: columns.length
-            }
-          )}
+            }}
+          />
         </Typography>
       </CardContent>
       <Hr />
@@ -109,14 +110,14 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
       >
         <div className={classes.actionBar}>
           <Button color="default" onClick={onReset}>
-            {i18n.t("Reset")}
+            <FormattedMessage defaultMessage="Reset" description="button" />
           </Button>
           <div>
             <Button color="default" onClick={onCancel}>
-              {i18n.t("Cancel")}
+              <FormattedMessage {...buttonMessages.cancel} />
             </Button>
             <Button color="primary" variant="contained" onClick={onSave}>
-              {i18n.t("Save")}
+              <FormattedMessage {...buttonMessages.save} />
             </Button>
           </div>
         </div>

@@ -13,8 +13,7 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import { ContentState } from "draft-js";
 import React from "react";
-
-import i18n from "../../i18n";
+import { FormattedMessage } from "react-intl";
 
 interface ImageEntityProps {
   children: React.ReactNode;
@@ -88,7 +87,10 @@ const ImageEntity = withStyles(styles, {
                         }}
                         color="primary"
                       >
-                        {i18n.t("Replace")}
+                        <FormattedMessage
+                          defaultMessage="Replace"
+                          description="replace image, button"
+                        />
                       </Button>
                       <IconButton onClick={() => onRemove(entityKey)}>
                         <DeleteIcon color="primary" />

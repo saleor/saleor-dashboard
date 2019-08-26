@@ -10,12 +10,12 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
 import { ProductListColumns } from "@saleor/config";
-import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
@@ -97,6 +97,7 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
     onUpdateListSettings,
     onRowClick
   }: ProductListProps) => {
+    const intl = useIntl();
     const displayColumn = React.useCallback(
       (column: ProductListColumns) =>
         isSelected(column, settings.columns, (a, b) => a === b),
@@ -124,22 +125,28 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
           >
             <TableCell className={classes.colName}>
               <span className={classes.colNameHeader}>
-                {i18n.t("Name", { context: "object" })}
+                <FormattedMessage defaultMessage="Name" description="product" />
               </span>
             </TableCell>
             {displayColumn("productType") && (
               <TableCell className={classes.colType}>
-                {i18n.t("Type", { context: "object" })}
+                <FormattedMessage defaultMessage="Type" description="product" />
               </TableCell>
             )}
             {displayColumn("isPublished") && (
               <TableCell className={classes.colPublished}>
-                {i18n.t("Published", { context: "object" })}
+                <FormattedMessage
+                  defaultMessage="Published"
+                  description="product status"
+                />
               </TableCell>
             )}
             {displayColumn("price") && (
               <TableCell className={classes.colPrice}>
-                {i18n.t("Price", { context: "object" })}
+                <FormattedMessage
+                  defaultMessage="Price"
+                  description="product"
+                />
               </TableCell>
             )}
           </TableHead>
@@ -204,11 +211,13 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                           <StatusLabel
                             label={
                               product.isAvailable
-                                ? i18n.t("Published", {
-                                    context: "product status"
+                                ? intl.formatMessage({
+                                    defaultMessage: "Published",
+                                    description: "product status"
                                   })
-                                : i18n.t("Not published", {
-                                    context: "product status"
+                                : intl.formatMessage({
+                                    defaultMessage: "Not published",
+                                    description: "product status"
                                   })
                             }
                             status={product.isAvailable ? "success" : "error"}
@@ -236,7 +245,7 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    {i18n.t("No products found")}
+                    <FormattedMessage defaultMessage="No products found" />
                   </TableCell>
                 </TableRow>
               )

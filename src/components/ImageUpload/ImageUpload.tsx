@@ -8,8 +8,7 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
-
-import i18n from "../../i18n";
+import { FormattedMessage } from "react-intl";
 import ImageIcon from "../../icons/Image";
 import Dropzone from "../Dropzone";
 
@@ -95,9 +94,10 @@ export const ImageUpload = withStyles(styles, { name: "ImageUpload" })(
               <input {...getInputProps()} className={classes.fileField} />
               <ImageIcon className={classes.photosIcon} />
               <Typography className={classes.uploadText} variant="body1">
-                {i18n.t("Drop here to upload", {
-                  context: "image upload"
-                })}
+                <FormattedMessage
+                  defaultMessage="Drop here to upload"
+                  description="image upload"
+                />
               </Typography>
             </div>
           </div>

@@ -3,8 +3,8 @@ import Select from "@material-ui/core/Select";
 import { Theme } from "@material-ui/core/styles";
 import { createStyles, makeStyles, useTheme } from "@material-ui/styles";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import i18n from "../../i18n";
 import { ListSettings } from "../../types";
 
 const useStyles = makeStyles(
@@ -51,7 +51,9 @@ const RowNumberSelect: React.FC<RowNumberSelectProps> = ({
   const classes = useStyles({ theme });
   return (
     <div className={className}>
-      <span className={classes.label}>{i18n.t("No of Rows:")}</span>
+      <span className={classes.label}>
+        <FormattedMessage defaultMessage="No of Rows:" />
+      </span>
       <Select
         className={classes.select}
         value={settings.rowNumber}

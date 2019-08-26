@@ -1,5 +1,5 @@
 import React from "react";
-import i18n from "../../i18n";
+import { FormattedMessage } from "react-intl";
 
 export interface Weight {
   unit: string;
@@ -9,10 +9,13 @@ export interface WeightProps {
   weight: Weight;
 }
 
-const Weight: React.StatelessComponent<WeightProps> = ({ weight }) =>
-  i18n.t("{{ value }} {{ unit }}", {
-    context: "weight",
-    ...weight
-  });
+const Weight: React.StatelessComponent<WeightProps> = ({ weight }) => (
+  <FormattedMessage
+    defaultMessage="{value} {unit}"
+    description="weight"
+    values={weight}
+  />
+);
+
 Weight.displayName = "Weight";
 export default Weight;

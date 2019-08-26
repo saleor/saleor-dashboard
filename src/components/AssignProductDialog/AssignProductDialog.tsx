@@ -11,6 +11,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -18,7 +19,7 @@ import ConfirmButton, {
 import FormSpacer from "@saleor/components/FormSpacer";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import i18n from "@saleor/i18n";
+import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { SearchProducts_products_edges_node } from "../../containers/SearchProducts/types/SearchProducts";
 import Checkbox from "../Checkbox";
@@ -88,6 +89,7 @@ const AssignProductDialog = withStyles(styles, {
     onFetch,
     onSubmit
   }: AssignProductDialogProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
     const [query, onQueryChange] = useSearchQuery(onFetch);
     const [selectedProducts, setSelectedProducts] = React.useState<
       SearchProducts_products_edges_node[]
@@ -103,21 +105,24 @@ const AssignProductDialog = withStyles(styles, {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle>{i18n.t("Assign Product")}</DialogTitle>
+        <DialogTitle>
+          <FormattedMessage
+            defaultMessage="Assign Product"
+            description="dialog header"
+          />
+        </DialogTitle>
         <DialogContent>
           <TextField
             name="query"
             value={query}
             onChange={onQueryChange}
-            label={i18n.t("Search Products", {
-              context: "product search input label"
+            label={intl.formatMessage({
+              defaultMessage: "Search Products"
             })}
-            placeholder={i18n.t(
-              "Search by product name, attribute, product type etc...",
-              {
-                context: "product search input placeholder"
-              }
-            )}
+            placeholder={intl.formatMessage({
+              defaultMessage:
+                "Search by product name, attribute, product type etc..."
+            })}
             fullWidth
             InputProps={{
               autoComplete: "off",
@@ -168,7 +173,7 @@ const AssignProductDialog = withStyles(styles, {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>
-            {i18n.t("Cancel", { context: "button" })}
+            <FormattedMessage {...buttonMessages.cancel} />
           </Button>
           <ConfirmButton
             transitionState={confirmButtonState}
@@ -177,7 +182,10 @@ const AssignProductDialog = withStyles(styles, {
             type="submit"
             onClick={handleSubmit}
           >
-            {i18n.t("Assign products", { context: "button" })}
+            <FormattedMessage
+              defaultMessage="Assign products"
+              description="button"
+            />
           </ConfirmButton>
         </DialogActions>
       </Dialog>

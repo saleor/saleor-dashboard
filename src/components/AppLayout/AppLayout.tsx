@@ -17,6 +17,7 @@ import {
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
+import { FormattedMessage } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 
 import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
@@ -27,7 +28,6 @@ import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
-import i18n from "@saleor/i18n";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import Container from "../Container";
 import AppActionContext from "./AppActionContext";
@@ -430,9 +430,10 @@ const AppLayout = withStyles(styles, {
                                             className={classes.userMenuItem}
                                             onClick={handleLogout}
                                           >
-                                            {i18n.t("Log out", {
-                                              context: "button"
-                                            })}
+                                            <FormattedMessage
+                                              defaultMessage="Log out"
+                                              description="button"
+                                            />
                                           </MenuItem>
                                         </Menu>
                                       </ClickAwayListener>
