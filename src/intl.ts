@@ -52,27 +52,43 @@ export const commonMessages = defineMessages({
 export const buttonMessages = defineMessages({
   cancel: {
     defaultMessage: "Cancel",
-    description: "button"
+    description: "button",
+    id: "cancel"
   },
   confirm: {
     defaultMessage: "Confirm",
-    description: "button"
+    description: "button",
+    id: "confirm"
   },
   edit: {
     defaultMessage: "Edit",
-    description: "button"
+    description: "button",
+    id: "edit"
   },
   manage: {
     defaultMessage: "Manage",
-    description: "button"
+    description: "button",
+    id: "manage"
   },
   remove: {
     defaultMessage: "Remove",
-    description: "button"
+    description: "button",
+    id: "remove"
   },
   save: {
     defaultMessage: "Save",
-    description: "button"
+    description: "button",
+    id: "save"
+  },
+  show: {
+    defaultMessage: "Show",
+    description: "button",
+    id: "show"
+  },
+  undo: {
+    defaultMessage: "Undo",
+    description: "button",
+    id: "undo"
   }
 });
 

@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
@@ -11,7 +12,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import i18n from "@saleor/i18n";
+import { buttonMessages, commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import MenuCreateDialog from "../components/MenuCreateDialog";
@@ -40,6 +41,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.NAVIGATION_LIST
   );
+  const intl = useIntl();
 
   const closeModal = () =>
     navigate(
@@ -66,8 +68,9 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         const handleCreate = (data: MenuCreate) => {
           if (data.menuCreate.errors.length === 0) {
             notify({
-              text: i18n.t("Created menu", {
-                context: "notification"
+              text: intl.formatMessage({
+                defaultMessage: "Created menu",
+                id: "menuListCreatedMenu"
               })
             });
             navigate(menuUrl(data.menuCreate.menu.id));
@@ -77,9 +80,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         const handleBulkDelete = (data: MenuBulkDelete) => {
           if (data.menuBulkDelete.errors.length === 0) {
             notify({
-              text: i18n.t("Removed menus", {
-                context: "notification"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             closeModal();
             reset();
@@ -90,8 +91,9 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         const handleDelete = (data: MenuDelete) => {
           if (data.menuDelete.errors.length === 0) {
             notify({
-              text: i18n.t("Removed menu", {
-                context: "notification"
+              text: intl.formatMessage({
+                defaultMessage: "Deleted menu",
+                id: "menuListDeletedMenu"
               })
             });
             closeModal();
@@ -172,7 +174,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                                   )
                                 }
                               >
-                                {i18n.t("Remove")}
+                                <FormattedMessage {...buttonMessages.remove} />
                               </Button>
                             }
                           />
@@ -199,27 +201,33 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                               })
                             }
                             variant="delete"
-                            title={i18n.t("Remove menu")}
+                            title={intl.formatMessage({
+                              defaultMessage: "Delete menu",
+                              description: "dialog header",
+                              id: "menuListDeleteMenuHeader"
+                            })}
                           >
-                            <DialogContentText
-                              dangerouslySetInnerHTML={{
-                                __html: i18n.t(
-                                  "Are you sure you want to remove <strong>{{ name }}</strong>?",
-                                  {
-                                    name: maybe(
-                                      () =>
-                                        data.menus.edges.find(
-                                          edge => edge.node.id === params.id
-                                        ).node.name,
-                                      "..."
-                                    )
-                                  }
-                                )
-                              }}
-                            />
+                            <DialogContentText>
+                              <FormattedMessage
+                                defaultMessage="Are you sure you want to delete {menuName}?"
+                                id="menuListDeleteMenuContent"
+                                values={{
+                                  menuName: maybe(
+                                    () =>
+                                      data.menus.edges.find(
+                                        edge => edge.node.id === params.id
+                                      ).node.name,
+                                    "..."
+                                  )
+                                }}
+                              />
+                            </DialogContentText>
                           </ActionDialog>
                           <ActionDialog
-                            open={params.action === "remove-many"}
+                            open={
+                              params.action === "remove-many" &&
+                              maybe(() => params.ids.length > 0)
+                            }
                             onClose={closeModal}
                             confirmButtonState={bulkDeleteTransitionState}
                             onConfirm={() =>
@@ -230,21 +238,35 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                               })
                             }
                             variant="delete"
-                            title={i18n.t("Remove menus")}
+                            title={intl.formatMessage({
+                              defaultMessage: "Delete menus",
+                              description: "dialog header",
+                              id: "menuListDeleteMenusHeader"
+                            })}
                           >
-                            <DialogContentText
-                              dangerouslySetInnerHTML={{
-                                __html: i18n.t(
-                                  "Are you sure you want to remove <strong>{{ number }}</strong> menus?",
-                                  {
-                                    number: maybe(
-                                      () => params.ids.length.toString(),
-                                      "..."
-                                    )
-                                  }
-                                )
-                              }}
-                            />
+                            <DialogContentText>
+                              <FormattedMessage
+                                defaultMessage="Are you sure you want to delete {counter, plural,
+                              one {this menu}
+                              other {{displayQuantity} menus}
+                            }?"
+                                id="menuListDeleteMenusContent"
+                                values={{
+                                  counter: maybe(
+                                    () => params.ids.length.toString(),
+                                    "..."
+                                  ),
+                                  displayQuantity: (
+                                    <strong>
+                                      {maybe(
+                                        () => params.ids.length.toString(),
+                                        "..."
+                                      )}
+                                    </strong>
+                                  )
+                                }}
+                              />
+                            </DialogContentText>
                           </ActionDialog>
                         </>
                       );

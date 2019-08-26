@@ -14,12 +14,13 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import classNames from "classnames";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import SortableTree, { NodeRendererProps, TreeItem } from "react-sortable-tree";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import useTheme from "@saleor/hooks/useTheme";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import Draggable from "../../../icons/Draggable";
 import { MenuDetails_menu_items } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
@@ -121,7 +122,10 @@ const Placeholder = withStyles(styles, {
 })(({ classes }: WithStyles<typeof styles>) => (
   <Paper className={classes.row} elevation={0}>
     <Typography>
-      {i18n.t("Add new menu item to begin creating menu")}
+      <FormattedMessage
+        defaultMessage="Add new menu item to begin creating menu"
+        id="menuItemsPlaceholder"
+      />
     </Typography>
   </Paper>
 ));
@@ -175,7 +179,7 @@ const Node = withStyles(styles, {
           </Typography>
           <div className={classes.spacer} />
           <Button color="primary" onClick={node.onClick}>
-            {i18n.t("Show")}
+            <FormattedMessage {...buttonMessages.show} />
           </Button>
           <IconButton color="primary" onClick={node.onEdit}>
             <EditIcon />
@@ -209,15 +213,20 @@ const MenuItems = withStyles(styles, { name: "MenuItems" })(
     onItemEdit,
     onUndo
   }: MenuItemsProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
     const { isDark } = useTheme();
 
     return (
       <Card>
         <CardTitle
-          title={i18n.t("Menu Items")}
+          title={intl.formatMessage({
+            defaultMessage: "Menu Items",
+            description: "header",
+            id: "menuItemsHeader"
+          })}
           toolbar={
             <Button color="primary" disabled={!canUndo} onClick={onUndo}>
-              {i18n.t("Undo")}
+              <FormattedMessage {...buttonMessages.undo} />
             </Button>
           }
         />
@@ -266,9 +275,11 @@ const MenuItems = withStyles(styles, { name: "MenuItems" })(
         </div>
         <CardActions className={classes.actions}>
           <Button color="primary" onClick={onItemAdd}>
-            {i18n.t("Add new item", {
-              context: "add menu item"
-            })}
+            <FormattedMessage
+              defaultMessage="Add new item"
+              description="add new menu item"
+              id="menuItemsAddItem"
+            />
           </Button>
         </CardActions>
       </Card>
