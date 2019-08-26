@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -8,7 +9,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { getUserName, maybe } from "../../../misc";
 import { PermissionEnum } from "../../../types/globalTypes";
 import {
@@ -57,6 +58,8 @@ const StaffDetailsPage: React.StatelessComponent<StaffDetailsPageProps> = ({
   onImageUpload,
   onSubmit
 }: StaffDetailsPageProps) => {
+  const intl = useIntl();
+
   const initialForm: FormData = {
     email: maybe(() => staffMember.email, ""),
     firstName: maybe(() => staffMember.firstName, ""),
@@ -78,7 +81,9 @@ const StaffDetailsPage: React.StatelessComponent<StaffDetailsPageProps> = ({
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
       {({ data, change, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Staff Members")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.staff)}
+          </AppHeader>
           <PageHeader title={getUserName(staffMember)} />
           <Grid>
             <div>

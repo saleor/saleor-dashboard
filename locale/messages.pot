@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T21:32:40.783Z\n"
+"POT-Creation-Date: 2019-08-26T21:41:35.304Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -33,6 +33,22 @@ msgstr ""
 #. A value named {name} already exists
 msgctxt "attribute value edit error"
 msgid "A value named {name} already exists"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffStatus/StaffStatus.json
+#. [src.staff.components.StaffStatus.2183517419] - section header
+#. defaultMessage is:
+#. Account Status
+msgctxt "section header"
+msgid "Account Status"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffList/StaffList.json
+#. [src.staff.components.StaffList.3247064221] - staff member status
+#. defaultMessage is:
+#. Active
+msgctxt "staff member status"
+msgid "Active"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
@@ -129,6 +145,14 @@ msgstr ""
 #. Add Sale
 msgctxt "button"
 msgid "Add Sale"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffAddMemberDialog/StaffAddMemberDialog.json
+#. [src.staff.components.StaffAddMemberDialog.3490059488] - dialog header
+#. defaultMessage is:
+#. Add Staff Member
+msgctxt "dialog header"
+msgid "Add Staff Member"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
@@ -341,6 +365,14 @@ msgstr ""
 #. Add shipping zone
 msgctxt "button"
 msgid "Add shipping zone"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffListPage/StaffListPage.json
+#. [src.staff.components.StaffListPage.802625341] - button
+#. defaultMessage is:
+#. Add staff member
+msgctxt "button"
+msgid "Add staff member"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
@@ -895,6 +927,22 @@ msgctxt "unassign country"
 msgid "Are you sure you want to remove {countryName} from this shipping zone?"
 msgstr ""
 
+#: build/locale/src/staff/views/StaffDetails.json
+#. [src.staff.views.3945766678]
+#. defaultMessage is:
+#. Are you sure you want to remove {email} avatar?
+msgctxt "description"
+msgid "Are you sure you want to remove {email} avatar?"
+msgstr ""
+
+#: build/locale/src/staff/views/StaffDetails.json
+#. [src.staff.views.2728048444]
+#. defaultMessage is:
+#. Are you sure you want to remove {email} from staff members?
+msgctxt "description"
+msgid "Are you sure you want to remove {email} from staff members?"
+msgstr ""
+
 #: build/locale/src/productTypes/components/ProductTypeAttributeUnassignDialog/ProductTypeAttributeUnassignDialog.json
 #. [src.productTypes.components.ProductTypeAttributeUnassignDialog.722498450]
 #. defaultMessage is:
@@ -1421,6 +1469,14 @@ msgstr ""
 #. Category name
 msgctxt "description"
 msgid "Category name"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffProperties/StaffProperties.json
+#. [src.staff.components.StaffProperties.2771097267] - button
+#. defaultMessage is:
+#. Change photo
+msgctxt "button"
+msgid "Change photo"
 msgstr ""
 
 #: build/locale/src/products/views/ProductList/ProductList.json
@@ -2219,6 +2275,14 @@ msgctxt "dialog header"
 msgid "Delete Shipping Zones"
 msgstr ""
 
+#: build/locale/src/staff/views/StaffDetails.json
+#. [src.staff.views.701332676] - dialog header
+#. defaultMessage is:
+#. Delete Staff User Avatar
+msgctxt "dialog header"
+msgid "Delete Staff User Avatar"
+msgstr ""
+
 #: build/locale/src/products/components/ProductVariantCreatePage/ProductVariantCreatePage.json
 #. [src.products.components.ProductVariantCreatePage.3726089650] - button
 #. defaultMessage is:
@@ -2349,6 +2413,14 @@ msgstr ""
 #. Delete menus
 msgctxt "dialog header"
 msgid "Delete menus"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffProperties/StaffProperties.json
+#. [src.staff.components.StaffProperties.457748370] - button
+#. defaultMessage is:
+#. Delete photo
+msgctxt "button"
+msgid "Delete photo"
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
@@ -2627,6 +2699,14 @@ msgctxt "section header"
 msgid "Eligible Products"
 msgstr ""
 
+#: build/locale/src/staff/components/StaffList/StaffList.json
+#. [src.staff.components.StaffList.1789607185]
+#. defaultMessage is:
+#. Email Address
+msgctxt "description"
+msgid "Email Address"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.endDate]
 #. defaultMessage is:
@@ -2665,6 +2745,22 @@ msgstr ""
 #. Enter any extra infotmation regarding this customer.
 msgctxt "description"
 msgid "Enter any extra infotmation regarding this customer."
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPermissions/StaffPermissions.json
+#. [src.staff.components.StaffPermissions.3639008725]
+#. defaultMessage is:
+#. Expand or restrict user's permissions to access certain part of saleor system.
+msgctxt "description"
+msgid "Expand or restrict user's permissions to access certain part of saleor system."
+msgstr ""
+
+#: build/locale/src/staff/components/StaffAddMemberDialog/StaffAddMemberDialog.json
+#. [src.staff.components.StaffAddMemberDialog.351138560]
+#. defaultMessage is:
+#. Expand or restrict user’s permissions to access certain part of saleor system.
+msgctxt "description"
+msgid "Expand or restrict user’s permissions to access certain part of saleor system."
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionDetailsPage/CollectionDetailsPage.json
@@ -2899,6 +2995,14 @@ msgctxt "description"
 msgid "If this option is disabled, discount will be counted for every eligible product"
 msgstr ""
 
+#: build/locale/src/staff/components/StaffStatus/StaffStatus.json
+#. [src.staff.components.StaffStatus.2683780981]
+#. defaultMessage is:
+#. If you want to disable this account uncheck the box below
+msgctxt "description"
+msgid "If you want to disable this account uncheck the box below"
+msgstr ""
+
 #: build/locale/src/products/components/ProductVariantImageSelectDialog/ProductVariantImageSelectDialog.json
 #. [src.products.components.ProductVariantImageSelectDialog.3196043669] - dialog header
 #. defaultMessage is:
@@ -2917,6 +3021,14 @@ msgstr ""
 #. Images
 msgctxt "section header"
 msgid "Images"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffList/StaffList.json
+#. [src.staff.components.StaffList.1004218338] - staff member status
+#. defaultMessage is:
+#. Inactive
+msgctxt "staff member status"
+msgid "Inactive"
 msgstr ""
 
 #: build/locale/src/products/components/ProductStock/ProductStock.json
@@ -3323,6 +3435,14 @@ msgctxt "shipping zone"
 msgid "Name"
 msgstr ""
 
+#: build/locale/src/staff/components/StaffList/StaffList.json
+#. [src.staff.components.StaffList.636461959] - staff member full name
+#. defaultMessage is:
+#. Name
+msgctxt "staff member full name"
+msgid "Name"
+msgstr ""
+
 #: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
 #. [src.siteSettings.components.SiteSettingsDetails.2286355060]
 #. defaultMessage is:
@@ -3589,6 +3709,14 @@ msgstr ""
 #. No shipping zones found
 msgctxt "description"
 msgid "No shipping zones found"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffList/StaffList.json
+#. [src.staff.components.StaffList.480166346]
+#. defaultMessage is:
+#. No staff members found
+msgctxt "description"
+msgid "No staff members found"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
@@ -4101,6 +4229,22 @@ msgstr ""
 #. Percentage
 msgctxt "voucher discount type"
 msgid "Percentage"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffAddMemberDialog/StaffAddMemberDialog.json
+#. [src.staff.components.StaffAddMemberDialog.2690176844]
+#. defaultMessage is:
+#. Permissions
+msgctxt "description"
+msgid "Permissions"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPermissions/StaffPermissions.json
+#. [src.staff.components.StaffPermissions.2690176844] - dialog header
+#. defaultMessage is:
+#. Permissions
+msgctxt "dialog header"
+msgid "Permissions"
 msgstr ""
 
 #: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
@@ -4947,6 +5091,14 @@ msgctxt "description"
 msgid "Selling price override"
 msgstr ""
 
+#: build/locale/src/staff/components/StaffAddMemberDialog/StaffAddMemberDialog.json
+#. [src.staff.components.StaffAddMemberDialog.449055697] - button
+#. defaultMessage is:
+#. Send invite
+msgctxt "button"
+msgid "Send invite"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
 #. [src.customers.components.CustomerAddress.3096438859] - button
 #. defaultMessage is:
@@ -5157,6 +5309,14 @@ msgstr ""
 #. Specific Price
 msgctxt "description"
 msgid "Specific Price"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffProperties/StaffProperties.json
+#. [src.staff.components.StaffProperties.2650522200] - section header
+#. defaultMessage is:
+#. Staff Member Information
+msgctxt "section header"
+msgid "Staff Member Information"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -6035,6 +6195,30 @@ msgctxt "check to mark this account as active"
 msgid "User account active"
 msgstr ""
 
+#: build/locale/src/staff/components/StaffAddMemberDialog/StaffAddMemberDialog.json
+#. [src.staff.components.StaffAddMemberDialog.1570990296]
+#. defaultMessage is:
+#. User has full access
+msgctxt "description"
+msgid "User has full access"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPermissions/StaffPermissions.json
+#. [src.staff.components.StaffPermissions.1848599267] - checkbox label
+#. defaultMessage is:
+#. User has full access to the store
+msgctxt "checkbox label"
+msgid "User has full access to the store"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffStatus/StaffStatus.json
+#. [src.staff.components.StaffStatus.881953347] - checkbox label
+#. defaultMessage is:
+#. User is active
+msgctxt "checkbox label"
+msgid "User is active"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherList/VoucherList.json
 #. [src.discounts.components.VoucherList.3917820600] - voucher uses
 #. defaultMessage is:
@@ -6349,6 +6533,14 @@ msgstr ""
 #. is set as
 msgctxt "product status is set as"
 msgid "is set as"
+msgstr ""
+
+#: build/locale/src/staff/views/StaffDetails.json
+#. [src.staff.views.2240444792] - dialog header
+#. defaultMessage is:
+#. remove Staff User
+msgctxt "dialog header"
+msgid "remove Staff User"
 msgstr ""
 
 #: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
