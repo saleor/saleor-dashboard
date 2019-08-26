@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -9,7 +10,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { CountryFragment } from "../../../taxes/types/CountryFragment";
 import { UserError } from "../../../types";
 import ShippingZoneCountriesAssignDialog from "../ShippingZoneCountriesAssignDialog";
@@ -33,6 +34,7 @@ export interface ShippingZoneCreatePageProps {
 const ShippingZoneCreatePage: React.StatelessComponent<
   ShippingZoneCreatePageProps
 > = ({ countries, disabled, errors, onBack, onSubmit, saveButtonBarState }) => {
+  const intl = useIntl();
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
@@ -47,8 +49,15 @@ const ShippingZoneCreatePage: React.StatelessComponent<
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <>
           <Container>
-            <AppHeader onBack={onBack}>{i18n.t("Shipping")}</AppHeader>
-            <PageHeader title={i18n.t("Create New Shipping Zone")} />
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.shipping)}
+            </AppHeader>
+            <PageHeader
+              title={intl.formatMessage({
+                defaultMessage: "Create New Shipping Zone",
+                description: "header"
+              })}
+            />
             <Grid>
               <div>
                 <ShippingZoneInfo
@@ -64,12 +73,14 @@ const ShippingZoneCreatePage: React.StatelessComponent<
                   disabled={disabled}
                   emptyText={
                     data.default
-                      ? i18n.t(
-                          "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-                        )
-                      : i18n.t(
-                          "Currently, there are no countries assigned to this shipping zone"
-                        )
+                      ? intl.formatMessage({
+                          defaultMessage:
+                            "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
+                        })
+                      : intl.formatMessage({
+                          defaultMessage:
+                            "Currently, there are no countries assigned to this shipping zone"
+                        })
                   }
                   onCountryAssign={toggleModal}
                   onCountryUnassign={countryCode =>
@@ -82,7 +93,9 @@ const ShippingZoneCreatePage: React.StatelessComponent<
                       }
                     } as any)
                   }
-                  title={i18n.t("Countries")}
+                  title={intl.formatMessage({
+                    defaultMessage: "Countries"
+                  })}
                 />
               </div>
             </Grid>

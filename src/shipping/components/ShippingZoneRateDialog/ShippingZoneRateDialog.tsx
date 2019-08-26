@@ -12,6 +12,7 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -21,7 +22,7 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { FormErrors, UserError } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
@@ -77,6 +78,8 @@ const ShippingZoneRateDialog = withStyles(styles, {
     rate,
     variant
   }: ShippingZoneRateDialogProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
+
     const initialForm: FormData =
       action === "create"
         ? {
@@ -122,11 +125,25 @@ const ShippingZoneRateDialog = withStyles(styles, {
                 <DialogTitle>
                   {variant === ShippingMethodTypeEnum.PRICE
                     ? action === "create"
-                      ? i18n.t("Add Price Rate")
-                      : i18n.t("Edit Price Rate")
+                      ? intl.formatMessage({
+                          defaultMessage: "Add Price Rate",
+                          description: "dialog header"
+                        })
+                      : intl.formatMessage({
+                          defaultMessage: "Edit Price Rate",
+                          description: "dialog header"
+                        })
                     : action === "create"
-                    ? i18n.t("Add Weight Rate")
-                    : i18n.t("Edit Weight Rate")}
+                    ? intl.formatMessage({
+                        defaultMessage: "Add Weight Rate",
+                        description:
+                          "add weight based shipping method, dialog header"
+                      })
+                    : intl.formatMessage({
+                        defaultMessage: "Edit Weight Rate",
+                        description:
+                          "edit weight based shipping method, dialog header"
+                      })}
                 </DialogTitle>
                 <DialogContent>
                   <TextField
@@ -135,9 +152,15 @@ const ShippingZoneRateDialog = withStyles(styles, {
                     fullWidth
                     helperText={
                       typedFormErrors.name ||
-                      i18n.t("This will be shown to customers at checkout")
+                      intl.formatMessage({
+                        defaultMessage:
+                          "This will be shown to customers at checkout"
+                      })
                     }
-                    label={i18n.t("Rate Name")}
+                    label={intl.formatMessage({
+                      defaultMessage: "Rate Name",
+                      description: "shipping method name"
+                    })}
                     name={"name" as keyof FormData}
                     value={data.name}
                     onChange={change}
@@ -152,8 +175,14 @@ const ShippingZoneRateDialog = withStyles(styles, {
                         variant="subtitle1"
                       >
                         {variant === ShippingMethodTypeEnum.PRICE
-                          ? i18n.t("Value range")
-                          : i18n.t("Weight range")}
+                          ? intl.formatMessage({
+                              defaultMessage: "Value range",
+                              description: "order price range"
+                            })
+                          : intl.formatMessage({
+                              defaultMessage: "Weight range",
+                              description: "order weight range"
+                            })}
                       </Typography>
                       <ControlledSwitch
                         checked={data.noLimits}
@@ -161,15 +190,20 @@ const ShippingZoneRateDialog = withStyles(styles, {
                         onChange={change}
                         label={
                           <>
-                            {i18n.t("There are no value limits")}
+                            <FormattedMessage
+                              defaultMessage="There are no value limits"
+                              description="shipping method has no value limits"
+                            />
                             <Typography variant="caption">
                               {variant === ShippingMethodTypeEnum.PRICE
-                                ? i18n.t(
-                                    "This rate will apply to all orders of all prices"
-                                  )
-                                : i18n.t(
-                                    "This rate will apply to all orders of all weights"
-                                  )}
+                                ? intl.formatMessage({
+                                    defaultMessage:
+                                      "This rate will apply to all orders of all prices"
+                                  })
+                                : intl.formatMessage({
+                                    defaultMessage:
+                                      "This rate will apply to all orders of all weights"
+                                  })}
                             </Typography>
                           </>
                         }
@@ -194,9 +228,13 @@ const ShippingZoneRateDialog = withStyles(styles, {
                               label={
                                 variant === ShippingMethodTypeEnum.PRICE
                                   ? typedFormErrors.minimumOrderPrice ||
-                                    i18n.t("Minimal Order Value")
+                                    intl.formatMessage({
+                                      defaultMessage: "Minimal Order Value"
+                                    })
                                   : typedFormErrors.minimumOrderWeight ||
-                                    i18n.t("Minimal Order Weight")
+                                    intl.formatMessage({
+                                      defaultMessage: "Minimal Order Weight"
+                                    })
                               }
                               name={"minValue" as keyof FormData}
                               type="number"
@@ -219,9 +257,13 @@ const ShippingZoneRateDialog = withStyles(styles, {
                               label={
                                 variant === ShippingMethodTypeEnum.PRICE
                                   ? typedFormErrors.maximumOrderPrice ||
-                                    i18n.t("Maximal Order Value")
+                                    intl.formatMessage({
+                                      defaultMessage: "Maximal Order Value"
+                                    })
                                   : typedFormErrors.maximumOrderWeight ||
-                                    i18n.t("Maximal Order Weight")
+                                    intl.formatMessage({
+                                      defaultMessage: "Maximal Order Weight"
+                                    })
                               }
                               name={"maxValue" as keyof FormData}
                               type="number"
@@ -242,12 +284,18 @@ const ShippingZoneRateDialog = withStyles(styles, {
                     className={classes.subheading}
                     variant="subtitle1"
                   >
-                    {i18n.t("Rate")}
+                    <FormattedMessage
+                      defaultMessage="Rate"
+                      description="shipping method"
+                    />
                   </Typography>
                   <ControlledSwitch
                     checked={data.isFree}
                     disabled={disabled}
-                    label={i18n.t("This is free shipping")}
+                    label={intl.formatMessage({
+                      defaultMessage: "This is free shipping",
+                      description: "shipping method, switch button"
+                    })}
                     name={"isFree" as keyof FormData}
                     onChange={change}
                   />
@@ -260,7 +308,10 @@ const ShippingZoneRateDialog = withStyles(styles, {
                           error={!!typedFormErrors.price}
                           fullWidth
                           helperText={typedFormErrors.price}
-                          label={i18n.t("Rate Price")}
+                          label={intl.formatMessage({
+                            defaultMessage: "Rate Price",
+                            description: "shipping method price"
+                          })}
                           name={"price" as keyof FormData}
                           type="number"
                           value={data.price}
@@ -275,7 +326,7 @@ const ShippingZoneRateDialog = withStyles(styles, {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={onClose}>
-                    {i18n.t("Cancel", { context: "button" })}
+                    <FormattedMessage {...buttonMessages.cancel} />
                   </Button>
                   <ConfirmButton
                     disabled={disabled || !hasChanged}
@@ -285,8 +336,14 @@ const ShippingZoneRateDialog = withStyles(styles, {
                     type="submit"
                   >
                     {action === "create"
-                      ? i18n.t("Create rate", { context: "button" })
-                      : i18n.t("Update rate", { context: "button" })}
+                      ? intl.formatMessage({
+                          defaultMessage: "Create rate",
+                          description: "button"
+                        })
+                      : intl.formatMessage({
+                          defaultMessage: "Update rate",
+                          description: "button"
+                        })}
                   </ConfirmButton>
                 </DialogActions>
               </>
