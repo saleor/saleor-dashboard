@@ -1,39 +1,41 @@
-import { LOCALE_URI } from "@saleor/config";
 import React from "react";
 import { IntlProvider } from "react-intl";
-import urlJoin from "url-join";
 
 export type LocaleContextType = string;
 export const LocaleContext = React.createContext<LocaleContextType>("en");
 
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 
-const LocaleProvider: React.FC = ({ children }) => {
-  const [localeIndex, setLocaleIndex] = React.useState(0);
-  const [messages, setMessages] = React.useState({});
+enum Locale {
+  EN = "en",
+  EN_GB = "en-gb",
+  EN_US = "en-us"
+}
 
-  const locale = navigator.languages[localeIndex];
+type LocaleMessages = Record<string, string>;
+const localeData: Record<Locale, LocaleMessages> = {
+  [Locale.EN]: {},
+  [Locale.EN_GB]: {},
+  [Locale.EN_US]: {}
+};
 
-  React.useEffect(() => {
-    async function fetchLocale() {
-      if (locale) {
-        const res = await fetch(urlJoin(LOCALE_URI, `${locale}.json`), {
-          credentials: "same-origin",
-          mode: "cors"
-        });
-        if (res.ok) {
-          const localeData = await res.json();
-          setMessages(localeData);
-        } else {
-          setLocaleIndex(localeIndex + 1);
-        }
+function getMatchingLocale(): Locale {
+  const localeEntries = Object.entries(Locale);
+
+  for (const preferredLocale of navigator.languages) {
+    for (const localeEntry of localeEntries) {
+      if (localeEntry[1].toLowerCase() === preferredLocale.toLowerCase()) {
+        return Locale[localeEntry[0]];
       }
     }
-    fetchLocale();
-  }, [localeIndex]);
+  }
+}
+
+const LocaleProvider: React.FC = ({ children }) => {
+  const [locale] = React.useState(getMatchingLocale());
 
   return (
-    <IntlProvider locale={locale} messages={messages} key={locale}>
+    <IntlProvider locale={locale} messages={localeData[locale]} key={locale}>
       <RawLocaleProvider value={locale}>{children}</RawLocaleProvider>
     </IntlProvider>
   );
