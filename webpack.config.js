@@ -69,7 +69,10 @@ module.exports = (env, argv) => {
         {
           test: /\.(jsx?|tsx?)$/,
           exclude: /node_modules/,
-          loader: "babel-loader"
+          loader: "babel-loader",
+          options: {
+            configFile: resolve("./babel.config.js")
+          }
         },
         {
           test: /\.(eot|otf|png|svg|jpg|ttf|woff|woff2)(\?v=[0-9.]+)?$/,

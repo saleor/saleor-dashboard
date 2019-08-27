@@ -70,7 +70,7 @@ const HomeNotificationTable = withStyles(styles, {
                 } are ready to fulfill"
                     id="homeNotificationTableOrders"
                     values={{
-                      amount: ordersToFulfill
+                      amount: <strong>{ordersToFulfill}</strong>
                     }}
                   />
                 </Typography>
@@ -100,7 +100,7 @@ const HomeNotificationTable = withStyles(styles, {
                 } to capture"
                     id="homeNotificationTablePayments"
                     values={{
-                      amount: ordersToCapture
+                      amount: <strong>{ordersToCapture}</strong>
                     }}
                   />
                 </Typography>
@@ -130,7 +130,7 @@ const HomeNotificationTable = withStyles(styles, {
                 } out of stock"
                     id="homeNotificationTableProducts"
                     values={{
-                      amount: productsOutOfStock
+                      amount: <strong>{productsOutOfStock}</strong>
                     }}
                   />
                 </Typography>
