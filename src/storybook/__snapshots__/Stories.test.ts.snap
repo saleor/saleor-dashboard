@@ -46451,7 +46451,10 @@ exports[`Storyshots Views / HomePage default 1`] = `
                   <p
                     class="MuiTypography-root-id MuiTypography-body2-id"
                   >
-                    One order are ready to fulfill
+                    <strong>
+                      1
+                    </strong>
+                     Orders are ready to fulfill
                   </p>
                 </td>
                 <td
@@ -47573,7 +47576,10 @@ exports[`Storyshots Views / HomePage no data 1`] = `
                   <p
                     class="MuiTypography-root-id MuiTypography-body2-id"
                   >
-                    One order are ready to fulfill
+                    <strong>
+                      1
+                    </strong>
+                     Orders are ready to fulfill
                   </p>
                 </td>
                 <td
