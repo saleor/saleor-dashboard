@@ -91,10 +91,15 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
         <CardTitle
           title={
             !!collection ? (
-              intl.formatMessage({
-                defaultMessage: "Products in {name}",
-                description: "products in collection"
-              })
+              intl.formatMessage(
+                {
+                  defaultMessage: "Products in {name}",
+                  description: "products in collection"
+                },
+                {
+                  name: maybe(() => collection.name, "...")
+                }
+              )
             ) : (
               <Skeleton />
             )

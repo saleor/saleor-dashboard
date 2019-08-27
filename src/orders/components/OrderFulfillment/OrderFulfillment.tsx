@@ -86,8 +86,8 @@ const OrderFulfillment = withStyles(styles, { name: "OrderFulfillment" })(
     const lines = maybe(() => fulfillment.lines);
     const status = maybe(() => fulfillment.status);
     const quantity = lines
-      .map(line => line.quantity)
-      .reduce((prev, curr) => prev + curr, 0);
+      ? lines.map(line => line.quantity).reduce((prev, curr) => prev + curr, 0)
+      : "...";
 
     return (
       <Card>

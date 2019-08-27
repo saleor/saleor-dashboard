@@ -139,13 +139,8 @@
     "fsevents": "^1.2.9"
   },
   "jest": {
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.json"
-      }
-    },
     "transform": {
-      "^.+\\.tsx?$": "ts-jest",
+      "^.+\\.(jsx?|tsx?)$": "babel-jest",
       "^.+\\.(png|svg|jpe?g)$": "jest-file"
     },
     "testRegex": ".*\\.test\\.tsx?$",

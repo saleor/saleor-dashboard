@@ -263,6 +263,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     loading={disabled}
                     onClick={onSeoClick}
                     onChange={change}
+                    helperText={intl.formatMessage({
+                      defaultMessage:
+                        "Add search engine title and description to make this product easier to find"
+                    })}
                   />
                 </div>
                 <div>
