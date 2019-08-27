@@ -93,7 +93,8 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
     value,
     InputProps,
     fetchChoices,
-    onChange
+    onChange,
+    ...props
   }: SingleAutocompleteSelectFieldProps & WithStyles<typeof styles>) => {
     const [prevDisplayValue] = useStateFromProps(displayValue);
     const handleChange = item =>
@@ -136,7 +137,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
               }
 
               return (
-                <div className={classes.container}>
+                <div className={classes.container} {...props}>
                   <TextField
                     InputProps={{
                       ...InputProps,
@@ -173,6 +174,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                               {...getItemProps({
                                 item: ""
                               })}
+                              data-tc="singleautocomplete-select-option"
                             >
                               <Typography color="textSecondary">
                                 {i18n.t("None")}
@@ -195,6 +197,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                                   index: choiceIndex,
                                   item: suggestion.value
                                 })}
+                                data-tc="singleautocomplete-select-option"
                               >
                                 {suggestion.label}
                               </MenuItem>
@@ -215,6 +218,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                                 {...getItemProps({
                                   item: inputValue
                                 })}
+                                data-tc="singleautocomplete-select-option"
                               >
                                 {i18n.t("Add new value: {{ value }}", {
                                   context: "add custom option",
@@ -224,7 +228,11 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                             )}
                         </>
                       ) : (
-                        <MenuItem disabled={true} component="div">
+                        <MenuItem
+                          disabled={true}
+                          component="div"
+                          data-tc="singleautocomplete-select-no-options"
+                        >
                           {i18n.t("No results found")}
                         </MenuItem>
                       )}

@@ -94,10 +94,20 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
         title={i18n.t("Variants")}
         toolbar={
           <>
-            <Button onClick={onAttributesEdit} variant="text" color="primary">
+            <Button
+              onClick={onAttributesEdit}
+              variant="text"
+              color="primary"
+              data-tc="button-edit-attributes"
+            >
               {i18n.t("Edit attributes")}
             </Button>
-            <Button onClick={onVariantAdd} variant="text" color="primary">
+            <Button
+              onClick={onVariantAdd}
+              variant="text"
+              color="primary"
+              data-tc="button-add-variant"
+            >
               {i18n.t("Add variant")}
             </Button>
           </>

@@ -99,7 +99,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onReset={handleReset}
           onSave={handleSave}
         />
-        <Button onClick={onAdd} color="primary" variant="contained">
+        <Button
+          onClick={onAdd}
+          color="primary"
+          variant="contained"
+          data-tc="add-product"
+        >
           {i18n.t("Add product")} <AddIcon />
         </Button>
       </PageHeader>

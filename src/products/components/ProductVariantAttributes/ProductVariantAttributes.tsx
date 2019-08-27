@@ -93,6 +93,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
                 value={getAttributeValue(attribute.id, attributes)}
                 choices={getAttributeValueChoices(attribute.id, attributes)}
                 allowCustomValues
+                data-tc="variant-attribute-input"
               />
             );
           })

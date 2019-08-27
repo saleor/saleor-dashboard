@@ -101,6 +101,7 @@ const ProductOrganization = withStyles(styles, { name: "ProductOrganization" })(
             choices={productTypes}
             value={data.productType}
             onChange={onProductTypeChange}
+            data-tc="product-type"
           />
         ) : (
           <>
@@ -137,6 +138,7 @@ const ProductOrganization = withStyles(styles, { name: "ProductOrganization" })(
           value={data.category}
           onChange={onCategoryChange}
           fetchChoices={fetchCategories}
+          data-tc="category"
         />
         <FormSpacer />
         <Hr />
@@ -152,6 +154,7 @@ const ProductOrganization = withStyles(styles, { name: "ProductOrganization" })(
           )}
           onChange={onCollectionChange}
           fetchChoices={fetchCollections}
+          data-tc="collections"
         />
       </CardContent>
     </Card>

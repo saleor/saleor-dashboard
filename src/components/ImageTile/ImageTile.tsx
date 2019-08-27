@@ -60,7 +60,7 @@ interface ImageTileProps extends WithStyles<typeof styles> {
 
 const ImageTile = withStyles(styles, { name: "ImageTile" })(
   ({ classes, onImageDelete, onImageEdit, image }: ImageTileProps) => (
-    <div className={classes.imageContainer}>
+    <div className={classes.imageContainer} data-tc="product-image">
       <div className={classes.imageOverlay}>
         <div className={classes.imageOverlayToolbar}>
           {onImageEdit && (

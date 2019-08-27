@@ -154,6 +154,9 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                   name="email"
                   onChange={handleChange}
                   value={data.email}
+                  inputProps={{
+                    "data-tc": "email"
+                  }}
                 />
                 <FormSpacer />
                 <TextField
@@ -164,6 +167,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                   onChange={handleChange}
                   type="password"
                   value={data.password}
+                  data-tc="password"
                 />
                 <FormSpacer />
                 <div className={classes.buttonContainer}>
@@ -181,6 +185,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                     variant="contained"
                     onClick={handleSubmit}
                     type="submit"
+                    data-tc="submit"
                   >
                     {i18n.t("Login")}
                   </Button>

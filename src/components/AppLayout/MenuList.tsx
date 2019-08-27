@@ -233,6 +233,7 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
                       menuItem.ariaLabel === activeSubMenu.label &&
                       activeSubMenu.isActive
                   })}
+                  data-tc={menuItem.label}
                   onClick={() => handleSubMenu(menuItem.ariaLabel)}
                 >
                   <SVG
