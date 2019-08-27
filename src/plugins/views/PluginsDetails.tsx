@@ -1,29 +1,22 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
 
-import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../i18n";
 import { getMutationState, maybe } from "../../misc";
-import { PluginConfigurationUpdateInput } from "../../types/globalTypes";
-import PluginsDetailsPage, { FormData } from "../components/PluginsDetailsPage";
+import PluginsDetailsPage from "../components/PluginsDetailsPage";
 import { TypedPluginConfigurationUpdate } from "../mutations";
 import { TypedPluginsDetailsQuery } from "../queries";
-import { pluginsListUrl, pluginsUrl, PluginsUrlQueryParams } from "../urls";
+import { pluginsListUrl, PluginsListUrlQueryParams } from "../urls";
 
 export interface PluginsDetailsProps {
   id: string;
-  params: PluginsUrlQueryParams;
+  params: PluginsListUrlQueryParams;
 }
 
 export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
-  id,
-  params
+  id
 }) => {
   const navigate = useNavigator();
-  const notify = useNotifier();
 
   return (
     <TypedPluginConfigurationUpdate>
@@ -35,7 +28,8 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
               pluginConfigurationUpdateOpts.loading,
               maybe(
                 () =>
-                  pluginConfigurationUpdateOpts.data.pluginConfiguration.errors
+                  pluginConfigurationUpdateOpts.data.pluginConfigurationUpdate
+                    .errors
               )
             );
 
@@ -50,8 +44,8 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
                   disabled={PluginDetails.loading}
                   errors={maybe(
                     () =>
-                      pluginConfigurationUpdateOpts.data.pluginConfiguration
-                        .errors,
+                      pluginConfigurationUpdateOpts.data
+                        .pluginConfigurationUpdate.errors,
                     []
                   )}
                   saveButtonBarState={formTransitionState}
@@ -62,7 +56,7 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
                     formData.configuration.map(item => {
                       configurationInput.push({
                         name: item.name,
-                        value: item.value
+                        value: item.value.toString()
                       });
                     });
                     pluginConfigurationUpdate({

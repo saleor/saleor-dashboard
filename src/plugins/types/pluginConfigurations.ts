@@ -3,10 +3,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: pluginConfigurations
+// GraphQL query operation: PluginConfigurations
 // ====================================================
 
-export interface pluginConfigurations_pluginConfigurations_edges_node {
+export interface PluginConfigurations_pluginConfigurations_edges_node {
   __typename: "PluginConfiguration";
   id: string;
   name: string;
@@ -14,21 +14,30 @@ export interface pluginConfigurations_pluginConfigurations_edges_node {
   active: boolean;
 }
 
-export interface pluginConfigurations_pluginConfigurations_edges {
+export interface PluginConfigurations_pluginConfigurations_edges {
   __typename: "PluginConfigurationCountableEdge";
-  node: pluginConfigurations_pluginConfigurations_edges_node;
+  node: PluginConfigurations_pluginConfigurations_edges_node;
 }
 
-export interface pluginConfigurations_pluginConfigurations {
+export interface PluginConfigurations_pluginConfigurations_pageInfo {
+  __typename: "PageInfo";
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  startCursor: string | null;
+  endCursor: string | null;
+}
+
+export interface PluginConfigurations_pluginConfigurations {
   __typename: "PluginConfigurationCountableConnection";
-  edges: pluginConfigurations_pluginConfigurations_edges[];
+  edges: PluginConfigurations_pluginConfigurations_edges[];
+  pageInfo: PluginConfigurations_pluginConfigurations_pageInfo;
 }
 
-export interface pluginConfigurations {
-  pluginConfigurations: pluginConfigurations_pluginConfigurations | null;
+export interface PluginConfigurations {
+  pluginConfigurations: PluginConfigurations_pluginConfigurations | null;
 }
 
-export interface pluginConfigurationsVariables {
+export interface PluginConfigurationsVariables {
   first?: number | null;
   after?: string | null;
   last?: number | null;

@@ -1,42 +1,36 @@
-import React from "react";
 import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
-import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
+import { maybe } from "@saleor/misc";
+import { UserError } from "@saleor/types";
+import React from "react";
+
 import i18n from "../../../i18n";
-import { maybe } from "../../../misc";
-import { UserError } from "../../../types";
-import { PageDetails_page } from "../../types/PluginDetails";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
 
 export interface FormData {
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
   active: boolean;
-  id: string;
-  configuration: [
-    {
-      name: string;
-      value: string;
-      type: string;
-      helpText: string;
-      label: string;
-    }
-  ];
+  configuration: Array<{
+    name: string;
+    value: string;
+    type: string;
+    helpText: string;
+    label: string;
+  }>;
 }
 
 export interface PageDetailsPageProps {
   disabled: boolean;
   errors: UserError[];
-  plugin: PageDetails_page;
+  plugin: FormData;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: FormData) => void;
@@ -51,22 +45,14 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
   onSubmit
 }) => {
   const initialForm: FormData = {
-    name: maybe(() => plugin.name, ""),
-    description: maybe(() => plugin.description, ""),
     active: maybe(() => plugin.active, false),
-    configuration: maybe(() => plugin.configuration, [])
+    configuration: maybe(() => plugin.configuration, []),
+    description: maybe(() => plugin.description, ""),
+    name: maybe(() => plugin.name, "")
   };
   return (
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({
-        change,
-        data,
-        errors: formErrors,
-        hasChanged,
-        submit,
-        set,
-        triggerChange
-      }) => {
+      {({ data, errors, hasChanged, submit, set, triggerChange }) => {
         const newData = {
           active: data.active,
           configuration: data.configuration
@@ -104,12 +90,7 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
                   )}
                 </Typography>
               </div>
-              <PluginInfo
-                data={data}
-                errors={errors}
-                disabled={disabled}
-                onChange={onChange}
-              />
+              <PluginInfo data={data} onChange={onChange} />
               {data.configuration && (
                 <>
                   <div>

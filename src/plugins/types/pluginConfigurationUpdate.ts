@@ -5,16 +5,16 @@
 import { PluginConfigurationUpdateInput, ConfigurationTypeFieldEnum } from "./../../types/globalTypes";
 
 // ====================================================
-// GraphQL mutation operation: pluginConfigurationUpdate
+// GraphQL mutation operation: PluginConfigurationUpdate
 // ====================================================
 
-export interface pluginConfigurationUpdate_pluginConfigurationUpdate_errors {
+export interface PluginConfigurationUpdate_pluginConfigurationUpdate_errors {
   __typename: "Error";
   field: string | null;
   message: string | null;
 }
 
-export interface pluginConfigurationUpdate_pluginConfigurationUpdate_pluginConfiguration_configuration {
+export interface PluginConfigurationUpdate_pluginConfigurationUpdate_pluginConfiguration_configuration {
   __typename: "ConfigurationItem";
   name: string;
   type: ConfigurationTypeFieldEnum | null;
@@ -23,26 +23,26 @@ export interface pluginConfigurationUpdate_pluginConfigurationUpdate_pluginConfi
   label: string | null;
 }
 
-export interface pluginConfigurationUpdate_pluginConfigurationUpdate_pluginConfiguration {
+export interface PluginConfigurationUpdate_pluginConfigurationUpdate_pluginConfiguration {
   __typename: "PluginConfiguration";
   id: string;
   name: string;
   description: string;
   active: boolean;
-  configuration: (pluginConfigurationUpdate_pluginConfigurationUpdate_pluginConfiguration_configuration | null)[] | null;
+  configuration: (PluginConfigurationUpdate_pluginConfigurationUpdate_pluginConfiguration_configuration | null)[] | null;
 }
 
-export interface pluginConfigurationUpdate_pluginConfigurationUpdate {
+export interface PluginConfigurationUpdate_pluginConfigurationUpdate {
   __typename: "PluginConfigurationUpdate";
-  errors: pluginConfigurationUpdate_pluginConfigurationUpdate_errors[] | null;
-  pluginConfiguration: pluginConfigurationUpdate_pluginConfigurationUpdate_pluginConfiguration | null;
+  errors: PluginConfigurationUpdate_pluginConfigurationUpdate_errors[] | null;
+  pluginConfiguration: PluginConfigurationUpdate_pluginConfigurationUpdate_pluginConfiguration | null;
 }
 
-export interface pluginConfigurationUpdate {
-  pluginConfigurationUpdate: pluginConfigurationUpdate_pluginConfigurationUpdate | null;
+export interface PluginConfigurationUpdate {
+  pluginConfigurationUpdate: PluginConfigurationUpdate_pluginConfigurationUpdate | null;
 }
 
-export interface pluginConfigurationUpdateVariables {
+export interface PluginConfigurationUpdateVariables {
   id: string;
   input: PluginConfigurationUpdateInput;
 }

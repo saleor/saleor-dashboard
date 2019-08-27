@@ -1,17 +1,17 @@
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
 import React from "react";
 
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import i18n from "@saleor/i18n";
-import { ListActions, PageListProps } from "@saleor/types";
-import { PageList_pages_edges_node } from "../../types/PageList";
+import { ListActionsWithoutToolbar, PageListProps } from "@saleor/types";
+import { PluginConfigurations_pluginConfigurations_edges_node } from "../../types/PluginConfigurations";
 import PluginsList from "../PluginsList/PluginsList";
 
-export interface PluginsListPageProps extends PageListProps, ListActions {
-  pages: PageList_pages_edges_node[];
+export interface PluginsListPageProps
+  extends PageListProps,
+    ListActionsWithoutToolbar {
+  plugins: PluginConfigurations_pluginConfigurations_edges_node[];
   onBack: () => void;
 }
 
@@ -28,8 +28,7 @@ const PluginsListPage: React.StatelessComponent<PluginsListPageProps> = ({
   isChecked,
   selected,
   toggle,
-  toggleAll,
-  toolbar
+  toggleAll
 }) => (
   <Container>
     <AppHeader onBack={onBack}>{i18n.t("Configuration")}</AppHeader>
@@ -47,7 +46,6 @@ const PluginsListPage: React.StatelessComponent<PluginsListPageProps> = ({
       selected={selected}
       toggle={toggle}
       toggleAll={toggleAll}
-      toolbar={toolbar}
     />
   </Container>
 );

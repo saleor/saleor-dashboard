@@ -5,9 +5,9 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { WindowTitle } from "../components/WindowTitle";
 import i18n from "../i18n";
 import {
-  pluginsPath,
   pluginsListPath,
-  PluginsListUrlQueryParams
+  PluginsListUrlQueryParams,
+  pluginsPath
 } from "./urls";
 import PluginsDetailsComponent from "./views/PluginsDetails";
 import PluginsListComponent from "./views/PluginsList";

@@ -1,18 +1,10 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import React from "react";
-
 import CardTitle from "@saleor/components/CardTitle";
-import FormSpacer from "@saleor/components/FormSpacer";
+import ControlledSwitch from "@saleor/components/ControlledSwitch";
+import React from "react";
 import i18n from "../../../i18n";
 import { FormData } from "../PluginsDetailsPage";
 
@@ -27,13 +19,12 @@ interface PluginSettingsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    item: {
-      marginBottom: 5,
-      marginTop: 10
-    }
-  });
+const styles = createStyles({
+  item: {
+    paddingBottom: 5,
+    paddingTop: 5
+  }
+});
 
 const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
   ({
@@ -42,7 +33,8 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
     classes,
     errors,
     onChange
-  }: PluginSettingsProps & WithStyles<typeof styles>) => (
+  }: PluginSettingsProps & WithStyles<typeof styles>) => {
+    return (
       <Card>
         <CardTitle
           title={i18n.t("Plugin Settings", {
@@ -51,10 +43,9 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
         />
         <CardContent>
           {data.configuration.map((configuration, index) => (
-            <div className={classes.item} key={`item-${index}`}>
+            <div className={classes.item} key={index}>
               {configuration.type === "STRING" && (
                 <TextField
-                  className={classes.item}
                   disabled={disabled}
                   error={!!errors.name}
                   label={configuration.label}
@@ -66,8 +57,7 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
               )}
               {configuration.type === "BOOLEAN" && (
                 <ControlledSwitch
-                  className={classes.item}
-                  checked={configuration.value}
+                  checked={configuration.value === "true"}
                   label={configuration.label}
                   name={configuration.name}
                   onChange={onChange}
@@ -78,6 +68,7 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
         </CardContent>
       </Card>
     );
+  }
 );
 PluginSettings.displayName = "PluginSettings";
 export default PluginSettings;

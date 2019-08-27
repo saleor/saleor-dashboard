@@ -1,12 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 
@@ -19,36 +13,27 @@ import { FormData } from "../PluginsDetailsPage";
 
 interface PluginInfoProps {
   data: FormData;
-  errors: Partial<{
-    description: string;
-    domain: string;
-    name: string;
-  }>;
-  disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    title: {
-      fontSize: 14,
-      color: "#616161",
-      paddingTop: 10
-    },
-    status: {
-      fontSize: 16,
-      color: "#3D3D3D",
-      paddingTop: 20,
-      fontWeight: "400"
-    }
-  });
+const styles = createStyles({
+  status: {
+    color: "#3D3D3D",
+    fontSize: 16,
+    fontWeight: 400,
+    paddingTop: 20
+  },
+  title: {
+    color: "#616161",
+    fontSize: 14,
+    paddingTop: 10
+  }
+});
 
 const PluginInfo = withStyles(styles, { name: "PluginInfo" })(
   ({
     data,
-    disabled,
     classes,
-    errors,
     onChange
   }: PluginInfoProps & WithStyles<typeof styles>) => {
     return (

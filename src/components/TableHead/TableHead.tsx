@@ -25,7 +25,7 @@ export interface TableHeadProps extends MuiTableHeadProps {
   dragRows?: boolean;
   selected: number;
   items: Node[];
-  toolbar: React.ReactNode | React.ReactNodeArray;
+  toolbar?: React.ReactNode | React.ReactNodeArray;
   toggleAll: (items: Node[], selected: number) => void;
 }
 
@@ -138,7 +138,7 @@ const TableHead = withStyles(styles, {
                     </Typography>
                   )}
                   <div className={classes.spacer} />
-                  <div className={classes.toolbar}>{toolbar}</div>
+                  {toolbar && <div className={classes.toolbar}>{toolbar}</div>}
                 </div>
               </TableCell>
             </>

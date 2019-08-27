@@ -3,13 +3,13 @@ import gql from "graphql-tag";
 import { TypedMutation } from "../mutations";
 import { pluginsDetailsFragment } from "./queries";
 import {
-  pluginConfigurationUpdate,
-  pluginConfigurationUpdateVariables
+  PluginConfigurationUpdate,
+  PluginConfigurationUpdateVariables
 } from "./types/pluginConfigurationUpdate";
 
 const pluginConfigurationUpdate = gql`
   ${pluginsDetailsFragment}
-  mutation pluginConfigurationUpdate(
+  mutation PluginConfigurationUpdate(
     $id: ID!
     $input: PluginConfigurationUpdateInput!
   ) {
@@ -25,6 +25,6 @@ const pluginConfigurationUpdate = gql`
   }
 `;
 export const TypedPluginConfigurationUpdate = TypedMutation<
-  pluginConfigurationUpdate,
-  pluginConfigurationUpdateVariables
+  PluginConfigurationUpdate,
+  PluginConfigurationUpdateVariables
 >(pluginConfigurationUpdate);

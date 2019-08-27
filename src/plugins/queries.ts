@@ -1,8 +1,14 @@
 import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
-import { PluginDetails, PluginDetailsVariables } from "./types/PluginDetails";
-import { PluginsList, PluginsListVariables } from "./types/PluginsList";
+import {
+  PluginConfiguration,
+  PluginConfigurationVariables
+} from "./types/pluginConfiguration";
+import {
+  PluginConfigurations,
+  PluginConfigurationsVariables
+} from "./types/pluginConfigurations";
 
 export const pluginsFragment = gql`
   fragment pluginFragment on PluginConfiguration {
@@ -29,7 +35,7 @@ export const pluginsDetailsFragment = gql`
 
 const pluginsList = gql`
   ${pluginsFragment}
-  query pluginConfigurations(
+  query PluginConfigurations(
     $first: Int
     $after: String
     $last: Int
@@ -46,23 +52,29 @@ const pluginsList = gql`
           ...pluginFragment
         }
       }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        startCursor
+        endCursor
+      }
     }
   }
 `;
 export const TypedPluginsListQuery = TypedQuery<
-  PluginsList,
-  PluginsListVariables
+  PluginConfigurations,
+  PluginConfigurationsVariables
 >(pluginsList);
 
 const pluginsDetails = gql`
   ${pluginsDetailsFragment}
-  query pluginConfiguration($id: ID!) {
+  query PluginConfiguration($id: ID!) {
     pluginConfiguration(id: $id) {
       ...pluginsDetailsFragment
     }
   }
 `;
 export const TypedPluginsDetailsQuery = TypedQuery<
-  PluginDetails,
-  PluginDetailsVariables
+  PluginConfiguration,
+  PluginConfigurationVariables
 >(pluginsDetails);

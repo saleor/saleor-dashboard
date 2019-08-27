@@ -5,10 +5,10 @@
 import { ConfigurationTypeFieldEnum } from "./../../types/globalTypes";
 
 // ====================================================
-// GraphQL query operation: pluginConfiguration
+// GraphQL query operation: PluginConfiguration
 // ====================================================
 
-export interface pluginConfiguration_pluginConfiguration_configuration {
+export interface PluginConfiguration_pluginConfiguration_configuration {
   __typename: "ConfigurationItem";
   name: string;
   type: ConfigurationTypeFieldEnum | null;
@@ -17,19 +17,19 @@ export interface pluginConfiguration_pluginConfiguration_configuration {
   label: string | null;
 }
 
-export interface pluginConfiguration_pluginConfiguration {
+export interface PluginConfiguration_pluginConfiguration {
   __typename: "PluginConfiguration";
   id: string;
   name: string;
   description: string;
   active: boolean;
-  configuration: (pluginConfiguration_pluginConfiguration_configuration | null)[] | null;
+  configuration: (PluginConfiguration_pluginConfiguration_configuration | null)[] | null;
 }
 
-export interface pluginConfiguration {
-  pluginConfiguration: pluginConfiguration_pluginConfiguration | null;
+export interface PluginConfiguration {
+  pluginConfiguration: PluginConfiguration_pluginConfiguration | null;
 }
 
-export interface pluginConfigurationVariables {
+export interface PluginConfigurationVariables {
   id: string;
 }

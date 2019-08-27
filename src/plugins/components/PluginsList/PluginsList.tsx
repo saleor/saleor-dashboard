@@ -20,28 +20,28 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps } from "@saleor/types";
-import { PageList_pages_edges_node } from "../../types/PageList";
+import { ListActionsWithoutToolbar, ListProps } from "@saleor/types";
+import { PluginConfigurations_pluginConfigurations_edges_node } from "../../types/pluginConfigurations";
 
-export interface PluginListProps extends ListProps, ListActions {
-  plugins: PageList_pages_edges_node[];
+export interface PluginListProps extends ListProps, ListActionsWithoutToolbar {
+  plugins: PluginConfigurations_pluginConfigurations_edges_node[];
 }
 
 const styles = (theme: Theme) =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
-      colActive: {},
-      colName: {},
       colAction: {
-        textAlign: "right",
         "& svg": {
           color: theme.palette.primary.main
-        }
-      }
+        },
+        textAlign: "right"
+      },
+      colActive: {},
+      colName: {}
     },
-    colName: {},
-    colActive: {},
     colAction: {},
+    colActive: {},
+    colName: {},
     link: {
       cursor: "pointer"
     }
@@ -63,8 +63,7 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
     isChecked,
     selected,
     toggle,
-    toggleAll,
-    toolbar
+    toggleAll
   }: PluginListProps & WithStyles<typeof styles>) => {
     return (
       <Card>
@@ -75,7 +74,6 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
             disabled={disabled}
             items={plugins}
             toggleAll={toggleAll}
-            toolbar={toolbar}
           >
             <TableCell className={classes.colName} padding="dense">
               {i18n.t("Name", { context: "table header" })}
