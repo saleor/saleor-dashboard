@@ -49,6 +49,7 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
                 <TextField
                   disabled={disabled}
                   error={!!errors.name}
+                  helperText={configuration.helpText}
                   label={configuration.label}
                   name={configuration.name}
                   fullWidth
@@ -64,6 +65,7 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
                       : configuration.value
                   }
                   label={configuration.label}
+                  helperText={configuration.helpText}
                   name={configuration.name}
                   onChange={onChange}
                 />
