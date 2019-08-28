@@ -10,3 +10,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add switch to make attribute available in product list as a column - #99 by @dominik-zeglen
 - Add tc tags for E2E testing - #134 by @dominik-zeglen
 - Use react-intl - #105 by @dominik-zeglen
+- Add dynamic dashboard settings - #135 by @benekex2
