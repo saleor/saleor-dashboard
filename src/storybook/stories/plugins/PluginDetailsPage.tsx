@@ -12,8 +12,8 @@ import { formError } from "../../misc";
 const props: PluginsDetailsPageProps = {
   disabled: false,
   errors: [],
-  onSubmit: () => undefined,
   onBack: () => undefined,
+  onSubmit: () => undefined,
   plugin,
   saveButtonBarState: "default"
 };

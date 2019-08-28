@@ -10,12 +10,12 @@ import Decorator from "../../Decorator";
 
 const props: PluginsListPageProps = {
   ...pageListProps.default,
-  toggle: () => undefined,
-  toggleAll: () => undefined,
   isChecked: () => undefined,
-  selected: undefined,
   onBack: () => undefined,
-  plugins: pluginList
+  plugins: pluginList,
+  selected: undefined,
+  toggle: () => undefined,
+  toggleAll: () => undefined
 };
 
 storiesOf("Views / Plugins / Plugin list", module)
