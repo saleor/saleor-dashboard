@@ -4,6 +4,7 @@ import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
+import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import i18n from "../../../i18n";
 import { FormData } from "../PluginsDetailsPage";
@@ -44,7 +45,7 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
         <CardContent>
           {data.configuration.map((configuration, index) => (
             <div className={classes.item} key={index}>
-              {configuration.type === "STRING" && (
+              {configuration.type === ConfigurationTypeFieldEnum.STRING && (
                 <TextField
                   disabled={disabled}
                   error={!!errors.name}
@@ -55,7 +56,7 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
                   onChange={onChange}
                 />
               )}
-              {configuration.type === "BOOLEAN" && (
+              {configuration.type === ConfigurationTypeFieldEnum.BOOLEAN && (
                 <ControlledSwitch
                   checked={
                     typeof configuration.value !== "boolean"
