@@ -75138,6 +75138,7 @@ exports[`Storyshots Views / Plugins / Plugin list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -75164,6 +75165,7 @@ exports[`Storyshots Views / Plugins / Plugin list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -75444,6 +75446,7 @@ exports[`Storyshots Views / Plugins / Plugin list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -75470,6 +75473,7 @@ exports[`Storyshots Views / Plugins / Plugin list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -75685,6 +75689,7 @@ exports[`Storyshots Views / Plugins / Plugin list no data 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -75711,6 +75716,7 @@ exports[`Storyshots Views / Plugins / Plugin list no data 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
