@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import { pluginsDetailsFragment } from "./queries";
-import { PluginUpdate, PluginUpdateVariables } from "./types/pluginUpdate";
+import { PluginUpdate, PluginUpdateVariables } from "./types/PluginUpdate";
 
 const pluginUpdate = gql`
   ${pluginsDetailsFragment}
