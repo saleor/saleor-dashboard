@@ -50,6 +50,7 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
     description: maybe(() => plugin.description, ""),
     name: maybe(() => plugin.name, "")
   };
+
   return (
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ data, errors, hasChanged, submit, set, triggerChange }) => {
@@ -63,7 +64,6 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
           name === "active"
             ? (newData.active = value)
             : (newData.active = data.active);
-
           newData.configuration.map(item => {
             if (item.name === name) {
               item.value = value;

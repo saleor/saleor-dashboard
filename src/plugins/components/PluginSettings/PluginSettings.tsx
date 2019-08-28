@@ -21,8 +21,8 @@ interface PluginSettingsProps {
 
 const styles = createStyles({
   item: {
-    paddingBottom: 5,
-    paddingTop: 5
+    paddingBottom: 10,
+    paddingTop: 10
   }
 });
 
@@ -57,7 +57,11 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
               )}
               {configuration.type === "BOOLEAN" && (
                 <ControlledSwitch
-                  checked={configuration.value === "true"}
+                  checked={
+                    typeof configuration.value !== "boolean"
+                      ? configuration.value === "true"
+                      : configuration.value
+                  }
                   label={configuration.label}
                   name={configuration.name}
                   onChange={onChange}
