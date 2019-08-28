@@ -162,6 +162,7 @@ const MenuNested = withStyles(styles, { name: "MenuNested" })(
                 className={classNames(classes.menuListNestedClose, {
                   [classes.menuListNestedCloseDark]: isDark
                 })}
+                data-tc={ariaLabel}
                 onClick={() =>
                   closeSubMenu({
                     isActive: false,
@@ -178,6 +179,7 @@ const MenuNested = withStyles(styles, { name: "MenuNested" })(
               <a
                 className={classNames(classes.menuListNestedItem)}
                 href={createHref(item.url)}
+                data-tc={ariaLabel}
                 onClick={event => closeMenu(item.url, event)}
                 key={item.label}
               >

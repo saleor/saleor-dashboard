@@ -173,6 +173,7 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                     key={product ? product.id : "skeleton"}
                     onClick={product && onRowClick(product.id)}
                     className={classes.link}
+                    data-tc={product ? `product-${product.id}` : undefined}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox

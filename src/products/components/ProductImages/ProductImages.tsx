@@ -192,6 +192,7 @@ const ProductImages = withStyles(styles, { name: "ProductImages" })(
               disabled={loading}
               variant="text"
               color="primary"
+              data-tc="button-upload-image"
             >
               {i18n.t("Upload image")}
             </Button>

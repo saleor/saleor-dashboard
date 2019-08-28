@@ -103,6 +103,7 @@ export const SaveButtonBar = withStyles(styles, { name: "SaveButtonBar" })(
                       variant="contained"
                       onClick={onDelete}
                       className={classes.deleteButton}
+                      data-tc="button-bar-delete"
                     >
                       {labels && labels.delete
                         ? labels.delete
@@ -114,6 +115,7 @@ export const SaveButtonBar = withStyles(styles, { name: "SaveButtonBar" })(
                     className={classes.cancelButton}
                     variant="text"
                     onClick={onCancel}
+                    data-tc="button-bar-cancel"
                   >
                     {maybe(
                       () => labels.cancel,
@@ -126,6 +128,7 @@ export const SaveButtonBar = withStyles(styles, { name: "SaveButtonBar" })(
                     disabled={disabled}
                     onClick={onSave}
                     transitionState={state}
+                    data-tc="button-bar-confirm"
                   >
                     {maybe(
                       () => labels.save,

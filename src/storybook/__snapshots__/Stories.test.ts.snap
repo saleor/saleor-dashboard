@@ -4448,6 +4448,7 @@ exports[`Storyshots Generics / TablePagination both previous and next pages are 
                 >
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-back"
                     tabindex="0"
                     type="button"
                   >
@@ -4473,6 +4474,7 @@ exports[`Storyshots Generics / TablePagination both previous and next pages are 
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -4538,6 +4540,7 @@ exports[`Storyshots Generics / TablePagination next page available 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -4564,6 +4567,7 @@ exports[`Storyshots Generics / TablePagination next page available 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -4629,6 +4633,7 @@ exports[`Storyshots Generics / TablePagination no previous / next page 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -4655,6 +4660,7 @@ exports[`Storyshots Generics / TablePagination no previous / next page 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -4721,6 +4727,7 @@ exports[`Storyshots Generics / TablePagination previous page available 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-back"
                     tabindex="0"
                     type="button"
                   >
@@ -4746,6 +4753,7 @@ exports[`Storyshots Generics / TablePagination previous page available 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -10803,6 +10811,7 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -10829,6 +10838,7 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -11528,6 +11538,7 @@ exports[`Storyshots Views / Attributes / Attribute list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -11554,6 +11565,7 @@ exports[`Storyshots Views / Attributes / Attribute list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -11774,6 +11786,7 @@ exports[`Storyshots Views / Attributes / Attribute list no data 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -11800,6 +11813,7 @@ exports[`Storyshots Views / Attributes / Attribute list no data 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -11903,6 +11917,7 @@ exports[`Storyshots Views / Authentication / Log in default 1`] = `
                 autocomplete="username"
                 autofocus=""
                 class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                data-tc="email"
                 name="email"
                 type="text"
                 value=""
@@ -11914,6 +11929,7 @@ exports[`Storyshots Views / Authentication / Log in default 1`] = `
           />
           <div
             class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+            data-tc="password"
           >
             <label
               class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -11980,6 +11996,7 @@ exports[`Storyshots Views / Authentication / Log in default 1`] = `
             />
             <button
               class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiButton-root-id MuiButton-contained-id MuiButton-containedPrimary-id MuiButton-raised-id MuiButton-raisedPrimary-id MuiButton-disabled-id LoginCard-loginButton-id"
+              data-tc="submit"
               disabled=""
               tabindex="-1"
               type="submit"
@@ -12064,6 +12081,7 @@ exports[`Storyshots Views / Authentication / Log in error 1`] = `
                 autocomplete="username"
                 autofocus=""
                 class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                data-tc="email"
                 name="email"
                 type="text"
                 value=""
@@ -12075,6 +12093,7 @@ exports[`Storyshots Views / Authentication / Log in error 1`] = `
           />
           <div
             class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+            data-tc="password"
           >
             <label
               class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -12141,6 +12160,7 @@ exports[`Storyshots Views / Authentication / Log in error 1`] = `
             />
             <button
               class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiButton-root-id MuiButton-contained-id MuiButton-containedPrimary-id MuiButton-raised-id MuiButton-raisedPrimary-id MuiButton-disabled-id LoginCard-loginButton-id"
+              data-tc="submit"
               disabled=""
               tabindex="-1"
               type="submit"
@@ -12214,6 +12234,7 @@ exports[`Storyshots Views / Authentication / Log in loading 1`] = `
                 autocomplete="username"
                 autofocus=""
                 class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                data-tc="email"
                 name="email"
                 type="text"
                 value=""
@@ -12225,6 +12246,7 @@ exports[`Storyshots Views / Authentication / Log in loading 1`] = `
           />
           <div
             class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+            data-tc="password"
           >
             <label
               class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -12291,6 +12313,7 @@ exports[`Storyshots Views / Authentication / Log in loading 1`] = `
             />
             <button
               class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiButton-root-id MuiButton-contained-id MuiButton-containedPrimary-id MuiButton-raised-id MuiButton-raisedPrimary-id MuiButton-disabled-id LoginCard-loginButton-id"
+              data-tc="submit"
               disabled=""
               tabindex="-1"
               type="submit"
@@ -12498,6 +12521,7 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -12524,6 +12548,7 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -12909,6 +12934,7 @@ exports[`Storyshots Views / Categories / Category list empty 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -12935,6 +12961,7 @@ exports[`Storyshots Views / Categories / Category list empty 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -13142,6 +13169,7 @@ exports[`Storyshots Views / Categories / Category list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -13168,6 +13196,7 @@ exports[`Storyshots Views / Categories / Category list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -14815,6 +14844,7 @@ Ctrl + K"
         >
           <div
             class="ImageTile-imageContainer-id"
+            data-tc="product-image"
           >
             <div
               class="ImageTile-imageOverlay-id"
@@ -15075,6 +15105,7 @@ Ctrl + K"
                   >
                     <button
                       class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                      data-tc="button-pagination-back"
                       tabindex="0"
                       type="button"
                     >
@@ -15100,6 +15131,7 @@ Ctrl + K"
                     </button>
                     <button
                       class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                      data-tc="button-pagination-next"
                       tabindex="0"
                       type="button"
                     >
@@ -15781,6 +15813,7 @@ Ctrl + K"
                   >
                     <button
                       class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                      data-tc="button-pagination-back"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -15807,6 +15840,7 @@ Ctrl + K"
                     </button>
                     <button
                       class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                      data-tc="button-pagination-next"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -16547,6 +16581,7 @@ Ctrl + K"
         >
           <div
             class="ImageTile-imageContainer-id"
+            data-tc="product-image"
           >
             <div
               class="ImageTile-imageOverlay-id"
@@ -16807,6 +16842,7 @@ Ctrl + K"
                   >
                     <button
                       class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                      data-tc="button-pagination-back"
                       tabindex="0"
                       type="button"
                     >
@@ -16832,6 +16868,7 @@ Ctrl + K"
                     </button>
                     <button
                       class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                      data-tc="button-pagination-next"
                       tabindex="0"
                       type="button"
                     >
@@ -17533,6 +17570,7 @@ Ctrl + K"
         >
           <div
             class="ImageTile-imageContainer-id"
+            data-tc="product-image"
           >
             <div
               class="ImageTile-imageOverlay-id"
@@ -17821,6 +17859,7 @@ Ctrl + K"
                     >
                       <button
                         class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                        data-tc="button-pagination-back"
                         tabindex="0"
                         type="button"
                       >
@@ -17846,6 +17885,7 @@ Ctrl + K"
                       </button>
                       <button
                         class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                        data-tc="button-pagination-next"
                         tabindex="0"
                         type="button"
                       >
@@ -18548,6 +18588,7 @@ Ctrl + K"
         >
           <div
             class="ImageTile-imageContainer-id"
+            data-tc="product-image"
           >
             <div
               class="ImageTile-imageOverlay-id"
@@ -18808,6 +18849,7 @@ Ctrl + K"
                   >
                     <button
                       class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                      data-tc="button-pagination-back"
                       tabindex="0"
                       type="button"
                     >
@@ -18833,6 +18875,7 @@ Ctrl + K"
                     </button>
                     <button
                       class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                      data-tc="button-pagination-next"
                       tabindex="0"
                       type="button"
                     >
@@ -19534,6 +19577,7 @@ Ctrl + K"
         >
           <div
             class="ImageTile-imageContainer-id"
+            data-tc="product-image"
           >
             <div
               class="ImageTile-imageOverlay-id"
@@ -19838,6 +19882,7 @@ Ctrl + K"
                     >
                       <button
                         class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                        data-tc="button-pagination-back"
                         tabindex="0"
                         type="button"
                       >
@@ -19863,6 +19908,7 @@ Ctrl + K"
                       </button>
                       <button
                         class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                        data-tc="button-pagination-next"
                         tabindex="0"
                         type="button"
                       >
@@ -19896,6 +19942,7 @@ Ctrl + K"
             >
               <tr
                 class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+                data-tc="product-UHJvZHVjdDoyMQ=="
               >
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -19955,6 +20002,7 @@ Ctrl + K"
               </tr>
               <tr
                 class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+                data-tc="product-UHJvZHVjdDoyMg=="
               >
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -20014,6 +20062,7 @@ Ctrl + K"
               </tr>
               <tr
                 class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+                data-tc="product-UHJvZHVjdDoyMw=="
               >
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -20073,6 +20122,7 @@ Ctrl + K"
               </tr>
               <tr
                 class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+                data-tc="product-UHJvZHVjdDoyNA=="
               >
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -20132,6 +20182,7 @@ Ctrl + K"
               </tr>
               <tr
                 class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+                data-tc="product-UHJvZHVjdDoyNQ=="
               >
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -20191,6 +20242,7 @@ Ctrl + K"
               </tr>
               <tr
                 class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+                data-tc="product-UHJvZHVjdDoyNg=="
               >
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -20250,6 +20302,7 @@ Ctrl + K"
               </tr>
               <tr
                 class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+                data-tc="product-UHJvZHVjdDoyNw=="
               >
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -20309,6 +20362,7 @@ Ctrl + K"
               </tr>
               <tr
                 class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+                data-tc="product-UHJvZHVjdDoyOA=="
               >
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -20368,6 +20422,7 @@ Ctrl + K"
               </tr>
               <tr
                 class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+                data-tc="product-UHJvZHVjdDoyOQ=="
               >
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -20427,6 +20482,7 @@ Ctrl + K"
               </tr>
               <tr
                 class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+                data-tc="product-UHJvZHVjdDozMA=="
               >
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -21147,6 +21203,7 @@ Ctrl + K"
             >
               <div
                 class="ImageTile-imageContainer-id"
+                data-tc="product-image"
               >
                 <div
                   class="ImageTile-imageOverlay-id"
@@ -21368,6 +21425,7 @@ Ctrl + K"
                       >
                         <button
                           class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                          data-tc="button-pagination-back"
                           disabled=""
                           tabindex="-1"
                           type="button"
@@ -21394,6 +21452,7 @@ Ctrl + K"
                         </button>
                         <button
                           class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                          data-tc="button-pagination-next"
                           tabindex="0"
                           type="button"
                         >
@@ -22516,6 +22575,7 @@ Ctrl + K"
                       >
                         <button
                           class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                          data-tc="button-pagination-back"
                           disabled=""
                           tabindex="-1"
                           type="button"
@@ -22542,6 +22602,7 @@ Ctrl + K"
                         </button>
                         <button
                           class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                          data-tc="button-pagination-next"
                           tabindex="0"
                           type="button"
                         >
@@ -23545,6 +23606,7 @@ Ctrl + K"
             >
               <div
                 class="ImageTile-imageContainer-id"
+                data-tc="product-image"
               >
                 <div
                   class="ImageTile-imageOverlay-id"
@@ -23751,6 +23813,7 @@ Ctrl + K"
                       >
                         <button
                           class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                          data-tc="button-pagination-back"
                           disabled=""
                           tabindex="-1"
                           type="button"
@@ -23777,6 +23840,7 @@ Ctrl + K"
                         </button>
                         <button
                           class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                          data-tc="button-pagination-next"
                           tabindex="0"
                           type="button"
                         >
@@ -24159,6 +24223,7 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -24185,6 +24250,7 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -24613,6 +24679,7 @@ exports[`Storyshots Views / Collections / Collection list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -24639,6 +24706,7 @@ exports[`Storyshots Views / Collections / Collection list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -34389,6 +34457,7 @@ exports[`Storyshots Views / Customers / Customer list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -34415,6 +34484,7 @@ exports[`Storyshots Views / Customers / Customer list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -35431,6 +35501,7 @@ exports[`Storyshots Views / Customers / Customer list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -35457,6 +35528,7 @@ exports[`Storyshots Views / Customers / Customer list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -35681,6 +35753,7 @@ exports[`Storyshots Views / Customers / Customer list no data 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -35707,6 +35780,7 @@ exports[`Storyshots Views / Customers / Customer list no data 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -36962,6 +37036,7 @@ exports[`Storyshots Views / Discounts / Sale details collections 1`] = `
                       >
                         <button
                           class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                          data-tc="button-pagination-back"
                           disabled=""
                           tabindex="-1"
                           type="button"
@@ -36988,6 +37063,7 @@ exports[`Storyshots Views / Discounts / Sale details collections 1`] = `
                         </button>
                         <button
                           class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                          data-tc="button-pagination-next"
                           tabindex="0"
                           type="button"
                         >
@@ -37552,6 +37628,7 @@ exports[`Storyshots Views / Discounts / Sale details default 1`] = `
                       >
                         <button
                           class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                          data-tc="button-pagination-back"
                           disabled=""
                           tabindex="-1"
                           type="button"
@@ -37578,6 +37655,7 @@ exports[`Storyshots Views / Discounts / Sale details default 1`] = `
                         </button>
                         <button
                           class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                          data-tc="button-pagination-next"
                           tabindex="0"
                           type="button"
                         >
@@ -38162,6 +38240,7 @@ exports[`Storyshots Views / Discounts / Sale details form errors 1`] = `
                       >
                         <button
                           class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                          data-tc="button-pagination-back"
                           disabled=""
                           tabindex="-1"
                           type="button"
@@ -38188,6 +38267,7 @@ exports[`Storyshots Views / Discounts / Sale details form errors 1`] = `
                         </button>
                         <button
                           class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                          data-tc="button-pagination-next"
                           tabindex="0"
                           type="button"
                         >
@@ -38763,6 +38843,7 @@ exports[`Storyshots Views / Discounts / Sale details loading 1`] = `
                       >
                         <button
                           class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                          data-tc="button-pagination-back"
                           disabled=""
                           tabindex="-1"
                           type="button"
@@ -38789,6 +38870,7 @@ exports[`Storyshots Views / Discounts / Sale details loading 1`] = `
                         </button>
                         <button
                           class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                          data-tc="button-pagination-next"
                           disabled=""
                           tabindex="-1"
                           type="button"
@@ -39391,6 +39473,7 @@ exports[`Storyshots Views / Discounts / Sale details products 1`] = `
                       >
                         <button
                           class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                          data-tc="button-pagination-back"
                           disabled=""
                           tabindex="-1"
                           type="button"
@@ -39417,6 +39500,7 @@ exports[`Storyshots Views / Discounts / Sale details products 1`] = `
                         </button>
                         <button
                           class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                          data-tc="button-pagination-next"
                           tabindex="0"
                           type="button"
                         >
@@ -40038,6 +40122,7 @@ exports[`Storyshots Views / Discounts / Sale list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -40064,6 +40149,7 @@ exports[`Storyshots Views / Discounts / Sale list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -40492,6 +40578,7 @@ exports[`Storyshots Views / Discounts / Sale list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -40518,6 +40605,7 @@ exports[`Storyshots Views / Discounts / Sale list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -40760,6 +40848,7 @@ exports[`Storyshots Views / Discounts / Sale list no data 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -40786,6 +40875,7 @@ exports[`Storyshots Views / Discounts / Sale list no data 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -45409,6 +45499,7 @@ exports[`Storyshots Views / Discounts / Voucher list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -45435,6 +45526,7 @@ exports[`Storyshots Views / Discounts / Voucher list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -45760,6 +45852,7 @@ exports[`Storyshots Views / Discounts / Voucher list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -45786,6 +45879,7 @@ exports[`Storyshots Views / Discounts / Voucher list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -46058,6 +46152,7 @@ exports[`Storyshots Views / Discounts / Voucher list no data 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -46084,6 +46179,7 @@ exports[`Storyshots Views / Discounts / Voucher list no data 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -48949,6 +49045,7 @@ exports[`Storyshots Views / Navigation / Menu list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -48975,6 +49072,7 @@ exports[`Storyshots Views / Navigation / Menu list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -49285,6 +49383,7 @@ exports[`Storyshots Views / Navigation / Menu list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -49311,6 +49410,7 @@ exports[`Storyshots Views / Navigation / Menu list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -49556,6 +49656,7 @@ exports[`Storyshots Views / Navigation / Menu list no data 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -49582,6 +49683,7 @@ exports[`Storyshots Views / Navigation / Menu list no data 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -49849,6 +49951,7 @@ exports[`Storyshots Views / Orders / Draft order list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -49875,6 +49978,7 @@ exports[`Storyshots Views / Orders / Draft order list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -50981,6 +51085,7 @@ exports[`Storyshots Views / Orders / Draft order list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -51007,6 +51112,7 @@ exports[`Storyshots Views / Orders / Draft order list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -51252,6 +51358,7 @@ exports[`Storyshots Views / Orders / Draft order list when no data 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -51278,6 +51385,7 @@ exports[`Storyshots Views / Orders / Draft order list when no data 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -66652,6 +66760,7 @@ exports[`Storyshots Views / Orders / Order list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -66678,6 +66787,7 @@ exports[`Storyshots Views / Orders / Order list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -68277,6 +68387,7 @@ exports[`Storyshots Views / Orders / Order list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -68303,6 +68414,7 @@ exports[`Storyshots Views / Orders / Order list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -68700,6 +68812,7 @@ exports[`Storyshots Views / Orders / Order list when no data 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -68726,6 +68839,7 @@ exports[`Storyshots Views / Orders / Order list when no data 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -69533,6 +69647,7 @@ exports[`Storyshots Views / Orders / Order list with custom filters 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -69559,6 +69674,7 @@ exports[`Storyshots Views / Orders / Order list with custom filters 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -73346,6 +73462,7 @@ exports[`Storyshots Views / Pages / Page list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -73372,6 +73489,7 @@ exports[`Storyshots Views / Pages / Page list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -73724,6 +73842,7 @@ exports[`Storyshots Views / Pages / Page list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -73750,6 +73869,7 @@ exports[`Storyshots Views / Pages / Page list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -73980,6 +74100,7 @@ exports[`Storyshots Views / Pages / Page list no data 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -74006,6 +74127,7 @@ exports[`Storyshots Views / Pages / Page list no data 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -76952,6 +77074,7 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -76978,6 +77101,7 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -77333,6 +77457,7 @@ exports[`Storyshots Views / Product types / Product types list loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -77359,6 +77484,7 @@ exports[`Storyshots Views / Product types / Product types list loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -77909,6 +78035,7 @@ Ctrl + K"
                 </div>
                 <button
                   class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
+                  data-tc="product-attributes-expand"
                   tabindex="0"
                   type="button"
                 >
@@ -78214,6 +78341,7 @@ Ctrl + K"
             >
               <div
                 class="SingleAutocompleteSelectField-container-id"
+                data-tc="product-type"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -78283,6 +78411,7 @@ Ctrl + K"
               />
               <div
                 class="SingleAutocompleteSelectField-container-id"
+                data-tc="category"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -78352,6 +78481,7 @@ Ctrl + K"
               />
               <div
                 class="MultiAutocompleteSelectField-container-id"
+                data-tc="collections"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -78987,6 +79117,7 @@ Ctrl + K"
                 </div>
                 <button
                   class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
+                  data-tc="product-attributes-expand"
                   tabindex="0"
                   type="button"
                 >
@@ -79287,6 +79418,7 @@ Ctrl + K"
             >
               <div
                 class="SingleAutocompleteSelectField-container-id"
+                data-tc="product-type"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -79355,6 +79487,7 @@ Ctrl + K"
               />
               <div
                 class="SingleAutocompleteSelectField-container-id"
+                data-tc="category"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -79423,6 +79556,7 @@ Ctrl + K"
               />
               <div
                 class="MultiAutocompleteSelectField-container-id"
+                data-tc="collections"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -80060,6 +80194,7 @@ Ctrl + K"
                 </div>
                 <button
                   class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
+                  data-tc="product-attributes-expand"
                   tabindex="0"
                   type="button"
                 >
@@ -80365,6 +80500,7 @@ Ctrl + K"
             >
               <div
                 class="SingleAutocompleteSelectField-container-id"
+                data-tc="product-type"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -80438,6 +80574,7 @@ Ctrl + K"
               />
               <div
                 class="SingleAutocompleteSelectField-container-id"
+                data-tc="category"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -80511,6 +80648,7 @@ Ctrl + K"
               />
               <div
                 class="MultiAutocompleteSelectField-container-id"
+                data-tc="collections"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -80836,6 +80974,7 @@ exports[`Storyshots Views / Products / Create product variant add first variant 
               >
                 <div
                   class="SingleAutocompleteSelectField-container-id"
+                  data-tc="variant-attribute-input"
                 >
                   <div
                     class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -81344,6 +81483,7 @@ exports[`Storyshots Views / Products / Create product variant default 1`] = `
               >
                 <div
                   class="SingleAutocompleteSelectField-container-id"
+                  data-tc="variant-attribute-input"
                 >
                   <div
                     class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -82291,6 +82431,7 @@ exports[`Storyshots Views / Products / Create product variant with errors 1`] = 
               >
                 <div
                   class="SingleAutocompleteSelectField-container-id"
+                  data-tc="variant-attribute-input"
                 >
                   <div
                     class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -83237,6 +83378,7 @@ Ctrl + K"
               >
                 <button
                   class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-upload-image"
                   tabindex="0"
                   type="button"
                 >
@@ -83322,6 +83464,7 @@ Ctrl + K"
                 >
                   <div
                     class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
                   >
                     <div
                       class="ImageTile-imageOverlay-id"
@@ -83338,6 +83481,7 @@ Ctrl + K"
                   </div>
                   <div
                     class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
                   >
                     <div
                       class="ImageTile-imageOverlay-id"
@@ -83354,6 +83498,7 @@ Ctrl + K"
                   </div>
                   <div
                     class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
                   >
                     <div
                       class="ImageTile-imageOverlay-id"
@@ -83370,6 +83515,7 @@ Ctrl + K"
                   </div>
                   <div
                     class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
                   >
                     <div
                       class="ImageTile-imageOverlay-id"
@@ -83386,6 +83532,7 @@ Ctrl + K"
                   </div>
                   <div
                     class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
                   >
                     <div
                       class="ImageTile-imageOverlay-id"
@@ -83445,6 +83592,7 @@ Ctrl + K"
                 </div>
                 <button
                   class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
+                  data-tc="product-attributes-expand"
                   tabindex="0"
                   type="button"
                 >
@@ -83477,6 +83625,7 @@ Ctrl + K"
               >
                 <div
                   class="Hook-attributeSectionLabel-id"
+                  data-tc="product-attribute-label"
                 >
                   <p
                     class="MuiTypography-root-id MuiTypography-body2-id"
@@ -83484,7 +83633,9 @@ Ctrl + K"
                     Borders
                   </p>
                 </div>
-                <div>
+                <div
+                  data-tc="product-attribute-value"
+                >
                   <div
                     class="SingleAutocompleteSelectField-container-id"
                   >
@@ -83554,6 +83705,7 @@ Ctrl + K"
               >
                 <div
                   class="Hook-attributeSectionLabel-id"
+                  data-tc="product-attribute-label"
                 >
                   <p
                     class="MuiTypography-root-id MuiTypography-body2-id"
@@ -83561,7 +83713,9 @@ Ctrl + K"
                     Legacy
                   </p>
                 </div>
-                <div>
+                <div
+                  data-tc="product-attribute-value"
+                >
                   <div
                     class="MultiAutocompleteSelectField-container-id"
                   >
@@ -83785,6 +83939,7 @@ Ctrl + K"
               >
                 <button
                   class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-edit-attributes"
                   tabindex="0"
                   type="button"
                 >
@@ -83796,6 +83951,7 @@ Ctrl + K"
                 </button>
                 <button
                   class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-add-variant"
                   tabindex="0"
                   type="button"
                 >
@@ -84055,6 +84211,7 @@ Ctrl + K"
               />
               <div
                 class="SingleAutocompleteSelectField-container-id"
+                data-tc="category"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -84123,6 +84280,7 @@ Ctrl + K"
               />
               <div
                 class="MultiAutocompleteSelectField-container-id"
+                data-tc="collections"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -84746,6 +84904,7 @@ Ctrl + K"
               >
                 <button
                   class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-upload-image"
                   tabindex="0"
                   type="button"
                 >
@@ -84830,6 +84989,7 @@ Ctrl + K"
                 </div>
                 <button
                   class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
+                  data-tc="product-attributes-expand"
                   tabindex="0"
                   type="button"
                 >
@@ -85159,6 +85319,7 @@ Ctrl + K"
               />
               <div
                 class="SingleAutocompleteSelectField-container-id"
+                data-tc="category"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -85228,6 +85389,7 @@ Ctrl + K"
               />
               <div
                 class="MultiAutocompleteSelectField-container-id"
+                data-tc="collections"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -86045,6 +86207,7 @@ Ctrl + K"
               >
                 <button
                   class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-upload-image"
                   tabindex="0"
                   type="button"
                 >
@@ -86165,6 +86328,7 @@ Ctrl + K"
                 </div>
                 <button
                   class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
+                  data-tc="product-attributes-expand"
                   tabindex="0"
                   type="button"
                 >
@@ -86197,6 +86361,7 @@ Ctrl + K"
               >
                 <div
                   class="Hook-attributeSectionLabel-id"
+                  data-tc="product-attribute-label"
                 >
                   <p
                     class="MuiTypography-root-id MuiTypography-body2-id"
@@ -86204,7 +86369,9 @@ Ctrl + K"
                     Borders
                   </p>
                 </div>
-                <div>
+                <div
+                  data-tc="product-attribute-value"
+                >
                   <div
                     class="SingleAutocompleteSelectField-container-id"
                   >
@@ -86274,6 +86441,7 @@ Ctrl + K"
               >
                 <div
                   class="Hook-attributeSectionLabel-id"
+                  data-tc="product-attribute-label"
                 >
                   <p
                     class="MuiTypography-root-id MuiTypography-body2-id"
@@ -86281,7 +86449,9 @@ Ctrl + K"
                     Legacy
                   </p>
                 </div>
-                <div>
+                <div
+                  data-tc="product-attribute-value"
+                >
                   <div
                     class="MultiAutocompleteSelectField-container-id"
                   >
@@ -86505,6 +86675,7 @@ Ctrl + K"
               >
                 <button
                   class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-edit-attributes"
                   tabindex="0"
                   type="button"
                 >
@@ -86516,6 +86687,7 @@ Ctrl + K"
                 </button>
                 <button
                   class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-add-variant"
                   tabindex="0"
                   type="button"
                 >
@@ -86775,6 +86947,7 @@ Ctrl + K"
               />
               <div
                 class="SingleAutocompleteSelectField-container-id"
+                data-tc="category"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -86843,6 +87016,7 @@ Ctrl + K"
               />
               <div
                 class="MultiAutocompleteSelectField-container-id"
+                data-tc="collections"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -87664,6 +87838,7 @@ Ctrl + K"
               >
                 <button
                   class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-upload-image"
                   tabindex="0"
                   type="button"
                 >
@@ -87749,6 +87924,7 @@ Ctrl + K"
                 >
                   <div
                     class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
                   >
                     <div
                       class="ImageTile-imageOverlay-id"
@@ -87765,6 +87941,7 @@ Ctrl + K"
                   </div>
                   <div
                     class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
                   >
                     <div
                       class="ImageTile-imageOverlay-id"
@@ -87781,6 +87958,7 @@ Ctrl + K"
                   </div>
                   <div
                     class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
                   >
                     <div
                       class="ImageTile-imageOverlay-id"
@@ -87797,6 +87975,7 @@ Ctrl + K"
                   </div>
                   <div
                     class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
                   >
                     <div
                       class="ImageTile-imageOverlay-id"
@@ -87813,6 +87992,7 @@ Ctrl + K"
                   </div>
                   <div
                     class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
                   >
                     <div
                       class="ImageTile-imageOverlay-id"
@@ -87872,6 +88052,7 @@ Ctrl + K"
                 </div>
                 <button
                   class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
+                  data-tc="product-attributes-expand"
                   tabindex="0"
                   type="button"
                 >
@@ -87904,6 +88085,7 @@ Ctrl + K"
               >
                 <div
                   class="Hook-attributeSectionLabel-id"
+                  data-tc="product-attribute-label"
                 >
                   <p
                     class="MuiTypography-root-id MuiTypography-body2-id"
@@ -87911,7 +88093,9 @@ Ctrl + K"
                     Borders
                   </p>
                 </div>
-                <div>
+                <div
+                  data-tc="product-attribute-value"
+                >
                   <div
                     class="SingleAutocompleteSelectField-container-id"
                   >
@@ -87981,6 +88165,7 @@ Ctrl + K"
               >
                 <div
                   class="Hook-attributeSectionLabel-id"
+                  data-tc="product-attribute-label"
                 >
                   <p
                     class="MuiTypography-root-id MuiTypography-body2-id"
@@ -87988,7 +88173,9 @@ Ctrl + K"
                     Legacy
                   </p>
                 </div>
-                <div>
+                <div
+                  data-tc="product-attribute-value"
+                >
                   <div
                     class="MultiAutocompleteSelectField-container-id"
                   >
@@ -88407,6 +88594,7 @@ Ctrl + K"
               />
               <div
                 class="SingleAutocompleteSelectField-container-id"
+                data-tc="category"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -88475,6 +88663,7 @@ Ctrl + K"
               />
               <div
                 class="MultiAutocompleteSelectField-container-id"
+                data-tc="collections"
               >
                 <div
                   class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -89154,6 +89343,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
           </div>
           <button
             class="MuiButtonBase-root-id MuiButton-root-id MuiButton-contained-id MuiButton-containedPrimary-id MuiButton-raised-id MuiButton-raisedPrimary-id"
+            data-tc="add-product"
             tabindex="0"
             type="button"
           >
@@ -89440,6 +89630,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
                   >
                     <button
                       class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                      data-tc="button-pagination-back"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -89466,6 +89657,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
                     </button>
                     <button
                       class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                      data-tc="button-pagination-next"
                       tabindex="0"
                       type="button"
                     >
@@ -89499,6 +89691,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
           >
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyMQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -89558,6 +89751,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyMg=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -89617,6 +89811,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyMw=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -89676,6 +89871,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyNA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -89735,6 +89931,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyNQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -89794,6 +89991,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyNg=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -89853,6 +90051,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyNw=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -89912,6 +90111,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyOA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -89971,6 +90171,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyOQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -90030,6 +90231,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDozMA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -90148,6 +90350,7 @@ exports[`Storyshots Views / Products / Product list loading 1`] = `
           </div>
           <button
             class="MuiButtonBase-root-id MuiButton-root-id MuiButton-contained-id MuiButton-containedPrimary-id MuiButton-raised-id MuiButton-raisedPrimary-id"
+            data-tc="add-product"
             tabindex="0"
             type="button"
           >
@@ -90436,6 +90639,7 @@ exports[`Storyshots Views / Products / Product list loading 1`] = `
                   >
                     <button
                       class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                      data-tc="button-pagination-back"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -90462,6 +90666,7 @@ exports[`Storyshots Views / Products / Product list loading 1`] = `
                     </button>
                     <button
                       class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                      data-tc="button-pagination-next"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -90639,6 +90844,7 @@ exports[`Storyshots Views / Products / Product list no data 1`] = `
           </div>
           <button
             class="MuiButtonBase-root-id MuiButton-root-id MuiButton-contained-id MuiButton-containedPrimary-id MuiButton-raised-id MuiButton-raisedPrimary-id"
+            data-tc="add-product"
             tabindex="0"
             type="button"
           >
@@ -90909,6 +91115,7 @@ exports[`Storyshots Views / Products / Product list no data 1`] = `
                   >
                     <button
                       class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                      data-tc="button-pagination-back"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -90935,6 +91142,7 @@ exports[`Storyshots Views / Products / Product list no data 1`] = `
                     </button>
                     <button
                       class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                      data-tc="button-pagination-next"
                       tabindex="0"
                       type="button"
                     >
@@ -91037,6 +91245,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
           </div>
           <button
             class="MuiButtonBase-root-id MuiButton-root-id MuiButton-contained-id MuiButton-containedPrimary-id MuiButton-raised-id MuiButton-raisedPrimary-id"
+            data-tc="add-product"
             tabindex="0"
             type="button"
           >
@@ -91783,6 +91992,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
                   >
                     <button
                       class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                      data-tc="button-pagination-back"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -91809,6 +92019,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
                     </button>
                     <button
                       class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                      data-tc="button-pagination-next"
                       tabindex="0"
                       type="button"
                     >
@@ -91842,6 +92053,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
           >
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyMQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -91901,6 +92113,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyMg=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -91960,6 +92173,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyMw=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -92019,6 +92233,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyNA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -92078,6 +92293,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyNQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -92137,6 +92353,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyNg=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -92196,6 +92413,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyNw=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -92255,6 +92473,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyOA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -92314,6 +92533,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDoyOQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -92373,6 +92593,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="product-UHJvZHVjdDozMA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -92659,6 +92880,7 @@ exports[`Storyshots Views / Products / Product variant details attribute errors 
               >
                 <div
                   class="SingleAutocompleteSelectField-container-id"
+                  data-tc="variant-attribute-input"
                 >
                   <div
                     class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -92723,6 +92945,7 @@ exports[`Storyshots Views / Products / Product variant details attribute errors 
                 </div>
                 <div
                   class="SingleAutocompleteSelectField-container-id"
+                  data-tc="variant-attribute-input"
                 >
                   <div
                     class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -93340,6 +93563,7 @@ exports[`Storyshots Views / Products / Product variant details when loaded data 
               >
                 <div
                   class="SingleAutocompleteSelectField-container-id"
+                  data-tc="variant-attribute-input"
                 >
                   <div
                     class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -93399,6 +93623,7 @@ exports[`Storyshots Views / Products / Product variant details when loaded data 
                 </div>
                 <div
                   class="SingleAutocompleteSelectField-container-id"
+                  data-tc="variant-attribute-input"
                 >
                   <div
                     class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -96601,6 +96826,7 @@ exports[`Storyshots Views / Shipping / Shipping zones list default 1`] = `
                     >
                       <button
                         class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                        data-tc="button-pagination-back"
                         disabled=""
                         tabindex="-1"
                         type="button"
@@ -96627,6 +96853,7 @@ exports[`Storyshots Views / Shipping / Shipping zones list default 1`] = `
                       </button>
                       <button
                         class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                        data-tc="button-pagination-next"
                         tabindex="0"
                         type="button"
                       >
@@ -97220,6 +97447,7 @@ exports[`Storyshots Views / Shipping / Shipping zones list loading 1`] = `
                     >
                       <button
                         class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                        data-tc="button-pagination-back"
                         disabled=""
                         tabindex="-1"
                         type="button"
@@ -97246,6 +97474,7 @@ exports[`Storyshots Views / Shipping / Shipping zones list loading 1`] = `
                       </button>
                       <button
                         class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                        data-tc="button-pagination-next"
                         disabled=""
                         tabindex="-1"
                         type="button"
@@ -97600,6 +97829,7 @@ exports[`Storyshots Views / Shipping / Shipping zones list no data 1`] = `
                     >
                       <button
                         class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                        data-tc="button-pagination-back"
                         disabled=""
                         tabindex="-1"
                         type="button"
@@ -97626,6 +97856,7 @@ exports[`Storyshots Views / Shipping / Shipping zones list no data 1`] = `
                       </button>
                       <button
                         class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                        data-tc="button-pagination-next"
                         tabindex="0"
                         type="button"
                       >
@@ -101561,6 +101792,7 @@ exports[`Storyshots Views / Staff / Staff members default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -101587,6 +101819,7 @@ exports[`Storyshots Views / Staff / Staff members default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >
@@ -102135,6 +102368,7 @@ exports[`Storyshots Views / Staff / Staff members when loading 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -102161,6 +102395,7 @@ exports[`Storyshots Views / Staff / Staff members when loading 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-next"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -103804,6 +104039,7 @@ exports[`Storyshots Views / Translations / Entity list default 1`] = `
                 >
                   <button
                     class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    data-tc="button-pagination-back"
                     disabled=""
                     tabindex="-1"
                     type="button"
@@ -103830,6 +104066,7 @@ exports[`Storyshots Views / Translations / Entity list default 1`] = `
                   </button>
                   <button
                     class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    data-tc="button-pagination-next"
                     tabindex="0"
                     type="button"
                   >

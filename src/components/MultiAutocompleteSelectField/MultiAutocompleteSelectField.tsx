@@ -123,7 +123,8 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
     placeholder,
     value,
     fetchChoices,
-    onChange
+    onChange,
+    ...props
   }: MultiAutocompleteSelectFieldProps & WithStyles<typeof styles>) => {
     const handleSelect = (
       item: string,
@@ -153,7 +154,7 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
             highlightedIndex,
             inputValue
           }) => (
-            <div className={classes.container}>
+            <div className={classes.container} {...props}>
               <TextField
                 InputProps={{
                   ...getInputProps({
@@ -190,6 +191,7 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
                           {...getItemProps({
                             item: value.value
                           })}
+                          data-tc="multiautocomplete-select-option"
                         >
                           <Checkbox
                             className={classes.checkbox}
@@ -213,6 +215,7 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
                           {...getItemProps({
                             item: suggestion.value
                           })}
+                          data-tc="multiautocomplete-select-option"
                         >
                           <Checkbox
                             checked={value.includes(suggestion.value)}
@@ -238,6 +241,7 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
                             {...getItemProps({
                               item: inputValue
                             })}
+                            data-tc="multiautocomplete-select-option"
                           >
                             <span className={classes.menuItemLabel}>
                               {i18n.t("Add new value: {{ value }}", {
@@ -250,7 +254,11 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
                     </>
                   ) : (
                     !loading && (
-                      <MenuItem disabled={true} component="div">
+                      <MenuItem
+                        disabled={true}
+                        component="div"
+                        data-tc="multiautocomplete-select-no-options"
+                      >
                         {i18n.t("No results found")}
                       </MenuItem>
                     )

@@ -88,6 +88,7 @@ export const TablePaginationActions = withStyles(styles, {
           })}
           onClick={onPreviousPage}
           disabled={!hasPreviousPage}
+          data-tc="button-pagination-back"
           {...backIconButtonProps}
         >
           {theme.direction === "rtl" ? <ArrowRight /> : <ArrowLeft />}
@@ -99,6 +100,7 @@ export const TablePaginationActions = withStyles(styles, {
           })}
           onClick={onNextPage}
           disabled={!hasNextPage}
+          data-tc="button-pagination-next"
           {...nextIconButtonProps}
         >
           {theme.direction === "rtl" ? <ArrowLeft /> : <ArrowRight />}
