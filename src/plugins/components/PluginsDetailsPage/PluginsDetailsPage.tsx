@@ -27,7 +27,7 @@ export interface FormData {
   }>;
 }
 
-export interface PageDetailsPageProps {
+export interface PluginsDetailsPageProps {
   disabled: boolean;
   errors: UserError[];
   plugin: FormData;
@@ -36,7 +36,7 @@ export interface PageDetailsPageProps {
   onSubmit: (data: FormData) => void;
 }
 
-const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
+const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
   disabled,
   errors,
   plugin,
@@ -124,5 +124,5 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
     </Form>
   );
 };
-PageDetailsPage.displayName = "PageDetailsPage";
-export default PageDetailsPage;
+PluginsDetailsPage.displayName = "PluginsDetailsPage";
+export default PluginsDetailsPage;
