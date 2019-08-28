@@ -65,7 +65,6 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
                       : configuration.value
                   }
                   label={configuration.label}
-                  helperText={configuration.helpText}
                   name={configuration.name}
                   onChange={onChange}
                 />
