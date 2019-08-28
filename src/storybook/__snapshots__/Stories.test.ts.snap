@@ -74206,6 +74206,1559 @@ exports[`Storyshots Views / Pages / Page list no data 1`] = `
 </div>
 `;
 
+exports[`Storyshots Views / Plugins / Plugin details default 1`] = `
+<div
+  style="padding:24px"
+>
+  <form>
+    <div
+      class="Container-root-id"
+    >
+      <div
+        class="ExtendedPageHeader-root-id"
+      >
+        <h5
+          class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
+        >
+          Username or account Details
+        </h5>
+        <div
+          class="ExtendedPageHeader-action-id"
+        >
+          <div
+            class="Component-root-id"
+          />
+        </div>
+      </div>
+      <div
+        class="Grid-root-id Grid-inverted-id"
+      >
+        <div>
+          <h6
+            class="MuiTypography-root-id MuiTypography-h6-id"
+          >
+            Plugin Information and Status
+          </h6>
+          <p
+            class="MuiTypography-root-id MuiTypography-body2-id"
+          >
+            These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar.
+          </p>
+        </div>
+        <div
+          class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+        >
+          <div
+            class="CardTitle-root-id"
+          >
+            <span
+              class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+            >
+              Plugin Information and Status
+            </span>
+            <div
+              class="CardTitle-toolbar-id"
+            />
+          </div>
+          <div
+            class="CardTitle-children-id"
+          />
+          <hr
+            class="CardTitle-hr-id"
+          />
+          <div
+            class="MuiCardContent-root-id"
+          >
+            <h6
+              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-title-id"
+            >
+              Plugin Name
+            </h6>
+            <p
+              class="MuiTypography-root-id MuiTypography-body2-id"
+            >
+              Username or account
+            </p>
+            <h6
+              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-title-id"
+            >
+              Plugin Description
+            </h6>
+            <p
+              class="MuiTypography-root-id MuiTypography-body2-id"
+            >
+              Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna.
+            </p>
+            <div
+              class="FormSpacer-spacer-id"
+            />
+            <hr
+              class="Hr-root-id"
+            />
+            <h6
+              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-status-id"
+            >
+              Status
+            </h6>
+            <label
+              class="MuiFormControlLabel-root-id"
+            >
+              <span
+                class="MuiSwitch-root-id"
+              >
+                <span
+                  class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiSwitch-checked-id"
+                >
+                  <span
+                    class="MuiIconButton-label-id"
+                  >
+                    <span
+                      class="MuiSwitch-icon-id MuiSwitch-iconChecked-id"
+                    />
+                    <input
+                      checked=""
+                      class="MuiPrivateSwitchBase-input-id"
+                      name="active"
+                      type="checkbox"
+                    />
+                  </span>
+                </span>
+                <span
+                  class="MuiSwitch-bar-id"
+                />
+              </span>
+              <span
+                class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+              >
+                <div
+                  class="ControlledSwitch-label-id"
+                >
+                  <span
+                    class="ControlledSwitch-labelText-id"
+                  >
+                    Set plugin as Active
+                  </span>
+                  <div />
+                </div>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <h6
+            class="MuiTypography-root-id MuiTypography-h6-id"
+          >
+            Plugin Settings
+          </h6>
+          <p
+            class="MuiTypography-root-id MuiTypography-body2-id"
+          >
+            This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers.
+          </p>
+        </div>
+        <div
+          class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+        >
+          <div
+            class="CardTitle-root-id"
+          >
+            <span
+              class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+            >
+              Plugin Settings
+            </span>
+            <div
+              class="CardTitle-toolbar-id"
+            />
+          </div>
+          <div
+            class="CardTitle-children-id"
+          />
+          <hr
+            class="CardTitle-hr-id"
+          />
+          <div
+            class="MuiCardContent-root-id"
+          >
+            <div
+              class="PluginSettings-item-id"
+            >
+              <div
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+              >
+                <label
+                  class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                  data-shrink="false"
+                >
+                  Username or account
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
+                  >
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0.01px"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="Username or account"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <p
+                  class="MuiFormHelperText-root-id MuiFormHelperText-contained-id"
+                >
+                  Provide user or account details
+                </p>
+              </div>
+            </div>
+            <div
+              class="PluginSettings-item-id"
+            >
+              <div
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+              >
+                <label
+                  class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                  data-shrink="false"
+                >
+                  Password or license
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
+                  >
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0.01px"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="Password or license"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <p
+                  class="MuiFormHelperText-root-id MuiFormHelperText-contained-id"
+                >
+                  Provide password or license details
+                </p>
+              </div>
+            </div>
+            <div
+              class="PluginSettings-item-id"
+            >
+              <label
+                class="MuiFormControlLabel-root-id"
+              >
+                <span
+                  class="MuiSwitch-root-id"
+                >
+                  <span
+                    class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiSwitch-checked-id"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <span
+                        class="MuiSwitch-icon-id MuiSwitch-iconChecked-id"
+                      />
+                      <input
+                        checked=""
+                        class="MuiPrivateSwitchBase-input-id"
+                        name="Use sandbox"
+                        type="checkbox"
+                      />
+                    </span>
+                  </span>
+                  <span
+                    class="MuiSwitch-bar-id"
+                  />
+                </span>
+                <span
+                  class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                >
+                  <div
+                    class="ControlledSwitch-label-id"
+                  >
+                    <span
+                      class="ControlledSwitch-labelText-id"
+                    >
+                      Use sandbox
+                    </span>
+                    <div />
+                  </div>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Storyshots Views / Plugins / Plugin details form errors 1`] = `
+<div
+  style="padding:24px"
+>
+  <form>
+    <div
+      class="Container-root-id"
+    >
+      <div
+        class="ExtendedPageHeader-root-id"
+      >
+        <h5
+          class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
+        >
+          Username or account Details
+        </h5>
+        <div
+          class="ExtendedPageHeader-action-id"
+        >
+          <div
+            class="Component-root-id"
+          />
+        </div>
+      </div>
+      <div
+        class="Grid-root-id Grid-inverted-id"
+      >
+        <div>
+          <h6
+            class="MuiTypography-root-id MuiTypography-h6-id"
+          >
+            Plugin Information and Status
+          </h6>
+          <p
+            class="MuiTypography-root-id MuiTypography-body2-id"
+          >
+            These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar.
+          </p>
+        </div>
+        <div
+          class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+        >
+          <div
+            class="CardTitle-root-id"
+          >
+            <span
+              class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+            >
+              Plugin Information and Status
+            </span>
+            <div
+              class="CardTitle-toolbar-id"
+            />
+          </div>
+          <div
+            class="CardTitle-children-id"
+          />
+          <hr
+            class="CardTitle-hr-id"
+          />
+          <div
+            class="MuiCardContent-root-id"
+          >
+            <h6
+              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-title-id"
+            >
+              Plugin Name
+            </h6>
+            <p
+              class="MuiTypography-root-id MuiTypography-body2-id"
+            >
+              Username or account
+            </p>
+            <h6
+              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-title-id"
+            >
+              Plugin Description
+            </h6>
+            <p
+              class="MuiTypography-root-id MuiTypography-body2-id"
+            >
+              Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna.
+            </p>
+            <div
+              class="FormSpacer-spacer-id"
+            />
+            <hr
+              class="Hr-root-id"
+            />
+            <h6
+              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-status-id"
+            >
+              Status
+            </h6>
+            <label
+              class="MuiFormControlLabel-root-id"
+            >
+              <span
+                class="MuiSwitch-root-id"
+              >
+                <span
+                  class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiSwitch-checked-id"
+                >
+                  <span
+                    class="MuiIconButton-label-id"
+                  >
+                    <span
+                      class="MuiSwitch-icon-id MuiSwitch-iconChecked-id"
+                    />
+                    <input
+                      checked=""
+                      class="MuiPrivateSwitchBase-input-id"
+                      name="active"
+                      type="checkbox"
+                    />
+                  </span>
+                </span>
+                <span
+                  class="MuiSwitch-bar-id"
+                />
+              </span>
+              <span
+                class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+              >
+                <div
+                  class="ControlledSwitch-label-id"
+                >
+                  <span
+                    class="ControlledSwitch-labelText-id"
+                  >
+                    Set plugin as Active
+                  </span>
+                  <div />
+                </div>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <h6
+            class="MuiTypography-root-id MuiTypography-h6-id"
+          >
+            Plugin Settings
+          </h6>
+          <p
+            class="MuiTypography-root-id MuiTypography-body2-id"
+          >
+            This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers.
+          </p>
+        </div>
+        <div
+          class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+        >
+          <div
+            class="CardTitle-root-id"
+          >
+            <span
+              class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+            >
+              Plugin Settings
+            </span>
+            <div
+              class="CardTitle-toolbar-id"
+            />
+          </div>
+          <div
+            class="CardTitle-children-id"
+          />
+          <hr
+            class="CardTitle-hr-id"
+          />
+          <div
+            class="MuiCardContent-root-id"
+          >
+            <div
+              class="PluginSettings-item-id"
+            >
+              <div
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+              >
+                <label
+                  class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                  data-shrink="false"
+                >
+                  Username or account
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
+                  >
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0.01px"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="Username or account"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <p
+                  class="MuiFormHelperText-root-id MuiFormHelperText-contained-id"
+                >
+                  Provide user or account details
+                </p>
+              </div>
+            </div>
+            <div
+              class="PluginSettings-item-id"
+            >
+              <div
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+              >
+                <label
+                  class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                  data-shrink="false"
+                >
+                  Password or license
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
+                  >
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0.01px"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="Password or license"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <p
+                  class="MuiFormHelperText-root-id MuiFormHelperText-contained-id"
+                >
+                  Provide password or license details
+                </p>
+              </div>
+            </div>
+            <div
+              class="PluginSettings-item-id"
+            >
+              <label
+                class="MuiFormControlLabel-root-id"
+              >
+                <span
+                  class="MuiSwitch-root-id"
+                >
+                  <span
+                    class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiSwitch-checked-id"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <span
+                        class="MuiSwitch-icon-id MuiSwitch-iconChecked-id"
+                      />
+                      <input
+                        checked=""
+                        class="MuiPrivateSwitchBase-input-id"
+                        name="Use sandbox"
+                        type="checkbox"
+                      />
+                    </span>
+                  </span>
+                  <span
+                    class="MuiSwitch-bar-id"
+                  />
+                </span>
+                <span
+                  class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                >
+                  <div
+                    class="ControlledSwitch-label-id"
+                  >
+                    <span
+                      class="ControlledSwitch-labelText-id"
+                    >
+                      Use sandbox
+                    </span>
+                    <div />
+                  </div>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Storyshots Views / Plugins / Plugin details loading 1`] = `
+<div
+  style="padding:24px"
+>
+  <form>
+    <div
+      class="Container-root-id"
+    >
+      <div
+        class="ExtendedPageHeader-root-id"
+      >
+        <h5
+          class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
+        >
+           Details
+        </h5>
+        <div
+          class="ExtendedPageHeader-action-id"
+        >
+          <div
+            class="Component-root-id"
+          />
+        </div>
+      </div>
+      <div
+        class="Grid-root-id Grid-inverted-id"
+      >
+        <div>
+          <h6
+            class="MuiTypography-root-id MuiTypography-h6-id"
+          >
+            Plugin Information and Status
+          </h6>
+          <p
+            class="MuiTypography-root-id MuiTypography-body2-id"
+          >
+            These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar.
+          </p>
+        </div>
+        <div
+          class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+        >
+          <div
+            class="CardTitle-root-id"
+          >
+            <span
+              class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+            >
+              Plugin Information and Status
+            </span>
+            <div
+              class="CardTitle-toolbar-id"
+            />
+          </div>
+          <div
+            class="CardTitle-children-id"
+          />
+          <hr
+            class="CardTitle-hr-id"
+          />
+          <div
+            class="MuiCardContent-root-id"
+          >
+            <h6
+              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-title-id"
+            >
+              Plugin Name
+            </h6>
+            <p
+              class="MuiTypography-root-id MuiTypography-body2-id"
+            />
+            <div
+              class="FormSpacer-spacer-id"
+            />
+            <hr
+              class="Hr-root-id"
+            />
+            <h6
+              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-status-id"
+            >
+              Status
+            </h6>
+            <label
+              class="MuiFormControlLabel-root-id"
+            >
+              <span
+                class="MuiSwitch-root-id"
+              >
+                <span
+                  class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id"
+                >
+                  <span
+                    class="MuiIconButton-label-id"
+                  >
+                    <span
+                      class="MuiSwitch-icon-id"
+                    />
+                    <input
+                      class="MuiPrivateSwitchBase-input-id"
+                      name="active"
+                      type="checkbox"
+                    />
+                  </span>
+                </span>
+                <span
+                  class="MuiSwitch-bar-id"
+                />
+              </span>
+              <span
+                class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+              >
+                <div
+                  class="ControlledSwitch-label-id"
+                >
+                  <span
+                    class="ControlledSwitch-labelText-id"
+                  >
+                    Set plugin as Active
+                  </span>
+                  <div />
+                </div>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <h6
+            class="MuiTypography-root-id MuiTypography-h6-id"
+          >
+            Plugin Settings
+          </h6>
+          <p
+            class="MuiTypography-root-id MuiTypography-body2-id"
+          >
+            This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers.
+          </p>
+        </div>
+        <div
+          class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+        >
+          <div
+            class="CardTitle-root-id"
+          >
+            <span
+              class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+            >
+              Plugin Settings
+            </span>
+            <div
+              class="CardTitle-toolbar-id"
+            />
+          </div>
+          <div
+            class="CardTitle-children-id"
+          />
+          <hr
+            class="CardTitle-hr-id"
+          />
+          <div
+            class="MuiCardContent-root-id"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Storyshots Views / Plugins / Plugin list default 1`] = `
+<div
+  style="padding:24px"
+>
+  <div
+    class="Container-root-id"
+  >
+    <div
+      class="ExtendedPageHeader-root-id"
+    >
+      <h5
+        class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
+      >
+        Plugins
+      </h5>
+      <div
+        class="ExtendedPageHeader-action-id"
+      >
+        <div
+          class="Component-root-id"
+        />
+      </div>
+    </div>
+    <div
+      class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+    >
+      <table
+        class="MuiTable-root-id"
+      >
+        <thead
+          class="MuiTableHead-root-id"
+        >
+          <tr
+            class="MuiTableRow-root-id MuiTableRow-head-id"
+          >
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingCheckbox-id"
+              scope="col"
+            >
+              <button
+                class="MuiButtonBase-root-id Checkbox-root-id"
+                tabindex="0"
+                type="button"
+              >
+                <input
+                  class="Checkbox-box-id Checkbox-checked-id"
+                  type="checkbox"
+                  value="true"
+                />
+              </button>
+            </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colName-id"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colActive-id"
+              scope="col"
+            >
+              Active
+            </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colAction-id"
+              scope="col"
+            >
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tfoot
+          class="MuiTableFooter-root-id"
+        >
+          <tr
+            class="MuiTableRow-root-id MuiTableRow-footer-id"
+          >
+            <td
+              class="MuiTableCell-root-id MuiTableCell-footer-id TablePagination-root-id"
+              colspan="4"
+            >
+              <div
+                class="MuiToolbar-root-id MuiToolbar-regular-id MuiToolbar-gutters-id TablePagination-toolbar-id"
+              >
+                <div
+                  class="TablePagination-spacer-id"
+                >
+                  <div>
+                    <span
+                      class="RowNumberSelect-label-id"
+                    >
+                      No of Rows:
+                    </span>
+                    <div
+                      class="MuiInputBase-root-id MuiInput-root-id MuiInput-underline-id RowNumberSelect-select-id"
+                    >
+                      <div
+                        class="MuiSelect-root-id"
+                      >
+                        <div
+                          aria-haspopup="true"
+                          aria-pressed="false"
+                          class="MuiSelect-select-id MuiSelect-selectMenu-id MuiInputBase-input-id MuiInput-input-id"
+                          role="button"
+                          tabindex="0"
+                        >
+                          20
+                        </div>
+                        <input
+                          type="hidden"
+                          value="20"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id MuiSelect-icon-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="TablePaginationActions-root-id"
+                >
+                  <button
+                    class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    disabled=""
+                    tabindex="-1"
+                    type="button"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root-id"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M14 7l-5 5 5 5V7z"
+                        />
+                        <path
+                          d="M24 0v24H0V0h24z"
+                          fill="none"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <button
+                    class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root-id"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M10 17l5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+        <tbody
+          class="MuiTableBody-root-id"
+        >
+          <tr
+            class="MuiTableRow-root-id MuiTableRow-hover-id PluginList-link-id"
+          >
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
+            >
+              <button
+                class="MuiButtonBase-root-id Checkbox-root-id"
+                tabindex="0"
+                type="button"
+              >
+                <input
+                  class="Checkbox-box-id"
+                  type="checkbox"
+                  value="false"
+                />
+              </button>
+            </td>
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id PluginList-colName-id"
+            >
+              Avalara
+            </td>
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id PluginList-colActive-id"
+            >
+              <div
+                class="StatusLabel-root-id undefined StatusLabel-successDot-id"
+              >
+                Yes
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id PluginList-colAction-id"
+            >
+              <div>
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-id"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                  />
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                </svg>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root-id MuiTableRow-hover-id PluginList-link-id"
+          >
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
+            >
+              <button
+                class="MuiButtonBase-root-id Checkbox-root-id"
+                tabindex="0"
+                type="button"
+              >
+                <input
+                  class="Checkbox-box-id"
+                  type="checkbox"
+                  value="false"
+                />
+              </button>
+            </td>
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id PluginList-colName-id"
+            >
+              VatLayer
+            </td>
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id PluginList-colActive-id"
+            >
+              <div
+                class="StatusLabel-root-id undefined StatusLabel-errorDot-id"
+              >
+                No
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id PluginList-colAction-id"
+            >
+              <div>
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-id"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                  />
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                </svg>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Views / Plugins / Plugin list loading 1`] = `
+<div
+  style="padding:24px"
+>
+  <div
+    class="Container-root-id"
+  >
+    <div
+      class="ExtendedPageHeader-root-id"
+    >
+      <h5
+        class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
+      >
+        Plugins
+      </h5>
+      <div
+        class="ExtendedPageHeader-action-id"
+      >
+        <div
+          class="Component-root-id"
+        />
+      </div>
+    </div>
+    <div
+      class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+    >
+      <table
+        class="MuiTable-root-id"
+      >
+        <thead
+          class="MuiTableHead-root-id"
+        >
+          <tr
+            class="MuiTableRow-root-id MuiTableRow-head-id"
+          >
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingCheckbox-id"
+              scope="col"
+            >
+              <button
+                class="MuiButtonBase-root-id MuiButtonBase-disabled-id Checkbox-root-id"
+                disabled=""
+                tabindex="-1"
+                type="button"
+              >
+                <input
+                  class="Checkbox-box-id Checkbox-checked-id Checkbox-disabled-id"
+                  disabled=""
+                  type="checkbox"
+                  value="true"
+                />
+              </button>
+            </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colName-id"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colActive-id"
+              scope="col"
+            >
+              Active
+            </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colAction-id"
+              scope="col"
+            >
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tfoot
+          class="MuiTableFooter-root-id"
+        >
+          <tr
+            class="MuiTableRow-root-id MuiTableRow-footer-id"
+          >
+            <td
+              class="MuiTableCell-root-id MuiTableCell-footer-id TablePagination-root-id"
+              colspan="4"
+            >
+              <div
+                class="MuiToolbar-root-id MuiToolbar-regular-id MuiToolbar-gutters-id TablePagination-toolbar-id"
+              >
+                <div
+                  class="TablePagination-spacer-id"
+                >
+                  <div>
+                    <span
+                      class="RowNumberSelect-label-id"
+                    >
+                      No of Rows:
+                    </span>
+                    <div
+                      class="MuiInputBase-root-id MuiInput-root-id MuiInput-underline-id RowNumberSelect-select-id"
+                    >
+                      <div
+                        class="MuiSelect-root-id"
+                      >
+                        <div
+                          aria-haspopup="true"
+                          aria-pressed="false"
+                          class="MuiSelect-select-id MuiSelect-selectMenu-id MuiInputBase-input-id MuiInput-input-id"
+                          role="button"
+                          tabindex="0"
+                        >
+                          20
+                        </div>
+                        <input
+                          type="hidden"
+                          value="20"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id MuiSelect-icon-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="TablePaginationActions-root-id"
+                >
+                  <button
+                    class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    disabled=""
+                    tabindex="-1"
+                    type="button"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root-id"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M14 7l-5 5 5 5V7z"
+                        />
+                        <path
+                          d="M24 0v24H0V0h24z"
+                          fill="none"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <button
+                    class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    disabled=""
+                    tabindex="-1"
+                    type="button"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root-id"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M10 17l5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+        <tbody
+          class="MuiTableBody-root-id"
+        >
+          <tr
+            class="MuiTableRow-root-id"
+          >
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
+            >
+              <button
+                class="MuiButtonBase-root-id MuiButtonBase-disabled-id Checkbox-root-id"
+                disabled=""
+                tabindex="-1"
+                type="button"
+              >
+                <input
+                  class="Checkbox-box-id Checkbox-disabled-id"
+                  disabled=""
+                  type="checkbox"
+                  value="false"
+                />
+              </button>
+            </td>
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id PluginList-colName-id"
+            >
+              <span
+                class="Skeleton-skeleton-id"
+              >
+                ‌
+              </span>
+            </td>
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id PluginList-colActive-id"
+            >
+              <span
+                class="Skeleton-skeleton-id"
+              >
+                ‌
+              </span>
+            </td>
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id PluginList-colAction-id"
+            >
+              <div>
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-id"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                  />
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                </svg>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Views / Plugins / Plugin list no data 1`] = `
+<div
+  style="padding:24px"
+>
+  <div
+    class="Container-root-id"
+  >
+    <div
+      class="ExtendedPageHeader-root-id"
+    >
+      <h5
+        class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
+      >
+        Plugins
+      </h5>
+      <div
+        class="ExtendedPageHeader-action-id"
+      >
+        <div
+          class="Component-root-id"
+        />
+      </div>
+    </div>
+    <div
+      class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+    >
+      <table
+        class="MuiTable-root-id"
+      >
+        <thead
+          class="MuiTableHead-root-id"
+        >
+          <tr
+            class="MuiTableRow-root-id MuiTableRow-head-id"
+          >
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colName-id"
+              scope="col"
+            >
+              Name
+            </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colActive-id"
+              scope="col"
+            >
+              Active
+            </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colAction-id"
+              scope="col"
+            >
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tfoot
+          class="MuiTableFooter-root-id"
+        >
+          <tr
+            class="MuiTableRow-root-id MuiTableRow-footer-id"
+          >
+            <td
+              class="MuiTableCell-root-id MuiTableCell-footer-id TablePagination-root-id"
+              colspan="4"
+            >
+              <div
+                class="MuiToolbar-root-id MuiToolbar-regular-id MuiToolbar-gutters-id TablePagination-toolbar-id"
+              >
+                <div
+                  class="TablePagination-spacer-id"
+                >
+                  <div>
+                    <span
+                      class="RowNumberSelect-label-id"
+                    >
+                      No of Rows:
+                    </span>
+                    <div
+                      class="MuiInputBase-root-id MuiInput-root-id MuiInput-underline-id RowNumberSelect-select-id"
+                    >
+                      <div
+                        class="MuiSelect-root-id"
+                      >
+                        <div
+                          aria-haspopup="true"
+                          aria-pressed="false"
+                          class="MuiSelect-select-id MuiSelect-selectMenu-id MuiInputBase-input-id MuiInput-input-id"
+                          role="button"
+                          tabindex="0"
+                        >
+                          20
+                        </div>
+                        <input
+                          type="hidden"
+                          value="20"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id MuiSelect-icon-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="TablePaginationActions-root-id"
+                >
+                  <button
+                    class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id TablePaginationActions-iconButton-id TablePaginationActions-disabled-id"
+                    disabled=""
+                    tabindex="-1"
+                    type="button"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root-id"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M14 7l-5 5 5 5V7z"
+                        />
+                        <path
+                          d="M24 0v24H0V0h24z"
+                          fill="none"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <button
+                    class="MuiButtonBase-root-id MuiIconButton-root-id TablePaginationActions-iconButton-id"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="MuiIconButton-label-id"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root-id"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M10 17l5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+        <tbody
+          class="MuiTableBody-root-id"
+        >
+          <tr
+            class="MuiTableRow-root-id"
+          >
+            <td
+              class="MuiTableCell-root-id MuiTableCell-body-id"
+              colspan="4"
+            >
+              No plugins found
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Storyshots Views / Product types / Create product type default 1`] = `
 <div
   style="padding:24px"
