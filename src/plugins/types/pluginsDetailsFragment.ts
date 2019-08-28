@@ -18,7 +18,7 @@ export interface pluginsDetailsFragment_configuration {
 }
 
 export interface pluginsDetailsFragment {
-  __typename: "PluginConfiguration";
+  __typename: "Plugin";
   id: string;
   name: string;
   description: string;

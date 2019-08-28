@@ -476,7 +476,7 @@ export interface PageTranslationInput {
   contentJson?: any | null;
 }
 
-export interface PluginConfigurationUpdateInput {
+export interface PluginUpdateInput {
   active?: boolean | null;
   configuration?: (ConfigurationItemInput | null)[] | null;
 }
@@ -495,6 +495,7 @@ export interface ProductFilterInput {
   stockAvailability?: StockAvailability | null;
   productType?: string | null;
   search?: string | null;
+  minimalPrice?: PriceRangeInput | null;
 }
 
 export interface ProductTypeInput {

@@ -1,10 +1,10 @@
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
-import { PluginConfiguration_pluginConfiguration } from "./types/pluginConfiguration";
-import { PluginConfigurations_pluginConfigurations_edges_node } from "./types/pluginConfigurations";
+import { Plugin_plugin } from "./types/Plugin";
+import { Plugins_plugins_edges_node } from "./types/Plugins";
 
-export const pluginList: PluginConfigurations_pluginConfigurations_edges_node[] = [
+export const pluginList: Plugins_plugins_edges_node[] = [
   {
-    __typename: "PluginConfiguration",
+    __typename: "Plugin",
     active: true,
     description:
       "Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna.",
@@ -12,7 +12,7 @@ export const pluginList: PluginConfigurations_pluginConfigurations_edges_node[] 
     name: "Avalara"
   },
   {
-    __typename: "PluginConfiguration",
+    __typename: "Plugin",
     active: false,
     description:
       "Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna.",
@@ -20,8 +20,8 @@ export const pluginList: PluginConfigurations_pluginConfigurations_edges_node[] 
     name: "VatLayer"
   }
 ];
-export const plugin: PluginConfiguration_pluginConfiguration = {
-  __typename: "PluginConfiguration",
+export const plugin: Plugin_plugin = {
+  __typename: "Plugin",
   active: true,
   configuration: [
     {

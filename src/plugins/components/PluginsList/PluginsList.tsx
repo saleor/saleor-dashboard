@@ -21,10 +21,10 @@ import TablePagination from "@saleor/components/TablePagination";
 import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActionsWithoutToolbar, ListProps } from "@saleor/types";
-import { PluginConfigurations_pluginConfigurations_edges_node } from "../../types/pluginConfigurations";
+import { Plugins_plugins_edges_node } from "../../types/Plugins";
 
 export interface PluginListProps extends ListProps, ListActionsWithoutToolbar {
-  plugins: PluginConfigurations_pluginConfigurations_edges_node[];
+  plugins: Plugins_plugins_edges_node[];
 }
 
 const styles = (theme: Theme) =>

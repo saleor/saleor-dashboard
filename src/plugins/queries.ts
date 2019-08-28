@@ -1,17 +1,11 @@
 import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
-import {
-  PluginConfiguration,
-  PluginConfigurationVariables
-} from "./types/pluginConfiguration";
-import {
-  PluginConfigurations,
-  PluginConfigurationsVariables
-} from "./types/pluginConfigurations";
+import { Plugin, PluginVariables } from "./types/Plugin";
+import { Plugins, PluginsVariables } from "./types/Plugins";
 
 export const pluginsFragment = gql`
-  fragment pluginFragment on PluginConfiguration {
+  fragment pluginFragment on Plugin {
     id
     name
     description
@@ -21,7 +15,7 @@ export const pluginsFragment = gql`
 
 export const pluginsDetailsFragment = gql`
   ${pluginsFragment}
-  fragment pluginsDetailsFragment on PluginConfiguration {
+  fragment pluginsDetailsFragment on Plugin {
     ...pluginFragment
     configuration {
       name
@@ -35,18 +29,8 @@ export const pluginsDetailsFragment = gql`
 
 const pluginsList = gql`
   ${pluginsFragment}
-  query PluginConfigurations(
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
-  ) {
-    pluginConfigurations(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-    ) {
+  query Plugins($first: Int, $after: String, $last: Int, $before: String) {
+    plugins(before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
           ...pluginFragment
@@ -61,20 +45,18 @@ const pluginsList = gql`
     }
   }
 `;
-export const TypedPluginsListQuery = TypedQuery<
-  PluginConfigurations,
-  PluginConfigurationsVariables
->(pluginsList);
+export const TypedPluginsListQuery = TypedQuery<Plugins, PluginsVariables>(
+  pluginsList
+);
 
 const pluginsDetails = gql`
   ${pluginsDetailsFragment}
-  query PluginConfiguration($id: ID!) {
-    pluginConfiguration(id: $id) {
+  query Plugin($id: ID!) {
+    plugin(id: $id) {
       ...pluginsDetailsFragment
     }
   }
 `;
-export const TypedPluginsDetailsQuery = TypedQuery<
-  PluginConfiguration,
-  PluginConfigurationVariables
->(pluginsDetails);
+export const TypedPluginsDetailsQuery = TypedQuery<Plugin, PluginVariables>(
+  pluginsDetails
+);

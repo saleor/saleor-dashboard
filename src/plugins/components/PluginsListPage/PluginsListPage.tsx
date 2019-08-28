@@ -5,13 +5,13 @@ import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import i18n from "@saleor/i18n";
 import { ListActionsWithoutToolbar, PageListProps } from "@saleor/types";
-import { PluginConfigurations_pluginConfigurations_edges_node } from "../../types/PluginConfigurations";
+import { Plugins_plugins_edges_node } from "../../types/Plugins";
 import PluginsList from "../PluginsList/PluginsList";
 
 export interface PluginsListPageProps
   extends PageListProps,
     ListActionsWithoutToolbar {
-  plugins: PluginConfigurations_pluginConfigurations_edges_node[];
+  plugins: Plugins_plugins_edges_node[];
   onBack: () => void;
 }
 

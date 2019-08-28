@@ -4,7 +4,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { getMutationState, maybe } from "../../misc";
 import PluginsDetailsPage from "../components/PluginsDetailsPage";
-import { TypedPluginConfigurationUpdate } from "../mutations";
+import { TypedPluginUpdate } from "../mutations";
 import { TypedPluginsDetailsQuery } from "../queries";
 import { pluginsListUrl, PluginsListUrlQueryParams } from "../urls";
 
@@ -19,37 +19,29 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
   const navigate = useNavigator();
 
   return (
-    <TypedPluginConfigurationUpdate>
-      {(pluginConfigurationUpdate, pluginConfigurationUpdateOpts) => (
+    <TypedPluginUpdate>
+      {(pluginUpdate, pluginUpdateOpts) => (
         <TypedPluginsDetailsQuery variables={{ id }}>
           {PluginDetails => {
             const formTransitionState = getMutationState(
-              pluginConfigurationUpdateOpts.called,
-              pluginConfigurationUpdateOpts.loading,
-              maybe(
-                () =>
-                  pluginConfigurationUpdateOpts.data.pluginConfigurationUpdate
-                    .errors
-              )
+              pluginUpdateOpts.called,
+              pluginUpdateOpts.loading,
+              maybe(() => pluginUpdateOpts.data.pluginUpdate.errors)
             );
 
             return (
               <>
                 <WindowTitle
-                  title={maybe(
-                    () => PluginDetails.data.pluginConfiguration.name
-                  )}
+                  title={maybe(() => PluginDetails.data.plugin.name)}
                 />
                 <PluginsDetailsPage
                   disabled={PluginDetails.loading}
                   errors={maybe(
-                    () =>
-                      pluginConfigurationUpdateOpts.data
-                        .pluginConfigurationUpdate.errors,
+                    () => pluginUpdateOpts.data.pluginUpdate.errors,
                     []
                   )}
                   saveButtonBarState={formTransitionState}
-                  plugin={maybe(() => PluginDetails.data.pluginConfiguration)}
+                  plugin={maybe(() => PluginDetails.data.plugin)}
                   onBack={() => navigate(pluginsListUrl())}
                   onSubmit={formData => {
                     const configurationInput = [];
@@ -59,7 +51,7 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
                         value: item.value.toString()
                       });
                     });
-                    pluginConfigurationUpdate({
+                    pluginUpdate({
                       variables: {
                         id,
                         input: {
@@ -75,7 +67,7 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
           }}
         </TypedPluginsDetailsQuery>
       )}
-    </TypedPluginConfigurationUpdate>
+    </TypedPluginUpdate>
   );
 };
 PluginsDetails.displayName = "PluginsDetails";

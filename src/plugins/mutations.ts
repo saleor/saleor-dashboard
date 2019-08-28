@@ -2,29 +2,23 @@ import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import { pluginsDetailsFragment } from "./queries";
-import {
-  PluginConfigurationUpdate,
-  PluginConfigurationUpdateVariables
-} from "./types/pluginConfigurationUpdate";
+import { PluginUpdate, PluginUpdateVariables } from "./types/pluginUpdate";
 
-const pluginConfigurationUpdate = gql`
+const pluginUpdate = gql`
   ${pluginsDetailsFragment}
-  mutation PluginConfigurationUpdate(
-    $id: ID!
-    $input: PluginConfigurationUpdateInput!
-  ) {
-    pluginConfigurationUpdate(id: $id, input: $input) {
+  mutation PluginUpdate($id: ID!, $input: PluginUpdateInput!) {
+    pluginUpdate(id: $id, input: $input) {
       errors {
         field
         message
       }
-      pluginConfiguration {
+      plugin {
         ...pluginsDetailsFragment
       }
     }
   }
 `;
-export const TypedPluginConfigurationUpdate = TypedMutation<
-  PluginConfigurationUpdate,
-  PluginConfigurationUpdateVariables
->(pluginConfigurationUpdate);
+export const TypedPluginUpdate = TypedMutation<
+  PluginUpdate,
+  PluginUpdateVariables
+>(pluginUpdate);

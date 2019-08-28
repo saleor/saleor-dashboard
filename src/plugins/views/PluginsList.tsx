@@ -33,7 +33,7 @@ export const PluginsList: React.StatelessComponent<PluginsListProps> = ({
     <TypedPluginsListQuery displayLoader variables={paginationState}>
       {({ data, loading }) => {
         const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-          maybe(() => data.pluginConfigurations.pageInfo),
+          maybe(() => data.plugins.pageInfo),
           paginationState,
           params
         );
@@ -42,9 +42,7 @@ export const PluginsList: React.StatelessComponent<PluginsListProps> = ({
             <PluginsListPage
               disabled={loading}
               settings={settings}
-              plugins={maybe(() =>
-                data.pluginConfigurations.edges.map(edge => edge.node)
-              )}
+              plugins={maybe(() => data.plugins.edges.map(edge => edge.node))}
               pageInfo={pageInfo}
               onAdd={() => navigate(configurationMenuUrl)}
               onBack={() => navigate(configurationMenuUrl)}
