@@ -12,6 +12,7 @@ import ColumnPicker, {
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { ProductListColumns } from "@saleor/config";
+import { sectionNames } from "@saleor/intl";
 import {
   AvailableInGridAttributes_availableInGrid_edges_node,
   AvailableInGridAttributes_grid_edges_node

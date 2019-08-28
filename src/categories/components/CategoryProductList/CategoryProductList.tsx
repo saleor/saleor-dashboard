@@ -13,13 +13,13 @@ import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
@@ -95,6 +95,8 @@ export const CategoryProductList = withStyles(styles, {
     onPreviousPage,
     onRowClick
   }: CategoryProductListProps) => {
+    const intl = useIntl();
+
     const numberOfColumns = 5;
 
     return (
@@ -117,17 +119,26 @@ export const CategoryProductList = withStyles(styles, {
           >
             <TableCell className={classes.colName}>
               <span className={classes.colNameHeader}>
-                {i18n.t("Name", { context: "object" })}
+                <FormattedMessage defaultMessage="Name" description="product" />
               </span>
             </TableCell>
             <TableCell className={classes.colType}>
-              {i18n.t("Type", { context: "object" })}
+              <FormattedMessage
+                defaultMessage="Type"
+                description="product type"
+              />
             </TableCell>
             <TableCell className={classes.colPublished}>
-              {i18n.t("Published", { context: "object" })}
+              <FormattedMessage
+                defaultMessage="Published"
+                description="product status"
+              />
             </TableCell>
             <TableCell className={classes.colPrice}>
-              {i18n.t("Price", { context: "object" })}
+              <FormattedMessage
+                defaultMessage="Price"
+                description="product price"
+              />
             </TableCell>
           </TableHead>
           <TableFooter>
@@ -186,11 +197,14 @@ export const CategoryProductList = withStyles(styles, {
                         <StatusLabel
                           label={
                             product.isAvailable
-                              ? i18n.t("Published", {
-                                  context: "product status"
+                              ? intl.formatMessage({
+                                  defaultMessage: "Published",
+                                  description: "product",
+                                  id: "productStatusLabel"
                                 })
-                              : i18n.t("Not published", {
-                                  context: "product status"
+                              : intl.formatMessage({
+                                  defaultMessage: "Not published",
+                                  description: "product"
                                 })
                           }
                           status={product.isAvailable ? "success" : "error"}
@@ -214,7 +228,7 @@ export const CategoryProductList = withStyles(styles, {
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    {i18n.t("No products found")}
+                    <FormattedMessage defaultMessage="No products found" />
                   </TableCell>
                 </TableRow>
               )

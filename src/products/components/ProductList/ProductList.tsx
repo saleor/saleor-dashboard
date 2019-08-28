@@ -11,6 +11,7 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import classNames from "classnames";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
@@ -22,7 +23,6 @@ import TableCellAvatar, {
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { ProductListColumns } from "@saleor/config";
-import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
 import {
   getAttributeIdFromColumnValue,
@@ -113,6 +113,8 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
     onUpdateListSettings,
     onRowClick
   }: ProductListProps) => {
+    const intl = useIntl();
+
     const DisplayColumn: React.FC<{ column: ProductListColumns }> = props => (
       <TDisplayColumn displayColumns={settings.columns} {...props} />
     );
@@ -154,17 +156,23 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               })}
             >
               <span className={classes.colNameHeader}>
-                {i18n.t("Name", { context: "object" })}
+                <FormattedMessage defaultMessage="Name" description="product" />
               </span>
             </TableCell>
             <DisplayColumn column="productType">
               <TableCell className={classes.colType}>
-                {i18n.t("Type", { context: "object" })}
+                <FormattedMessage
+                  defaultMessage="Type"
+                  description="product type"
+                />
               </TableCell>
             </DisplayColumn>
             <DisplayColumn column="isPublished">
               <TableCell className={classes.colPublished}>
-                {i18n.t("Published", { context: "object" })}
+                <FormattedMessage
+                  defaultMessage="Published"
+                  description="product status"
+                />
               </TableCell>
             </DisplayColumn>
             {gridAttributesFromSettings.map(gridAttributeFromSettings => (
@@ -186,7 +194,10 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
             ))}
             <DisplayColumn column="price">
               <TableCell className={classes.colPrice}>
-                {i18n.t("Price", { context: "object" })}
+                <FormattedMessage
+                  defaultMessage="Price"
+                  description="product price"
+                />
               </TableCell>
             </DisplayColumn>
           </TableHead>
@@ -251,11 +262,14 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                           <StatusLabel
                             label={
                               product.isAvailable
-                                ? i18n.t("Published", {
-                                    context: "product status"
+                                ? intl.formatMessage({
+                                    defaultMessage: "Published",
+                                    description: "product",
+                                    id: "productStatusLabel"
                                   })
-                                : i18n.t("Not published", {
-                                    context: "product status"
+                                : intl.formatMessage({
+                                    defaultMessage: "Not published",
+                                    description: "product"
                                   })
                             }
                             status={product.isAvailable ? "success" : "error"}
@@ -303,7 +317,7 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    {i18n.t("No products found")}
+                    <FormattedMessage defaultMessage="No products found" />
                   </TableCell>
                 </TableRow>
               )
