@@ -11,12 +11,18 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 
+import Checkbox from "@saleor/components/Checkbox";
+import Money from "@saleor/components/Money";
+import Skeleton from "@saleor/components/Skeleton";
+import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
+import TableHead from "@saleor/components/TableHead";
+import TablePagination from "@saleor/components/TablePagination";
 import { ProductListColumns } from "@saleor/config";
+import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
 import {
   getAttributeIdFromColumnValue,
@@ -26,12 +32,6 @@ import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/type
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ListActions, ListProps } from "@saleor/types";
 import TDisplayColumn from "@saleor/utils/columns/DisplayColumn";
-import Checkbox from "../Checkbox";
-import Money from "../Money";
-import Skeleton from "../Skeleton";
-import StatusLabel from "../StatusLabel";
-import TableHead from "../TableHead";
-import TablePagination from "../TablePagination";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -113,12 +113,9 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
     onUpdateListSettings,
     onRowClick
   }: ProductListProps) => {
-    const intl = useIntl();
-
     const DisplayColumn: React.FC<{ column: ProductListColumns }> = props => (
       <TDisplayColumn displayColumns={settings.columns} {...props} />
     );
-
     const gridAttributesFromSettings = settings.columns.filter(
       isAttributeColumnValue
     );
@@ -157,20 +154,17 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               })}
             >
               <span className={classes.colNameHeader}>
-                <FormattedMessage defaultMessage="Name" description="product" />
+                {i18n.t("Name", { context: "object" })}
               </span>
             </TableCell>
             <DisplayColumn column="productType">
               <TableCell className={classes.colType}>
-                <FormattedMessage defaultMessage="Type" description="product" />
+                {i18n.t("Type", { context: "object" })}
               </TableCell>
             </DisplayColumn>
             <DisplayColumn column="isPublished">
               <TableCell className={classes.colPublished}>
-                <FormattedMessage
-                  defaultMessage="Published"
-                  description="product status"
-                />
+                {i18n.t("Published", { context: "object" })}
               </TableCell>
             </DisplayColumn>
             {gridAttributesFromSettings.map(gridAttributeFromSettings => (
@@ -192,10 +186,7 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
             ))}
             <DisplayColumn column="price">
               <TableCell className={classes.colPrice}>
-                <FormattedMessage
-                  defaultMessage="Price"
-                  description="product"
-                />
+                {i18n.t("Price", { context: "object" })}
               </TableCell>
             </DisplayColumn>
           </TableHead>
@@ -229,7 +220,6 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                     key={product ? product.id : "skeleton"}
                     onClick={product && onRowClick(product.id)}
                     className={classes.link}
-                    data-tc={product ? `product-${product.id}` : undefined}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -261,13 +251,11 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                           <StatusLabel
                             label={
                               product.isAvailable
-                                ? intl.formatMessage({
-                                    defaultMessage: "Published",
-                                    description: "product status"
+                                ? i18n.t("Published", {
+                                    context: "product status"
                                   })
-                                : intl.formatMessage({
-                                    defaultMessage: "Not published",
-                                    description: "product status"
+                                : i18n.t("Not published", {
+                                    context: "product status"
                                   })
                             }
                             status={product.isAvailable ? "success" : "error"}
@@ -315,7 +303,7 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No products found" />
+                    {i18n.t("No products found")}
                   </TableCell>
                 </TableRow>
               )

@@ -6,14 +6,23 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { toggle } from "@saleor/utils/lists";
 import ColumnPickerButton from "./ColumnPickerButton";
 import ColumnPickerContent, {
   ColumnPickerContentProps
 } from "./ColumnPickerContent";
 
-export interface ColumnPickerProps extends ColumnPickerContentProps {
+export interface ColumnPickerProps
+  extends Omit<
+    ColumnPickerContentProps,
+    "selectedColumns" | "onCancel" | "onColumnToggle" | "onReset" | "onSave"
+  > {
   className?: string;
-  initial?: boolean;
+  defaultColumns: string[];
+  initialColumns: string[];
+  initialOpen?: boolean;
+  onSave: (columns: string[]) => void;
 }
 
 const useStyles = makeStyles(
@@ -33,33 +42,39 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
   const {
     className,
     columns,
+    defaultColumns,
     hasMore,
-    initial = false,
+    initialColumns,
+    initialOpen = false,
     loading,
-    selectedColumns,
     total,
-    onCancel,
-    onColumnToggle,
     onFetchMore,
-    onReset,
     onSave
   } = props;
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();
   const [isExpanded, setExpansionState] = React.useState(false);
+  const [selectedColumns, setSelectedColumns] = useStateFromProps(
+    initialColumns
+  );
 
   React.useEffect(() => {
-    setTimeout(() => setExpansionState(initial), 100);
+    setTimeout(() => setExpansionState(initialOpen), 100);
   }, []);
 
   const handleCancel = React.useCallback(() => {
     setExpansionState(false);
-    onCancel();
-  }, []);
+    setSelectedColumns(columns.map(column => column.value));
+  }, [columns]);
+
+  const handleColumnToggle = (column: string) =>
+    setSelectedColumns(toggle(column, selectedColumns, (a, b) => a === b));
+
+  const handleReset = () => setSelectedColumns(defaultColumns);
 
   const handleSave = () => {
     setExpansionState(false);
-    onSave();
+    onSave(selectedColumns);
   };
 
   return (
@@ -95,9 +110,9 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
                 selectedColumns={selectedColumns}
                 total={total}
                 onCancel={handleCancel}
-                onColumnToggle={onColumnToggle}
+                onColumnToggle={handleColumnToggle}
                 onFetchMore={onFetchMore}
-                onReset={onReset}
+                onReset={handleReset}
                 onSave={handleSave}
               />
             </ClickAwayListener>

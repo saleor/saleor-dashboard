@@ -377,11 +377,11 @@ export const TypedProductImageQuery = TypedQuery<
 
 const availableInGridAttributes = gql`
   ${pageInfoFragment}
-  query AvailableInGridAttributes($first: Int!, $after: String) {
-    attributes(
+  query GridAttributes($first: Int!, $after: String, $ids: [ID!]!) {
+    availableInGrid: attributes(
       first: $first
       after: $after
-      filter: { availableInGrid: true }
+      filter: { availableInGrid: true, isVariantOnly: false }
     ) {
       edges {
         node {
@@ -393,6 +393,15 @@ const availableInGridAttributes = gql`
         ...PageInfoFragment
       }
       totalCount
+    }
+
+    grid: attributes(first: 25, filter: { ids: $ids }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
     }
   }
 `;

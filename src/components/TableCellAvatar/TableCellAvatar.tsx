@@ -26,7 +26,8 @@ const styles = (theme: Theme) =>
     },
     children: {
       alignSelf: "center",
-      marginLeft: theme.spacing.unit * 2
+      marginLeft: theme.spacing.unit * 2,
+      width: "100%"
     },
     content: {
       alignItems: "center",
@@ -69,7 +70,7 @@ const TableCellAvatar = withStyles(styles, { name: "TableCellAvatar" })(
             src={thumbnail}
           />
         )}
-        <span className={classes.children}>{children}</span>
+        <div className={classes.children}>{children}</div>
       </div>
     </TableCell>
   )

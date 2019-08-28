@@ -6,25 +6,25 @@ import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CategoryDetails_category_products_edges_node } from "@saleor/categories/types/CategoryDetails";
 import ColumnPicker, {
   ColumnPickerChoice
 } from "@saleor/components/ColumnPicker";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import ProductList from "@saleor/components/ProductList";
 import { ProductListColumns } from "@saleor/config";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { sectionNames } from "@saleor/intl";
-import { AvailableInGridAttributes_attributes_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
+import {
+  AvailableInGridAttributes_availableInGrid_edges_node,
+  AvailableInGridAttributes_grid_edges_node
+} from "@saleor/products/types/AvailableInGridAttributes";
+import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import {
   FetchMoreProps,
   FilterPageProps,
   ListActions,
   PageListProps
 } from "@saleor/types";
-import { toggle } from "@saleor/utils/lists";
 import { ProductListUrlFilters } from "../../urls";
+import ProductList from "../ProductList";
 import ProductListFilter from "../ProductListFilter";
 
 export interface ProductListPageProps
@@ -32,10 +32,11 @@ export interface ProductListPageProps
     ListActions,
     FilterPageProps<ProductListUrlFilters>,
     FetchMoreProps {
+  availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
-  gridAttributes: AvailableInGridAttributes_attributes_edges_node[];
+  gridAttributes: AvailableInGridAttributes_grid_edges_node[];
   totalGridAttributes: number;
-  products: CategoryDetails_category_products_edges_node[];
+  products: ProductList_products_edges_node[];
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -52,6 +53,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     filtersList,
     filterTabs,
     gridAttributes,
+    availableInGridAttributes,
     hasMore,
     initialSearch,
     loading,
@@ -70,23 +72,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles(props);
-  const [selectedColumns, setSelectedColumns] = useStateFromProps(
-    settings.columns
-  );
 
-  const handleCancel = React.useCallback(
-    () => setSelectedColumns(settings.columns),
-    [settings.columns]
-  );
-
-  const handleColumnToggle = (column: ProductListColumns) =>
-    setSelectedColumns(prevSelectedColumns =>
-      toggle(column, prevSelectedColumns, (a, b) => a === b)
-    );
-
-  const handleReset = () => setSelectedColumns(defaultSettings.columns);
-
-  const handleSave = () => onUpdateListSettings("columns", selectedColumns);
+  const handleSave = (columns: ProductListColumns[]) =>
+    onUpdateListSettings("columns", columns);
 
   const columns: ColumnPickerChoice[] = [
     {
@@ -110,7 +98,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       }),
       value: "productType" as ProductListColumns
     },
-    ...gridAttributes.map(attribute => ({
+    ...availableInGridAttributes.map(attribute => ({
       label: attribute.name,
       value: `attribute:${attribute.id}`
     }))
@@ -122,14 +110,16 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         <ColumnPicker
           className={classes.columnPicker}
           columns={columns}
+          defaultColumns={defaultSettings.columns}
           hasMore={hasMore}
           loading={loading}
-          selectedColumns={selectedColumns}
-          total={columns.length + totalGridAttributes}
-          onColumnToggle={handleColumnToggle}
-          onCancel={handleCancel}
+          initialColumns={settings.columns}
+          total={
+            columns.length -
+            availableInGridAttributes.length +
+            totalGridAttributes
+          }
           onFetchMore={onFetchMore}
-          onReset={handleReset}
           onSave={handleSave}
         />
         <Button
@@ -168,7 +158,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         />
         <ProductList
           {...listProps}
-          settings={{ ...settings, columns: selectedColumns }}
+          gridAttributes={gridAttributes}
+          settings={settings}
           onUpdateListSettings={onUpdateListSettings}
         />
       </Card>

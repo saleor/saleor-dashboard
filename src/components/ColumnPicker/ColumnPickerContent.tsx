@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     gridColumnEnd: "span 3",
     height: theme.spacing.unit * 3,
     justifyContent: "center"
+  },
+  root: {
+    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
   }
 }));
 
@@ -87,7 +90,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
     : false;
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardContent>
         <Typography color="textSecondary">
           <FormattedMessage

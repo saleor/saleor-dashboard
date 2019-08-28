@@ -22,7 +22,7 @@ import {
   CategoryDetails_category_products_edges_node
 } from "../../types/CategoryDetails";
 import CategoryBackground from "../CategoryBackground";
-import CategoryProductsCard from "../CategoryProductsCard";
+import CategoryProducts from "../CategoryProducts";
 
 export interface FormData {
   backgroundImageAlt: string;
@@ -195,7 +195,7 @@ export const CategoryUpdatePage: React.StatelessComponent<
             />
           )}
           {currentTab === CategoryPageTab.products && (
-            <CategoryProductsCard
+            <CategoryProducts
               categoryName={maybe(() => category.name)}
               products={products}
               disabled={disabled}
