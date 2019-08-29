@@ -1,0 +1,10 @@
+[main]
+host = https://www.transifex.com
+
+[saleor-1.dashboard-20]
+file_filter = locale/<lang>.po
+minimum_perc = 1
+source_file = locale/messages.pot
+source_lang = en
+type = PO
+
