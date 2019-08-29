@@ -11889,7 +11889,7 @@ exports[`Storyshots Views / Authentication / Log in default 1`] = `
               class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
               data-shrink="false"
             >
-              Email
+              E-mail Address
             </label>
             <div
               class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
@@ -12041,9 +12041,7 @@ exports[`Storyshots Views / Authentication / Log in error 1`] = `
             <span
               class="MuiTypography-root-id MuiTypography-caption-id"
             >
-              Sorry, your username and/or password are incorrect. 
-              <br />
-              Please try again.
+              Sorry, your username and/or password are incorrect. Please try again.
             </span>
           </div>
           <div
@@ -12053,7 +12051,7 @@ exports[`Storyshots Views / Authentication / Log in error 1`] = `
               class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
               data-shrink="false"
             >
-              Email
+              E-mail Address
             </label>
             <div
               class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
@@ -12206,7 +12204,7 @@ exports[`Storyshots Views / Authentication / Log in loading 1`] = `
               class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
               data-shrink="false"
             >
-              Email
+              E-mail Address
             </label>
             <div
               class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
@@ -42757,7 +42755,7 @@ exports[`Storyshots Views / Discounts / Voucher details default 1`] = `
                     <span
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
-                      Specific Products
+                      Specific products
                     </span>
                   </label>
                 </div>
@@ -43736,7 +43734,7 @@ exports[`Storyshots Views / Discounts / Voucher details form errors 1`] = `
                     <span
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
-                      Specific Products
+                      Specific products
                     </span>
                   </label>
                 </div>
@@ -44736,7 +44734,7 @@ exports[`Storyshots Views / Discounts / Voucher details loading 1`] = `
                     <span
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
                     >
-                      Specific Products
+                      Specific products
                     </span>
                   </label>
                 </div>

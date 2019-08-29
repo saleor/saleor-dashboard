@@ -2,10 +2,10 @@ import moment from "moment-timezone";
 import { MutationFunction, MutationResult } from "react-apollo";
 import urlJoin from "url-join";
 
+import { defineMessages, IntlShape } from "react-intl";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
 import { APP_MOUNT_URI } from "./config";
 import { AddressType } from "./customers/types";
-import i18n from "./i18n";
 import { PartialMutationProviderOutput, UserError } from "./types";
 import {
   AuthorizationKeyType,
@@ -26,7 +26,7 @@ export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
 > &
   {
     [K in Keys]-?: Required<Pick<T, K>> &
-      Partial<Record<Exclude<Keys, K>, undefined>>
+      Partial<Record<Exclude<Keys, K>, undefined>>;
   }[Keys];
 
 export function renderCollection<T>(
@@ -57,33 +57,109 @@ export function decimal(value: string | number) {
 export const removeDoubleSlashes = (url: string) =>
   url.replace(/([^:]\/)\/+/g, "$1");
 
-export const transformPaymentStatus = (status: string) => {
+const paymentStatusMessages = defineMessages({
+  paid: {
+    defaultMessage: "Fully paid",
+    description: "payment status"
+  },
+  partiallyPaid: {
+    defaultMessage: "Partially paid",
+    description: "payment status"
+  },
+  partiallyRefunded: {
+    defaultMessage: "Partially refunded",
+    description: "payment status"
+  },
+  refunded: {
+    defaultMessage: "Fully refunded",
+    description: "payment status"
+  },
+  unpaid: {
+    defaultMessage: "Unpaid",
+    description: "payment status"
+  }
+});
+
+export const transformPaymentStatus = (status: string, intl: IntlShape) => {
   switch (status) {
     case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
-      return { localized: i18n.t("Partially paid"), status: "error" };
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
+        status: "error"
+      };
     case PaymentChargeStatusEnum.FULLY_CHARGED:
-      return { localized: i18n.t("Fully paid"), status: "success" };
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.paid),
+        status: "success"
+      };
     case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
-      return { localized: i18n.t("Partially refunded"), status: "error" };
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
+        status: "error"
+      };
     case PaymentChargeStatusEnum.FULLY_REFUNDED:
-      return { localized: i18n.t("Fully refunded"), status: "success" };
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.refunded),
+        status: "success"
+      };
     default:
-      return { localized: i18n.t("Unpaid"), status: "error" };
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.unpaid),
+        status: "error"
+      };
   }
 };
 
-export const transformOrderStatus = (status: string) => {
+const orderStatusMessages = defineMessages({
+  cancelled: {
+    defaultMessage: "Cancelled",
+    description: "order status"
+  },
+  draft: {
+    defaultMessage: "Draft",
+    description: "order status"
+  },
+  fulfilled: {
+    defaultMessage: "Fulfilled",
+    description: "order status"
+  },
+  partiallyFulfilled: {
+    defaultMessage: "Partially fulfilled",
+    description: "order status"
+  },
+  unfulfilled: {
+    defaultMessage: "Unfulfilled",
+    description: "order status"
+  }
+});
+
+export const transformOrderStatus = (status: string, intl: IntlShape) => {
   switch (status) {
     case OrderStatus.FULFILLED:
-      return { localized: i18n.t("Fulfilled"), status: "success" };
+      return {
+        localized: intl.formatMessage(orderStatusMessages.fulfilled),
+        status: "success"
+      };
     case OrderStatus.PARTIALLY_FULFILLED:
-      return { localized: i18n.t("Partially fulfilled"), status: "neutral" };
+      return {
+        localized: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
+        status: "neutral"
+      };
     case OrderStatus.UNFULFILLED:
-      return { localized: i18n.t("Unfulfilled"), status: "error" };
+      return {
+        localized: intl.formatMessage(orderStatusMessages.unfulfilled),
+        status: "error"
+      };
     case OrderStatus.CANCELED:
-      return { localized: i18n.t("Cancelled"), status: "error" };
+      return {
+        localized: intl.formatMessage(orderStatusMessages.cancelled),
+        status: "error"
+      };
     case OrderStatus.DRAFT:
-      return { localized: i18n.t("Draft"), status: "error" };
+      return {
+        localized: intl.formatMessage(orderStatusMessages.draft),
+        status: "error"
+      };
   }
   return {
     localized: status,
@@ -105,43 +181,162 @@ export const transformAddressToForm = (data: AddressType) => ({
   streetAddress2: maybe(() => data.streetAddress2, "")
 });
 
-export const translatedTaxRates = () => ({
-  [TaxRateType.ACCOMMODATION]: i18n.t("Accommodation"),
-  [TaxRateType.ADMISSION_TO_CULTURAL_EVENTS]: i18n.t(
-    "Admission to cultural events"
-  ),
-  [TaxRateType.ADMISSION_TO_ENTERTAINMENT_EVENTS]: i18n.t(
-    "Admission to entertainment events"
-  ),
-  [TaxRateType.ADMISSION_TO_SPORTING_EVENTS]: i18n.t(
-    "Admission to sporting events"
-  ),
-  [TaxRateType.ADVERTISING]: i18n.t("Advertising"),
-  [TaxRateType.AGRICULTURAL_SUPPLIES]: i18n.t("Agricultural supplies"),
-  [TaxRateType.BABY_FOODSTUFFS]: i18n.t("Baby foodstuffs"),
-  [TaxRateType.BIKES]: i18n.t("Bikes"),
-  [TaxRateType.BOOKS]: i18n.t("Books"),
-  [TaxRateType.CHILDRENS_CLOTHING]: i18n.t("Children's clothing"),
-  [TaxRateType.DOMESTIC_FUEL]: i18n.t("Domestic fuel"),
-  [TaxRateType.DOMESTIC_SERVICES]: i18n.t("Domestic services"),
-  [TaxRateType.E_BOOKS]: i18n.t("E-books"),
-  [TaxRateType.FOODSTUFFS]: i18n.t("Foodstuffs"),
-  [TaxRateType.HOTELS]: i18n.t("Hotels"),
-  [TaxRateType.MEDICAL]: i18n.t("Medical"),
-  [TaxRateType.NEWSPAPERS]: i18n.t("Newspapers"),
-  [TaxRateType.PASSENGER_TRANSPORT]: i18n.t("Passenger transport"),
-  [TaxRateType.PHARMACEUTICALS]: i18n.t("Pharmaceuticals"),
-  [TaxRateType.PROPERTY_RENOVATIONS]: i18n.t("Property renovations"),
-  [TaxRateType.RESTAURANTS]: i18n.t("Restaurants"),
-  [TaxRateType.SOCIAL_HOUSING]: i18n.t("Social housing"),
-  [TaxRateType.STANDARD]: i18n.t("Standard"),
-  [TaxRateType.WATER]: i18n.t("Water")
+const taxRatesMessages = defineMessages({
+  accommodation: {
+    defaultMessage: "Accommodation",
+    description: "tax rate"
+  },
+  admissionToCulturalEvents: {
+    defaultMessage: "Admission to cultural events",
+    description: "tax rate"
+  },
+  admissionToEntertainmentEvents: {
+    defaultMessage: "Admission to entertainment events",
+    description: "tax rate"
+  },
+  admissionToSportingEvents: {
+    defaultMessage: "Admission to sporting events",
+    description: "tax rate"
+  },
+  advertising: {
+    defaultMessage: "Advertising",
+    description: "tax rate"
+  },
+  agriculturalSupplies: {
+    defaultMessage: "Agricultural supplies",
+    description: "tax rate"
+  },
+  babyFoodstuffs: {
+    defaultMessage: "Baby foodstuffs",
+    description: "tax rate"
+  },
+  bikes: {
+    defaultMessage: "Bikes",
+    description: "tax rate"
+  },
+  books: {
+    defaultMessage: "Books",
+    description: "tax rate"
+  },
+  childrensClothing: {
+    defaultMessage: "Children's clothing",
+    description: "tax rate"
+  },
+  domesticFuel: {
+    defaultMessage: "Domestic fuel",
+    description: "tax rate"
+  },
+  domesticServices: {
+    defaultMessage: "Domestic services",
+    description: "tax rate"
+  },
+  ebooks: {
+    defaultMessage: "E-books",
+    description: "tax rate"
+  },
+  foodstuffs: {
+    defaultMessage: "Foodstuffs",
+    description: "tax rate"
+  },
+  hotels: {
+    defaultMessage: "Hotels",
+    description: "tax rate"
+  },
+  medical: {
+    defaultMessage: "Medical",
+    description: "tax rate"
+  },
+  newspapers: {
+    defaultMessage: "Newspapers",
+    description: "tax rate"
+  },
+  passengerTransport: {
+    defaultMessage: "Passenger transport",
+    description: "tax rate"
+  },
+  pharmaceuticals: {
+    defaultMessage: "Pharmaceuticals",
+    description: "tax rate"
+  },
+  propertyRenovations: {
+    defaultMessage: "Property renovations",
+    description: "tax rate"
+  },
+  restaurants: {
+    defaultMessage: "Restaurants",
+    description: "tax rate"
+  },
+  socialHousing: {
+    defaultMessage: "Social housing",
+    description: "tax rate"
+  },
+  standard: {
+    defaultMessage: "Standard",
+    description: "tax rate"
+  },
+  water: {
+    defaultMessage: "Water",
+    description: "tax rate"
+  }
 });
 
-export const translatedAuthorizationKeyTypes = () => ({
-  [AuthorizationKeyType.FACEBOOK]: i18n.t("Facebook"),
-  [AuthorizationKeyType.GOOGLE_OAUTH2]: i18n.t("Google OAuth2")
+export const translatedTaxRates = (intl: IntlShape) => ({
+  [TaxRateType.ACCOMMODATION]: intl.formatMessage(
+    taxRatesMessages.accommodation
+  ),
+  [TaxRateType.ADMISSION_TO_CULTURAL_EVENTS]: intl.formatMessage(
+    taxRatesMessages.admissionToCulturalEvents
+  ),
+  [TaxRateType.ADMISSION_TO_ENTERTAINMENT_EVENTS]: intl.formatMessage(
+    taxRatesMessages.admissionToEntertainmentEvents
+  ),
+  [TaxRateType.ADMISSION_TO_SPORTING_EVENTS]: intl.formatMessage(
+    taxRatesMessages.admissionToSportingEvents
+  ),
+  [TaxRateType.ADVERTISING]: intl.formatMessage(taxRatesMessages.advertising),
+  [TaxRateType.AGRICULTURAL_SUPPLIES]: intl.formatMessage(
+    taxRatesMessages.agriculturalSupplies
+  ),
+  [TaxRateType.BABY_FOODSTUFFS]: intl.formatMessage(
+    taxRatesMessages.babyFoodstuffs
+  ),
+  [TaxRateType.BIKES]: intl.formatMessage(taxRatesMessages.bikes),
+  [TaxRateType.BOOKS]: intl.formatMessage(taxRatesMessages.books),
+  [TaxRateType.CHILDRENS_CLOTHING]: intl.formatMessage(
+    taxRatesMessages.childrensClothing
+  ),
+  [TaxRateType.DOMESTIC_FUEL]: intl.formatMessage(
+    taxRatesMessages.domesticFuel
+  ),
+  [TaxRateType.DOMESTIC_SERVICES]: intl.formatMessage(
+    taxRatesMessages.domesticServices
+  ),
+  [TaxRateType.E_BOOKS]: intl.formatMessage(taxRatesMessages.ebooks),
+  [TaxRateType.FOODSTUFFS]: intl.formatMessage(taxRatesMessages.foodstuffs),
+  [TaxRateType.HOTELS]: intl.formatMessage(taxRatesMessages.hotels),
+  [TaxRateType.MEDICAL]: intl.formatMessage(taxRatesMessages.medical),
+  [TaxRateType.NEWSPAPERS]: intl.formatMessage(taxRatesMessages.newspapers),
+  [TaxRateType.PASSENGER_TRANSPORT]: intl.formatMessage(
+    taxRatesMessages.passengerTransport
+  ),
+  [TaxRateType.PHARMACEUTICALS]: intl.formatMessage(
+    taxRatesMessages.pharmaceuticals
+  ),
+  [TaxRateType.PROPERTY_RENOVATIONS]: intl.formatMessage(
+    taxRatesMessages.propertyRenovations
+  ),
+  [TaxRateType.RESTAURANTS]: intl.formatMessage(taxRatesMessages.restaurants),
+  [TaxRateType.SOCIAL_HOUSING]: intl.formatMessage(
+    taxRatesMessages.socialHousing
+  ),
+  [TaxRateType.STANDARD]: intl.formatMessage(taxRatesMessages.standard),
+  [TaxRateType.WATER]: intl.formatMessage(taxRatesMessages.water)
 });
+
+export const authorizationKeyTypes = {
+  [AuthorizationKeyType.FACEBOOK]: "Facebook",
+  [AuthorizationKeyType.GOOGLE_OAUTH2]: "Google OAuth2"
+};
 
 export function maybe<T>(exp: () => T): T | undefined;
 export function maybe<T>(exp: () => T, d: T): T;

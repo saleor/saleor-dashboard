@@ -6,15 +6,15 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { translateBoolean } from "@saleor/intl";
 import { renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
-import { translateBoolean } from "@saleor/utils/i18n";
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 
 export interface AttributeListProps extends ListProps, ListActions {
@@ -71,6 +71,7 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
   toolbar
 }) => {
   const classes = useStyles({});
+  const intl = useIntl();
 
   return (
     <Table>
@@ -153,21 +154,21 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
                 </TableCell>
                 <TableCell className={classes.colVisible}>
                   {attribute ? (
-                    translateBoolean(attribute.visibleInStorefront)
+                    translateBoolean(attribute.visibleInStorefront, intl)
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colSearchable}>
                   {attribute ? (
-                    translateBoolean(attribute.filterableInDashboard)
+                    translateBoolean(attribute.filterableInDashboard, intl)
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colFaceted}>
                   {attribute ? (
-                    translateBoolean(attribute.filterableInStorefront)
+                    translateBoolean(attribute.filterableInStorefront, intl)
                   ) : (
                     <Skeleton />
                   )}

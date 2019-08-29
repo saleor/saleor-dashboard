@@ -10,7 +10,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import { DateTime } from "@saleor/components/Date";
@@ -78,11 +78,13 @@ export const OrderDraftList = withStyles(styles, { name: "OrderDraftList" })(
     toggleAll,
     toolbar
   }: OrderDraftListProps) => {
+    const intl = useIntl();
+
     const orderDraftList = orders
       ? orders.map(order => ({
           ...order,
-          paymentStatus: transformPaymentStatus(order.paymentStatus),
-          status: transformOrderStatus(order.status)
+          paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
+          status: transformOrderStatus(order.status, intl)
         }))
       : undefined;
 

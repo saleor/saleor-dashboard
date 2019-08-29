@@ -1,14 +1,23 @@
-import { defineMessages } from "react-intl";
+import { defineMessages, IntlShape } from "react-intl";
 
 export const commonMessages = defineMessages({
   availability: {
     defaultMessage: "Availability"
+  },
+  catalog: {
+    defaultMessage: "Catalog"
   },
   dashboard: {
     defaultMessage: "Dashboard"
   },
   description: {
     defaultMessage: "Description"
+  },
+  discounts: {
+    defaultMessage: "Discounts"
+  },
+  drafts: {
+    defaultMessage: "Drafts"
   },
   email: {
     defaultMessage: "E-mail Address"
@@ -27,6 +36,9 @@ export const commonMessages = defineMessages({
   },
   lastName: {
     defaultMessage: "Last Name"
+  },
+  no: {
+    defaultMessage: "No"
   },
   optionalField: {
     defaultMessage: "Optional",
@@ -50,6 +62,9 @@ export const commonMessages = defineMessages({
   uploadImage: {
     defaultMessage: "Upload image",
     description: "button"
+  },
+  yes: {
+    defaultMessage: "Yes"
   }
 });
 
@@ -121,6 +136,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Draft Orders",
     description: "draft orders section name"
   },
+  home: {
+    defaultMessage: "Home",
+    description: "home section name"
+  },
   navigation: {
     defaultMessage: "Navigation",
     description: "navigation section name"
@@ -170,3 +189,9 @@ export const sectionNames = defineMessages({
     description: "vouchers section name"
   }
 });
+
+export function translateBoolean(value: boolean, intl: IntlShape): string {
+  return value
+    ? intl.formatMessage(commonMessages.yes)
+    : intl.formatMessage(commonMessages.no);
+}

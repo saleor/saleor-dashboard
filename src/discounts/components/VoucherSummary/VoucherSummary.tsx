@@ -29,7 +29,7 @@ const VoucherSummary: React.StatelessComponent<VoucherSummaryProps> = ({
 }) => {
   const intl = useIntl();
 
-  const translatedVoucherTypes = translateVoucherTypes();
+  const translatedVoucherTypes = translateVoucherTypes(intl);
 
   return (
     <Card>

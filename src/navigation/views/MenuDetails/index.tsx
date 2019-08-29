@@ -136,13 +136,13 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                     return (
                       <MenuDeleteMutation
                         onCompleted={data =>
-                          handleDelete(data, navigate, notify)
+                          handleDelete(data, navigate, notify, intl)
                         }
                       >
                         {(menuDelete, menuDeleteOpts) => (
                           <MenuUpdateMutation
                             onCompleted={data =>
-                              handleUpdate(data, notify, refetch)
+                              handleUpdate(data, notify, refetch, intl)
                             }
                           >
                             {(menuUpdate, menuUpdateOpts) => {
@@ -263,7 +263,12 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
 
                                   <MenuItemCreateMutation
                                     onCompleted={data =>
-                                      handleItemCreate(data, notify, closeModal)
+                                      handleItemCreate(
+                                        data,
+                                        notify,
+                                        closeModal,
+                                        intl
+                                      )
                                     }
                                   >
                                     {(menuItemCreate, menuItemCreateOpts) => {
@@ -323,7 +328,8 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                                         data,
                                         id,
                                         navigate,
-                                        notify
+                                        notify,
+                                        intl
                                       )
                                     }
                                   >

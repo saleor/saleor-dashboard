@@ -199,7 +199,8 @@ export const OrderList: React.StatelessComponent<OrderListProps> = ({
                           {
                             formatDate
                           },
-                          changeFilterField
+                          changeFilterField,
+                          intl
                         )}
                         currentTab={currentTab}
                         disabled={loading}

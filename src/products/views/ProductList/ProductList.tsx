@@ -217,7 +217,8 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                             currencySymbol,
                             locale
                           },
-                          changeFilterField
+                          changeFilterField,
+                          intl
                         )}
                         onAdd={() => navigate(productAddUrl)}
                         disabled={loading}

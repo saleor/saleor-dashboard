@@ -11,7 +11,7 @@ import Form, { FormProps } from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { buttonMessages } from "@saleor/intl";
-import { translatedAuthorizationKeyTypes } from "../../../misc";
+import { authorizationKeyTypes } from "../../../misc";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 
 export interface SiteSettingsKeyDialogForm {
@@ -33,7 +33,6 @@ const SiteSettingsKeyDialog: React.StatelessComponent<
   SiteSettingsKeyDialogProps
 > = ({ errors, initial, open, onClose, onSubmit }) => {
   const intl = useIntl();
-  const keyTypes = translatedAuthorizationKeyTypes();
 
   return (
     <Dialog onClose={onClose} maxWidth="xs" open={open}>
@@ -48,8 +47,8 @@ const SiteSettingsKeyDialog: React.StatelessComponent<
             </DialogTitle>
             <DialogContent>
               <SingleSelectField
-                choices={Object.keys(keyTypes).map(key => ({
-                  label: keyTypes[key],
+                choices={Object.keys(authorizationKeyTypes).map(key => ({
+                  label: authorizationKeyTypes[key],
                   value: key
                 }))}
                 error={!!errors.keyType}

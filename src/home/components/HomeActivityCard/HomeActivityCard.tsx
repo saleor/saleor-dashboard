@@ -50,7 +50,9 @@ const HomeActivityCard = withStyles(styles, { name: "HomeActivityCard" })(
                 {activity ? (
                   <ListItemText
                     primary={
-                      <Typography>{getActivityMessage(activity)}</Typography>
+                      <Typography>
+                        {getActivityMessage(activity, intl)}
+                      </Typography>
                     }
                     secondary={<DateTime date={activity.date} />}
                   />

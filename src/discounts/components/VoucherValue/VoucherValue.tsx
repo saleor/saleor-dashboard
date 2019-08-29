@@ -39,7 +39,7 @@ const VoucherValue = ({
 }: VoucherValueProps) => {
   const intl = useIntl();
 
-  const translatedVoucherTypes = translateVoucherTypes();
+  const translatedVoucherTypes = translateVoucherTypes(intl);
   const voucherTypeChoices = Object.values(VoucherType).map(type => ({
     label: translatedVoucherTypes[type],
     value: type

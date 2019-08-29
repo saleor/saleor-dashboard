@@ -44,7 +44,7 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
     const orderList = orders
       ? orders.map(order => ({
           ...order,
-          paymentStatus: transformPaymentStatus(order.paymentStatus)
+          paymentStatus: transformPaymentStatus(order.paymentStatus, intl)
         }))
       : undefined;
     return (

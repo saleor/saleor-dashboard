@@ -1,3 +1,4 @@
+import { MessageDescriptor } from "react-intl";
 import { SearchCustomers_customers_edges_node } from "../containers/SearchCustomers/types/SearchCustomers";
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 import {
@@ -1126,8 +1127,12 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
 });
 export const flatOrders = orders.map(order => ({
   ...order,
-  orderStatus: transformOrderStatus(order.status),
-  paymentStatus: transformPaymentStatus(order.paymentStatus)
+  orderStatus: transformOrderStatus(order.status, {
+    formatMessage: (message: MessageDescriptor) => message.defaultMessage
+  } as any),
+  paymentStatus: transformPaymentStatus(order.paymentStatus, {
+    formatMessage: (message: MessageDescriptor) => message.defaultMessage
+  } as any)
 }));
 export const variants = [
   { id: "p1", name: "Product 1: variant 1", sku: "12345", stockQuantity: 3 },

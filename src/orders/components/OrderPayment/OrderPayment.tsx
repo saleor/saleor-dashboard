@@ -64,7 +64,10 @@ const OrderPayment = withStyles(styles, { name: "OrderPayment" })(
     const canMarkAsPaid = maybe(() => order.actions, []).includes(
       OrderAction.MARK_AS_PAID
     );
-    const payment = transformPaymentStatus(maybe(() => order.paymentStatus));
+    const payment = transformPaymentStatus(
+      maybe(() => order.paymentStatus),
+      intl
+    );
     return (
       <Card>
         <CardTitle

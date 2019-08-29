@@ -18,11 +18,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import {
-  maybe,
-  renderCollection,
-  translatedAuthorizationKeyTypes
-} from "../../../misc";
+import { authorizationKeyTypes, maybe, renderCollection } from "../../../misc";
 import { ICONBUTTON_SIZE } from "../../../theme";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 import { SiteSettings_shop_authorizationKeys } from "../../types/SiteSettings";
@@ -47,8 +43,6 @@ interface SiteSettingsKeysProps extends WithStyles<typeof styles> {
 const SiteSettingsKeys = withStyles(styles, { name: "SiteSettingsKeys" })(
   ({ classes, disabled, keys, onAdd, onRemove }: SiteSettingsKeysProps) => {
     const intl = useIntl();
-
-    const keyTypes = translatedAuthorizationKeyTypes();
 
     return (
       <Card>
@@ -96,7 +90,7 @@ const SiteSettingsKeys = withStyles(styles, { name: "SiteSettingsKeys" })(
                 >
                   <TableCell>
                     {maybe<React.ReactNode>(
-                      () => keyTypes[key.name],
+                      () => authorizationKeyTypes[key.name],
                       <Skeleton />
                     )}
                   </TableCell>

@@ -38,7 +38,7 @@ const CountryTaxesPage = withStyles(styles, { name: "CountryTaxesPage" })(
   }: CountryTaxesPageProps & WithStyles<typeof styles>) => {
     const intl = useIntl();
 
-    const taxRates = translatedTaxRates();
+    const taxRates = translatedTaxRates(intl);
     return (
       <Container>
         <AppHeader onBack={onBack}>
