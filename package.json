@@ -150,6 +150,7 @@
     ],
     "moduleNameMapper": {
       "@assets(.*)$": "<rootDir>/assets/$1",
+      "@locale(.*)$": "<rootDir>/locale/$1",
       "@saleor(.*)$": "<rootDir>/src/$1",
       "^lodash-es(.*)$": "lodash/$1"
     }
