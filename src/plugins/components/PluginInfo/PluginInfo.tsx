@@ -18,13 +18,9 @@ interface PluginInfoProps {
 
 const styles = createStyles({
   status: {
-    color: "#3D3D3D",
-    fontSize: 16,
-    fontWeight: 400,
     paddingTop: 20
   },
   title: {
-    color: "#616161",
     fontSize: 14,
     paddingTop: 10
   }
@@ -58,9 +54,7 @@ const PluginInfo = withStyles(styles, { name: "PluginInfo" })(
           )}
           <FormSpacer />
           <Hr />
-          <Typography className={classes.status} variant="h6">
-            {i18n.t("Status")}
-          </Typography>
+          <Typography className={classes.status}>{i18n.t("Status")}</Typography>
           <ControlledSwitch
             checked={data.active}
             label={"Set plugin as Active"}

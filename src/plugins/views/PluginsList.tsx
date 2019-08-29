@@ -1,5 +1,4 @@
 import { configurationMenuUrl } from "@saleor/configuration";
-import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
@@ -21,9 +20,6 @@ export const PluginsList: React.StatelessComponent<PluginsListProps> = ({
 }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
-  const { isSelected, listElements, toggle, toggleAll } = useBulkActions(
-    params.ids
-  );
   const { updateListSettings, settings } = useListSettings(
     ListViews.PLUGINS_LIST
   );
@@ -50,10 +46,6 @@ export const PluginsList: React.StatelessComponent<PluginsListProps> = ({
               onPreviousPage={loadPreviousPage}
               onUpdateListSettings={updateListSettings}
               onRowClick={id => () => navigate(pluginsUrl(id))}
-              isChecked={isSelected}
-              selected={listElements.length}
-              toggle={toggle}
-              toggleAll={toggleAll}
             />
           </>
         );

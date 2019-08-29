@@ -11,6 +11,7 @@ import { UserError } from "@saleor/types";
 import React from "react";
 
 import i18n from "../../../i18n";
+import { Plugin_plugin } from "../../types/Plugin";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
 
@@ -30,7 +31,7 @@ export interface FormData {
 export interface PluginsDetailsPageProps {
   disabled: boolean;
   errors: UserError[];
-  plugin: FormData;
+  plugin: Plugin_plugin;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: FormData) => void;
@@ -54,23 +55,22 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
   return (
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ data, errors, hasChanged, submit, set, triggerChange }) => {
-        const newData = {
-          active: data.active,
-          configuration: data.configuration
-        };
-
         const onChange = event => {
+          const newData = {
+            active: data.active,
+            configuration: data.configuration
+          };
           const { name, value } = event.target;
           name === "active"
             ? (newData.active = value)
             : (newData.active = data.active);
-          newData.configuration &&
+          if (newData.configuration) {
             newData.configuration.map(item => {
               if (item.name === name) {
                 item.value = value;
               }
             });
-
+          }
           triggerChange();
           set(newData);
         };

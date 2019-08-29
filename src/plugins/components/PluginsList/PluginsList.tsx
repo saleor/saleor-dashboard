@@ -13,17 +13,17 @@ import TableRow from "@material-ui/core/TableRow";
 import EditIcon from "@material-ui/icons/Edit";
 import React from "react";
 
-import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import i18n from "@saleor/i18n";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActionsWithoutToolbar, ListProps } from "@saleor/types";
+import { ListProps } from "@saleor/types";
+import { translateBoolean } from "@saleor/utils/i18n";
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
 
-export interface PluginListProps extends ListProps, ListActionsWithoutToolbar {
+export interface PluginListProps extends ListProps {
   plugins: Plugins_plugins_edges_node[];
 }
 
@@ -59,21 +59,15 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
     pageInfo,
     onRowClick,
     onUpdateListSettings,
-    onPreviousPage,
-    isChecked,
-    selected,
-    toggle,
-    toggleAll
+    onPreviousPage
   }: PluginListProps & WithStyles<typeof styles>) => {
     return (
       <Card>
         <Table>
           <TableHead
             colSpan={numberOfColumns}
-            selected={selected}
             disabled={disabled}
             items={plugins}
-            toggleAll={toggleAll}
           >
             <TableCell className={classes.colName} padding="dense">
               {i18n.t("Name", { context: "table header" })}
@@ -106,24 +100,13 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
             {renderCollection(
               plugins,
               plugin => {
-                const isSelected = plugin ? isChecked(plugin.id) : false;
-
                 return (
                   <TableRow
                     hover={!!plugin}
                     className={!!plugin ? classes.link : undefined}
                     onClick={plugin ? onRowClick(plugin.id) : undefined}
                     key={plugin ? plugin.id : "skeleton"}
-                    selected={isSelected}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        disabled={disabled}
-                        disableClickPropagation
-                        onChange={() => toggle(plugin.id)}
-                      />
-                    </TableCell>
                     <TableCell className={classes.colName}>
                       {maybe<React.ReactNode>(() => plugin.name, <Skeleton />)}
                     </TableCell>
@@ -131,7 +114,7 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
                       {maybe<React.ReactNode>(
                         () => (
                           <StatusLabel
-                            label={plugin.active ? i18n.t("Yes") : i18n.t("No")}
+                            label={translateBoolean(plugin.active)}
                             status={plugin.active ? "success" : "error"}
                           />
                         ),

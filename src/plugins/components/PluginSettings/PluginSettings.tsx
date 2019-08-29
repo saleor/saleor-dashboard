@@ -4,6 +4,7 @@ import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
+import { FormErrors } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import i18n from "../../../i18n";
@@ -11,11 +12,7 @@ import { FormData } from "../PluginsDetailsPage";
 
 interface PluginSettingsProps {
   data: FormData;
-  errors: Partial<{
-    description: string;
-    domain: string;
-    name: string;
-  }>;
+  errors: FormErrors<"name" | "configuration">;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -64,6 +61,7 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
                       ? configuration.value === "true"
                       : configuration.value
                   }
+                  disabled={disabled}
                   label={configuration.label}
                   name={configuration.name}
                   onChange={onChange}

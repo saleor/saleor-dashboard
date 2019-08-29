@@ -4,13 +4,11 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import i18n from "@saleor/i18n";
-import { ListActionsWithoutToolbar, PageListProps } from "@saleor/types";
+import { PageListProps } from "@saleor/types";
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
 import PluginsList from "../PluginsList/PluginsList";
 
-export interface PluginsListPageProps
-  extends PageListProps,
-    ListActionsWithoutToolbar {
+export interface PluginsListPageProps extends PageListProps {
   plugins: Plugins_plugins_edges_node[];
   onBack: () => void;
 }
@@ -24,11 +22,7 @@ const PluginsListPage: React.StatelessComponent<PluginsListPageProps> = ({
   onRowClick,
   onUpdateListSettings,
   pageInfo,
-  plugins,
-  isChecked,
-  selected,
-  toggle,
-  toggleAll
+  plugins
 }) => (
   <Container>
     <AppHeader onBack={onBack}>{i18n.t("Configuration")}</AppHeader>
@@ -42,10 +36,6 @@ const PluginsListPage: React.StatelessComponent<PluginsListPageProps> = ({
       onUpdateListSettings={onUpdateListSettings}
       onRowClick={onRowClick}
       pageInfo={pageInfo}
-      isChecked={isChecked}
-      selected={selected}
-      toggle={toggle}
-      toggleAll={toggleAll}
     />
   </Container>
 );
