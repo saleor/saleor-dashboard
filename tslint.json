@@ -12,6 +12,7 @@
       "@material-ui",
       "lodash-es",
       "@assets",
+      "@locale",
       "@saleor"
     ]
   }

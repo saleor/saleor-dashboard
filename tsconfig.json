@@ -10,6 +10,7 @@
     "noUnusedParameters": true,
     "paths": {
       "@assets/*": ["assets/*"],
+      "@locale/*": ["locale/*"],
       "@saleor/*": ["src/*"]
     },
     "resolveJsonModule": true
