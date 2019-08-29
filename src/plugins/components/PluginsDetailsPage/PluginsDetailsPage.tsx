@@ -64,11 +64,12 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
           name === "active"
             ? (newData.active = value)
             : (newData.active = data.active);
-          newData.configuration.map(item => {
-            if (item.name === name) {
-              item.value = value;
-            }
-          });
+          newData.configuration &&
+            newData.configuration.map(item => {
+              if (item.name === name) {
+                item.value = value;
+              }
+            });
 
           triggerChange();
           set(newData);
