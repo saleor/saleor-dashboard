@@ -1,7 +1,8 @@
-import React from "react";
-
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
+import i18n from "@saleor/i18n";
+import React from "react";
 import { getMutationState, maybe } from "../../misc";
 import PluginsDetailsPage from "../components/PluginsDetailsPage";
 import { TypedPluginUpdate } from "../mutations";
@@ -17,6 +18,7 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
   id
 }) => {
   const navigate = useNavigator();
+  const notify = useNotifier();
 
   return (
     <TypedPluginUpdate>
@@ -29,6 +31,25 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
               maybe(() => pluginUpdateOpts.data.pluginUpdate.errors)
             );
 
+            const formErrors = maybe(
+              () => pluginUpdateOpts.data.pluginUpdate.errors,
+              []
+            );
+
+            if (formErrors.length) {
+              formErrors.map(error => {
+                notify({
+                  text: error.message
+                });
+              });
+            } else {
+              if (pluginUpdateOpts.data) {
+                notify({
+                  text: i18n.t("Succesfully updated plugin settings")
+                });
+              }
+            }
+
             return (
               <>
                 <WindowTitle
@@ -36,10 +57,7 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
                 />
                 <PluginsDetailsPage
                   disabled={PluginDetails.loading}
-                  errors={maybe(
-                    () => pluginUpdateOpts.data.pluginUpdate.errors,
-                    []
-                  )}
+                  errors={formErrors}
                   saveButtonBarState={formTransitionState}
                   plugin={maybe(() => PluginDetails.data.plugin)}
                   onBack={() => navigate(pluginsListUrl())}
