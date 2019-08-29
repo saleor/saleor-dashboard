@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-26T21:52:39.170Z\n"
+"POT-Creation-Date: 2019-08-29T12:47:44.847Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -33,6 +33,14 @@ msgstr ""
 #. A value named {name} already exists
 msgctxt "attribute value edit error"
 msgid "A value named {name} already exists"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.accommodation] - tax rate
+#. defaultMessage is:
+#. Accommodation
+msgctxt "tax rate"
+msgid "Accommodation"
 msgstr ""
 
 #: build/locale/src/staff/components/StaffStatus/StaffStatus.json
@@ -403,6 +411,10 @@ msgstr ""
 #. [src.products.components.ProductCreatePage.2706108815]
 #. defaultMessage is:
 #. Add search engine title and description to make this product easier to find
+#: build/locale/src/products/components/ProductUpdatePage/ProductUpdatePage.json
+#. [src.products.components.ProductUpdatePage.2706108815]
+#. defaultMessage is:
+#. Add search engine title and description to make this product easier to find
 msgctxt "description"
 msgid "Add search engine title and description to make this product easier to find"
 msgstr ""
@@ -437,6 +449,14 @@ msgstr ""
 #. Add subcategory
 msgctxt "button"
 msgid "Add subcategory"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
+#. [src.attributes.components.AttributeProperties.673770329] - add attribute as column in product list table
+#. defaultMessage is:
+#. Add to Column Options
+msgctxt "add attribute as column in product list table"
+msgid "Add to Column Options"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
@@ -553,6 +573,46 @@ msgstr ""
 #. Admin
 msgctxt "attribute values list: slug column header"
 msgid "Admin"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.admissionToCulturalEvents] - tax rate
+#. defaultMessage is:
+#. Admission to cultural events
+msgctxt "tax rate"
+msgid "Admission to cultural events"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.admissionToEntertainmentEvents] - tax rate
+#. defaultMessage is:
+#. Admission to entertainment events
+msgctxt "tax rate"
+msgid "Admission to entertainment events"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.admissionToSportingEvents] - tax rate
+#. defaultMessage is:
+#. Admission to sporting events
+msgctxt "tax rate"
+msgid "Admission to sporting events"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.advertising] - tax rate
+#. defaultMessage is:
+#. Advertising
+msgctxt "tax rate"
+msgid "Advertising"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.agriculturalSupplies] - tax rate
+#. defaultMessage is:
+#. Agricultural supplies
+msgctxt "tax rate"
+msgid "Agricultural supplies"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderListPage/OrderListPage.json
@@ -1383,6 +1443,22 @@ msgctxt "product variant status"
 msgid "Available"
 msgstr ""
 
+#: build/locale/src/products/views/ProductList/filters.json
+#. [src.products.views.ProductList.available] - filter products by stock
+#. defaultMessage is:
+#. Available
+msgctxt "filter products by stock"
+msgid "Available"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.babyFoodstuffs] - tax rate
+#. defaultMessage is:
+#. Baby foodstuffs
+msgctxt "tax rate"
+msgid "Baby foodstuffs"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.back] - button
 #. defaultMessage is:
@@ -1411,6 +1487,14 @@ msgctxt "section header"
 msgid "Background image (optional)"
 msgstr ""
 
+#: build/locale/src/misc.json
+#. [src.bikes] - tax rate
+#. defaultMessage is:
+#. Bikes
+msgctxt "tax rate"
+msgid "Bikes"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 #. [src.orders.components.OrderCustomer.4282475982]
 #. defaultMessage is:
@@ -1425,6 +1509,14 @@ msgstr ""
 #. Billing address
 msgctxt "subsection header"
 msgid "Billing address"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.books] - tax rate
+#. defaultMessage is:
+#. Books
+msgctxt "tax rate"
+msgid "Books"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -1495,6 +1587,14 @@ msgctxt "button"
 msgid "Cancel shipment"
 msgstr ""
 
+#: build/locale/src/misc.json
+#. [src.cancelled] - order status
+#. defaultMessage is:
+#. Cancelled
+msgctxt "order status"
+msgid "Cancelled"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json
 #. [src.orders.components.OrderPayment.4211710217] - capture payment, button
 #. defaultMessage is:
@@ -1517,6 +1617,14 @@ msgstr ""
 #. Captured amount
 msgctxt "order payment"
 msgid "Captured amount"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.catalog]
+#. defaultMessage is:
+#. Catalog
+msgctxt "description"
+msgid "Catalog"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -1653,6 +1761,14 @@ msgstr ""
 #. Charge taxes on shipping rates
 msgctxt "description"
 msgid "Charge taxes on shipping rates"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.childrensClothing] - tax rate
+#. defaultMessage is:
+#. Children's clothing
+msgctxt "tax rate"
+msgid "Children's clothing"
 msgstr ""
 
 #: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
@@ -2319,6 +2435,30 @@ msgctxt "description"
 msgid "Date"
 msgstr ""
 
+#: build/locale/src/orders/views/OrderList/filters.json
+#. [src.orders.views.OrderList.dateFrom] - filter by date
+#. defaultMessage is:
+#. Date from {date}
+msgctxt "filter by date"
+msgid "Date from {date}"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderList/filters.json
+#. [src.orders.views.OrderList.dateIs] - filter by date
+#. defaultMessage is:
+#. Date is {date}
+msgctxt "filter by date"
+msgid "Date is {date}"
+msgstr ""
+
+#: build/locale/src/orders/views/OrderList/filters.json
+#. [src.orders.views.OrderList.dateTo] - filter by date
+#. defaultMessage is:
+#. Date to {date}
+msgctxt "filter by date"
+msgid "Date to {date}"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
 #. [src.customers.components.CustomerAddress.1224809208]
 #. defaultMessage is:
@@ -2807,12 +2947,44 @@ msgctxt "description"
 msgid "Discount Value"
 msgstr ""
 
+#: build/locale/src/intl.json
+#. [src.discounts]
+#. defaultMessage is:
+#. Discounts
+msgctxt "description"
+msgid "Discounts"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.domesticFuel] - tax rate
+#. defaultMessage is:
+#. Domestic fuel
+msgctxt "tax rate"
+msgid "Domestic fuel"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.domesticServices] - tax rate
+#. defaultMessage is:
+#. Domestic services
+msgctxt "tax rate"
+msgid "Domestic services"
+msgstr ""
+
 #: build/locale/src/components/ErrorPage/ErrorPage.json
 #. [src.components.ErrorPage.3090161573]
 #. defaultMessage is:
 #. Don't worry, everything is gonna be fine
 msgctxt "description"
 msgid "Don't worry, everything is gonna be fine"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.draft] - order status
+#. defaultMessage is:
+#. Draft
+msgctxt "order status"
+msgid "Draft"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -2839,6 +3011,14 @@ msgctxt "order history message"
 msgid "Draft order was created"
 msgstr ""
 
+#: build/locale/src/intl.json
+#. [src.drafts]
+#. defaultMessage is:
+#. Drafts
+msgctxt "description"
+msgid "Drafts"
+msgstr ""
+
 #: build/locale/src/components/ImageUpload/ImageUpload.json
 #. [src.components.ImageUpload.1731007575] - image upload
 #. defaultMessage is:
@@ -2853,6 +3033,14 @@ msgstr ""
 #. Dropdown
 msgctxt "product attribute type"
 msgid "Dropdown"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.ebooks] - tax rate
+#. defaultMessage is:
+#. E-books
+msgctxt "tax rate"
+msgid "E-books"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -3039,6 +3227,14 @@ msgctxt "description"
 msgid "Enter any extra infotmation regarding this customer."
 msgstr ""
 
+#: build/locale/src/discounts/translations.json
+#. [src.discounts.order] - voucher discount
+#. defaultMessage is:
+#. Entire order
+msgctxt "voucher discount"
+msgid "Entire order"
+msgstr ""
+
 #: build/locale/src/components/ConfirmButton/ConfirmButton.json
 #. [src.components.ConfirmButton.2845142593] - button
 #. defaultMessage is:
@@ -3155,6 +3351,14 @@ msgctxt "voucher discount type"
 msgid "Fixed Amount"
 msgstr ""
 
+#: build/locale/src/misc.json
+#. [src.foodstuffs] - tax rate
+#. defaultMessage is:
+#. Foodstuffs
+msgctxt "tax rate"
+msgid "Foodstuffs"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
 #. [src.discounts.components.VoucherTypes.3289659291] - voucher discount type
 #. defaultMessage is:
@@ -3177,6 +3381,18 @@ msgstr ""
 #. Fulfill products
 msgctxt "dialog header"
 msgid "Fulfill products"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.fulfilled] - order status
+#. defaultMessage is:
+#. Fulfilled
+#: build/locale/src/orders/views/OrderList/filters.json
+#. [src.orders.views.OrderList.fulfilled] - order status
+#. defaultMessage is:
+#. Fulfilled
+msgctxt "order status"
+msgid "Fulfilled"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
@@ -3251,6 +3467,22 @@ msgctxt "order history message"
 msgid "Fulfillment was cancelled"
 msgstr ""
 
+#: build/locale/src/misc.json
+#. [src.paid] - payment status
+#. defaultMessage is:
+#. Fully paid
+msgctxt "payment status"
+msgid "Fully paid"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.refunded] - payment status
+#. defaultMessage is:
+#. Fully refunded
+msgctxt "payment status"
+msgid "Fully refunded"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.generalInformations]
 #. defaultMessage is:
@@ -3311,6 +3543,30 @@ msgctxt "product is hidden"
 msgid "Hidden"
 msgstr ""
 
+#: build/locale/src/products/views/ProductList/filters.json
+#. [src.products.views.ProductList.hidden] - filter products by visibility
+#. defaultMessage is:
+#. Hidden
+msgctxt "filter products by visibility"
+msgid "Hidden"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.home] - home section name
+#. defaultMessage is:
+#. Home
+msgctxt "home section name"
+msgid "Home"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.hotels] - tax rate
+#. defaultMessage is:
+#. Hotels
+msgctxt "tax rate"
+msgid "Hotels"
+msgstr ""
+
 #: build/locale/src/pages/components/PageSlug/PageSlug.json
 #. [src.pages.components.PageSlug.4210828158]
 #. defaultMessage is:
@@ -3325,6 +3581,14 @@ msgstr ""
 #. If empty, the preview shows what will be autogenerated.
 msgctxt "description"
 msgid "If empty, the preview shows what will be autogenerated."
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
+#. [src.attributes.components.AttributeProperties.2519239682]
+#. defaultMessage is:
+#. If enable this attribute can be used as a column in product table.
+msgctxt "description"
+msgid "If enable this attribute can be used as a column in product table."
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
@@ -3587,6 +3851,14 @@ msgctxt "button"
 msgid "Log out"
 msgstr ""
 
+#: build/locale/src/auth/components/LoginPage/LoginPage.json
+#. [src.auth.components.LoginPage.109182747] - button
+#. defaultMessage is:
+#. Login
+msgctxt "button"
+msgid "Login"
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.manage] - button
 #. defaultMessage is:
@@ -3665,6 +3937,14 @@ msgstr ""
 #. Maximal Order Weight
 msgctxt "description"
 msgid "Maximal Order Weight"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.medical] - tax rate
+#. defaultMessage is:
+#. Medical
+msgctxt "tax rate"
+msgid "Medical"
 msgstr ""
 
 #: build/locale/src/navigation/components/MenuItems/MenuItems.json
@@ -3897,6 +4177,22 @@ msgstr ""
 #. New Variant
 msgctxt "variant name"
 msgid "New Variant"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.newspapers] - tax rate
+#. defaultMessage is:
+#. Newspapers
+msgctxt "tax rate"
+msgid "Newspapers"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.no]
+#. defaultMessage is:
+#. No
+msgctxt "description"
+msgid "No"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
@@ -4463,6 +4759,30 @@ msgctxt "optional field"
 msgid "Optional"
 msgstr ""
 
+#: build/locale/src/home/components/HomeActivityCard/activityMessages.json
+#. [src.home.components.HomeActivityCard.paid]
+#. defaultMessage is:
+#. Order #{orderId} was fully paid
+msgctxt "description"
+msgid "Order #{orderId} was fully paid"
+msgstr ""
+
+#: build/locale/src/home/components/HomeActivityCard/activityMessages.json
+#. [src.home.components.HomeActivityCard.placed]
+#. defaultMessage is:
+#. Order #{orderId} was placed
+msgctxt "description"
+msgid "Order #{orderId} was placed"
+msgstr ""
+
+#: build/locale/src/home/components/HomeActivityCard/activityMessages.json
+#. [src.home.components.HomeActivityCard.draft]
+#. defaultMessage is:
+#. Order #{orderId} was placed from draft by {userEmail}
+msgctxt "description"
+msgid "Order #{orderId} was placed from draft by {userEmail}"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderDraftDetails/OrderDraftDetails.json
 #. [src.orders.components.OrderDraftDetails.2343989342] - section header
 #. defaultMessage is:
@@ -4643,6 +4963,14 @@ msgctxt "product status"
 msgid "Out Of Stock"
 msgstr ""
 
+#: build/locale/src/products/views/ProductList/filters.json
+#. [src.products.views.ProductList.outOfStock] - filter products by stock
+#. defaultMessage is:
+#. Out of stock
+msgctxt "filter products by stock"
+msgid "Out of stock"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json
 #. [src.orders.components.OrderPayment.353147224] - order payment
 #. defaultMessage is:
@@ -4691,6 +5019,50 @@ msgctxt "order fulfillment status"
 msgid "Partially Fulfilled"
 msgstr ""
 
+#: build/locale/src/orders/views/OrderList/filters.json
+#. [src.orders.views.OrderList.partiallyFulfilled] - order status
+#. defaultMessage is:
+#. Partially Fulfilled
+msgctxt "order status"
+msgid "Partially Fulfilled"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.partiallyFulfilled] - order status
+#. defaultMessage is:
+#. Partially fulfilled
+msgctxt "order status"
+msgid "Partially fulfilled"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.partiallyPaid] - payment status
+#. defaultMessage is:
+#. Partially paid
+msgctxt "payment status"
+msgid "Partially paid"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.partiallyRefunded] - payment status
+#. defaultMessage is:
+#. Partially refunded
+msgctxt "payment status"
+msgid "Partially refunded"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.passengerTransport] - tax rate
+#. defaultMessage is:
+#. Passenger transport
+msgctxt "tax rate"
+msgid "Passenger transport"
+msgstr ""
+
+#: build/locale/src/auth/components/LoginPage/LoginPage.json
+#. [src.auth.components.LoginPage.2237029987]
+#. defaultMessage is:
+#. Password
 #: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
 #. [src.siteSettings.components.SiteSettingsKeyDialog.2237029987]
 #. defaultMessage is:
@@ -4801,6 +5173,14 @@ msgstr ""
 #. Permissions
 msgctxt "dialog header"
 msgid "Permissions"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.pharmaceuticals] - tax rate
+#. defaultMessage is:
+#. Pharmaceuticals
+msgctxt "tax rate"
+msgid "Pharmaceuticals"
 msgstr ""
 
 #: build/locale/src/components/AddressEdit/AddressEdit.json
@@ -4925,6 +5305,30 @@ msgstr ""
 #. Price Based Rates
 msgctxt "price based shipping methods, section header"
 msgid "Price Based Rates"
+msgstr ""
+
+#: build/locale/src/products/views/ProductList/filters.json
+#. [src.products.views.ProductList.priceFrom] - filter by price
+#. defaultMessage is:
+#. Price from {price}
+msgctxt "filter by price"
+msgid "Price from {price}"
+msgstr ""
+
+#: build/locale/src/products/views/ProductList/filters.json
+#. [src.products.views.ProductList.priceIs] - filter by price
+#. defaultMessage is:
+#. Price is {price}
+msgctxt "filter by price"
+msgid "Price is {price}"
+msgstr ""
+
+#: build/locale/src/products/views/ProductList/filters.json
+#. [src.products.views.ProductList.priceTo] - filter by price
+#. defaultMessage is:
+#. Price to {price}
+msgctxt "filter by price"
+msgid "Price to {price}"
 msgstr ""
 
 #: build/locale/src/discounts/components/SalePricing/SalePricing.json
@@ -5183,6 +5587,14 @@ msgctxt "description"
 msgid "Properties"
 msgstr ""
 
+#: build/locale/src/misc.json
+#. [src.propertyRenovations] - tax rate
+#. defaultMessage is:
+#. Property renovations
+msgctxt "tax rate"
+msgid "Property renovations"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionList.json
 #. [src.collections.views.1547167026] - publish collections
 #. defaultMessage is:
@@ -5276,6 +5688,14 @@ msgstr ""
 #. defaultMessage is:
 #. Published
 msgctxt "page status"
+msgid "Published"
+msgstr ""
+
+#: build/locale/src/products/views/ProductList/filters.json
+#. [src.products.views.ProductList.published] - filter products by visibility
+#. defaultMessage is:
+#. Published
+msgctxt "filter products by visibility"
 msgid "Published"
 msgstr ""
 
@@ -5411,6 +5831,14 @@ msgctxt "switch button"
 msgid "Release all stock allocated to this order"
 msgstr ""
 
+#: build/locale/src/auth/components/LoginPage/LoginPage.json
+#. [src.auth.components.LoginPage.3182284913] - login
+#. defaultMessage is:
+#. Remember me
+msgctxt "login"
+msgid "Remember me"
+msgstr ""
+
 #: build/locale/src/categories/views/CategoryDetails.json
 #. [src.categories.views.3488150607]
 #. defaultMessage is:
@@ -5509,6 +5937,14 @@ msgstr ""
 #. Rest of the World
 msgctxt "description"
 msgid "Rest of the World"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.restaurants] - tax rate
+#. defaultMessage is:
+#. Restaurants
+msgctxt "tax rate"
+msgid "Restaurants"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderFulfillmentCancelDialog/OrderFulfillmentCancelDialog.json
@@ -5943,6 +6379,14 @@ msgctxt "voucher end date, switch button"
 msgid "Set end date"
 msgstr ""
 
+#: build/locale/src/discounts/translations.json
+#. [src.discounts.shipment] - voucher discount
+#. defaultMessage is:
+#. Shipment
+msgctxt "voucher discount"
+msgid "Shipment"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json
 #. [src.orders.components.OrderPayment.1325966144] - order shipping method name
 #. defaultMessage is:
@@ -6115,12 +6559,32 @@ msgctxt "attribute internal name"
 msgid "Slug"
 msgstr ""
 
+#: build/locale/src/misc.json
+#. [src.socialHousing] - tax rate
+#. defaultMessage is:
+#. Social housing
+msgctxt "tax rate"
+msgid "Social housing"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
 #. [src.orders.components.OrderDraftFinalizeDialog.2968256006]
 #. defaultMessage is:
 #. Some products require shipping, but no method provided
 msgctxt "description"
 msgid "Some products require shipping, but no method provided"
+msgstr ""
+
+#: build/locale/src/mutations.json
+#. [src.1395232177] - error message
+#. defaultMessage is:
+#. Something went wrong. {errorMessage}
+#: build/locale/src/queries.json
+#. [src.1395232177] - error message
+#. defaultMessage is:
+#. Something went wrong. {errorMessage}
+msgctxt "error message"
+msgid "Something went wrong. {errorMessage}"
 msgstr ""
 
 #: build/locale/src/components/NotFoundPage/NotFoundPage.json
@@ -6139,6 +6603,14 @@ msgctxt "description"
 msgid "Sorry, the page was not found"
 msgstr ""
 
+#: build/locale/src/auth/components/LoginPage/LoginPage.json
+#. [src.auth.components.LoginPage.3476994590]
+#. defaultMessage is:
+#. Sorry, your username and/or password are incorrect. Please try again.
+msgctxt "description"
+msgid "Sorry, your username and/or password are incorrect. Please try again."
+msgstr ""
+
 #: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
 #. [src.orders.components.OrderListFilter.789263812]
 #. defaultMessage is:
@@ -6155,6 +6627,14 @@ msgctxt "description"
 msgid "Specific Price"
 msgstr ""
 
+#: build/locale/src/discounts/translations.json
+#. [src.discounts.products] - voucher discount
+#. defaultMessage is:
+#. Specific products
+msgctxt "voucher discount"
+msgid "Specific products"
+msgstr ""
+
 #: build/locale/src/staff/components/StaffProperties/StaffProperties.json
 #. [src.staff.components.StaffProperties.2650522200] - section header
 #. defaultMessage is:
@@ -6169,6 +6649,14 @@ msgstr ""
 #. Staff Members
 msgctxt "staff section name"
 msgid "Staff Members"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.standard] - tax rate
+#. defaultMessage is:
+#. Standard
+msgctxt "tax rate"
+msgid "Standard"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -7023,6 +7511,18 @@ msgctxt "button"
 msgid "Undo"
 msgstr ""
 
+#: build/locale/src/misc.json
+#. [src.unfulfilled] - order status
+#. defaultMessage is:
+#. Unfulfilled
+#: build/locale/src/orders/views/OrderList/filters.json
+#. [src.orders.views.OrderList.unfulfilled] - order status
+#. defaultMessage is:
+#. Unfulfilled
+msgctxt "order status"
+msgid "Unfulfilled"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
 #. [src.orders.components.OrderListFilter.1751787272] - order fulfillment status
 #. defaultMessage is:
@@ -7037,6 +7537,14 @@ msgstr ""
 #. Unfulfilled ({quantity})
 msgctxt "section header"
 msgid "Unfulfilled ({quantity})"
+msgstr ""
+
+#: build/locale/src/misc.json
+#. [src.unpaid] - payment status
+#. defaultMessage is:
+#. Unpaid
+msgctxt "payment status"
+msgid "Unpaid"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList.json
@@ -7483,6 +7991,14 @@ msgctxt "description"
 msgid "Vouchers"
 msgstr ""
 
+#: build/locale/src/misc.json
+#. [src.water] - tax rate
+#. defaultMessage is:
+#. Water
+msgctxt "tax rate"
+msgid "Water"
+msgstr ""
+
 #: build/locale/src/components/ErrorPage/ErrorPage.json
 #. [src.components.ErrorPage.3182212440]
 #. defaultMessage is:
@@ -7521,6 +8037,14 @@ msgstr ""
 #. Weight range
 msgctxt "order weight range"
 msgid "Weight range"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.yes]
+#. defaultMessage is:
+#. Yes
+msgctxt "description"
+msgid "Yes"
 msgstr ""
 
 #: build/locale/src/components/AddressEdit/AddressEdit.json
