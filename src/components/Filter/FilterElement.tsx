@@ -2,8 +2,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import i18n from "../../i18n";
 import Calendar from "../../icons/Calendar";
 import FormSpacer from "../FormSpacer";
 import PriceField from "../PriceField";
@@ -41,6 +41,7 @@ const FilterElement: React.FC<FilterElementProps> = ({
   onChange,
   value
 }) => {
+  const intl = useIntl();
   const classes = useStyles({});
 
   if (filter.data.type === FieldType.date) {
@@ -62,7 +63,9 @@ const FilterElement: React.FC<FilterElementProps> = ({
   } else if (filter.data.type === FieldType.rangeDate) {
     return (
       <>
-        <Typography>{i18n.t("from")}</Typography>
+        <Typography>
+          <FormattedMessage defaultMessage="from" />
+        </Typography>
         <TextField
           className={className}
           fullWidth
@@ -77,7 +80,9 @@ const FilterElement: React.FC<FilterElementProps> = ({
           }}
         />
         <FormSpacer />
-        <Typography>{i18n.t("to")}</Typography>
+        <Typography>
+          <FormattedMessage defaultMessage="to" />
+        </Typography>
         <TextField
           className={className}
           fullWidth
@@ -96,7 +101,9 @@ const FilterElement: React.FC<FilterElementProps> = ({
   } else if (filter.data.type === FieldType.range) {
     return (
       <>
-        <Typography>{i18n.t("from")}</Typography>
+        <Typography>
+          <FormattedMessage defaultMessage="from" />
+        </Typography>
         <TextField
           className={className}
           fullWidth
@@ -110,7 +117,9 @@ const FilterElement: React.FC<FilterElementProps> = ({
           }}
         />
         <FormSpacer />
-        <Typography>{i18n.t("to")}</Typography>
+        <Typography>
+          <FormattedMessage defaultMessage="to" />
+        </Typography>
         <TextField
           className={className}
           fullWidth
@@ -128,7 +137,9 @@ const FilterElement: React.FC<FilterElementProps> = ({
   } else if (filter.data.type === FieldType.rangePrice) {
     return (
       <>
-        <Typography>{i18n.t("from")}</Typography>
+        <Typography>
+          <FormattedMessage defaultMessage="from" />
+        </Typography>
         <PriceField
           currencySymbol={currencySymbol}
           className={className}
@@ -141,7 +152,9 @@ const FilterElement: React.FC<FilterElementProps> = ({
           }}
         />
         <FormSpacer />
-        <Typography>{i18n.t("to")}</Typography>
+        <Typography>
+          <FormattedMessage defaultMessage="to" />
+        </Typography>
         <PriceField
           currencySymbol={currencySymbol}
           className={className}
@@ -169,7 +182,9 @@ const FilterElement: React.FC<FilterElementProps> = ({
           }
         }}
         value={value as string}
-        placeholder={i18n.t("Select Filter...")}
+        placeholder={intl.formatMessage({
+          defaultMessage: "Select Filter..."
+        })}
         onChange={event => onChange(event.target.value)}
       />
     );

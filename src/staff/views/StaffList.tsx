@@ -6,9 +6,10 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import { useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "@saleor/configuration";
-import i18n from "@saleor/i18n";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import StaffAddMemberDialog, {
@@ -37,6 +38,7 @@ export const StaffList: React.StatelessComponent<StaffListProps> = ({
   const { updateListSettings, settings } = useListSettings(
     ListViews.STAFF_MEMBERS_LIST
   );
+  const intl = useIntl();
 
   const closeModal = () =>
     navigate(
@@ -55,7 +57,7 @@ export const StaffList: React.StatelessComponent<StaffListProps> = ({
         const handleStaffMemberAddSuccess = (data: StaffMemberAdd) => {
           if (data.staffCreate.errors.length === 0) {
             notify({
-              text: i18n.t("Succesfully added staff member")
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(staffMemberDetailsUrl(data.staffCreate.user.id));
           }

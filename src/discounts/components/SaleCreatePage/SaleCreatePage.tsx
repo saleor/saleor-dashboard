@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -8,7 +9,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { UserError } from "../../../types";
 import { SaleType } from "../../../types/globalTypes";
 import SaleInfo from "../SaleInfo";
@@ -39,6 +40,8 @@ const SaleCreatePage: React.StatelessComponent<SaleCreatePageProps> = ({
   saveButtonBarState,
   onBack
 }) => {
+  const intl = useIntl();
+
   const initialForm: FormData = {
     endDate: "",
     name: "",
@@ -50,8 +53,15 @@ const SaleCreatePage: React.StatelessComponent<SaleCreatePageProps> = ({
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, errors: formErrors, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Sales")}</AppHeader>
-          <PageHeader title={i18n.t("Create Sale")} />
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.sales)}
+          </AppHeader>
+          <PageHeader
+            title={intl.formatMessage({
+              defaultMessage: "Create Sale",
+              description: "page header"
+            })}
+          />
           <Grid>
             <div>
               <SaleInfo

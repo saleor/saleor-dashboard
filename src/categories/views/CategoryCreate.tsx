@@ -1,9 +1,9 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "../../i18n";
 import { getMutationState, maybe } from "../../misc";
 import CategoryCreatePage from "../components/CategoryCreatePage";
 import { TypedCategoryCreateMutation } from "../mutations";
@@ -19,10 +19,15 @@ export const CategoryCreateView: React.StatelessComponent<
 > = ({ parentId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   const handleSuccess = (data: CategoryCreate) => {
     if (data.categoryCreate.errors.length === 0) {
-      notify({ text: i18n.t("Category created") });
+      notify({
+        text: intl.formatMessage({
+          defaultMessage: "Category created"
+        })
+      });
       navigate(categoryUrl(data.categoryCreate.category.id));
     }
   };
@@ -42,7 +47,12 @@ export const CategoryCreateView: React.StatelessComponent<
 
         return (
           <>
-            <WindowTitle title={i18n.t("Create category")} />
+            <WindowTitle
+              title={intl.formatMessage({
+                defaultMessage: "Create category",
+                description: "window title"
+              })}
+            />
             <CategoryCreatePage
               saveButtonBarState={formTransitionState}
               errors={errors}

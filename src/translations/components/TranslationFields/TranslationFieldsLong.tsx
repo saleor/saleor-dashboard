@@ -1,10 +1,10 @@
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
-import i18n from "../../../i18n";
 import TranslationFieldsSave from "./TranslationFieldsSave";
 
 interface TranslationFieldsLongProps {
@@ -23,8 +23,10 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
   saveButtonState,
   onDiscard,
   onSubmit
-}) =>
-  edit ? (
+}) => {
+  const intl = useIntl();
+
+  return edit ? (
     <Form
       initial={{ translation: initial }}
       onSubmit={data => onSubmit(data.translation)}
@@ -35,7 +37,9 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
             disabled={disabled}
             fullWidth
             multiline
-            label={i18n.t("Translation")}
+            label={intl.formatMessage({
+              defaultMessage: "Translation"
+            })}
             name="translation"
             value={data.translation}
             onChange={change}
@@ -50,10 +54,11 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
     </Form>
   ) : initial === null ? (
     <Typography color="textSecondary">
-      {i18n.t("No translation yet")}
+      <FormattedMessage defaultMessage="No translation yet" />
     </Typography>
   ) : (
     <Typography>{initial}</Typography>
   );
+};
 TranslationFieldsLong.displayName = "TranslationFieldsLong";
 export default TranslationFieldsLong;

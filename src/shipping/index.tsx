@@ -1,9 +1,10 @@
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
-import i18n from "../i18n";
 import {
   shippingZoneAddPath,
   shippingZonePath,
@@ -39,14 +40,26 @@ const ShippingZoneDetails: React.StatelessComponent<
   );
 };
 
-export const ShippingRouter: React.StatelessComponent = () => (
-  <>
-    <WindowTitle title={i18n.t("Shipping")} />
-    <Switch>
-      <Route exact path={shippingZonesListPath} component={ShippingZonesList} />
-      <Route exact path={shippingZoneAddPath} component={ShippingZoneCreate} />
-      <Route path={shippingZonePath(":id")} component={ShippingZoneDetails} />
-    </Switch>
-  </>
-);
+export const ShippingRouter: React.FC = () => {
+  const intl = useIntl();
+
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(sectionNames.shipping)} />
+      <Switch>
+        <Route
+          exact
+          path={shippingZonesListPath}
+          component={ShippingZonesList}
+        />
+        <Route
+          exact
+          path={shippingZoneAddPath}
+          component={ShippingZoneCreate}
+        />
+        <Route path={shippingZonePath(":id")} component={ShippingZoneDetails} />
+      </Switch>
+    </>
+  );
+};
 export default ShippingRouter;

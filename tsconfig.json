@@ -11,7 +11,8 @@
     "paths": {
       "@assets/*": ["assets/*"],
       "@saleor/*": ["src/*"]
-    }
+    },
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules"]
 }

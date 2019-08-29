@@ -1,11 +1,12 @@
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { Container } from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import i18n from "@saleor/i18n";
+import { sectionNames } from "@saleor/intl";
 import { ListProps } from "@saleor/types";
 import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 import StaffList from "../StaffList/StaffList";
@@ -21,22 +22,31 @@ const StaffListPage: React.StatelessComponent<StaffListPageProps> = ({
   onAdd,
   onBack,
   ...listProps
-}) => (
-  <Container>
-    <AppHeader onBack={onBack}>{i18n.t("Configuration")}</AppHeader>
-    <PageHeader title={i18n.t("Staff members", { context: "page title" })}>
-      <Button
-        color="primary"
-        disabled={disabled}
-        variant="contained"
-        onClick={onAdd}
-      >
-        {i18n.t("Add staff member", { context: "button" })}
-        <AddIcon />
-      </Button>
-    </PageHeader>
-    <StaffList disabled={disabled} {...listProps} />
-  </Container>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <Container>
+      <AppHeader onBack={onBack}>
+        {intl.formatMessage(sectionNames.configuration)}
+      </AppHeader>
+      <PageHeader title={intl.formatMessage(sectionNames.staff)}>
+        <Button
+          color="primary"
+          disabled={disabled}
+          variant="contained"
+          onClick={onAdd}
+        >
+          <FormattedMessage
+            defaultMessage="Add staff member"
+            description="button"
+          />
+          <AddIcon />
+        </Button>
+      </PageHeader>
+      <StaffList disabled={disabled} {...listProps} />
+    </Container>
+  );
+};
 StaffListPage.displayName = "StaffListPage";
 export default StaffListPage;

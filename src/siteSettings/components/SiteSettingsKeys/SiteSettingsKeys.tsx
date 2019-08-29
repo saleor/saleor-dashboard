@@ -14,15 +14,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
-import {
-  maybe,
-  renderCollection,
-  translatedAuthorizationKeyTypes
-} from "../../../misc";
+import { authorizationKeyTypes, maybe, renderCollection } from "../../../misc";
 import { ICONBUTTON_SIZE } from "../../../theme";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 import { SiteSettings_shop_authorizationKeys } from "../../types/SiteSettings";
@@ -46,12 +42,14 @@ interface SiteSettingsKeysProps extends WithStyles<typeof styles> {
 
 const SiteSettingsKeys = withStyles(styles, { name: "SiteSettingsKeys" })(
   ({ classes, disabled, keys, onAdd, onRemove }: SiteSettingsKeysProps) => {
-    const keyTypes = translatedAuthorizationKeyTypes();
+    const intl = useIntl();
+
     return (
       <Card>
         <CardTitle
-          title={i18n.t("Authentication Keys", {
-            context: "card title"
+          title={intl.formatMessage({
+            defaultMessage: "Authentication Keys",
+            description: "section header"
           })}
           toolbar={
             <Button
@@ -60,9 +58,7 @@ const SiteSettingsKeys = withStyles(styles, { name: "SiteSettingsKeys" })(
               variant="text"
               onClick={onAdd}
             >
-              {i18n.t("Add key", {
-                context: "button"
-              })}
+              <FormattedMessage defaultMessage="Add key" description="button" />
             </Button>
           }
         />
@@ -70,10 +66,16 @@ const SiteSettingsKeys = withStyles(styles, { name: "SiteSettingsKeys" })(
           <TableHead>
             <TableRow>
               <TableCell>
-                {i18n.t("Authentication Type", { context: "table header" })}
+                <FormattedMessage
+                  defaultMessage="Authentication Type"
+                  description="authentication provider name"
+                />
               </TableCell>
               <TableCell>
-                {i18n.t("Key", { context: "table header" })}
+                <FormattedMessage
+                  defaultMessage="Key"
+                  description="authentication provider API key"
+                />
               </TableCell>
               <TableCell />
             </TableRow>
@@ -88,7 +90,7 @@ const SiteSettingsKeys = withStyles(styles, { name: "SiteSettingsKeys" })(
                 >
                   <TableCell>
                     {maybe<React.ReactNode>(
-                      () => keyTypes[key.name],
+                      () => authorizationKeyTypes[key.name],
                       <Skeleton />
                     )}
                   </TableCell>
@@ -104,7 +106,12 @@ const SiteSettingsKeys = withStyles(styles, { name: "SiteSettingsKeys" })(
               ),
               () => (
                 <TableRow>
-                  <TableCell colSpan={3}>{i18n.t("No keys")}</TableCell>
+                  <TableCell colSpan={3}>
+                    <FormattedMessage
+                      defaultMessage="No keys"
+                      description="no authentication provider API keys"
+                    />
+                  </TableCell>
                 </TableRow>
               )
             )}

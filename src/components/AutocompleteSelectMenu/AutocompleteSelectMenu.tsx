@@ -11,8 +11,9 @@ import TextField from "@material-ui/core/TextField";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import Downshift from "downshift";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import i18n from "../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import {
   getMenuItemByPath,
   IMenu,
@@ -153,7 +154,7 @@ const AutocompleteSelectMenu = withStyles(styles, {
                               }
                             >
                               <ArrowBack className={classes.menuBack} />
-                              {i18n.t("Back")}
+                              <FormattedMessage {...buttonMessages.back} />
                             </MenuItem>
                           )}
                           {(menuPath.length
@@ -176,7 +177,7 @@ const AutocompleteSelectMenu = withStyles(styles, {
                         </>
                       ) : (
                         <MenuItem disabled component="div">
-                          {i18n.t("No results")}
+                          <FormattedMessage defaultMessage="No results" />
                         </MenuItem>
                       )}
                     </Paper>

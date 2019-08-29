@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
@@ -8,7 +9,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { getUserName, maybe } from "../../../misc";
 import { UserError } from "../../../types";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
@@ -51,59 +52,67 @@ const CustomerDetailsPage: React.StatelessComponent<
   onRowClick,
   onAddressManageClick,
   onDelete
-}: CustomerDetailsPageProps) => (
-  <Form
-    errors={errors}
-    initial={{
-      email: maybe(() => customer.email, ""),
-      firstName: maybe(() => customer.firstName, ""),
-      isActive: maybe(() => customer.isActive, false),
-      lastName: maybe(() => customer.lastName, ""),
-      note: maybe(() => customer.note, "")
-    }}
-    onSubmit={onSubmit}
-    confirmLeave
-  >
-    {({ change, data, errors: formErrors, hasChanged, submit }) => (
-      <Container>
-        <AppHeader onBack={onBack}>{i18n.t("Customers")}</AppHeader>
-        <PageHeader title={getUserName(customer, true)} />
-        <Grid>
-          <div>
-            <CustomerDetails
-              customer={customer}
-              data={data}
-              disabled={disabled}
-              errors={formErrors}
-              onChange={change}
-            />
-            <CardSpacer />
-            <CustomerOrders
-              orders={maybe(() => customer.orders.edges.map(edge => edge.node))}
-              onViewAllOrdersClick={onViewAllOrdersClick}
-              onRowClick={onRowClick}
-            />
-          </div>
-          <div>
-            <CustomerAddresses
-              customer={customer}
-              disabled={disabled}
-              onAddressManageClick={onAddressManageClick}
-            />
-            <CardSpacer />
-            <CustomerStats customer={customer} />
-          </div>
-        </Grid>
-        <SaveButtonBar
-          disabled={disabled || !hasChanged}
-          state={saveButtonBar}
-          onSave={submit}
-          onCancel={onBack}
-          onDelete={onDelete}
-        />
-      </Container>
-    )}
-  </Form>
-);
+}: CustomerDetailsPageProps) => {
+  const intl = useIntl();
+
+  return (
+    <Form
+      errors={errors}
+      initial={{
+        email: maybe(() => customer.email, ""),
+        firstName: maybe(() => customer.firstName, ""),
+        isActive: maybe(() => customer.isActive, false),
+        lastName: maybe(() => customer.lastName, ""),
+        note: maybe(() => customer.note, "")
+      }}
+      onSubmit={onSubmit}
+      confirmLeave
+    >
+      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+        <Container>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.customers)}
+          </AppHeader>
+          <PageHeader title={getUserName(customer, true)} />
+          <Grid>
+            <div>
+              <CustomerDetails
+                customer={customer}
+                data={data}
+                disabled={disabled}
+                errors={formErrors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <CustomerOrders
+                orders={maybe(() =>
+                  customer.orders.edges.map(edge => edge.node)
+                )}
+                onViewAllOrdersClick={onViewAllOrdersClick}
+                onRowClick={onRowClick}
+              />
+            </div>
+            <div>
+              <CustomerAddresses
+                customer={customer}
+                disabled={disabled}
+                onAddressManageClick={onAddressManageClick}
+              />
+              <CardSpacer />
+              <CustomerStats customer={customer} />
+            </div>
+          </Grid>
+          <SaveButtonBar
+            disabled={disabled || !hasChanged}
+            state={saveButtonBar}
+            onSave={submit}
+            onCancel={onBack}
+            onDelete={onDelete}
+          />
+        </Container>
+      )}
+    </Form>
+  );
+};
 CustomerDetailsPage.displayName = "CustomerDetailsPage";
 export default CustomerDetailsPage;

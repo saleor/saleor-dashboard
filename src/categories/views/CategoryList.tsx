@@ -2,6 +2,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -10,7 +11,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import i18n from "@saleor/i18n";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import { CategoryListPage } from "../components/CategoryListPage/CategoryListPage";
@@ -39,6 +39,8 @@ export const CategoryList: React.StatelessComponent<CategoryListProps> = ({
   const { updateListSettings, settings } = useListSettings(
     ListViews.CATEGORY_LIST
   );
+  const intl = useIntl();
+
   const paginationState = createPaginationState(settings.rowNumber, params);
   return (
     <TypedRootCategoriesQuery displayLoader variables={paginationState}>
@@ -124,26 +126,26 @@ export const CategoryList: React.StatelessComponent<CategoryListProps> = ({
                       })
                     }
                     open={params.action === "delete"}
-                    title={i18n.t("Remove categories")}
+                    title={intl.formatMessage({
+                      defaultMessage: "Delete categories",
+                      description: "dialog title"
+                    })}
                     variant="delete"
                   >
-                    <DialogContentText
-                      dangerouslySetInnerHTML={{
-                        __html: i18n.t(
-                          "Are you sure you want to remove <strong>{{ number }}</strong> categories?",
-                          {
-                            number: maybe(
-                              () => params.ids.length.toString(),
-                              "..."
-                            )
-                          }
+                    <FormattedMessage
+                      defaultMessage="Are you sure you want to delete {counter, plural,
+                        one {this attribute}
+                        other {{displayQuantity} categories}
+                      }?"
+                      values={{
+                        counter: maybe(() => params.ids.length),
+                        displayQuantity: (
+                          <strong>{maybe(() => params.ids.length)}</strong>
                         )
                       }}
                     />
                     <DialogContentText>
-                      {i18n.t(
-                        "Remember that this will also remove all products assigned to this category."
-                      )}
+                      <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
                     </DialogContentText>
                   </ActionDialog>
                 </>

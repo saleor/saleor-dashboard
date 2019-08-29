@@ -3,12 +3,12 @@ import { DocumentNode } from "graphql";
 import gql from "graphql-tag";
 import React from "react";
 import { Query, QueryResult } from "react-apollo";
+import { useIntl } from "react-intl";
 
 import AppProgress from "./components/AppProgress";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import useNavigator from "./hooks/useNavigator";
 import useNotifier from "./hooks/useNotifier";
-import i18n from "./i18n";
 import { RequireAtLeastOne } from "./misc";
 
 export interface LoadMore<TData, TVariables> {
@@ -69,6 +69,7 @@ export function TypedQuery<TData, TVariables>(
   return ({ children, displayLoader, skip, variables, require }) => {
     const navigate = useNavigator();
     const pushMessage = useNotifier();
+    const intl = useIntl();
 
     return (
       <AppProgress>
@@ -82,9 +83,15 @@ export function TypedQuery<TData, TVariables>(
           >
             {queryData => {
               if (queryData.error) {
-                const msg = i18n.t("Something went wrong: {{ message }}", {
-                  message: queryData.error.message
-                });
+                const msg = intl.formatMessage(
+                  {
+                    defaultMessage: "Something went wrong. {errorMessage}",
+                    description: "error message"
+                  },
+                  {
+                    message: queryData.error.message
+                  }
+                );
                 pushMessage({ text: msg });
               }
 

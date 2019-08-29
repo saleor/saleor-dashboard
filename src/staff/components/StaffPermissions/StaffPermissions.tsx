@@ -8,11 +8,11 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
 import { StaffMemberDetails_shop_permissions } from "../../types/StaffMemberDetails";
 
 const styles = (theme: Theme) =>
@@ -47,6 +47,8 @@ const StaffPermissions = withStyles(styles, { name: "StaffPermissions" })(
     permissions,
     onChange
   }: StaffPermissionsProps) => {
+    const intl = useIntl();
+
     const handleFullAccessChange = (event: React.ChangeEvent<any>) =>
       onChange(event, () =>
         onChange({
@@ -68,19 +70,23 @@ const StaffPermissions = withStyles(styles, { name: "StaffPermissions" })(
     };
     return (
       <Card>
-        <CardTitle title={i18n.t("Permissions")} />
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Permissions",
+            description: "dialog header"
+          })}
+        />
         <CardContent>
           <Typography>
-            {i18n.t(
-              "Expand or restrict user's permissions to access certain part of saleor system."
-            )}
+            <FormattedMessage defaultMessage="Expand or restrict user's permissions to access certain part of saleor system." />
           </Typography>
           <div className={classes.checkboxContainer}>
             <ControlledCheckbox
               checked={data.hasFullAccess}
               disabled={disabled}
-              label={i18n.t("User has full access to the store", {
-                context: "checkbox label"
+              label={intl.formatMessage({
+                defaultMessage: "User has full access to the store",
+                description: "checkbox label"
               })}
               name="hasFullAccess"
               onChange={handleFullAccessChange}

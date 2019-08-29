@@ -11,8 +11,8 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import i18n from "../../i18n";
 import Checkbox from "../Checkbox";
 
 const styles = (theme: Theme) =>
@@ -110,7 +110,9 @@ export const MultiSelectField = withStyles(styles, {
               );
             })
           ) : (
-            <MenuItem disabled={true}>{i18n.t("No results found")}</MenuItem>
+            <MenuItem disabled={true}>
+              <FormattedMessage defaultMessage="No results found" />
+            </MenuItem>
           )}
         </Select>
         {hint && <FormHelperText>{hint}</FormHelperText>}

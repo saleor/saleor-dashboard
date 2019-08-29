@@ -5,11 +5,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import ListField from "@saleor/components/ListField";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 
 export interface FormData {
   name: string;
@@ -39,6 +40,8 @@ export interface ProductTypeAttributeEditDialogProps {
 const ProductTypeAttributeEditDialog: React.StatelessComponent<
   ProductTypeAttributeEditDialogProps
 > = ({ disabled, errors, name, opened, title, values, onClose, onConfirm }) => {
+  const intl = useIntl();
+
   const initialForm: FormData = {
     name: name || "",
     values: values || []
@@ -54,7 +57,9 @@ const ProductTypeAttributeEditDialog: React.StatelessComponent<
                 disabled={disabled}
                 error={!!formErrors.name}
                 fullWidth
-                label={i18n.t("Attribute name")}
+                label={intl.formatMessage({
+                  defaultMessage: "Attribute name"
+                })}
                 helperText={formErrors.name}
                 name="name"
                 value={data.name}
@@ -71,7 +76,9 @@ const ProductTypeAttributeEditDialog: React.StatelessComponent<
                 }
                 fullWidth
                 name="values"
-                label={i18n.t("Attribute values")}
+                label={intl.formatMessage({
+                  defaultMessage: "Attribute values"
+                })}
                 helperText={
                   formErrors.values ||
                   formErrors.addValues ||
@@ -83,10 +90,10 @@ const ProductTypeAttributeEditDialog: React.StatelessComponent<
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>
-                {i18n.t("Cancel", { context: "button" })}
+                <FormattedMessage {...buttonMessages.cancel} />
               </Button>
               <Button color="primary" variant="contained" type="submit">
-                {i18n.t("Save", { context: "button" })}
+                <FormattedMessage {...buttonMessages.confirm} />
               </Button>
             </DialogActions>
           </>

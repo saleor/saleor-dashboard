@@ -19,8 +19,8 @@
 !.tx
 *.css
 *.log
-*.pot
 *.pyc
+*.mo
 local_settings.py
 __pycache__/
 build/

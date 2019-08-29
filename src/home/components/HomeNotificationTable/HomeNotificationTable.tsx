@@ -12,9 +12,9 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -46,83 +46,104 @@ const HomeNotificationTable = withStyles(styles, {
     ordersToCapture,
     ordersToFulfill,
     productsOutOfStock
-  }: HomeNotificationTableProps) => {
-    return (
-      <Card>
-        <Table>
-          <TableBody className={classes.tableRow}>
-            <TableRow hover={true} onClick={onOrdersToFulfillClick}>
-              <TableCell>
-                {ordersToFulfill === undefined ? (
-                  <Skeleton />
-                ) : ordersToFulfill === 0 ? (
-                  <Typography>
-                    {i18n.t("No orders ready to fulfill")}
-                  </Typography>
-                ) : (
-                  <Typography
-                    dangerouslySetInnerHTML={{
-                      __html: i18n.t(
-                        "<b>{{ amount }} Orders</b> are ready to fulfill",
-                        { amount: ordersToFulfill }
-                      )
+  }: HomeNotificationTableProps) => (
+    <Card>
+      <Table>
+        <TableBody className={classes.tableRow}>
+          <TableRow hover={true} onClick={onOrdersToFulfillClick}>
+            <TableCell>
+              {ordersToFulfill === undefined ? (
+                <Skeleton />
+              ) : ordersToFulfill === 0 ? (
+                <Typography>
+                  <FormattedMessage
+                    defaultMessage="No orders ready to fulfill"
+                    id="homeNotificationTableNoOrders"
+                  />
+                </Typography>
+              ) : (
+                <Typography>
+                  <FormattedMessage
+                    defaultMessage="{amount, plural,
+                  one {One order}
+                  other {{amount} Orders}
+                } are ready to fulfill"
+                    id="homeNotificationTableOrders"
+                    values={{
+                      amount: <strong>{ordersToFulfill}</strong>
                     }}
                   />
-                )}
-              </TableCell>
-              <TableCell className={classes.arrowIcon}>
-                <KeyboardArrowRight />
-              </TableCell>
-            </TableRow>
-            <TableRow hover={true} onClick={onOrdersToCaptureClick}>
-              <TableCell>
-                {ordersToCapture === undefined ? (
-                  <Skeleton />
-                ) : ordersToCapture === 0 ? (
-                  <Typography>
-                    {i18n.t("No payments waiting for capture")}
-                  </Typography>
-                ) : (
-                  <Typography
-                    dangerouslySetInnerHTML={{
-                      __html: i18n.t(
-                        "<b>{{ amount }} Payments</b> to capture",
-                        { amount: ordersToCapture }
-                      )
+                </Typography>
+              )}
+            </TableCell>
+            <TableCell className={classes.arrowIcon}>
+              <KeyboardArrowRight />
+            </TableCell>
+          </TableRow>
+          <TableRow hover={true} onClick={onOrdersToCaptureClick}>
+            <TableCell>
+              {ordersToCapture === undefined ? (
+                <Skeleton />
+              ) : ordersToCapture === 0 ? (
+                <Typography>
+                  <FormattedMessage
+                    defaultMessage="No payments waiting for capture"
+                    id="homeNotificationsNoPayments"
+                  />
+                </Typography>
+              ) : (
+                <Typography>
+                  <FormattedMessage
+                    defaultMessage="{amount, plural,
+                  one {One payment}
+                  other {{amount} Payments}
+                } to capture"
+                    id="homeNotificationTablePayments"
+                    values={{
+                      amount: <strong>{ordersToCapture}</strong>
                     }}
                   />
-                )}
-              </TableCell>
-              <TableCell className={classes.arrowIcon}>
-                <KeyboardArrowRight />
-              </TableCell>
-            </TableRow>
-            <TableRow hover={true} onClick={onProductsOutOfStockClick}>
-              <TableCell>
-                {productsOutOfStock === undefined ? (
-                  <Skeleton />
-                ) : productsOutOfStock === 0 ? (
-                  <Typography>{i18n.t("No products out of stock")}</Typography>
-                ) : (
-                  <Typography
-                    dangerouslySetInnerHTML={{
-                      __html: i18n.t(
-                        "<b>{{ amount }} Products</b> out of stock",
-                        { amount: productsOutOfStock }
-                      )
+                </Typography>
+              )}
+            </TableCell>
+            <TableCell className={classes.arrowIcon}>
+              <KeyboardArrowRight />
+            </TableCell>
+          </TableRow>
+          <TableRow hover={true} onClick={onProductsOutOfStockClick}>
+            <TableCell>
+              {productsOutOfStock === undefined ? (
+                <Skeleton />
+              ) : productsOutOfStock === 0 ? (
+                <Typography>
+                  <FormattedMessage
+                    defaultMessage="No products out of stock"
+                    id="homeNotificationsTableNoProducts"
+                  />
+                </Typography>
+              ) : (
+                <Typography>
+                  <FormattedMessage
+                    defaultMessage="{amount, plural,
+                  one {One product}
+                  other {{amount} Products}
+                } out of stock"
+                    id="homeNotificationTableProducts"
+                    values={{
+                      amount: <strong>{productsOutOfStock}</strong>
                     }}
                   />
-                )}
-              </TableCell>
-              <TableCell className={classes.arrowIcon}>
-                <KeyboardArrowRight />
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </Card>
-    );
-  }
+                </Typography>
+              )}
+            </TableCell>
+            <TableCell className={classes.arrowIcon}>
+              <KeyboardArrowRight />
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </Card>
+  )
 );
 HomeNotificationTable.displayName = "HomeNotificationTable";
 export default HomeNotificationTable;

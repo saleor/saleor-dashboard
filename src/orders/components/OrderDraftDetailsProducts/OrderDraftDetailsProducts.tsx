@@ -14,6 +14,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import { DebounceForm } from "@saleor/components/DebounceForm";
 import Form from "@saleor/components/Form";
@@ -22,7 +23,6 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
-import i18n from "../../../i18n";
 import { maybe, renderCollection } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 
@@ -89,17 +89,26 @@ const OrderDraftDetailsProducts = withStyles(styles, {
           <TableRow>
             <TableCell className={classes.colName}>
               <span className={classes.colNameLabel}>
-                {i18n.t("Product", { context: "table header" })}
+                <FormattedMessage defaultMessage="Product" />
               </span>
             </TableCell>
             <TableCell className={classes.colQuantity}>
-              {i18n.t("Quantity", { context: "table header" })}
+              <FormattedMessage
+                defaultMessage="Quantity"
+                description="quantity of ordered products"
+              />
             </TableCell>
             <TableCell className={classes.colPrice}>
-              {i18n.t("Price", { context: "table header" })}
+              <FormattedMessage
+                defaultMessage="Price"
+                description="price or ordered products"
+              />
             </TableCell>
             <TableCell className={classes.colTotal}>
-              {i18n.t("Total", { context: "table header" })}
+              <FormattedMessage
+                defaultMessage="Total"
+                description="total price of ordered products"
+              />
             </TableCell>
             <TableCell className={classes.colAction} />
           </TableRow>
@@ -109,7 +118,7 @@ const OrderDraftDetailsProducts = withStyles(styles, {
         {maybe(() => lines.length) === 0 ? (
           <TableRow>
             <TableCell colSpan={5}>
-              {i18n.t("No Products added to Order")}
+              <FormattedMessage defaultMessage="No Products added to Order" />
             </TableCell>
           </TableRow>
         ) : (

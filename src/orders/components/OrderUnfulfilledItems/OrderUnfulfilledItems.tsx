@@ -8,6 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
@@ -16,7 +17,6 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
-import i18n from "../../../i18n";
 import { maybe } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 
@@ -58,90 +58,116 @@ interface OrderUnfulfilledItemsProps extends WithStyles<typeof styles> {
 
 const OrderUnfulfilledItems = withStyles(styles, {
   name: "OrderUnfulfilledItems"
-})(({ canFulfill, classes, lines, onFulfill }: OrderUnfulfilledItemsProps) => (
-  <Card>
-    <CardTitle
-      title={
-        <StatusLabel
-          label={i18n.t("Unfulfilled ({{ quantity }})", {
-            quantity: lines
-              .map(line => line.quantity - line.quantityFulfilled)
-              .reduce((prev, curr) => prev + curr, 0)
-          })}
-          status="error"
-        />
-      }
-    />
-    <Table className={classes.table}>
-      <TableHead>
-        <TableRow>
-          <TableCell className={classes.colName}>
-            <span className={classes.colNameLabel}>{i18n.t("Product")}</span>
-          </TableCell>
-          <TableCell className={classes.colQuantity}>
-            {i18n.t("Quantity")}
-          </TableCell>
-          <TableCell className={classes.colPrice}>{i18n.t("Price")}</TableCell>
-          <TableCell className={classes.colTotal}>{i18n.t("Total")}</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {lines.map(line => (
-          <TableRow
-            className={!!line ? classes.clickableRow : undefined}
-            hover={!!line}
-            key={maybe(() => line.id)}
-          >
-            <TableCellAvatar
-              className={classes.colName}
-              thumbnail={maybe(() => line.thumbnail.url)}
-            >
-              {maybe(() => line.productName) || <Skeleton />}
-            </TableCellAvatar>
+})(({ canFulfill, classes, lines, onFulfill }: OrderUnfulfilledItemsProps) => {
+  const intl = useIntl();
+
+  return (
+    <Card>
+      <CardTitle
+        title={
+          <StatusLabel
+            label={intl.formatMessage(
+              {
+                defaultMessage: "Unfulfilled ({quantity})",
+                description: "section header"
+              },
+              {
+                quantity: lines
+                  .map(line => line.quantity - line.quantityFulfilled)
+                  .reduce((prev, curr) => prev + curr, 0)
+              }
+            )}
+            status="error"
+          />
+        }
+      />
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell className={classes.colName}>
+              <span className={classes.colNameLabel}>
+                <FormattedMessage
+                  defaultMessage="Product"
+                  description="product name"
+                />
+              </span>
+            </TableCell>
             <TableCell className={classes.colQuantity}>
-              {maybe(() => line.quantity - line.quantityFulfilled) || (
-                <Skeleton />
-              )}
+              <FormattedMessage
+                defaultMessage="Quantity"
+                description="ordered products"
+              />
             </TableCell>
             <TableCell className={classes.colPrice}>
-              {maybe(() => line.unitPrice.gross) ? (
-                <Money money={line.unitPrice.gross} />
-              ) : (
-                <Skeleton />
-              )}
+              <FormattedMessage
+                defaultMessage="Price"
+                description="product unit price"
+              />
             </TableCell>
             <TableCell className={classes.colTotal}>
-              {maybe(
-                () =>
-                  (line.quantity - line.quantityFulfilled) *
-                  line.unitPrice.gross.amount
-              ) ? (
-                <Money
-                  money={{
-                    amount:
-                      (line.quantity - line.quantityFulfilled) *
-                      line.unitPrice.gross.amount,
-                    currency: line.unitPrice.gross.currency
-                  }}
-                />
-              ) : (
-                <Skeleton />
-              )}
+              <FormattedMessage
+                defaultMessage="Total"
+                description="order line total price"
+              />
             </TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-    {canFulfill && (
-      <CardActions>
-        <Button variant="text" color="primary" onClick={onFulfill}>
-          {i18n.t("Fulfill", {
-            context: "button"
-          })}
-        </Button>
-      </CardActions>
-    )}
-  </Card>
-));
+        </TableHead>
+        <TableBody>
+          {lines.map(line => (
+            <TableRow
+              className={!!line ? classes.clickableRow : undefined}
+              hover={!!line}
+              key={maybe(() => line.id)}
+            >
+              <TableCellAvatar
+                className={classes.colName}
+                thumbnail={maybe(() => line.thumbnail.url)}
+              >
+                {maybe(() => line.productName) || <Skeleton />}
+              </TableCellAvatar>
+              <TableCell className={classes.colQuantity}>
+                {maybe(() => line.quantity - line.quantityFulfilled) || (
+                  <Skeleton />
+                )}
+              </TableCell>
+              <TableCell className={classes.colPrice}>
+                {maybe(() => line.unitPrice.gross) ? (
+                  <Money money={line.unitPrice.gross} />
+                ) : (
+                  <Skeleton />
+                )}
+              </TableCell>
+              <TableCell className={classes.colTotal}>
+                {maybe(
+                  () =>
+                    (line.quantity - line.quantityFulfilled) *
+                    line.unitPrice.gross.amount
+                ) ? (
+                  <Money
+                    money={{
+                      amount:
+                        (line.quantity - line.quantityFulfilled) *
+                        line.unitPrice.gross.amount,
+                      currency: line.unitPrice.gross.currency
+                    }}
+                  />
+                ) : (
+                  <Skeleton />
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      {canFulfill && (
+        <CardActions>
+          <Button variant="text" color="primary" onClick={onFulfill}>
+            <FormattedMessage defaultMessage="Fulfill" description="button" />
+          </Button>
+        </CardActions>
+      )}
+    </Card>
+  );
+});
 OrderUnfulfilledItems.displayName = "OrderUnfulfilledItems";
 export default OrderUnfulfilledItems;

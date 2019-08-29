@@ -11,8 +11,9 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -36,27 +37,33 @@ const CategoryDeleteDialog = withStyles(styles, {
   name: "CategoryDeleteDialog"
 })(({ classes, name, open, onConfirm, onClose }: CategoryDeleteDialogProps) => (
   <Dialog onClose={onClose} open={open}>
-    <DialogTitle>{i18n.t("Delete category", { context: "title" })}</DialogTitle>
-    <DialogContent>
-      <DialogContentText
-        dangerouslySetInnerHTML={{
-          __html: i18n.t(
-            "Are you sure you want to remove <strong>{{name}}</strong>?",
-            { name }
-          )
-        }}
+    <DialogTitle>
+      <FormattedMessage
+        defaultMessage="Delete category"
+        description="dialog title"
       />
+    </DialogTitle>
+    <DialogContent>
+      <DialogContentText>
+        <FormattedMessage
+          defaultMessage="Are you sure you want to delete {categoryName}?"
+          description="delete category"
+          values={{
+            categoryName: <strong>{name}</strong>
+          }}
+        />
+      </DialogContentText>
     </DialogContent>
     <DialogActions>
       <Button onClick={onClose}>
-        {i18n.t("Cancel", { context: "button" })}
+        <FormattedMessage {...buttonMessages.cancel} />
       </Button>
       <Button
         className={classes.deleteButton}
         variant="contained"
         onClick={onConfirm}
       >
-        {i18n.t("Delete category", { context: "button" })}
+        <FormattedMessage {...buttonMessages.save} />
       </Button>
     </DialogActions>
   </Dialog>

@@ -13,10 +13,10 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import { Node } from "../../types";
 
-import i18n from "../../i18n";
 import Checkbox from "../Checkbox";
 
 export interface TableHeadProps extends MuiTableHeadProps {
@@ -129,9 +129,12 @@ const TableHead = withStyles(styles, {
                 <div className={classes.container}>
                   {selected && (
                     <Typography>
-                      {i18n.t("Selected {{ number }} items", {
-                        number: selected
-                      })}
+                      <FormattedMessage
+                        defaultMessage="Selected {number} items"
+                        values={{
+                          number: selected
+                        }}
+                      />
                     </Typography>
                   )}
                   <div className={classes.spacer} />

@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
@@ -16,7 +17,6 @@ import {
   SortableTableBody,
   SortableTableRow
 } from "@saleor/components/SortableTable";
-import i18n from "@saleor/i18n";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ReorderAction } from "@saleor/types";
 import { AttributeDetailsFragment_values } from "../../types/AttributeDetailsFragment";
@@ -63,14 +63,21 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
   values
 }) => {
   const classes = useStyles({});
+  const intl = useIntl();
 
   return (
     <Card>
       <CardTitle
-        title={i18n.t("Attribute Values")}
+        title={intl.formatMessage({
+          defaultMessage: "Attribute Values",
+          description: "section header"
+        })}
         toolbar={
           <Button color="primary" variant="text" onClick={onValueAdd}>
-            {i18n.t("Add value", { context: "button" })}
+            <FormattedMessage
+              defaultMessage="Add value"
+              description="add attribute value button"
+            />
           </Button>
         }
       />
@@ -79,10 +86,16 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
           <TableRow>
             <TableCell className={classes.columnDrag} />
             <TableCell className={classes.columnAdmin}>
-              {i18n.t("Admin")}
+              <FormattedMessage
+                defaultMessage="Admin"
+                description="attribute values list: slug column header"
+              />
             </TableCell>
             <TableCell className={classes.columnStore}>
-              {i18n.t("Default Store View")}
+              <FormattedMessage
+                defaultMessage="Default Store View"
+                description="attribute values list: name column header"
+              />
             </TableCell>
             <TableCell />
           </TableRow>
@@ -116,7 +129,12 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
             ),
             () => (
               <TableRow>
-                <TableCell colSpan={2}>{i18n.t("No values found")}</TableCell>
+                <TableCell colSpan={2}>
+                  <FormattedMessage
+                    defaultMessage="No values found"
+                    description="No attribute values found"
+                  />
+                </TableCell>
               </TableRow>
             )
           )}

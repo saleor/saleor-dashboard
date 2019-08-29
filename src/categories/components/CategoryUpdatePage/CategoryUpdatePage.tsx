@@ -1,5 +1,6 @@
 import { RawDraftContentState } from "draft-js";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
@@ -10,7 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { Tab, TabContainer } from "@saleor/components/Tab";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { TabListActions, UserError } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
@@ -96,6 +97,7 @@ export const CategoryUpdatePage: React.StatelessComponent<
   toggle,
   toggleAll
 }: CategoryUpdatePageProps) => {
+  const intl = useIntl();
   const initialData: FormData = category
     ? {
         backgroundImageAlt: maybe(() => category.backgroundImage.alt, ""),
@@ -120,7 +122,9 @@ export const CategoryUpdatePage: React.StatelessComponent<
     >
       {({ data, change, errors, submit, hasChanged }) => (
         <Container>
-          <AppHeader onBack={onBack}>{i18n.t("Categories")}</AppHeader>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.categories)}
+          </AppHeader>
           <PageHeader title={category ? category.name : undefined} />
           <CategoryDetailsForm
             category={category}
@@ -139,9 +143,10 @@ export const CategoryUpdatePage: React.StatelessComponent<
           />
           <CardSpacer />
           <SeoForm
-            helperText={i18n.t(
-              "Add search engine title and description to make this category easier to find"
-            )}
+            helperText={intl.formatMessage({
+              defaultMessage:
+                "Add search engine title and description to make this category easier to find"
+            })}
             title={data.seoTitle}
             titlePlaceholder={data.name}
             description={data.seoDescription}
@@ -156,13 +161,19 @@ export const CategoryUpdatePage: React.StatelessComponent<
               isActive={currentTab === CategoryPageTab.categories}
               changeTab={changeTab}
             >
-              {i18n.t("Subcategories")}
+              <FormattedMessage
+                defaultMessage="Subcategories"
+                description="number of subcategories in category"
+              />
             </CategoriesTab>
             <ProductsTab
               isActive={currentTab === CategoryPageTab.products}
               changeTab={changeTab}
             >
-              {i18n.t("Products")}
+              <FormattedMessage
+                defaultMessage="Products"
+                description="number of products in category"
+              />
             </ProductsTab>
           </TabContainer>
           <CardSpacer />
@@ -204,9 +215,6 @@ export const CategoryUpdatePage: React.StatelessComponent<
             onCancel={onBack}
             onDelete={onDelete}
             onSave={submit}
-            labels={{
-              delete: i18n.t("Delete category")
-            }}
             state={saveButtonBarState}
             disabled={disabled || !hasChanged}
           />

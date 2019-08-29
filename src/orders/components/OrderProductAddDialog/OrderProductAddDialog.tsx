@@ -17,6 +17,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
@@ -25,7 +26,7 @@ import ConfirmButton, {
 import Money from "@saleor/components/Money";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import i18n from "@saleor/i18n";
+import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
 import {
@@ -161,6 +162,7 @@ const OrderProductAddDialog = withStyles(styles, {
     onClose,
     onSubmit
   }: OrderProductAddDialogProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
     const [query, onQueryChange] = useSearchQuery(onFetch);
     const [variants, setVariants] = React.useState<
       SearchOrderVariant_products_edges_node_variants[]
@@ -187,21 +189,24 @@ const OrderProductAddDialog = withStyles(styles, {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle>{i18n.t("Add product")}</DialogTitle>
+        <DialogTitle>
+          <FormattedMessage
+            defaultMessage="Add Product"
+            description="dialog header"
+          />
+        </DialogTitle>
         <DialogContent className={classes.overflow}>
           <TextField
             name="query"
             value={query}
             onChange={onQueryChange}
-            label={i18n.t("Search Products", {
-              context: "product search input label"
+            label={intl.formatMessage({
+              defaultMessage: "Search Products"
             })}
-            placeholder={i18n.t(
-              "Search by product name, attribute, product type etc...",
-              {
-                context: "product search input placeholder"
-              }
-            )}
+            placeholder={intl.formatMessage({
+              defaultMessage:
+                "Search by product name, attribute, product type etc..."
+            })}
             fullWidth
             InputProps={{
               autoComplete: "off",
@@ -285,9 +290,13 @@ const OrderProductAddDialog = withStyles(styles, {
                             <TableCell>
                               <div>{variant.name}</div>
                               <div className={classes.grayText}>
-                                {i18n.t("SKU {{ sku }}", {
-                                  sku: variant.sku
-                                })}
+                                <FormattedMessage
+                                  defaultMessage="SKU {sku}"
+                                  description="variant sku"
+                                  values={{
+                                    sku: variant.sku
+                                  }}
+                                />
                               </div>
                             </TableCell>
                             <TableCell className={classes.textRight}>
@@ -301,7 +310,7 @@ const OrderProductAddDialog = withStyles(styles, {
                   () => (
                     <TableRow>
                       <TableCell colSpan={4}>
-                        {i18n.t("No products matching given query")}
+                        <FormattedMessage defaultMessage="No products matching given query" />
                       </TableCell>
                     </TableRow>
                   )
@@ -312,7 +321,7 @@ const OrderProductAddDialog = withStyles(styles, {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>
-            {i18n.t("Cancel", { context: "button" })}
+            <FormattedMessage {...buttonMessages.cancel} />
           </Button>
           <ConfirmButton
             transitionState={confirmButtonState}
@@ -321,7 +330,7 @@ const OrderProductAddDialog = withStyles(styles, {
             type="submit"
             onClick={handleSubmit}
           >
-            {i18n.t("Confirm", { context: "button" })}
+            <FormattedMessage {...buttonMessages.confirm} />
           </ConfirmButton>
         </DialogActions>
       </Dialog>

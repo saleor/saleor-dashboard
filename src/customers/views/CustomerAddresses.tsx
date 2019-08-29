@@ -1,12 +1,13 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import i18n from "../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "../../misc";
 import CustomerAddressDialog from "../components/CustomerAddressDialog";
 import CustomerAddressListPage from "../components/CustomerAddressListPage";
@@ -40,6 +41,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
+  const intl = useIntl();
 
   const closeModal = () => navigate(customerAddressesUrl(id), true);
   const openModal = (action: CustomerAddressesUrlDialog, addressId?: string) =>
@@ -49,9 +51,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     if (data.addressSetDefault.errors.length === 0) {
       closeModal();
       notify({
-        text: i18n.t("Set address as default", {
-          context: "notification"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
   };
@@ -66,9 +66,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     if (data.addressUpdate.errors.length === 0) {
       closeModal();
       notify({
-        text: i18n.t("Updated address", {
-          context: "notification"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
   };
@@ -77,9 +75,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     if (data.addressDelete.errors.length === 0) {
       closeModal();
       notify({
-        text: i18n.t("Removed address", {
-          context: "notification"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
   };
@@ -214,7 +210,10 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                             <ActionDialog
                               open={params.action === "remove"}
                               variant="delete"
-                              title={i18n.t("Remove Address")}
+                              title={intl.formatMessage({
+                                defaultMessage: "Delete Address",
+                                description: "dialog header"
+                              })}
                               confirmButtonState={removeAddressTransitionState}
                               onClose={closeModal}
                               onConfirm={() =>
@@ -226,9 +225,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                               }
                             >
                               <DialogContentText>
-                                {i18n.t(
-                                  "Are you sure you want to remove this address from users address book?"
-                                )}
+                                <FormattedMessage defaultMessage="Are you sure you want to delete this address from users address book?" />
                               </DialogContentText>
                             </ActionDialog>
                           </>

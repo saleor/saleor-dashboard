@@ -6,15 +6,15 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
+import { translateBoolean } from "@saleor/intl";
 import { renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
-import { translateBoolean } from "@saleor/utils/i18n";
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 
 export interface AttributeListProps extends ListProps, ListActions {
@@ -71,6 +71,7 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
   toolbar
 }) => {
   const classes = useStyles({});
+  const intl = useIntl();
 
   return (
     <Table>
@@ -83,23 +84,31 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
         toolbar={toolbar}
       >
         <TableCell className={classes.colSlug}>
-          {i18n.t("Attribute Code", { context: "attribute slug" })}
+          <FormattedMessage defaultMessage="Attribute Code" />
         </TableCell>
         <TableCell className={classes.colName}>
-          {i18n.t("Default Label", { context: "attribute name" })}
+          <FormattedMessage
+            defaultMessage="Default Label"
+            description="attribute's label'"
+          />
         </TableCell>
         <TableCell className={classes.colVisible}>
-          {i18n.t("Visible", { context: "attribute visibility" })}
+          <FormattedMessage
+            defaultMessage="Visible"
+            description="attribute is visible"
+          />
         </TableCell>
         <TableCell className={classes.colSearchable}>
-          {i18n.t("Searchable", {
-            context: "attribute can be searched in dashboard"
-          })}
+          <FormattedMessage
+            defaultMessage="Searchable"
+            description="attribute can be searched in dashboard"
+          />
         </TableCell>
         <TableCell className={classes.colFaceted}>
-          {i18n.t("Use in faceted search", {
-            context: "attribute can be searched in storefront"
-          })}
+          <FormattedMessage
+            defaultMessage="Use in faceted search"
+            description="attribute can be searched in storefront"
+          />
         </TableCell>
       </TableHead>
       <TableFooter>
@@ -145,21 +154,21 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
                 </TableCell>
                 <TableCell className={classes.colVisible}>
                   {attribute ? (
-                    translateBoolean(attribute.visibleInStorefront)
+                    translateBoolean(attribute.visibleInStorefront, intl)
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colSearchable}>
                   {attribute ? (
-                    translateBoolean(attribute.filterableInDashboard)
+                    translateBoolean(attribute.filterableInDashboard, intl)
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colFaceted}>
                   {attribute ? (
-                    translateBoolean(attribute.filterableInStorefront)
+                    translateBoolean(attribute.filterableInStorefront, intl)
                   ) : (
                     <Skeleton />
                   )}
@@ -170,7 +179,7 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                {i18n.t("No attributes found")}
+                <FormattedMessage defaultMessage="No attributes found" />
               </TableCell>
             </TableRow>
           )

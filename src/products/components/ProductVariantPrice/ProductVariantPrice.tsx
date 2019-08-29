@@ -7,10 +7,10 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
-import i18n from "../../../i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -39,43 +39,68 @@ const ProductVariantPrice = withStyles(styles, { name: "ProductVariantPrice" })(
     priceOverride,
     loading,
     onChange
-  }: ProductVariantPriceProps) => (
-    <Card>
-      <CardTitle title={i18n.t("Pricing")} />
-      <CardContent>
-        <div className={classes.grid}>
-          <div>
-            <PriceField
-              error={!!errors.price_override}
-              name="priceOverride"
-              label={i18n.t("Selling price override")}
-              hint={
-                errors.price_override
-                  ? errors.price_override
-                  : i18n.t("Optional")
-              }
-              value={priceOverride}
-              currencySymbol={currencySymbol}
-              onChange={onChange}
-              disabled={loading}
-            />
+  }: ProductVariantPriceProps) => {
+    const intl = useIntl();
+
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Pricing",
+            description: "product pricing, section header"
+          })}
+        />
+        <CardContent>
+          <div className={classes.grid}>
+            <div>
+              <PriceField
+                error={!!errors.price_override}
+                name="priceOverride"
+                label={intl.formatMessage({
+                  defaultMessage: "Selling price override"
+                })}
+                hint={
+                  errors.price_override
+                    ? errors.price_override
+                    : intl.formatMessage({
+                        defaultMessage: "Optional",
+                        description: "optional field",
+                        id: "productVariantPriceOptionalPriceOverrideField"
+                      })
+                }
+                value={priceOverride}
+                currencySymbol={currencySymbol}
+                onChange={onChange}
+                disabled={loading}
+              />
+            </div>
+            <div>
+              <PriceField
+                error={!!errors.cost_price}
+                name="costPrice"
+                label={intl.formatMessage({
+                  defaultMessage: "Cost price override"
+                })}
+                hint={
+                  errors.cost_price
+                    ? errors.cost_price
+                    : intl.formatMessage({
+                        defaultMessage: "Optional",
+                        description: "optional field",
+                        id: "productVariantPriceOptionalCostPriceField"
+                      })
+                }
+                value={costPrice}
+                currencySymbol={currencySymbol}
+                onChange={onChange}
+                disabled={loading}
+              />
+            </div>
           </div>
-          <div>
-            <PriceField
-              error={!!errors.cost_price}
-              name="costPrice"
-              label={i18n.t("Cost price override")}
-              hint={errors.cost_price ? errors.cost_price : i18n.t("Optional")}
-              value={costPrice}
-              currencySymbol={currencySymbol}
-              onChange={onChange}
-              disabled={loading}
-            />
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
+        </CardContent>
+      </Card>
+    );
+  }
 );
 ProductVariantPrice.displayName = "ProductVariantPrice";
 export default ProductVariantPrice;

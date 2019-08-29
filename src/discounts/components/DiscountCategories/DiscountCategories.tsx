@@ -14,13 +14,13 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "../../../i18n";
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps } from "../../../types";
 import { SaleDetails_sale } from "../../types/SaleDetails";
@@ -71,105 +71,123 @@ const DiscountCategories = withStyles(styles, {
     toggleAll,
     selected,
     isChecked
-  }: DiscountCategoriesProps & WithStyles<typeof styles>) => (
-    <Card>
-      <CardTitle
-        title={i18n.t("Eligible Categories")}
-        toolbar={
-          <Button color="primary" onClick={onCategoryAssign}>
-            {i18n.t("Assign categories")}
-          </Button>
-        }
-      />
-      <Table>
-        <TableHead
-          colSpan={numberOfColumns}
-          selected={selected}
-          disabled={disabled}
-          items={maybe(() => sale.categories.edges.map(edge => edge.node))}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-        >
-          <>
-            <TableCell className={classes.wideColumn}>
-              {i18n.t("Category name")}
-            </TableCell>
-            <TableCell className={classes.textRight}>
-              {i18n.t("Products")}
-            </TableCell>
-            <TableCell />
-          </>
-        </TableHead>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
-            />
-          </TableRow>
-        </TableFooter>
-        <TableBody>
-          {renderCollection(
-            maybe(() => sale.categories.edges.map(edge => edge.node)),
-            category => {
-              const isSelected = category ? isChecked(category.id) : false;
+  }: DiscountCategoriesProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
 
-              return (
-                <TableRow
-                  hover={!!category}
-                  key={category ? category.id : "skeleton"}
-                  onClick={category && onRowClick(category.id)}
-                  className={classes.tableRow}
-                  selected={isSelected}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(category.id)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    {maybe<React.ReactNode>(() => category.name, <Skeleton />)}
-                  </TableCell>
-                  <TableCell className={classes.textRight}>
-                    {maybe<React.ReactNode>(
-                      () => category.products.totalCount,
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.iconCell}>
-                    <IconButton
-                      disabled={!category || disabled}
-                      onClick={event => {
-                        event.stopPropagation();
-                        onCategoryUnassign(category.id);
-                      }}
-                    >
-                      <DeleteIcon color="primary" />
-                    </IconButton>
+    return (
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Eligible Categories",
+            description: "section header"
+          })}
+          toolbar={
+            <Button color="primary" onClick={onCategoryAssign}>
+              <FormattedMessage
+                defaultMessage="Assign categories"
+                description="button"
+              />
+            </Button>
+          }
+        />
+        <Table>
+          <TableHead
+            colSpan={numberOfColumns}
+            selected={selected}
+            disabled={disabled}
+            items={maybe(() => sale.categories.edges.map(edge => edge.node))}
+            toggleAll={toggleAll}
+            toolbar={toolbar}
+          >
+            <>
+              <TableCell className={classes.wideColumn}>
+                <FormattedMessage defaultMessage="Category name" />
+              </TableCell>
+              <TableCell className={classes.textRight}>
+                <FormattedMessage
+                  defaultMessage="Products"
+                  description="number of products"
+                />
+              </TableCell>
+              <TableCell />
+            </>
+          </TableHead>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                colSpan={numberOfColumns}
+                hasNextPage={
+                  pageInfo && !disabled ? pageInfo.hasNextPage : false
+                }
+                onNextPage={onNextPage}
+                hasPreviousPage={
+                  pageInfo && !disabled ? pageInfo.hasPreviousPage : false
+                }
+                onPreviousPage={onPreviousPage}
+              />
+            </TableRow>
+          </TableFooter>
+          <TableBody>
+            {renderCollection(
+              maybe(() => sale.categories.edges.map(edge => edge.node)),
+              category => {
+                const isSelected = category ? isChecked(category.id) : false;
+
+                return (
+                  <TableRow
+                    hover={!!category}
+                    key={category ? category.id : "skeleton"}
+                    onClick={category && onRowClick(category.id)}
+                    className={classes.tableRow}
+                    selected={isSelected}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isSelected}
+                        disabled={disabled}
+                        disableClickPropagation
+                        onChange={() => toggle(category.id)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      {maybe<React.ReactNode>(
+                        () => category.name,
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell className={classes.textRight}>
+                      {maybe<React.ReactNode>(
+                        () => category.products.totalCount,
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell className={classes.iconCell}>
+                      <IconButton
+                        disabled={!category || disabled}
+                        onClick={event => {
+                          event.stopPropagation();
+                          onCategoryUnassign(category.id);
+                        }}
+                      >
+                        <DeleteIcon color="primary" />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              },
+              () => (
+                <TableRow>
+                  <TableCell colSpan={numberOfColumns}>
+                    <FormattedMessage defaultMessage="No categories found" />
                   </TableCell>
                 </TableRow>
-              );
-            },
-            () => (
-              <TableRow>
-                <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("No categories found")}
-                </TableCell>
-              </TableRow>
-            )
-          )}
-        </TableBody>
-      </Table>
-    </Card>
-  )
+              )
+            )}
+          </TableBody>
+        </Table>
+      </Card>
+    );
+  }
 );
 DiscountCategories.displayName = "DiscountCategories";
 export default DiscountCategories;

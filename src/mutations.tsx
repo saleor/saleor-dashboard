@@ -2,9 +2,9 @@ import { ApolloError, MutationUpdaterFn } from "apollo-client";
 import { DocumentNode } from "graphql";
 import React from "react";
 import { Mutation, MutationFunction, MutationResult } from "react-apollo";
+import { useIntl } from "react-intl";
 
 import useNotifier from "./hooks/useNotifier";
-import i18n from "./i18n";
 
 export interface TypedMutationInnerProps<TData, TVariables> {
   children: (
@@ -23,6 +23,7 @@ export function TypedMutation<TData, TVariables>(
 ) {
   return (props: TypedMutationInnerProps<TData, TVariables>) => {
     const notify = useNotifier();
+    const intl = useIntl();
     const { children, onCompleted, onError, variables } = props;
 
     return (
@@ -30,9 +31,15 @@ export function TypedMutation<TData, TVariables>(
         mutation={mutation}
         onCompleted={onCompleted}
         onError={err => {
-          const msg = i18n.t("Something went wrong: {{ message }}", {
-            message: err.message
-          });
+          const msg = intl.formatMessage(
+            {
+              defaultMessage: "Something went wrong. {errorMessage}",
+              description: "error message"
+            },
+            {
+              errorMessage: err.message
+            }
+          );
           notify({ text: msg });
           if (onError) {
             onError(err);

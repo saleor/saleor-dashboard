@@ -10,6 +10,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import { DateTime } from "@saleor/components/Date";
@@ -17,7 +18,6 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
 import {
   maybe,
   renderCollection,
@@ -78,13 +78,16 @@ export const OrderDraftList = withStyles(styles, { name: "OrderDraftList" })(
     toggleAll,
     toolbar
   }: OrderDraftListProps) => {
+    const intl = useIntl();
+
     const orderDraftList = orders
       ? orders.map(order => ({
           ...order,
-          paymentStatus: transformPaymentStatus(order.paymentStatus),
-          status: transformOrderStatus(order.status)
+          paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
+          status: transformOrderStatus(order.status, intl)
         }))
       : undefined;
+
     return (
       <Table>
         <TableHead
@@ -96,16 +99,22 @@ export const OrderDraftList = withStyles(styles, { name: "OrderDraftList" })(
           toolbar={toolbar}
         >
           <TableCell padding="dense" className={classes.colNumber}>
-            {i18n.t("No. of Order", { context: "table header" })}
+            <FormattedMessage defaultMessage="No. of Order" />
           </TableCell>
           <TableCell padding="dense" className={classes.colDate}>
-            {i18n.t("Date", { context: "table header" })}
+            <FormattedMessage
+              defaultMessage="Date"
+              description="order draft creation date"
+            />
           </TableCell>
           <TableCell padding="dense" className={classes.colCustomer}>
-            {i18n.t("Customer", { context: "table header" })}
+            <FormattedMessage defaultMessage="Customer" />
           </TableCell>
           <TableCell className={classes.colTotal} padding="dense">
-            {i18n.t("Total", { context: "table header" })}
+            <FormattedMessage
+              defaultMessage="Total"
+              description="order draft total price"
+            />
           </TableCell>
         </TableHead>
         <TableFooter>
@@ -185,7 +194,7 @@ export const OrderDraftList = withStyles(styles, { name: "OrderDraftList" })(
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  {i18n.t("No orders found")}
+                  <FormattedMessage defaultMessage="No draft orders found" />
                 </TableCell>
               </TableRow>
             )

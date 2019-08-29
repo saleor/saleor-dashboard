@@ -8,13 +8,17 @@ import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
+import { FormattedMessage, useIntl } from "react-intl";
 import { matchPath } from "react-router";
 
 import configureIcon from "@assets/images/menu-configure-icon.svg";
 import useTheme from "@saleor/hooks/useTheme";
+import { sectionNames } from "@saleor/intl";
 import { User } from "../../auth/types/User";
-import { configurationMenu, configurationMenuUrl } from "../../configuration";
-import i18n from "../../i18n";
+import {
+  configurationMenuUrl,
+  createConfigurationMenu
+} from "../../configuration";
 import { createHref } from "../../misc";
 import { orderDraftListUrl, orderListUrl } from "../../orders/urls";
 import MenuNested from "./MenuNested";
@@ -167,6 +171,7 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
       isActive: false,
       label: null
     });
+    const intl = useIntl();
 
     const handleSubMenu = itemLabel => {
       setActiveSubMenu({
@@ -300,7 +305,7 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
           );
         })}
         {renderConfigure &&
-          configurationMenu.filter(menuItem =>
+          createConfigurationMenu(intl).filter(menuItem =>
             user.permissions
               .map(perm => perm.code)
               .includes(menuItem.permission)
@@ -323,7 +328,7 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
                     [classes.menuListItemTextHide]: !isMenuSmall
                   })}
                 >
-                  {i18n.t("Configuration")}
+                  <FormattedMessage {...sectionNames.configuration} />
                 </Typography>
               </div>
             </a>

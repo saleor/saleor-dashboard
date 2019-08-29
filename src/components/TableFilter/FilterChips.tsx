@@ -6,8 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import ClearIcon from "@material-ui/icons/Clear";
 import { createStyles, makeStyles, useTheme } from "@material-ui/styles";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import i18n from "../../i18n";
 import Filter, { FilterContentSubmitData, IFilter } from "../Filter";
 import Hr from "../Hr";
 import Link from "../Link";
@@ -163,9 +163,19 @@ export const FilterChips: React.FC<FilterChipProps> = ({
             ))}
           </div>
           {isCustomSearch ? (
-            <Link onClick={onFilterSave}>{i18n.t("Save Custom Search")}</Link>
+            <Link onClick={onFilterSave}>
+              <FormattedMessage
+                defaultMessage="Save Custom Search"
+                description="button"
+              />
+            </Link>
           ) : (
-            <Link onClick={onFilterDelete}>{i18n.t("Delete Search")}</Link>
+            <Link onClick={onFilterDelete}>
+              <FormattedMessage
+                defaultMessage="Delete Search"
+                description="button"
+              />
+            </Link>
           )}
         </div>
       ) : (

@@ -1,6 +1,8 @@
+import { IntlShape } from "react-intl";
+
+import { commonMessages } from "@saleor/intl";
 import { UseNavigatorResult } from "../../../hooks/useNavigator";
 import { UseNotifierResult } from "../../../hooks/useNotifier";
-import i18n from "../../../i18n";
 import { MenuDelete } from "../../types/MenuDelete";
 import { MenuItemCreate } from "../../types/MenuItemCreate";
 import { MenuItemUpdate } from "../../types/MenuItemUpdate";
@@ -10,14 +12,13 @@ import { menuListUrl, menuUrl } from "../../urls";
 export function handleItemCreate(
   data: MenuItemCreate,
   notify: UseNotifierResult,
-  closeModal: () => void
+  closeModal: () => void,
+  intl: IntlShape
 ) {
   if (data.menuItemCreate.errors.length === 0) {
     closeModal();
     notify({
-      text: i18n.t("Created menu item", {
-        context: "notification"
-      })
+      text: intl.formatMessage(commonMessages.savedChanges)
     });
   }
 }
@@ -26,13 +27,12 @@ export function handleItemUpdate(
   data: MenuItemUpdate,
   id: string,
   navigate: UseNavigatorResult,
-  notify: UseNotifierResult
+  notify: UseNotifierResult,
+  intl: IntlShape
 ) {
   if (data.menuItemUpdate.errors.length === 0) {
     notify({
-      text: i18n.t("Updated menu item", {
-        context: "notification"
-      })
+      text: intl.formatMessage(commonMessages.savedChanges)
     });
     navigate(
       menuUrl(id, {
@@ -46,13 +46,12 @@ export function handleItemUpdate(
 export function handleDelete(
   data: MenuDelete,
   navigate: UseNavigatorResult,
-  notify: UseNotifierResult
+  notify: UseNotifierResult,
+  intl: IntlShape
 ) {
   if (data.menuDelete.errors.length === 0) {
     notify({
-      text: i18n.t("Removed menu", {
-        context: "notification"
-      })
+      text: intl.formatMessage(commonMessages.savedChanges)
     });
     navigate(menuListUrl(), true);
   }
@@ -61,7 +60,8 @@ export function handleDelete(
 export function handleUpdate(
   data: MenuUpdate,
   notify: UseNotifierResult,
-  refetch: () => void
+  refetch: () => void,
+  intl: IntlShape
 ) {
   if (
     data.menuItemBulkDelete.errors.length === 0 &&
@@ -69,9 +69,7 @@ export function handleUpdate(
     data.menuUpdate.errors.length === 0
   ) {
     notify({
-      text: i18n.t("Updated menu", {
-        context: "notification"
-      })
+      text: intl.formatMessage(commonMessages.savedChanges)
     });
     refetch();
   }

@@ -1,9 +1,9 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import i18n from "../../../i18n";
 
 export type OrderDraftFinalizeWarning =
   | "no-shipping"
@@ -21,18 +21,28 @@ export interface OrderDraftFinalizeDialogProps {
   onConfirm: () => void;
 }
 
-const warningToText = (warning: OrderDraftFinalizeWarning) => {
+const warningToText = (warning: OrderDraftFinalizeWarning, intl: IntlShape) => {
   switch (warning) {
     case "no-shipping":
-      return i18n.t("No shipping address");
+      return intl.formatMessage({
+        defaultMessage: "No shipping address"
+      });
     case "no-billing":
-      return i18n.t("No billing address");
+      return intl.formatMessage({
+        defaultMessage: "No billing address"
+      });
     case "no-user":
-      return i18n.t("No user information");
+      return intl.formatMessage({
+        defaultMessage: "No user information"
+      });
     case "no-shipping-method":
-      return i18n.t("Some products require shipping, but no method provided");
+      return intl.formatMessage({
+        defaultMessage: "Some products require shipping, but no method provided"
+      });
     case "unnecessary-shipping-method":
-      return i18n.t("Shipping method provided, but no product requires it");
+      return intl.formatMessage({
+        defaultMessage: "Shipping method provided, but no product requires it"
+      });
   }
 };
 
@@ -45,48 +55,54 @@ const OrderDraftFinalizeDialog: React.StatelessComponent<
   onClose,
   onConfirm,
   orderNumber
-}) => (
-  <ActionDialog
-    onClose={onClose}
-    onConfirm={onConfirm}
-    open={open}
-    title={i18n.t("Finalize draft order", {
-      context: "modal title"
-    })}
-    confirmButtonLabel={
-      warnings.length > 0 ? i18n.t("Finalize anyway") : i18n.t("Finalize")
-    }
-    confirmButtonState={confirmButtonState}
-    variant={warnings.length > 0 ? "delete" : "default"}
-  >
-    <DialogContentText component="div">
-      {warnings.length > 0 && (
-        <>
-          <p>
-            {i18n.t(
-              "There are missing or incorrect informations about this order:"
-            )}
-          </p>
-          <ul>
-            {warnings.map(warning => (
-              <li key={warning}>{warningToText(warning)}</li>
-            ))}
-          </ul>
-        </>
-      )}
-      <span
-        dangerouslySetInnerHTML={{
-          __html: i18n.t(
-            "Are you sure you want to finalize draft <strong>#{{ number }}</strong>?",
-            {
-              context: "modal",
-              number: orderNumber
-            }
-          )
-        }}
-      />
-    </DialogContentText>
-  </ActionDialog>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <ActionDialog
+      onClose={onClose}
+      onConfirm={onConfirm}
+      open={open}
+      title={intl.formatMessage({
+        defaultMessage: "Finalize draft order",
+        description: "dialog header"
+      })}
+      confirmButtonLabel={
+        warnings.length > 0
+          ? intl.formatMessage({
+              defaultMessage: "Finalize anyway",
+              description: "button"
+            })
+          : intl.formatMessage({
+              defaultMessage: "Finalize",
+              description: "button"
+            })
+      }
+      confirmButtonState={confirmButtonState}
+      variant={warnings.length > 0 ? "delete" : "default"}
+    >
+      <DialogContentText component="div">
+        {warnings.length > 0 && (
+          <>
+            <p>
+              <FormattedMessage defaultMessage="There are missing or incorrect informations about this order:" />
+            </p>
+            <ul>
+              {warnings.map(warning => (
+                <li key={warning}>{warningToText(warning, intl)}</li>
+              ))}
+            </ul>
+          </>
+        )}
+        <FormattedMessage
+          defaultMessage="Are you sure you want to finalize draft #{number}?"
+          values={{
+            orderNumber
+          }}
+        />
+      </DialogContentText>
+    </ActionDialog>
+  );
+};
 OrderDraftFinalizeDialog.displayName = "OrderDraftFinalize";
 export default OrderDraftFinalizeDialog;

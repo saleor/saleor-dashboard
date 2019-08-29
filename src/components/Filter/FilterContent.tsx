@@ -1,9 +1,9 @@
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { makeStyles } from "@material-ui/styles";
-import i18n from "../../i18n";
 import { getMenuItemByValue, isLeaf, walkToRoot } from "../../utils/menu";
 import FormSpacer from "../FormSpacer";
 import SingleSelectField from "../SingleSelectField";
@@ -45,6 +45,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   filters,
   onSubmit
 }) => {
+  const intl = useIntl();
   const [menuValue, setMenuValue] = React.useState<string>("");
   const [filterValue, setFilterValue] = React.useState<string | string[]>("");
   const classes = useStyles({});
@@ -72,7 +73,9 @@ const FilterContent: React.FC<FilterContentProps> = ({
           }
         }}
         value={menus ? menus[0].value : menuValue}
-        placeholder={i18n.t("Select Filter...")}
+        placeholder={intl.formatMessage({
+          defaultMessage: "Select Filter..."
+        })}
       />
       {menus &&
         menus.map(
@@ -95,7 +98,9 @@ const FilterContent: React.FC<FilterContentProps> = ({
                       ? menuValue
                       : menus[filterItemIndex - 1].label.toString()
                   }
-                  placeholder={i18n.t("Select Filter...")}
+                  placeholder={intl.formatMessage({
+                    defaultMessage: "Select Filter..."
+                  })}
                 />
               </React.Fragment>
             )
@@ -124,7 +129,10 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   })
                 }
               >
-                {i18n.t("Add filter")}
+                <FormattedMessage
+                  defaultMessage="Add filter"
+                  description="button"
+                />
               </Button>
             </>
           )}

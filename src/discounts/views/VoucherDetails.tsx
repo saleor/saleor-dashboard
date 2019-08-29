@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
@@ -14,13 +15,13 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "../../config";
 import SearchCategories from "../../containers/SearchCategories";
 import SearchCollections from "../../containers/SearchCollections";
 import SearchProducts from "../../containers/SearchProducts";
-import i18n from "../../i18n";
 import { decimal, getMutationState, joinDateTime, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import {
@@ -66,6 +67,7 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
+  const intl = useIntl();
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const changeTab = (tab: VoucherDetailsPageTab) => {
@@ -80,8 +82,8 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
   const handleVoucherDelete = (data: VoucherDelete) => {
     if (data.voucherDelete.errors.length === 0) {
       notify({
-        text: i18n.t("Removed voucher", {
-          context: "notification"
+        text: intl.formatMessage({
+          defaultMessage: "Deleted voucher"
         })
       });
       navigate(voucherListUrl(), true);
@@ -92,9 +94,7 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
     if (data.voucherUpdate.errors.length === 0) {
       closeModal();
       notify({
-        text: i18n.t("Updated voucher", {
-          context: "notification"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
   };
@@ -129,6 +129,8 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
       reset();
     }
   };
+
+  const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
   return (
     <TypedVoucherCataloguesRemove onCompleted={handleCatalogueRemove}>
@@ -225,7 +227,9 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
 
                         return (
                           <>
-                            <WindowTitle title={i18n.t("Vouchers")} />
+                            <WindowTitle
+                              title={intl.formatMessage(sectionNames.vouchers)}
+                            />
                             <VoucherDetailsPage
                               defaultCurrency={maybe(
                                 () => shop.defaultCurrency
@@ -374,7 +378,11 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                                     openModal("unassign-category", listElements)
                                   }
                                 >
-                                  {i18n.t("Unassign")}
+                                  <FormattedMessage
+                                    defaultMessage="Unassign"
+                                    description="unassign category from voucher, button"
+                                    id="voucherDetailsUnassignCategory"
+                                  />
                                 </Button>
                               }
                               collectionListToolbar={
@@ -387,7 +395,11 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                                     )
                                   }
                                 >
-                                  {i18n.t("Unassign")}
+                                  <FormattedMessage
+                                    defaultMessage="Unassign"
+                                    description="unassign collection from voucher, button"
+                                    id="voucherDetailsUnassignCollection"
+                                  />
                                 </Button>
                               }
                               productListToolbar={
@@ -397,7 +409,11 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                                     openModal("unassign-product", listElements)
                                   }
                                 >
-                                  {i18n.t("Unassign")}
+                                  <FormattedMessage
+                                    defaultMessage="Unassign"
+                                    description="unassign product from voucher, button"
+                                    id="voucherDetailsUnassignProduct"
+                                  />
                                 </Button>
                               }
                               isChecked={isSelected}
@@ -539,77 +555,113 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                               )}
                             </SearchProducts>
                             <ActionDialog
-                              open={params.action === "unassign-category"}
-                              title={i18n.t("Unassign Categories From Sale")}
+                              open={
+                                params.action === "unassign-category" &&
+                                canOpenBulkActionDialog
+                              }
+                              title={intl.formatMessage({
+                                defaultMessage:
+                                  "Unassign Categories From Voucher",
+                                description: "dialog header"
+                              })}
                               confirmButtonState={unassignTransitionState}
                               onClose={closeModal}
                               onConfirm={() =>
                                 handleCategoriesUnassign(params.ids)
                               }
                             >
-                              <DialogContentText
-                                dangerouslySetInnerHTML={{
-                                  __html: i18n.t(
-                                    "Are you sure you want to unassign <strong>{{ saleName }}</strong> categories?",
-                                    {
-                                      saleName: maybe(
-                                        () => params.ids.length.toString(),
-                                        "..."
+                              {canOpenBulkActionDialog && (
+                                <DialogContentText>
+                                  <FormattedMessage
+                                    defaultMessage="Are you sure you want to unassign {counter, plural,
+                                    one {this category}
+                                    other {{displayQuantity} categories}
+                                  }?"
+                                    description="dialog content"
+                                    values={{
+                                      counter: params.ids.length,
+                                      displayQuantity: (
+                                        <strong>{params.ids.length}</strong>
                                       )
-                                    }
-                                  )
-                                }}
-                              />
+                                    }}
+                                  />
+                                </DialogContentText>
+                              )}
                             </ActionDialog>
                             <ActionDialog
-                              open={params.action === "unassign-collection"}
-                              title={i18n.t("Unassign Collections From Sale")}
+                              open={
+                                params.action === "unassign-collection" &&
+                                canOpenBulkActionDialog
+                              }
+                              title={intl.formatMessage({
+                                defaultMessage:
+                                  "Unassign Collections From Voucher",
+                                description: "dialog header"
+                              })}
                               confirmButtonState={unassignTransitionState}
                               onClose={closeModal}
                               onConfirm={() =>
                                 handleCollectionsUnassign(params.ids)
                               }
                             >
-                              <DialogContentText
-                                dangerouslySetInnerHTML={{
-                                  __html: i18n.t(
-                                    "Are you sure you want to unassign <strong>{{ saleName }}</strong> collections?",
-                                    {
-                                      saleName: maybe(
-                                        () => params.ids.length.toString(),
-                                        "..."
+                              {canOpenBulkActionDialog && (
+                                <DialogContentText>
+                                  <FormattedMessage
+                                    defaultMessage="Are you sure you want to unassign {counter, plural,
+                                    one {this collection}
+                                    other {{displayQuantity} collections}
+                                  }?"
+                                    description="dialog content"
+                                    values={{
+                                      counter: params.ids.length,
+                                      displayQuantity: (
+                                        <strong>{params.ids.length}</strong>
                                       )
-                                    }
-                                  )
-                                }}
-                              />
+                                    }}
+                                  />
+                                </DialogContentText>
+                              )}
                             </ActionDialog>
                             <ActionDialog
-                              open={params.action === "unassign-product"}
-                              title={i18n.t("Unassign Products From Sale")}
+                              open={
+                                params.action === "unassign-product" &&
+                                canOpenBulkActionDialog
+                              }
+                              title={intl.formatMessage({
+                                defaultMessage:
+                                  "Unassign Products From Voucher",
+                                description: "dialog header"
+                              })}
                               confirmButtonState={unassignTransitionState}
                               onClose={closeModal}
                               onConfirm={() =>
                                 handleProductsUnassign(params.ids)
                               }
                             >
-                              <DialogContentText
-                                dangerouslySetInnerHTML={{
-                                  __html: i18n.t(
-                                    "Are you sure you want to unassign <strong>{{ saleName }}</strong> products?",
-                                    {
-                                      saleName: maybe(
-                                        () => params.ids.length.toString(),
-                                        "..."
+                              {canOpenBulkActionDialog && (
+                                <DialogContentText>
+                                  <FormattedMessage
+                                    defaultMessage="Are you sure you want to unassign {counter, plural,
+                                    one {this product}
+                                    other {{displayQuantity} products}
+                                  }?"
+                                    description="dialog content"
+                                    values={{
+                                      counter: params.ids.length,
+                                      displayQuantity: (
+                                        <strong>{params.ids.length}</strong>
                                       )
-                                    }
-                                  )
-                                }}
-                              />
+                                    }}
+                                  />
+                                </DialogContentText>
+                              )}
                             </ActionDialog>
                             <ActionDialog
                               open={params.action === "remove"}
-                              title={i18n.t("Remove Voucher")}
+                              title={intl.formatMessage({
+                                defaultMessage: "Delete Voucher",
+                                description: "dialog header"
+                              })}
                               confirmButtonState={removeTransitionState}
                               onClose={closeModal}
                               variant="delete"
@@ -619,19 +671,19 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                                 })
                               }
                             >
-                              <DialogContentText
-                                dangerouslySetInnerHTML={{
-                                  __html: i18n.t(
-                                    "Are you sure you want to remove <strong>{{ voucherCode }}</strong>?",
-                                    {
-                                      voucherCode: maybe(
-                                        () => data.voucher.code,
-                                        "..."
-                                      )
-                                    }
-                                  )
-                                }}
-                              />
+                              <DialogContentText>
+                                <FormattedMessage
+                                  defaultMessage="Are you sure you want to delete {voucherCode}?"
+                                  description="dialog content"
+                                  values={{
+                                    voucherCode: (
+                                      <strong>
+                                        {maybe(() => data.voucher.code, "...")}
+                                      </strong>
+                                    )
+                                  }}
+                                />
+                              </DialogContentText>
                             </ActionDialog>
                           </>
                         );

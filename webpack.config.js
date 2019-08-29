@@ -66,17 +66,11 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.(jsx?|tsx?)$/,
           exclude: /node_modules/,
-          loader: "babel-loader"
-        },
-        {
-          test: /\.tsx?$/,
-          exclude: /node_modules/,
-          loader: "ts-loader",
+          loader: "babel-loader",
           options: {
-            experimentalWatchApi: true,
-            transpileOnly: true
+            configFile: resolve("./babel.config.js")
           }
         },
         {

@@ -1,4 +1,5 @@
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
@@ -8,8 +9,8 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { sectionNames } from "@saleor/intl";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import i18n from "../../../i18n";
 import { UserError } from "../../../types";
 import { AddressTypeInput } from "../../types";
 import { CustomerCreateData_shop_countries } from "../../types/CustomerCreateData";
@@ -59,6 +60,8 @@ const CustomerCreatePage: React.StatelessComponent<CustomerCreatePageProps> = ({
   onBack,
   onSubmit
 }: CustomerCreatePageProps) => {
+  const intl = useIntl();
+
   const [countryDisplayName, setCountryDisplayName] = React.useState("");
   const countryChoices = countries.map(country => ({
     label: country.country,
@@ -81,8 +84,15 @@ const CustomerCreatePage: React.StatelessComponent<CustomerCreatePageProps> = ({
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>{i18n.t("Customers")}</AppHeader>
-            <PageHeader title={i18n.t("Add customer")} />
+            <AppHeader onBack={onBack}>
+              <FormattedMessage {...sectionNames.customers} />
+            </AppHeader>
+            <PageHeader
+              title={intl.formatMessage({
+                defaultMessage: "Add customer",
+                description: "page header"
+              })}
+            />
             <Grid>
               <div>
                 <CustomerCreateDetails

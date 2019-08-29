@@ -14,10 +14,10 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
 import {
   getUserInitials,
   getUserName,
@@ -80,97 +80,114 @@ const StaffList = withStyles(styles, { name: "StaffList" })(
     onRowClick,
     pageInfo,
     staffMembers
-  }: StaffListProps) => (
-    <Card>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell className={classes.wideColumn}>
-              {i18n.t("Name", { context: "object" })}
-            </TableCell>
-            <TableCell>
-              {i18n.t("Email Address", { context: "object" })}
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              colSpan={3}
-              settings={settings}
-              hasNextPage={
-                pageInfo && !disabled ? pageInfo.hasNextPage : undefined
-              }
-              onNextPage={onNextPage}
-              onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : undefined
-              }
-              onPreviousPage={onPreviousPage}
-            />
-          </TableRow>
-        </TableFooter>
-        <TableBody>
-          {renderCollection(
-            staffMembers,
-            staffMember => (
-              <TableRow
-                className={classNames({
-                  [classes.tableRow]: !!staffMember
-                })}
-                hover={!!staffMember}
-                onClick={!!staffMember ? onRowClick(staffMember.id) : undefined}
-                key={staffMember ? staffMember.id : "skeleton"}
-              >
-                <TableCell>
-                  <div className={classes.avatar}>
-                    {maybe(() => staffMember.avatar.url) ? (
-                      <img
-                        className={classes.avatarImage}
-                        src={maybe(() => staffMember.avatar.url)}
-                      />
-                    ) : (
-                      <div className={classes.avatarDefault}>
-                        <Typography>{getUserInitials(staffMember)}</Typography>
-                      </div>
-                    )}
-                  </div>
-                  <Typography>
-                    {getUserName(staffMember) || <Skeleton />}
-                  </Typography>
-                  <Typography
-                    variant={"caption"}
-                    className={classes.statusText}
-                  >
+  }: StaffListProps) => {
+    const intl = useIntl();
+
+    return (
+      <Card>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.wideColumn}>
+                <FormattedMessage
+                  defaultMessage="Name"
+                  description="staff member full name"
+                />
+              </TableCell>
+              <TableCell>
+                <FormattedMessage defaultMessage="Email Address" />
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                colSpan={3}
+                settings={settings}
+                hasNextPage={
+                  pageInfo && !disabled ? pageInfo.hasNextPage : undefined
+                }
+                onNextPage={onNextPage}
+                onUpdateListSettings={onUpdateListSettings}
+                hasPreviousPage={
+                  pageInfo && !disabled ? pageInfo.hasPreviousPage : undefined
+                }
+                onPreviousPage={onPreviousPage}
+              />
+            </TableRow>
+          </TableFooter>
+          <TableBody>
+            {renderCollection(
+              staffMembers,
+              staffMember => (
+                <TableRow
+                  className={classNames({
+                    [classes.tableRow]: !!staffMember
+                  })}
+                  hover={!!staffMember}
+                  onClick={
+                    !!staffMember ? onRowClick(staffMember.id) : undefined
+                  }
+                  key={staffMember ? staffMember.id : "skeleton"}
+                >
+                  <TableCell>
+                    <div className={classes.avatar}>
+                      {maybe(() => staffMember.avatar.url) ? (
+                        <img
+                          className={classes.avatarImage}
+                          src={maybe(() => staffMember.avatar.url)}
+                        />
+                      ) : (
+                        <div className={classes.avatarDefault}>
+                          <Typography>
+                            {getUserInitials(staffMember)}
+                          </Typography>
+                        </div>
+                      )}
+                    </div>
+                    <Typography>
+                      {getUserName(staffMember) || <Skeleton />}
+                    </Typography>
+                    <Typography
+                      variant={"caption"}
+                      className={classes.statusText}
+                    >
+                      {maybe<React.ReactNode>(
+                        () =>
+                          staffMember.isActive
+                            ? intl.formatMessage({
+                                defaultMessage: "Active",
+                                description: "staff member status"
+                              })
+                            : intl.formatMessage({
+                                defaultMessage: "Inactive",
+                                description: "staff member status"
+                              }),
+                        <Skeleton />
+                      )}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
                     {maybe<React.ReactNode>(
-                      () =>
-                        staffMember.isActive
-                          ? i18n.t("Active", { context: "status" })
-                          : i18n.t("Inactive", { context: "status" }),
+                      () => staffMember.email,
                       <Skeleton />
                     )}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  {maybe<React.ReactNode>(
-                    () => staffMember.email,
-                    <Skeleton />
-                  )}
-                </TableCell>
-              </TableRow>
-            ),
-            () => (
-              <TableRow>
-                <TableCell colSpan={3}>
-                  {i18n.t("No staff members found")}
-                </TableCell>
-              </TableRow>
-            )
-          )}
-        </TableBody>
-      </Table>
-    </Card>
-  )
+                  </TableCell>
+                </TableRow>
+              ),
+              () => (
+                <TableRow>
+                  <TableCell colSpan={3}>
+                    <FormattedMessage defaultMessage="No staff members found" />
+                  </TableCell>
+                </TableRow>
+              )
+            )}
+          </TableBody>
+        </Table>
+      </Card>
+    );
+  }
 );
 StaffList.displayName = "StaffList";
 export default StaffList;

@@ -1,10 +1,11 @@
 import { stringify as stringifyQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import i18n from "../../i18n";
+import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "../../misc";
 import {
   LanguageCodeEnum,
@@ -39,6 +40,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
+  const intl = useIntl();
 
   const onEdit = (field: string) =>
     navigate(
@@ -51,7 +53,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
   const onUpdate = (data: UpdateVoucherTranslations) => {
     if (data.voucherTranslate.errors.length === 0) {
       notify({
-        text: i18n.t("Translation Saved")
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);
     }

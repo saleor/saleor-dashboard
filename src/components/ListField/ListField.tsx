@@ -8,7 +8,8 @@ import {
 } from "@material-ui/core/styles";
 import TextField, { StandardTextFieldProps } from "@material-ui/core/TextField";
 import React from "react";
-import i18n from "../../i18n";
+import { FormattedMessage } from "react-intl";
+
 import Chip from "../Chip";
 
 interface ListFieldState {
@@ -105,7 +106,7 @@ const ListField = withStyles(styles)(
                   color="primary"
                   onClick={this.handleValueAdd}
                 >
-                  {i18n.t("Add", { context: "button" })}
+                  <FormattedMessage defaultMessage="Add" description="button" />
                 </Button>
               )
             }}

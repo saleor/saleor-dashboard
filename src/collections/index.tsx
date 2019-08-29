@@ -1,9 +1,10 @@
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
-import i18n from "../i18n";
 import {
   collectionAddPath,
   collectionListPath,
@@ -39,14 +40,18 @@ const CollectionDetails: React.StatelessComponent<
   );
 };
 
-const Component = () => (
-  <>
-    <WindowTitle title={i18n.t("Collections")} />
-    <Switch>
-      <Route exact path={collectionListPath} component={CollectionList} />
-      <Route exact path={collectionAddPath} component={CollectionCreate} />
-      <Route path={collectionPath(":id")} component={CollectionDetails} />
-    </Switch>
-  </>
-);
+const Component = () => {
+  const intl = useIntl();
+
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(sectionNames.collections)} />
+      <Switch>
+        <Route exact path={collectionListPath} component={CollectionList} />
+        <Route exact path={collectionAddPath} component={CollectionCreate} />
+        <Route path={collectionPath(":id")} component={CollectionDetails} />
+      </Switch>
+    </>
+  );
+};
 export default Component;

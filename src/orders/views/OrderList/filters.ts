@@ -1,6 +1,7 @@
+import { defineMessages, IntlShape } from "react-intl";
+
 import { FilterContentSubmitData } from "../../../components/Filter";
 import { Filter } from "../../../components/TableFilter";
-import i18n from "../../../i18n";
 import {
   OrderFilterInput,
   OrderStatusFilter
@@ -18,16 +19,43 @@ import {
 
 export const ORDER_FILTERS_KEY = "orderFilters";
 
-function getStatusLabel(status: string): string {
+const filterMessages = defineMessages({
+  dateFrom: {
+    defaultMessage: "Date from {date}",
+    description: "filter by date"
+  },
+  dateIs: {
+    defaultMessage: "Date is {date}",
+    description: "filter by date"
+  },
+  dateTo: {
+    defaultMessage: "Date to {date}",
+    description: "filter by date"
+  },
+  fulfilled: {
+    defaultMessage: "Fulfilled",
+    description: "order status"
+  },
+  partiallyFulfilled: {
+    defaultMessage: "Partially Fulfilled",
+    description: "order status"
+  },
+  unfulfilled: {
+    defaultMessage: "Unfulfilled",
+    description: "order status"
+  }
+});
+
+function getStatusLabel(status: string, intl: IntlShape): string {
   switch (status) {
     case OrderStatusFilter.FULFILLED.toString():
-      return i18n.t("Fulfilled");
+      return intl.formatMessage(filterMessages.fulfilled);
 
     case OrderStatusFilter.PARTIALLY_FULFILLED.toString():
-      return i18n.t("Partially Fulfilled");
+      return intl.formatMessage(filterMessages.partiallyFulfilled);
 
     case OrderStatusFilter.UNFULFILLED.toString():
-      return i18n.t("Unfulfilled");
+      return intl.formatMessage(filterMessages.unfulfilled);
   }
 
   return "";
@@ -90,7 +118,8 @@ interface OrderListChipFormatData {
 export function createFilterChips(
   filters: OrderListUrlFilters,
   formatData: OrderListChipFormatData,
-  onFilterDelete: (filters: OrderListUrlFilters) => void
+  onFilterDelete: (filters: OrderListUrlFilters) => void,
+  intl: IntlShape
 ): Filter[] {
   let filterChips: Filter[] = [];
 
@@ -99,7 +128,7 @@ export function createFilterChips(
       filterChips = [
         ...filterChips,
         {
-          label: i18n.t("Date is {{ date }}", {
+          label: intl.formatMessage(filterMessages.dateIs, {
             date: formatData.formatDate(filters.dateFrom)
           }),
           onClick: () =>
@@ -115,7 +144,7 @@ export function createFilterChips(
         filterChips = [
           ...filterChips,
           {
-            label: i18n.t("Date from {{ date }}", {
+            label: intl.formatMessage(filterMessages.dateFrom, {
               date: formatData.formatDate(filters.dateFrom)
             }),
             onClick: () =>
@@ -131,7 +160,7 @@ export function createFilterChips(
         filterChips = [
           ...filterChips,
           {
-            label: i18n.t("Date to {{ date }}", {
+            label: intl.formatMessage(filterMessages.dateTo, {
               date: formatData.formatDate(filters.dateTo)
             }),
             onClick: () =>
@@ -149,7 +178,7 @@ export function createFilterChips(
     filterChips = [
       ...filterChips,
       {
-        label: getStatusLabel(filters.status),
+        label: getStatusLabel(filters.status, intl),
         onClick: () =>
           onFilterDelete({
             ...filters,

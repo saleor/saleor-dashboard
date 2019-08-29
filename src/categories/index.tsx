@@ -1,8 +1,10 @@
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
+
+import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
-import i18n from "../i18n";
 import {
   categoryAddPath,
   categoryListPath,
@@ -56,16 +58,20 @@ const CategoryList: React.StatelessComponent<RouteComponentProps<{}>> = ({
   return <CategoryListComponent params={params} />;
 };
 
-const Component = () => (
-  <>
-    <WindowTitle title={i18n.t("Categories")} />
-    <Switch>
-      <Route exact path={categoryListPath} component={CategoryList} />
-      <Route exact path={categoryAddPath()} component={CategoryCreate} />
-      <Route exact path={categoryAddPath(":id")} component={CategoryCreate} />
-      <Route path={categoryPath(":id")} component={CategoryDetails} />
-    </Switch>
-  </>
-);
+const Component = () => {
+  const intl = useIntl();
+
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(sectionNames.categories)} />
+      <Switch>
+        <Route exact path={categoryListPath} component={CategoryList} />
+        <Route exact path={categoryAddPath()} component={CategoryCreate} />
+        <Route exact path={categoryAddPath(":id")} component={CategoryCreate} />
+        <Route path={categoryPath(":id")} component={CategoryDetails} />
+      </Switch>
+    </>
+  );
+};
 
 export default Component;

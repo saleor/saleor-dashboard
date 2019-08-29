@@ -1,6 +1,6 @@
+import { defineMessages, IntlShape } from "react-intl";
 import { FilterContentSubmitData } from "../../../components/Filter";
 import { Filter } from "../../../components/TableFilter";
-import i18n from "../../../i18n";
 import {
   ProductFilterInput,
   StockAvailability
@@ -61,6 +61,37 @@ export function createFilter(
   }
 }
 
+const filterMessages = defineMessages({
+  available: {
+    defaultMessage: "Available",
+    description: "filter products by stock"
+  },
+  hidden: {
+    defaultMessage: "Hidden",
+    description: "filter products by visibility"
+  },
+  outOfStock: {
+    defaultMessage: "Out of stock",
+    description: "filter products by stock"
+  },
+  priceFrom: {
+    defaultMessage: "Price from {price}",
+    description: "filter by price"
+  },
+  priceIs: {
+    defaultMessage: "Price is {price}",
+    description: "filter by price"
+  },
+  priceTo: {
+    defaultMessage: "Price to {price}",
+    description: "filter by price"
+  },
+  published: {
+    defaultMessage: "Published",
+    description: "filter products by visibility"
+  }
+});
+
 interface ProductListChipFormatData {
   currencySymbol: string;
   locale: string;
@@ -68,7 +99,8 @@ interface ProductListChipFormatData {
 export function createFilterChips(
   filters: ProductListUrlFilters,
   formatData: ProductListChipFormatData,
-  onFilterDelete: (filters: ProductListUrlFilters) => void
+  onFilterDelete: (filters: ProductListUrlFilters) => void,
+  intl: IntlShape
 ): Filter[] {
   let filterChips: Filter[] = [];
 
@@ -77,7 +109,7 @@ export function createFilterChips(
       filterChips = [
         ...filterChips,
         {
-          label: i18n.t("Price is {{ price }}", {
+          label: intl.formatMessage(filterMessages.priceIs, {
             price: parseFloat(filters.priceFrom).toLocaleString(
               formatData.locale,
               {
@@ -99,7 +131,7 @@ export function createFilterChips(
         filterChips = [
           ...filterChips,
           {
-            label: i18n.t("Price from {{ price }}", {
+            label: intl.formatMessage(filterMessages.priceFrom, {
               price: parseFloat(filters.priceFrom).toLocaleString(
                 formatData.locale,
                 {
@@ -121,7 +153,7 @@ export function createFilterChips(
         filterChips = [
           ...filterChips,
           {
-            label: i18n.t("Price to {{ price }}", {
+            label: intl.formatMessage(filterMessages.priceTo, {
               price: parseFloat(filters.priceTo).toLocaleString(
                 formatData.locale,
                 {
@@ -147,8 +179,8 @@ export function createFilterChips(
       {
         label:
           filters.status === StockAvailability.IN_STOCK.toString()
-            ? i18n.t("Available")
-            : i18n.t("Out Of Stock"),
+            ? intl.formatMessage(filterMessages.available)
+            : intl.formatMessage(filterMessages.outOfStock),
         onClick: () =>
           onFilterDelete({
             ...filters,
@@ -162,10 +194,9 @@ export function createFilterChips(
     filterChips = [
       ...filterChips,
       {
-        label:
-          filters.isPublished === StockAvailability.IN_STOCK.toString()
-            ? i18n.t("Published")
-            : i18n.t("Hidden"),
+        label: !!filters.isPublished
+          ? intl.formatMessage(filterMessages.published)
+          : intl.formatMessage(filterMessages.hidden),
         onClick: () =>
           onFilterDelete({
             ...filters,

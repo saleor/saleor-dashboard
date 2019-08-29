@@ -1,9 +1,10 @@
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
-import i18n from "../i18n";
 import {
   pageCreatePath,
   pageListPath,
@@ -37,15 +38,19 @@ const PageDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
   );
 };
 
-const Component = () => (
-  <>
-    <WindowTitle title={i18n.t("Pages")} />
-    <Switch>
-      <Route exact path={pageListPath} component={PageList} />
-      <Route exact path={pageCreatePath} component={PageCreate} />
-      <Route path={pagePath(":id")} component={PageDetails} />
-    </Switch>
-  </>
-);
+const Component = () => {
+  const intl = useIntl();
+
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(sectionNames.pages)} />
+      <Switch>
+        <Route exact path={pageListPath} component={PageList} />
+        <Route exact path={pageCreatePath} component={PageCreate} />
+        <Route path={pagePath(":id")} component={PageDetails} />
+      </Switch>
+    </>
+  );
+};
 
 export default Component;

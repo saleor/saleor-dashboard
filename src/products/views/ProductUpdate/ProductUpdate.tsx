@@ -2,6 +2,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import ActionDialog from "@saleor/components/ActionDialog";
@@ -9,10 +10,10 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { commonMessages } from "@saleor/intl";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
 import SearchCategories from "../../../containers/SearchCategories";
 import SearchCollections from "../../../containers/SearchCollections";
-import i18n from "../../../i18n";
 import { getMutationState, maybe } from "../../../misc";
 import { productTypeUrl } from "../../../productTypes/urls";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
@@ -53,6 +54,7 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
+  const intl = useIntl();
 
   const openModal = (action: ProductUrlDialog) =>
     navigate(
@@ -73,12 +75,18 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
             >
               {({ data, loading, refetch }) => {
                 const handleDelete = () => {
-                  notify({ text: i18n.t("Product removed") });
+                  notify({
+                    text: intl.formatMessage({
+                      defaultMessage: "Product removed"
+                    })
+                  });
                   navigate(productListUrl());
                 };
                 const handleUpdate = (data: ProductUpdateMutationResult) => {
                   if (data.productUpdate.errors.length === 0) {
-                    notify({ text: i18n.t("Saved changes") });
+                    notify({
+                      text: intl.formatMessage(commonMessages.savedChanges)
+                    });
                   } else {
                     const attributeError = data.productUpdate.errors.find(
                       err => err.field === "attributes"
@@ -103,7 +111,7 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                 };
                 const handleImageDeleteSuccess = () =>
                   notify({
-                    text: i18n.t("Image successfully deleted")
+                    text: intl.formatMessage(commonMessages.savedChanges)
                   });
                 const handleVariantAdd = () =>
                   navigate(productVariantAddUrl(id));
@@ -276,18 +284,20 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                             confirmButtonState={deleteTransitionState}
                             onConfirm={() => deleteProduct.mutate({ id })}
                             variant="delete"
-                            title={i18n.t("Remove product")}
+                            title={intl.formatMessage({
+                              defaultMessage: "Delete Product",
+                              description: "dialog header"
+                            })}
                           >
-                            <DialogContentText
-                              dangerouslySetInnerHTML={{
-                                __html: i18n.t(
-                                  "Are you sure you want to remove <strong>{{ name }}</strong>?",
-                                  {
-                                    name: product ? product.name : undefined
-                                  }
-                                )
-                              }}
-                            />
+                            <DialogContentText>
+                              <FormattedMessage
+                                defaultMessage="Are you sure you want to delete {name}?"
+                                description="delete product"
+                                values={{
+                                  name: product ? product.name : undefined
+                                }}
+                              />
+                            </DialogContentText>
                           </ActionDialog>
                           <ActionDialog
                             open={params.action === "remove-variants"}
@@ -301,21 +311,28 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                               })
                             }
                             variant="delete"
-                            title={i18n.t("Remove product variants")}
+                            title={intl.formatMessage({
+                              defaultMessage: "Delete Product Variants",
+                              description: "dialog header"
+                            })}
                           >
-                            <DialogContentText
-                              dangerouslySetInnerHTML={{
-                                __html: i18n.t(
-                                  "Are you sure you want to remove <strong>{{ number }}</strong> variants?",
-                                  {
-                                    number: maybe(
-                                      () => params.ids.length.toString(),
-                                      "..."
-                                    )
-                                  }
-                                )
-                              }}
-                            />
+                            <DialogContentText>
+                              <FormattedMessage
+                                defaultMessage="Are you sure you want to delete {counter, plural,
+            one {this variant}
+            other {{displayQuantity} variants}
+          }?"
+                                description="dialog content"
+                                values={{
+                                  counter: maybe(() => params.ids.length),
+                                  displayQuantity: (
+                                    <strong>
+                                      {maybe(() => params.ids.length)}
+                                    </strong>
+                                  )
+                                }}
+                              />
+                            </DialogContentText>
                           </ActionDialog>
                         </>
                       );

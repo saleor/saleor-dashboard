@@ -8,12 +8,12 @@ import {
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import i18n from "../../i18n";
 import { DateContext } from "../Date/DateContext";
 
 const styles = (theme: Theme) =>
@@ -54,11 +54,17 @@ export const VisibilityCard = withStyles(styles, {
     disabled,
     onChange
   }: VisibilityCardProps) => {
+    const intl = useIntl();
     const localizeDate = useDateLocalize();
     const dateNow = React.useContext(DateContext);
     return (
       <Card>
-        <CardTitle title={i18n.t("Visibility")} />
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Visibility",
+            description: "section header"
+          })}
+        />
         <CardContent>
           <div
             className={
@@ -69,18 +75,32 @@ export const VisibilityCard = withStyles(styles, {
           >
             <ControlledSwitch
               name="isPublished"
-              label={i18n.t("Visible")}
-              uncheckedLabel={i18n.t("Hidden")}
+              label={intl.formatMessage({
+                defaultMessage: "Visible"
+              })}
+              uncheckedLabel={intl.formatMessage({
+                defaultMessage: "Hidden"
+              })}
               secondLabel={
                 publicationDate
                   ? isPublished
-                    ? i18n.t("since {{ date }}", {
-                        date: localizeDate(publicationDate)
-                      })
+                    ? intl.formatMessage(
+                        {
+                          defaultMessage: "since {date}"
+                        },
+                        {
+                          date: localizeDate(publicationDate)
+                        }
+                      )
                     : Date.parse(publicationDate) > dateNow
-                    ? i18n.t("will be visible from {{ date }}", {
-                        date: localizeDate(publicationDate)
-                      })
+                    ? intl.formatMessage(
+                        {
+                          defaultMessage: "will be visible from {date}"
+                        },
+                        {
+                          date: localizeDate(publicationDate)
+                        }
+                      )
                     : null
                   : null
               }
@@ -94,7 +114,10 @@ export const VisibilityCard = withStyles(styles, {
               <TextField
                 error={!!errors.publicationDate}
                 disabled={disabled}
-                label={i18n.t("Publish on")}
+                label={intl.formatMessage({
+                  defaultMessage: "Publish on",
+                  description: "publish on date"
+                })}
                 name="publicationDate"
                 type="date"
                 fullWidth={true}

@@ -1,9 +1,10 @@
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
-import i18n from "../i18n";
 import {
   customerAddPath,
   customerAddressesPath,
@@ -60,17 +61,21 @@ const CustomerAddressesView: React.StatelessComponent<
   );
 };
 
-export const CustomerSection: React.StatelessComponent<{}> = () => (
-  <>
-    <WindowTitle title={i18n.t("Customers")} />
-    <Switch>
-      <Route exact path={customerListPath} component={CustomerListView} />
-      <Route exact path={customerAddPath} component={CustomerCreateView} />
-      <Route
-        path={customerAddressesPath(":id")}
-        component={CustomerAddressesView}
-      />
-      <Route path={customerPath(":id")} component={CustomerDetailsView} />
-    </Switch>
-  </>
-);
+export const CustomerSection: React.StatelessComponent<{}> = () => {
+  const intl = useIntl();
+
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(sectionNames.customers)} />
+      <Switch>
+        <Route exact path={customerListPath} component={CustomerListView} />
+        <Route exact path={customerAddPath} component={CustomerCreateView} />
+        <Route
+          path={customerAddressesPath(":id")}
+          component={CustomerAddressesView}
+        />
+        <Route path={customerPath(":id")} component={CustomerDetailsView} />
+      </Switch>
+    </>
+  );
+};

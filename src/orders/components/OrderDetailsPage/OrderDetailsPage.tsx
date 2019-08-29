@@ -6,6 +6,7 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
@@ -15,7 +16,7 @@ import { DateTime } from "@saleor/components/Date";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
+import { sectionNames } from "@saleor/intl";
 import { maybe, renderCollection } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
@@ -81,6 +82,8 @@ const OrderDetailsPage = withStyles(styles, { name: "OrderDetailsPage" })(
     onShippingAddressEdit,
     onProfileView
   }: OrderDetailsPageProps) => {
+    const intl = useIntl();
+
     const canCancel = maybe(() => order.status) !== OrderStatus.CANCELED;
     const canEditAddresses = maybe(() => order.status) !== OrderStatus.CANCELED;
     const canFulfill = maybe(() => order.status) !== OrderStatus.CANCELED;
@@ -90,7 +93,9 @@ const OrderDetailsPage = withStyles(styles, { name: "OrderDetailsPage" })(
 
     return (
       <Container>
-        <AppHeader onBack={onBack}>{i18n.t("Orders")}</AppHeader>
+        <AppHeader onBack={onBack}>
+          {intl.formatMessage(sectionNames.orders)}
+        </AppHeader>
         <PageHeader
           className={classes.header}
           title={maybe(() => order.number) ? "#" + order.number : undefined}
@@ -99,7 +104,10 @@ const OrderDetailsPage = withStyles(styles, { name: "OrderDetailsPage" })(
             <CardMenu
               menuItems={[
                 {
-                  label: i18n.t("Cancel order", { context: "button" }),
+                  label: intl.formatMessage({
+                    defaultMessage: "Cancel order",
+                    description: "button"
+                  }),
                   onSelect: onOrderCancel
                 }
               ]}

@@ -6,11 +6,11 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 // tslint:disable no-submodule-imports
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../../i18n";
 import { maybe, renderCollection } from "../../../misc";
 
 export interface TranslationsLanguageListProps {
@@ -40,7 +40,7 @@ const TranslationsLanguageList = withStyles(styles, {
         <TableHead>
           <TableRow>
             <TableCell>
-              {i18n.t("Language", { context: "table header" })}
+              <FormattedMessage defaultMessage="Language" />
             </TableCell>
           </TableRow>
         </TableHead>
@@ -65,7 +65,7 @@ const TranslationsLanguageList = withStyles(styles, {
             () => (
               <TableRow>
                 <TableCell colSpan={1}>
-                  {i18n.t("No languages found")}
+                  <FormattedMessage defaultMessage="No languages found" />
                 </TableCell>
               </TableRow>
             )

@@ -1,8 +1,24 @@
-import i18n from "../i18n";
+import { defineMessages, IntlShape } from "react-intl";
+
 import { VoucherTypeEnum } from "../types/globalTypes";
 
-export const translateVoucherTypes = () => ({
-  [VoucherTypeEnum.SHIPPING]: i18n.t("Shipment"),
-  [VoucherTypeEnum.ENTIRE_ORDER]: i18n.t("Entire order"),
-  [VoucherTypeEnum.SPECIFIC_PRODUCT]: i18n.t("Specific Products")
+const messages = defineMessages({
+  order: {
+    defaultMessage: "Entire order",
+    description: "voucher discount"
+  },
+  products: {
+    defaultMessage: "Specific products",
+    description: "voucher discount"
+  },
+  shipment: {
+    defaultMessage: "Shipment",
+    description: "voucher discount"
+  }
+});
+
+export const translateVoucherTypes = (intl: IntlShape) => ({
+  [VoucherTypeEnum.SHIPPING]: intl.formatMessage(messages.shipment),
+  [VoucherTypeEnum.ENTIRE_ORDER]: intl.formatMessage(messages.order),
+  [VoucherTypeEnum.SPECIFIC_PRODUCT]: intl.formatMessage(messages.products)
 });

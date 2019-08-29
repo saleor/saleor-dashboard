@@ -9,6 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import SVG from "react-inlinesvg";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import backgroundArt from "@assets/images/login-background.svg";
 import saleorDarkLogo from "@assets/images/logo-dark.svg";
@@ -17,7 +18,7 @@ import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import useTheme from "@saleor/hooks/useTheme";
-import i18n from "@saleor/i18n";
+import { commonMessages } from "@saleor/intl";
 
 export interface FormData {
   email: string;
@@ -117,6 +118,7 @@ export interface LoginCardProps extends WithStyles<typeof styles> {
 const LoginCard = withStyles(styles, { name: "LoginCard" })(
   ({ classes, error, disableLoginButton, onSubmit }: LoginCardProps) => {
     const { isDark } = useTheme();
+    const intl = useIntl();
 
     return (
       <Form
@@ -136,21 +138,16 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                 />
                 {error && (
                   <div className={classes.panel}>
-                    <Typography
-                      variant="caption"
-                      dangerouslySetInnerHTML={{
-                        __html: i18n.t(
-                          "Sorry, your username and/or password are incorrect. <br />Please try again."
-                        )
-                      }}
-                    />
+                    <Typography variant="caption">
+                      <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
+                    </Typography>
                   </div>
                 )}
                 <TextField
                   autoFocus
                   fullWidth
                   autoComplete="username"
-                  label={i18n.t("Email", { context: "form" })}
+                  label={intl.formatMessage(commonMessages.email)}
                   name="email"
                   onChange={handleChange}
                   value={data.email}
@@ -162,7 +159,9 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                 <TextField
                   fullWidth
                   autoComplete="current-password"
-                  label={i18n.t("Password")}
+                  label={intl.formatMessage({
+                    defaultMessage: "Password"
+                  })}
                   name="password"
                   onChange={handleChange}
                   type="password"
@@ -173,7 +172,10 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                 <div className={classes.buttonContainer}>
                   <ControlledCheckbox
                     checked={data.rememberMe}
-                    label={i18n.t("Remember me")}
+                    label={intl.formatMessage({
+                      defaultMessage: "Remember me",
+                      description: "login"
+                    })}
                     name="rememberMe"
                     onChange={handleChange}
                   />
@@ -187,7 +189,10 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                     type="submit"
                     data-tc="submit"
                   >
-                    {i18n.t("Login")}
+                    <FormattedMessage
+                      defaultMessage="Login"
+                      description="button"
+                    />
                   </Button>
                 </div>
                 {/* <FormSpacer />

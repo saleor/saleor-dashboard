@@ -6,8 +6,9 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import { EditorState, EntityInstance, RichUtils } from "draft-js";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import i18n from "../../i18n";
+import { buttonMessages } from "@saleor/intl";
 import Form from "../Form";
 
 interface LinkSourceProps {
@@ -20,10 +21,17 @@ interface LinkSourceProps {
   onClose: () => void;
 }
 
-class LinkSource extends React.Component<LinkSourceProps> {
-  submit = (url: string) => {
-    const { editorState, entityType, onComplete } = this.props;
+const LinkSource: React.FC<LinkSourceProps> = ({
+  editorState,
+  entity,
+  entityType,
+  onComplete,
+  onClose
+}) => {
+  const intl = useIntl();
+  const initial = entity ? entity.getData().url : "";
 
+  const handleSubmit = (url: string) => {
     if (url) {
       const content = editorState.getCurrentContent();
       const contentWithEntity = content.createEntity(
@@ -47,41 +55,44 @@ class LinkSource extends React.Component<LinkSourceProps> {
     }
   };
 
-  render() {
-    const { entity, onClose } = this.props;
-    const initial = entity ? entity.getData().url : "";
+  return (
+    <Dialog onClose={onClose} open={true} fullWidth maxWidth="sm">
+      <Form
+        initial={{ url: initial }}
+        onSubmit={({ url }) => handleSubmit(url)}
+      >
+        {({ data, change, submit }) => (
+          <>
+            <DialogTitle>
+              <FormattedMessage
+                defaultMessage="Add or Edit Link"
+                description="button"
+              />
+            </DialogTitle>
+            <DialogContent>
+              <TextField
+                name="url"
+                fullWidth
+                label={intl.formatMessage({
+                  defaultMessage: "URL Linked"
+                })}
+                value={data.url}
+                onChange={change}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={onClose}>
+                <FormattedMessage {...buttonMessages.cancel} />
+              </Button>
+              <Button onClick={submit} color="secondary" variant="contained">
+                <FormattedMessage {...buttonMessages.save} />
+              </Button>
+            </DialogActions>
+          </>
+        )}
+      </Form>
+    </Dialog>
+  );
+};
 
-    return (
-      <Dialog onClose={onClose} open={true} fullWidth maxWidth="sm">
-        <Form
-          initial={{ url: initial }}
-          onSubmit={({ url }) => this.submit(url)}
-        >
-          {({ data, change, submit }) => (
-            <>
-              <DialogTitle>{i18n.t("Add or Edit Link")}</DialogTitle>
-              <DialogContent>
-                <TextField
-                  name="url"
-                  fullWidth
-                  label={i18n.t("URL Linked")}
-                  value={data.url}
-                  onChange={change}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={onClose}>
-                  {i18n.t("Cancel", { context: "button" })}
-                </Button>
-                <Button onClick={submit} color="secondary" variant="contained">
-                  {i18n.t("Save", { context: "button" })}
-                </Button>
-              </DialogActions>
-            </>
-          )}
-        </Form>
-      </Dialog>
-    );
-  }
-}
 export default LinkSource;

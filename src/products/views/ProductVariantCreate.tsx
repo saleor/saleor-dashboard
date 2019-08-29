@@ -1,10 +1,10 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import i18n from "../../i18n";
 import { decimal, getMutationState, maybe } from "../../misc";
 import ProductVariantCreatePage, {
   ProductVariantCreatePageSubmitData
@@ -24,6 +24,7 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
+  const intl = useIntl();
 
   return (
     <TypedProductVariantCreateQuery
@@ -34,7 +35,11 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
       {({ data, loading: productLoading }) => {
         const handleCreateSuccess = (data: VariantCreate) => {
           if (data.productVariantCreate.errors.length === 0) {
-            notify({ text: i18n.t("Product created") });
+            notify({
+              text: intl.formatMessage({
+                defaultMessage: "Product created"
+              })
+            });
             navigate(
               productVariantEditUrl(
                 productId,
@@ -81,7 +86,12 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
               );
               return (
                 <>
-                  <WindowTitle title={i18n.t("Create variant")} />
+                  <WindowTitle
+                    title={intl.formatMessage({
+                      defaultMessage: "Create Variant",
+                      description: "window title"
+                    })}
+                  />
                   <ProductVariantCreatePage
                     currencySymbol={maybe(() => shop.defaultCurrency)}
                     errors={maybe(
@@ -89,7 +99,10 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
                         variantCreateResult.data.productVariantCreate.errors,
                       []
                     )}
-                    header={i18n.t("Add Variant")}
+                    header={intl.formatMessage({
+                      defaultMessage: "Add Variant",
+                      description: "header"
+                    })}
                     loading={disableForm}
                     product={maybe(() => data.product)}
                     onBack={handleBack}

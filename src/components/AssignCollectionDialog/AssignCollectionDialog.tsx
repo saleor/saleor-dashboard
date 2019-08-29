@@ -11,9 +11,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import i18n from "@saleor/i18n";
+import { buttonMessages } from "@saleor/intl";
 import { SearchCollections_collections_edges_node } from "../../containers/SearchCollections/types/SearchCollections";
 import Checkbox from "../Checkbox";
 import ConfirmButton, {
@@ -85,6 +86,7 @@ const AssignCollectionDialog = withStyles(styles, {
     onFetch,
     onSubmit
   }: AssignCollectionDialogProps) => {
+    const intl = useIntl();
     const [query, onQueryChange] = useSearchQuery(onFetch);
     const [selectedCollections, setSelectedCollections] = React.useState<
       SearchCollections_collections_edges_node[]
@@ -100,17 +102,22 @@ const AssignCollectionDialog = withStyles(styles, {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle>{i18n.t("Assign Collection")}</DialogTitle>
+        <DialogTitle>
+          <FormattedMessage
+            defaultMessage="Assign Collection"
+            description="dialog header"
+          />
+        </DialogTitle>
         <DialogContent className={classes.overflow}>
           <TextField
             name="query"
             value={query}
             onChange={onQueryChange}
-            label={i18n.t("Search Collection", {
-              context: "product search input label"
+            label={intl.formatMessage({
+              defaultMessage: "Search Collection"
             })}
-            placeholder={i18n.t("Search by collection name, etc...", {
-              context: "product search input placeholder"
+            placeholder={intl.formatMessage({
+              defaultMessage: "Search by collection name, etc..."
             })}
             fullWidth
             InputProps={{
@@ -157,7 +164,7 @@ const AssignCollectionDialog = withStyles(styles, {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>
-            {i18n.t("Cancel", { context: "button" })}
+            <FormattedMessage {...buttonMessages.cancel} />
           </Button>
           <ConfirmButton
             transitionState={confirmButtonState}
@@ -166,7 +173,10 @@ const AssignCollectionDialog = withStyles(styles, {
             type="submit"
             onClick={handleSubmit}
           >
-            {i18n.t("Assign collections", { context: "button" })}
+            <FormattedMessage
+              defaultMessage="Assign collections"
+              description="button"
+            />
           </ConfirmButton>
         </DialogActions>
       </Dialog>

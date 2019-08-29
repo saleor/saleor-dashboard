@@ -17,6 +17,7 @@ import {
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
+import { FormattedMessage, useIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 
 import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
@@ -27,14 +28,13 @@ import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
-import i18n from "@saleor/i18n";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import Container from "../Container";
 import AppActionContext from "./AppActionContext";
 import AppHeaderContext from "./AppHeaderContext";
 import { appLoaderHeight, drawerWidth, drawerWidthExpanded } from "./consts";
 import MenuList from "./MenuList";
-import menuStructure from "./menuStructure";
+import createMenuStructure from "./menuStructure";
 import ResponsiveDrawer from "./ResponsiveDrawer";
 import ThemeSwitch from "./ThemeSwitch";
 
@@ -108,9 +108,7 @@ const styles = (theme: Theme) =>
     },
     isMenuSmallDark: {
       "&:hover": {
-        background: `linear-gradient(0deg, rgba(25, 195, 190, 0.1), rgba(25, 195, 190, 0.1)), ${
-          theme.palette.background.paper
-        }`
+        background: `linear-gradient(0deg, rgba(25, 195, 190, 0.1), rgba(25, 195, 190, 0.1)), ${theme.palette.background.paper}`
       },
       border: `solid 1px #252728`,
       transition: `background  ${theme.transitions.duration.shorter}ms`
@@ -277,6 +275,9 @@ const AppLayout = withStyles(styles, {
       const anchor = React.useRef<HTMLDivElement>();
       const { logout, user } = useUser();
       const navigate = useNavigator();
+      const intl = useIntl();
+
+      const menuStructure = createMenuStructure(intl);
 
       const handleLogout = () => {
         close();
@@ -430,9 +431,10 @@ const AppLayout = withStyles(styles, {
                                             className={classes.userMenuItem}
                                             onClick={handleLogout}
                                           >
-                                            {i18n.t("Log out", {
-                                              context: "button"
-                                            })}
+                                            <FormattedMessage
+                                              defaultMessage="Log out"
+                                              description="button"
+                                            />
                                           </MenuItem>
                                         </Menu>
                                       </ClickAwayListener>

@@ -1,15 +1,18 @@
 /* eslint-disable */
+const path = require("path");
 const CheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
+const resolve = resolvePath => path.resolve(__dirname, resolvePath);
+
 module.exports = ({ config }) => {
   config.module.rules.push({
-    test: /\.tsx?$/,
+    test: /\.(jsx?|tsx?)$/,
     exclude: /node_modules/,
-    loader: "ts-loader",
+    loader: "babel-loader",
     options: {
-      experimentalWatchApi: true,
-      transpileOnly: true
+      configFile: resolve("../../babel.config.js"),
+      envName: "storybook"
     }
   });
   config.optimization.removeAvailableModules = false;

@@ -2,9 +2,9 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import i18n from "../../../i18n";
 import { maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderDraftDetailsProducts, {
@@ -29,34 +29,40 @@ const OrderDraftDetails: React.StatelessComponent<OrderDraftDetailsProps> = ({
   onOrderLineChange,
   onOrderLineRemove,
   onShippingMethodEdit
-}) => (
-  <Card>
-    <CardTitle
-      title={i18n.t("Order details", {
-        context: "card title"
-      })}
-      toolbar={
-        <Button color="primary" variant="text" onClick={onOrderLineAdd}>
-          {i18n.t("Add products", {
-            context: "button"
-          })}
-        </Button>
-      }
-    />
-    <OrderDraftDetailsProducts
-      lines={maybe(() => order.lines)}
-      onOrderLineChange={onOrderLineChange}
-      onOrderLineRemove={onOrderLineRemove}
-    />
-    {maybe(() => order.lines.length) !== 0 && (
-      <CardContent>
-        <OrderDraftDetailsSummary
-          order={order}
-          onShippingMethodEdit={onShippingMethodEdit}
-        />
-      </CardContent>
-    )}
-  </Card>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Order Details",
+          description: "section header"
+        })}
+        toolbar={
+          <Button color="primary" variant="text" onClick={onOrderLineAdd}>
+            <FormattedMessage
+              defaultMessage="Add products"
+              description="button"
+            />
+          </Button>
+        }
+      />
+      <OrderDraftDetailsProducts
+        lines={maybe(() => order.lines)}
+        onOrderLineChange={onOrderLineChange}
+        onOrderLineRemove={onOrderLineRemove}
+      />
+      {maybe(() => order.lines.length) !== 0 && (
+        <CardContent>
+          <OrderDraftDetailsSummary
+            order={order}
+            onShippingMethodEdit={onShippingMethodEdit}
+          />
+        </CardContent>
+      )}
+    </Card>
+  );
+};
 OrderDraftDetails.displayName = "OrderDraftDetails";
 export default OrderDraftDetails;

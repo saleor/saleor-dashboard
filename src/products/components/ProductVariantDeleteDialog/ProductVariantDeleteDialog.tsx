@@ -11,11 +11,12 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import i18n from "../../../i18n";
+import { buttonMessages } from "@saleor/intl";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -50,21 +51,25 @@ const ProductVariantDeleteDialog = withStyles(styles, {
   }: ProductVariantDeleteDialogProps) => (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
-        {i18n.t("Delete variant", { context: "title" })}
+        <FormattedMessage
+          defaultMessage="Delete Variant"
+          description="dialog header"
+        />
       </DialogTitle>
       <DialogContent>
-        <DialogContentText
-          dangerouslySetInnerHTML={{
-            __html: i18n.t(
-              "Are you sure you want to remove <strong>{{name}}</strong>?",
-              { name }
-            )
-          }}
-        />
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="Are you sure you want to delete {name}?"
+            description="delete product variant"
+            values={{
+              name
+            }}
+          />
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>
-          {i18n.t("Cancel", { context: "button" })}
+          <FormattedMessage {...buttonMessages.cancel} />
         </Button>
         <ConfirmButton
           transitionState={confirmButtonState}
@@ -72,7 +77,10 @@ const ProductVariantDeleteDialog = withStyles(styles, {
           variant="contained"
           onClick={onConfirm}
         >
-          {i18n.t("Delete variant", { context: "button" })}
+          <FormattedMessage
+            defaultMessage="Delete variant"
+            description="button"
+          />
         </ConfirmButton>
       </DialogActions>
     </Dialog>

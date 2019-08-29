@@ -16,10 +16,10 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import DeleteIcon from "@material-ui/icons/Delete";
 import classNames from "classnames";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import i18n from "../../i18n";
 import { maybe, renderCollection } from "../../misc";
 import { CountryFragment } from "../../taxes/types/CountryFragment";
 
@@ -99,7 +99,10 @@ const CountryList = withStyles(styles, {
           title={title}
           toolbar={
             <Button color="primary" onClick={onCountryAssign}>
-              {i18n.t("Assign countries")}
+              <FormattedMessage
+                defaultMessage="Assign countries"
+                description="button"
+              />
             </Button>
           }
         />
@@ -110,10 +113,13 @@ const CountryList = withStyles(styles, {
                 <TableCell
                   className={classNames(classes.wideColumn, classes.toLeft)}
                 >
-                  {i18n.t("{{ number }} Countries", {
-                    context: "number of countries",
-                    number: maybe(() => countries.length.toString(), "...")
-                  })}
+                  <FormattedMessage
+                    defaultMessage="{number} Countries"
+                    description="number of countries"
+                    values={{
+                      number: maybe(() => countries.length.toString(), "...")
+                    }}
+                  />
                 </TableCell>
                 <TableCell
                   className={classNames(classes.textRight, classes.iconCell)}

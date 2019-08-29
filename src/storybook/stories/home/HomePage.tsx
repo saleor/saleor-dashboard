@@ -9,7 +9,7 @@ import Decorator from "../../Decorator";
 
 const shop = shopFixture(placeholderImage);
 
-const HomePageProps: Omit<HomePageProps, "classes"> = {
+const homePageProps: Omit<HomePageProps, "classes"> = {
   activities: shop.activities.edges.map(edge => edge.node),
   onOrdersToCaptureClick: () => undefined,
   onOrdersToFulfillClick: () => undefined,
@@ -26,10 +26,10 @@ const HomePageProps: Omit<HomePageProps, "classes"> = {
 
 storiesOf("Views / HomePage", module)
   .addDecorator(Decorator)
-  .add("default", () => <HomePage {...HomePageProps} />)
+  .add("default", () => <HomePage {...homePageProps} />)
   .add("loading", () => (
     <HomePage
-      {...HomePageProps}
+      {...homePageProps}
       activities={undefined}
       orders={undefined}
       ordersToCapture={undefined}
@@ -41,5 +41,5 @@ storiesOf("Views / HomePage", module)
     />
   ))
   .add("no data", () => (
-    <HomePage {...HomePageProps} topProducts={[]} activities={[]} />
+    <HomePage {...homePageProps} topProducts={[]} activities={[]} />
   ));
