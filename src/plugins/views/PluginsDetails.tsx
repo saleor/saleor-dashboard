@@ -1,8 +1,9 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import i18n from "@saleor/i18n";
 import React from "react";
+import { useIntl } from "react-intl";
+
 import { getMutationState, maybe } from "../../misc";
 import PluginsDetailsPage from "../components/PluginsDetailsPage";
 import { TypedPluginUpdate } from "../mutations";
@@ -19,6 +20,7 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const intl = useIntl();
 
   return (
     <TypedPluginUpdate>
@@ -45,7 +47,10 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
             } else {
               if (pluginUpdateOpts.data) {
                 notify({
-                  text: i18n.t("Succesfully updated plugin settings")
+                  text: intl.formatMessage({
+                    defaultMessage: "Succesfully updated plugin settings",
+                    description: "plugin success message"
+                  })
                 });
               }
             }

@@ -12,15 +12,15 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import EditIcon from "@material-ui/icons/Edit";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import i18n from "@saleor/i18n";
+import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
-import { translateBoolean } from "@saleor/utils/i18n";
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
 
 export interface PluginListProps extends ListProps {
@@ -61,6 +61,7 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
     onUpdateListSettings,
     onPreviousPage
   }: PluginListProps & WithStyles<typeof styles>) => {
+    const intl = useIntl();
     return (
       <Card>
         <Table>
@@ -70,13 +71,22 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
             items={plugins}
           >
             <TableCell className={classes.colName} padding="dense">
-              {i18n.t("Name", { context: "table header" })}
+              {intl.formatMessage({
+                defaultMessage: "Name",
+                description: "plugin list table header"
+              })}
             </TableCell>
             <TableCell className={classes.colActive} padding="dense">
-              {i18n.t("Active", { context: "table header" })}
+              {intl.formatMessage({
+                defaultMessage: "Active",
+                description: "plugin list table header"
+              })}
             </TableCell>
             <TableCell className={classes.colAction} padding="dense">
-              {i18n.t("Action", { context: "table header" })}
+              {intl.formatMessage({
+                defaultMessage: "Action",
+                description: "plugin list table header"
+              })}
             </TableCell>
           </TableHead>
           <TableFooter>
@@ -114,7 +124,7 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
                       {maybe<React.ReactNode>(
                         () => (
                           <StatusLabel
-                            label={translateBoolean(plugin.active)}
+                            label={translateBoolean(plugin.active, intl)}
                             status={plugin.active ? "success" : "error"}
                           />
                         ),
@@ -132,7 +142,10 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    {i18n.t("No plugins found")}
+                    {intl.formatMessage({
+                      defaultMessage: "No plugins found",
+                      description: "plugin no found"
+                    })}
                   </TableCell>
                 </TableRow>
               )

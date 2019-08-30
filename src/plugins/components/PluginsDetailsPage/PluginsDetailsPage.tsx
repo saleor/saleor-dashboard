@@ -6,12 +6,13 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
+import { useIntl } from "react-intl";
 
-import i18n from "../../../i18n";
 import { Plugin_plugin } from "../../types/Plugin";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
@@ -38,6 +39,7 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
   onBack,
   onSubmit
 }) => {
+  const intl = useIntl();
   const initialForm: FormData = {
     active: maybe(() => plugin.active, false),
     configuration: maybe(() => plugin.configuration, [])
@@ -67,19 +69,29 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
         };
         return (
           <Container>
-            <AppHeader onBack={onBack}>{i18n.t("Plugins")}</AppHeader>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.plugins)}
+            </AppHeader>
             <PageHeader
-              title={`${maybe(() => plugin.name, "")} ${i18n.t("Details")}`}
+              title={`${maybe(() => plugin.name, "")} ${intl.formatMessage({
+                defaultMessage: "Details",
+                description: "plugin page title"
+              })}`}
             />
             <Grid variant="inverted">
               <div>
                 <Typography variant="h6">
-                  {i18n.t("Plugin Information and Status")}
+                  {intl.formatMessage({
+                    defaultMessage: "Plugin Information and Status",
+                    description: "plugin section title"
+                  })}
                 </Typography>
                 <Typography>
-                  {i18n.t(
-                    "These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar."
-                  )}
+                  {intl.formatMessage({
+                    defaultMessage:
+                      "These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar.",
+                    description: "plugin section description"
+                  })}
                 </Typography>
               </div>
               <PluginInfo
@@ -92,17 +104,22 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
                 <>
                   <div>
                     <Typography variant="h6">
-                      {i18n.t("Plugin Settings")}
+                      {intl.formatMessage({
+                        defaultMessage: "Plugin Settings",
+                        description: "plugin section title"
+                      })}
                     </Typography>
                     <Typography>
-                      {i18n.t(
-                        "This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers."
-                      )}
+                      {intl.formatMessage({
+                        defaultMessage:
+                          "This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers.",
+                        description: "plugin section description"
+                      })}
                     </Typography>
                   </div>
                   <PluginSettings
                     data={data}
-                    plugin={maybe(() => plugin.configuration, [])}
+                    fields={maybe(() => plugin.configuration, [])}
                     errors={errors}
                     disabled={disabled}
                     onChange={onChange}

@@ -1,9 +1,10 @@
 import { parse as parseQs } from "qs";
 import React from "react";
+import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
-import i18n from "../i18n";
 import {
   pluginsListPath,
   PluginsListUrlQueryParams,
@@ -34,14 +35,17 @@ const PageDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
   );
 };
 
-const Component = () => (
-  <>
-    <WindowTitle title={i18n.t("Plugins")} />
-    <Switch>
-      <Route exact path={pluginsListPath} component={PluginList} />
-      <Route path={pluginsPath(":id")} component={PageDetails} />
-    </Switch>
-  </>
-);
+const Component = () => {
+  const intl = useIntl();
+  return (
+    <>
+      <WindowTitle title={intl.formatMessage(sectionNames.plugins)} />
+      <Switch>
+        <Route exact path={pluginsListPath} component={PluginList} />
+        <Route path={pluginsPath(":id")} component={PageDetails} />
+      </Switch>
+    </>
+  );
+};
 
 export default Component;

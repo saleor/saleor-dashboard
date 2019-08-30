@@ -26,7 +26,6 @@ import { taxSection } from "@saleor/taxes/urls";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import ConfigurationPage, { MenuItem } from "./ConfigurationPage";
 
-<<<<<<< HEAD
 export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
   return [
     {
@@ -108,82 +107,25 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       permission: PermissionEnum.MANAGE_PAGES,
       title: intl.formatMessage(sectionNames.pages),
       url: pageListUrl()
+    },
+    {
+      description: intl.formatMessage({
+        defaultMessage: "View and update your plugins and their settings.",
+        id: "configurationPluginsPages"
+      }),
+      icon: (
+        <Plugins
+          fontSize="inherit"
+          viewBox="-8 -5 44 44"
+          preserveAspectRatio="xMinYMin meet"
+        />
+      ),
+      permission: PermissionEnum.MANAGE_SETTINGS,
+      title: intl.formatMessage(sectionNames.plugins),
+      url: pluginsListUrl()
     }
   ];
 }
-=======
-export const configurationMenu: MenuItem[] = [
-  {
-    description: i18n.t("Determine attributes used to create product types"),
-    icon: <ProductTypes fontSize="inherit" viewBox="0 0 44 44" />,
-    permission: PermissionEnum.MANAGE_PRODUCTS,
-    title: i18n.t("Attributes"),
-    url: attributeListUrl()
-  },
-  {
-    description: i18n.t("Define types of products you sell"),
-    icon: <ProductTypes fontSize="inherit" viewBox="0 0 44 44" />,
-    permission: PermissionEnum.MANAGE_PRODUCTS,
-    title: i18n.t("Product Types"),
-    url: productTypeListUrl()
-  },
-  {
-    description: i18n.t("Manage your employees and their permissions"),
-    icon: <StaffMembers fontSize="inherit" viewBox="0 0 44 44" />,
-    permission: PermissionEnum.MANAGE_STAFF,
-    title: i18n.t("Staff Members"),
-    url: staffListUrl()
-  },
-  {
-    description: i18n.t("Manage how you ship out orders."),
-    icon: <ShippingMethods fontSize="inherit" viewBox="0 0 44 44" />,
-    permission: PermissionEnum.MANAGE_SHIPPING,
-    title: i18n.t("Shipping Methods"),
-    url: shippingZonesListUrl()
-  },
-  {
-    description: i18n.t("Manage how your store charges tax"),
-    icon: <Taxes fontSize="inherit" viewBox="0 0 44 44" />,
-    permission: PermissionEnum.MANAGE_PRODUCTS,
-    title: i18n.t("Taxes"),
-    url: taxSection
-  },
-  {
-    description: i18n.t("Define how users can navigate through your store"),
-    icon: <Navigation fontSize="inherit" viewBox="0 0 44 44" />,
-    permission: PermissionEnum.MANAGE_MENUS,
-    title: i18n.t("Navigation"),
-    url: menuListUrl()
-  },
-  {
-    description: i18n.t("View and update your site settings"),
-    icon: <SiteSettings fontSize="inherit" viewBox="0 0 44 44" />,
-    permission: PermissionEnum.MANAGE_SETTINGS,
-    title: i18n.t("Site Settings"),
-    url: siteSettingsUrl()
-  },
-  {
-    description: i18n.t("Manage and add additional pages"),
-    icon: <Pages fontSize="inherit" viewBox="0 0 44 44" />,
-    permission: PermissionEnum.MANAGE_PAGES,
-    title: i18n.t("Pages"),
-    url: pageListUrl()
-  },
-  {
-    description: i18n.t("View and update your plugins and their settings."),
-    icon: (
-      <Plugins
-        fontSize="inherit"
-        viewBox="-8 -5 44 44"
-        preserveAspectRatio="xMinYMin meet"
-      />
-    ),
-    permission: PermissionEnum.MANAGE_SETTINGS,
-    title: i18n.t("Plugins"),
-    url: pluginsListUrl()
-  }
-];
->>>>>>> Add plugin page, plugin list view
 
 export const configurationMenuUrl = "/configuration/";
 
