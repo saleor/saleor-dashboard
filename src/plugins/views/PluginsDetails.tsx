@@ -62,14 +62,14 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
                   plugin={maybe(() => PluginDetails.data.plugin)}
                   onBack={() => navigate(pluginsListUrl())}
                   onSubmit={formData => {
-                    const configurationInput = formData.configuration.map(
-                      item => {
+                    const configurationInput =
+                      formData.configuration &&
+                      formData.configuration.map(item => {
                         return {
                           name: item.name,
                           value: item.value.toString()
                         };
-                      }
-                    );
+                      });
                     pluginUpdate({
                       variables: {
                         id,
