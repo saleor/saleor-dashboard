@@ -73812,7 +73812,7 @@ exports[`Storyshots Views / Plugins / Plugin details default 1`] = `
             <h6
               class="MuiTypography-root-id MuiTypography-h6-id Hook-title-id"
             >
-              Plugin Description
+              Description
             </h6>
             <p
               class="MuiTypography-root-id MuiTypography-body2-id"
@@ -74128,7 +74128,7 @@ exports[`Storyshots Views / Plugins / Plugin details form errors 1`] = `
             <h6
               class="MuiTypography-root-id MuiTypography-h6-id Hook-title-id"
             >
-              Plugin Description
+              Description
             </h6>
             <p
               class="MuiTypography-root-id MuiTypography-body2-id"
@@ -74382,7 +74382,7 @@ exports[`Storyshots Views / Plugins / Plugin details loading 1`] = `
         <h5
           class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
         >
-           Details
+          ... Details
         </h5>
         <div
           class="ExtendedPageHeader-action-id"
