@@ -101,6 +101,10 @@ function loadStories() {
   require("./stories/pages/PageDetailsPage");
   require("./stories/pages/PageListPage");
 
+  // Plugins
+  require("./stories/plugins/PluginDetailsPage");
+  require("./stories/plugins/PluginsListPage");
+
   // Products
   require("./stories/products/ProductCreatePage");
   require("./stories/products/ProductImagePage");

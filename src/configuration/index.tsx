@@ -7,6 +7,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import Navigation from "@saleor/icons/Navigation";
 import Pages from "@saleor/icons/Pages";
+import Plugins from "@saleor/icons/Plugins";
 import ProductTypes from "@saleor/icons/ProductTypes";
 import ShippingMethods from "@saleor/icons/ShippingMethods";
 import SiteSettings from "@saleor/icons/SiteSettings";
@@ -16,6 +17,7 @@ import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { pageListUrl } from "@saleor/pages/urls";
+import { pluginsListUrl } from "@saleor/plugins/urls";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
@@ -105,6 +107,22 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       permission: PermissionEnum.MANAGE_PAGES,
       title: intl.formatMessage(sectionNames.pages),
       url: pageListUrl()
+    },
+    {
+      description: intl.formatMessage({
+        defaultMessage: "View and update your plugins and their settings.",
+        id: "configurationPluginsPages"
+      }),
+      icon: (
+        <Plugins
+          fontSize="inherit"
+          viewBox="-8 -5 44 44"
+          preserveAspectRatio="xMinYMin meet"
+        />
+      ),
+      permission: PermissionEnum.MANAGE_SETTINGS,
+      title: intl.formatMessage(sectionNames.plugins),
+      url: pluginsListUrl()
     }
   ];
 }

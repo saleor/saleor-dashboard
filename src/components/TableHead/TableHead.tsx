@@ -23,10 +23,10 @@ export interface TableHeadProps extends MuiTableHeadProps {
   colSpan: number;
   disabled: boolean;
   dragRows?: boolean;
-  selected: number;
+  selected?: number;
   items: Node[];
-  toolbar: React.ReactNode | React.ReactNodeArray;
-  toggleAll: (items: Node[], selected: number) => void;
+  toolbar?: React.ReactNode | React.ReactNodeArray;
+  toggleAll?: (items: Node[], selected: number) => void;
 }
 
 const styles = (theme: Theme) =>
@@ -101,25 +101,26 @@ const TableHead = withStyles(styles, {
               })}
             />
           )}
-          {(items === undefined || items.length > 0) && (
-            <TableCell
-              padding="checkbox"
-              className={classNames({
-                [classes.checkboxSelected]: selected,
-                [classes.dragRows]: dragRows
-              })}
-            >
-              <Checkbox
+          {(items === undefined || items.length > 0) &&
+            (selected && (
+              <TableCell
+                padding="checkbox"
                 className={classNames({
-                  [classes.checkboxPartialSelect]:
-                    items && items.length > selected && selected > 0
+                  [classes.checkboxSelected]: selected,
+                  [classes.dragRows]: dragRows
                 })}
-                checked={selected === 0 ? false : true}
-                disabled={disabled}
-                onChange={() => toggleAll(items, selected)}
-              />
-            </TableCell>
-          )}
+              >
+                <Checkbox
+                  className={classNames({
+                    [classes.checkboxPartialSelect]:
+                      items && items.length > selected && selected > 0
+                  })}
+                  checked={selected === 0 ? false : true}
+                  disabled={disabled}
+                  onChange={() => toggleAll(items, selected)}
+                />
+              </TableCell>
+            ))}
           {selected ? (
             <>
               <TableCell
@@ -138,7 +139,7 @@ const TableHead = withStyles(styles, {
                     </Typography>
                   )}
                   <div className={classes.spacer} />
-                  <div className={classes.toolbar}>{toolbar}</div>
+                  {toolbar && <div className={classes.toolbar}>{toolbar}</div>}
                 </div>
               </TableCell>
             </>
