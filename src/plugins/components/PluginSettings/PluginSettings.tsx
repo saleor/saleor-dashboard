@@ -1,7 +1,7 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import makeStyles from "@material-ui/styles/makeStyles";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import { FormErrors } from "@saleor/types";
@@ -24,63 +24,61 @@ interface PluginSettingsProps {
   }>;
 }
 
-const styles = createStyles({
+const useStyles = makeStyles(() => ({
   item: {
     paddingBottom: 10,
     paddingTop: 10
   }
-});
+}));
 
-const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
-  ({
-    data,
-    disabled,
-    classes,
-    errors,
-    onChange,
-    plugin
-  }: PluginSettingsProps & WithStyles<typeof styles>) => {
-    return (
-      <Card>
-        <CardTitle
-          title={i18n.t("Plugin Settings", {
-            context: "plugin configuration"
-          })}
-        />
-        <CardContent>
-          {data.configuration.map((configuration, index) => (
-            <div className={classes.item} key={index}>
-              {plugin[index].type === ConfigurationTypeFieldEnum.STRING && (
-                <TextField
-                  disabled={disabled}
-                  error={!!errors.name}
-                  helperText={plugin[index].helpText}
-                  label={plugin[index].label}
-                  name={configuration.name}
-                  fullWidth
-                  value={configuration.value}
-                  onChange={onChange}
-                />
-              )}
-              {plugin[index].type === ConfigurationTypeFieldEnum.BOOLEAN && (
-                <ControlledSwitch
-                  checked={
-                    typeof configuration.value !== "boolean"
-                      ? configuration.value === "true"
-                      : configuration.value
-                  }
-                  disabled={disabled}
-                  label={plugin[index].label}
-                  name={configuration.name}
-                  onChange={onChange}
-                />
-              )}
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-    );
-  }
-);
+const PluginSettings: React.StatelessComponent<PluginSettingsProps> = ({
+  data,
+  disabled,
+  errors,
+  onChange,
+  plugin
+}) => {
+  const classes = useStyles({});
+  return (
+    <Card>
+      <CardTitle
+        title={i18n.t("Plugin Settings", {
+          context: "plugin configuration"
+        })}
+      />
+      <CardContent>
+        {data.configuration.map((configuration, index) => (
+          <div className={classes.item} key={index}>
+            {plugin[index].type === ConfigurationTypeFieldEnum.STRING && (
+              <TextField
+                disabled={disabled}
+                error={!!errors.name}
+                helperText={plugin[index].helpText}
+                label={plugin[index].label}
+                name={configuration.name}
+                fullWidth
+                value={configuration.value}
+                onChange={onChange}
+              />
+            )}
+            {plugin[index].type === ConfigurationTypeFieldEnum.BOOLEAN && (
+              <ControlledSwitch
+                checked={
+                  typeof configuration.value !== "boolean"
+                    ? configuration.value === "true"
+                    : configuration.value
+                }
+                disabled={disabled}
+                label={plugin[index].label}
+                name={configuration.name}
+                onChange={onChange}
+              />
+            )}
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+};
 PluginSettings.displayName = "PluginSettings";
 export default PluginSettings;
