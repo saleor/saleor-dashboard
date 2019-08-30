@@ -10,9 +10,11 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import i18n from "../../../i18n";
 import { FormData } from "../PluginsDetailsPage";
+import { Plugin_plugin } from "../../types/Plugin";
 
 interface PluginInfoProps {
   data: FormData;
+  plugin: Plugin_plugin;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -29,6 +31,7 @@ const styles = createStyles({
 const PluginInfo = withStyles(styles, { name: "PluginInfo" })(
   ({
     data,
+    plugin,
     classes,
     onChange
   }: PluginInfoProps & WithStyles<typeof styles>) => {
@@ -43,13 +46,13 @@ const PluginInfo = withStyles(styles, { name: "PluginInfo" })(
           <Typography className={classes.title} variant="h6">
             {i18n.t("Plugin Name")}
           </Typography>
-          <Typography>{data.name}</Typography>
-          {data.description && (
+          <Typography>{plugin.name}</Typography>
+          {plugin.description && (
             <>
               <Typography className={classes.title} variant="h6">
                 {i18n.t("Plugin Description")}
               </Typography>
-              <Typography>{data.description}</Typography>
+              <Typography>{plugin.description}</Typography>
             </>
           )}
           <FormSpacer />

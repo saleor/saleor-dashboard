@@ -11,21 +11,13 @@ import { UserError } from "@saleor/types";
 import React from "react";
 
 import i18n from "../../../i18n";
-import { Plugin_plugin } from "../../types/Plugin";
+import { Plugin_plugin, Plugin_plugin_configuration } from "../../types/Plugin";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
 
 export interface FormData {
-  name?: string;
-  description?: string;
   active: boolean;
-  configuration: Array<{
-    name: string;
-    value: string;
-    type: string;
-    helpText: string;
-    label: string;
-  }>;
+  configuration: Plugin_plugin_configuration;
 }
 
 export interface PluginsDetailsPageProps {
@@ -47,9 +39,7 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
 }) => {
   const initialForm: FormData = {
     active: maybe(() => plugin.active, false),
-    configuration: maybe(() => plugin.configuration, []),
-    description: maybe(() => plugin.description, ""),
-    name: maybe(() => plugin.name, "")
+    configuration: maybe(() => plugin.configuration, [])
   };
 
   return (
@@ -91,7 +81,11 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
                   )}
                 </Typography>
               </div>
-              <PluginInfo data={data} onChange={onChange} />
+              <PluginInfo
+                data={data}
+                plugin={maybe(() => plugin, "")}
+                onChange={onChange}
+              />
               {data.configuration && (
                 <>
                   <div>
