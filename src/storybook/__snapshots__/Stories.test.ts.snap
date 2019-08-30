@@ -73800,7 +73800,7 @@ exports[`Storyshots Views / Plugins / Plugin details default 1`] = `
             class="MuiCardContent-root-id"
           >
             <h6
-              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-title-id"
+              class="MuiTypography-root-id MuiTypography-h6-id Hook-title-id"
             >
               Plugin Name
             </h6>
@@ -73810,7 +73810,7 @@ exports[`Storyshots Views / Plugins / Plugin details default 1`] = `
               Username or account
             </p>
             <h6
-              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-title-id"
+              class="MuiTypography-root-id MuiTypography-h6-id Hook-title-id"
             >
               Plugin Description
             </h6>
@@ -73826,7 +73826,7 @@ exports[`Storyshots Views / Plugins / Plugin details default 1`] = `
               class="Hr-root-id"
             />
             <p
-              class="MuiTypography-root-id MuiTypography-body2-id PluginInfo-status-id"
+              class="MuiTypography-root-id MuiTypography-body2-id Hook-status-id"
             >
               Status
             </p>
@@ -73911,7 +73911,7 @@ exports[`Storyshots Views / Plugins / Plugin details default 1`] = `
             class="MuiCardContent-root-id"
           >
             <div
-              class="PluginSettings-item-id"
+              class="Hook-item-id"
             >
               <div
                 class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -73955,7 +73955,7 @@ exports[`Storyshots Views / Plugins / Plugin details default 1`] = `
               </div>
             </div>
             <div
-              class="PluginSettings-item-id"
+              class="Hook-item-id"
             >
               <div
                 class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -73999,7 +73999,7 @@ exports[`Storyshots Views / Plugins / Plugin details default 1`] = `
               </div>
             </div>
             <div
-              class="PluginSettings-item-id"
+              class="Hook-item-id"
             >
               <label
                 class="MuiFormControlLabel-root-id"
@@ -74116,7 +74116,7 @@ exports[`Storyshots Views / Plugins / Plugin details form errors 1`] = `
             class="MuiCardContent-root-id"
           >
             <h6
-              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-title-id"
+              class="MuiTypography-root-id MuiTypography-h6-id Hook-title-id"
             >
               Plugin Name
             </h6>
@@ -74126,7 +74126,7 @@ exports[`Storyshots Views / Plugins / Plugin details form errors 1`] = `
               Username or account
             </p>
             <h6
-              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-title-id"
+              class="MuiTypography-root-id MuiTypography-h6-id Hook-title-id"
             >
               Plugin Description
             </h6>
@@ -74142,7 +74142,7 @@ exports[`Storyshots Views / Plugins / Plugin details form errors 1`] = `
               class="Hr-root-id"
             />
             <p
-              class="MuiTypography-root-id MuiTypography-body2-id PluginInfo-status-id"
+              class="MuiTypography-root-id MuiTypography-body2-id Hook-status-id"
             >
               Status
             </p>
@@ -74227,7 +74227,7 @@ exports[`Storyshots Views / Plugins / Plugin details form errors 1`] = `
             class="MuiCardContent-root-id"
           >
             <div
-              class="PluginSettings-item-id"
+              class="Hook-item-id"
             >
               <div
                 class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -74271,7 +74271,7 @@ exports[`Storyshots Views / Plugins / Plugin details form errors 1`] = `
               </div>
             </div>
             <div
-              class="PluginSettings-item-id"
+              class="Hook-item-id"
             >
               <div
                 class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
@@ -74315,7 +74315,7 @@ exports[`Storyshots Views / Plugins / Plugin details form errors 1`] = `
               </div>
             </div>
             <div
-              class="PluginSettings-item-id"
+              class="Hook-item-id"
             >
               <label
                 class="MuiFormControlLabel-root-id"
@@ -74432,7 +74432,7 @@ exports[`Storyshots Views / Plugins / Plugin details loading 1`] = `
             class="MuiCardContent-root-id"
           >
             <h6
-              class="MuiTypography-root-id MuiTypography-h6-id PluginInfo-title-id"
+              class="MuiTypography-root-id MuiTypography-h6-id Hook-title-id"
             >
               Plugin Name
             </h6>
@@ -74446,7 +74446,7 @@ exports[`Storyshots Views / Plugins / Plugin details loading 1`] = `
               class="Hr-root-id"
             />
             <p
-              class="MuiTypography-root-id MuiTypography-body2-id PluginInfo-status-id"
+              class="MuiTypography-root-id MuiTypography-body2-id Hook-status-id"
             >
               Status
             </p>
