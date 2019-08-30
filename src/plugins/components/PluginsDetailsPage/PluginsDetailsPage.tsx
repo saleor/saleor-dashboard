@@ -8,16 +8,17 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
+import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 
 import i18n from "../../../i18n";
-import { Plugin_plugin, Plugin_plugin_configuration } from "../../types/Plugin";
+import { Plugin_plugin } from "../../types/Plugin";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
 
 export interface FormData {
   active: boolean;
-  configuration: Plugin_plugin_configuration;
+  configuration: ConfigurationItemInput[];
 }
 
 export interface PluginsDetailsPageProps {
@@ -83,7 +84,8 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
               </div>
               <PluginInfo
                 data={data}
-                plugin={maybe(() => plugin, "")}
+                description={maybe(() => plugin.description, "")}
+                name={maybe(() => plugin.name, "")}
                 onChange={onChange}
               />
               {data.configuration && (
@@ -100,6 +102,7 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
                   </div>
                   <PluginSettings
                     data={data}
+                    plugin={maybe(() => plugin.configuration, [])}
                     errors={errors}
                     disabled={disabled}
                     onChange={onChange}

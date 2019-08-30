@@ -5,7 +5,7 @@ import { Plugin, PluginVariables } from "./types/Plugin";
 import { Plugins, PluginsVariables } from "./types/Plugins";
 
 export const pluginsFragment = gql`
-  fragment pluginFragment on Plugin {
+  fragment PluginFragment on Plugin {
     id
     name
     description
@@ -15,8 +15,8 @@ export const pluginsFragment = gql`
 
 export const pluginsDetailsFragment = gql`
   ${pluginsFragment}
-  fragment pluginsDetailsFragment on Plugin {
-    ...pluginFragment
+  fragment PluginsDetailsFragment on Plugin {
+    ...PluginFragment
     configuration {
       name
       type
@@ -33,7 +33,7 @@ const pluginsList = gql`
     plugins(before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
-          ...pluginFragment
+          ...PluginFragment
         }
       }
       pageInfo {
@@ -53,7 +53,7 @@ const pluginsDetails = gql`
   ${pluginsDetailsFragment}
   query Plugin($id: ID!) {
     plugin(id: $id) {
-      ...pluginsDetailsFragment
+      ...PluginsDetailsFragment
     }
   }
 `;

@@ -15,6 +15,13 @@ interface PluginSettingsProps {
   errors: FormErrors<"name" | "configuration">;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
+  plugin: Array<{
+    name: string;
+    type: ConfigurationTypeFieldEnum | null;
+    value: string;
+    helpText: string | null;
+    label: string | null;
+  }>;
 }
 
 const styles = createStyles({
@@ -30,7 +37,8 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
     disabled,
     classes,
     errors,
-    onChange
+    onChange,
+    plugin
   }: PluginSettingsProps & WithStyles<typeof styles>) => {
     return (
       <Card>
@@ -42,19 +50,19 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
         <CardContent>
           {data.configuration.map((configuration, index) => (
             <div className={classes.item} key={index}>
-              {configuration.type === ConfigurationTypeFieldEnum.STRING && (
+              {plugin[index].type === ConfigurationTypeFieldEnum.STRING && (
                 <TextField
                   disabled={disabled}
                   error={!!errors.name}
-                  helperText={configuration.helpText}
-                  label={configuration.label}
+                  helperText={plugin[index].helpText}
+                  label={plugin[index].label}
                   name={configuration.name}
                   fullWidth
                   value={configuration.value}
                   onChange={onChange}
                 />
               )}
-              {configuration.type === ConfigurationTypeFieldEnum.BOOLEAN && (
+              {plugin[index].type === ConfigurationTypeFieldEnum.BOOLEAN && (
                 <ControlledSwitch
                   checked={
                     typeof configuration.value !== "boolean"
@@ -62,7 +70,7 @@ const PluginSettings = withStyles(styles, { name: "PluginSettings" })(
                       : configuration.value
                   }
                   disabled={disabled}
-                  label={configuration.label}
+                  label={plugin[index].label}
                   name={configuration.name}
                   onChange={onChange}
                 />

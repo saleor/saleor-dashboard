@@ -13,7 +13,7 @@ const pluginUpdate = gql`
         message
       }
       plugin {
-        ...pluginsDetailsFragment
+        ...PluginsDetailsFragment
       }
     }
   }
