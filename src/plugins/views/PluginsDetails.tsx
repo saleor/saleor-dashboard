@@ -2,7 +2,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState, maybe } from "../../misc";
 import PluginsDetailsPage from "../components/PluginsDetailsPage";

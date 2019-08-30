@@ -46,7 +46,7 @@ const PluginSettings: React.StatelessComponent<PluginSettingsProps> = ({
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Plugin Settings",
-          description: "plugin section title"
+          description: "section header"
         })}
       />
       <CardContent>

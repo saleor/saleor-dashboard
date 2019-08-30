@@ -73,24 +73,28 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
               {intl.formatMessage(sectionNames.plugins)}
             </AppHeader>
             <PageHeader
-              title={`${maybe(() => plugin.name, "")} ${intl.formatMessage({
-                defaultMessage: "Details",
-                description: "plugin page title"
-              })}`}
+              title={intl.formatMessage(
+                {
+                  defaultMessage: "{pluginName} Details",
+                  description: "header"
+                },
+                {
+                  pluginName: maybe(() => plugin.name, "...")
+                }
+              )}
             />
             <Grid variant="inverted">
               <div>
                 <Typography variant="h6">
                   {intl.formatMessage({
                     defaultMessage: "Plugin Information and Status",
-                    description: "plugin section title"
+                    description: "section header"
                   })}
                 </Typography>
                 <Typography>
                   {intl.formatMessage({
                     defaultMessage:
-                      "These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar.",
-                    description: "plugin section description"
+                      "These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar."
                   })}
                 </Typography>
               </div>
@@ -106,14 +110,13 @@ const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
                     <Typography variant="h6">
                       {intl.formatMessage({
                         defaultMessage: "Plugin Settings",
-                        description: "plugin section title"
+                        description: "section header"
                       })}
                     </Typography>
                     <Typography>
                       {intl.formatMessage({
                         defaultMessage:
-                          "This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers.",
-                        description: "plugin section description"
+                          "This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers."
                       })}
                     </Typography>
                   </div>
