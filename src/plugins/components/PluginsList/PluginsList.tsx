@@ -73,19 +73,19 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
             <TableCell className={classes.colName} padding="dense">
               {intl.formatMessage({
                 defaultMessage: "Name",
-                description: "plugin list table header"
+                description: "plugin name"
               })}
             </TableCell>
             <TableCell className={classes.colActive} padding="dense">
               {intl.formatMessage({
                 defaultMessage: "Active",
-                description: "plugin list table header"
+                description: "plugin status"
               })}
             </TableCell>
             <TableCell className={classes.colAction} padding="dense">
               {intl.formatMessage({
                 defaultMessage: "Action",
-                description: "plugin list table header"
+                description: "user action bar"
               })}
             </TableCell>
           </TableHead>
@@ -143,8 +143,7 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
                     {intl.formatMessage({
-                      defaultMessage: "No plugins found",
-                      description: "plugin no found"
+                      defaultMessage: "No plugins found"
                     })}
                   </TableCell>
                 </TableRow>

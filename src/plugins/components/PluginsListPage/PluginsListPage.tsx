@@ -29,10 +29,7 @@ const PluginsListPage: React.StatelessComponent<PluginsListPageProps> = ({
   return (
     <Container>
       <AppHeader onBack={onBack}>
-        {intl.formatMessage({
-          defaultMessage: "Configuration",
-          description: "plugin back button"
-        })}
+        {intl.formatMessage(sectionNames.configuration)}
       </AppHeader>
       <PageHeader title={intl.formatMessage(sectionNames.plugins)} />
       <PluginsList

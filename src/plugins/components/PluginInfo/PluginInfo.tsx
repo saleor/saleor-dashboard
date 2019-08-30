@@ -3,12 +3,13 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
+import { commonMessages } from "@saleor/intl";
 import { FormData } from "../PluginsDetailsPage";
 
 interface PluginInfoProps {
@@ -41,7 +42,7 @@ const PluginInfo: React.StatelessComponent<PluginInfoProps> = ({
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Plugin Information and Status",
-          description: "plugin title"
+          description: "section header"
         })}
       />
       <CardContent>
@@ -55,10 +56,7 @@ const PluginInfo: React.StatelessComponent<PluginInfoProps> = ({
         {description && (
           <>
             <Typography className={classes.title} variant="h6">
-              {intl.formatMessage({
-                defaultMessage: "Plugin Description",
-                description: "plugin description"
-              })}
+              <FormattedMessage {...commonMessages.description} />
             </Typography>
             <Typography>{description}</Typography>
           </>
@@ -74,8 +72,7 @@ const PluginInfo: React.StatelessComponent<PluginInfoProps> = ({
         <ControlledSwitch
           checked={data.active}
           label={intl.formatMessage({
-            defaultMessage: "Set plugin as Active",
-            description: "plugin active label"
+            defaultMessage: "Set plugin as Active"
           })}
           name={"active" as keyof FormData}
           onChange={onChange}

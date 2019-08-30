@@ -11,3 +11,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add tc tags for E2E testing - #134 by @dominik-zeglen
 - Use react-intl - #105 by @dominik-zeglen
 - Add dynamic dashboard settings - #135 by @benekex2
+- Fix plugins page translations - #141 by @benekex2
