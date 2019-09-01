@@ -18,7 +18,7 @@ These instructions will get you a copy of the project up and running on your loc
 Clone the repository:
 
 ```
-$ git clone git@github.com:mirumee/saleor-dashboard.git
+$ git clone https://github.com/mirumee/saleor-dashboard.git
 ```
 
 Enter the project directory:
