@@ -62,10 +62,10 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
     setTimeout(() => setExpansionState(initialOpen), 100);
   }, []);
 
-  const handleCancel = React.useCallback(() => {
+  const handleCancel = () => {
     setExpansionState(false);
-    setSelectedColumns(columns.map(column => column.value));
-  }, [columns]);
+    setSelectedColumns(initialColumns);
+  };
 
   const handleColumnToggle = (column: string) =>
     setSelectedColumns(toggle(column, selectedColumns, (a, b) => a === b));
