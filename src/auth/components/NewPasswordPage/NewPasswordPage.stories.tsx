@@ -6,4 +6,9 @@ import NewPasswordPage from "./NewPasswordPage";
 
 storiesOf("Views / Authentication / Set up a new password", module)
   .addDecorator(Decorator)
-  .add("default", () => <NewPasswordPage onSubmit={() => undefined} />);
+  .add("default", () => (
+    <NewPasswordPage disabled={false} onSubmit={() => undefined} />
+  ))
+  .add("loading", () => (
+    <NewPasswordPage disabled={true} onSubmit={() => undefined} />
+  ));

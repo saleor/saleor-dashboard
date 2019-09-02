@@ -9,15 +9,13 @@ import { User } from "./types/User";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 
 interface AuthProviderOperationsProps {
-  children: (
-    props: {
-      hasToken: boolean;
-      isAuthenticated: boolean;
-      tokenAuthLoading: boolean;
-      tokenVerifyLoading: boolean;
-      user: User;
-    }
-  ) => React.ReactNode;
+  children: (props: {
+    hasToken: boolean;
+    isAuthenticated: boolean;
+    tokenAuthLoading: boolean;
+    tokenVerifyLoading: boolean;
+    user: User;
+  }) => React.ReactNode;
 }
 const AuthProviderOperations: React.StatelessComponent<
   AuthProviderOperationsProps
@@ -41,15 +39,13 @@ const AuthProviderOperations: React.StatelessComponent<
 };
 
 interface AuthProviderProps {
-  children: (
-    props: {
-      hasToken: boolean;
-      isAuthenticated: boolean;
-      tokenAuthLoading: boolean;
-      tokenVerifyLoading: boolean;
-      user: User;
-    }
-  ) => React.ReactNode;
+  children: (props: {
+    hasToken: boolean;
+    isAuthenticated: boolean;
+    tokenAuthLoading: boolean;
+    tokenVerifyLoading: boolean;
+    user: User;
+  }) => React.ReactNode;
   tokenAuth: PartialMutationProviderOutput<TokenAuth, TokenAuthVariables>;
   tokenVerify: PartialMutationProviderOutput<VerifyToken, VerifyTokenVariables>;
 }
@@ -116,9 +112,16 @@ class AuthProvider extends React.Component<
     const { children, tokenAuth, tokenVerify } = this.props;
     const { user } = this.state;
     const isAuthenticated = !!user;
+
     return (
       <UserContext.Provider
-        value={{ user, login: this.login, logout: this.logout }}
+        value={{
+          login: this.login,
+          logout: this.logout,
+          tokenAuthLoading: tokenAuth.opts.loading,
+          tokenVerifyLoading: tokenVerify.opts.loading,
+          user
+        }}
       >
         {children({
           hasToken: !!getAuthToken(),

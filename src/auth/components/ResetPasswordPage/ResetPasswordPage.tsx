@@ -25,11 +25,12 @@ export interface ResetPasswordPageFormData {
   email: string;
 }
 export interface ResetPasswordPageProps {
+  disabled: boolean;
   onSubmit: (data: ResetPasswordPageFormData) => void;
 }
 
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
-  const { onSubmit } = props;
+  const { disabled, onSubmit } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -44,6 +45,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
           <FormSpacer />
           <TextField
             autoFocus
+            disabled={disabled}
             fullWidth
             autoComplete="username"
             label={intl.formatMessage(commonMessages.email)}
@@ -58,6 +60,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
           <Button
             className={classes.submit}
             color="primary"
+            disabled={disabled}
             variant="contained"
             onClick={handleSubmit}
             type="submit"

@@ -6,4 +6,9 @@ import ResetPasswordPage from "./ResetPasswordPage";
 
 storiesOf("Views / Authentication / Reset password", module)
   .addDecorator(Decorator)
-  .add("default", () => <ResetPasswordPage onSubmit={() => undefined} />);
+  .add("default", () => (
+    <ResetPasswordPage disabled={false} onSubmit={() => undefined} />
+  ))
+  .add("loading", () => (
+    <ResetPasswordPage disabled={true} onSubmit={() => undefined} />
+  ));

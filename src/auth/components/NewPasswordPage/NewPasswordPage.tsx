@@ -25,6 +25,7 @@ export interface NewPasswordPageFormData {
   confirmPassword: string;
 }
 export interface NewPasswordPageProps {
+  disabled: boolean;
   onSubmit: (data: NewPasswordPageFormData) => void;
 }
 
@@ -34,7 +35,7 @@ const initialForm: NewPasswordPageFormData = {
 };
 
 const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
-  const { onSubmit } = props;
+  const { disabled, onSubmit } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -55,6 +56,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               autoFocus
               fullWidth
               autoComplete="none"
+              disabled={disabled}
               label={intl.formatMessage({
                 defaultMessage: "New Password"
               })}
@@ -72,6 +74,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               fullWidth
               error={passwordError}
               autoComplete="none"
+              disabled={disabled}
               label={intl.formatMessage({
                 defaultMessage: "Confirm Password"
               })}
@@ -93,7 +96,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
             <Button
               className={classes.submit}
               color="primary"
-              disabled={passwordError && data.password.length > 0}
+              disabled={(passwordError && data.password.length > 0) || disabled}
               variant="contained"
               onClick={handleSubmit}
               type="submit"

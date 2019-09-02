@@ -56,7 +56,13 @@ export interface LoginCardProps extends WithStyles<typeof styles> {
 }
 
 const LoginCard = withStyles(styles, { name: "LoginCard" })(
-  ({ classes, error, disableLoginButton, onSubmit }: LoginCardProps) => {
+  ({
+    classes,
+    error,
+    disableLoginButton,
+    onPasswordRecovery,
+    onSubmit
+  }: LoginCardProps) => {
     const intl = useIntl();
 
     return (
@@ -123,7 +129,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
               </Button>
             </div>
             <FormSpacer />
-            <Typography className={classes.link}>
+            <Typography className={classes.link} onClick={onPasswordRecovery}>
               <FormattedMessage
                 defaultMessage="Reset your password"
                 description="button"
