@@ -43,7 +43,9 @@ const styles = (theme: Theme) =>
     },
     colCustomer: {},
     colDate: {},
-    colNumber: {},
+    colNumber: {
+      paddingLeft: 0
+    },
     colTotal: {
       textAlign: "right"
     },

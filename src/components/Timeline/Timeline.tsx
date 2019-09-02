@@ -21,7 +21,7 @@ const styles = (theme: Theme) =>
         width: "100%"
       },
       alignSelf: "flex-start",
-      marginRight: theme.spacing.unit * 5.5
+      marginRight: 28
     },
     cardActionsExpanded: {
       maxHeight: theme.spacing.unit * 6
@@ -41,7 +41,8 @@ const styles = (theme: Theme) =>
       },
       alignItems: "center",
       background: theme.palette.background.default,
-      display: "flex"
+      display: "flex",
+      paddingLeft: theme.spacing.unit * 3
     },
     root: {
       borderColor: theme.overrides.MuiCard.root.borderColor,

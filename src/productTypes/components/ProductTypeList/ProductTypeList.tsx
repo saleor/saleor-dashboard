@@ -33,7 +33,9 @@ const styles = (theme: Theme) =>
         width: 300
       }
     },
-    colName: {},
+    colName: {
+      paddingLeft: 0
+    },
     colTax: {},
     colType: {},
     link: {

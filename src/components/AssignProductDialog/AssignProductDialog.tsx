@@ -45,6 +45,7 @@ const styles = createStyles({
     overflowY: "scroll"
   },
   wideCell: {
+    paddingLeft: 0,
     width: "100%"
   }
 });

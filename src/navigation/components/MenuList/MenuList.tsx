@@ -39,7 +39,9 @@ const styles = (theme: Theme) =>
     colItems: {
       textAlign: "right"
     },
-    colTitle: {},
+    colTitle: {
+      paddingLeft: 0
+    },
     row: {
       cursor: "pointer"
     }
@@ -88,6 +90,7 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
               id="menuListItems"
             />
           </TableCell>
+          <TableCell />
         </TableHead>
         <TableFooter>
           <TableRow>

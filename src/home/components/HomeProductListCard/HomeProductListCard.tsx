@@ -29,7 +29,11 @@ const styles = (theme: Theme) =>
     },
     avatarSpacing: {
       paddingBottom: theme.spacing.unit * 2,
+      paddingRight: theme.spacing.unit,
       paddingTop: theme.spacing.unit * 2
+    },
+    label: {
+      paddingLeft: 0
     },
     noProducts: {
       paddingBottom: 20,
@@ -81,7 +85,7 @@ export const HomeProductList = withStyles(styles, { name: "HomeProductList" })(
                     avatarProps={classes.avatarProps}
                   />
 
-                  <TableCell>
+                  <TableCell className={classes.label}>
                     {variant ? (
                       <>
                         <Typography color={"primary"}>

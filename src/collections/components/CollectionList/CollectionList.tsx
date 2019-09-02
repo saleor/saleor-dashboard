@@ -28,7 +28,9 @@ const styles = (theme: Theme) =>
       colAvailability: {
         width: 240
       },
-      colName: {},
+      colName: {
+        paddingLeft: 0
+      },
       colProducts: {
         width: 240
       }

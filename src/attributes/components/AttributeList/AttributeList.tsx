@@ -46,7 +46,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   colSearchable: {
     textAlign: "center"
   },
-  colSlug: {},
+  colSlug: {
+    paddingLeft: 0
+  },
   colVisible: {
     textAlign: "center"
   },

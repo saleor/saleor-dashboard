@@ -25,6 +25,7 @@ const styles = createStyles({
     cursor: "pointer"
   },
   colName: {
+    paddingLeft: 0,
     width: "auto"
   },
   colNameLabel: {

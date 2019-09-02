@@ -23,6 +23,10 @@ import { ProductVariantDetails_productVariant } from "../../types/ProductVariant
 
 const styles = (theme: Theme) =>
   createStyles({
+    colName: {
+      paddingLeft: 0,
+      textAlign: [["left"], "!important"] as any
+    },
     link: {
       cursor: "pointer"
     },
@@ -37,9 +41,6 @@ const styles = (theme: Theme) =>
         width: 2
       },
       position: "relative"
-    },
-    textLeft: {
-      textAlign: [["left"], "!important"] as any
     }
   });
 
@@ -92,7 +93,7 @@ const ProductVariantNavigation = withStyles(styles, {
                     fallbackThumbnail
                   )}
                 />
-                <TableCell className={classes.textLeft}>
+                <TableCell className={classes.colName}>
                   {variant ? variant.name || variant.sku : <Skeleton />}
                 </TableCell>
               </TableRow>
@@ -114,7 +115,7 @@ const ProductVariantNavigation = withStyles(styles, {
                   className={classes.tabActive}
                   thumbnail={null}
                 />
-                <TableCell className={classes.textLeft}>
+                <TableCell className={classes.colName}>
                   <FormattedMessage
                     defaultMessage="New Variant"
                     description="variant name"

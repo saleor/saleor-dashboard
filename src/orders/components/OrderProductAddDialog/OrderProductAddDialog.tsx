@@ -39,6 +39,12 @@ const styles = (theme: Theme) =>
     avatar: {
       paddingLeft: 0
     },
+    colName: {
+      paddingLeft: 0
+    },
+    colVariantCheckbox: {
+      padding: 0
+    },
     content: {
       overflowY: "scroll"
     },
@@ -259,7 +265,7 @@ const OrderProductAddDialog = withStyles(styles, {
                           className={classes.avatar}
                           thumbnail={maybe(() => product.thumbnail.url)}
                         />
-                        <TableCell className={classes.wideCell} colSpan={2}>
+                        <TableCell className={classes.colName} colSpan={2}>
                           {maybe(() => product.name)}
                         </TableCell>
                       </TableRow>
@@ -267,7 +273,7 @@ const OrderProductAddDialog = withStyles(styles, {
                         (variant, variantIndex) => (
                           <TableRow key={variant.id}>
                             <TableCell />
-                            <TableCell>
+                            <TableCell className={classes.colVariantCheckbox}>
                               <Checkbox
                                 className={classes.variantCheckbox}
                                 checked={
@@ -288,7 +294,7 @@ const OrderProductAddDialog = withStyles(styles, {
                                 }
                               />
                             </TableCell>
-                            <TableCell>
+                            <TableCell className={classes.colName}>
                               <div>{variant.name}</div>
                               <div className={classes.grayText}>
                                 <FormattedMessage

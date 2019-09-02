@@ -59,7 +59,8 @@ const styles = (theme: Theme) =>
     colName: {
       "&$colNameFixed": {
         width: 250
-      }
+      },
+      paddingLeft: 0
     },
     colNameFixed: {},
     colNameHeader: {

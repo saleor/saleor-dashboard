@@ -13,3 +13,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add dynamic dashboard settings - #135 by @benekex2
 - Fix plugins page translations - #141 by @benekex2
 - Add attributes to column picker - #136 by @dominik-zeglen
+- Fix table cell padding - #143 by @dominik-zeglen
