@@ -12,3 +12,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Use react-intl - #105 by @dominik-zeglen
 - Add dynamic dashboard settings - #135 by @benekex2
 - Fix plugins page translations - #141 by @benekex2
+- Fix zero value in list header - #144 by @benekex2
