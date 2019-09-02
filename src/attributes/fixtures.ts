@@ -22,16 +22,14 @@ export const attribute: AttributeDetailsFragment = {
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
       name: "John Doe",
       slug: "john-doe",
-      type: AttributeValueType.STRING,
-      value: ""
+      type: AttributeValueType.STRING
     },
     {
       __typename: "AttributeValue" as "AttributeValue",
       id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
       name: "Milionare Pirate",
       slug: "milionare-pirate",
-      type: AttributeValueType.STRING,
-      value: ""
+      type: AttributeValueType.STRING
     }
   ],
   visibleInStorefront: true

@@ -14,7 +14,6 @@ export interface AttributeDetailsFragment_values {
   name: string | null;
   slug: string | null;
   type: AttributeValueType | null;
-  value: string | null;
 }
 
 export interface AttributeDetailsFragment {

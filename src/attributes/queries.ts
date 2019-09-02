@@ -31,7 +31,6 @@ export const attributeDetailsFragment = gql`
       name
       slug
       type
-      value
     }
   }
 `;
