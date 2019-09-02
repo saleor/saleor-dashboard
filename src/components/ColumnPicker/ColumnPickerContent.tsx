@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     boxShadow: `0px 0px 0px 0px ${theme.palette.background.paper}`,
     transition: theme.transitions.duration.short + "ms"
   },
+  cancelButton: {
+    marginRight: theme.spacing.unit * 2
+  },
   content: {
     display: "grid",
     gridColumnGap: theme.spacing.unit * 3,
@@ -164,7 +167,11 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
             <FormattedMessage defaultMessage="Reset" description="button" />
           </Button>
           <div>
-            <Button color="default" onClick={onCancel}>
+            <Button
+              className={classes.cancelButton}
+              color="default"
+              onClick={onCancel}
+            >
               <FormattedMessage {...buttonMessages.cancel} />
             </Button>
             <Button color="primary" variant="contained" onClick={onSave}>

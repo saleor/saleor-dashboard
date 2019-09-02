@@ -9,6 +9,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
+import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import EditIcon from "@material-ui/icons/Edit";
 import React from "react";
@@ -16,7 +17,6 @@ import { useIntl } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
-import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
@@ -65,11 +65,7 @@ const PluginList = withStyles(styles, { name: "PluginList" })(
     return (
       <Card>
         <Table>
-          <TableHead
-            colSpan={numberOfColumns}
-            disabled={disabled}
-            items={plugins}
-          >
+          <TableHead>
             <TableCell className={classes.colName} padding="dense">
               {intl.formatMessage({
                 defaultMessage: "Name",

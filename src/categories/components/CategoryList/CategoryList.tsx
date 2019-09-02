@@ -36,7 +36,7 @@ const styles = (theme: Theme) =>
       }
     },
     colName: {
-      paddingLeft: "0 !important"
+      paddingLeft: 0
     },
     colProducts: {
       textAlign: "center"
