@@ -74,6 +74,11 @@ export default (colors: IThemeColors): Theme =>
           flexDirection: "row-reverse" as "row-reverse"
         }
       },
+      MuiCardContent: {
+        root: {
+          padding: "24px"
+        }
+      },
       MuiDialogContent: {
         root: {
           padding: "5px 24px 24px"
