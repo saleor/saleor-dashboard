@@ -20,7 +20,6 @@ export interface AttributeUpdate_attributeUpdate_attribute_values {
   name: string | null;
   slug: string | null;
   type: AttributeValueType | null;
-  value: string | null;
 }
 
 export interface AttributeUpdate_attributeUpdate_attribute {

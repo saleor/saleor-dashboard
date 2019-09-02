@@ -219,13 +219,9 @@ export enum TaxRateType {
 }
 
 export enum VoucherTypeEnum {
-  CATEGORY = "CATEGORY",
-  COLLECTION = "COLLECTION",
   ENTIRE_ORDER = "ENTIRE_ORDER",
-  PRODUCT = "PRODUCT",
   SHIPPING = "SHIPPING",
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
-  VALUE = "VALUE",
 }
 
 export enum WeightUnitsEnum {
@@ -289,12 +285,10 @@ export interface AttributeUpdateInput {
 
 export interface AttributeValueCreateInput {
   name: string;
-  value?: string | null;
 }
 
 export interface AttributeValueInput {
   id?: string | null;
-  name?: string | null;
   slug?: string | null;
   values: (string | null)[];
 }
@@ -506,7 +500,6 @@ export interface ProductTypeInput {
   isShippingRequired?: boolean | null;
   isDigital?: boolean | null;
   weight?: any | null;
-  taxRate?: TaxRateType | null;
   taxCode?: string | null;
 }
 

@@ -3,10 +3,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: pluginFragment
+// GraphQL fragment: PluginFragment
 // ====================================================
 
-export interface pluginFragment {
+export interface PluginFragment {
   __typename: "Plugin";
   id: string;
   name: string;
