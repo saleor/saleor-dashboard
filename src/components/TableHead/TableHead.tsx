@@ -102,7 +102,7 @@ const TableHead = withStyles(styles, {
             />
           )}
           {(items === undefined || items.length > 0) &&
-            (selected && (
+            (selected >= 0 && (
               <TableCell
                 padding="checkbox"
                 className={classNames({

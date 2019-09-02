@@ -31,7 +31,7 @@ const styles = (theme: Theme) =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colName: {
-        width: "auto"
+        width: "inherit"
       },
       colPrice: {
         width: 200
