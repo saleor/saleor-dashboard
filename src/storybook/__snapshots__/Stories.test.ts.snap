@@ -75088,25 +75088,7 @@ exports[`Storyshots Views / Plugins / Plugin list default 1`] = `
         <thead
           class="MuiTableHead-root-id"
         >
-          <tr
-            class="MuiTableRow-root-id MuiTableRow-head-id"
-          >
-            <th
-              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingCheckbox-id"
-              scope="col"
-            >
-              <button
-                class="MuiButtonBase-root-id Checkbox-root-id"
-                tabindex="0"
-                type="button"
-              >
-                <input
-                  class="Checkbox-box-id Checkbox-checked-id"
-                  type="checkbox"
-                  value="true"
-                />
-              </button>
-            </th>
+          <tr>
             <th
               class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colName-id"
               scope="col"
@@ -75364,27 +75346,7 @@ exports[`Storyshots Views / Plugins / Plugin list loading 1`] = `
         <thead
           class="MuiTableHead-root-id"
         >
-          <tr
-            class="MuiTableRow-root-id MuiTableRow-head-id"
-          >
-            <th
-              class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingCheckbox-id"
-              scope="col"
-            >
-              <button
-                class="MuiButtonBase-root-id MuiButtonBase-disabled-id Checkbox-root-id"
-                disabled=""
-                tabindex="-1"
-                type="button"
-              >
-                <input
-                  class="Checkbox-box-id Checkbox-checked-id Checkbox-disabled-id"
-                  disabled=""
-                  type="checkbox"
-                  value="true"
-                />
-              </button>
-            </th>
+          <tr>
             <th
               class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colName-id"
               scope="col"
@@ -75608,9 +75570,7 @@ exports[`Storyshots Views / Plugins / Plugin list no data 1`] = `
         <thead
           class="MuiTableHead-root-id"
         >
-          <tr
-            class="MuiTableRow-root-id MuiTableRow-head-id"
-          >
+          <tr>
             <th
               class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingDense-id PluginList-colName-id"
               scope="col"
