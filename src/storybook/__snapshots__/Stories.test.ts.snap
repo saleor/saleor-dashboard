@@ -46674,7 +46674,7 @@ exports[`Storyshots Views / HomePage default 1`] = `
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root-id MuiTableCell-body-id"
+                  class="MuiTableCell-root-id MuiTableCell-body-id HomeProductList-label-id"
                 >
                   <p
                     class="MuiTypography-root-id MuiTypography-body2-id MuiTypography-colorPrimary-id"
@@ -47401,7 +47401,7 @@ exports[`Storyshots Views / HomePage loading 1`] = `
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root-id MuiTableCell-body-id"
+                  class="MuiTableCell-root-id MuiTableCell-body-id HomeProductList-label-id"
                 >
                   <span
                     class="Skeleton-skeleton-id"
@@ -49050,6 +49050,10 @@ exports[`Storyshots Views / Navigation / Menu list default 1`] = `
             >
               Items
             </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id"
+              scope="col"
+            />
           </tr>
         </thead>
         <tfoot
@@ -49388,6 +49392,10 @@ exports[`Storyshots Views / Navigation / Menu list loading 1`] = `
             >
               Items
             </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id"
+              scope="col"
+            />
           </tr>
         </thead>
         <tfoot
@@ -49661,6 +49669,10 @@ exports[`Storyshots Views / Navigation / Menu list no data 1`] = `
             >
               Items
             </th>
+            <th
+              class="MuiTableCell-root-id MuiTableCell-head-id"
+              scope="col"
+            />
           </tr>
         </thead>
         <tfoot
@@ -82515,7 +82527,7 @@ exports[`Storyshots Views / Products / Create product variant add first variant 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     New Variant
                   </td>
@@ -82942,7 +82954,7 @@ exports[`Storyshots Views / Products / Create product variant default 1`] = `
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     Cordoba Oro
                   </td>
@@ -82970,7 +82982,7 @@ exports[`Storyshots Views / Products / Create product variant default 1`] = `
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     silver
                   </td>
@@ -83024,7 +83036,7 @@ exports[`Storyshots Views / Products / Create product variant default 1`] = `
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     New Variant
                   </td>
@@ -83462,7 +83474,7 @@ exports[`Storyshots Views / Products / Create product variant when loading data 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     <span
                       class="Skeleton-skeleton-id"
@@ -83520,7 +83532,7 @@ exports[`Storyshots Views / Products / Create product variant when loading data 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     New Variant
                   </td>
@@ -83890,7 +83902,7 @@ exports[`Storyshots Views / Products / Create product variant with errors 1`] = 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     Cordoba Oro
                   </td>
@@ -83918,7 +83930,7 @@ exports[`Storyshots Views / Products / Create product variant with errors 1`] = 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     silver
                   </td>
@@ -83972,7 +83984,7 @@ exports[`Storyshots Views / Products / Create product variant with errors 1`] = 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     New Variant
                   </td>
@@ -95477,7 +95489,7 @@ exports[`Storyshots Views / Products / Product variant details attribute errors 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     Extended Hard
                   </td>
@@ -95505,7 +95517,7 @@ exports[`Storyshots Views / Products / Product variant details attribute errors 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     Extended Soft
                   </td>
@@ -95533,7 +95545,7 @@ exports[`Storyshots Views / Products / Product variant details attribute errors 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     Normal Hard
                   </td>
@@ -95561,7 +95573,7 @@ exports[`Storyshots Views / Products / Product variant details attribute errors 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     Normal Soft
                   </td>
@@ -96160,7 +96172,7 @@ exports[`Storyshots Views / Products / Product variant details when loaded data 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     Extended Hard
                   </td>
@@ -96188,7 +96200,7 @@ exports[`Storyshots Views / Products / Product variant details when loaded data 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     Extended Soft
                   </td>
@@ -96216,7 +96228,7 @@ exports[`Storyshots Views / Products / Product variant details when loaded data 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     Normal Hard
                   </td>
@@ -96244,7 +96256,7 @@ exports[`Storyshots Views / Products / Product variant details when loaded data 
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     Normal Soft
                   </td>
@@ -96849,7 +96861,7 @@ exports[`Storyshots Views / Products / Product variant details when loading data
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-textLeft-id"
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariantNavigation-colName-id"
                   >
                     <span
                       class="Skeleton-skeleton-id"
