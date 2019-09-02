@@ -51,8 +51,8 @@ const styles = (theme: Theme) =>
         color: theme.palette.primary.contrastText
       },
       alignItems: "center",
-      background: fade(theme.palette.primary.main, 0.6),
-      borderRadius: 24,
+      background: fade(theme.palette.primary.main, 0.8),
+      borderRadius: 18,
       color: theme.palette.primary.contrastText,
       display: "flex",
       justifyContent: "space-between",
@@ -61,7 +61,8 @@ const styles = (theme: Theme) =>
       paddingRight: theme.spacing.unit
     },
     chipLabel: {
-      color: theme.palette.primary.contrastText
+      color: theme.palette.common.white,
+      fontSize: "16px"
     },
     container: {
       flexGrow: 1,

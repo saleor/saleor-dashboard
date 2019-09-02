@@ -49,7 +49,7 @@ const useStyles = makeStyles(
       },
       filterButton: {
         alignItems: "center",
-        backgroundColor: fade(theme.palette.primary.main, 0.6),
+        backgroundColor: fade(theme.palette.primary.main, 0.8),
         borderRadius: "19px",
         display: "flex",
         height: "38px",
@@ -90,8 +90,9 @@ const useStyles = makeStyles(
       },
       filterText: {
         color: theme.palette.common.white,
-        fontSize: 12,
-        fontWeight: 400 as 400
+        fontSize: 14,
+        fontWeight: 400 as 400,
+        lineHeight: "38px"
       }
     }),
   {

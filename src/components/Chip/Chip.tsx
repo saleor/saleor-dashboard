@@ -28,7 +28,7 @@ const styles = (theme: Theme) =>
       color: theme.palette.common.white
     },
     root: {
-      background: fade(theme.palette.secondary.main, 0.6),
+      background: fade(theme.palette.secondary.main, 0.8),
       borderRadius: 8,
       display: "inline-block",
       marginRight: theme.spacing.unit * 2,
