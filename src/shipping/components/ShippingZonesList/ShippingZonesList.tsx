@@ -45,7 +45,9 @@ const styles = (theme: Theme) =>
       width: ICONBUTTON_SIZE + theme.spacing.unit / 2
     },
     colCountries: {},
-    colName: {},
+    colName: {
+      paddingLeft: 0
+    },
     row: {
       cursor: "pointer"
     }

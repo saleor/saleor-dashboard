@@ -36,7 +36,7 @@ const styles = (theme: Theme) =>
       "&:last-child": {
         paddingRight: 0
       },
-      width: 48 + theme.spacing.unit / 2
+      width: 76 + theme.spacing.unit / 2
     },
     colName: {
       width: "auto"

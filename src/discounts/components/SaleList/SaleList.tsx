@@ -47,7 +47,9 @@ const styles = (theme: Theme) =>
     colEnd: {
       textAlign: "right"
     },
-    colName: {},
+    colName: {
+      paddingLeft: 0
+    },
     colStart: {
       textAlign: "right"
     },

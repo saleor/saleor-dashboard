@@ -270,8 +270,7 @@ export default (colors: IThemeColors): Theme =>
           paddingTop: 8
         },
         head: {
-          fontSize: ".875rem",
-          fontWeight: 400
+          fontSize: ".875rem"
         },
         paddingCheckbox: {
           "&:first-child": {
@@ -292,7 +291,7 @@ export default (colors: IThemeColors): Theme =>
           },
           borderBottomColor: colors.paperBorder,
           height: 56,
-          padding: "4px 24px 4px 0"
+          padding: "4px 24px"
         }
       },
       MuiTableRow: {

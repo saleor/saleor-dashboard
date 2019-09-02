@@ -31,7 +31,9 @@ const styles = (theme: Theme) =>
       }
     },
     colEmail: {},
-    colName: {},
+    colName: {
+      paddingLeft: 0
+    },
     colOrders: {
       textAlign: "center"
     },

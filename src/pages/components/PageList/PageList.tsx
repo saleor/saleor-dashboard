@@ -38,7 +38,9 @@ const styles = (theme: Theme) =>
       }
     },
     colSlug: {},
-    colTitle: {},
+    colTitle: {
+      paddingLeft: 0
+    },
     colVisibility: {},
     link: {
       cursor: "pointer"

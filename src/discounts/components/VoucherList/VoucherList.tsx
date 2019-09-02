@@ -56,7 +56,9 @@ const styles = (theme: Theme) =>
     colMinSpent: {
       textAlign: "right"
     },
-    colName: {},
+    colName: {
+      paddingLeft: 0
+    },
     colStart: {
       textAlign: "right"
     },
