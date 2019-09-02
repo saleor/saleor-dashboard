@@ -134,6 +134,5 @@ export const filters: Filter[] = [
 export const fetchMoreProps: FetchMoreProps = {
   hasMore: true,
   loading: false,
-  onFetch: () => undefined,
   onFetchMore: () => undefined
 };

@@ -204,6 +204,7 @@ const styles = (theme: Theme) =>
     menuSmall: {
       background: theme.palette.background.paper,
       height: "100vh",
+      overflow: "hidden",
       padding: 25
     },
     popover: {

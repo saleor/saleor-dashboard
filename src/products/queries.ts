@@ -1,6 +1,10 @@
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
+import { pageInfoFragment, TypedQuery } from "../queries";
+import {
+  AvailableInGridAttributes,
+  AvailableInGridAttributesVariables
+} from "./types/AvailableInGridAttributes";
 import { ProductCreateData } from "./types/ProductCreateData";
 import {
   ProductDetails,
@@ -225,6 +229,15 @@ const productListQuery = gql`
       edges {
         node {
           ...ProductFragment
+          attributes {
+            attribute {
+              id
+            }
+            values {
+              id
+              name
+            }
+          }
         }
       }
       pageInfo {
@@ -361,3 +374,38 @@ export const TypedProductImageQuery = TypedQuery<
   ProductImageById,
   ProductImageByIdVariables
 >(productImageQuery);
+
+const availableInGridAttributes = gql`
+  ${pageInfoFragment}
+  query GridAttributes($first: Int!, $after: String, $ids: [ID!]!) {
+    availableInGrid: attributes(
+      first: $first
+      after: $after
+      filter: { availableInGrid: true, isVariantOnly: false }
+    ) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        ...PageInfoFragment
+      }
+      totalCount
+    }
+
+    grid: attributes(first: 25, filter: { ids: $ids }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+export const AvailableInGridAttributesQuery = TypedQuery<
+  AvailableInGridAttributes,
+  AvailableInGridAttributesVariables
+>(availableInGridAttributes);

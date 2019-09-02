@@ -81,6 +81,7 @@ interface OrderProductAddDialogProps extends FetchMoreProps {
   open: boolean;
   products: SearchOrderVariant_products_edges_node[];
   onClose: () => void;
+  onFetch: (query: string) => void;
   onSubmit: (data: SearchOrderVariant_products_edges_node_variants[]) => void;
 }
 

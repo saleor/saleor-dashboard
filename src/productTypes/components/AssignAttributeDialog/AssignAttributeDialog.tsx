@@ -54,6 +54,7 @@ export interface AssignAttributeDialogProps extends FetchMoreProps {
   attributes: SearchAttributes_productType_availableAttributes_edges_node[];
   selected: string[];
   onClose: () => void;
+  onFetch: (query: string) => void;
   onOpen: () => void;
   onSubmit: () => void;
   onToggle: (id: string) => void;

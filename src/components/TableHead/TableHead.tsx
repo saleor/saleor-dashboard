@@ -101,26 +101,25 @@ const TableHead = withStyles(styles, {
               })}
             />
           )}
-          {(items === undefined || items.length > 0) &&
-            (selected && (
-              <TableCell
-                padding="checkbox"
+          {(items === undefined || items.length > 0) && (
+            <TableCell
+              padding="checkbox"
+              className={classNames({
+                [classes.checkboxSelected]: selected,
+                [classes.dragRows]: dragRows
+              })}
+            >
+              <Checkbox
                 className={classNames({
-                  [classes.checkboxSelected]: selected,
-                  [classes.dragRows]: dragRows
+                  [classes.checkboxPartialSelect]:
+                    items && items.length > selected && selected > 0
                 })}
-              >
-                <Checkbox
-                  className={classNames({
-                    [classes.checkboxPartialSelect]:
-                      items && items.length > selected && selected > 0
-                  })}
-                  checked={selected === 0 ? false : true}
-                  disabled={disabled}
-                  onChange={() => toggleAll(items, selected)}
-                />
-              </TableCell>
-            ))}
+                checked={selected === 0 ? false : true}
+                disabled={disabled}
+                onChange={() => toggleAll(items, selected)}
+              />
+            </TableCell>
+          )}
           {selected ? (
             <>
               <TableCell

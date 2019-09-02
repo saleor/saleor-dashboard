@@ -26,12 +26,10 @@ const columns: ColumnPickerChoice[] = [
 
 const props: ColumnPickerProps = {
   columns,
-  initial: true,
-  onCancel: () => undefined,
-  onColumnToggle: () => undefined,
-  onReset: () => undefined,
-  onSave: () => undefined,
-  selectedColumns: [1, 3, 4, 6].map(index => columns[index].value)
+  defaultColumns: [1, 3].map(index => columns[index].value),
+  initialColumns: [1, 3, 4, 6].map(index => columns[index].value),
+  initialOpen: true,
+  onSave: () => undefined
 };
 
 storiesOf("Generics / Column picker", module)
@@ -42,4 +40,12 @@ storiesOf("Generics / Column picker", module)
   ))
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
-  .add("default", () => <ColumnPicker {...props} />);
+  .add("default", () => <ColumnPicker {...props} />)
+  .add("loading", () => (
+    <ColumnPicker
+      {...props}
+      loading={true}
+      hasMore={true}
+      onFetchMore={() => undefined}
+    />
+  ));

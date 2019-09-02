@@ -13,9 +13,15 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import Checkbox from "@saleor/components/Checkbox";
+import Money from "@saleor/components/Money";
+import Skeleton from "@saleor/components/Skeleton";
+import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
+import TableHead from "@saleor/components/TableHead";
+import TablePagination from "@saleor/components/TablePagination";
 import { ProductListColumns } from "@saleor/config";
 import { maybe, renderCollection } from "@saleor/misc";
 import {
@@ -26,12 +32,6 @@ import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/type
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ListActions, ListProps } from "@saleor/types";
 import TDisplayColumn from "@saleor/utils/columns/DisplayColumn";
-import Checkbox from "../Checkbox";
-import Money from "../Money";
-import Skeleton from "../Skeleton";
-import StatusLabel from "../StatusLabel";
-import TableHead from "../TableHead";
-import TablePagination from "../TablePagination";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -118,7 +118,6 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
     const DisplayColumn: React.FC<{ column: ProductListColumns }> = props => (
       <TDisplayColumn displayColumns={settings.columns} {...props} />
     );
-
     const gridAttributesFromSettings = settings.columns.filter(
       isAttributeColumnValue
     );
@@ -162,7 +161,10 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
             </TableCell>
             <DisplayColumn column="productType">
               <TableCell className={classes.colType}>
-                <FormattedMessage defaultMessage="Type" description="product" />
+                <FormattedMessage
+                  defaultMessage="Type"
+                  description="product type"
+                />
               </TableCell>
             </DisplayColumn>
             <DisplayColumn column="isPublished">
@@ -194,7 +196,7 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               <TableCell className={classes.colPrice}>
                 <FormattedMessage
                   defaultMessage="Price"
-                  description="product"
+                  description="product price"
                 />
               </TableCell>
             </DisplayColumn>
@@ -229,7 +231,6 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                     key={product ? product.id : "skeleton"}
                     onClick={product && onRowClick(product.id)}
                     className={classes.link}
-                    data-tc={product ? `product-${product.id}` : undefined}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -263,11 +264,12 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                               product.isAvailable
                                 ? intl.formatMessage({
                                     defaultMessage: "Published",
-                                    description: "product status"
+                                    description: "product",
+                                    id: "productStatusLabel"
                                   })
                                 : intl.formatMessage({
                                     defaultMessage: "Not published",
-                                    description: "product status"
+                                    description: "product"
                                   })
                             }
                             status={product.isAvailable ? "success" : "error"}

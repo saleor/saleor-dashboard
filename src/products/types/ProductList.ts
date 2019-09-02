@@ -25,6 +25,23 @@ export interface ProductList_products_edges_node_productType {
   name: string;
 }
 
+export interface ProductList_products_edges_node_attributes_attribute {
+  __typename: "Attribute";
+  id: string;
+}
+
+export interface ProductList_products_edges_node_attributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+}
+
+export interface ProductList_products_edges_node_attributes {
+  __typename: "SelectedAttribute";
+  attribute: ProductList_products_edges_node_attributes_attribute;
+  values: (ProductList_products_edges_node_attributes_values | null)[];
+}
+
 export interface ProductList_products_edges_node {
   __typename: "Product";
   id: string;
@@ -33,6 +50,7 @@ export interface ProductList_products_edges_node {
   isAvailable: boolean | null;
   basePrice: ProductList_products_edges_node_basePrice | null;
   productType: ProductList_products_edges_node_productType;
+  attributes: ProductList_products_edges_node_attributes[];
 }
 
 export interface ProductList_products_edges {

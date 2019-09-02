@@ -3,9 +3,11 @@ import React from "react";
 
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { defaultListSettings } from "@saleor/config";
+import { products as productListFixture } from "@saleor/products/fixtures";
+import { attributes } from "@saleor/productTypes/fixtures";
 import { ListViews } from "@saleor/types";
-import { category as categoryFixture } from "../../../categories/fixtures";
 import {
+  fetchMoreProps,
   filterPageProps,
   filters,
   listActionsProps,
@@ -16,20 +18,22 @@ import ProductListPage, {
 } from "../../../products/components/ProductListPage";
 import Decorator from "../../Decorator";
 
-const products = categoryFixture(placeholderImage).products.edges.map(
-  edge => edge.node
-);
+const products = productListFixture(placeholderImage);
 
 const props: ProductListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
   ...filterPageProps,
+  ...fetchMoreProps,
+  availableInGridAttributes: attributes,
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
+  gridAttributes: attributes,
   products,
   settings: {
     ...pageListProps.default.settings,
     columns: ["isPublished", "productType", "price"]
-  }
+  },
+  totalGridAttributes: attributes.length
 };
 
 storiesOf("Views / Products / Product list", module)
