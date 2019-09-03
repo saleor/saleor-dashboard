@@ -130,3 +130,10 @@ export interface FetchMoreProps {
   hasMore: boolean;
   onFetchMore: () => void;
 }
+
+export enum ConfigurationCategoryEnum {
+  ATTRUBUTES_PRODUCT_TYPES = "ATTRUBUTES_PRODUCT_TYPES",
+  PRODUCT_SETTINGS = "PRODUCT_SETTINGS",
+  STAFF_SETTINGS = "STAFF_SETTINGS",
+  MISCELLANEOUS = "MISCELLANEOUS"
+}

@@ -23,12 +23,14 @@ import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
 import { taxSection } from "@saleor/taxes/urls";
+import { ConfigurationCategoryEnum } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import ConfigurationPage, { MenuItem } from "./ConfigurationPage";
 
 export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
   return [
     {
+      category: ConfigurationCategoryEnum.ATTRUBUTES_PRODUCT_TYPES,
       description: intl.formatMessage({
         defaultMessage: "Determine attributes used to create product types",
         id: "configurationMenuAttributes"
@@ -39,6 +41,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       url: attributeListUrl()
     },
     {
+      category: ConfigurationCategoryEnum.ATTRUBUTES_PRODUCT_TYPES,
       description: intl.formatMessage({
         defaultMessage: "Define types of products you sell",
         id: "configurationMenuProductTypes"
@@ -49,6 +52,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       url: productTypeListUrl()
     },
     {
+      category: ConfigurationCategoryEnum.STAFF_SETTINGS,
       description: intl.formatMessage({
         defaultMessage: "Manage your employees and their permissions",
         id: "configurationMenuStaff"
@@ -59,6 +63,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       url: staffListUrl()
     },
     {
+      category: ConfigurationCategoryEnum.PRODUCT_SETTINGS,
       description: intl.formatMessage({
         defaultMessage: "Manage how you ship out orders",
         id: "configurationMenuShipping"
@@ -69,6 +74,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       url: shippingZonesListUrl()
     },
     {
+      category: ConfigurationCategoryEnum.PRODUCT_SETTINGS,
       description: intl.formatMessage({
         defaultMessage: "Manage how your store charges tax",
         id: "configurationMenuTaxes"
@@ -79,6 +85,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       url: taxSection
     },
     {
+      category: ConfigurationCategoryEnum.MISCELLANEOUS,
       description: intl.formatMessage({
         defaultMessage: "Define how users can navigate through your store",
         id: "configurationMenuNavigation"
@@ -89,6 +96,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       url: menuListUrl()
     },
     {
+      category: ConfigurationCategoryEnum.MISCELLANEOUS,
       description: intl.formatMessage({
         defaultMessage: "View and update your site settings",
         id: "configurationMenuSiteSettings"
@@ -99,6 +107,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       url: siteSettingsUrl()
     },
     {
+      category: ConfigurationCategoryEnum.MISCELLANEOUS,
       description: intl.formatMessage({
         defaultMessage: "Manage and add additional pages",
         id: "configurationMenuPages"
@@ -109,6 +118,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       url: pageListUrl()
     },
     {
+      category: ConfigurationCategoryEnum.MISCELLANEOUS,
       description: intl.formatMessage({
         defaultMessage: "View and update your plugins and their settings.",
         id: "configurationPluginsPages"
