@@ -40,12 +40,12 @@ export default (colors: IThemeColors): Theme =>
         },
         flat: {
           "& span": {
-            color: colors.font.textButton
+            color: colors.primary
           }
         },
         flatPrimary: {
           "& span": {
-            color: colors.font.textButton
+            color: colors.primary
           }
         },
         label: {
