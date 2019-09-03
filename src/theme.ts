@@ -22,7 +22,13 @@ export type IThemeColors = Record<
   gray: Record<"default" | "disabled", string>;
 } & {
   input: Record<
-    "default" | "border" | "disabled" | "text" | "textHover",
+    | "default"
+    | "border"
+    | "disabled"
+    | "disabledBackground"
+    | "disabledText"
+    | "text"
+    | "textHover",
     string
   >;
 };
@@ -121,6 +127,9 @@ export default (colors: IThemeColors): Theme =>
         }
       },
       MuiInputLabel: {
+        disabled: {
+          color: `${fade(colors.primary, 0.4)} !important` as any
+        },
         formControl: {
           transform: "translate(0, 1.5px) scale(0.75)",
           transformOrigin: "top left" as "top left",
@@ -197,10 +206,11 @@ export default (colors: IThemeColors): Theme =>
           },
           "&$disabled": {
             "& fieldset": {
-              backgroundColor: colors.input.disabled
+              backgroundColor: colors.input.disabledBackground,
+              borderColor: [[colors.input.disabled], "!important"] as any
             },
             "& input": {
-              color: colors.input.text,
+              color: colors.input.disabledText,
               zIndex: 2
             }
           },
