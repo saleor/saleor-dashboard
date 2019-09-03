@@ -65,6 +65,9 @@ const useStyles = makeStyles(
         flexWrap: "wrap"
       },
       filterContainer: {
+        "& a": {
+          paddingBottom: 10
+        },
         borderBottom: "1px solid #e8e8e8",
         display: "flex",
         marginTop: theme.spacing.unit,
