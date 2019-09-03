@@ -15,7 +15,7 @@ import { CategoryDetails_category } from "../../types/CategoryDetails";
 
 const styles = createStyles({
   root: {
-    width: "50%"
+    width: "100%"
   }
 });
 

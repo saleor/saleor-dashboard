@@ -21,7 +21,7 @@ const styles = (theme: Theme) =>
     root: {
       display: "grid",
       gridColumnGap: theme.spacing.unit * 2 + "px",
-      gridTemplateColumns: `3fr 1fr`
+      gridTemplateColumns: `1fr`
     }
   });
 
@@ -69,7 +69,6 @@ export const ProductDetailsForm = withStyles(styles, {
                 description: "product name"
               })}
               name="name"
-              rows={5}
               value={data.name}
               onChange={onChange}
             />

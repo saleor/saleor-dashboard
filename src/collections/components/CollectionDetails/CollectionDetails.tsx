@@ -16,7 +16,7 @@ import { CollectionDetails_collection } from "../../types/CollectionDetails";
 
 const styles = createStyles({
   name: {
-    width: "80%"
+    width: "100%"
   }
 });
 

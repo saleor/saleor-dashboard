@@ -127,9 +127,6 @@ export default (colors: IThemeColors): Theme =>
         }
       },
       MuiInputLabel: {
-        disabled: {
-          color: `${fade(colors.primary, 0.4)} !important` as any
-        },
         formControl: {
           transform: "translate(0, 1.5px) scale(0.75)",
           transformOrigin: "top left" as "top left",
@@ -142,7 +139,10 @@ export default (colors: IThemeColors): Theme =>
           transform: "translate(14px, 14px) scale(1)"
         },
         root: {
-          color: colors.input.text
+          color: colors.input.text,
+          "&$disabled": {
+            color: `${fade(colors.primary, 0.4)} !important` as any
+          }
         },
         shrink: {
           // Negates x0.75 scale
