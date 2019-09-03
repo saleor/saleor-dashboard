@@ -6,6 +6,4 @@ import ResetPasswordSuccessPage from "./ResetPasswordSuccessPage";
 
 storiesOf("Views / Authentication / Reset password success", module)
   .addDecorator(Decorator)
-  .add("default", () => (
-    <ResetPasswordSuccessPage onSubmit={() => undefined} />
-  ));
+  .add("default", () => <ResetPasswordSuccessPage onBack={() => undefined} />);
