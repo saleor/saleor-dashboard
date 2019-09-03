@@ -53,7 +53,7 @@ const light: IThemeColors = {
     disabled: "rgba(216, 216, 216, 0.3)"
   },
   input: {
-    border: "#616161",
+    border: "#06847B",
     default: "#FFFFFF",
     disabled: "#EAEAEA",
     disabledBackground: "#F4F4F4",
