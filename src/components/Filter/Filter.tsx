@@ -60,21 +60,23 @@ const styles = (theme: Theme) =>
     filterButton: {
       alignItems: "center",
       backgroundColor: fade(theme.palette.primary.main, 0.6),
-      borderRadius: "19px",
+      borderRadius: "4px",
       display: "flex",
-      height: "38px",
+      height: "45px",
       justifyContent: "space-around",
       margin: `0 ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
       marginLeft: 0,
-      padding: "0 16px"
-    },
-    filterLabel: {
-      marginBottom: theme.spacing.unit
+      padding: "0 16px",
+      position: "relative",
+      top: -5
     },
     paper: {
       marginTop: theme.spacing.unit * 2,
       padding: theme.spacing.unit * 2,
-      width: 240
+      width: 240,
+      "& p": {
+        paddingBottom: 10
+      }
     },
     popover: {
       zIndex: 1

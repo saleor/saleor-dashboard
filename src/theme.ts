@@ -228,6 +228,11 @@ export default (colors: IThemeColors): Theme =>
           borderColor: colors.input.border
         }
       },
+      MuiSelect: {
+        outlined: {
+          padding: ["15px 12px 17px", "!important"] as any
+        }
+      },
       MuiSwitch: {
         bar: {
           "$colorPrimary$checked + &": {
