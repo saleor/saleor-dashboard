@@ -5,7 +5,6 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import FormSpacer from "@saleor/components/FormSpacer";
-import Layout from "../Layout";
 
 const useStyles = makeStyles(
   {
@@ -33,7 +32,7 @@ const ResetPasswordSuccessPage: React.FC<
   const classes = useStyles(props);
 
   return (
-    <Layout>
+    <>
       <Typography>
         <FormattedMessage defaultMessage="Success! If we have your e-mail, you’ll receive a message with instructions on how to reset your password." />
       </Typography>
@@ -47,7 +46,7 @@ const ResetPasswordSuccessPage: React.FC<
       >
         <FormattedMessage defaultMessage="Back to login" description="button" />
       </Button>
-    </Layout>
+    </>
   );
 };
 

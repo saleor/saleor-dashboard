@@ -5,6 +5,7 @@ import {
   RequestPasswordReset,
   RequestPasswordResetVariables
 } from "./types/RequestPasswordReset";
+import { SetPassword, SetPasswordVariables } from "./types/SetPassword";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 
@@ -78,3 +79,23 @@ export const RequestPasswordResetMutation = TypedMutation<
   RequestPasswordReset,
   RequestPasswordResetVariables
 >(requestPasswordReset);
+
+export const setPassword = gql`
+  ${fragmentUser}
+  mutation SetPassword($email: String!, $password: String!, $token: String!) {
+    setPassword(email: $email, password: $password, token: $token) {
+      token
+      errors {
+        field
+        message
+      }
+      user {
+        ...User
+      }
+    }
+  }
+`;
+export const SetPasswordMutation = TypedMutation<
+  SetPassword,
+  SetPasswordVariables
+>(setPassword);

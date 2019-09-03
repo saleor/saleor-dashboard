@@ -8,7 +8,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { commonMessages } from "@saleor/intl";
-import Layout from "../Layout";
 
 const useStyles = makeStyles(
   {
@@ -38,7 +37,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
   return (
     <Form initial={{ email: "" }} onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
-        <Layout>
+        <>
           <Typography>
             <FormattedMessage defaultMessage="Forgot your password? Don't worry, we'll reset it for you." />
           </Typography>
@@ -70,7 +69,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
               description="password reset, button"
             />
           </Button>
-        </Layout>
+        </>
       )}
     </Form>
   );

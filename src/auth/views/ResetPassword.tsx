@@ -1,8 +1,8 @@
 import React from "react";
 import urlJoin from "url-join";
 
+import { APP_MOUNT_URI } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useShop from "@saleor/hooks/useShop";
 import ResetPasswordPage, {
   ResetPasswordPageFormData
 } from "../components/ResetPasswordPage";
@@ -12,7 +12,6 @@ import { newPasswordUrl, passwordResetSuccessUrl } from "../urls";
 
 const ResetPasswordView: React.FC = () => {
   const navigate = useNavigator();
-  const shop = useShop();
 
   const handleRequestPasswordReset = (data: RequestPasswordReset) => {
     if (data.requestPasswordReset.errors.length === 0) {
@@ -27,7 +26,11 @@ const ResetPasswordView: React.FC = () => {
           requestPasswordReset({
             variables: {
               email: data.email,
-              redirectUrl: urlJoin(shop.domain.url, newPasswordUrl())
+              redirectUrl: urlJoin(
+                window.location.origin,
+                APP_MOUNT_URI,
+                newPasswordUrl().replace(/\?/, "")
+              )
             }
           });
 

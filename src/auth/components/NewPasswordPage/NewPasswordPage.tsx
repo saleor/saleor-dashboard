@@ -7,7 +7,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import Layout from "../Layout";
 
 const useStyles = makeStyles(
   {
@@ -47,7 +46,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
           data.password !== data.confirmPassword && data.password.length > 0;
 
         return (
-          <Layout>
+          <>
             <Typography>
               <FormattedMessage defaultMessage="Please set up a new password." />
             </Typography>
@@ -106,7 +105,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
                 description="button"
               />
             </Button>
-          </Layout>
+          </>
         );
       }}
     </Form>

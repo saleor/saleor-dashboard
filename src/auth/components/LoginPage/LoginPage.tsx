@@ -9,7 +9,6 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import Layout from "../Layout";
 
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
@@ -71,7 +70,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
         onSubmit={onSubmit}
       >
         {({ change: handleChange, data, submit: handleSubmit }) => (
-          <Layout>
+          <>
             {error && (
               <div className={classes.panel}>
                 <Typography variant="caption">
@@ -135,7 +134,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                 description="button"
               />
             </Typography>
-          </Layout>
+          </>
         )}
       </Form>
     );

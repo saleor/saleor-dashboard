@@ -1,12 +1,12 @@
 import React from "react";
 
-import { getMutationProviderData } from "../misc";
-import { PartialMutationProviderOutput } from "../types";
-import { getAuthToken, removeAuthToken, setAuthToken, UserContext } from "./";
+import { MutationFunction, MutationResult } from "react-apollo";
+import { UserContext } from "./";
 import { TypedTokenAuthMutation, TypedVerifyTokenMutation } from "./mutations";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { User } from "./types/User";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
+import { getAuthToken, removeAuthToken, setAuthToken } from "./utils";
 
 interface AuthProviderOperationsProps {
   children: (props: {
@@ -25,10 +25,7 @@ const AuthProviderOperations: React.StatelessComponent<
       {(...tokenAuth) => (
         <TypedVerifyTokenMutation>
           {(...tokenVerify) => (
-            <AuthProvider
-              tokenAuth={getMutationProviderData(...tokenAuth)}
-              tokenVerify={getMutationProviderData(...tokenVerify)}
-            >
+            <AuthProvider tokenAuth={tokenAuth} tokenVerify={tokenVerify}>
               {children}
             </AuthProvider>
           )}
@@ -46,8 +43,14 @@ interface AuthProviderProps {
     tokenVerifyLoading: boolean;
     user: User;
   }) => React.ReactNode;
-  tokenAuth: PartialMutationProviderOutput<TokenAuth, TokenAuthVariables>;
-  tokenVerify: PartialMutationProviderOutput<VerifyToken, VerifyTokenVariables>;
+  tokenAuth: [
+    MutationFunction<TokenAuth, TokenAuthVariables>,
+    MutationResult<TokenAuth>
+  ];
+  tokenVerify: [
+    MutationFunction<VerifyToken, VerifyTokenVariables>,
+    MutationResult<VerifyToken>
+  ];
 }
 
 interface AuthProviderState {
@@ -66,23 +69,26 @@ class AuthProvider extends React.Component<
 
   componentWillReceiveProps(props: AuthProviderProps) {
     const { tokenAuth, tokenVerify } = props;
-    if (tokenAuth.opts.error || tokenVerify.opts.error) {
+    const tokenAuthOpts = tokenAuth[1];
+    const tokenVerifyOpts = tokenVerify[1];
+
+    if (tokenAuthOpts.error || tokenVerifyOpts.error) {
       this.logout();
     }
-    if (tokenAuth.opts.data) {
-      const user = tokenAuth.opts.data.tokenCreate.user;
+    if (tokenAuthOpts.data) {
+      const user = tokenAuthOpts.data.tokenCreate.user;
       // FIXME: Now we set state also when auth fails and returned user is
       // `null`, because the LoginView uses this `null` to display error.
       this.setState({ user });
       if (user) {
         setAuthToken(
-          tokenAuth.opts.data.tokenCreate.token,
+          tokenAuthOpts.data.tokenCreate.token,
           this.state.persistToken
         );
       }
     } else {
-      if (tokenVerify.opts.data && tokenVerify.opts.data.tokenVerify.user) {
-        const user = tokenVerify.opts.data.tokenVerify.user;
+      if (tokenVerifyOpts.data && tokenVerifyOpts.data.tokenVerify.user) {
+        const user = tokenVerifyOpts.data.tokenVerify.user;
         this.setState({ user });
       }
     }
@@ -90,17 +96,23 @@ class AuthProvider extends React.Component<
 
   componentDidMount() {
     const { user } = this.state;
-    const { tokenVerify } = this.props;
     const token = getAuthToken();
     if (!!token && !user) {
-      tokenVerify.mutate({ token });
+      this.verifyToken(token);
     }
   }
 
   login = (email: string, password: string, persistToken: boolean) => {
     const { tokenAuth } = this.props;
+    const [tokenAuthFn] = tokenAuth;
+
     this.setState({ persistToken });
-    tokenAuth.mutate({ email, password });
+    tokenAuthFn({ variables: { email, password } });
+  };
+
+  loginByToken = (token: string, user: User) => {
+    this.setState({ user });
+    setAuthToken(token, this.state.persistToken);
   };
 
   logout = () => {
@@ -108,8 +120,17 @@ class AuthProvider extends React.Component<
     removeAuthToken();
   };
 
+  verifyToken = (token: string) => {
+    const { tokenVerify } = this.props;
+    const [tokenVerifyFn] = tokenVerify;
+
+    return tokenVerifyFn({ variables: { token } });
+  };
+
   render() {
     const { children, tokenAuth, tokenVerify } = this.props;
+    const tokenAuthOpts = tokenAuth[1];
+    const tokenVerifyOpts = tokenVerify[1];
     const { user } = this.state;
     const isAuthenticated = !!user;
 
@@ -117,17 +138,18 @@ class AuthProvider extends React.Component<
       <UserContext.Provider
         value={{
           login: this.login,
+          loginByToken: this.loginByToken,
           logout: this.logout,
-          tokenAuthLoading: tokenAuth.opts.loading,
-          tokenVerifyLoading: tokenVerify.opts.loading,
+          tokenAuthLoading: tokenAuthOpts.loading,
+          tokenVerifyLoading: tokenVerifyOpts.loading,
           user
         }}
       >
         {children({
           hasToken: !!getAuthToken(),
           isAuthenticated,
-          tokenAuthLoading: tokenAuth.opts.loading,
-          tokenVerifyLoading: tokenVerify.opts.loading,
+          tokenAuthLoading: tokenAuthOpts.loading,
+          tokenVerifyLoading: tokenVerifyOpts.loading,
           user
         })}
       </UserContext.Provider>
