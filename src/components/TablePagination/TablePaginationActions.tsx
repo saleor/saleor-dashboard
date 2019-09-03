@@ -31,6 +31,10 @@ const styles = (theme: Theme) =>
     },
     disabled: {},
     iconButton: {
+      "& svg": {
+        border: `solid 1px #BDBDBD`,
+        borderRadius: "50%"
+      },
       "& > span:first-of-type": {
         backgroundColor: theme.palette.background.default,
         borderRadius: "100%",
@@ -46,7 +50,10 @@ const styles = (theme: Theme) =>
     root: {
       color: theme.palette.text.secondary,
       flexShrink: 0,
-      marginLeft: theme.spacing.unit * 2.5
+      margin: `0 ${theme.spacing.unit * 2.5}px`,
+      "& button": {
+        padding: 6
+      }
     }
   });
 
