@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-09-06T13:51:55.647Z\n"
+"POT-Creation-Date: 2019-09-06T13:56:36.897Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -5723,6 +5723,14 @@ msgctxt "tax rate"
 msgid "Property renovations"
 msgstr ""
 
+#: build/locale/src/auth/views/ResetPassword.json
+#. [src.auth.views.2388238158]
+#. defaultMessage is:
+#. Provided email address does not exist in our database.
+msgctxt "description"
+msgid "Provided email address does not exist in our database."
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionList.json
 #. [src.collections.views.1547167026] - publish collections
 #. defaultMessage is:
@@ -6161,6 +6169,14 @@ msgstr ""
 #. Sale Name
 msgctxt "description"
 msgid "Sale Name"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.somethingWentWrong]
+#. defaultMessage is:
+#. Saleor ran into an unexpected problem
+msgctxt "description"
+msgid "Saleor ran into an unexpected problem"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -6755,18 +6771,6 @@ msgctxt "description"
 msgid "Some products require shipping, but no method provided"
 msgstr ""
 
-#: build/locale/src/mutations.json
-#. [src.1395232177] - error message
-#. defaultMessage is:
-#. Something went wrong. {errorMessage}
-#: build/locale/src/queries.json
-#. [src.1395232177] - error message
-#. defaultMessage is:
-#. Something went wrong. {errorMessage}
-msgctxt "error message"
-msgid "Something went wrong. {errorMessage}"
-msgstr ""
-
 #: build/locale/src/components/NotFoundPage/NotFoundPage.json
 #. [src.components.NotFoundPage.4036415297]
 #. defaultMessage is:
@@ -7016,11 +7020,11 @@ msgid "Succesfully updated plugin settings"
 msgstr ""
 
 #: build/locale/src/auth/components/ResetPasswordSuccessPage/ResetPasswordSuccessPage.json
-#. [src.auth.components.ResetPasswordSuccessPage.1759278119]
+#. [src.auth.components.ResetPasswordSuccessPage.4066297200]
 #. defaultMessage is:
-#. Success! If we have your e-mail, you’ll receive a message with instructions on how to reset your password.
+#. Success! In a few minutes you’ll receive a message with instructions on how to reset your password.
 msgctxt "description"
-msgid "Success! If we have your e-mail, you’ll receive a message with instructions on how to reset your password."
+msgid "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
