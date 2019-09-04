@@ -14,3 +14,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix plugins page translations - #141 by @benekex2
 - Add attributes to column picker - #136 by @dominik-zeglen
 - Fix table cell padding - #143 by @dominik-zeglen
+- Replace checkbox with switch component in "product type has variants" - #152 by @dominik-zeglen
