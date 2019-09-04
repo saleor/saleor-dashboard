@@ -22,6 +22,7 @@ const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
   onAttributeUnassign: () => undefined,
   onBack: () => undefined,
   onDelete: () => undefined,
+  onHasVariantsToggle: () => undefined,
   onSubmit: () => undefined,
   pageTitle: productType.name,
   productAttributeList: listActionsProps,
