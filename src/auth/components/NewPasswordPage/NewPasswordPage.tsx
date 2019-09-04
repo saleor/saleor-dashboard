@@ -69,7 +69,6 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
             />
             <FormSpacer />
             <TextField
-              autoFocus
               fullWidth
               error={passwordError}
               autoComplete="none"
