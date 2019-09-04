@@ -43,7 +43,7 @@ const ResetPasswordView: React.FC = () => {
               email: data.email,
               redirectUrl: urlJoin(
                 window.location.origin,
-                APP_MOUNT_URI,
+                APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
                 newPasswordUrl().replace(/\?/, "")
               )
             }
