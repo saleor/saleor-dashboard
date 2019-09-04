@@ -34,7 +34,7 @@ const ResetPasswordSuccessPage: React.FC<
   return (
     <>
       <Typography>
-        <FormattedMessage defaultMessage="Success! If we have your e-mail, you’ll receive a message with instructions on how to reset your password." />
+        <FormattedMessage defaultMessage="Success! In a few minutes you’ll receive a message with instructions on how to reset your password." />
       </Typography>
       <FormSpacer />
       <Button
