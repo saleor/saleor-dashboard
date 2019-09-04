@@ -50,6 +50,9 @@ export const commonMessages = defineMessages({
   savedChanges: {
     defaultMessage: "Saved changes"
   },
+  somethingWentWrong: {
+    defaultMessage: "Saleor ran into an unexpected problem"
+  },
   startDate: {
     defaultMessage: "Start Date"
   },
