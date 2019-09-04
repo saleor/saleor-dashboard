@@ -45,8 +45,9 @@ const useStyles = makeStyles(
       actionContainer: {
         display: "flex",
         flexWrap: "wrap",
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
-          3}px ${theme.spacing.unit / 2}px ${theme.spacing.unit * 3}px`
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${
+          theme.spacing.unit
+        }px ${theme.spacing.unit * 3}px`
       },
       filterButton: {
         alignItems: "center",

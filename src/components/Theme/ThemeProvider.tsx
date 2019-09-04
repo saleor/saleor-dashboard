@@ -28,6 +28,7 @@ const dark: IThemeColors = {
     default: "#25262A",
     disabled: "#393939",
     disabledBackground: "#292A2D",
+    disabledText: "#9D9D9D",
     text: "#FCFCFC",
     textHover: "#616161"
   },

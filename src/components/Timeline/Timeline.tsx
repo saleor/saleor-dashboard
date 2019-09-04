@@ -96,9 +96,6 @@ export const TimelineAddNote = withStyles(styles, { name: "TimelineAddNote" })(
             placeholder={intl.formatMessage({
               defaultMessage: "Leave your note here..."
             })}
-            // label={intl.formatMessage({
-            //   defaultMessage: "Leave your note here..."
-            // })}
             onChange={onChange}
             value={message}
             name="message"

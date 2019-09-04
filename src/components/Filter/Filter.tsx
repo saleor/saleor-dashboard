@@ -71,12 +71,12 @@ const styles = (theme: Theme) =>
       top: -5
     },
     paper: {
-      marginTop: theme.spacing.unit * 2,
-      padding: theme.spacing.unit * 2,
-      width: 240,
       "& p": {
         paddingBottom: 10
-      }
+      },
+      marginTop: theme.spacing.unit * 2,
+      padding: theme.spacing.unit * 2,
+      width: 240
     },
     popover: {
       zIndex: 1
@@ -134,9 +134,7 @@ const Filter = withStyles(styles, { name: "Filter" })(
               }}
             >
               <Paper className={classes.paper}>
-                <Typography className={classes.filterLabel}>
-                  {filterLabel}
-                </Typography>
+                <Typography>{filterLabel}</Typography>
                 <FilterContent
                   currencySymbol={currencySymbol}
                   filters={menu}

@@ -136,13 +136,14 @@ export default (colors: IThemeColors): Theme =>
           "&$shrink": {
             transform: "translate(12px, 6px) scale(0.75)"
           },
-          transform: "translate(14px, 14px) scale(1)"
+          transform: "translate(14px, 14px) scale(1)",
+          zIndex: 9
         },
         root: {
-          color: colors.input.text,
           "&$disabled": {
             color: `${fade(colors.primary, 0.4)} !important` as any
-          }
+          },
+          color: colors.input.text
         },
         shrink: {
           // Negates x0.75 scale
@@ -178,14 +179,30 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiMenuItem: {
         root: {
-          "&:hover, &$selected, &$selected:focus": {
-            backgroundColor: colors.input.default
+          "&$selected, &$selected:focus": {
+            backgroundColor: [colors.background.default, "!important"] as any,
+            color: colors.primary,
+            fontWeight: 700
+          },
+          "&:hover": {
+            backgroundColor: [colors.background.default, "!important"] as any,
+            color: colors.font.default,
+            fontWeight: 400
           },
           borderRadius: 4
-        }
+        },
+        selected: {}
       },
       MuiOutlinedInput: {
         input: {
+          "&:-webkit-autofill": {
+            boxShadow: `0 0 0px 1000px rgba(19, 190, 187, 0.1) inset`,
+            left: 1,
+            position: "relative",
+            top: -3,
+            width: `calc(100% - 26px)`,
+            zIndex: 0
+          },
           "&::placeholder": {
             opacity: [[0], "!important"] as any
           },
@@ -241,6 +258,19 @@ export default (colors: IThemeColors): Theme =>
       MuiSelect: {
         outlined: {
           padding: ["15px 12px 17px", "!important"] as any
+        }
+      },
+      MuiSnackbarContent: {
+        action: {
+          "& $MuiIconButton": {
+            "& svg": {
+              color: colors.font.default
+            }
+          }
+        },
+        root: {
+          backgroundColor: colors.background.paper,
+          color: colors.font.default
         }
       },
       MuiSwitch: {

@@ -31,14 +31,14 @@ const styles = (theme: Theme) =>
     },
     disabled: {},
     iconButton: {
-      "& svg": {
-        border: `solid 1px #BDBDBD`,
-        borderRadius: "50%"
-      },
       "& > span:first-of-type": {
         backgroundColor: theme.palette.background.default,
         borderRadius: "100%",
         transition: theme.transitions.duration.standard + "ms"
+      },
+      "& svg": {
+        border: `solid 1px #BDBDBD`,
+        borderRadius: "50%"
       },
       "&:focus, &:hover": {
         "& > span:first-of-type": {
@@ -48,12 +48,12 @@ const styles = (theme: Theme) =>
       }
     },
     root: {
-      color: theme.palette.text.secondary,
-      flexShrink: 0,
-      margin: `0 ${theme.spacing.unit * 2.5}px`,
       "& button": {
         padding: 6
-      }
+      },
+      color: theme.palette.text.secondary,
+      flexShrink: 0,
+      margin: `0 ${theme.spacing.unit * 2.5}px`
     }
   });
 
