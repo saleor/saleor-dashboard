@@ -151,10 +151,12 @@ function getMatchingLocale(): Locale {
       }
     }
   }
+
+  return undefined;
 }
 
 const LocaleProvider: React.FC = ({ children }) => {
-  const [locale] = React.useState(getMatchingLocale());
+  const [locale] = React.useState(getMatchingLocale() || defaultLocale);
 
   return (
     <IntlProvider
