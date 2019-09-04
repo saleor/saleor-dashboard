@@ -5,6 +5,7 @@ import { Mutation, MutationFunction, MutationResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
 import useNotifier from "./hooks/useNotifier";
+import { commonMessages } from "./intl";
 
 export interface TypedMutationInnerProps<TData, TVariables> {
   children: (
@@ -30,17 +31,10 @@ export function TypedMutation<TData, TVariables>(
       <Mutation
         mutation={mutation}
         onCompleted={onCompleted}
-        onError={err => {
-          const msg = intl.formatMessage(
-            {
-              defaultMessage: "Something went wrong. {errorMessage}",
-              description: "error message"
-            },
-            {
-              errorMessage: err.message
-            }
-          );
-          notify({ text: msg });
+        onError={(err: ApolloError) => {
+          notify({
+            text: intl.formatMessage(commonMessages.somethingWentWrong)
+          });
           if (onError) {
             onError(err);
           }
