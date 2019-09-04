@@ -24,7 +24,6 @@ import { DraftOrderInput } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
-import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 
 const styles = (theme: Theme) =>
@@ -56,10 +55,7 @@ export interface OrderDraftPageProps extends WithStyles<typeof styles> {
   onDraftRemove: () => void;
   onNoteAdd: (data: HistoryFormData) => void;
   onOrderLineAdd: () => void;
-  onOrderLineChange: (
-    id: string,
-    data: OrderDraftDetailsProductsFormData
-  ) => void;
+  onOrderLineChange: (id: string, data: number) => void;
   onOrderLineRemove: (id: string) => void;
   onProductClick: (id: string) => void;
   onShippingAddressEdit: () => void;

@@ -65292,37 +65292,35 @@ exports[`Storyshots Views / Orders / Order draft default 1`] = `
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id OrderDraftDetailsProducts-colQuantity-id"
                 >
-                  <form>
+                  <div
+                    class="MuiFormControl-root-id MuiFormControl-fullWidth-id OrderDraftDetailsProducts-quantityField-id"
+                  >
                     <div
-                      class="MuiFormControl-root-id MuiFormControl-fullWidth-id OrderDraftDetailsProducts-quantityField-id"
+                      class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
                     >
-                      <div
-                        class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                      <fieldset
+                        aria-hidden="true"
+                        class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                        style="padding-left:8px"
                       >
-                        <fieldset
-                          aria-hidden="true"
-                          class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
-                          style="padding-left:8px"
+                        <legend
+                          class="MuiPrivateNotchedOutline-legend-id"
+                          style="width:0"
                         >
-                          <legend
-                            class="MuiPrivateNotchedOutline-legend-id"
-                            style="width:0"
-                          >
-                            <span>
-                              ​
-                            </span>
-                          </legend>
-                        </fieldset>
-                        <input
-                          aria-invalid="false"
-                          class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputType-id"
-                          name="quantity"
-                          type="number"
-                          value="2"
-                        />
-                      </div>
+                          <span>
+                            ​
+                          </span>
+                        </legend>
+                      </fieldset>
+                      <input
+                        aria-invalid="false"
+                        class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputType-id"
+                        name="quantity"
+                        type="number"
+                        value="2"
+                      />
                     </div>
-                  </form>
+                  </div>
                 </td>
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id OrderDraftDetailsProducts-colPrice-id"
@@ -65400,37 +65398,35 @@ exports[`Storyshots Views / Orders / Order draft default 1`] = `
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id OrderDraftDetailsProducts-colQuantity-id"
                 >
-                  <form>
+                  <div
+                    class="MuiFormControl-root-id MuiFormControl-fullWidth-id OrderDraftDetailsProducts-quantityField-id"
+                  >
                     <div
-                      class="MuiFormControl-root-id MuiFormControl-fullWidth-id OrderDraftDetailsProducts-quantityField-id"
+                      class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
                     >
-                      <div
-                        class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                      <fieldset
+                        aria-hidden="true"
+                        class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                        style="padding-left:8px"
                       >
-                        <fieldset
-                          aria-hidden="true"
-                          class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
-                          style="padding-left:8px"
+                        <legend
+                          class="MuiPrivateNotchedOutline-legend-id"
+                          style="width:0"
                         >
-                          <legend
-                            class="MuiPrivateNotchedOutline-legend-id"
-                            style="width:0"
-                          >
-                            <span>
-                              ​
-                            </span>
-                          </legend>
-                        </fieldset>
-                        <input
-                          aria-invalid="false"
-                          class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputType-id"
-                          name="quantity"
-                          type="number"
-                          value="2"
-                        />
-                      </div>
+                          <span>
+                            ​
+                          </span>
+                        </legend>
+                      </fieldset>
+                      <input
+                        aria-invalid="false"
+                        class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputType-id"
+                        name="quantity"
+                        type="number"
+                        value="2"
+                      />
                     </div>
-                  </form>
+                  </div>
                 </td>
                 <td
                   class="MuiTableCell-root-id MuiTableCell-body-id OrderDraftDetailsProducts-colPrice-id"

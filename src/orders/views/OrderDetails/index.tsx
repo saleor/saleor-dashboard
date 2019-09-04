@@ -441,10 +441,12 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
                                 onOrderLineRemove={id =>
                                   orderLineDelete.mutate({ id })
                                 }
-                                onOrderLineChange={(id, data) =>
+                                onOrderLineChange={(id, quantity) =>
                                   orderLineUpdate.mutate({
                                     id,
-                                    input: data
+                                    input: {
+                                      quantity
+                                    }
                                   })
                                 }
                                 saveButtonBarState="default"

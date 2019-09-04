@@ -7,18 +7,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import { maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
-import OrderDraftDetailsProducts, {
-  FormData as OrderDraftDetailsProductsFormData
-} from "../OrderDraftDetailsProducts";
+import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts";
 import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary/OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
   order: OrderDetails_order;
   onOrderLineAdd: () => void;
-  onOrderLineChange: (
-    id: string,
-    data: OrderDraftDetailsProductsFormData
-  ) => void;
+  onOrderLineChange: (id: string, data: number) => void;
   onOrderLineRemove: (id: string) => void;
   onShippingMethodEdit: () => void;
 }
