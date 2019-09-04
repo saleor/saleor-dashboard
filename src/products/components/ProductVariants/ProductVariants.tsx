@@ -90,7 +90,6 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
     toolbar
   }: ProductVariantsProps) => {
     const intl = useIntl();
-
     return (
       <Card>
         <CardTitle
@@ -125,11 +124,13 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
             </>
           }
         />
-        <CardContent>
-          <Typography>
-            <FormattedMessage defaultMessage="Use variants for products that come in a variety of versions for example different sizes or colors" />
-          </Typography>
-        </CardContent>
+        {!variants.length && (
+          <CardContent>
+            <Typography>
+              <FormattedMessage defaultMessage="Use variants for products that come in a variety of versions for example different sizes or colors" />
+            </Typography>
+          </CardContent>
+        )}
         <Table className={classes.denseTable}>
           <TableHead
             colSpan={numberOfColumns}
