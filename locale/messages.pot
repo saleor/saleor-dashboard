@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-29T12:47:44.847Z\n"
+"POT-Creation-Date: 2019-09-04T11:51:21.421Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -49,6 +49,22 @@ msgstr ""
 #. Account Status
 msgctxt "section header"
 msgid "Account Status"
+msgstr ""
+
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+#. [src.plugins.components.PluginsList.4120604650] - user action bar
+#. defaultMessage is:
+#. Action
+msgctxt "user action bar"
+msgid "Action"
+msgstr ""
+
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+#. [src.plugins.components.PluginsList.3247064221] - plugin status
+#. defaultMessage is:
+#. Active
+msgctxt "plugin status"
+msgid "Active"
 msgstr ""
 
 #: build/locale/src/staff/components/StaffList/StaffList.json
@@ -341,10 +357,6 @@ msgstr ""
 
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
 #. [src.categories.components.CategoryProducts.3554578821] - button
-#. defaultMessage is:
-#. Add product
-#: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
-#. [src.categories.components.CategoryProductsCard.3554578821] - button
 #. defaultMessage is:
 #. Add product
 msgctxt "button"
@@ -1737,14 +1749,6 @@ msgstr ""
 #. Change photo
 msgctxt "button"
 msgid "Change photo"
-msgstr ""
-
-#: build/locale/src/products/views/ProductList/ProductList.json
-#. [src.products.views.ProductList.224127438] - product status update notification
-#. defaultMessage is:
-#. Changed publication status
-msgctxt "product status update notification"
-msgid "Changed publication status"
 msgstr ""
 
 #: build/locale/src/products/components/ProductPricing/ProductPricing.json
@@ -4043,19 +4047,19 @@ msgctxt "attribute name"
 msgid "Name"
 msgstr ""
 
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#. [src.categories.components.CategoryProducts.636461959] - product name
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#. [src.categories.components.CategoryProductList.636461959] - product
 #. defaultMessage is:
 #. Name
-#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
-#. [src.collections.components.CollectionProducts.636461959] - product name
+#: build/locale/src/components/ProductList/ProductList.json
+#. [src.components.ProductList.636461959] - product
 #. defaultMessage is:
 #. Name
-#: build/locale/src/products/components/ProductDetailsForm/ProductDetailsForm.json
-#. [src.products.components.ProductDetailsForm.636461959] - product name
+#: build/locale/src/products/components/ProductList/ProductList.json
+#. [src.products.components.ProductList.636461959] - product
 #. defaultMessage is:
 #. Name
-msgctxt "product name"
+msgctxt "product"
 msgid "Name"
 msgstr ""
 
@@ -4067,11 +4071,15 @@ msgctxt "collection name"
 msgid "Name"
 msgstr ""
 
-#: build/locale/src/components/ProductList/ProductList.json
-#. [src.components.ProductList.636461959] - product
+#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
+#. [src.collections.components.CollectionProducts.636461959] - product name
 #. defaultMessage is:
 #. Name
-msgctxt "product"
+#: build/locale/src/products/components/ProductDetailsForm/ProductDetailsForm.json
+#. [src.products.components.ProductDetailsForm.636461959] - product name
+#. defaultMessage is:
+#. Name
+msgctxt "product name"
 msgid "Name"
 msgstr ""
 
@@ -4096,6 +4104,14 @@ msgstr ""
 #. defaultMessage is:
 #. Name
 msgctxt "menu item name"
+msgid "Name"
+msgstr ""
+
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+#. [src.plugins.components.PluginsList.636461959] - plugin name
+#. defaultMessage is:
+#. Name
+msgctxt "plugin name"
 msgid "Name"
 msgstr ""
 
@@ -4363,6 +4379,14 @@ msgctxt "description"
 msgid "No payments waiting for capture"
 msgstr ""
 
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+#. [src.plugins.components.PluginsList.666641390]
+#. defaultMessage is:
+#. No plugins found
+msgctxt "description"
+msgid "No plugins found"
+msgstr ""
+
 #: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
 #. [src.productTypes.components.ProductTypeList.1126553969]
 #. defaultMessage is:
@@ -4371,8 +4395,8 @@ msgctxt "description"
 msgid "No product types found"
 msgstr ""
 
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#. [src.categories.components.CategoryProducts.1657559629]
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#. [src.categories.components.CategoryProductList.1657559629]
 #. defaultMessage is:
 #. No products found
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
@@ -4389,6 +4413,10 @@ msgstr ""
 #. No products found
 #: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
 #. [homeProductsListCardNoProducts]
+#. defaultMessage is:
+#. No products found
+#: build/locale/src/products/components/ProductList/ProductList.json
+#. [src.products.components.ProductList.1657559629]
 #. defaultMessage is:
 #. No products found
 msgctxt "description"
@@ -4617,6 +4645,18 @@ msgstr ""
 #. Not Published
 msgctxt "page status"
 msgid "Not Published"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#. [src.categories.components.CategoryProductList.2341910657] - product
+#. defaultMessage is:
+#. Not published
+#: build/locale/src/products/components/ProductList/ProductList.json
+#. [src.products.components.ProductList.2341910657] - product
+#. defaultMessage is:
+#. Not published
+msgctxt "product"
+msgid "Not published"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionList/CollectionList.json
@@ -5219,6 +5259,46 @@ msgctxt "product type"
 msgid "Physical"
 msgstr ""
 
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+#. [src.plugins.components.PluginInfo.3425535100] - section header
+#. defaultMessage is:
+#. Plugin Information and Status
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+#. [src.plugins.components.PluginsDetailsPage.3425535100] - section header
+#. defaultMessage is:
+#. Plugin Information and Status
+msgctxt "section header"
+msgid "Plugin Information and Status"
+msgstr ""
+
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+#. [src.plugins.components.PluginInfo.1049131348] - plugin name
+#. defaultMessage is:
+#. Plugin Name
+msgctxt "plugin name"
+msgid "Plugin Name"
+msgstr ""
+
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+#. [src.plugins.components.PluginsDetailsPage.1970881031] - section header
+#. defaultMessage is:
+#. Plugin Settings
+#: build/locale/src/plugins/components/PluginSettings/PluginSettings.json
+#. [src.plugins.components.PluginSettings.1970881031] - section header
+#. defaultMessage is:
+#. Plugin Settings
+msgctxt "section header"
+msgid "Plugin Settings"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.plugins] - plugins section name
+#. defaultMessage is:
+#. Plugins
+msgctxt "plugins section name"
+msgid "Plugins"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.3590282519] - attribute position in storefront filters
 #. defaultMessage is:
@@ -5235,6 +5315,30 @@ msgctxt "order payment"
 msgid "Preauthorized amount"
 msgstr ""
 
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#. [src.categories.components.CategoryProductList.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#. [src.orders.components.OrderFulfillment.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#: build/locale/src/products/components/ProductList/ProductList.json
+#. [src.products.components.ProductList.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#. [src.products.components.ProductListPage.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#: build/locale/src/products/components/ProductPricing/ProductPricing.json
+#. [src.products.components.ProductPricing.1134347598] - product price
+#. defaultMessage is:
+#. Price
+msgctxt "product price"
+msgid "Price"
+msgstr ""
+
 #: build/locale/src/components/ProductList/ProductList.json
 #. [src.components.ProductList.1134347598] - product
 #. defaultMessage is:
@@ -5248,22 +5352,6 @@ msgstr ""
 #. defaultMessage is:
 #. Price
 msgctxt "price or ordered products"
-msgid "Price"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
-#. [src.orders.components.OrderFulfillment.1134347598] - product price
-#. defaultMessage is:
-#. Price
-#: build/locale/src/products/components/ProductListPage/ProductListPage.json
-#. [src.products.components.ProductListPage.1134347598] - product price
-#. defaultMessage is:
-#. Price
-#: build/locale/src/products/components/ProductPricing/ProductPricing.json
-#. [src.products.components.ProductPricing.1134347598] - product price
-#. defaultMessage is:
-#. Price
-msgctxt "product price"
 msgid "Price"
 msgstr ""
 
@@ -5483,12 +5571,12 @@ msgctxt "description"
 msgid "Product type deleted"
 msgstr ""
 
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#. [src.categories.components.CategoryProducts.2968663655] - section header
+#: build/locale/src/productTypes/components/ProductTypeDetailsPage/ProductTypeDetailsPage.json
+#. [src.productTypes.components.ProductTypeDetailsPage.1217376589] - switch button
 #. defaultMessage is:
-#. Products
-msgctxt "section header"
-msgid "Products"
+#. Product type uses Variant Attributes
+msgctxt "switch button"
+msgid "Product type uses Variant Attributes"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryUpdatePage/CategoryUpdatePage.json
@@ -5539,11 +5627,11 @@ msgctxt "number of products"
 msgid "Products ({quantity})"
 msgstr ""
 
-#: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
-#. [src.categories.components.CategoryProductsCard.4164156574] - section header
+#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+#. [src.categories.components.CategoryProducts.4164156574] - header
 #. defaultMessage is:
 #. Products in {categoryName}
-msgctxt "section header"
+msgctxt "header"
 msgid "Products in {categoryName}"
 msgstr ""
 
@@ -5553,14 +5641,6 @@ msgstr ""
 #. Products in {name}
 msgctxt "products in collection"
 msgid "Products in {name}"
-msgstr ""
-
-#: build/locale/src/products/views/ProductList/ProductList.json
-#. [src.products.views.ProductList.1694086800]
-#. defaultMessage is:
-#. Products removed
-msgctxt "description"
-msgid "Products removed"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
@@ -5651,6 +5731,38 @@ msgctxt "publish on date"
 msgid "Publish on"
 msgstr ""
 
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#. [src.categories.components.CategoryProductList.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#: build/locale/src/components/ProductList/ProductList.json
+#. [src.components.ProductList.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#: build/locale/src/products/components/ProductList/ProductList.json
+#. [src.products.components.ProductList.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#. [src.products.components.ProductListPage.3640454975] - product status
+#. defaultMessage is:
+#. Published
+msgctxt "product status"
+msgid "Published"
+msgstr ""
+
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#. [productStatusLabel] - product
+#. defaultMessage is:
+#. Published
+#: build/locale/src/products/components/ProductList/ProductList.json
+#. [productStatusLabel] - product
+#. defaultMessage is:
+#. Published
+msgctxt "product"
+msgid "Published"
+msgstr ""
+
 #: build/locale/src/collections/components/CollectionList/CollectionList.json
 #. [src.collections.components.CollectionList.3640454975] - collection is published
 #. defaultMessage is:
@@ -5668,18 +5780,6 @@ msgstr ""
 #. defaultMessage is:
 #. Published
 msgctxt "product is published"
-msgid "Published"
-msgstr ""
-
-#: build/locale/src/components/ProductList/ProductList.json
-#. [src.components.ProductList.3640454975] - product status
-#. defaultMessage is:
-#. Published
-#: build/locale/src/products/components/ProductListPage/ProductListPage.json
-#. [src.products.components.ProductListPage.3640454975] - product status
-#. defaultMessage is:
-#. Published
-msgctxt "product status"
 msgid "Published"
 msgstr ""
 
@@ -6379,6 +6479,14 @@ msgctxt "voucher end date, switch button"
 msgid "Set end date"
 msgstr ""
 
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+#. [src.plugins.components.PluginInfo.4013064767]
+#. defaultMessage is:
+#. Set plugin as Active
+msgctxt "description"
+msgid "Set plugin as Active"
+msgstr ""
+
 #: build/locale/src/discounts/translations.json
 #. [src.discounts.shipment] - voucher discount
 #. defaultMessage is:
@@ -6715,6 +6823,14 @@ msgctxt "order fulfillment status"
 msgid "Status"
 msgstr ""
 
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+#. [src.plugins.components.PluginInfo.1756106276] - plugin status
+#. defaultMessage is:
+#. Status
+msgctxt "plugin status"
+msgid "Status"
+msgstr ""
+
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.1756106276] - product status
 #. defaultMessage is:
@@ -6817,6 +6933,14 @@ msgstr ""
 #. Subtotal
 msgctxt "order subtotal price"
 msgid "Subtotal"
+msgstr ""
+
+#: build/locale/src/plugins/views/PluginsDetails.json
+#. [src.plugins.views.100549097] - plugin success message
+#. defaultMessage is:
+#. Succesfully updated plugin settings
+msgctxt "plugin success message"
+msgid "Succesfully updated plugin settings"
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
@@ -6983,6 +7107,22 @@ msgctxt "description"
 msgid "There is no address to show for this customer"
 msgstr ""
 
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+#. [src.plugins.components.PluginsDetailsPage.2277745418]
+#. defaultMessage is:
+#. These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar.
+msgctxt "description"
+msgid "These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar."
+msgstr ""
+
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+#. [src.plugins.components.PluginsDetailsPage.4241018152]
+#. defaultMessage is:
+#. This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers.
+msgctxt "description"
+msgid "This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers."
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
 #. [src.customers.components.CustomerAddressListPage.1428369222]
 #. defaultMessage is:
@@ -7033,14 +7173,6 @@ msgstr ""
 #. This product has no variants
 msgctxt "description"
 msgid "This product has no variants"
-msgstr ""
-
-#: build/locale/src/productTypes/components/ProductTypeDetailsPage/ProductTypeDetailsPage.json
-#. [src.productTypes.components.ProductTypeDetailsPage.1756957616] - switch button
-#. defaultMessage is:
-#. This product type has variants
-msgctxt "switch button"
-msgid "This product type has variants"
 msgstr ""
 
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
@@ -7295,12 +7427,16 @@ msgctxt "header"
 msgid "Translations to {language}"
 msgstr ""
 
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#. [src.categories.components.CategoryProducts.1952810469] - product type
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#. [src.categories.components.CategoryProductList.1952810469] - product type
 #. defaultMessage is:
 #. Type
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 #. [src.collections.components.CollectionProducts.1952810469] - product type
+#. defaultMessage is:
+#. Type
+#: build/locale/src/products/components/ProductList/ProductList.json
+#. [src.products.components.ProductList.1952810469] - product type
 #. defaultMessage is:
 #. Type
 #: build/locale/src/products/components/ProductListPage/ProductListPage.json
@@ -7872,6 +8008,14 @@ msgid "View all orders"
 msgstr ""
 
 #: build/locale/src/configuration/index.json
+#. [configurationPluginsPages]
+#. defaultMessage is:
+#. View and update your plugins and their settings.
+msgctxt "description"
+msgid "View and update your plugins and their settings."
+msgstr ""
+
+#: build/locale/src/configuration/index.json
 #. [configurationMenuSiteSettings]
 #. defaultMessage is:
 #. View and update your site settings
@@ -8297,6 +8441,14 @@ msgstr ""
 #. {number} Countries
 msgctxt "number of countries"
 msgid "{number} Countries"
+msgstr ""
+
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+#. [src.plugins.components.PluginsDetailsPage.3352026836] - header
+#. defaultMessage is:
+#. {pluginName} Details
+msgctxt "header"
+msgid "{pluginName} Details"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json
