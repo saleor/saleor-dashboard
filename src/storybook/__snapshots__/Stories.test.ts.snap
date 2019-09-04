@@ -76998,22 +76998,42 @@ exports[`Storyshots Views / Product types / Product type details default 1`] = `
           <label
             class="MuiFormControlLabel-root-id"
           >
-            <button
-              class="MuiButtonBase-root-id Checkbox-root-id"
-              tabindex="0"
-              type="button"
+            <span
+              class="MuiSwitch-root-id"
             >
-              <input
-                class="Checkbox-box-id"
-                name="hasVariants"
-                type="checkbox"
-                value="false"
+              <span
+                class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id"
+              >
+                <span
+                  class="MuiIconButton-label-id"
+                >
+                  <span
+                    class="MuiSwitch-icon-id"
+                  />
+                  <input
+                    class="MuiPrivateSwitchBase-input-id"
+                    name="hasVariants"
+                    type="checkbox"
+                  />
+                </span>
+              </span>
+              <span
+                class="MuiSwitch-bar-id"
               />
-            </button>
+            </span>
             <span
               class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
             >
-              This product type has variants
+              <div
+                class="ControlledSwitch-label-id"
+              >
+                <span
+                  class="ControlledSwitch-labelText-id"
+                >
+                  Product type uses Variant Attributes
+                </span>
+                <div />
+              </div>
             </span>
           </label>
         </div>
@@ -77634,22 +77654,42 @@ exports[`Storyshots Views / Product types / Product type details form errors 1`]
           <label
             class="MuiFormControlLabel-root-id"
           >
-            <button
-              class="MuiButtonBase-root-id Checkbox-root-id"
-              tabindex="0"
-              type="button"
+            <span
+              class="MuiSwitch-root-id"
             >
-              <input
-                class="Checkbox-box-id"
-                name="hasVariants"
-                type="checkbox"
-                value="false"
+              <span
+                class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id"
+              >
+                <span
+                  class="MuiIconButton-label-id"
+                >
+                  <span
+                    class="MuiSwitch-icon-id"
+                  />
+                  <input
+                    class="MuiPrivateSwitchBase-input-id"
+                    name="hasVariants"
+                    type="checkbox"
+                  />
+                </span>
+              </span>
+              <span
+                class="MuiSwitch-bar-id"
               />
-            </button>
+            </span>
             <span
               class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
             >
-              This product type has variants
+              <div
+                class="ControlledSwitch-label-id"
+              >
+                <span
+                  class="ControlledSwitch-labelText-id"
+                >
+                  Product type uses Variant Attributes
+                </span>
+                <div />
+              </div>
             </span>
           </label>
         </div>
@@ -78093,24 +78133,44 @@ exports[`Storyshots Views / Product types / Product type details loading 1`] = `
           <label
             class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id"
           >
-            <button
-              class="MuiButtonBase-root-id MuiButtonBase-disabled-id Checkbox-root-id"
-              disabled=""
-              tabindex="-1"
-              type="button"
+            <span
+              class="MuiSwitch-root-id"
             >
-              <input
-                class="Checkbox-box-id Checkbox-disabled-id"
-                disabled=""
-                name="hasVariants"
-                type="checkbox"
-                value="false"
+              <span
+                class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiSwitch-disabled-id"
+                tabindex="-1"
+              >
+                <span
+                  class="MuiIconButton-label-id"
+                >
+                  <span
+                    class="MuiSwitch-icon-id"
+                  />
+                  <input
+                    class="MuiPrivateSwitchBase-input-id"
+                    disabled=""
+                    name="hasVariants"
+                    type="checkbox"
+                  />
+                </span>
+              </span>
+              <span
+                class="MuiSwitch-bar-id"
               />
-            </button>
+            </span>
             <span
               class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
             >
-              This product type has variants
+              <div
+                class="ControlledSwitch-label-id"
+              >
+                <span
+                  class="ControlledSwitch-labelText-id"
+                >
+                  Product type uses Variant Attributes
+                </span>
+                <div />
+              </div>
             </span>
           </label>
         </div>
@@ -78433,22 +78493,42 @@ exports[`Storyshots Views / Product types / Product type details no attributes 1
           <label
             class="MuiFormControlLabel-root-id"
           >
-            <button
-              class="MuiButtonBase-root-id Checkbox-root-id"
-              tabindex="0"
-              type="button"
+            <span
+              class="MuiSwitch-root-id"
             >
-              <input
-                class="Checkbox-box-id"
-                name="hasVariants"
-                type="checkbox"
-                value="false"
+              <span
+                class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiSwitch-switchBase-id MuiSwitch-colorPrimary-id"
+              >
+                <span
+                  class="MuiIconButton-label-id"
+                >
+                  <span
+                    class="MuiSwitch-icon-id"
+                  />
+                  <input
+                    class="MuiPrivateSwitchBase-input-id"
+                    name="hasVariants"
+                    type="checkbox"
+                  />
+                </span>
+              </span>
+              <span
+                class="MuiSwitch-bar-id"
               />
-            </button>
+            </span>
             <span
               class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
             >
-              This product type has variants
+              <div
+                class="ControlledSwitch-label-id"
+              >
+                <span
+                  class="ControlledSwitch-labelText-id"
+                >
+                  Product type uses Variant Attributes
+                </span>
+                <div />
+              </div>
             </span>
           </label>
         </div>

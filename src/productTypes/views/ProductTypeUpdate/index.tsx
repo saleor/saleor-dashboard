@@ -151,6 +151,15 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                       }
                     });
                   };
+                  const handleProductTypeVariantsToggle = (
+                    hasVariants: boolean
+                  ) =>
+                    updateProductType.mutate({
+                      id,
+                      input: {
+                        hasVariants
+                      }
+                    });
                   const handleAssignAttribute = () =>
                     assignAttribute.mutate({
                       id,
@@ -266,6 +275,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                             })
                           )
                         }
+                        onHasVariantsToggle={handleProductTypeVariantsToggle}
                         onSubmit={handleProductTypeUpdate}
                         productAttributeList={{
                           isChecked: productAttributeListActions.isSelected,

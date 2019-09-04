@@ -5,7 +5,7 @@ import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
-import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
+import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
@@ -56,6 +56,7 @@ export interface ProductTypeDetailsPageProps {
   onAttributeUnassign: (id: string) => void;
   onBack: () => void;
   onDelete: () => void;
+  onHasVariantsToggle: (hasVariants: boolean) => void;
   onSubmit: (data: ProductTypeForm) => void;
 }
 
@@ -89,6 +90,7 @@ const ProductTypeDetailsPage: React.StatelessComponent<
   onAttributeClick,
   onBack,
   onDelete,
+  onHasVariantsToggle,
   onSubmit
 }) => {
   const intl = useIntl();
@@ -172,15 +174,15 @@ const ProductTypeDetailsPage: React.StatelessComponent<
                 {...productAttributeList}
               />
               <CardSpacer />
-              <ControlledCheckbox
+              <ControlledSwitch
                 checked={data.hasVariants}
                 disabled={disabled}
                 label={intl.formatMessage({
-                  defaultMessage: "This product type has variants",
+                  defaultMessage: "Product type uses Variant Attributes",
                   description: "switch button"
                 })}
                 name="hasVariants"
-                onChange={change}
+                onChange={event => onHasVariantsToggle(event.target.value)}
               />
               {data.hasVariants && (
                 <>
