@@ -21,13 +21,21 @@ const styles = (theme: Theme) =>
         width: "100%"
       },
       alignSelf: "flex-start",
-      marginRight: 28
+      marginRight: theme.spacing.unit * 3.5
     },
     cardActionsExpanded: {
       maxHeight: theme.spacing.unit * 6
     },
     input: {
-      marginTop: -theme.spacing.unit
+      "& > div": {
+        padding: "0 14px"
+      },
+      "& textarea": {
+        "&::placeholder": {
+          opacity: [[1], "!important"] as any
+        }
+      },
+      background: theme.palette.common.white
     },
     noteRoot: {
       left: -theme.spacing.unit * 8.5 - 1,
@@ -37,7 +45,8 @@ const styles = (theme: Theme) =>
     },
     noteTitle: {
       "&:last-child": {
-        paddingBottom: 0
+        paddingBottom: 0,
+        paddingRight: 0
       },
       alignItems: "center",
       background: theme.palette.background.default,
@@ -87,6 +96,9 @@ export const TimelineAddNote = withStyles(styles, { name: "TimelineAddNote" })(
             placeholder={intl.formatMessage({
               defaultMessage: "Leave your note here..."
             })}
+            // label={intl.formatMessage({
+            //   defaultMessage: "Leave your note here..."
+            // })}
             onChange={onChange}
             value={message}
             name="message"
@@ -102,7 +114,7 @@ export const TimelineAddNote = withStyles(styles, { name: "TimelineAddNote" })(
                 </Button>
               )
             }}
-            variant="standard"
+            variant="outlined"
           />
         </CardContent>
       </div>
