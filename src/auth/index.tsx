@@ -14,7 +14,7 @@ import ResetPassword from "./views/ResetPassword";
 import ResetPasswordSuccess from "./views/ResetPasswordSuccess";
 
 interface UserContext {
-  login: (username: string, password: string, persist: boolean) => void;
+  login: (username: string, password: string) => void;
   loginByToken: (token: string, user: User) => void;
   logout: () => void;
   tokenAuthLoading: boolean;

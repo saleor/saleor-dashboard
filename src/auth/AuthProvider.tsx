@@ -99,15 +99,44 @@ class AuthProvider extends React.Component<
     const token = getAuthToken();
     if (!!token && !user) {
       this.verifyToken(token);
+    } else {
+      if (navigator.credentials && navigator.credentials.preventSilentAccess) {
+        navigator.credentials.get({ password: true }).then(credential => {
+          if (credential instanceof PasswordCredential) {
+            this.login(credential.id, credential.password);
+          }
+        });
+      }
     }
   }
 
-  login = (email: string, password: string, persistToken: boolean) => {
+  login = async (email: string, password: string) => {
     const { tokenAuth } = this.props;
     const [tokenAuthFn] = tokenAuth;
 
-    this.setState({ persistToken });
-    tokenAuthFn({ variables: { email, password } });
+    tokenAuthFn({ variables: { email, password } }).then(result => {
+      if (result && !result.data.tokenCreate.errors.length) {
+        if (
+          navigator.credentials &&
+          navigator.credentials.preventSilentAccess
+        ) {
+          const {
+            data: {
+              tokenCreate: { user }
+            }
+          } = result;
+          const cred = new PasswordCredential({
+            iconURL: user.avatar ? user.avatar.url : undefined,
+            id: email,
+            name: user.firstName
+              ? `${user.firstName} ${user.lastName}`
+              : undefined,
+            password
+          });
+          navigator.credentials.store(cred);
+        }
+      }
+    });
   };
 
   loginByToken = (token: string, user: User) => {
@@ -117,6 +146,9 @@ class AuthProvider extends React.Component<
 
   logout = () => {
     this.setState({ user: undefined });
+    if (navigator.credentials && navigator.credentials.preventSilentAccess) {
+      navigator.credentials.preventSilentAccess();
+    }
     removeAuthToken();
   };
 

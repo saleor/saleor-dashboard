@@ -10,23 +10,20 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import { commonMessages } from "@saleor/intl";
 
 export interface FormData {
   email: string;
-  loading: boolean;
   password: string;
-  rememberMe: boolean;
 }
 
 const styles = (theme: Theme) =>
   createStyles({
     buttonContainer: {
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "flex-end"
     },
     link: {
       color: theme.palette.primary.main,
@@ -65,10 +62,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
     const intl = useIntl();
 
     return (
-      <Form
-        initial={{ email: "", password: "", rememberMe: false }}
-        onSubmit={onSubmit}
-      >
+      <Form initial={{ email: "", password: "" }} onSubmit={onSubmit}>
         {({ change: handleChange, data, submit: handleSubmit }) => (
           <>
             {error && (
@@ -105,16 +99,6 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
             />
             <FormSpacer />
             <div className={classes.buttonContainer}>
-              <ControlledCheckbox
-                checked={data.rememberMe}
-                label={intl.formatMessage({
-                  defaultMessage: "Remember me",
-                  description: "login"
-                })}
-                name="rememberMe"
-                onChange={handleChange}
-              />
-              <FormSpacer />
               <Button
                 className={classes.loginButton}
                 color="primary"

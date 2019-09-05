@@ -101,6 +101,7 @@
     "@types/storybook__react": "^4.0.2",
     "@types/string-similarity": "^1.2.1",
     "@types/url-join": "^0.8.3",
+    "@types/webappsec-credential-management": "^0.5.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.6",
