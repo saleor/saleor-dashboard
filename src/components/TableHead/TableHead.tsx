@@ -35,12 +35,20 @@ const styles = (theme: Theme) =>
       padding: 0
     },
     checkboxPartialSelect: {
+      "& input": {
+        "&:before": {
+          background: [theme.palette.common.white, "!important"] as any,
+          border: `solid 1px ${theme.palette.primary.main}`,
+          content: "''"
+        },
+        background: theme.palette.common.white
+      },
       "&:after": {
-        background: theme.palette.common.white,
+        background: theme.palette.primary.main,
         content: "''",
         height: 2,
         position: "absolute",
-        width: 4
+        width: 6
       }
     },
     checkboxSelected: {
