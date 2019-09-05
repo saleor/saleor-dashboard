@@ -47,7 +47,7 @@ const PageListPage: React.StatelessComponent<PageListPageProps> = ({
           variant="contained"
           color="primary"
         >
-          <FormattedMessage defaultMessage="Add page" description="button" />
+          <FormattedMessage defaultMessage="Create page" description="button" />
           <AddIcon />
         </Button>
       </PageHeader>

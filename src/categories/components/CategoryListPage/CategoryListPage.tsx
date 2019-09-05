@@ -44,7 +44,7 @@ export const CategoryListPage: React.StatelessComponent<CategoryTableProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.categories)}>
         <Button color="primary" variant="contained" onClick={onAdd}>
           <FormattedMessage
-            defaultMessage="Add category"
+            defaultMessage="Create category"
             description="button"
           />
           <AddIcon />

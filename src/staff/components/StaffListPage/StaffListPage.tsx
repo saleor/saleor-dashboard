@@ -38,7 +38,7 @@ const StaffListPage: React.StatelessComponent<StaffListPageProps> = ({
           onClick={onAdd}
         >
           <FormattedMessage
-            defaultMessage="Add staff member"
+            defaultMessage="Invite staff member"
             description="button"
           />
           <AddIcon />

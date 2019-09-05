@@ -25,9 +25,7 @@ const SaleListPage: React.StatelessComponent<SaleListPageProps> = ({
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.sales)}>
         <Button onClick={onAdd} variant="contained" color="primary">
-          <FormattedMessage defaultMessage="Add Sale"
-            description="button"
-             />
+          <FormattedMessage defaultMessage="Create Sale" description="button" />
           <AddIcon />
         </Button>
       </PageHeader>

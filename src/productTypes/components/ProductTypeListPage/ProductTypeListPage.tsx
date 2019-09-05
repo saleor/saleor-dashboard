@@ -34,7 +34,7 @@ const ProductTypeListPage: React.StatelessComponent<
           onClick={onAdd}
         >
           <FormattedMessage
-            defaultMessage="Add product type"
+            defaultMessage="create product type"
             description="button"
           />{" "}
           <AddIcon />

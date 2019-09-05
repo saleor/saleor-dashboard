@@ -38,7 +38,10 @@ const VoucherListPage: React.StatelessComponent<VoucherListPageProps> = ({
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
         <Button onClick={onAdd} variant="contained" color="primary">
-          <FormattedMessage defaultMessage="Add voucher" description="button" />
+          <FormattedMessage
+            defaultMessage="Create voucher"
+            description="button"
+          />
           <AddIcon />
         </Button>
       </PageHeader>

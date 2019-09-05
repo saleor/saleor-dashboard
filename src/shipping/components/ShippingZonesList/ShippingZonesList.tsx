@@ -87,7 +87,7 @@ const ShippingZonesList = withStyles(styles, { name: "ShippingZonesList" })(
           toolbar={
             <Button color="primary" onClick={onAdd}>
               <FormattedMessage
-                defaultMessage="Add shipping zone"
+                defaultMessage="Create shipping zone"
                 description="button"
               />
             </Button>

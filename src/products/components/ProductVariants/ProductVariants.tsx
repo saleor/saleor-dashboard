@@ -117,7 +117,7 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
                 data-tc="button-add-variant"
               >
                 <FormattedMessage
-                  defaultMessage="Add variant"
+                  defaultMessage="Create variant"
                   description="button"
                 />
               </Button>

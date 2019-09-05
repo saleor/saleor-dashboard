@@ -129,7 +129,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           variant="contained"
           data-tc="add-product"
         >
-          <FormattedMessage defaultMessage="Add Product" description="button" />
+          <FormattedMessage
+            defaultMessage="Create Product"
+            description="button"
+          />
           <AddIcon />
         </Button>
       </PageHeader>

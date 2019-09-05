@@ -37,7 +37,7 @@ const MenuListPage: React.StatelessComponent<MenuListPageProps> = ({
           onClick={onAdd}
         >
           <FormattedMessage
-            defaultMessage="Add Menu"
+            defaultMessage="Create Menu"
             description="button"
             id="menuListPageAddMenu"
           />

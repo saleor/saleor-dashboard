@@ -78,7 +78,7 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
             title={
               page === null
                 ? intl.formatMessage({
-                    defaultMessage: "Add Page",
+                    defaultMessage: "Create Page",
                     description: "page header"
                   })
                 : maybe(() => page.title)

@@ -198,7 +198,7 @@ const OrderProductAddDialog = withStyles(styles, {
       >
         <DialogTitle>
           <FormattedMessage
-            defaultMessage="Add Product"
+            defaultMessage="Create Product"
             description="dialog header"
           />
         </DialogTitle>

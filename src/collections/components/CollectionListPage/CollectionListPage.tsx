@@ -31,7 +31,7 @@ const CollectionListPage: React.StatelessComponent<CollectionListPageProps> = ({
           onClick={onAdd}
         >
           <FormattedMessage
-            defaultMessage="Add collection"
+            defaultMessage="Create collection"
             description="button"
           />
           <AddIcon />

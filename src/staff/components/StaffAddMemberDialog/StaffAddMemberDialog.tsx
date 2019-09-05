@@ -85,7 +85,7 @@ const StaffAddMemberDialog = withStyles(styles, {
             <>
               <DialogTitle>
                 <FormattedMessage
-                  defaultMessage="Add Staff Member"
+                  defaultMessage="Invite Staff Member"
                   description="dialog header"
                 />
               </DialogTitle>
