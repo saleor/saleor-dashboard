@@ -112,6 +112,9 @@ export type ActiveTab<TTab extends string = string> = Partial<{
 export type Filters<TFilters extends string> = Partial<
   Record<TFilters, string>
 >;
+export type FiltersWithMultipleValues<TFilters extends string> = Partial<
+  Record<TFilters, string | string[]>
+>;
 export type SingleAction = Partial<{
   id: string;
 }>;

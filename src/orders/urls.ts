@@ -6,6 +6,7 @@ import {
   BulkAction,
   Dialog,
   Filters,
+  FiltersWithMultipleValues,
   Pagination,
   SingleAction
 } from "../types";
@@ -16,11 +17,14 @@ export const orderListPath = orderSectionUrl;
 export enum OrderListUrlFiltersEnum {
   dateFrom = "dateFrom",
   dateTo = "dateTo",
-  status = "status",
   email = "email",
   payment = "payment"
 }
-export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum>;
+export enum OrderListUrlFiltersWithMultipleValuesEnum {
+  status = "status"
+}
+export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
+  FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValuesEnum>;
 export type OrderListUrlDialog = "cancel" | "save-search" | "delete-search";
 export type OrderListUrlQueryParams = BulkAction &
   Dialog<OrderListUrlDialog> &

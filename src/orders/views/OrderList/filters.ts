@@ -1,5 +1,7 @@
 import { defineMessages, IntlShape } from "react-intl";
 
+import { findInEnum } from "@saleor/misc";
+import { removeAtIndex } from "@saleor/utils/lists";
 import { FilterContentSubmitData } from "../../../components/Filter";
 import { Filter } from "../../../components/TableFilter";
 import {
@@ -7,8 +9,12 @@ import {
   OrderStatusFilter
 } from "../../../types/globalTypes";
 import {
+  arrayOrUndefined,
+  arrayOrValue,
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  dedupeFilter,
+  valueOrFirst
 } from "../../../utils/filters";
 import { OrderFilterKeys } from "../../components/OrderListFilter";
 import {
@@ -70,22 +76,25 @@ export function getFilterVariables(
       lte: params.dateTo
     },
     customer: params.email,
-    status: OrderStatusFilter[params.status]
+    status: Array.isArray(params.status)
+      ? params.status.map(status => findInEnum(status, OrderStatusFilter))
+      : params.status
+      ? [findInEnum(params.status, OrderStatusFilter)]
+      : undefined
   };
 }
 
 export function createFilter(
-  filter: FilterContentSubmitData
+  filter: OrderListUrlFilters,
+  data: FilterContentSubmitData
 ): OrderListUrlFilters {
-  const filterName = filter.name;
+  const { name: filterName, value } = data;
   if (filterName === OrderFilterKeys.dateEqual.toString()) {
-    const value = filter.value as string;
     return {
-      dateFrom: value,
-      dateTo: value
+      dateFrom: valueOrFirst(value),
+      dateTo: valueOrFirst(value)
     };
   } else if (filterName === OrderFilterKeys.dateRange.toString()) {
-    const { value } = filter;
     return {
       dateFrom: value[0],
       dateTo: value[1]
@@ -99,15 +108,17 @@ export function createFilter(
       .map(value => value.toString())
       .includes(filterName)
   ) {
-    const { value } = filter;
     return {
-      dateFrom: value as string,
+      dateFrom: valueOrFirst(value),
       dateTo: undefined
     };
   } else if (filterName === OrderFilterKeys.fulfillment.toString()) {
-    const { value } = filter;
     return {
-      status: value as string
+      status: dedupeFilter(
+        filter.status
+          ? [...(filter.status as string[]), valueOrFirst(value)]
+          : arrayOrValue(value)
+      )
     };
   }
 }
@@ -175,17 +186,29 @@ export function createFilterChips(
   }
 
   if (!!filters.status) {
-    filterChips = [
-      ...filterChips,
-      {
-        label: getStatusLabel(filters.status, intl),
-        onClick: () =>
-          onFilterDelete({
-            ...filters,
-            status: undefined
-          })
-      }
-    ];
+    const statusFilterChips = Array.isArray(filters.status)
+      ? filters.status.map((status, statusIndex) => ({
+          label: getStatusLabel(status, intl),
+          onClick: () =>
+            onFilterDelete({
+              ...filters,
+              status: arrayOrUndefined(
+                removeAtIndex(filters.status as string[], statusIndex)
+              )
+            })
+        }))
+      : [
+          {
+            label: getStatusLabel(filters.status, intl),
+            onClick: () =>
+              onFilterDelete({
+                ...filters,
+                status: undefined
+              })
+          }
+        ];
+
+    filterChips = [...filterChips, ...statusFilterChips];
   }
 
   return filterChips;

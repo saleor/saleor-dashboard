@@ -466,3 +466,15 @@ export function generateCode(charNum: number) {
   }
   return result;
 }
+
+export function findInEnum<TEnum extends object>(
+  needle: string,
+  haystack: TEnum
+) {
+  const match = Object.keys(haystack).find(key => key === needle);
+  if (!!match) {
+    return haystack[needle as keyof TEnum];
+  }
+
+  throw new Error(`Key ${needle} not found in enum`);
+}
