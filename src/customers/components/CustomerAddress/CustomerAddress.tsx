@@ -61,28 +61,19 @@ const CustomerAddress = withStyles(styles, { name: "CustomerAddress" })(
           title={
             address ? (
               <>
-                <FormattedMessage
-                  defaultMessage="Address {addressNumber}"
-                  description="addres card header"
-                  values={{
-                    addressNumber
-                  }}
-                />
-                <Typography variant="caption">
-                  {isDefaultBillingAddress && isDefaultShippingAddress
-                    ? intl.formatMessage({
-                        defaultMessage: "Default Address"
-                      })
-                    : isDefaultShippingAddress
-                    ? intl.formatMessage({
-                        defaultMessage: "Default Shipping Address"
-                      })
-                    : isDefaultBillingAddress
-                    ? intl.formatMessage({
-                        defaultMessage: "Default Billing Address"
-                      })
-                    : null}
-                </Typography>
+                {isDefaultBillingAddress && isDefaultShippingAddress
+                  ? intl.formatMessage({
+                      defaultMessage: "Default Address"
+                    })
+                  : isDefaultShippingAddress
+                  ? intl.formatMessage({
+                      defaultMessage: "Default Shipping Address"
+                    })
+                  : isDefaultBillingAddress
+                  ? intl.formatMessage({
+                      defaultMessage: "Default Billing Address"
+                    })
+                  : null}
               </>
             ) : (
               <Skeleton />
