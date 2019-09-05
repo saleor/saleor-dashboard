@@ -105,14 +105,14 @@ export const ProductImage: React.StatelessComponent<ProductImageProps> = ({
                         onConfirm={handleDelete}
                         open={params.action === "remove"}
                         title={intl.formatMessage({
-                          defaultMessage: "Remove Image",
+                          defaultMessage: "Delete Image",
                           description: "dialog header"
                         })}
                         variant="delete"
                         confirmButtonState={deleteTransitionState}
                       >
                         <DialogContentText>
-                          <FormattedMessage defaultMessage="Are you sure you want to remove this image?" />
+                          <FormattedMessage defaultMessage="Are you sure you want to delete this image?" />
                         </DialogContentText>
                       </ActionDialog>
                     </>

@@ -25,14 +25,14 @@ const OrderDraftCancelDialog: React.StatelessComponent<
       onConfirm={onConfirm}
       open={open}
       title={intl.formatMessage({
-        defaultMessage: "Remove draft order",
+        defaultMessage: "Delete draft order",
         description: "dialog header"
       })}
       variant="delete"
     >
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="Are you sure you want to remove draft #{number}?"
+          defaultMessage="Are you sure you want to delete draft #{number}?"
           values={{
             orderNumber
           }}

@@ -120,7 +120,7 @@ const CustomerAddress = withStyles(styles, { name: "CustomerAddress" })(
               <FormattedMessage {...buttonMessages.edit} />
             </Button>
             <Button color="primary" disabled={disabled} onClick={onRemove}>
-              <FormattedMessage {...buttonMessages.remove} />
+              <FormattedMessage {...buttonMessages.delete} />
             </Button>
           </CardActions>
         </div>
