@@ -1,12 +1,12 @@
 # Translators:
 # SALAH EDDINE BOUZELZEL <salah.bouzelzel@gmail.com>, 2019
-# Patryk Zawadzki <patrys@room-303.com>, 2019
 # Mohammed Alobaidan <m.a.s.obaidan@gmail.com>, 2019
+# Patryk Zawadzki <patrys@room-303.com>, 2019
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-29T12:47:44.847Z\n"
-"Last-Translator: Mohammed Alobaidan <m.a.s.obaidan@gmail.com>, 2019\n"
+"POT-Creation-Date: 2019-09-06T13:56:36.897Z\n"
+"Last-Translator: Patryk Zawadzki <patrys@room-303.com>, 2019\n"
 "Language-Team: Arabic (https://www.transifex.com/mirumee/teams/34782/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,6 +61,22 @@ msgstr ""
 msgctxt "section header"
 msgid "Account Status"
 msgstr ""
+
+#. [src.plugins.components.PluginsList.4120604650] - user action bar
+#. defaultMessage is:
+#. Action
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+msgctxt "user action bar"
+msgid "Action"
+msgstr ""
+
+#. [src.plugins.components.PluginsList.3247064221] - plugin status
+#. defaultMessage is:
+#. Active
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+msgctxt "plugin status"
+msgid "Active"
+msgstr "فعال"
 
 #. [src.staff.components.StaffList.3247064221] - staff member status
 #. defaultMessage is:
@@ -359,11 +375,7 @@ msgstr "أضف صفحة"
 #. [src.categories.components.CategoryProducts.3554578821] - button
 #. defaultMessage is:
 #. Add product
-#. [src.categories.components.CategoryProductsCard.3554578821] - button
-#. defaultMessage is:
-#. Add product
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
 msgctxt "button"
 msgid "Add product"
 msgstr "أضف منتج"
@@ -1616,6 +1628,14 @@ msgctxt "button"
 msgid "Back to home"
 msgstr ""
 
+#. [src.auth.components.ResetPasswordSuccessPage.2245157344] - button
+#. defaultMessage is:
+#. Back to login
+#: build/locale/src/auth/components/ResetPasswordSuccessPage/ResetPasswordSuccessPage.json
+msgctxt "button"
+msgid "Back to login"
+msgstr ""
+
 #. [src.categories.components.CategoryBackground.1849089820] - section header
 #. defaultMessage is:
 #. Background image (optional)
@@ -1883,15 +1903,6 @@ msgctxt "button"
 msgid "Change photo"
 msgstr ""
 
-#. [src.products.views.ProductList.224127438] - product status update
-#. notification
-#. defaultMessage is:
-#. Changed publication status
-#: build/locale/src/products/views/ProductList/ProductList.json
-msgctxt "product status update notification"
-msgid "Changed publication status"
-msgstr ""
-
 #. [src.products.components.ProductPricing.3015886868]
 #. defaultMessage is:
 #. Charge taxes for this item
@@ -2085,6 +2096,14 @@ msgstr "إعفاء"
 #: build/locale/src/intl.json
 msgctxt "button"
 msgid "Confirm"
+msgstr ""
+
+#. [src.auth.components.NewPasswordPage.2799926859]
+#. defaultMessage is:
+#. Confirm Password
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+msgctxt "description"
+msgid "Confirm Password"
 msgstr ""
 
 #. [src.orders.components.OrderCustomer.1111991638] - subheader
@@ -3540,6 +3559,14 @@ msgctxt "tax rate"
 msgid "Foodstuffs"
 msgstr ""
 
+#. [src.auth.components.ResetPasswordPage.2370700732]
+#. defaultMessage is:
+#. Forgot your password? Don't worry, we'll reset it for you.
+#: build/locale/src/auth/components/ResetPasswordPage/ResetPasswordPage.json
+msgctxt "description"
+msgid "Forgot your password? Don't worry, we'll reset it for you."
+msgstr ""
+
 #. [src.discounts.components.VoucherTypes.3289659291] - voucher discount type
 #. defaultMessage is:
 #. Free Shipping
@@ -4246,19 +4273,19 @@ msgctxt "attribute name"
 msgid "Name"
 msgstr "الاسم"
 
-#. [src.categories.components.CategoryProducts.636461959] - product name
+#. [src.categories.components.CategoryProductList.636461959] - product
 #. defaultMessage is:
 #. Name
-#. [src.collections.components.CollectionProducts.636461959] - product name
+#. [src.components.ProductList.636461959] - product
 #. defaultMessage is:
 #. Name
-#. [src.products.components.ProductDetailsForm.636461959] - product name
+#. [src.products.components.ProductList.636461959] - product
 #. defaultMessage is:
 #. Name
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
-#: build/locale/src/products/components/ProductDetailsForm/ProductDetailsForm.json
-msgctxt "product name"
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#: build/locale/src/components/ProductList/ProductList.json
+#: build/locale/src/products/components/ProductList/ProductList.json
+msgctxt "product"
 msgid "Name"
 msgstr "الاسم"
 
@@ -4270,11 +4297,15 @@ msgctxt "collection name"
 msgid "Name"
 msgstr "الاسم"
 
-#. [src.components.ProductList.636461959] - product
+#. [src.collections.components.CollectionProducts.636461959] - product name
 #. defaultMessage is:
 #. Name
-#: build/locale/src/components/ProductList/ProductList.json
-msgctxt "product"
+#. [src.products.components.ProductDetailsForm.636461959] - product name
+#. defaultMessage is:
+#. Name
+#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
+#: build/locale/src/products/components/ProductDetailsForm/ProductDetailsForm.json
+msgctxt "product name"
 msgid "Name"
 msgstr "الاسم"
 
@@ -4299,6 +4330,14 @@ msgstr "الاسم"
 #. Name
 #: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
 msgctxt "menu item name"
+msgid "Name"
+msgstr "الاسم"
+
+#. [src.plugins.components.PluginsList.636461959] - plugin name
+#. defaultMessage is:
+#. Name
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+msgctxt "plugin name"
 msgid "Name"
 msgstr "الاسم"
 
@@ -4367,6 +4406,14 @@ msgstr ""
 msgctxt "navigation section name"
 msgid "Navigation"
 msgstr "تصفح الموقع"
+
+#. [src.auth.components.NewPasswordPage.1254879564]
+#. defaultMessage is:
+#. New Password
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+msgctxt "description"
+msgid "New Password"
+msgstr ""
 
 #. [src.products.views.1591632382] - page header
 #. defaultMessage is:
@@ -4570,6 +4617,14 @@ msgctxt "description"
 msgid "No payments waiting for capture"
 msgstr ""
 
+#. [src.plugins.components.PluginsList.666641390]
+#. defaultMessage is:
+#. No plugins found
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+msgctxt "description"
+msgid "No plugins found"
+msgstr ""
+
 #. [src.productTypes.components.ProductTypeList.1126553969]
 #. defaultMessage is:
 #. No product types found
@@ -4578,7 +4633,7 @@ msgctxt "description"
 msgid "No product types found"
 msgstr ""
 
-#. [src.categories.components.CategoryProducts.1657559629]
+#. [src.categories.components.CategoryProductList.1657559629]
 #. defaultMessage is:
 #. No products found
 #. [src.collections.components.CollectionProducts.1657559629]
@@ -4593,11 +4648,15 @@ msgstr ""
 #. [homeProductsListCardNoProducts]
 #. defaultMessage is:
 #. No products found
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+#. [src.products.components.ProductList.1657559629]
+#. defaultMessage is:
+#. No products found
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 #: build/locale/src/components/ProductList/ProductList.json
 #: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
 #: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
+#: build/locale/src/products/components/ProductList/ProductList.json
 msgctxt "description"
 msgid "No products found"
 msgstr ""
@@ -4826,6 +4885,18 @@ msgstr ""
 #: build/locale/src/pages/components/PageList/PageList.json
 msgctxt "page status"
 msgid "Not Published"
+msgstr "غير منشور"
+
+#. [src.categories.components.CategoryProductList.2341910657] - product
+#. defaultMessage is:
+#. Not published
+#. [src.products.components.ProductList.2341910657] - product
+#. defaultMessage is:
+#. Not published
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#: build/locale/src/products/components/ProductList/ProductList.json
+msgctxt "product"
+msgid "Not published"
 msgstr "غير منشور"
 
 #. [src.collections.components.CollectionList.2341910657] - collection is not
@@ -5290,6 +5361,14 @@ msgctxt "description"
 msgid "Password"
 msgstr "كلمة المرور"
 
+#. [src.auth.components.NewPasswordPage.4253911811]
+#. defaultMessage is:
+#. Passwords do not match
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+msgctxt "description"
+msgid "Passwords do not match"
+msgstr ""
+
 #. [src.orders.components.OrderList.2743232155] - payment status
 #. defaultMessage is:
 #. Payment
@@ -5438,6 +5517,54 @@ msgctxt "product type"
 msgid "Physical"
 msgstr ""
 
+#. [src.auth.components.NewPasswordPage.1915811227]
+#. defaultMessage is:
+#. Please set up a new password.
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+msgctxt "description"
+msgid "Please set up a new password."
+msgstr ""
+
+#. [src.plugins.components.PluginInfo.3425535100] - section header
+#. defaultMessage is:
+#. Plugin Information and Status
+#. [src.plugins.components.PluginsDetailsPage.3425535100] - section header
+#. defaultMessage is:
+#. Plugin Information and Status
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+msgctxt "section header"
+msgid "Plugin Information and Status"
+msgstr ""
+
+#. [src.plugins.components.PluginInfo.1049131348] - plugin name
+#. defaultMessage is:
+#. Plugin Name
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+msgctxt "plugin name"
+msgid "Plugin Name"
+msgstr ""
+
+#. [src.plugins.components.PluginsDetailsPage.1970881031] - section header
+#. defaultMessage is:
+#. Plugin Settings
+#. [src.plugins.components.PluginSettings.1970881031] - section header
+#. defaultMessage is:
+#. Plugin Settings
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+#: build/locale/src/plugins/components/PluginSettings/PluginSettings.json
+msgctxt "section header"
+msgid "Plugin Settings"
+msgstr ""
+
+#. [src.plugins] - plugins section name
+#. defaultMessage is:
+#. Plugins
+#: build/locale/src/intl.json
+msgctxt "plugins section name"
+msgid "Plugins"
+msgstr ""
+
 #. [src.attributes.components.AttributeProperties.3590282519] - attribute
 #. position in storefront filters
 #. defaultMessage is:
@@ -5455,6 +5582,30 @@ msgctxt "order payment"
 msgid "Preauthorized amount"
 msgstr ""
 
+#. [src.categories.components.CategoryProductList.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#. [src.orders.components.OrderFulfillment.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#. [src.products.components.ProductList.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#. [src.products.components.ProductListPage.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#. [src.products.components.ProductPricing.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#: build/locale/src/products/components/ProductList/ProductList.json
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#: build/locale/src/products/components/ProductPricing/ProductPricing.json
+msgctxt "product price"
+msgid "Price"
+msgstr "السعر"
+
 #. [src.components.ProductList.1134347598] - product
 #. defaultMessage is:
 #. Price
@@ -5469,22 +5620,6 @@ msgstr "السعر"
 #. Price
 #: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
 msgctxt "price or ordered products"
-msgid "Price"
-msgstr "السعر"
-
-#. [src.orders.components.OrderFulfillment.1134347598] - product price
-#. defaultMessage is:
-#. Price
-#. [src.products.components.ProductListPage.1134347598] - product price
-#. defaultMessage is:
-#. Price
-#. [src.products.components.ProductPricing.1134347598] - product price
-#. defaultMessage is:
-#. Price
-#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
-#: build/locale/src/products/components/ProductListPage/ProductListPage.json
-#: build/locale/src/products/components/ProductPricing/ProductPricing.json
-msgctxt "product price"
 msgid "Price"
 msgstr "السعر"
 
@@ -5711,13 +5846,14 @@ msgctxt "description"
 msgid "Product type deleted"
 msgstr ""
 
-#. [src.categories.components.CategoryProducts.2968663655] - section header
+#. [src.productTypes.components.ProductTypeDetailsPage.1217376589] - switch
+#. button
 #. defaultMessage is:
-#. Products
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-msgctxt "section header"
-msgid "Products"
-msgstr "المنتجات"
+#. Product type uses Variant Attributes
+#: build/locale/src/productTypes/components/ProductTypeDetailsPage/ProductTypeDetailsPage.json
+msgctxt "switch button"
+msgid "Product type uses Variant Attributes"
+msgstr ""
 
 #. [src.categories.components.CategoryUpdatePage.2968663655] - number of
 #. products in category
@@ -5771,12 +5907,11 @@ msgctxt "number of products"
 msgid "Products ({quantity})"
 msgstr ""
 
-#. [src.categories.components.CategoryProductsCard.4164156574] - section
-#. header
+#. [src.categories.components.CategoryProducts.4164156574] - header
 #. defaultMessage is:
 #. Products in {categoryName}
-#: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
-msgctxt "section header"
+#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+msgctxt "header"
 msgid "Products in {categoryName}"
 msgstr ""
 
@@ -5787,14 +5922,6 @@ msgstr ""
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 msgctxt "products in collection"
 msgid "Products in {name}"
-msgstr ""
-
-#. [src.products.views.ProductList.1694086800]
-#. defaultMessage is:
-#. Products removed
-#: build/locale/src/products/views/ProductList/ProductList.json
-msgctxt "description"
-msgid "Products removed"
 msgstr ""
 
 #. [src.orders.components.OrderHistory.3506022286] - order history message
@@ -5827,6 +5954,14 @@ msgstr ""
 #: build/locale/src/misc.json
 msgctxt "tax rate"
 msgid "Property renovations"
+msgstr ""
+
+#. [src.auth.views.2388238158]
+#. defaultMessage is:
+#. Provided email address does not exist in our database.
+#: build/locale/src/auth/views/ResetPassword.json
+msgctxt "description"
+msgid "Provided email address does not exist in our database."
 msgstr ""
 
 #. [src.collections.views.1547167026] - publish collections
@@ -5885,6 +6020,38 @@ msgctxt "publish on date"
 msgid "Publish on"
 msgstr ""
 
+#. [src.categories.components.CategoryProductList.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#. [src.components.ProductList.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#. [src.products.components.ProductList.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#. [src.products.components.ProductListPage.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#: build/locale/src/components/ProductList/ProductList.json
+#: build/locale/src/products/components/ProductList/ProductList.json
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+msgctxt "product status"
+msgid "Published"
+msgstr "منشور"
+
+#. [productStatusLabel] - product
+#. defaultMessage is:
+#. Published
+#. [productStatusLabel] - product
+#. defaultMessage is:
+#. Published
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#: build/locale/src/products/components/ProductList/ProductList.json
+msgctxt "product"
+msgid "Published"
+msgstr "منشور"
+
 #. [src.collections.components.CollectionList.3640454975] - collection is
 #. published
 #. defaultMessage is:
@@ -5905,18 +6072,6 @@ msgstr "منشور"
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 #: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
 msgctxt "product is published"
-msgid "Published"
-msgstr "منشور"
-
-#. [src.components.ProductList.3640454975] - product status
-#. defaultMessage is:
-#. Published
-#. [src.products.components.ProductListPage.3640454975] - product status
-#. defaultMessage is:
-#. Published
-#: build/locale/src/components/ProductList/ProductList.json
-#: build/locale/src/products/components/ProductListPage/ProductListPage.json
-msgctxt "product status"
 msgid "Published"
 msgstr "منشور"
 
@@ -6175,6 +6330,14 @@ msgctxt "button"
 msgid "Reset"
 msgstr ""
 
+#. [src.auth.components.LoginPage.4028609483] - button
+#. defaultMessage is:
+#. Reset your password
+#: build/locale/src/auth/components/LoginPage/LoginPage.json
+msgctxt "button"
+msgid "Reset your password"
+msgstr ""
+
 #. [src.shipping.components.ShippingZoneCountriesAssignDialog.1003092716]
 #. defaultMessage is:
 #. Rest of the World
@@ -6250,6 +6413,14 @@ msgstr ""
 #: build/locale/src/translations/components/TranslationsSalesPage/TranslationsSalesPage.json
 msgctxt "description"
 msgid "Sale Name"
+msgstr ""
+
+#. [src.somethingWentWrong]
+#. defaultMessage is:
+#. Saleor ran into an unexpected problem
+#: build/locale/src/intl.json
+msgctxt "description"
+msgid "Saleor ran into an unexpected problem"
 msgstr ""
 
 #. [src.sales] - sales section name
@@ -6594,6 +6765,14 @@ msgctxt "add order note, button"
 msgid "Send"
 msgstr ""
 
+#. [src.auth.components.ResetPasswordPage.3663311080] - password reset, button
+#. defaultMessage is:
+#. Send Instructions
+#: build/locale/src/auth/components/ResetPasswordPage/ResetPasswordPage.json
+msgctxt "password reset, button"
+msgid "Send Instructions"
+msgstr ""
+
 #. [src.staff.components.StaffAddMemberDialog.449055697] - button
 #. defaultMessage is:
 #. Send invite
@@ -6625,6 +6804,22 @@ msgstr ""
 #: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
 msgctxt "voucher end date, switch button"
 msgid "Set end date"
+msgstr ""
+
+#. [src.auth.components.NewPasswordPage.2342634351] - button
+#. defaultMessage is:
+#. Set new password
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+msgctxt "button"
+msgid "Set new password"
+msgstr ""
+
+#. [src.plugins.components.PluginInfo.4013064767]
+#. defaultMessage is:
+#. Set plugin as Active
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+msgctxt "description"
+msgid "Set plugin as Active"
 msgstr ""
 
 #. [src.discounts.shipment] - voucher discount
@@ -6828,17 +7023,6 @@ msgctxt "description"
 msgid "Some products require shipping, but no method provided"
 msgstr ""
 
-#. [src.1395232177] - error message
-#. defaultMessage is:
-#. Something went wrong. {errorMessage}
-#. [src.1395232177] - error message
-#. defaultMessage is:
-#. Something went wrong. {errorMessage}
-#: build/locale/src/mutations.json build/locale/src/queries.json
-msgctxt "error message"
-msgid "Something went wrong. {errorMessage}"
-msgstr ""
-
 #. [src.components.NotFoundPage.4036415297]
 #. defaultMessage is:
 #. Something's missing
@@ -6969,6 +7153,14 @@ msgctxt "order fulfillment status"
 msgid "Status"
 msgstr "الحالة"
 
+#. [src.plugins.components.PluginInfo.1756106276] - plugin status
+#. defaultMessage is:
+#. Status
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+msgctxt "plugin status"
+msgid "Status"
+msgstr "الحالة"
+
 #. [src.products.components.ProductListFilter.1756106276] - product status
 #. defaultMessage is:
 #. Status
@@ -7079,6 +7271,25 @@ msgstr "المبلغ الإجمالي"
 msgctxt "order subtotal price"
 msgid "Subtotal"
 msgstr "المبلغ الإجمالي"
+
+#. [src.plugins.views.100549097] - plugin success message
+#. defaultMessage is:
+#. Succesfully updated plugin settings
+#: build/locale/src/plugins/views/PluginsDetails.json
+msgctxt "plugin success message"
+msgid "Succesfully updated plugin settings"
+msgstr ""
+
+#. [src.auth.components.ResetPasswordSuccessPage.4066297200]
+#. defaultMessage is:
+#. Success! In a few minutes you’ll receive a message with instructions on how
+#. to reset your password.
+#: build/locale/src/auth/components/ResetPasswordSuccessPage/ResetPasswordSuccessPage.json
+msgctxt "description"
+msgid ""
+"Success! In a few minutes you’ll receive a message with instructions on how "
+"to reset your password."
+msgstr ""
 
 #. [src.attributes.views.AttributeCreate.11941964]
 #. defaultMessage is:
@@ -7249,6 +7460,30 @@ msgctxt "description"
 msgid "There is no address to show for this customer"
 msgstr ""
 
+#. [src.plugins.components.PluginsDetailsPage.2277745418]
+#. defaultMessage is:
+#. These are general information about your store. They define what is the URL
+#. of your store and what is shown in brow sers taskbar.
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+msgctxt "description"
+msgid ""
+"These are general information about your store. They define what is the URL "
+"of your store and what is shown in brow sers taskbar."
+msgstr ""
+
+#. [src.plugins.components.PluginsDetailsPage.4241018152]
+#. defaultMessage is:
+#. This adress will be used to generate invoices and calculate shipping rates.
+#. Email adress you provide here will be used as a contact adress for your
+#. customers.
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+msgctxt "description"
+msgid ""
+"This adress will be used to generate invoices and calculate shipping rates. "
+"Email adress you provide here will be used as a contact adress for your "
+"customers."
+msgstr ""
+
 #. [src.customers.components.CustomerAddressListPage.1428369222]
 #. defaultMessage is:
 #. This customer doesn’t have any adresses added to his address book. You can
@@ -7308,15 +7543,6 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariants/ProductVariants.json
 msgctxt "description"
 msgid "This product has no variants"
-msgstr ""
-
-#. [src.productTypes.components.ProductTypeDetailsPage.1756957616] - switch
-#. button
-#. defaultMessage is:
-#. This product type has variants
-#: build/locale/src/productTypes/components/ProductTypeDetailsPage/ProductTypeDetailsPage.json
-msgctxt "switch button"
-msgid "This product type has variants"
 msgstr ""
 
 #. [src.shipping.components.ShippingZoneRateDialog.4226393146]
@@ -7580,17 +7806,21 @@ msgctxt "header"
 msgid "Translations to {language}"
 msgstr ""
 
-#. [src.categories.components.CategoryProducts.1952810469] - product type
+#. [src.categories.components.CategoryProductList.1952810469] - product type
 #. defaultMessage is:
 #. Type
 #. [src.collections.components.CollectionProducts.1952810469] - product type
 #. defaultMessage is:
 #. Type
+#. [src.products.components.ProductList.1952810469] - product type
+#. defaultMessage is:
+#. Type
 #. [src.products.components.ProductListPage.1952810469] - product type
 #. defaultMessage is:
 #. Type
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
+#: build/locale/src/products/components/ProductList/ProductList.json
 #: build/locale/src/products/components/ProductListPage/ProductListPage.json
 msgctxt "product type"
 msgid "Type"
@@ -8185,6 +8415,14 @@ msgctxt "button"
 msgid "View all orders"
 msgstr ""
 
+#. [configurationPluginsPages]
+#. defaultMessage is:
+#. View and update your plugins and their settings.
+#: build/locale/src/configuration/index.json
+msgctxt "description"
+msgid "View and update your plugins and their settings."
+msgstr ""
+
 #. [configurationMenuSiteSettings]
 #. defaultMessage is:
 #. View and update your site settings
@@ -8620,6 +8858,14 @@ msgstr ""
 #: build/locale/src/components/CountryList/CountryList.json
 msgctxt "number of countries"
 msgid "{number} Countries"
+msgstr ""
+
+#. [src.plugins.components.PluginsDetailsPage.3352026836] - header
+#. defaultMessage is:
+#. {pluginName} Details
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+msgctxt "header"
+msgid "{pluginName} Details"
 msgstr ""
 
 #. [src.orders.components.OrderPayment.2183023165] - ordered products

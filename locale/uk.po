@@ -1,17 +1,18 @@
 # Translators:
 # Anatolii Krivko <anatolii.krivko@gmail.com>, 2019
-# Roman Starenkyi <rstar2808@gmail.com>, 2019
 # Roman Storozhuk <roman.storozhuk@gmail.com>, 2019
 # Oleksandr Pryymak <235@inmind.org>, 2019
 # Andriy Kovalchuk <tulsluper@gmail.com>, 2019
-# Николай Инкогнито <mmmsvit@gmail.com>, 2019
 # Marysya Rudska <rudmari@gmail.com>, 2019
+# rice_ua <derkach.m@gmail.com>, 2019
+# Николай Инкогнито <mmmsvit@gmail.com>, 2019
 # Yevhenii Dehtiar <yevhenii.dehtiar@gmail.com>, 2019
+# Roman Starenkyi <rstar2808@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-08-29T12:47:44.847Z\n"
-"Last-Translator: Yevhenii Dehtiar <yevhenii.dehtiar@gmail.com>, 2019\n"
+"POT-Creation-Date: 2019-09-06T13:56:36.897Z\n"
+"Last-Translator: Roman Starenkyi <rstar2808@gmail.com>, 2019\n"
 "Language-Team: Ukrainian (https://www.transifex.com/mirumee/teams/34782/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,6 +68,22 @@ msgctxt "section header"
 msgid "Account Status"
 msgstr ""
 
+#. [src.plugins.components.PluginsList.4120604650] - user action bar
+#. defaultMessage is:
+#. Action
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+msgctxt "user action bar"
+msgid "Action"
+msgstr ""
+
+#. [src.plugins.components.PluginsList.3247064221] - plugin status
+#. defaultMessage is:
+#. Active
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+msgctxt "plugin status"
+msgid "Active"
+msgstr "Активний"
+
 #. [src.staff.components.StaffList.3247064221] - staff member status
 #. defaultMessage is:
 #. Active
@@ -90,7 +107,7 @@ msgstr ""
 #: build/locale/src/home/components/HomeActivityCard/HomeActivityCard.json
 msgctxt "header"
 msgid "Activity"
-msgstr ""
+msgstr "Активність"
 
 #. [src.components.ListField.3099331554] - button
 #. defaultMessage is:
@@ -106,7 +123,7 @@ msgstr "Додати"
 #: build/locale/src/customers/components/CustomerAddressDialog/CustomerAddressDialog.json
 msgctxt "dialog title"
 msgid "Add Address"
-msgstr ""
+msgstr "Добавити адресу"
 
 #. [src.components.Filter.2852521946] - button
 #. defaultMessage is:
@@ -114,7 +131,7 @@ msgstr ""
 #: build/locale/src/components/Filter/Filter.json
 msgctxt "button"
 msgid "Add Filter"
-msgstr ""
+msgstr "Додати фільтр"
 
 #. [src.components.RichTextEditor.1603794322] - dialog header
 #. defaultMessage is:
@@ -122,7 +139,7 @@ msgstr ""
 #: build/locale/src/components/RichTextEditor/ImageSource.json
 msgctxt "dialog header"
 msgid "Add Image Link"
-msgstr ""
+msgstr "Додати посилання на зображення"
 
 #. [menuItemDialogAddItem] - create new menu item, header
 #. defaultMessage is:
@@ -130,7 +147,7 @@ msgstr ""
 #: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
 msgctxt "create new menu item, header"
 msgid "Add Item"
-msgstr ""
+msgstr "Додати пункт меню"
 
 #. [menuCreateDialogHeader] - dialog header
 #. defaultMessage is:
@@ -138,7 +155,7 @@ msgstr ""
 #: build/locale/src/navigation/components/MenuCreateDialog/MenuCreateDialog.json
 msgctxt "dialog header"
 msgid "Add Menu"
-msgstr ""
+msgstr "Додати меню"
 
 #. [menuListPageAddMenu] - button
 #. defaultMessage is:
@@ -146,7 +163,7 @@ msgstr ""
 #: build/locale/src/navigation/components/MenuListPage/MenuListPage.json
 msgctxt "button"
 msgid "Add Menu"
-msgstr ""
+msgstr "Додати меню"
 
 #. [src.siteSettings.components.SiteSettingsKeyDialog.1238948746] - dialog
 #. header
@@ -155,7 +172,7 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
 msgctxt "dialog header"
 msgid "Add New Authorization Key"
-msgstr ""
+msgstr "Додати новий авторизаціний ключ"
 
 #. [src.pages.components.PageDetailsPage.755314116] - page header
 #. defaultMessage is:
@@ -163,7 +180,7 @@ msgstr ""
 #: build/locale/src/pages/components/PageDetailsPage/PageDetailsPage.json
 msgctxt "page header"
 msgid "Add Page"
-msgstr ""
+msgstr "Додати сторінку"
 
 #. [src.shipping.components.ShippingZoneRateDialog.2892088870] - dialog header
 #. defaultMessage is:
@@ -179,7 +196,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
 msgctxt "dialog header"
 msgid "Add Product"
-msgstr ""
+msgstr "Додати продукт"
 
 #. [src.products.components.ProductListPage.2775402904] - button
 #. defaultMessage is:
@@ -187,7 +204,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductListPage/ProductListPage.json
 msgctxt "button"
 msgid "Add Product"
-msgstr ""
+msgstr "Додати продукт"
 
 #. [src.discounts.components.SaleListPage.1742771332] - button
 #. defaultMessage is:
@@ -195,7 +212,7 @@ msgstr ""
 #: build/locale/src/discounts/components/SaleListPage/SaleListPage.json
 msgctxt "button"
 msgid "Add Sale"
-msgstr ""
+msgstr "Додати розпродаж"
 
 #. [src.staff.components.StaffAddMemberDialog.3490059488] - dialog header
 #. defaultMessage is:
@@ -203,7 +220,7 @@ msgstr ""
 #: build/locale/src/staff/components/StaffAddMemberDialog/StaffAddMemberDialog.json
 msgctxt "dialog header"
 msgid "Add Staff Member"
-msgstr ""
+msgstr "Додати члена команди"
 
 #. [src.attributes.components.AttributeValueEditDialog.1841790893] - add
 #. attribute value
@@ -212,7 +229,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
 msgctxt "add attribute value"
 msgid "Add Value"
-msgstr ""
+msgstr "Додати значення"
 
 #. [src.products.views.2178905289] - header
 #. defaultMessage is:
@@ -220,7 +237,7 @@ msgstr ""
 #: build/locale/src/products/views/ProductVariantCreate.json
 msgctxt "header"
 msgid "Add Variant"
-msgstr ""
+msgstr "Додати опцію"
 
 #. [src.shipping.components.ShippingZoneRateDialog.1397795758] - add weight
 #. based shipping method, dialog header
@@ -237,7 +254,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
 msgctxt "button"
 msgid "Add address"
-msgstr ""
+msgstr "Додати адресу"
 
 #. [src.attributes.components.AttributeListPage.350498821] - button
 #. defaultMessage is:
@@ -269,7 +286,7 @@ msgstr "Додати категорію"
 #: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
 msgctxt "page header"
 msgid "Add collection"
-msgstr ""
+msgstr "Додати колекцію"
 
 #. [src.collections.components.CollectionListPage.3958681866] - button
 #. defaultMessage is:
@@ -277,7 +294,7 @@ msgstr ""
 #: build/locale/src/collections/components/CollectionListPage/CollectionListPage.json
 msgctxt "button"
 msgid "Add collection"
-msgstr ""
+msgstr "Додати колекцію"
 
 #. [src.customers.components.CustomerCreatePage.1934221653] - page header
 #. defaultMessage is:
@@ -301,7 +318,7 @@ msgstr "Додати покупця"
 #: build/locale/src/components/Filter/FilterContent.json
 msgctxt "button"
 msgid "Add filter"
-msgstr ""
+msgstr "Додати фільтр"
 
 #. [src.siteSettings.components.SiteSettingsKeys.1114030884] - button
 #. defaultMessage is:
@@ -317,7 +334,7 @@ msgstr ""
 #: build/locale/src/navigation/components/MenuItems/MenuItems.json
 msgctxt "add new menu item"
 msgid "Add new item"
-msgstr ""
+msgstr "Додати пункт меню"
 
 #. [menuItemsPlaceholder]
 #. defaultMessage is:
@@ -364,11 +381,7 @@ msgstr ""
 #. [src.categories.components.CategoryProducts.3554578821] - button
 #. defaultMessage is:
 #. Add product
-#. [src.categories.components.CategoryProductsCard.3554578821] - button
-#. defaultMessage is:
-#. Add product
 #: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
 msgctxt "button"
 msgid "Add product"
 msgstr "Додати продукт"
@@ -1621,6 +1634,14 @@ msgctxt "button"
 msgid "Back to home"
 msgstr ""
 
+#. [src.auth.components.ResetPasswordSuccessPage.2245157344] - button
+#. defaultMessage is:
+#. Back to login
+#: build/locale/src/auth/components/ResetPasswordSuccessPage/ResetPasswordSuccessPage.json
+msgctxt "button"
+msgid "Back to login"
+msgstr ""
+
 #. [src.categories.components.CategoryBackground.1849089820] - section header
 #. defaultMessage is:
 #. Background image (optional)
@@ -1888,15 +1909,6 @@ msgctxt "button"
 msgid "Change photo"
 msgstr ""
 
-#. [src.products.views.ProductList.224127438] - product status update
-#. notification
-#. defaultMessage is:
-#. Changed publication status
-#: build/locale/src/products/views/ProductList/ProductList.json
-msgctxt "product status update notification"
-msgid "Changed publication status"
-msgstr ""
-
 #. [src.products.components.ProductPricing.3015886868]
 #. defaultMessage is:
 #. Charge taxes for this item
@@ -2090,6 +2102,14 @@ msgstr "Конфігурація"
 #: build/locale/src/intl.json
 msgctxt "button"
 msgid "Confirm"
+msgstr ""
+
+#. [src.auth.components.NewPasswordPage.2799926859]
+#. defaultMessage is:
+#. Confirm Password
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+msgctxt "description"
+msgid "Confirm Password"
 msgstr ""
 
 #. [src.orders.components.OrderCustomer.1111991638] - subheader
@@ -3545,6 +3565,14 @@ msgctxt "tax rate"
 msgid "Foodstuffs"
 msgstr ""
 
+#. [src.auth.components.ResetPasswordPage.2370700732]
+#. defaultMessage is:
+#. Forgot your password? Don't worry, we'll reset it for you.
+#: build/locale/src/auth/components/ResetPasswordPage/ResetPasswordPage.json
+msgctxt "description"
+msgid "Forgot your password? Don't worry, we'll reset it for you."
+msgstr ""
+
 #. [src.discounts.components.VoucherTypes.3289659291] - voucher discount type
 #. defaultMessage is:
 #. Free Shipping
@@ -4251,19 +4279,19 @@ msgctxt "attribute name"
 msgid "Name"
 msgstr "Назва"
 
-#. [src.categories.components.CategoryProducts.636461959] - product name
+#. [src.categories.components.CategoryProductList.636461959] - product
 #. defaultMessage is:
 #. Name
-#. [src.collections.components.CollectionProducts.636461959] - product name
+#. [src.components.ProductList.636461959] - product
 #. defaultMessage is:
 #. Name
-#. [src.products.components.ProductDetailsForm.636461959] - product name
+#. [src.products.components.ProductList.636461959] - product
 #. defaultMessage is:
 #. Name
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
-#: build/locale/src/products/components/ProductDetailsForm/ProductDetailsForm.json
-msgctxt "product name"
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#: build/locale/src/components/ProductList/ProductList.json
+#: build/locale/src/products/components/ProductList/ProductList.json
+msgctxt "product"
 msgid "Name"
 msgstr "Назва"
 
@@ -4275,11 +4303,15 @@ msgctxt "collection name"
 msgid "Name"
 msgstr "Назва"
 
-#. [src.components.ProductList.636461959] - product
+#. [src.collections.components.CollectionProducts.636461959] - product name
 #. defaultMessage is:
 #. Name
-#: build/locale/src/components/ProductList/ProductList.json
-msgctxt "product"
+#. [src.products.components.ProductDetailsForm.636461959] - product name
+#. defaultMessage is:
+#. Name
+#: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
+#: build/locale/src/products/components/ProductDetailsForm/ProductDetailsForm.json
+msgctxt "product name"
 msgid "Name"
 msgstr "Назва"
 
@@ -4304,6 +4336,14 @@ msgstr "Назва"
 #. Name
 #: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
 msgctxt "menu item name"
+msgid "Name"
+msgstr "Назва"
+
+#. [src.plugins.components.PluginsList.636461959] - plugin name
+#. defaultMessage is:
+#. Name
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+msgctxt "plugin name"
 msgid "Name"
 msgstr "Назва"
 
@@ -4371,6 +4411,14 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "navigation section name"
 msgid "Navigation"
+msgstr ""
+
+#. [src.auth.components.NewPasswordPage.1254879564]
+#. defaultMessage is:
+#. New Password
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+msgctxt "description"
+msgid "New Password"
 msgstr ""
 
 #. [src.products.views.1591632382] - page header
@@ -4575,6 +4623,14 @@ msgctxt "description"
 msgid "No payments waiting for capture"
 msgstr ""
 
+#. [src.plugins.components.PluginsList.666641390]
+#. defaultMessage is:
+#. No plugins found
+#: build/locale/src/plugins/components/PluginsList/PluginsList.json
+msgctxt "description"
+msgid "No plugins found"
+msgstr ""
+
 #. [src.productTypes.components.ProductTypeList.1126553969]
 #. defaultMessage is:
 #. No product types found
@@ -4583,7 +4639,7 @@ msgctxt "description"
 msgid "No product types found"
 msgstr ""
 
-#. [src.categories.components.CategoryProducts.1657559629]
+#. [src.categories.components.CategoryProductList.1657559629]
 #. defaultMessage is:
 #. No products found
 #. [src.collections.components.CollectionProducts.1657559629]
@@ -4598,11 +4654,15 @@ msgstr ""
 #. [homeProductsListCardNoProducts]
 #. defaultMessage is:
 #. No products found
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+#. [src.products.components.ProductList.1657559629]
+#. defaultMessage is:
+#. No products found
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 #: build/locale/src/components/ProductList/ProductList.json
 #: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
 #: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
+#: build/locale/src/products/components/ProductList/ProductList.json
 msgctxt "description"
 msgid "No products found"
 msgstr ""
@@ -4832,6 +4892,18 @@ msgstr ""
 msgctxt "page status"
 msgid "Not Published"
 msgstr ""
+
+#. [src.categories.components.CategoryProductList.2341910657] - product
+#. defaultMessage is:
+#. Not published
+#. [src.products.components.ProductList.2341910657] - product
+#. defaultMessage is:
+#. Not published
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#: build/locale/src/products/components/ProductList/ProductList.json
+msgctxt "product"
+msgid "Not published"
+msgstr "Неопубліковано"
 
 #. [src.collections.components.CollectionList.2341910657] - collection is not
 #. published
@@ -5295,6 +5367,14 @@ msgctxt "description"
 msgid "Password"
 msgstr "Пароль"
 
+#. [src.auth.components.NewPasswordPage.4253911811]
+#. defaultMessage is:
+#. Passwords do not match
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+msgctxt "description"
+msgid "Passwords do not match"
+msgstr ""
+
 #. [src.orders.components.OrderList.2743232155] - payment status
 #. defaultMessage is:
 #. Payment
@@ -5443,6 +5523,54 @@ msgctxt "product type"
 msgid "Physical"
 msgstr ""
 
+#. [src.auth.components.NewPasswordPage.1915811227]
+#. defaultMessage is:
+#. Please set up a new password.
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+msgctxt "description"
+msgid "Please set up a new password."
+msgstr ""
+
+#. [src.plugins.components.PluginInfo.3425535100] - section header
+#. defaultMessage is:
+#. Plugin Information and Status
+#. [src.plugins.components.PluginsDetailsPage.3425535100] - section header
+#. defaultMessage is:
+#. Plugin Information and Status
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+msgctxt "section header"
+msgid "Plugin Information and Status"
+msgstr ""
+
+#. [src.plugins.components.PluginInfo.1049131348] - plugin name
+#. defaultMessage is:
+#. Plugin Name
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+msgctxt "plugin name"
+msgid "Plugin Name"
+msgstr ""
+
+#. [src.plugins.components.PluginsDetailsPage.1970881031] - section header
+#. defaultMessage is:
+#. Plugin Settings
+#. [src.plugins.components.PluginSettings.1970881031] - section header
+#. defaultMessage is:
+#. Plugin Settings
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+#: build/locale/src/plugins/components/PluginSettings/PluginSettings.json
+msgctxt "section header"
+msgid "Plugin Settings"
+msgstr ""
+
+#. [src.plugins] - plugins section name
+#. defaultMessage is:
+#. Plugins
+#: build/locale/src/intl.json
+msgctxt "plugins section name"
+msgid "Plugins"
+msgstr ""
+
 #. [src.attributes.components.AttributeProperties.3590282519] - attribute
 #. position in storefront filters
 #. defaultMessage is:
@@ -5460,6 +5588,30 @@ msgctxt "order payment"
 msgid "Preauthorized amount"
 msgstr "Попередньо авторизована оплата"
 
+#. [src.categories.components.CategoryProductList.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#. [src.orders.components.OrderFulfillment.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#. [src.products.components.ProductList.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#. [src.products.components.ProductListPage.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#. [src.products.components.ProductPricing.1134347598] - product price
+#. defaultMessage is:
+#. Price
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
+#: build/locale/src/products/components/ProductList/ProductList.json
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+#: build/locale/src/products/components/ProductPricing/ProductPricing.json
+msgctxt "product price"
+msgid "Price"
+msgstr "Ціна"
+
 #. [src.components.ProductList.1134347598] - product
 #. defaultMessage is:
 #. Price
@@ -5474,22 +5626,6 @@ msgstr "Ціна"
 #. Price
 #: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
 msgctxt "price or ordered products"
-msgid "Price"
-msgstr "Ціна"
-
-#. [src.orders.components.OrderFulfillment.1134347598] - product price
-#. defaultMessage is:
-#. Price
-#. [src.products.components.ProductListPage.1134347598] - product price
-#. defaultMessage is:
-#. Price
-#. [src.products.components.ProductPricing.1134347598] - product price
-#. defaultMessage is:
-#. Price
-#: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
-#: build/locale/src/products/components/ProductListPage/ProductListPage.json
-#: build/locale/src/products/components/ProductPricing/ProductPricing.json
-msgctxt "product price"
 msgid "Price"
 msgstr "Ціна"
 
@@ -5716,13 +5852,14 @@ msgctxt "description"
 msgid "Product type deleted"
 msgstr ""
 
-#. [src.categories.components.CategoryProducts.2968663655] - section header
+#. [src.productTypes.components.ProductTypeDetailsPage.1217376589] - switch
+#. button
 #. defaultMessage is:
-#. Products
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
-msgctxt "section header"
-msgid "Products"
-msgstr "Продукти"
+#. Product type uses Variant Attributes
+#: build/locale/src/productTypes/components/ProductTypeDetailsPage/ProductTypeDetailsPage.json
+msgctxt "switch button"
+msgid "Product type uses Variant Attributes"
+msgstr ""
 
 #. [src.categories.components.CategoryUpdatePage.2968663655] - number of
 #. products in category
@@ -5776,12 +5913,11 @@ msgctxt "number of products"
 msgid "Products ({quantity})"
 msgstr ""
 
-#. [src.categories.components.CategoryProductsCard.4164156574] - section
-#. header
+#. [src.categories.components.CategoryProducts.4164156574] - header
 #. defaultMessage is:
 #. Products in {categoryName}
-#: build/locale/src/categories/components/CategoryProductsCard/CategoryProductsCard.json
-msgctxt "section header"
+#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+msgctxt "header"
 msgid "Products in {categoryName}"
 msgstr ""
 
@@ -5792,14 +5928,6 @@ msgstr ""
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 msgctxt "products in collection"
 msgid "Products in {name}"
-msgstr ""
-
-#. [src.products.views.ProductList.1694086800]
-#. defaultMessage is:
-#. Products removed
-#: build/locale/src/products/views/ProductList/ProductList.json
-msgctxt "description"
-msgid "Products removed"
 msgstr ""
 
 #. [src.orders.components.OrderHistory.3506022286] - order history message
@@ -5832,6 +5960,14 @@ msgstr ""
 #: build/locale/src/misc.json
 msgctxt "tax rate"
 msgid "Property renovations"
+msgstr ""
+
+#. [src.auth.views.2388238158]
+#. defaultMessage is:
+#. Provided email address does not exist in our database.
+#: build/locale/src/auth/views/ResetPassword.json
+msgctxt "description"
+msgid "Provided email address does not exist in our database."
 msgstr ""
 
 #. [src.collections.views.1547167026] - publish collections
@@ -5890,6 +6026,38 @@ msgctxt "publish on date"
 msgid "Publish on"
 msgstr ""
 
+#. [src.categories.components.CategoryProductList.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#. [src.components.ProductList.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#. [src.products.components.ProductList.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#. [src.products.components.ProductListPage.3640454975] - product status
+#. defaultMessage is:
+#. Published
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#: build/locale/src/components/ProductList/ProductList.json
+#: build/locale/src/products/components/ProductList/ProductList.json
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+msgctxt "product status"
+msgid "Published"
+msgstr "Опубліковано"
+
+#. [productStatusLabel] - product
+#. defaultMessage is:
+#. Published
+#. [productStatusLabel] - product
+#. defaultMessage is:
+#. Published
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
+#: build/locale/src/products/components/ProductList/ProductList.json
+msgctxt "product"
+msgid "Published"
+msgstr "Опубліковано"
+
 #. [src.collections.components.CollectionList.3640454975] - collection is
 #. published
 #. defaultMessage is:
@@ -5910,18 +6078,6 @@ msgstr "Опубліковано"
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 #: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
 msgctxt "product is published"
-msgid "Published"
-msgstr "Опубліковано"
-
-#. [src.components.ProductList.3640454975] - product status
-#. defaultMessage is:
-#. Published
-#. [src.products.components.ProductListPage.3640454975] - product status
-#. defaultMessage is:
-#. Published
-#: build/locale/src/components/ProductList/ProductList.json
-#: build/locale/src/products/components/ProductListPage/ProductListPage.json
-msgctxt "product status"
 msgid "Published"
 msgstr "Опубліковано"
 
@@ -6180,6 +6336,14 @@ msgctxt "button"
 msgid "Reset"
 msgstr ""
 
+#. [src.auth.components.LoginPage.4028609483] - button
+#. defaultMessage is:
+#. Reset your password
+#: build/locale/src/auth/components/LoginPage/LoginPage.json
+msgctxt "button"
+msgid "Reset your password"
+msgstr ""
+
 #. [src.shipping.components.ShippingZoneCountriesAssignDialog.1003092716]
 #. defaultMessage is:
 #. Rest of the World
@@ -6255,6 +6419,14 @@ msgstr ""
 #: build/locale/src/translations/components/TranslationsSalesPage/TranslationsSalesPage.json
 msgctxt "description"
 msgid "Sale Name"
+msgstr ""
+
+#. [src.somethingWentWrong]
+#. defaultMessage is:
+#. Saleor ran into an unexpected problem
+#: build/locale/src/intl.json
+msgctxt "description"
+msgid "Saleor ran into an unexpected problem"
 msgstr ""
 
 #. [src.sales] - sales section name
@@ -6599,6 +6771,14 @@ msgctxt "add order note, button"
 msgid "Send"
 msgstr ""
 
+#. [src.auth.components.ResetPasswordPage.3663311080] - password reset, button
+#. defaultMessage is:
+#. Send Instructions
+#: build/locale/src/auth/components/ResetPasswordPage/ResetPasswordPage.json
+msgctxt "password reset, button"
+msgid "Send Instructions"
+msgstr ""
+
 #. [src.staff.components.StaffAddMemberDialog.449055697] - button
 #. defaultMessage is:
 #. Send invite
@@ -6630,6 +6810,22 @@ msgstr ""
 #: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
 msgctxt "voucher end date, switch button"
 msgid "Set end date"
+msgstr ""
+
+#. [src.auth.components.NewPasswordPage.2342634351] - button
+#. defaultMessage is:
+#. Set new password
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+msgctxt "button"
+msgid "Set new password"
+msgstr ""
+
+#. [src.plugins.components.PluginInfo.4013064767]
+#. defaultMessage is:
+#. Set plugin as Active
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+msgctxt "description"
+msgid "Set plugin as Active"
 msgstr ""
 
 #. [src.discounts.shipment] - voucher discount
@@ -6833,17 +7029,6 @@ msgctxt "description"
 msgid "Some products require shipping, but no method provided"
 msgstr ""
 
-#. [src.1395232177] - error message
-#. defaultMessage is:
-#. Something went wrong. {errorMessage}
-#. [src.1395232177] - error message
-#. defaultMessage is:
-#. Something went wrong. {errorMessage}
-#: build/locale/src/mutations.json build/locale/src/queries.json
-msgctxt "error message"
-msgid "Something went wrong. {errorMessage}"
-msgstr ""
-
 #. [src.components.NotFoundPage.4036415297]
 #. defaultMessage is:
 #. Something's missing
@@ -6974,6 +7159,14 @@ msgctxt "order fulfillment status"
 msgid "Status"
 msgstr "Статус"
 
+#. [src.plugins.components.PluginInfo.1756106276] - plugin status
+#. defaultMessage is:
+#. Status
+#: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
+msgctxt "plugin status"
+msgid "Status"
+msgstr "Статус"
+
 #. [src.products.components.ProductListFilter.1756106276] - product status
 #. defaultMessage is:
 #. Status
@@ -7084,6 +7277,25 @@ msgstr "Загалом"
 msgctxt "order subtotal price"
 msgid "Subtotal"
 msgstr "Загалом"
+
+#. [src.plugins.views.100549097] - plugin success message
+#. defaultMessage is:
+#. Succesfully updated plugin settings
+#: build/locale/src/plugins/views/PluginsDetails.json
+msgctxt "plugin success message"
+msgid "Succesfully updated plugin settings"
+msgstr ""
+
+#. [src.auth.components.ResetPasswordSuccessPage.4066297200]
+#. defaultMessage is:
+#. Success! In a few minutes you’ll receive a message with instructions on how
+#. to reset your password.
+#: build/locale/src/auth/components/ResetPasswordSuccessPage/ResetPasswordSuccessPage.json
+msgctxt "description"
+msgid ""
+"Success! In a few minutes you’ll receive a message with instructions on how "
+"to reset your password."
+msgstr ""
 
 #. [src.attributes.views.AttributeCreate.11941964]
 #. defaultMessage is:
@@ -7254,6 +7466,30 @@ msgctxt "description"
 msgid "There is no address to show for this customer"
 msgstr ""
 
+#. [src.plugins.components.PluginsDetailsPage.2277745418]
+#. defaultMessage is:
+#. These are general information about your store. They define what is the URL
+#. of your store and what is shown in brow sers taskbar.
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+msgctxt "description"
+msgid ""
+"These are general information about your store. They define what is the URL "
+"of your store and what is shown in brow sers taskbar."
+msgstr ""
+
+#. [src.plugins.components.PluginsDetailsPage.4241018152]
+#. defaultMessage is:
+#. This adress will be used to generate invoices and calculate shipping rates.
+#. Email adress you provide here will be used as a contact adress for your
+#. customers.
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+msgctxt "description"
+msgid ""
+"This adress will be used to generate invoices and calculate shipping rates. "
+"Email adress you provide here will be used as a contact adress for your "
+"customers."
+msgstr ""
+
 #. [src.customers.components.CustomerAddressListPage.1428369222]
 #. defaultMessage is:
 #. This customer doesn’t have any adresses added to his address book. You can
@@ -7313,15 +7549,6 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariants/ProductVariants.json
 msgctxt "description"
 msgid "This product has no variants"
-msgstr ""
-
-#. [src.productTypes.components.ProductTypeDetailsPage.1756957616] - switch
-#. button
-#. defaultMessage is:
-#. This product type has variants
-#: build/locale/src/productTypes/components/ProductTypeDetailsPage/ProductTypeDetailsPage.json
-msgctxt "switch button"
-msgid "This product type has variants"
 msgstr ""
 
 #. [src.shipping.components.ShippingZoneRateDialog.4226393146]
@@ -7585,17 +7812,21 @@ msgctxt "header"
 msgid "Translations to {language}"
 msgstr ""
 
-#. [src.categories.components.CategoryProducts.1952810469] - product type
+#. [src.categories.components.CategoryProductList.1952810469] - product type
 #. defaultMessage is:
 #. Type
 #. [src.collections.components.CollectionProducts.1952810469] - product type
 #. defaultMessage is:
 #. Type
+#. [src.products.components.ProductList.1952810469] - product type
+#. defaultMessage is:
+#. Type
 #. [src.products.components.ProductListPage.1952810469] - product type
 #. defaultMessage is:
 #. Type
-#: build/locale/src/categories/components/CategoryProducts/CategoryProducts.json
+#: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
+#: build/locale/src/products/components/ProductList/ProductList.json
 #: build/locale/src/products/components/ProductListPage/ProductListPage.json
 msgctxt "product type"
 msgid "Type"
@@ -8190,6 +8421,14 @@ msgctxt "button"
 msgid "View all orders"
 msgstr ""
 
+#. [configurationPluginsPages]
+#. defaultMessage is:
+#. View and update your plugins and their settings.
+#: build/locale/src/configuration/index.json
+msgctxt "description"
+msgid "View and update your plugins and their settings."
+msgstr ""
+
 #. [configurationMenuSiteSettings]
 #. defaultMessage is:
 #. View and update your site settings
@@ -8625,6 +8864,14 @@ msgstr ""
 #: build/locale/src/components/CountryList/CountryList.json
 msgctxt "number of countries"
 msgid "{number} Countries"
+msgstr ""
+
+#. [src.plugins.components.PluginsDetailsPage.3352026836] - header
+#. defaultMessage is:
+#. {pluginName} Details
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
+msgctxt "header"
+msgid "{pluginName} Details"
 msgstr ""
 
 #. [src.orders.components.OrderPayment.2183023165] - ordered products
