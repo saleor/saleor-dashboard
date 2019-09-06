@@ -73,7 +73,7 @@ describe("Create filter object", () => {
     const filter = createFilter(
       {},
       {
-        name: OrderFilterKeys.fulfillment,
+        name: OrderFilterKeys.status,
         value: OrderStatusFilter.PARTIALLY_FULFILLED
       }
     );
@@ -87,7 +87,7 @@ describe("Create filter object", () => {
         status: [OrderStatusFilter.FULFILLED]
       },
       {
-        name: OrderFilterKeys.fulfillment,
+        name: OrderFilterKeys.status,
         value: OrderStatusFilter.PARTIALLY_FULFILLED
       }
     );
@@ -101,7 +101,7 @@ describe("Create filter object", () => {
         status: [OrderStatusFilter.FULFILLED]
       },
       {
-        name: OrderFilterKeys.fulfillment,
+        name: OrderFilterKeys.status,
         value: OrderStatusFilter.FULFILLED
       }
     );
