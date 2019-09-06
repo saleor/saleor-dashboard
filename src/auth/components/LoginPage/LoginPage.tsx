@@ -87,7 +87,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
             <FormSpacer />
             <TextField
               fullWidth
-              autoComplete="current-password"
+              autoComplete="password"
               label={intl.formatMessage({
                 defaultMessage: "Password"
               })}
@@ -95,7 +95,9 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
               onChange={handleChange}
               type="password"
               value={data.password}
-              data-tc="password"
+              inputProps={{
+                "data-tc": "password"
+              }}
             />
             <FormSpacer />
             <div className={classes.buttonContainer}>
