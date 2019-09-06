@@ -46,6 +46,10 @@ const filterMessages = defineMessages({
     defaultMessage: "Partially Fulfilled",
     description: "order status"
   },
+  readyToCapture: {
+    defaultMessage: "Ready to Capture",
+    description: "order status"
+  },
   unfulfilled: {
     defaultMessage: "Unfulfilled",
     description: "order status"
@@ -62,6 +66,9 @@ function getStatusLabel(status: string, intl: IntlShape): string {
 
     case OrderStatusFilter.UNFULFILLED.toString():
       return intl.formatMessage(filterMessages.unfulfilled);
+
+    case OrderStatusFilter.READY_TO_CAPTURE.toString():
+      return intl.formatMessage(filterMessages.readyToCapture);
   }
 
   return "";
@@ -110,7 +117,7 @@ export function createFilter(
       dateFrom: valueOrFirst(value),
       dateTo: undefined
     };
-  } else if (filterName === OrderFilterKeys.fulfillment) {
+  } else if (filterName === OrderFilterKeys.status) {
     return {
       status: dedupeFilter(
         filter.status

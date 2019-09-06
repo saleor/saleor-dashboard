@@ -31,14 +31,17 @@ const HomeSection = () => {
           onOrdersToCaptureClick={() =>
             navigate(
               orderListUrl({
-                status: OrderStatusFilter.READY_TO_CAPTURE
+                status: [OrderStatusFilter.READY_TO_CAPTURE]
               })
             )
           }
           onOrdersToFulfillClick={() =>
             navigate(
               orderListUrl({
-                status: OrderStatusFilter.READY_TO_FULFILL
+                status: [
+                  OrderStatusFilter.UNFULFILLED,
+                  OrderStatusFilter.PARTIALLY_FULFILLED
+                ]
               })
             )
           }

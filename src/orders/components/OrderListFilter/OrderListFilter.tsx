@@ -19,7 +19,7 @@ export enum OrderFilterKeys {
   dateLastWeek = "dateLastWeek",
   dateLastMonth = "dateLastMonth",
   dateLastYear = "dateLastYear",
-  fulfillment = "fulfillment"
+  status = "status"
 }
 
 const OrderListFilter: React.FC<OrderListFilterProps> = props => {
@@ -146,15 +146,21 @@ const OrderListFilter: React.FC<OrderListFilterProps> = props => {
               description: "order fulfillment status"
             }),
             value: OrderStatusFilter.UNFULFILLED.toString()
+          },
+          {
+            label: intl.formatMessage({
+              defaultMessage: "Ready to Capture",
+              description: "order status"
+            }),
+            value: OrderStatusFilter.READY_TO_CAPTURE.toString()
           }
         ],
         type: FieldType.select
       },
       label: intl.formatMessage({
-        defaultMessage: "Fulfillment Status",
-        description: "order"
+        defaultMessage: "Order Status"
       }),
-      value: OrderFilterKeys.fulfillment
+      value: OrderFilterKeys.status
     }
   ];
 
