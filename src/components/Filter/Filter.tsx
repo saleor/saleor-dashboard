@@ -19,9 +19,9 @@ import { FilterContent } from ".";
 import { FilterContentSubmitData } from "./FilterContent";
 import { IFilter } from "./types";
 
-export interface FilterProps {
+export interface FilterProps<TFilterKeys = string> {
   currencySymbol: string;
-  menu: IFilter;
+  menu: IFilter<TFilterKeys>;
   filterLabel: string;
   onFilterAdd: (filter: FilterContentSubmitData) => void;
 }

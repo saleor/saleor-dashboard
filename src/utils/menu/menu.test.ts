@@ -9,24 +9,33 @@ import {
   walkToRoot
 } from "./menu";
 
-const validMenu: IMenu = [
+enum MenuKey {
+  one,
+  two,
+  three,
+  four,
+  fourOne,
+  foutTwo
+}
+
+const validMenu: IMenu<null, MenuKey> = [
   {
     children: [],
     data: null,
     label: "1",
-    value: "1"
+    value: MenuKey.one
   },
   {
     children: [],
     data: null,
     label: "2",
-    value: "2"
+    value: MenuKey.two
   },
   {
     children: [],
     data: null,
     label: "3",
-    value: "3"
+    value: MenuKey.three
   },
   {
     children: [
@@ -34,18 +43,18 @@ const validMenu: IMenu = [
         children: [],
         data: null,
         label: "4.1",
-        value: "4.1"
+        value: MenuKey.fourOne
       },
       {
         children: [],
         data: null,
         label: "4.2",
-        value: "4.2"
+        value: MenuKey.foutTwo
       }
     ],
     data: null,
     label: "4",
-    value: "4"
+    value: MenuKey.four
   }
 ];
 

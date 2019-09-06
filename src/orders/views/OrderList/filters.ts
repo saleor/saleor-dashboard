@@ -86,15 +86,15 @@ export function getFilterVariables(
 
 export function createFilter(
   filter: OrderListUrlFilters,
-  data: FilterContentSubmitData
+  data: FilterContentSubmitData<OrderFilterKeys>
 ): OrderListUrlFilters {
   const { name: filterName, value } = data;
-  if (filterName === OrderFilterKeys.dateEqual.toString()) {
+  if (filterName === OrderFilterKeys.dateEqual) {
     return {
       dateFrom: valueOrFirst(value),
       dateTo: valueOrFirst(value)
     };
-  } else if (filterName === OrderFilterKeys.dateRange.toString()) {
+  } else if (filterName === OrderFilterKeys.dateRange) {
     return {
       dateFrom: value[0],
       dateTo: value[1]
@@ -104,15 +104,13 @@ export function createFilter(
       OrderFilterKeys.dateLastWeek,
       OrderFilterKeys.dateLastMonth,
       OrderFilterKeys.dateLastYear
-    ]
-      .map(value => value.toString())
-      .includes(filterName)
+    ].includes(filterName)
   ) {
     return {
       dateFrom: valueOrFirst(value),
       dateTo: undefined
     };
-  } else if (filterName === OrderFilterKeys.fulfillment.toString()) {
+  } else if (filterName === OrderFilterKeys.fulfillment) {
     return {
       status: dedupeFilter(
         filter.status

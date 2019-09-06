@@ -25,6 +25,6 @@ export interface FilterData {
   value?: string;
 }
 
-export type IFilterItem = IMenuItem<FilterData>;
+export type IFilterItem<TKeys> = IMenuItem<FilterData, TKeys>;
 
-export type IFilter = IMenu<FilterData>;
+export type IFilter<TKeys> = IMenu<FilterData, TKeys>;

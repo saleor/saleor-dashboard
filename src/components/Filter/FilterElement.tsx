@@ -10,9 +10,9 @@ import PriceField from "../PriceField";
 import SingleSelectField from "../SingleSelectField";
 import { FieldType, IFilterItem } from "./types";
 
-export interface FilterElementProps {
+export interface FilterElementProps<TFilterKeys = string> {
   className?: string;
-  filter: IFilterItem;
+  filter: IFilterItem<TFilterKeys>;
   value: string | string[];
   onChange: (value: string | string[]) => void;
 }
@@ -26,10 +26,10 @@ const useStyles = makeStyles({
   }
 });
 
-export interface FilterElementProps {
+export interface FilterElementProps<TFilterKeys = string> {
   className?: string;
   currencySymbol: string;
-  filter: IFilterItem;
+  filter: IFilterItem<TFilterKeys>;
   value: string | string[];
   onChange: (value: string | string[]) => void;
 }

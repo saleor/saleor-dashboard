@@ -65,7 +65,7 @@ export interface PageListProps<TColumns extends string = string>
   defaultSettings?: ListSettings<TColumns>;
   onAdd: () => void;
 }
-export interface FilterPageProps<TUrlFilters> {
+export interface FilterPageProps<TUrlFilters, TFilterKeys> {
   currencySymbol: string;
   currentTab: number;
   filterTabs: GetFilterTabsOutput<TUrlFilters>;
@@ -73,12 +73,13 @@ export interface FilterPageProps<TUrlFilters> {
   initialSearch: string;
   onAll: () => void;
   onSearchChange: (value: string) => void;
-  onFilterAdd: (filter: FilterContentSubmitData) => void;
+  onFilterAdd: (filter: FilterContentSubmitData<TFilterKeys>) => void;
   onFilterDelete: () => void;
   onFilterSave: () => void;
   onTabChange: (tab: number) => void;
 }
-export interface FilterProps<TUrlFilters> extends FilterPageProps<TUrlFilters> {
+export interface FilterProps<TUrlFilters, TFilterKeys>
+  extends FilterPageProps<TUrlFilters, TFilterKeys> {
   allTabLabel: string;
   filterLabel: string;
   searchPlaceholder: string;
