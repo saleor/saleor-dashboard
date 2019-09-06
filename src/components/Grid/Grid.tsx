@@ -17,10 +17,10 @@ export interface GridProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) =>
   createStyles({
     default: {
-      gridTemplateColumns: "9fr 4fr"
+      gridTemplateColumns: "minmax(0, 2fr) minmax(0, 1fr)"
     },
     inverted: {
-      gridTemplateColumns: "4fr 9fr"
+      gridTemplateColumns: "minmax(0, 1fr) minmax(0, 2fr)"
     },
     root: {
       display: "grid",
@@ -32,7 +32,7 @@ const styles = (theme: Theme) =>
       }
     },
     uniform: {
-      gridTemplateColumns: "1fr 1fr"
+      gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)"
     }
   });
 

@@ -289,6 +289,9 @@ export default (colors: IThemeColors): Theme =>
               textAlign: "left" as "left"
             }
           },
+          "@media all and (max-width: 1360px)": {
+            padding: "4px 16px"
+          },
           borderBottomColor: colors.paperBorder,
           height: 56,
           padding: "4px 24px"
