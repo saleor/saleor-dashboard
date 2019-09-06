@@ -1,7 +1,13 @@
 /* eslint-disable */
-const { configure } = require("@storybook/react");
+import requireContext from "require-context.macro";
+import { configure } from "@storybook/react";
+
+const req = requireContext("../", true, /.stories.tsx$/);
 
 function loadStories() {
+  // Story autodiscovery
+  req.keys().forEach(filename => req(filename));
+
   // Components
   require("./stories/components/ActionDialog");
   require("./stories/components/AddressEdit");

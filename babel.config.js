@@ -37,7 +37,8 @@ module.exports = api => {
         extractFromFormatMessageCall: true,
         messagesDir: "build/locale/"
       }
-    ]
+    ],
+    "macros"
   ];
 
   return {
