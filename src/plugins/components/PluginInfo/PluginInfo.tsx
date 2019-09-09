@@ -6,7 +6,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { commonMessages } from "@saleor/intl";
@@ -69,12 +69,12 @@ const PluginInfo: React.StatelessComponent<PluginInfoProps> = ({
             description: "plugin status"
           })}
         </Typography>
-        <ControlledSwitch
-          checked={data.active}
+        <ControlledCheckbox
+          name={"active" as keyof FormData}
           label={intl.formatMessage({
             defaultMessage: "Set plugin as Active"
           })}
-          name={"active" as keyof FormData}
+          checked={data.active}
           onChange={onChange}
         />
       </CardContent>

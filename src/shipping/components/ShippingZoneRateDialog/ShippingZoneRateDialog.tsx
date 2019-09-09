@@ -17,7 +17,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
@@ -184,10 +184,8 @@ const ShippingZoneRateDialog = withStyles(styles, {
                               description: "order weight range"
                             })}
                       </Typography>
-                      <ControlledSwitch
-                        checked={data.noLimits}
+                      <ControlledCheckbox
                         name={"noLimits" as keyof FormData}
-                        onChange={change}
                         label={
                           <>
                             <FormattedMessage
@@ -207,6 +205,9 @@ const ShippingZoneRateDialog = withStyles(styles, {
                             </Typography>
                           </>
                         }
+                        checked={data.noLimits}
+                        onChange={change}
+                        disabled={disabled}
                       />
                       {!data.noLimits && (
                         <>
@@ -289,15 +290,15 @@ const ShippingZoneRateDialog = withStyles(styles, {
                       description="shipping method"
                     />
                   </Typography>
-                  <ControlledSwitch
-                    checked={data.isFree}
-                    disabled={disabled}
+                  <ControlledCheckbox
+                    name={"isFree" as keyof FormData}
                     label={intl.formatMessage({
                       defaultMessage: "This is free shipping",
                       description: "shipping method, switch button"
                     })}
-                    name={"isFree" as keyof FormData}
+                    checked={data.isFree}
                     onChange={change}
+                    disabled={disabled}
                   />
                   {!data.isFree && (
                     <>

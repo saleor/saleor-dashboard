@@ -6,7 +6,7 @@ import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
-import { ControlledSwitch } from "@saleor/components/ControlledSwitch";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
@@ -126,15 +126,15 @@ const CollectionDetailsPage: React.StatelessComponent<
                   disabled={disabled}
                   onChange={change}
                 >
-                  <ControlledSwitch
-                    checked={data.isFeatured}
-                    disabled={disabled}
-                    name="isFeatured"
-                    onChange={change}
+                  <ControlledCheckbox
+                    name={"isFeatured" as keyof FormData}
                     label={intl.formatMessage({
                       defaultMessage: "Feature on Homepage",
                       description: "switch button"
                     })}
+                    checked={data.isFeatured}
+                    onChange={change}
+                    disabled={disabled}
                   />
                 </VisibilityCard>
               </div>

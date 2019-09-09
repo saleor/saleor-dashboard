@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { commonMessages } from "@saleor/intl";
@@ -71,16 +71,17 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           />
         </Typography>
         <Hr />
-        <ControlledSwitch
-          name={"filterableInStorefront" as keyof AttributePageFormData}
-          checked={data.filterableInStorefront}
-          disabled={disabled}
+        <ControlledCheckbox
+          name={"filterableInStorefront" as keyof FormData}
           label={intl.formatMessage({
             defaultMessage: "Use in faceted navigation",
             description: "attribute is filterable in storefront"
           })}
+          checked={data.filterableInStorefront}
           onChange={onChange}
+          disabled={disabled}
         />
+        <FormSpacer />
         {data.filterableInStorefront && (
           <TextField
             disabled={disabled}
@@ -97,15 +98,15 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           />
         )}
         <FormSpacer />
-        <ControlledSwitch
-          name={"visibleInStorefront" as keyof AttributePageFormData}
-          checked={data.visibleInStorefront}
-          disabled={disabled}
+        <ControlledCheckbox
+          name={"visibleInStorefront" as keyof FormData}
           label={intl.formatMessage({
             defaultMessage: "Visible on Product Page in Storefront",
             description: "attribute"
           })}
+          checked={data.visibleInStorefront}
           onChange={onChange}
+          disabled={disabled}
         />
         <CardSpacer />
         <Typography variant="subtitle1">
@@ -116,36 +117,40 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
         </Typography>
         <Hr />
         <CardSpacer />
-        <ControlledSwitch
-          name={"filterableInDashboard" as keyof AttributePageFormData}
-          checked={data.filterableInDashboard}
-          disabled={disabled}
-          label={intl.formatMessage({
-            defaultMessage: "Use in Filtering",
-            description: "use attribute in filtering"
-          })}
-          secondLabel={
-            <Typography variant="caption">
-              <FormattedMessage defaultMessage="If enabled, you’ll be able to use this attribute to filter products in product list." />
-            </Typography>
+        <ControlledCheckbox
+          name={"filterableInDashboard" as keyof FormData}
+          label={
+            <>
+              <FormattedMessage
+                defaultMessage="Use in Filtering"
+                description="use attribute in filtering"
+              />
+              <Typography variant="caption">
+                <FormattedMessage defaultMessage="If enabled, you’ll be able to use this attribute to filter products in product list." />
+              </Typography>
+            </>
           }
+          checked={data.filterableInDashboard}
           onChange={onChange}
+          disabled={disabled}
         />
         <FormSpacer />
-        <ControlledSwitch
-          name={"availableInGrid" as keyof AttributePageFormData}
-          checked={data.availableInGrid}
-          disabled={disabled}
-          label={intl.formatMessage({
-            defaultMessage: "Add to Column Options",
-            description: "add attribute as column in product list table"
-          })}
-          secondLabel={
-            <Typography variant="caption">
-              <FormattedMessage defaultMessage="If enable this attribute can be used as a column in product table." />
-            </Typography>
+        <ControlledCheckbox
+          name={"availableInGrid" as keyof FormData}
+          label={
+            <>
+              <FormattedMessage
+                defaultMessage="Add to Column Options"
+                description="add attribute as column in product list table"
+              />
+              <Typography variant="caption">
+                <FormattedMessage defaultMessage="If enable this attribute can be used as a column in product table." />
+              </Typography>
+            </>
           }
+          checked={data.availableInGrid}
           onChange={onChange}
+          disabled={disabled}
         />
       </CardContent>
     </Card>

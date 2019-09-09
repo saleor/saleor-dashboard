@@ -90,6 +90,12 @@ export default (colors: IThemeColors): Theme =>
           padding: "5px 24px 24px"
         }
       },
+      MuiFormControlLabel: {
+        root: {
+          display: "grid",
+          gridTemplateColumns: "50px 6fr"
+        }
+      },
       MuiFormLabel: {
         filled: {
           color: [[colors.primary], "!important"] as any
