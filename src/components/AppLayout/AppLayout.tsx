@@ -120,8 +120,8 @@ const styles = (theme: Theme) =>
     },
     logo: {
       "& svg": {
-        height: "100%",
-        margin: "20px 50px"
+        width: "256px",
+        padding: "20px 50px"
       },
       background: theme.palette.secondary.main,
       display: "block",
