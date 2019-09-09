@@ -3,7 +3,6 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -44,7 +43,6 @@ const styles = createStyles({
 const CustomerAddress = withStyles(styles, { name: "CustomerAddress" })(
   ({
     address,
-    addressNumber,
     classes,
     disabled,
     isDefaultBillingAddress,

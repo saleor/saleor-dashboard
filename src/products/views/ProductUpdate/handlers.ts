@@ -25,7 +25,10 @@ export function createUpdateHandler(
       collections: data.collections,
       descriptionJson: JSON.stringify(data.description),
       id: product.id,
-      isPublished: data.isPublished,
+      isPublished:
+        typeof data.isPublished !== "boolean" && data.isPublished === "true"
+          ? true
+          : false,
       name: data.name,
       publicationDate:
         data.publicationDate !== "" ? data.publicationDate : null,

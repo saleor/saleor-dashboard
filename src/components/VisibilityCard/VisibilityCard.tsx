@@ -7,12 +7,13 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
 import { FormSpacer } from "@saleor/components/FormSpacer";
+import RadioGroupField from "@saleor/components/RadioGroupField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { DateContext } from "../Date/DateContext";
 
@@ -22,12 +23,25 @@ const styles = (theme: Theme) =>
       "& svg": {
         fill: theme.palette.primary.main
       },
-      marginTop: theme.spacing.unit * 4
+      marginTop: theme.spacing.unit * 3
     },
     expandedSwitchContainer: {
+      "& > div": {
+        padding: 0
+      },
       marginBottom: 0
     },
+    setPublicationDate: {
+      color: theme.palette.primary.main,
+      cursor: "pointer",
+      fontSize: "14px",
+      paddingTop: "15px",
+      textDecoration: "underline"
+    },
     switchContainer: {
+      "& > div": {
+        padding: 0
+      },
       marginBottom: -theme.spacing.unit
     }
   });
@@ -55,8 +69,60 @@ export const VisibilityCard = withStyles(styles, {
     onChange
   }: VisibilityCardProps) => {
     const intl = useIntl();
+    const [isPublicationDate, setPublicationDate] = React.useState(
+      publicationDate === null ? true : false
+    );
     const localizeDate = useDateLocalize();
     const dateNow = React.useContext(DateContext);
+    const isPublishedRadio =
+      typeof isPublished !== "boolean"
+        ? isPublished
+        : isPublished
+        ? "true"
+        : "false";
+    const visibleSecondLabel = publicationDate
+      ? isPublished
+        ? intl.formatMessage(
+            {
+              defaultMessage: "since {date}"
+            },
+            {
+              date: localizeDate(publicationDate)
+            }
+          )
+        : null
+      : null;
+    const hiddenSecondLabel = publicationDate
+      ? isPublished
+        ? null
+        : Date.parse(publicationDate) > dateNow
+        ? intl.formatMessage(
+            {
+              defaultMessage: "will be visible from {date}"
+            },
+            {
+              date: localizeDate(publicationDate)
+            }
+          )
+        : null
+      : null;
+
+    const visiblilityPickerChoices = [
+      {
+        label: intl.formatMessage({
+          defaultMessage: "Visible"
+        }),
+        secondLabel: visibleSecondLabel,
+        value: "true"
+      },
+      {
+        label: intl.formatMessage({
+          defaultMessage: "Hidden"
+        }),
+        secondLabel: hiddenSecondLabel,
+        value: "false"
+      }
+    ];
     return (
       <Card>
         <CardTitle
@@ -73,62 +139,45 @@ export const VisibilityCard = withStyles(styles, {
                 : classes.switchContainer
             }
           >
-            <ControlledSwitch
-              name="isPublished"
-              label={intl.formatMessage({
-                defaultMessage: "Visible"
-              })}
-              uncheckedLabel={intl.formatMessage({
-                defaultMessage: "Hidden"
-              })}
-              secondLabel={
-                publicationDate
-                  ? isPublished
-                    ? intl.formatMessage(
-                        {
-                          defaultMessage: "since {date}"
-                        },
-                        {
-                          date: localizeDate(publicationDate)
-                        }
-                      )
-                    : Date.parse(publicationDate) > dateNow
-                    ? intl.formatMessage(
-                        {
-                          defaultMessage: "will be visible from {date}"
-                        },
-                        {
-                          date: localizeDate(publicationDate)
-                        }
-                      )
-                    : null
-                  : null
-              }
-              checked={isPublished}
-              onChange={onChange}
+            <RadioGroupField
+              choices={visiblilityPickerChoices}
               disabled={disabled}
+              name={"isPublished" as keyof FormData}
+              value={isPublishedRadio}
+              onChange={onChange}
             />
           </div>
-          {!isPublished && (
+          {isPublishedRadio === "false" && (
             <>
-              <TextField
-                error={!!errors.publicationDate}
-                disabled={disabled}
-                label={intl.formatMessage({
-                  defaultMessage: "Publish on",
-                  description: "publish on date"
-                })}
-                name="publicationDate"
-                type="date"
-                fullWidth={true}
-                helperText={errors.publicationDate}
-                value={publicationDate ? publicationDate : ""}
-                onChange={onChange}
-                className={classes.date}
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
+              {!isPublicationDate && (
+                <Typography
+                  className={classes.setPublicationDate}
+                  onClick={() => setPublicationDate(!isPublicationDate)}
+                >
+                  {" "}
+                  Set publication date
+                </Typography>
+              )}
+              {isPublicationDate && (
+                <TextField
+                  error={!!errors.publicationDate}
+                  disabled={disabled}
+                  label={intl.formatMessage({
+                    defaultMessage: "Publish on",
+                    description: "publish on date"
+                  })}
+                  name="publicationDate"
+                  type="date"
+                  fullWidth={true}
+                  helperText={errors.publicationDate}
+                  value={publicationDate ? publicationDate : ""}
+                  onChange={onChange}
+                  className={classes.date}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              )}
             </>
           )}
           <FormSpacer />

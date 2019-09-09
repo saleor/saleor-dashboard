@@ -63,7 +63,11 @@ export const CollectionCreate: React.FC = () => {
                       backgroundImage: formData.backgroundImage.value,
                       backgroundImageAlt: formData.backgroundImageAlt,
                       descriptionJson: JSON.stringify(formData.description),
-                      isPublished: formData.isPublished,
+                      isPublished:
+                        typeof formData.isPublished !== "boolean" &&
+                        formData.isPublished === "true"
+                          ? true
+                          : false,
                       name: formData.name,
                       seo: {
                         description: formData.seoDescription,

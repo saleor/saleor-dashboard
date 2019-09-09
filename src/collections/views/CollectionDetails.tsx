@@ -148,7 +148,11 @@ export const CollectionDetails: React.StatelessComponent<
                 const input: CollectionInput = {
                   backgroundImageAlt: formData.backgroundImageAlt,
                   descriptionJson: JSON.stringify(formData.description),
-                  isPublished: formData.isPublished,
+                  isPublished:
+                    typeof formData.isPublished !== "boolean" &&
+                    formData.isPublished === "true"
+                      ? true
+                      : false,
                   name: formData.name,
                   publicationDate: formData.publicationDate,
                   seo: {

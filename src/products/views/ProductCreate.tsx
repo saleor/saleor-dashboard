@@ -83,7 +83,11 @@ export const ProductUpdate: React.StatelessComponent<
                             descriptionJson: JSON.stringify(
                               formData.description
                             ),
-                            isPublished: formData.isPublished,
+                            isPublished:
+                              typeof formData.isPublished !== "boolean" &&
+                              formData.isPublished === "true"
+                                ? true
+                                : false,
                             name: formData.name,
                             productType: formData.productType,
                             publicationDate:

@@ -31,8 +31,8 @@ const styles = (theme: Theme) =>
       "&$checked": {
         "&:before": {
           background: theme.palette.primary.main,
-          content: '"\\2713"',
           color: theme.palette.common.white,
+          content: '"\\2713"',
           fontWeight: "bold",
           textAlign: "center"
         },
@@ -74,17 +74,17 @@ const styles = (theme: Theme) =>
     disabled: {},
     indeterminate: {},
     root: {
+      "&:hover": {
+        background: fade(theme.palette.primary.main, 0.1)
+      },
       alignItems: "center",
       borderRadius: "100%",
       cursor: "pointer",
       display: "flex",
       height: 30,
       justifyContent: "center",
-      width: 30,
       margin: 9,
-      "&:hover": {
-        background: fade(theme.palette.primary.main, 0.1)
-      }
+      width: 30
     }
   });
 const Checkbox = withStyles(styles, { name: "Checkbox" })(

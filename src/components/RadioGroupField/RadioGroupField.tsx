@@ -21,6 +21,10 @@ const styles = createStyles({
   },
   radioLabel: {
     "& > span": {
+      "& > span": {
+        display: "block",
+        fontSize: "12px"
+      },
       padding: "6px"
     }
   }
@@ -30,6 +34,7 @@ interface RadioGroupFieldProps extends WithStyles<typeof styles> {
   choices: Array<{
     value: string;
     label: string | React.ReactNode;
+    secondLabel?: string | React.ReactNode;
   }>;
   className?: string;
   disabled?: boolean;
@@ -72,15 +77,22 @@ export const RadioGroupField = withStyles(styles, {
           onChange={onChange}
         >
           {choices.length > 0 ? (
-            choices.map(choice => (
-              <FormControlLabel
-                value={choice.value}
-                className={classes.radioLabel}
-                control={<Radio color="primary" />}
-                label={choice.label}
-                key={choice.value}
-              />
-            ))
+            choices.map(choice => {
+              return (
+                <FormControlLabel
+                  value={choice.value}
+                  className={classes.radioLabel}
+                  control={<Radio color="primary" />}
+                  label={
+                    <>
+                      {choice.label}
+                      <span>{choice.secondLabel}</span>
+                    </>
+                  }
+                  key={choice.value}
+                />
+              );
+            })
           ) : (
             <MenuItem disabled={true}>
               <FormattedMessage defaultMessage="No results found" />

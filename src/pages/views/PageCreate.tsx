@@ -54,16 +54,16 @@ export const PageCreate: React.StatelessComponent<PageCreateProps> = () => {
               page={null}
               onBack={() => navigate(pageListUrl())}
               onRemove={() => undefined}
-              onSubmit={formData =>
+              onSubmit={formData => {
                 pageCreate({
                   variables: {
                     input: {
                       contentJson: JSON.stringify(formData.content),
-                      isPublished: formData.isPublished
-                        ? true
-                        : formData.publicationDate === ""
-                        ? false
-                        : true,
+                      isPublished:
+                        typeof formData.isPublished !== "boolean" &&
+                        formData.isPublished === "true"
+                          ? true
+                          : false,
                       publicationDate: formData.isPublished
                         ? null
                         : formData.publicationDate === ""
@@ -77,8 +77,8 @@ export const PageCreate: React.StatelessComponent<PageCreateProps> = () => {
                       title: formData.title
                     }
                   }
-                })
-              }
+                });
+              }}
             />
           </>
         );
