@@ -53,6 +53,8 @@ const styles = (theme: Theme) =>
       marginBottom: theme.spacing.unit * 3
     },
     configurationCategory: {
+      borderTop: `solid 1px #eaeaea`,
+      paddingTop: theme.spacing.unit * 3 + "px",
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "1fr"
       },

@@ -5,6 +5,7 @@ import { attributeListUrl } from "@saleor/attributes/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
+import Attributes from "@saleor/icons/Attributes";
 import Navigation from "@saleor/icons/Navigation";
 import Pages from "@saleor/icons/Pages";
 import Plugins from "@saleor/icons/Plugins";
@@ -35,7 +36,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
         defaultMessage: "Determine attributes used to create product types",
         id: "configurationMenuAttributes"
       }),
-      icon: <ProductTypes fontSize="inherit" viewBox="0 0 44 44" />,
+      icon: <Attributes fontSize="inherit" viewBox="0 0 44 44" />,
       permission: PermissionEnum.MANAGE_PRODUCTS,
       title: intl.formatMessage(sectionNames.attributes),
       url: attributeListUrl()
