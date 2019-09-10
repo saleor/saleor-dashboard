@@ -5,12 +5,19 @@ import AttributeListPage, {
   AttributeListPageProps
 } from "@saleor/attributes/components/AttributeListPage";
 import { attributes } from "@saleor/attributes/fixtures";
-import { listActionsProps, pageListProps } from "@saleor/fixtures";
+import {
+  listActionsProps,
+  pageListProps,
+  searchPageProps,
+  tabPageProps
+} from "@saleor/fixtures";
 import Decorator from "../../Decorator";
 
 const props: AttributeListPageProps = {
   ...pageListProps.default,
   ...listActionsProps,
+  ...tabPageProps,
+  ...searchPageProps,
   attributes
 };
 

@@ -1,12 +1,26 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination, SingleAction } from "../types";
+import {
+  ActiveTab,
+  BulkAction,
+  Dialog,
+  Filters,
+  Pagination,
+  SingleAction,
+  TabActionDialog
+} from "../types";
 
 export const attributeSection = "/attributes/";
 
-export type AttributeListUrlDialog = "remove";
-export type AttributeListUrlQueryParams = BulkAction &
+export enum AttributeListUrlFiltersEnum {
+  query = "query"
+}
+export type AttributeListUrlFilters = Filters<AttributeListUrlFiltersEnum>;
+export type AttributeListUrlDialog = "remove" | TabActionDialog;
+export type AttributeListUrlQueryParams = ActiveTab &
+  AttributeListUrlFilters &
+  BulkAction &
   Dialog<AttributeListUrlDialog> &
   Pagination;
 export const attributeListPath = attributeSection;

@@ -168,6 +168,7 @@ export enum PermissionEnum {
   MANAGE_PAGES = "MANAGE_PAGES",
   MANAGE_PLUGINS = "MANAGE_PLUGINS",
   MANAGE_PRODUCTS = "MANAGE_PRODUCTS",
+  MANAGE_SERVICE_ACCOUNTS = "MANAGE_SERVICE_ACCOUNTS",
   MANAGE_SETTINGS = "MANAGE_SETTINGS",
   MANAGE_SHIPPING = "MANAGE_SHIPPING",
   MANAGE_STAFF = "MANAGE_STAFF",
@@ -262,6 +263,17 @@ export interface AttributeCreateInput {
   filterableInDashboard?: boolean | null;
   storefrontSearchPosition?: number | null;
   availableInGrid?: boolean | null;
+}
+
+export interface AttributeFilterInput {
+  valueRequired?: boolean | null;
+  isVariantOnly?: boolean | null;
+  visibleInStorefront?: boolean | null;
+  filterableInStorefront?: boolean | null;
+  filterableInDashboard?: boolean | null;
+  availableInGrid?: boolean | null;
+  search?: string | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface AttributeInput {
@@ -431,6 +443,7 @@ export interface OrderFilterInput {
   status?: (OrderStatusFilter | null)[] | null;
   customer?: string | null;
   created?: DateRangeInput | null;
+  search?: string | null;
 }
 
 export interface OrderLineCreateInput {
@@ -577,6 +590,7 @@ export interface StaffCreateInput {
   note?: string | null;
   permissions?: (PermissionEnum | null)[] | null;
   sendPasswordEmail?: boolean | null;
+  redirectUrl?: string | null;
 }
 
 export interface StaffInput {
@@ -605,6 +619,7 @@ export interface UserCreateInput {
   isActive?: boolean | null;
   note?: string | null;
   sendPasswordEmail?: boolean | null;
+  redirectUrl?: string | null;
 }
 
 export interface VoucherInput {
