@@ -20,7 +20,8 @@ const dark: IThemeColors = {
     button: "#202124",
     default: "#FCFCFC",
     gray: "#9E9D9D",
-    textButton: "#FFFFFF"
+    textButton: "#FFFFFF",
+    textDisabled: "#FCFCFC"
   },
   gray: {
     default: "#202124",
@@ -53,7 +54,8 @@ const light: IThemeColors = {
     button: "#FFFFFF",
     default: "#3D3D3D",
     gray: "#616161",
-    textButton: "#06847B"
+    textButton: "#06847B",
+    textDisabled: "#616161"
   },
   gray: {
     default: "#C8C8C8",

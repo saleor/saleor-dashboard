@@ -19,7 +19,10 @@ export type IThemeColors = Record<
 } & {
   checkbox: Record<"default" | "disabled", string>;
 } & {
-  font: Record<"default" | "gray" | "button" | "textButton", string>;
+  font: Record<
+    "default" | "gray" | "button" | "textButton" | "textDisabled",
+    string
+  >;
 } & {
   gray: Record<"default" | "disabled", string>;
 } & {
@@ -397,6 +400,7 @@ export default (colors: IThemeColors): Theme =>
       },
       primary: {
         contrastText: "#ffffff",
+        dark: colors.font.textDisabled,
         main: colors.primary
       },
       secondary: {
