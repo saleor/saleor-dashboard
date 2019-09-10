@@ -15,7 +15,7 @@ const styles = (theme: Theme) =>
   createStyles({
     cardContent: {
       "&:last-child": {
-        paddingBottom: 16
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px`
       },
       display: "grid",
       gridColumnGap: theme.spacing.unit * 3 + "px",
@@ -28,12 +28,14 @@ const styles = (theme: Theme) =>
       marginBottom: theme.spacing.unit * 3
     },
     cardSubtitle: {
-      color: theme.palette.text.secondary,
+      color: theme.palette.primary.main,
       height: "20px",
-      lineHeight: 0.9
+      lineHeight: 0.9,
+      fontSize: 12
     },
     cardTitle: {
-      fontWeight: 600 as 600
+      fontWeight: 500 as 500,
+      fontSize: 20
     },
     icon: {
       color: theme.palette.primary.contrastText,
