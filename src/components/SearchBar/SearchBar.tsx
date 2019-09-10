@@ -14,18 +14,23 @@ export interface SearchBarProps extends SearchPageProps, TabPageProps {
   searchPlaceholder: string;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  tabAction: {
-    display: "inline-block"
-  },
-  tabActionContainer: {
-    borderBottom: "1px solid #e8e8e8",
-    display: "flex",
-    justifyContent: "flex-end",
-    marginTop: theme.spacing.unit,
-    padding: `0 ${theme.spacing.unit * 3}px ${theme.spacing.unit}px`
+const useStyles = makeStyles(
+  (theme: Theme) => ({
+    tabAction: {
+      display: "inline-block"
+    },
+    tabActionContainer: {
+      borderBottom: "1px solid #e8e8e8",
+      display: "flex",
+      justifyContent: "flex-end",
+      marginTop: theme.spacing.unit,
+      padding: `0 ${theme.spacing.unit * 3}px ${theme.spacing.unit}px`
+    }
+  }),
+  {
+    name: "SearchBar"
   }
-}));
+);
 
 const SearchBar: React.FC<SearchBarProps> = props => {
   const {
@@ -88,10 +93,10 @@ const SearchBar: React.FC<SearchBarProps> = props => {
                 search={search}
                 onSearchChange={handleSearchChange}
               />
-              <div className={classes.tabActionContainer}>
-                <div className={classes.tabAction}>
-                  {search || (tabs && tabs.length) > 0 ? (
-                    isCustom ? (
+              {!!search || (tabs && tabs.length > 0) ? (
+                <div className={classes.tabActionContainer}>
+                  <div className={classes.tabAction}>
+                    {isCustom ? (
                       <Link onClick={onTabSave}>
                         <FormattedMessage
                           defaultMessage="Save Custom Search"
@@ -105,12 +110,12 @@ const SearchBar: React.FC<SearchBarProps> = props => {
                           description="button"
                         />
                       </Link>
-                    )
-                  ) : (
-                    <Hr />
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <Hr />
+              )}
             </>
           );
         }}
@@ -118,5 +123,6 @@ const SearchBar: React.FC<SearchBarProps> = props => {
     </>
   );
 };
+
 SearchBar.displayName = "SearchBar";
 export default SearchBar;

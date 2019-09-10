@@ -110,7 +110,7 @@ export const FilterChips: React.FC<FilterChipProps> = ({
         onSearchChange={onSearchChange}
         onFilterAdd={onFilterAdd}
       />
-      {search || (filtersList && filtersList.length) ? (
+      {search || (filtersList && filtersList.length > 0) ? (
         <div className={classes.filterContainer}>
           <div className={classes.filterChipContainer}>
             {filtersList.map(filter => (
