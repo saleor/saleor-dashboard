@@ -30,9 +30,9 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   onAll,
   onSearchChange,
   onFilterAdd,
-  onFilterSave,
   onTabChange,
-  onFilterDelete,
+  onTabDelete,
+  onTabSave,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -58,7 +58,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           filterLabel={intl.formatMessage({
             defaultMessage: "Select all orders where:"
           })}
-          filterTabs={tabs}
+          tabs={tabs}
           filtersList={filtersList}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
@@ -67,9 +67,9 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           onAll={onAll}
           onSearchChange={onSearchChange}
           onFilterAdd={onFilterAdd}
-          onFilterSave={onFilterSave}
           onTabChange={onTabChange}
-          onFilterDelete={onFilterDelete}
+          onTabDelete={onTabDelete}
+          onTabSave={onTabSave}
         />
         <OrderList {...listProps} />
       </Card>

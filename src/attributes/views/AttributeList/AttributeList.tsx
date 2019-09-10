@@ -8,8 +8,8 @@ import {
   deleteFilterTab,
   getActiveFilters,
   getFilterTabs,
-  saveFilterTab,
-  getFilterVariables
+  getFilterVariables,
+  saveFilterTab
 } from "@saleor/attributes/views/AttributeList/filters";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {

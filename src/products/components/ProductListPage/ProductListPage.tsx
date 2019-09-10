@@ -64,9 +64,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onFetchMore,
     onSearchChange,
     onFilterAdd,
-    onFilterSave,
     onTabChange,
-    onFilterDelete,
+    onTabDelete,
+    onTabSave,
     onUpdateListSettings,
     ...listProps
   } = props;
@@ -140,13 +140,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           currentTab={currentTab}
           filtersList={filtersList}
           initialSearch={initialSearch}
-          tabs={tabs}
           onAll={onAll}
-          onSearchChange={onSearchChange}
           onFilterAdd={onFilterAdd}
-          onFilterSave={onFilterSave}
+          onSearchChange={onSearchChange}
           onTabChange={onTabChange}
-          onFilterDelete={onFilterDelete}
+          onTabDelete={onTabDelete}
+          onTabSave={onTabSave}
+          tabs={tabs}
         />
         <ProductList
           {...listProps}

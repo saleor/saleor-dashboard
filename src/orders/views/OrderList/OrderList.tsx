@@ -232,11 +232,11 @@ export const OrderList: React.StatelessComponent<OrderListProps> = ({
                         onFilterAdd={data =>
                           changeFilterField(createFilter(params, data))
                         }
-                        onFilterSave={() => openModal("save-search")}
-                        onFilterDelete={() => openModal("delete-search")}
+                        onTabSave={() => openModal("save-search")}
+                        onTabDelete={() => openModal("delete-search")}
                         onTabChange={handleTabChange}
                         initialSearch={params.email || ""}
-                        filterTabs={getFilterTabs().map(tab => tab.name)}
+                        tabs={getFilterTabs().map(tab => tab.name)}
                         onAll={() =>
                           changeFilters({
                             status: undefined

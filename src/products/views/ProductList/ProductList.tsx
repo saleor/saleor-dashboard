@@ -351,8 +351,8 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                             onFilterAdd={filter =>
                               changeFilterField(createFilter(filter))
                             }
-                            onFilterSave={() => openModal("save-search")}
-                            onFilterDelete={() => openModal("delete-search")}
+                            onTabSave={() => openModal("save-search")}
+                            onTabDelete={() => openModal("delete-search")}
                             onTabChange={handleTabChange}
                             initialSearch={params.query || ""}
                             tabs={getFilterTabs().map(tab => tab.name)}
