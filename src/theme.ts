@@ -17,6 +17,8 @@ export type IThemeColors = Record<
 > & {
   background: Record<"default" | "paper", string>;
 } & {
+  checkbox: Record<"default" | "disabled", string>;
+} & {
   font: Record<"default" | "gray" | "button" | "textButton", string>;
 } & {
   gray: Record<"default" | "disabled", string>;
@@ -406,6 +408,9 @@ export default (colors: IThemeColors): Theme =>
         hint: colors.font.gray,
         primary: colors.font.default,
         secondary: colors.font.gray
+      },
+      action: {
+        active: colors.checkbox.default
       }
     },
     props: {

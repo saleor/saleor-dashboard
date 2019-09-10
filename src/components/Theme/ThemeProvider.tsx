@@ -12,6 +12,9 @@ const dark: IThemeColors = {
     default: "#1D1E1F",
     paper: "#2E2F31"
   },
+  checkbox: {
+    default: "#FFFFFF"
+  },
   error: "#C22D74",
   font: {
     button: "#202124",
@@ -41,6 +44,9 @@ const light: IThemeColors = {
   background: {
     default: "#F1F6F6",
     paper: "#FFFFFF"
+  },
+  checkbox: {
+    default: "#616161"
   },
   error: "#C22D74",
   font: {

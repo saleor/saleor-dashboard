@@ -31,7 +31,7 @@ const styles = (theme: Theme) =>
       "&$checked": {
         "&:before": {
           background: theme.palette.primary.main,
-          color: theme.palette.common.white,
+          color: theme.palette.background.paper,
           content: '"\\2713"',
           fontWeight: "bold",
           textAlign: "center"
@@ -61,7 +61,7 @@ const styles = (theme: Theme) =>
       },
 
       WebkitAppearance: "none",
-      border: `1px solid ${theme.palette.grey[500]}`,
+      border: `1px solid ${theme.palette.action.active}`,
       boxSizing: "border-box",
       cursor: "pointer",
       height: 14,
