@@ -158,6 +158,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                       onBlur: closeMenu,
                       onFocus: openMenu
                     }}
+                    error={error}
                     disabled={disabled}
                     helperText={helperText}
                     label={label}
