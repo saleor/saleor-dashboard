@@ -37,11 +37,11 @@ const styles = (theme: Theme) =>
     checkboxPartialSelect: {
       "& input": {
         "&:before": {
-          background: [theme.palette.common.white, "!important"] as any,
+          background: [theme.palette.background.paper, "!important"] as any,
           border: `solid 1px ${theme.palette.primary.main}`,
           content: "''"
         },
-        background: theme.palette.common.white
+        background: theme.palette.background.paper
       },
       "&:after": {
         background: theme.palette.primary.main,
