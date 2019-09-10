@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -41,7 +41,6 @@ const MenuListPage: React.StatelessComponent<MenuListPageProps> = ({
             description="button"
             id="menuListPageAddMenu"
           />
-          <AddIcon />
         </Button>
       </PageHeader>
       <MenuList disabled={disabled} {...listProps} />

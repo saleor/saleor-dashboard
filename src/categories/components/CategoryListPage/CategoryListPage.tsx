@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -47,7 +47,6 @@ export const CategoryListPage: React.StatelessComponent<CategoryTableProps> = ({
             defaultMessage="Create category"
             description="button"
           />
-          <AddIcon />
         </Button>
       </PageHeader>
       <CategoryList

@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -35,7 +35,6 @@ const CustomerListPage: React.StatelessComponent<CustomerListPageProps> = ({
             defaultMessage="Add customer"
             description="button"
           />
-          <AddIcon />
         </Button>
       </PageHeader>
       <CustomerList

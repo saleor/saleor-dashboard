@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -34,7 +34,6 @@ const CollectionListPage: React.StatelessComponent<CollectionListPageProps> = ({
             defaultMessage="Create collection"
             description="button"
           />
-          <AddIcon />
         </Button>
       </PageHeader>
       <CollectionList disabled={disabled} {...listProps} />

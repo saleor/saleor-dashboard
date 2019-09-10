@@ -6,7 +6,7 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import AddIcon from "@material-ui/icons/Add";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -98,7 +98,6 @@ const CustomerAddressListPage = withStyles(styles, {
                 defaultMessage="Add address"
                 description="button"
               />
-              <AddIcon />
             </Button>
           </PageHeader>
         )}
@@ -120,7 +119,6 @@ const CustomerAddressListPage = withStyles(styles, {
                 defaultMessage="Add address"
                 description="button"
               />
-              <AddIcon />
             </Button>
           </div>
         ) : (
