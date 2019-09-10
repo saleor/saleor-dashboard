@@ -361,10 +361,9 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                                         "SHIPPING"
                                           ? VoucherTypeEnum.SHIPPING
                                           : formData.type,
-                                      usageLimit: parseInt(
-                                        formData.usageLimit,
-                                        10
-                                      )
+                                      usageLimit: formData.hasUsageLimit
+                                        ? parseInt(formData.usageLimit, 10)
+                                        : 0
                                     }
                                   }
                                 })
