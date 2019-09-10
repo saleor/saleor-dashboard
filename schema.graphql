@@ -466,6 +466,10 @@ type CategoryDelete {
   category: Category
 }
 
+input CategoryFilterInput {
+  search: String
+}
+
 input CategoryInput {
   description: String
   descriptionJson: JSONString
@@ -1627,6 +1631,10 @@ type MenuDelete {
   menu: Menu
 }
 
+input MenuFilterInput {
+  search: String
+}
+
 input MenuInput {
   name: String
 }
@@ -1680,6 +1688,10 @@ input MenuItemCreateInput {
 type MenuItemDelete {
   errors: [Error!]
   menuItem: MenuItem
+}
+
+input MenuItemFilterInput {
+  search: String
 }
 
 input MenuItemInput {
@@ -1980,6 +1992,11 @@ type Mutations {
   userBulkSetActive(ids: [ID]!, isActive: Boolean!): UserBulkSetActive
   userUpdatePrivateMetadata(id: ID!, input: MetaInput!): UserUpdatePrivateMeta
   userClearStoredPrivateMetadata(id: ID!, input: MetaPath!): UserClearStoredPrivateMeta
+  serviceAccountCreate(input: ServiceAccountInput!): ServiceAccountCreate
+  serviceAccountUpdate(id: ID!, input: ServiceAccountInput!): ServiceAccountUpdate
+  serviceAccountDelete(id: ID!): ServiceAccountDelete
+  serviceAccountUpdatePrivateMetadata(id: ID!, input: MetaInput!): ServiceAccountUpdatePrivateMeta
+  serviceAccountClearStoredPrivateMetadata(id: ID!, input: MetaPath!): ServiceAccountClearStoredPrivateMeta
   passwordReset(email: String!): PasswordReset
 }
 
@@ -2095,6 +2112,7 @@ enum OrderDirection {
 input OrderDraftFilterInput {
   customer: String
   created: DateRangeInput
+  search: String
 }
 
 type OrderEvent implements Node {
@@ -2171,12 +2189,13 @@ input OrderFilterInput {
   status: [OrderStatusFilter]
   customer: String
   created: DateRangeInput
+  search: String
 }
 
 type OrderLine implements Node {
   id: ID!
   productName: String!
-  translatedProductName: String!
+  variantName: String!
   productSku: String!
   isShippingRequired: Boolean!
   quantity: Int!
@@ -2186,6 +2205,8 @@ type OrderLine implements Node {
   thumbnail(size: Int): Image
   unitPrice: TaxedMoney
   variant: ProductVariant
+  translatedProductName: String!
+  translatedVariantName: String!
 }
 
 input OrderLineCreateInput {
@@ -2292,6 +2313,10 @@ type PageCreate {
 type PageDelete {
   errors: [Error!]
   page: Page
+}
+
+input PageFilterInput {
+  search: String
 }
 
 type PageInfo {
@@ -2430,6 +2455,7 @@ type PermissionDisplay {
 enum PermissionEnum {
   MANAGE_USERS
   MANAGE_STAFF
+  MANAGE_SERVICE_ACCOUNTS
   IMPERSONATE_USERS
   MANAGE_DISCOUNTS
   MANAGE_GIFT_CARD
@@ -2460,6 +2486,11 @@ type PluginCountableConnection {
 type PluginCountableEdge {
   node: Plugin!
   cursor: String!
+}
+
+input PluginFilterInput {
+  active: Boolean
+  search: String
 }
 
 type PluginUpdate {
@@ -2661,6 +2692,8 @@ enum ProductOrderField {
   PRICE
   MINIMAL_PRICE
   DATE
+  TYPE
+  PUBLISHED
 }
 
 type ProductPricingInfo {
@@ -2922,7 +2955,7 @@ type Query {
   digitalContents(query: String, level: Int, before: String, after: String, first: Int, last: Int): DigitalContentCountableConnection
   attributes(query: String, inCategory: ID, inCollection: ID, filter: AttributeFilterInput, sortBy: AttributeSortingInput, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
   attribute(id: ID!): Attribute
-  categories(query: String, level: Int, before: String, after: String, first: Int, last: Int): CategoryCountableConnection
+  categories(query: String, filter: CategoryFilterInput, level: Int, before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   category(id: ID!): Category
   collection(id: ID!): Collection
   collections(filter: CollectionFilterInput, query: String, before: String, after: String, first: Int, last: Int): CollectionCountableConnection
@@ -2937,7 +2970,7 @@ type Query {
   payments(before: String, after: String, first: Int, last: Int): PaymentCountableConnection
   paymentClientToken(gateway: GatewaysEnum): String
   page(id: ID, slug: String): Page
-  pages(query: String, before: String, after: String, first: Int, last: Int): PageCountableConnection
+  pages(query: String, filter: PageFilterInput, before: String, after: String, first: Int, last: Int): PageCountableConnection
   homepageEvents(before: String, after: String, first: Int, last: Int): OrderEventCountableConnection
   order(id: ID!): Order
   orders(filter: OrderFilterInput, query: String, created: ReportingPeriod, status: OrderStatusFilter, before: String, after: String, first: Int, last: Int): OrderCountableConnection
@@ -2945,13 +2978,13 @@ type Query {
   ordersTotal(period: ReportingPeriod): TaxedMoney
   orderByToken(token: String!): Order
   menu(id: ID, name: String): Menu
-  menus(query: String, before: String, after: String, first: Int, last: Int): MenuCountableConnection
+  menus(query: String, filter: MenuFilterInput, before: String, after: String, first: Int, last: Int): MenuCountableConnection
   menuItem(id: ID!): MenuItem
-  menuItems(query: String, before: String, after: String, first: Int, last: Int): MenuItemCountableConnection
+  menuItems(query: String, filter: MenuItemFilterInput, before: String, after: String, first: Int, last: Int): MenuItemCountableConnection
   giftCard(id: ID!): GiftCard
   giftCards(before: String, after: String, first: Int, last: Int): GiftCardCountableConnection
   plugin(id: ID!): Plugin
-  plugins(before: String, after: String, first: Int, last: Int): PluginCountableConnection
+  plugins(filter: PluginFilterInput, before: String, after: String, first: Int, last: Int): PluginCountableConnection
   sale(id: ID!): Sale
   sales(filter: SaleFilterInput, query: String, before: String, after: String, first: Int, last: Int): SaleCountableConnection
   voucher(id: ID!): Voucher
@@ -2965,6 +2998,8 @@ type Query {
   customers(filter: CustomerFilterInput, query: String, before: String, after: String, first: Int, last: Int): UserCountableConnection
   me: User
   staffUsers(filter: StaffUserInput, query: String, before: String, after: String, first: Int, last: Int): UserCountableConnection
+  serviceAccounts(filter: ServiceAccountFilterInput, before: String, after: String, first: Int, last: Int): ServiceAccountCountableConnection
+  serviceAccount(id: ID!): ServiceAccount
   user(id: ID!): User
   node(id: ID!): Node
 }
@@ -3090,6 +3125,65 @@ type SelectedAttribute {
 input SeoInput {
   title: String
   description: String
+}
+
+type ServiceAccount implements Node {
+  id: ID!
+  authToken: String
+  created: DateTime
+  isActive: Boolean
+  privateMeta: [MetaStore]!
+  meta: [MetaStore]!
+  permissions: [PermissionDisplay]
+  name: String
+}
+
+type ServiceAccountClearStoredPrivateMeta {
+  errors: [Error!]
+  serviceAccount: ServiceAccount
+}
+
+type ServiceAccountCountableConnection {
+  pageInfo: PageInfo!
+  edges: [ServiceAccountCountableEdge!]!
+  totalCount: Int
+}
+
+type ServiceAccountCountableEdge {
+  node: ServiceAccount!
+  cursor: String!
+}
+
+type ServiceAccountCreate {
+  errors: [Error!]
+  authToken: String
+  serviceAccount: ServiceAccount
+}
+
+type ServiceAccountDelete {
+  errors: [Error!]
+  serviceAccount: ServiceAccount
+}
+
+input ServiceAccountFilterInput {
+  search: String
+  isActive: Boolean
+}
+
+input ServiceAccountInput {
+  name: String
+  isActive: Boolean
+  permissions: [PermissionEnum]
+}
+
+type ServiceAccountUpdate {
+  errors: [Error!]
+  serviceAccount: ServiceAccount
+}
+
+type ServiceAccountUpdatePrivateMeta {
+  errors: [Error!]
+  serviceAccount: ServiceAccount
 }
 
 type SetPassword {
@@ -3307,6 +3401,7 @@ input StaffCreateInput {
   note: String
   permissions: [PermissionEnum]
   sendPasswordEmail: Boolean
+  redirectUrl: String
 }
 
 type StaffDelete {
@@ -3534,6 +3629,7 @@ input UserCreateInput {
   isActive: Boolean
   note: String
   sendPasswordEmail: Boolean
+  redirectUrl: String
 }
 
 type UserUpdateMeta {
