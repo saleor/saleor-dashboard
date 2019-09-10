@@ -229,7 +229,8 @@ export default (colors: IThemeColors): Theme =>
         },
         root: {
           "& fieldset": {
-            borderColor: [[colors.input.border], "!important"] as any
+            borderColor: [[colors.input.border], "!important"] as any,
+            background: colors.background.paper
           },
           "& legend": {
             display: "none"
