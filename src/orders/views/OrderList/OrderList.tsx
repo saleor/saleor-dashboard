@@ -229,8 +229,8 @@ export const OrderList: React.StatelessComponent<OrderListProps> = ({
                           </Button>
                         }
                         onSearchChange={email => changeFilterField({ email })}
-                        onFilterAdd={filter =>
-                          changeFilterField(createFilter(filter))
+                        onFilterAdd={data =>
+                          changeFilterField(createFilter(params, data))
                         }
                         onFilterSave={() => openModal("save-search")}
                         onFilterDelete={() => openModal("delete-search")}

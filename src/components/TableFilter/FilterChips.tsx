@@ -99,16 +99,16 @@ const useStyles = makeStyles(
   }
 );
 
-interface FilterChipProps {
+interface FilterChipProps<TFilterKeys = string> {
   currencySymbol: string;
-  menu: IFilter;
+  menu: IFilter<TFilterKeys>;
   filtersList: Filter[];
   filterLabel: string;
   placeholder: string;
   search: string;
   isCustomSearch: boolean;
   onSearchChange: (event: React.ChangeEvent<any>) => void;
-  onFilterAdd: (filter: FilterContentSubmitData) => void;
+  onFilterAdd: (filter: FilterContentSubmitData<TFilterKeys>) => void;
   onFilterDelete: () => void;
   onFilterSave: () => void;
 }

@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Crate filter chips 1`] = `
+Array [
+  Object {
+    "label": "Date from 2019-09-01",
+    "onClick": [Function],
+  },
+  Object {
+    "label": "Date to 2019-09-10",
+    "onClick": [Function],
+  },
+  Object {
+    "label": "Fulfilled",
+    "onClick": [Function],
+  },
+  Object {
+    "label": "Partially Fulfilled",
+    "onClick": [Function],
+  },
+]
+`;
+
+exports[`Create filter object with date 1`] = `
+Object {
+  "dateFrom": "2019-09-01",
+  "dateTo": "2019-09-01",
+}
+`;
+
+exports[`Create filter object with date last month 1`] = `
+Object {
+  "dateFrom": "2019-09-01",
+  "dateTo": undefined,
+}
+`;
+
+exports[`Create filter object with date last week 1`] = `
+Object {
+  "dateFrom": "2019-09-01",
+  "dateTo": undefined,
+}
+`;
+
+exports[`Create filter object with date last year 1`] = `
+Object {
+  "dateFrom": "2019-09-01",
+  "dateTo": undefined,
+}
+`;
+
+exports[`Create filter object with date range 1`] = `
+Object {
+  "dateFrom": "2019-09-01",
+  "dateTo": "2019-09-10",
+}
+`;
+
+exports[`Create filter object with fulfillment status 1`] = `
+Object {
+  "status": Array [
+    "PARTIALLY_FULFILLED",
+  ],
+}
+`;
+
+exports[`Create filter object with multiple deduped values 1`] = `
+Object {
+  "status": Array [
+    "FULFILLED",
+  ],
+}
+`;
+
+exports[`Create filter object with multiple values 1`] = `
+Object {
+  "status": Array [
+    "FULFILLED",
+    "PARTIALLY_FULFILLED",
+  ],
+}
+`;
+
+exports[`Get filter variables from multiple status value 1`] = `
+Object {
+  "created": Object {
+    "gte": "2019-09-01",
+    "lte": "2019-09-10",
+  },
+  "customer": "email@example.com",
+  "status": Array [
+    "FULFILLED",
+    "PARTIALLY_FULFILLED",
+  ],
+}
+`;
+
+exports[`Get filter variables from single status value 1`] = `
+Object {
+  "created": Object {
+    "gte": "2019-09-01",
+    "lte": "2019-09-10",
+  },
+  "customer": "email@example.com",
+  "status": Array [
+    "FULFILLED",
+  ],
+}
+`;

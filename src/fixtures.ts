@@ -46,7 +46,7 @@ export const countries = [
   { code: "AS", label: "American Samoa" }
 ];
 
-export const filterPageProps: FilterPageProps<{}> = {
+export const filterPageProps: FilterPageProps<{}, unknown> = {
   currencySymbol: "USD",
   currentTab: 0,
   filterTabs: [
