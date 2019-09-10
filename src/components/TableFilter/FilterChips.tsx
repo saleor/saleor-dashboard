@@ -69,7 +69,7 @@ const useStyles = makeStyles(
         "& a": {
           paddingBottom: 10
         },
-        borderBottom: "1px solid #e8e8e8",
+        borderBottom: `1px solid ${theme.palette.divider}`,
         display: "flex",
         marginTop: theme.spacing.unit,
         padding: `0 ${theme.spacing.unit * 3}px ${theme.spacing.unit}px`
