@@ -1,14 +1,14 @@
 import ButtonBase from "@material-ui/core/ButtonBase";
 import { Theme } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import TextField, { TextFieldProps } from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import ClearIcon from "@material-ui/icons/Clear";
-import { createStyles, makeStyles, useTheme } from "@material-ui/styles";
+import { makeStyles, useTheme } from "@material-ui/styles";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import Filter, { FilterContentSubmitData, IFilter } from "../Filter";
+import Filter from "../Filter";
+import FilterActions, { FilterActionsProps } from "../Filter/FilterActions";
 import Hr from "../Hr";
 import Link from "../Link";
 
@@ -17,104 +17,68 @@ export interface Filter {
   onClick: () => void;
 }
 
-const useInputStyles = makeStyles({
-  input: {
-    padding: "10px 12px"
-  },
-  root: {
-    flex: 1
-  }
-});
-
-const Search: React.FC<TextFieldProps> = props => {
-  const classes = useInputStyles({});
-  return (
-    <TextField
-      {...props}
-      className={classes.root}
-      inputProps={{
-        className: classes.input
-      }}
-    />
-  );
-};
-
 const useStyles = makeStyles(
-  (theme: Theme) =>
-    createStyles({
-      actionContainer: {
-        display: "flex",
-        flexWrap: "wrap",
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${
-          theme.spacing.unit
-        }px ${theme.spacing.unit * 3}px`
+  (theme: Theme) => ({
+    filterButton: {
+      alignItems: "center",
+      backgroundColor: fade(theme.palette.primary.main, 0.8),
+      borderRadius: "19px",
+      display: "flex",
+      height: "38px",
+      justifyContent: "space-around",
+      margin: `0 ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
+      marginLeft: 0,
+      padding: "0 16px"
+    },
+    filterChipContainer: {
+      display: "flex",
+      flex: 1,
+      flexWrap: "wrap"
+    },
+    filterContainer: {
+      "& a": {
+        paddingBottom: 10
       },
-      filterButton: {
-        alignItems: "center",
-        backgroundColor: fade(theme.palette.primary.main, 0.8),
-        borderRadius: "19px",
-        display: "flex",
-        height: "38px",
-        justifyContent: "space-around",
-        margin: `0 ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
-        marginLeft: 0,
-        padding: "0 16px"
-      },
-      filterChipContainer: {
-        display: "flex",
-        flex: 1,
-        flexWrap: "wrap"
-      },
-      filterContainer: {
-        "& a": {
-          paddingBottom: 10
-        },
-        borderBottom: `1px solid ${theme.palette.divider}`,
-        display: "flex",
-        marginTop: theme.spacing.unit,
-        padding: `0 ${theme.spacing.unit * 3}px ${theme.spacing.unit}px`
-      },
-      filterIcon: {
-        color: theme.palette.common.white,
-        height: 16,
-        width: 16
-      },
-      filterIconContainer: {
-        WebkitAppearance: "none",
-        background: "transparent",
-        border: "none",
-        borderRadius: "100%",
-        cursor: "pointer",
-        height: 32,
-        marginRight: -13,
-        padding: 8,
-        width: 32
-      },
-      filterLabel: {
-        marginBottom: theme.spacing.unit
-      },
-      filterText: {
-        color: theme.palette.common.white,
-        fontSize: 14,
-        fontWeight: 400 as 400,
-        lineHeight: "38px"
-      }
-    }),
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      display: "flex",
+      marginTop: theme.spacing.unit,
+      padding: `0 ${theme.spacing.unit * 3}px ${theme.spacing.unit}px`
+    },
+    filterIcon: {
+      color: theme.palette.common.white,
+      height: 16,
+      width: 16
+    },
+    filterIconContainer: {
+      WebkitAppearance: "none",
+      background: "transparent",
+      border: "none",
+      borderRadius: "100%",
+      cursor: "pointer",
+      height: 32,
+      marginRight: -13,
+      padding: 8,
+      width: 32
+    },
+    filterLabel: {
+      marginBottom: theme.spacing.unit
+    },
+    filterText: {
+      color: theme.palette.common.white,
+      fontSize: 14,
+      fontWeight: 400 as 400,
+      lineHeight: "38px"
+    }
+  }),
   {
     name: "FilterChips"
   }
 );
 
-interface FilterChipProps<TFilterKeys = string> {
-  currencySymbol: string;
-  menu: IFilter<TFilterKeys>;
+interface FilterChipProps extends FilterActionsProps {
   filtersList: Filter[];
-  filterLabel: string;
-  placeholder: string;
   search: string;
   isCustomSearch: boolean;
-  onSearchChange: (event: React.ChangeEvent<any>) => void;
-  onFilterAdd: (filter: FilterContentSubmitData<TFilterKeys>) => void;
   onFilterDelete: () => void;
   onFilterSave: () => void;
 }
@@ -137,20 +101,15 @@ export const FilterChips: React.FC<FilterChipProps> = ({
 
   return (
     <>
-      <div className={classes.actionContainer}>
-        <Filter
-          currencySymbol={currencySymbol}
-          menu={menu}
-          filterLabel={filterLabel}
-          onFilterAdd={onFilterAdd}
-        />
-        <Search
-          fullWidth
-          placeholder={placeholder}
-          value={search}
-          onChange={onSearchChange}
-        />
-      </div>
+      <FilterActions
+        currencySymbol={currencySymbol}
+        menu={menu}
+        filterLabel={filterLabel}
+        placeholder={placeholder}
+        search={search}
+        onSearchChange={onSearchChange}
+        onFilterAdd={onFilterAdd}
+      />
       {search || (filtersList && filtersList.length) ? (
         <div className={classes.filterContainer}>
           <div className={classes.filterChipContainer}>

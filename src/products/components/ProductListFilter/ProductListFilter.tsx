@@ -5,11 +5,10 @@ import { FieldType, IFilter } from "@saleor/components/Filter";
 import FilterBar from "@saleor/components/FilterBar";
 import { FilterProps } from "@saleor/types";
 import { StockAvailability } from "@saleor/types/globalTypes";
-import { ProductListUrlFilters } from "../../urls";
 
-type ProductListFilterProps = FilterProps<
-  ProductListUrlFilters,
-  ProductFilterKeys
+type ProductListFilterProps = Omit<
+  FilterProps,
+  "allTabLabel" | "filterLabel" | "searchPlaceholder"
 >;
 
 export enum ProductFilterKeys {
@@ -133,7 +132,22 @@ const ProductListFilter: React.FC<ProductListFilterProps> = props => {
     }
   ];
 
-  return <FilterBar {...props} filterMenu={filterMenu} />;
+  return (
+    <FilterBar
+      {...props}
+      allTabLabel={intl.formatMessage({
+        defaultMessage: "All Products",
+        description: "tab name"
+      })}
+      filterMenu={filterMenu}
+      filterLabel={intl.formatMessage({
+        defaultMessage: "Select all products where:"
+      })}
+      searchPlaceholder={intl.formatMessage({
+        defaultMessage: "Search Products..."
+      })}
+    />
+  );
 };
 ProductListFilter.displayName = "ProductListFilter";
 export default ProductListFilter;

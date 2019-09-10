@@ -355,7 +355,7 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                             onFilterDelete={() => openModal("delete-search")}
                             onTabChange={handleTabChange}
                             initialSearch={params.query || ""}
-                            filterTabs={getFilterTabs()}
+                            tabs={getFilterTabs().map(tab => tab.name)}
                           />
                           <ActionDialog
                             open={params.action === "delete"}

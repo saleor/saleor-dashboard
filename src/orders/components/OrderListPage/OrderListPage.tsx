@@ -10,14 +10,13 @@ import { sectionNames } from "@saleor/intl";
 import { OrderFilterKeys } from "@saleor/orders/components/OrderListFilter";
 import { FilterPageProps, ListActions, PageListProps } from "@saleor/types";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
-import { OrderListUrlFilters } from "../../urls";
 import OrderList from "../OrderList";
 import OrderListFilter from "../OrderListFilter";
 
 export interface OrderListPageProps
   extends PageListProps,
     ListActions,
-    FilterPageProps<OrderListUrlFilters, OrderFilterKeys> {
+    FilterPageProps {
   orders: OrderList_orders_edges_node[];
 }
 
@@ -25,8 +24,8 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   currencySymbol,
   currentTab,
   filtersList,
-  filterTabs,
   initialSearch,
+  tabs,
   onAdd,
   onAll,
   onSearchChange,
@@ -59,7 +58,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           filterLabel={intl.formatMessage({
             defaultMessage: "Select all orders where:"
           })}
-          filterTabs={filterTabs}
+          filterTabs={tabs}
           filtersList={filtersList}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({

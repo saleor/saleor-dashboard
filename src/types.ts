@@ -2,7 +2,6 @@ import { MutationResult } from "react-apollo";
 
 import { FilterContentSubmitData } from "./components/Filter";
 import { Filter } from "./components/TableFilter";
-import { GetFilterTabsOutput } from "./utils/filters";
 
 export interface UserError {
   field: string;
@@ -65,24 +64,32 @@ export interface PageListProps<TColumns extends string = string>
   defaultSettings?: ListSettings<TColumns>;
   onAdd: () => void;
 }
-export interface FilterPageProps<TUrlFilters, TFilterKeys> {
-  currencySymbol: string;
-  currentTab: number;
-  filterTabs: GetFilterTabsOutput<TUrlFilters>;
-  filtersList: Filter[];
+
+export interface SearchPageProps {
   initialSearch: string;
-  onAll: () => void;
   onSearchChange: (value: string) => void;
-  onFilterAdd: (filter: FilterContentSubmitData<TFilterKeys>) => void;
-  onFilterDelete: () => void;
-  onFilterSave: () => void;
-  onTabChange: (tab: number) => void;
 }
-export interface FilterProps<TUrlFilters, TFilterKeys>
-  extends FilterPageProps<TUrlFilters, TFilterKeys> {
+export interface FilterPageProps extends SearchPageProps, TabPageProps {
+  currencySymbol: string;
+  filtersList: Filter[];
+  onFilterAdd: (filter: FilterContentSubmitData) => void;
+}
+
+export interface SearchProps {
+  searchPlaceholder: string;
+}
+export interface FilterProps extends FilterPageProps, SearchProps {
   allTabLabel: string;
   filterLabel: string;
-  searchPlaceholder: string;
+}
+
+export interface TabPageProps {
+  currentTab: number;
+  tabs: string[];
+  onAll: () => void;
+  onTabChange: (tab: number) => void;
+  onTabDelete: () => void;
+  onTabSave: () => void;
 }
 
 export interface PartialMutationProviderOutput<
@@ -134,3 +141,5 @@ export interface FetchMoreProps {
   hasMore: boolean;
   onFetchMore: () => void;
 }
+
+export type TabActionDialog = "save-search" | "delete-search";

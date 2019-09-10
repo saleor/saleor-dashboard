@@ -236,7 +236,7 @@ export const OrderList: React.StatelessComponent<OrderListProps> = ({
                         onFilterDelete={() => openModal("delete-search")}
                         onTabChange={handleTabChange}
                         initialSearch={params.email || ""}
-                        filterTabs={getFilterTabs()}
+                        filterTabs={getFilterTabs().map(tab => tab.name)}
                         onAll={() =>
                           changeFilters({
                             status: undefined

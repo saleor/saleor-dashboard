@@ -8,7 +8,8 @@ import {
   Filters,
   FiltersWithMultipleValues,
   Pagination,
-  SingleAction
+  SingleAction,
+  TabActionDialog
 } from "../types";
 
 const orderSectionUrl = "/orders";
@@ -25,7 +26,7 @@ export enum OrderListUrlFiltersWithMultipleValuesEnum {
 }
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
   FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValuesEnum>;
-export type OrderListUrlDialog = "cancel" | "save-search" | "delete-search";
+export type OrderListUrlDialog = "cancel" | TabActionDialog;
 export type OrderListUrlQueryParams = BulkAction &
   Dialog<OrderListUrlDialog> &
   OrderListUrlFilters &

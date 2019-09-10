@@ -24,14 +24,13 @@ import {
   ListActions,
   PageListProps
 } from "@saleor/types";
-import { ProductListUrlFilters } from "../../urls";
 import ProductList from "../ProductList";
 import ProductListFilter, { ProductFilterKeys } from "../ProductListFilter";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
-    FilterPageProps<ProductListUrlFilters, ProductFilterKeys>,
+    FilterPageProps,
     FetchMoreProps {
   availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
@@ -52,13 +51,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     currentTab,
     defaultSettings,
     filtersList,
-    filterTabs,
     gridAttributes,
     availableInGridAttributes,
     hasMore,
     initialSearch,
     loading,
     settings,
+    tabs,
     totalGridAttributes,
     onAdd,
     onAll,
@@ -137,21 +136,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       </PageHeader>
       <Card>
         <ProductListFilter
-          allTabLabel={intl.formatMessage({
-            defaultMessage: "All Products",
-            description: "tab name"
-          })}
           currencySymbol={currencySymbol}
           currentTab={currentTab}
-          filterLabel={intl.formatMessage({
-            defaultMessage: "Select all products where:"
-          })}
-          filterTabs={filterTabs}
           filtersList={filtersList}
           initialSearch={initialSearch}
-          searchPlaceholder={intl.formatMessage({
-            defaultMessage: "Search Products..."
-          })}
+          tabs={tabs}
           onAll={onAll}
           onSearchChange={onSearchChange}
           onFilterAdd={onFilterAdd}

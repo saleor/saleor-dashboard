@@ -1,7 +1,14 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { ActiveTab, BulkAction, Dialog, Filters, Pagination } from "../types";
+import {
+  ActiveTab,
+  BulkAction,
+  Dialog,
+  Filters,
+  Pagination,
+  TabActionDialog
+} from "../types";
 
 const productSection = "/products/";
 
@@ -13,8 +20,7 @@ export type ProductListUrlDialog =
   | "publish"
   | "unpublish"
   | "delete"
-  | "save-search"
-  | "delete-search";
+  | TabActionDialog;
 export enum ProductListUrlFiltersEnum {
   isPublished = "isPublished",
   priceFrom = "priceFrom",
