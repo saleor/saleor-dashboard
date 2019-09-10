@@ -19,6 +19,8 @@ export type IThemeColors = Record<
 } & {
   checkbox: Record<"default" | "disabled", string>;
 } & {
+  divider: string;
+} & {
   font: Record<
     "default" | "gray" | "button" | "textButton" | "textDisabled",
     string
@@ -395,6 +397,7 @@ export default (colors: IThemeColors): Theme =>
     },
     palette: {
       background: colors.background,
+      divider: colors.divider,
       error: {
         main: colors.error
       },
