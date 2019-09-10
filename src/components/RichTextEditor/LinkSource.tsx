@@ -84,7 +84,7 @@ const LinkSource: React.FC<LinkSourceProps> = ({
               <Button onClick={onClose}>
                 <FormattedMessage {...buttonMessages.cancel} />
               </Button>
-              <Button onClick={submit} color="secondary" variant="contained">
+              <Button onClick={submit} color="primary" variant="contained">
                 <FormattedMessage {...buttonMessages.save} />
               </Button>
             </DialogActions>
