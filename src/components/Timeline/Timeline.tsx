@@ -35,7 +35,7 @@ const styles = (theme: Theme) =>
           opacity: [[1], "!important"] as any
         }
       },
-      background: theme.palette.common.white
+      background: theme.palette.background.paper
     },
     noteRoot: {
       left: -theme.spacing.unit * 8.5 - 1,
