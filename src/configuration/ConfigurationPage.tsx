@@ -56,7 +56,7 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "1fr"
       },
-      borderTop: `solid 1px #eaeaea`,
+      borderTop: `solid 1px ${theme.palette.divider}`,
       display: "grid",
       gridColumnGap: theme.spacing.unit * 4 + "px",
       gridTemplateColumns: "1fr 3fr",

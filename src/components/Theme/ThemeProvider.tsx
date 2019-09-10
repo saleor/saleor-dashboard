@@ -15,6 +15,7 @@ const dark: IThemeColors = {
   checkbox: {
     default: "#FFFFFF"
   },
+  divider: "#252728",
   error: "#C22D74",
   font: {
     button: "#202124",
@@ -49,6 +50,7 @@ const light: IThemeColors = {
   checkbox: {
     default: "#616161"
   },
+  divider: "#EAEAEA",
   error: "#C22D74",
   font: {
     button: "#FFFFFF",
