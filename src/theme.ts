@@ -363,7 +363,7 @@ export default (colors: IThemeColors): Theme =>
         },
         hover: {
           "$root&:hover": {
-            backgroundColor: fade(colors.primary, 0.2)
+            backgroundColor: fade(colors.primary, 0.3)
           }
         },
         root: {
