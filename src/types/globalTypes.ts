@@ -33,6 +33,11 @@ export enum AuthorizationKeyType {
   GOOGLE_OAUTH2 = "GOOGLE_OAUTH2",
 }
 
+export enum CollectionPublished {
+  HIDDEN = "HIDDEN",
+  PUBLISHED = "PUBLISHED",
+}
+
 export enum ConfigurationTypeFieldEnum {
   BOOLEAN = "BOOLEAN",
   STRING = "STRING",
@@ -341,6 +346,11 @@ export interface CollectionCreateInput {
   seo?: SeoInput | null;
   publicationDate?: any | null;
   products?: (string | null)[] | null;
+}
+
+export interface CollectionFilterInput {
+  published?: CollectionPublished | null;
+  search?: string | null;
 }
 
 export interface CollectionInput {

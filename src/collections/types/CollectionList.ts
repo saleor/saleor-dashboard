@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { CollectionFilterInput } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: CollectionList
 // ====================================================
@@ -47,4 +49,5 @@ export interface CollectionListVariables {
   after?: string | null;
   last?: number | null;
   before?: string | null;
+  filter?: CollectionFilterInput | null;
 }

@@ -60,8 +60,15 @@ export const collectionList = gql`
     $after: String
     $last: Int
     $before: String
+    $filter: CollectionFilterInput
   ) {
-    collections(first: $first, after: $after, before: $before, last: $last) {
+    collections(
+      first: $first
+      after: $after
+      before: $before
+      last: $last
+      filter: $filter
+    ) {
       edges {
         node {
           ...CollectionFragment

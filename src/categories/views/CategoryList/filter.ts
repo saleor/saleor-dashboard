@@ -9,7 +9,7 @@ import {
   CategoryListUrlQueryParams
 } from "../../urls";
 
-export const PRODUCT_FILTERS_KEY = "productFilters";
+export const CATEGORY_FILTERS_KEY = "categoryFilters";
 
 export function getFilterVariables(
   params: CategoryListUrlFilters
@@ -23,7 +23,7 @@ export const {
   deleteFilterTab,
   getFilterTabs,
   saveFilterTab
-} = createFilterTabUtils<CategoryListUrlFilters>(PRODUCT_FILTERS_KEY);
+} = createFilterTabUtils<CategoryListUrlFilters>(CATEGORY_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   CategoryListUrlQueryParams,

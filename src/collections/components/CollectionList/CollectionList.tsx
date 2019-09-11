@@ -1,4 +1,3 @@
-import Card from "@material-ui/core/Card";
 import {
   createStyles,
   Theme,
@@ -74,118 +73,110 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
     const intl = useIntl();
 
     return (
-      <Card>
-        <Table>
-          <TableHead
-            colSpan={numberOfColumns}
-            selected={selected}
-            disabled={disabled}
-            items={collections}
-            toggleAll={toggleAll}
-            toolbar={toolbar}
-          >
-            <TableCell className={classes.colName}>
-              <FormattedMessage defaultMessage="Category Name" />
-            </TableCell>
-            <TableCell className={classes.colProducts}>
-              <FormattedMessage defaultMessage="No. of Products" />
-            </TableCell>
-            <TableCell className={classes.colAvailability}>
-              <FormattedMessage
-                defaultMessage="Availability"
-                description="collection availability"
-              />
-            </TableCell>
-          </TableHead>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                colSpan={numberOfColumns}
-                settings={settings}
-                hasNextPage={
-                  pageInfo && !disabled ? pageInfo.hasNextPage : false
-                }
-                onNextPage={onNextPage}
-                onUpdateListSettings={onUpdateListSettings}
-                hasPreviousPage={
-                  pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-                }
-                onPreviousPage={onPreviousPage}
-              />
-            </TableRow>
-          </TableFooter>
-          <TableBody>
-            {renderCollection(
-              collections,
-              collection => {
-                const isSelected = collection
-                  ? isChecked(collection.id)
-                  : false;
-                return (
-                  <TableRow
-                    className={classes.tableRow}
-                    hover={!!collection}
-                    onClick={collection ? onRowClick(collection.id) : undefined}
-                    key={collection ? collection.id : "skeleton"}
-                    selected={isSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        disabled={disabled}
-                        disableClickPropagation
-                        onChange={() => toggle(collection.id)}
-                      />
-                    </TableCell>
-                    <TableCell className={classes.colName}>
-                      {maybe<React.ReactNode>(
-                        () => collection.name,
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.colProducts}>
-                      {maybe<React.ReactNode>(
-                        () => collection.products.totalCount,
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.colAvailability}>
-                      {maybe(
-                        () => (
-                          <StatusLabel
-                            status={
-                              collection.isPublished ? "success" : "error"
-                            }
-                            label={
-                              collection.isPublished
-                                ? intl.formatMessage({
-                                    defaultMessage: "Published",
-                                    description: "collection is published"
-                                  })
-                                : intl.formatMessage({
-                                    defaultMessage: "Not published",
-                                    description: "collection is not published"
-                                  })
-                            }
-                          />
-                        ),
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                  </TableRow>
-                );
-              },
-              () => (
-                <TableRow>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No collections found" />
+      <Table>
+        <TableHead
+          colSpan={numberOfColumns}
+          selected={selected}
+          disabled={disabled}
+          items={collections}
+          toggleAll={toggleAll}
+          toolbar={toolbar}
+        >
+          <TableCell className={classes.colName}>
+            <FormattedMessage defaultMessage="Category Name" />
+          </TableCell>
+          <TableCell className={classes.colProducts}>
+            <FormattedMessage defaultMessage="No. of Products" />
+          </TableCell>
+          <TableCell className={classes.colAvailability}>
+            <FormattedMessage
+              defaultMessage="Availability"
+              description="collection availability"
+            />
+          </TableCell>
+        </TableHead>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={numberOfColumns}
+              settings={settings}
+              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+              onNextPage={onNextPage}
+              onUpdateListSettings={onUpdateListSettings}
+              hasPreviousPage={
+                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
+              }
+              onPreviousPage={onPreviousPage}
+            />
+          </TableRow>
+        </TableFooter>
+        <TableBody>
+          {renderCollection(
+            collections,
+            collection => {
+              const isSelected = collection ? isChecked(collection.id) : false;
+              return (
+                <TableRow
+                  className={classes.tableRow}
+                  hover={!!collection}
+                  onClick={collection ? onRowClick(collection.id) : undefined}
+                  key={collection ? collection.id : "skeleton"}
+                  selected={isSelected}
+                >
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      checked={isSelected}
+                      disabled={disabled}
+                      disableClickPropagation
+                      onChange={() => toggle(collection.id)}
+                    />
+                  </TableCell>
+                  <TableCell className={classes.colName}>
+                    {maybe<React.ReactNode>(
+                      () => collection.name,
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.colProducts}>
+                    {maybe<React.ReactNode>(
+                      () => collection.products.totalCount,
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.colAvailability}>
+                    {maybe(
+                      () => (
+                        <StatusLabel
+                          status={collection.isPublished ? "success" : "error"}
+                          label={
+                            collection.isPublished
+                              ? intl.formatMessage({
+                                  defaultMessage: "Published",
+                                  description: "collection is published"
+                                })
+                              : intl.formatMessage({
+                                  defaultMessage: "Not published",
+                                  description: "collection is not published"
+                                })
+                          }
+                        />
+                      ),
+                      <Skeleton />
+                    )}
                   </TableCell>
                 </TableRow>
-              )
-            )}
-          </TableBody>
-        </Table>
-      </Card>
+              );
+            },
+            () => (
+              <TableRow>
+                <TableCell colSpan={numberOfColumns}>
+                  <FormattedMessage defaultMessage="No collections found" />
+                </TableCell>
+              </TableRow>
+            )
+          )}
+        </TableBody>
+      </Table>
     );
   }
 );

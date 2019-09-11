@@ -65,7 +65,7 @@ export const CategoryListPage: React.StatelessComponent<CategoryTableProps> = ({
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
-            defaultMessage: "Search Attribute"
+            defaultMessage: "Search Category"
           })}
           tabs={tabs}
           onAll={onAll}
