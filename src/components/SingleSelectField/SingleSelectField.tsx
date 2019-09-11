@@ -11,10 +11,10 @@ import { FormattedMessage } from "react-intl";
 
 const styles = createStyles({
   formControl: {
-    width: "100%",
     "& label": {
       top: "-3px"
-    }
+    },
+    width: "100%"
   }
 });
 

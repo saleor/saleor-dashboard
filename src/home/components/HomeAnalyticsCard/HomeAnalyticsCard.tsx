@@ -29,13 +29,13 @@ const styles = (theme: Theme) =>
     },
     cardSubtitle: {
       color: theme.palette.primary.main,
+      fontSize: 12,
       height: "20px",
-      lineHeight: 0.9,
-      fontSize: 12
+      lineHeight: 0.9
     },
     cardTitle: {
-      fontWeight: 500 as 500,
-      fontSize: 20
+      fontSize: 20,
+      fontWeight: 500 as 500
     },
     icon: {
       color: theme.palette.primary.contrastText,

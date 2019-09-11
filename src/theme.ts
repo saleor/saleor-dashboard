@@ -17,7 +17,7 @@ export type IThemeColors = Record<
 > & {
   background: Record<"default" | "paper", string>;
 } & {
-  checkbox: Record<"default" | "disabled", string>;
+  checkbox: Record<"default", string>;
 } & {
   divider: string;
 } & {
@@ -136,11 +136,11 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiInputBase: {
         input: {
-          zIndex: 1,
           "&::placeholder": {
             color: colors.font.gray,
             opacity: "1 !important" as any
-          }
+          },
+          zIndex: 1
         }
       },
       MuiInputLabel: {
@@ -233,8 +233,8 @@ export default (colors: IThemeColors): Theme =>
         },
         root: {
           "& fieldset": {
-            borderColor: [[colors.input.border], "!important"] as any,
-            background: colors.background.paper
+            background: colors.background.paper,
+            borderColor: [[colors.input.border], "!important"] as any
           },
           "& legend": {
             display: "none"
@@ -274,11 +274,11 @@ export default (colors: IThemeColors): Theme =>
         }
       },
       MuiSelect: {
-        outlined: {
-          padding: ["20px 12px 8px 12px", "!important"] as any
-        },
         disabled: {
           color: colors.input.disabledText
+        },
+        outlined: {
+          padding: ["20px 12px 8px 12px", "!important"] as any
         }
       },
       MuiSnackbarContent: {
@@ -291,9 +291,9 @@ export default (colors: IThemeColors): Theme =>
         },
         root: {
           backgroundColor: colors.background.paper,
-          color: colors.font.default,
           boxShadow:
-            "0 6px 10px 0px rgba(0, 0, 0, 0.15), 0 1px 18px 0px rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.10)"
+            "0 6px 10px 0px rgba(0, 0, 0, 0.15), 0 1px 18px 0px rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.10)",
+          color: colors.font.default
         }
       },
       MuiSwitch: {
@@ -404,6 +404,9 @@ export default (colors: IThemeColors): Theme =>
       }
     },
     palette: {
+      action: {
+        active: colors.checkbox.default
+      },
       background: colors.background,
       divider: colors.divider,
       error: {
@@ -423,9 +426,6 @@ export default (colors: IThemeColors): Theme =>
         hint: colors.font.gray,
         primary: colors.font.default,
         secondary: colors.font.gray
-      },
-      action: {
-        active: colors.checkbox.default
       }
     },
     props: {
