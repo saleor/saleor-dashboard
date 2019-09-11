@@ -136,6 +136,7 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiInputBase: {
         input: {
+          zIndex: 1,
           "&::placeholder": {
             color: colors.font.gray,
             opacity: "1 !important" as any
@@ -274,7 +275,10 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiSelect: {
         outlined: {
-          padding: ["15px 12px 17px", "!important"] as any
+          padding: ["20px 12px 8px 12px", "!important"] as any
+        },
+        disabled: {
+          color: colors.input.disabledText
         }
       },
       MuiSnackbarContent: {
