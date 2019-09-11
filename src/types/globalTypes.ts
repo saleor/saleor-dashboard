@@ -370,6 +370,14 @@ export interface ConfigurationItemInput {
   value: string;
 }
 
+export interface CustomerFilterInput {
+  dateJoined?: DateRangeInput | null;
+  moneySpent?: PriceRangeInput | null;
+  numberOfOrders?: IntRangeInput | null;
+  placedOrders?: DateRangeInput | null;
+  search?: string | null;
+}
+
 export interface CustomerInput {
   defaultBillingAddress?: AddressInput | null;
   defaultShippingAddress?: AddressInput | null;
@@ -413,6 +421,11 @@ export interface FulfillmentLineInput {
 export interface FulfillmentUpdateTrackingInput {
   trackingNumber?: string | null;
   notifyCustomer?: boolean | null;
+}
+
+export interface IntRangeInput {
+  gte?: number | null;
+  lte?: number | null;
 }
 
 export interface MenuCreateInput {

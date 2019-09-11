@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { CustomerFilterInput } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: ListCustomers
 // ====================================================
@@ -48,4 +50,5 @@ export interface ListCustomersVariables {
   before?: string | null;
   first?: number | null;
   last?: number | null;
+  filter?: CustomerFilterInput | null;
 }

@@ -60,7 +60,7 @@ const OrderDraftListPage: React.StatelessComponent<OrderDraftListPageProps> = ({
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
-            defaultMessage: "Search Collection"
+            defaultMessage: "Search Draft"
           })}
           tabs={tabs}
           onAll={onAll}

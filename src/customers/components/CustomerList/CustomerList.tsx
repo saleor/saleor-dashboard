@@ -1,4 +1,3 @@
-import Card from "@material-ui/core/Card";
 import {
   createStyles,
   Theme,
@@ -68,89 +67,87 @@ const CustomerList = withStyles(styles, { name: "CustomerList" })(
     selected,
     isChecked
   }: CustomerListProps) => (
-    <Card>
-      <Table>
-        <TableHead
-          colSpan={numberOfColumns}
-          selected={selected}
-          disabled={disabled}
-          items={customers}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-        >
-          <TableCell className={classes.colName}>
-            <FormattedMessage defaultMessage="Customer Name" />
-          </TableCell>
-          <TableCell className={classes.colEmail}>
-            <FormattedMessage defaultMessage="Customer Email" />
-          </TableCell>
-          <TableCell className={classes.colOrders}>
-            <FormattedMessage defaultMessage="No. of Orders" />
-          </TableCell>
-        </TableHead>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              settings={settings}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
-              onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
-            />
-          </TableRow>
-        </TableFooter>
-        <TableBody>
-          {renderCollection(
-            customers,
-            customer => {
-              const isSelected = customer ? isChecked(customer.id) : false;
+    <Table>
+      <TableHead
+        colSpan={numberOfColumns}
+        selected={selected}
+        disabled={disabled}
+        items={customers}
+        toggleAll={toggleAll}
+        toolbar={toolbar}
+      >
+        <TableCell className={classes.colName}>
+          <FormattedMessage defaultMessage="Customer Name" />
+        </TableCell>
+        <TableCell className={classes.colEmail}>
+          <FormattedMessage defaultMessage="Customer Email" />
+        </TableCell>
+        <TableCell className={classes.colOrders}>
+          <FormattedMessage defaultMessage="No. of Orders" />
+        </TableCell>
+      </TableHead>
+      <TableFooter>
+        <TableRow>
+          <TablePagination
+            colSpan={numberOfColumns}
+            settings={settings}
+            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+            onNextPage={onNextPage}
+            onUpdateListSettings={onUpdateListSettings}
+            hasPreviousPage={
+              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
+            }
+            onPreviousPage={onPreviousPage}
+          />
+        </TableRow>
+      </TableFooter>
+      <TableBody>
+        {renderCollection(
+          customers,
+          customer => {
+            const isSelected = customer ? isChecked(customer.id) : false;
 
-              return (
-                <TableRow
-                  className={!!customer ? classes.tableRow : undefined}
-                  hover={!!customer}
-                  key={customer ? customer.id : "skeleton"}
-                  selected={isSelected}
-                  onClick={customer ? onRowClick(customer.id) : undefined}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(customer.id)}
-                    />
-                  </TableCell>
-                  <TableCell className={classes.colName}>
-                    {getUserName(customer)}
-                  </TableCell>
-                  <TableCell className={classes.colEmail}>
-                    {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
-                  </TableCell>
-                  <TableCell className={classes.colOrders}>
-                    {maybe<React.ReactNode>(
-                      () => customer.orders.totalCount,
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                </TableRow>
-              );
-            },
-            () => (
-              <TableRow>
-                <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No customers found" />
+            return (
+              <TableRow
+                className={!!customer ? classes.tableRow : undefined}
+                hover={!!customer}
+                key={customer ? customer.id : "skeleton"}
+                selected={isSelected}
+                onClick={customer ? onRowClick(customer.id) : undefined}
+              >
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    checked={isSelected}
+                    disabled={disabled}
+                    disableClickPropagation
+                    onChange={() => toggle(customer.id)}
+                  />
+                </TableCell>
+                <TableCell className={classes.colName}>
+                  {getUserName(customer)}
+                </TableCell>
+                <TableCell className={classes.colEmail}>
+                  {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
+                </TableCell>
+                <TableCell className={classes.colOrders}>
+                  {maybe<React.ReactNode>(
+                    () => customer.orders.totalCount,
+                    <Skeleton />
+                  )}
                 </TableCell>
               </TableRow>
-            )
-          )}
-        </TableBody>
-      </Table>
-    </Card>
+            );
+          },
+          () => (
+            <TableRow>
+              <TableCell colSpan={numberOfColumns}>
+                <FormattedMessage defaultMessage="No customers found" />
+              </TableCell>
+            </TableRow>
+          )
+        )}
+      </TableBody>
+    </Table>
   )
 );
 CustomerList.displayName = "CustomerList";
