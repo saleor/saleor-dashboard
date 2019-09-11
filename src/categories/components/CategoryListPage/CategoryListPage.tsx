@@ -1,44 +1,55 @@
 import Button from "@material-ui/core/Button";
-
+import Card from "@material-ui/core/Card";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
-import { ListActions, PageListProps } from "@saleor/types";
+import {
+  ListActions,
+  PageListProps,
+  SearchPageProps,
+  TabPageProps
+} from "@saleor/types";
 import CategoryList from "../CategoryList";
 
-export interface CategoryTableProps extends PageListProps, ListActions {
-  categories: Array<{
-    id: string;
-    name: string;
-    children: {
-      totalCount: number;
-    };
-    products: {
-      totalCount: number;
-    };
-  }>;
+export interface CategoryTableProps
+  extends PageListProps,
+    ListActions,
+    SearchPageProps,
+    TabPageProps {
+  categories: CategoryFragment[];
 }
 
 export const CategoryListPage: React.StatelessComponent<CategoryTableProps> = ({
   categories,
+  currentTab,
   disabled,
-  settings,
-  onAdd,
-  onNextPage,
-  onPreviousPage,
-  onUpdateListSettings,
-  onRowClick,
-  pageInfo,
+  initialSearch,
   isChecked,
+  pageInfo,
   selected,
+  settings,
+  tabs,
   toggle,
   toggleAll,
-  toolbar
+  toolbar,
+  onAdd,
+  onAll,
+  onNextPage,
+  onPreviousPage,
+  onRowClick,
+  onSearchChange,
+  onTabChange,
+  onTabDelete,
+  onTabSave,
+  onUpdateListSettings
 }) => {
   const intl = useIntl();
+
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.categories)}>
@@ -49,23 +60,38 @@ export const CategoryListPage: React.StatelessComponent<CategoryTableProps> = ({
           />
         </Button>
       </PageHeader>
-      <CategoryList
-        categories={categories}
-        onAdd={onAdd}
-        onRowClick={onRowClick}
-        disabled={disabled}
-        settings={settings}
-        isRoot={true}
-        onNextPage={onNextPage}
-        onPreviousPage={onPreviousPage}
-        onUpdateListSettings={onUpdateListSettings}
-        pageInfo={pageInfo}
-        isChecked={isChecked}
-        selected={selected}
-        toggle={toggle}
-        toggleAll={toggleAll}
-        toolbar={toolbar}
-      />
+      <Card>
+        <SearchBar
+          currentTab={currentTab}
+          initialSearch={initialSearch}
+          searchPlaceholder={intl.formatMessage({
+            defaultMessage: "Search Attribute"
+          })}
+          tabs={tabs}
+          onAll={onAll}
+          onSearchChange={onSearchChange}
+          onTabChange={onTabChange}
+          onTabDelete={onTabDelete}
+          onTabSave={onTabSave}
+        />
+        <CategoryList
+          categories={categories}
+          disabled={disabled}
+          isChecked={isChecked}
+          isRoot={true}
+          pageInfo={pageInfo}
+          selected={selected}
+          settings={settings}
+          toggle={toggle}
+          toggleAll={toggleAll}
+          toolbar={toolbar}
+          onAdd={onAdd}
+          onNextPage={onNextPage}
+          onPreviousPage={onPreviousPage}
+          onRowClick={onRowClick}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      </Card>
     </Container>
   );
 };

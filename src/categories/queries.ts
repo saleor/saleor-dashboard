@@ -7,6 +7,18 @@ import {
 } from "./types/CategoryDetails";
 import { RootCategories } from "./types/RootCategories";
 
+export const categoryFragment = gql`
+  fragment CategoryFragment on Category {
+    id
+    name
+    children {
+      totalCount
+    }
+    products {
+      totalCount
+    }
+  }
+`;
 export const categoryDetailsFragment = gql`
   fragment CategoryDetailsFragment on Category {
     id
@@ -25,11 +37,13 @@ export const categoryDetailsFragment = gql`
 `;
 
 export const rootCategories = gql`
+  ${categoryFragment}
   query RootCategories(
     $first: Int
     $after: String
     $last: Int
     $before: String
+    $filter: CategoryFilterInput
   ) {
     categories(
       level: 0
@@ -37,17 +51,11 @@ export const rootCategories = gql`
       after: $after
       last: $last
       before: $before
+      filter: $filter
     ) {
       edges {
         node {
-          id
-          name
-          children {
-            totalCount
-          }
-          products {
-            totalCount
-          }
+          ...CategoryFragment
         }
       }
       pageInfo {
@@ -64,6 +72,7 @@ export const TypedRootCategoriesQuery = TypedQuery<RootCategories, {}>(
 );
 
 export const categoryDetails = gql`
+  ${categoryFragment}
   ${categoryDetailsFragment}
   query CategoryDetails(
     $id: ID!
@@ -77,14 +86,7 @@ export const categoryDetails = gql`
       children(first: 20) {
         edges {
           node {
-            id
-            name
-            children {
-              totalCount
-            }
-            products {
-              totalCount
-            }
+            ...CategoryFragment
           }
         }
       }

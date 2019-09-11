@@ -316,6 +316,10 @@ export interface CatalogueInput {
   collections?: (string | null)[] | null;
 }
 
+export interface CategoryFilterInput {
+  search?: string | null;
+}
+
 export interface CategoryInput {
   description?: string | null;
   descriptionJson?: any | null;
