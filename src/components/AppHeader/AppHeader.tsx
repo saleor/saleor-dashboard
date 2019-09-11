@@ -25,6 +25,9 @@ const styles = (theme: Theme) =>
       marginTop: -theme.spacing.unit * 2
     },
     root: {
+      "& svg": {
+        fontSize: 30
+      },
       "&:hover": {
         color: theme.typography.body2.color
       },
