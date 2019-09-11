@@ -37,12 +37,6 @@ const styles = (theme: Theme) =>
       fontSize: "14px",
       paddingTop: "15px",
       textDecoration: "underline"
-    },
-    switchContainer: {
-      "& > div": {
-        padding: 0
-      },
-      marginBottom: -theme.spacing.unit
     }
   });
 
@@ -154,8 +148,10 @@ export const VisibilityCard = withStyles(styles, {
                   className={classes.setPublicationDate}
                   onClick={() => setPublicationDate(!isPublicationDate)}
                 >
-                  {" "}
-                  Set publication date
+                  {intl.formatMessage({
+                    defaultMessage: "Set publication date",
+                    description: "set publication date"
+                  })}
                 </Typography>
               )}
               {isPublicationDate && (

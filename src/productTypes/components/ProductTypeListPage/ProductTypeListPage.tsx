@@ -36,7 +36,7 @@ const ProductTypeListPage: React.StatelessComponent<
           <FormattedMessage
             defaultMessage="create product type"
             description="button"
-          />{" "}
+          />
         </Button>
       </PageHeader>
       <ProductTypeList disabled={disabled} {...listProps} />

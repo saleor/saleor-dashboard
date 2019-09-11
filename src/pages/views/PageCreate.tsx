@@ -54,7 +54,7 @@ export const PageCreate: React.StatelessComponent<PageCreateProps> = () => {
               page={null}
               onBack={() => navigate(pageListUrl())}
               onRemove={() => undefined}
-              onSubmit={formData => {
+              onSubmit={formData =>
                 pageCreate({
                   variables: {
                     input: {
@@ -77,8 +77,8 @@ export const PageCreate: React.StatelessComponent<PageCreateProps> = () => {
                       title: formData.title
                     }
                   }
-                });
-              }}
+                })
+              }
             />
           </>
         );

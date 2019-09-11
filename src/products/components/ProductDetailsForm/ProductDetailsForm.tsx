@@ -25,7 +25,7 @@ const styles = (theme: Theme) =>
     }
   });
 
-interface ProductDetailsFormProps extends WithStyles<typeof styles> {
+interface ProductDetailsFormProps {
   data: {
     description: RawDraftContentState;
     name: string;
@@ -39,54 +39,47 @@ interface ProductDetailsFormProps extends WithStyles<typeof styles> {
   onChange(event: any);
 }
 
-export const ProductDetailsForm = withStyles(styles, {
-  name: "ProductDetailsForm"
-})(
-  ({
-    classes,
-    data,
-    disabled,
-    errors,
-    initialDescription,
-    onChange
-  }: ProductDetailsFormProps) => {
-    const intl = useIntl();
+export const ProductDetailsForm = ({
+  classes,
+  data,
+  disabled,
+  errors,
+  initialDescription,
+  onChange
+}: ProductDetailsFormProps) => {
+  const intl = useIntl();
 
-    return (
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(commonMessages.generalInformations)}
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage(commonMessages.generalInformations)}
+      />
+      <CardContent>
+        <TextField
+          error={!!errors.name}
+          helperText={errors.name}
+          disabled={disabled}
+          fullWidth
+          label={intl.formatMessage({
+            defaultMessage: "Name",
+            description: "product name"
+          })}
+          name="name"
+          value={data.name}
+          onChange={onChange}
         />
-        <CardContent>
-          <div className={classes.root}>
-            <TextField
-              error={!!errors.name}
-              helperText={errors.name}
-              disabled={disabled}
-              fullWidth
-              label={intl.formatMessage({
-                defaultMessage: "Name",
-                description: "product name"
-              })}
-              name="name"
-              value={data.name}
-              onChange={onChange}
-            />
-          </div>
-          <FormSpacer />
-          <RichTextEditor
-            disabled={disabled}
-            error={!!errors.descriptionJson}
-            helperText={errors.descriptionJson}
-            initial={initialDescription}
-            label={intl.formatMessage(commonMessages.description)}
-            name="description"
-            onChange={onChange}
-          />
-        </CardContent>
-      </Card>
-    );
-  }
-);
-ProductDetailsForm.displayName = "ProductDetailsForm";
+        <FormSpacer />
+        <RichTextEditor
+          disabled={disabled}
+          error={!!errors.descriptionJson}
+          helperText={errors.descriptionJson}
+          initial={initialDescription}
+          label={intl.formatMessage(commonMessages.description)}
+          name="description"
+          onChange={onChange}
+        />
+      </CardContent>
+    </Card>
+  );
+};
 export default ProductDetailsForm;

@@ -127,7 +127,7 @@ const CollectionDetailsPage: React.StatelessComponent<
                   onChange={change}
                 >
                   <ControlledCheckbox
-                    name={"isFeatured" as keyof FormData}
+                    name={"isFeatured" as keyof CollectionDetailsPageFormData}
                     label={intl.formatMessage({
                       defaultMessage: "Feature on Homepage",
                       description: "switch button"

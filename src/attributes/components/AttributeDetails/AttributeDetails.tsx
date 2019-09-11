@@ -104,7 +104,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
         />
         <FormSpacer />
         <ControlledCheckbox
-          name={"valueRequired" as keyof FormData}
+          name={"valueRequired" as keyof AttributePageFormData}
           label={intl.formatMessage({
             defaultMessage: "Value Required",
             description: "check to require attribute to have value"

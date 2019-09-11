@@ -76,7 +76,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
           <Button color="primary" variant="text" onClick={onValueAdd}>
             <FormattedMessage
               defaultMessage="Assign value"
-              description="add attribute value button"
+              description="assign attribute value button"
             />
           </Button>
         }

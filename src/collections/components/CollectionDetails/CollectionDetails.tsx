@@ -1,6 +1,5 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { RawDraftContentState } from "draft-js";
 import React from "react";
@@ -14,13 +13,7 @@ import { maybe } from "@saleor/misc";
 import { FormErrors } from "@saleor/types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 
-const styles = createStyles({
-  name: {
-    width: "100%"
-  }
-});
-
-export interface CollectionDetailsProps extends WithStyles<typeof styles> {
+export interface CollectionDetailsProps {
   collection?: CollectionDetails_collection;
   data: {
     description: RawDraftContentState;
@@ -31,50 +24,47 @@ export interface CollectionDetailsProps extends WithStyles<typeof styles> {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CollectionDetails = withStyles(styles, { name: "CollectionDetails" })(
-  ({
-    classes,
-    collection,
-    disabled,
-    data,
-    onChange,
-    errors
-  }: CollectionDetailsProps) => {
-    const intl = useIntl();
+const CollectionDetails = ({
+  classes,
+  collection,
+  disabled,
+  data,
+  onChange,
+  errors
+}: CollectionDetailsProps) => {
+  const intl = useIntl();
 
-    return (
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(commonMessages.generalInformations)}
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage(commonMessages.generalInformations)}
+      />
+      <CardContent>
+        <TextField
+          label={intl.formatMessage({
+            defaultMessage: "Name",
+            description: "collection name"
+          })}
+          name="name"
+          disabled={disabled}
+          value={data.name}
+          onChange={onChange}
+          error={!!errors.name}
+          helperText={errors.name}
+          fullWidth
         />
-        <CardContent>
-          <TextField
-            classes={{ root: classes.name }}
-            label={intl.formatMessage({
-              defaultMessage: "Name",
-              description: "collection name"
-            })}
-            name="name"
-            disabled={disabled}
-            value={data.name}
-            onChange={onChange}
-            error={!!errors.name}
-            helperText={errors.name}
-          />
-          <FormSpacer />
-          <RichTextEditor
-            error={!!errors.descriptionJson}
-            helperText={errors.descriptionJson}
-            initial={maybe(() => JSON.parse(collection.descriptionJson))}
-            label={intl.formatMessage(commonMessages.description)}
-            name="description"
-            disabled={disabled}
-            onChange={onChange}
-          />
-        </CardContent>
-      </Card>
-    );
-  }
-);
-CollectionDetails.displayName = "CollectionDetails";
+        <FormSpacer />
+        <RichTextEditor
+          error={!!errors.descriptionJson}
+          helperText={errors.descriptionJson}
+          initial={maybe(() => JSON.parse(collection.descriptionJson))}
+          label={intl.formatMessage(commonMessages.description)}
+          name="description"
+          disabled={disabled}
+          onChange={onChange}
+        />
+      </CardContent>
+    </Card>
+  );
+};
 export default CollectionDetails;

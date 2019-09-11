@@ -21,12 +21,12 @@ const styles = createStyles({
   },
   radioLabel: {
     "& > span": {
-      "& > span": {
-        display: "block",
-        fontSize: "12px"
-      },
       padding: "6px"
     }
+  },
+  secondLabel: {
+    display: "block",
+    fontSize: "12px"
   }
 });
 
@@ -77,22 +77,22 @@ export const RadioGroupField = withStyles(styles, {
           onChange={onChange}
         >
           {choices.length > 0 ? (
-            choices.map(choice => {
-              return (
-                <FormControlLabel
-                  value={choice.value}
-                  className={classes.radioLabel}
-                  control={<Radio color="primary" />}
-                  label={
-                    <>
-                      {choice.label}
-                      <span>{choice.secondLabel}</span>
-                    </>
-                  }
-                  key={choice.value}
-                />
-              );
-            })
+            choices.map(choice => (
+              <FormControlLabel
+                value={choice.value}
+                className={classes.radioLabel}
+                control={<Radio color="primary" />}
+                label={
+                  <>
+                    {choice.label}
+                    <span className={classes.secondLabel}>
+                      {choice.secondLabel}
+                    </span>
+                  </>
+                }
+                key={choice.value}
+              />
+            ))
           ) : (
             <MenuItem disabled={true}>
               <FormattedMessage defaultMessage="No results found" />
