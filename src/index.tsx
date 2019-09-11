@@ -13,12 +13,11 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
-import { getAuthToken, removeAuthToken } from "./auth";
+import Auth, { getAuthToken, removeAuthToken } from "./auth";
 import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import { hasPermission } from "./auth/misc";
-import Login from "./auth/views/Login";
 import CategorySection from "./categories";
 import CollectionSection from "./collections";
 import { AppProgressProvider } from "./components/AppProgress";
@@ -64,6 +63,7 @@ const invalidTokenLink = onError((error: ResponseError) => {
 
 const authLink = setContext((_, context) => {
   const authToken = getAuthToken();
+
   return {
     ...context,
     headers: {
@@ -241,7 +241,7 @@ const Routes: React.FC = () => {
           ) : hasToken && tokenVerifyLoading ? (
             <LoginLoading />
           ) : (
-            <Login loading={tokenAuthLoading} />
+            <Auth />
           )
         }
       </AuthProvider>

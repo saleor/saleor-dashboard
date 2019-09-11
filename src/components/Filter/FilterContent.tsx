@@ -10,13 +10,13 @@ import SingleSelectField from "../SingleSelectField";
 import FilterElement from "./FilterElement";
 import { IFilter } from "./types";
 
-export interface FilterContentSubmitData {
-  name: string;
+export interface FilterContentSubmitData<TKeys = string> {
+  name: TKeys;
   value: string | string[];
 }
 export interface FilterContentProps {
   currencySymbol: string;
-  filters: IFilter;
+  filters: IFilter<string>;
   onSubmit: (data: FilterContentSubmitData) => void;
 }
 
@@ -27,10 +27,10 @@ function checkFilterValue(value: string | string[]): boolean {
   return value.some(v => !!v);
 }
 
-function getFilterChoices(items: IFilter) {
+function getFilterChoices(items: IFilter<string>) {
   return items.map(filterItem => ({
     label: filterItem.label,
-    value: filterItem.value
+    value: filterItem.value.toString()
   }));
 }
 
@@ -46,7 +46,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
-  const [menuValue, setMenuValue] = React.useState<string>("");
+  const [menuValue, setMenuValue] = React.useState<string>(null);
   const [filterValue, setFilterValue] = React.useState<string | string[]>("");
   const classes = useStyles({});
 
@@ -95,7 +95,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   }}
                   value={
                     filterItemIndex === menus.length - 1
-                      ? menuValue
+                      ? menuValue.toString()
                       : menus[filterItemIndex - 1].label.toString()
                   }
                   placeholder={intl.formatMessage({

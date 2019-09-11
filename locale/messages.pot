@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-09-04T11:51:21.421Z\n"
+"POT-Creation-Date: 2019-09-10T11:00:36.829Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1439,6 +1439,10 @@ msgctxt "description"
 msgid "Availability"
 msgstr ""
 
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.2157131639] - product status
+#. defaultMessage is:
+#. Available
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.2157131639] - product status
 #. defaultMessage is:
@@ -1485,6 +1489,14 @@ msgstr ""
 #. Back to home
 msgctxt "button"
 msgid "Back to home"
+msgstr ""
+
+#: build/locale/src/auth/components/ResetPasswordSuccessPage/ResetPasswordSuccessPage.json
+#. [src.auth.components.ResetPasswordSuccessPage.2245157344] - button
+#. defaultMessage is:
+#. Back to login
+msgctxt "button"
+msgid "Back to login"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryBackground/CategoryBackground.json
@@ -1941,6 +1953,14 @@ msgstr ""
 #. Confirm
 msgctxt "button"
 msgid "Confirm"
+msgstr ""
+
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+#. [src.auth.components.NewPasswordPage.2799926859]
+#. defaultMessage is:
+#. Confirm Password
+msgctxt "description"
+msgid "Confirm Password"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
@@ -3363,6 +3383,14 @@ msgctxt "tax rate"
 msgid "Foodstuffs"
 msgstr ""
 
+#: build/locale/src/auth/components/ResetPasswordPage/ResetPasswordPage.json
+#. [src.auth.components.ResetPasswordPage.2370700732]
+#. defaultMessage is:
+#. Forgot your password? Don't worry, we'll reset it for you.
+msgctxt "description"
+msgid "Forgot your password? Don't worry, we'll reset it for you."
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
 #. [src.discounts.components.VoucherTypes.3289659291] - voucher discount type
 #. defaultMessage is:
@@ -3421,14 +3449,6 @@ msgstr ""
 #. Fulfilled {quantity} items
 msgctxt "order history message"
 msgid "Fulfilled {quantity} items"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-#. [src.orders.components.OrderListFilter.2943502192] - order
-#. defaultMessage is:
-#. Fulfillment Status
-msgctxt "order"
-msgid "Fulfillment Status"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
@@ -3531,19 +3551,23 @@ msgctxt "subheader"
 msgid "Here is some information we gathered about your store"
 msgstr ""
 
-#: build/locale/src/components/VisibilityCard/VisibilityCard.json
-#. [src.components.VisibilityCard.77815154]
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.77815154] - product is hidden
 #. defaultMessage is:
 #. Hidden
-msgctxt "description"
-msgid "Hidden"
-msgstr ""
-
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.77815154] - product is hidden
 #. defaultMessage is:
 #. Hidden
 msgctxt "product is hidden"
+msgid "Hidden"
+msgstr ""
+
+#: build/locale/src/components/VisibilityCard/VisibilityCard.json
+#. [src.components.VisibilityCard.77815154]
+#. defaultMessage is:
+#. Hidden
+msgctxt "description"
 msgid "Hidden"
 msgstr ""
 
@@ -4177,6 +4201,14 @@ msgstr ""
 #. Navigation
 msgctxt "navigation section name"
 msgid "Navigation"
+msgstr ""
+
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+#. [src.auth.components.NewPasswordPage.1254879564]
+#. defaultMessage is:
+#. New Password
+msgctxt "description"
+msgid "New Password"
 msgstr ""
 
 #: build/locale/src/products/views/ProductCreate.json
@@ -4839,6 +4871,14 @@ msgctxt "description"
 msgid "Order History"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.2222765704]
+#. defaultMessage is:
+#. Order Status
+msgctxt "description"
+msgid "Order Status"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
 #. [src.orders.components.OrderHistory.1230178536] - order history message
 #. defaultMessage is:
@@ -4995,6 +5035,10 @@ msgctxt "description"
 msgid "Original String"
 msgstr ""
 
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.1640493122] - product status
+#. defaultMessage is:
+#. Out Of Stock
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.1640493122] - product status
 #. defaultMessage is:
@@ -5109,6 +5153,14 @@ msgstr ""
 #. Password
 msgctxt "description"
 msgid "Password"
+msgstr ""
+
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+#. [src.auth.components.NewPasswordPage.4253911811]
+#. defaultMessage is:
+#. Passwords do not match
+msgctxt "description"
+msgid "Passwords do not match"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderList/OrderList.json
@@ -5259,6 +5311,14 @@ msgctxt "product type"
 msgid "Physical"
 msgstr ""
 
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+#. [src.auth.components.NewPasswordPage.1915811227]
+#. defaultMessage is:
+#. Please set up a new password.
+msgctxt "description"
+msgid "Please set up a new password."
+msgstr ""
+
 #: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
 #. [src.plugins.components.PluginInfo.3425535100] - section header
 #. defaultMessage is:
@@ -5315,6 +5375,18 @@ msgctxt "order payment"
 msgid "Preauthorized amount"
 msgstr ""
 
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.1134347598]
+#. defaultMessage is:
+#. Price
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.1134347598]
+#. defaultMessage is:
+#. Price
+msgctxt "description"
+msgid "Price"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
 #. [src.categories.components.CategoryProductList.1134347598] - product price
 #. defaultMessage is:
@@ -5360,14 +5432,6 @@ msgstr ""
 #. defaultMessage is:
 #. Price
 msgctxt "product unit price"
-msgid "Price"
-msgstr ""
-
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-#. [src.products.components.ProductListFilter.1134347598]
-#. defaultMessage is:
-#. Price
-msgctxt "description"
 msgid "Price"
 msgstr ""
 
@@ -5675,6 +5739,14 @@ msgctxt "tax rate"
 msgid "Property renovations"
 msgstr ""
 
+#: build/locale/src/auth/views/ResetPassword.json
+#. [src.auth.views.2388238158]
+#. defaultMessage is:
+#. Provided email address does not exist in our database.
+msgctxt "description"
+msgid "Provided email address does not exist in our database."
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionList.json
 #. [src.collections.views.1547167026] - publish collections
 #. defaultMessage is:
@@ -5847,6 +5919,10 @@ msgctxt "description"
 msgid "Quick Pick"
 msgstr ""
 
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.2545228781]
+#. defaultMessage is:
+#. Range
 #: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
 #. [src.orders.components.OrderListFilter.2545228781]
 #. defaultMessage is:
@@ -5881,6 +5957,18 @@ msgstr ""
 #. Rate Price
 msgctxt "shipping method price"
 msgid "Rate Price"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.2415661583] - order status
+#. defaultMessage is:
+#. Ready to Capture
+#: build/locale/src/orders/views/OrderList/filters.json
+#. [src.orders.views.OrderList.readyToCapture] - order status
+#. defaultMessage is:
+#. Ready to Capture
+msgctxt "order status"
+msgid "Ready to Capture"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
@@ -6031,6 +6119,14 @@ msgctxt "button"
 msgid "Reset"
 msgstr ""
 
+#: build/locale/src/auth/components/LoginPage/LoginPage.json
+#. [src.auth.components.LoginPage.4028609483] - button
+#. defaultMessage is:
+#. Reset your password
+msgctxt "button"
+msgid "Reset your password"
+msgstr ""
+
 #: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
 #. [src.shipping.components.ShippingZoneCountriesAssignDialog.1003092716]
 #. defaultMessage is:
@@ -6105,6 +6201,14 @@ msgstr ""
 #. Sale Name
 msgctxt "description"
 msgid "Sale Name"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.somethingWentWrong]
+#. defaultMessage is:
+#. Saleor ran into an unexpected problem
+msgctxt "description"
+msgid "Saleor ran into an unexpected problem"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -6447,6 +6551,14 @@ msgctxt "add order note, button"
 msgid "Send"
 msgstr ""
 
+#: build/locale/src/auth/components/ResetPasswordPage/ResetPasswordPage.json
+#. [src.auth.components.ResetPasswordPage.3663311080] - password reset, button
+#. defaultMessage is:
+#. Send Instructions
+msgctxt "password reset, button"
+msgid "Send Instructions"
+msgstr ""
+
 #: build/locale/src/staff/components/StaffAddMemberDialog/StaffAddMemberDialog.json
 #. [src.staff.components.StaffAddMemberDialog.449055697] - button
 #. defaultMessage is:
@@ -6477,6 +6589,14 @@ msgstr ""
 #. Set end date
 msgctxt "voucher end date, switch button"
 msgid "Set end date"
+msgstr ""
+
+#: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
+#. [src.auth.components.NewPasswordPage.2342634351] - button
+#. defaultMessage is:
+#. Set new password
+msgctxt "button"
+msgid "Set new password"
 msgstr ""
 
 #: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
@@ -6683,18 +6803,6 @@ msgctxt "description"
 msgid "Some products require shipping, but no method provided"
 msgstr ""
 
-#: build/locale/src/mutations.json
-#. [src.1395232177] - error message
-#. defaultMessage is:
-#. Something went wrong. {errorMessage}
-#: build/locale/src/queries.json
-#. [src.1395232177] - error message
-#. defaultMessage is:
-#. Something went wrong. {errorMessage}
-msgctxt "error message"
-msgid "Something went wrong. {errorMessage}"
-msgstr ""
-
 #: build/locale/src/components/NotFoundPage/NotFoundPage.json
 #. [src.components.NotFoundPage.4036415297]
 #. defaultMessage is:
@@ -6727,6 +6835,10 @@ msgctxt "description"
 msgid "Specific Date"
 msgstr ""
 
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.2844426531]
+#. defaultMessage is:
+#. Specific Price
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.2844426531]
 #. defaultMessage is:
@@ -6807,6 +6919,18 @@ msgctxt "voucher is active from date"
 msgid "Starts"
 msgstr ""
 
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.1756106276] - product status
+#. defaultMessage is:
+#. Status
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.1756106276] - product status
+#. defaultMessage is:
+#. Status
+msgctxt "product status"
+msgid "Status"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
 #. [src.customers.components.CustomerOrders.1756106276] - order status
 #. defaultMessage is:
@@ -6831,14 +6955,6 @@ msgctxt "plugin status"
 msgid "Status"
 msgstr ""
 
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-#. [src.products.components.ProductListFilter.1756106276] - product status
-#. defaultMessage is:
-#. Status
-msgctxt "product status"
-msgid "Status"
-msgstr ""
-
 #: build/locale/src/products/components/ProductVariants/ProductVariants.json
 #. [src.products.components.ProductVariants.1756106276] - product variant status
 #. defaultMessage is:
@@ -6847,6 +6963,10 @@ msgctxt "product variant status"
 msgid "Status"
 msgstr ""
 
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.3841616483] - product stock
+#. defaultMessage is:
+#. Stock
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.3841616483] - product stock
 #. defaultMessage is:
@@ -6863,6 +6983,10 @@ msgctxt "product variant stock, section header"
 msgid "Stock"
 msgstr ""
 
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.3645081351]
+#. defaultMessage is:
+#. Stock quantity
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.3645081351]
 #. defaultMessage is:
@@ -6941,6 +7065,14 @@ msgstr ""
 #. Succesfully updated plugin settings
 msgctxt "plugin success message"
 msgid "Succesfully updated plugin settings"
+msgstr ""
+
+#: build/locale/src/auth/components/ResetPasswordSuccessPage/ResetPasswordSuccessPage.json
+#. [src.auth.components.ResetPasswordSuccessPage.4066297200]
+#. defaultMessage is:
+#. Success! In a few minutes you’ll receive a message with instructions on how to reset your password.
+msgctxt "description"
+msgid "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
@@ -8023,6 +8155,18 @@ msgctxt "description"
 msgid "View and update your site settings"
 msgstr ""
 
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.1459686496] - product visibility
+#. defaultMessage is:
+#. Visibility
+#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#. [src.products.components.ProductListFilter.1459686496] - product visibility
+#. defaultMessage is:
+#. Visibility
+msgctxt "product visibility"
+msgid "Visibility"
+msgstr ""
+
 #: build/locale/src/components/VisibilityCard/VisibilityCard.json
 #. [src.components.VisibilityCard.1459686496] - section header
 #. defaultMessage is:
@@ -8039,14 +8183,6 @@ msgctxt "page status"
 msgid "Visibility"
 msgstr ""
 
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-#. [src.products.components.ProductListFilter.1459686496] - product visibility
-#. defaultMessage is:
-#. Visibility
-msgctxt "product visibility"
-msgid "Visibility"
-msgstr ""
-
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
 #. [src.attributes.components.AttributeList.643174786] - attribute is visible
 #. defaultMessage is:
@@ -8055,19 +8191,23 @@ msgctxt "attribute is visible"
 msgid "Visible"
 msgstr ""
 
-#: build/locale/src/components/VisibilityCard/VisibilityCard.json
-#. [src.components.VisibilityCard.643174786]
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.643174786] - product is visible
 #. defaultMessage is:
 #. Visible
-msgctxt "description"
-msgid "Visible"
-msgstr ""
-
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.643174786] - product is visible
 #. defaultMessage is:
 #. Visible
 msgctxt "product is visible"
+msgid "Visible"
+msgstr ""
+
+#: build/locale/src/components/VisibilityCard/VisibilityCard.json
+#. [src.components.VisibilityCard.643174786]
+#. defaultMessage is:
+#. Visible
+msgctxt "description"
 msgid "Visible"
 msgstr ""
 
@@ -8219,19 +8359,23 @@ msgctxt "order does not require shipping"
 msgid "does not apply"
 msgstr ""
 
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-#. [src.orders.components.OrderListFilter.3477667254]
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.3477667254] - product price
 #. defaultMessage is:
 #. equals
-msgctxt "description"
-msgid "equals"
-msgstr ""
-
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.3477667254] - product price
 #. defaultMessage is:
 #. equals
 msgctxt "product price"
+msgid "equals"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.3477667254]
+#. defaultMessage is:
+#. equals
+msgctxt "description"
 msgid "equals"
 msgstr ""
 
@@ -8259,19 +8403,23 @@ msgctxt "weight"
 msgid "from {value} {unit}"
 msgstr ""
 
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-#. [src.orders.components.OrderListFilter.1438173764] - date is set as
+#: build/locale/src/attributes/components/ProductListFilter/ProductListFilter.json
+#. [src.attributes.components.ProductListFilter.1438173764] - product status is set as
 #. defaultMessage is:
 #. is set as
-msgctxt "date is set as"
-msgid "is set as"
-msgstr ""
-
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 #. [src.products.components.ProductListFilter.1438173764] - product status is set as
 #. defaultMessage is:
 #. is set as
 msgctxt "product status is set as"
+msgid "is set as"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
+#. [src.orders.components.OrderListFilter.1438173764] - date is set as
+#. defaultMessage is:
+#. is set as
+msgctxt "date is set as"
 msgid "is set as"
 msgstr ""
 

@@ -9,6 +9,7 @@ import AppProgress from "./components/AppProgress";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import useNavigator from "./hooks/useNavigator";
 import useNotifier from "./hooks/useNotifier";
+import { commonMessages } from "./intl";
 import { RequireAtLeastOne } from "./misc";
 
 export interface LoadMore<TData, TVariables> {
@@ -83,16 +84,9 @@ export function TypedQuery<TData, TVariables>(
           >
             {queryData => {
               if (queryData.error) {
-                const msg = intl.formatMessage(
-                  {
-                    defaultMessage: "Something went wrong. {errorMessage}",
-                    description: "error message"
-                  },
-                  {
-                    message: queryData.error.message
-                  }
-                );
-                pushMessage({ text: msg });
+                pushMessage({
+                  text: intl.formatMessage(commonMessages.somethingWentWrong)
+                });
               }
 
               const loadMore = (

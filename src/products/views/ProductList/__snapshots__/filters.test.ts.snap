@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Crate filter chips 1`] = `
+Array [
+  Object {
+    "label": "Price from $10.00",
+    "onClick": [Function],
+  },
+  Object {
+    "label": "Price to $20.00",
+    "onClick": [Function],
+  },
+  Object {
+    "label": "Available",
+    "onClick": [Function],
+  },
+  Object {
+    "label": "Published",
+    "onClick": [Function],
+  },
+]
+`;
+
+exports[`Create filter object with price 1`] = `
+Object {
+  "priceFrom": "10",
+  "priceTo": "10",
+}
+`;
+
+exports[`Create filter object with price range 1`] = `
+Object {
+  "priceFrom": Array [
+    "10",
+    "20",
+  ],
+  "priceTo": Array [
+    "10",
+    "20",
+  ],
+}
+`;
+
+exports[`Create filter object with publication status 1`] = `
+Object {
+  "isPublished": "false",
+}
+`;
+
+exports[`Create filter object with stock status 1`] = `
+Object {
+  "status": "OUT_OF_STOCK",
+}
+`;
+
+exports[`Get filter variables 1`] = `
+Object {
+  "isPublished": true,
+  "price": Object {
+    "gte": 10,
+    "lte": 20,
+  },
+  "search": undefined,
+  "stockAvailability": "IN_STOCK",
+}
+`;

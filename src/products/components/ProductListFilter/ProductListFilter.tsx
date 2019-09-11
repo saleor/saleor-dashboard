@@ -7,21 +7,23 @@ import { FilterProps } from "@saleor/types";
 import { StockAvailability } from "@saleor/types/globalTypes";
 import { ProductListUrlFilters } from "../../urls";
 
-type ProductListFilterProps = FilterProps<ProductListUrlFilters>;
+type ProductListFilterProps = FilterProps<
+  ProductListUrlFilters,
+  ProductFilterKeys
+>;
 
 export enum ProductFilterKeys {
-  published,
-  price,
-  priceEqual,
-  priceRange,
-  stock,
-  query
+  published = "published",
+  price = "price",
+  priceEqual = "priceEqual",
+  priceRange = "priceRange",
+  stock = "stock"
 }
 
 const ProductListFilter: React.FC<ProductListFilterProps> = props => {
   const intl = useIntl();
 
-  const filterMenu: IFilter = [
+  const filterMenu: IFilter<ProductFilterKeys> = [
     {
       children: [],
       data: {
@@ -55,7 +57,7 @@ const ProductListFilter: React.FC<ProductListFilterProps> = props => {
         defaultMessage: "Visibility",
         description: "product visibility"
       }),
-      value: ProductFilterKeys.published.toString()
+      value: ProductFilterKeys.published
     },
     {
       children: [],
@@ -85,7 +87,7 @@ const ProductListFilter: React.FC<ProductListFilterProps> = props => {
         defaultMessage: "Stock",
         description: "product stock"
       }),
-      value: ProductFilterKeys.stock.toString()
+      value: ProductFilterKeys.stock
     },
     {
       children: [
@@ -102,7 +104,7 @@ const ProductListFilter: React.FC<ProductListFilterProps> = props => {
           label: intl.formatMessage({
             defaultMessage: "Specific Price"
           }),
-          value: ProductFilterKeys.priceEqual.toString()
+          value: ProductFilterKeys.priceEqual
         },
         {
           children: [],
@@ -115,7 +117,7 @@ const ProductListFilter: React.FC<ProductListFilterProps> = props => {
           label: intl.formatMessage({
             defaultMessage: "Range"
           }),
-          value: ProductFilterKeys.priceRange.toString()
+          value: ProductFilterKeys.priceRange
         }
       ],
       data: {
@@ -127,7 +129,7 @@ const ProductListFilter: React.FC<ProductListFilterProps> = props => {
       label: intl.formatMessage({
         defaultMessage: "Price"
       }),
-      value: ProductFilterKeys.price.toString()
+      value: ProductFilterKeys.price
     }
   ];
 

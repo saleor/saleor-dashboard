@@ -34,26 +34,26 @@ export function getFilterVariables(
 }
 
 export function createFilter(
-  filter: FilterContentSubmitData
+  filter: FilterContentSubmitData<ProductFilterKeys>
 ): ProductListUrlFilters {
   const filterName = filter.name;
-  if (filterName === ProductFilterKeys.priceEqual.toString()) {
+  if (filterName === ProductFilterKeys.priceEqual) {
     const value = filter.value as string;
     return {
       priceFrom: value,
       priceTo: value
     };
-  } else if (filterName === ProductFilterKeys.priceRange.toString()) {
+  } else if (filterName === ProductFilterKeys.priceRange) {
     const { value } = filter;
     return {
       priceFrom: value[0],
       priceTo: value[1]
     };
-  } else if (filterName === ProductFilterKeys.published.toString()) {
+  } else if (filterName === ProductFilterKeys.published) {
     return {
       isPublished: filter.value as string
     };
-  } else if (filterName === ProductFilterKeys.stock.toString()) {
+  } else if (filterName === ProductFilterKeys.stock) {
     const value = filter.value as string;
     return {
       status: StockAvailability[value]

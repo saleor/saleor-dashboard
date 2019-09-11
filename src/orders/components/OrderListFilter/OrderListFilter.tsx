@@ -10,17 +10,16 @@ import { FilterProps } from "../../../types";
 import { OrderStatusFilter } from "../../../types/globalTypes";
 import { OrderListUrlFilters } from "../../urls";
 
-type OrderListFilterProps = FilterProps<OrderListUrlFilters>;
+type OrderListFilterProps = FilterProps<OrderListUrlFilters, OrderFilterKeys>;
 
 export enum OrderFilterKeys {
-  date,
-  dateEqual,
-  dateRange,
-  dateLastWeek,
-  dateLastMonth,
-  dateLastYear,
-  email,
-  fulfillment
+  date = "date",
+  dateEqual = "dateEqual",
+  dateRange = "dateRange",
+  dateLastWeek = "dateLastWeek",
+  dateLastMonth = "dateLastMonth",
+  dateLastYear = "dateLastYear",
+  status = "status"
 }
 
 const OrderListFilter: React.FC<OrderListFilterProps> = props => {
@@ -28,7 +27,7 @@ const OrderListFilter: React.FC<OrderListFilterProps> = props => {
   const tz = React.useContext(TimezoneContext);
   const intl = useIntl();
 
-  const filterMenu: IFilter = [
+  const filterMenu: IFilter<OrderFilterKeys> = [
     {
       children: [
         {
@@ -44,7 +43,7 @@ const OrderListFilter: React.FC<OrderListFilterProps> = props => {
           label: intl.formatMessage({
             defaultMessage: "Last 7 Days"
           }),
-          value: OrderFilterKeys.dateLastWeek.toString()
+          value: OrderFilterKeys.dateLastWeek
         },
         {
           children: [],
@@ -59,7 +58,7 @@ const OrderListFilter: React.FC<OrderListFilterProps> = props => {
           label: intl.formatMessage({
             defaultMessage: "Last 30 Days"
           }),
-          value: OrderFilterKeys.dateLastMonth.toString()
+          value: OrderFilterKeys.dateLastMonth
         },
         {
           children: [],
@@ -74,7 +73,7 @@ const OrderListFilter: React.FC<OrderListFilterProps> = props => {
           label: intl.formatMessage({
             defaultMessage: "Last Year"
           }),
-          value: OrderFilterKeys.dateLastYear.toString()
+          value: OrderFilterKeys.dateLastYear
         },
         {
           children: [],
@@ -88,7 +87,7 @@ const OrderListFilter: React.FC<OrderListFilterProps> = props => {
           label: intl.formatMessage({
             defaultMessage: "Specific Date"
           }),
-          value: OrderFilterKeys.dateEqual.toString()
+          value: OrderFilterKeys.dateEqual
         },
         {
           children: [],
@@ -101,7 +100,7 @@ const OrderListFilter: React.FC<OrderListFilterProps> = props => {
           label: intl.formatMessage({
             defaultMessage: "Range"
           }),
-          value: OrderFilterKeys.dateRange.toString()
+          value: OrderFilterKeys.dateRange
         }
       ],
       data: {
@@ -113,7 +112,7 @@ const OrderListFilter: React.FC<OrderListFilterProps> = props => {
       label: intl.formatMessage({
         defaultMessage: "Date"
       }),
-      value: OrderFilterKeys.date.toString()
+      value: OrderFilterKeys.date
     },
     {
       children: [],
@@ -147,15 +146,21 @@ const OrderListFilter: React.FC<OrderListFilterProps> = props => {
               description: "order fulfillment status"
             }),
             value: OrderStatusFilter.UNFULFILLED.toString()
+          },
+          {
+            label: intl.formatMessage({
+              defaultMessage: "Ready to Capture",
+              description: "order status"
+            }),
+            value: OrderStatusFilter.READY_TO_CAPTURE.toString()
           }
         ],
         type: FieldType.select
       },
       label: intl.formatMessage({
-        defaultMessage: "Fulfillment Status",
-        description: "order"
+        defaultMessage: "Order Status"
       }),
-      value: OrderFilterKeys.fulfillment.toString()
+      value: OrderFilterKeys.status
     }
   ];
 

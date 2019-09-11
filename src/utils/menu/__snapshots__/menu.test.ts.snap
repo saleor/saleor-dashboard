@@ -8,7 +8,7 @@ Array [
     "label": "1",
     "parent": null,
     "sort": 0,
-    "value": "1",
+    "value": 0,
   },
   Object {
     "data": null,
@@ -16,7 +16,7 @@ Array [
     "label": "2",
     "parent": null,
     "sort": 1,
-    "value": "2",
+    "value": 1,
   },
   Object {
     "data": null,
@@ -24,7 +24,7 @@ Array [
     "label": "3",
     "parent": null,
     "sort": 2,
-    "value": "3",
+    "value": 2,
   },
   Object {
     "data": null,
@@ -32,7 +32,7 @@ Array [
     "label": "4",
     "parent": null,
     "sort": 3,
-    "value": "4",
+    "value": 3,
   },
   Object {
     "data": null,
@@ -40,7 +40,7 @@ Array [
     "label": "4.1",
     "parent": "3",
     "sort": 0,
-    "value": "4.1",
+    "value": 4,
   },
   Object {
     "data": null,
@@ -48,7 +48,7 @@ Array [
     "label": "4.2",
     "parent": "3",
     "sort": 1,
-    "value": "4.2",
+    "value": 5,
   },
 ]
 `;
@@ -61,24 +61,24 @@ Array [
         "children": Array [],
         "data": null,
         "label": "4.1",
-        "value": "4.1",
+        "value": 4,
       },
       Object {
         "children": Array [],
         "data": null,
         "label": "4.2",
-        "value": "4.2",
+        "value": 5,
       },
     ],
     "data": null,
     "label": "4",
-    "value": "4",
+    "value": 3,
   },
   Object {
     "children": Array [],
     "data": null,
     "label": "4.1",
-    "value": "4.1",
+    "value": 4,
   },
 ]
 `;
@@ -89,7 +89,7 @@ Array [
     "children": Array [],
     "data": null,
     "label": "4.1",
-    "value": "4.1",
+    "value": 4,
   },
   Object {
     "children": Array [
@@ -97,18 +97,18 @@ Array [
         "children": Array [],
         "data": null,
         "label": "4.1",
-        "value": "4.1",
+        "value": 4,
       },
       Object {
         "children": Array [],
         "data": null,
         "label": "4.2",
-        "value": "4.2",
+        "value": 5,
       },
     ],
     "data": null,
     "label": "4",
-    "value": "4",
+    "value": 3,
   },
 ]
 `;

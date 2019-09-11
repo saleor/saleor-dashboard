@@ -3,6 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import LoginPage, { LoginCardProps } from "../../../auth/components/LoginPage";
+import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 
 const props: Omit<LoginCardProps, "classes"> = {
@@ -13,6 +14,7 @@ const props: Omit<LoginCardProps, "classes"> = {
 };
 
 storiesOf("Views / Authentication / Log in", module)
+  .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <LoginPage {...props} />)
   .add("error", () => <LoginPage {...props} error={true} />)

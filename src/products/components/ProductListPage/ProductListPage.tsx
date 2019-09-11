@@ -26,12 +26,12 @@ import {
 } from "@saleor/types";
 import { ProductListUrlFilters } from "../../urls";
 import ProductList from "../ProductList";
-import ProductListFilter from "../ProductListFilter";
+import ProductListFilter, { ProductFilterKeys } from "../ProductListFilter";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
-    FilterPageProps<ProductListUrlFilters>,
+    FilterPageProps<ProductListUrlFilters, ProductFilterKeys>,
     FetchMoreProps {
   availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
