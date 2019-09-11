@@ -77,7 +77,7 @@ const styles = (theme: Theme) =>
       "&:hover": {
         background: fade(theme.palette.primary.main, 0.1)
       },
-      alignItems: "center",
+      alignSelf: "start",
       borderRadius: "100%",
       cursor: "pointer",
       display: "flex",
