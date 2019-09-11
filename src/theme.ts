@@ -138,6 +138,9 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiInputBase: {
         input: {
+          "&$disabled": {
+            color: colors.input.disabledText
+          },
           "&::placeholder": {
             color: colors.font.gray,
             opacity: "1 !important" as any
@@ -279,9 +282,6 @@ export default (colors: IThemeColors): Theme =>
         }
       },
       MuiSelect: {
-        "&$disabled": {
-          color: colors.input.disabledText
-        },
         outlined: {
           padding: ["20px 12px 8px 12px", "!important"] as any
         }
