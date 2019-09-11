@@ -43,6 +43,12 @@ export enum ConfigurationTypeFieldEnum {
   STRING = "STRING",
 }
 
+export enum DiscountStatusEnum {
+  ACTIVE = "ACTIVE",
+  EXPIRED = "EXPIRED",
+  SCHEDULED = "SCHEDULED",
+}
+
 export enum DiscountValueTypeEnum {
   FIXED = "FIXED",
   PERCENTAGE = "PERCENTAGE",
@@ -393,6 +399,11 @@ export interface DateRangeInput {
   lte?: any | null;
 }
 
+export interface DateTimeRangeInput {
+  gte?: any | null;
+  lte?: any | null;
+}
+
 export interface DraftOrderInput {
   billingAddress?: AddressInput | null;
   user?: string | null;
@@ -562,6 +573,13 @@ export interface ProductVariantInput {
 export interface ReorderInput {
   id: string;
   sortOrder?: number | null;
+}
+
+export interface SaleFilterInput {
+  status?: (DiscountStatusEnum | null)[] | null;
+  saleType?: DiscountValueTypeEnum | null;
+  started?: DateTimeRangeInput | null;
+  search?: string | null;
 }
 
 export interface SaleInput {

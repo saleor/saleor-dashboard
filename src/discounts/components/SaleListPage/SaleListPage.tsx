@@ -1,22 +1,40 @@
 import Button from "@material-ui/core/Button";
-
+import Card from "@material-ui/core/Card";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
-import { ListActions, PageListProps } from "@saleor/types";
+import {
+  ListActions,
+  PageListProps,
+  SearchPageProps,
+  TabPageProps
+} from "@saleor/types";
 import { SaleList_sales_edges_node } from "../../types/SaleList";
 import SaleList from "../SaleList";
 
-export interface SaleListPageProps extends PageListProps, ListActions {
+export interface SaleListPageProps
+  extends PageListProps,
+    ListActions,
+    SearchPageProps,
+    TabPageProps {
   defaultCurrency: string;
   sales: SaleList_sales_edges_node[];
 }
 
 const SaleListPage: React.StatelessComponent<SaleListPageProps> = ({
+  currentTab,
+  initialSearch,
   onAdd,
+  onAll,
+  onSearchChange,
+  onTabChange,
+  onTabDelete,
+  onTabSave,
+  tabs,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -28,7 +46,22 @@ const SaleListPage: React.StatelessComponent<SaleListPageProps> = ({
           <FormattedMessage defaultMessage="Create Sale" description="button" />
         </Button>
       </PageHeader>
-      <SaleList {...listProps} />
+      <Card>
+        <SearchBar
+          currentTab={currentTab}
+          initialSearch={initialSearch}
+          searchPlaceholder={intl.formatMessage({
+            defaultMessage: "Search Sale"
+          })}
+          tabs={tabs}
+          onAll={onAll}
+          onSearchChange={onSearchChange}
+          onTabChange={onTabChange}
+          onTabDelete={onTabDelete}
+          onTabSave={onTabSave}
+        />
+        <SaleList {...listProps} />
+      </Card>
     </Container>
   );
 };

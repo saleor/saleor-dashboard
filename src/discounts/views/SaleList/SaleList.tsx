@@ -5,6 +5,10 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
+import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData
+} from "@saleor/components/SaveFilterTabDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -17,16 +21,26 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
-import SaleListPage from "../components/SaleListPage";
-import { TypedSaleBulkDelete } from "../mutations";
-import { TypedSaleList } from "../queries";
-import { SaleBulkDelete } from "../types/SaleBulkDelete";
+import SaleListPage from "../../components/SaleListPage";
+import { TypedSaleBulkDelete } from "../../mutations";
+import { TypedSaleList } from "../../queries";
+import { SaleBulkDelete } from "../../types/SaleBulkDelete";
 import {
   saleAddUrl,
   saleListUrl,
+  SaleListUrlDialog,
+  SaleListUrlFilters,
   SaleListUrlQueryParams,
   saleUrl
-} from "../urls";
+} from "../../urls";
+import {
+  areFiltersApplied,
+  deleteFilterTab,
+  getActiveFilters,
+  getFilterTabs,
+  getFilterVariables,
+  saveFilterTab
+} from "./filter";
 
 interface SaleListProps {
   params: SaleListUrlQueryParams;
@@ -47,13 +61,78 @@ export const SaleList: React.StatelessComponent<SaleListProps> = ({
   );
   const intl = useIntl();
 
-  const closeModal = () => navigate(saleListUrl(), true);
+  const tabs = getFilterTabs();
+
+  const currentTab =
+    params.activeTab === undefined
+      ? areFiltersApplied(params)
+        ? tabs.length + 1
+        : 0
+      : parseInt(params.activeTab, 0);
+
+  const changeFilterField = (filter: SaleListUrlFilters) => {
+    reset();
+    navigate(
+      saleListUrl({
+        ...getActiveFilters(params),
+        ...filter,
+        activeTab: undefined
+      })
+    );
+  };
+
+  const closeModal = () =>
+    navigate(
+      saleListUrl({
+        ...params,
+        action: undefined,
+        ids: undefined
+      })
+    );
+
+  const openModal = (action: SaleListUrlDialog, ids?: string[]) =>
+    navigate(
+      saleListUrl({
+        ...params,
+        action,
+        ids
+      })
+    );
+
+  const handleTabChange = (tab: number) => {
+    reset();
+    navigate(
+      saleListUrl({
+        activeTab: tab.toString(),
+        ...getFilterTabs()[tab - 1].data
+      })
+    );
+  };
+
+  const handleTabDelete = () => {
+    deleteFilterTab(currentTab);
+    reset();
+    navigate(saleListUrl());
+  };
+
+  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
+    saveFilterTab(data.name, getActiveFilters(params));
+    handleTabChange(tabs.length + 1);
+  };
 
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const queryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: getFilterVariables(params)
+    }),
+    [params]
+  );
+
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
   return (
-    <TypedSaleList displayLoader variables={paginationState}>
+    <TypedSaleList displayLoader variables={queryVariables}>
       {({ data, loading, refetch }) => {
         const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
           maybe(() => data.sales.pageInfo),
@@ -91,6 +170,14 @@ export const SaleList: React.StatelessComponent<SaleListProps> = ({
                 <>
                   <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
                   <SaleListPage
+                    currentTab={currentTab}
+                    initialSearch={params.query || ""}
+                    onSearchChange={query => changeFilterField({ query })}
+                    onAll={() => navigate(saleListUrl())}
+                    onTabChange={handleTabChange}
+                    onTabDelete={() => openModal("delete-search")}
+                    onTabSave={() => openModal("save-search")}
+                    tabs={tabs.map(tab => tab.name)}
                     defaultCurrency={maybe(() => shop.defaultCurrency)}
                     sales={maybe(() => data.sales.edges.map(edge => edge.node))}
                     settings={settings}
@@ -150,6 +237,19 @@ export const SaleList: React.StatelessComponent<SaleListProps> = ({
                       </DialogContentText>
                     )}
                   </ActionDialog>
+                  <SaveFilterTabDialog
+                    open={params.action === "save-search"}
+                    confirmButtonState="default"
+                    onClose={closeModal}
+                    onSubmit={handleTabSave}
+                  />
+                  <DeleteFilterTabDialog
+                    open={params.action === "delete-search"}
+                    confirmButtonState="default"
+                    onClose={closeModal}
+                    onSubmit={handleTabDelete}
+                    tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+                  />
                 </>
               );
             }}
