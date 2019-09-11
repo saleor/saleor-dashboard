@@ -452,6 +452,12 @@ export interface OrderAddNoteInput {
   message?: string | null;
 }
 
+export interface OrderDraftFilterInput {
+  customer?: string | null;
+  created?: DateRangeInput | null;
+  search?: string | null;
+}
+
 export interface OrderFilterInput {
   paymentStatus?: (PaymentChargeStatusEnum | null)[] | null;
   status?: (OrderStatusFilter | null)[] | null;

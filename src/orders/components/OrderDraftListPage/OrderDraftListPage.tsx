@@ -6,18 +6,36 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
-import { ListActions, PageListProps } from "@saleor/types";
+import {
+  ListActions,
+  PageListProps,
+  SearchPageProps,
+  TabPageProps
+} from "@saleor/types";
 import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
 import OrderDraftList from "../OrderDraftList";
 
-export interface OrderDraftListPageProps extends PageListProps, ListActions {
+export interface OrderDraftListPageProps
+  extends PageListProps,
+    ListActions,
+    SearchPageProps,
+    TabPageProps {
   orders: OrderDraftList_draftOrders_edges_node[];
 }
 
 const OrderDraftListPage: React.StatelessComponent<OrderDraftListPageProps> = ({
+  currentTab,
   disabled,
+  initialSearch,
   onAdd,
+  onAll,
+  onSearchChange,
+  onTabChange,
+  onTabDelete,
+  onTabSave,
+  tabs,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -38,6 +56,19 @@ const OrderDraftListPage: React.StatelessComponent<OrderDraftListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
+        <SearchBar
+          currentTab={currentTab}
+          initialSearch={initialSearch}
+          searchPlaceholder={intl.formatMessage({
+            defaultMessage: "Search Collection"
+          })}
+          tabs={tabs}
+          onAll={onAll}
+          onSearchChange={onSearchChange}
+          onTabChange={onTabChange}
+          onTabDelete={onTabDelete}
+          onTabSave={onTabSave}
+        />
         <OrderDraftList disabled={disabled} {...listProps} />
       </Card>
     </Container>

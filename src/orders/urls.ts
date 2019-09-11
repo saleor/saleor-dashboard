@@ -42,9 +42,15 @@ export const orderListUrl = (params?: OrderListUrlQueryParams): string => {
 };
 
 export const orderDraftListPath = urlJoin(orderSectionUrl, "drafts");
-export type OrderDraftListUrlDialog = "remove";
-export type OrderDraftListUrlQueryParams = BulkAction &
+export enum OrderDraftListUrlFiltersEnum {
+  query = "query"
+}
+export type OrderDraftListUrlFilters = Filters<OrderDraftListUrlFiltersEnum>;
+export type OrderDraftListUrlDialog = "remove" | TabActionDialog;
+export type OrderDraftListUrlQueryParams = ActiveTab &
+  BulkAction &
   Dialog<OrderDraftListUrlDialog> &
+  OrderDraftListUrlFilters &
   Pagination;
 export const orderDraftListUrl = (
   params?: OrderDraftListUrlQueryParams

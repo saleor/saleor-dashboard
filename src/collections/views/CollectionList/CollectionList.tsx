@@ -5,7 +5,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CategoryListUrlFilters } from "@saleor/categories/urls";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -33,6 +32,7 @@ import {
   collectionAddUrl,
   collectionListUrl,
   CollectionListUrlDialog,
+  CollectionListUrlFilters,
   CollectionListUrlQueryParams,
   collectionUrl
 } from "../../urls";
@@ -72,7 +72,7 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: CategoryListUrlFilters) => {
+  const changeFilterField = (filter: CollectionListUrlFilters) => {
     reset();
     navigate(
       collectionListUrl({

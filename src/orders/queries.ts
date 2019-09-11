@@ -221,8 +221,15 @@ export const orderDraftListQuery = gql`
     $after: String
     $last: Int
     $before: String
+    $filter: OrderDraftFilterInput
   ) {
-    draftOrders(before: $before, after: $after, first: $first, last: $last) {
+    draftOrders(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      filter: $filter
+    ) {
       edges {
         node {
           __typename
