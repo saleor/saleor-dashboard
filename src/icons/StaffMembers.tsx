@@ -3,7 +3,6 @@ import React from "react";
 
 export const StaffMembers = createSvgIcon(
   <>
-    <rect width="40" height="40" fill="white" />
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
