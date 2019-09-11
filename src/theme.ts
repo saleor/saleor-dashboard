@@ -106,6 +106,9 @@ export default (colors: IThemeColors): Theme =>
       MuiFormLabel: {
         filled: {
           color: [[colors.primary], "!important"] as any
+        },
+        focused: {
+          color: [[colors.font.gray], "!important"] as any
         }
       },
       MuiIconButton: {

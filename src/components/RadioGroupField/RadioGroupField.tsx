@@ -12,7 +12,7 @@ import { FormattedMessage } from "react-intl";
 
 const styles = createStyles({
   formControl: {
-    padding: "0 15px",
+    padding: 0,
     width: "100%"
   },
   formLabel: {
