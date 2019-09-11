@@ -56,6 +56,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
           <>
             <DialogContent>
               <TextField
+                autoFocus
                 fullWidth
                 label={intl.formatMessage({
                   defaultMessage: "Search Name",
