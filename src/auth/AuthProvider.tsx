@@ -105,9 +105,7 @@ class AuthProvider extends React.Component<
     if (!!token && !user) {
       this.verifyToken(token);
     } else {
-      if (isCredentialsManagementAPISupported) {
-        loginWithCredentialsManagementAPI(this.login);
-      }
+      loginWithCredentialsManagementAPI(this.login);
     }
   }
 
@@ -117,9 +115,7 @@ class AuthProvider extends React.Component<
 
     tokenAuthFn({ variables: { email, password } }).then(result => {
       if (result && !result.data.tokenCreate.errors.length) {
-        if (isCredentialsManagementAPISupported) {
-          saveCredentials(result.data.tokenCreate.user, password);
-        }
+        saveCredentials(result.data.tokenCreate.user, password);
       }
     });
   };
