@@ -107,8 +107,10 @@ export default (colors: IThemeColors): Theme =>
         filled: {
           color: [[colors.primary], "!important"] as any
         },
-        focused: {
-          color: [[colors.font.gray], "!important"] as any
+        root: {
+          "&$focused": {
+            color: [[colors.font.gray], "!important"] as any
+          }
         }
       },
       MuiIconButton: {
@@ -159,6 +161,9 @@ export default (colors: IThemeColors): Theme =>
         root: {
           "&$disabled": {
             color: `${fade(colors.primary, 0.4)} !important` as any
+          },
+          "&$focused": {
+            color: [[colors.primary], "!important"] as any
           },
           color: colors.input.text
         },
@@ -257,7 +262,7 @@ export default (colors: IThemeColors): Theme =>
               "&::placeholder": {
                 opacity: [[1], "!important"] as any
               },
-              color: colors.input.textHover,
+              color: colors.font.default,
               zIndex: 2
             }
           },
@@ -266,7 +271,7 @@ export default (colors: IThemeColors): Theme =>
               borderColor: [[colors.primary], "!important"] as any
             },
             "& input": {
-              color: colors.input.textHover,
+              color: colors.font.default,
               zIndex: 2
             }
           },
@@ -274,7 +279,7 @@ export default (colors: IThemeColors): Theme =>
         }
       },
       MuiSelect: {
-        disabled: {
+        "&$disabled": {
           color: colors.input.disabledText
         },
         outlined: {
