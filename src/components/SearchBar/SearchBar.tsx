@@ -11,6 +11,7 @@ import Link from "../Link";
 import FilterTabs, { FilterTab } from "../TableFilter";
 
 export interface SearchBarProps extends SearchPageProps, TabPageProps {
+  allTabLabel: string;
   searchPlaceholder: string;
 }
 
@@ -34,6 +35,7 @@ const useStyles = makeStyles(
 
 const SearchBar: React.FC<SearchBarProps> = props => {
   const {
+    allTabLabel,
     currentTab,
     initialSearch,
     onSearchChange,
@@ -54,13 +56,7 @@ const SearchBar: React.FC<SearchBarProps> = props => {
   return (
     <>
       <FilterTabs currentTab={currentTab}>
-        <FilterTab
-          label={intl.formatMessage({
-            defaultMessage: "All Attributes",
-            description: "tab name"
-          })}
-          onClick={onAll}
-        />
+        <FilterTab label={allTabLabel} onClick={onAll} />
         {tabs.map((tab, tabIndex) => (
           <FilterTab
             onClick={() => onTabChange(tabIndex + 1)}

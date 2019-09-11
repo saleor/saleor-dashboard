@@ -56,6 +56,10 @@ const CollectionListPage: React.StatelessComponent<CollectionListPageProps> = ({
       </PageHeader>
       <Card>
         <SearchBar
+          allTabLabel={intl.formatMessage({
+            defaultMessage: "All Collections",
+            description: "tab name"
+          })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({

@@ -48,6 +48,10 @@ const SaleListPage: React.StatelessComponent<SaleListPageProps> = ({
       </PageHeader>
       <Card>
         <SearchBar
+          allTabLabel={intl.formatMessage({
+            defaultMessage: "All Sales",
+            description: "tab name"
+          })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({

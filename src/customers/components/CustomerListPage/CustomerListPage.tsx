@@ -57,6 +57,10 @@ const CustomerListPage: React.StatelessComponent<CustomerListPageProps> = ({
       </PageHeader>
       <Card>
         <SearchBar
+          allTabLabel={intl.formatMessage({
+            defaultMessage: "All Customers",
+            description: "tab name"
+          })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({

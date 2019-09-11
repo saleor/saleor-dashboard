@@ -57,6 +57,10 @@ const OrderDraftListPage: React.StatelessComponent<OrderDraftListPageProps> = ({
       </PageHeader>
       <Card>
         <SearchBar
+          allTabLabel={intl.formatMessage({
+            defaultMessage: "All Drafts",
+            description: "tab name"
+          })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
