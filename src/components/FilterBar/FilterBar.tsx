@@ -71,9 +71,9 @@ const FilterBar: React.FC<FilterBarProps> = ({
               search={search}
               onSearchChange={handleSearchChange}
               onFilterAdd={onFilterAdd}
-              onFilterSave={onTabDelete}
+              onFilterSave={onTabSave}
               isCustomSearch={isCustom}
-              onFilterDelete={onTabSave}
+              onFilterDelete={onTabDelete}
             />
           );
         }}
