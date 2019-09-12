@@ -89,7 +89,7 @@ const SearchBar: React.FC<SearchBarProps> = props => {
                 search={search}
                 onSearchChange={handleSearchChange}
               />
-              {!!search || (tabs && tabs.length > 0) ? (
+              {!!search || (tabs && tabs.length > 0 && currentTab !== 0) ? (
                 <div className={classes.tabActionContainer}>
                   <div className={classes.tabAction}>
                     {isCustom ? (
