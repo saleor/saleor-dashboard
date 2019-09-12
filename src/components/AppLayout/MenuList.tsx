@@ -173,6 +173,13 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
     });
     const intl = useIntl();
 
+    const configutationMenu = createConfigurationMenu(intl).map(menu => {
+      menu.menuItems.map(item => {
+        return user.permissions
+          .map(perm => perm.code)
+          .includes(item.permission);
+      });
+    });
     const handleSubMenu = itemLabel => {
       setActiveSubMenu({
         isActive:
@@ -304,35 +311,30 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
             </a>
           );
         })}
-        {renderConfigure &&
-          createConfigurationMenu(intl).filter(menuItem =>
-            user.permissions
-              .map(perm => perm.code)
-              .includes(menuItem.permission)
-          ).length > 0 && (
-            <a
-              className={classes.menuListItem}
-              href={createHref(configurationMenuUrl)}
-              onClick={event => closeSubMenu(configurationMenuUrl, event)}
-            >
-              <div className={classes.menuItemHover}>
-                <SVG
-                  className={classNames(classes.menuIcon, {
-                    [classes.menuIconDark]: isDark
-                  })}
-                  src={configureIcon}
-                />
-                <Typography
-                  aria-label="configuration"
-                  className={classNames(classes.menuListItemText, {
-                    [classes.menuListItemTextHide]: !isMenuSmall
-                  })}
-                >
-                  <FormattedMessage {...sectionNames.configuration} />
-                </Typography>
-              </div>
-            </a>
-          )}
+        {renderConfigure && configutationMenu.length > 0 && (
+          <a
+            className={classes.menuListItem}
+            href={createHref(configurationMenuUrl)}
+            onClick={event => closeSubMenu(configurationMenuUrl, event)}
+          >
+            <div className={classes.menuItemHover}>
+              <SVG
+                className={classNames(classes.menuIcon, {
+                  [classes.menuIconDark]: isDark
+                })}
+                src={configureIcon}
+              />
+              <Typography
+                aria-label="configuration"
+                className={classNames(classes.menuListItemText, {
+                  [classes.menuListItemTextHide]: !isMenuSmall
+                })}
+              >
+                <FormattedMessage {...sectionNames.configuration} />
+              </Typography>
+            </div>
+          </a>
+        )}
       </div>
     );
   }

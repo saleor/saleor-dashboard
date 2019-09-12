@@ -24,116 +24,126 @@ import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
 import { taxSection } from "@saleor/taxes/urls";
-import { ConfigurationCategoryEnum } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import ConfigurationPage, { MenuItem } from "./ConfigurationPage";
 
 export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
   return [
     {
-      category: ConfigurationCategoryEnum.ATTRUBUTES_PRODUCT_TYPES,
-      description: intl.formatMessage({
-        defaultMessage: "Determine attributes used to create product types",
-        id: "configurationMenuAttributes"
-      }),
-      icon: <Attributes fontSize="inherit" viewBox="0 0 44 44" />,
-      permission: PermissionEnum.MANAGE_PRODUCTS,
-      title: intl.formatMessage(sectionNames.attributes),
-      url: attributeListUrl()
+      label: "Attributes and Product Types",
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Determine attributes used to create product types",
+            id: "configurationMenuAttributes"
+          }),
+          icon: <Attributes fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_PRODUCTS,
+          title: intl.formatMessage(sectionNames.attributes),
+          url: attributeListUrl()
+        },
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Define types of products you sell",
+            id: "configurationMenuProductTypes"
+          }),
+          icon: <ProductTypes fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_PRODUCTS,
+          title: intl.formatMessage(sectionNames.productTypes),
+          url: productTypeListUrl()
+        }
+      ]
     },
     {
-      category: ConfigurationCategoryEnum.ATTRUBUTES_PRODUCT_TYPES,
-      description: intl.formatMessage({
-        defaultMessage: "Define types of products you sell",
-        id: "configurationMenuProductTypes"
-      }),
-      icon: <ProductTypes fontSize="inherit" viewBox="0 0 44 44" />,
-      permission: PermissionEnum.MANAGE_PRODUCTS,
-      title: intl.formatMessage(sectionNames.productTypes),
-      url: productTypeListUrl()
+      label: "Product Settings",
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Manage how you ship out orders",
+            id: "configurationMenuShipping"
+          }),
+          icon: <ShippingMethods fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_SHIPPING,
+          title: intl.formatMessage(sectionNames.shipping),
+          url: shippingZonesListUrl()
+        },
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Manage how your store charges tax",
+            id: "configurationMenuTaxes"
+          }),
+          icon: <Taxes fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_PRODUCTS,
+          title: intl.formatMessage(sectionNames.taxes),
+          url: taxSection
+        }
+      ]
     },
     {
-      category: ConfigurationCategoryEnum.STAFF_SETTINGS,
-      description: intl.formatMessage({
-        defaultMessage: "Manage your employees and their permissions",
-        id: "configurationMenuStaff"
-      }),
-      icon: <StaffMembers fontSize="inherit" viewBox="0 0 44 44" />,
-      permission: PermissionEnum.MANAGE_STAFF,
-      title: intl.formatMessage(sectionNames.staff),
-      url: staffListUrl()
+      label: "Staff Settings",
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Manage your employees and their permissions",
+            id: "configurationMenuStaff"
+          }),
+          icon: <StaffMembers fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_STAFF,
+          title: intl.formatMessage(sectionNames.staff),
+          url: staffListUrl()
+        }
+      ]
     },
     {
-      category: ConfigurationCategoryEnum.PRODUCT_SETTINGS,
-      description: intl.formatMessage({
-        defaultMessage: "Manage how you ship out orders",
-        id: "configurationMenuShipping"
-      }),
-      icon: <ShippingMethods fontSize="inherit" viewBox="0 0 44 44" />,
-      permission: PermissionEnum.MANAGE_SHIPPING,
-      title: intl.formatMessage(sectionNames.shipping),
-      url: shippingZonesListUrl()
-    },
-    {
-      category: ConfigurationCategoryEnum.PRODUCT_SETTINGS,
-      description: intl.formatMessage({
-        defaultMessage: "Manage how your store charges tax",
-        id: "configurationMenuTaxes"
-      }),
-      icon: <Taxes fontSize="inherit" viewBox="0 0 44 44" />,
-      permission: PermissionEnum.MANAGE_PRODUCTS,
-      title: intl.formatMessage(sectionNames.taxes),
-      url: taxSection
-    },
-    {
-      category: ConfigurationCategoryEnum.MISCELLANEOUS,
-      description: intl.formatMessage({
-        defaultMessage: "Define how users can navigate through your store",
-        id: "configurationMenuNavigation"
-      }),
-      icon: <Navigation fontSize="inherit" viewBox="0 0 44 44" />,
-      permission: PermissionEnum.MANAGE_MENUS,
-      title: intl.formatMessage(sectionNames.navigation),
-      url: menuListUrl()
-    },
-    {
-      category: ConfigurationCategoryEnum.MISCELLANEOUS,
-      description: intl.formatMessage({
-        defaultMessage: "View and update your site settings",
-        id: "configurationMenuSiteSettings"
-      }),
-      icon: <SiteSettings fontSize="inherit" viewBox="0 0 44 44" />,
-      permission: PermissionEnum.MANAGE_SETTINGS,
-      title: intl.formatMessage(sectionNames.siteSettings),
-      url: siteSettingsUrl()
-    },
-    {
-      category: ConfigurationCategoryEnum.MISCELLANEOUS,
-      description: intl.formatMessage({
-        defaultMessage: "Manage and add additional pages",
-        id: "configurationMenuPages"
-      }),
-      icon: <Pages fontSize="inherit" viewBox="0 0 44 44" />,
-      permission: PermissionEnum.MANAGE_PAGES,
-      title: intl.formatMessage(sectionNames.pages),
-      url: pageListUrl()
-    },
-    {
-      category: ConfigurationCategoryEnum.MISCELLANEOUS,
-      description: intl.formatMessage({
-        defaultMessage: "View and update your plugins and their settings.",
-        id: "configurationPluginsPages"
-      }),
-      icon: (
-        <Plugins
-          fontSize="inherit"
-          viewBox="-8 -5 44 44"
-          preserveAspectRatio="xMinYMin meet"
-        />
-      ),
-      permission: PermissionEnum.MANAGE_SETTINGS,
-      title: intl.formatMessage(sectionNames.plugins),
-      url: pluginsListUrl()
+      label: "Miscellaneous",
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Define how users can navigate through your store",
+            id: "configurationMenuNavigation"
+          }),
+          icon: <Navigation fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_MENUS,
+          title: intl.formatMessage(sectionNames.navigation),
+          url: menuListUrl()
+        },
+        {
+          description: intl.formatMessage({
+            defaultMessage: "View and update your site settings",
+            id: "configurationMenuSiteSettings"
+          }),
+          icon: <SiteSettings fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_SETTINGS,
+          title: intl.formatMessage(sectionNames.siteSettings),
+          url: siteSettingsUrl()
+        },
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Manage and add additional pages",
+            id: "configurationMenuPages"
+          }),
+          icon: <Pages fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_PAGES,
+          title: intl.formatMessage(sectionNames.pages),
+          url: pageListUrl()
+        },
+        {
+          description: intl.formatMessage({
+            defaultMessage: "View and update your plugins and their settings.",
+            id: "configurationPluginsPages"
+          }),
+          icon: (
+            <Plugins
+              fontSize="inherit"
+              viewBox="-8 -5 44 44"
+              preserveAspectRatio="xMinYMin meet"
+            />
+          ),
+          permission: PermissionEnum.MANAGE_SETTINGS,
+          title: intl.formatMessage(sectionNames.plugins),
+          url: pluginsListUrl()
+        }
+      ]
     }
   ];
 }

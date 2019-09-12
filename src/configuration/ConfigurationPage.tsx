@@ -12,19 +12,23 @@ import { useIntl } from "react-intl";
 
 import { IconProps } from "@material-ui/core/Icon";
 import { sectionNames } from "@saleor/intl";
-import { ConfigurationCategoryEnum } from "@saleor/types";
+import { hasPermission } from "../auth/misc";
 import { User } from "../auth/types/User";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
 import { PermissionEnum } from "../types/globalTypes";
 
 export interface MenuItem {
-  category: ConfigurationCategoryEnum;
-  description: string;
-  icon: React.ReactElement<IconProps>;
-  permission: PermissionEnum;
-  title: string;
-  url?: string;
+  label: string;
+  menuItems: [
+    {
+      description: string;
+      icon: React.ReactElement<IconProps>;
+      permission: PermissionEnum;
+      title: string;
+      url?: string;
+    }
+  ];
 }
 
 const styles = (theme: Theme) =>
@@ -70,6 +74,9 @@ const styles = (theme: Theme) =>
     configurationLabel: {
       paddingBottom: 20
     },
+    header: {
+      margin: 0
+    },
     icon: {
       color: theme.palette.primary.main,
       fontSize: 48
@@ -99,191 +106,45 @@ export const ConfigurationPage = withStyles(styles, {
     const intl = useIntl();
     return (
       <Container>
-        <PageHeader title={intl.formatMessage(sectionNames.configuration)} />
-        <div className={classes.configurationCategory}>
-          <div className={classes.configurationLabel}>
-            <Typography>
-              {intl.formatMessage({
-                defaultMessage: "Attributes and Product Types",
-                description: "configuration category"
-              })}
-            </Typography>
-          </div>
-          <div className={classes.configurationItem}>
-            {menu
-              .filter(menuItem =>
-                user.permissions
-                  .map(perm => perm.code)
-                  .includes(menuItem.permission)
-              )
-              .map(
-                (menuItem, menuItemIndex) =>
-                  menuItem.category ===
-                    ConfigurationCategoryEnum.ATTRUBUTES_PRODUCT_TYPES && (
-                    <Card
-                      className={
-                        menuItem.url ? classes.card : classes.cardDisabled
-                      }
-                      onClick={() => onSectionClick(menuItem.url)}
-                      key={menuItemIndex}
-                    >
-                      <CardContent className={classes.cardContent}>
-                        <div className={classes.icon}>{menuItem.icon}</div>
-                        <div>
-                          <Typography
-                            className={classes.sectionTitle}
-                            color="primary"
-                          >
-                            {menuItem.title}
-                          </Typography>
-                          <Typography className={classes.sectionDescription}>
-                            {menuItem.description}
-                          </Typography>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  )
-              )}
-          </div>
-        </div>
-        <div className={classes.configurationCategory}>
-          <div className={classes.configurationLabel}>
-            <Typography>
-              {intl.formatMessage({
-                defaultMessage: "Product Settings",
-                description: "configuration category"
-              })}
-            </Typography>
-          </div>
-          <div className={classes.configurationItem}>
-            {menu
-              .filter(menuItem =>
-                user.permissions
-                  .map(perm => perm.code)
-                  .includes(menuItem.permission)
-              )
-              .map(
-                (menuItem, menuItemIndex) =>
-                  menuItem.category ===
-                    ConfigurationCategoryEnum.PRODUCT_SETTINGS && (
-                    <Card
-                      className={
-                        menuItem.url ? classes.card : classes.cardDisabled
-                      }
-                      onClick={() => onSectionClick(menuItem.url)}
-                      key={menuItemIndex}
-                    >
-                      <CardContent className={classes.cardContent}>
-                        <div className={classes.icon}>{menuItem.icon}</div>
-                        <div>
-                          <Typography
-                            className={classes.sectionTitle}
-                            color="primary"
-                          >
-                            {menuItem.title}
-                          </Typography>
-                          <Typography className={classes.sectionDescription}>
-                            {menuItem.description}
-                          </Typography>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  )
-              )}
-          </div>
-        </div>
-        <div className={classes.configurationCategory}>
-          <div className={classes.configurationLabel}>
-            <Typography>
-              {intl.formatMessage({
-                defaultMessage: "Staff Settings",
-                description: "configuration category"
-              })}
-            </Typography>
-          </div>
-          <div className={classes.configurationItem}>
-            {menu
-              .filter(menuItem =>
-                user.permissions
-                  .map(perm => perm.code)
-                  .includes(menuItem.permission)
-              )
-              .map(
-                (menuItem, menuItemIndex) =>
-                  menuItem.category ===
-                    ConfigurationCategoryEnum.STAFF_SETTINGS && (
-                    <Card
-                      className={
-                        menuItem.url ? classes.card : classes.cardDisabled
-                      }
-                      onClick={() => onSectionClick(menuItem.url)}
-                      key={menuItemIndex}
-                    >
-                      <CardContent className={classes.cardContent}>
-                        <div className={classes.icon}>{menuItem.icon}</div>
-                        <div>
-                          <Typography
-                            className={classes.sectionTitle}
-                            color="primary"
-                          >
-                            {menuItem.title}
-                          </Typography>
-                          <Typography className={classes.sectionDescription}>
-                            {menuItem.description}
-                          </Typography>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  )
-              )}
-          </div>
-        </div>
-        <div className={classes.configurationCategory}>
-          <div className={classes.configurationLabel}>
-            <Typography>
-              {intl.formatMessage({
-                defaultMessage: "Miscellaneous",
-                description: "configuration category"
-              })}
-            </Typography>
-          </div>
-          <div className={classes.configurationItem}>
-            {menu
-              .filter(menuItem =>
-                user.permissions
-                  .map(perm => perm.code)
-                  .includes(menuItem.permission)
-              )
-              .map(
-                (menuItem, menuItemIndex) =>
-                  menuItem.category ===
-                    ConfigurationCategoryEnum.MISCELLANEOUS && (
-                    <Card
-                      className={
-                        menuItem.url ? classes.card : classes.cardDisabled
-                      }
-                      onClick={() => onSectionClick(menuItem.url)}
-                      key={menuItemIndex}
-                    >
-                      <CardContent className={classes.cardContent}>
-                        <div className={classes.icon}>{menuItem.icon}</div>
-                        <div>
-                          <Typography
-                            className={classes.sectionTitle}
-                            color="primary"
-                          >
-                            {menuItem.title}
-                          </Typography>
-                          <Typography className={classes.sectionDescription}>
-                            {menuItem.description}
-                          </Typography>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  )
-              )}
-          </div>
-        </div>
+        <PageHeader
+          className={classes.header}
+          title={intl.formatMessage(sectionNames.configuration)}
+        />
+        {menu
+          .filter(menu =>
+            menu.menuItems.map(item => hasPermission(item.permission, user))
+          )
+          .map((menu, menuIndex) => (
+            <div className={classes.configurationCategory}>
+              <div className={classes.configurationLabel}>
+                <Typography>{menu.label}</Typography>
+              </div>
+              <div className={classes.configurationItem}>
+                {menu.menuItems.map(item => (
+                  <Card
+                    className={item.url ? classes.card : classes.cardDisabled}
+                    onClick={() => onSectionClick(item.url)}
+                    key={menuIndex}
+                  >
+                    <CardContent className={classes.cardContent}>
+                      <div className={classes.icon}>{item.icon}</div>
+                      <div>
+                        <Typography
+                          className={classes.sectionTitle}
+                          color="primary"
+                        >
+                          {item.title}
+                        </Typography>
+                        <Typography className={classes.sectionDescription}>
+                          {item.description}
+                        </Typography>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          ))}
       </Container>
     );
   }

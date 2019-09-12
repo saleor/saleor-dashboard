@@ -227,8 +227,8 @@ const Routes: React.FC = () => {
                 path={attributeSection}
                 component={AttributeSection}
               />
-              {createConfigurationMenu(intl).filter(menuItem =>
-                hasPermission(menuItem.permission, user)
+              {createConfigurationMenu(intl).filter(menu =>
+                menu.menuItems.map(item => hasPermission(item.permission, user))
               ).length > 0 && (
                 <SectionRoute
                   exact

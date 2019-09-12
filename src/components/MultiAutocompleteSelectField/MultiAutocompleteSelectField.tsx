@@ -61,8 +61,7 @@ const styles = (theme: Theme) =>
       paddingRight: theme.spacing.unit
     },
     chipLabel: {
-      color: theme.palette.common.white,
-      fontSize: "16px"
+      color: theme.palette.primary.contrastText
     },
     container: {
       flexGrow: 1,
@@ -276,7 +275,7 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
           {displayValues.map(value => (
             <div className={classes.chip} key={value.value}>
               <div className={classes.chipInner}>
-                <Typography className={classes.chipLabel} variant="caption">
+                <Typography className={classes.chipLabel}>
                   {value.label}
                 </Typography>
                 <IconButton
