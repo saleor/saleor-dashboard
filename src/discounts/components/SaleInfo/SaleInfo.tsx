@@ -1,11 +1,5 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles
-} from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 import { useIntl } from "react-intl";

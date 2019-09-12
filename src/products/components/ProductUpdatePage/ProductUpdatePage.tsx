@@ -291,7 +291,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     errors={errors}
                     disabled={disabled}
                     onChange={change}
-                    translate="product"
                   />
                 </div>
               </Grid>

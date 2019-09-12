@@ -281,7 +281,6 @@ export const ProductCreatePage: React.StatelessComponent<
                   errors={errors}
                   disabled={disabled}
                   onChange={change}
-                  translate="page"
                 />
               </div>
             </Grid>
