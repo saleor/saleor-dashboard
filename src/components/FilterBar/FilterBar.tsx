@@ -6,8 +6,8 @@ import Debounce from "../Debounce";
 import { IFilter } from "../Filter/types";
 import FilterTabs, { FilterChips, FilterTab } from "../TableFilter";
 
-export interface FilterBarProps extends FilterProps {
-  filterMenu: IFilter;
+export interface FilterBarProps<TKeys = string> extends FilterProps {
+  filterMenu: IFilter<TKeys>;
 }
 
 const FilterBar: React.FC<FilterBarProps> = ({

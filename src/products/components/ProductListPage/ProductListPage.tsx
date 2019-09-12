@@ -30,7 +30,7 @@ import ProductListFilter, { ProductFilterKeys } from "../ProductListFilter";
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
-    FilterPageProps,
+    FilterPageProps<ProductFilterKeys>,
     FetchMoreProps {
   availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;

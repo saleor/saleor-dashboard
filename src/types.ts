@@ -70,16 +70,20 @@ export interface SearchPageProps {
   initialSearch: string;
   onSearchChange: (value: string) => void;
 }
-export interface FilterPageProps extends SearchPageProps, TabPageProps {
+export interface FilterPageProps<TKeys = string>
+  extends SearchPageProps,
+    TabPageProps {
   currencySymbol: string;
   filtersList: Filter[];
-  onFilterAdd: (filter: FilterContentSubmitData) => void;
+  onFilterAdd: (filter: FilterContentSubmitData<TKeys>) => void;
 }
 
 export interface SearchProps {
   searchPlaceholder: string;
 }
-export interface FilterProps extends FilterPageProps, SearchProps {
+export interface FilterProps<TKeys = string>
+  extends FilterPageProps<TKeys>,
+    SearchProps {
   allTabLabel: string;
   filterLabel: string;
 }

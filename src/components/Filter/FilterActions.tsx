@@ -48,11 +48,11 @@ export interface FilterActionsPropsSearch {
   search: string;
   onSearchChange: (event: React.ChangeEvent<any>) => void;
 }
-export interface FilterActionsPropsFilters {
+export interface FilterActionsPropsFilters<TKeys = string> {
   currencySymbol: string;
-  menu: IFilter;
+  menu: IFilter<TKeys>;
   filterLabel: string;
-  onFilterAdd: (filter: FilterContentSubmitData) => void;
+  onFilterAdd: (filter: FilterContentSubmitData<TKeys>) => void;
 }
 
 export const FilterActionsOnlySearch: React.FC<

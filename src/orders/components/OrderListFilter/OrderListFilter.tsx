@@ -9,7 +9,7 @@ import TimezoneContext from "@saleor/components/Timezone";
 import { FilterProps } from "../../../types";
 import { OrderStatusFilter } from "../../../types/globalTypes";
 
-type OrderListFilterProps = FilterProps;
+type OrderListFilterProps = FilterProps<OrderFilterKeys>;
 
 export enum OrderFilterKeys {
   date = "date",
