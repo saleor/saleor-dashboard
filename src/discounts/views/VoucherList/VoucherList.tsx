@@ -87,7 +87,8 @@ export const VoucherList: React.StatelessComponent<VoucherListProps> = ({
         ...params,
         action: undefined,
         ids: undefined
-      })
+      }),
+      true
     );
 
   const openModal = (action: VoucherListUrlDialog, ids?: string[]) =>

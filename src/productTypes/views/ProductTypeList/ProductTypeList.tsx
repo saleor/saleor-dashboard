@@ -83,7 +83,8 @@ export const ProductTypeList: React.StatelessComponent<
         ...params,
         action: undefined,
         ids: undefined
-      })
+      }),
+      true
     );
 
   const openModal = (action: ProductTypeListUrlDialog, ids?: string[]) =>

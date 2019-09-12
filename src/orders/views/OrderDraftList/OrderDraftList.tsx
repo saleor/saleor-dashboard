@@ -86,7 +86,8 @@ export const OrderDraftList: React.StatelessComponent<OrderDraftListProps> = ({
         ...params,
         action: undefined,
         ids: undefined
-      })
+      }),
+      true
     );
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {

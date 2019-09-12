@@ -33,7 +33,7 @@ const ShippingZoneDetails: React.StatelessComponent<
   const notify = useNotifier();
   const intl = useIntl();
 
-  const closeModal = () => navigate(shippingZoneUrl(id));
+  const closeModal = () => navigate(shippingZoneUrl(id), true);
 
   const onShippingRateCreate = (data: CreateShippingRate) => {
     if (data.shippingPriceCreate.errors.length === 0) {

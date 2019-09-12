@@ -78,7 +78,8 @@ export const StaffList: React.StatelessComponent<StaffListProps> = ({
         ...params,
         action: undefined,
         ids: undefined
-      })
+      }),
+      true
     );
 
   const openModal = (action: StaffListUrlDialog, ids?: string[]) =>

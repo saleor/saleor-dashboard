@@ -87,7 +87,8 @@ export const SaleList: React.StatelessComponent<SaleListProps> = ({
         ...params,
         action: undefined,
         ids: undefined
-      })
+      }),
+      true
     );
 
   const openModal = (action: SaleListUrlDialog, ids?: string[]) =>
