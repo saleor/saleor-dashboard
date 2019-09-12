@@ -8,11 +8,8 @@ import usePaginator, {
 import useShop from "@saleor/hooks/useShop";
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
-import { Pagination } from "../../types";
 import TranslationsEntitiesList from "../components/TranslationsEntitiesList";
-import TranslationsEntitiesListPage, {
-  TranslationsEntitiesListFilterTab
-} from "../components/TranslationsEntitiesListPage";
+import TranslationsEntitiesListPage from "../components/TranslationsEntitiesListPage";
 import {
   TypedCategoryTranslations,
   TypedCollectionTranslations,
@@ -24,18 +21,16 @@ import {
 } from "../queries";
 import { AttributeTranslationFragment } from "../types/AttributeTranslationFragment";
 import {
+  languageEntitiesUrl,
+  LanguageEntitiesUrlQueryParams,
   languageEntityUrl,
   languageListUrl,
   TranslatableEntities
 } from "../urls";
 
-export type TranslationsEntitiesListQueryParams = Pagination & {
-  tab: TranslationsEntitiesListFilterTab;
-};
-
 interface TranslationsEntitiesProps {
   language: string;
-  params: TranslationsEntitiesListQueryParams;
+  params: LanguageEntitiesUrlQueryParams;
 }
 
 function sumTranslations(
@@ -128,9 +123,29 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
     shop.languages.find(languageFromList => languageFromList.code === language)
   );
   const paginationState = createPaginationState(PAGINATE_BY, params);
+  const queryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: {
+        search: params.query
+      },
+      language: language as any
+    }),
+    [params]
+  );
 
   return (
     <TranslationsEntitiesListPage
+      initialSearch={params.query || ""}
+      onSearchChange={query =>
+        navigate(
+          languageEntitiesUrl(language, {
+            ...params,
+            query
+          }),
+          true
+        )
+      }
       filters={{
         current: params.tab,
         ...filterCallbacks
@@ -139,9 +154,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
       onBack={() => navigate(languageListUrl)}
     >
       {params.tab === "categories" ? (
-        <TypedCategoryTranslations
-          variables={{ language: language as any, ...paginationState }}
-        >
+        <TypedCategoryTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
               maybe(() => data.categories.pageInfo),
@@ -191,9 +204,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           }}
         </TypedCategoryTranslations>
       ) : params.tab === "products" ? (
-        <TypedProductTranslations
-          variables={{ language: language as any, ...paginationState }}
-        >
+        <TypedProductTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
               maybe(() => data.products.pageInfo),
@@ -243,9 +254,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           }}
         </TypedProductTranslations>
       ) : params.tab === "collections" ? (
-        <TypedCollectionTranslations
-          variables={{ language: language as any, ...paginationState }}
-        >
+        <TypedCollectionTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
               maybe(() => data.collections.pageInfo),
@@ -295,9 +304,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           }}
         </TypedCollectionTranslations>
       ) : params.tab === "sales" ? (
-        <TypedSaleTranslations
-          variables={{ language: language as any, ...paginationState }}
-        >
+        <TypedSaleTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
               maybe(() => data.sales.pageInfo),
@@ -335,9 +342,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           }}
         </TypedSaleTranslations>
       ) : params.tab === "vouchers" ? (
-        <TypedVoucherTranslations
-          variables={{ language: language as any, ...paginationState }}
-        >
+        <TypedVoucherTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
               maybe(() => data.vouchers.pageInfo),
@@ -379,9 +384,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           }}
         </TypedVoucherTranslations>
       ) : params.tab === "pages" ? (
-        <TypedPageTranslations
-          variables={{ language: language as any, ...paginationState }}
-        >
+        <TypedPageTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
               maybe(() => data.pages.pageInfo),
@@ -427,9 +430,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           }}
         </TypedPageTranslations>
       ) : params.tab === "productTypes" ? (
-        <TypedProductTypeTranslations
-          variables={{ language: language as any, ...paginationState }}
-        >
+        <TypedProductTypeTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
               maybe(() => data.productTypes.pageInfo),

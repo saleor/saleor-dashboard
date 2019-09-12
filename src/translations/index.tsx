@@ -18,9 +18,7 @@ import TranslationsCategoriesComponent, {
 import TranslationsCollectionsComponent, {
   TranslationsCollectionsQueryParams
 } from "./views/TranslationsCollections";
-import TranslationsEntitiesComponent, {
-  TranslationsEntitiesListQueryParams
-} from "./views/TranslationsEntities";
+import TranslationsEntitiesComponent from "./views/TranslationsEntities";
 import TranslationsLanguageList from "./views/TranslationsLanguageList";
 import TranslationsPagesComponent, {
   TranslationsPagesQueryParams
@@ -46,15 +44,11 @@ const TranslationsEntities: React.FC<TranslationsEntitiesRouteProps> = ({
   match
 }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsEntitiesListQueryParams = {
-    after: qs.after,
-    before: qs.before,
-    tab: qs.tab
-  };
+
   return (
     <TranslationsEntitiesComponent
       language={match.params.languageCode}
-      params={params}
+      params={qs}
     />
   );
 };

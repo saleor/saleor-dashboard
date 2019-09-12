@@ -109,10 +109,9 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
                 onDiscard={onDiscard}
                 onBack={() =>
                   navigate(
-                    languageEntitiesUrl(
-                      languageCode,
-                      TranslatableEntities.collections
-                    )
+                    languageEntitiesUrl(languageCode, {
+                      tab: TranslatableEntities.collections
+                    })
                   )
                 }
                 onLanguageChange={lang =>

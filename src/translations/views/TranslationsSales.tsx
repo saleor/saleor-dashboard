@@ -98,10 +98,9 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
                 saveButtonState={saveButtonState}
                 onBack={() =>
                   navigate(
-                    languageEntitiesUrl(
-                      languageCode,
-                      TranslatableEntities.sales
-                    )
+                    languageEntitiesUrl(languageCode, {
+                      tab: TranslatableEntities.sales
+                    })
                   )
                 }
                 onEdit={onEdit}

@@ -101,10 +101,9 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
                 saveButtonState={saveButtonState}
                 onBack={() =>
                   navigate(
-                    languageEntitiesUrl(
-                      languageCode,
-                      TranslatableEntities.vouchers
-                    )
+                    languageEntitiesUrl(languageCode, {
+                      tab: TranslatableEntities.vouchers
+                    })
                   )
                 }
                 onEdit={onEdit}

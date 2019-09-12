@@ -144,10 +144,9 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
                     saveButtonState={saveButtonState}
                     onBack={() =>
                       navigate(
-                        languageEntitiesUrl(
-                          languageCode,
-                          TranslatableEntities.productTypes
-                        )
+                        languageEntitiesUrl(languageCode, {
+                          tab: TranslatableEntities.productTypes
+                        })
                       )
                     }
                     onEdit={onEdit}

@@ -14,7 +14,7 @@ const TranslationsLanguageList: React.FC = () => {
     <TranslationsLanguageListPage
       languages={maybe(() => shop.languages)}
       //   onAdd={undefined}
-      onRowClick={code => navigate(languageEntitiesUrl(code))}
+      onRowClick={code => navigate(languageEntitiesUrl(code, {}))}
     />
   );
 };

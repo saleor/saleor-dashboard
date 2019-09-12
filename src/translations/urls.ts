@@ -1,6 +1,9 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
+import { Pagination } from "@saleor/types";
+import { TranslationsEntitiesListFilterTab } from "./components/TranslationsEntitiesListPage";
+
 export enum TranslatableEntities {
   categories = "categories",
   products = "products",
@@ -18,12 +21,15 @@ export const languageListUrl = translationsSection;
 
 export const languageEntitiesPath = (code: string) =>
   urlJoin(translationsSection, code);
-export const languageEntitiesUrl = (code: string, tab?: TranslatableEntities) =>
-  languageEntitiesPath(code) +
-  "?" +
-  stringifyQs({
-    tab
-  });
+export type LanguageEntitiesUrlQueryParams = Pagination &
+  Partial<{
+    query: string;
+    tab: TranslationsEntitiesListFilterTab;
+  }>;
+export const languageEntitiesUrl = (
+  code: string,
+  params: LanguageEntitiesUrlQueryParams
+) => languageEntitiesPath(code) + "?" + stringifyQs(params);
 
 export const languageEntityPath = (
   code: string,

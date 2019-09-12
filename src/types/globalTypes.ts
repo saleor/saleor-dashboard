@@ -187,6 +187,16 @@ export enum PermissionEnum {
   MANAGE_USERS = "MANAGE_USERS",
 }
 
+export enum ProductTypeConfigurable {
+  CONFIGURABLE = "CONFIGURABLE",
+  SIMPLE = "SIMPLE",
+}
+
+export enum ProductTypeEnum {
+  DIGITAL = "DIGITAL",
+  SHIPPABLE = "SHIPPABLE",
+}
+
 export enum SaleType {
   FIXED = "FIXED",
   PERCENTAGE = "PERCENTAGE",
@@ -520,6 +530,10 @@ export interface OrderUpdateShippingInput {
   shippingMethod?: string | null;
 }
 
+export interface PageFilterInput {
+  search?: string | null;
+}
+
 export interface PageInput {
   slug?: string | null;
   title?: string | null;
@@ -558,6 +572,12 @@ export interface ProductFilterInput {
   productType?: string | null;
   search?: string | null;
   minimalPrice?: PriceRangeInput | null;
+}
+
+export interface ProductTypeFilterInput {
+  search?: string | null;
+  configurable?: ProductTypeConfigurable | null;
+  productType?: ProductTypeEnum | null;
 }
 
 export interface ProductTypeInput {
