@@ -1,15 +1,28 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination } from "../types";
+import {
+  ActiveTab,
+  BulkAction,
+  Dialog,
+  Filters,
+  Pagination,
+  TabActionDialog
+} from "../types";
 
 const staffSection = "/staff/";
 
 export const staffListPath = staffSection;
-export type StaffListUrlDialog = "add" | "remove";
-export type StaffListUrlQueryParams = BulkAction &
+export enum StaffListUrlFiltersEnum {
+  query = "query"
+}
+export type StaffListUrlFilters = Filters<StaffListUrlFiltersEnum>;
+export type StaffListUrlDialog = "add" | "remove" | TabActionDialog;
+export type StaffListUrlQueryParams = ActiveTab &
+  BulkAction &
   Dialog<StaffListUrlDialog> &
-  Pagination;
+  Pagination &
+  StaffListUrlFilters;
 export const staffListUrl = (params?: StaffListUrlQueryParams) =>
   staffListPath + "?" + stringifyQs(params);
 

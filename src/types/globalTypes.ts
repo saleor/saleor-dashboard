@@ -197,6 +197,11 @@ export enum ShippingMethodTypeEnum {
   WEIGHT = "WEIGHT",
 }
 
+export enum StaffMemberStatus {
+  ACTIVE = "ACTIVE",
+  DEACTIVATED = "DEACTIVATED",
+}
+
 export enum StockAvailability {
   IN_STOCK = "IN_STOCK",
   OUT_OF_STOCK = "OUT_OF_STOCK",
@@ -657,6 +662,11 @@ export interface StaffInput {
   isActive?: boolean | null;
   note?: string | null;
   permissions?: (PermissionEnum | null)[] | null;
+}
+
+export interface StaffUserInput {
+  status?: StaffMemberStatus | null;
+  search?: string | null;
 }
 
 export interface TranslationInput {

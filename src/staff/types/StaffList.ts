@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PermissionEnum } from "./../../types/globalTypes";
+import { StaffUserInput, PermissionEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: StaffList
@@ -64,4 +64,5 @@ export interface StaffListVariables {
   after?: string | null;
   last?: number | null;
   before?: string | null;
+  filter?: StaffUserInput | null;
 }
