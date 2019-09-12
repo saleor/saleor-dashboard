@@ -13394,7 +13394,7 @@ exports[`Storyshots Views / Categories / Create category When loading 1`] = `
           >
             <div>
               <div
-                class="MuiFormControl-root-id CategoryDetailsForm-root-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
                 <label
                   class="MuiFormLabel-root-id MuiFormLabel-disabled-id MuiInputLabel-disabled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -13403,7 +13403,7 @@ exports[`Storyshots Views / Categories / Create category When loading 1`] = `
                   Category Name
                 </label>
                 <div
-                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-formControl-id"
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
                 >
                   <fieldset
                     aria-hidden="true"
@@ -13850,7 +13850,7 @@ exports[`Storyshots Views / Categories / Create category default 1`] = `
           >
             <div>
               <div
-                class="MuiFormControl-root-id CategoryDetailsForm-root-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
                 <label
                   class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -13859,7 +13859,7 @@ exports[`Storyshots Views / Categories / Create category default 1`] = `
                   Category Name
                 </label>
                 <div
-                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-formControl-id"
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
                 >
                   <fieldset
                     aria-hidden="true"
@@ -14304,7 +14304,7 @@ exports[`Storyshots Views / Categories / Update category default 1`] = `
         >
           <div>
             <div
-              class="MuiFormControl-root-id CategoryDetailsForm-root-id"
+              class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
             >
               <label
                 class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
@@ -14313,7 +14313,7 @@ exports[`Storyshots Views / Categories / Update category default 1`] = `
                 Category Name
               </label>
               <div
-                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-formControl-id"
+                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
               >
                 <fieldset
                   aria-hidden="true"
@@ -15298,7 +15298,7 @@ exports[`Storyshots Views / Categories / Update category loading 1`] = `
         >
           <div>
             <div
-              class="MuiFormControl-root-id CategoryDetailsForm-root-id"
+              class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
             >
               <label
                 class="MuiFormLabel-root-id MuiFormLabel-disabled-id MuiInputLabel-disabled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -15307,7 +15307,7 @@ exports[`Storyshots Views / Categories / Update category loading 1`] = `
                 Category Name
               </label>
               <div
-                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-formControl-id"
+                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
               >
                 <fieldset
                   aria-hidden="true"
@@ -16041,7 +16041,7 @@ exports[`Storyshots Views / Categories / Update category no background 1`] = `
         >
           <div>
             <div
-              class="MuiFormControl-root-id CategoryDetailsForm-root-id"
+              class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
             >
               <label
                 class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
@@ -16050,7 +16050,7 @@ exports[`Storyshots Views / Categories / Update category no background 1`] = `
                 Category Name
               </label>
               <div
-                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-formControl-id"
+                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
               >
                 <fieldset
                   aria-hidden="true"
@@ -17030,7 +17030,7 @@ exports[`Storyshots Views / Categories / Update category no products 1`] = `
         >
           <div>
             <div
-              class="MuiFormControl-root-id CategoryDetailsForm-root-id"
+              class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
             >
               <label
                 class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
@@ -17039,7 +17039,7 @@ exports[`Storyshots Views / Categories / Update category no products 1`] = `
                 Category Name
               </label>
               <div
-                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-formControl-id"
+                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
               >
                 <fieldset
                   aria-hidden="true"
@@ -18048,7 +18048,7 @@ exports[`Storyshots Views / Categories / Update category no subcategories 1`] = 
         >
           <div>
             <div
-              class="MuiFormControl-root-id CategoryDetailsForm-root-id"
+              class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
             >
               <label
                 class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
@@ -18057,7 +18057,7 @@ exports[`Storyshots Views / Categories / Update category no subcategories 1`] = 
                 Category Name
               </label>
               <div
-                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-formControl-id"
+                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
               >
                 <fieldset
                   aria-hidden="true"
@@ -19037,7 +19037,7 @@ exports[`Storyshots Views / Categories / Update category products 1`] = `
         >
           <div>
             <div
-              class="MuiFormControl-root-id CategoryDetailsForm-root-id"
+              class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
             >
               <label
                 class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
@@ -19046,7 +19046,7 @@ exports[`Storyshots Views / Categories / Update category products 1`] = `
                 Category Name
               </label>
               <div
-                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-formControl-id"
+                class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
               >
                 <fieldset
                   aria-hidden="true"
@@ -20654,7 +20654,7 @@ exports[`Storyshots Views / Collections / Collection details default 1`] = `
               class="MuiCardContent-root-id"
             >
               <div
-                class="MuiFormControl-root-id CollectionDetails-name-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
                 <label
                   class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
@@ -20663,7 +20663,7 @@ exports[`Storyshots Views / Collections / Collection details default 1`] = `
                   Name
                 </label>
                 <div
-                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-formControl-id"
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
                 >
                   <fieldset
                     aria-hidden="true"
@@ -21945,90 +21945,90 @@ Ctrl + K"
                 class="MuiCardContent-root-id"
               >
                 <div
-                  class="VisibilityCard-expandedSwitchContainer-id"
+                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
                 >
                   <div
-                    class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                    aria-label="isPublished"
+                    class="MuiFormGroup-root-id"
+                    role="radiogroup"
                   >
-                    <div
-                      aria-label="isPublished"
-                      class="MuiFormGroup-root-id"
-                      role="radiogroup"
+                    <label
+                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
                     >
-                      <label
-                        class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                      <span
+                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
                       >
                         <span
-                          class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                          class="MuiIconButton-label-id"
                         >
-                          <span
-                            class="MuiIconButton-label-id"
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
                           >
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root-id"
-                              focusable="false"
-                              role="presentation"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                              />
-                            </svg>
-                            <input
-                              checked=""
-                              class="MuiPrivateSwitchBase-input-id"
-                              name="isPublished"
-                              type="radio"
-                              value="true"
+                            <path
+                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                             />
-                          </span>
+                          </svg>
+                          <input
+                            checked=""
+                            class="MuiPrivateSwitchBase-input-id"
+                            name="isPublished"
+                            type="radio"
+                            value="true"
+                          />
                         </span>
+                      </span>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                      >
+                        Visible
                         <span
-                          class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                          class="RadioGroupField-secondLabel-id"
                         >
-                          Visible
-                          <span>
-                            since Aug 25, 2018
-                          </span>
+                          since Aug 25, 2018
                         </span>
-                      </label>
-                      <label
-                        class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                      </span>
+                    </label>
+                    <label
+                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    >
+                      <span
+                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
                       >
                         <span
-                          class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                          class="MuiIconButton-label-id"
                         >
-                          <span
-                            class="MuiIconButton-label-id"
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
                           >
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root-id"
-                              focusable="false"
-                              role="presentation"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                              />
-                            </svg>
-                            <input
-                              class="MuiPrivateSwitchBase-input-id"
-                              name="isPublished"
-                              type="radio"
-                              value="false"
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                             />
-                          </span>
+                          </svg>
+                          <input
+                            class="MuiPrivateSwitchBase-input-id"
+                            name="isPublished"
+                            type="radio"
+                            value="false"
+                          />
                         </span>
+                      </span>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                      >
+                        Hidden
                         <span
-                          class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                        >
-                          Hidden
-                          <span />
-                        </span>
-                      </label>
-                    </div>
+                          class="RadioGroupField-secondLabel-id"
+                        />
+                      </span>
+                    </label>
                   </div>
                 </div>
                 <div
@@ -22123,7 +22123,7 @@ exports[`Storyshots Views / Collections / Collection details loading 1`] = `
               class="MuiCardContent-root-id"
             >
               <div
-                class="MuiFormControl-root-id CollectionDetails-name-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
                 <label
                   class="MuiFormLabel-root-id MuiFormLabel-disabled-id MuiInputLabel-disabled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -22132,7 +22132,7 @@ exports[`Storyshots Views / Collections / Collection details loading 1`] = `
                   Name
                 </label>
                 <div
-                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-formControl-id"
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
                 >
                   <fieldset
                     aria-hidden="true"
@@ -22890,98 +22890,98 @@ Ctrl + K"
                 class="MuiCardContent-root-id"
               >
                 <div
-                  class="VisibilityCard-switchContainer-id"
+                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
                 >
                   <div
-                    class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                    aria-label="isPublished"
+                    class="MuiFormGroup-root-id"
+                    role="radiogroup"
                   >
-                    <div
-                      aria-label="isPublished"
-                      class="MuiFormGroup-root-id"
-                      role="radiogroup"
+                    <label
+                      class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
                     >
-                      <label
-                        class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                      <span
+                        class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                        tabindex="-1"
                       >
                         <span
-                          class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                          tabindex="-1"
+                          class="MuiIconButton-label-id"
                         >
-                          <span
-                            class="MuiIconButton-label-id"
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
                           >
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root-id"
-                              focusable="false"
-                              role="presentation"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                              />
-                            </svg>
-                            <input
-                              class="MuiPrivateSwitchBase-input-id"
-                              disabled=""
-                              name="isPublished"
-                              type="radio"
-                              value="true"
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                             />
-                          </span>
+                          </svg>
+                          <input
+                            class="MuiPrivateSwitchBase-input-id"
+                            disabled=""
+                            name="isPublished"
+                            type="radio"
+                            value="true"
+                          />
                         </span>
+                      </span>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                      >
+                        Visible
                         <span
-                          class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                        >
-                          Visible
-                          <span />
-                        </span>
-                      </label>
-                      <label
-                        class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                          class="RadioGroupField-secondLabel-id"
+                        />
+                      </span>
+                    </label>
+                    <label
+                      class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                    >
+                      <span
+                        class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                        tabindex="-1"
                       >
                         <span
-                          class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                          tabindex="-1"
+                          class="MuiIconButton-label-id"
                         >
-                          <span
-                            class="MuiIconButton-label-id"
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
                           >
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root-id"
-                              focusable="false"
-                              role="presentation"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                              />
-                            </svg>
-                            <input
-                              checked=""
-                              class="MuiPrivateSwitchBase-input-id"
-                              disabled=""
-                              name="isPublished"
-                              type="radio"
-                              value="false"
+                            <path
+                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                             />
-                          </span>
+                          </svg>
+                          <input
+                            checked=""
+                            class="MuiPrivateSwitchBase-input-id"
+                            disabled=""
+                            name="isPublished"
+                            type="radio"
+                            value="false"
+                          />
                         </span>
+                      </span>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                      >
+                        Hidden
                         <span
-                          class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                        >
-                          Hidden
-                          <span />
-                        </span>
-                      </label>
-                    </div>
+                          class="RadioGroupField-secondLabel-id"
+                        />
+                      </span>
+                    </label>
                   </div>
                 </div>
                 <p
                   class="MuiTypography-root-id MuiTypography-body2-id VisibilityCard-setPublicationDate-id"
                 >
-                   Set publication date
+                  Set publication date
                 </p>
                 <div
                   class="FormSpacer-spacer-id"
@@ -23072,7 +23072,7 @@ exports[`Storyshots Views / Collections / Collection details no products 1`] = `
               class="MuiCardContent-root-id"
             >
               <div
-                class="MuiFormControl-root-id CollectionDetails-name-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
                 <label
                   class="MuiFormLabel-root-id MuiFormLabel-disabled-id MuiInputLabel-disabled-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
@@ -23081,7 +23081,7 @@ exports[`Storyshots Views / Collections / Collection details no products 1`] = `
                   Name
                 </label>
                 <div
-                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-formControl-id"
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
                 >
                   <fieldset
                     aria-hidden="true"
@@ -24030,94 +24030,94 @@ Ctrl + K"
                 class="MuiCardContent-root-id"
               >
                 <div
-                  class="VisibilityCard-expandedSwitchContainer-id"
+                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
                 >
                   <div
-                    class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                    aria-label="isPublished"
+                    class="MuiFormGroup-root-id"
+                    role="radiogroup"
                   >
-                    <div
-                      aria-label="isPublished"
-                      class="MuiFormGroup-root-id"
-                      role="radiogroup"
+                    <label
+                      class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
                     >
-                      <label
-                        class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                      <span
+                        class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                        tabindex="-1"
                       >
                         <span
-                          class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                          tabindex="-1"
+                          class="MuiIconButton-label-id"
                         >
-                          <span
-                            class="MuiIconButton-label-id"
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
                           >
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root-id"
-                              focusable="false"
-                              role="presentation"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                              />
-                            </svg>
-                            <input
-                              checked=""
-                              class="MuiPrivateSwitchBase-input-id"
-                              disabled=""
-                              name="isPublished"
-                              type="radio"
-                              value="true"
+                            <path
+                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                             />
-                          </span>
+                          </svg>
+                          <input
+                            checked=""
+                            class="MuiPrivateSwitchBase-input-id"
+                            disabled=""
+                            name="isPublished"
+                            type="radio"
+                            value="true"
+                          />
                         </span>
+                      </span>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                      >
+                        Visible
                         <span
-                          class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                          class="RadioGroupField-secondLabel-id"
                         >
-                          Visible
-                          <span>
-                            since Aug 25, 2018
-                          </span>
+                          since Aug 25, 2018
                         </span>
-                      </label>
-                      <label
-                        class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                      </span>
+                    </label>
+                    <label
+                      class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                    >
+                      <span
+                        class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                        tabindex="-1"
                       >
                         <span
-                          class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                          tabindex="-1"
+                          class="MuiIconButton-label-id"
                         >
-                          <span
-                            class="MuiIconButton-label-id"
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
                           >
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root-id"
-                              focusable="false"
-                              role="presentation"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                              />
-                            </svg>
-                            <input
-                              class="MuiPrivateSwitchBase-input-id"
-                              disabled=""
-                              name="isPublished"
-                              type="radio"
-                              value="false"
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                             />
-                          </span>
+                          </svg>
+                          <input
+                            class="MuiPrivateSwitchBase-input-id"
+                            disabled=""
+                            name="isPublished"
+                            type="radio"
+                            value="false"
+                          />
                         </span>
+                      </span>
+                      <span
+                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                      >
+                        Hidden
                         <span
-                          class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                        >
-                          Hidden
-                          <span />
-                        </span>
-                      </label>
-                    </div>
+                          class="RadioGroupField-secondLabel-id"
+                        />
+                      </span>
+                    </label>
                   </div>
                 </div>
                 <div
@@ -24909,7 +24909,7 @@ exports[`Storyshots Views / Collections / Create collection default 1`] = `
               class="MuiCardContent-root-id"
             >
               <div
-                class="MuiFormControl-root-id CollectionDetails-name-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
                 <label
                   class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -24918,7 +24918,7 @@ exports[`Storyshots Views / Collections / Create collection default 1`] = `
                   Name
                 </label>
                 <div
-                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-formControl-id"
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
                 >
                   <fieldset
                     aria-hidden="true"
@@ -25452,94 +25452,94 @@ Ctrl + K"
                     class="MuiCardContent-root-id"
                   >
                     <div
-                      class="VisibilityCard-switchContainer-id"
+                      class="MuiFormControl-root-id RadioGroupField-formControl-id"
                     >
                       <div
-                        class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                        aria-label="isPublished"
+                        class="MuiFormGroup-root-id"
+                        role="radiogroup"
                       >
-                        <div
-                          aria-label="isPublished"
-                          class="MuiFormGroup-root-id"
-                          role="radiogroup"
+                        <label
+                          class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
                         >
-                          <label
-                            class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                          <span
+                            class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
                           >
                             <span
-                              class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                              class="MuiIconButton-label-id"
                             >
-                              <span
-                                class="MuiIconButton-label-id"
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root-id"
+                                focusable="false"
+                                role="presentation"
+                                viewBox="0 0 24 24"
                               >
-                                <svg
-                                  aria-hidden="true"
-                                  class="MuiSvgIcon-root-id"
-                                  focusable="false"
-                                  role="presentation"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                                  />
-                                </svg>
-                                <input
-                                  class="MuiPrivateSwitchBase-input-id"
-                                  name="isPublished"
-                                  type="radio"
-                                  value="true"
+                                <path
+                                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                                 />
-                              </span>
+                              </svg>
+                              <input
+                                class="MuiPrivateSwitchBase-input-id"
+                                name="isPublished"
+                                type="radio"
+                                value="true"
+                              />
                             </span>
+                          </span>
+                          <span
+                            class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                          >
+                            Visible
                             <span
-                              class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                            >
-                              Visible
-                              <span />
-                            </span>
-                          </label>
-                          <label
-                            class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                              class="RadioGroupField-secondLabel-id"
+                            />
+                          </span>
+                        </label>
+                        <label
+                          class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                        >
+                          <span
+                            class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
                           >
                             <span
-                              class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                              class="MuiIconButton-label-id"
                             >
-                              <span
-                                class="MuiIconButton-label-id"
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root-id"
+                                focusable="false"
+                                role="presentation"
+                                viewBox="0 0 24 24"
                               >
-                                <svg
-                                  aria-hidden="true"
-                                  class="MuiSvgIcon-root-id"
-                                  focusable="false"
-                                  role="presentation"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                                  />
-                                </svg>
-                                <input
-                                  checked=""
-                                  class="MuiPrivateSwitchBase-input-id"
-                                  name="isPublished"
-                                  type="radio"
-                                  value="false"
+                                <path
+                                  d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                                 />
-                              </span>
+                              </svg>
+                              <input
+                                checked=""
+                                class="MuiPrivateSwitchBase-input-id"
+                                name="isPublished"
+                                type="radio"
+                                value="false"
+                              />
                             </span>
+                          </span>
+                          <span
+                            class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                          >
+                            Hidden
                             <span
-                              class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                            >
-                              Hidden
-                              <span />
-                            </span>
-                          </label>
-                        </div>
+                              class="RadioGroupField-secondLabel-id"
+                            />
+                          </span>
+                        </label>
                       </div>
                     </div>
                     <p
                       class="MuiTypography-root-id MuiTypography-body2-id VisibilityCard-setPublicationDate-id"
                     >
-                       Set publication date
+                      Set publication date
                     </p>
                     <div
                       class="FormSpacer-spacer-id"
@@ -25609,7 +25609,7 @@ exports[`Storyshots Views / Collections / Create collection loading 1`] = `
               class="MuiCardContent-root-id"
             >
               <div
-                class="MuiFormControl-root-id CollectionDetails-name-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
                 <label
                   class="MuiFormLabel-root-id MuiFormLabel-disabled-id MuiInputLabel-disabled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -25618,7 +25618,7 @@ exports[`Storyshots Views / Collections / Create collection loading 1`] = `
                   Name
                 </label>
                 <div
-                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-formControl-id"
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
                 >
                   <fieldset
                     aria-hidden="true"
@@ -26153,98 +26153,98 @@ Ctrl + K"
                     class="MuiCardContent-root-id"
                   >
                     <div
-                      class="VisibilityCard-switchContainer-id"
+                      class="MuiFormControl-root-id RadioGroupField-formControl-id"
                     >
                       <div
-                        class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                        aria-label="isPublished"
+                        class="MuiFormGroup-root-id"
+                        role="radiogroup"
                       >
-                        <div
-                          aria-label="isPublished"
-                          class="MuiFormGroup-root-id"
-                          role="radiogroup"
+                        <label
+                          class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
                         >
-                          <label
-                            class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                          <span
+                            class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                            tabindex="-1"
                           >
                             <span
-                              class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                              tabindex="-1"
+                              class="MuiIconButton-label-id"
                             >
-                              <span
-                                class="MuiIconButton-label-id"
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root-id"
+                                focusable="false"
+                                role="presentation"
+                                viewBox="0 0 24 24"
                               >
-                                <svg
-                                  aria-hidden="true"
-                                  class="MuiSvgIcon-root-id"
-                                  focusable="false"
-                                  role="presentation"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                                  />
-                                </svg>
-                                <input
-                                  class="MuiPrivateSwitchBase-input-id"
-                                  disabled=""
-                                  name="isPublished"
-                                  type="radio"
-                                  value="true"
+                                <path
+                                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                                 />
-                              </span>
+                              </svg>
+                              <input
+                                class="MuiPrivateSwitchBase-input-id"
+                                disabled=""
+                                name="isPublished"
+                                type="radio"
+                                value="true"
+                              />
                             </span>
+                          </span>
+                          <span
+                            class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                          >
+                            Visible
                             <span
-                              class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                            >
-                              Visible
-                              <span />
-                            </span>
-                          </label>
-                          <label
-                            class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                              class="RadioGroupField-secondLabel-id"
+                            />
+                          </span>
+                        </label>
+                        <label
+                          class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                        >
+                          <span
+                            class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                            tabindex="-1"
                           >
                             <span
-                              class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                              tabindex="-1"
+                              class="MuiIconButton-label-id"
                             >
-                              <span
-                                class="MuiIconButton-label-id"
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root-id"
+                                focusable="false"
+                                role="presentation"
+                                viewBox="0 0 24 24"
                               >
-                                <svg
-                                  aria-hidden="true"
-                                  class="MuiSvgIcon-root-id"
-                                  focusable="false"
-                                  role="presentation"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                                  />
-                                </svg>
-                                <input
-                                  checked=""
-                                  class="MuiPrivateSwitchBase-input-id"
-                                  disabled=""
-                                  name="isPublished"
-                                  type="radio"
-                                  value="false"
+                                <path
+                                  d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                                 />
-                              </span>
+                              </svg>
+                              <input
+                                checked=""
+                                class="MuiPrivateSwitchBase-input-id"
+                                disabled=""
+                                name="isPublished"
+                                type="radio"
+                                value="false"
+                              />
                             </span>
+                          </span>
+                          <span
+                            class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                          >
+                            Hidden
                             <span
-                              class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                            >
-                              Hidden
-                              <span />
-                            </span>
-                          </label>
-                        </div>
+                              class="RadioGroupField-secondLabel-id"
+                            />
+                          </span>
+                        </label>
                       </div>
                     </div>
                     <p
                       class="MuiTypography-root-id MuiTypography-body2-id VisibilityCard-setPublicationDate-id"
                     >
-                       Set publication date
+                      Set publication date
                     </p>
                     <div
                       class="FormSpacer-spacer-id"
@@ -40927,7 +40927,9 @@ exports[`Storyshots Views / Discounts / Voucher create default 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Fixed Amount
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                     <label
@@ -40962,7 +40964,9 @@ exports[`Storyshots Views / Discounts / Voucher create default 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Percentage
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                     <label
@@ -40997,7 +41001,9 @@ exports[`Storyshots Views / Discounts / Voucher create default 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Free Shipping
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                   </div>
@@ -41179,7 +41185,9 @@ exports[`Storyshots Views / Discounts / Voucher create default 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       None
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -41214,7 +41222,9 @@ exports[`Storyshots Views / Discounts / Voucher create default 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Minimal order value
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -41249,7 +41259,9 @@ exports[`Storyshots Views / Discounts / Voucher create default 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Minimum quantity of items
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                 </div>
@@ -41638,7 +41650,9 @@ exports[`Storyshots Views / Discounts / Voucher create form errors 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Fixed Amount
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                     <label
@@ -41673,7 +41687,9 @@ exports[`Storyshots Views / Discounts / Voucher create form errors 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Percentage
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                     <label
@@ -41708,7 +41724,9 @@ exports[`Storyshots Views / Discounts / Voucher create form errors 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Free Shipping
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                   </div>
@@ -41895,7 +41913,9 @@ exports[`Storyshots Views / Discounts / Voucher create form errors 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       None
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -41930,7 +41950,9 @@ exports[`Storyshots Views / Discounts / Voucher create form errors 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Minimal order value
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -41965,7 +41987,9 @@ exports[`Storyshots Views / Discounts / Voucher create form errors 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Minimum quantity of items
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                 </div>
@@ -42348,7 +42372,9 @@ exports[`Storyshots Views / Discounts / Voucher details default 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Fixed Amount
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                     <label
@@ -42383,7 +42409,9 @@ exports[`Storyshots Views / Discounts / Voucher details default 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Percentage
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                     <label
@@ -42418,7 +42446,9 @@ exports[`Storyshots Views / Discounts / Voucher details default 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Free Shipping
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                   </div>
@@ -42547,7 +42577,9 @@ exports[`Storyshots Views / Discounts / Voucher details default 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Entire order
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -42582,7 +42614,9 @@ exports[`Storyshots Views / Discounts / Voucher details default 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Specific products
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                 </div>
@@ -42697,7 +42731,9 @@ exports[`Storyshots Views / Discounts / Voucher details default 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       None
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -42733,7 +42769,9 @@ exports[`Storyshots Views / Discounts / Voucher details default 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Minimal order value
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -42768,7 +42806,9 @@ exports[`Storyshots Views / Discounts / Voucher details default 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Minimum quantity of items
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                 </div>
@@ -43309,7 +43349,9 @@ exports[`Storyshots Views / Discounts / Voucher details form errors 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Fixed Amount
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                     <label
@@ -43344,7 +43386,9 @@ exports[`Storyshots Views / Discounts / Voucher details form errors 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Percentage
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                     <label
@@ -43379,7 +43423,9 @@ exports[`Storyshots Views / Discounts / Voucher details form errors 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                       >
                         Free Shipping
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                   </div>
@@ -43518,7 +43564,9 @@ exports[`Storyshots Views / Discounts / Voucher details form errors 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Entire order
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -43553,7 +43601,9 @@ exports[`Storyshots Views / Discounts / Voucher details form errors 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Specific products
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                 </div>
@@ -43673,7 +43723,9 @@ exports[`Storyshots Views / Discounts / Voucher details form errors 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       None
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -43709,7 +43761,9 @@ exports[`Storyshots Views / Discounts / Voucher details form errors 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Minimal order value
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -43744,7 +43798,9 @@ exports[`Storyshots Views / Discounts / Voucher details form errors 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
                     >
                       Minimum quantity of items
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                 </div>
@@ -44302,7 +44358,9 @@ exports[`Storyshots Views / Discounts / Voucher details loading 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
                       >
                         Fixed Amount
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                     <label
@@ -44339,7 +44397,9 @@ exports[`Storyshots Views / Discounts / Voucher details loading 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
                       >
                         Percentage
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                     <label
@@ -44376,7 +44436,9 @@ exports[`Storyshots Views / Discounts / Voucher details loading 1`] = `
                         class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
                       >
                         Free Shipping
-                        <span />
+                        <span
+                          class="RadioGroupField-secondLabel-id"
+                        />
                       </span>
                     </label>
                   </div>
@@ -44508,7 +44570,9 @@ exports[`Storyshots Views / Discounts / Voucher details loading 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
                     >
                       Entire order
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -44545,7 +44609,9 @@ exports[`Storyshots Views / Discounts / Voucher details loading 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
                     >
                       Specific products
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                 </div>
@@ -44665,7 +44731,9 @@ exports[`Storyshots Views / Discounts / Voucher details loading 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
                     >
                       None
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -44702,7 +44770,9 @@ exports[`Storyshots Views / Discounts / Voucher details loading 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
                     >
                       Minimal order value
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                   <label
@@ -44739,7 +44809,9 @@ exports[`Storyshots Views / Discounts / Voucher details loading 1`] = `
                       class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
                     >
                       Minimum quantity of items
-                      <span />
+                      <span
+                        class="RadioGroupField-secondLabel-id"
+                      />
                     </span>
                   </label>
                 </div>
@@ -71430,94 +71502,94 @@ Ctrl + K"
               class="MuiCardContent-root-id"
             >
               <div
-                class="VisibilityCard-switchContainer-id"
+                class="MuiFormControl-root-id RadioGroupField-formControl-id"
               >
                 <div
-                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
                 >
-                  <div
-                    aria-label="isPublished"
-                    class="MuiFormGroup-root-id"
-                    role="radiogroup"
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
                   >
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="true"
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Visible
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Visible
-                        <span />
-                      </span>
-                    </label>
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            checked=""
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="false"
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Hidden
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Hidden
-                        <span />
-                      </span>
-                    </label>
-                  </div>
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
                 </div>
               </div>
               <p
                 class="MuiTypography-root-id MuiTypography-body2-id VisibilityCard-setPublicationDate-id"
               >
-                 Set publication date
+                Set publication date
               </p>
               <div
                 class="FormSpacer-spacer-id"
@@ -72287,94 +72359,94 @@ Ctrl + K"
               class="MuiCardContent-root-id"
             >
               <div
-                class="VisibilityCard-switchContainer-id"
+                class="MuiFormControl-root-id RadioGroupField-formControl-id"
               >
                 <div
-                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
                 >
-                  <div
-                    aria-label="isPublished"
-                    class="MuiFormGroup-root-id"
-                    role="radiogroup"
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
                   >
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="true"
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Visible
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Visible
-                        <span />
-                      </span>
-                    </label>
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            checked=""
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="false"
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Hidden
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Hidden
-                        <span />
-                      </span>
-                    </label>
-                  </div>
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
                 </div>
               </div>
               <p
                 class="MuiTypography-root-id MuiTypography-body2-id VisibilityCard-setPublicationDate-id"
               >
-                 Set publication date
+                Set publication date
               </p>
               <div
                 class="FormSpacer-spacer-id"
@@ -72942,98 +73014,98 @@ Ctrl + K"
               class="MuiCardContent-root-id"
             >
               <div
-                class="VisibilityCard-switchContainer-id"
+                class="MuiFormControl-root-id RadioGroupField-formControl-id"
               >
                 <div
-                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
                 >
-                  <div
-                    aria-label="isPublished"
-                    class="MuiFormGroup-root-id"
-                    role="radiogroup"
+                  <label
+                    class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
                   >
-                    <label
-                      class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                    <span
+                      class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                      tabindex="-1"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                        tabindex="-1"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            class="MuiPrivateSwitchBase-input-id"
-                            disabled=""
-                            name="isPublished"
-                            type="radio"
-                            value="true"
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          disabled=""
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                    >
+                      Visible
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                      >
-                        Visible
-                        <span />
-                      </span>
-                    </label>
-                    <label
-                      class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                      tabindex="-1"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                        tabindex="-1"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            checked=""
-                            class="MuiPrivateSwitchBase-input-id"
-                            disabled=""
-                            name="isPublished"
-                            type="radio"
-                            value="false"
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          disabled=""
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                    >
+                      Hidden
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                      >
-                        Hidden
-                        <span />
-                      </span>
-                    </label>
-                  </div>
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
                 </div>
               </div>
               <p
                 class="MuiTypography-root-id MuiTypography-body2-id VisibilityCard-setPublicationDate-id"
               >
-                 Set publication date
+                Set publication date
               </p>
               <div
                 class="FormSpacer-spacer-id"
@@ -78131,7 +78203,7 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
             <span
               class="MuiButton-label-id"
             >
-              create product type 
+              create product type
             </span>
           </button>
         </div>
@@ -78497,7 +78569,7 @@ exports[`Storyshots Views / Product types / Product types list loading 1`] = `
             <span
               class="MuiButton-label-id"
             >
-              create product type 
+              create product type
             </span>
           </button>
         </div>
@@ -78754,43 +78826,39 @@ exports[`Storyshots Views / Products / Create product When loading 1`] = `
               class="MuiCardContent-root-id"
             >
               <div
-                class="ProductDetailsForm-root-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
-                <div
-                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                <label
+                  class="MuiFormLabel-root-id MuiFormLabel-disabled-id MuiInputLabel-disabled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                  data-shrink="false"
                 >
-                  <label
-                    class="MuiFormLabel-root-id MuiFormLabel-disabled-id MuiInputLabel-disabled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
-                    data-shrink="false"
+                  Name
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
                   >
-                    Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
-                  >
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
-                      style="padding-left:8px"
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0.01px"
                     >
-                      <legend
-                        class="MuiPrivateNotchedOutline-legend-id"
-                        style="width:0.01px"
-                      >
-                        <span>
-                          ​
-                        </span>
-                      </legend>
-                    </fieldset>
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id"
-                      disabled=""
-                      name="name"
-                      type="text"
-                      value=""
-                    />
-                  </div>
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id"
+                    disabled=""
+                    name="name"
+                    type="text"
+                    value=""
+                  />
                 </div>
               </div>
               <div
@@ -79693,98 +79761,98 @@ Ctrl + K"
               class="MuiCardContent-root-id"
             >
               <div
-                class="VisibilityCard-switchContainer-id"
+                class="MuiFormControl-root-id RadioGroupField-formControl-id"
               >
                 <div
-                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
                 >
-                  <div
-                    aria-label="isPublished"
-                    class="MuiFormGroup-root-id"
-                    role="radiogroup"
+                  <label
+                    class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
                   >
-                    <label
-                      class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                    <span
+                      class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                      tabindex="-1"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                        tabindex="-1"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            class="MuiPrivateSwitchBase-input-id"
-                            disabled=""
-                            name="isPublished"
-                            type="radio"
-                            value="true"
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          disabled=""
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                    >
+                      Visible
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                      >
-                        Visible
-                        <span />
-                      </span>
-                    </label>
-                    <label
-                      class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                      tabindex="-1"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                        tabindex="-1"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            checked=""
-                            class="MuiPrivateSwitchBase-input-id"
-                            disabled=""
-                            name="isPublished"
-                            type="radio"
-                            value="false"
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          disabled=""
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                    >
+                      Hidden
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                      >
-                        Hidden
-                        <span />
-                      </span>
-                    </label>
-                  </div>
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
                 </div>
               </div>
               <p
                 class="MuiTypography-root-id MuiTypography-body2-id VisibilityCard-setPublicationDate-id"
               >
-                 Set publication date
+                Set publication date
               </p>
               <div
                 class="FormSpacer-spacer-id"
@@ -79851,42 +79919,38 @@ exports[`Storyshots Views / Products / Create product default 1`] = `
               class="MuiCardContent-root-id"
             >
               <div
-                class="ProductDetailsForm-root-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
-                <div
-                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                <label
+                  class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                  data-shrink="false"
                 >
-                  <label
-                    class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
-                    data-shrink="false"
+                  Name
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
                   >
-                    Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
-                  >
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
-                      style="padding-left:8px"
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0.01px"
                     >
-                      <legend
-                        class="MuiPrivateNotchedOutline-legend-id"
-                        style="width:0.01px"
-                      >
-                        <span>
-                          ​
-                        </span>
-                      </legend>
-                    </fieldset>
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input-id MuiOutlinedInput-input-id"
-                      name="name"
-                      type="text"
-                      value=""
-                    />
-                  </div>
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="name"
+                    type="text"
+                    value=""
+                  />
                 </div>
               </div>
               <div
@@ -80782,94 +80846,94 @@ Ctrl + K"
               class="MuiCardContent-root-id"
             >
               <div
-                class="VisibilityCard-switchContainer-id"
+                class="MuiFormControl-root-id RadioGroupField-formControl-id"
               >
                 <div
-                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
                 >
-                  <div
-                    aria-label="isPublished"
-                    class="MuiFormGroup-root-id"
-                    role="radiogroup"
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
                   >
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="true"
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Visible
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Visible
-                        <span />
-                      </span>
-                    </label>
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            checked=""
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="false"
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Hidden
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Hidden
-                        <span />
-                      </span>
-                    </label>
-                  </div>
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
                 </div>
               </div>
               <p
                 class="MuiTypography-root-id MuiTypography-body2-id VisibilityCard-setPublicationDate-id"
               >
-                 Set publication date
+                Set publication date
               </p>
               <div
                 class="FormSpacer-spacer-id"
@@ -80936,48 +81000,44 @@ exports[`Storyshots Views / Products / Create product form errors 1`] = `
               class="MuiCardContent-root-id"
             >
               <div
-                class="ProductDetailsForm-root-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
-                <div
-                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                <label
+                  class="MuiFormLabel-root-id MuiFormLabel-error-id MuiInputLabel-error-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                  data-shrink="false"
                 >
-                  <label
-                    class="MuiFormLabel-root-id MuiFormLabel-error-id MuiInputLabel-error-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
-                    data-shrink="false"
+                  Name
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-error-id MuiOutlinedInput-error-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
                   >
-                    Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-error-id MuiOutlinedInput-error-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
-                  >
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
-                      style="padding-left:8px"
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0.01px"
                     >
-                      <legend
-                        class="MuiPrivateNotchedOutline-legend-id"
-                        style="width:0.01px"
-                      >
-                        <span>
-                          ​
-                        </span>
-                      </legend>
-                    </fieldset>
-                    <input
-                      aria-invalid="true"
-                      class="MuiInputBase-input-id MuiOutlinedInput-input-id"
-                      name="name"
-                      type="text"
-                      value=""
-                    />
-                  </div>
-                  <p
-                    class="MuiFormHelperText-root-id MuiFormHelperText-contained-id MuiFormHelperText-error-id"
-                  >
-                    Generic form error
-                  </p>
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="true"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="name"
+                    type="text"
+                    value=""
+                  />
                 </div>
+                <p
+                  class="MuiFormHelperText-root-id MuiFormHelperText-contained-id MuiFormHelperText-error-id"
+                >
+                  Generic form error
+                </p>
               </div>
               <div
                 class="FormSpacer-spacer-id"
@@ -81887,94 +81947,94 @@ Ctrl + K"
               class="MuiCardContent-root-id"
             >
               <div
-                class="VisibilityCard-switchContainer-id"
+                class="MuiFormControl-root-id RadioGroupField-formControl-id"
               >
                 <div
-                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
                 >
-                  <div
-                    aria-label="isPublished"
-                    class="MuiFormGroup-root-id"
-                    role="radiogroup"
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
                   >
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="true"
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Visible
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Visible
-                        <span />
-                      </span>
-                    </label>
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            checked=""
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="false"
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Hidden
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Hidden
-                        <span />
-                      </span>
-                    </label>
-                  </div>
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
                 </div>
               </div>
               <p
                 class="MuiTypography-root-id MuiTypography-body2-id VisibilityCard-setPublicationDate-id"
               >
-                 Set publication date
+                Set publication date
               </p>
               <div
                 class="FormSpacer-spacer-id"
@@ -83956,42 +84016,38 @@ exports[`Storyshots Views / Products / Product edit when data is fully loaded 1`
               class="MuiCardContent-root-id"
             >
               <div
-                class="ProductDetailsForm-root-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
-                <div
-                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                <label
+                  class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
+                  data-shrink="true"
                 >
-                  <label
-                    class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
-                    data-shrink="true"
+                  Name
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
                   >
-                    Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
-                  >
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
-                      style="padding-left:8px"
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0"
                     >
-                      <legend
-                        class="MuiPrivateNotchedOutline-legend-id"
-                        style="width:0"
-                      >
-                        <span>
-                          ​
-                        </span>
-                      </legend>
-                    </fieldset>
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input-id MuiOutlinedInput-input-id"
-                      name="name"
-                      type="text"
-                      value="Ergonomic Plastic Bacon"
-                    />
-                  </div>
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="name"
+                    type="text"
+                    value="Ergonomic Plastic Bacon"
+                  />
                 </div>
               </div>
               <div
@@ -85562,90 +85618,90 @@ Ctrl + K"
               class="MuiCardContent-root-id"
             >
               <div
-                class="VisibilityCard-expandedSwitchContainer-id"
+                class="MuiFormControl-root-id RadioGroupField-formControl-id"
               >
                 <div
-                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
                 >
-                  <div
-                    aria-label="isPublished"
-                    class="MuiFormGroup-root-id"
-                    role="radiogroup"
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
                   >
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            checked=""
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="true"
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Visible
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                        class="RadioGroupField-secondLabel-id"
                       >
-                        Visible
-                        <span>
-                          since Aug 25, 2018
-                        </span>
+                        since Aug 25, 2018
                       </span>
-                    </label>
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="false"
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Hidden
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Hidden
-                        <span />
-                      </span>
-                    </label>
-                  </div>
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
                 </div>
               </div>
               <div
@@ -85718,43 +85774,39 @@ exports[`Storyshots Views / Products / Product edit when loading data 1`] = `
               class="MuiCardContent-root-id"
             >
               <div
-                class="ProductDetailsForm-root-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
-                <div
-                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                <label
+                  class="MuiFormLabel-root-id MuiFormLabel-disabled-id MuiInputLabel-disabled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                  data-shrink="false"
                 >
-                  <label
-                    class="MuiFormLabel-root-id MuiFormLabel-disabled-id MuiInputLabel-disabled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
-                    data-shrink="false"
+                  Name
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
                   >
-                    Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
-                  >
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
-                      style="padding-left:8px"
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0.01px"
                     >
-                      <legend
-                        class="MuiPrivateNotchedOutline-legend-id"
-                        style="width:0.01px"
-                      >
-                        <span>
-                          ​
-                        </span>
-                      </legend>
-                    </fieldset>
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id"
-                      disabled=""
-                      name="name"
-                      type="text"
-                      value=""
-                    />
-                  </div>
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-disabled-id MuiOutlinedInput-disabled-id"
+                    disabled=""
+                    name="name"
+                    type="text"
+                    value=""
+                  />
                 </div>
               </div>
               <div
@@ -86674,98 +86726,98 @@ Ctrl + K"
               class="MuiCardContent-root-id"
             >
               <div
-                class="VisibilityCard-switchContainer-id"
+                class="MuiFormControl-root-id RadioGroupField-formControl-id"
               >
                 <div
-                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
                 >
-                  <div
-                    aria-label="isPublished"
-                    class="MuiFormGroup-root-id"
-                    role="radiogroup"
+                  <label
+                    class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
                   >
-                    <label
-                      class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                    <span
+                      class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                      tabindex="-1"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                        tabindex="-1"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            class="MuiPrivateSwitchBase-input-id"
-                            disabled=""
-                            name="isPublished"
-                            type="radio"
-                            value="true"
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          disabled=""
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                    >
+                      Visible
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                      >
-                        Visible
-                        <span />
-                      </span>
-                    </label>
-                    <label
-                      class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id RadioGroupField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
+                      tabindex="-1"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiIconButton-root-id MuiIconButton-disabled-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id MuiPrivateSwitchBase-disabled-id MuiRadio-disabled-id"
-                        tabindex="-1"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            checked=""
-                            class="MuiPrivateSwitchBase-input-id"
-                            disabled=""
-                            name="isPublished"
-                            type="radio"
-                            value="false"
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          disabled=""
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                    >
+                      Hidden
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                      >
-                        Hidden
-                        <span />
-                      </span>
-                    </label>
-                  </div>
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
                 </div>
               </div>
               <p
                 class="MuiTypography-root-id MuiTypography-body2-id VisibilityCard-setPublicationDate-id"
               >
-                 Set publication date
+                Set publication date
               </p>
               <div
                 class="FormSpacer-spacer-id"
@@ -86832,42 +86884,38 @@ exports[`Storyshots Views / Products / Product edit when product has no images 1
               class="MuiCardContent-root-id"
             >
               <div
-                class="ProductDetailsForm-root-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
-                <div
-                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                <label
+                  class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
+                  data-shrink="true"
                 >
-                  <label
-                    class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
-                    data-shrink="true"
+                  Name
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
                   >
-                    Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
-                  >
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
-                      style="padding-left:8px"
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0"
                     >
-                      <legend
-                        class="MuiPrivateNotchedOutline-legend-id"
-                        style="width:0"
-                      >
-                        <span>
-                          ​
-                        </span>
-                      </legend>
-                    </fieldset>
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input-id MuiOutlinedInput-input-id"
-                      name="name"
-                      type="text"
-                      value="Ergonomic Plastic Bacon"
-                    />
-                  </div>
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="name"
+                    type="text"
+                    value="Ergonomic Plastic Bacon"
+                  />
                 </div>
               </div>
               <div
@@ -88345,90 +88393,90 @@ Ctrl + K"
               class="MuiCardContent-root-id"
             >
               <div
-                class="VisibilityCard-expandedSwitchContainer-id"
+                class="MuiFormControl-root-id RadioGroupField-formControl-id"
               >
                 <div
-                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
                 >
-                  <div
-                    aria-label="isPublished"
-                    class="MuiFormGroup-root-id"
-                    role="radiogroup"
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
                   >
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            checked=""
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="true"
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Visible
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                        class="RadioGroupField-secondLabel-id"
                       >
-                        Visible
-                        <span>
-                          since Aug 25, 2018
-                        </span>
+                        since Aug 25, 2018
                       </span>
-                    </label>
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="false"
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Hidden
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Hidden
-                        <span />
-                      </span>
-                    </label>
-                  </div>
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
                 </div>
               </div>
               <div
@@ -88496,42 +88544,38 @@ exports[`Storyshots Views / Products / Product edit when product has no variants
               class="MuiCardContent-root-id"
             >
               <div
-                class="ProductDetailsForm-root-id"
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
               >
-                <div
-                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                <label
+                  class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
+                  data-shrink="true"
                 >
-                  <label
-                    class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
-                    data-shrink="true"
+                  Name
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
                   >
-                    Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
-                  >
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
-                      style="padding-left:8px"
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0"
                     >
-                      <legend
-                        class="MuiPrivateNotchedOutline-legend-id"
-                        style="width:0"
-                      >
-                        <span>
-                          ​
-                        </span>
-                      </legend>
-                    </fieldset>
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input-id MuiOutlinedInput-input-id"
-                      name="name"
-                      type="text"
-                      value="Ergonomic Plastic Bacon"
-                    />
-                  </div>
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="name"
+                    type="text"
+                    value="Ergonomic Plastic Bacon"
+                  />
                 </div>
               </div>
               <div
@@ -90034,90 +90078,90 @@ Ctrl + K"
               class="MuiCardContent-root-id"
             >
               <div
-                class="VisibilityCard-expandedSwitchContainer-id"
+                class="MuiFormControl-root-id RadioGroupField-formControl-id"
               >
                 <div
-                  class="MuiFormControl-root-id RadioGroupField-formControl-id"
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
                 >
-                  <div
-                    aria-label="isPublished"
-                    class="MuiFormGroup-root-id"
-                    role="radiogroup"
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
                   >
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            checked=""
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="true"
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Visible
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                        class="RadioGroupField-secondLabel-id"
                       >
-                        Visible
-                        <span>
-                          since Aug 25, 2018
-                        </span>
+                        since Aug 25, 2018
                       </span>
-                    </label>
-                    <label
-                      class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id RadioGroupField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
                     >
                       <span
-                        class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                        class="MuiIconButton-label-id"
                       >
-                        <span
-                          class="MuiIconButton-label-id"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
                         >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root-id"
-                            focusable="false"
-                            role="presentation"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                            />
-                          </svg>
-                          <input
-                            class="MuiPrivateSwitchBase-input-id"
-                            name="isPublished"
-                            type="radio"
-                            value="false"
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
                           />
-                        </span>
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
                       </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Hidden
                       <span
-                        class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                      >
-                        Hidden
-                        <span />
-                      </span>
-                    </label>
-                  </div>
+                        class="RadioGroupField-secondLabel-id"
+                      />
+                    </span>
+                  </label>
                 </div>
               </div>
               <div
