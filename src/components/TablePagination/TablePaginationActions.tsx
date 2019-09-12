@@ -45,12 +45,10 @@ const styles = (theme: Theme) =>
           backgroundColor: fade(theme.palette.primary.main, 0.2)
         },
         backgroundColor: "transparent"
-      }
+      },
+      padding: 6
     },
     root: {
-      "& button": {
-        padding: 6
-      },
       color: theme.palette.text.secondary,
       flexShrink: 0,
       margin: `0 ${theme.spacing.unit * 2.5}px`

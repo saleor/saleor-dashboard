@@ -18,6 +18,9 @@ export interface AppHeaderProps {
 
 const styles = (theme: Theme) =>
   createStyles({
+    backArrow: {
+      fontSize: 30
+    },
     menuButton: {
       flex: "0 0 auto",
       marginLeft: theme.spacing.unit * -2,
@@ -25,9 +28,6 @@ const styles = (theme: Theme) =>
       marginTop: -theme.spacing.unit * 2
     },
     root: {
-      "& svg": {
-        fontSize: 30
-      },
       "&:hover": {
         color: theme.typography.body2.color
       },
@@ -60,7 +60,7 @@ const AppHeader = withStyles(styles, { name: "AppHeader" })(
         anchor ? (
           <Portal container={anchor.current}>
             <div className={classes.root} onClick={onBack}>
-              <ArrowBackIcon />
+              <ArrowBackIcon className={classes.backArrow} />
               {children ? (
                 <Typography className={classes.title}>{children}</Typography>
               ) : (

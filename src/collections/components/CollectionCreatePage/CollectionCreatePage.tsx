@@ -150,6 +150,7 @@ const CollectionCreatePage: React.StatelessComponent<
                       errors={formErrors}
                       disabled={disabled}
                       onChange={change}
+                      translate="collection"
                     />
                   </CardContent>
                 </Card>

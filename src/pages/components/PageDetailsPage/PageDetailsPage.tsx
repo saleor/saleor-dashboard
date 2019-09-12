@@ -124,6 +124,7 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
                 disabled={disabled}
                 errors={formErrors}
                 onChange={change}
+                translate="product"
               />
             </div>
           </Grid>

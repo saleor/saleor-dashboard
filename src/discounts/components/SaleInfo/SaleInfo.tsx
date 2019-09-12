@@ -23,50 +23,36 @@ export interface SaleInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    root: {
-      display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
-      gridTemplateColumns: "1fr"
-    }
-  });
+const SaleInfo: React.FC<SaleInfoProps> = ({
+  data,
+  disabled,
+  errors,
+  onChange
+}) => {
+  const intl = useIntl();
 
-const SaleInfo = withStyles(styles, {
-  name: "SaleInfo"
-})(
-  ({
-    classes,
-    data,
-    disabled,
-    errors,
-    onChange
-  }: SaleInfoProps & WithStyles<typeof styles>) => {
-    const intl = useIntl();
-
-    return (
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(commonMessages.generalInformations)}
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage(commonMessages.generalInformations)}
+      />
+      <CardContent>
+        <TextField
+          disabled={disabled}
+          error={!!errors.name}
+          helperText={errors.name}
+          name={"name" as keyof FormData}
+          onChange={onChange}
+          label={intl.formatMessage({
+            defaultMessage: "Name",
+            description: "sale name"
+          })}
+          value={data.name}
+          fullWidth
         />
-        <CardContent className={classes.root}>
-          <TextField
-            disabled={disabled}
-            error={!!errors.name}
-            helperText={errors.name}
-            name={"name" as keyof FormData}
-            onChange={onChange}
-            label={intl.formatMessage({
-              defaultMessage: "Name",
-              description: "sale name"
-            })}
-            value={data.name}
-            fullWidth
-          />
-        </CardContent>
-      </Card>
-    );
-  }
-);
+      </CardContent>
+    </Card>
+  );
+};
 SaleInfo.displayName = "SaleInfo";
 export default SaleInfo;

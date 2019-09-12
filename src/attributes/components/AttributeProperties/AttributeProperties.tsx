@@ -144,7 +144,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
                 description="add attribute as column in product list table"
               />
               <Typography variant="caption">
-                <FormattedMessage defaultMessage="If enable this attribute can be used as a column in product table." />
+                <FormattedMessage defaultMessage="If enabled this attribute can be used as a column in product table." />
               </Typography>
             </>
           }

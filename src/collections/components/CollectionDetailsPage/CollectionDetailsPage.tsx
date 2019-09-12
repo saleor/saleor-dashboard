@@ -125,6 +125,7 @@ const CollectionDetailsPage: React.StatelessComponent<
                   errors={formErrors}
                   disabled={disabled}
                   onChange={change}
+                  translate="collection"
                 >
                   <ControlledCheckbox
                     name={"isFeatured" as keyof CollectionDetailsPageFormData}

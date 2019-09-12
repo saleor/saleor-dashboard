@@ -43,6 +43,7 @@ interface VisibilityCardProps extends WithStyles<typeof styles> {
   errors: { [key: string]: string };
   disabled?: boolean;
   onChange(event: any);
+  translate: string;
 }
 
 export const VisibilityCard = withStyles(styles, {
@@ -54,7 +55,8 @@ export const VisibilityCard = withStyles(styles, {
     data: { isPublished, publicationDate },
     errors,
     disabled,
-    onChange
+    onChange,
+    translate
   }: VisibilityCardProps) => {
     const intl = useIntl();
     const [isPublicationDate, setPublicationDate] = React.useState(
@@ -75,7 +77,8 @@ export const VisibilityCard = withStyles(styles, {
               defaultMessage: "since {date}"
             },
             {
-              date: localizeDate(publicationDate)
+              date: localizeDate(publicationDate),
+              description: translate
             }
           )
         : null
@@ -89,7 +92,8 @@ export const VisibilityCard = withStyles(styles, {
               defaultMessage: "will be visible from {date}"
             },
             {
-              date: localizeDate(publicationDate)
+              date: localizeDate(publicationDate),
+              description: translate
             }
           )
         : null
