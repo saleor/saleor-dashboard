@@ -48,10 +48,16 @@ export const saleAddUrl = saleAddPath;
 
 export const voucherSection = urlJoin(discountSection, "vouchers");
 export const voucherListPath = voucherSection;
-export type VoucherListUrlDialog = "remove";
-export type VoucherListUrlQueryParams = BulkAction &
+export enum VoucherListUrlFiltersEnum {
+  query = "query"
+}
+export type VoucherListUrlFilters = Filters<VoucherListUrlFiltersEnum>;
+export type VoucherListUrlDialog = "remove" | TabActionDialog;
+export type VoucherListUrlQueryParams = ActiveTab &
+  BulkAction &
   Dialog<VoucherListUrlDialog> &
-  Pagination;
+  Pagination &
+  VoucherListUrlFilters;
 export const voucherListUrl = (params?: VoucherListUrlQueryParams) =>
   voucherListPath + "?" + stringifyQs(params);
 export const voucherPath = (id: string) => urlJoin(voucherSection, id);

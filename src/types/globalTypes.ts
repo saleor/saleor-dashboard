@@ -230,6 +230,12 @@ export enum TaxRateType {
   WINE = "WINE",
 }
 
+export enum VoucherDiscountType {
+  FIXED = "FIXED",
+  PERCENTAGE = "PERCENTAGE",
+  SHIPPING = "SHIPPING",
+}
+
 export enum VoucherTypeEnum {
   ENTIRE_ORDER = "ENTIRE_ORDER",
   SHIPPING = "SHIPPING",
@@ -671,6 +677,14 @@ export interface UserCreateInput {
   note?: string | null;
   sendPasswordEmail?: boolean | null;
   redirectUrl?: string | null;
+}
+
+export interface VoucherFilterInput {
+  status?: (DiscountStatusEnum | null)[] | null;
+  timesUsed?: IntRangeInput | null;
+  discountType?: (VoucherDiscountType | null)[] | null;
+  started?: DateTimeRangeInput | null;
+  search?: string | null;
 }
 
 export interface VoucherInput {

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { DiscountValueTypeEnum } from "./../../types/globalTypes";
+import { VoucherFilterInput, DiscountValueTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: VoucherList
@@ -62,4 +62,5 @@ export interface VoucherListVariables {
   before?: string | null;
   first?: number | null;
   last?: number | null;
+  filter?: VoucherFilterInput | null;
 }

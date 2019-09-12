@@ -196,8 +196,20 @@ export const TypedSaleList = TypedQuery<SaleList, SaleListVariables>(saleList);
 export const voucherList = gql`
   ${pageInfoFragment}
   ${voucherFragment}
-  query VoucherList($after: String, $before: String, $first: Int, $last: Int) {
-    vouchers(after: $after, before: $before, first: $first, last: $last) {
+  query VoucherList(
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $filter: VoucherFilterInput
+  ) {
+    vouchers(
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      filter: $filter
+    ) {
       edges {
         node {
           ...VoucherFragment
