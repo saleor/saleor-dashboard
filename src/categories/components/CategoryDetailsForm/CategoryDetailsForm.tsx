@@ -23,14 +23,13 @@ interface CategoryDetailsFormProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const CategoryDetailsForm = ({
+export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
   category,
-  classes,
   disabled,
   data,
   onChange,
   errors
-}: CategoryDetailsFormProps) => {
+}) => {
   const intl = useIntl();
 
   return (
@@ -39,34 +38,32 @@ export const CategoryDetailsForm = ({
         title={intl.formatMessage(commonMessages.generalInformations)}
       />
       <CardContent>
-        <>
-          <div>
-            <TextField
-              label={intl.formatMessage({
-                defaultMessage: "Category Name"
-              })}
-              name="name"
-              disabled={disabled}
-              value={data && data.name}
-              onChange={onChange}
-              error={!!errors.name}
-              helperText={errors.name}
-              fullWidth
-            />
-          </div>
-          <FormSpacer />
-          <RichTextEditor
-            disabled={disabled}
-            error={!!errors.descriptionJson}
-            helperText={errors.descriptionJson}
+        <div>
+          <TextField
             label={intl.formatMessage({
-              defaultMessage: "Category Description"
+              defaultMessage: "Category Name"
             })}
-            initial={maybe(() => JSON.parse(category.descriptionJson))}
-            name="description"
+            name="name"
+            disabled={disabled}
+            value={data && data.name}
             onChange={onChange}
+            error={!!errors.name}
+            helperText={errors.name}
+            fullWidth
           />
-        </>
+        </div>
+        <FormSpacer />
+        <RichTextEditor
+          disabled={disabled}
+          error={!!errors.descriptionJson}
+          helperText={errors.descriptionJson}
+          label={intl.formatMessage({
+            defaultMessage: "Category Description"
+          })}
+          initial={maybe(() => JSON.parse(category.descriptionJson))}
+          name="description"
+          onChange={onChange}
+        />
       </CardContent>
     </Card>
   );

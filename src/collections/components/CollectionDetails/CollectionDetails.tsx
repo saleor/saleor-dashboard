@@ -24,14 +24,13 @@ export interface CollectionDetailsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CollectionDetails = ({
-  classes,
+const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   collection,
   disabled,
   data,
   onChange,
   errors
-}: CollectionDetailsProps) => {
+}) => {
   const intl = useIntl();
 
   return (

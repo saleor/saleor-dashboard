@@ -25,12 +25,6 @@ const styles = (theme: Theme) =>
       },
       marginTop: theme.spacing.unit * 3
     },
-    expandedSwitchContainer: {
-      "& > div": {
-        padding: 0
-      },
-      marginBottom: 0
-    },
     setPublicationDate: {
       color: theme.palette.primary.main,
       cursor: "pointer",
@@ -126,21 +120,13 @@ export const VisibilityCard = withStyles(styles, {
           })}
         />
         <CardContent>
-          <div
-            className={
-              isPublished
-                ? classes.expandedSwitchContainer
-                : classes.switchContainer
-            }
-          >
-            <RadioGroupField
-              choices={visiblilityPickerChoices}
-              disabled={disabled}
-              name={"isPublished" as keyof FormData}
-              value={isPublishedRadio}
-              onChange={onChange}
-            />
-          </div>
+          <RadioGroupField
+            choices={visiblilityPickerChoices}
+            disabled={disabled}
+            name={"isPublished" as keyof FormData}
+            value={isPublishedRadio}
+            onChange={onChange}
+          />
           {isPublishedRadio === "false" && (
             <>
               {!isPublicationDate && (
@@ -149,8 +135,7 @@ export const VisibilityCard = withStyles(styles, {
                   onClick={() => setPublicationDate(!isPublicationDate)}
                 >
                   {intl.formatMessage({
-                    defaultMessage: "Set publication date",
-                    description: "set publication date"
+                    defaultMessage: "Set publication date"
                   })}
                 </Typography>
               )}
