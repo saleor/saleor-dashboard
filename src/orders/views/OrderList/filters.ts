@@ -20,6 +20,7 @@ import { OrderFilterKeys } from "../../components/OrderListFilter";
 import {
   OrderListUrlFilters,
   OrderListUrlFiltersEnum,
+  OrderListUrlFiltersWithMultipleValuesEnum,
   OrderListUrlQueryParams
 } from "../../urls";
 
@@ -228,4 +229,7 @@ export const {
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   OrderListUrlQueryParams,
   OrderListUrlFilters
->(OrderListUrlFiltersEnum);
+>({
+  ...OrderListUrlFiltersEnum,
+  ...OrderListUrlFiltersWithMultipleValuesEnum
+});
