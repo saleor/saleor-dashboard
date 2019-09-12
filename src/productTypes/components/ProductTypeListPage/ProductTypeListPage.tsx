@@ -17,7 +17,7 @@ import {
 import { ProductTypeList_productTypes_edges_node } from "../../types/ProductTypeList";
 import ProductTypeList from "../ProductTypeList";
 
-interface ProductTypeListPageProps
+export interface ProductTypeListPageProps
   extends PageListProps,
     ListActions,
     SearchPageProps,

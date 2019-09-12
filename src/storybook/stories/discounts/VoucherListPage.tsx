@@ -5,12 +5,19 @@ import VoucherListPage, {
   VoucherListPageProps
 } from "../../../discounts/components/VoucherListPage";
 import { voucherList } from "../../../discounts/fixtures";
-import { listActionsProps, pageListProps } from "../../../fixtures";
+import {
+  listActionsProps,
+  pageListProps,
+  searchPageProps,
+  tabPageProps
+} from "../../../fixtures";
 import Decorator from "../../Decorator";
 
 const props: VoucherListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
+  ...searchPageProps,
+  ...tabPageProps,
   defaultCurrency: "USD",
   vouchers: voucherList
 };

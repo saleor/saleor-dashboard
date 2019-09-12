@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { pageListProps } from "../../../fixtures";
+import { pageListProps, searchPageProps } from "../../../fixtures";
 import TranslationsEntitiesList from "../../../translations/components/TranslationsEntitiesList";
 import TranslationsEntitiesListPage, {
   TranslationsEntitiesListPageProps
@@ -11,6 +11,7 @@ import Decorator from "../../Decorator";
 
 const props: TranslationsEntitiesListPageProps = {
   ...pageListProps.default,
+  ...searchPageProps,
   children: null,
   filters: {
     current: "products",

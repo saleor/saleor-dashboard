@@ -5,12 +5,19 @@ import SaleListPage, {
   SaleListPageProps
 } from "../../../discounts/components/SaleListPage";
 import { saleList } from "../../../discounts/fixtures";
-import { listActionsProps, pageListProps } from "../../../fixtures";
+import {
+  listActionsProps,
+  pageListProps,
+  searchPageProps,
+  tabPageProps
+} from "../../../fixtures";
 import Decorator from "../../Decorator";
 
 const props: SaleListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
+  ...searchPageProps,
+  ...tabPageProps,
   defaultCurrency: "USD",
   sales: saleList
 };

@@ -1,7 +1,12 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { listActionsProps, pageListProps } from "../../../fixtures";
+import {
+  listActionsProps,
+  pageListProps,
+  searchPageProps,
+  tabPageProps
+} from "../../../fixtures";
 import OrderDraftListPage, {
   OrderDraftListPageProps
 } from "../../../orders/components/OrderDraftListPage";
@@ -11,6 +16,8 @@ import Decorator from "../../Decorator";
 const props: OrderDraftListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
+  ...searchPageProps,
+  ...tabPageProps,
   onAdd: () => undefined,
   orders
 };

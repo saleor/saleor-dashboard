@@ -1,7 +1,11 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { pageListProps } from "../../../fixtures";
+import {
+  pageListProps,
+  searchPageProps,
+  tabPageProps
+} from "../../../fixtures";
 import StaffListPage, {
   StaffListPageProps
 } from "../../../staff/components/StaffListPage";
@@ -9,10 +13,12 @@ import { staffMembers } from "../../../staff/fixtures";
 import Decorator from "../../Decorator";
 
 const props: StaffListPageProps = {
+  ...pageListProps.default,
+  ...searchPageProps,
+  ...tabPageProps,
   onAdd: undefined,
   onBack: () => undefined,
-  staffMembers,
-  ...pageListProps.default
+  staffMembers
 };
 
 storiesOf("Views / Staff / Staff members", module)
