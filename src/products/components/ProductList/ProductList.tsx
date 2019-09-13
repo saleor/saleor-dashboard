@@ -31,8 +31,8 @@ import {
 } from "@saleor/products/components/ProductListPage/utils";
 import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
+import { ProductListUrlSortField } from "@saleor/products/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
-import { ProductOrder, ProductOrderField } from "@saleor/types/globalTypes";
 import TDisplayColumn, {
   DisplayColumnProps
 } from "@saleor/utils/columns/DisplayColumn";
@@ -98,11 +98,10 @@ const DisplayColumn = TDisplayColumn as React.FunctionComponent<
 interface ProductListProps
   extends ListProps<ProductListColumns>,
     ListActions,
-    SortPage<ProductOrderField>,
+    SortPage<ProductListUrlSortField>,
     WithStyles<typeof styles> {
   gridAttributes: AvailableInGridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
-  sort: ProductOrder;
 }
 
 export const ProductList = withStyles(styles, { name: "ProductList" })(
@@ -171,11 +170,11 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                 [classes.colNameFixed]: settings.columns.length > 4
               })}
               direction={
-                sort.field === ProductOrderField.NAME
-                  ? getArrowDirection(sort.direction)
+                sort.sort === ProductListUrlSortField.name
+                  ? getArrowDirection(sort.asc)
                   : undefined
               }
-              onClick={() => onSort(ProductOrderField.NAME)}
+              onClick={() => onSort(ProductListUrlSortField.name)}
             >
               <span className={classes.colNameHeader}>
                 <FormattedMessage defaultMessage="Name" description="product" />
@@ -188,11 +187,11 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               <TableCellHeader
                 className={classes.colType}
                 direction={
-                  sort.field === ProductOrderField.TYPE
-                    ? getArrowDirection(sort.direction)
+                  sort.sort === ProductListUrlSortField.productType
+                    ? getArrowDirection(sort.asc)
                     : undefined
                 }
-                onClick={() => onSort(ProductOrderField.TYPE)}
+                onClick={() => onSort(ProductListUrlSortField.productType)}
               >
                 <FormattedMessage
                   defaultMessage="Type"
@@ -207,11 +206,11 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               <TableCellHeader
                 className={classes.colPublished}
                 direction={
-                  sort.field === ProductOrderField.PUBLISHED
-                    ? getArrowDirection(sort.direction)
+                  sort.sort === ProductListUrlSortField.status
+                    ? getArrowDirection(sort.asc)
                     : undefined
                 }
-                onClick={() => onSort(ProductOrderField.PUBLISHED)}
+                onClick={() => onSort(ProductListUrlSortField.status)}
               >
                 <FormattedMessage
                   defaultMessage="Published"
@@ -240,12 +239,12 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
               <TableCellHeader
                 className={classes.colPrice}
                 direction={
-                  sort.field === ProductOrderField.PRICE
-                    ? getArrowDirection(sort.direction)
+                  sort.sort === ProductListUrlSortField.price
+                    ? getArrowDirection(sort.asc)
                     : undefined
                 }
                 textAlign="right"
-                onClick={() => onSort(ProductOrderField.PRICE)}
+                onClick={() => onSort(ProductListUrlSortField.price)}
               >
                 <FormattedMessage
                   defaultMessage="Price"

@@ -24,8 +24,7 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
-import { ProductOrder, ProductOrderField } from "@saleor/types/globalTypes";
-import { ProductListUrlFilters } from "../../urls";
+import { ProductListUrlFilters, ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
 import ProductListFilter, { ProductFilterKeys } from "../ProductListFilter";
 
@@ -34,13 +33,12 @@ export interface ProductListPageProps
     ListActions,
     FilterPageProps<ProductFilterKeys>,
     FetchMoreProps,
-    SortPage<ProductOrderField> {
+    SortPage<ProductListUrlSortField> {
   availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
   gridAttributes: AvailableInGridAttributes_grid_edges_node[];
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
-  sort: ProductOrder;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({

@@ -1,17 +1,10 @@
 import { getOrderDirection } from "@saleor/misc";
 import {
   ProductListUrlQueryParams,
-  ProductListUrlSortFields as ProductListUrlSortField
+  ProductListUrlSortField
 } from "@saleor/products/urls";
 import { Sort } from "@saleor/types";
-import { ProductOrderField } from "@saleor/types/globalTypes";
-
-export function getSortQueryVariables(params: ProductListUrlQueryParams) {
-  return {
-    direction: getOrderDirection(params.asc),
-    field: getSortQueryField(params.sort)
-  };
-}
+import { ProductOrder, ProductOrderField } from "@saleor/types/globalTypes";
 
 export function getSortQueryField(
   sort: ProductListUrlSortField
@@ -28,6 +21,15 @@ export function getSortQueryField(
     default:
       return ProductOrderField.NAME;
   }
+}
+
+export function getSortQueryVariables(
+  params: ProductListUrlQueryParams
+): ProductOrder {
+  return {
+    direction: getOrderDirection(params.asc),
+    field: getSortQueryField(params.sort)
+  };
 }
 
 export function getSortUrlField(
@@ -48,19 +50,18 @@ export function getSortUrlField(
 }
 
 export function getSortUrlVariables(
-  field: ProductOrderField,
-  selectedField: ProductOrderField,
+  field: ProductListUrlSortField,
   params: Sort<ProductListUrlSortField>
 ): Sort<ProductListUrlSortField> {
-  if (field === selectedField) {
+  if (field === params.sort) {
     return {
       asc: !params.asc,
-      sort: getSortUrlField(field)
+      sort: field
     };
   }
 
   return {
     asc: true,
-    sort: getSortUrlField(field)
+    sort: field
   };
 }

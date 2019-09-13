@@ -49,6 +49,7 @@ export interface ListProps<TColumns extends string = string> {
 }
 
 export interface SortPage<TSortKey extends string> {
+  sort: Sort<TSortKey>;
   onSort: (field: TSortKey) => void;
 }
 export interface ListActionsWithoutToolbar {

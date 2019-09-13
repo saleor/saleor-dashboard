@@ -485,10 +485,8 @@ export function getOrderDirection(asc: boolean): OrderDirection {
   return asc ? OrderDirection.ASC : OrderDirection.DESC;
 }
 
-export function getArrowDirection(
-  order: OrderDirection
-): TableCellHeaderArrowDirection {
-  return order === OrderDirection.ASC ? "asc" : "desc";
+export function getArrowDirection(asc: boolean): TableCellHeaderArrowDirection {
+  return asc ? "asc" : "desc";
 }
 
 export function parseBoolean(a: string): boolean {

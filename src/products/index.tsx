@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { sectionNames } from "@saleor/intl";
-import { parseBoolean } from "@saleor/misc";
+import { findInEnum, parseBoolean } from "@saleor/misc";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   productAddPath,
@@ -12,6 +12,7 @@ import {
   ProductImageUrlQueryParams,
   productListPath,
   ProductListUrlQueryParams,
+  ProductListUrlSortField,
   productPath,
   ProductUrlQueryParams,
   productVariantAddPath,
@@ -31,7 +32,10 @@ const ProductList: React.StatelessComponent<RouteComponentProps<any>> = ({
   const qs = parseQs(location.search.substr(1));
   const params: ProductListUrlQueryParams = {
     ...qs,
-    asc: parseBoolean(qs.asc)
+    asc: parseBoolean(qs.asc),
+    sort: qs.sort
+      ? findInEnum(qs.sort, ProductListUrlSortField)
+      : ProductListUrlSortField.name
   };
   return <ProductListComponent params={params} />;
 };

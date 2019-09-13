@@ -229,16 +229,15 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                       return (
                         <>
                           <ProductListPage
-                            sort={sort}
+                            sort={{
+                              asc: params.asc,
+                              sort: params.sort
+                            }}
                             onSort={field =>
                               navigate(
                                 productListUrl({
                                   ...params,
-                                  ...getSortUrlVariables(
-                                    field,
-                                    sort.field,
-                                    params
-                                  )
+                                  ...getSortUrlVariables(field, params)
                                 })
                               )
                             }

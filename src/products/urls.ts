@@ -30,13 +30,13 @@ export enum ProductListUrlFiltersEnum {
   query = "query"
 }
 export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum>;
-export enum ProductListUrlSortFields {
+export enum ProductListUrlSortField {
   name = "name",
-  productType = "type",
+  productType = "productType",
   status = "status",
   price = "price"
 }
-export type ProductListUrlSort = Sort<ProductListUrlSortFields>;
+export type ProductListUrlSort = Sort<ProductListUrlSortField>;
 export type ProductListUrlQueryParams = BulkAction &
   Dialog<ProductListUrlDialog> &
   ProductListUrlFilters &
