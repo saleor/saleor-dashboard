@@ -22,3 +22,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix en locale matching - #165 by @dominik-zeglen
 - Implement the Credential Management API - #158 by @patrys
 - Add search bars - #172 by @dominik-zeglen
+- Add sorting to product list - #173 by @dominik-zeglen
