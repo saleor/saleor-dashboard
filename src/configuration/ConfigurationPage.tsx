@@ -20,15 +20,13 @@ import { PermissionEnum } from "../types/globalTypes";
 
 export interface MenuItem {
   label: string;
-  menuItems: [
-    {
-      description: string;
-      icon: React.ReactElement<IconProps>;
-      permission: PermissionEnum;
-      title: string;
-      url?: string;
-    }
-  ];
+  menuItems: Array<{
+    description: string;
+    icon: React.ReactElement<IconProps>;
+    permission: PermissionEnum;
+    title: string;
+    url?: string;
+  }>;
 }
 
 const styles = (theme: Theme) =>
@@ -115,16 +113,16 @@ export const ConfigurationPage = withStyles(styles, {
             menu.menuItems.map(item => hasPermission(item.permission, user))
           )
           .map((menu, menuIndex) => (
-            <div className={classes.configurationCategory}>
+            <div className={classes.configurationCategory} key={menuIndex}>
               <div className={classes.configurationLabel}>
                 <Typography>{menu.label}</Typography>
               </div>
               <div className={classes.configurationItem}>
-                {menu.menuItems.map(item => (
+                {menu.menuItems.map((item, itemIndex) => (
                   <Card
                     className={item.url ? classes.card : classes.cardDisabled}
                     onClick={() => onSectionClick(item.url)}
-                    key={menuIndex}
+                    key={itemIndex}
                   >
                     <CardContent className={classes.cardContent}>
                       <div className={classes.icon}>{item.icon}</div>

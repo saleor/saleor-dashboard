@@ -30,7 +30,9 @@ import ConfigurationPage, { MenuItem } from "./ConfigurationPage";
 export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
   return [
     {
-      label: "Attributes and Product Types",
+      label: intl.formatMessage({
+        defaultMessage: "Attributes and Product Typess"
+      }),
       menuItems: [
         {
           description: intl.formatMessage({
@@ -55,7 +57,9 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       ]
     },
     {
-      label: "Product Settings",
+      label: intl.formatMessage({
+        defaultMessage: "Product Settings"
+      }),
       menuItems: [
         {
           description: intl.formatMessage({
@@ -80,7 +84,9 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       ]
     },
     {
-      label: "Staff Settings",
+      label: intl.formatMessage({
+        defaultMessage: "Staff Settings"
+      }),
       menuItems: [
         {
           description: intl.formatMessage({
@@ -95,7 +101,9 @@ export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
       ]
     },
     {
-      label: "Miscellaneous",
+      label: intl.formatMessage({
+        defaultMessage: "Miscellaneous"
+      }),
       menuItems: [
         {
           description: intl.formatMessage({

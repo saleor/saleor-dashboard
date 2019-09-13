@@ -174,12 +174,11 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
     const intl = useIntl();
 
     const configutationMenu = createConfigurationMenu(intl).map(menu => {
-      menu.menuItems.map(item => {
-        return user.permissions
-          .map(perm => perm.code)
-          .includes(item.permission);
-      });
+      menu.menuItems.map(item =>
+        user.permissions.map(perm => perm.code).includes(item.permission)
+      );
     });
+
     const handleSubMenu = itemLabel => {
       setActiveSubMenu({
         isActive:
