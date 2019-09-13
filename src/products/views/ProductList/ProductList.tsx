@@ -53,7 +53,7 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import { getSortUrlVariables, getSortQueryVariables } from "./sort";
+import { getSortQueryVariables, getSortUrlVariables } from "./sort";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
