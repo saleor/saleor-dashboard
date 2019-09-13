@@ -24,6 +24,7 @@ import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ProductListVariables } from "@saleor/products/types/ProductList";
 import { ListViews } from "@saleor/types";
+import { getSortUrlVariables } from "@saleor/utils/sort";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -53,7 +54,7 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import { getSortQueryVariables, getSortUrlVariables } from "./sort";
+import { getSortQueryVariables } from "./sort";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;

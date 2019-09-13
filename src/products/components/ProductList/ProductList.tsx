@@ -24,7 +24,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { ProductListColumns } from "@saleor/config";
-import { getArrowDirection, maybe, renderCollection } from "@saleor/misc";
+import { maybe, renderCollection } from "@saleor/misc";
 import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
@@ -36,6 +36,7 @@ import { ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
   DisplayColumnProps
 } from "@saleor/utils/columns/DisplayColumn";
+import { getArrowDirection } from "@saleor/utils/sort";
 
 const styles = (theme: Theme) =>
   createStyles({
