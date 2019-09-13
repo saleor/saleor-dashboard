@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { sectionNames } from "@saleor/intl";
+import { parseBoolean } from "@saleor/misc";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   productAddPath,
@@ -28,7 +29,10 @@ const ProductList: React.StatelessComponent<RouteComponentProps<any>> = ({
   location
 }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: ProductListUrlQueryParams = qs;
+  const params: ProductListUrlQueryParams = {
+    ...qs,
+    asc: parseBoolean(qs.asc)
+  };
   return <ProductListComponent params={params} />;
 };
 

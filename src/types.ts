@@ -47,6 +47,10 @@ export interface ListProps<TColumns extends string = string> {
   ) => void;
   onListSettingsReset?: () => void;
 }
+
+export interface SortPage<TSortKey extends string> {
+  onSort: (field: TSortKey) => void;
+}
 export interface ListActionsWithoutToolbar {
   toggle: (id: string) => void;
   toggleAll: (items: React.ReactNodeArray, selected: number) => void;
@@ -130,6 +134,10 @@ export type FiltersWithMultipleValues<TFilters extends string> = Partial<
 >;
 export type SingleAction = Partial<{
   id: string;
+}>;
+export type Sort<TSort extends string = string> = Partial<{
+  asc: boolean;
+  sort: TSort;
 }>;
 export type BulkAction = Partial<{
   ids: string[];

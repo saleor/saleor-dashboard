@@ -4,11 +4,13 @@ import urlJoin from "url-join";
 
 import { defineMessages, IntlShape } from "react-intl";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
+import { TableCellHeaderArrowDirection } from "./components/TableCellHeader";
 import { APP_MOUNT_URI } from "./config";
 import { AddressType } from "./customers/types";
 import { PartialMutationProviderOutput, UserError } from "./types";
 import {
   AuthorizationKeyType,
+  OrderDirection,
   OrderStatus,
   PaymentChargeStatusEnum,
   TaxRateType
@@ -477,4 +479,18 @@ export function findInEnum<TEnum extends object>(
   }
 
   throw new Error(`Key ${needle} not found in enum`);
+}
+
+export function getOrderDirection(asc: boolean): OrderDirection {
+  return asc ? OrderDirection.ASC : OrderDirection.DESC;
+}
+
+export function getArrowDirection(
+  order: OrderDirection
+): TableCellHeaderArrowDirection {
+  return order === OrderDirection.ASC ? "asc" : "desc";
+}
+
+export function parseBoolean(a: string): boolean {
+  return a === "true";
 }

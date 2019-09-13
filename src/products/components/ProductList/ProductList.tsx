@@ -20,18 +20,22 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { ProductListColumns } from "@saleor/config";
-import { maybe, renderCollection } from "@saleor/misc";
+import { getArrowDirection, maybe, renderCollection } from "@saleor/misc";
 import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
-import { ListActions, ListProps } from "@saleor/types";
-import TDisplayColumn from "@saleor/utils/columns/DisplayColumn";
+import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { ProductOrder, ProductOrderField } from "@saleor/types/globalTypes";
+import TDisplayColumn, {
+  DisplayColumnProps
+} from "@saleor/utils/columns/DisplayColumn";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -87,12 +91,18 @@ const styles = (theme: Theme) =>
     }
   });
 
+const DisplayColumn = TDisplayColumn as React.FunctionComponent<
+  DisplayColumnProps<ProductListColumns>
+>;
+
 interface ProductListProps
   extends ListProps<ProductListColumns>,
     ListActions,
+    SortPage<ProductOrderField>,
     WithStyles<typeof styles> {
   gridAttributes: AvailableInGridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
+  sort: ProductOrder;
 }
 
 export const ProductList = withStyles(styles, { name: "ProductList" })(
@@ -105,19 +115,18 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
     pageInfo,
     products,
     selected,
+    sort,
     toggle,
     toggleAll,
     toolbar,
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
-    onRowClick
+    onRowClick,
+    onSort
   }: ProductListProps) => {
     const intl = useIntl();
 
-    const DisplayColumn: React.FC<{ column: ProductListColumns }> = props => (
-      <TDisplayColumn displayColumns={settings.columns} {...props} />
-    );
     const gridAttributesFromSettings = settings.columns.filter(
       isAttributeColumnValue
     );
@@ -129,16 +138,22 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
           <colgroup>
             <col />
             <col className={classes.colName} />
-            <DisplayColumn column="productType">
+            <DisplayColumn
+              column="productType"
+              displayColumns={settings.columns}
+            >
               <col className={classes.colType} />
             </DisplayColumn>
-            <DisplayColumn column="isPublished">
+            <DisplayColumn
+              column="isPublished"
+              displayColumns={settings.columns}
+            >
               <col className={classes.colPublished} />
             </DisplayColumn>
             {gridAttributesFromSettings.map(gridAttribute => (
               <col className={classes.colAttribute} key={gridAttribute} />
             ))}
-            <DisplayColumn column="price">
+            <DisplayColumn column="price" displayColumns={settings.columns}>
               <col className={classes.colPrice} />
             </DisplayColumn>
           </colgroup>
@@ -150,30 +165,59 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
             toggleAll={toggleAll}
             toolbar={toolbar}
           >
-            <TableCell
+            <TableCellHeader
+              arrowPosition="right"
               className={classNames(classes.colName, {
                 [classes.colNameFixed]: settings.columns.length > 4
               })}
+              direction={
+                sort.field === ProductOrderField.NAME
+                  ? getArrowDirection(sort.direction)
+                  : undefined
+              }
+              onClick={() => onSort(ProductOrderField.NAME)}
             >
               <span className={classes.colNameHeader}>
                 <FormattedMessage defaultMessage="Name" description="product" />
               </span>
-            </TableCell>
-            <DisplayColumn column="productType">
-              <TableCell className={classes.colType}>
+            </TableCellHeader>
+            <DisplayColumn
+              column="productType"
+              displayColumns={settings.columns}
+            >
+              <TableCellHeader
+                className={classes.colType}
+                direction={
+                  sort.field === ProductOrderField.TYPE
+                    ? getArrowDirection(sort.direction)
+                    : undefined
+                }
+                onClick={() => onSort(ProductOrderField.TYPE)}
+              >
                 <FormattedMessage
                   defaultMessage="Type"
                   description="product type"
                 />
-              </TableCell>
+              </TableCellHeader>
             </DisplayColumn>
-            <DisplayColumn column="isPublished">
-              <TableCell className={classes.colPublished}>
+            <DisplayColumn
+              column="isPublished"
+              displayColumns={settings.columns}
+            >
+              <TableCellHeader
+                className={classes.colPublished}
+                direction={
+                  sort.field === ProductOrderField.PUBLISHED
+                    ? getArrowDirection(sort.direction)
+                    : undefined
+                }
+                onClick={() => onSort(ProductOrderField.PUBLISHED)}
+              >
                 <FormattedMessage
                   defaultMessage="Published"
                   description="product status"
                 />
-              </TableCell>
+              </TableCellHeader>
             </DisplayColumn>
             {gridAttributesFromSettings.map(gridAttributeFromSettings => (
               <TableCell
@@ -192,13 +236,22 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                 )}
               </TableCell>
             ))}
-            <DisplayColumn column="price">
-              <TableCell className={classes.colPrice}>
+            <DisplayColumn column="price" displayColumns={settings.columns}>
+              <TableCellHeader
+                className={classes.colPrice}
+                direction={
+                  sort.field === ProductOrderField.PRICE
+                    ? getArrowDirection(sort.direction)
+                    : undefined
+                }
+                textAlign="right"
+                onClick={() => onSort(ProductOrderField.PRICE)}
+              >
                 <FormattedMessage
                   defaultMessage="Price"
                   description="product price"
                 />
-              </TableCell>
+              </TableCellHeader>
             </DisplayColumn>
           </TableHead>
           <TableFooter>
@@ -246,7 +299,10 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                     >
                       {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                     </TableCellAvatar>
-                    <DisplayColumn column="productType">
+                    <DisplayColumn
+                      column="productType"
+                      displayColumns={settings.columns}
+                    >
                       <TableCell className={classes.colType}>
                         {product && product.productType ? (
                           product.productType.name
@@ -255,7 +311,10 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                         )}
                       </TableCell>
                     </DisplayColumn>
-                    <DisplayColumn column="isPublished">
+                    <DisplayColumn
+                      column="isPublished"
+                      displayColumns={settings.columns}
+                    >
                       <TableCell className={classes.colPublished}>
                         {product &&
                         maybe(() => product.isAvailable !== undefined) ? (
@@ -299,7 +358,10 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                         }, <Skeleton />)}
                       </TableCell>
                     ))}
-                    <DisplayColumn column="price">
+                    <DisplayColumn
+                      column="price"
+                      displayColumns={settings.columns}
+                    >
                       <TableCell className={classes.colPrice}>
                         {maybe(() => product.basePrice) &&
                         maybe(() => product.basePrice.amount) !== undefined &&

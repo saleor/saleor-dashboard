@@ -12,12 +12,12 @@ const DisplayColumn: React.FC<DisplayColumnProps> = ({
   children,
   column
 }) => {
-  const displayColumn = React.useCallback(
-    (column: string) => isSelected(column, displayColumns, (a, b) => a === b),
-    [displayColumns]
+  const display = React.useMemo(
+    () => isSelected(column, displayColumns, (a, b) => a === b),
+    [column, displayColumns]
   );
 
-  return <>{displayColumn(column) && children}</>;
+  return <>{display && children}</>;
 };
 
 DisplayColumn.displayName = "DisplayColumn";

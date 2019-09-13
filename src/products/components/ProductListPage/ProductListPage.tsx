@@ -1,7 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { Theme } from "@material-ui/core/styles";
-
 import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,8 +21,11 @@ import {
   FetchMoreProps,
   FilterPageProps,
   ListActions,
-  PageListProps
+  PageListProps,
+  SortPage
 } from "@saleor/types";
+import { ProductOrder, ProductOrderField } from "@saleor/types/globalTypes";
+import { ProductListUrlFilters } from "../../urls";
 import ProductList from "../ProductList";
 import ProductListFilter, { ProductFilterKeys } from "../ProductListFilter";
 
@@ -31,12 +33,14 @@ export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
     FilterPageProps<ProductFilterKeys>,
-    FetchMoreProps {
+    FetchMoreProps,
+    SortPage<ProductOrderField> {
   availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
   gridAttributes: AvailableInGridAttributes_grid_edges_node[];
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
+  sort: ProductOrder;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({

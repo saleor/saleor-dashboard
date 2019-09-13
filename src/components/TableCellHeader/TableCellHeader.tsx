@@ -24,6 +24,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     height: 24
   },
+  labelContainerCenter: {
+    justifyContent: "center"
+  },
+  labelContainerRight: {
+    justifyContent: "flex-end"
+  },
   root: {
     cursor: "pointer"
   }
@@ -31,18 +37,31 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export type TableCellHeaderArrowDirection = "asc" | "desc";
 export type TableCellHeaderArrowPosition = "left" | "right";
-export interface TableCellHeader extends TableCellProps {
+export interface TableCellHeaderProps extends TableCellProps {
   arrowPosition?: TableCellHeaderArrowPosition;
   direction?: TableCellHeaderArrowDirection;
+  textAlign?: "left" | "center" | "right";
 }
 
-const TableCellHeader: React.FC<TableCellHeader> = props => {
+const TableCellHeader: React.FC<TableCellHeaderProps> = props => {
   const classes = useStyles(props);
-  const { arrowPosition, children, className, direction, ...rest } = props;
+  const {
+    arrowPosition,
+    children,
+    className,
+    direction,
+    textAlign,
+    ...rest
+  } = props;
 
   return (
-    <TableCell {...rest} className={classNames(className, classes.root)}>
-      <div className={classes.labelContainer}>
+    <TableCell {...rest} className={classNames(classes.root, className)}>
+      <div
+        className={classNames(classes.labelContainer, {
+          [classes.labelContainerCenter]: textAlign === "center",
+          [classes.labelContainerRight]: textAlign === "right"
+        })}
+      >
         {!!direction && arrowPosition === "left" && (
           <ArrowSort
             className={classNames(classes.arrow, classes.arrowLeft, {
@@ -65,6 +84,7 @@ const TableCellHeader: React.FC<TableCellHeader> = props => {
 
 TableCellHeader.displayName = "TableCellHeader";
 TableCellHeader.defaultProps = {
-  arrowPosition: "left"
+  arrowPosition: "left",
+  textAlign: "left"
 };
 export default TableCellHeader;

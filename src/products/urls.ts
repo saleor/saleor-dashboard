@@ -7,6 +7,7 @@ import {
   Dialog,
   Filters,
   Pagination,
+  Sort,
   TabActionDialog
 } from "../types";
 
@@ -29,9 +30,17 @@ export enum ProductListUrlFiltersEnum {
   query = "query"
 }
 export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum>;
+export enum ProductListUrlSortFields {
+  name = "name",
+  productType = "type",
+  status = "status",
+  price = "price"
+}
+export type ProductListUrlSort = Sort<ProductListUrlSortFields>;
 export type ProductListUrlQueryParams = BulkAction &
   Dialog<ProductListUrlDialog> &
   ProductListUrlFilters &
+  ProductListUrlSort &
   Pagination &
   ActiveTab;
 export const productListUrl = (params?: ProductListUrlQueryParams): string =>
