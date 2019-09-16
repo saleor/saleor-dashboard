@@ -52,7 +52,7 @@ export const LocaleContext = React.createContext<LocaleContextType>(
 
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 
-enum Locale {
+export enum Locale {
   AR = "ar",
   AZ = "az",
   BG = "bg",
@@ -62,6 +62,7 @@ enum Locale {
   DA = "da",
   DE = "de",
   EL = "el",
+  EN = "en",
   ES = "es",
   ES_CO = "es-co",
   ET = "et",
@@ -107,6 +108,8 @@ const localeData: Record<Locale, LocaleMessages> = {
   [Locale.DA]: locale_DA,
   [Locale.DE]: locale_DE,
   [Locale.EL]: locale_EL,
+  // Default language
+  [Locale.EN]: undefined,
   [Locale.ES]: locale_ES,
   [Locale.ES_CO]: locale_ES_CO,
   [Locale.ET]: locale_ET,
@@ -141,10 +144,10 @@ const localeData: Record<Locale, LocaleMessages> = {
   [Locale.ZH_HANT]: locale_ZH_HANT
 };
 
-function getMatchingLocale(): Locale {
+export function getMatchingLocale(languages: readonly string[]): Locale {
   const localeEntries = Object.entries(Locale);
 
-  for (const preferredLocale of navigator.languages) {
+  for (const preferredLocale of languages) {
     for (const localeEntry of localeEntries) {
       if (localeEntry[1].toLowerCase() === preferredLocale.toLowerCase()) {
         return Locale[localeEntry[0]];
@@ -156,7 +159,9 @@ function getMatchingLocale(): Locale {
 }
 
 const LocaleProvider: React.FC = ({ children }) => {
-  const [locale] = React.useState(getMatchingLocale() || defaultLocale);
+  const [locale] = React.useState(
+    getMatchingLocale(navigator.languages) || defaultLocale
+  );
 
   return (
     <IntlProvider
