@@ -4,6 +4,7 @@ import React from "react";
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { defaultListSettings } from "@saleor/config";
 import { products as productListFixture } from "@saleor/products/fixtures";
+import { ProductListUrlSortField } from "@saleor/products/urls";
 import { attributes } from "@saleor/productTypes/fixtures";
 import { ListViews } from "@saleor/types";
 import {
@@ -11,7 +12,8 @@ import {
   filterPageProps,
   filters,
   listActionsProps,
-  pageListProps
+  pageListProps,
+  sortPageProps
 } from "../../../fixtures";
 import ProductListPage, {
   ProductListPageProps
@@ -25,6 +27,13 @@ const props: ProductListPageProps = {
   ...pageListProps.default,
   ...filterPageProps,
   ...fetchMoreProps,
+  ...{
+    ...sortPageProps,
+    sort: {
+      ...sortPageProps.sort,
+      sort: ProductListUrlSortField.name
+    }
+  },
   availableInGridAttributes: attributes,
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
   gridAttributes: attributes,

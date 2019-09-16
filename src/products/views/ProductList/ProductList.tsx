@@ -22,7 +22,9 @@ import usePaginator, {
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
+import { ProductListVariables } from "@saleor/products/types/ProductList";
 import { ListViews } from "@saleor/types";
+import { getSortUrlVariables } from "@saleor/utils/sort";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -52,6 +54,7 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filters";
+import { getSortQueryVariables } from "./sort";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -152,10 +155,13 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
-  const queryVariables = React.useMemo(
+  const filter = getFilterVariables(params);
+  const sort = getSortQueryVariables(params);
+  const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
-      filter: getFilterVariables(params)
+      filter,
+      sort
     }),
     [params, settings.rowNumber]
   );
@@ -224,6 +230,18 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                       return (
                         <>
                           <ProductListPage
+                            sort={{
+                              asc: params.asc,
+                              sort: params.sort
+                            }}
+                            onSort={field =>
+                              navigate(
+                                productListUrl({
+                                  ...params,
+                                  ...getSortUrlVariables(field, params)
+                                })
+                              )
+                            }
                             availableInGridAttributes={maybe(
                               () =>
                                 attributes.data.availableInGrid.edges.map(

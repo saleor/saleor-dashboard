@@ -112,6 +112,11 @@ export enum OrderAction {
   VOID = "VOID",
 }
 
+export enum OrderDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 export enum OrderEventsEmailsEnum {
   DIGITAL_LINKS = "DIGITAL_LINKS",
   FULFILLMENT_CONFIRMATION = "FULFILLMENT_CONFIRMATION",
@@ -185,6 +190,15 @@ export enum PermissionEnum {
   MANAGE_STAFF = "MANAGE_STAFF",
   MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
   MANAGE_USERS = "MANAGE_USERS",
+}
+
+export enum ProductOrderField {
+  DATE = "DATE",
+  MINIMAL_PRICE = "MINIMAL_PRICE",
+  NAME = "NAME",
+  PRICE = "PRICE",
+  PUBLISHED = "PUBLISHED",
+  TYPE = "TYPE",
 }
 
 export enum ProductTypeConfigurable {
@@ -572,6 +586,11 @@ export interface ProductFilterInput {
   productType?: string | null;
   search?: string | null;
   minimalPrice?: PriceRangeInput | null;
+}
+
+export interface ProductOrder {
+  field: ProductOrderField;
+  direction: OrderDirection;
 }
 
 export interface ProductTypeFilterInput {

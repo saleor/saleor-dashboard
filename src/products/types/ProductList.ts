@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductFilterInput } from "./../../types/globalTypes";
+import { ProductFilterInput, ProductOrder } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductList
@@ -82,4 +82,5 @@ export interface ProductListVariables {
   last?: number | null;
   before?: string | null;
   filter?: ProductFilterInput | null;
+  sort?: ProductOrder | null;
 }

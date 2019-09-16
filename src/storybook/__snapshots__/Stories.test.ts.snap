@@ -4591,6 +4591,273 @@ exports[`Storyshots Generics / StatusLabel when success 1`] = `
 </div>
 `;
 
+exports[`Storyshots Generics / Table header ascending 1`] = `
+<div
+  style="padding:24px"
+>
+  <div
+    class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+    style="margin:auto;width:400px"
+  >
+    <table
+      class="MuiTable-root-id"
+    >
+      <thead
+        class="MuiTableHead-root-id"
+      >
+        <tr
+          class="MuiTableRow-root-id MuiTableRow-head-id"
+        >
+          <th
+            class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id"
+            scope="col"
+          >
+            <div
+              class="Hook-labelContainer-id Hook-labelContainerActive-id"
+            >
+              <div
+                class="Hook-label-id"
+              >
+                Name
+              </div>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root-id Hook-arrow-id Hook-arrowUp-id"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <rect
+                  fill="transparent"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  clip-rule="evenodd"
+                  d="M11.0328 17.1401V4H12.9672V17.1401L14.6322 15.4751L16 16.8429L12 20.8429L8 16.8429L9.36782 15.4751L11.0328 17.1401Z"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+          </th>
+          <th
+            class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id"
+            scope="col"
+          >
+            <div
+              class="Hook-labelContainer-id"
+            >
+              <div
+                class="Hook-label-id"
+              >
+                Type
+              </div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        class="MuiTableBody-root-id"
+      >
+        <tr
+          class="MuiTableRow-root-id"
+        >
+          <td
+            class="MuiTableCell-root-id MuiTableCell-body-id"
+          >
+            Apple Juice
+          </td>
+          <td
+            class="MuiTableCell-root-id MuiTableCell-body-id"
+          >
+            Juice
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Generics / Table header descending 1`] = `
+<div
+  style="padding:24px"
+>
+  <div
+    class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+    style="margin:auto;width:400px"
+  >
+    <table
+      class="MuiTable-root-id"
+    >
+      <thead
+        class="MuiTableHead-root-id"
+      >
+        <tr
+          class="MuiTableRow-root-id MuiTableRow-head-id"
+        >
+          <th
+            class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id"
+            scope="col"
+          >
+            <div
+              class="Hook-labelContainer-id Hook-labelContainerActive-id"
+            >
+              <div
+                class="Hook-label-id"
+              >
+                Name
+              </div>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root-id Hook-arrow-id"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <rect
+                  fill="transparent"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  clip-rule="evenodd"
+                  d="M11.0328 17.1401V4H12.9672V17.1401L14.6322 15.4751L16 16.8429L12 20.8429L8 16.8429L9.36782 15.4751L11.0328 17.1401Z"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+          </th>
+          <th
+            class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id"
+            scope="col"
+          >
+            <div
+              class="Hook-labelContainer-id"
+            >
+              <div
+                class="Hook-label-id"
+              >
+                Type
+              </div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        class="MuiTableBody-root-id"
+      >
+        <tr
+          class="MuiTableRow-root-id"
+        >
+          <td
+            class="MuiTableCell-root-id MuiTableCell-body-id"
+          >
+            Apple Juice
+          </td>
+          <td
+            class="MuiTableCell-root-id MuiTableCell-body-id"
+          >
+            Juice
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Generics / Table header interactive 1`] = `
+<div
+  style="padding:24px"
+>
+  <div
+    class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+    style="margin:auto;width:400px"
+  >
+    <table
+      class="MuiTable-root-id"
+    >
+      <thead
+        class="MuiTableHead-root-id"
+      >
+        <tr
+          class="MuiTableRow-root-id MuiTableRow-head-id"
+        >
+          <th
+            class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id"
+            scope="col"
+          >
+            <div
+              class="Hook-labelContainer-id Hook-labelContainerActive-id"
+            >
+              <div
+                class="Hook-label-id"
+              >
+                Name
+              </div>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root-id Hook-arrow-id Hook-arrowUp-id"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <rect
+                  fill="transparent"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  clip-rule="evenodd"
+                  d="M11.0328 17.1401V4H12.9672V17.1401L14.6322 15.4751L16 16.8429L12 20.8429L8 16.8429L9.36782 15.4751L11.0328 17.1401Z"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+          </th>
+          <th
+            class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id"
+            scope="col"
+          >
+            <div
+              class="Hook-labelContainer-id"
+            >
+              <div
+                class="Hook-label-id"
+              >
+                Type
+              </div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        class="MuiTableBody-root-id"
+      >
+        <tr
+          class="MuiTableRow-root-id"
+        >
+          <td
+            class="MuiTableCell-root-id MuiTableCell-body-id"
+          >
+            Apple Juice
+          </td>
+          <td
+            class="MuiTableCell-root-id MuiTableCell-body-id"
+          >
+            Juice
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
 exports[`Storyshots Generics / TablePagination both previous and next pages are available 1`] = `
 <div
   style="padding:24px"
@@ -93583,32 +93850,83 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
                 </button>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colName-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colName-id"
                 scope="col"
               >
-                <span
-                  class="ProductList-colNameHeader-id"
+                <div
+                  class="Hook-labelContainer-id Hook-labelContainerActive-id"
                 >
-                  Name
-                </span>
+                  <div
+                    class="Hook-label-id"
+                  >
+                    <span
+                      class="ProductList-colNameHeader-id"
+                    >
+                      Name
+                    </span>
+                  </div>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root-id Hook-arrow-id Hook-arrowUp-id"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <rect
+                      fill="transparent"
+                      height="24"
+                      width="24"
+                    />
+                    <path
+                      clip-rule="evenodd"
+                      d="M11.0328 17.1401V4H12.9672V17.1401L14.6322 15.4751L16 16.8429L12 20.8429L8 16.8429L9.36782 15.4751L11.0328 17.1401Z"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colType-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colType-id"
                 scope="col"
               >
-                Type
+                <div
+                  class="Hook-labelContainer-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Type
+                  </div>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colPublished-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colPublished-id"
                 scope="col"
               >
-                Published
+                <div
+                  class="Hook-labelContainer-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Published
+                  </div>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colPrice-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colPrice-id"
                 scope="col"
               >
-                Price
+                <div
+                  class="Hook-labelContainer-id Hook-labelContainerRight-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Price
+                  </div>
+                </div>
               </th>
             </tr>
           </thead>
@@ -95157,32 +95475,83 @@ exports[`Storyshots Views / Products / Product list loading 1`] = `
                 </button>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colName-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colName-id"
                 scope="col"
               >
-                <span
-                  class="ProductList-colNameHeader-id"
+                <div
+                  class="Hook-labelContainer-id Hook-labelContainerActive-id"
                 >
-                  Name
-                </span>
+                  <div
+                    class="Hook-label-id"
+                  >
+                    <span
+                      class="ProductList-colNameHeader-id"
+                    >
+                      Name
+                    </span>
+                  </div>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root-id Hook-arrow-id Hook-arrowUp-id"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <rect
+                      fill="transparent"
+                      height="24"
+                      width="24"
+                    />
+                    <path
+                      clip-rule="evenodd"
+                      d="M11.0328 17.1401V4H12.9672V17.1401L14.6322 15.4751L16 16.8429L12 20.8429L8 16.8429L9.36782 15.4751L11.0328 17.1401Z"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colType-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colType-id"
                 scope="col"
               >
-                Type
+                <div
+                  class="Hook-labelContainer-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Type
+                  </div>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colPublished-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colPublished-id"
                 scope="col"
               >
-                Published
+                <div
+                  class="Hook-labelContainer-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Published
+                  </div>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colPrice-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colPrice-id"
                 scope="col"
               >
-                Price
+                <div
+                  class="Hook-labelContainer-id Hook-labelContainerRight-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Price
+                  </div>
+                </div>
               </th>
             </tr>
           </thead>
@@ -95618,32 +95987,83 @@ exports[`Storyshots Views / Products / Product list no data 1`] = `
               class="MuiTableRow-root-id MuiTableRow-head-id"
             >
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colName-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colName-id"
                 scope="col"
               >
-                <span
-                  class="ProductList-colNameHeader-id"
+                <div
+                  class="Hook-labelContainer-id Hook-labelContainerActive-id"
                 >
-                  Name
-                </span>
+                  <div
+                    class="Hook-label-id"
+                  >
+                    <span
+                      class="ProductList-colNameHeader-id"
+                    >
+                      Name
+                    </span>
+                  </div>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root-id Hook-arrow-id Hook-arrowUp-id"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <rect
+                      fill="transparent"
+                      height="24"
+                      width="24"
+                    />
+                    <path
+                      clip-rule="evenodd"
+                      d="M11.0328 17.1401V4H12.9672V17.1401L14.6322 15.4751L16 16.8429L12 20.8429L8 16.8429L9.36782 15.4751L11.0328 17.1401Z"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colType-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colType-id"
                 scope="col"
               >
-                Type
+                <div
+                  class="Hook-labelContainer-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Type
+                  </div>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colPublished-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colPublished-id"
                 scope="col"
               >
-                Published
+                <div
+                  class="Hook-labelContainer-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Published
+                  </div>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colPrice-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colPrice-id"
                 scope="col"
               >
-                Price
+                <div
+                  class="Hook-labelContainer-id Hook-labelContainerRight-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Price
+                  </div>
+                </div>
               </th>
             </tr>
           </thead>
@@ -96475,32 +96895,83 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
                 </button>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colName-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colName-id"
                 scope="col"
               >
-                <span
-                  class="ProductList-colNameHeader-id"
+                <div
+                  class="Hook-labelContainer-id Hook-labelContainerActive-id"
                 >
-                  Name
-                </span>
+                  <div
+                    class="Hook-label-id"
+                  >
+                    <span
+                      class="ProductList-colNameHeader-id"
+                    >
+                      Name
+                    </span>
+                  </div>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root-id Hook-arrow-id Hook-arrowUp-id"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <rect
+                      fill="transparent"
+                      height="24"
+                      width="24"
+                    />
+                    <path
+                      clip-rule="evenodd"
+                      d="M11.0328 17.1401V4H12.9672V17.1401L14.6322 15.4751L16 16.8429L12 20.8429L8 16.8429L9.36782 15.4751L11.0328 17.1401Z"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colType-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colType-id"
                 scope="col"
               >
-                Type
+                <div
+                  class="Hook-labelContainer-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Type
+                  </div>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colPublished-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colPublished-id"
                 scope="col"
               >
-                Published
+                <div
+                  class="Hook-labelContainer-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Published
+                  </div>
+                </div>
               </th>
               <th
-                class="MuiTableCell-root-id MuiTableCell-head-id ProductList-colPrice-id"
+                class="MuiTableCell-root-id MuiTableCell-head-id Hook-root-id ProductList-colPrice-id"
                 scope="col"
               >
-                Price
+                <div
+                  class="Hook-labelContainer-id Hook-labelContainerRight-id"
+                >
+                  <div
+                    class="Hook-label-id"
+                  >
+                    Price
+                  </div>
+                </div>
               </th>
             </tr>
           </thead>

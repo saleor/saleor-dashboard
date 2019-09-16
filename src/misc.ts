@@ -478,3 +478,7 @@ export function findInEnum<TEnum extends object>(
 
   throw new Error(`Key ${needle} not found in enum`);
 }
+
+export function parseBoolean(a: string): boolean {
+  return a === "true";
+}
