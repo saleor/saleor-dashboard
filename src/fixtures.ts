@@ -5,6 +5,7 @@ import {
   ListActions,
   PageListProps,
   SearchPageProps,
+  SortPage,
   TabPageProps
 } from "./types";
 
@@ -140,4 +141,11 @@ export const fetchMoreProps: FetchMoreProps = {
   hasMore: true,
   loading: false,
   onFetchMore: () => undefined
+};
+
+export const sortPageProps: SortPage<string> = {
+  onSort: () => undefined,
+  sort: {
+    asc: true
+  }
 };
