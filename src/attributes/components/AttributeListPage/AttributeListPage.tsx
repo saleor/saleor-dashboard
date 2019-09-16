@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import AddIcon from "@material-ui/icons/Add";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -26,10 +26,9 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.attributes)}>
         <Button onClick={onAdd} color="primary" variant="contained">
           <FormattedMessage
-            defaultMessage="Add attribute"
+            defaultMessage="Create attribute"
             description="button"
           />
-          <AddIcon />
         </Button>
       </PageHeader>
       <Card>

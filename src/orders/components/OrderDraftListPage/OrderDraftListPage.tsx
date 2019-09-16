@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import AddIcon from "@material-ui/icons/Add";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -35,7 +35,6 @@ const OrderDraftListPage: React.StatelessComponent<OrderDraftListPageProps> = ({
             defaultMessage="Create order"
             description="button"
           />
-          <AddIcon />
         </Button>
       </PageHeader>
       <Card>

@@ -37,7 +37,7 @@ const styles = (theme: Theme) =>
       padding: 8,
       position: "absolute",
       right: 0,
-      zIndex: 2
+      zIndex: 22
     }
   });
 
@@ -158,6 +158,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                       onBlur: closeMenu,
                       onFocus: openMenu
                     }}
+                    error={error}
                     disabled={disabled}
                     helperText={helperText}
                     label={label}

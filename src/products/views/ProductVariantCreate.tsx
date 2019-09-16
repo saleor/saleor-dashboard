@@ -88,7 +88,7 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
                 <>
                   <WindowTitle
                     title={intl.formatMessage({
-                      defaultMessage: "Create Variant",
+                      defaultMessage: "Create variant",
                       description: "window title"
                     })}
                   />
@@ -100,7 +100,7 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
                       []
                     )}
                     header={intl.formatMessage({
-                      defaultMessage: "Add Variant",
+                      defaultMessage: "Create Variant",
                       description: "header"
                     })}
                     loading={disableForm}

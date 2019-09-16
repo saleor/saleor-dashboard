@@ -51,8 +51,8 @@ const styles = (theme: Theme) =>
         color: theme.palette.primary.contrastText
       },
       alignItems: "center",
-      background: fade(theme.palette.primary.main, 0.6),
-      borderRadius: 24,
+      background: fade(theme.palette.primary.main, 0.8),
+      borderRadius: 18,
       color: theme.palette.primary.contrastText,
       display: "flex",
       justifyContent: "space-between",
@@ -71,10 +71,28 @@ const styles = (theme: Theme) =>
       margin: `${theme.spacing.unit}px 0`
     },
     menuItem: {
+      "&:focus": {
+        backgroundColor: [
+          theme.palette.background.default,
+          "!important"
+        ] as any,
+        color: theme.palette.primary.main,
+        fontWeight: 400
+      },
+      "&:hover": {
+        backgroundColor: [
+          theme.palette.background.default,
+          "!important"
+        ] as any,
+        color: theme.palette.primary.main,
+        fontWeight: 700
+      },
+      borderRadius: 4,
       display: "grid",
       gridColumnGap: theme.spacing.unit + "px",
-      gridTemplateColumns: "20px 1fr",
+      gridTemplateColumns: "30px 1fr",
       height: "auto",
+      padding: 0,
       whiteSpace: "normal"
     },
     menuItemLabel: {
@@ -275,7 +293,7 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
           {displayValues.map(value => (
             <div className={classes.chip} key={value.value}>
               <div className={classes.chipInner}>
-                <Typography className={classes.chipLabel} variant="caption">
+                <Typography className={classes.chipLabel}>
                   {value.label}
                 </Typography>
                 <IconButton

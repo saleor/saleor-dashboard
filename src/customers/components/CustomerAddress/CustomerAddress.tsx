@@ -3,7 +3,6 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -44,7 +43,6 @@ const styles = createStyles({
 const CustomerAddress = withStyles(styles, { name: "CustomerAddress" })(
   ({
     address,
-    addressNumber,
     classes,
     disabled,
     isDefaultBillingAddress,
@@ -61,28 +59,19 @@ const CustomerAddress = withStyles(styles, { name: "CustomerAddress" })(
           title={
             address ? (
               <>
-                <FormattedMessage
-                  defaultMessage="Address {addressNumber}"
-                  description="addres card header"
-                  values={{
-                    addressNumber
-                  }}
-                />
-                <Typography variant="caption">
-                  {isDefaultBillingAddress && isDefaultShippingAddress
-                    ? intl.formatMessage({
-                        defaultMessage: "Default Address"
-                      })
-                    : isDefaultShippingAddress
-                    ? intl.formatMessage({
-                        defaultMessage: "Default Shipping Address"
-                      })
-                    : isDefaultBillingAddress
-                    ? intl.formatMessage({
-                        defaultMessage: "Default Billing Address"
-                      })
-                    : null}
-                </Typography>
+                {isDefaultBillingAddress && isDefaultShippingAddress
+                  ? intl.formatMessage({
+                      defaultMessage: "Default Address"
+                    })
+                  : isDefaultShippingAddress
+                  ? intl.formatMessage({
+                      defaultMessage: "Default Shipping Address"
+                    })
+                  : isDefaultBillingAddress
+                  ? intl.formatMessage({
+                      defaultMessage: "Default Billing Address"
+                    })
+                  : null}
               </>
             ) : (
               <Skeleton />
@@ -120,7 +109,7 @@ const CustomerAddress = withStyles(styles, { name: "CustomerAddress" })(
               <FormattedMessage {...buttonMessages.edit} />
             </Button>
             <Button color="primary" disabled={disabled} onClick={onRemove}>
-              <FormattedMessage {...buttonMessages.remove} />
+              <FormattedMessage {...buttonMessages.delete} />
             </Button>
           </CardActions>
         </div>

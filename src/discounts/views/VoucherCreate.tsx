@@ -85,7 +85,9 @@ export const VoucherDetails: React.StatelessComponent = () => {
                         formData.discountType.toString() === "SHIPPING"
                           ? VoucherTypeEnum.ENTIRE_ORDER
                           : formData.type,
-                      usageLimit: parseInt(formData.usageLimit, 10)
+                      usageLimit: formData.hasUsageLimit
+                        ? parseInt(formData.usageLimit, 10)
+                        : 0
                     }
                   }
                 })

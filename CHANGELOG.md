@@ -18,4 +18,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Replace checkbox with switch component in "product type has variants" - #152 by @dominik-zeglen
 - Add password reset flow - #147 by @dominik-zeglen
 - Add support for multiple values in filters - #160 by @dominik-zeglen
+- UI improvements - #166 by @benekex2
 - Fix en locale matching - #165 by @dominik-zeglen
+

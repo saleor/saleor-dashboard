@@ -81,7 +81,7 @@ export const OrderDraftList: React.StatelessComponent<OrderDraftListProps> = ({
               if (data.draftOrderBulkDelete.errors.length === 0) {
                 notify({
                   text: intl.formatMessage({
-                    defaultMessage: "Removed draft orders"
+                    defaultMessage: "Deleted draft orders"
                   })
                 });
                 refetch();

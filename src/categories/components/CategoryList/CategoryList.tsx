@@ -101,7 +101,7 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
             toolbar={
               <Button color="primary" variant="text" onClick={onAdd}>
                 <FormattedMessage
-                  defaultMessage="Add subcategory"
+                  defaultMessage="Create subcategory"
                   description="button"
                 />
               </Button>

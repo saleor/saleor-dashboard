@@ -15,6 +15,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
+import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { UserError } from "../../../types";
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
@@ -66,6 +67,7 @@ const CollectionCreatePage: React.StatelessComponent<
   onSubmit
 }: CollectionCreatePageProps) => {
   const intl = useIntl();
+  const localizeDate = useDateLocalize();
 
   return (
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
@@ -149,7 +151,25 @@ const CollectionCreatePage: React.StatelessComponent<
                       data={data}
                       errors={formErrors}
                       disabled={disabled}
+                      hiddenMessage={intl.formatMessage(
+                        {
+                          defaultMessage: "will be visible from {date}",
+                          description: "collection"
+                        },
+                        {
+                          date: localizeDate(data.publicationDate)
+                        }
+                      )}
                       onChange={change}
+                      visibleMessage={intl.formatMessage(
+                        {
+                          defaultMessage: "since {date}",
+                          description: "collection"
+                        },
+                        {
+                          date: localizeDate(data.publicationDate)
+                        }
+                      )}
                     />
                   </CardContent>
                 </Card>

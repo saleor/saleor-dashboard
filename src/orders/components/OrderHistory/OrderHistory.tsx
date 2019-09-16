@@ -46,7 +46,7 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
       });
     case OrderEventsEnum.DRAFT_REMOVED_PRODUCTS:
       return intl.formatMessage({
-        defaultMessage: "Products were removed from draft order",
+        defaultMessage: "Products were deleted from draft order",
         description: "order history message"
       });
     case OrderEventsEnum.EMAIL_SENT:

@@ -45,11 +45,13 @@ const useStyles = makeStyles(
       actionContainer: {
         display: "flex",
         flexWrap: "wrap",
-        padding: `${theme.spacing.unit}px ${theme.spacing.unit * 3}px`
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${
+          theme.spacing.unit
+        }px ${theme.spacing.unit * 3}px`
       },
       filterButton: {
         alignItems: "center",
-        backgroundColor: fade(theme.palette.primary.main, 0.6),
+        backgroundColor: fade(theme.palette.primary.main, 0.8),
         borderRadius: "19px",
         display: "flex",
         height: "38px",
@@ -64,7 +66,10 @@ const useStyles = makeStyles(
         flexWrap: "wrap"
       },
       filterContainer: {
-        borderBottom: "1px solid #e8e8e8",
+        "& a": {
+          paddingBottom: 10
+        },
+        borderBottom: `1px solid ${theme.palette.divider}`,
         display: "flex",
         marginTop: theme.spacing.unit,
         padding: `0 ${theme.spacing.unit * 3}px ${theme.spacing.unit}px`
@@ -90,8 +95,9 @@ const useStyles = makeStyles(
       },
       filterText: {
         color: theme.palette.common.white,
-        fontSize: 12,
-        fontWeight: 400 as 400
+        fontSize: 14,
+        fontWeight: 400 as 400,
+        lineHeight: "38px"
       }
     }),
   {

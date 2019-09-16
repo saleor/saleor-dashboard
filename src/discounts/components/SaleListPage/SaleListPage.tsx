@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -25,10 +25,7 @@ const SaleListPage: React.StatelessComponent<SaleListPageProps> = ({
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.sales)}>
         <Button onClick={onAdd} variant="contained" color="primary">
-          <FormattedMessage defaultMessage="Add Sale"
-            description="button"
-             />
-          <AddIcon />
+          <FormattedMessage defaultMessage="Create Sale" description="button" />
         </Button>
       </PageHeader>
       <SaleList {...listProps} />

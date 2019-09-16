@@ -44,7 +44,7 @@ const styles = (theme: Theme) =>
       bottom: 0,
       gridColumn: 2,
       position: "sticky",
-      zIndex: 1
+      zIndex: 10
     },
     appLoader: {
       height: appLoaderHeight,
@@ -120,8 +120,8 @@ const styles = (theme: Theme) =>
     },
     logo: {
       "& svg": {
-        height: "100%",
-        margin: "20px 50px"
+        padding: "20px 50px",
+        width: "256px"
       },
       background: theme.palette.secondary.main,
       display: "block",
@@ -135,7 +135,9 @@ const styles = (theme: Theme) =>
     },
     logoSmall: {
       "& svg": {
-        margin: "0px 25px"
+        margin: "20px 0",
+        padding: 0,
+        width: "80px"
       }
     },
     menu: {

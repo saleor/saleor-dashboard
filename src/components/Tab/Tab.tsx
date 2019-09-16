@@ -4,13 +4,16 @@ import {
   withStyles,
   WithStyles
 } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 
 const styles = (theme: Theme) =>
   createStyles({
-    active: {},
+    active: {
+      color: theme.typography.caption.color
+    },
     root: {
       "&$active": {
         borderBottomColor: theme.palette.primary.main,
@@ -23,7 +26,7 @@ const styles = (theme: Theme) =>
         color: theme.palette.primary.main
       },
       borderBottom: "1px solid transparent",
-      color: theme.typography.caption.color,
+      color: fade(theme.typography.caption.color, 0.6),
       cursor: "pointer",
       display: "inline-block",
       fontWeight: theme.typography.fontWeightRegular,

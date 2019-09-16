@@ -7,6 +7,7 @@ import {
   withStyles,
   WithStyles
 } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import classNames from "classnames";
 import React from "react";
 
@@ -29,7 +30,11 @@ const styles = (theme: Theme) =>
     box: {
       "&$checked": {
         "&:before": {
-          background: theme.palette.primary.main
+          background: theme.palette.primary.main,
+          color: theme.palette.background.paper,
+          content: '"\\2713"',
+          fontWeight: "bold",
+          textAlign: "center"
         },
         borderColor: theme.palette.primary.main
       },
@@ -47,15 +52,16 @@ const styles = (theme: Theme) =>
       "&:before": {
         background: "rgba(0, 0, 0, 0)",
         content: '""',
-        height: 8,
-        left: 2,
+        height: 14,
+        left: -1,
         position: "absolute",
-        top: 2,
+        top: -1,
         transition: theme.transitions.duration.short + "ms",
-        width: 8
+        width: 14
       },
+
       WebkitAppearance: "none",
-      border: `1px solid ${theme.palette.grey[500]}`,
+      border: `1px solid ${theme.palette.action.active}`,
       boxSizing: "border-box",
       cursor: "pointer",
       height: 14,
@@ -68,13 +74,17 @@ const styles = (theme: Theme) =>
     disabled: {},
     indeterminate: {},
     root: {
-      alignItems: "center",
+      "&:hover": {
+        background: fade(theme.palette.primary.main, 0.1)
+      },
+      alignSelf: "start",
       borderRadius: "100%",
       cursor: "pointer",
       display: "flex",
-      height: 48,
+      height: 30,
       justifyContent: "center",
-      width: 48
+      margin: 9,
+      width: 30
     }
   });
 const Checkbox = withStyles(styles, { name: "Checkbox" })(

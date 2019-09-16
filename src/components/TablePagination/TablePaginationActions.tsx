@@ -36,17 +36,22 @@ const styles = (theme: Theme) =>
         borderRadius: "100%",
         transition: theme.transitions.duration.standard + "ms"
       },
+      "& svg": {
+        border: `solid 1px #BDBDBD`,
+        borderRadius: "50%"
+      },
       "&:focus, &:hover": {
         "& > span:first-of-type": {
           backgroundColor: fade(theme.palette.primary.main, 0.2)
         },
         backgroundColor: "transparent"
-      }
+      },
+      padding: 6
     },
     root: {
       color: theme.palette.text.secondary,
       flexShrink: 0,
-      marginLeft: theme.spacing.unit * 2.5
+      margin: `0 ${theme.spacing.unit * 2.5}px`
     }
   });
 

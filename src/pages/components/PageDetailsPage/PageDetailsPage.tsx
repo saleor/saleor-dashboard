@@ -17,6 +17,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
+import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { UserError } from "../../../types";
@@ -54,6 +55,7 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
+  const localizeDate = useDateLocalize();
 
   const initialForm: FormData = {
     content: maybe(
@@ -78,7 +80,7 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
             title={
               page === null
                 ? intl.formatMessage({
-                    defaultMessage: "Add Page",
+                    defaultMessage: "Create Page",
                     description: "page header"
                   })
                 : maybe(() => page.title)
@@ -121,9 +123,27 @@ const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
               <CardSpacer />
               <VisibilityCard
                 data={data}
-                disabled={disabled}
                 errors={formErrors}
+                disabled={disabled}
+                hiddenMessage={intl.formatMessage(
+                  {
+                    defaultMessage: "will be visible from {date}",
+                    description: "page"
+                  },
+                  {
+                    date: localizeDate(data.publicationDate)
+                  }
+                )}
                 onChange={change}
+                visibleMessage={intl.formatMessage(
+                  {
+                    defaultMessage: "since {date}",
+                    description: "page"
+                  },
+                  {
+                    date: localizeDate(data.publicationDate)
+                  }
+                )}
               />
             </div>
           </Grid>

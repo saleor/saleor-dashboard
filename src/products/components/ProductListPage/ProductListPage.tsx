@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { Theme } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
+
 import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -129,8 +129,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           variant="contained"
           data-tc="add-product"
         >
-          <FormattedMessage defaultMessage="Add Product" description="button" />
-          <AddIcon />
+          <FormattedMessage
+            defaultMessage="Create Product"
+            description="button"
+          />
         </Button>
       </PageHeader>
       <Card>

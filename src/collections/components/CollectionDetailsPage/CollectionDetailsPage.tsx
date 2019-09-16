@@ -6,13 +6,16 @@ import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
-import { ControlledSwitch } from "@saleor/components/ControlledSwitch";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
+import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
+import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
+import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { ListActions, PageListProps } from "../../../types";
@@ -59,6 +62,7 @@ const CollectionDetailsPage: React.StatelessComponent<
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
   const intl = useIntl();
+  const localizeDate = useDateLocalize();
 
   return (
     <Form
@@ -124,17 +128,37 @@ const CollectionDetailsPage: React.StatelessComponent<
                   data={data}
                   errors={formErrors}
                   disabled={disabled}
+                  hiddenMessage={intl.formatMessage(
+                    {
+                      defaultMessage: "will be visible from {date}",
+                      description: "collection"
+                    },
+                    {
+                      date: localizeDate(data.publicationDate)
+                    }
+                  )}
                   onChange={change}
+                  visibleMessage={intl.formatMessage(
+                    {
+                      defaultMessage: "since {date}",
+                      description: "collection"
+                    },
+                    {
+                      date: localizeDate(data.publicationDate)
+                    }
+                  )}
                 >
-                  <ControlledSwitch
-                    checked={data.isFeatured}
-                    disabled={disabled}
-                    name="isFeatured"
-                    onChange={change}
+                  <FormSpacer />
+                  <Hr />
+                  <ControlledCheckbox
+                    name={"isFeatured" as keyof CollectionDetailsPageFormData}
                     label={intl.formatMessage({
                       defaultMessage: "Feature on Homepage",
                       description: "switch button"
                     })}
+                    checked={data.isFeatured}
+                    onChange={change}
+                    disabled={disabled}
                   />
                 </VisibilityCard>
               </div>

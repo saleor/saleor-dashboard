@@ -5,7 +5,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import RadioGroupField from "@saleor/components/RadioGroupField";
@@ -98,8 +98,8 @@ const VoucherValue = ({
         )}
         <Hr />
         <FormSpacer />
-        <ControlledSwitch
-          checked={data.applyOncePerOrder}
+        <ControlledCheckbox
+          name={"applyOncePerOrder" as keyof FormData}
           label={
             <>
               <FormattedMessage
@@ -111,8 +111,8 @@ const VoucherValue = ({
               </Typography>
             </>
           }
+          checked={data.applyOncePerOrder}
           onChange={onChange}
-          name={"applyOncePerOrder" as keyof FormData}
           disabled={disabled}
         />
       </CardContent>

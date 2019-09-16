@@ -276,7 +276,7 @@ const MenuItems = withStyles(styles, { name: "MenuItems" })(
         <CardActions className={classes.actions}>
           <Button color="primary" onClick={onItemAdd}>
             <FormattedMessage
-              defaultMessage="Add new item"
+              defaultMessage="Create new item"
               description="add new menu item"
               id="menuItemsAddItem"
             />

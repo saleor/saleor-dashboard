@@ -42,7 +42,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
     <Dialog onClose={onClose} maxWidth="sm" fullWidth open={open}>
       <DialogTitle>
         <FormattedMessage
-          defaultMessage="Add Menu"
+          defaultMessage="Create Menu"
           description="dialog header"
           id="menuCreateDialogHeader"
         />

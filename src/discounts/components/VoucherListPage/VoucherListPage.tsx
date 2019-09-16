@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -38,8 +38,10 @@ const VoucherListPage: React.StatelessComponent<VoucherListPageProps> = ({
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
         <Button onClick={onAdd} variant="contained" color="primary">
-          <FormattedMessage defaultMessage="Add voucher" description="button" />
-          <AddIcon />
+          <FormattedMessage
+            defaultMessage="Create voucher"
+            description="button"
+          />
         </Button>
       </PageHeader>
       <VoucherList

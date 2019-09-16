@@ -12,6 +12,7 @@ import { useIntl } from "react-intl";
 
 import { IconProps } from "@material-ui/core/Icon";
 import { sectionNames } from "@saleor/intl";
+import { hasPermission } from "../auth/misc";
 import { User } from "../auth/types/User";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
@@ -23,6 +24,11 @@ export interface MenuItem {
   permission: PermissionEnum;
   title: string;
   url?: string;
+}
+
+export interface MenuSection {
+  label: string;
+  menuItems: MenuItem[];
 }
 
 const styles = (theme: Theme) =>
@@ -50,17 +56,30 @@ const styles = (theme: Theme) =>
       },
       marginBottom: theme.spacing.unit * 3
     },
-    icon: {
-      color: theme.palette.primary.main,
-      fontSize: 48
-    },
-    root: {
+    configurationCategory: {
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "1fr"
       },
+      borderTop: `solid 1px ${theme.palette.divider}`,
+      display: "grid",
+      gridColumnGap: theme.spacing.unit * 4 + "px",
+      gridTemplateColumns: "1fr 3fr",
+      paddingTop: theme.spacing.unit * 3 + "px"
+    },
+    configurationItem: {
       display: "grid",
       gridColumnGap: theme.spacing.unit * 4 + "px",
       gridTemplateColumns: "1fr 1fr"
+    },
+    configurationLabel: {
+      paddingBottom: 20
+    },
+    header: {
+      margin: 0
+    },
+    icon: {
+      color: theme.palette.primary.main,
+      fontSize: 48
     },
     sectionDescription: {},
     sectionTitle: {
@@ -70,7 +89,7 @@ const styles = (theme: Theme) =>
   });
 
 export interface ConfigurationPageProps {
-  menu: MenuItem[];
+  menu: MenuSection[];
   user: User;
   onSectionClick: (sectionName: string) => void;
 }
@@ -85,40 +104,47 @@ export const ConfigurationPage = withStyles(styles, {
     onSectionClick
   }: ConfigurationPageProps & WithStyles<typeof styles>) => {
     const intl = useIntl();
-
     return (
       <Container>
-        <PageHeader title={intl.formatMessage(sectionNames.configuration)} />
-        <div className={classes.root}>
-          {menu
-            .filter(menuItem =>
-              user.permissions
-                .map(perm => perm.code)
-                .includes(menuItem.permission)
-            )
-            .map((menuItem, menuItemIndex) => (
-              <Card
-                className={menuItem.url ? classes.card : classes.cardDisabled}
-                onClick={() => onSectionClick(menuItem.url)}
-                key={menuItemIndex}
-              >
-                <CardContent className={classes.cardContent}>
-                  <div className={classes.icon}>{menuItem.icon}</div>
-                  <div>
-                    <Typography
-                      className={classes.sectionTitle}
-                      color="primary"
-                    >
-                      {menuItem.title}
-                    </Typography>
-                    <Typography className={classes.sectionDescription}>
-                      {menuItem.description}
-                    </Typography>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-        </div>
+        <PageHeader
+          className={classes.header}
+          title={intl.formatMessage(sectionNames.configuration)}
+        />
+        {menu
+          .filter(menu =>
+            menu.menuItems.map(item => hasPermission(item.permission, user))
+          )
+          .map((menu, menuIndex) => (
+            <div className={classes.configurationCategory} key={menuIndex}>
+              <div className={classes.configurationLabel}>
+                <Typography>{menu.label}</Typography>
+              </div>
+              <div className={classes.configurationItem}>
+                {menu.menuItems.map((item, itemIndex) => (
+                  <Card
+                    className={item.url ? classes.card : classes.cardDisabled}
+                    onClick={() => onSectionClick(item.url)}
+                    key={itemIndex}
+                  >
+                    <CardContent className={classes.cardContent}>
+                      <div className={classes.icon}>{item.icon}</div>
+                      <div>
+                        <Typography
+                          className={classes.sectionTitle}
+                          color="primary"
+                        >
+                          {item.title}
+                        </Typography>
+                        <Typography className={classes.sectionDescription}>
+                          {item.description}
+                        </Typography>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          ))}
       </Container>
     );
   }

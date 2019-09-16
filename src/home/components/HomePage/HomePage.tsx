@@ -78,7 +78,7 @@ const HomePage = withStyles(styles, { name: "HomePage" })(
           <div className={classes.cardContainer}>
             <HomeAnalyticsCard
               title={"Sales"}
-              icon={<Sales fontSize={"inherit"} viewBox="0 0 48 48" />}
+              icon={<Sales fontSize={"inherit"} viewBox="0 0 64 64" />}
             >
               {sales ? (
                 <Money money={sales} />
@@ -88,7 +88,7 @@ const HomePage = withStyles(styles, { name: "HomePage" })(
             </HomeAnalyticsCard>
             <HomeAnalyticsCard
               title={"Orders"}
-              icon={<Orders fontSize={"inherit"} viewBox="0 0 48 48" />}
+              icon={<Orders fontSize={"inherit"} viewBox="0 0 64 64" />}
             >
               {orders === undefined ? (
                 <Skeleton style={{ width: "5em" }} />

@@ -12,7 +12,7 @@ import { FormattedMessage } from "react-intl";
 
 const styles = createStyles({
   formControl: {
-    padding: "0 15px",
+    padding: 0,
     width: "100%"
   },
   formLabel: {
@@ -26,11 +26,13 @@ const styles = createStyles({
   }
 });
 
-interface RadioGroupFieldProps extends WithStyles<typeof styles> {
-  choices: Array<{
-    value: string;
-    label: string | React.ReactNode;
-  }>;
+interface RadioGroupFieldChoice {
+  value: string;
+  label: React.ReactNode;
+}
+
+interface RadioGroupFieldProps {
+  choices: RadioGroupFieldChoice[];
   className?: string;
   disabled?: boolean;
   error?: boolean;
@@ -55,7 +57,7 @@ export const RadioGroupField = withStyles(styles, {
     onChange,
     name,
     hint
-  }: RadioGroupFieldProps) => {
+  }: RadioGroupFieldProps & WithStyles<typeof styles>) => {
     return (
       <FormControl
         className={classNames(classes.formControl, className)}

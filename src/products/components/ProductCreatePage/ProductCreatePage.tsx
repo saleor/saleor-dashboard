@@ -15,6 +15,7 @@ import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import { SearchCategories_categories_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
 import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
+import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -98,7 +99,7 @@ export const ProductCreatePage: React.StatelessComponent<
   onSubmit
 }: ProductCreatePageProps) => {
   const intl = useIntl();
-
+  const localizeDate = useDateLocalize();
   // Form values
   const {
     change: changeAttributeData,
@@ -280,7 +281,25 @@ export const ProductCreatePage: React.StatelessComponent<
                   data={data}
                   errors={errors}
                   disabled={disabled}
+                  hiddenMessage={intl.formatMessage(
+                    {
+                      defaultMessage: "will be visible from {date}",
+                      description: "product"
+                    },
+                    {
+                      date: localizeDate(data.publicationDate)
+                    }
+                  )}
                   onChange={change}
+                  visibleMessage={intl.formatMessage(
+                    {
+                      defaultMessage: "since {date}",
+                      description: "product"
+                    },
+                    {
+                      date: localizeDate(data.publicationDate)
+                    }
+                  )}
                 />
               </div>
             </Grid>

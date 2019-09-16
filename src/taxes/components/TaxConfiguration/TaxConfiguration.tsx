@@ -7,7 +7,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { sectionNames } from "@saleor/intl";
@@ -42,33 +42,35 @@ export const TaxConfiguration = withStyles(styles, {
       <Card>
         <CardTitle title={intl.formatMessage(sectionNames.configuration)} />
         <CardContent className={classes.content}>
-          <ControlledSwitch
-            disabled={disabled}
+          <ControlledCheckbox
             name={"includeTax" as keyof FormData}
             label={intl.formatMessage({
               defaultMessage:
                 "All products prices are entered with tax included"
             })}
-            onChange={onChange}
             checked={data.includeTax}
-          />
-          <ControlledSwitch
+            onChange={onChange}
             disabled={disabled}
+          />
+          <FormSpacer />
+          <ControlledCheckbox
             name={"showGross" as keyof FormData}
             label={intl.formatMessage({
               defaultMessage: "Show gross prices to customers in the storefront"
             })}
-            onChange={onChange}
             checked={data.showGross}
-          />
-          <ControlledSwitch
+            onChange={onChange}
             disabled={disabled}
+          />
+          <FormSpacer />
+          <ControlledCheckbox
             name={"chargeTaxesOnShipping" as keyof FormData}
             label={intl.formatMessage({
               defaultMessage: "Charge taxes on shipping rates"
             })}
-            onChange={onChange}
             checked={data.chargeTaxesOnShipping}
+            onChange={onChange}
+            disabled={disabled}
           />
           <FormSpacer />
         </CardContent>

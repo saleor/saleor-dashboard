@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import slugify from "slugify";
 
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { commonMessages } from "@saleor/intl";
@@ -103,14 +103,15 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
           value={data.inputType}
         />
         <FormSpacer />
-        <ControlledSwitch
-          checked={data.valueRequired}
+        <ControlledCheckbox
+          name={"valueRequired" as keyof AttributePageFormData}
           label={intl.formatMessage({
             defaultMessage: "Value Required",
             description: "check to require attribute to have value"
           })}
-          name={"valueRequired" as keyof AttributePageFormData}
+          checked={data.valueRequired}
           onChange={onChange}
+          disabled={disabled}
         />
       </CardContent>
     </Card>

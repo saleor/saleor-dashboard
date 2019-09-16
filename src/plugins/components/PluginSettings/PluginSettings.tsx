@@ -3,7 +3,7 @@ import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/styles/makeStyles";
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { FormErrors } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import React from "react";
@@ -65,16 +65,16 @@ const PluginSettings: React.StatelessComponent<PluginSettingsProps> = ({
               />
             )}
             {fields[index].type === ConfigurationTypeFieldEnum.BOOLEAN && (
-              <ControlledSwitch
+              <ControlledCheckbox
+                name={configuration.name}
+                label={fields[index].label}
                 checked={
                   typeof configuration.value !== "boolean"
                     ? configuration.value === "true"
                     : configuration.value
                 }
-                disabled={disabled}
-                label={fields[index].label}
-                name={configuration.name}
                 onChange={onChange}
+                disabled={disabled}
               />
             )}
           </div>

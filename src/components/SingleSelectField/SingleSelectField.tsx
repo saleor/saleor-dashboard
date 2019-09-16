@@ -1,8 +1,8 @@
-import FilledInput from "@material-ui/core/FilledInput";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select, { SelectProps } from "@material-ui/core/Select";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
@@ -11,6 +11,9 @@ import { FormattedMessage } from "react-intl";
 
 const styles = createStyles({
   formControl: {
+    "& label": {
+      top: "-3px"
+    },
     width: "100%"
   }
 });
@@ -65,14 +68,14 @@ export const SingleSelectField = withStyles(styles, {
       >
         <InputLabel shrink={!!value}>{label}</InputLabel>
         <Select
-          variant="filled"
+          variant="outlined"
           fullWidth
           renderValue={choiceValue =>
             choiceValue ? choicesByKey[choiceValue.toString()] : placeholder
           }
           value={value || ""}
           onChange={onChange}
-          input={<FilledInput name={name} />}
+          input={<OutlinedInput name={name} labelWidth={180} />}
           {...selectProps}
         >
           {choices.length > 0 ? (

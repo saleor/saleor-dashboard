@@ -81,7 +81,7 @@ const ShippingZoneRates = withStyles(styles, { name: "ShippingZoneRates" })(
           toolbar={
             <Button color="primary" onClick={onRateAdd}>
               <FormattedMessage
-                defaultMessage="Add rate"
+                defaultMessage="Create rate"
                 description="button"
               />
             </Button>

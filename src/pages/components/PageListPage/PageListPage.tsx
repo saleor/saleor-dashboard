@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
+
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -47,8 +47,7 @@ const PageListPage: React.StatelessComponent<PageListPageProps> = ({
           variant="contained"
           color="primary"
         >
-          <FormattedMessage defaultMessage="Add page" description="button" />
-          <AddIcon />
+          <FormattedMessage defaultMessage="Create page" description="button" />
         </Button>
       </PageHeader>
       <PageList

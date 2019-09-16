@@ -1,11 +1,5 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { RawDraftContentState } from "draft-js";
 import React from "react";
@@ -16,16 +10,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import { commonMessages } from "@saleor/intl";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    root: {
-      display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
-      gridTemplateColumns: `3fr 1fr`
-    }
-  });
-
-interface ProductDetailsFormProps extends WithStyles<typeof styles> {
+interface ProductDetailsFormProps {
   data: {
     description: RawDraftContentState;
     name: string;
@@ -39,55 +24,46 @@ interface ProductDetailsFormProps extends WithStyles<typeof styles> {
   onChange(event: any);
 }
 
-export const ProductDetailsForm = withStyles(styles, {
-  name: "ProductDetailsForm"
-})(
-  ({
-    classes,
-    data,
-    disabled,
-    errors,
-    initialDescription,
-    onChange
-  }: ProductDetailsFormProps) => {
-    const intl = useIntl();
+export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
+  data,
+  disabled,
+  errors,
+  initialDescription,
+  onChange
+}) => {
+  const intl = useIntl();
 
-    return (
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(commonMessages.generalInformations)}
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage(commonMessages.generalInformations)}
+      />
+      <CardContent>
+        <TextField
+          error={!!errors.name}
+          helperText={errors.name}
+          disabled={disabled}
+          fullWidth
+          label={intl.formatMessage({
+            defaultMessage: "Name",
+            description: "product name"
+          })}
+          name="name"
+          value={data.name}
+          onChange={onChange}
         />
-        <CardContent>
-          <div className={classes.root}>
-            <TextField
-              error={!!errors.name}
-              helperText={errors.name}
-              disabled={disabled}
-              fullWidth
-              label={intl.formatMessage({
-                defaultMessage: "Name",
-                description: "product name"
-              })}
-              name="name"
-              rows={5}
-              value={data.name}
-              onChange={onChange}
-            />
-          </div>
-          <FormSpacer />
-          <RichTextEditor
-            disabled={disabled}
-            error={!!errors.descriptionJson}
-            helperText={errors.descriptionJson}
-            initial={initialDescription}
-            label={intl.formatMessage(commonMessages.description)}
-            name="description"
-            onChange={onChange}
-          />
-        </CardContent>
-      </Card>
-    );
-  }
-);
-ProductDetailsForm.displayName = "ProductDetailsForm";
+        <FormSpacer />
+        <RichTextEditor
+          disabled={disabled}
+          error={!!errors.descriptionJson}
+          helperText={errors.descriptionJson}
+          initial={initialDescription}
+          label={intl.formatMessage(commonMessages.description)}
+          name="description"
+          onChange={onChange}
+        />
+      </CardContent>
+    </Card>
+  );
+};
 export default ProductDetailsForm;

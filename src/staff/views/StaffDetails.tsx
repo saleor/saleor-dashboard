@@ -170,7 +170,7 @@ export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
                               <ActionDialog
                                 open={params.action === "remove"}
                                 title={intl.formatMessage({
-                                  defaultMessage: "remove Staff User",
+                                  defaultMessage: "delete Staff User",
                                   description: "dialog header"
                                 })}
                                 confirmButtonState={deleteTransitionState}
@@ -182,7 +182,7 @@ export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
                               >
                                 <DialogContentText>
                                   <FormattedMessage
-                                    defaultMessage="Are you sure you want to remove {email} from staff members?"
+                                    defaultMessage="Are you sure you want to delete {email} from staff members?"
                                     values={{
                                       email: maybe(() => data.user.email, "...")
                                     }}
