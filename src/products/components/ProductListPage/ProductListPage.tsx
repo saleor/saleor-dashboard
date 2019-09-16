@@ -24,7 +24,7 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
-import { ProductListUrlFilters, ProductListUrlSortField } from "../../urls";
+import { ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
 import ProductListFilter, { ProductFilterKeys } from "../ProductListFilter";
 
