@@ -23,9 +23,7 @@ const SearchBar: React.FC<SearchBarProps> = props => {
     onTabDelete,
     onTabSave
   } = props;
-  const [search, setSearch] = React.useState(initialSearch);
   const intl = useIntl();
-  React.useEffect(() => setSearch(initialSearch), [initialSearch]);
 
   const isCustom = currentTab === tabs.length + 1;
 
@@ -50,7 +48,9 @@ const SearchBar: React.FC<SearchBarProps> = props => {
         )}
       </FilterTabs>
       <FilterSearch
-        displaySearchAction={!!search ? (isCustom ? "save" : "delete") : null}
+        displaySearchAction={
+          !!initialSearch ? (isCustom ? "save" : "delete") : null
+        }
         initialSearch={initialSearch}
         searchPlaceholder={searchPlaceholder}
         onSearchChange={onSearchChange}

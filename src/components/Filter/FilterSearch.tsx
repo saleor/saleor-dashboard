@@ -22,7 +22,7 @@ const useStyles = makeStyles(
       display: "inline-block"
     },
     tabActionContainer: {
-      borderBottom: "1px solid #e8e8e8",
+      borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       justifyContent: "flex-end",
       marginTop: theme.spacing.unit,

@@ -64,6 +64,9 @@ const FilterBar: React.FC<FilterBarProps> = ({
           return (
             <FilterChips
               currencySymbol={currencySymbol}
+              displayTabAction={
+                !!initialSearch ? (isCustom ? "save" : "delete") : null
+              }
               menu={filterMenu}
               filtersList={filtersList}
               filterLabel={filterLabel}

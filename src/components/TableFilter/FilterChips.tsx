@@ -28,7 +28,7 @@ const useStyles = makeStyles(
       justifyContent: "space-around",
       margin: `0 ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
       marginLeft: 0,
-      padding: "0 16px"
+      padding: `0 ${theme.spacing.unit * 2}px`
     },
     filterChipContainer: {
       display: "flex",
@@ -76,6 +76,7 @@ const useStyles = makeStyles(
 );
 
 interface FilterChipProps extends FilterActionsProps {
+  displayTabAction: "save" | "delete" | null;
   filtersList: Filter[];
   search: string;
   isCustomSearch: boolean;
@@ -85,6 +86,7 @@ interface FilterChipProps extends FilterActionsProps {
 
 export const FilterChips: React.FC<FilterChipProps> = ({
   currencySymbol,
+  displayTabAction,
   filtersList,
   menu,
   filterLabel,
@@ -93,8 +95,7 @@ export const FilterChips: React.FC<FilterChipProps> = ({
   search,
   onFilterAdd,
   onFilterSave,
-  onFilterDelete,
-  isCustomSearch
+  onFilterDelete
 }) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
@@ -127,7 +128,7 @@ export const FilterChips: React.FC<FilterChipProps> = ({
               </div>
             ))}
           </div>
-          {isCustomSearch ? (
+          {displayTabAction === "save" ? (
             <Link onClick={onFilterSave}>
               <FormattedMessage
                 defaultMessage="Save Custom Search"
@@ -135,12 +136,14 @@ export const FilterChips: React.FC<FilterChipProps> = ({
               />
             </Link>
           ) : (
-            <Link onClick={onFilterDelete}>
-              <FormattedMessage
-                defaultMessage="Delete Search"
-                description="button"
-              />
-            </Link>
+            displayTabAction === "delete" && (
+              <Link onClick={onFilterDelete}>
+                <FormattedMessage
+                  defaultMessage="Delete Search"
+                  description="button"
+                />
+              </Link>
+            )
           )}
         </div>
       ) : (
