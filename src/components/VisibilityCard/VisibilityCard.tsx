@@ -17,6 +17,14 @@ import { DateContext } from "../Date/DateContext";
 
 const styles = (theme: Theme) =>
   createStyles({
+    children: {
+      "& button": {
+        margin: "0 9px"
+      },
+      "& label": {
+        marginTop: `${theme.spacing.unit * 2.5}px`
+      }
+    },
     date: {
       "& svg": {
         fill: theme.palette.primary.main
@@ -154,7 +162,7 @@ export const VisibilityCard = withStyles(styles, {
               )}
             </>
           )}
-          {children}
+          <div className={classes.children}>{children}</div>
         </CardContent>
       </Card>
     );
