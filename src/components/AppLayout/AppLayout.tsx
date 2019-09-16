@@ -44,7 +44,7 @@ const styles = (theme: Theme) =>
       bottom: 0,
       gridColumn: 2,
       position: "sticky",
-      zIndex: 1
+      zIndex: 10
     },
     appLoader: {
       height: appLoaderHeight,

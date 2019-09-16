@@ -101,11 +101,8 @@ const styles = (theme: Theme) =>
           "&:hover": {
             borderColor: theme.palette.primary.main
           },
-          border: `1px ${
-            theme.overrides.MuiOutlinedInput.root.borderColor
-          } solid`,
-          borderTopLeftRadius: 4,
-          borderTopRightRadius: 4,
+          border: `1px ${theme.overrides.MuiOutlinedInput.root.borderColor} solid`,
+          borderRadius: 4,
           padding: "27px 12px 10px",
           position: "relative",
           transition: theme.transitions.duration.shortest + "ms"
@@ -142,9 +139,7 @@ const styles = (theme: Theme) =>
             alignItems: "center",
             background: "none",
             border: "none",
-            borderRight: `1px ${
-              theme.overrides.MuiCard.root.borderColor
-            } solid`,
+            borderRight: `1px ${theme.overrides.MuiCard.root.borderColor} solid`,
             color: theme.typography.body2.color,
             cursor: "pointer",
             display: "inline-flex",

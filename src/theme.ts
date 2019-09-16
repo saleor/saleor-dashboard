@@ -1,5 +1,5 @@
 import { createMuiTheme, Theme } from "@material-ui/core/styles";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { fade, darken } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
 
 const createShadow = (pv, pb, ps, uv, ub, us, av, ab, as) =>
@@ -49,6 +49,11 @@ export default (colors: IThemeColors): Theme =>
         contained: {
           "&$disabled": {
             backgroundColor: fade(colors.primary, 0.12)
+          }
+        },
+        containedPrimary: {
+          "&:hover": {
+            backgroundColor: darken(colors.primary, 0.1)
           }
         },
         flat: {
@@ -215,8 +220,7 @@ export default (colors: IThemeColors): Theme =>
             fontWeight: 400
           },
           borderRadius: 4
-        },
-        selected: {}
+        }
       },
       MuiOutlinedInput: {
         input: {

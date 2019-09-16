@@ -71,10 +71,28 @@ const styles = (theme: Theme) =>
       margin: `${theme.spacing.unit}px 0`
     },
     menuItem: {
+      "&:focus": {
+        backgroundColor: [
+          theme.palette.background.default,
+          "!important"
+        ] as any,
+        color: theme.palette.primary.main,
+        fontWeight: 400
+      },
+      "&:hover": {
+        backgroundColor: [
+          theme.palette.background.default,
+          "!important"
+        ] as any,
+        color: theme.palette.primary.main,
+        fontWeight: 700
+      },
+      borderRadius: 4,
       display: "grid",
       gridColumnGap: theme.spacing.unit + "px",
-      gridTemplateColumns: "20px 1fr",
+      gridTemplateColumns: "30px 1fr",
       height: "auto",
+      padding: 0,
       whiteSpace: "normal"
     },
     menuItemLabel: {
