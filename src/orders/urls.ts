@@ -19,7 +19,8 @@ export enum OrderListUrlFiltersEnum {
   dateFrom = "dateFrom",
   dateTo = "dateTo",
   email = "email",
-  payment = "payment"
+  payment = "payment",
+  query = "query"
 }
 export enum OrderListUrlFiltersWithMultipleValuesEnum {
   status = "status"

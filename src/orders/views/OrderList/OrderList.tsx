@@ -228,14 +228,14 @@ export const OrderList: React.StatelessComponent<OrderListProps> = ({
                             />
                           </Button>
                         }
-                        onSearchChange={email => changeFilterField({ email })}
+                        onSearchChange={query => changeFilterField({ query })}
                         onFilterAdd={data =>
                           changeFilterField(createFilter(params, data))
                         }
                         onTabSave={() => openModal("save-search")}
                         onTabDelete={() => openModal("delete-search")}
                         onTabChange={handleTabChange}
-                        initialSearch={params.email || ""}
+                        initialSearch={params.query || ""}
                         tabs={getFilterTabs().map(tab => tab.name)}
                         onAll={() =>
                           changeFilters({

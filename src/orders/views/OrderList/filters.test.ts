@@ -115,6 +115,7 @@ test("Crate filter chips", () => {
     {
       dateFrom: "2019-09-01",
       dateTo: "2019-09-10",
+      email: "email@example.com",
       status: [OrderStatus.FULFILLED, OrderStatus.PARTIALLY_FULFILLED]
     },
     {
@@ -133,6 +134,7 @@ describe("Get filter variables", () => {
       dateFrom: "2019-09-01",
       dateTo: "2019-09-10",
       email: "email@example.com",
+      query: "24",
       status: OrderStatus.FULFILLED.toString()
     });
 
@@ -144,6 +146,7 @@ describe("Get filter variables", () => {
       dateFrom: "2019-09-01",
       dateTo: "2019-09-10",
       email: "email@example.com",
+      query: "24",
       status: [
         OrderStatus.FULFILLED.toString(),
         OrderStatus.PARTIALLY_FULFILLED.toString()

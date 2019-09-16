@@ -168,7 +168,6 @@ export const orderListQuery = gql`
     $after: String
     $last: Int
     $before: String
-    $status: OrderStatusFilter
     $filter: OrderFilterInput
   ) {
     orders(
@@ -176,7 +175,6 @@ export const orderListQuery = gql`
       after: $after
       first: $first
       last: $last
-      status: $status
       filter: $filter
     ) {
       edges {
