@@ -71525,11 +71525,6 @@ exports[`Storyshots Views / Orders / Order list with custom filters 1`] = `
             </button>
           </div>
         </div>
-        <a
-          class="MuiTypography-root-id MuiTypography-body2-id Link-root-id Link-primary-id"
-        >
-          Delete Search
-        </a>
       </div>
       <table
         class="MuiTable-root-id"
@@ -96465,11 +96460,6 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </button>
           </div>
         </div>
-        <a
-          class="MuiTypography-root-id MuiTypography-body2-id Link-root-id Link-primary-id"
-        >
-          Delete Search
-        </a>
       </div>
       <div
         class="ProductList-tableContainer-id"
