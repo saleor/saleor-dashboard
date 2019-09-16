@@ -1,5 +1,5 @@
 import { createMuiTheme, Theme } from "@material-ui/core/styles";
-import { fade, darken } from "@material-ui/core/styles/colorManipulator";
+import { darken, fade } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
 
 const createShadow = (pv, pb, ps, uv, ub, us, av, ab, as) =>
