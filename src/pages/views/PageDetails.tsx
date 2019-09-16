@@ -22,10 +22,7 @@ export interface PageDetailsProps {
 const createPageInput = (data: FormData): PageInput => {
   return {
     contentJson: JSON.stringify(data.content),
-    isPublished:
-      typeof data.isPublished !== "boolean" && data.isPublished === "true"
-        ? true
-        : false,
+    isPublished: data.isPublished,
     publicationDate: data.isPublished
       ? null
       : data.publicationDate === ""

@@ -12,8 +12,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import { FormSpacer } from "@saleor/components/FormSpacer";
-import RadioGroupField from "@saleor/components/RadioGroupField";
+import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { DateContext } from "../Date/DateContext";
 
@@ -24,6 +23,13 @@ const styles = (theme: Theme) =>
         fill: theme.palette.primary.main
       },
       marginTop: theme.spacing.unit * 3
+    },
+    label: {
+      lineHeight: 1,
+      margin: 0
+    },
+    secondLabel: {
+      fontSize: 12
     },
     setPublicationDate: {
       color: theme.palette.primary.main,
@@ -42,7 +48,7 @@ interface VisibilityCardProps extends WithStyles<typeof styles> {
   };
   errors: { [key: string]: string };
   disabled?: boolean;
-  onChange(event: any);
+  onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 export const VisibilityCard = withStyles(styles, {
@@ -62,12 +68,6 @@ export const VisibilityCard = withStyles(styles, {
     );
     const localizeDate = useDateLocalize();
     const dateNow = React.useContext(DateContext);
-    const isPublishedRadio =
-      typeof isPublished !== "boolean"
-        ? isPublished
-        : isPublished
-        ? "true"
-        : "false";
     const visibleSecondLabel = publicationDate
       ? isPublished
         ? intl.formatMessage(
@@ -95,22 +95,6 @@ export const VisibilityCard = withStyles(styles, {
         : null
       : null;
 
-    const visiblilityPickerChoices = [
-      {
-        label: intl.formatMessage({
-          defaultMessage: "Visible"
-        }),
-        secondLabel: visibleSecondLabel,
-        value: "true"
-      },
-      {
-        label: intl.formatMessage({
-          defaultMessage: "Hidden"
-        }),
-        secondLabel: hiddenSecondLabel,
-        value: "false"
-      }
-    ];
     return (
       <Card>
         <CardTitle
@@ -120,16 +104,37 @@ export const VisibilityCard = withStyles(styles, {
           })}
         />
         <CardContent>
-          <RadioGroupField
-            choices={visiblilityPickerChoices}
+          <RadioSwitchField
             disabled={disabled}
+            firstOptionLabel={
+              <>
+                <p className={classes.label}>
+                  {intl.formatMessage({
+                    defaultMessage: "Visible"
+                  })}
+                </p>
+                <span className={classes.secondLabel}>
+                  {visibleSecondLabel}
+                </span>
+              </>
+            }
             name={"isPublished" as keyof FormData}
-            value={isPublishedRadio}
+            secondOptionLabel={
+              <>
+                <p className={classes.label}>
+                  {intl.formatMessage({
+                    defaultMessage: "Hidden"
+                  })}
+                </p>
+                <span className={classes.secondLabel}>{hiddenSecondLabel}</span>
+              </>
+            }
+            value={isPublished}
             onChange={onChange}
           />
-          {isPublishedRadio === "false" && (
+          {!isPublished && (
             <>
-              {!isPublicationDate && (
+              {!isPublished && (
                 <Typography
                   className={classes.setPublicationDate}
                   onClick={() => setPublicationDate(!isPublicationDate)}
@@ -161,7 +166,6 @@ export const VisibilityCard = withStyles(styles, {
               )}
             </>
           )}
-          <FormSpacer />
           {children}
         </CardContent>
       </Card>

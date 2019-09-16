@@ -30,11 +30,10 @@ const styles = createStyles({
   }
 });
 
-interface RadioGroupFieldProps extends WithStyles<typeof styles> {
+interface RadioGroupFieldProps {
   choices: Array<{
     value: string;
-    label: string | React.ReactNode;
-    secondLabel?: string | React.ReactNode;
+    label: React.ReactNode;
   }>;
   className?: string;
   disabled?: boolean;
@@ -60,7 +59,7 @@ export const RadioGroupField = withStyles(styles, {
     onChange,
     name,
     hint
-  }: RadioGroupFieldProps) => {
+  }: RadioGroupFieldProps & WithStyles<typeof styles>) => {
     return (
       <FormControl
         className={classNames(classes.formControl, className)}
@@ -82,14 +81,7 @@ export const RadioGroupField = withStyles(styles, {
                 value={choice.value}
                 className={classes.radioLabel}
                 control={<Radio color="primary" />}
-                label={
-                  <>
-                    {choice.label}
-                    <span className={classes.secondLabel}>
-                      {choice.secondLabel}
-                    </span>
-                  </>
-                }
+                label={choice.label}
                 key={choice.value}
               />
             ))

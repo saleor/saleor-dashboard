@@ -59,11 +59,7 @@ export const PageCreate: React.StatelessComponent<PageCreateProps> = () => {
                   variables: {
                     input: {
                       contentJson: JSON.stringify(formData.content),
-                      isPublished:
-                        typeof formData.isPublished !== "boolean" &&
-                        formData.isPublished === "true"
-                          ? true
-                          : false,
+                      isPublished: formData.isPublished,
                       publicationDate: formData.isPublished
                         ? null
                         : formData.publicationDate === ""
