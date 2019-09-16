@@ -1,13 +1,30 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination } from "../types";
+import {
+  ActiveTab,
+  BulkAction,
+  Dialog,
+  Filters,
+  Pagination,
+  TabActionDialog
+} from "../types";
 
 const collectionSectionUrl = "/collections/";
 
 export const collectionListPath = collectionSectionUrl;
-export type CollectionListUrlDialog = "publish" | "unpublish" | "remove";
-export type CollectionListUrlQueryParams = BulkAction &
+export enum CollectionListUrlFiltersEnum {
+  query = "query"
+}
+export type CollectionListUrlFilters = Filters<CollectionListUrlFiltersEnum>;
+export type CollectionListUrlDialog =
+  | "publish"
+  | "unpublish"
+  | "remove"
+  | TabActionDialog;
+export type CollectionListUrlQueryParams = ActiveTab &
+  BulkAction &
+  CollectionListUrlFilters &
   Dialog<CollectionListUrlDialog> &
   Pagination;
 export const collectionListUrl = (params?: CollectionListUrlQueryParams) =>

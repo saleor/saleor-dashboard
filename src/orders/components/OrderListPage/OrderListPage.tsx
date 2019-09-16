@@ -7,17 +7,15 @@ import { FormattedMessage, useIntl } from "react-intl";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
-import { OrderFilterKeys } from "@saleor/orders/components/OrderListFilter";
 import { FilterPageProps, ListActions, PageListProps } from "@saleor/types";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
-import { OrderListUrlFilters } from "../../urls";
 import OrderList from "../OrderList";
-import OrderListFilter from "../OrderListFilter";
+import OrderListFilter, { OrderFilterKeys } from "../OrderListFilter";
 
 export interface OrderListPageProps
   extends PageListProps,
     ListActions,
-    FilterPageProps<OrderListUrlFilters, OrderFilterKeys> {
+    FilterPageProps<OrderFilterKeys> {
   orders: OrderList_orders_edges_node[];
 }
 
@@ -25,15 +23,15 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   currencySymbol,
   currentTab,
   filtersList,
-  filterTabs,
   initialSearch,
+  tabs,
   onAdd,
   onAll,
   onSearchChange,
   onFilterAdd,
-  onFilterSave,
   onTabChange,
-  onFilterDelete,
+  onTabDelete,
+  onTabSave,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -59,7 +57,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           filterLabel={intl.formatMessage({
             defaultMessage: "Select all orders where:"
           })}
-          filterTabs={filterTabs}
+          tabs={tabs}
           filtersList={filtersList}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
@@ -68,9 +66,9 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           onAll={onAll}
           onSearchChange={onSearchChange}
           onFilterAdd={onFilterAdd}
-          onFilterSave={onFilterSave}
           onTabChange={onTabChange}
-          onFilterDelete={onFilterDelete}
+          onTabDelete={onTabDelete}
+          onTabSave={onTabSave}
         />
         <OrderList {...listProps} />
       </Card>

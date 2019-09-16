@@ -3,7 +3,12 @@ import React from "react";
 
 import CategoryListPage from "../../../categories/components/CategoryListPage";
 import { categories } from "../../../categories/fixtures";
-import { listActionsProps, pageListProps } from "../../../fixtures";
+import {
+  listActionsProps,
+  pageListProps,
+  searchPageProps,
+  tabPageProps
+} from "../../../fixtures";
 import Decorator from "../../Decorator";
 
 const categoryTableProps = {
@@ -11,6 +16,8 @@ const categoryTableProps = {
   onAddCategory: undefined,
   onCategoryClick: () => undefined,
   ...listActionsProps,
+  ...tabPageProps,
+  ...searchPageProps,
   ...pageListProps.default
 };
 

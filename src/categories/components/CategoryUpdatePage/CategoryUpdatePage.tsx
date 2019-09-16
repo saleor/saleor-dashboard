@@ -1,9 +1,12 @@
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
 import { RawDraftContentState } from "draft-js";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
+import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -178,21 +181,40 @@ export const CategoryUpdatePage: React.StatelessComponent<
           </TabContainer>
           <CardSpacer />
           {currentTab === CategoryPageTab.categories && (
-            <CategoryList
-              disabled={disabled}
-              isRoot={false}
-              categories={subcategories}
-              onAdd={onAddCategory}
-              onRowClick={onCategoryClick}
-              onNextPage={onNextPage}
-              onPreviousPage={onPreviousPage}
-              pageInfo={pageInfo}
-              toggle={toggle}
-              toggleAll={toggleAll}
-              selected={selected}
-              isChecked={isChecked}
-              toolbar={subcategoryListToolbar}
-            />
+            <Card>
+              <CardTitle
+                title={intl.formatMessage({
+                  defaultMessage: "All Subcategories",
+                  description: "section header"
+                })}
+                toolbar={
+                  <Button
+                    color="primary"
+                    variant="text"
+                    onClick={onAddCategory}
+                  >
+                    <FormattedMessage
+                      defaultMessage="Create subcategory"
+                      description="button"
+                    />
+                  </Button>
+                }
+              />
+              <CategoryList
+                categories={subcategories}
+                disabled={disabled}
+                isChecked={isChecked}
+                isRoot={false}
+                pageInfo={pageInfo}
+                selected={selected}
+                toggle={toggle}
+                toggleAll={toggleAll}
+                toolbar={subcategoryListToolbar}
+                onNextPage={onNextPage}
+                onPreviousPage={onPreviousPage}
+                onRowClick={onCategoryClick}
+              />
+            </Card>
           )}
           {currentTab === CategoryPageTab.products && (
             <CategoryProducts

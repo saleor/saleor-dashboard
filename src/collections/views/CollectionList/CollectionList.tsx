@@ -6,6 +6,10 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
+import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData
+} from "@saleor/components/SaveFilterTabDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -16,21 +20,30 @@ import usePaginator, {
 import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
-import CollectionListPage from "../components/CollectionListPage/CollectionListPage";
+import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
 import {
   TypedCollectionBulkDelete,
   TypedCollectionBulkPublish
-} from "../mutations";
-import { TypedCollectionListQuery } from "../queries";
-import { CollectionBulkDelete } from "../types/CollectionBulkDelete";
-import { CollectionBulkPublish } from "../types/CollectionBulkPublish";
+} from "../../mutations";
+import { TypedCollectionListQuery } from "../../queries";
+import { CollectionBulkDelete } from "../../types/CollectionBulkDelete";
+import { CollectionBulkPublish } from "../../types/CollectionBulkPublish";
 import {
   collectionAddUrl,
   collectionListUrl,
   CollectionListUrlDialog,
+  CollectionListUrlFilters,
   CollectionListUrlQueryParams,
   collectionUrl
-} from "../urls";
+} from "../../urls";
+import {
+  areFiltersApplied,
+  deleteFilterTab,
+  getActiveFilters,
+  getFilterTabs,
+  getFilterVariables,
+  saveFilterTab
+} from "./filter";
 
 interface CollectionListProps {
   params: CollectionListUrlQueryParams;
@@ -50,6 +63,26 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
   );
   const intl = useIntl();
 
+  const tabs = getFilterTabs();
+
+  const currentTab =
+    params.activeTab === undefined
+      ? areFiltersApplied(params)
+        ? tabs.length + 1
+        : 0
+      : parseInt(params.activeTab, 0);
+
+  const changeFilterField = (filter: CollectionListUrlFilters) => {
+    reset();
+    navigate(
+      collectionListUrl({
+        ...getActiveFilters(params),
+        ...filter,
+        activeTab: undefined
+      })
+    );
+  };
+
   const closeModal = () =>
     navigate(
       collectionListUrl({
@@ -60,17 +93,47 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
       true
     );
 
-  const openModal = (action: CollectionListUrlDialog, ids: string[]) =>
+  const openModal = (action: CollectionListUrlDialog, ids?: string[]) =>
     navigate(
       collectionListUrl({
+        ...params,
         action,
         ids
       })
     );
 
+  const handleTabChange = (tab: number) => {
+    reset();
+    navigate(
+      collectionListUrl({
+        activeTab: tab.toString(),
+        ...getFilterTabs()[tab - 1].data
+      })
+    );
+  };
+
+  const handleTabDelete = () => {
+    deleteFilterTab(currentTab);
+    reset();
+    navigate(collectionListUrl());
+  };
+
+  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
+    saveFilterTab(data.name, getActiveFilters(params));
+    handleTabChange(tabs.length + 1);
+  };
+
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const queryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: getFilterVariables(params)
+    }),
+    [params]
+  );
+
   return (
-    <TypedCollectionListQuery displayLoader variables={paginationState}>
+    <TypedCollectionListQuery displayLoader variables={queryVariables}>
       {({ data, loading, refetch }) => {
         const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
           maybe(() => data.collections.pageInfo),
@@ -130,7 +193,15 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                   return (
                     <>
                       <CollectionListPage
+                        currentTab={currentTab}
+                        initialSearch={params.query || ""}
+                        onSearchChange={query => changeFilterField({ query })}
                         onAdd={() => navigate(collectionAddUrl)}
+                        onAll={() => navigate(collectionListUrl())}
+                        onTabChange={handleTabChange}
+                        onTabDelete={() => openModal("delete-search")}
+                        onTabSave={() => openModal("save-search")}
+                        tabs={tabs.map(tab => tab.name)}
                         disabled={loading}
                         collections={maybe(() =>
                           data.collections.edges.map(edge => edge.node)
@@ -289,6 +360,19 @@ export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
                           />
                         </DialogContentText>
                       </ActionDialog>
+                      <SaveFilterTabDialog
+                        open={params.action === "save-search"}
+                        confirmButtonState="default"
+                        onClose={closeModal}
+                        onSubmit={handleTabSave}
+                      />
+                      <DeleteFilterTabDialog
+                        open={params.action === "delete-search"}
+                        confirmButtonState="default"
+                        onClose={closeModal}
+                        onSubmit={handleTabDelete}
+                        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+                      />
                     </>
                   );
                 }}

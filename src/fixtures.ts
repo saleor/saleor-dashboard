@@ -3,7 +3,9 @@ import {
   FetchMoreProps,
   FilterPageProps,
   ListActions,
-  PageListProps
+  PageListProps,
+  SearchPageProps,
+  TabPageProps
 } from "./types";
 
 const pageInfo = {
@@ -46,23 +48,26 @@ export const countries = [
   { code: "AS", label: "American Samoa" }
 ];
 
-export const filterPageProps: FilterPageProps<{}, unknown> = {
-  currencySymbol: "USD",
+export const tabPageProps: TabPageProps = {
   currentTab: 0,
-  filterTabs: [
-    {
-      data: {},
-      name: "Tab X"
-    }
-  ],
-  filtersList: [],
-  initialSearch: "",
   onAll: () => undefined,
-  onFilterAdd: () => undefined,
-  onFilterDelete: () => undefined,
-  onFilterSave: () => undefined,
-  onSearchChange: () => undefined,
-  onTabChange: () => undefined
+  onTabChange: () => undefined,
+  onTabDelete: () => undefined,
+  onTabSave: () => undefined,
+  tabs: ["Tab X"]
+};
+
+export const searchPageProps: SearchPageProps = {
+  initialSearch: "",
+  onSearchChange: () => undefined
+};
+
+export const filterPageProps: FilterPageProps = {
+  ...searchPageProps,
+  ...tabPageProps,
+  currencySymbol: "USD",
+  filtersList: [],
+  onFilterAdd: () => undefined
 };
 
 export const filters: Filter[] = [

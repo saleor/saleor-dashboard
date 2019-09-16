@@ -1,14 +1,27 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { ActiveTab, BulkAction, Dialog, Pagination } from "../types";
+import {
+  ActiveTab,
+  BulkAction,
+  Dialog,
+  Filters,
+  Pagination,
+  TabActionDialog
+} from "../types";
 import { CategoryPageTab } from "./components/CategoryUpdatePage";
 
 const categorySectionUrl = "/categories/";
 
 export const categoryListPath = categorySectionUrl;
-export type CategoryListUrlDialog = "delete";
-export type CategoryListUrlQueryParams = BulkAction &
+export enum CategoryListUrlFiltersEnum {
+  query = "query"
+}
+export type CategoryListUrlFilters = Filters<CategoryListUrlFiltersEnum>;
+export type CategoryListUrlDialog = "delete" | TabActionDialog;
+export type CategoryListUrlQueryParams = ActiveTab &
+  BulkAction &
+  CategoryListUrlFilters &
   Dialog<CategoryListUrlDialog> &
   Pagination;
 export const categoryListUrl = (params?: CategoryListUrlQueryParams) =>

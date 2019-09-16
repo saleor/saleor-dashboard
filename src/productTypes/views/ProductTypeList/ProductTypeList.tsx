@@ -5,26 +5,41 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
+import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData
+} from "@saleor/components/SaveFilterTabDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
-import { PAGINATE_BY } from "../../config";
-import { configurationMenuUrl } from "../../configuration";
-import { getMutationState, maybe } from "../../misc";
-import ProductTypeListPage from "../components/ProductTypeListPage";
-import { TypedProductTypeBulkDeleteMutation } from "../mutations";
-import { TypedProductTypeListQuery } from "../queries";
-import { ProductTypeBulkDelete } from "../types/ProductTypeBulkDelete";
+import { ListViews } from "@saleor/types";
+import { configurationMenuUrl } from "../../../configuration";
+import { getMutationState, maybe } from "../../../misc";
+import ProductTypeListPage from "../../components/ProductTypeListPage";
+import { TypedProductTypeBulkDeleteMutation } from "../../mutations";
+import { TypedProductTypeListQuery } from "../../queries";
+import { ProductTypeBulkDelete } from "../../types/ProductTypeBulkDelete";
 import {
   productTypeAddUrl,
   productTypeListUrl,
+  ProductTypeListUrlDialog,
+  ProductTypeListUrlFilters,
   ProductTypeListUrlQueryParams,
   productTypeUrl
-} from "../urls";
+} from "../../urls";
+import {
+  areFiltersApplied,
+  deleteFilterTab,
+  getActiveFilters,
+  getFilterTabs,
+  getFilterVariables,
+  saveFilterTab
+} from "./filter";
 
 interface ProductTypeListProps {
   params: ProductTypeListUrlQueryParams;
@@ -39,13 +54,80 @@ export const ProductTypeList: React.StatelessComponent<
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
+  const { settings } = useListSettings(ListViews.PRODUCT_LIST);
   const intl = useIntl();
 
-  const closeModal = () => navigate(productTypeListUrl(), true);
+  const tabs = getFilterTabs();
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  const currentTab =
+    params.activeTab === undefined
+      ? areFiltersApplied(params)
+        ? tabs.length + 1
+        : 0
+      : parseInt(params.activeTab, 0);
+
+  const changeFilterField = (filter: ProductTypeListUrlFilters) => {
+    reset();
+    navigate(
+      productTypeListUrl({
+        ...getActiveFilters(params),
+        ...filter,
+        activeTab: undefined
+      })
+    );
+  };
+
+  const closeModal = () =>
+    navigate(
+      productTypeListUrl({
+        ...params,
+        action: undefined,
+        ids: undefined
+      }),
+      true
+    );
+
+  const openModal = (action: ProductTypeListUrlDialog, ids?: string[]) =>
+    navigate(
+      productTypeListUrl({
+        ...params,
+        action,
+        ids
+      })
+    );
+
+  const handleTabChange = (tab: number) => {
+    reset();
+    navigate(
+      productTypeListUrl({
+        activeTab: tab.toString(),
+        ...getFilterTabs()[tab - 1].data
+      })
+    );
+  };
+
+  const handleTabDelete = () => {
+    deleteFilterTab(currentTab);
+    reset();
+    navigate(productTypeListUrl());
+  };
+
+  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
+    saveFilterTab(data.name, getActiveFilters(params));
+    handleTabChange(tabs.length + 1);
+  };
+
+  const paginationState = createPaginationState(settings.rowNumber, params);
+  const queryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: getFilterVariables(params)
+    }),
+    [params]
+  );
+
   return (
-    <TypedProductTypeListQuery displayLoader variables={paginationState}>
+    <TypedProductTypeListQuery displayLoader variables={queryVariables}>
       {({ data, loading, refetch }) => {
         const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
           maybe(() => data.productTypes.pageInfo),
@@ -93,6 +175,14 @@ export const ProductTypeList: React.StatelessComponent<
               return (
                 <>
                   <ProductTypeListPage
+                    currentTab={currentTab}
+                    initialSearch={params.query || ""}
+                    onSearchChange={query => changeFilterField({ query })}
+                    onAll={() => navigate(productTypeListUrl())}
+                    onTabChange={handleTabChange}
+                    onTabDelete={() => openModal("delete-search")}
+                    onTabSave={() => openModal("save-search")}
+                    tabs={tabs.map(tab => tab.name)}
                     disabled={loading}
                     productTypes={maybe(() =>
                       data.productTypes.edges.map(edge => edge.node)
@@ -150,6 +240,19 @@ export const ProductTypeList: React.StatelessComponent<
                       />
                     </DialogContentText>
                   </ActionDialog>
+                  <SaveFilterTabDialog
+                    open={params.action === "save-search"}
+                    confirmButtonState="default"
+                    onClose={closeModal}
+                    onSubmit={handleTabSave}
+                  />
+                  <DeleteFilterTabDialog
+                    open={params.action === "delete-search"}
+                    confirmButtonState="default"
+                    onClose={closeModal}
+                    onSubmit={handleTabDelete}
+                    tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+                  />
                 </>
               );
             }}

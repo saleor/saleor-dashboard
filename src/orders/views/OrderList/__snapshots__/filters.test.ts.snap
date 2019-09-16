@@ -11,6 +11,10 @@ Array [
     "onClick": [Function],
   },
   Object {
+    "label": "email@example.com",
+    "onClick": [Function],
+  },
+  Object {
     "label": "Fulfilled",
     "onClick": [Function],
   },
@@ -88,6 +92,7 @@ Object {
     "lte": "2019-09-10",
   },
   "customer": "email@example.com",
+  "search": "24",
   "status": Array [
     "FULFILLED",
     "PARTIALLY_FULFILLED",
@@ -102,6 +107,7 @@ Object {
     "lte": "2019-09-10",
   },
   "customer": "email@example.com",
+  "search": "24",
   "status": Array [
     "FULFILLED",
   ],

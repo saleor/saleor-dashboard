@@ -1,15 +1,29 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination, SingleAction } from "../types";
+import {
+  ActiveTab,
+  BulkAction,
+  Dialog,
+  Filters,
+  Pagination,
+  SingleAction,
+  TabActionDialog
+} from "../types";
 
 const productTypeSection = "/product-types/";
 
 export const productTypeListPath = productTypeSection;
-export type ProductTypeListUrlDialog = "remove";
-export type ProductTypeListUrlQueryParams = BulkAction &
+export enum ProductTypeListUrlFiltersEnum {
+  query = "query"
+}
+export type ProductTypeListUrlFilters = Filters<ProductTypeListUrlFiltersEnum>;
+export type ProductTypeListUrlDialog = "remove" | TabActionDialog;
+export type ProductTypeListUrlQueryParams = ActiveTab &
+  BulkAction &
   Dialog<ProductTypeListUrlDialog> &
-  Pagination;
+  Pagination &
+  ProductTypeListUrlFilters;
 export const productTypeListUrl = (params?: ProductTypeListUrlQueryParams) =>
   productTypeListPath + "?" + stringifyQs(params);
 

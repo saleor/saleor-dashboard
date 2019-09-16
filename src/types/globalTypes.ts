@@ -33,9 +33,20 @@ export enum AuthorizationKeyType {
   GOOGLE_OAUTH2 = "GOOGLE_OAUTH2",
 }
 
+export enum CollectionPublished {
+  HIDDEN = "HIDDEN",
+  PUBLISHED = "PUBLISHED",
+}
+
 export enum ConfigurationTypeFieldEnum {
   BOOLEAN = "BOOLEAN",
   STRING = "STRING",
+}
+
+export enum DiscountStatusEnum {
+  ACTIVE = "ACTIVE",
+  EXPIRED = "EXPIRED",
+  SCHEDULED = "SCHEDULED",
 }
 
 export enum DiscountValueTypeEnum {
@@ -168,11 +179,22 @@ export enum PermissionEnum {
   MANAGE_PAGES = "MANAGE_PAGES",
   MANAGE_PLUGINS = "MANAGE_PLUGINS",
   MANAGE_PRODUCTS = "MANAGE_PRODUCTS",
+  MANAGE_SERVICE_ACCOUNTS = "MANAGE_SERVICE_ACCOUNTS",
   MANAGE_SETTINGS = "MANAGE_SETTINGS",
   MANAGE_SHIPPING = "MANAGE_SHIPPING",
   MANAGE_STAFF = "MANAGE_STAFF",
   MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
   MANAGE_USERS = "MANAGE_USERS",
+}
+
+export enum ProductTypeConfigurable {
+  CONFIGURABLE = "CONFIGURABLE",
+  SIMPLE = "SIMPLE",
+}
+
+export enum ProductTypeEnum {
+  DIGITAL = "DIGITAL",
+  SHIPPABLE = "SHIPPABLE",
 }
 
 export enum SaleType {
@@ -183,6 +205,11 @@ export enum SaleType {
 export enum ShippingMethodTypeEnum {
   PRICE = "PRICE",
   WEIGHT = "WEIGHT",
+}
+
+export enum StaffMemberStatus {
+  ACTIVE = "ACTIVE",
+  DEACTIVATED = "DEACTIVATED",
 }
 
 export enum StockAvailability {
@@ -216,6 +243,12 @@ export enum TaxRateType {
   STANDARD = "STANDARD",
   WATER = "WATER",
   WINE = "WINE",
+}
+
+export enum VoucherDiscountType {
+  FIXED = "FIXED",
+  PERCENTAGE = "PERCENTAGE",
+  SHIPPING = "SHIPPING",
 }
 
 export enum VoucherTypeEnum {
@@ -264,6 +297,17 @@ export interface AttributeCreateInput {
   availableInGrid?: boolean | null;
 }
 
+export interface AttributeFilterInput {
+  valueRequired?: boolean | null;
+  isVariantOnly?: boolean | null;
+  visibleInStorefront?: boolean | null;
+  filterableInStorefront?: boolean | null;
+  filterableInDashboard?: boolean | null;
+  availableInGrid?: boolean | null;
+  search?: string | null;
+  ids?: (string | null)[] | null;
+}
+
 export interface AttributeInput {
   slug: string;
   value: string;
@@ -304,6 +348,10 @@ export interface CatalogueInput {
   collections?: (string | null)[] | null;
 }
 
+export interface CategoryFilterInput {
+  search?: string | null;
+}
+
 export interface CategoryInput {
   description?: string | null;
   descriptionJson?: any | null;
@@ -327,6 +375,11 @@ export interface CollectionCreateInput {
   products?: (string | null)[] | null;
 }
 
+export interface CollectionFilterInput {
+  published?: CollectionPublished | null;
+  search?: string | null;
+}
+
 export interface CollectionInput {
   isPublished?: boolean | null;
   name?: string | null;
@@ -344,6 +397,14 @@ export interface ConfigurationItemInput {
   value: string;
 }
 
+export interface CustomerFilterInput {
+  dateJoined?: DateRangeInput | null;
+  moneySpent?: PriceRangeInput | null;
+  numberOfOrders?: IntRangeInput | null;
+  placedOrders?: DateRangeInput | null;
+  search?: string | null;
+}
+
 export interface CustomerInput {
   defaultBillingAddress?: AddressInput | null;
   defaultShippingAddress?: AddressInput | null;
@@ -355,6 +416,11 @@ export interface CustomerInput {
 }
 
 export interface DateRangeInput {
+  gte?: any | null;
+  lte?: any | null;
+}
+
+export interface DateTimeRangeInput {
   gte?: any | null;
   lte?: any | null;
 }
@@ -387,6 +453,11 @@ export interface FulfillmentLineInput {
 export interface FulfillmentUpdateTrackingInput {
   trackingNumber?: string | null;
   notifyCustomer?: boolean | null;
+}
+
+export interface IntRangeInput {
+  gte?: number | null;
+  lte?: number | null;
 }
 
 export interface MenuCreateInput {
@@ -426,11 +497,18 @@ export interface OrderAddNoteInput {
   message?: string | null;
 }
 
+export interface OrderDraftFilterInput {
+  customer?: string | null;
+  created?: DateRangeInput | null;
+  search?: string | null;
+}
+
 export interface OrderFilterInput {
   paymentStatus?: (PaymentChargeStatusEnum | null)[] | null;
   status?: (OrderStatusFilter | null)[] | null;
   customer?: string | null;
   created?: DateRangeInput | null;
+  search?: string | null;
 }
 
 export interface OrderLineCreateInput {
@@ -450,6 +528,10 @@ export interface OrderUpdateInput {
 
 export interface OrderUpdateShippingInput {
   shippingMethod?: string | null;
+}
+
+export interface PageFilterInput {
+  search?: string | null;
 }
 
 export interface PageInput {
@@ -492,6 +574,12 @@ export interface ProductFilterInput {
   minimalPrice?: PriceRangeInput | null;
 }
 
+export interface ProductTypeFilterInput {
+  search?: string | null;
+  configurable?: ProductTypeConfigurable | null;
+  productType?: ProductTypeEnum | null;
+}
+
 export interface ProductTypeInput {
   name?: string | null;
   hasVariants?: boolean | null;
@@ -516,6 +604,13 @@ export interface ProductVariantInput {
 export interface ReorderInput {
   id: string;
   sortOrder?: number | null;
+}
+
+export interface SaleFilterInput {
+  status?: (DiscountStatusEnum | null)[] | null;
+  saleType?: DiscountValueTypeEnum | null;
+  started?: DateTimeRangeInput | null;
+  search?: string | null;
 }
 
 export interface SaleInput {
@@ -577,6 +672,7 @@ export interface StaffCreateInput {
   note?: string | null;
   permissions?: (PermissionEnum | null)[] | null;
   sendPasswordEmail?: boolean | null;
+  redirectUrl?: string | null;
 }
 
 export interface StaffInput {
@@ -586,6 +682,11 @@ export interface StaffInput {
   isActive?: boolean | null;
   note?: string | null;
   permissions?: (PermissionEnum | null)[] | null;
+}
+
+export interface StaffUserInput {
+  status?: StaffMemberStatus | null;
+  search?: string | null;
 }
 
 export interface TranslationInput {
@@ -605,6 +706,15 @@ export interface UserCreateInput {
   isActive?: boolean | null;
   note?: string | null;
   sendPasswordEmail?: boolean | null;
+  redirectUrl?: string | null;
+}
+
+export interface VoucherFilterInput {
+  status?: (DiscountStatusEnum | null)[] | null;
+  timesUsed?: IntRangeInput | null;
+  discountType?: (VoucherDiscountType | null)[] | null;
+  started?: DateTimeRangeInput | null;
+  search?: string | null;
 }
 
 export interface VoucherInput {

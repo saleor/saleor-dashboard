@@ -166,8 +166,20 @@ export const voucherDetailsFragment = gql`
 export const saleList = gql`
   ${pageInfoFragment}
   ${saleFragment}
-  query SaleList($after: String, $before: String, $first: Int, $last: Int) {
-    sales(after: $after, before: $before, first: $first, last: $last) {
+  query SaleList(
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $filter: SaleFilterInput
+  ) {
+    sales(
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      filter: $filter
+    ) {
       edges {
         node {
           ...SaleFragment
@@ -184,8 +196,20 @@ export const TypedSaleList = TypedQuery<SaleList, SaleListVariables>(saleList);
 export const voucherList = gql`
   ${pageInfoFragment}
   ${voucherFragment}
-  query VoucherList($after: String, $before: String, $first: Int, $last: Int) {
-    vouchers(after: $after, before: $before, first: $first, last: $last) {
+  query VoucherList(
+    $after: String
+    $before: String
+    $first: Int
+    $last: Int
+    $filter: VoucherFilterInput
+  ) {
+    vouchers(
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      filter: $filter
+    ) {
       edges {
         node {
           ...VoucherFragment

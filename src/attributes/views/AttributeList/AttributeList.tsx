@@ -3,6 +3,18 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import {
+  areFiltersApplied,
+  deleteFilterTab,
+  getActiveFilters,
+  getFilterTabs,
+  getFilterVariables,
+  saveFilterTab
+} from "@saleor/attributes/views/AttributeList/filters";
+import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData
+} from "@saleor/components/SaveFilterTabDialog";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -20,6 +32,7 @@ import {
   attributeAddUrl,
   attributeListUrl,
   AttributeListUrlDialog,
+  AttributeListUrlFilters,
   AttributeListUrlQueryParams,
   attributeUrl
 } from "../../urls";
@@ -36,6 +49,15 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     params.ids
   );
   const intl = useIntl();
+
+  const tabs = getFilterTabs();
+
+  const currentTab =
+    params.activeTab === undefined
+      ? areFiltersApplied(params)
+        ? tabs.length + 1
+        : 0
+      : parseInt(params.activeTab, 0);
 
   const closeModal = () =>
     navigate(
@@ -56,8 +78,46 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
       })
     );
 
+  const changeFilterField = (filter: AttributeListUrlFilters) => {
+    reset();
+    navigate(
+      attributeListUrl({
+        ...getActiveFilters(params),
+        ...filter,
+        activeTab: undefined
+      })
+    );
+  };
+
+  const handleTabChange = (tab: number) => {
+    reset();
+    navigate(
+      attributeListUrl({
+        activeTab: tab.toString(),
+        ...getFilterTabs()[tab - 1].data
+      })
+    );
+  };
+
+  const handleTabDelete = () => {
+    deleteFilterTab(currentTab);
+    reset();
+    navigate(attributeListUrl());
+  };
+
+  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
+    saveFilterTab(data.name, getActiveFilters(params));
+    handleTabChange(tabs.length + 1);
+  };
+
   const paginationState = createPaginationState(PAGINATE_BY, params);
-  const queryVariables = React.useMemo(() => paginationState, [params]);
+  const queryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: getFilterVariables(params)
+    }),
+    [params]
+  );
 
   return (
     <AttributeListQuery variables={queryVariables}>
@@ -99,14 +159,22 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
                     attributes={maybe(() =>
                       data.attributes.edges.map(edge => edge.node)
                     )}
+                    currentTab={currentTab}
                     disabled={loading || attributeBulkDeleteOpts.loading}
+                    initialSearch={params.query || ""}
                     isChecked={isSelected}
                     onAdd={() => navigate(attributeAddUrl())}
+                    onAll={() => navigate(attributeListUrl())}
                     onNextPage={loadNextPage}
                     onPreviousPage={loadPreviousPage}
                     onRowClick={id => () => navigate(attributeUrl(id))}
+                    onSearchChange={query => changeFilterField({ query })}
+                    onTabChange={handleTabChange}
+                    onTabDelete={() => openModal("delete-search")}
+                    onTabSave={() => openModal("save-search")}
                     pageInfo={pageInfo}
                     selected={listElements.length}
+                    tabs={tabs.map(tab => tab.name)}
                     toggle={toggle}
                     toggleAll={toggleAll}
                     toolbar={
@@ -129,6 +197,19 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
                     }
                     onClose={closeModal}
                     quantity={maybe(() => params.ids.length)}
+                  />
+                  <SaveFilterTabDialog
+                    open={params.action === "save-search"}
+                    confirmButtonState="default"
+                    onClose={closeModal}
+                    onSubmit={handleTabSave}
+                  />
+                  <DeleteFilterTabDialog
+                    open={params.action === "delete-search"}
+                    confirmButtonState="default"
+                    onClose={closeModal}
+                    onSubmit={handleTabDelete}
+                    tabName={maybe(() => tabs[currentTab - 1].name, "...")}
                   />
                 </>
               );

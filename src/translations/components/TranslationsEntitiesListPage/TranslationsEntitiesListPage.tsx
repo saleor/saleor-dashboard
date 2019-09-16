@@ -1,17 +1,19 @@
 import Card from "@material-ui/core/Card";
 import React from "react";
-import { useIntl } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
+import FilterSearch from "@saleor/components/Filter/FilterSearch";
 import PageHeader from "@saleor/components/PageHeader";
 // tslint:disable no-submodule-imports
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import FilterTabs, { FilterTab } from "@saleor/components/TableFilter";
 import { maybe } from "@saleor/misc";
+import { SearchPageProps } from "@saleor/types";
 import { TranslatableEntities } from "../../urls";
 
-export interface TranslationsEntitiesListPageProps {
+export interface TranslationsEntitiesListPageProps extends SearchPageProps {
   children: React.ReactNode;
   filters: TranslationsEntitiesFilters;
   language: ShopInfo_shop_languages;
@@ -31,10 +33,66 @@ export interface TranslationsEntitiesFilters {
 
 export type TranslationsEntitiesListFilterTab = keyof typeof TranslatableEntities;
 
+function getSearchPlaceholder(
+  tab: TranslationsEntitiesListFilterTab,
+  intl: IntlShape
+): string {
+  switch (tab) {
+    case "categories":
+      return intl.formatMessage({
+        defaultMessage: "Search Category"
+      });
+
+    case "collections":
+      return intl.formatMessage({
+        defaultMessage: "Search Collection"
+      });
+
+    case "products":
+      return intl.formatMessage({
+        defaultMessage: "Search Product"
+      });
+
+    case "sales":
+      return intl.formatMessage({
+        defaultMessage: "Search Sale"
+      });
+
+    case "vouchers":
+      return intl.formatMessage({
+        defaultMessage: "Search Voucher"
+      });
+
+    case "pages":
+      return intl.formatMessage({
+        defaultMessage: "Search Page"
+      });
+
+    case "productTypes":
+      return intl.formatMessage({
+        defaultMessage: "Search Product Type"
+      });
+
+    default:
+      return "...";
+  }
+}
+
+const tabs: TranslationsEntitiesListFilterTab[] = [
+  "categories",
+  "collections",
+  "products",
+  "sales",
+  "vouchers",
+  "pages",
+  "productTypes"
+];
+
 const TranslationsEntitiesListPage: React.StatelessComponent<
   TranslationsEntitiesListPageProps
-> = ({ filters, language, onBack, children }) => {
+> = ({ filters, language, onBack, children, ...searchProps }) => {
   const intl = useIntl();
+  const currentTab = tabs.indexOf(filters.current);
 
   return (
     <Container>
@@ -55,17 +113,7 @@ const TranslationsEntitiesListPage: React.StatelessComponent<
         )}
       />
       <Card>
-        <FilterTabs
-          currentTab={([
-            "categories",
-            "collections",
-            "products",
-            "sales",
-            "vouchers",
-            "pages",
-            "productTypes"
-          ] as TranslationsEntitiesListFilterTab[]).indexOf(filters.current)}
-        >
+        <FilterTabs currentTab={currentTab}>
           <FilterTab
             label={intl.formatMessage({
               defaultMessage: "Categories"
@@ -109,6 +157,11 @@ const TranslationsEntitiesListPage: React.StatelessComponent<
             onClick={filters.onProductTypesTabClick}
           />
         </FilterTabs>
+        <FilterSearch
+          displaySearchAction={null}
+          searchPlaceholder={getSearchPlaceholder(filters.current, intl)}
+          {...searchProps}
+        />
         {children}
       </Card>
     </Container>

@@ -168,7 +168,6 @@ export const orderListQuery = gql`
     $after: String
     $last: Int
     $before: String
-    $status: OrderStatusFilter
     $filter: OrderFilterInput
   ) {
     orders(
@@ -176,7 +175,6 @@ export const orderListQuery = gql`
       after: $after
       first: $first
       last: $last
-      status: $status
       filter: $filter
     ) {
       edges {
@@ -221,8 +219,15 @@ export const orderDraftListQuery = gql`
     $after: String
     $last: Int
     $before: String
+    $filter: OrderDraftFilterInput
   ) {
-    draftOrders(before: $before, after: $after, first: $first, last: $last) {
+    draftOrders(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      filter: $filter
+    ) {
       edges {
         node {
           __typename

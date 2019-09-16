@@ -64,8 +64,15 @@ const customerList = gql`
     $before: String
     $first: Int
     $last: Int
+    $filter: CustomerFilterInput
   ) {
-    customers(after: $after, before: $before, first: $first, last: $last) {
+    customers(
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      filter: $filter
+    ) {
       edges {
         node {
           ...CustomerFragment

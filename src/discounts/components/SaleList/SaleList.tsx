@@ -1,4 +1,3 @@
-import Card from "@material-ui/core/Card";
 import {
   createStyles,
   Theme,
@@ -83,124 +82,119 @@ const SaleList = withStyles(styles, {
     toggleAll,
     toolbar
   }: SaleListProps & WithStyles<typeof styles>) => (
-    <Card>
-      <Table>
-        <TableHead
-          colSpan={numberOfColumns}
-          selected={selected}
-          disabled={disabled}
-          items={sales}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-        >
-          <TableCell className={classes.colName}>
-            <FormattedMessage defaultMessage="Name" description="sale name" />
-          </TableCell>
-          <TableCell className={classes.colStart}>
-            <FormattedMessage
-              defaultMessage="Starts"
-              description="sale start date"
-            />
-          </TableCell>
-          <TableCell className={classes.colEnd}>
-            <FormattedMessage
-              defaultMessage="Ends"
-              description="sale end date"
-            />
-          </TableCell>
-          <TableCell className={classes.colValue}>
-            <FormattedMessage defaultMessage="Value" description="sale value" />
-          </TableCell>
-        </TableHead>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              colSpan={numberOfColumns}
-              settings={settings}
-              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-              onNextPage={onNextPage}
-              onUpdateListSettings={onUpdateListSettings}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-              }
-              onPreviousPage={onPreviousPage}
-            />
-          </TableRow>
-        </TableFooter>
-        <TableBody>
-          {renderCollection(
-            sales,
-            sale => {
-              const isSelected = sale ? isChecked(sale.id) : false;
+    <Table>
+      <TableHead
+        colSpan={numberOfColumns}
+        selected={selected}
+        disabled={disabled}
+        items={sales}
+        toggleAll={toggleAll}
+        toolbar={toolbar}
+      >
+        <TableCell className={classes.colName}>
+          <FormattedMessage defaultMessage="Name" description="sale name" />
+        </TableCell>
+        <TableCell className={classes.colStart}>
+          <FormattedMessage
+            defaultMessage="Starts"
+            description="sale start date"
+          />
+        </TableCell>
+        <TableCell className={classes.colEnd}>
+          <FormattedMessage defaultMessage="Ends" description="sale end date" />
+        </TableCell>
+        <TableCell className={classes.colValue}>
+          <FormattedMessage defaultMessage="Value" description="sale value" />
+        </TableCell>
+      </TableHead>
+      <TableFooter>
+        <TableRow>
+          <TablePagination
+            colSpan={numberOfColumns}
+            settings={settings}
+            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+            onNextPage={onNextPage}
+            onUpdateListSettings={onUpdateListSettings}
+            hasPreviousPage={
+              pageInfo && !disabled ? pageInfo.hasPreviousPage : false
+            }
+            onPreviousPage={onPreviousPage}
+          />
+        </TableRow>
+      </TableFooter>
+      <TableBody>
+        {renderCollection(
+          sales,
+          sale => {
+            const isSelected = sale ? isChecked(sale.id) : false;
 
-              return (
-                <TableRow
-                  className={!!sale ? classes.tableRow : undefined}
-                  hover={!!sale}
-                  key={sale ? sale.id : "skeleton"}
+            return (
+              <TableRow
+                className={!!sale ? classes.tableRow : undefined}
+                hover={!!sale}
+                key={sale ? sale.id : "skeleton"}
+                onClick={sale ? onRowClick(sale.id) : undefined}
+                selected={isSelected}
+              >
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    checked={isSelected}
+                    disabled={disabled}
+                    disableClickPropagation
+                    onChange={() => toggle(sale.id)}
+                  />
+                </TableCell>
+                <TableCell className={classes.colName}>
+                  {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
+                </TableCell>
+                <TableCell className={classes.colStart}>
+                  {sale && sale.startDate ? (
+                    <Date date={sale.startDate} />
+                  ) : (
+                    <Skeleton />
+                  )}
+                </TableCell>
+                <TableCell className={classes.colEnd}>
+                  {sale && sale.endDate ? (
+                    <Date date={sale.endDate} />
+                  ) : sale && sale.endDate === null ? (
+                    "-"
+                  ) : (
+                    <Skeleton />
+                  )}
+                </TableCell>
+                <TableCell
+                  className={classes.colValue}
                   onClick={sale ? onRowClick(sale.id) : undefined}
-                  selected={isSelected}
                 >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(sale.id)}
-                    />
-                  </TableCell>
-                  <TableCell className={classes.colName}>
-                    {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
-                  </TableCell>
-                  <TableCell className={classes.colStart}>
-                    {sale && sale.startDate ? (
-                      <Date date={sale.startDate} />
+                  {sale && sale.type && sale.value ? (
+                    sale.type === SaleType.FIXED ? (
+                      <Money
+                        money={{
+                          amount: sale.value,
+                          currency: defaultCurrency
+                        }}
+                      />
                     ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.colEnd}>
-                    {sale && sale.endDate ? (
-                      <Date date={sale.endDate} />
-                    ) : sale && sale.endDate === null ? (
-                      "-"
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell
-                    className={classes.colValue}
-                    onClick={sale ? onRowClick(sale.id) : undefined}
-                  >
-                    {sale && sale.type && sale.value ? (
-                      sale.type === SaleType.FIXED ? (
-                        <Money
-                          money={{
-                            amount: sale.value,
-                            currency: defaultCurrency
-                          }}
-                        />
-                      ) : (
-                        <Percent amount={sale.value} />
-                      )
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                </TableRow>
-              );
-            },
-            () => (
-              <TableRow>
-                <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No sales found" />
+                      <Percent amount={sale.value} />
+                    )
+                  ) : (
+                    <Skeleton />
+                  )}
                 </TableCell>
               </TableRow>
-            )
-          )}
-        </TableBody>
-      </Table>
-    </Card>
+            );
+          },
+          () => (
+            <TableRow>
+              <TableCell colSpan={numberOfColumns}>
+                <FormattedMessage defaultMessage="No sales found" />
+              </TableCell>
+            </TableRow>
+          )
+        )}
+      </TableBody>
+    </Table>
   )
 );
 SaleList.displayName = "SaleList";

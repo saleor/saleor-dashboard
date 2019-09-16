@@ -20,6 +20,7 @@ import { OrderFilterKeys } from "../../components/OrderListFilter";
 import {
   OrderListUrlFilters,
   OrderListUrlFiltersEnum,
+  OrderListUrlFiltersWithMultipleValuesEnum,
   OrderListUrlQueryParams
 } from "../../urls";
 
@@ -83,6 +84,7 @@ export function getFilterVariables(
       lte: params.dateTo
     },
     customer: params.email,
+    search: params.query,
     status: Array.isArray(params.status)
       ? params.status.map(status => findInEnum(status, OrderStatusFilter))
       : params.status
@@ -190,6 +192,20 @@ export function createFilterChips(
     }
   }
 
+  if (!!filters.email) {
+    filterChips = [
+      ...filterChips,
+      {
+        label: filters.email,
+        onClick: () =>
+          onFilterDelete({
+            ...filters,
+            email: undefined
+          })
+      }
+    ];
+  }
+
   if (!!filters.status) {
     const statusFilterChips = Array.isArray(filters.status)
       ? filters.status.map((status, statusIndex) => ({
@@ -228,4 +244,7 @@ export const {
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   OrderListUrlQueryParams,
   OrderListUrlFilters
->(OrderListUrlFiltersEnum);
+>({
+  ...OrderListUrlFiltersEnum,
+  ...OrderListUrlFiltersWithMultipleValuesEnum
+});

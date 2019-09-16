@@ -5,6 +5,10 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
+import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData
+} from "@saleor/components/SaveFilterTabDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -14,19 +18,29 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
-import OrderDraftListPage from "../components/OrderDraftListPage";
+import OrderDraftListPage from "../../components/OrderDraftListPage";
 import {
   TypedOrderDraftBulkCancelMutation,
   TypedOrderDraftCreateMutation
-} from "../mutations";
-import { TypedOrderDraftListQuery } from "../queries";
-import { OrderDraftBulkCancel } from "../types/OrderDraftBulkCancel";
-import { OrderDraftCreate } from "../types/OrderDraftCreate";
+} from "../../mutations";
+import { TypedOrderDraftListQuery } from "../../queries";
+import { OrderDraftBulkCancel } from "../../types/OrderDraftBulkCancel";
+import { OrderDraftCreate } from "../../types/OrderDraftCreate";
 import {
   orderDraftListUrl,
+  OrderDraftListUrlDialog,
+  OrderDraftListUrlFilters,
   OrderDraftListUrlQueryParams,
   orderUrl
-} from "../urls";
+} from "../../urls";
+import {
+  areFiltersApplied,
+  deleteFilterTab,
+  getActiveFilters,
+  getFilterTabs,
+  getFilterVariables,
+  saveFilterTab
+} from "./filter";
 
 interface OrderDraftListProps {
   params: OrderDraftListUrlQueryParams;
@@ -46,13 +60,34 @@ export const OrderDraftList: React.StatelessComponent<OrderDraftListProps> = ({
   );
   const intl = useIntl();
 
+  const tabs = getFilterTabs();
+
+  const currentTab =
+    params.activeTab === undefined
+      ? areFiltersApplied(params)
+        ? tabs.length + 1
+        : 0
+      : parseInt(params.activeTab, 0);
+
+  const changeFilterField = (filter: OrderDraftListUrlFilters) => {
+    reset();
+    navigate(
+      orderDraftListUrl({
+        ...getActiveFilters(params),
+        ...filter,
+        activeTab: undefined
+      })
+    );
+  };
+
   const closeModal = () =>
     navigate(
       orderDraftListUrl({
         ...params,
         action: undefined,
         ids: undefined
-      })
+      }),
+      true
     );
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
@@ -64,12 +99,49 @@ export const OrderDraftList: React.StatelessComponent<OrderDraftListProps> = ({
     navigate(orderUrl(data.draftOrderCreate.order.id));
   };
 
+  const openModal = (action: OrderDraftListUrlDialog, ids?: string[]) =>
+    navigate(
+      orderDraftListUrl({
+        ...params,
+        action,
+        ids
+      })
+    );
+
+  const handleTabChange = (tab: number) => {
+    reset();
+    navigate(
+      orderDraftListUrl({
+        activeTab: tab.toString(),
+        ...getFilterTabs()[tab - 1].data
+      })
+    );
+  };
+
+  const handleTabDelete = () => {
+    deleteFilterTab(currentTab);
+    reset();
+    navigate(orderDraftListUrl());
+  };
+
+  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
+    saveFilterTab(data.name, getActiveFilters(params));
+    handleTabChange(tabs.length + 1);
+  };
+
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const queryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: getFilterVariables(params)
+    }),
+    [params]
+  );
 
   return (
     <TypedOrderDraftCreateMutation onCompleted={handleCreateOrderCreateSuccess}>
       {createOrder => (
-        <TypedOrderDraftListQuery displayLoader variables={paginationState}>
+        <TypedOrderDraftListQuery displayLoader variables={queryVariables}>
           {({ data, loading, refetch }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
               maybe(() => data.draftOrders.pageInfo),
@@ -114,6 +186,14 @@ export const OrderDraftList: React.StatelessComponent<OrderDraftListProps> = ({
                   return (
                     <>
                       <OrderDraftListPage
+                        currentTab={currentTab}
+                        initialSearch={params.query || ""}
+                        onSearchChange={query => changeFilterField({ query })}
+                        onAll={() => navigate(orderDraftListUrl())}
+                        onTabChange={handleTabChange}
+                        onTabDelete={() => openModal("delete-search")}
+                        onTabSave={() => openModal("save-search")}
+                        tabs={tabs.map(tab => tab.name)}
                         disabled={loading}
                         settings={settings}
                         orders={maybe(() =>
@@ -174,6 +254,19 @@ export const OrderDraftList: React.StatelessComponent<OrderDraftListProps> = ({
                           />
                         </DialogContentText>
                       </ActionDialog>
+                      <SaveFilterTabDialog
+                        open={params.action === "save-search"}
+                        confirmButtonState="default"
+                        onClose={closeModal}
+                        onSubmit={handleTabSave}
+                      />
+                      <DeleteFilterTabDialog
+                        open={params.action === "delete-search"}
+                        confirmButtonState="default"
+                        onClose={closeModal}
+                        onSubmit={handleTabDelete}
+                        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+                      />
                     </>
                   );
                 }}

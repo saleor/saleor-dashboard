@@ -351,11 +351,11 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                             onFilterAdd={filter =>
                               changeFilterField(createFilter(filter))
                             }
-                            onFilterSave={() => openModal("save-search")}
-                            onFilterDelete={() => openModal("delete-search")}
+                            onTabSave={() => openModal("save-search")}
+                            onTabDelete={() => openModal("delete-search")}
                             onTabChange={handleTabChange}
                             initialSearch={params.query || ""}
-                            filterTabs={getFilterTabs()}
+                            tabs={getFilterTabs().map(tab => tab.name)}
                           />
                           <ActionDialog
                             open={params.action === "delete"}

@@ -1,4 +1,3 @@
-import Card from "@material-ui/core/Card";
 import {
   createStyles,
   Theme,
@@ -70,138 +69,132 @@ const ProductTypeList = withStyles(styles, { name: "ProductTypeList" })(
     const intl = useIntl();
 
     return (
-      <Card>
-        <Table>
-          <TableHead
-            colSpan={numberOfColumns}
-            selected={selected}
-            disabled={disabled}
-            items={productTypes}
-            toggleAll={toggleAll}
-            toolbar={toolbar}
-          >
-            <TableCell className={classes.colName}>
-              <FormattedMessage
-                defaultMessage="Type Name"
-                description="product type name"
-              />
-            </TableCell>
-            <TableCell className={classes.colType}>
-              <FormattedMessage
-                defaultMessage="Type"
-                description="product type is either simple or configurable"
-              />
-            </TableCell>
-            <TableCell className={classes.colTax}>
-              <FormattedMessage
-                defaultMessage="Tax"
-                description="tax rate for a product type"
-              />
-            </TableCell>
-          </TableHead>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                colSpan={numberOfColumns}
-                hasNextPage={
-                  pageInfo && !disabled ? pageInfo.hasNextPage : false
-                }
-                onNextPage={onNextPage}
-                hasPreviousPage={
-                  pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-                }
-                onPreviousPage={onPreviousPage}
-              />
-            </TableRow>
-          </TableFooter>
-          <TableBody>
-            {renderCollection(
-              productTypes,
-              productType => {
-                const isSelected = productType
-                  ? isChecked(productType.id)
-                  : false;
-                return (
-                  <TableRow
-                    className={!!productType ? classes.link : undefined}
-                    hover={!!productType}
-                    key={productType ? productType.id : "skeleton"}
-                    onClick={
-                      productType ? onRowClick(productType.id) : undefined
-                    }
-                    selected={isSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        disabled={disabled}
-                        disableClickPropagation
-                        onChange={() => toggle(productType.id)}
-                      />
-                    </TableCell>
-                    <TableCell className={classes.colName}>
-                      {productType ? (
+      <Table>
+        <TableHead
+          colSpan={numberOfColumns}
+          selected={selected}
+          disabled={disabled}
+          items={productTypes}
+          toggleAll={toggleAll}
+          toolbar={toolbar}
+        >
+          <TableCell className={classes.colName}>
+            <FormattedMessage
+              defaultMessage="Type Name"
+              description="product type name"
+            />
+          </TableCell>
+          <TableCell className={classes.colType}>
+            <FormattedMessage
+              defaultMessage="Type"
+              description="product type is either simple or configurable"
+            />
+          </TableCell>
+          <TableCell className={classes.colTax}>
+            <FormattedMessage
+              defaultMessage="Tax"
+              description="tax rate for a product type"
+            />
+          </TableCell>
+        </TableHead>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={numberOfColumns}
+              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+              onNextPage={onNextPage}
+              hasPreviousPage={
+                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
+              }
+              onPreviousPage={onPreviousPage}
+            />
+          </TableRow>
+        </TableFooter>
+        <TableBody>
+          {renderCollection(
+            productTypes,
+            productType => {
+              const isSelected = productType
+                ? isChecked(productType.id)
+                : false;
+              return (
+                <TableRow
+                  className={!!productType ? classes.link : undefined}
+                  hover={!!productType}
+                  key={productType ? productType.id : "skeleton"}
+                  onClick={productType ? onRowClick(productType.id) : undefined}
+                  selected={isSelected}
+                >
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      checked={isSelected}
+                      disabled={disabled}
+                      disableClickPropagation
+                      onChange={() => toggle(productType.id)}
+                    />
+                  </TableCell>
+                  <TableCell className={classes.colName}>
+                    {productType ? (
+                      <>
+                        {productType.name}
+                        <Typography variant="caption">
+                          {maybe(() => productType.hasVariants)
+                            ? intl.formatMessage({
+                                defaultMessage: "Configurable",
+                                description: "product type"
+                              })
+                            : intl.formatMessage({
+                                defaultMessage: "Simple product",
+                                description: "product type"
+                              })}
+                        </Typography>
+                      </>
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.colType}>
+                    {maybe(() => productType.isShippingRequired) !==
+                    undefined ? (
+                      productType.isShippingRequired ? (
                         <>
-                          {productType.name}
-                          <Typography variant="caption">
-                            {maybe(() => productType.hasVariants)
-                              ? intl.formatMessage({
-                                  defaultMessage: "Configurable",
-                                  description: "product type"
-                                })
-                              : intl.formatMessage({
-                                  defaultMessage: "Simple product",
-                                  description: "product type"
-                                })}
-                          </Typography>
+                          <FormattedMessage
+                            defaultMessage="Physical"
+                            description="product type"
+                          />
                         </>
                       ) : (
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.colType}>
-                      {maybe(() => productType.isShippingRequired) !==
-                      undefined ? (
-                        productType.isShippingRequired ? (
-                          <>
-                            <FormattedMessage
-                              defaultMessage="Physical"
-                              description="product type"
-                            />
-                          </>
-                        ) : (
-                          <>
-                            <FormattedMessage
-                              defaultMessage="Digital"
-                              description="product type"
-                            />
-                          </>
-                        )
-                      ) : (
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.colTax}>
-                      {maybe(() => productType.taxType) ? (
-                        productType.taxType.description
-                      ) : (
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                  </TableRow>
-                );
-              },
-              () => (
-                <TableRow>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No product types found" />
+                        <>
+                          <FormattedMessage
+                            defaultMessage="Digital"
+                            description="product type"
+                          />
+                        </>
+                      )
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.colTax}>
+                    {maybe(() => productType.taxType) ? (
+                      productType.taxType.description
+                    ) : (
+                      <Skeleton />
+                    )}
                   </TableCell>
                 </TableRow>
-              )
-            )}
-          </TableBody>
-        </Table>
-      </Card>
+              );
+            },
+            () => (
+              <TableRow>
+                <TableCell colSpan={numberOfColumns}>
+                  <FormattedMessage defaultMessage="No product types found" />
+                </TableCell>
+              </TableRow>
+            )
+          )}
+        </TableBody>
+      </Table>
     );
   }
 );

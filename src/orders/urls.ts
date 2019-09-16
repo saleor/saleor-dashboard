@@ -8,7 +8,8 @@ import {
   Filters,
   FiltersWithMultipleValues,
   Pagination,
-  SingleAction
+  SingleAction,
+  TabActionDialog
 } from "../types";
 
 const orderSectionUrl = "/orders";
@@ -18,14 +19,15 @@ export enum OrderListUrlFiltersEnum {
   dateFrom = "dateFrom",
   dateTo = "dateTo",
   email = "email",
-  payment = "payment"
+  payment = "payment",
+  query = "query"
 }
 export enum OrderListUrlFiltersWithMultipleValuesEnum {
   status = "status"
 }
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
   FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValuesEnum>;
-export type OrderListUrlDialog = "cancel" | "save-search" | "delete-search";
+export type OrderListUrlDialog = "cancel" | TabActionDialog;
 export type OrderListUrlQueryParams = BulkAction &
   Dialog<OrderListUrlDialog> &
   OrderListUrlFilters &
@@ -41,9 +43,15 @@ export const orderListUrl = (params?: OrderListUrlQueryParams): string => {
 };
 
 export const orderDraftListPath = urlJoin(orderSectionUrl, "drafts");
-export type OrderDraftListUrlDialog = "remove";
-export type OrderDraftListUrlQueryParams = BulkAction &
+export enum OrderDraftListUrlFiltersEnum {
+  query = "query"
+}
+export type OrderDraftListUrlFilters = Filters<OrderDraftListUrlFiltersEnum>;
+export type OrderDraftListUrlDialog = "remove" | TabActionDialog;
+export type OrderDraftListUrlQueryParams = ActiveTab &
+  BulkAction &
   Dialog<OrderDraftListUrlDialog> &
+  OrderDraftListUrlFilters &
   Pagination;
 export const orderDraftListUrl = (
   params?: OrderDraftListUrlQueryParams

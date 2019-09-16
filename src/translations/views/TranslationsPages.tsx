@@ -104,10 +104,9 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
                 saveButtonState={saveButtonState}
                 onBack={() =>
                   navigate(
-                    languageEntitiesUrl(
-                      languageCode,
-                      TranslatableEntities.pages
-                    )
+                    languageEntitiesUrl(languageCode, {
+                      tab: TranslatableEntities.pages
+                    })
                   )
                 }
                 onEdit={onEdit}

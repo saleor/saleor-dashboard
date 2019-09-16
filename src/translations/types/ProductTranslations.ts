@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { LanguageCodeEnum } from "./../../types/globalTypes";
+import { LanguageCodeEnum, ProductFilterInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductTranslations
@@ -63,4 +63,5 @@ export interface ProductTranslationsVariables {
   after?: string | null;
   last?: number | null;
   before?: string | null;
+  filter?: ProductFilterInput | null;
 }

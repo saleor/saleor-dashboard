@@ -6,9 +6,8 @@ import Debounce from "../Debounce";
 import { IFilter } from "../Filter/types";
 import FilterTabs, { FilterChips, FilterTab } from "../TableFilter";
 
-export interface FilterBarProps<TUrlFilters = object, TFilterKeys = any>
-  extends FilterProps<TUrlFilters, TFilterKeys> {
-  filterMenu: IFilter<TFilterKeys>;
+export interface FilterBarProps<TKeys = string> extends FilterProps {
+  filterMenu: IFilter<TKeys>;
 }
 
 const FilterBar: React.FC<FilterBarProps> = ({
@@ -16,32 +15,32 @@ const FilterBar: React.FC<FilterBarProps> = ({
   currencySymbol,
   filterLabel,
   filtersList,
-  filterTabs,
   filterMenu,
   currentTab,
   initialSearch,
   searchPlaceholder,
+  tabs,
   onAll,
   onSearchChange,
   onFilterAdd,
-  onFilterSave,
   onTabChange,
-  onFilterDelete
+  onTabDelete,
+  onTabSave
 }) => {
   const intl = useIntl();
   const [search, setSearch] = React.useState(initialSearch);
   React.useEffect(() => setSearch(initialSearch), [currentTab, initialSearch]);
 
-  const isCustom = currentTab === filterTabs.length + 1;
+  const isCustom = currentTab === tabs.length + 1;
 
   return (
     <>
       <FilterTabs currentTab={currentTab}>
         <FilterTab label={allTabLabel} onClick={onAll} />
-        {filterTabs.map((tab, tabIndex) => (
+        {tabs.map((tab, tabIndex) => (
           <FilterTab
             onClick={() => onTabChange(tabIndex + 1)}
-            label={tab.name}
+            label={tab}
             key={tabIndex}
           />
         ))}
@@ -65,6 +64,9 @@ const FilterBar: React.FC<FilterBarProps> = ({
           return (
             <FilterChips
               currencySymbol={currencySymbol}
+              displayTabAction={
+                !!initialSearch ? (isCustom ? "save" : "delete") : null
+              }
               menu={filterMenu}
               filtersList={filtersList}
               filterLabel={filterLabel}
@@ -72,9 +74,9 @@ const FilterBar: React.FC<FilterBarProps> = ({
               search={search}
               onSearchChange={handleSearchChange}
               onFilterAdd={onFilterAdd}
-              onFilterSave={onFilterSave}
+              onFilterSave={onTabSave}
               isCustomSearch={isCustom}
-              onFilterDelete={onFilterDelete}
+              onFilterDelete={onTabDelete}
             />
           );
         }}

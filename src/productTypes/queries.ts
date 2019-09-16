@@ -51,8 +51,15 @@ export const productTypeListQuery = gql`
     $before: String
     $first: Int
     $last: Int
+    $filter: ProductTypeFilterInput
   ) {
-    productTypes(after: $after, before: $before, first: $first, last: $last) {
+    productTypes(
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      filter: $filter
+    ) {
       edges {
         node {
           ...ProductTypeFragment

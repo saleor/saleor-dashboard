@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { AttributeFilterInput } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: AttributeList
 // ====================================================
@@ -40,7 +42,7 @@ export interface AttributeList {
 }
 
 export interface AttributeListVariables {
-  query?: string | null;
+  filter?: AttributeFilterInput | null;
   inCategory?: string | null;
   inCollection?: string | null;
   before?: string | null;

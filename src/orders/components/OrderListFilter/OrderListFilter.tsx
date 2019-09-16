@@ -8,9 +8,8 @@ import FilterBar from "@saleor/components/FilterBar";
 import TimezoneContext from "@saleor/components/Timezone";
 import { FilterProps } from "../../../types";
 import { OrderStatusFilter } from "../../../types/globalTypes";
-import { OrderListUrlFilters } from "../../urls";
 
-type OrderListFilterProps = FilterProps<OrderListUrlFilters, OrderFilterKeys>;
+type OrderListFilterProps = FilterProps<OrderFilterKeys>;
 
 export enum OrderFilterKeys {
   date = "date",

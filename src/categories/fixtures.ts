@@ -1,64 +1,83 @@
 import { content } from "../storybook/stories/components/RichTextEditor";
 import { CategoryDetails_category } from "./types/CategoryDetails";
+import { CategoryFragment } from "./types/CategoryFragment";
 
-export const categories = [
+export const categories: CategoryFragment[] = [
   {
+    __typename: "Category",
     children: {
+      __typename: "CategoryCountableConnection",
       totalCount: 2
     },
     id: "123123",
     name: "Lorem ipsum dolor",
     products: {
+      __typename: "ProductCountableConnection",
       totalCount: 4
     }
   },
   {
+    __typename: "Category",
     children: {
+      __typename: "CategoryCountableConnection",
       totalCount: 54
     },
     id: "876752",
     name: "Mauris vehicula tortor vulputate",
     products: {
+      __typename: "ProductCountableConnection",
       totalCount: 3
     }
   },
   {
+    __typename: "Category",
     children: {
+      __typename: "CategoryCountableConnection",
       totalCount: 2
     },
     id: "876542",
     name: "Excepteur sint occaecat cupidatat non proident",
     products: {
+      __typename: "ProductCountableConnection",
       totalCount: 6
     }
   },
   {
+    __typename: "Category",
     children: {
+      __typename: "CategoryCountableConnection",
       totalCount: 6
     },
     id: "875352",
     name: "Ut enim ad minim veniam",
     products: {
+      __typename: "ProductCountableConnection",
       totalCount: 12
     }
   },
   {
+    __typename: "Category",
     children: {
+      __typename: "CategoryCountableConnection",
       totalCount: 76
     },
     id: "865752",
     name: "Duis aute irure dolor in reprehenderit",
     products: {
+      __typename: "ProductCountableConnection",
       totalCount: 43
     }
   },
   {
+    __typename: "Category",
     children: {
+      __typename: "CategoryCountableConnection",
       totalCount: 11
     },
     id: "878752",
     name: "Neque porro quisquam est",
     products: {
+      __typename: "ProductCountableConnection",
       totalCount: 21
     }
   }
