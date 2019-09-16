@@ -11522,7 +11522,6 @@ exports[`Storyshots Views / Authentication / Log in default 1`] = `
         />
         <div
           class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
-          data-tc="password"
         >
           <label
             class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -11549,8 +11548,9 @@ exports[`Storyshots Views / Authentication / Log in default 1`] = `
             </fieldset>
             <input
               aria-invalid="false"
-              autocomplete="current-password"
+              autocomplete="password"
               class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputType-id"
+              data-tc="password"
               name="password"
               type="password"
               value=""
@@ -11563,30 +11563,6 @@ exports[`Storyshots Views / Authentication / Log in default 1`] = `
         <div
           class="LoginCard-buttonContainer-id"
         >
-          <label
-            class="MuiFormControlLabel-root-id"
-          >
-            <button
-              class="MuiButtonBase-root-id Checkbox-root-id"
-              tabindex="0"
-              type="button"
-            >
-              <input
-                class="Checkbox-box-id"
-                name="rememberMe"
-                type="checkbox"
-                value="false"
-              />
-            </button>
-            <span
-              class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-            >
-              Remember me
-            </span>
-          </label>
-          <div
-            class="FormSpacer-spacer-id"
-          />
           <button
             class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiButton-root-id MuiButton-contained-id MuiButton-containedPrimary-id MuiButton-raised-id MuiButton-raisedPrimary-id MuiButton-disabled-id LoginCard-loginButton-id"
             data-tc="submit"
@@ -11679,7 +11655,6 @@ exports[`Storyshots Views / Authentication / Log in error 1`] = `
         />
         <div
           class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
-          data-tc="password"
         >
           <label
             class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -11706,8 +11681,9 @@ exports[`Storyshots Views / Authentication / Log in error 1`] = `
             </fieldset>
             <input
               aria-invalid="false"
-              autocomplete="current-password"
+              autocomplete="password"
               class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputType-id"
+              data-tc="password"
               name="password"
               type="password"
               value=""
@@ -11720,30 +11696,6 @@ exports[`Storyshots Views / Authentication / Log in error 1`] = `
         <div
           class="LoginCard-buttonContainer-id"
         >
-          <label
-            class="MuiFormControlLabel-root-id"
-          >
-            <button
-              class="MuiButtonBase-root-id Checkbox-root-id"
-              tabindex="0"
-              type="button"
-            >
-              <input
-                class="Checkbox-box-id"
-                name="rememberMe"
-                type="checkbox"
-                value="false"
-              />
-            </button>
-            <span
-              class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-            >
-              Remember me
-            </span>
-          </label>
-          <div
-            class="FormSpacer-spacer-id"
-          />
           <button
             class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiButton-root-id MuiButton-contained-id MuiButton-containedPrimary-id MuiButton-raised-id MuiButton-raisedPrimary-id MuiButton-disabled-id LoginCard-loginButton-id"
             data-tc="submit"
@@ -11827,7 +11779,6 @@ exports[`Storyshots Views / Authentication / Log in loading 1`] = `
         />
         <div
           class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
-          data-tc="password"
         >
           <label
             class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
@@ -11854,8 +11805,9 @@ exports[`Storyshots Views / Authentication / Log in loading 1`] = `
             </fieldset>
             <input
               aria-invalid="false"
-              autocomplete="current-password"
+              autocomplete="password"
               class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputType-id"
+              data-tc="password"
               name="password"
               type="password"
               value=""
@@ -11868,30 +11820,6 @@ exports[`Storyshots Views / Authentication / Log in loading 1`] = `
         <div
           class="LoginCard-buttonContainer-id"
         >
-          <label
-            class="MuiFormControlLabel-root-id"
-          >
-            <button
-              class="MuiButtonBase-root-id Checkbox-root-id"
-              tabindex="0"
-              type="button"
-            >
-              <input
-                class="Checkbox-box-id"
-                name="rememberMe"
-                type="checkbox"
-                value="false"
-              />
-            </button>
-            <span
-              class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-            >
-              Remember me
-            </span>
-          </label>
-          <div
-            class="FormSpacer-spacer-id"
-          />
           <button
             class="MuiButtonBase-root-id MuiButtonBase-disabled-id MuiButton-root-id MuiButton-contained-id MuiButton-containedPrimary-id MuiButton-raised-id MuiButton-raisedPrimary-id MuiButton-disabled-id LoginCard-loginButton-id"
             data-tc="submit"

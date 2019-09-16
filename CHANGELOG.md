@@ -20,4 +20,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add support for multiple values in filters - #160 by @dominik-zeglen
 - UI improvements - #166 by @benekex2
 - Fix en locale matching - #165 by @dominik-zeglen
-
+- Implement the Credential Management API - #158 by @patrys

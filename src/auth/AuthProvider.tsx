@@ -1,5 +1,10 @@
 import React from "react";
 
+import {
+  isSupported as isCredentialsManagementAPISupported,
+  login as loginWithCredentialsManagementAPI,
+  saveCredentials
+} from "@saleor/utils/credentialsManagement";
 import { MutationFunction, MutationResult } from "react-apollo";
 import { UserContext } from "./";
 import { TypedTokenAuthMutation, TypedVerifyTokenMutation } from "./mutations";
@@ -99,15 +104,20 @@ class AuthProvider extends React.Component<
     const token = getAuthToken();
     if (!!token && !user) {
       this.verifyToken(token);
+    } else {
+      loginWithCredentialsManagementAPI(this.login);
     }
   }
 
-  login = (email: string, password: string, persistToken: boolean) => {
+  login = async (email: string, password: string) => {
     const { tokenAuth } = this.props;
     const [tokenAuthFn] = tokenAuth;
 
-    this.setState({ persistToken });
-    tokenAuthFn({ variables: { email, password } });
+    tokenAuthFn({ variables: { email, password } }).then(result => {
+      if (result && !result.data.tokenCreate.errors.length) {
+        saveCredentials(result.data.tokenCreate.user, password);
+      }
+    });
   };
 
   loginByToken = (token: string, user: User) => {
@@ -117,6 +127,9 @@ class AuthProvider extends React.Component<
 
   logout = () => {
     this.setState({ user: undefined });
+    if (isCredentialsManagementAPISupported) {
+      navigator.credentials.preventSilentAccess();
+    }
     removeAuthToken();
   };
 
