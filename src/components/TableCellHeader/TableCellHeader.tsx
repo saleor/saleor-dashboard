@@ -21,8 +21,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "inline-block"
   },
   labelContainer: {
+    "&:hover": {
+      color: theme.palette.text.primary
+    },
     display: "flex",
     height: 24
+  },
+  labelContainerActive: {
+    color: theme.palette.text.primary
   },
   labelContainerCenter: {
     justifyContent: "center"
@@ -58,6 +64,7 @@ const TableCellHeader: React.FC<TableCellHeaderProps> = props => {
     <TableCell {...rest} className={classNames(classes.root, className)}>
       <div
         className={classNames(classes.labelContainer, {
+          [classes.labelContainerActive]: !!direction && !!arrowPosition,
           [classes.labelContainerCenter]: textAlign === "center",
           [classes.labelContainerRight]: textAlign === "right"
         })}

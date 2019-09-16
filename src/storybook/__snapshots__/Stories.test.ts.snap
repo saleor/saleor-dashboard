@@ -4613,7 +4613,7 @@ exports[`Storyshots Generics / Table header ascending 1`] = `
             scope="col"
           >
             <div
-              class="Hook-labelContainer-id"
+              class="Hook-labelContainer-id Hook-labelContainerActive-id"
             >
               <div
                 class="Hook-label-id"
@@ -4646,7 +4646,7 @@ exports[`Storyshots Generics / Table header ascending 1`] = `
             scope="col"
           >
             <div
-              class="Hook-labelContainer-id"
+              class="Hook-labelContainer-id Hook-labelContainerActive-id"
             >
               <div
                 class="Hook-label-id"
@@ -4702,7 +4702,7 @@ exports[`Storyshots Generics / Table header descending 1`] = `
             scope="col"
           >
             <div
-              class="Hook-labelContainer-id"
+              class="Hook-labelContainer-id Hook-labelContainerActive-id"
             >
               <div
                 class="Hook-label-id"
@@ -93854,7 +93854,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
                 scope="col"
               >
                 <div
-                  class="Hook-labelContainer-id"
+                  class="Hook-labelContainer-id Hook-labelContainerActive-id"
                 >
                   <div
                     class="Hook-label-id"
@@ -93891,7 +93891,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
                 scope="col"
               >
                 <div
-                  class="Hook-labelContainer-id"
+                  class="Hook-labelContainer-id Hook-labelContainerActive-id"
                 >
                   <div
                     class="Hook-label-id"
@@ -93905,7 +93905,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
                 scope="col"
               >
                 <div
-                  class="Hook-labelContainer-id"
+                  class="Hook-labelContainer-id Hook-labelContainerActive-id"
                 >
                   <div
                     class="Hook-label-id"
@@ -95479,7 +95479,7 @@ exports[`Storyshots Views / Products / Product list loading 1`] = `
                 scope="col"
               >
                 <div
-                  class="Hook-labelContainer-id"
+                  class="Hook-labelContainer-id Hook-labelContainerActive-id"
                 >
                   <div
                     class="Hook-label-id"
