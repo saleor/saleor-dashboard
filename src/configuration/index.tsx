@@ -25,9 +25,9 @@ import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
 import { taxSection } from "@saleor/taxes/urls";
 import { PermissionEnum } from "@saleor/types/globalTypes";
-import ConfigurationPage, { MenuItem } from "./ConfigurationPage";
+import ConfigurationPage, { MenuSection } from "./ConfigurationPage";
 
-export function createConfigurationMenu(intl: IntlShape): MenuItem[] {
+export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
     {
       label: intl.formatMessage({

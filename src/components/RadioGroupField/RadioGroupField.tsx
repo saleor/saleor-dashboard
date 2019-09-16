@@ -23,18 +23,16 @@ const styles = createStyles({
     "& > span": {
       padding: "6px"
     }
-  },
-  secondLabel: {
-    display: "block",
-    fontSize: "12px"
   }
 });
 
+interface RadioGroupFieldChoice {
+  value: string;
+  label: React.ReactNode;
+}
+
 interface RadioGroupFieldProps {
-  choices: Array<{
-    value: string;
-    label: React.ReactNode;
-  }>;
+  choices: RadioGroupFieldChoice[];
   className?: string;
   disabled?: boolean;
   error?: boolean;

@@ -148,20 +148,18 @@ const CollectionDetailsPage: React.StatelessComponent<
                     }
                   )}
                 >
-                  <>
-                    <FormSpacer />
-                    <Hr />
-                    <ControlledCheckbox
-                      name={"isFeatured" as keyof CollectionDetailsPageFormData}
-                      label={intl.formatMessage({
-                        defaultMessage: "Feature on Homepage",
-                        description: "switch button"
-                      })}
-                      checked={data.isFeatured}
-                      onChange={change}
-                      disabled={disabled}
-                    />
-                  </>
+                  <FormSpacer />
+                  <Hr />
+                  <ControlledCheckbox
+                    name={"isFeatured" as keyof CollectionDetailsPageFormData}
+                    label={intl.formatMessage({
+                      defaultMessage: "Feature on Homepage",
+                      description: "switch button"
+                    })}
+                    checked={data.isFeatured}
+                    onChange={change}
+                    disabled={disabled}
+                  />
                 </VisibilityCard>
               </div>
             </div>

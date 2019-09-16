@@ -51,13 +51,13 @@ export const RadioSwitchField = withStyles(styles, {
     secondOptionLabel,
     value
   }: RadioSwitchFieldProps & WithStyles<typeof styles>) => {
-    const initialValue = value ? "visible" : "hidden";
+    const initialValue = value ? "true" : "false";
 
     const change = event => {
       onChange({
         target: {
           name: event.target.name,
-          value: event.target.value === "visible" ? true : false
+          value: event.target.value === "true" ? true : false
         }
       } as any);
     };
@@ -75,14 +75,14 @@ export const RadioSwitchField = withStyles(styles, {
           onChange={event => change(event)}
         >
           <FormControlLabel
-            value="visible"
+            value="true"
             className={classes.radioLabel}
             control={<Radio color="primary" />}
             label={firstOptionLabel}
             name={name}
           />
           <FormControlLabel
-            value="hidden"
+            value="false"
             className={classes.radioLabel}
             control={<Radio color="primary" />}
             label={secondOptionLabel}

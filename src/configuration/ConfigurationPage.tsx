@@ -19,14 +19,16 @@ import PageHeader from "../components/PageHeader";
 import { PermissionEnum } from "../types/globalTypes";
 
 export interface MenuItem {
+  description: string;
+  icon: React.ReactElement<IconProps>;
+  permission: PermissionEnum;
+  title: string;
+  url?: string;
+}
+
+export interface MenuSection {
   label: string;
-  menuItems: Array<{
-    description: string;
-    icon: React.ReactElement<IconProps>;
-    permission: PermissionEnum;
-    title: string;
-    url?: string;
-  }>;
+  menuItems: MenuItem[];
 }
 
 const styles = (theme: Theme) =>
@@ -87,7 +89,7 @@ const styles = (theme: Theme) =>
   });
 
 export interface ConfigurationPageProps {
-  menu: MenuItem[];
+  menu: MenuSection[];
   user: User;
   onSectionClick: (sectionName: string) => void;
 }
