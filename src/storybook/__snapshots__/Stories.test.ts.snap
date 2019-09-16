@@ -21977,7 +21977,7 @@ Ctrl + K"
                             class="MuiPrivateSwitchBase-input-id"
                             name="isPublished"
                             type="radio"
-                            value="visible"
+                            value="true"
                           />
                         </span>
                       </span>
@@ -22020,7 +22020,7 @@ Ctrl + K"
                             class="MuiPrivateSwitchBase-input-id"
                             name="isPublished"
                             type="radio"
-                            value="hidden"
+                            value="false"
                           />
                         </span>
                       </span>
@@ -22040,32 +22040,36 @@ Ctrl + K"
                   </div>
                 </div>
                 <div
-                  class="FormSpacer-spacer-id"
-                />
-                <hr
-                  class="Hr-root-id"
-                />
-                <label
-                  class="MuiFormControlLabel-root-id"
+                  class="VisibilityCard-children-id"
                 >
-                  <button
-                    class="MuiButtonBase-root-id Checkbox-root-id"
-                    tabindex="0"
-                    type="button"
+                  <div
+                    class="FormSpacer-spacer-id"
+                  />
+                  <hr
+                    class="Hr-root-id"
+                  />
+                  <label
+                    class="MuiFormControlLabel-root-id"
                   >
-                    <input
-                      class="Checkbox-box-id Checkbox-checked-id"
-                      name="isFeatured"
-                      type="checkbox"
-                      value="true"
-                    />
-                  </button>
-                  <span
-                    class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
-                  >
-                    Feature on Homepage
-                  </span>
-                </label>
+                    <button
+                      class="MuiButtonBase-root-id Checkbox-root-id"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <input
+                        class="Checkbox-box-id Checkbox-checked-id"
+                        name="isFeatured"
+                        type="checkbox"
+                        value="true"
+                      />
+                    </button>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      Feature on Homepage
+                    </span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -22934,7 +22938,7 @@ Ctrl + K"
                             disabled=""
                             name="isPublished"
                             type="radio"
-                            value="visible"
+                            value="true"
                           />
                         </span>
                       </span>
@@ -22978,7 +22982,7 @@ Ctrl + K"
                             disabled=""
                             name="isPublished"
                             type="radio"
-                            value="hidden"
+                            value="false"
                           />
                         </span>
                       </span>
@@ -23003,34 +23007,38 @@ Ctrl + K"
                   Set publication date
                 </p>
                 <div
-                  class="FormSpacer-spacer-id"
-                />
-                <hr
-                  class="Hr-root-id"
-                />
-                <label
-                  class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id"
+                  class="VisibilityCard-children-id"
                 >
-                  <button
-                    class="MuiButtonBase-root-id MuiButtonBase-disabled-id Checkbox-root-id"
-                    disabled=""
-                    tabindex="-1"
-                    type="button"
+                  <div
+                    class="FormSpacer-spacer-id"
+                  />
+                  <hr
+                    class="Hr-root-id"
+                  />
+                  <label
+                    class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id"
                   >
-                    <input
-                      class="Checkbox-box-id Checkbox-checked-id Checkbox-disabled-id"
+                    <button
+                      class="MuiButtonBase-root-id MuiButtonBase-disabled-id Checkbox-root-id"
                       disabled=""
-                      name="isFeatured"
-                      type="checkbox"
-                      value="true"
-                    />
-                  </button>
-                  <span
-                    class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                  >
-                    Feature on Homepage
-                  </span>
-                </label>
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <input
+                        class="Checkbox-box-id Checkbox-checked-id Checkbox-disabled-id"
+                        disabled=""
+                        name="isFeatured"
+                        type="checkbox"
+                        value="true"
+                      />
+                    </button>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                    >
+                      Feature on Homepage
+                    </span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -24086,7 +24094,7 @@ Ctrl + K"
                             disabled=""
                             name="isPublished"
                             type="radio"
-                            value="visible"
+                            value="true"
                           />
                         </span>
                       </span>
@@ -24131,7 +24139,7 @@ Ctrl + K"
                             disabled=""
                             name="isPublished"
                             type="radio"
-                            value="hidden"
+                            value="false"
                           />
                         </span>
                       </span>
@@ -24151,34 +24159,38 @@ Ctrl + K"
                   </div>
                 </div>
                 <div
-                  class="FormSpacer-spacer-id"
-                />
-                <hr
-                  class="Hr-root-id"
-                />
-                <label
-                  class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id"
+                  class="VisibilityCard-children-id"
                 >
-                  <button
-                    class="MuiButtonBase-root-id MuiButtonBase-disabled-id Checkbox-root-id"
-                    disabled=""
-                    tabindex="-1"
-                    type="button"
+                  <div
+                    class="FormSpacer-spacer-id"
+                  />
+                  <hr
+                    class="Hr-root-id"
+                  />
+                  <label
+                    class="MuiFormControlLabel-root-id MuiFormControlLabel-disabled-id"
                   >
-                    <input
-                      class="Checkbox-box-id Checkbox-checked-id Checkbox-disabled-id"
+                    <button
+                      class="MuiButtonBase-root-id MuiButtonBase-disabled-id Checkbox-root-id"
                       disabled=""
-                      name="isFeatured"
-                      type="checkbox"
-                      value="true"
-                    />
-                  </button>
-                  <span
-                    class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
-                  >
-                    Feature on Homepage
-                  </span>
-                </label>
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <input
+                        class="Checkbox-box-id Checkbox-checked-id Checkbox-disabled-id"
+                        disabled=""
+                        name="isFeatured"
+                        type="checkbox"
+                        value="true"
+                      />
+                    </button>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id MuiFormControlLabel-disabled-id"
+                    >
+                      Feature on Homepage
+                    </span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -25516,7 +25528,7 @@ Ctrl + K"
                                 class="MuiPrivateSwitchBase-input-id"
                                 name="isPublished"
                                 type="radio"
-                                value="visible"
+                                value="true"
                               />
                             </span>
                           </span>
@@ -25558,7 +25570,7 @@ Ctrl + K"
                                 class="MuiPrivateSwitchBase-input-id"
                                 name="isPublished"
                                 type="radio"
-                                value="hidden"
+                                value="false"
                               />
                             </span>
                           </span>
@@ -25582,6 +25594,9 @@ Ctrl + K"
                     >
                       Set publication date
                     </p>
+                    <div
+                      class="VisibilityCard-children-id"
+                    />
                   </div>
                 </div>
               </div>
@@ -26224,7 +26239,7 @@ Ctrl + K"
                                 disabled=""
                                 name="isPublished"
                                 type="radio"
-                                value="visible"
+                                value="true"
                               />
                             </span>
                           </span>
@@ -26268,7 +26283,7 @@ Ctrl + K"
                                 disabled=""
                                 name="isPublished"
                                 type="radio"
-                                value="hidden"
+                                value="false"
                               />
                             </span>
                           </span>
@@ -26292,6 +26307,9 @@ Ctrl + K"
                     >
                       Set publication date
                     </p>
+                    <div
+                      class="VisibilityCard-children-id"
+                    />
                   </div>
                 </div>
               </div>
@@ -71624,7 +71642,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="visible"
+                          value="true"
                         />
                       </span>
                     </span>
@@ -71666,7 +71684,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="hidden"
+                          value="false"
                         />
                       </span>
                     </span>
@@ -71690,6 +71708,9 @@ Ctrl + K"
               >
                 Set publication date
               </p>
+              <div
+                class="VisibilityCard-children-id"
+              />
             </div>
           </div>
         </div>
@@ -72486,7 +72507,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="visible"
+                          value="true"
                         />
                       </span>
                     </span>
@@ -72528,7 +72549,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="hidden"
+                          value="false"
                         />
                       </span>
                     </span>
@@ -72552,6 +72573,9 @@ Ctrl + K"
               >
                 Set publication date
               </p>
+              <div
+                class="VisibilityCard-children-id"
+              />
             </div>
           </div>
         </div>
@@ -73148,7 +73172,7 @@ Ctrl + K"
                           disabled=""
                           name="isPublished"
                           type="radio"
-                          value="visible"
+                          value="true"
                         />
                       </span>
                     </span>
@@ -73192,7 +73216,7 @@ Ctrl + K"
                           disabled=""
                           name="isPublished"
                           type="radio"
-                          value="hidden"
+                          value="false"
                         />
                       </span>
                     </span>
@@ -73216,6 +73240,9 @@ Ctrl + K"
               >
                 Set publication date
               </p>
+              <div
+                class="VisibilityCard-children-id"
+              />
             </div>
           </div>
         </div>
@@ -79900,7 +79927,7 @@ Ctrl + K"
                           disabled=""
                           name="isPublished"
                           type="radio"
-                          value="visible"
+                          value="true"
                         />
                       </span>
                     </span>
@@ -79944,7 +79971,7 @@ Ctrl + K"
                           disabled=""
                           name="isPublished"
                           type="radio"
-                          value="hidden"
+                          value="false"
                         />
                       </span>
                     </span>
@@ -79968,6 +79995,9 @@ Ctrl + K"
               >
                 Set publication date
               </p>
+              <div
+                class="VisibilityCard-children-id"
+              />
             </div>
           </div>
         </div>
@@ -80988,7 +81018,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="visible"
+                          value="true"
                         />
                       </span>
                     </span>
@@ -81030,7 +81060,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="hidden"
+                          value="false"
                         />
                       </span>
                     </span>
@@ -81054,6 +81084,9 @@ Ctrl + K"
               >
                 Set publication date
               </p>
+              <div
+                class="VisibilityCard-children-id"
+              />
             </div>
           </div>
         </div>
@@ -82094,7 +82127,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="visible"
+                          value="true"
                         />
                       </span>
                     </span>
@@ -82136,7 +82169,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="hidden"
+                          value="false"
                         />
                       </span>
                     </span>
@@ -82160,6 +82193,9 @@ Ctrl + K"
               >
                 Set publication date
               </p>
+              <div
+                class="VisibilityCard-children-id"
+              />
             </div>
           </div>
         </div>
@@ -85771,7 +85807,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="visible"
+                          value="true"
                         />
                       </span>
                     </span>
@@ -85814,7 +85850,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="hidden"
+                          value="false"
                         />
                       </span>
                     </span>
@@ -85833,6 +85869,9 @@ Ctrl + K"
                   </label>
                 </div>
               </div>
+              <div
+                class="VisibilityCard-children-id"
+              />
             </div>
           </div>
         </div>
@@ -86885,7 +86924,7 @@ Ctrl + K"
                           disabled=""
                           name="isPublished"
                           type="radio"
-                          value="visible"
+                          value="true"
                         />
                       </span>
                     </span>
@@ -86929,7 +86968,7 @@ Ctrl + K"
                           disabled=""
                           name="isPublished"
                           type="radio"
-                          value="hidden"
+                          value="false"
                         />
                       </span>
                     </span>
@@ -86953,6 +86992,9 @@ Ctrl + K"
               >
                 Set publication date
               </p>
+              <div
+                class="VisibilityCard-children-id"
+              />
             </div>
           </div>
         </div>
@@ -88556,7 +88598,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="visible"
+                          value="true"
                         />
                       </span>
                     </span>
@@ -88599,7 +88641,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="hidden"
+                          value="false"
                         />
                       </span>
                     </span>
@@ -88618,6 +88660,9 @@ Ctrl + K"
                   </label>
                 </div>
               </div>
+              <div
+                class="VisibilityCard-children-id"
+              />
             </div>
           </div>
         </div>
@@ -90246,7 +90291,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="visible"
+                          value="true"
                         />
                       </span>
                     </span>
@@ -90289,7 +90334,7 @@ Ctrl + K"
                           class="MuiPrivateSwitchBase-input-id"
                           name="isPublished"
                           type="radio"
-                          value="hidden"
+                          value="false"
                         />
                       </span>
                     </span>
@@ -90308,6 +90353,9 @@ Ctrl + K"
                   </label>
                 </div>
               </div>
+              <div
+                class="VisibilityCard-children-id"
+              />
             </div>
           </div>
         </div>
