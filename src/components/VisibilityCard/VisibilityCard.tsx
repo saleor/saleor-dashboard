@@ -13,7 +13,6 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { DateContext } from "../Date/DateContext";
 
 const styles = (theme: Theme) =>
@@ -48,7 +47,9 @@ interface VisibilityCardProps extends WithStyles<typeof styles> {
   };
   errors: { [key: string]: string };
   disabled?: boolean;
+  hiddenMessage: string;
   onChange: (event: React.ChangeEvent<any>) => void;
+  visibleMessage: string;
 }
 
 export const VisibilityCard = withStyles(styles, {
@@ -60,38 +61,25 @@ export const VisibilityCard = withStyles(styles, {
     data: { isPublished, publicationDate },
     errors,
     disabled,
-    onChange
+    hiddenMessage,
+    onChange,
+    visibleMessage
   }: VisibilityCardProps) => {
     const intl = useIntl();
     const [isPublicationDate, setPublicationDate] = React.useState(
       publicationDate === null ? true : false
     );
-    const localizeDate = useDateLocalize();
     const dateNow = React.useContext(DateContext);
     const visibleSecondLabel = publicationDate
       ? isPublished
-        ? intl.formatMessage(
-            {
-              defaultMessage: "since {date}"
-            },
-            {
-              date: localizeDate(publicationDate)
-            }
-          )
+        ? visibleMessage
         : null
       : null;
     const hiddenSecondLabel = publicationDate
       ? isPublished
         ? null
         : Date.parse(publicationDate) > dateNow
-        ? intl.formatMessage(
-            {
-              defaultMessage: "will be visible from {date}"
-            },
-            {
-              date: localizeDate(publicationDate)
-            }
-          )
+        ? hiddenMessage
         : null
       : null;
 
