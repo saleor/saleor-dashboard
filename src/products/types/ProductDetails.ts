@@ -139,11 +139,25 @@ export interface ProductDetails_product_variants {
   stockQuantity: number;
 }
 
+export interface ProductDetails_product_productType_variantAttributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+}
+
+export interface ProductDetails_product_productType_variantAttributes {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  values: (ProductDetails_product_productType_variantAttributes_values | null)[] | null;
+}
+
 export interface ProductDetails_product_productType {
   __typename: "ProductType";
   id: string;
   name: string;
   hasVariants: boolean;
+  variantAttributes: (ProductDetails_product_productType_variantAttributes | null)[] | null;
 }
 
 export interface ProductDetails_product {

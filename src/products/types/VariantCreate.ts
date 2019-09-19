@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueInput } from "./../../types/globalTypes";
+import { ProductVariantCreateInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantCreate
@@ -122,11 +122,5 @@ export interface VariantCreate {
 }
 
 export interface VariantCreateVariables {
-  attributes: (AttributeValueInput | null)[];
-  costPrice?: any | null;
-  priceOverride?: any | null;
-  product: string;
-  sku?: string | null;
-  quantity?: number | null;
-  trackInventory: boolean;
+  input: ProductVariantCreateInput;
 }

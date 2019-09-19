@@ -319,26 +319,8 @@ export const TypedVariantUpdateMutation = TypedMutation<
 
 export const variantCreateMutation = gql`
   ${fragmentVariant}
-  mutation VariantCreate(
-    $attributes: [AttributeValueInput]!
-    $costPrice: Decimal
-    $priceOverride: Decimal
-    $product: ID!
-    $sku: String
-    $quantity: Int
-    $trackInventory: Boolean!
-  ) {
-    productVariantCreate(
-      input: {
-        attributes: $attributes
-        costPrice: $costPrice
-        priceOverride: $priceOverride
-        product: $product
-        sku: $sku
-        quantity: $quantity
-        trackInventory: $trackInventory
-      }
-    ) {
+  mutation VariantCreate($input: ProductVariantCreateInput!) {
+    productVariantCreate(input: $input) {
       errors {
         field
         message

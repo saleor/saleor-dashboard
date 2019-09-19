@@ -614,6 +614,17 @@ export interface ProductTypeInput {
   taxCode?: string | null;
 }
 
+export interface ProductVariantCreateInput {
+  attributes: (AttributeValueInput | null)[];
+  costPrice?: any | null;
+  priceOverride?: any | null;
+  sku?: string | null;
+  quantity?: number | null;
+  trackInventory?: boolean | null;
+  weight?: any | null;
+  product: string;
+}
+
 export interface ProductVariantInput {
   attributes?: (AttributeValueInput | null)[] | null;
   costPrice?: any | null;

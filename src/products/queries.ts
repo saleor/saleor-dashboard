@@ -260,6 +260,16 @@ const productDetailsQuery = gql`
   query ProductDetails($id: ID!) {
     product(id: $id) {
       ...Product
+      productType {
+        variantAttributes {
+          id
+          name
+          values {
+            id
+            name
+          }
+        }
+      }
     }
   }
 `;
