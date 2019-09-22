@@ -1,0 +1,26 @@
+{
+  "name": "saleor-dashboard",
+  "description": "A GraphQL-powered, single-page dashboard application for Saleor",
+  "repository": "https://github.com/mirumee/saleor-dashboard",
+  "website": "http://getsaleor.com/",
+  "logo": "https://mirumee.com/img/opensource_saleor.jpg",
+  "keywords": ["saleor", "e-commerce", "dashboard"],
+  "env": {
+    "API_URI": {
+      "description": "URI of a running instance of Saleor GraphQL API",
+      "value": "https://demo.getsaleor.com/graphql/"
+    },
+    "APP_MOUNT_URI": {
+      "description": "URI at which the Dashboard app will be mounted",
+      "value": "/"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-static.git"
+    }
+  ]
+}
