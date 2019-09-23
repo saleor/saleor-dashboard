@@ -48,8 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     "& input": {
       padding: "16px 12px 17px"
     },
-    marginTop: theme.spacing.unit / 2,
-    width: 104
+    marginTop: theme.spacing.unit / 2
   }
 }));
 
