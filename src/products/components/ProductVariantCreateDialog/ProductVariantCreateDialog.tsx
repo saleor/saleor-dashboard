@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   content: {
     overflowX: "visible",
     overflowY: "hidden",
-    width: 600
+    width: 800
   }
 }));
 

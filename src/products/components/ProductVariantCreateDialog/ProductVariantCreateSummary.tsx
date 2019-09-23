@@ -32,13 +32,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "auto"
   },
   colPrice: {
-    width: 110
+    width: 160
   },
   colSku: {
-    width: 110
+    width: 210
   },
   colStock: {
-    width: 110
+    width: 160
   },
   hr: {
     marginBottom: theme.spacing.unit,

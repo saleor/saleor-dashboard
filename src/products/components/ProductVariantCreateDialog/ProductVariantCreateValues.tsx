@@ -14,7 +14,7 @@ import { ProductVariantCreateFormData } from "./form";
 export interface ProductVariantCreateValuesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   data: ProductVariantCreateFormData;
-  onValueClick: (id: string) => void;
+  onValueClick: (attributeId: string, valueId: string) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -47,10 +47,16 @@ const ProductVariantCreateValues: React.FC<
           <div className={classes.valueContainer}>
             {attribute.values.map(value => (
               <ControlledCheckbox
-                checked={isSelected(value.id, data.values, (a, b) => a === b)}
+                checked={isSelected(
+                  value.id,
+                  data.attributes.find(
+                    dataAttribute => attribute.id === dataAttribute.id
+                  ).values,
+                  (a, b) => a === b
+                )}
                 name={`value:${value.id}`}
                 label={value.name}
-                onChange={() => onValueClick(value.id)}
+                onChange={() => onValueClick(attribute.id, value.id)}
               />
             ))}
           </div>

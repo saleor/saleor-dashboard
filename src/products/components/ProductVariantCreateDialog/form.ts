@@ -1,16 +1,23 @@
 import { ProductVariantCreateInput } from "../../../types/globalTypes";
 
+export interface AttributeValue {
+  id: string;
+  value: string;
+}
 export interface AllOrAttribute {
   all: boolean;
   attribute: string;
   value: string;
+  values: AttributeValue[];
+}
+export interface Attribute {
+  id: string;
   values: string[];
 }
 export interface ProductVariantCreateFormData {
-  attributes: string[];
+  attributes: Attribute[];
   price: AllOrAttribute;
   stock: AllOrAttribute;
-  values: string[];
   variants: ProductVariantCreateInput[];
 }
 
@@ -28,6 +35,5 @@ export const initialForm: ProductVariantCreateFormData = {
     value: "",
     values: []
   },
-  values: [],
   variants: []
 };

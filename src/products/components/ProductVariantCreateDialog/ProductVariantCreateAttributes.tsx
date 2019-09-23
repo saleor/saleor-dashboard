@@ -43,7 +43,7 @@ const ProductVariantCreateAttributes: React.FC<
               return null;
             }
             const isChecked = !!data.attributes.find(
-              selectedAttribute => selectedAttribute === attribute.id
+              selectedAttribute => selectedAttribute.id === attribute.id
             );
 
             return (

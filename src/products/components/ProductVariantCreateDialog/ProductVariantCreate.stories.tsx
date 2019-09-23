@@ -4,55 +4,56 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { attributes } from "@saleor/attributes/fixtures";
-import { isSelected } from "@saleor/utils/lists";
 import Decorator from "../../../storybook/Decorator";
+import { createVariants } from "./createVariants";
+import { AllOrAttribute } from "./form";
 import ProductVariantCreateContent, {
   ProductVariantCreateContentProps
 } from "./ProductVariantCreateContent";
 import ProductVariantCreateDialog from "./ProductVariantCreateDialog";
 
-const selectedAttributes = [1, 2, 4].map(index => attributes[index].id);
-const selectedValues = attributes
-  .filter(attribute =>
-    isSelected(attribute.id, selectedAttributes, (a, b) => a === b)
-  )
-  .map(attribute => attribute.values.map(value => value.id))
-  .reduce((acc, curr) => [...acc, ...curr], [])
-  .filter((_, valueIndex) => valueIndex % 2);
+const selectedAttributes = [1, 4, 5].map(index => attributes[index]);
+
+const price: AllOrAttribute = {
+  all: false,
+  attribute: selectedAttributes[1].id,
+  value: "2.79",
+  values: selectedAttributes[1].values.map((attribute, attributeIndex) => ({
+    id: attribute.id,
+    value: (attributeIndex + 4).toFixed(2)
+  }))
+};
+
+const stock: AllOrAttribute = {
+  all: false,
+  attribute: selectedAttributes[1].id,
+  value: "8",
+  values: selectedAttributes[1].values.map((attribute, attributeIndex) => ({
+    id: attribute.id,
+    value: (selectedAttributes.length * 10 - attributeIndex).toString()
+  }))
+};
+
+const dataAttributes = selectedAttributes.map(attribute => ({
+  id: attribute.id,
+  values: attribute.values
+    .map(value => value.id)
+    .filter((_, valueIndex) => valueIndex % 2 !== 1)
+}));
 
 const props: ProductVariantCreateContentProps = {
   attributes,
   currencySymbol: "USD",
   data: {
-    attributes: selectedAttributes,
-    price: {
-      all: false,
-      attribute: selectedAttributes[1],
-      value: "2.79",
-      values: selectedAttributes.map((_, attributeIndex) =>
-        (attributeIndex + 4).toFixed(2)
-      )
-    },
-    stock: {
-      all: false,
-      attribute: selectedAttributes[1],
-      value: "8",
-      values: selectedAttributes.map((_, attributeIndex) =>
-        (selectedAttributes.length * 10 - attributeIndex).toString()
-      )
-    },
-    values: selectedValues,
-    variants: [
-      {
-        attributes: attributes
-          .filter(attribute => selectedAttributes.includes(attribute.id))
-          .map(attribute => ({
-            id: attribute.id,
-            values: [attribute.values[0].id]
-          })),
-        product: "=1uahc98nas"
-      }
-    ]
+    attributes: dataAttributes,
+    price,
+    stock,
+    variants: createVariants({
+      attributes: dataAttributes,
+      price,
+      stock,
+      variants: []
+    })
   },
   dispatchFormDataAction: () => undefined,
   step: "attributes"
@@ -64,7 +65,7 @@ storiesOf("Views / Products / Create multiple variants", module)
       style={{
         margin: "auto",
         overflow: "visible",
-        width: 600
+        width: 800
       }}
     >
       <CardContent>{storyFn()}</CardContent>

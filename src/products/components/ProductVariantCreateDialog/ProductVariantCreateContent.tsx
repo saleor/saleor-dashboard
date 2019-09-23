@@ -40,7 +40,11 @@ const ProductVariantCreateContent: React.FC<
   const classes = useStyles(props);
 
   const selectedAttributes = attributes.filter(attribute =>
-    isSelected(attribute.id, data.attributes, (a, b) => a === b)
+    isSelected(
+      attribute.id,
+      data.attributes.map(dataAttribute => dataAttribute.id),
+      (a, b) => a === b
+    )
   );
 
   return (
@@ -51,9 +55,9 @@ const ProductVariantCreateContent: React.FC<
           <ProductVariantCreateAttributes
             attributes={attributes}
             data={data}
-            onAttributeClick={id =>
+            onAttributeClick={attributeId =>
               dispatchFormDataAction({
-                id,
+                attributeId,
                 type: "selectAttribute"
               })
             }
@@ -63,10 +67,11 @@ const ProductVariantCreateContent: React.FC<
           <ProductVariantCreateValues
             attributes={selectedAttributes}
             data={data}
-            onValueClick={id =>
+            onValueClick={(attributeId, valueId) =>
               dispatchFormDataAction({
-                id,
-                type: "selectValue"
+                attributeId,
+                type: "selectValue",
+                valueId
               })
             }
           />
@@ -90,19 +95,23 @@ const ProductVariantCreateContent: React.FC<
                 value
               })
             }
-            onAttributeSelect={(id, type) =>
+            onAttributeSelect={(attributeId, type) =>
               dispatchFormDataAction({
-                id,
+                attributeId,
                 type:
                   type === "price"
                     ? "changeApplyPriceToAttributeId"
                     : "changeApplyStockToAttributeId"
               })
             }
-            onValueClick={id =>
+            onAttributeValueChange={(valueId, value, type) =>
               dispatchFormDataAction({
-                id,
-                type: "selectValue"
+                type:
+                  type === "price"
+                    ? "changeAttributeValuePrice"
+                    : "changeAttributeValueStock",
+                value,
+                valueId
               })
             }
           />

@@ -13,7 +13,6 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
-import { isSelected } from "@saleor/utils/lists";
 import { ProductVariantCreateFormData } from "./form";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -33,10 +32,14 @@ export type PriceOrStock = "price" | "stock";
 export interface ProductVariantCreatePricesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   data: ProductVariantCreateFormData;
-  onValueClick: (id: string) => void;
-  onAttributeSelect: (id: string, type: PriceOrStock) => void;
   onApplyPriceOrStockChange: (applyToAll: boolean, type: PriceOrStock) => void;
   onApplyToAllChange: (value: string, type: PriceOrStock) => void;
+  onAttributeSelect: (id: string, type: PriceOrStock) => void;
+  onAttributeValueChange: (
+    id: string,
+    value: string,
+    type: PriceOrStock
+  ) => void;
 }
 
 const ProductVariantCreatePrices: React.FC<
@@ -47,31 +50,25 @@ const ProductVariantCreatePrices: React.FC<
     data,
     onApplyPriceOrStockChange,
     onApplyToAllChange,
-    onAttributeSelect
+    onAttributeSelect,
+    onAttributeValueChange
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const selectedAttributes = attributes.filter(attribute =>
-    isSelected(attribute.id, data.attributes, (a, b) => a === b)
-  );
-  const attributeChoices = selectedAttributes.map(attribute => ({
+  const attributeChoices = attributes.map(attribute => ({
     label: attribute.name,
     value: attribute.id
   }));
   const priceAttributeValues = data.price.all
     ? null
     : data.price.attribute
-    ? selectedAttributes.find(
-        attribute => attribute.id === data.price.attribute
-      ).values
+    ? attributes.find(attribute => attribute.id === data.price.attribute).values
     : [];
   const stockAttributeValues = data.stock.all
     ? null
     : data.stock.attribute
-    ? selectedAttributes.find(
-        attribute => attribute.id === data.stock.attribute
-      ).values
+    ? attributes.find(attribute => attribute.id === data.stock.attribute).values
     : [];
 
   return (
@@ -142,27 +139,36 @@ const ProductVariantCreatePrices: React.FC<
               </div>
             </Grid>
             {priceAttributeValues &&
-              priceAttributeValues.map((attribute, attributeIndex) => (
-                <>
-                  <FormSpacer />
-                  <Grid variant="inverted">
-                    <div className={classes.label}>
-                      <Typography>{attribute.name}</Typography>
-                    </div>
-                    <div>
-                      <TextField
-                        label={intl.formatMessage({
-                          defaultMessage: "Price",
-                          description: "variant price",
-                          id: "productVariantCreatePricesSetPricePlaceholder"
-                        })}
-                        fullWidth
-                        value={data.price.values[attributeIndex]}
-                      />
-                    </div>
-                  </Grid>
-                </>
-              ))}
+              priceAttributeValues.map(
+                (attributeValue, attributeValueIndex) => (
+                  <>
+                    <FormSpacer />
+                    <Grid variant="inverted">
+                      <div className={classes.label}>
+                        <Typography>{attributeValue.name}</Typography>
+                      </div>
+                      <div>
+                        <TextField
+                          label={intl.formatMessage({
+                            defaultMessage: "Price",
+                            description: "variant price",
+                            id: "productVariantCreatePricesSetPricePlaceholder"
+                          })}
+                          fullWidth
+                          value={data.price.values[attributeValueIndex].value}
+                          onChange={event =>
+                            onAttributeValueChange(
+                              attributeValue.id,
+                              event.target.value,
+                              "price"
+                            )
+                          }
+                        />
+                      </div>
+                    </Grid>
+                  </>
+                )
+              )}
           </>
         )}
       </RadioGroup>
@@ -233,27 +239,36 @@ const ProductVariantCreatePrices: React.FC<
               </div>
             </Grid>
             {stockAttributeValues &&
-              stockAttributeValues.map((attribute, attributeIndex) => (
-                <>
-                  <FormSpacer />
-                  <Grid variant="inverted">
-                    <div className={classes.label}>
-                      <Typography>{attribute.name}</Typography>
-                    </div>
-                    <div>
-                      <TextField
-                        label={intl.formatMessage({
-                          defaultMessage: "Stock",
-                          description: "variant stock",
-                          id: "productVariantCreatePricesSetStockPlaceholder"
-                        })}
-                        fullWidth
-                        value={data.stock.values[attributeIndex]}
-                      />
-                    </div>
-                  </Grid>
-                </>
-              ))}
+              stockAttributeValues.map(
+                (attributeValue, attributeValueIndex) => (
+                  <>
+                    <FormSpacer />
+                    <Grid variant="inverted">
+                      <div className={classes.label}>
+                        <Typography>{attributeValue.name}</Typography>
+                      </div>
+                      <div>
+                        <TextField
+                          label={intl.formatMessage({
+                            defaultMessage: "Stock",
+                            description: "variant stock",
+                            id: "productVariantCreatePricesSetStockPlaceholder"
+                          })}
+                          fullWidth
+                          value={data.stock.values[attributeValueIndex].value}
+                          onChange={event =>
+                            onAttributeValueChange(
+                              attributeValue.id,
+                              event.target.value,
+                              "stock"
+                            )
+                          }
+                        />
+                      </div>
+                    </Grid>
+                  </>
+                )
+              )}
           </>
         )}
       </RadioGroup>
