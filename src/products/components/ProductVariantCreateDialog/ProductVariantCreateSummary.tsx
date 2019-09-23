@@ -1,3 +1,8 @@
+import blue from "@material-ui/core/colors/blue";
+import cyan from "@material-ui/core/colors/cyan";
+import green from "@material-ui/core/colors/green";
+import purple from "@material-ui/core/colors/purple";
+import yellow from "@material-ui/core/colors/yellow";
 import { Theme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import Hr from "@saleor/components/Hr";
 import { ProductVariantCreateInput } from "@saleor/types/globalTypes";
@@ -22,7 +27,12 @@ export interface ProductVariantCreateSummaryProps {
   data: ProductVariantCreateFormData;
 }
 
+const colors = [blue, cyan, green, purple, yellow].map(color => color[500]);
+
 const useStyles = makeStyles((theme: Theme) => ({
+  attributeValue: {
+    marginRight: theme.spacing.unit
+  },
   col: {
     paddingLeft: theme.spacing.unit,
     paddingRight: theme.spacing.unit
@@ -118,7 +128,18 @@ const ProductVariantCreateSummary: React.FC<
               key={variant.attributes.map(attribute => attribute.id).join(":")}
             >
               <TableCell className={classNames(classes.col, classes.colName)}>
-                {getVariantName(variant, attributes).join(" ")}
+                {getVariantName(variant, attributes).map(
+                  (value, valueIndex) => (
+                    <span
+                      className={classes.attributeValue}
+                      style={{
+                        color: colors[valueIndex % colors.length]
+                      }}
+                    >
+                      {value}
+                    </span>
+                  )
+                )}
               </TableCell>
               <TableCell className={classNames(classes.col, classes.colStock)}>
                 <TextField
