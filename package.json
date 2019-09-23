@@ -171,6 +171,7 @@
     "storybook": "start-storybook -p 3000 -c src/storybook/",
     "build-storybook": "build-storybook -c src/storybook/ -o build/storybook",
     "test": "jest src/",
-    "test-e2e": "testcafe 'chrome:headless' .testcafe"
+    "test-e2e": "testcafe 'chrome:headless' .testcafe",
+    "heroku-postbuild": "npm run build"
   }
 }
