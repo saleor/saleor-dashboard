@@ -135,6 +135,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -160,6 +161,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -185,6 +187,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -210,6 +213,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -235,6 +239,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -260,6 +265,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -285,6 +291,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -310,6 +317,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
   ],
 }
@@ -386,6 +394,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -411,6 +420,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -436,6 +446,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -461,6 +472,7 @@ Object {
       "priceOverride": "45.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -486,6 +498,7 @@ Object {
       "priceOverride": "51.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -511,6 +524,7 @@ Object {
       "priceOverride": "51.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -536,6 +550,7 @@ Object {
       "priceOverride": "51.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -561,6 +576,7 @@ Object {
       "priceOverride": "51.99",
       "product": "",
       "quantity": NaN,
+      "sku": "",
     },
   ],
 }
@@ -628,6 +644,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 45,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -653,6 +670,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 45,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -678,6 +696,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 45,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -703,6 +722,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 45,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -728,6 +748,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 45,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -753,6 +774,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 45,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -778,6 +800,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 45,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -803,6 +826,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 45,
+      "sku": "",
     },
   ],
 }
@@ -879,6 +903,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 13,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -904,6 +929,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 13,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -929,6 +955,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 13,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -954,6 +981,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 13,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -979,6 +1007,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 19,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -1004,6 +1033,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 19,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -1029,6 +1059,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 19,
+      "sku": "",
     },
     Object {
       "attributes": Array [
@@ -1054,6 +1085,7 @@ Object {
       "priceOverride": "",
       "product": "",
       "quantity": 19,
+      "sku": "",
     },
   ],
 }
