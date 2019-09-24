@@ -20,17 +20,24 @@ import Hr from "@saleor/components/Hr";
 import { ProductVariantCreateInput } from "@saleor/types/globalTypes";
 import { ProductDetails_product_productType_variantAttributes } from "../../types/ProductDetails";
 import { ProductVariantCreateFormData } from "./form";
+import { VariantField } from "./reducer";
 
 export interface ProductVariantCreateSummaryProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
+  onVariantDataChange: (
+    variantIndex: number,
+    field: VariantField,
+    value: string
+  ) => void;
 }
 
 const colors = [blue, cyan, green, purple, yellow].map(color => color[800]);
 
 const useStyles = makeStyles((theme: Theme) => ({
   attributeValue: {
+    display: "inline-block",
     marginRight: theme.spacing.unit
   },
   col: {
@@ -84,7 +91,7 @@ function getVariantName(
 const ProductVariantCreateSummary: React.FC<
   ProductVariantCreateSummaryProps
 > = props => {
-  const { attributes, currencySymbol, data } = props;
+  const { attributes, currencySymbol, data, onVariantDataChange } = props;
   const classes = useStyles(props);
 
   return (
@@ -123,7 +130,7 @@ const ProductVariantCreateSummary: React.FC<
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.variants.map(variant => (
+          {data.variants.map((variant, variantIndex) => (
             <TableRow
               key={variant.attributes
                 .map(attribute => attribute.values[0])
@@ -152,6 +159,13 @@ const ProductVariantCreateSummary: React.FC<
                   }}
                   fullWidth
                   value={variant.quantity}
+                  onChange={event =>
+                    onVariantDataChange(
+                      variantIndex,
+                      "stock",
+                      event.target.value
+                    )
+                  }
                 />
               </TableCell>
               <TableCell className={classNames(classes.col, classes.colPrice)}>
@@ -166,6 +180,13 @@ const ProductVariantCreateSummary: React.FC<
                   }}
                   fullWidth
                   value={variant.priceOverride}
+                  onChange={event =>
+                    onVariantDataChange(
+                      variantIndex,
+                      "price",
+                      event.target.value
+                    )
+                  }
                 />
               </TableCell>
               <TableCell className={classNames(classes.col, classes.colSku)}>
@@ -173,6 +194,9 @@ const ProductVariantCreateSummary: React.FC<
                   className={classes.input}
                   fullWidth
                   value={variant.sku}
+                  onChange={event =>
+                    onVariantDataChange(variantIndex, "sku", event.target.value)
+                  }
                 />
               </TableCell>
             </TableRow>

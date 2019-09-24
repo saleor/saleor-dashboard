@@ -25,6 +25,51 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
+function canHitNext(
+  step: ProductVariantCreateStep,
+  data: ProductVariantCreateFormData
+): boolean {
+  switch (step) {
+    case "attributes":
+      return data.attributes.length > 0;
+    case "values":
+      return data.attributes.every(attribute => attribute.values.length > 0);
+    case "prices":
+      if (data.price.all) {
+        if (data.price.value === "") {
+          return false;
+        }
+      } else {
+        if (
+          data.price.attribute === "" ||
+          data.price.values.some(attributeValue => attributeValue.value === "")
+        ) {
+          return false;
+        }
+      }
+
+      if (data.stock.all) {
+        if (data.stock.value === "") {
+          return false;
+        }
+      } else {
+        if (
+          data.stock.attribute === "" ||
+          data.stock.values.some(attributeValue => attributeValue.value === "")
+        ) {
+          return false;
+        }
+      }
+
+      return true;
+    case "summary":
+      return data.variants.every(variant => variant.sku !== "");
+
+    default:
+      return false;
+  }
+}
+
 export interface ProductVariantCreateDialogProps
   extends Omit<
     ProductVariantCreateContentProps,
@@ -110,13 +155,19 @@ const ProductVariantCreateDialog: React.FC<
           <Button
             className={classes.button}
             color="primary"
+            disabled={!canHitNext(step, data)}
             variant="contained"
             onClick={handleNextStep}
           >
             <FormattedMessage defaultMessage="Next" description="button" />
           </Button>
         ) : (
-          <Button className={classes.button} variant="contained">
+          <Button
+            className={classes.button}
+            color="primary"
+            disabled={!canHitNext(step, data)}
+            variant="contained"
+          >
             <FormattedMessage
               defaultMessage="Create"
               description="create multiple variants, button"

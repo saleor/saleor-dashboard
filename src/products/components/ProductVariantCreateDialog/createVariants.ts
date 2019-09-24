@@ -47,7 +47,8 @@ function createVariant(
     })),
     priceOverride,
     product: "",
-    quantity
+    quantity,
+    sku: ""
   };
 }
 

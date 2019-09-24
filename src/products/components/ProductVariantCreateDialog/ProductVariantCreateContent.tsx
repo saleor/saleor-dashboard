@@ -121,6 +121,14 @@ const ProductVariantCreateContent: React.FC<
             attributes={selectedAttributes}
             currencySymbol={currencySymbol}
             data={data}
+            onVariantDataChange={(variantIndex, field, value) =>
+              dispatchFormDataAction({
+                field,
+                type: "changeVariantData",
+                value,
+                variantIndex
+              })
+            }
           />
         )}
       </div>
