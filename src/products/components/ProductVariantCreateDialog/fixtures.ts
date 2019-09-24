@@ -1,4 +1,9 @@
-import { initialForm, ProductVariantCreateFormData } from "./form";
+import { createVariants } from "./createVariants";
+import {
+  AllOrAttribute,
+  initialForm,
+  ProductVariantCreateFormData
+} from "./form";
 
 export const attributes = [
   {
@@ -44,6 +49,7 @@ export const secondStep: ProductVariantCreateFormData = {
     }
   ]
 };
+
 export const thirdStep: ProductVariantCreateFormData = {
   ...secondStep,
   attributes: [
@@ -60,4 +66,45 @@ export const thirdStep: ProductVariantCreateFormData = {
       values: [0, 4].map(index => attributes[3].values[index])
     }
   ]
+};
+
+const price: AllOrAttribute = {
+  all: false,
+  attribute: thirdStep.attributes[1].id,
+  value: "",
+  values: [
+    {
+      id: thirdStep.attributes[1].values[0],
+      value: "24.99"
+    },
+    {
+      id: thirdStep.attributes[1].values[1],
+      value: "26.99"
+    }
+  ]
+};
+const stock: AllOrAttribute = {
+  all: false,
+  attribute: thirdStep.attributes[2].id,
+  value: "",
+  values: [
+    {
+      id: thirdStep.attributes[2].values[0],
+      value: "50"
+    },
+    {
+      id: thirdStep.attributes[2].values[1],
+      value: "35"
+    }
+  ]
+};
+export const fourthStep: ProductVariantCreateFormData = {
+  ...thirdStep,
+  price,
+  stock,
+  variants: createVariants({
+    ...thirdStep,
+    price,
+    stock
+  })
 };

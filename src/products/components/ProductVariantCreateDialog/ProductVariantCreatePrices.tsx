@@ -112,66 +112,64 @@ const ProductVariantCreatePrices: React.FC<
           })}
           onChange={() => onApplyPriceOrStockChange(false, "price")}
         />
-        {!data.price.all && (
-          <>
-            <FormSpacer />
-            <Grid variant="inverted">
-              <div className={classes.label}>
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="Choose attribute"
-                    description="variant attribute"
-                  />
-                </Typography>
-              </div>
-              <div>
-                <SingleSelectField
-                  choices={attributeChoices}
-                  label={intl.formatMessage({
-                    defaultMessage: "Attribute",
-                    description: "variant attribute"
-                  })}
-                  value={data.price.attribute}
-                  onChange={event =>
-                    onAttributeSelect(event.target.value, "price")
-                  }
-                />
-              </div>
-            </Grid>
-            {priceAttributeValues &&
-              priceAttributeValues.map(
-                (attributeValue, attributeValueIndex) => (
-                  <>
-                    <FormSpacer />
-                    <Grid variant="inverted">
-                      <div className={classes.label}>
-                        <Typography>{attributeValue.name}</Typography>
-                      </div>
-                      <div>
-                        <TextField
-                          label={intl.formatMessage({
-                            defaultMessage: "Price",
-                            description: "variant price",
-                            id: "productVariantCreatePricesSetPricePlaceholder"
-                          })}
-                          fullWidth
-                          value={data.price.values[attributeValueIndex].value}
-                          onChange={event =>
-                            onAttributeValueChange(
-                              attributeValue.id,
-                              event.target.value,
-                              "price"
-                            )
-                          }
-                        />
-                      </div>
-                    </Grid>
-                  </>
-                )
-              )}
-          </>
-        )}
       </RadioGroup>
+      {!data.price.all && (
+        <>
+          <FormSpacer />
+          <Grid variant="inverted">
+            <div className={classes.label}>
+              <Typography>
+                <FormattedMessage
+                  defaultMessage="Choose attribute"
+                  description="variant attribute"
+                />
+              </Typography>
+            </div>
+            <div>
+              <SingleSelectField
+                choices={attributeChoices}
+                label={intl.formatMessage({
+                  defaultMessage: "Attribute",
+                  description: "variant attribute"
+                })}
+                value={data.price.attribute}
+                onChange={event =>
+                  onAttributeSelect(event.target.value, "price")
+                }
+              />
+            </div>
+          </Grid>
+          {priceAttributeValues &&
+            priceAttributeValues.map((attributeValue, attributeValueIndex) => (
+              <>
+                <FormSpacer />
+                <Grid variant="inverted">
+                  <div className={classes.label}>
+                    <Typography>{attributeValue.name}</Typography>
+                  </div>
+                  <div>
+                    <TextField
+                      label={intl.formatMessage({
+                        defaultMessage: "Price",
+                        description: "variant price",
+                        id: "productVariantCreatePricesSetPricePlaceholder"
+                      })}
+                      fullWidth
+                      value={data.price.values[attributeValueIndex].value}
+                      onChange={event =>
+                        onAttributeValueChange(
+                          attributeValue.id,
+                          event.target.value,
+                          "price"
+                        )
+                      }
+                    />
+                  </div>
+                </Grid>
+              </>
+            ))}
+        </>
+      )}
       <FormSpacer />
       <Typography color="textSecondary" variant="headline">
         <FormattedMessage
@@ -212,66 +210,64 @@ const ProductVariantCreatePrices: React.FC<
           })}
           onChange={() => onApplyPriceOrStockChange(false, "stock")}
         />
-        {!data.stock.all && (
-          <>
-            <FormSpacer />
-            <Grid variant="inverted">
-              <div className={classes.label}>
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="Choose attribute"
-                    description="variant attribute"
-                  />
-                </Typography>
-              </div>
-              <div>
-                <SingleSelectField
-                  choices={attributeChoices}
-                  label={intl.formatMessage({
-                    defaultMessage: "Attribute",
-                    description: "variant attribute"
-                  })}
-                  value={data.stock.attribute}
-                  onChange={event =>
-                    onAttributeSelect(event.target.value, "stock")
-                  }
-                />
-              </div>
-            </Grid>
-            {stockAttributeValues &&
-              stockAttributeValues.map(
-                (attributeValue, attributeValueIndex) => (
-                  <>
-                    <FormSpacer />
-                    <Grid variant="inverted">
-                      <div className={classes.label}>
-                        <Typography>{attributeValue.name}</Typography>
-                      </div>
-                      <div>
-                        <TextField
-                          label={intl.formatMessage({
-                            defaultMessage: "Stock",
-                            description: "variant stock",
-                            id: "productVariantCreatePricesSetStockPlaceholder"
-                          })}
-                          fullWidth
-                          value={data.stock.values[attributeValueIndex].value}
-                          onChange={event =>
-                            onAttributeValueChange(
-                              attributeValue.id,
-                              event.target.value,
-                              "stock"
-                            )
-                          }
-                        />
-                      </div>
-                    </Grid>
-                  </>
-                )
-              )}
-          </>
-        )}
       </RadioGroup>
+      {!data.stock.all && (
+        <>
+          <FormSpacer />
+          <Grid variant="inverted">
+            <div className={classes.label}>
+              <Typography>
+                <FormattedMessage
+                  defaultMessage="Choose attribute"
+                  description="variant attribute"
+                />
+              </Typography>
+            </div>
+            <div>
+              <SingleSelectField
+                choices={attributeChoices}
+                label={intl.formatMessage({
+                  defaultMessage: "Attribute",
+                  description: "variant attribute"
+                })}
+                value={data.stock.attribute}
+                onChange={event =>
+                  onAttributeSelect(event.target.value, "stock")
+                }
+              />
+            </div>
+          </Grid>
+          {stockAttributeValues &&
+            stockAttributeValues.map((attributeValue, attributeValueIndex) => (
+              <>
+                <FormSpacer />
+                <Grid variant="inverted">
+                  <div className={classes.label}>
+                    <Typography>{attributeValue.name}</Typography>
+                  </div>
+                  <div>
+                    <TextField
+                      label={intl.formatMessage({
+                        defaultMessage: "Stock",
+                        description: "variant stock",
+                        id: "productVariantCreatePricesSetStockPlaceholder"
+                      })}
+                      fullWidth
+                      value={data.stock.values[attributeValueIndex].value}
+                      onChange={event =>
+                        onAttributeValueChange(
+                          attributeValue.id,
+                          event.target.value,
+                          "stock"
+                        )
+                      }
+                    />
+                  </div>
+                </Grid>
+              </>
+            ))}
+        </>
+      )}
     </>
   );
 };

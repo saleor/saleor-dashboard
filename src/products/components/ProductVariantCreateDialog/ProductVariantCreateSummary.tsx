@@ -125,7 +125,9 @@ const ProductVariantCreateSummary: React.FC<
         <TableBody>
           {data.variants.map(variant => (
             <TableRow
-              key={variant.attributes.map(attribute => attribute.id).join(":")}
+              key={variant.attributes
+                .map(attribute => attribute.values[0])
+                .join(":")}
             >
               <TableCell className={classNames(classes.col, classes.colName)}>
                 {getVariantName(variant, attributes).map(

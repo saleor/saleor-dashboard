@@ -1,32 +1,42 @@
 import { ProductVariantCreateInput } from "@saleor/types/globalTypes";
-import { Attribute, ProductVariantCreateFormData } from "./form";
+import {
+  AllOrAttribute,
+  Attribute,
+  ProductVariantCreateFormData
+} from "./form";
 
 interface CreateVariantAttributeValueInput {
   attributeId: string;
   attributeValueId: string;
 }
 type CreateVariantInput = CreateVariantAttributeValueInput[];
+
+function getAttributeValuePriceOrStock(
+  attributes: CreateVariantInput,
+  priceOrStock: AllOrAttribute
+): string {
+  const attribute = attributes.find(
+    attribute => attribute.attributeId === priceOrStock.attribute
+  );
+
+  const attributeValue = priceOrStock.values.find(
+    attributeValue => attribute.attributeValueId === attributeValue.id
+  );
+
+  return attributeValue.value;
+}
+
 function createVariant(
   data: ProductVariantCreateFormData,
   attributes: CreateVariantInput
 ): ProductVariantCreateInput {
   const priceOverride = data.price.all
     ? data.price.value
-    : data.price.values.find(
-        value =>
-          attributes.find(
-            attribute => attribute.attributeId === data.price.attribute
-          ).attributeValueId === value.id
-      ).value;
+    : getAttributeValuePriceOrStock(attributes, data.price);
   const quantity = parseInt(
     data.stock.all
       ? data.stock.value
-      : data.stock.values.find(
-          value =>
-            attributes.find(
-              attribute => attribute.attributeId === data.stock.attribute
-            ).attributeValueId === value.id
-        ).value,
+      : getAttributeValuePriceOrStock(attributes, data.stock),
     10
   );
 
@@ -81,6 +91,12 @@ export function createVariantFlatMatrixDimension(
 export function createVariants(
   data: ProductVariantCreateFormData
 ): ProductVariantCreateInput[] {
+  if (
+    (!data.price.all && !data.price.attribute) ||
+    (!data.stock.all && !data.stock.attribute)
+  ) {
+    return [];
+  }
   const variants = createVariantFlatMatrixDimension([[]], data.attributes).map(
     variant => createVariant(data, variant)
   );

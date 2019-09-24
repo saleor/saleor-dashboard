@@ -1,6 +1,6 @@
-import { attributes, secondStep, thirdStep } from "./fixtures";
+import { attributes, fourthStep, secondStep, thirdStep } from "./fixtures";
 import { initialForm } from "./form";
-import reducer from "./reducer";
+import reducer, { VariantField } from "./reducer";
 
 function execActions<TState, TAction>(
   initialState: TState,
@@ -108,6 +108,7 @@ describe("Reducer is able to", () => {
   });
 
   it("select price to each attribute value", () => {
+    const attribute = thirdStep.attributes[0];
     const value = 45.99;
     const state = execActions(thirdStep, reducer, [
       {
@@ -115,18 +116,18 @@ describe("Reducer is able to", () => {
         type: "applyPriceToAll"
       },
       {
-        attributeId: attributes[0].id,
+        attributeId: attribute.id,
         type: "changeApplyPriceToAttributeId"
       },
       {
         type: "changeAttributeValuePrice",
         value: value.toString(),
-        valueId: attributes[0].values[0]
+        valueId: attribute.values[0]
       },
       {
         type: "changeAttributeValuePrice",
         value: (value + 6).toString(),
-        valueId: attributes[0].values[6]
+        valueId: attribute.values[1]
       }
     ]);
 
@@ -139,6 +140,7 @@ describe("Reducer is able to", () => {
   });
 
   it("select stock to each attribute value", () => {
+    const attribute = thirdStep.attributes[0];
     const value = 13;
     const state = execActions(thirdStep, reducer, [
       {
@@ -146,18 +148,18 @@ describe("Reducer is able to", () => {
         type: "applyStockToAll"
       },
       {
-        attributeId: attributes[0].id,
+        attributeId: attribute.id,
         type: "changeApplyStockToAttributeId"
       },
       {
         type: "changeAttributeValueStock",
         value: value.toString(),
-        valueId: attributes[0].values[0]
+        valueId: attribute.values[0]
       },
       {
         type: "changeAttributeValueStock",
         value: (value + 6).toString(),
-        valueId: attributes[0].values[6]
+        valueId: attribute.values[1]
       }
     ]);
 
@@ -167,5 +169,25 @@ describe("Reducer is able to", () => {
         .values.length
     );
     expect(state).toMatchSnapshot();
+  });
+
+  it("modify individual variant price", () => {
+    const field: VariantField = "price";
+    const value = "49.99";
+    const variantIndex = 3;
+
+    const state = execActions(fourthStep, reducer, [
+      {
+        field,
+        type: "changeVariantData",
+        value,
+        variantIndex
+      }
+    ]);
+
+    expect(state.variants[variantIndex].priceOverride).toBe(value);
+    expect(state.variants[variantIndex - 1].priceOverride).toBe(
+      fourthStep.variants[variantIndex - 1].priceOverride
+    );
   });
 });

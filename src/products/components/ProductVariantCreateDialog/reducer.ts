@@ -13,14 +13,19 @@ export type ProductVariantCreateReducerActionType =
   | "changeApplyStockToAttributeId"
   | "changeAttributeValuePrice"
   | "changeAttributeValueStock"
+  | "changeVariantData"
   | "selectAttribute"
   | "selectValue";
+
+export type VariantField = "stock" | "price" | "sku";
 export interface ProductVariantCreateReducerAction {
   all?: boolean;
   attributeId?: string;
+  field?: VariantField;
   type: ProductVariantCreateReducerActionType;
   value?: string;
   valueId?: string;
+  variantIndex?: number;
 }
 
 function selectAttribute(
@@ -69,12 +74,17 @@ function applyPriceToAll(
   state: ProductVariantCreateFormData,
   value: boolean
 ): ProductVariantCreateFormData {
-  return {
+  const data = {
     ...state,
     price: {
       ...state.price,
       all: value
     }
+  };
+
+  return {
+    ...data,
+    variants: createVariants(data)
   };
 }
 
@@ -82,12 +92,17 @@ function applyStockToAll(
   state: ProductVariantCreateFormData,
   value: boolean
 ): ProductVariantCreateFormData {
-  return {
+  const data = {
     ...state,
     stock: {
       ...state.stock,
       all: value
     }
+  };
+
+  return {
+    ...data,
+    variants: createVariants(data)
   };
 }
 
@@ -113,12 +128,17 @@ function changeAttributeValuePrice(
     index
   );
 
-  return {
+  const data = {
     ...state,
     price: {
       ...state.price,
       values
     }
+  };
+
+  return {
+    ...data,
+    variants: createVariants(data)
   };
 }
 
@@ -144,12 +164,17 @@ function changeAttributeValueStock(
     index
   );
 
-  return {
+  const data = {
     ...state,
     stock: {
       ...state.stock,
       values
     }
+  };
+
+  return {
+    ...data,
+    variants: createVariants(data)
   };
 }
 
@@ -164,8 +189,7 @@ function changeApplyPriceToAttributeId(
     id,
     value: ""
   }));
-
-  return {
+  const data = {
     ...state,
     price: {
       ...state.price,
@@ -173,24 +197,37 @@ function changeApplyPriceToAttributeId(
       values
     }
   };
+
+  return {
+    ...data,
+    variants: createVariants(data)
+  };
 }
 
 function changeApplyStockToAttributeId(
   state: ProductVariantCreateFormData,
-  attribute: string
+  attributeId: string
 ): ProductVariantCreateFormData {
-  return {
+  const attribute = state.attributes.find(
+    attribute => attribute.id === attributeId
+  );
+  const values = attribute.values.map(id => ({
+    id,
+    value: ""
+  }));
+
+  const data = {
     ...state,
     stock: {
       ...state.stock,
-      attribute,
-      values: state.attributes
-        .find(stateAttribute => stateAttribute.id === attribute)
-        .values.map(attributeValue => ({
-          id: attributeValue,
-          value: ""
-        }))
+      attribute: attributeId,
+      values
     }
+  };
+
+  return {
+    ...data,
+    variants: createVariants(data)
   };
 }
 
@@ -198,12 +235,17 @@ function changeApplyPriceToAllValue(
   state: ProductVariantCreateFormData,
   value: string
 ): ProductVariantCreateFormData {
-  return {
+  const data = {
     ...state,
     price: {
       ...state.price,
       value
     }
+  };
+
+  return {
+    ...data,
+    variants: createVariants(data)
   };
 }
 
@@ -222,6 +264,27 @@ function changeApplyStockToAllValue(
   return {
     ...data,
     variants: createVariants(data)
+  };
+}
+
+function changeVariantData(
+  state: ProductVariantCreateFormData,
+  field: VariantField,
+  value: string,
+  variantIndex: number
+): ProductVariantCreateFormData {
+  const variant = state.variants[variantIndex];
+  if (field === "price") {
+    variant.priceOverride = value;
+  } else if (field === "sku") {
+    variant.sku = value;
+  } else {
+    variant.quantity = parseInt(value, 10);
+  }
+
+  return {
+    ...state,
+    variants: updateAtIndex(variant, state.variants, variantIndex)
   };
 }
 
@@ -252,6 +315,13 @@ function reduceProductVariantCreateFormData(
       return changeApplyPriceToAllValue(prevState, action.value);
     case "changeApplyStockToAllValue":
       return changeApplyStockToAllValue(prevState, action.value);
+    case "changeVariantData":
+      return changeVariantData(
+        prevState,
+        action.field,
+        action.value,
+        action.variantIndex
+      );
     default:
       return prevState;
   }
