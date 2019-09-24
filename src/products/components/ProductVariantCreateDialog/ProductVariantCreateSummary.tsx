@@ -27,7 +27,7 @@ export interface ProductVariantCreateSummaryProps {
   data: ProductVariantCreateFormData;
 }
 
-const colors = [blue, cyan, green, purple, yellow].map(color => color[500]);
+const colors = [blue, cyan, green, purple, yellow].map(color => color[800]);
 
 const useStyles = makeStyles((theme: Theme) => ({
   attributeValue: {
