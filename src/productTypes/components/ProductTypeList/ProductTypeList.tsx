@@ -124,6 +124,8 @@ const ProductTypeList = withStyles(styles, { name: "ProductTypeList" })(
                   key={productType ? productType.id : "skeleton"}
                   onClick={productType ? onRowClick(productType.id) : undefined}
                   selected={isSelected}
+                  data-tc="id"
+                  data-tc-id={maybe(() => productType.id)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -136,7 +138,7 @@ const ProductTypeList = withStyles(styles, { name: "ProductTypeList" })(
                   <TableCell className={classes.colName}>
                     {productType ? (
                       <>
-                        {productType.name}
+                        <span data-tc="name">{productType.name}</span>
                         <Typography variant="caption">
                           {maybe(() => productType.hasVariants)
                             ? intl.formatMessage({

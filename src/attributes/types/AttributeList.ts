@@ -8,6 +8,13 @@ import { AttributeFilterInput } from "./../../types/globalTypes";
 // GraphQL query operation: AttributeList
 // ====================================================
 
+export interface AttributeList_attributes_edges_node_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
 export interface AttributeList_attributes_edges_node {
   __typename: "Attribute";
   id: string;
@@ -16,6 +23,7 @@ export interface AttributeList_attributes_edges_node {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  values: (AttributeList_attributes_edges_node_values | null)[] | null;
 }
 
 export interface AttributeList_attributes_edges {

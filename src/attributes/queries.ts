@@ -72,6 +72,11 @@ const attributeList = gql`
       edges {
         node {
           ...AttributeFragment
+          values {
+            id
+            name
+            slug
+          }
         }
       }
       pageInfo {
