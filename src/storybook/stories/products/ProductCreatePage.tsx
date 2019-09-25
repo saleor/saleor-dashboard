@@ -27,7 +27,6 @@ storiesOf("Views / Products / Create product", module)
       fetchProductTypes={() => undefined}
       productTypes={productTypes}
       categories={[product.category]}
-      onAttributesEdit={undefined}
       onBack={() => undefined}
       onSubmit={() => undefined}
       saveButtonBarState="default"
@@ -45,7 +44,6 @@ storiesOf("Views / Products / Create product", module)
       fetchProductTypes={() => undefined}
       productTypes={productTypes}
       categories={[product.category]}
-      onAttributesEdit={undefined}
       onBack={() => undefined}
       onSubmit={() => undefined}
       saveButtonBarState="default"
@@ -65,7 +63,6 @@ storiesOf("Views / Products / Create product", module)
       fetchProductTypes={() => undefined}
       productTypes={productTypes}
       categories={[product.category]}
-      onAttributesEdit={undefined}
       onBack={() => undefined}
       onSubmit={() => undefined}
       saveButtonBarState="default"

@@ -29,7 +29,6 @@ export const ProductUpdate: React.StatelessComponent<
   const shop = useShop();
   const intl = useIntl();
 
-  const handleAttributesEdit = undefined;
   const handleBack = () => navigate(productListUrl());
 
   return (
@@ -146,7 +145,6 @@ export const ProductUpdate: React.StatelessComponent<
                                 edge => edge.node
                               )
                             )}
-                            onAttributesEdit={handleAttributesEdit}
                             onBack={handleBack}
                             onSubmit={handleSubmit}
                             saveButtonBarState={formTransitionState}

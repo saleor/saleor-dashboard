@@ -67,7 +67,6 @@ interface ProductVariantsProps extends ListActions, WithStyles<typeof styles> {
   disabled: boolean;
   variants: ProductDetails_product_variants[];
   fallbackPrice?: ProductVariant_costPrice;
-  onAttributesEdit: () => void;
   onRowClick: (id: string) => () => void;
   onVariantAdd?();
 }
@@ -80,7 +79,6 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
     disabled,
     variants,
     fallbackPrice,
-    onAttributesEdit,
     onRowClick,
     onVariantAdd,
     isChecked,
@@ -90,6 +88,8 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
     toolbar
   }: ProductVariantsProps) => {
     const intl = useIntl();
+    const hasVariants = maybe(() => variants.length > 0, true);
+
     return (
       <Card>
         <CardTitle
@@ -99,17 +99,6 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
           })}
           toolbar={
             <>
-              <Button
-                onClick={onAttributesEdit}
-                variant="text"
-                color="primary"
-                data-tc="button-edit-attributes"
-              >
-                <FormattedMessage
-                  defaultMessage="Edit attributes"
-                  description="product variant attributes, button"
-                />
-              </Button>
               <Button
                 onClick={onVariantAdd}
                 variant="text"
@@ -126,48 +115,47 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
         />
         {!variants.length && (
           <CardContent>
-            <Typography>
+            <Typography color={hasVariants ? "default" : "textSecondary"}>
               <FormattedMessage defaultMessage="Use variants for products that come in a variety of versions for example different sizes or colors" />
             </Typography>
           </CardContent>
         )}
-        <Table className={classes.denseTable}>
-          <TableHead
-            colSpan={numberOfColumns}
-            selected={selected}
-            disabled={disabled}
-            items={variants}
-            toggleAll={toggleAll}
-            toolbar={toolbar}
-          >
-            <TableCell className={classes.colName}>
-              <FormattedMessage
-                defaultMessage="Name"
-                description="product variant name"
-              />
-            </TableCell>
-            <TableCell className={classes.colStatus}>
-              <FormattedMessage
-                defaultMessage="Status"
-                description="product variant status"
-              />
-            </TableCell>
-            <TableCell className={classes.colSku}>
-              <FormattedMessage defaultMessage="SKU" />
-            </TableCell>
-            <Hidden smDown>
-              <TableCell className={classes.colPrice}>
+        {hasVariants && (
+          <Table className={classes.denseTable}>
+            <TableHead
+              colSpan={numberOfColumns}
+              selected={selected}
+              disabled={disabled}
+              items={variants}
+              toggleAll={toggleAll}
+              toolbar={toolbar}
+            >
+              <TableCell className={classes.colName}>
                 <FormattedMessage
-                  defaultMessage="Price"
-                  description="product variant price"
+                  defaultMessage="Name"
+                  description="product variant name"
                 />
               </TableCell>
-            </Hidden>
-          </TableHead>
-          <TableBody>
-            {renderCollection(
-              variants,
-              variant => {
+              <TableCell className={classes.colStatus}>
+                <FormattedMessage
+                  defaultMessage="Status"
+                  description="product variant status"
+                />
+              </TableCell>
+              <TableCell className={classes.colSku}>
+                <FormattedMessage defaultMessage="SKU" />
+              </TableCell>
+              <Hidden smDown>
+                <TableCell className={classes.colPrice}>
+                  <FormattedMessage
+                    defaultMessage="Price"
+                    description="product variant price"
+                  />
+                </TableCell>
+              </Hidden>
+            </TableHead>
+            <TableBody>
+              {renderCollection(variants, variant => {
                 const isSelected = variant ? isChecked(variant.id) : false;
 
                 return (
@@ -237,17 +225,10 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
                     </Hidden>
                   </TableRow>
                 );
-              },
-              () => (
-                <TableRow>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="This product has no variants" />
-                  </TableCell>
-                </TableRow>
-              )
-            )}
-          </TableBody>
-        </Table>
+              })}
+            </TableBody>
+          </Table>
+        )}
       </Card>
     );
   }
