@@ -649,6 +649,11 @@ export interface SeoInput {
   description?: string | null;
 }
 
+export interface ServiceAccountFilterInput {
+  search?: string | null;
+  isActive?: boolean | null;
+}
+
 export interface ShippingPriceInput {
   name?: string | null;
   price?: any | null;

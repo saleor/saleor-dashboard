@@ -171,6 +171,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Sales",
     description: "sales section name"
   },
+  serviceAccounts: {
+    defaultMessage: "Service Accounts",
+    description: "service accounts section name"
+  },
   shipping: {
     defaultMessage: "Shipping Methods",
     description: "shipping section name"
