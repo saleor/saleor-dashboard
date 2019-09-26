@@ -18,7 +18,7 @@ const styles = (theme: Theme) =>
       overflow: "visible",
       padding: 0,
       position: "fixed" as "fixed",
-      transition: "width 0.2s ease",
+      transition: "width 0.3s ease",
       width: drawerWidthExpanded
     },
     drawerDesktopSmall: {
