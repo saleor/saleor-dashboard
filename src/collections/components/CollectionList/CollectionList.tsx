@@ -122,6 +122,8 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
                   onClick={collection ? onRowClick(collection.id) : undefined}
                   key={collection ? collection.id : "skeleton"}
                   selected={isSelected}
+                  data-tc="id"
+                  data-tc-id={maybe(() => collection.id)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -131,7 +133,7 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
                       onChange={() => toggle(collection.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName}>
+                  <TableCell className={classes.colName} data-tc="name">
                     {maybe<React.ReactNode>(
                       () => collection.name,
                       <Skeleton />
@@ -143,7 +145,11 @@ const CollectionList = withStyles(styles, { name: "CollectionList" })(
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell className={classes.colAvailability}>
+                  <TableCell
+                    className={classes.colAvailability}
+                    data-tc="published"
+                    data-tc-published={maybe(() => collection.isPublished)}
+                  >
                     {maybe(
                       () => (
                         <StatusLabel

@@ -13,7 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { translateBoolean } from "@saleor/intl";
-import { renderCollection } from "@saleor/misc";
+import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 
@@ -139,6 +139,11 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
                 key={attribute ? attribute.id : "skeleton"}
                 onClick={attribute && onRowClick(attribute.id)}
                 className={classes.link}
+                data-tc="id"
+                data-tc-id={maybe(() => attribute.id)}
+                data-tc-values={JSON.stringify(
+                  maybe(() => attribute.values, [])
+                )}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -148,27 +153,43 @@ const AttributeList: React.StatelessComponent<AttributeListProps> = ({
                     onChange={() => toggle(attribute.id)}
                   />
                 </TableCell>
-                <TableCell className={classes.colSlug}>
+                <TableCell className={classes.colSlug} data-tc="slug">
                   {attribute ? attribute.slug : <Skeleton />}
                 </TableCell>
-                <TableCell className={classes.colName}>
+                <TableCell className={classes.colName} data-tc="name">
                   {attribute ? attribute.name : <Skeleton />}
                 </TableCell>
-                <TableCell className={classes.colVisible}>
+                <TableCell
+                  className={classes.colVisible}
+                  data-tc="visible"
+                  data-tc-visible={maybe(() => attribute.visibleInStorefront)}
+                >
                   {attribute ? (
                     translateBoolean(attribute.visibleInStorefront, intl)
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
-                <TableCell className={classes.colSearchable}>
+                <TableCell
+                  className={classes.colSearchable}
+                  data-tc="searchable"
+                  data-tc-searchable={maybe(
+                    () => attribute.filterableInDashboard
+                  )}
+                >
                   {attribute ? (
                     translateBoolean(attribute.filterableInDashboard, intl)
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
-                <TableCell className={classes.colFaceted}>
+                <TableCell
+                  className={classes.colFaceted}
+                  data-tc="use-in-faceted-search"
+                  data-tc-use-in-faceted-search={maybe(
+                    () => attribute.filterableInStorefront
+                  )}
+                >
                   {attribute ? (
                     translateBoolean(attribute.filterableInStorefront, intl)
                   ) : (
