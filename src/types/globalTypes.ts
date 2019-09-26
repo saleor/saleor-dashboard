@@ -190,6 +190,7 @@ export enum PermissionEnum {
   MANAGE_STAFF = "MANAGE_STAFF",
   MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
   MANAGE_USERS = "MANAGE_USERS",
+  MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
 }
 
 export enum ProductOrderField {

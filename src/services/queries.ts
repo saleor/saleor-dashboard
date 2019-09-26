@@ -1,6 +1,10 @@
 import gql from "graphql-tag";
 
 import { pageInfoFragment, TypedQuery } from "../queries";
+import {
+  ServiceDetails,
+  ServiceDetailsVariables
+} from "./types/ServiceDetails";
 import { ServiceList, ServiceListVariables } from "./types/ServiceList";
 
 export const serviceFragment = gql`
@@ -39,3 +43,32 @@ const serviceList = gql`
 export const ServiceListQuery = TypedQuery<ServiceList, ServiceListVariables>(
   serviceList
 );
+
+const serviceDetailsFragment = gql`
+  ${serviceFragment}
+  fragment ServiceDetailsFragment on ServiceAccount {
+    ...ServiceFragment
+    permissions {
+      code
+      name
+    }
+    tokens {
+      id
+      name
+      authToken
+    }
+  }
+`;
+
+const serviceDetails = gql`
+  ${serviceDetailsFragment}
+  query ServiceDetails($id: ID!) {
+    serviceAccount(id: $id) {
+      ...ServiceDetailsFragment
+    }
+  }
+`;
+export const ServiceDetailsFragmentQuery = TypedQuery<
+  ServiceDetails,
+  ServiceDetailsVariables
+>(serviceDetails);
