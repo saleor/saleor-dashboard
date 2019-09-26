@@ -2,7 +2,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import AccountPermissions from "@saleor/components/AccountPermissions";
-import StaffStatus from "@saleor/components/AccountStatus";
+import AccountStatus from "@saleor/components/AccountStatus";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -104,7 +104,7 @@ const StaffDetailsPage: React.StatelessComponent<StaffDetailsPageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                <StaffStatus
+                <AccountStatus
                   data={data}
                   disabled={disabled}
                   onChange={change}
