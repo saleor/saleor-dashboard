@@ -107,6 +107,14 @@ const styles = (theme: Theme) =>
         top: 15,
         width: 0
       },
+      "&:before": {
+        borderLeft: `solid 2px ${theme.palette.primary.main}`,
+        content: "''",
+        height: 33,
+        left: -25,
+        position: "absolute",
+        top: 8
+      },
       position: "relative"
     },
     menuListItemText: {
