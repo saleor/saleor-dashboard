@@ -44,10 +44,16 @@ const styles = (theme: Theme) =>
       boxShadow: "0px 0px 12px 1px rgba(0,0,0,0.2)"
     },
     menuItemHover: {
+      "& p": {
+        transition: "color 0.5s ease"
+      },
       "& path": {
         transition: "fill 0.5s ease"
       },
       "&:hover": {
+        "& p": {
+          color: theme.palette.primary.main
+        },
         "& path": {
           fill: theme.palette.primary.main
         },
