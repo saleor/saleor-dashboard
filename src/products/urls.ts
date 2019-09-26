@@ -31,18 +31,22 @@ export enum ProductListUrlFiltersEnum {
 }
 export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum>;
 export enum ProductListUrlSortField {
+  attribute = "attribute",
   name = "name",
   productType = "productType",
   status = "status",
   price = "price"
 }
 export type ProductListUrlSort = Sort<ProductListUrlSortField>;
-export type ProductListUrlQueryParams = BulkAction &
-  Dialog<ProductListUrlDialog> &
-  ProductListUrlFilters &
-  ProductListUrlSort &
-  Pagination &
-  ActiveTab;
+export interface ProductListUrlQueryParams
+  extends BulkAction,
+    Dialog<ProductListUrlDialog>,
+    ProductListUrlFilters,
+    ProductListUrlSort,
+    Pagination,
+    ActiveTab {
+  attributeId?: string;
+}
 export const productListUrl = (params?: ProductListUrlQueryParams): string =>
   productListPath + "?" + stringifyQs(params);
 

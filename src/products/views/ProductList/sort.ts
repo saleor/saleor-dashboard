@@ -17,12 +17,20 @@ export function getSortQueryField(
       return ProductOrderField.TYPE;
     case ProductListUrlSortField.status:
       return ProductOrderField.PUBLISHED;
+    default:
+      return undefined;
   }
 }
 
 export function getSortQueryVariables(
   params: ProductListUrlQueryParams
 ): ProductOrder {
+  if (params.sort === ProductListUrlSortField.attribute) {
+    return {
+      attributeId: params.attributeId,
+      direction: getOrderDirection(params.asc)
+    };
+  }
   return {
     direction: getOrderDirection(params.asc),
     field: getSortQueryField(params.sort)

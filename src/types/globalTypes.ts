@@ -589,7 +589,8 @@ export interface ProductFilterInput {
 }
 
 export interface ProductOrder {
-  field: ProductOrderField;
+  field?: ProductOrderField | null;
+  attributeId?: string | null;
   direction: OrderDirection;
 }
 

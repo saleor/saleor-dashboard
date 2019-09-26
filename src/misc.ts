@@ -480,5 +480,8 @@ export function findInEnum<TEnum extends object>(
 }
 
 export function parseBoolean(a: string): boolean {
+  if (a === undefined) {
+    return true;
+  }
   return a === "true";
 }

@@ -50,7 +50,7 @@ export interface ListProps<TColumns extends string = string> {
 
 export interface SortPage<TSortKey extends string> {
   sort: Sort<TSortKey>;
-  onSort: (field: TSortKey) => void;
+  onSort: (field: TSortKey, id?: string) => void;
 }
 export interface ListActionsWithoutToolbar {
   toggle: (id: string) => void;

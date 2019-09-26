@@ -42,6 +42,7 @@ import {
   ProductListUrlDialog,
   ProductListUrlFilters,
   ProductListUrlQueryParams,
+  ProductListUrlSortField,
   productUrl
 } from "../../urls";
 import {
@@ -153,6 +154,15 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
     handleTabChange(tabs.length + 1);
   };
 
+  const handleSort = (field: ProductListUrlSortField, attributeId?: string) =>
+    navigate(
+      productListUrl({
+        ...params,
+        ...getSortUrlVariables(field, params),
+        attributeId
+      })
+    );
+
   const paginationState = createPaginationState(settings.rowNumber, params);
   const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
   const filter = getFilterVariables(params);
@@ -230,18 +240,12 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
                       return (
                         <>
                           <ProductListPage
+                            activeAttributeSortId={params.attributeId}
                             sort={{
                               asc: params.asc,
                               sort: params.sort
                             }}
-                            onSort={field =>
-                              navigate(
-                                productListUrl({
-                                  ...params,
-                                  ...getSortUrlVariables(field, params)
-                                })
-                              )
-                            }
+                            onSort={handleSort}
                             availableInGridAttributes={maybe(
                               () =>
                                 attributes.data.availableInGrid.edges.map(
