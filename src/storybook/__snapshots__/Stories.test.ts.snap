@@ -10868,6 +10868,9 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
         >
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZTo5"
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0\\",\\"name\\":\\"John Doe\\",\\"slug\\":\\"john-doe\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1\\",\\"name\\":\\"Milionare Pirate\\",\\"slug\\":\\"milionare-pirate\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -10886,32 +10889,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               author
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Author
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="false"
             >
               No
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZTo2"
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE1\\",\\"name\\":\\"100g\\",\\"slug\\":\\"100g\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE2\\",\\"name\\":\\"250g\\",\\"slug\\":\\"250g\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE3\\",\\"name\\":\\"500g\\",\\"slug\\":\\"500g\\",\\"sortOrder\\":2,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE4\\",\\"name\\":\\"1kg\\",\\"slug\\":\\"1kg\\",\\"sortOrder\\":3,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -10930,32 +10944,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               box-size
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Box Size
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="false"
             >
               No
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="false"
             >
               No
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZToz"
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjY=\\",\\"name\\":\\"Saleor\\",\\"slug\\":\\"saleor\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -10974,32 +10999,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               brand
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Brand
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="false"
             >
               No
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="false"
             >
               No
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="true"
             >
               Yes
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZTo4"
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIx\\",\\"name\\":\\"100g\\",\\"slug\\":\\"100g\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIy\\",\\"name\\":\\"250g\\",\\"slug\\":\\"250g\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIz\\",\\"name\\":\\"500g\\",\\"slug\\":\\"500g\\",\\"sortOrder\\":2,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -11018,32 +11054,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               candy-box-size
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Candy Box Size
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="false"
             >
               No
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="true"
             >
               Yes
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZTo1"
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEz\\",\\"name\\":\\"Arabica\\",\\"slug\\":\\"arabica\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE0\\",\\"name\\":\\"Robusta\\",\\"slug\\":\\"robusta\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -11062,32 +11109,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               coffee-genre
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Coffee Genre
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="true"
             >
               Yes
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZToy"
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM=\\",\\"name\\":\\"Round\\",\\"slug\\":\\"round\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjQ=\\",\\"name\\":\\"V-Neck\\",\\"slug\\":\\"v-neck\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjU=\\",\\"name\\":\\"Polo\\",\\"slug\\":\\"polo\\",\\"sortOrder\\":2,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -11106,32 +11164,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               collar
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Collar
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="false"
             >
               No
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="true"
             >
               Yes
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZTox"
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE=\\",\\"name\\":\\"Blue\\",\\"slug\\":\\"blue\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI=\\",\\"name\\":\\"White\\",\\"slug\\":\\"white\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -11150,32 +11219,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               color
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Color
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="false"
             >
               No
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="false"
             >
               No
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZToxMg=="
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMw\\",\\"name\\":\\"Soft\\",\\"slug\\":\\"soft\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMx\\",\\"name\\":\\"Hard\\",\\"slug\\":\\"hard\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMy\\",\\"name\\":\\"Middle soft\\",\\"slug\\":\\"middle-soft\\",\\"sortOrder\\":2,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjMz\\",\\"name\\":\\"Middle hard\\",\\"slug\\":\\"middle-hard\\",\\"sortOrder\\":3,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM0\\",\\"name\\":\\"Middle\\",\\"slug\\":\\"middle\\",\\"sortOrder\\":4,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjM1\\",\\"name\\":\\"Very hard\\",\\"slug\\":\\"very-hard\\",\\"sortOrder\\":5,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -11194,32 +11274,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               cover
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Cover
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="false"
             >
               No
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="false"
             >
               No
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZTo3"
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjE5\\",\\"name\\":\\"Sour\\",\\"slug\\":\\"sour\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjIw\\",\\"name\\":\\"Sweet\\",\\"slug\\":\\"sweet\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -11238,32 +11329,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               flavor
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Flavor
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="true"
             >
               Yes
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZToxMQ=="
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI4\\",\\"name\\":\\"English\\",\\"slug\\":\\"english\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI5\\",\\"name\\":\\"Pirate\\",\\"slug\\":\\"pirate\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -11282,32 +11384,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               language
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Language
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="false"
             >
               No
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="true"
             >
               Yes
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZToxMA=="
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI2\\",\\"name\\":\\"Mirumee Press\\",\\"slug\\":\\"mirumee-press\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI3\\",\\"name\\":\\"Saleor Publishing\\",\\"slug\\":\\"saleor-publishing\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -11326,32 +11439,43 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               publisher
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Publisher
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="true"
             >
               Yes
             </td>
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id Hook-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdEF0dHJpYnV0ZTo0"
+            data-tc-values="[{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjc=\\",\\"name\\":\\"XS\\",\\"slug\\":\\"xs\\",\\"sortOrder\\":0,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjg=\\",\\"name\\":\\"S\\",\\"slug\\":\\"s\\",\\"sortOrder\\":1,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjk=\\",\\"name\\":\\"M\\",\\"slug\\":\\"m\\",\\"sortOrder\\":2,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEw\\",\\"name\\":\\"L\\",\\"slug\\":\\"l\\",\\"sortOrder\\":3,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEx\\",\\"name\\":\\"XL\\",\\"slug\\":\\"xl\\",\\"sortOrder\\":4,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"},{\\"__typename\\":\\"AttributeValue\\",\\"id\\":\\"UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjEy\\",\\"name\\":\\"XXL\\",\\"slug\\":\\"xxl\\",\\"sortOrder\\":5,\\"type\\":\\"STRING\\",\\"value\\":\\"\\"}]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -11370,26 +11494,34 @@ exports[`Storyshots Views / Attributes / Attribute list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               size
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               Size
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
+              data-tc-visible="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
+              data-tc-searchable="true"
             >
               Yes
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
+              data-tc-use-in-faceted-search="true"
             >
               Yes
             </td>
@@ -11675,6 +11807,8 @@ exports[`Storyshots Views / Attributes / Attribute list loading 1`] = `
         >
           <tr
             class="MuiTableRow-root-id Hook-link-id"
+            data-tc="id"
+            data-tc-values="[]"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -11695,6 +11829,7 @@ exports[`Storyshots Views / Attributes / Attribute list loading 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSlug-id"
+              data-tc="slug"
             >
               <span
                 class="Skeleton-skeleton-id"
@@ -11704,6 +11839,7 @@ exports[`Storyshots Views / Attributes / Attribute list loading 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colName-id"
+              data-tc="name"
             >
               <span
                 class="Skeleton-skeleton-id"
@@ -11713,6 +11849,7 @@ exports[`Storyshots Views / Attributes / Attribute list loading 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colVisible-id"
+              data-tc="visible"
             >
               <span
                 class="Skeleton-skeleton-id"
@@ -11722,6 +11859,7 @@ exports[`Storyshots Views / Attributes / Attribute list loading 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colSearchable-id"
+              data-tc="searchable"
             >
               <span
                 class="Skeleton-skeleton-id"
@@ -11731,6 +11869,7 @@ exports[`Storyshots Views / Attributes / Attribute list loading 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id Hook-colFaceted-id"
+              data-tc="use-in-faceted-search"
             >
               <span
                 class="Skeleton-skeleton-id"
@@ -13245,6 +13384,8 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
         >
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CategoryList-tableRow-id"
+            data-tc="id"
+            data-tc-id="123123"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -13263,6 +13404,7 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CategoryList-colName-id"
+              data-tc="name"
             >
               Lorem ipsum dolor
             </td>
@@ -13279,6 +13421,8 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CategoryList-tableRow-id"
+            data-tc="id"
+            data-tc-id="876752"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -13297,6 +13441,7 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CategoryList-colName-id"
+              data-tc="name"
             >
               Mauris vehicula tortor vulputate
             </td>
@@ -13313,6 +13458,8 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CategoryList-tableRow-id"
+            data-tc="id"
+            data-tc-id="876542"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -13331,6 +13478,7 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CategoryList-colName-id"
+              data-tc="name"
             >
               Excepteur sint occaecat cupidatat non proident
             </td>
@@ -13347,6 +13495,8 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CategoryList-tableRow-id"
+            data-tc="id"
+            data-tc-id="875352"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -13365,6 +13515,7 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CategoryList-colName-id"
+              data-tc="name"
             >
               Ut enim ad minim veniam
             </td>
@@ -13381,6 +13532,8 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CategoryList-tableRow-id"
+            data-tc="id"
+            data-tc-id="865752"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -13399,6 +13552,7 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CategoryList-colName-id"
+              data-tc="name"
             >
               Duis aute irure dolor in reprehenderit
             </td>
@@ -13415,6 +13569,8 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CategoryList-tableRow-id"
+            data-tc="id"
+            data-tc-id="878752"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -13433,6 +13589,7 @@ exports[`Storyshots Views / Categories / Category list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CategoryList-colName-id"
+              data-tc="name"
             >
               Neque porro quisquam est
             </td>
@@ -14051,6 +14208,7 @@ exports[`Storyshots Views / Categories / Category list loading 1`] = `
         >
           <tr
             class="MuiTableRow-root-id CategoryList-tableRow-id"
+            data-tc="id"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -14069,6 +14227,7 @@ exports[`Storyshots Views / Categories / Category list loading 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CategoryList-colName-id"
+              data-tc="name"
             >
               <span
                 class="Skeleton-skeleton-id"
@@ -16696,6 +16855,7 @@ Ctrl + K"
           >
             <tr
               class="MuiTableRow-root-id CategoryList-tableRow-id"
+              data-tc="id"
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -16716,6 +16876,7 @@ Ctrl + K"
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id CategoryList-colName-id"
+                data-tc="name"
               >
                 <span
                   class="Skeleton-skeleton-id"
@@ -25259,6 +25420,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
         >
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CollectionList-tableRow-id"
+            data-tc="id"
+            data-tc-id="Q29sbGVjdGlvbjox"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -25277,6 +25440,7 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colName-id"
+              data-tc="name"
             >
               Summer collection
             </td>
@@ -25287,6 +25451,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colAvailability-id"
+              data-tc="published"
+              data-tc-published="true"
             >
               <div
                 class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -25297,6 +25463,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CollectionList-tableRow-id"
+            data-tc="id"
+            data-tc-id="Q29sbGVjdGlvbjoy"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -25315,6 +25483,7 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colName-id"
+              data-tc="name"
             >
               Winter sale
             </td>
@@ -25325,6 +25494,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colAvailability-id"
+              data-tc="published"
+              data-tc-published="true"
             >
               <div
                 class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -25335,6 +25506,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CollectionList-tableRow-id"
+            data-tc="id"
+            data-tc-id="Q29sbGVjdGlvbjoz"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -25353,6 +25526,7 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colName-id"
+              data-tc="name"
             >
               Vintage vibes
             </td>
@@ -25363,6 +25537,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colAvailability-id"
+              data-tc="published"
+              data-tc-published="true"
             >
               <div
                 class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -25373,6 +25549,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CollectionList-tableRow-id"
+            data-tc="id"
+            data-tc-id="Q29sbGVjdGlvbjoa"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -25391,6 +25569,7 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colName-id"
+              data-tc="name"
             >
               Merry Christmas
             </td>
@@ -25401,6 +25580,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colAvailability-id"
+              data-tc="published"
+              data-tc-published="true"
             >
               <div
                 class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -25411,6 +25592,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CollectionList-tableRow-id"
+            data-tc="id"
+            data-tc-id="Q29sbGVjdGlvbjob"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -25429,6 +25612,7 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colName-id"
+              data-tc="name"
             >
               80s Miami
             </td>
@@ -25439,6 +25623,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colAvailability-id"
+              data-tc="published"
+              data-tc-published="true"
             >
               <div
                 class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -25449,6 +25635,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id CollectionList-tableRow-id"
+            data-tc="id"
+            data-tc-id="Q29sbGVjdGlvbjoc"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -25467,6 +25655,7 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colName-id"
+              data-tc="name"
             >
               Yellow Submarine 2019
             </td>
@@ -25477,6 +25666,8 @@ exports[`Storyshots Views / Collections / Collection list default 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colAvailability-id"
+              data-tc="published"
+              data-tc-published="true"
             >
               <div
                 class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -25795,6 +25986,7 @@ exports[`Storyshots Views / Collections / Collection list loading 1`] = `
         >
           <tr
             class="MuiTableRow-root-id CollectionList-tableRow-id"
+            data-tc="id"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -25815,6 +26007,7 @@ exports[`Storyshots Views / Collections / Collection list loading 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colName-id"
+              data-tc="name"
             >
               <span
                 class="Skeleton-skeleton-id"
@@ -25833,6 +26026,7 @@ exports[`Storyshots Views / Collections / Collection list loading 1`] = `
             </td>
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id CollectionList-colAvailability-id"
+              data-tc="published"
             >
               <span
                 class="Skeleton-skeleton-id"
@@ -78711,6 +78905,7 @@ exports[`Storyshots Views / Product types / Product type details default 1`] = `
           />
           <div
             class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+            data-tc="product-attributes"
           >
             <div
               class="CardTitle-root-id"
@@ -78794,6 +78989,8 @@ exports[`Storyshots Views / Product types / Product type details default 1`] = `
               >
                 <tr
                   class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeAttributes-link-id"
+                  data-tc="id"
+                  data-tc-id="UHJvZHVjdEF0dHJpYnV0ZTo5"
                 >
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id Hook-columnDrag-id"
@@ -78849,11 +79046,13 @@ exports[`Storyshots Views / Product types / Product type details default 1`] = `
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colName-id"
+                    data-tc="name"
                   >
                     Author
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colSlug-id"
+                    data-tc="slug"
                   >
                     author
                   </td>
@@ -78889,6 +79088,8 @@ exports[`Storyshots Views / Product types / Product type details default 1`] = `
                 </tr>
                 <tr
                   class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeAttributes-link-id"
+                  data-tc="id"
+                  data-tc-id="UHJvZHVjdEF0dHJpYnV0ZToxMQ=="
                 >
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id Hook-columnDrag-id"
@@ -78944,11 +79145,13 @@ exports[`Storyshots Views / Product types / Product type details default 1`] = `
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colName-id"
+                    data-tc="name"
                   >
                     Language
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colSlug-id"
+                    data-tc="slug"
                   >
                     language
                   </td>
@@ -78984,6 +79187,8 @@ exports[`Storyshots Views / Product types / Product type details default 1`] = `
                 </tr>
                 <tr
                   class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeAttributes-link-id"
+                  data-tc="id"
+                  data-tc-id="UHJvZHVjdEF0dHJpYnV0ZToxMA=="
                 >
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id Hook-columnDrag-id"
@@ -79039,11 +79244,13 @@ exports[`Storyshots Views / Product types / Product type details default 1`] = `
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colName-id"
+                    data-tc="name"
                   >
                     Publisher
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colSlug-id"
+                    data-tc="slug"
                   >
                     publisher
                   </td>
@@ -79367,6 +79574,7 @@ exports[`Storyshots Views / Product types / Product type details form errors 1`]
           />
           <div
             class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+            data-tc="product-attributes"
           >
             <div
               class="CardTitle-root-id"
@@ -79450,6 +79658,8 @@ exports[`Storyshots Views / Product types / Product type details form errors 1`]
               >
                 <tr
                   class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeAttributes-link-id"
+                  data-tc="id"
+                  data-tc-id="UHJvZHVjdEF0dHJpYnV0ZTo5"
                 >
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id Hook-columnDrag-id"
@@ -79505,11 +79715,13 @@ exports[`Storyshots Views / Product types / Product type details form errors 1`]
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colName-id"
+                    data-tc="name"
                   >
                     Author
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colSlug-id"
+                    data-tc="slug"
                   >
                     author
                   </td>
@@ -79545,6 +79757,8 @@ exports[`Storyshots Views / Product types / Product type details form errors 1`]
                 </tr>
                 <tr
                   class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeAttributes-link-id"
+                  data-tc="id"
+                  data-tc-id="UHJvZHVjdEF0dHJpYnV0ZToxMQ=="
                 >
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id Hook-columnDrag-id"
@@ -79600,11 +79814,13 @@ exports[`Storyshots Views / Product types / Product type details form errors 1`]
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colName-id"
+                    data-tc="name"
                   >
                     Language
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colSlug-id"
+                    data-tc="slug"
                   >
                     language
                   </td>
@@ -79640,6 +79856,8 @@ exports[`Storyshots Views / Product types / Product type details form errors 1`]
                 </tr>
                 <tr
                   class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeAttributes-link-id"
+                  data-tc="id"
+                  data-tc-id="UHJvZHVjdEF0dHJpYnV0ZToxMA=="
                 >
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id Hook-columnDrag-id"
@@ -79695,11 +79913,13 @@ exports[`Storyshots Views / Product types / Product type details form errors 1`]
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colName-id"
+                    data-tc="name"
                   >
                     Publisher
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colSlug-id"
+                    data-tc="slug"
                   >
                     publisher
                   </td>
@@ -80024,6 +80244,7 @@ exports[`Storyshots Views / Product types / Product type details loading 1`] = `
           />
           <div
             class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+            data-tc="product-attributes"
           >
             <div
               class="CardTitle-root-id"
@@ -80109,6 +80330,7 @@ exports[`Storyshots Views / Product types / Product type details loading 1`] = `
               >
                 <tr
                   class="MuiTableRow-root-id"
+                  data-tc="id"
                 >
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id Hook-columnDrag-id"
@@ -80166,6 +80388,7 @@ exports[`Storyshots Views / Product types / Product type details loading 1`] = `
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colName-id"
+                    data-tc="name"
                   >
                     <span
                       class="Skeleton-skeleton-id"
@@ -80175,6 +80398,7 @@ exports[`Storyshots Views / Product types / Product type details loading 1`] = `
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeAttributes-colSlug-id"
+                    data-tc="slug"
                   >
                     <span
                       class="Skeleton-skeleton-id"
@@ -80501,6 +80725,7 @@ exports[`Storyshots Views / Product types / Product type details no attributes 1
           />
           <div
             class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+            data-tc="product-attributes"
           >
             <div
               class="CardTitle-root-id"
@@ -80934,6 +81159,8 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
         >
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeList-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdFR5cGU6NA=="
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -80953,7 +81180,11 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeList-colName-id"
             >
-              Candy
+              <span
+                data-tc="name"
+              >
+                Candy
+              </span>
               <span
                 class="MuiTypography-root-id MuiTypography-caption-id"
               >
@@ -80973,6 +81204,8 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeList-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdFR5cGU6NQ=="
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -80992,7 +81225,11 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeList-colName-id"
             >
-              E-books
+              <span
+                data-tc="name"
+              >
+                E-books
+              </span>
               <span
                 class="MuiTypography-root-id MuiTypography-caption-id"
               >
@@ -81012,6 +81249,8 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeList-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdFR5cGU6Mg=="
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -81031,7 +81270,11 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeList-colName-id"
             >
-              Mugs
+              <span
+                data-tc="name"
+              >
+                Mugs
+              </span>
               <span
                 class="MuiTypography-root-id MuiTypography-caption-id"
               >
@@ -81051,6 +81294,8 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeList-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdFR5cGU6Mw=="
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -81070,7 +81315,11 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeList-colName-id"
             >
-              Coffee
+              <span
+                data-tc="name"
+              >
+                Coffee
+              </span>
               <span
                 class="MuiTypography-root-id MuiTypography-caption-id"
               >
@@ -81090,6 +81339,8 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
           </tr>
           <tr
             class="MuiTableRow-root-id MuiTableRow-hover-id ProductTypeList-link-id"
+            data-tc="id"
+            data-tc-id="UHJvZHVjdFR5cGU6MQ=="
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -81109,7 +81360,11 @@ exports[`Storyshots Views / Product types / Product types list default 1`] = `
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id ProductTypeList-colName-id"
             >
-              T-Shirt
+              <span
+                data-tc="name"
+              >
+                T-Shirt
+              </span>
               <span
                 class="MuiTypography-root-id MuiTypography-caption-id"
               >
@@ -81396,6 +81651,7 @@ exports[`Storyshots Views / Product types / Product types list loading 1`] = `
         >
           <tr
             class="MuiTableRow-root-id"
+            data-tc="id"
           >
             <td
               class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
