@@ -34,6 +34,7 @@ export type IThemeColors = Record<
     | "disabled"
     | "disabledBackground"
     | "disabledText"
+    | "error"
     | "text"
     | "textHover",
     string
@@ -110,7 +111,14 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiFormLabel: {
         filled: {
-          color: [[colors.primary], "!important"] as any
+          "&&:not($error)": {
+            color: colors.primary
+          }
+        },
+        root: {
+          "&&$focused:not($error)": {
+            color: colors.font.gray
+          }
         }
       },
       MuiIconButton: {
@@ -171,8 +179,13 @@ export default (colors: IThemeColors): Theme =>
           "&$disabled": {
             color: `${fade(colors.primary, 0.4)} !important` as any
           },
-          "&$focused": {
-            color: colors.primary
+          "&&$focused": {
+            "&$error": {
+              color: colors.error
+            },
+            "&:not($error)": {
+              color: colors.primary
+            }
           },
           color: colors.input.text
         },
@@ -266,8 +279,10 @@ export default (colors: IThemeColors): Theme =>
         },
         root: {
           "& fieldset": {
-            background: colors.background.paper,
-            borderColor: colors.input.border
+            "&&:not($error)": {
+              borderColor: colors.input.border
+            },
+            background: colors.background.paper
           },
           "& legend": {
             display: "none"
@@ -283,24 +298,34 @@ export default (colors: IThemeColors): Theme =>
             }
           },
           "&$focused": {
-            "& fieldset": {
-              borderColor: colors.primary
-            },
             "& input": {
               "&::placeholder": {
                 opacity: [[1], "!important"] as any
               },
               color: colors.font.default,
               zIndex: 2
+            },
+            "&&&": {
+              "& fieldset": {
+                borderColor: colors.primary
+              },
+              "&$error fieldset": {
+                borderColor: colors.error
+              }
             }
           },
           "&:hover": {
-            "& fieldset": {
-              borderColor: colors.primary
-            },
             "& input": {
               color: colors.font.default,
               zIndex: 2
+            },
+            "&&&": {
+              "& fieldset": {
+                borderColor: colors.primary
+              },
+              "&$error fieldset": {
+                borderColor: colors.input.error
+              }
             }
           },
           borderColor: colors.input.border

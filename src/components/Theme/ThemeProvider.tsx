@@ -34,6 +34,7 @@ const dark: IThemeColors = {
     disabled: "#393939",
     disabledBackground: "#292A2D",
     disabledText: "#9D9D9D",
+    error: "#8C2054",
     text: "#FCFCFC",
     textHover: "#616161"
   },
@@ -69,6 +70,7 @@ const light: IThemeColors = {
     disabled: "#EAEAEA",
     disabledBackground: "#F4F4F4",
     disabledText: "#9D9D9D",
+    error: "#8C2054",
     text: "#3D3D3D",
     textHover: "#616161"
   },
