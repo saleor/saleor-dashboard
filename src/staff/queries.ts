@@ -57,12 +57,6 @@ const staffList = gql`
         endCursor
       }
     }
-    shop {
-      permissions {
-        code
-        name
-      }
-    }
   }
 `;
 export const TypedStaffListQuery = TypedQuery<StaffList, StaffListVariables>(
@@ -74,12 +68,6 @@ export const staffMemberDetails = gql`
   query StaffMemberDetails($id: ID!) {
     user(id: $id) {
       ...StaffMemberDetailsFragment
-    }
-    shop {
-      permissions {
-        code
-        name
-      }
     }
   }
 `;

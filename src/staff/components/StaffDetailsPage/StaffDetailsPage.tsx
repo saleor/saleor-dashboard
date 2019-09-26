@@ -1,6 +1,8 @@
 import React from "react";
 import { useIntl } from "react-intl";
 
+import AccountPermissions from "@saleor/components/AccountPermissions";
+import StaffStatus from "@saleor/components/AccountStatus";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -9,16 +11,12 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import { sectionNames } from "@saleor/intl";
 import { getUserName, maybe } from "../../../misc";
 import { PermissionEnum } from "../../../types/globalTypes";
-import {
-  StaffMemberDetails_shop_permissions,
-  StaffMemberDetails_user
-} from "../../types/StaffMemberDetails";
-import StaffPermissions from "../StaffPermissions/StaffPermissions";
+import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 import StaffProperties from "../StaffProperties/StaffProperties";
-import StaffStatus from "../StaffStatus/StaffStatus";
 
 interface FormData {
   hasFullAccess: boolean;
@@ -34,7 +32,7 @@ export interface StaffDetailsPageProps {
   canEditStatus: boolean;
   canRemove: boolean;
   disabled: boolean;
-  permissions: StaffMemberDetails_shop_permissions[];
+  permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
   staffMember: StaffMemberDetails_user;
   onBack: () => void;
@@ -99,7 +97,7 @@ const StaffDetailsPage: React.StatelessComponent<StaffDetailsPageProps> = ({
             </div>
             {canEditStatus && (
               <div>
-                <StaffPermissions
+                <AccountPermissions
                   data={data}
                   disabled={disabled}
                   permissions={permissions}

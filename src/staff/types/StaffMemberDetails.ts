@@ -30,20 +30,8 @@ export interface StaffMemberDetails_user {
   permissions: (StaffMemberDetails_user_permissions | null)[] | null;
 }
 
-export interface StaffMemberDetails_shop_permissions {
-  __typename: "PermissionDisplay";
-  code: PermissionEnum;
-  name: string;
-}
-
-export interface StaffMemberDetails_shop {
-  __typename: "Shop";
-  permissions: (StaffMemberDetails_shop_permissions | null)[];
-}
-
 export interface StaffMemberDetails {
   user: StaffMemberDetails_user | null;
-  shop: StaffMemberDetails_shop | null;
 }
 
 export interface StaffMemberDetailsVariables {
