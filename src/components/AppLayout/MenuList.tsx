@@ -65,7 +65,7 @@ const styles = (theme: Theme) =>
           borderLeft: `solid 2px ${theme.palette.primary.main}`,
           content: "''",
           height: 33,
-          left: -25,
+          left: -20,
           position: "absolute",
           top: 8
         },
@@ -115,7 +115,7 @@ const styles = (theme: Theme) =>
         borderLeft: `solid 2px ${theme.palette.primary.main}`,
         content: "''",
         height: 33,
-        left: -25,
+        left: -20,
         position: "absolute",
         top: 8
       },
