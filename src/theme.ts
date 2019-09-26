@@ -227,7 +227,7 @@ export default (colors: IThemeColors): Theme =>
         error: {
           "&$focused": {
             "& fieldset": {
-              borderColor: [[colors.error], "!important"] as any
+              borderColor: colors.error
             },
             "& input": {
               color: colors.error,
@@ -236,7 +236,7 @@ export default (colors: IThemeColors): Theme =>
           },
           "&:hover": {
             "& fieldset": {
-              borderColor: [[colors.error], "!important"] as any
+              borderColor: colors.error
             },
             "& input": {
               color: colors.error,
@@ -284,7 +284,7 @@ export default (colors: IThemeColors): Theme =>
           },
           "&$focused": {
             "& fieldset": {
-              borderColor: [[colors.primary], "!important"] as any
+              borderColor: colors.primary
             },
             "& input": {
               "&::placeholder": {
@@ -296,7 +296,7 @@ export default (colors: IThemeColors): Theme =>
           },
           "&:hover": {
             "& fieldset": {
-              borderColor: [[colors.primary], "!important"] as any
+              borderColor: colors.primary
             },
             "& input": {
               color: colors.font.default,
