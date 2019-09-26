@@ -111,11 +111,6 @@ export default (colors: IThemeColors): Theme =>
       MuiFormLabel: {
         filled: {
           color: [[colors.primary], "!important"] as any
-        },
-        root: {
-          "&$focused": {
-            color: [[colors.font.gray], "!important"] as any
-          }
         }
       },
       MuiIconButton: {
@@ -154,6 +149,12 @@ export default (colors: IThemeColors): Theme =>
         }
       },
       MuiInputLabel: {
+        error: {
+          "&$focused": {
+            color: colors.error
+          },
+          color: colors.error
+        },
         formControl: {
           transform: "translate(0, 1.5px) scale(0.75)",
           transformOrigin: "top left" as "top left",
@@ -171,7 +172,7 @@ export default (colors: IThemeColors): Theme =>
             color: `${fade(colors.primary, 0.4)} !important` as any
           },
           "&$focused": {
-            color: [[colors.primary], "!important"] as any
+            color: colors.primary
           },
           color: colors.input.text
         },
@@ -223,6 +224,26 @@ export default (colors: IThemeColors): Theme =>
         }
       },
       MuiOutlinedInput: {
+        error: {
+          "&$focused": {
+            "& fieldset": {
+              borderColor: [[colors.error], "!important"] as any
+            },
+            "& input": {
+              color: colors.error,
+              zIndex: 2
+            }
+          },
+          "&:hover": {
+            "& fieldset": {
+              borderColor: [[colors.error], "!important"] as any
+            },
+            "& input": {
+              color: colors.error,
+              zIndex: 2
+            }
+          }
+        },
         input: {
           "&:-webkit-autofill": {
             boxShadow: `0 0 0px 1000px rgba(19, 190, 187, 0.1) inset`,
@@ -246,7 +267,7 @@ export default (colors: IThemeColors): Theme =>
         root: {
           "& fieldset": {
             background: colors.background.paper,
-            borderColor: [[colors.input.border], "!important"] as any
+            borderColor: colors.input.border
           },
           "& legend": {
             display: "none"
