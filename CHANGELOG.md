@@ -24,3 +24,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add search bars - #172 by @dominik-zeglen
 - Add sorting to product list - #173 by @dominik-zeglen
 - Add Heroku integration - #175 by @bogdal
+- Allow sorting products by attribute - #180 by @dominik-zeglen
