@@ -34,6 +34,7 @@ export type IThemeColors = Record<
     | "disabled"
     | "disabledBackground"
     | "disabledText"
+    | "error"
     | "text"
     | "textHover",
     string
@@ -110,11 +111,13 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiFormLabel: {
         filled: {
-          color: [[colors.primary], "!important"] as any
+          "&&:not($error)": {
+            color: colors.primary
+          }
         },
         root: {
-          "&$focused": {
-            color: [[colors.font.gray], "!important"] as any
+          "&&$focused:not($error)": {
+            color: colors.font.gray
           }
         }
       },
@@ -154,6 +157,12 @@ export default (colors: IThemeColors): Theme =>
         }
       },
       MuiInputLabel: {
+        error: {
+          "&$focused": {
+            color: colors.error
+          },
+          color: colors.error
+        },
         formControl: {
           transform: "translate(0, 1.5px) scale(0.75)",
           transformOrigin: "top left" as "top left",
@@ -170,8 +179,13 @@ export default (colors: IThemeColors): Theme =>
           "&$disabled": {
             color: `${fade(colors.primary, 0.4)} !important` as any
           },
-          "&$focused": {
-            color: [[colors.primary], "!important"] as any
+          "&&$focused": {
+            "&$error": {
+              color: colors.error
+            },
+            "&:not($error)": {
+              color: colors.primary
+            }
           },
           color: colors.input.text
         },
@@ -223,6 +237,26 @@ export default (colors: IThemeColors): Theme =>
         }
       },
       MuiOutlinedInput: {
+        error: {
+          "&$focused": {
+            "& fieldset": {
+              borderColor: colors.error
+            },
+            "& input": {
+              color: colors.error,
+              zIndex: 2
+            }
+          },
+          "&:hover": {
+            "& fieldset": {
+              borderColor: colors.error
+            },
+            "& input": {
+              color: colors.error,
+              zIndex: 2
+            }
+          }
+        },
         input: {
           "&:-webkit-autofill": {
             boxShadow: `0 0 0px 1000px rgba(19, 190, 187, 0.1) inset`,
@@ -245,8 +279,10 @@ export default (colors: IThemeColors): Theme =>
         },
         root: {
           "& fieldset": {
-            background: colors.background.paper,
-            borderColor: [[colors.input.border], "!important"] as any
+            "&&:not($error)": {
+              borderColor: colors.input.border
+            },
+            background: colors.background.paper
           },
           "& legend": {
             display: "none"
@@ -262,24 +298,34 @@ export default (colors: IThemeColors): Theme =>
             }
           },
           "&$focused": {
-            "& fieldset": {
-              borderColor: [[colors.primary], "!important"] as any
-            },
             "& input": {
               "&::placeholder": {
                 opacity: [[1], "!important"] as any
               },
               color: colors.font.default,
               zIndex: 2
+            },
+            "&&&": {
+              "& fieldset": {
+                borderColor: colors.primary
+              },
+              "&$error fieldset": {
+                borderColor: colors.error
+              }
             }
           },
           "&:hover": {
-            "& fieldset": {
-              borderColor: [[colors.primary], "!important"] as any
-            },
             "& input": {
               color: colors.font.default,
               zIndex: 2
+            },
+            "&&&": {
+              "& fieldset": {
+                borderColor: colors.primary
+              },
+              "&$error fieldset": {
+                borderColor: colors.input.error
+              }
             }
           },
           borderColor: colors.input.border
