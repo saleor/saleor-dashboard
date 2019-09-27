@@ -52,9 +52,10 @@ const TableCellAvatar = withStyles(styles, { name: "TableCellAvatar" })(
     children,
     className,
     thumbnail,
-    avatarProps
+    avatarProps,
+    ...props
   }: TableCellAvatarProps) => (
-    <TableCell className={classNames(classes.root, className)}>
+    <TableCell className={classNames(classes.root, className)} {...props}>
       <div className={classes.content}>
         {thumbnail === undefined ? (
           <Avatar className={classNames(classes.avatar, avatarProps)}>

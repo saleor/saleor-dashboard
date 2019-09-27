@@ -94344,6 +94344,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -94408,6 +94409,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -94472,6 +94474,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -94536,6 +94539,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -94600,6 +94604,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -94664,6 +94669,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -94728,6 +94734,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -94792,6 +94799,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -94856,6 +94864,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -94920,6 +94929,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -94984,6 +94994,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -95048,6 +95059,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -95112,6 +95124,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -95176,6 +95189,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -95240,6 +95254,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -95304,6 +95319,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -95368,6 +95384,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -95432,6 +95449,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -95496,6 +95514,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -95560,6 +95579,7 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -96071,6 +96091,7 @@ exports[`Storyshots Views / Products / Product list loading 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -97492,6 +97513,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -97556,6 +97578,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -97620,6 +97643,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -97684,6 +97708,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -97748,6 +97773,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -97812,6 +97838,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -97876,6 +97903,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -97940,6 +97968,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98004,6 +98033,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98068,6 +98098,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98132,6 +98163,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98196,6 +98228,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98260,6 +98293,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98324,6 +98358,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98388,6 +98423,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98452,6 +98488,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98516,6 +98553,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98580,6 +98618,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98644,6 +98683,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
@@ -98708,6 +98748,7 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id TableCellAvatar-root-id ProductList-colName-id"
+                data-tc="name"
               >
                 <div
                   class="TableCellAvatar-content-id"
