@@ -8,10 +8,11 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ServiceCreateMutation } from "@saleor/services/mutations";
+import { ServiceCreate as ServiceCreateData } from "@saleor/services/types/ServiceCreate";
 import ServiceCreatePage, {
   ServiceCreatePageFormData
 } from "../../components/ServiceCreatePage";
-import { serviceListUrl, serviceUrl, ServiceUrlQueryParams } from "../../urls";
+import { serviceListUrl, serviceUrl } from "../../urls";
 
 export const ServiceCreate: React.StatelessComponent = () => {
   const navigate = useNavigator();
@@ -19,7 +20,14 @@ export const ServiceCreate: React.StatelessComponent = () => {
   const intl = useIntl();
   const shop = useShop();
 
-  const onSubmit = () => undefined;
+  const onSubmit = (data: ServiceCreateData) => {
+    if (data.serviceAccountCreate.errors.length === 0) {
+      notify({
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      navigate(serviceUrl(data.serviceAccountCreate.serviceAccount.id));
+    }
+  };
 
   const handleBack = () => navigate(serviceListUrl());
 
@@ -55,7 +63,10 @@ export const ServiceCreate: React.StatelessComponent = () => {
             />
             <ServiceCreatePage
               disabled={false}
-              errors={[]}
+              errors={maybe(
+                () => serviceCreateOpts.data.serviceAccountCreate.errors,
+                []
+              )}
               onBack={handleBack}
               onSubmit={handleSubmit}
               permissions={maybe(() => shop.permissions)}
