@@ -94324,6 +94324,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
           >
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo2MQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94363,11 +94365,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Paint
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94383,6 +94388,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo2NA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94422,11 +94429,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Paint
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94442,6 +94452,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo2NQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94481,11 +94493,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Paint
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94501,6 +94516,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3NQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94540,11 +94557,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94560,6 +94580,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3Ng=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94599,11 +94621,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94619,6 +94644,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3Mg=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94658,11 +94685,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94678,6 +94708,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3MQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94717,11 +94749,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94737,6 +94772,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3NA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94776,11 +94813,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94796,6 +94836,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3OQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94835,11 +94877,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94855,6 +94900,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3Mw=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94894,11 +94941,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94914,6 +94964,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3OA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -94953,11 +95005,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -94973,6 +95028,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo4OQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -95012,11 +95069,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -95032,6 +95092,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMDc="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -95071,11 +95133,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -95091,6 +95156,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMDg="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -95130,11 +95197,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -95150,6 +95220,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMDk="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -95189,11 +95261,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -95209,6 +95284,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMTA="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -95248,11 +95325,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -95268,6 +95348,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMTU="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -95307,11 +95389,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -95327,6 +95412,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMTY="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -95366,11 +95453,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -95386,6 +95476,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMTc="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -95425,11 +95517,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -95445,6 +95540,8 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo4NQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -95484,11 +95581,14 @@ exports[`Storyshots Views / Products / Product list default 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Cushion
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -95950,6 +96050,7 @@ exports[`Storyshots Views / Products / Product list loading 1`] = `
           >
             <tr
               class="MuiTableRow-root-id ProductList-link-id"
+              data-tc="id"
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -96006,6 +96107,7 @@ exports[`Storyshots Views / Products / Product list loading 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 <span
                   class="Skeleton-skeleton-id"
@@ -96015,6 +96117,7 @@ exports[`Storyshots Views / Products / Product list loading 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
               >
                 <span
                   class="Skeleton-skeleton-id"
@@ -97369,6 +97472,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
           >
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo2MQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97408,11 +97513,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Paint
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -97428,6 +97536,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo2NA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97467,11 +97577,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Paint
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -97487,6 +97600,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo2NQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97526,11 +97641,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Paint
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -97546,6 +97664,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3NQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97585,11 +97705,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -97605,6 +97728,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3Ng=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97644,11 +97769,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -97664,6 +97792,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3Mg=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97703,11 +97833,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -97723,6 +97856,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3MQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97762,11 +97897,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -97782,6 +97920,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3NA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97821,11 +97961,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -97841,6 +97984,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3OQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97880,11 +98025,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -97900,6 +98048,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3Mw=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97939,11 +98089,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -97959,6 +98112,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo3OA=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -97998,11 +98153,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Juice
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -98018,6 +98176,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo4OQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -98057,11 +98217,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -98077,6 +98240,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMDc="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -98116,11 +98281,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -98136,6 +98304,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMDg="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -98175,11 +98345,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -98195,6 +98368,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMDk="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -98234,11 +98409,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -98254,6 +98432,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMTA="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -98293,11 +98473,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -98313,6 +98496,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMTU="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -98352,11 +98537,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -98372,6 +98560,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMTY="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -98411,11 +98601,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -98431,6 +98624,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDoxMTc="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -98470,11 +98665,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Top (clothing)
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -98490,6 +98688,8 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root-id MuiTableRow-hover-id ProductList-link-id"
+              data-tc="id"
+              data-tc-id="UHJvZHVjdDo4NQ=="
             >
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
@@ -98529,11 +98729,14 @@ exports[`Storyshots Views / Products / Product list with custom filters 1`] = `
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colType-id"
+                data-tc="product-type"
               >
                 Cushion
               </td>
               <td
                 class="MuiTableCell-root-id MuiTableCell-body-id ProductList-colPublished-id"
+                data-tc="isPublished"
+                data-tc-is-published="true"
               >
                 <div
                   class="StatusLabel-root-id undefined StatusLabel-successDot-id"
