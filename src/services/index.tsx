@@ -6,11 +6,13 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
 import {
+  serviceAddPath,
   serviceListPath,
   ServiceListUrlQueryParams,
   servicePath,
   ServiceUrlQueryParams
 } from "./urls";
+import ServiceCreate from "./views/ServiceCreate";
 import ServiceDetailsComponent from "./views/ServiceDetails";
 import ServiceListComponent from "./views/ServiceList";
 
@@ -43,6 +45,7 @@ const ServiceSection = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.serviceAccounts)} />
       <Switch>
         <Route exact path={serviceListPath} component={ServiceList} />
+        <Route exact path={serviceAddPath} component={ServiceCreate} />
         <Route path={servicePath(":id")} component={ServiceDetails} />
       </Switch>
     </>

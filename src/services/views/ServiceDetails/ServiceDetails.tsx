@@ -11,7 +11,12 @@ import ServiceDetailsPage, {
   ServiceDetailsPageFormData
 } from "../../components/ServiceDetailsPage";
 import { ServiceDetailsQuery } from "../../queries";
-import { serviceListUrl, serviceUrl, ServiceUrlQueryParams } from "../../urls";
+import {
+  serviceListUrl,
+  serviceUrl,
+  ServiceUrlDialog,
+  ServiceUrlQueryParams
+} from "../../urls";
 
 interface OrderListProps {
   id: string;
@@ -26,6 +31,25 @@ export const ServiceDetails: React.StatelessComponent<OrderListProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
+
+  const closeModal = () =>
+    navigate(
+      serviceUrl(id, {
+        ...params,
+        action: undefined,
+        id: undefined
+      }),
+      true
+    );
+
+  const openModal = (action: ServiceUrlDialog, tokenId?: string) =>
+    navigate(
+      serviceUrl(id, {
+        ...params,
+        action,
+        id: tokenId
+      })
+    );
 
   return (
     <ServiceDetailsQuery
@@ -50,14 +74,7 @@ export const ServiceDetails: React.StatelessComponent<OrderListProps> = ({
           }
         };
 
-        const handleBack = navigate(serviceListUrl());
-
-        const handleDelete = navigate(
-          serviceUrl(id, {
-            ...params,
-            action: "remove"
-          })
-        );
+        const handleBack = () => navigate(serviceListUrl());
 
         const handleSubmit = (data: ServiceDetailsPageFormData) => undefined;
 
@@ -68,8 +85,10 @@ export const ServiceDetails: React.StatelessComponent<OrderListProps> = ({
               disabled={loading}
               errors={[]}
               onBack={handleBack}
-              onDelete={handleDelete}
+              onDelete={() => openModal("remove")}
               onSubmit={handleSubmit}
+              onTokenCreate={() => openModal("create-token")}
+              onTokenDelete={() => openModal("delete-token")}
               permissions={maybe(() => shop.permissions)}
               service={maybe(() => data.serviceAccount)}
               saveButtonBarState="default"

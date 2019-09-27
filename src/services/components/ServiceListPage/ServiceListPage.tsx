@@ -8,18 +8,12 @@ import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
-import {
-  ListActions,
-  PageListProps,
-  SearchPageProps,
-  TabPageProps
-} from "@saleor/types";
+import { PageListProps, SearchPageProps, TabPageProps } from "@saleor/types";
 import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
 import ServiceList from "../ServiceList";
 
 export interface ServiceListPageProps
   extends PageListProps,
-    ListActions,
     SearchPageProps,
     TabPageProps {
   services: ServiceList_serviceAccounts_edges_node[];

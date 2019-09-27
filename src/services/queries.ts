@@ -37,6 +37,9 @@ const serviceList = gql`
           ...ServiceFragment
         }
       }
+      pageInfo {
+        ...PageInfoFragment
+      }
     }
   }
 `;

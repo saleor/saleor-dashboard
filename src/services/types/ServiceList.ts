@@ -20,9 +20,18 @@ export interface ServiceList_serviceAccounts_edges {
   node: ServiceList_serviceAccounts_edges_node;
 }
 
+export interface ServiceList_serviceAccounts_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
 export interface ServiceList_serviceAccounts {
   __typename: "ServiceAccountCountableConnection";
   edges: ServiceList_serviceAccounts_edges[];
+  pageInfo: ServiceList_serviceAccounts_pageInfo;
 }
 
 export interface ServiceList {

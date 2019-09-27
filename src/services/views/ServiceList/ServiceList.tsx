@@ -20,6 +20,7 @@ import { ListViews } from "@saleor/types";
 import ServiceListPage from "../../components/ServiceListPage";
 import { ServiceListQuery } from "../../queries";
 import {
+  serviceAddUrl,
   serviceListUrl,
   ServiceListUrlDialog,
   ServiceListUrlFilters,
@@ -118,72 +119,50 @@ export const ServiceList: React.StatelessComponent<ServiceListProps> = ({
 
   return (
     <ServiceListQuery displayLoader variables={queryVariables}>
-      {({ data, loading }) => (
-        <TypedServiceMemberAddMutation
-          onCompleted={handleServiceMemberAddSuccess}
-        >
-          {(addServiceMember, addServiceMemberData) => {
-            const handleServiceMemberAdd = (variables: AddServiceMemberForm) =>
-              addServiceMember({
-                variables: {
-                  input: {
-                    email: variables.email,
-                    firstName: variables.firstName,
-                    lastName: variables.lastName,
-                    permissions: variables.fullAccess
-                      ? maybe(() => shop.permissions.map(perm => perm.code))
-                      : undefined,
-                    sendPasswordEmail: true
-                  }
-                }
-              });
-            const addTransitionState = getMutationState(
-              addServiceMemberData.called,
-              addServiceMemberData.loading,
-              maybe(() => addServiceMemberData.data.serviceCreate.errors)
-            );
+      {({ data, loading }) => {
+        const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+          maybe(() => data.serviceAccounts.pageInfo),
+          paginationState,
+          params
+        );
 
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.serviceUsers.pageInfo),
-              paginationState,
-              params
-            );
+        const handleCreate = () => navigate(serviceAddUrl);
+        const handleRemove = () =>
+          navigate(
+            serviceListUrl({
+              ...params,
+              action: "remove"
+            })
+          );
 
-            return (
-              <>
-                <ServiceListPage
-                  currentTab={currentTab}
-                  initialSearch={params.query || ""}
-                  onSearchChange={query => changeFilterField({ query })}
-                  onAll={() => navigate(serviceListUrl())}
-                  onTabChange={handleTabChange}
-                  onTabDelete={() => openModal("delete-search")}
-                  onTabSave={() => openModal("save-search")}
-                  tabs={tabs.map(tab => tab.name)}
-                  disabled={loading || addServiceMemberData.loading}
-                  settings={settings}
-                  pageInfo={pageInfo}
-                  serviceMembers={maybe(() =>
-                    data.serviceUsers.edges.map(edge => edge.node)
-                  )}
-                  onAdd={() =>
-                    navigate(
-                      serviceListUrl({
-                        action: "add"
-                      })
-                    )
-                  }
-                  onBack={() => navigate(configurationMenuUrl)}
-                  onNextPage={loadNextPage}
-                  onPreviousPage={loadPreviousPage}
-                  onUpdateListSettings={updateListSettings}
-                  onRowClick={id => () => navigate(serviceUrl(id))}
-                />
-              </>
-            );
-          }}
-        </TypedServiceMemberAddMutation>
-      )}
+        return (
+          <>
+            <ServiceListPage
+              currentTab={currentTab}
+              initialSearch={params.query || ""}
+              onSearchChange={query => changeFilterField({ query })}
+              onAll={() => navigate(serviceListUrl())}
+              onTabChange={handleTabChange}
+              onTabDelete={() => openModal("delete-search")}
+              onTabSave={() => openModal("save-search")}
+              tabs={tabs.map(tab => tab.name)}
+              disabled={loading}
+              settings={settings}
+              pageInfo={pageInfo}
+              services={maybe(() =>
+                data.serviceAccounts.edges.map(edge => edge.node)
+              )}
+              onAdd={handleCreate}
+              onBack={() => navigate(configurationMenuUrl)}
+              onNextPage={loadNextPage}
+              onPreviousPage={loadPreviousPage}
+              onUpdateListSettings={updateListSettings}
+              onRowClick={id => () => navigate(serviceUrl(id))}
+              onRemove={handleRemove}
+            />
+          </>
+        );
+      }}
     </ServiceListQuery>
   );
 };

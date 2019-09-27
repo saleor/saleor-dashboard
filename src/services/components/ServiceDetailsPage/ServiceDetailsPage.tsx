@@ -97,14 +97,20 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
                 onDelete={onTokenDelete}
               />
             </div>
-            <AccountPermissions
-              data={data}
-              disabled={disabled}
-              permissions={permissions}
-              onChange={change}
-            />
-            <CardSpacer />
-            <AccountStatus data={data} disabled={disabled} onChange={change} />
+            <div>
+              <AccountPermissions
+                data={data}
+                disabled={disabled}
+                permissions={permissions}
+                onChange={change}
+              />
+              <CardSpacer />
+              <AccountStatus
+                data={data}
+                disabled={disabled}
+                onChange={change}
+              />
+            </div>
           </Grid>
           <SaveButtonBar
             disabled={disabled || !hasChanged}

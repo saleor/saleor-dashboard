@@ -655,6 +655,12 @@ export interface ServiceAccountFilterInput {
   isActive?: boolean | null;
 }
 
+export interface ServiceAccountInput {
+  name?: string | null;
+  isActive?: boolean | null;
+  permissions?: (PermissionEnum | null)[] | null;
+}
+
 export interface ShippingPriceInput {
   name?: string | null;
   price?: any | null;
