@@ -22,7 +22,7 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
-import { renderCollection, maybe } from "../../../misc";
+import { maybe, renderCollection } from "../../../misc";
 import { ListActions } from "../../../types";
 import { ProductDetails_product_variants } from "../../types/ProductDetails";
 import { ProductVariant_costPrice } from "../../types/ProductVariant";
