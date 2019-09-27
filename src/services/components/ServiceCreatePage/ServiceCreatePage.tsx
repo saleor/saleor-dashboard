@@ -17,7 +17,7 @@ import { UserError } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import ServiceInfo from "../ServiceInfo";
 
-export interface ServiceDetailsPageFormData {
+export interface ServiceCreatePageFormData {
   hasFullAccess: boolean;
   isActive: boolean;
   name: string;
@@ -29,7 +29,7 @@ export interface ServiceCreatePageProps {
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: ServiceDetailsPageFormData) => void;
+  onSubmit: (data: ServiceCreatePageFormData) => void;
 }
 
 const ServiceCreatePage: React.FC<ServiceCreatePageProps> = props => {
@@ -43,7 +43,7 @@ const ServiceCreatePage: React.FC<ServiceCreatePageProps> = props => {
   } = props;
   const intl = useIntl();
 
-  const initialForm: ServiceDetailsPageFormData = {
+  const initialForm: ServiceCreatePageFormData = {
     hasFullAccess: false,
     isActive: false,
     name: "",

@@ -68,7 +68,7 @@ const serviceDetails = gql`
     }
   }
 `;
-export const ServiceDetailsFragmentQuery = TypedQuery<
+export const ServiceDetailsQuery = TypedQuery<
   ServiceDetails,
   ServiceDetailsVariables
 >(serviceDetails);

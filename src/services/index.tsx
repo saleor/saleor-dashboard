@@ -7,45 +7,46 @@ import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   serviceListPath,
-  ServiceListUrlQueryParams
-  //   servicePath
+  ServiceListUrlQueryParams,
+  servicePath,
+  ServiceUrlQueryParams
 } from "./urls";
-// import ServiceDetailsComponent from "./views/ServiceDetails";
+import ServiceDetailsComponent from "./views/ServiceDetails";
 import ServiceListComponent from "./views/ServiceList";
 
-const PluginList: React.StatelessComponent<RouteComponentProps<any>> = ({
-  location
-}) => {
+const ServiceList: React.FC<RouteComponentProps> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ServiceListUrlQueryParams = qs;
+
   return <ServiceListComponent params={params} />;
 };
 
-// const ServiceDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
-//   match
-// }) => {
-//   const qs = parseQs(location.search.substr(1));
-//   const params: ServiceListUrlQueryParams = qs;
+const ServiceDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ServiceUrlQueryParams = qs;
 
-//   return (
-//     <ServiceDetailsComponent
-//       id={decodeURIComponent(match.params.id)}
-//       params={params}
-//     />
-//   );
-// };
+  return (
+    <ServiceDetailsComponent
+      id={decodeURIComponent(match.params.id)}
+      params={params}
+    />
+  );
+};
 
-const Component = () => {
+const ServiceSection = () => {
   const intl = useIntl();
+
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.serviceAccounts)} />
       <Switch>
-        <Route exact path={serviceListPath} component={PluginList} />
-        {/* <Route path={servicePath(":id")} component={ServiceDetails} /> */}
+        <Route exact path={serviceListPath} component={ServiceList} />
+        <Route path={servicePath(":id")} component={ServiceDetails} />
       </Switch>
     </>
   );
 };
 
-export default Component;
+export default ServiceSection;
