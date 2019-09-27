@@ -88475,11 +88475,14 @@ Ctrl + K"
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colName-id"
+                    data-tc="name"
                   >
                     Cordoba Oro
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colStatus-id"
+                    data-tc="isAvailable"
+                    data-tc-is-available="true"
                   >
                     <div
                       class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -88489,6 +88492,7 @@ Ctrl + K"
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colSku-id"
+                    data-tc="sku"
                   >
                     87192-94370
                   </td>
@@ -88513,11 +88517,14 @@ Ctrl + K"
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colName-id"
+                    data-tc="name"
                   >
                     silver
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colStatus-id"
+                    data-tc="isAvailable"
+                    data-tc-is-available="true"
                   >
                     <div
                       class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -88527,6 +88534,7 @@ Ctrl + K"
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colSku-id"
+                    data-tc="sku"
                   >
                     69055-15190
                   </td>
@@ -91266,11 +91274,14 @@ Ctrl + K"
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colName-id"
+                    data-tc="name"
                   >
                     Cordoba Oro
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colStatus-id"
+                    data-tc="isAvailable"
+                    data-tc-is-available="true"
                   >
                     <div
                       class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -91280,6 +91291,7 @@ Ctrl + K"
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colSku-id"
+                    data-tc="sku"
                   >
                     87192-94370
                   </td>
@@ -91304,11 +91316,14 @@ Ctrl + K"
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colName-id"
+                    data-tc="name"
                   >
                     silver
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colStatus-id"
+                    data-tc="isAvailable"
+                    data-tc-is-available="true"
                   >
                     <div
                       class="StatusLabel-root-id undefined StatusLabel-successDot-id"
@@ -91318,6 +91333,7 @@ Ctrl + K"
                   </td>
                   <td
                     class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colSku-id"
+                    data-tc="sku"
                   >
                     69055-15190
                   </td>

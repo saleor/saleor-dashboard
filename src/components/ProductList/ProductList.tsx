@@ -243,11 +243,15 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                     <TableCellAvatar
                       className={classes.colName}
                       thumbnail={maybe(() => product.thumbnail.url)}
+                      data-tc="name"
                     >
                       {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                     </TableCellAvatar>
                     <DisplayColumn column="productType">
-                      <TableCell className={classes.colType}>
+                      <TableCell
+                        className={classes.colType}
+                        data-tc="product-type"
+                      >
                         {product && product.productType ? (
                           product.productType.name
                         ) : (
@@ -256,7 +260,11 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                       </TableCell>
                     </DisplayColumn>
                     <DisplayColumn column="isPublished">
-                      <TableCell className={classes.colPublished}>
+                      <TableCell
+                        className={classes.colPublished}
+                        data-tc="isPublished"
+                        data-tc-is-published={maybe(() => product.isAvailable)}
+                      >
                         {product &&
                         maybe(() => product.isAvailable !== undefined) ? (
                           <StatusLabel
@@ -278,26 +286,31 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                         )}
                       </TableCell>
                     </DisplayColumn>
-                    {gridAttributesFromSettings.map(gridAttribute => (
-                      <TableCell
-                        className={classes.colAttribute}
-                        key={gridAttribute}
-                      >
-                        {maybe<React.ReactNode>(() => {
-                          const attribute = product.attributes.find(
-                            attribute =>
-                              attribute.attribute.id ===
-                              getAttributeIdFromColumnValue(gridAttribute)
-                          );
-                          if (attribute) {
-                            return attribute.values
-                              .map(value => value.name)
-                              .join(", ");
-                          }
-                          return "-";
-                        }, <Skeleton />)}
-                      </TableCell>
-                    ))}
+                    {gridAttributesFromSettings.map(gridAttribute => {
+                      const attribute = maybe(() =>
+                        product.attributes.find(
+                          attribute =>
+                            attribute.attribute.id ===
+                            getAttributeIdFromColumnValue(gridAttribute)
+                        )
+                      );
+                      const attributeValues = attribute
+                        ? attribute.values.map(value => value.name).join(", ")
+                        : "-";
+
+                      return (
+                        <TableCell
+                          className={classes.colAttribute}
+                          key={gridAttribute}
+                          data-tc="attribute"
+                          data-tc-attribute={maybe(
+                            () => attribute.attribute.id
+                          )}
+                        >
+                          {attribute ? attributeValues : <Skeleton />}
+                        </TableCell>
+                      );
+                    })}
                     <DisplayColumn column="price">
                       <TableCell className={classes.colPrice}>
                         {maybe(() => product.basePrice) &&

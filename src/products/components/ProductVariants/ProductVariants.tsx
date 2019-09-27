@@ -22,7 +22,7 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
-import { renderCollection } from "../../../misc";
+import { maybe, renderCollection } from "../../../misc";
 import { ListActions } from "../../../types";
 import { ProductDetails_product_variants } from "../../types/ProductDetails";
 import { ProductVariant_costPrice } from "../../types/ProductVariant";
@@ -186,10 +186,16 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
                         onChange={() => toggle(variant.id)}
                       />
                     </TableCell>
-                    <TableCell className={classes.colName}>
+                    <TableCell className={classes.colName} data-tc="name">
                       {variant ? variant.name || variant.sku : <Skeleton />}
                     </TableCell>
-                    <TableCell className={classes.colStatus}>
+                    <TableCell
+                      className={classes.colStatus}
+                      data-tc="isAvailable"
+                      data-tc-is-available={maybe(
+                        () => variant.stockQuantity > 0
+                      )}
+                    >
                       {variant ? (
                         <StatusLabel
                           status={
@@ -211,11 +217,11 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
                         <Skeleton />
                       )}
                     </TableCell>
-                    <TableCell className={classes.colSku}>
+                    <TableCell className={classes.colSku} data-tc="sku">
                       {variant ? variant.sku : <Skeleton />}
                     </TableCell>
                     <Hidden smDown>
-                      <TableCell className={classes.colPrice}>
+                      <TableCell className={classes.colPrice} data-tc="price">
                         {variant ? (
                           variant.priceOverride ? (
                             <Money money={variant.priceOverride} />
