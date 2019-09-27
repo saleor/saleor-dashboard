@@ -47,7 +47,7 @@ export const ServiceListQuery = TypedQuery<ServiceList, ServiceListVariables>(
   serviceList
 );
 
-const serviceDetailsFragment = gql`
+export const serviceDetailsFragment = gql`
   ${serviceFragment}
   fragment ServiceDetailsFragment on ServiceAccount {
     ...ServiceFragment

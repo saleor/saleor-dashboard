@@ -16,7 +16,10 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
+import { ServiceDeleteMutation } from "@saleor/services/mutations";
+import { ServiceDelete } from "@saleor/services/types/ServiceDelete";
 import { ListViews } from "@saleor/types";
+import ServiceDeleteDialog from "../../components/ServiceDeleteDialog";
 import ServiceListPage from "../../components/ServiceListPage";
 import { ServiceListQuery } from "../../queries";
 import {
@@ -50,7 +53,6 @@ export const ServiceList: React.StatelessComponent<ServiceListProps> = ({
     ListViews.STAFF_MEMBERS_LIST
   );
   const intl = useIntl();
-  const shop = useShop();
 
   const tabs = getFilterTabs();
 
@@ -75,17 +77,17 @@ export const ServiceList: React.StatelessComponent<ServiceListProps> = ({
       serviceListUrl({
         ...params,
         action: undefined,
-        ids: undefined
+        id: undefined
       }),
       true
     );
 
-  const openModal = (action: ServiceListUrlDialog, ids?: string[]) =>
+  const openModal = (action: ServiceListUrlDialog, id?: string) =>
     navigate(
       serviceListUrl({
         ...params,
         action,
-        ids
+        id
       })
     );
 
@@ -119,7 +121,7 @@ export const ServiceList: React.StatelessComponent<ServiceListProps> = ({
 
   return (
     <ServiceListQuery displayLoader variables={queryVariables}>
-      {({ data, loading }) => {
+      {({ data, loading, refetch }) => {
         const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
           maybe(() => data.serviceAccounts.pageInfo),
           paginationState,
@@ -127,40 +129,95 @@ export const ServiceList: React.StatelessComponent<ServiceListProps> = ({
         );
 
         const handleCreate = () => navigate(serviceAddUrl);
-        const handleRemove = () =>
+        const handleRemove = (id: string) =>
           navigate(
             serviceListUrl({
               ...params,
-              action: "remove"
+              action: "remove",
+              id
             })
           );
+        const onRemove = (data: ServiceDelete) => {
+          if (data.serviceAccountDelete.errors.length === 0) {
+            notify({
+              text: intl.formatMessage(commonMessages.savedChanges)
+            });
+            closeModal();
+            refetch();
+          }
+        };
 
         return (
-          <>
-            <ServiceListPage
-              currentTab={currentTab}
-              initialSearch={params.query || ""}
-              onSearchChange={query => changeFilterField({ query })}
-              onAll={() => navigate(serviceListUrl())}
-              onTabChange={handleTabChange}
-              onTabDelete={() => openModal("delete-search")}
-              onTabSave={() => openModal("save-search")}
-              tabs={tabs.map(tab => tab.name)}
-              disabled={loading}
-              settings={settings}
-              pageInfo={pageInfo}
-              services={maybe(() =>
-                data.serviceAccounts.edges.map(edge => edge.node)
-              )}
-              onAdd={handleCreate}
-              onBack={() => navigate(configurationMenuUrl)}
-              onNextPage={loadNextPage}
-              onPreviousPage={loadPreviousPage}
-              onUpdateListSettings={updateListSettings}
-              onRowClick={id => () => navigate(serviceUrl(id))}
-              onRemove={handleRemove}
-            />
-          </>
+          <ServiceDeleteMutation onCompleted={onRemove}>
+            {(deleteService, deleteServiceOpts) => {
+              const handleRemoveConfirm = () =>
+                deleteService({
+                  variables: {
+                    id: params.id
+                  }
+                });
+
+              const removeTransitionState = getMutationState(
+                deleteServiceOpts.called,
+                deleteServiceOpts.loading,
+                maybe(() => deleteServiceOpts.data.serviceAccountDelete.errors)
+              );
+
+              return (
+                <>
+                  <ServiceListPage
+                    currentTab={currentTab}
+                    initialSearch={params.query || ""}
+                    onSearchChange={query => changeFilterField({ query })}
+                    onAll={() => navigate(serviceListUrl())}
+                    onTabChange={handleTabChange}
+                    onTabDelete={() => openModal("delete-search")}
+                    onTabSave={() => openModal("save-search")}
+                    tabs={tabs.map(tab => tab.name)}
+                    disabled={loading}
+                    settings={settings}
+                    pageInfo={pageInfo}
+                    services={maybe(() =>
+                      data.serviceAccounts.edges.map(edge => edge.node)
+                    )}
+                    onAdd={handleCreate}
+                    onBack={() => navigate(configurationMenuUrl)}
+                    onNextPage={loadNextPage}
+                    onPreviousPage={loadPreviousPage}
+                    onUpdateListSettings={updateListSettings}
+                    onRowClick={id => () => navigate(serviceUrl(id))}
+                    onRemove={handleRemove}
+                  />
+                  <ServiceDeleteDialog
+                    confirmButtonState={removeTransitionState}
+                    name={maybe(
+                      () =>
+                        data.serviceAccounts.edges.find(
+                          edge => edge.node.id === params.id
+                        ).node.name,
+                      "..."
+                    )}
+                    onClose={closeModal}
+                    onConfirm={handleRemoveConfirm}
+                    open={params.action === "remove"}
+                  />
+                  <SaveFilterTabDialog
+                    open={params.action === "save-search"}
+                    confirmButtonState="default"
+                    onClose={closeModal}
+                    onSubmit={handleTabSave}
+                  />
+                  <DeleteFilterTabDialog
+                    open={params.action === "delete-search"}
+                    confirmButtonState="default"
+                    onClose={closeModal}
+                    onSubmit={handleTabDelete}
+                    tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+                  />
+                </>
+              );
+            }}
+          </ServiceDeleteMutation>
         );
       }}
     </ServiceListQuery>

@@ -3,7 +3,6 @@ import urlJoin from "url-join";
 
 import {
   ActiveTab,
-  BulkAction,
   Dialog,
   Filters,
   Pagination,
@@ -20,10 +19,10 @@ export enum ServiceListUrlFiltersEnum {
 export type ServiceListUrlFilters = Filters<ServiceListUrlFiltersEnum>;
 export type ServiceListUrlDialog = "remove" | TabActionDialog;
 export type ServiceListUrlQueryParams = ActiveTab &
-  BulkAction &
   ServiceListUrlFilters &
   Dialog<ServiceListUrlDialog> &
-  Pagination;
+  Pagination &
+  SingleAction;
 export const serviceListUrl = (params?: ServiceListUrlQueryParams) =>
   serviceListPath + "?" + stringifyQs(params);
 

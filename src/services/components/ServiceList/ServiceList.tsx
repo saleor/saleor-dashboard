@@ -17,10 +17,9 @@ import EditIcon from "@material-ui/icons/Edit";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
-import { maybe, renderCollection } from "@saleor/misc";
+import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
 
@@ -76,10 +75,15 @@ const ServiceList = withStyles(styles, {
   }: ServiceListProps & WithStyles<typeof styles>) => (
     <Table className={classes.table}>
       <TableHead>
-        <TableCell className={classes.colName}>
-          <FormattedMessage defaultMessage="Name" description="service name" />
-        </TableCell>
-        <TableCell />
+        <TableRow>
+          <TableCell className={classes.colName}>
+            <FormattedMessage
+              defaultMessage="Name"
+              description="service name"
+            />
+          </TableCell>
+          <TableCell />
+        </TableRow>
       </TableHead>
       <TableFooter>
         <TableRow>
@@ -135,7 +139,11 @@ const ServiceList = withStyles(styles, {
                 </IconButton>
                 <IconButton
                   color="primary"
-                  onClick={service ? () => onRemove(service.id) : undefined}
+                  onClick={
+                    service
+                      ? stopPropagation(() => onRemove(service.id))
+                      : undefined
+                  }
                 >
                   <DeleteIcon />
                 </IconButton>
