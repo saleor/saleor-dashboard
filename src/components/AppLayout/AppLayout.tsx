@@ -88,7 +88,7 @@ const styles = (theme: Theme) =>
         margin: "0 8px"
       },
       "& svg": {
-        marginTop: 12,
+        marginTop: 8,
         transform: "rotate(180deg)"
       },
       "&:hover": {
@@ -115,17 +115,21 @@ const styles = (theme: Theme) =>
     },
     isMenuSmallHide: {
       "& svg": {
+        marginLeft: "3px",
         transform: "rotate(0deg)"
       }
     },
     logo: {
       "& svg": {
-        padding: "20px 50px",
-        width: "256px"
+        left: "50%",
+        position: "absolute",
+        top: "50%",
+        transform: "translate(-50%,-50%)"
       },
       background: theme.palette.secondary.main,
       display: "block",
-      height: 80
+      height: 80,
+      position: "relative"
     },
     logoDark: {
       "& path": {
@@ -135,7 +139,7 @@ const styles = (theme: Theme) =>
     },
     logoSmall: {
       "& svg": {
-        margin: "20px 0",
+        margin: 0,
         padding: 0,
         width: "80px"
       }
@@ -143,7 +147,7 @@ const styles = (theme: Theme) =>
     menu: {
       background: theme.palette.background.paper,
       height: "100vh",
-      padding: 25
+      padding: "25px 20px"
     },
     menuIcon: {
       "& span": {

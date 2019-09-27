@@ -24,5 +24,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add search bars - #172 by @dominik-zeglen
 - Add sorting to product list - #173 by @dominik-zeglen
 - Add Heroku integration - #175 by @bogdal
+- Fix navigation - #182 by @benekex2
 - Add testcafe tags to attributes, categories, collections and product types - #178 by @dominik-zeglen
 - Fix input error style - #183 by @benekex2
