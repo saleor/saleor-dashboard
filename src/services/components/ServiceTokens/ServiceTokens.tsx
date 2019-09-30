@@ -94,7 +94,10 @@ const ServiceTokens: React.FC<ServiceTokensProps> = props => {
                   {maybe<React.ReactNode>(() => token.name, <Skeleton />)}
                 </TableCell>
                 <TableCell className={classes.colKey}>
-                  {maybe<React.ReactNode>(() => token.authToken, <Skeleton />)}
+                  {maybe<React.ReactNode>(
+                    () => `**** ${token.authToken}`,
+                    <Skeleton />
+                  )}
                 </TableCell>
                 <TableCell className={classes.colActions}>
                   <IconButton

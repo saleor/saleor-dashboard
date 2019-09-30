@@ -661,6 +661,11 @@ export interface ServiceAccountInput {
   permissions?: (PermissionEnum | null)[] | null;
 }
 
+export interface ServiceAccountTokenInput {
+  name?: string | null;
+  serviceAccount: string;
+}
+
 export interface ShippingPriceInput {
   name?: string | null;
   price?: any | null;

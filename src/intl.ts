@@ -88,6 +88,10 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Delete",
     description: "button"
   },
+  done: {
+    defaultMessage: "Done",
+    description: "button"
+  },
   edit: {
     defaultMessage: "Edit",
     description: "button"

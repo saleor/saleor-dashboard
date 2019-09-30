@@ -38,7 +38,7 @@ export const service: ServiceDetails_serviceAccount = {
   tokens: [
     {
       __typename: "ServiceAccountToken",
-      authToken: "**** AK05",
+      authToken: "AK05",
       id: "t1",
       name: "default"
     }

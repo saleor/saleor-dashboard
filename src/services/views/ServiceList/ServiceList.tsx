@@ -13,7 +13,6 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ServiceDeleteMutation } from "@saleor/services/mutations";
