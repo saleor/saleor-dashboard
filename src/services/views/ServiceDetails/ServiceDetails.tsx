@@ -34,16 +34,22 @@ import {
 interface OrderListProps {
   id: string;
   params: ServiceUrlQueryParams;
+  token: string;
+  onTokenClose: () => void;
 }
 
 export const ServiceDetails: React.StatelessComponent<OrderListProps> = ({
   id,
-  params
+  params,
+  token,
+  onTokenClose
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
+
+  React.useEffect(() => onTokenClose, []);
 
   const closeModal = () =>
     navigate(
@@ -203,9 +209,11 @@ export const ServiceDetails: React.StatelessComponent<OrderListProps> = ({
                               <ServiceDetailsPage
                                 disabled={loading}
                                 errors={[]}
+                                token={token}
                                 onBack={handleBack}
                                 onDelete={() => openModal("remove")}
                                 onSubmit={handleSubmit}
+                                onTokenClose={onTokenClose}
                                 onTokenCreate={() => openModal("create-token")}
                                 onTokenDelete={id =>
                                   openModal("remove-token", id)

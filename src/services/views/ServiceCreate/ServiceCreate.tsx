@@ -14,7 +14,10 @@ import ServiceCreatePage, {
 } from "../../components/ServiceCreatePage";
 import { serviceListUrl, serviceUrl } from "../../urls";
 
-export const ServiceCreate: React.StatelessComponent = () => {
+interface ServiceCreateProps {
+  setToken: (token: string) => void;
+}
+export const ServiceCreate: React.FC<ServiceCreateProps> = ({ setToken }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -26,6 +29,7 @@ export const ServiceCreate: React.StatelessComponent = () => {
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(serviceUrl(data.serviceAccountCreate.serviceAccount.id));
+      setToken(data.serviceAccountCreate.authToken);
     }
   };
 

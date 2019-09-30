@@ -37,6 +37,7 @@ const useStyles = makeStyles(
       marginRight: theme.spacing.unit
     },
     copy: {
+      marginTop: theme.spacing.unit,
       position: "relative",
       right: theme.spacing.unit
     },
@@ -49,6 +50,10 @@ const useStyles = makeStyles(
     name: "ServiceTokenCreateDialog"
   }
 );
+
+function handleCopy(token: string) {
+  navigator.clipboard.writeText(token);
+}
 
 const ServiceTokenCreateDialog: React.FC<
   ServiceTokenCreateDialogProps
@@ -71,88 +76,84 @@ const ServiceTokenCreateDialog: React.FC<
   return (
     <Dialog open={open} fullWidth maxWidth="sm">
       <Form initial={{ name: "" }} onSubmit={data => onCreate(data.name)}>
-        {({ change, data, submit }) => {
-          const handleCopy = () => navigator.clipboard.writeText(token);
-
-          return (
-            <>
-              <DialogTitle>
-                <FormattedMessage
-                  defaultMessage="Create Token"
-                  description="header"
-                />
-              </DialogTitle>
-              <DialogContent>
-                {step === "form" ? (
-                  <>
-                    <Typography>
-                      <FormattedMessage defaultMessage="Access token is used to authenticate service accounts" />
+        {({ change, data, submit }) => (
+          <>
+            <DialogTitle>
+              <FormattedMessage
+                defaultMessage="Create Token"
+                description="header"
+              />
+            </DialogTitle>
+            <DialogContent>
+              {step === "form" ? (
+                <>
+                  <Typography>
+                    <FormattedMessage defaultMessage="Access token is used to authenticate service accounts" />
+                  </Typography>
+                  <FormSpacer />
+                  <TextField
+                    label={intl.formatMessage({
+                      defaultMessage: "Token Note"
+                    })}
+                    value={data.name}
+                    onChange={change}
+                    fullWidth
+                    name="name"
+                  />
+                </>
+              ) : (
+                <>
+                  <Typography>
+                    <FormattedMessage defaultMessage="We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again." />
+                  </Typography>
+                  <CardSpacer />
+                  <Paper className={classes.paper} elevation={0}>
+                    <Typography variant="caption">
+                      <FormattedMessage defaultMessage="Generated Token" />
                     </Typography>
-                    <FormSpacer />
-                    <TextField
-                      label={intl.formatMessage({
-                        defaultMessage: "Token Note"
-                      })}
-                      value={data.name}
-                      onChange={change}
-                      fullWidth
-                      name="name"
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Typography>
-                      <FormattedMessage defaultMessage="We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again." />
-                    </Typography>
-                    <CardSpacer />
-                    <Paper className={classes.paper} elevation={0}>
-                      <Typography variant="caption">
-                        <FormattedMessage defaultMessage="Generated Token" />
-                      </Typography>
-                      <Typography>{token}</Typography>
-                      <Button
-                        className={classes.copy}
-                        color="primary"
-                        onClick={handleCopy}
-                      >
-                        <FormattedMessage
-                          defaultMessage="Copy token"
-                          description="button"
-                        />
-                      </Button>
-                    </Paper>{" "}
-                  </>
-                )}
-              </DialogContent>
-              <DialogActions>
-                {step === "form" ? (
-                  <>
+                    <Typography>{token}</Typography>
                     <Button
-                      className={classes.cancel}
+                      className={classes.copy}
                       color="primary"
-                      onClick={onClose}
-                    >
-                      <FormattedMessage {...buttonMessages.cancel} />
-                    </Button>
-                    <ConfirmButton
-                      transitionState={confirmButtonState}
-                      onClick={submit}
+                      onClick={() => handleCopy(token)}
                     >
                       <FormattedMessage
-                        defaultMessage="Create"
-                        description="create service token, button"
+                        defaultMessage="Copy token"
+                        description="button"
                       />
-                    </ConfirmButton>
-                  </>
-                ) : (
-                  <Button color="primary" variant="contained" onClick={onClose}>
-                    <FormattedMessage {...buttonMessages.done} />
+                    </Button>
+                  </Paper>
+                </>
+              )}
+            </DialogContent>
+            <DialogActions>
+              {step === "form" ? (
+                <>
+                  <Button
+                    className={classes.cancel}
+                    color="primary"
+                    onClick={onClose}
+                  >
+                    <FormattedMessage {...buttonMessages.cancel} />
                   </Button>
-                )}
-              </DialogActions>
-            </>
-          );
-        }}
+                  <ConfirmButton
+                    transitionState={confirmButtonState}
+                    onClick={submit}
+                  >
+                    <FormattedMessage
+                      defaultMessage="Create"
+                      description="create service token, button"
+                    />
+                  </ConfirmButton>
+                </>
+              ) : (
+                <Button color="primary" variant="contained" onClick={onClose}>
+                  <FormattedMessage {...buttonMessages.done} />
+                </Button>
+              )}
+            </DialogActions>
+          </>
+        )}
       </Form>
     </Dialog>
   );

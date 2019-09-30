@@ -17,6 +17,7 @@ import { maybe } from "@saleor/misc";
 import { ServiceDetails_serviceAccount } from "@saleor/services/types/ServiceDetails";
 import { UserError } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
+import ServiceDefaultToken from "../ServiceDefaultToken";
 import ServiceInfo from "../ServiceInfo";
 import ServiceTokens from "../ServiceTokens";
 
@@ -32,9 +33,11 @@ export interface ServiceDetailsPageProps {
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
   service: ServiceDetails_serviceAccount;
+  token: string;
   onBack: () => void;
   onTokenDelete: (id: string) => void;
   onDelete: () => void;
+  onTokenClose: () => void;
   onTokenCreate: () => void;
   onSubmit: (data: ServiceDetailsPageFormData) => void;
 }
@@ -46,8 +49,10 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
     permissions,
     saveButtonBarState,
     service,
+    token,
     onBack,
     onDelete,
+    onTokenClose,
     onTokenCreate,
     onTokenDelete,
     onSubmit
@@ -84,6 +89,15 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
           <PageHeader title={maybe(() => service.name)} />
           <Grid>
             <div>
+              {token && (
+                <>
+                  <ServiceDefaultToken
+                    token={token}
+                    onTokenClose={onTokenClose}
+                  />
+                  <CardSpacer />
+                </>
+              )}
               <ServiceInfo
                 data={data}
                 disabled={disabled}

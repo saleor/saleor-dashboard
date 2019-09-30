@@ -24,6 +24,7 @@ export interface ServiceCreate_serviceAccountCreate_serviceAccount {
 export interface ServiceCreate_serviceAccountCreate {
   __typename: "ServiceAccountCreate";
   errors: ServiceCreate_serviceAccountCreate_errors[] | null;
+  authToken: string | null;
   serviceAccount: ServiceCreate_serviceAccountCreate_serviceAccount | null;
 }
 

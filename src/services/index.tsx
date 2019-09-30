@@ -23,8 +23,14 @@ const ServiceList: React.FC<RouteComponentProps> = ({ location }) => {
   return <ServiceListComponent params={params} />;
 };
 
-const ServiceDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
+interface ServiceDetailsProps extends RouteComponentProps<{ id: string }> {
+  token: string;
+  onTokenClose: () => void;
+}
+const ServiceDetails: React.FC<ServiceDetailsProps> = ({
+  match,
+  token,
+  onTokenClose
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ServiceUrlQueryParams = qs;
@@ -33,20 +39,36 @@ const ServiceDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
     <ServiceDetailsComponent
       id={decodeURIComponent(match.params.id)}
       params={params}
+      token={token}
+      onTokenClose={onTokenClose}
     />
   );
 };
 
 const ServiceSection = () => {
   const intl = useIntl();
+  const [token, setToken] = React.useState<string>(null);
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.serviceAccounts)} />
       <Switch>
         <Route exact path={serviceListPath} component={ServiceList} />
-        <Route exact path={serviceAddPath} component={ServiceCreate} />
-        <Route path={servicePath(":id")} component={ServiceDetails} />
+        <Route
+          exact
+          path={serviceAddPath}
+          render={() => <ServiceCreate setToken={setToken} />}
+        />
+        <Route
+          path={servicePath(":id")}
+          render={props => (
+            <ServiceDetails
+              {...props}
+              token={token}
+              onTokenClose={() => setToken(null)}
+            />
+          )}
+        />
       </Switch>
     </>
   );

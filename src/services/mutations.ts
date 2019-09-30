@@ -22,6 +22,7 @@ const serviceCreateMutation = gql`
         field
         message
       }
+      authToken
       serviceAccount {
         ...ServiceFragment
       }

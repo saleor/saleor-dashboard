@@ -15,11 +15,13 @@ const props: ServiceDetailsPageProps = {
   onBack: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,
+  onTokenClose: () => undefined,
   onTokenCreate: () => undefined,
   onTokenDelete: () => undefined,
   permissions,
   saveButtonBarState: "default",
-  service
+  service,
+  token: null
 };
 storiesOf("Views / Services / Service details", module)
   .addDecorator(Decorator)
@@ -32,4 +34,7 @@ storiesOf("Views / Services / Service details", module)
       {...props}
       errors={["name"].map(field => formError(field))}
     />
+  ))
+  .add("default token", () => (
+    <ServiceDetailsPage {...props} token="93B4AF3D7E9FD7C61C4C9B32FF82F" />
   ));

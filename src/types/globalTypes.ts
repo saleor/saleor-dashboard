@@ -321,6 +321,8 @@ export interface AttributeFilterInput {
   availableInGrid?: boolean | null;
   search?: string | null;
   ids?: (string | null)[] | null;
+  inCollection?: string | null;
+  inCategory?: string | null;
 }
 
 export interface AttributeInput {
