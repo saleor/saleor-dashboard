@@ -62,7 +62,6 @@ export interface ProductUpdatePageProps extends ListActions {
   fetchCollections: (query: string) => void;
   onVariantShow: (id: string) => () => void;
   onImageDelete: (id: string) => () => void;
-  onAttributesEdit: () => void;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -92,7 +91,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   product,
   saveButtonBarState,
   variants,
-  onAttributesEdit,
   onBack,
   onDelete,
   onImageDelete,
@@ -215,12 +213,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onImageUpload={onImageUpload}
                   />
                   <CardSpacer />
-                  <ProductAttributes
-                    attributes={attributes}
-                    disabled={disabled}
-                    onChange={handleAttributeChange}
-                    onMultiChange={handleAttributeMultiChange}
-                  />
+                  {attributes.length > 0 && (
+                    <ProductAttributes
+                      attributes={attributes}
+                      disabled={disabled}
+                      onChange={handleAttributeChange}
+                      onMultiChange={handleAttributeMultiChange}
+                    />
+                  )}
                   <CardSpacer />
                   <ProductPricing
                     currency={currency}
@@ -234,7 +234,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       disabled={disabled}
                       variants={variants}
                       fallbackPrice={product ? product.basePrice : undefined}
-                      onAttributesEdit={onAttributesEdit}
                       onRowClick={onVariantShow}
                       onVariantAdd={onVariantAdd}
                       toolbar={toolbar}

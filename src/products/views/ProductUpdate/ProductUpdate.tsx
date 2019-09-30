@@ -15,7 +15,6 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
 import SearchCategories from "../../../containers/SearchCategories";
 import SearchCollections from "../../../containers/SearchCollections";
 import { getMutationState, maybe } from "../../../misc";
-import { productTypeUrl } from "../../../productTypes/urls";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import ProductUpdateOperations from "../../containers/ProductUpdateOperations";
 import { TypedProductDetailsQuery } from "../../queries";
@@ -234,11 +233,6 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                             placeholderImage={placeholderImg}
                             product={product}
                             variants={maybe(() => product.variants)}
-                            onAttributesEdit={() =>
-                              navigate(
-                                productTypeUrl(data.product.productType.id)
-                              )
-                            }
                             onBack={() => {
                               navigate(productListUrl());
                             }}

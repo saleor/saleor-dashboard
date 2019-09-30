@@ -82384,71 +82384,6 @@ Ctrl + K"
             class="CardSpacer-spacer-id"
           />
           <div
-            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id Hook-card-id"
-          >
-            <div
-              class="CardTitle-root-id"
-            >
-              <span
-                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
-              >
-                Attributes
-              </span>
-              <div
-                class="CardTitle-toolbar-id"
-              />
-            </div>
-            <div
-              class="CardTitle-children-id"
-            />
-            <hr
-              class="CardTitle-hr-id"
-            />
-            <div
-              class="MuiCardContent-root-id Hook-cardContent-id"
-            >
-              <div
-                class="Hook-expansionBar-id"
-              >
-                <div
-                  class="Hook-expansionBarLabelContainer-id"
-                >
-                  <span
-                    class="MuiTypography-root-id MuiTypography-caption-id Hook-expansionBarLabel-id"
-                  >
-                    0 Attributes
-                  </span>
-                </div>
-                <button
-                  class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
-                  data-tc="product-attributes-expand"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiIconButton-label-id"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root-id Hook-expansionBarButtonIcon-id Hook-rotate-id"
-                      focusable="false"
-                      role="presentation"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                    </svg>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div
             class="CardSpacer-spacer-id"
           />
           <div
@@ -83484,71 +83419,6 @@ Ctrl + K"
             class="CardSpacer-spacer-id"
           />
           <div
-            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id Hook-card-id"
-          >
-            <div
-              class="CardTitle-root-id"
-            >
-              <span
-                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
-              >
-                Attributes
-              </span>
-              <div
-                class="CardTitle-toolbar-id"
-              />
-            </div>
-            <div
-              class="CardTitle-children-id"
-            />
-            <hr
-              class="CardTitle-hr-id"
-            />
-            <div
-              class="MuiCardContent-root-id Hook-cardContent-id"
-            >
-              <div
-                class="Hook-expansionBar-id"
-              >
-                <div
-                  class="Hook-expansionBarLabelContainer-id"
-                >
-                  <span
-                    class="MuiTypography-root-id MuiTypography-caption-id Hook-expansionBarLabel-id"
-                  >
-                    0 Attributes
-                  </span>
-                </div>
-                <button
-                  class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
-                  data-tc="product-attributes-expand"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiIconButton-label-id"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root-id Hook-expansionBarButtonIcon-id Hook-rotate-id"
-                      focusable="false"
-                      role="presentation"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                    </svg>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div
             class="CardSpacer-spacer-id"
           />
           <div
@@ -84577,71 +84447,6 @@ Ctrl + K"
           <div
             class="CardSpacer-spacer-id"
           />
-          <div
-            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id Hook-card-id"
-          >
-            <div
-              class="CardTitle-root-id"
-            >
-              <span
-                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
-              >
-                Attributes
-              </span>
-              <div
-                class="CardTitle-toolbar-id"
-              />
-            </div>
-            <div
-              class="CardTitle-children-id"
-            />
-            <hr
-              class="CardTitle-hr-id"
-            />
-            <div
-              class="MuiCardContent-root-id Hook-cardContent-id"
-            >
-              <div
-                class="Hook-expansionBar-id"
-              >
-                <div
-                  class="Hook-expansionBarLabelContainer-id"
-                >
-                  <span
-                    class="MuiTypography-root-id MuiTypography-caption-id Hook-expansionBarLabel-id"
-                  >
-                    0 Attributes
-                  </span>
-                </div>
-                <button
-                  class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
-                  data-tc="product-attributes-expand"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiIconButton-label-id"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root-id Hook-expansionBarButtonIcon-id Hook-rotate-id"
-                      focusable="false"
-                      role="presentation"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                    </svg>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
           <div
             class="CardSpacer-spacer-id"
           />
@@ -87189,6 +86994,3253 @@ exports[`Storyshots Views / Products / Create product variant with errors 1`] = 
 </div>
 `;
 
+exports[`Storyshots Views / Products / Product edit no product attributes 1`] = `
+<div
+  style="padding:24px"
+>
+  <form>
+    <div
+      class="Container-root-id"
+    >
+      <div
+        class="ExtendedPageHeader-root-id"
+      >
+        <h5
+          class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
+        >
+          Ergonomic Plastic Bacon
+        </h5>
+        <div
+          class="ExtendedPageHeader-action-id"
+        >
+          <div
+            class="Component-root-id"
+          />
+        </div>
+      </div>
+      <div
+        class="Grid-root-id Grid-default-id"
+      >
+        <div>
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                General Informations
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              />
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id"
+            >
+              <div
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+              >
+                <label
+                  class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
+                  data-shrink="true"
+                >
+                  Name
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
+                  >
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="name"
+                    type="text"
+                    value="Ergonomic Plastic Bacon"
+                  />
+                </div>
+              </div>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <div
+                class="RichTextEditor-root-id RichTextEditor-scroll-id"
+              >
+                <div
+                  class="RichTextEditor-input-id"
+                >
+                  <span
+                    class="MuiTypography-root-id MuiTypography-caption-id MuiTypography-colorPrimary-id RichTextEditor-label-id"
+                  >
+                    Description
+                  </span>
+                  <div
+                    class="Draftail-Editor Draftail-Editor--hide-placeholder"
+                  >
+                    <div
+                      class="Draftail-Toolbar"
+                      role="toolbar"
+                    >
+                      <div
+                        class="Draftail-ToolbarGroup"
+                      >
+                        <button
+                          aria-label="Bold
+Ctrl + B"
+                          class="Draftail-ToolbarButton Draftail-ToolbarButton--active"
+                          data-draftail-balloon="true"
+                          name="BOLD"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id RichTextEditor-smallIcon-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M9.02336 6.79C10.0411 6.12 10.7546 5.02 10.7546 4C10.7546 1.74 8.91844 0 6.55768 0H0V14H7.38657C9.57945 14 11.2792 12.3 11.2792 10.21C11.2792 8.69 10.3769 7.39 9.02336 6.79V6.79ZM3.14768 2.5H6.29537C7.16623 2.5 7.86921 3.17 7.86921 4C7.86921 4.83 7.16623 5.5 6.29537 5.5H3.14768V2.5ZM6.81998 11.5H3.14768V8.5H6.81998C7.69084 8.5 8.39383 9.17 8.39383 10C8.39383 10.83 7.69084 11.5 6.81998 11.5Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Italic
+Ctrl + I"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="ITALIC"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id RichTextEditor-smallIcon-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M4.19691 0V3H6.51571L2.92735 11H0V14H8.39383V11H6.07503L9.66339 3H12.5907V0H4.19691Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Strikethrough
+Ctrl + ⇧ + X"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="STRIKETHROUGH"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M6.53333 14H10.2667V11.2H6.53333V14ZM1.86667 0V2.8H6.53333V5.6H10.2667V2.8H14.9333V0H1.86667ZM0 9.33333H16.8V7.46667H0V9.33333Z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div
+                        class="Draftail-ToolbarGroup"
+                      >
+                        <button
+                          aria-label="Heading 1
+#"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="header-one"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M0 14H3.10341V8.2168H8.4V14H11.4962V0H8.4V5.77637H3.10341V0H0V7V14Z"
+                            />
+                            <path
+                              d="M19.5997 0H16.611C16.5751 0.854492 15.3137 2.31055 13.4287 2.31055V4.66211C15.0485 4.66211 16.1021 4.08789 16.4175 3.62305H16.5536V14H19.5997V0Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Heading 2
+##"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="header-two"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M11.2857 14H8.42857V8.0813H2.85714V14H0V0.189702H2.85714V5.78591H8.42857V0.189702H11.2857V14Z"
+                            />
+                            <path
+                              d="M23 14H13.4952V12.122L17.981 7.36043C18.5968 6.69015 19.0508 6.10524 19.3429 5.60569C19.6413 5.10614 19.7905 4.63189 19.7905 4.18293C19.7905 3.56956 19.6349 3.08898 19.3238 2.74119C19.0127 2.38708 18.5683 2.21003 17.9905 2.21003C17.3683 2.21003 16.8762 2.42502 16.5143 2.85501C16.1587 3.27868 15.981 3.8383 15.981 4.53388H13.219C13.219 3.69286 13.419 2.92457 13.819 2.229C14.2254 1.53342 14.7968 0.989612 15.5333 0.597561C16.2698 0.199187 17.1048 0 18.0381 0C19.4667 0 20.5746 0.341463 21.3619 1.02439C22.1556 1.70732 22.5524 2.67164 22.5524 3.91734C22.5524 4.60027 22.3746 5.29584 22.019 6.00407C21.6635 6.71229 21.054 7.53749 20.1905 8.47967L17.0381 11.79H23V14Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Heading 3
+###"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="header-three"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M10.8943 13.8128H8.13623V7.97326H2.75804V13.8128H0V0.187166H2.75804V5.70856H8.13623V0.187166H10.8943V13.8128Z"
+                            />
+                            <path
+                              d="M15.73 5.80214H17.1458C17.82 5.80214 18.3195 5.63057 18.6444 5.28743C18.9692 4.9443 19.1316 4.48886 19.1316 3.92112C19.1316 3.3721 18.9692 2.94474 18.6444 2.63904C18.3257 2.33333 17.8844 2.18048 17.3205 2.18048C16.8118 2.18048 16.3858 2.32398 16.0426 2.61096C15.6994 2.89171 15.5278 3.2598 15.5278 3.71524H12.8709C12.8709 3.00401 13.0578 2.36765 13.4317 1.80615C13.8117 1.23841 14.3388 0.795455 15.013 0.477273C15.6933 0.159091 16.441 0 17.2562 0C18.672 0 19.7813 0.346257 20.5842 1.03877C21.3871 1.72504 21.7885 2.67335 21.7885 3.88369C21.7885 4.50758 21.6016 5.08155 21.2277 5.60562C20.8539 6.12968 20.3636 6.53209 19.7568 6.81283C20.5107 7.08734 21.0715 7.49911 21.4392 8.04813C21.8131 8.59715 22 9.24599 22 9.99465C22 11.205 21.5648 12.1751 20.6945 12.9051C19.8303 13.635 18.6842 14 17.2562 14C15.92 14 14.826 13.6413 13.9741 12.9238C13.1283 12.2063 12.7054 11.258 12.7054 10.0789H15.3623C15.3623 10.5905 15.5492 11.0085 15.9231 11.3329C16.3031 11.6573 16.7689 11.8195 17.3205 11.8195C17.9518 11.8195 18.4452 11.6511 18.8007 11.3142C19.1623 10.971 19.3431 10.5187 19.3431 9.95722C19.3431 8.59715 18.6076 7.91711 17.1366 7.91711H15.73V5.80214Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Blockquote
+>"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="blockquote"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M1.46891 14H5.87564L8.81345 8.4V0H0V8.4H4.40673L1.46891 14ZM13.2202 14H17.6269L20.5647 8.4V0H11.7513V8.4H16.158L13.2202 14Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Bulleted list
+-"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="unordered-list-item"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M1.46892 5.6C0.656117 5.6 0 6.22533 0 7C0 7.77467 0.656117 8.4 1.46892 8.4C2.28172 8.4 2.93784 7.77467 2.93784 7C2.93784 6.22533 2.28172 5.6 1.46892 5.6ZM1.46892 0C0.656117 0 0 0.625333 0 1.4C0 2.17467 0.656117 2.8 1.46892 2.8C2.28172 2.8 2.93784 2.17467 2.93784 1.4C2.93784 0.625333 2.28172 0 1.46892 0ZM1.46892 11.2C0.656117 11.2 0 11.8347 0 12.6C0 13.3653 0.66591 14 1.46892 14C2.27193 14 2.93784 13.3653 2.93784 12.6C2.93784 11.8347 2.28172 11.2 1.46892 11.2ZM4.40676 13.5333H18.1167V11.6667H4.40676V13.5333ZM4.40676 7.93333H18.1167V6.06667H4.40676V7.93333ZM4.40676 0.466667V2.33333H18.1167V0.466667H4.40676Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Numbered list
+1."
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="ordered-list-item"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M0 12.9214H2V13.3979H1V14.351H2V14.8275H0V15.7806H3V11.9683H0V12.9214ZM1 4.34359H2V0.53125H0V1.48433H1V4.34359ZM0 7.20284H1.8L0 9.20432V10.0621H3V9.10901H1.2L3 7.10754V6.24976H0V7.20284ZM5 1.48433V3.3905H19V1.48433H5ZM5 14.8275H19V12.9214H5V14.8275ZM5 9.10901H19V7.20284H5V9.10901Z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div
+                        class="Draftail-ToolbarGroup"
+                      >
+                        <button
+                          aria-label="Line break
+⇧ + ↵"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="BR"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <span
+                            class="Draftail-ToolbarButton__label"
+                          >
+                            ↵
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class="Draftail-ToolbarGroup"
+                      >
+                        <button
+                          aria-label="Link
+Ctrl + K"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="LINK"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id RichTextEditor-linkIcon-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M1.99352 5C1.99352 3.29 3.45194 1.9 5.2461 1.9H9.44299V0H5.2461C2.35025 0 0 2.24 0 5C0 7.76 2.35025 10 5.2461 10H9.44299V8.1H5.2461C3.45194 8.1 1.99352 6.71 1.99352 5ZM6.29532 6H14.6891V4H6.29532V6ZM15.7383 0H11.5414V1.9H15.7383C17.5325 1.9 18.9909 3.29 18.9909 5C18.9909 6.71 17.5325 8.1 15.7383 8.1H11.5414V10H15.7383C18.6342 10 20.9844 7.76 20.9844 5C20.9844 2.24 18.6342 0 15.7383 0Z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      class="DraftEditor-root"
+                    >
+                      <div
+                        class="DraftEditor-editorContainer"
+                      >
+                        <div
+                          aria-describedby="placeholder-testKey"
+                          class="notranslate public-DraftEditor-content"
+                          contenteditable="true"
+                          role="textbox"
+                          spellcheck="false"
+                          style="outline:none;user-select:text;-webkit-user-select:text;white-space:pre-wrap;word-wrap:break-word"
+                        >
+                          <div
+                            data-contents="true"
+                          >
+                            <div
+                              class="Draftail-block--unstyled "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="rosn-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="rosn-0-0"
+                              >
+                                <span
+                                  data-offset-key="rosn-0-0"
+                                  style="font-weight:bold"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    bold
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                            <div
+                              class="Draftail-block--unstyled "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="6tbch-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="6tbch-0-0"
+                              >
+                                <span
+                                  data-offset-key="6tbch-0-0"
+                                  style="font-style:italic"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    italic
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                            <div
+                              class="Draftail-block--unstyled "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="1p044-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="1p044-0-0"
+                              >
+                                <span
+                                  data-offset-key="1p044-0-0"
+                                  style="text-decoration:line-through"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    strikethrough
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                            <h1
+                              class="Draftail-block--header-one "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="aven6-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="aven6-0-0"
+                              >
+                                <span
+                                  data-offset-key="aven6-0-0"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    h1
+                                  </span>
+                                </span>
+                              </div>
+                            </h1>
+                            <h2
+                              class="Draftail-block--header-two "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="9rabl-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="9rabl-0-0"
+                              >
+                                <span
+                                  data-offset-key="9rabl-0-0"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    h2
+                                  </span>
+                                </span>
+                              </div>
+                            </h2>
+                            <h3
+                              class="Draftail-block--header-three "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="bv0ac-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="bv0ac-0-0"
+                              >
+                                <span
+                                  data-offset-key="bv0ac-0-0"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    h3
+                                  </span>
+                                </span>
+                              </div>
+                            </h3>
+                            <blockquote
+                              class="Draftail-block--blockquote "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="2ip7q-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="2ip7q-0-0"
+                              >
+                                <span
+                                  data-offset-key="2ip7q-0-0"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    blockquote
+                                  </span>
+                                </span>
+                              </div>
+                            </blockquote>
+                            <ul
+                              class="public-DraftStyleDefault-ul"
+                              data-offset-key="8r8ss-0-0"
+                            >
+                              <li
+                                class="Draftail-block--unordered-list-item  public-DraftStyleDefault-unorderedListItem public-DraftStyleDefault-reset public-DraftStyleDefault-depth0 public-DraftStyleDefault-listLTR"
+                                data-block="true"
+                                data-editor="testKey"
+                                data-offset-key="8r8ss-0-0"
+                              >
+                                <div
+                                  class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                  data-offset-key="8r8ss-0-0"
+                                >
+                                  <span
+                                    data-offset-key="8r8ss-0-0"
+                                  >
+                                    <span
+                                      data-text="true"
+                                    >
+                                      ul
+                                    </span>
+                                  </span>
+                                </div>
+                              </li>
+                            </ul>
+                            <ol
+                              class="public-DraftStyleDefault-ol"
+                              data-offset-key="911hc-0-0"
+                            >
+                              <li
+                                class="Draftail-block--ordered-list-item  public-DraftStyleDefault-orderedListItem public-DraftStyleDefault-reset public-DraftStyleDefault-depth0 public-DraftStyleDefault-listLTR"
+                                data-block="true"
+                                data-editor="testKey"
+                                data-offset-key="911hc-0-0"
+                              >
+                                <div
+                                  class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                  data-offset-key="911hc-0-0"
+                                >
+                                  <span
+                                    data-offset-key="911hc-0-0"
+                                  >
+                                    <span
+                                      data-text="true"
+                                    >
+                                      ol
+                                    </span>
+                                  </span>
+                                </div>
+                              </li>
+                            </ol>
+                            <div
+                              class="Draftail-block--unstyled "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="5aejo-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="5aejo-0-0"
+                              >
+                                <span
+                                  data-offset-key="5aejo-0-0"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    link
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id ProductImages-card-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Images
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              >
+                <button
+                  class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-upload-image"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-label-id"
+                  >
+                    Upload image
+                  </span>
+                </button>
+                <input
+                  class="ProductImages-fileField-id"
+                  id="fileUpload"
+                  type="file"
+                />
+              </div>
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="ProductImages-imageGridContainer-id"
+            >
+              <div
+                class="ImageUpload-photosIconContainer-id ProductImages-imageUpload-id"
+                tabindex="0"
+              >
+                <div
+                  class="ProductImages-imageUploadIcon-id"
+                >
+                  <input
+                    autocomplete="off"
+                    class="ImageUpload-fileField-id"
+                    multiple=""
+                    style="display:none"
+                    tabindex="-1"
+                    type="file"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root-id ImageUpload-photosIcon-id"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6.10864 17.8974H3.29212C3.23158 17.8878 3.16942 17.8772 3.12042 17.8416C3.04669 17.788 3.01472 17.6983 3 17.6051V3.29232C3.01963 3.16818 3.08547 3.05213 3.20185 3.01431C3.23081 3.00488 3.26204 3.00477 3.29212 3H17.595C17.6248 3.00477 17.655 3.00954 17.6851 3.01431C17.7693 3.05715 17.8446 3.11527 17.8727 3.20199C17.8821 3.23097 17.8821 3.26223 17.887 3.29232V6.10798L20.7073 6.10342C20.7374 6.10815 20.7676 6.11285 20.7977 6.11759C20.8819 6.16039 20.9572 6.21852 20.9856 6.3053C20.9951 6.33435 20.9951 6.36561 21 6.39574V20.7074C20.9804 20.8315 20.9145 20.9476 20.7981 20.9854C20.769 20.9948 20.7378 20.9949 20.7076 20.9997L6.4008 21C6.34022 20.9904 6.27807 20.9798 6.22906 20.9442C6.15534 20.8906 6.1234 20.8009 6.10864 20.7077V17.8974ZM20.4156 18.1487H6.69292V20.4154L20.4156 20.415V18.1487ZM17.3216 10.7226L14.5234 13.4247L18.5752 17.4543C18.6102 17.5025 18.6316 17.5227 18.6457 17.5641H20.4156V13.6145L17.3216 10.7226ZM7.13581 17.5392C7.13753 17.5474 7.13886 17.5557 7.13988 17.5641H17.8565L12.6137 12.3498L7.13581 17.5392ZM17.3027 6.10892V3.58465H3.58424V17.3128H6.10864V6.41886C6.11821 6.35835 6.1288 6.29622 6.16431 6.24721C6.21777 6.17347 6.30727 6.14141 6.40031 6.12653L17.3027 6.10892ZM20.4156 12.8145V6.68856C15.8415 6.69596 11.2671 6.70333 6.69292 6.71073V17.1537L12.4178 11.7303C12.4913 11.6796 12.492 11.6793 12.5774 11.6532C12.6073 11.6536 12.6371 11.6539 12.667 11.6543C12.7517 11.6824 12.7524 11.6827 12.8246 11.7352L14.1087 13.0125L17.1155 10.1091C17.2122 10.0238 17.2154 10.0181 17.3552 10.0295C17.453 10.0463 17.4713 10.0661 17.5179 10.1059L20.4156 12.8145ZM9.46155 7.9651C10.1933 7.97204 10.8858 8.53631 11.0257 9.26605C11.125 9.7844 10.9492 10.3474 10.571 10.717C10.1291 11.1488 9.4265 11.2926 8.84531 11.0548C8.33223 10.8449 7.94546 10.3525 7.86504 9.80323C7.7658 9.12545 8.15208 8.40581 8.77376 8.11517C8.98813 8.01494 9.22433 7.96432 9.46155 7.9651ZM9.44459 8.54974C8.98175 8.55416 8.54681 8.90584 8.45303 9.36375C8.32277 10 8.9137 10.7061 9.63799 10.5718C10.051 10.4953 10.398 10.137 10.4593 9.71848C10.5424 9.15123 10.0783 8.55953 9.46446 8.54981C9.45784 8.54974 9.45121 8.54974 9.44459 8.54974Z"
+                      fill="url(#paint0_linear)"
+                    />
+                    <defs>
+                      <linearGradient
+                        gradientUnits="userSpaceOnUse"
+                        id="paint0_linear"
+                        x1="3"
+                        x2="22.8"
+                        y1="3"
+                        y2="23.5714"
+                      >
+                        <stop
+                          stop-color="#06847B"
+                        />
+                        <stop
+                          offset="1"
+                          stop-color="#3EE7CD"
+                        />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <p
+                    class="MuiTypography-root-id MuiTypography-body1-id ImageUpload-uploadText-id"
+                  >
+                    Drop here to upload
+                  </p>
+                </div>
+              </div>
+              <div
+                class="MuiCardContent-root-id"
+              >
+                <div
+                  class="ProductImages-root-id"
+                >
+                  <div
+                    class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
+                  >
+                    <div
+                      class="ImageTile-imageOverlay-id"
+                    >
+                      <div
+                        class="ImageTile-imageOverlayToolbar-id"
+                      />
+                    </div>
+                    <img
+                      alt="Id sit dolores adipisci"
+                      class="ImageTile-image-id"
+                      src="placeholder255x255.png"
+                    />
+                  </div>
+                  <div
+                    class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
+                  >
+                    <div
+                      class="ImageTile-imageOverlay-id"
+                    >
+                      <div
+                        class="ImageTile-imageOverlayToolbar-id"
+                      />
+                    </div>
+                    <img
+                      alt="Id sit dolores adipisci"
+                      class="ImageTile-image-id"
+                      src="placeholder255x255.png"
+                    />
+                  </div>
+                  <div
+                    class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
+                  >
+                    <div
+                      class="ImageTile-imageOverlay-id"
+                    >
+                      <div
+                        class="ImageTile-imageOverlayToolbar-id"
+                      />
+                    </div>
+                    <img
+                      alt="Id sit dolores adipisci"
+                      class="ImageTile-image-id"
+                      src="placeholder255x255.png"
+                    />
+                  </div>
+                  <div
+                    class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
+                  >
+                    <div
+                      class="ImageTile-imageOverlay-id"
+                    >
+                      <div
+                        class="ImageTile-imageOverlayToolbar-id"
+                      />
+                    </div>
+                    <img
+                      alt="Id sit dolores adipisci"
+                      class="ImageTile-image-id"
+                      src="placeholder255x255.png"
+                    />
+                  </div>
+                  <div
+                    class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
+                  >
+                    <div
+                      class="ImageTile-imageOverlay-id"
+                    >
+                      <div
+                        class="ImageTile-imageOverlayToolbar-id"
+                      />
+                    </div>
+                    <img
+                      alt="Id sit dolores adipisci"
+                      class="ImageTile-image-id"
+                      src="placeholder255x255.png"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Pricing
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              />
+            </div>
+            <div
+              class="CardTitle-children-id"
+            >
+              <label
+                class="MuiFormControlLabel-root-id"
+              >
+                <button
+                  class="MuiButtonBase-root-id Checkbox-root-id"
+                  tabindex="0"
+                  type="button"
+                >
+                  <input
+                    class="Checkbox-box-id Checkbox-checked-id"
+                    name="chargeTaxes"
+                    type="checkbox"
+                    value="true"
+                  />
+                </button>
+                <span
+                  class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                >
+                  Charge taxes for this item
+                </span>
+              </label>
+            </div>
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id"
+            >
+              <div
+                class="ProductPricing-root-id"
+              >
+                <div
+                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                >
+                  <label
+                    class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
+                    data-shrink="true"
+                  >
+                    Price
+                  </label>
+                  <div
+                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id MuiInputBase-adornedEnd-id MuiOutlinedInput-adornedEnd-id"
+                  >
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                      style="padding-left:8px"
+                    >
+                      <legend
+                        class="MuiPrivateNotchedOutline-legend-id"
+                        style="width:0"
+                      >
+                        <span>
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputType-id MuiInputBase-inputAdornedEnd-id MuiOutlinedInput-inputAdornedEnd-id"
+                      name="basePrice"
+                      type="number"
+                      value="339.39"
+                    />
+                    <div
+                      class="MuiInputAdornment-root-id MuiInputAdornment-positionEnd-id PriceField-currencySymbol-id"
+                    >
+                      <p
+                        class="MuiTypography-root-id MuiTypography-body2-id MuiTypography-colorTextSecondary-id"
+                      >
+                        NZD
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Variants
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              >
+                <button
+                  class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-add-variant"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-label-id"
+                  >
+                    Create variant
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <table
+              class="MuiTable-root-id ProductVariants-denseTable-id"
+            >
+              <thead
+                class="MuiTableHead-root-id"
+              >
+                <tr
+                  class="MuiTableRow-root-id MuiTableRow-head-id"
+                >
+                  <th
+                    class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingCheckbox-id"
+                    scope="col"
+                  >
+                    <button
+                      class="MuiButtonBase-root-id Checkbox-root-id"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <input
+                        class="Checkbox-box-id"
+                        type="checkbox"
+                        value="false"
+                      />
+                    </button>
+                  </th>
+                  <th
+                    class="MuiTableCell-root-id MuiTableCell-head-id ProductVariants-colName-id"
+                    scope="col"
+                  >
+                    Name
+                  </th>
+                  <th
+                    class="MuiTableCell-root-id MuiTableCell-head-id ProductVariants-colStatus-id"
+                    scope="col"
+                  >
+                    Status
+                  </th>
+                  <th
+                    class="MuiTableCell-root-id MuiTableCell-head-id ProductVariants-colSku-id"
+                    scope="col"
+                  >
+                    SKU
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="MuiTableBody-root-id"
+              >
+                <tr
+                  class="MuiTableRow-root-id MuiTableRow-hover-id ProductVariants-link-id"
+                >
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
+                  >
+                    <button
+                      class="MuiButtonBase-root-id Checkbox-root-id"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <input
+                        class="Checkbox-box-id"
+                        type="checkbox"
+                        value="false"
+                      />
+                    </button>
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colName-id"
+                    data-tc="name"
+                  >
+                    Cordoba Oro
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colStatus-id"
+                    data-tc="isAvailable"
+                    data-tc-is-available="true"
+                  >
+                    <div
+                      class="StatusLabel-root-id undefined StatusLabel-successDot-id"
+                    >
+                      Available
+                    </div>
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colSku-id"
+                    data-tc="sku"
+                  >
+                    87192-94370
+                  </td>
+                </tr>
+                <tr
+                  class="MuiTableRow-root-id MuiTableRow-hover-id ProductVariants-link-id"
+                >
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
+                  >
+                    <button
+                      class="MuiButtonBase-root-id Checkbox-root-id"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <input
+                        class="Checkbox-box-id"
+                        type="checkbox"
+                        value="false"
+                      />
+                    </button>
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colName-id"
+                    data-tc="name"
+                  >
+                    silver
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colStatus-id"
+                    data-tc="isAvailable"
+                    data-tc-is-available="true"
+                  >
+                    <div
+                      class="StatusLabel-root-id undefined StatusLabel-successDot-id"
+                    >
+                      Available
+                    </div>
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colSku-id"
+                    data-tc="sku"
+                  >
+                    69055-15190
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Search Engine Preview
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              >
+                <button
+                  class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-label-id"
+                  >
+                    Edit website SEO
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id"
+            >
+              <p
+                class="MuiTypography-root-id MuiTypography-body2-id"
+              >
+                Add search engine title and description to make this product easier to find
+              </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id ProductOrganization-card-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Organize Product
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              />
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-caption-id ProductOrganization-label-id"
+              >
+                Product Type
+              </span>
+              <p
+                class="MuiTypography-root-id MuiTypography-body2-id"
+              >
+                Versatile
+              </p>
+              <div
+                class="CardSpacer-spacer-id"
+              />
+              <span
+                class="MuiTypography-root-id MuiTypography-caption-id ProductOrganization-label-id"
+              >
+                Product Type
+              </span>
+              <p
+                class="MuiTypography-root-id MuiTypography-body2-id"
+              >
+                Configurable
+              </p>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <hr
+                class="Hr-root-id"
+              />
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <div
+                class="SingleAutocompleteSelectField-container-id"
+                data-tc="category"
+              >
+                <div
+                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                >
+                  <label
+                    class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
+                    data-shrink="true"
+                  >
+                    Category
+                  </label>
+                  <div
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id MuiInputBase-adornedEnd-id MuiOutlinedInput-adornedEnd-id"
+                    role="combobox"
+                  >
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                      style="padding-left:8px"
+                    >
+                      <legend
+                        class="MuiPrivateNotchedOutline-legend-id"
+                        style="width:0"
+                      >
+                        <span>
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                    <input
+                      aria-invalid="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputAdornedEnd-id MuiOutlinedInput-inputAdornedEnd-id"
+                      type="text"
+                      value="Apparel"
+                    />
+                    <div>
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root-id"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 24 24"
+                      >
+                        <g
+                          style="fill-rule:evenodd"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <hr
+                class="Hr-root-id"
+              />
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <div
+                class="MultiAutocompleteSelectField-container-id"
+                data-tc="collections"
+              >
+                <div
+                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                >
+                  <label
+                    class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                    data-shrink="false"
+                  >
+                    Collections
+                  </label>
+                  <div
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id MuiInputBase-adornedEnd-id MuiOutlinedInput-adornedEnd-id"
+                    role="combobox"
+                  >
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                      style="padding-left:8px"
+                    >
+                      <legend
+                        class="MuiPrivateNotchedOutline-legend-id"
+                        style="width:0.01px"
+                      >
+                        <span>
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                    <input
+                      aria-invalid="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputAdornedEnd-id MuiOutlinedInput-inputAdornedEnd-id"
+                      type="text"
+                      value=""
+                    />
+                    <div>
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root-id"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 24 24"
+                      >
+                        <g
+                          style="fill-rule:evenodd"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <p
+                    class="MuiFormHelperText-root-id MuiFormHelperText-contained-id"
+                  >
+                    *Optional. Adding product to collection helps users find it.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="MultiAutocompleteSelectField-chipContainer-id"
+              >
+                <div
+                  class="MultiAutocompleteSelectField-chip-id"
+                >
+                  <div
+                    class="MultiAutocompleteSelectField-chipInner-id"
+                  >
+                    <p
+                      class="MuiTypography-root-id MuiTypography-body2-id MultiAutocompleteSelectField-chipLabel-id"
+                    >
+                      Winter sale
+                    </p>
+                    <button
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MultiAutocompleteSelectField-chipClose-id"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <span
+                        class="MuiIconButton-label-id"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id MuiSvgIcon-fontSizeSmall-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Visibility
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              />
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id"
+            >
+              <div
+                class="MuiFormControl-root-id RadioSwitchField-formControl-id"
+              >
+                <div
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
+                >
+                  <label
+                    class="MuiFormControlLabel-root-id RadioSwitchField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                    >
+                      <span
+                        class="MuiIconButton-label-id"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                          />
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
+                      </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      <p
+                        class="VisibilityCard-label-id"
+                      >
+                        Visible
+                      </p>
+                      <span
+                        class="VisibilityCard-secondLabel-id"
+                      >
+                        since Aug 25, 2018
+                      </span>
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id RadioSwitchField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                    >
+                      <span
+                        class="MuiIconButton-label-id"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                          />
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
+                      </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      <p
+                        class="VisibilityCard-label-id"
+                      >
+                        Hidden
+                      </p>
+                      <span
+                        class="VisibilityCard-secondLabel-id"
+                      />
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="VisibilityCard-children-id"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Storyshots Views / Products / Product edit no variants 1`] = `
+<div
+  style="padding:24px"
+>
+  <form>
+    <div
+      class="Container-root-id"
+    >
+      <div
+        class="ExtendedPageHeader-root-id"
+      >
+        <h5
+          class="MuiTypography-root-id MuiTypography-h5-id Component-title-id"
+        >
+          Ergonomic Plastic Bacon
+        </h5>
+        <div
+          class="ExtendedPageHeader-action-id"
+        >
+          <div
+            class="Component-root-id"
+          />
+        </div>
+      </div>
+      <div
+        class="Grid-root-id Grid-default-id"
+      >
+        <div>
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                General Informations
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              />
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id"
+            >
+              <div
+                class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+              >
+                <label
+                  class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
+                  data-shrink="true"
+                >
+                  Name
+                </label>
+                <div
+                  class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id"
+                >
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                    style="padding-left:8px"
+                  >
+                    <legend
+                      class="MuiPrivateNotchedOutline-legend-id"
+                      style="width:0"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input-id MuiOutlinedInput-input-id"
+                    name="name"
+                    type="text"
+                    value="Ergonomic Plastic Bacon"
+                  />
+                </div>
+              </div>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <div
+                class="RichTextEditor-root-id RichTextEditor-scroll-id"
+              >
+                <div
+                  class="RichTextEditor-input-id"
+                >
+                  <span
+                    class="MuiTypography-root-id MuiTypography-caption-id MuiTypography-colorPrimary-id RichTextEditor-label-id"
+                  >
+                    Description
+                  </span>
+                  <div
+                    class="Draftail-Editor Draftail-Editor--hide-placeholder"
+                  >
+                    <div
+                      class="Draftail-Toolbar"
+                      role="toolbar"
+                    >
+                      <div
+                        class="Draftail-ToolbarGroup"
+                      >
+                        <button
+                          aria-label="Bold
+Ctrl + B"
+                          class="Draftail-ToolbarButton Draftail-ToolbarButton--active"
+                          data-draftail-balloon="true"
+                          name="BOLD"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id RichTextEditor-smallIcon-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M9.02336 6.79C10.0411 6.12 10.7546 5.02 10.7546 4C10.7546 1.74 8.91844 0 6.55768 0H0V14H7.38657C9.57945 14 11.2792 12.3 11.2792 10.21C11.2792 8.69 10.3769 7.39 9.02336 6.79V6.79ZM3.14768 2.5H6.29537C7.16623 2.5 7.86921 3.17 7.86921 4C7.86921 4.83 7.16623 5.5 6.29537 5.5H3.14768V2.5ZM6.81998 11.5H3.14768V8.5H6.81998C7.69084 8.5 8.39383 9.17 8.39383 10C8.39383 10.83 7.69084 11.5 6.81998 11.5Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Italic
+Ctrl + I"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="ITALIC"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id RichTextEditor-smallIcon-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M4.19691 0V3H6.51571L2.92735 11H0V14H8.39383V11H6.07503L9.66339 3H12.5907V0H4.19691Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Strikethrough
+Ctrl + ⇧ + X"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="STRIKETHROUGH"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M6.53333 14H10.2667V11.2H6.53333V14ZM1.86667 0V2.8H6.53333V5.6H10.2667V2.8H14.9333V0H1.86667ZM0 9.33333H16.8V7.46667H0V9.33333Z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div
+                        class="Draftail-ToolbarGroup"
+                      >
+                        <button
+                          aria-label="Heading 1
+#"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="header-one"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M0 14H3.10341V8.2168H8.4V14H11.4962V0H8.4V5.77637H3.10341V0H0V7V14Z"
+                            />
+                            <path
+                              d="M19.5997 0H16.611C16.5751 0.854492 15.3137 2.31055 13.4287 2.31055V4.66211C15.0485 4.66211 16.1021 4.08789 16.4175 3.62305H16.5536V14H19.5997V0Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Heading 2
+##"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="header-two"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M11.2857 14H8.42857V8.0813H2.85714V14H0V0.189702H2.85714V5.78591H8.42857V0.189702H11.2857V14Z"
+                            />
+                            <path
+                              d="M23 14H13.4952V12.122L17.981 7.36043C18.5968 6.69015 19.0508 6.10524 19.3429 5.60569C19.6413 5.10614 19.7905 4.63189 19.7905 4.18293C19.7905 3.56956 19.6349 3.08898 19.3238 2.74119C19.0127 2.38708 18.5683 2.21003 17.9905 2.21003C17.3683 2.21003 16.8762 2.42502 16.5143 2.85501C16.1587 3.27868 15.981 3.8383 15.981 4.53388H13.219C13.219 3.69286 13.419 2.92457 13.819 2.229C14.2254 1.53342 14.7968 0.989612 15.5333 0.597561C16.2698 0.199187 17.1048 0 18.0381 0C19.4667 0 20.5746 0.341463 21.3619 1.02439C22.1556 1.70732 22.5524 2.67164 22.5524 3.91734C22.5524 4.60027 22.3746 5.29584 22.019 6.00407C21.6635 6.71229 21.054 7.53749 20.1905 8.47967L17.0381 11.79H23V14Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Heading 3
+###"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="header-three"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M10.8943 13.8128H8.13623V7.97326H2.75804V13.8128H0V0.187166H2.75804V5.70856H8.13623V0.187166H10.8943V13.8128Z"
+                            />
+                            <path
+                              d="M15.73 5.80214H17.1458C17.82 5.80214 18.3195 5.63057 18.6444 5.28743C18.9692 4.9443 19.1316 4.48886 19.1316 3.92112C19.1316 3.3721 18.9692 2.94474 18.6444 2.63904C18.3257 2.33333 17.8844 2.18048 17.3205 2.18048C16.8118 2.18048 16.3858 2.32398 16.0426 2.61096C15.6994 2.89171 15.5278 3.2598 15.5278 3.71524H12.8709C12.8709 3.00401 13.0578 2.36765 13.4317 1.80615C13.8117 1.23841 14.3388 0.795455 15.013 0.477273C15.6933 0.159091 16.441 0 17.2562 0C18.672 0 19.7813 0.346257 20.5842 1.03877C21.3871 1.72504 21.7885 2.67335 21.7885 3.88369C21.7885 4.50758 21.6016 5.08155 21.2277 5.60562C20.8539 6.12968 20.3636 6.53209 19.7568 6.81283C20.5107 7.08734 21.0715 7.49911 21.4392 8.04813C21.8131 8.59715 22 9.24599 22 9.99465C22 11.205 21.5648 12.1751 20.6945 12.9051C19.8303 13.635 18.6842 14 17.2562 14C15.92 14 14.826 13.6413 13.9741 12.9238C13.1283 12.2063 12.7054 11.258 12.7054 10.0789H15.3623C15.3623 10.5905 15.5492 11.0085 15.9231 11.3329C16.3031 11.6573 16.7689 11.8195 17.3205 11.8195C17.9518 11.8195 18.4452 11.6511 18.8007 11.3142C19.1623 10.971 19.3431 10.5187 19.3431 9.95722C19.3431 8.59715 18.6076 7.91711 17.1366 7.91711H15.73V5.80214Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Blockquote
+>"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="blockquote"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M1.46891 14H5.87564L8.81345 8.4V0H0V8.4H4.40673L1.46891 14ZM13.2202 14H17.6269L20.5647 8.4V0H11.7513V8.4H16.158L13.2202 14Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Bulleted list
+-"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="unordered-list-item"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M1.46892 5.6C0.656117 5.6 0 6.22533 0 7C0 7.77467 0.656117 8.4 1.46892 8.4C2.28172 8.4 2.93784 7.77467 2.93784 7C2.93784 6.22533 2.28172 5.6 1.46892 5.6ZM1.46892 0C0.656117 0 0 0.625333 0 1.4C0 2.17467 0.656117 2.8 1.46892 2.8C2.28172 2.8 2.93784 2.17467 2.93784 1.4C2.93784 0.625333 2.28172 0 1.46892 0ZM1.46892 11.2C0.656117 11.2 0 11.8347 0 12.6C0 13.3653 0.66591 14 1.46892 14C2.27193 14 2.93784 13.3653 2.93784 12.6C2.93784 11.8347 2.28172 11.2 1.46892 11.2ZM4.40676 13.5333H18.1167V11.6667H4.40676V13.5333ZM4.40676 7.93333H18.1167V6.06667H4.40676V7.93333ZM4.40676 0.466667V2.33333H18.1167V0.466667H4.40676Z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Numbered list
+1."
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="ordered-list-item"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M0 12.9214H2V13.3979H1V14.351H2V14.8275H0V15.7806H3V11.9683H0V12.9214ZM1 4.34359H2V0.53125H0V1.48433H1V4.34359ZM0 7.20284H1.8L0 9.20432V10.0621H3V9.10901H1.2L3 7.10754V6.24976H0V7.20284ZM5 1.48433V3.3905H19V1.48433H5ZM5 14.8275H19V12.9214H5V14.8275ZM5 9.10901H19V7.20284H5V9.10901Z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div
+                        class="Draftail-ToolbarGroup"
+                      >
+                        <button
+                          aria-label="Line break
+⇧ + ↵"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="BR"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <span
+                            class="Draftail-ToolbarButton__label"
+                          >
+                            ↵
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class="Draftail-ToolbarGroup"
+                      >
+                        <button
+                          aria-label="Link
+Ctrl + K"
+                          class="Draftail-ToolbarButton"
+                          data-draftail-balloon="true"
+                          name="LINK"
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id RichTextEditor-linkIcon-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M1.99352 5C1.99352 3.29 3.45194 1.9 5.2461 1.9H9.44299V0H5.2461C2.35025 0 0 2.24 0 5C0 7.76 2.35025 10 5.2461 10H9.44299V8.1H5.2461C3.45194 8.1 1.99352 6.71 1.99352 5ZM6.29532 6H14.6891V4H6.29532V6ZM15.7383 0H11.5414V1.9H15.7383C17.5325 1.9 18.9909 3.29 18.9909 5C18.9909 6.71 17.5325 8.1 15.7383 8.1H11.5414V10H15.7383C18.6342 10 20.9844 7.76 20.9844 5C20.9844 2.24 18.6342 0 15.7383 0Z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      class="DraftEditor-root"
+                    >
+                      <div
+                        class="DraftEditor-editorContainer"
+                      >
+                        <div
+                          aria-describedby="placeholder-testKey"
+                          class="notranslate public-DraftEditor-content"
+                          contenteditable="true"
+                          role="textbox"
+                          spellcheck="false"
+                          style="outline:none;user-select:text;-webkit-user-select:text;white-space:pre-wrap;word-wrap:break-word"
+                        >
+                          <div
+                            data-contents="true"
+                          >
+                            <div
+                              class="Draftail-block--unstyled "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="rosn-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="rosn-0-0"
+                              >
+                                <span
+                                  data-offset-key="rosn-0-0"
+                                  style="font-weight:bold"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    bold
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                            <div
+                              class="Draftail-block--unstyled "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="6tbch-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="6tbch-0-0"
+                              >
+                                <span
+                                  data-offset-key="6tbch-0-0"
+                                  style="font-style:italic"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    italic
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                            <div
+                              class="Draftail-block--unstyled "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="1p044-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="1p044-0-0"
+                              >
+                                <span
+                                  data-offset-key="1p044-0-0"
+                                  style="text-decoration:line-through"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    strikethrough
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                            <h1
+                              class="Draftail-block--header-one "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="aven6-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="aven6-0-0"
+                              >
+                                <span
+                                  data-offset-key="aven6-0-0"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    h1
+                                  </span>
+                                </span>
+                              </div>
+                            </h1>
+                            <h2
+                              class="Draftail-block--header-two "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="9rabl-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="9rabl-0-0"
+                              >
+                                <span
+                                  data-offset-key="9rabl-0-0"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    h2
+                                  </span>
+                                </span>
+                              </div>
+                            </h2>
+                            <h3
+                              class="Draftail-block--header-three "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="bv0ac-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="bv0ac-0-0"
+                              >
+                                <span
+                                  data-offset-key="bv0ac-0-0"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    h3
+                                  </span>
+                                </span>
+                              </div>
+                            </h3>
+                            <blockquote
+                              class="Draftail-block--blockquote "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="2ip7q-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="2ip7q-0-0"
+                              >
+                                <span
+                                  data-offset-key="2ip7q-0-0"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    blockquote
+                                  </span>
+                                </span>
+                              </div>
+                            </blockquote>
+                            <ul
+                              class="public-DraftStyleDefault-ul"
+                              data-offset-key="8r8ss-0-0"
+                            >
+                              <li
+                                class="Draftail-block--unordered-list-item  public-DraftStyleDefault-unorderedListItem public-DraftStyleDefault-reset public-DraftStyleDefault-depth0 public-DraftStyleDefault-listLTR"
+                                data-block="true"
+                                data-editor="testKey"
+                                data-offset-key="8r8ss-0-0"
+                              >
+                                <div
+                                  class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                  data-offset-key="8r8ss-0-0"
+                                >
+                                  <span
+                                    data-offset-key="8r8ss-0-0"
+                                  >
+                                    <span
+                                      data-text="true"
+                                    >
+                                      ul
+                                    </span>
+                                  </span>
+                                </div>
+                              </li>
+                            </ul>
+                            <ol
+                              class="public-DraftStyleDefault-ol"
+                              data-offset-key="911hc-0-0"
+                            >
+                              <li
+                                class="Draftail-block--ordered-list-item  public-DraftStyleDefault-orderedListItem public-DraftStyleDefault-reset public-DraftStyleDefault-depth0 public-DraftStyleDefault-listLTR"
+                                data-block="true"
+                                data-editor="testKey"
+                                data-offset-key="911hc-0-0"
+                              >
+                                <div
+                                  class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                  data-offset-key="911hc-0-0"
+                                >
+                                  <span
+                                    data-offset-key="911hc-0-0"
+                                  >
+                                    <span
+                                      data-text="true"
+                                    >
+                                      ol
+                                    </span>
+                                  </span>
+                                </div>
+                              </li>
+                            </ol>
+                            <div
+                              class="Draftail-block--unstyled "
+                              data-block="true"
+                              data-editor="testKey"
+                              data-offset-key="5aejo-0-0"
+                            >
+                              <div
+                                class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                                data-offset-key="5aejo-0-0"
+                              >
+                                <span
+                                  data-offset-key="5aejo-0-0"
+                                >
+                                  <span
+                                    data-text="true"
+                                  >
+                                    link
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id ProductImages-card-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Images
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              >
+                <button
+                  class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-upload-image"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-label-id"
+                  >
+                    Upload image
+                  </span>
+                </button>
+                <input
+                  class="ProductImages-fileField-id"
+                  id="fileUpload"
+                  type="file"
+                />
+              </div>
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="ProductImages-imageGridContainer-id"
+            >
+              <div
+                class="ImageUpload-photosIconContainer-id ProductImages-imageUpload-id"
+                tabindex="0"
+              >
+                <div
+                  class="ProductImages-imageUploadIcon-id"
+                >
+                  <input
+                    autocomplete="off"
+                    class="ImageUpload-fileField-id"
+                    multiple=""
+                    style="display:none"
+                    tabindex="-1"
+                    type="file"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root-id ImageUpload-photosIcon-id"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6.10864 17.8974H3.29212C3.23158 17.8878 3.16942 17.8772 3.12042 17.8416C3.04669 17.788 3.01472 17.6983 3 17.6051V3.29232C3.01963 3.16818 3.08547 3.05213 3.20185 3.01431C3.23081 3.00488 3.26204 3.00477 3.29212 3H17.595C17.6248 3.00477 17.655 3.00954 17.6851 3.01431C17.7693 3.05715 17.8446 3.11527 17.8727 3.20199C17.8821 3.23097 17.8821 3.26223 17.887 3.29232V6.10798L20.7073 6.10342C20.7374 6.10815 20.7676 6.11285 20.7977 6.11759C20.8819 6.16039 20.9572 6.21852 20.9856 6.3053C20.9951 6.33435 20.9951 6.36561 21 6.39574V20.7074C20.9804 20.8315 20.9145 20.9476 20.7981 20.9854C20.769 20.9948 20.7378 20.9949 20.7076 20.9997L6.4008 21C6.34022 20.9904 6.27807 20.9798 6.22906 20.9442C6.15534 20.8906 6.1234 20.8009 6.10864 20.7077V17.8974ZM20.4156 18.1487H6.69292V20.4154L20.4156 20.415V18.1487ZM17.3216 10.7226L14.5234 13.4247L18.5752 17.4543C18.6102 17.5025 18.6316 17.5227 18.6457 17.5641H20.4156V13.6145L17.3216 10.7226ZM7.13581 17.5392C7.13753 17.5474 7.13886 17.5557 7.13988 17.5641H17.8565L12.6137 12.3498L7.13581 17.5392ZM17.3027 6.10892V3.58465H3.58424V17.3128H6.10864V6.41886C6.11821 6.35835 6.1288 6.29622 6.16431 6.24721C6.21777 6.17347 6.30727 6.14141 6.40031 6.12653L17.3027 6.10892ZM20.4156 12.8145V6.68856C15.8415 6.69596 11.2671 6.70333 6.69292 6.71073V17.1537L12.4178 11.7303C12.4913 11.6796 12.492 11.6793 12.5774 11.6532C12.6073 11.6536 12.6371 11.6539 12.667 11.6543C12.7517 11.6824 12.7524 11.6827 12.8246 11.7352L14.1087 13.0125L17.1155 10.1091C17.2122 10.0238 17.2154 10.0181 17.3552 10.0295C17.453 10.0463 17.4713 10.0661 17.5179 10.1059L20.4156 12.8145ZM9.46155 7.9651C10.1933 7.97204 10.8858 8.53631 11.0257 9.26605C11.125 9.7844 10.9492 10.3474 10.571 10.717C10.1291 11.1488 9.4265 11.2926 8.84531 11.0548C8.33223 10.8449 7.94546 10.3525 7.86504 9.80323C7.7658 9.12545 8.15208 8.40581 8.77376 8.11517C8.98813 8.01494 9.22433 7.96432 9.46155 7.9651ZM9.44459 8.54974C8.98175 8.55416 8.54681 8.90584 8.45303 9.36375C8.32277 10 8.9137 10.7061 9.63799 10.5718C10.051 10.4953 10.398 10.137 10.4593 9.71848C10.5424 9.15123 10.0783 8.55953 9.46446 8.54981C9.45784 8.54974 9.45121 8.54974 9.44459 8.54974Z"
+                      fill="url(#paint0_linear)"
+                    />
+                    <defs>
+                      <linearGradient
+                        gradientUnits="userSpaceOnUse"
+                        id="paint0_linear"
+                        x1="3"
+                        x2="22.8"
+                        y1="3"
+                        y2="23.5714"
+                      >
+                        <stop
+                          stop-color="#06847B"
+                        />
+                        <stop
+                          offset="1"
+                          stop-color="#3EE7CD"
+                        />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <p
+                    class="MuiTypography-root-id MuiTypography-body1-id ImageUpload-uploadText-id"
+                  >
+                    Drop here to upload
+                  </p>
+                </div>
+              </div>
+              <div
+                class="MuiCardContent-root-id"
+              >
+                <div
+                  class="ProductImages-root-id"
+                >
+                  <div
+                    class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
+                  >
+                    <div
+                      class="ImageTile-imageOverlay-id"
+                    >
+                      <div
+                        class="ImageTile-imageOverlayToolbar-id"
+                      />
+                    </div>
+                    <img
+                      alt="Id sit dolores adipisci"
+                      class="ImageTile-image-id"
+                      src="placeholder255x255.png"
+                    />
+                  </div>
+                  <div
+                    class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
+                  >
+                    <div
+                      class="ImageTile-imageOverlay-id"
+                    >
+                      <div
+                        class="ImageTile-imageOverlayToolbar-id"
+                      />
+                    </div>
+                    <img
+                      alt="Id sit dolores adipisci"
+                      class="ImageTile-image-id"
+                      src="placeholder255x255.png"
+                    />
+                  </div>
+                  <div
+                    class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
+                  >
+                    <div
+                      class="ImageTile-imageOverlay-id"
+                    >
+                      <div
+                        class="ImageTile-imageOverlayToolbar-id"
+                      />
+                    </div>
+                    <img
+                      alt="Id sit dolores adipisci"
+                      class="ImageTile-image-id"
+                      src="placeholder255x255.png"
+                    />
+                  </div>
+                  <div
+                    class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
+                  >
+                    <div
+                      class="ImageTile-imageOverlay-id"
+                    >
+                      <div
+                        class="ImageTile-imageOverlayToolbar-id"
+                      />
+                    </div>
+                    <img
+                      alt="Id sit dolores adipisci"
+                      class="ImageTile-image-id"
+                      src="placeholder255x255.png"
+                    />
+                  </div>
+                  <div
+                    class="ImageTile-imageContainer-id"
+                    data-tc="product-image"
+                  >
+                    <div
+                      class="ImageTile-imageOverlay-id"
+                    >
+                      <div
+                        class="ImageTile-imageOverlayToolbar-id"
+                      />
+                    </div>
+                    <img
+                      alt="Id sit dolores adipisci"
+                      class="ImageTile-image-id"
+                      src="placeholder255x255.png"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id Hook-card-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Attributes
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              />
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id Hook-cardContent-id"
+            >
+              <div
+                class="Hook-expansionBar-id"
+              >
+                <div
+                  class="Hook-expansionBarLabelContainer-id"
+                >
+                  <span
+                    class="MuiTypography-root-id MuiTypography-caption-id Hook-expansionBarLabel-id"
+                  >
+                    2 Attributes
+                  </span>
+                </div>
+                <button
+                  class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
+                  data-tc="product-attributes-expand"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiIconButton-label-id"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root-id Hook-expansionBarButtonIcon-id Hook-rotate-id"
+                      focusable="false"
+                      role="presentation"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+              <hr
+                class="Hr-root-id"
+              />
+              <div
+                class="Hook-attributeSection-id Grid-root-id Grid-uniform-id"
+              >
+                <div
+                  class="Hook-attributeSectionLabel-id"
+                  data-tc="product-attribute-label"
+                >
+                  <p
+                    class="MuiTypography-root-id MuiTypography-body2-id"
+                  >
+                    Borders
+                  </p>
+                </div>
+                <div
+                  data-tc="product-attribute-value"
+                >
+                  <div
+                    class="SingleAutocompleteSelectField-container-id"
+                  >
+                    <div
+                      class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                    >
+                      <label
+                        class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
+                        data-shrink="true"
+                      >
+                        Value
+                      </label>
+                      <div
+                        aria-autocomplete="list"
+                        aria-expanded="false"
+                        class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id MuiInputBase-adornedEnd-id MuiOutlinedInput-adornedEnd-id"
+                        role="combobox"
+                      >
+                        <fieldset
+                          aria-hidden="true"
+                          class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                          style="padding-left:8px"
+                        >
+                          <legend
+                            class="MuiPrivateNotchedOutline-legend-id"
+                            style="width:0"
+                          >
+                            <span>
+                              ​
+                            </span>
+                          </legend>
+                        </fieldset>
+                        <input
+                          aria-invalid="false"
+                          autocomplete="off"
+                          class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputAdornedEnd-id MuiOutlinedInput-inputAdornedEnd-id"
+                          type="text"
+                          value="portals"
+                        />
+                        <div>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <g
+                              style="fill-rule:evenodd"
+                            >
+                              <path
+                                d="M7 10l5 5 5-5z"
+                              />
+                            </g>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr
+                class="Hr-root-id"
+              />
+              <div
+                class="Hook-attributeSection-id Grid-root-id Grid-uniform-id"
+              >
+                <div
+                  class="Hook-attributeSectionLabel-id"
+                  data-tc="product-attribute-label"
+                >
+                  <p
+                    class="MuiTypography-root-id MuiTypography-body2-id"
+                  >
+                    Legacy
+                  </p>
+                </div>
+                <div
+                  data-tc="product-attribute-value"
+                >
+                  <div
+                    class="MultiAutocompleteSelectField-container-id"
+                  >
+                    <div
+                      class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                    >
+                      <label
+                        class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                        data-shrink="false"
+                      >
+                        Values
+                      </label>
+                      <div
+                        aria-autocomplete="list"
+                        aria-expanded="false"
+                        class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id MuiInputBase-adornedEnd-id MuiOutlinedInput-adornedEnd-id"
+                        role="combobox"
+                      >
+                        <fieldset
+                          aria-hidden="true"
+                          class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                          style="padding-left:8px"
+                        >
+                          <legend
+                            class="MuiPrivateNotchedOutline-legend-id"
+                            style="width:0.01px"
+                          >
+                            <span>
+                              ​
+                            </span>
+                          </legend>
+                        </fieldset>
+                        <input
+                          aria-invalid="false"
+                          autocomplete="off"
+                          class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputAdornedEnd-id MuiOutlinedInput-inputAdornedEnd-id"
+                          type="text"
+                          value=""
+                        />
+                        <div>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root-id"
+                            focusable="false"
+                            role="presentation"
+                            viewBox="0 0 24 24"
+                          >
+                            <g
+                              style="fill-rule:evenodd"
+                            >
+                              <path
+                                d="M7 10l5 5 5-5z"
+                              />
+                            </g>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MultiAutocompleteSelectField-chipContainer-id"
+                  >
+                    <div
+                      class="MultiAutocompleteSelectField-chip-id"
+                    >
+                      <div
+                        class="MultiAutocompleteSelectField-chipInner-id"
+                      >
+                        <p
+                          class="MuiTypography-root-id MuiTypography-body2-id MultiAutocompleteSelectField-chipLabel-id"
+                        >
+                          Auto Loan Account
+                        </p>
+                        <button
+                          class="MuiButtonBase-root-id MuiIconButton-root-id MultiAutocompleteSelectField-chipClose-id"
+                          tabindex="0"
+                          type="button"
+                        >
+                          <span
+                            class="MuiIconButton-label-id"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="MuiSvgIcon-root-id MuiSvgIcon-fontSizeSmall-id"
+                              focusable="false"
+                              role="presentation"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                              />
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Pricing
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              />
+            </div>
+            <div
+              class="CardTitle-children-id"
+            >
+              <label
+                class="MuiFormControlLabel-root-id"
+              >
+                <button
+                  class="MuiButtonBase-root-id Checkbox-root-id"
+                  tabindex="0"
+                  type="button"
+                >
+                  <input
+                    class="Checkbox-box-id Checkbox-checked-id"
+                    name="chargeTaxes"
+                    type="checkbox"
+                    value="true"
+                  />
+                </button>
+                <span
+                  class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                >
+                  Charge taxes for this item
+                </span>
+              </label>
+            </div>
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id"
+            >
+              <div
+                class="ProductPricing-root-id"
+              >
+                <div
+                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                >
+                  <label
+                    class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
+                    data-shrink="true"
+                  >
+                    Price
+                  </label>
+                  <div
+                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id MuiInputBase-adornedEnd-id MuiOutlinedInput-adornedEnd-id"
+                  >
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                      style="padding-left:8px"
+                    >
+                      <legend
+                        class="MuiPrivateNotchedOutline-legend-id"
+                        style="width:0"
+                      >
+                        <span>
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputType-id MuiInputBase-inputAdornedEnd-id MuiOutlinedInput-inputAdornedEnd-id"
+                      name="basePrice"
+                      type="number"
+                      value="339.39"
+                    />
+                    <div
+                      class="MuiInputAdornment-root-id MuiInputAdornment-positionEnd-id PriceField-currencySymbol-id"
+                    >
+                      <p
+                        class="MuiTypography-root-id MuiTypography-body2-id MuiTypography-colorTextSecondary-id"
+                      >
+                        NZD
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Variants
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              >
+                <button
+                  class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  data-tc="button-add-variant"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-label-id"
+                  >
+                    Create variant
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <table
+              class="MuiTable-root-id ProductVariants-denseTable-id"
+            >
+              <thead
+                class="MuiTableHead-root-id"
+              >
+                <tr
+                  class="MuiTableRow-root-id MuiTableRow-head-id"
+                >
+                  <th
+                    class="MuiTableCell-root-id MuiTableCell-head-id MuiTableCell-paddingCheckbox-id"
+                    scope="col"
+                  >
+                    <button
+                      class="MuiButtonBase-root-id Checkbox-root-id"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <input
+                        class="Checkbox-box-id"
+                        type="checkbox"
+                        value="false"
+                      />
+                    </button>
+                  </th>
+                  <th
+                    class="MuiTableCell-root-id MuiTableCell-head-id ProductVariants-colName-id"
+                    scope="col"
+                  >
+                    Name
+                  </th>
+                  <th
+                    class="MuiTableCell-root-id MuiTableCell-head-id ProductVariants-colStatus-id"
+                    scope="col"
+                  >
+                    Status
+                  </th>
+                  <th
+                    class="MuiTableCell-root-id MuiTableCell-head-id ProductVariants-colSku-id"
+                    scope="col"
+                  >
+                    SKU
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="MuiTableBody-root-id"
+              >
+                <tr
+                  class="MuiTableRow-root-id MuiTableRow-hover-id ProductVariants-link-id"
+                >
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
+                  >
+                    <button
+                      class="MuiButtonBase-root-id Checkbox-root-id"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <input
+                        class="Checkbox-box-id"
+                        type="checkbox"
+                        value="false"
+                      />
+                    </button>
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colName-id"
+                    data-tc="name"
+                  >
+                    Cordoba Oro
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colStatus-id"
+                    data-tc="isAvailable"
+                    data-tc-is-available="true"
+                  >
+                    <div
+                      class="StatusLabel-root-id undefined StatusLabel-successDot-id"
+                    >
+                      Available
+                    </div>
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colSku-id"
+                    data-tc="sku"
+                  >
+                    87192-94370
+                  </td>
+                </tr>
+                <tr
+                  class="MuiTableRow-root-id MuiTableRow-hover-id ProductVariants-link-id"
+                >
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id MuiTableCell-paddingCheckbox-id"
+                  >
+                    <button
+                      class="MuiButtonBase-root-id Checkbox-root-id"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <input
+                        class="Checkbox-box-id"
+                        type="checkbox"
+                        value="false"
+                      />
+                    </button>
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colName-id"
+                    data-tc="name"
+                  >
+                    silver
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colStatus-id"
+                    data-tc="isAvailable"
+                    data-tc-is-available="true"
+                  >
+                    <div
+                      class="StatusLabel-root-id undefined StatusLabel-successDot-id"
+                    >
+                      Available
+                    </div>
+                  </td>
+                  <td
+                    class="MuiTableCell-root-id MuiTableCell-body-id ProductVariants-colSku-id"
+                    data-tc="sku"
+                  >
+                    69055-15190
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Search Engine Preview
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              >
+                <button
+                  class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-label-id"
+                  >
+                    Edit website SEO
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id"
+            >
+              <p
+                class="MuiTypography-root-id MuiTypography-body2-id"
+              >
+                Add search engine title and description to make this product easier to find
+              </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id ProductOrganization-card-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Organize Product
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              />
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-caption-id ProductOrganization-label-id"
+              >
+                Product Type
+              </span>
+              <p
+                class="MuiTypography-root-id MuiTypography-body2-id"
+              >
+                Versatile
+              </p>
+              <div
+                class="CardSpacer-spacer-id"
+              />
+              <span
+                class="MuiTypography-root-id MuiTypography-caption-id ProductOrganization-label-id"
+              >
+                Product Type
+              </span>
+              <p
+                class="MuiTypography-root-id MuiTypography-body2-id"
+              >
+                Configurable
+              </p>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <hr
+                class="Hr-root-id"
+              />
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <div
+                class="SingleAutocompleteSelectField-container-id"
+                data-tc="category"
+              >
+                <div
+                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                >
+                  <label
+                    class="MuiFormLabel-root-id MuiFormLabel-filled-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-shrink-id MuiInputLabel-outlined-id"
+                    data-shrink="true"
+                  >
+                    Category
+                  </label>
+                  <div
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id MuiInputBase-adornedEnd-id MuiOutlinedInput-adornedEnd-id"
+                    role="combobox"
+                  >
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                      style="padding-left:8px"
+                    >
+                      <legend
+                        class="MuiPrivateNotchedOutline-legend-id"
+                        style="width:0"
+                      >
+                        <span>
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                    <input
+                      aria-invalid="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputAdornedEnd-id MuiOutlinedInput-inputAdornedEnd-id"
+                      type="text"
+                      value="Apparel"
+                    />
+                    <div>
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root-id"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 24 24"
+                      >
+                        <g
+                          style="fill-rule:evenodd"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <hr
+                class="Hr-root-id"
+              />
+              <div
+                class="FormSpacer-spacer-id"
+              />
+              <div
+                class="MultiAutocompleteSelectField-container-id"
+                data-tc="collections"
+              >
+                <div
+                  class="MuiFormControl-root-id MuiFormControl-fullWidth-id"
+                >
+                  <label
+                    class="MuiFormLabel-root-id MuiInputLabel-root-id MuiInputLabel-formControl-id MuiInputLabel-animated-id MuiInputLabel-outlined-id"
+                    data-shrink="false"
+                  >
+                    Collections
+                  </label>
+                  <div
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    class="MuiInputBase-root-id MuiOutlinedInput-root-id MuiInputBase-fullWidth-id MuiInputBase-formControl-id MuiInputBase-adornedEnd-id MuiOutlinedInput-adornedEnd-id"
+                    role="combobox"
+                  >
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiPrivateNotchedOutline-root-id MuiOutlinedInput-notchedOutline-id"
+                      style="padding-left:8px"
+                    >
+                      <legend
+                        class="MuiPrivateNotchedOutline-legend-id"
+                        style="width:0.01px"
+                      >
+                        <span>
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                    <input
+                      aria-invalid="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input-id MuiOutlinedInput-input-id MuiInputBase-inputAdornedEnd-id MuiOutlinedInput-inputAdornedEnd-id"
+                      type="text"
+                      value=""
+                    />
+                    <div>
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root-id"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 24 24"
+                      >
+                        <g
+                          style="fill-rule:evenodd"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <p
+                    class="MuiFormHelperText-root-id MuiFormHelperText-contained-id"
+                  >
+                    *Optional. Adding product to collection helps users find it.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="MultiAutocompleteSelectField-chipContainer-id"
+              >
+                <div
+                  class="MultiAutocompleteSelectField-chip-id"
+                >
+                  <div
+                    class="MultiAutocompleteSelectField-chipInner-id"
+                  >
+                    <p
+                      class="MuiTypography-root-id MuiTypography-body2-id MultiAutocompleteSelectField-chipLabel-id"
+                    >
+                      Winter sale
+                    </p>
+                    <button
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MultiAutocompleteSelectField-chipClose-id"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <span
+                        class="MuiIconButton-label-id"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id MuiSvgIcon-fontSizeSmall-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="CardSpacer-spacer-id"
+          />
+          <div
+            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id"
+          >
+            <div
+              class="CardTitle-root-id"
+            >
+              <span
+                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
+              >
+                Visibility
+              </span>
+              <div
+                class="CardTitle-toolbar-id"
+              />
+            </div>
+            <div
+              class="CardTitle-children-id"
+            />
+            <hr
+              class="CardTitle-hr-id"
+            />
+            <div
+              class="MuiCardContent-root-id"
+            >
+              <div
+                class="MuiFormControl-root-id RadioSwitchField-formControl-id"
+              >
+                <div
+                  aria-label="isPublished"
+                  class="MuiFormGroup-root-id"
+                  role="radiogroup"
+                >
+                  <label
+                    class="MuiFormControlLabel-root-id RadioSwitchField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id MuiPrivateSwitchBase-checked-id MuiRadio-checked-id"
+                    >
+                      <span
+                        class="MuiIconButton-label-id"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                          />
+                        </svg>
+                        <input
+                          checked=""
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="true"
+                        />
+                      </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      <p
+                        class="VisibilityCard-label-id"
+                      >
+                        Visible
+                      </p>
+                      <span
+                        class="VisibilityCard-secondLabel-id"
+                      >
+                        since Aug 25, 2018
+                      </span>
+                    </span>
+                  </label>
+                  <label
+                    class="MuiFormControlLabel-root-id RadioSwitchField-radioLabel-id"
+                  >
+                    <span
+                      class="MuiButtonBase-root-id MuiIconButton-root-id MuiPrivateSwitchBase-root-id MuiRadio-root-id MuiRadio-colorPrimary-id"
+                    >
+                      <span
+                        class="MuiIconButton-label-id"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root-id"
+                          focusable="false"
+                          role="presentation"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                          />
+                        </svg>
+                        <input
+                          class="MuiPrivateSwitchBase-input-id"
+                          name="isPublished"
+                          type="radio"
+                          value="false"
+                        />
+                      </span>
+                    </span>
+                    <span
+                      class="MuiTypography-root-id MuiTypography-body2-id MuiFormControlLabel-label-id"
+                    >
+                      <p
+                        class="VisibilityCard-label-id"
+                      >
+                        Hidden
+                      </p>
+                      <span
+                        class="VisibilityCard-secondLabel-id"
+                      />
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="VisibilityCard-children-id"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
 exports[`Storyshots Views / Products / Product edit when data is fully loaded 1`] = `
 <div
   style="padding:24px"
@@ -88377,18 +91429,6 @@ Ctrl + K"
               >
                 <button
                   class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
-                  data-tc="button-edit-attributes"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiButton-label-id"
-                  >
-                    Edit attributes
-                  </span>
-                </button>
-                <button
-                  class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
                   data-tc="button-add-variant"
                   tabindex="0"
                   type="button"
@@ -89434,71 +92474,6 @@ Ctrl + K"
           <div
             class="CardSpacer-spacer-id"
           />
-          <div
-            class="MuiPaper-root-id MuiPaper-elevation1-id MuiPaper-rounded-id MuiCard-root-id Hook-card-id"
-          >
-            <div
-              class="CardTitle-root-id"
-            >
-              <span
-                class="MuiTypography-root-id MuiTypography-h5-id CardTitle-title-id"
-              >
-                Attributes
-              </span>
-              <div
-                class="CardTitle-toolbar-id"
-              />
-            </div>
-            <div
-              class="CardTitle-children-id"
-            />
-            <hr
-              class="CardTitle-hr-id"
-            />
-            <div
-              class="MuiCardContent-root-id Hook-cardContent-id"
-            >
-              <div
-                class="Hook-expansionBar-id"
-              >
-                <div
-                  class="Hook-expansionBarLabelContainer-id"
-                >
-                  <span
-                    class="MuiTypography-root-id MuiTypography-caption-id Hook-expansionBarLabel-id"
-                  >
-                    0 Attributes
-                  </span>
-                </div>
-                <button
-                  class="MuiButtonBase-root-id MuiIconButton-root-id Hook-expansionBarButton-id"
-                  data-tc="product-attributes-expand"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiIconButton-label-id"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root-id Hook-expansionBarButtonIcon-id Hook-rotate-id"
-                      focusable="false"
-                      role="presentation"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                    </svg>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
           <div
             class="CardSpacer-spacer-id"
           />
@@ -91174,18 +94149,6 @@ Ctrl + K"
               <div
                 class="CardTitle-toolbar-id"
               >
-                <button
-                  class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
-                  data-tc="button-edit-attributes"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiButton-label-id"
-                  >
-                    Edit attributes
-                  </span>
-                </button>
                 <button
                   class="MuiButtonBase-root-id MuiButton-root-id MuiButton-text-id MuiButton-textPrimary-id MuiButton-flat-id MuiButton-flatPrimary-id"
                   data-tc="button-add-variant"

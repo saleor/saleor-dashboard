@@ -78,7 +78,6 @@ interface ProductCreatePageProps {
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
-  onAttributesEdit: () => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
 }
@@ -220,12 +219,14 @@ export const ProductCreatePage: React.StatelessComponent<
                   onChange={change}
                 />
                 <CardSpacer />
-                <ProductAttributes
-                  attributes={attributes}
-                  disabled={disabled}
-                  onChange={handleAttributeChange}
-                  onMultiChange={handleAttributeMultiChange}
-                />
+                {attributes.length > 0 && (
+                  <ProductAttributes
+                    attributes={attributes}
+                    disabled={disabled}
+                    onChange={handleAttributeChange}
+                    onMultiChange={handleAttributeMultiChange}
+                  />
+                )}
                 <CardSpacer />
                 <ProductPricing
                   currency={currency}

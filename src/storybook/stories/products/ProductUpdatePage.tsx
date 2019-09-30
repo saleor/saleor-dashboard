@@ -22,7 +22,6 @@ const props: ProductUpdatePageProps = {
   fetchCollections: () => undefined,
   header: product.name,
   images: product.images,
-  onAttributesEdit: () => undefined,
   onBack: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,
@@ -62,5 +61,23 @@ storiesOf("Views / Products / Product edit", module)
       product={undefined}
       collections={undefined}
       images={undefined}
+    />
+  ))
+  .add("no variants", () => (
+    <ProductUpdatePage
+      {...props}
+      product={{
+        ...props.product,
+        variants: []
+      }}
+    />
+  ))
+  .add("no product attributes", () => (
+    <ProductUpdatePage
+      {...props}
+      product={{
+        ...props.product,
+        attributes: []
+      }}
     />
   ));
