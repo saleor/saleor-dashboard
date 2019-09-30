@@ -282,35 +282,6 @@ export const TypedProductVariantQuery = TypedQuery<
   ProductVariantDetailsVariables
 >(productVariantQuery);
 
-const productCreateQuery = gql`
-  query ProductCreateData {
-    productTypes(first: 20) {
-      edges {
-        node {
-          id
-          name
-          hasVariants
-          productAttributes {
-            id
-            inputType
-            slug
-            name
-            valueRequired
-            values {
-              id
-              name
-              slug
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-export const TypedProductCreateQuery = TypedQuery<ProductCreateData, {}>(
-  productCreateQuery
-);
-
 const productVariantCreateQuery = gql`
   query ProductVariantCreateData($id: ID!) {
     product(id: $id) {

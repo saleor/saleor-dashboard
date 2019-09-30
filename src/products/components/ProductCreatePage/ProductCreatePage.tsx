@@ -77,6 +77,7 @@ interface ProductCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
+  fetchProductTypes: (data: string) => void;
   onAttributesEdit: () => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
@@ -96,6 +97,7 @@ export const ProductCreatePage: React.StatelessComponent<
   productTypes: productTypeChoiceList,
   saveButtonBarState,
   onBack,
+  fetchProductTypes,
   onSubmit
 }: ProductCreatePageProps) => {
   const intl = useIntl();
@@ -268,6 +270,7 @@ export const ProductCreatePage: React.StatelessComponent<
                   errors={errors}
                   fetchCategories={fetchCategories}
                   fetchCollections={fetchCollections}
+                  fetchProductTypes={fetchProductTypes}
                   productType={productType}
                   productTypeInputDisplayValue={productType.name}
                   productTypes={productTypes}
