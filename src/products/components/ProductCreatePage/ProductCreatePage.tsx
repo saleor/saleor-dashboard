@@ -15,6 +15,7 @@ import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import { SearchCategories_categories_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
 import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
+import { SearchProductTypes_productTypes_edges_node_productAttributes } from "@saleor/containers/SearchProductTypes/types/SearchProductTypes";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -27,7 +28,6 @@ import {
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { UserError } from "../../../types";
-import { ProductCreateData_productTypes_edges_node_productAttributes } from "../../types/ProductCreateData";
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
@@ -71,7 +71,7 @@ interface ProductCreatePageProps {
     id: string;
     name: string;
     hasVariants: boolean;
-    productAttributes: ProductCreateData_productTypes_edges_node_productAttributes[];
+    productAttributes: SearchProductTypes_productTypes_edges_node_productAttributes[];
   }>;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -141,7 +141,7 @@ export const ProductCreatePage: React.StatelessComponent<
     hasVariants: false,
     id: "",
     name: "",
-    productAttributes: [] as ProductCreateData_productTypes_edges_node_productAttributes[]
+    productAttributes: []
   });
 
   const categories = getChoices(categoryChoiceList);

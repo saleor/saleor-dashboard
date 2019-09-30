@@ -1,12 +1,12 @@
 import {
-  ProductCreateData_productTypes_edges_node,
-  ProductCreateData_productTypes_edges_node_productAttributes
-} from "../products/types/ProductCreateData";
+  SearchProductTypes_productTypes_edges_node,
+  SearchProductTypes_productTypes_edges_node_productAttributes
+} from "@saleor/containers/SearchProductTypes/types/SearchProductTypes";
 import { AttributeInputTypeEnum } from "../types/globalTypes";
 import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
 import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";
 
-export const attributes: ProductCreateData_productTypes_edges_node_productAttributes[] = [
+export const attributes: SearchProductTypes_productTypes_edges_node_productAttributes[] = [
   {
     node: {
       __typename: "Attribute" as "Attribute",
@@ -469,7 +469,7 @@ export const attributes: ProductCreateData_productTypes_edges_node_productAttrib
 ].map(edge => edge.node);
 
 export const productTypes: Array<
-  ProductCreateData_productTypes_edges_node &
+  SearchProductTypes_productTypes_edges_node &
     ProductTypeList_productTypes_edges_node
 > = [
   {

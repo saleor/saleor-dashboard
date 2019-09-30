@@ -24,6 +24,7 @@ storiesOf("Views / Products / Create product", module)
       collections={product.collections}
       fetchCategories={() => undefined}
       fetchCollections={() => undefined}
+      fetchProductTypes={() => undefined}
       productTypes={productTypes}
       categories={[product.category]}
       onAttributesEdit={undefined}
@@ -41,6 +42,7 @@ storiesOf("Views / Products / Create product", module)
       collections={product.collections}
       fetchCategories={() => undefined}
       fetchCollections={() => undefined}
+      fetchProductTypes={() => undefined}
       productTypes={productTypes}
       categories={[product.category]}
       onAttributesEdit={undefined}
@@ -60,6 +62,7 @@ storiesOf("Views / Products / Create product", module)
       collections={product.collections}
       fetchCategories={() => undefined}
       fetchCollections={() => undefined}
+      fetchProductTypes={() => undefined}
       productTypes={productTypes}
       categories={[product.category]}
       onAttributesEdit={undefined}

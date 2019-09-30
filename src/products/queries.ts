@@ -5,7 +5,6 @@ import {
   AvailableInGridAttributes,
   AvailableInGridAttributesVariables
 } from "./types/AvailableInGridAttributes";
-import { ProductCreateData } from "./types/ProductCreateData";
 import {
   ProductDetails,
   ProductDetailsVariables
