@@ -34,6 +34,7 @@ const props: ProductListPageProps = {
       sort: ProductListUrlSortField.name
     }
   },
+  activeAttributeSortId: undefined,
   availableInGridAttributes: attributes,
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
   gridAttributes: attributes,

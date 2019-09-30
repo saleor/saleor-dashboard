@@ -101,12 +101,14 @@ interface ProductListProps
     ListActions,
     SortPage<ProductListUrlSortField>,
     WithStyles<typeof styles> {
+  activeAttributeSortId: string;
   gridAttributes: AvailableInGridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
 }
 
 export const ProductList = withStyles(styles, { name: "ProductList" })(
   ({
+    activeAttributeSortId,
     classes,
     settings,
     disabled,
@@ -219,23 +221,35 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                 />
               </TableCellHeader>
             </DisplayColumn>
-            {gridAttributesFromSettings.map(gridAttributeFromSettings => (
-              <TableCell
-                className={classes.colAttribute}
-                key={gridAttributeFromSettings}
-              >
-                {maybe<React.ReactNode>(
-                  () =>
-                    gridAttributes.find(
-                      gridAttribute =>
-                        getAttributeIdFromColumnValue(
-                          gridAttributeFromSettings
-                        ) === gridAttribute.id
-                    ).name,
-                  <Skeleton />
-                )}
-              </TableCell>
-            ))}
+            {gridAttributesFromSettings.map(gridAttributeFromSettings => {
+              const attributeId = getAttributeIdFromColumnValue(
+                gridAttributeFromSettings
+              );
+
+              return (
+                <TableCellHeader
+                  className={classes.colAttribute}
+                  direction={
+                    sort.sort === ProductListUrlSortField.attribute &&
+                    attributeId === activeAttributeSortId
+                      ? getArrowDirection(sort.asc)
+                      : undefined
+                  }
+                  onClick={() =>
+                    onSort(ProductListUrlSortField.attribute, attributeId)
+                  }
+                  key={gridAttributeFromSettings}
+                >
+                  {maybe<React.ReactNode>(
+                    () =>
+                      gridAttributes.find(
+                        gridAttribute => attributeId === gridAttribute.id
+                      ).name,
+                    <Skeleton />
+                  )}
+                </TableCellHeader>
+              );
+            })}
             <DisplayColumn column="price" displayColumns={settings.columns}>
               <TableCellHeader
                 className={classes.colPrice}

@@ -34,6 +34,7 @@ export interface ProductListPageProps
     FilterPageProps<ProductFilterKeys>,
     FetchMoreProps,
     SortPage<ProductListUrlSortField> {
+  activeAttributeSortId: string;
   availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
   gridAttributes: AvailableInGridAttributes_grid_edges_node[];
