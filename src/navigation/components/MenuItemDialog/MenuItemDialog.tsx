@@ -23,6 +23,7 @@ import { buttonMessages, sectionNames } from "@saleor/intl";
 import { UserError } from "@saleor/types";
 import { getErrors, getFieldError } from "@saleor/utils/errors";
 import { getMenuItemByValue, IMenu } from "@saleor/utils/menu";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 
 export type MenuItemType = "category" | "collection" | "link" | "page";
 export interface MenuItemData {
@@ -97,16 +98,19 @@ const MenuItemDialog: React.StatelessComponent<MenuItemDialogProps> = ({
   );
   const [url, setUrl] = React.useState<string>(undefined);
 
+  // Reset input state after closing dialog
+  useModalDialogOpen(open, {
+    onClose: () => {
+      setData(initial || defaultInitial);
+      setDisplayValue(initialDisplayValue);
+      setUrl(undefined);
+    }
+  });
+
   // Refresh initial display value if changed
   React.useEffect(() => setDisplayValue(initialDisplayValue), [
     initialDisplayValue
   ]);
-
-  // Reset input state after closing dialog
-  React.useEffect(() => {
-    setDisplayValue(initialDisplayValue);
-    setUrl(undefined);
-  }, [open]);
 
   const mutationErrors = getErrors(errors);
 
