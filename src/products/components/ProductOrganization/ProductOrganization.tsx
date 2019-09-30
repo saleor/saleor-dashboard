@@ -62,6 +62,7 @@ interface ProductOrganizationProps extends WithStyles<typeof styles> {
   productTypes?: SingleAutocompleteChoiceType[];
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
+  fetchProductTypes?: (data: string) => void;
   onCategoryChange: (event: ChangeEvent) => void;
   onCollectionChange: (event: ChangeEvent) => void;
   onProductTypeChange?: (event: ChangeEvent) => void;
@@ -80,6 +81,7 @@ const ProductOrganization = withStyles(styles, { name: "ProductOrganization" })(
     errors,
     fetchCategories,
     fetchCollections,
+    fetchProductTypes,
     productType,
     productTypeInputDisplayValue,
     productTypes,
@@ -111,6 +113,7 @@ const ProductOrganization = withStyles(styles, { name: "ProductOrganization" })(
               choices={productTypes}
               value={data.productType}
               onChange={onProductTypeChange}
+              fetchChoices={fetchProductTypes}
               data-tc="product-type"
             />
           ) : (

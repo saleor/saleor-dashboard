@@ -27,5 +27,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix navigation - #182 by @benekex2
 - Add testcafe tags to attributes, categories, collections and product types - #178 by @dominik-zeglen
 - Fix input error style - #183 by @benekex2
+- Fix product type selection - #189 by @dominik-zeglen
 - Fix staff return link - #190 by @dominik-zeglen
 - Allow sorting products by attribute - #180 by @dominik-zeglen

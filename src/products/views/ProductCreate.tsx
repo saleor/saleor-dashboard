@@ -2,6 +2,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import SearchProductTypes from "@saleor/containers/SearchProductTypes";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -13,7 +14,6 @@ import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
 import { TypedProductCreateMutation } from "../mutations";
-import { TypedProductCreateQuery } from "../queries";
 import { ProductCreate } from "../types/ProductCreate";
 import { productListUrl, productUrl } from "../urls";
 
@@ -37,8 +37,11 @@ export const ProductUpdate: React.StatelessComponent<
       {({ search: searchCategory, result: searchCategoryOpts }) => (
         <SearchCollections variables={DEFAULT_INITIAL_SEARCH_DATA}>
           {({ search: searchCollection, result: searchCollectionOpts }) => (
-            <TypedProductCreateQuery displayLoader>
-              {({ data, loading }) => {
+            <SearchProductTypes variables={DEFAULT_INITIAL_SEARCH_DATA}>
+              {({
+                search: searchProductTypes,
+                result: searchProductTypesOpts
+              }) => {
                 const handleSuccess = (data: ProductCreate) => {
                   if (data.productCreate.errors.length === 0) {
                     notify({
@@ -103,8 +106,6 @@ export const ProductUpdate: React.StatelessComponent<
                         });
                       };
 
-                      const disabled = loading || productCreateDataLoading;
-
                       const formTransitionState = getMutationState(
                         productCreateCalled,
                         productCreateDataLoading,
@@ -128,19 +129,22 @@ export const ProductUpdate: React.StatelessComponent<
                               () => searchCollectionOpts.data.collections.edges,
                               []
                             ).map(edge => edge.node)}
-                            disabled={disabled}
+                            disabled={productCreateDataLoading}
                             errors={maybe(
                               () => productCreateData.productCreate.errors,
                               []
                             )}
                             fetchCategories={searchCategory}
                             fetchCollections={searchCollection}
+                            fetchProductTypes={searchProductTypes}
                             header={intl.formatMessage({
                               defaultMessage: "New Product",
                               description: "page header"
                             })}
                             productTypes={maybe(() =>
-                              data.productTypes.edges.map(edge => edge.node)
+                              searchProductTypesOpts.data.productTypes.edges.map(
+                                edge => edge.node
+                              )
                             )}
                             onAttributesEdit={handleAttributesEdit}
                             onBack={handleBack}
@@ -153,7 +157,7 @@ export const ProductUpdate: React.StatelessComponent<
                   </TypedProductCreateMutation>
                 );
               }}
-            </TypedProductCreateQuery>
+            </SearchProductTypes>
           )}
         </SearchCollections>
       )}
