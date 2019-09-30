@@ -151,7 +151,7 @@ const ShippingZoneDetailsDialogs: React.StatelessComponent<
               name: formData.name,
               price: formData.isFree ? 0 : parseFloat(formData.price),
               shippingZone: id,
-              type: ShippingMethodTypeEnum.PRICE
+              type: params.type
             }
           })
         }
