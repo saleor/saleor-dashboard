@@ -1,4 +1,5 @@
 import React from "react";
+import urlJoin from "url-join";
 
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -8,10 +9,12 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { useIntl } from "react-intl";
 
+import { newPasswordUrl } from "@saleor/auth/urls";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { APP_MOUNT_URI } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
@@ -146,6 +149,11 @@ export const StaffList: React.StatelessComponent<StaffListProps> = ({
                       permissions: variables.fullAccess
                         ? data.shop.permissions.map(perm => perm.code)
                         : undefined,
+                      redirectUrl: urlJoin(
+                        window.location.origin,
+                        APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
+                        newPasswordUrl().replace(/\?/, "")
+                      ),
                       sendPasswordEmail: true
                     }
                   }
