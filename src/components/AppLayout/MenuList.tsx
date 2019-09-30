@@ -40,14 +40,24 @@ const styles = (theme: Theme) =>
         fill: theme.palette.common.white
       }
     },
+    menuIconSmall: {
+      left: -5
+    },
     menuIsActive: {
       boxShadow: "0px 0px 12px 1px rgba(0,0,0,0.2)"
     },
     menuItemHover: {
+      "& p": {
+        fontSize: 14,
+        transition: "color 0.5s ease, opacity 0.3s ease-out"
+      },
       "& path": {
         transition: "fill 0.5s ease"
       },
       "&:hover": {
+        "& p": {
+          color: theme.palette.primary.main
+        },
         "& path": {
           fill: theme.palette.primary.main
         },
@@ -55,7 +65,7 @@ const styles = (theme: Theme) =>
           borderLeft: `solid 2px ${theme.palette.primary.main}`,
           content: "''",
           height: 33,
-          left: -25,
+          left: -20,
           position: "absolute",
           top: 8
         },
@@ -101,25 +111,36 @@ const styles = (theme: Theme) =>
         top: 15,
         width: 0
       },
+      "&:before": {
+        borderLeft: `solid 2px ${theme.palette.primary.main}`,
+        content: "''",
+        height: 33,
+        left: -20,
+        position: "absolute",
+        top: 8
+      },
       position: "relative"
     },
     menuListItemText: {
       "&:hover": {
         color: theme.palette.primary.main
       },
+      bottom: 0,
       cursor: "pointer",
-      display: "inline-block",
       fontSize: "1rem",
       fontWeight: 500,
+      left: 30,
       opacity: 1,
       paddingLeft: 16,
+      position: "absolute",
       textTransform: "uppercase",
-      transition: `opacity  ${theme.transitions.duration.shorter}ms ease 0.1s`
+      transition: "opacity 0.5s ease"
     },
     menuListItemTextHide: {
+      bottom: 0,
+      left: 30,
       opacity: 0,
-      position: "absolute",
-      transition: `opacity  ${theme.transitions.duration.shorter}ms ease`
+      position: "absolute"
     },
     subMenu: {
       padding: "0 15px"
@@ -249,7 +270,8 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
                 >
                   <SVG
                     className={classNames(classes.menuIcon, {
-                      [classes.menuIconDark]: isDark
+                      [classes.menuIconDark]: isDark,
+                      [classes.menuIconSmall]: !isMenuSmall
                     })}
                     src={menuItem.icon}
                   />
@@ -294,7 +316,8 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
               <div className={classes.menuItemHover}>
                 <SVG
                   className={classNames(classes.menuIcon, {
-                    [classes.menuIconDark]: isDark
+                    [classes.menuIconDark]: isDark,
+                    [classes.menuIconSmall]: !isMenuSmall
                   })}
                   src={menuItem.icon}
                 />
@@ -319,7 +342,8 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
             <div className={classes.menuItemHover}>
               <SVG
                 className={classNames(classes.menuIcon, {
-                  [classes.menuIconDark]: isDark
+                  [classes.menuIconDark]: isDark,
+                  [classes.menuIconSmall]: !isMenuSmall
                 })}
                 src={configureIcon}
               />

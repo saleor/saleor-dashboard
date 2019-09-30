@@ -17,7 +17,7 @@ import Checkbox from "@saleor/components/Checkbox";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { renderCollection } from "@saleor/misc";
+import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 
 const styles = (theme: Theme) =>
@@ -126,6 +126,8 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
                 onClick={category ? onRowClick(category.id) : undefined}
                 key={category ? category.id : "skeleton"}
                 selected={isSelected}
+                data-tc="id"
+                data-tc-id={maybe(() => category.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -135,7 +137,7 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
                     onChange={() => toggle(category.id)}
                   />
                 </TableCell>
-                <TableCell className={classes.colName}>
+                <TableCell className={classes.colName} data-tc="name">
                   {category && category.name ? category.name : <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.colSubcategories}>

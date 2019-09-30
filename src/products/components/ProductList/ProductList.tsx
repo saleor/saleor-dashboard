@@ -298,6 +298,8 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                     key={product ? product.id : "skeleton"}
                     onClick={product && onRowClick(product.id)}
                     className={classes.link}
+                    data-tc="id"
+                    data-tc-id={maybe(() => product.id)}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -310,6 +312,7 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                     <TableCellAvatar
                       className={classes.colName}
                       thumbnail={maybe(() => product.thumbnail.url)}
+                      data-tc="name"
                     >
                       {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                     </TableCellAvatar>
@@ -317,7 +320,10 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                       column="productType"
                       displayColumns={settings.columns}
                     >
-                      <TableCell className={classes.colType}>
+                      <TableCell
+                        className={classes.colType}
+                        data-tc="product-type"
+                      >
                         {product && product.productType ? (
                           product.productType.name
                         ) : (
@@ -329,7 +335,11 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                       column="isPublished"
                       displayColumns={settings.columns}
                     >
-                      <TableCell className={classes.colPublished}>
+                      <TableCell
+                        className={classes.colPublished}
+                        data-tc="isPublished"
+                        data-tc-is-published={maybe(() => product.isAvailable)}
+                      >
                         {product &&
                         maybe(() => product.isAvailable !== undefined) ? (
                           <StatusLabel
@@ -337,12 +347,11 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                               product.isAvailable
                                 ? intl.formatMessage({
                                     defaultMessage: "Published",
-                                    description: "product",
-                                    id: "productStatusLabel"
+                                    description: "product status"
                                   })
                                 : intl.formatMessage({
                                     defaultMessage: "Not published",
-                                    description: "product"
+                                    description: "product status"
                                   })
                             }
                             status={product.isAvailable ? "success" : "error"}
@@ -356,6 +365,10 @@ export const ProductList = withStyles(styles, { name: "ProductList" })(
                       <TableCell
                         className={classes.colAttribute}
                         key={gridAttribute}
+                        data-tc="attribute"
+                        data-tc-attribute={getAttributeIdFromColumnValue(
+                          gridAttribute
+                        )}
                       >
                         {maybe<React.ReactNode>(() => {
                           const attribute = product.attributes.find(

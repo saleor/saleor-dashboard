@@ -85,7 +85,13 @@ const ProductTypeAttributes = withStyles(styles, {
     const intl = useIntl();
 
     return (
-      <Card>
+      <Card
+        data-tc={
+          type === AttributeTypeEnum.PRODUCT
+            ? "product-attributes"
+            : "variant-attributes"
+        }
+      >
         <CardTitle
           title={
             type === AttributeTypeEnum.PRODUCT
@@ -150,6 +156,8 @@ const ProductTypeAttributes = withStyles(styles, {
                     }
                     key={maybe(() => attribute.id)}
                     index={attributeIndex || 0}
+                    data-tc="id"
+                    data-tc-id={maybe(() => attribute.id)}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -159,14 +167,14 @@ const ProductTypeAttributes = withStyles(styles, {
                         onChange={() => toggle(attribute.id)}
                       />
                     </TableCell>
-                    <TableCell className={classes.colName}>
+                    <TableCell className={classes.colName} data-tc="name">
                       {maybe(() => attribute.name) ? (
                         attribute.name
                       ) : (
                         <Skeleton />
                       )}
                     </TableCell>
-                    <TableCell className={classes.colSlug}>
+                    <TableCell className={classes.colSlug} data-tc="slug">
                       {maybe(() => attribute.slug) ? (
                         attribute.slug
                       ) : (
