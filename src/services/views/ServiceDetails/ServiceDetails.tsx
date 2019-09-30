@@ -17,6 +17,7 @@ import {
   ServiceUpdateMutation
 } from "@saleor/services/mutations";
 import { ServiceDelete } from "@saleor/services/types/ServiceDelete";
+import { ServiceTokenCreate } from "@saleor/services/types/ServiceTokenCreate";
 import { ServiceTokenDelete } from "@saleor/services/types/ServiceTokenDelete";
 import { ServiceUpdate } from "@saleor/services/types/ServiceUpdate";
 import ServiceDetailsPage, {
@@ -88,6 +89,11 @@ export const ServiceDetails: React.StatelessComponent<OrderListProps> = ({
       require={["serviceAccount"]}
     >
       {({ data, loading, refetch }) => {
+        const onTokenCreate = (data: ServiceTokenCreate) => {
+          if (maybe(() => data.serviceAccountTokenCreate.errors.length === 0)) {
+            refetch();
+          }
+        };
         const onTokenDelete = (data: ServiceTokenDelete) => {
           if (maybe(() => data.serviceAccountTokenDelete.errors.length === 0)) {
             notify({
@@ -97,12 +103,13 @@ export const ServiceDetails: React.StatelessComponent<OrderListProps> = ({
             closeModal();
           }
         };
+
         return (
           <ServiceUpdateMutation onCompleted={onServiceUpdate}>
             {(updateService, updateServiceOpts) => (
               <ServiceDeleteMutation onCompleted={onServiceDelete}>
                 {(deleteService, deleteServiceOpts) => (
-                  <ServiceTokenCreateMutation>
+                  <ServiceTokenCreateMutation onCompleted={onTokenCreate}>
                     {(createToken, createTokenOpts) => (
                       <ServiceTokenDeleteMutation onCompleted={onTokenDelete}>
                         {(deleteToken, deleteTokenOpts) => {
