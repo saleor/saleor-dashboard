@@ -31,3 +31,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix staff return link - #190 by @dominik-zeglen
 - Allow sorting products by attribute - #180 by @dominik-zeglen
 - Hide variants and attributes if product has none - #179 by @dominik-zeglen
+- Add service account section - #188 by @dominik-zeglen
