@@ -74,11 +74,11 @@ const price: AllOrAttribute = {
   value: "",
   values: [
     {
-      id: thirdStep.attributes[1].values[0],
+      slug: thirdStep.attributes[1].values[0],
       value: "24.99"
     },
     {
-      id: thirdStep.attributes[1].values[1],
+      slug: thirdStep.attributes[1].values[1],
       value: "26.99"
     }
   ]
@@ -89,11 +89,11 @@ const stock: AllOrAttribute = {
   value: "",
   values: [
     {
-      id: thirdStep.attributes[2].values[0],
+      slug: thirdStep.attributes[2].values[0],
       value: "50"
     },
     {
-      id: thirdStep.attributes[2].values[1],
+      slug: thirdStep.attributes[2].values[1],
       value: "35"
     }
   ]

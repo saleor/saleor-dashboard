@@ -30,6 +30,7 @@ const props: ProductUpdatePageProps = {
   onSubmit: () => undefined,
   onVariantAdd: () => undefined,
   onVariantShow: () => undefined,
+  onVariantsAdd: () => undefined,
   placeholderImage,
   product,
   saveButtonBarState: "default",

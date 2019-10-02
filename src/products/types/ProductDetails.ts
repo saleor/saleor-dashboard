@@ -143,6 +143,7 @@ export interface ProductDetails_product_productType_variantAttributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
+  slug: string | null;
 }
 
 export interface ProductDetails_product_productType_variantAttributes {

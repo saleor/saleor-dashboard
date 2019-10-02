@@ -1,7 +1,7 @@
-import { ProductVariantCreateInput } from "../../../types/globalTypes";
+import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 
 export interface AttributeValue {
-  id: string;
+  slug: string;
   value: string;
 }
 export interface AllOrAttribute {
@@ -18,7 +18,7 @@ export interface ProductVariantCreateFormData {
   attributes: Attribute[];
   price: AllOrAttribute;
   stock: AllOrAttribute;
-  variants: ProductVariantCreateInput[];
+  variants: ProductVariantBulkCreateInput[];
 }
 
 export const initialForm: ProductVariantCreateFormData = {

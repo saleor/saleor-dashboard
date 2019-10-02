@@ -7,6 +7,8 @@ import { Theme } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+
+import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 import { initialForm, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreateContent, {
   ProductVariantCreateContentProps
@@ -73,17 +75,17 @@ function canHitNext(
 export interface ProductVariantCreateDialogProps
   extends Omit<
     ProductVariantCreateContentProps,
-    "dispatchFormDataAction" | "step"
+    "data" | "dispatchFormDataAction" | "step"
   > {
   open: boolean;
-  onClose: () => undefined;
-  onSubmit: (data: ProductVariantCreateFormData) => void;
+  onClose: () => void;
+  onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
 
 const ProductVariantCreateDialog: React.FC<
   ProductVariantCreateDialogProps
 > = props => {
-  const { open, onClose, ...contentProps } = props;
+  const { open, onClose, onSubmit, ...contentProps } = props;
   const classes = useStyles(props);
   const [step, setStep] = React.useState<ProductVariantCreateStep>(
     "attributes"
@@ -167,6 +169,7 @@ const ProductVariantCreateDialog: React.FC<
             color="primary"
             disabled={!canHitNext(step, data)}
             variant="contained"
+            onClick={() => onSubmit(data.variants)}
           >
             <FormattedMessage
               defaultMessage="Create"

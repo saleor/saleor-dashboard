@@ -2,6 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/styles";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
+import { ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { isSelected } from "@saleor/utils/lists";
 import { ProductVariantCreateFormData } from "./form";
 import ProductVariantCreateAttributes from "./ProductVariantCreateAttributes";
@@ -24,6 +25,7 @@ export interface ProductVariantCreateContentProps {
   currencySymbol: string;
   data: ProductVariantCreateFormData;
   dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
+  errors: ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors[];
   step: ProductVariantCreateStep;
 }
 
@@ -35,6 +37,7 @@ const ProductVariantCreateContent: React.FC<
     currencySymbol,
     data,
     dispatchFormDataAction,
+    errors,
     step
   } = props;
   const classes = useStyles(props);
@@ -121,6 +124,7 @@ const ProductVariantCreateContent: React.FC<
             attributes={selectedAttributes}
             currencySymbol={currencySymbol}
             data={data}
+            errors={errors}
             onVariantDataChange={(variantIndex, field, value) =>
               dispatchFormDataAction({
                 field,

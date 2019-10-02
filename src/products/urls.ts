@@ -53,7 +53,7 @@ export const productListUrl = (params?: ProductListUrlQueryParams): string =>
 export const productPath = (id: string) => urlJoin(productSection + id);
 export type ProductUrlDialog = "remove";
 export type ProductUrlQueryParams = BulkAction &
-  Dialog<"remove" | "remove-variants">;
+  Dialog<"create-variants" | "remove" | "remove-variants">;
 export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
   productPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 

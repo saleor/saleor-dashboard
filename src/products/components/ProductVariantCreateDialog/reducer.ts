@@ -108,20 +108,20 @@ function applyStockToAll(
 
 function changeAttributeValuePrice(
   state: ProductVariantCreateFormData,
-  attributeValueId: string,
+  attributeValueSlug: string,
   price: string
 ): ProductVariantCreateFormData {
   const index = state.price.values.findIndex(
-    value => value.id === attributeValueId
+    value => value.slug === attributeValueSlug
   );
 
   if (index === -1) {
-    throw new Error(`Value with id ${attributeValueId} not found`);
+    throw new Error(`Value with id ${attributeValueSlug} not found`);
   }
 
   const values = updateAtIndex(
     {
-      id: attributeValueId,
+      slug: attributeValueSlug,
       value: price
     },
     state.price.values,
@@ -144,20 +144,20 @@ function changeAttributeValuePrice(
 
 function changeAttributeValueStock(
   state: ProductVariantCreateFormData,
-  attributeValueId: string,
+  attributeValueSlug: string,
   stock: string
 ): ProductVariantCreateFormData {
   const index = state.stock.values.findIndex(
-    value => value.id === attributeValueId
+    value => value.slug === attributeValueSlug
   );
 
   if (index === -1) {
-    throw new Error(`Value with id ${attributeValueId} not found`);
+    throw new Error(`Value with id ${attributeValueSlug} not found`);
   }
 
   const values = updateAtIndex(
     {
-      id: attributeValueId,
+      slug: attributeValueSlug,
       value: stock
     },
     state.stock.values,
@@ -185,8 +185,8 @@ function changeApplyPriceToAttributeId(
   const attribute = state.attributes.find(
     attribute => attribute.id === attributeId
   );
-  const values = attribute.values.map(id => ({
-    id,
+  const values = attribute.values.map(slug => ({
+    slug,
     value: ""
   }));
   const data = {
@@ -211,8 +211,8 @@ function changeApplyStockToAttributeId(
   const attribute = state.attributes.find(
     attribute => attribute.id === attributeId
   );
-  const values = attribute.values.map(id => ({
-    id,
+  const values = attribute.values.map(slug => ({
+    slug,
     value: ""
   }));
 

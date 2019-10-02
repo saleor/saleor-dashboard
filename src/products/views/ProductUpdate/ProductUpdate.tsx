@@ -10,7 +10,10 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog";
+import { ProductVariantBulkCreate } from "@saleor/products/types/ProductVariantBulkCreate";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
 import SearchCategories from "../../../containers/SearchCategories";
 import SearchCollections from "../../../containers/SearchCollections";
@@ -54,6 +57,7 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
     params.ids
   );
   const intl = useIntl();
+  const shop = useShop();
 
   const openModal = (action: ProductUrlDialog) =>
     navigate(
@@ -115,6 +119,15 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                 const handleVariantAdd = () =>
                   navigate(productVariantAddUrl(id));
 
+                const handleBulkProductVariantCreate = (
+                  data: ProductVariantBulkCreate
+                ) => {
+                  if (data.productVariantBulkCreate.errors.length === 0) {
+                    navigate(productUrl(id), true);
+                    refetch();
+                  }
+                };
+
                 const handleBulkProductVariantDelete = (
                   data: ProductVariantBulkDelete
                 ) => {
@@ -125,10 +138,19 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                   }
                 };
 
+                const handleVariantCreatorOpen = () =>
+                  navigate(
+                    productUrl(id, {
+                      ...params,
+                      action: "create-variants"
+                    })
+                  );
+
                 const product = data ? data.product : undefined;
                 return (
                   <ProductUpdateOperations
                     product={product}
+                    onBulkProductVariantCreate={handleBulkProductVariantCreate}
                     onBulkProductVariantDelete={handleBulkProductVariantDelete}
                     onDelete={handleDelete}
                     onImageCreate={handleImageCreate}
@@ -136,6 +158,7 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                     onUpdate={handleUpdate}
                   >
                     {({
+                      bulkProductVariantCreate,
                       bulkProductVariantDelete,
                       createProductImage,
                       deleteProduct,
@@ -245,6 +268,7 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                             onImageReorder={handleImageReorder}
                             onSubmit={handleSubmit}
                             onVariantAdd={handleVariantAdd}
+                            onVariantsAdd={handleVariantCreatorOpen}
                             onVariantShow={variantId => () =>
                               navigate(
                                 productVariantEditUrl(product.id, variantId)
@@ -328,6 +352,34 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                               />
                             </DialogContentText>
                           </ActionDialog>
+                          <ProductVariantCreateDialog
+                            errors={maybe(
+                              () =>
+                                bulkProductVariantCreate.opts.data
+                                  .productVariantBulkCreate.bulkProductErrors,
+                              []
+                            )}
+                            open={params.action === "create-variants"}
+                            attributes={maybe(
+                              () => data.product.productType.variantAttributes,
+                              []
+                            )}
+                            currencySymbol={maybe(() => shop.defaultCurrency)}
+                            onClose={() =>
+                              navigate(
+                                productUrl(id, {
+                                  ...params,
+                                  action: undefined
+                                })
+                              )
+                            }
+                            onSubmit={inputs =>
+                              bulkProductVariantCreate.mutate({
+                                id,
+                                inputs
+                              })
+                            }
+                          />
                         </>
                       );
                     }}

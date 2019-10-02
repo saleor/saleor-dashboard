@@ -48,15 +48,15 @@ const ProductVariantCreateValues: React.FC<
             {attribute.values.map(value => (
               <ControlledCheckbox
                 checked={isSelected(
-                  value.id,
+                  value.slug,
                   data.attributes.find(
                     dataAttribute => attribute.id === dataAttribute.id
                   ).values,
                   (a, b) => a === b
                 )}
-                name={`value:${value.id}`}
+                name={`value:${value.slug}`}
                 label={value.name}
-                onChange={() => onValueClick(attribute.id, value.id)}
+                onChange={() => onValueClick(attribute.id, value.slug)}
               />
             ))}
           </div>

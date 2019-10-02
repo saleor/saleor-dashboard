@@ -4,11 +4,6 @@ import green from "@material-ui/core/colors/green";
 import purple from "@material-ui/core/colors/purple";
 import yellow from "@material-ui/core/colors/yellow";
 import { Theme } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
@@ -17,7 +12,9 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import Hr from "@saleor/components/Hr";
-import { ProductVariantCreateInput } from "@saleor/types/globalTypes";
+import { maybe } from "@saleor/misc";
+import { ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors } from "@saleor/products/types/ProductVariantBulkCreate";
+import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import { ProductDetails_product_productType_variantAttributes } from "../../types/ProductDetails";
 import { ProductVariantCreateFormData } from "./form";
 import { VariantField } from "./reducer";
@@ -26,6 +23,7 @@ export interface ProductVariantCreateSummaryProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
+  errors: ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors[];
   onVariantDataChange: (
     variantIndex: number,
     field: VariantField,
@@ -35,42 +33,58 @@ export interface ProductVariantCreateSummaryProps {
 
 const colors = [blue, cyan, green, purple, yellow].map(color => color[800]);
 
-const useStyles = makeStyles((theme: Theme) => ({
-  attributeValue: {
-    display: "inline-block",
-    marginRight: theme.spacing.unit
-  },
-  col: {
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit
-  },
-  colName: {
-    paddingLeft: "0 !important",
-    width: "auto"
-  },
-  colPrice: {
-    width: 200
-  },
-  colSku: {
-    width: 210
-  },
-  colStock: {
-    width: 120
-  },
-  hr: {
-    marginBottom: theme.spacing.unit,
-    marginTop: theme.spacing.unit / 2
-  },
-  input: {
-    "& input": {
-      padding: "16px 12px 17px"
+const useStyles = makeStyles(
+  (theme: Theme) => ({
+    attributeValue: {
+      display: "inline-block",
+      marginRight: theme.spacing.unit
     },
-    marginTop: theme.spacing.unit / 2
+    col: {
+      ...theme.typography.body2,
+      fontSize: 14,
+      paddingLeft: theme.spacing.unit,
+      paddingRight: theme.spacing.unit
+    },
+    colHeader: {
+      ...theme.typography.body2,
+      fontSize: 14
+    },
+    colName: {
+      "&&": {
+        paddingLeft: "0 !important"
+      },
+      "&:not($colHeader)": {
+        paddingTop: theme.spacing.unit * 2
+      }
+    },
+    colPrice: {},
+    colSku: {},
+    colStock: {},
+    errorRow: {},
+    hr: {
+      marginBottom: theme.spacing.unit,
+      marginTop: theme.spacing.unit / 2
+    },
+    input: {
+      "& input": {
+        padding: "16px 12px 17px"
+      },
+      marginTop: theme.spacing.unit / 2
+    },
+    row: {
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      display: "grid",
+      gridTemplateColumns: "1fr 200px 120px 210px",
+      padding: `${theme.spacing.unit}px 0`
+    }
+  }),
+  {
+    name: "ProductVariantCreateSummary"
   }
-}));
+);
 
 function getVariantName(
-  variant: ProductVariantCreateInput,
+  variant: ProductVariantBulkCreateInput,
   attributes: ProductDetails_product_productType_variantAttributes[]
 ): string[] {
   return attributes.reduce(
@@ -78,7 +92,7 @@ function getVariantName(
       ...acc,
       attribute.values.find(
         value =>
-          value.id ===
+          value.slug ===
           variant.attributes.find(
             variantAttribute => variantAttribute.id === attribute.id
           ).values[0]
@@ -91,7 +105,13 @@ function getVariantName(
 const ProductVariantCreateSummary: React.FC<
   ProductVariantCreateSummaryProps
 > = props => {
-  const { attributes, currencySymbol, data, onVariantDataChange } = props;
+  const {
+    attributes,
+    currencySymbol,
+    data,
+    errors,
+    onVariantDataChange
+  } = props;
   const classes = useStyles(props);
 
   return (
@@ -103,40 +123,69 @@ const ProductVariantCreateSummary: React.FC<
         />
       </Typography>
       <Hr className={classes.hr} />
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell className={classNames(classes.col, classes.colName)}>
-              <FormattedMessage
-                defaultMessage="Variant"
-                description="variant name"
-              />
-            </TableCell>
-            <TableCell className={classNames(classes.col, classes.colStock)}>
-              <FormattedMessage
-                defaultMessage="Inventory"
-                description="variant stock amount"
-              />
-            </TableCell>
-            <TableCell className={classNames(classes.col, classes.colPrice)}>
-              <FormattedMessage
-                defaultMessage="Price"
-                description="variant price"
-              />
-            </TableCell>
-            <TableCell className={classNames(classes.col, classes.colSku)}>
-              <FormattedMessage defaultMessage="SKU" />
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.variants.map((variant, variantIndex) => (
-            <TableRow
+      <div>
+        <div className={classes.row}>
+          <div
+            className={classNames(
+              classes.col,
+              classes.colHeader,
+              classes.colName
+            )}
+          >
+            <FormattedMessage
+              defaultMessage="Variant"
+              description="variant name"
+            />
+          </div>
+          <div
+            className={classNames(
+              classes.col,
+              classes.colHeader,
+              classes.colPrice
+            )}
+          >
+            <FormattedMessage
+              defaultMessage="Price"
+              description="variant price"
+            />
+          </div>
+          <div
+            className={classNames(
+              classes.col,
+              classes.colHeader,
+              classes.colStock
+            )}
+          >
+            <FormattedMessage
+              defaultMessage="Inventory"
+              description="variant stock amount"
+            />
+          </div>
+          <div
+            className={classNames(
+              classes.col,
+              classes.colHeader,
+              classes.colSku
+            )}
+          >
+            <FormattedMessage defaultMessage="SKU" />
+          </div>
+        </div>
+        {data.variants.map((variant, variantIndex) => {
+          const variantErrors = errors.filter(
+            error => error.index === variantIndex
+          );
+
+          return (
+            <div
+              className={classNames(classes.row, {
+                [classes.errorRow]: variantErrors.length > 0
+              })}
               key={variant.attributes
                 .map(attribute => attribute.values[0])
                 .join(":")}
             >
-              <TableCell className={classNames(classes.col, classes.colName)}>
+              <div className={classNames(classes.col, classes.colName)}>
                 {getVariantName(variant, attributes).map(
                   (value, valueIndex) => (
                     <span
@@ -149,31 +198,24 @@ const ProductVariantCreateSummary: React.FC<
                     </span>
                   )
                 )}
-              </TableCell>
-              <TableCell className={classNames(classes.col, classes.colStock)}>
-                <TextField
-                  className={classes.input}
-                  inputProps={{
-                    min: 0,
-                    type: "number"
-                  }}
-                  fullWidth
-                  value={variant.quantity}
-                  onChange={event =>
-                    onVariantDataChange(
-                      variantIndex,
-                      "stock",
-                      event.target.value
-                    )
-                  }
-                />
-              </TableCell>
-              <TableCell className={classNames(classes.col, classes.colPrice)}>
+              </div>
+              <div className={classNames(classes.col, classes.colPrice)}>
                 <TextField
                   InputProps={{
                     endAdornment: currencySymbol
                   }}
                   className={classes.input}
+                  error={
+                    !!variantErrors.find(
+                      error => error.field === "priceOverride"
+                    )
+                  }
+                  helperText={maybe(
+                    () =>
+                      variantErrors.find(
+                        error => error.field === "priceOverride"
+                      ).message
+                  )}
                   inputProps={{
                     min: 0,
                     type: "number"
@@ -188,21 +230,52 @@ const ProductVariantCreateSummary: React.FC<
                     )
                   }
                 />
-              </TableCell>
-              <TableCell className={classNames(classes.col, classes.colSku)}>
+              </div>
+              <div className={classNames(classes.col, classes.colStock)}>
                 <TextField
                   className={classes.input}
+                  error={
+                    !!variantErrors.find(error => error.field === "quantity")
+                  }
+                  helperText={maybe(
+                    () =>
+                      variantErrors.find(error => error.field === "quantity")
+                        .message
+                  )}
+                  inputProps={{
+                    min: 0,
+                    type: "number"
+                  }}
+                  fullWidth
+                  value={variant.quantity}
+                  onChange={event =>
+                    onVariantDataChange(
+                      variantIndex,
+                      "stock",
+                      event.target.value
+                    )
+                  }
+                />
+              </div>
+              <div className={classNames(classes.col, classes.colSku)}>
+                <TextField
+                  className={classes.input}
+                  error={!!variantErrors.find(error => error.field === "sku")}
+                  helperText={maybe(
+                    () =>
+                      variantErrors.find(error => error.field === "sku").message
+                  )}
                   fullWidth
                   value={variant.sku}
                   onChange={event =>
                     onVariantDataChange(variantIndex, "sku", event.target.value)
                   }
                 />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 };

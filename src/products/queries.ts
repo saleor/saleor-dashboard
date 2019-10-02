@@ -267,6 +267,7 @@ const productDetailsQuery = gql`
           values {
             id
             name
+            slug
           }
         }
       }

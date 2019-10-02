@@ -4,6 +4,8 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { attributes } from "@saleor/attributes/fixtures";
+import { ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors } from "@saleor/products/types/ProductVariantBulkCreate";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import Decorator from "../../../storybook/Decorator";
 import { createVariants } from "./createVariants";
 import { AllOrAttribute } from "./form";
@@ -19,7 +21,7 @@ const price: AllOrAttribute = {
   attribute: selectedAttributes[1].id,
   value: "2.79",
   values: selectedAttributes[1].values.map((attribute, attributeIndex) => ({
-    id: attribute.id,
+    slug: attribute.slug,
     value: (attributeIndex + 4).toFixed(2)
   }))
 };
@@ -29,7 +31,7 @@ const stock: AllOrAttribute = {
   attribute: selectedAttributes[1].id,
   value: "8",
   values: selectedAttributes[1].values.map((attribute, attributeIndex) => ({
-    id: attribute.id,
+    slug: attribute.slug,
     value: (selectedAttributes.length * 10 - attributeIndex).toString()
   }))
 };
@@ -37,9 +39,19 @@ const stock: AllOrAttribute = {
 const dataAttributes = selectedAttributes.map(attribute => ({
   id: attribute.id,
   values: attribute.values
-    .map(value => value.id)
+    .map(value => value.slug)
     .filter((_, valueIndex) => valueIndex % 2 !== 1)
 }));
+
+const errors: ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors[] = [
+  {
+    __typename: "BulkProductError",
+    code: ProductErrorCode.UNIQUE,
+    field: "sku",
+    index: 3,
+    message: "Duplicated SKU."
+  }
+];
 
 const props: ProductVariantCreateContentProps = {
   attributes,
@@ -56,6 +68,7 @@ const props: ProductVariantCreateContentProps = {
     })
   },
   dispatchFormDataAction: () => undefined,
+  errors: [],
   step: "attributes"
 };
 
@@ -78,9 +91,26 @@ storiesOf("Views / Products / Create multiple variants", module)
   ))
   .add("prices and SKU", () => (
     <ProductVariantCreateContent {...props} step="prices" />
+  ));
+
+storiesOf("Views / Products / Create multiple variants / summary", module)
+  .addDecorator(storyFn => (
+    <Card
+      style={{
+        margin: "auto",
+        overflow: "visible",
+        width: 800
+      }}
+    >
+      <CardContent>{storyFn()}</CardContent>
+    </Card>
   ))
-  .add("summary", () => (
+  .addDecorator(Decorator)
+  .add("default", () => (
     <ProductVariantCreateContent {...props} step="summary" />
+  ))
+  .add("errors", () => (
+    <ProductVariantCreateContent {...props} step="summary" errors={errors} />
   ));
 
 storiesOf("Views / Products / Create multiple variants", module)

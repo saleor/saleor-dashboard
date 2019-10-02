@@ -63,12 +63,24 @@ const ProductVariantCreatePrices: React.FC<
   const priceAttributeValues = data.price.all
     ? null
     : data.price.attribute
-    ? attributes.find(attribute => attribute.id === data.price.attribute).values
+    ? attributes
+        .find(attribute => attribute.id === data.price.attribute)
+        .values.filter(value =>
+          data.attributes
+            .find(attribute => attribute.id === data.price.attribute)
+            .values.includes(value.slug)
+        )
     : [];
   const stockAttributeValues = data.stock.all
     ? null
     : data.stock.attribute
-    ? attributes.find(attribute => attribute.id === data.stock.attribute).values
+    ? attributes
+        .find(attribute => attribute.id === data.stock.attribute)
+        .values.filter(value =>
+          data.attributes
+            .find(attribute => attribute.id === data.stock.attribute)
+            .values.includes(value.slug)
+        )
     : [];
 
   return (
@@ -158,7 +170,7 @@ const ProductVariantCreatePrices: React.FC<
                       value={data.price.values[attributeValueIndex].value}
                       onChange={event =>
                         onAttributeValueChange(
-                          attributeValue.id,
+                          attributeValue.slug,
                           event.target.value,
                           "price"
                         )
@@ -256,7 +268,7 @@ const ProductVariantCreatePrices: React.FC<
                       value={data.stock.values[attributeValueIndex].value}
                       onChange={event =>
                         onAttributeValueChange(
-                          attributeValue.id,
+                          attributeValue.slug,
                           event.target.value,
                           "stock"
                         )

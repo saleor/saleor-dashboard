@@ -1,4 +1,4 @@
-import { ProductVariantCreateInput } from "@saleor/types/globalTypes";
+import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import {
   AllOrAttribute,
   Attribute,
@@ -7,7 +7,7 @@ import {
 
 interface CreateVariantAttributeValueInput {
   attributeId: string;
-  attributeValueId: string;
+  attributeValueSlug: string;
 }
 type CreateVariantInput = CreateVariantAttributeValueInput[];
 
@@ -20,7 +20,7 @@ function getAttributeValuePriceOrStock(
   );
 
   const attributeValue = priceOrStock.values.find(
-    attributeValue => attribute.attributeValueId === attributeValue.id
+    attributeValue => attribute.attributeValueSlug === attributeValue.slug
   );
 
   return attributeValue.value;
@@ -29,7 +29,7 @@ function getAttributeValuePriceOrStock(
 function createVariant(
   data: ProductVariantCreateFormData,
   attributes: CreateVariantInput
-): ProductVariantCreateInput {
+): ProductVariantBulkCreateInput {
   const priceOverride = data.price.all
     ? data.price.value
     : getAttributeValuePriceOrStock(attributes, data.price);
@@ -43,10 +43,9 @@ function createVariant(
   return {
     attributes: attributes.map(attribute => ({
       id: attribute.attributeId,
-      values: [attribute.attributeValueId]
+      values: [attribute.attributeValueSlug]
     })),
     priceOverride,
-    product: "",
     quantity,
     sku: ""
   };
@@ -56,11 +55,11 @@ function addAttributeToVariant(
   attribute: Attribute,
   variant: CreateVariantInput
 ): CreateVariantInput[] {
-  return attribute.values.map(attributeValueId => [
+  return attribute.values.map(attributeValueSlug => [
     ...variant,
     {
       attributeId: attribute.id,
-      attributeValueId
+      attributeValueSlug
     }
   ]);
 }
@@ -91,7 +90,7 @@ export function createVariantFlatMatrixDimension(
 
 export function createVariants(
   data: ProductVariantCreateFormData
-): ProductVariantCreateInput[] {
+): ProductVariantBulkCreateInput[] {
   if (
     (!data.price.all && !data.price.attribute) ||
     (!data.stock.all && !data.stock.attribute)

@@ -60,6 +60,7 @@ export interface ProductUpdatePageProps extends ListActions {
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
+  onVariantsAdd: () => void;
   onVariantShow: (id: string) => () => void;
   onImageDelete: (id: string) => () => void;
   onBack?();
@@ -100,6 +101,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onSeoClick,
   onSubmit,
   onVariantAdd,
+  onVariantsAdd,
   onVariantShow,
   isChecked,
   selected,
@@ -236,6 +238,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       fallbackPrice={product ? product.basePrice : undefined}
                       onRowClick={onVariantShow}
                       onVariantAdd={onVariantAdd}
+                      onVariantsAdd={onVariantsAdd}
                       toolbar={toolbar}
                       isChecked={isChecked}
                       selected={selected}

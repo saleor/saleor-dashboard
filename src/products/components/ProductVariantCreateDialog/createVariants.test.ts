@@ -62,7 +62,7 @@ describe("Creates variant matrix", () => {
         all: false,
         attribute: attribute.id,
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
-          id: attributeValue,
+          slug: attributeValue,
           value: (price * (attributeValueIndex + 1)).toString()
         }))
       },
@@ -120,7 +120,7 @@ describe("Creates variant matrix", () => {
         all: false,
         attribute: attribute.id,
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
-          id: attributeValue,
+          slug: attributeValue,
           value: (stock * (attributeValueIndex + 1)).toString()
         }))
       }
@@ -166,7 +166,7 @@ describe("Creates variant matrix", () => {
         all: false,
         attribute: attribute.id,
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
-          id: attributeValue,
+          slug: attributeValue,
           value: (price * (attributeValueIndex + 1)).toString()
         }))
       },
@@ -175,7 +175,7 @@ describe("Creates variant matrix", () => {
         all: false,
         attribute: attribute.id,
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
-          id: attributeValue,
+          slug: attributeValue,
           value: (stock * (attributeValueIndex + 1)).toString()
         }))
       }

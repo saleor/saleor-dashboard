@@ -1,4 +1,3 @@
-import { Theme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,14 +17,14 @@ export interface ProductVariantCreateAttributesProps {
   onAttributeClick: (id: string) => void;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles({
   checkboxCell: {
     paddingLeft: 0
   },
   wideCell: {
     width: "100%"
   }
-}));
+});
 
 const ProductVariantCreateAttributes: React.FC<
   ProductVariantCreateAttributesProps
