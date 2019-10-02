@@ -18,12 +18,12 @@ import { SearchCategories_categories_edges_node } from "@saleor/containers/Searc
 import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
 import { SearchPages_pages_edges_node } from "@saleor/containers/SearchPages/types/SearchPages";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages, sectionNames } from "@saleor/intl";
 import { UserError } from "@saleor/types";
 import { getErrors, getFieldError } from "@saleor/utils/errors";
 import { getMenuItemByValue, IMenu } from "@saleor/utils/menu";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 
 export type MenuItemType = "category" | "collection" | "link" | "page";
 export interface MenuItemData {
