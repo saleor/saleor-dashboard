@@ -1,4 +1,10 @@
-import { add, remove, toggle, updateAtIndex } from "@saleor/utils/lists";
+import {
+  add,
+  remove,
+  toggle,
+  updateAtIndex,
+  removeAtIndex
+} from "@saleor/utils/lists";
 import { createVariants } from "./createVariants";
 import { initialForm, ProductVariantCreateFormData } from "./form";
 
@@ -14,6 +20,7 @@ export type ProductVariantCreateReducerActionType =
   | "changeAttributeValuePrice"
   | "changeAttributeValueStock"
   | "changeVariantData"
+  | "deleteVariant"
   | "selectAttribute"
   | "selectValue";
 
@@ -288,6 +295,16 @@ function changeVariantData(
   };
 }
 
+function deleteVariant(
+  state: ProductVariantCreateFormData,
+  variantIndex: number
+): ProductVariantCreateFormData {
+  return {
+    ...state,
+    variants: removeAtIndex(state.variants, variantIndex)
+  };
+}
+
 function reduceProductVariantCreateFormData(
   prevState: ProductVariantCreateFormData,
   action: ProductVariantCreateReducerAction
@@ -322,6 +339,8 @@ function reduceProductVariantCreateFormData(
         action.value,
         action.variantIndex
       );
+    case "deleteVariant":
+      return deleteVariant(prevState, action.variantIndex);
     default:
       return prevState;
   }

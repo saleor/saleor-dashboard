@@ -190,4 +190,17 @@ describe("Reducer is able to", () => {
       fourthStep.variants[variantIndex - 1].priceOverride
     );
   });
+
+  it("delete variant", () => {
+    const variantIndex = 3;
+
+    const state = execActions(fourthStep, reducer, [
+      {
+        type: "deleteVariant",
+        variantIndex
+      }
+    ]);
+
+    expect(state.variants.length).toBe(fourthStep.variants.length - 1);
+  });
 });

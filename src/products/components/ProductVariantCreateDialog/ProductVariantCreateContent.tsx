@@ -133,6 +133,12 @@ const ProductVariantCreateContent: React.FC<
                 variantIndex
               })
             }
+            onVariantDelete={variantIndex =>
+              dispatchFormDataAction({
+                type: "deleteVariant",
+                variantIndex
+              })
+            }
           />
         )}
       </div>

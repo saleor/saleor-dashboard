@@ -93,6 +93,7 @@ const ProductVariantCreateTabs: React.FC<
             [classes.tabUnderline]:
               steps.findIndex(step => step.value === currentStep) >= stepIndex
           })}
+          key={step.value}
         >
           <Typography className={classes.label} variant="caption">
             {step.label}

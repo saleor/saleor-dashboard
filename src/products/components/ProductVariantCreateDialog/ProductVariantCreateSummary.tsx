@@ -3,9 +3,11 @@ import cyan from "@material-ui/core/colors/cyan";
 import green from "@material-ui/core/colors/green";
 import purple from "@material-ui/core/colors/purple";
 import yellow from "@material-ui/core/colors/yellow";
+import IconButton from "@material-ui/core/IconButton";
 import { Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
 import React from "react";
@@ -29,6 +31,7 @@ export interface ProductVariantCreateSummaryProps {
     field: VariantField,
     value: string
   ) => void;
+  onVariantDelete: (variantIndex: number) => void;
 }
 
 const colors = [blue, cyan, green, purple, yellow].map(color => color[800]);
@@ -60,6 +63,9 @@ const useStyles = makeStyles(
     colPrice: {},
     colSku: {},
     colStock: {},
+    delete: {
+      marginTop: theme.spacing.unit / 2
+    },
     errorRow: {},
     hr: {
       marginBottom: theme.spacing.unit,
@@ -74,7 +80,7 @@ const useStyles = makeStyles(
     row: {
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "grid",
-      gridTemplateColumns: "1fr 200px 120px 210px",
+      gridTemplateColumns: "1fr 180px 120px 180px 64px",
       padding: `${theme.spacing.unit}px 0`
     }
   }),
@@ -110,7 +116,8 @@ const ProductVariantCreateSummary: React.FC<
     currencySymbol,
     data,
     errors,
-    onVariantDataChange
+    onVariantDataChange,
+    onVariantDelete
   } = props;
   const classes = useStyles(props);
 
@@ -271,6 +278,15 @@ const ProductVariantCreateSummary: React.FC<
                     onVariantDataChange(variantIndex, "sku", event.target.value)
                   }
                 />
+              </div>
+              <div className={classes.col}>
+                <IconButton
+                  className={classes.delete}
+                  color="primary"
+                  onClick={() => onVariantDelete(variantIndex)}
+                >
+                  <DeleteIcon />
+                </IconButton>
               </div>
             </div>
           );
