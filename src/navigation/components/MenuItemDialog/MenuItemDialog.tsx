@@ -18,6 +18,7 @@ import { SearchCategories_categories_edges_node } from "@saleor/containers/Searc
 import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
 import { SearchPages_pages_edges_node } from "@saleor/containers/SearchPages/types/SearchPages";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages, sectionNames } from "@saleor/intl";
 import { UserError } from "@saleor/types";
@@ -97,16 +98,19 @@ const MenuItemDialog: React.StatelessComponent<MenuItemDialogProps> = ({
   );
   const [url, setUrl] = React.useState<string>(undefined);
 
+  // Reset input state after closing dialog
+  useModalDialogOpen(open, {
+    onClose: () => {
+      setData(initial || defaultInitial);
+      setDisplayValue(initialDisplayValue);
+      setUrl(undefined);
+    }
+  });
+
   // Refresh initial display value if changed
   React.useEffect(() => setDisplayValue(initialDisplayValue), [
     initialDisplayValue
   ]);
-
-  // Reset input state after closing dialog
-  React.useEffect(() => {
-    setDisplayValue(initialDisplayValue);
-    setUrl(undefined);
-  }, [open]);
 
   const mutationErrors = getErrors(errors);
 

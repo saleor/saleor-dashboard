@@ -15,6 +15,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { configurationMenuUrl } from "@saleor/configuration";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -165,6 +166,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
                     isChecked={isSelected}
                     onAdd={() => navigate(attributeAddUrl())}
                     onAll={() => navigate(attributeListUrl())}
+                    onBack={() => navigate(configurationMenuUrl)}
                     onNextPage={loadNextPage}
                     onPreviousPage={loadPreviousPage}
                     onRowClick={id => () => navigate(attributeUrl(id))}

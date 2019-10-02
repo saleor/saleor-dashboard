@@ -222,18 +222,20 @@ export const CategoryList: React.StatelessComponent<CategoryListProps> = ({
                     })}
                     variant="delete"
                   >
-                    <FormattedMessage
-                      defaultMessage="Are you sure you want to delete {counter, plural,
+                    <DialogContentText>
+                      <FormattedMessage
+                        defaultMessage="Are you sure you want to delete {counter, plural,
                         one {this category}
                         other {{displayQuantity} categories}
                       }?"
-                      values={{
-                        counter: maybe(() => params.ids.length),
-                        displayQuantity: (
-                          <strong>{maybe(() => params.ids.length)}</strong>
-                        )
-                      }}
-                    />
+                        values={{
+                          counter: maybe(() => params.ids.length),
+                          displayQuantity: (
+                            <strong>{maybe(() => params.ids.length)}</strong>
+                          )
+                        }}
+                      />
+                    </DialogContentText>
                     <DialogContentText>
                       <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
                     </DialogContentText>

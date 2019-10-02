@@ -18,7 +18,8 @@ const props: AttributeListPageProps = {
   ...listActionsProps,
   ...tabPageProps,
   ...searchPageProps,
-  attributes
+  attributes,
+  onBack: () => undefined
 };
 
 storiesOf("Views / Attributes / Attribute list", module)
