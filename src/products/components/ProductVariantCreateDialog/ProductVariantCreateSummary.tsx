@@ -123,7 +123,7 @@ const ProductVariantCreateSummary: React.FC<
 
   return (
     <>
-      <Typography color="textSecondary" variant="headline">
+      <Typography color="textSecondary" variant="h5">
         <FormattedMessage
           defaultMessage="You will create variants below"
           description="header"

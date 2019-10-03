@@ -1,9 +1,9 @@
 import {
   add,
   remove,
+  removeAtIndex,
   toggle,
-  updateAtIndex,
-  removeAtIndex
+  updateAtIndex
 } from "@saleor/utils/lists";
 import { createVariants } from "./createVariants";
 import { initialForm, ProductVariantCreateFormData } from "./form";

@@ -85,7 +85,7 @@ const ProductVariantCreatePrices: React.FC<
 
   return (
     <>
-      <Typography color="textSecondary" variant="headline">
+      <Typography color="textSecondary" variant="h5">
         <FormattedMessage
           defaultMessage="Price"
           description="variant price, header"
@@ -183,7 +183,7 @@ const ProductVariantCreatePrices: React.FC<
         </>
       )}
       <FormSpacer />
-      <Typography color="textSecondary" variant="headline">
+      <Typography color="textSecondary" variant="h5">
         <FormattedMessage
           defaultMessage="Stock"
           description="variant stock, header"

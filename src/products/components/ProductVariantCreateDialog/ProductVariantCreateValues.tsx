@@ -39,8 +39,8 @@ const ProductVariantCreateValues: React.FC<
   return (
     <>
       {attributes.map(attribute => (
-        <>
-          <Typography color="textSecondary" variant="headline">
+        <React.Fragment key={attribute.id}>
+          <Typography color="textSecondary" variant="h5">
             {maybe<React.ReactNode>(() => attribute.name, <Skeleton />)}
           </Typography>
           <Hr className={classes.hr} />
@@ -57,10 +57,11 @@ const ProductVariantCreateValues: React.FC<
                 name={`value:${value.slug}`}
                 label={value.name}
                 onChange={() => onValueClick(attribute.id, value.slug)}
+                key={value.slug}
               />
             ))}
           </div>
-        </>
+        </React.Fragment>
       ))}
     </>
   );
