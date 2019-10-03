@@ -69,7 +69,7 @@ const props: ProductVariantCreateContentProps = {
   },
   dispatchFormDataAction: () => undefined,
   errors: [],
-  step: "attributes"
+  step: "values"
 };
 
 storiesOf("Views / Products / Create multiple variants", module)
@@ -85,10 +85,7 @@ storiesOf("Views / Products / Create multiple variants", module)
     </Card>
   ))
   .addDecorator(Decorator)
-  .add("choose attributes", () => <ProductVariantCreateContent {...props} />)
-  .add("select values", () => (
-    <ProductVariantCreateContent {...props} step="values" />
-  ))
+  .add("choose values", () => <ProductVariantCreateContent {...props} />)
   .add("prices and SKU", () => (
     <ProductVariantCreateContent {...props} step="prices" />
   ));
@@ -118,6 +115,7 @@ storiesOf("Views / Products / Create multiple variants", module)
   .add("interactive", () => (
     <ProductVariantCreateDialog
       {...props}
+      defaultPrice="10.99"
       open={true}
       onClose={() => undefined}
       onSubmit={() => undefined}
