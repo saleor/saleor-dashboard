@@ -1,5 +1,4 @@
 import { attributes, fourthStep, secondStep, thirdStep } from "./fixtures";
-import { initialForm } from "./form";
 import reducer, { VariantField } from "./reducer";
 
 function execActions<TState, TAction>(
@@ -11,26 +10,6 @@ function execActions<TState, TAction>(
 }
 
 describe("Reducer is able to", () => {
-  it("select attributes", () => {
-    const state = execActions(initialForm, reducer, [
-      {
-        attributeId: attributes[0].id,
-        type: "selectAttribute"
-      },
-      {
-        attributeId: attributes[1].id,
-        type: "selectAttribute"
-      },
-      {
-        attributeId: attributes[3].id,
-        type: "selectAttribute"
-      }
-    ]);
-
-    expect(state.attributes).toHaveLength(3);
-    expect(state).toMatchSnapshot();
-  });
-
   it("select attribute values", () => {
     const state = execActions(secondStep, reducer, [
       {

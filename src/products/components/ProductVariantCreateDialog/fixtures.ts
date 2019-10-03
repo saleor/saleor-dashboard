@@ -1,7 +1,7 @@
 import { createVariants } from "./createVariants";
 import {
   AllOrAttribute,
-  initialForm,
+  createInitialForm,
   ProductVariantCreateFormData
 } from "./form";
 
@@ -33,7 +33,7 @@ export const attributes = [
 ];
 
 export const secondStep: ProductVariantCreateFormData = {
-  ...initialForm,
+  ...createInitialForm([], "10.99"),
   attributes: [
     {
       id: attributes[0].id,
