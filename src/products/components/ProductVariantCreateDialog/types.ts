@@ -1,5 +1,1 @@
-export type ProductVariantCreateStep =
-  | "attributes"
-  | "values"
-  | "prices"
-  | "summary";
+export type ProductVariantCreateStep = "values" | "prices" | "summary";

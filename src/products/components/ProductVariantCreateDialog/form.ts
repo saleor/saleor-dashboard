@@ -1,3 +1,4 @@
+import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 
 export interface AttributeValue {
@@ -21,12 +22,18 @@ export interface ProductVariantCreateFormData {
   variants: ProductVariantBulkCreateInput[];
 }
 
-export const initialForm: ProductVariantCreateFormData = {
-  attributes: [],
+export const createInitialForm = (
+  attributes: ProductDetails_product_productType_variantAttributes[],
+  price: string
+): ProductVariantCreateFormData => ({
+  attributes: attributes.map(attribute => ({
+    id: attribute.id,
+    values: []
+  })),
   price: {
     all: true,
     attribute: undefined,
-    value: "",
+    value: price || "",
     values: []
   },
   stock: {
@@ -36,4 +43,4 @@ export const initialForm: ProductVariantCreateFormData = {
     values: []
   },
   variants: []
-};
+});

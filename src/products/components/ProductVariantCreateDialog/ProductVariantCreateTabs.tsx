@@ -15,13 +15,6 @@ function getSteps(intl: IntlShape): Step[] {
   return [
     {
       label: intl.formatMessage({
-        defaultMessage: "Choose Attributes",
-        description: "variant creation step"
-      }),
-      value: "attributes"
-    },
-    {
-      label: intl.formatMessage({
         defaultMessage: "Select Values",
         description: "attribute values, variant creation step"
       }),

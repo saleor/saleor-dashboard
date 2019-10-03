@@ -353,6 +353,9 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                             </DialogContentText>
                           </ActionDialog>
                           <ProductVariantCreateDialog
+                            defaultPrice={maybe(() =>
+                              data.product.basePrice.amount.toFixed(2)
+                            )}
                             errors={maybe(
                               () =>
                                 bulkProductVariantCreate.opts.data

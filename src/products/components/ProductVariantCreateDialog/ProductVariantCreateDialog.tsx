@@ -9,7 +9,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
-import { initialForm, ProductVariantCreateFormData } from "./form";
+import { createInitialForm, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreateContent, {
   ProductVariantCreateContentProps
 } from "./ProductVariantCreateContent";
@@ -32,8 +32,6 @@ function canHitNext(
   data: ProductVariantCreateFormData
 ): boolean {
   switch (step) {
-    case "attributes":
-      return data.attributes.length > 0;
     case "values":
       return data.attributes.every(attribute => attribute.values.length > 0);
     case "prices":
@@ -77,6 +75,7 @@ export interface ProductVariantCreateDialogProps
     ProductVariantCreateContentProps,
     "data" | "dispatchFormDataAction" | "step"
   > {
+  defaultPrice: string;
   open: boolean;
   onClose: () => void;
   onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
@@ -85,17 +84,19 @@ export interface ProductVariantCreateDialogProps
 const ProductVariantCreateDialog: React.FC<
   ProductVariantCreateDialogProps
 > = props => {
-  const { open, onClose, onSubmit, ...contentProps } = props;
+  const {
+    attributes,
+    defaultPrice,
+    open,
+    onClose,
+    onSubmit,
+    ...contentProps
+  } = props;
   const classes = useStyles(props);
-  const [step, setStep] = React.useState<ProductVariantCreateStep>(
-    "attributes"
-  );
+  const [step, setStep] = React.useState<ProductVariantCreateStep>("values");
 
   function handleNextStep() {
     switch (step) {
-      case "attributes":
-        setStep("values");
-        break;
       case "values":
         setStep("prices");
         break;
@@ -107,9 +108,6 @@ const ProductVariantCreateDialog: React.FC<
 
   function handlePrevStep() {
     switch (step) {
-      case "values":
-        setStep("attributes");
-        break;
       case "prices":
         setStep("values");
         break;
@@ -121,7 +119,16 @@ const ProductVariantCreateDialog: React.FC<
 
   const [data, dispatchFormDataAction] = React.useReducer(
     reduceProductVariantCreateFormData,
-    initialForm
+    createInitialForm(attributes, defaultPrice)
+  );
+
+  React.useEffect(
+    () =>
+      dispatchFormDataAction({
+        data: createInitialForm(attributes, defaultPrice),
+        type: "reload"
+      }),
+    [attributes.length]
   );
 
   return (
@@ -135,6 +142,7 @@ const ProductVariantCreateDialog: React.FC<
       <DialogContent className={classes.content}>
         <ProductVariantCreateContent
           {...contentProps}
+          attributes={attributes}
           data={data}
           dispatchFormDataAction={dispatchFormDataAction}
           step={step}
@@ -144,7 +152,7 @@ const ProductVariantCreateDialog: React.FC<
         <Button className={classes.button} onClick={onClose}>
           <FormattedMessage defaultMessage="Cancel" description="button" />
         </Button>
-        {step !== "attributes" && (
+        {step !== "values" && (
           <Button
             className={classes.button}
             color="primary"

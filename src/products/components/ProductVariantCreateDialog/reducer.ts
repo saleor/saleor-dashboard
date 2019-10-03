@@ -6,7 +6,7 @@ import {
   updateAtIndex
 } from "@saleor/utils/lists";
 import { createVariants } from "./createVariants";
-import { initialForm, ProductVariantCreateFormData } from "./form";
+import { ProductVariantCreateFormData } from "./form";
 
 export type ProductVariantCreateReducerActionType =
   | "applyPriceToAll"
@@ -21,13 +21,14 @@ export type ProductVariantCreateReducerActionType =
   | "changeAttributeValueStock"
   | "changeVariantData"
   | "deleteVariant"
-  | "selectAttribute"
+  | "reload"
   | "selectValue";
 
 export type VariantField = "stock" | "price" | "sku";
 export interface ProductVariantCreateReducerAction {
   all?: boolean;
   attributeId?: string;
+  data?: ProductVariantCreateFormData;
   field?: VariantField;
   type: ProductVariantCreateReducerActionType;
   value?: string;
@@ -35,31 +36,12 @@ export interface ProductVariantCreateReducerAction {
   variantIndex?: number;
 }
 
-function selectAttribute(
-  state: ProductVariantCreateFormData,
-  attributeId: string
-): ProductVariantCreateFormData {
-  const attributes = toggle(
-    {
-      id: attributeId,
-      values: []
-    },
-    state.attributes,
-    (a, b) => a.id === b.id
-  );
-
-  return {
-    ...initialForm,
-    attributes
-  };
-}
-
 function selectValue(
-  state: ProductVariantCreateFormData,
+  prevState: ProductVariantCreateFormData,
   attributeId: string,
   valueId: string
 ): ProductVariantCreateFormData {
-  const attribute = state.attributes.find(
+  const attribute = prevState.attributes.find(
     attribute => attribute.id === attributeId
   );
   const values = toggle(valueId, attribute.values, (a, b) => a === b);
@@ -68,11 +50,11 @@ function selectValue(
       id: attributeId,
       values
     },
-    remove(attribute, state.attributes, (a, b) => a.id === b.id)
+    remove(attribute, prevState.attributes, (a, b) => a.id === b.id)
   );
 
   return {
-    ...initialForm,
+    ...prevState,
     attributes: updatedAttributes
   };
 }
@@ -310,9 +292,6 @@ function reduceProductVariantCreateFormData(
   action: ProductVariantCreateReducerAction
 ) {
   switch (action.type) {
-    case "selectAttribute":
-      return selectAttribute(prevState, action.attributeId);
-
     case "selectValue":
       return selectValue(prevState, action.attributeId, action.valueId);
 
@@ -341,6 +320,8 @@ function reduceProductVariantCreateFormData(
       );
     case "deleteVariant":
       return deleteVariant(prevState, action.variantIndex);
+    case "reload":
+      return action.data;
     default:
       return prevState;
   }

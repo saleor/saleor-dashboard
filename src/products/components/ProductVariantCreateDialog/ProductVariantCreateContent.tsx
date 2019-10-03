@@ -5,7 +5,6 @@ import { ProductDetails_product_productType_variantAttributes } from "@saleor/pr
 import { ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { isSelected } from "@saleor/utils/lists";
 import { ProductVariantCreateFormData } from "./form";
-import ProductVariantCreateAttributes from "./ProductVariantCreateAttributes";
 import ProductVariantCreatePrices from "./ProductVariantCreatePrices";
 import ProductVariantCreateSummary from "./ProductVariantCreateSummary";
 import ProductVariantCreateTabs from "./ProductVariantCreateTabs";
@@ -54,18 +53,6 @@ const ProductVariantCreateContent: React.FC<
     <div>
       <ProductVariantCreateTabs step={step} />
       <div className={classes.root}>
-        {step === "attributes" && (
-          <ProductVariantCreateAttributes
-            attributes={attributes}
-            data={data}
-            onAttributeClick={attributeId =>
-              dispatchFormDataAction({
-                attributeId,
-                type: "selectAttribute"
-              })
-            }
-          />
-        )}
         {step === "values" && (
           <ProductVariantCreateValues
             attributes={selectedAttributes}
