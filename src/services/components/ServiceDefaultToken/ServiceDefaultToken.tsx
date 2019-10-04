@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/styles";
 import Link from "@saleor/components/Link";
+import useClipboard from "@saleor/hooks/useClipboard";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -55,13 +56,10 @@ const useStyles = makeStyles(
   }
 );
 
-function handleCopy(token: string) {
-  navigator.clipboard.writeText(token);
-}
-
 const ServiceDefaultToken: React.FC<ServiceDefaultTokenProps> = props => {
   const { apiUri, token, onApiUriClick, onTokenClose } = props;
   const classes = useStyles(props);
+  const [copied, copy] = useClipboard();
 
   return (
     <Card className={classes.root}>
@@ -98,12 +96,16 @@ const ServiceDefaultToken: React.FC<ServiceDefaultTokenProps> = props => {
           <Button
             className={classes.copy}
             color="primary"
-            onClick={() => handleCopy(token)}
+            onClick={() => copy(token)}
           >
-            <FormattedMessage
-              defaultMessage="Copy token"
-              description="button"
-            />
+            {copied ? (
+              <FormattedMessage defaultMessage="Copied" description="button" />
+            ) : (
+              <FormattedMessage
+                defaultMessage="Copy token"
+                description="button"
+              />
+            )}
           </Button>
         </Paper>
       </CardContent>
