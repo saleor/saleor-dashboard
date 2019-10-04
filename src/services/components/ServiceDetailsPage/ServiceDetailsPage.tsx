@@ -28,12 +28,14 @@ export interface ServiceDetailsPageFormData {
   permissions: PermissionEnum[];
 }
 export interface ServiceDetailsPageProps {
+  apiUri: string;
   disabled: boolean;
   errors: UserError[];
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
   service: ServiceDetails_serviceAccount;
   token: string;
+  onApiUriClick: () => void;
   onBack: () => void;
   onTokenDelete: (id: string) => void;
   onDelete: () => void;
@@ -44,12 +46,14 @@ export interface ServiceDetailsPageProps {
 
 const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
   const {
+    apiUri,
     disabled,
     errors: formErrors,
     permissions,
     saveButtonBarState,
     service,
     token,
+    onApiUriClick,
     onBack,
     onDelete,
     onTokenClose,
@@ -92,7 +96,9 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
               {token && (
                 <>
                   <ServiceDefaultToken
+                    apiUri={apiUri}
                     token={token}
+                    onApiUriClick={onApiUriClick}
                     onTokenClose={onTokenClose}
                   />
                   <CardSpacer />
@@ -122,6 +128,10 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
               <AccountStatus
                 data={data}
                 disabled={disabled}
+                label={intl.formatMessage({
+                  defaultMessage: "Service account is active",
+                  description: "checkbox label"
+                })}
                 onChange={change}
               />
             </div>

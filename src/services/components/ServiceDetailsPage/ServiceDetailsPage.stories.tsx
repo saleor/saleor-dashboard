@@ -10,8 +10,10 @@ import ServiceDetailsPage, {
 } from "./ServiceDetailsPage";
 
 const props: ServiceDetailsPageProps = {
+  apiUri: "https://example.com/graphql/",
   disabled: false,
   errors: [],
+  onApiUriClick: () => undefined,
   onBack: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,

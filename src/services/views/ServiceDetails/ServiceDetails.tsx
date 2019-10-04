@@ -2,6 +2,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { API_URI } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -207,9 +208,11 @@ export const ServiceDetails: React.StatelessComponent<OrderListProps> = ({
                                 title={maybe(() => data.serviceAccount.name)}
                               />
                               <ServiceDetailsPage
+                                apiUri={API_URI}
                                 disabled={loading}
                                 errors={[]}
                                 token={token}
+                                onApiUriClick={() => open(API_URI, "blank")}
                                 onBack={handleBack}
                                 onDelete={() => openModal("remove")}
                                 onSubmit={handleSubmit}

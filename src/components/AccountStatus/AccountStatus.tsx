@@ -12,12 +12,14 @@ interface StaffStatusProps {
     isActive: boolean;
   };
   disabled: boolean;
+  label: React.ReactNode;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 const StaffStatus: React.StatelessComponent<StaffStatusProps> = ({
   data,
   disabled,
+  label,
   onChange
 }) => {
   const intl = useIntl();
@@ -37,10 +39,7 @@ const StaffStatus: React.StatelessComponent<StaffStatusProps> = ({
         <ControlledCheckbox
           checked={data.isActive}
           disabled={disabled}
-          label={intl.formatMessage({
-            defaultMessage: "User is active",
-            description: "checkbox label"
-          })}
+          label={label}
           name="isActive"
           onChange={onChange}
         />

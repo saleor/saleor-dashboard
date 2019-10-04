@@ -107,6 +107,10 @@ const StaffDetailsPage: React.StatelessComponent<StaffDetailsPageProps> = ({
                 <AccountStatus
                   data={data}
                   disabled={disabled}
+                  label={intl.formatMessage({
+                    defaultMessage: "User is active",
+                    description: "checkbox label"
+                  })}
                   onChange={change}
                 />
               </div>

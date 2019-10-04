@@ -8,11 +8,14 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/styles";
+import Link from "@saleor/components/Link";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 export interface ServiceDefaultTokenProps {
+  apiUri: string;
   token: string;
+  onApiUriClick: () => void;
   onTokenClose: () => void;
 }
 
@@ -28,6 +31,12 @@ const useStyles = makeStyles(
       right: -theme.spacing.unit,
       top: -theme.spacing.unit
     },
+    content: {
+      display: "grid",
+      gridColumnGap: theme.spacing.unit * 3 + "px",
+      gridTemplateColumns: "1fr 60px",
+      marginBottom: theme.spacing.unit * 3
+    },
     copy: {
       marginTop: theme.spacing.unit,
       position: "relative",
@@ -39,12 +48,6 @@ const useStyles = makeStyles(
     },
     root: {
       boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.05)"
-    },
-    text: {
-      display: "grid",
-      gridColumnGap: theme.spacing.unit * 3 + "px",
-      gridTemplateColumns: "1fr 60px",
-      marginBottom: theme.spacing.unit * 3
     }
   }),
   {
@@ -57,16 +60,30 @@ function handleCopy(token: string) {
 }
 
 const ServiceDefaultToken: React.FC<ServiceDefaultTokenProps> = props => {
-  const { token, onTokenClose } = props;
+  const { apiUri, token, onApiUriClick, onTokenClose } = props;
   const classes = useStyles(props);
 
   return (
     <Card className={classes.root}>
       <CardContent>
-        <div className={classes.text}>
-          <Typography>
-            <FormattedMessage defaultMessage="We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again." />
-          </Typography>
+        <div className={classes.content}>
+          <div>
+            <Typography>
+              <FormattedMessage defaultMessage="We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again." />
+            </Typography>
+            <Typography>
+              <FormattedMessage
+                defaultMessage="This token gives you access to your shop's API, which you'll find here: {url}"
+                values={{
+                  url: (
+                    <Link href={apiUri} onClick={onApiUriClick}>
+                      {apiUri}
+                    </Link>
+                  )
+                }}
+              />
+            </Typography>
+          </div>
           <div className={classes.closeContainer}>
             <IconButton onClick={onTokenClose}>
               <CloseIcon />
