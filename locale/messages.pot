@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-09-30T16:54:24.460Z\n"
+"POT-Creation-Date: 2019-10-04T11:19:12.447Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1948,6 +1948,14 @@ msgid "Content"
 msgstr ""
 
 #: build/locale/src/services/components/ServiceDefaultToken/ServiceDefaultToken.json
+#. [src.services.components.ServiceDefaultToken.2864204643] - button
+#. defaultMessage is:
+#. Copied
+msgctxt "button"
+msgid "Copied"
+msgstr ""
+
+#: build/locale/src/services/components/ServiceDefaultToken/ServiceDefaultToken.json
 #. [src.services.components.ServiceDefaultToken.3406541221] - button
 #. defaultMessage is:
 #. Copy token
@@ -3357,14 +3365,6 @@ msgstr ""
 #. Edit Weight Rate
 msgctxt "edit weight based shipping method, dialog header"
 msgid "Edit Weight Rate"
-msgstr ""
-
-#: build/locale/src/products/components/ProductVariants/ProductVariants.json
-#. [src.products.components.ProductVariants.1703363919] - product variant attributes, button
-#. defaultMessage is:
-#. Edit attributes
-msgctxt "product variant attributes, button"
-msgid "Edit attributes"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
@@ -6923,6 +6923,18 @@ msgctxt "service accounts section name"
 msgid "Service Accounts"
 msgstr ""
 
+#: build/locale/src/services/components/ServiceCreatePage/ServiceCreatePage.json
+#. [src.services.components.ServiceCreatePage.27827485] - checkbox label
+#. defaultMessage is:
+#. Service account is active
+#: build/locale/src/services/components/ServiceDetailsPage/ServiceDetailsPage.json
+#. [src.services.components.ServiceDetailsPage.27827485] - checkbox label
+#. defaultMessage is:
+#. Service account is active
+msgctxt "checkbox label"
+msgid "Service account is active"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
 #. [src.customers.components.CustomerAddress.3096438859] - button
 #. defaultMessage is:
@@ -7655,14 +7667,6 @@ msgctxt "attribute slug input field helper text"
 msgid "This is used internally. Make sure you don’t use spaces"
 msgstr ""
 
-#: build/locale/src/products/components/ProductVariants/ProductVariants.json
-#. [src.products.components.ProductVariants.3156701241]
-#. defaultMessage is:
-#. This product has no variants
-msgctxt "description"
-msgid "This product has no variants"
-msgstr ""
-
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
 #. [src.shipping.components.ShippingZoneRateDialog.4226393146]
 #. defaultMessage is:
@@ -7677,6 +7681,14 @@ msgstr ""
 #. This rate will apply to all orders of all weights
 msgctxt "description"
 msgid "This rate will apply to all orders of all weights"
+msgstr ""
+
+#: build/locale/src/services/components/ServiceDefaultToken/ServiceDefaultToken.json
+#. [src.services.components.ServiceDefaultToken.2080322626]
+#. defaultMessage is:
+#. This token gives you access to your shop's API, which you'll find here: {url}
+msgctxt "description"
+msgid "This token gives you access to your shop's API, which you'll find here: {url}"
 msgstr ""
 
 #: build/locale/src/shipping/components/ShippingWeightUnitForm/ShippingWeightUnitForm.json
@@ -8335,8 +8347,8 @@ msgctxt "checkbox label"
 msgid "User has full access to the store"
 msgstr ""
 
-#: build/locale/src/components/AccountStatus/AccountStatus.json
-#. [src.components.AccountStatus.881953347] - checkbox label
+#: build/locale/src/staff/components/StaffDetailsPage/StaffDetailsPage.json
+#. [src.staff.components.StaffDetailsPage.881953347] - checkbox label
 #. defaultMessage is:
 #. User is active
 msgctxt "checkbox label"

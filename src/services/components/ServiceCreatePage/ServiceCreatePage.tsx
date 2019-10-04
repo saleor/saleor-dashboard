@@ -83,7 +83,15 @@ const ServiceCreatePage: React.FC<ServiceCreatePageProps> = props => {
               onChange={change}
             />
             <CardSpacer />
-            <AccountStatus data={data} disabled={disabled} onChange={change} />
+            <AccountStatus
+              data={data}
+              disabled={disabled}
+              label={intl.formatMessage({
+                defaultMessage: "Service account is active",
+                description: "checkbox label"
+              })}
+              onChange={change}
+            />
           </Grid>
           <SaveButtonBar
             disabled={disabled || !hasChanged}
