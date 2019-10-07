@@ -4,6 +4,7 @@ import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import Debounce from "@saleor/components/Debounce";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import { maybe } from "@saleor/misc";
@@ -46,19 +47,26 @@ const ProductVariantCreateValues: React.FC<
           <Hr className={classes.hr} />
           <div className={classes.valueContainer}>
             {attribute.values.map(value => (
-              <ControlledCheckbox
-                checked={isSelected(
-                  value.slug,
-                  data.attributes.find(
-                    dataAttribute => attribute.id === dataAttribute.id
-                  ).values,
-                  (a, b) => a === b
+              <Debounce
+                debounceFn={() => onValueClick(attribute.id, value.slug)}
+                time={100}
+              >
+                {change => (
+                  <ControlledCheckbox
+                    checked={isSelected(
+                      value.slug,
+                      data.attributes.find(
+                        dataAttribute => attribute.id === dataAttribute.id
+                      ).values,
+                      (a, b) => a === b
+                    )}
+                    name={`value:${value.slug}`}
+                    label={value.name}
+                    onChange={change}
+                    key={value.slug}
+                  />
                 )}
-                name={`value:${value.slug}`}
-                label={value.name}
-                onChange={() => onValueClick(attribute.id, value.slug)}
-                key={value.slug}
-              />
+              </Debounce>
             ))}
           </div>
         </React.Fragment>
