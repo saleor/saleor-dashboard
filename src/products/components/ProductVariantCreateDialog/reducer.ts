@@ -55,7 +55,19 @@ function selectValue(
 
   return {
     ...prevState,
-    attributes: updatedAttributes
+    attributes: updatedAttributes,
+    price: {
+      ...prevState.price,
+      all: true,
+      attribute: undefined,
+      values: []
+    },
+    stock: {
+      ...prevState.stock,
+      all: true,
+      attribute: undefined,
+      values: []
+    }
   };
 }
 

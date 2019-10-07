@@ -183,7 +183,11 @@ const ProductVariantCreatePrices: React.FC<
                         endAdornment: currencySymbol
                       }}
                       fullWidth
-                      value={data.price.values[attributeValueIndex].value}
+                      value={
+                        data.price.values.find(
+                          value => value.slug === attributeValue.slug
+                        ).value
+                      }
                       onChange={event =>
                         onAttributeValueChange(
                           attributeValue.slug,
@@ -267,7 +271,7 @@ const ProductVariantCreatePrices: React.FC<
           </Grid>
           <Hr className={classes.hrAttribute} />
           {stockAttributeValues &&
-            stockAttributeValues.map((attributeValue, attributeValueIndex) => (
+            stockAttributeValues.map(attributeValue => (
               <>
                 <FormSpacer />
                 <Grid variant="uniform">
@@ -282,7 +286,11 @@ const ProductVariantCreatePrices: React.FC<
                         id: "productVariantCreatePricesSetStockPlaceholder"
                       })}
                       fullWidth
-                      value={data.stock.values[attributeValueIndex].value}
+                      value={
+                        data.stock.values.find(
+                          value => value.slug === attributeValue.slug
+                        ).value
+                      }
                       onChange={event =>
                         onAttributeValueChange(
                           attributeValue.slug,
