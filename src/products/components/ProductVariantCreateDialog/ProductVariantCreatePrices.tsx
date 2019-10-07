@@ -161,7 +161,7 @@ const ProductVariantCreatePrices: React.FC<
           </Grid>
           <Hr className={classes.hrAttribute} />
           {priceAttributeValues &&
-            priceAttributeValues.map((attributeValue, attributeValueIndex) => (
+            priceAttributeValues.map(attributeValue => (
               <>
                 <FormSpacer />
                 <Grid variant="uniform">
