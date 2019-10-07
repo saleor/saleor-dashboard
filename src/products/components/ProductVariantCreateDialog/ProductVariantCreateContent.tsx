@@ -1,6 +1,7 @@
+import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/styles";
 import React from "react";
 
-import { makeStyles } from "@material-ui/styles";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { isSelected } from "@saleor/utils/lists";
@@ -12,12 +13,16 @@ import ProductVariantCreateValues from "./ProductVariantCreateValues";
 import { ProductVariantCreateReducerAction } from "./reducer";
 import { ProductVariantCreateStep } from "./types";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     maxHeight: 400,
-    overflowY: "scroll"
+    overflowY: "scroll",
+    paddingLeft: theme.spacing.unit * 3,
+    position: "relative",
+    right: theme.spacing.unit * 3,
+    width: `calc(100% + ${theme.spacing.unit * 3}px)`
   }
-});
+}));
 
 export interface ProductVariantCreateContentProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
