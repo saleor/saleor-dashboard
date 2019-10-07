@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing.unit,
     marginTop: theme.spacing.unit / 2
   },
+  hrAttribute: {
+    marginTop: theme.spacing.unit * 2
+  },
   label: {
     alignSelf: "center"
   },
@@ -31,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export type PriceOrStock = "price" | "stock";
 export interface ProductVariantCreatePricesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
+  currencySymbol: string;
   data: ProductVariantCreateFormData;
   onApplyPriceOrStockChange: (applyToAll: boolean, type: PriceOrStock) => void;
   onApplyToAllChange: (value: string, type: PriceOrStock) => void;
@@ -47,6 +51,7 @@ const ProductVariantCreatePrices: React.FC<
 > = props => {
   const {
     attributes,
+    currencySymbol,
     data,
     onApplyPriceOrStockChange,
     onApplyToAllChange,
@@ -108,6 +113,9 @@ const ProductVariantCreatePrices: React.FC<
             min: 0,
             type: "number"
           }}
+          InputProps={{
+            endAdornment: currencySymbol
+          }}
           label={intl.formatMessage({
             defaultMessage: "Price",
             id: "productVariantCreatePricesPriceInputLabel"
@@ -128,7 +136,7 @@ const ProductVariantCreatePrices: React.FC<
       {!data.price.all && (
         <>
           <FormSpacer />
-          <Grid variant="inverted">
+          <Grid variant="uniform">
             <div className={classes.label}>
               <Typography>
                 <FormattedMessage
@@ -151,11 +159,12 @@ const ProductVariantCreatePrices: React.FC<
               />
             </div>
           </Grid>
+          <Hr className={classes.hrAttribute} />
           {priceAttributeValues &&
             priceAttributeValues.map((attributeValue, attributeValueIndex) => (
               <>
                 <FormSpacer />
-                <Grid variant="inverted">
+                <Grid variant="uniform">
                   <div className={classes.label}>
                     <Typography>{attributeValue.name}</Typography>
                   </div>
@@ -166,6 +175,13 @@ const ProductVariantCreatePrices: React.FC<
                         description: "variant price",
                         id: "productVariantCreatePricesSetPricePlaceholder"
                       })}
+                      inputProps={{
+                        min: 0,
+                        type: "number"
+                      }}
+                      InputProps={{
+                        endAdornment: currencySymbol
+                      }}
                       fullWidth
                       value={data.price.values[attributeValueIndex].value}
                       onChange={event =>
@@ -226,7 +242,7 @@ const ProductVariantCreatePrices: React.FC<
       {!data.stock.all && (
         <>
           <FormSpacer />
-          <Grid variant="inverted">
+          <Grid variant="uniform">
             <div className={classes.label}>
               <Typography>
                 <FormattedMessage
@@ -249,11 +265,12 @@ const ProductVariantCreatePrices: React.FC<
               />
             </div>
           </Grid>
+          <Hr className={classes.hrAttribute} />
           {stockAttributeValues &&
             stockAttributeValues.map((attributeValue, attributeValueIndex) => (
               <>
                 <FormSpacer />
-                <Grid variant="inverted">
+                <Grid variant="uniform">
                   <div className={classes.label}>
                     <Typography>{attributeValue.name}</Typography>
                   </div>

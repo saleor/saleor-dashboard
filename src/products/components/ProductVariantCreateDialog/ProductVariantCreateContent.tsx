@@ -16,6 +16,7 @@ import { ProductVariantCreateStep } from "./types";
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     maxHeight: 400,
+    overflowX: "hidden",
     overflowY: "scroll",
     paddingLeft: theme.spacing.unit * 3,
     position: "relative",
@@ -74,6 +75,7 @@ const ProductVariantCreateContent: React.FC<
         {step === "prices" && (
           <ProductVariantCreatePrices
             attributes={selectedAttributes}
+            currencySymbol={currencySymbol}
             data={data}
             onApplyPriceOrStockChange={(all, type) =>
               dispatchFormDataAction({
