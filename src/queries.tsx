@@ -10,7 +10,7 @@ import ErrorPage from "./components/ErrorPage/ErrorPage";
 import useNavigator from "./hooks/useNavigator";
 import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
-import { RequireAtLeastOne } from "./misc";
+import { maybe, RequireAtLeastOne } from "./misc";
 
 export interface LoadMore<TData, TVariables> {
   loadMore: (
@@ -81,12 +81,21 @@ export function TypedQuery<TData, TVariables>(
             variables={variables}
             skip={skip}
             context={{ useBatching: true }}
+            errorPolicy="all"
           >
             {(queryData: QueryResult<TData, TVariables>) => {
               if (queryData.error) {
-                pushMessage({
-                  text: intl.formatMessage(commonMessages.somethingWentWrong)
-                });
+                if (
+                  !queryData.error.graphQLErrors.every(
+                    err =>
+                      maybe(() => err.extensions.exception.code) ===
+                      "PermissionDenied"
+                  )
+                ) {
+                  pushMessage({
+                    text: intl.formatMessage(commonMessages.somethingWentWrong)
+                  });
+                }
               }
 
               const loadMore = (
