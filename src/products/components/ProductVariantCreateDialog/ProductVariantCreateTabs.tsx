@@ -51,13 +51,15 @@ const useStyles = makeStyles(
     },
     tab: {
       flex: 1,
-      paddingBottom: theme.spacing.unit
+      paddingBottom: theme.spacing.unit,
+      userSelect: "none"
     },
     tabActive: {
       fontWeight: 600
     },
-    tabUnderline: {
-      borderBottom: `3px solid ${theme.palette.primary.main}`
+    tabVisited: {
+      borderBottom: `3px solid ${theme.palette.primary.main}`,
+      cursor: "pointer"
     }
   }),
   {
@@ -67,32 +69,38 @@ const useStyles = makeStyles(
 
 export interface ProductVariantCreateTabsProps {
   step: ProductVariantCreateStep;
+  onStepClick: (step: ProductVariantCreateStep) => void;
 }
 
 const ProductVariantCreateTabs: React.FC<
   ProductVariantCreateTabsProps
 > = props => {
-  const { step: currentStep } = props;
+  const { step: currentStep, onStepClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const steps = getSteps(intl);
 
   return (
     <div className={classes.root}>
-      {steps.map((step, stepIndex) => (
-        <div
-          className={classNames(classes.tab, {
-            [classes.tabActive]: step.value === currentStep,
-            [classes.tabUnderline]:
-              steps.findIndex(step => step.value === currentStep) >= stepIndex
-          })}
-          key={step.value}
-        >
-          <Typography className={classes.label} variant="caption">
-            {step.label}
-          </Typography>
-        </div>
-      ))}
+      {steps.map((step, stepIndex) => {
+        const visitedStep =
+          steps.findIndex(step => step.value === currentStep) >= stepIndex;
+
+        return (
+          <div
+            className={classNames(classes.tab, {
+              [classes.tabActive]: step.value === currentStep,
+              [classes.tabVisited]: visitedStep
+            })}
+            onClick={visitedStep ? () => onStepClick(step.value) : undefined}
+            key={step.value}
+          >
+            <Typography className={classes.label} variant="caption">
+              {step.label}
+            </Typography>
+          </div>
+        );
+      })}
     </div>
   );
 };

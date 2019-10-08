@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     overflowX: "visible",
     overflowY: "hidden",
     width: 800
+  },
+  spacer: {
+    flex: 1
   }
 }));
 
@@ -146,19 +149,24 @@ const ProductVariantCreateDialog: React.FC<
           data={data}
           dispatchFormDataAction={dispatchFormDataAction}
           step={step}
+          onStepClick={step => setStep(step)}
         />
       </DialogContent>
       <DialogActions>
         <Button className={classes.button} onClick={onClose}>
           <FormattedMessage defaultMessage="Cancel" description="button" />
         </Button>
+        <div className={classes.spacer} />
         {step !== "values" && (
           <Button
             className={classes.button}
             color="primary"
             onClick={handlePrevStep}
           >
-            <FormattedMessage defaultMessage="Back" description="button" />
+            <FormattedMessage
+              defaultMessage="Previous"
+              description="previous step, button"
+            />
           </Button>
         )}
         {step !== "summary" ? (

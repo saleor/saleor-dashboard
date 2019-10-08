@@ -50,6 +50,7 @@ const ProductVariantCreateValues: React.FC<
               <Debounce
                 debounceFn={() => onValueClick(attribute.id, value.slug)}
                 time={100}
+                key={value.slug}
               >
                 {change => (
                   <ControlledCheckbox
@@ -63,7 +64,6 @@ const ProductVariantCreateValues: React.FC<
                     name={`value:${value.slug}`}
                     label={value.name}
                     onChange={change}
-                    key={value.slug}
                   />
                 )}
               </Debounce>

@@ -32,6 +32,7 @@ export interface ProductVariantCreateContentProps {
   dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
   errors: ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors[];
   step: ProductVariantCreateStep;
+  onStepClick: (step: ProductVariantCreateStep) => void;
 }
 
 const ProductVariantCreateContent: React.FC<
@@ -43,7 +44,8 @@ const ProductVariantCreateContent: React.FC<
     data,
     dispatchFormDataAction,
     errors,
-    step
+    step,
+    onStepClick
   } = props;
   const classes = useStyles(props);
 
@@ -57,7 +59,7 @@ const ProductVariantCreateContent: React.FC<
 
   return (
     <div>
-      <ProductVariantCreateTabs step={step} />
+      <ProductVariantCreateTabs step={step} onStepClick={onStepClick} />
       <div className={classes.root}>
         {step === "values" && (
           <ProductVariantCreateValues

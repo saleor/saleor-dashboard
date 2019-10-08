@@ -60,7 +60,7 @@ export default (colors: IThemeColors): Theme =>
         },
         flat: {
           "& span": {
-            color: colors.primary
+            color: colors.font.gray
           }
         },
         flatPrimary: {
