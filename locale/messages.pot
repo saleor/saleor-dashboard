@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-09T10:24:36.690Z\n"
+"POT-Creation-Date: 2019-10-09T10:25:56.800Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1485,10 +1485,6 @@ msgstr ""
 
 #: build/locale/src/intl.json
 #. [src.back] - button
-#. defaultMessage is:
-#. Back
-#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog.json
-#. [src.products.components.ProductVariantCreateDialog.1347475195] - button
 #. defaultMessage is:
 #. Back
 msgctxt "button"
@@ -5741,6 +5737,14 @@ msgstr ""
 #. Preauthorized amount
 msgctxt "order payment"
 msgid "Preauthorized amount"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog.json
+#. [src.products.components.ProductVariantCreateDialog.904693740] - previous step, button
+#. defaultMessage is:
+#. Previous
+msgctxt "previous step, button"
+msgid "Previous"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
