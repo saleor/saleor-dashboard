@@ -76,7 +76,7 @@ function canHitNext(
 export interface ProductVariantCreateDialogProps
   extends Omit<
     ProductVariantCreateContentProps,
-    "data" | "dispatchFormDataAction" | "step"
+    "data" | "dispatchFormDataAction" | "step" | "onStepClick"
   > {
   defaultPrice: string;
   open: boolean;
