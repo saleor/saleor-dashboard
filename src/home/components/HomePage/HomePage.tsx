@@ -118,7 +118,10 @@ const HomePage = withStyles(styles, { name: "HomePage" })(
           <CardSpacer />
           <RequirePermissions
             userPermissions={userPermissions}
-            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+            requiredPermissions={[
+              PermissionEnum.MANAGE_ORDERS,
+              PermissionEnum.MANAGE_PRODUCTS
+            ]}
           >
             <HomeProductListCard
               onRowClick={onProductClick}
