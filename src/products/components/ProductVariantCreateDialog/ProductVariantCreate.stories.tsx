@@ -69,6 +69,7 @@ const props: ProductVariantCreateContentProps = {
   },
   dispatchFormDataAction: () => undefined,
   errors: [],
+  onStepClick: () => undefined,
   step: "values"
 };
 
