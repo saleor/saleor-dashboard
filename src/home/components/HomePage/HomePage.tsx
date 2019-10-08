@@ -10,7 +10,10 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Money from "@saleor/components/Money";
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import Skeleton from "@saleor/components/Skeleton";
+import { UserPermissionProps } from "@saleor/types";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import Orders from "../../../icons/Orders";
 import Sales from "../../../icons/Sales";
 import {
@@ -39,7 +42,7 @@ const styles = (theme: Theme) =>
     }
   });
 
-export interface HomePageProps extends WithStyles<typeof styles> {
+export interface HomePageProps extends UserPermissionProps {
   activities: Home_activities_edges_node[];
   orders: number;
   ordersToCapture: number;
@@ -68,35 +71,41 @@ const HomePage = withStyles(styles, { name: "HomePage" })(
     onProductsOutOfStockClick,
     ordersToCapture,
     ordersToFulfill,
-    productsOutOfStock
-  }: HomePageProps) => (
+    productsOutOfStock,
+    userPermissions
+  }: HomePageProps & WithStyles<typeof styles>) => (
     <Container>
       <HomeHeader userName={userName} />
       <CardSpacer />
       <Grid>
         <div>
-          <div className={classes.cardContainer}>
-            <HomeAnalyticsCard
-              title={"Sales"}
-              icon={<Sales fontSize={"inherit"} viewBox="0 0 64 64" />}
-            >
-              {sales ? (
-                <Money money={sales} />
-              ) : (
-                <Skeleton style={{ width: "5em" }} />
-              )}
-            </HomeAnalyticsCard>
-            <HomeAnalyticsCard
-              title={"Orders"}
-              icon={<Orders fontSize={"inherit"} viewBox="0 0 64 64" />}
-            >
-              {orders === undefined ? (
-                <Skeleton style={{ width: "5em" }} />
-              ) : (
-                orders
-              )}
-            </HomeAnalyticsCard>
-          </div>
+          <RequirePermissions
+            userPermissions={userPermissions}
+            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+          >
+            <div className={classes.cardContainer}>
+              <HomeAnalyticsCard
+                title={"Sales"}
+                icon={<Sales fontSize={"inherit"} viewBox="0 0 64 64" />}
+              >
+                {sales ? (
+                  <Money money={sales} />
+                ) : (
+                  <Skeleton style={{ width: "5em" }} />
+                )}
+              </HomeAnalyticsCard>
+              <HomeAnalyticsCard
+                title={"Orders"}
+                icon={<Orders fontSize={"inherit"} viewBox="0 0 64 64" />}
+              >
+                {orders === undefined ? (
+                  <Skeleton style={{ width: "5em" }} />
+                ) : (
+                  orders
+                )}
+              </HomeAnalyticsCard>
+            </div>
+          </RequirePermissions>
           <HomeNotificationTable
             onOrdersToCaptureClick={onOrdersToCaptureClick}
             onOrdersToFulfillClick={onOrdersToFulfillClick}
@@ -104,16 +113,27 @@ const HomePage = withStyles(styles, { name: "HomePage" })(
             ordersToCapture={ordersToCapture}
             ordersToFulfill={ordersToFulfill}
             productsOutOfStock={productsOutOfStock}
+            userPermissions={userPermissions}
           />
           <CardSpacer />
-          <HomeProductListCard
-            onRowClick={onProductClick}
-            topProducts={topProducts}
-          />
-          <CardSpacer />
+          <RequirePermissions
+            userPermissions={userPermissions}
+            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+          >
+            <HomeProductListCard
+              onRowClick={onProductClick}
+              topProducts={topProducts}
+            />
+            <CardSpacer />
+          </RequirePermissions>
         </div>
         <div>
-          <HomeActivityCard activities={activities} />
+          <RequirePermissions
+            userPermissions={userPermissions}
+            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+          >
+            <HomeActivityCard activities={activities} />
+          </RequirePermissions>
         </div>
       </Grid>
     </Container>

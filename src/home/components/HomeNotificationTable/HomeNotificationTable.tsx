@@ -14,7 +14,10 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import Skeleton from "@saleor/components/Skeleton";
+import { UserPermissionProps } from "@saleor/types";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -26,7 +29,7 @@ const styles = (theme: Theme) =>
     }
   });
 
-interface HomeNotificationTableProps extends WithStyles<typeof styles> {
+interface HomeNotificationTableProps extends UserPermissionProps {
   ordersToCapture: number;
   ordersToFulfill: number;
   productsOutOfStock: number;
@@ -45,101 +48,112 @@ const HomeNotificationTable = withStyles(styles, {
     onProductsOutOfStockClick,
     ordersToCapture,
     ordersToFulfill,
-    productsOutOfStock
-  }: HomeNotificationTableProps) => (
+    productsOutOfStock,
+    userPermissions
+  }: HomeNotificationTableProps & WithStyles<typeof styles>) => (
     <Card>
       <Table>
         <TableBody className={classes.tableRow}>
-          <TableRow hover={true} onClick={onOrdersToFulfillClick}>
-            <TableCell>
-              {ordersToFulfill === undefined ? (
-                <Skeleton />
-              ) : ordersToFulfill === 0 ? (
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="No orders ready to fulfill"
-                    id="homeNotificationTableNoOrders"
-                  />
-                </Typography>
-              ) : (
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="{amount, plural,
+          <RequirePermissions
+            userPermissions={userPermissions}
+            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+          >
+            <TableRow hover={true} onClick={onOrdersToFulfillClick}>
+              <TableCell>
+                {ordersToFulfill === undefined ? (
+                  <Skeleton />
+                ) : ordersToFulfill === 0 ? (
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="No orders ready to fulfill"
+                      id="homeNotificationTableNoOrders"
+                    />
+                  </Typography>
+                ) : (
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="{amount, plural,
                   one {One order}
                   other {{amount} Orders}
                 } are ready to fulfill"
-                    id="homeNotificationTableOrders"
-                    values={{
-                      amount: <strong>{ordersToFulfill}</strong>
-                    }}
-                  />
-                </Typography>
-              )}
-            </TableCell>
-            <TableCell className={classes.arrowIcon}>
-              <KeyboardArrowRight />
-            </TableCell>
-          </TableRow>
-          <TableRow hover={true} onClick={onOrdersToCaptureClick}>
-            <TableCell>
-              {ordersToCapture === undefined ? (
-                <Skeleton />
-              ) : ordersToCapture === 0 ? (
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="No payments waiting for capture"
-                    id="homeNotificationsNoPayments"
-                  />
-                </Typography>
-              ) : (
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="{amount, plural,
+                      id="homeNotificationTableOrders"
+                      values={{
+                        amount: <strong>{ordersToFulfill}</strong>
+                      }}
+                    />
+                  </Typography>
+                )}
+              </TableCell>
+              <TableCell className={classes.arrowIcon}>
+                <KeyboardArrowRight />
+              </TableCell>
+            </TableRow>
+            <TableRow hover={true} onClick={onOrdersToCaptureClick}>
+              <TableCell>
+                {ordersToCapture === undefined ? (
+                  <Skeleton />
+                ) : ordersToCapture === 0 ? (
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="No payments waiting for capture"
+                      id="homeNotificationsNoPayments"
+                    />
+                  </Typography>
+                ) : (
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="{amount, plural,
                   one {One payment}
                   other {{amount} Payments}
                 } to capture"
-                    id="homeNotificationTablePayments"
-                    values={{
-                      amount: <strong>{ordersToCapture}</strong>
-                    }}
-                  />
-                </Typography>
-              )}
-            </TableCell>
-            <TableCell className={classes.arrowIcon}>
-              <KeyboardArrowRight />
-            </TableCell>
-          </TableRow>
-          <TableRow hover={true} onClick={onProductsOutOfStockClick}>
-            <TableCell>
-              {productsOutOfStock === undefined ? (
-                <Skeleton />
-              ) : productsOutOfStock === 0 ? (
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="No products out of stock"
-                    id="homeNotificationsTableNoProducts"
-                  />
-                </Typography>
-              ) : (
-                <Typography>
-                  <FormattedMessage
-                    defaultMessage="{amount, plural,
+                      id="homeNotificationTablePayments"
+                      values={{
+                        amount: <strong>{ordersToCapture}</strong>
+                      }}
+                    />
+                  </Typography>
+                )}
+              </TableCell>
+              <TableCell className={classes.arrowIcon}>
+                <KeyboardArrowRight />
+              </TableCell>
+            </TableRow>
+          </RequirePermissions>
+          <RequirePermissions
+            userPermissions={userPermissions}
+            requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
+          >
+            <TableRow hover={true} onClick={onProductsOutOfStockClick}>
+              <TableCell>
+                {productsOutOfStock === undefined ? (
+                  <Skeleton />
+                ) : productsOutOfStock === 0 ? (
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="No products out of stock"
+                      id="homeNotificationsTableNoProducts"
+                    />
+                  </Typography>
+                ) : (
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="{amount, plural,
                   one {One product}
                   other {{amount} Products}
                 } out of stock"
-                    id="homeNotificationTableProducts"
-                    values={{
-                      amount: <strong>{productsOutOfStock}</strong>
-                    }}
-                  />
-                </Typography>
-              )}
-            </TableCell>
-            <TableCell className={classes.arrowIcon}>
-              <KeyboardArrowRight />
-            </TableCell>
-          </TableRow>
+                      id="homeNotificationTableProducts"
+                      values={{
+                        amount: <strong>{productsOutOfStock}</strong>
+                      }}
+                    />
+                  </Typography>
+                )}
+              </TableCell>
+              <TableCell className={classes.arrowIcon}>
+                <KeyboardArrowRight />
+              </TableCell>
+            </TableRow>
+          </RequirePermissions>
         </TableBody>
       </Table>
     </Card>
