@@ -190,6 +190,7 @@ export enum PermissionEnum {
   MANAGE_STAFF = "MANAGE_STAFF",
   MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
   MANAGE_USERS = "MANAGE_USERS",
+  MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
 }
 
 export enum ProductOrderField {
@@ -320,6 +321,8 @@ export interface AttributeFilterInput {
   availableInGrid?: boolean | null;
   search?: string | null;
   ids?: (string | null)[] | null;
+  inCollection?: string | null;
+  inCategory?: string | null;
 }
 
 export interface AttributeInput {
@@ -647,6 +650,22 @@ export interface SaleInput {
 export interface SeoInput {
   title?: string | null;
   description?: string | null;
+}
+
+export interface ServiceAccountFilterInput {
+  search?: string | null;
+  isActive?: boolean | null;
+}
+
+export interface ServiceAccountInput {
+  name?: string | null;
+  isActive?: boolean | null;
+  permissions?: (PermissionEnum | null)[] | null;
+}
+
+export interface ServiceAccountTokenInput {
+  name?: string | null;
+  serviceAccount: string;
 }
 
 export interface ShippingPriceInput {

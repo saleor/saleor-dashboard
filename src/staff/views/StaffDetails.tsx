@@ -6,6 +6,7 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "../../misc";
@@ -40,6 +41,7 @@ export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
   const notify = useNotifier();
   const user = useUser();
   const intl = useIntl();
+  const shop = useShop();
 
   return (
     <TypedStaffMemberDetailsQuery
@@ -163,7 +165,7 @@ export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
                                     })
                                   )
                                 }
-                                permissions={maybe(() => data.shop.permissions)}
+                                permissions={maybe(() => shop.permissions)}
                                 staffMember={maybe(() => data.user)}
                                 saveButtonBarState={formTransitionState}
                               />

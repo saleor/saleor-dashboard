@@ -88,6 +88,10 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Delete",
     description: "button"
   },
+  done: {
+    defaultMessage: "Done",
+    description: "button"
+  },
   edit: {
     defaultMessage: "Edit",
     description: "button"
@@ -170,6 +174,10 @@ export const sectionNames = defineMessages({
   sales: {
     defaultMessage: "Sales",
     description: "sales section name"
+  },
+  serviceAccounts: {
+    defaultMessage: "Service Accounts",
+    description: "service accounts section name"
   },
   shipping: {
     defaultMessage: "Shipping Methods",

@@ -1,3 +1,4 @@
+import { ShopInfo_shop_permissions } from "./components/Shop/types/ShopInfo";
 import { Filter } from "./components/TableFilter";
 import {
   FetchMoreProps,
@@ -8,6 +9,7 @@ import {
   SortPage,
   TabPageProps
 } from "./types";
+import { PermissionEnum } from "./types/globalTypes";
 
 const pageInfo = {
   hasNextPage: true,
@@ -149,3 +151,49 @@ export const sortPageProps: SortPage<string> = {
     asc: true
   }
 };
+
+export const permissions: ShopInfo_shop_permissions[] = [
+  {
+    code: PermissionEnum.IMPERSONATE_USERS,
+    name: "Impersonate customers."
+  },
+  {
+    code: PermissionEnum.MANAGE_DISCOUNTS,
+    name: "Manage sales and vouchers."
+  },
+  {
+    code: PermissionEnum.MANAGE_MENUS,
+    name: "Manage navigation."
+  },
+  {
+    code: PermissionEnum.MANAGE_ORDERS,
+    name: "Manage orders."
+  },
+  {
+    code: PermissionEnum.MANAGE_PAGES,
+    name: "Manage pages."
+  },
+  {
+    code: PermissionEnum.MANAGE_PRODUCTS,
+    name: "Manage products."
+  },
+  {
+    code: PermissionEnum.MANAGE_SETTINGS,
+    name: "Manage settings."
+  },
+  {
+    code: PermissionEnum.MANAGE_SHIPPING,
+    name: "Manage shipping."
+  },
+  {
+    code: PermissionEnum.MANAGE_STAFF,
+    name: "Manage staff."
+  },
+  {
+    code: PermissionEnum.MANAGE_USERS,
+    name: "Manage customers."
+  }
+].map(perm => ({
+  __typename: "PermissionDisplay" as "PermissionDisplay",
+  ...perm
+}));

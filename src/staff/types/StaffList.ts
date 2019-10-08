@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { StaffUserInput, PermissionEnum } from "./../../types/globalTypes";
+import { StaffUserInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: StaffList
@@ -43,20 +43,8 @@ export interface StaffList_staffUsers {
   pageInfo: StaffList_staffUsers_pageInfo;
 }
 
-export interface StaffList_shop_permissions {
-  __typename: "PermissionDisplay";
-  code: PermissionEnum;
-  name: string;
-}
-
-export interface StaffList_shop {
-  __typename: "Shop";
-  permissions: (StaffList_shop_permissions | null)[];
-}
-
 export interface StaffList {
   staffUsers: StaffList_staffUsers | null;
-  shop: StaffList_shop | null;
 }
 
 export interface StaffListVariables {

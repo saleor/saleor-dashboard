@@ -275,6 +275,8 @@ input AttributeFilterInput {
   availableInGrid: Boolean
   search: String
   ids: [ID]
+  inCollection: ID
+  inCategory: ID
 }
 
 input AttributeInput {
@@ -461,6 +463,13 @@ enum AuthorizationKeyType {
   GOOGLE_OAUTH2
 }
 
+type BulkProductError {
+  field: String
+  message: String
+  code: ProductErrorCode
+  index: Int
+}
+
 input CatalogueInput {
   products: [ID]
   categories: [ID]
@@ -595,7 +604,7 @@ type Checkout implements Node {
   privateMeta: [MetaStore]!
   meta: [MetaStore]!
   availableShippingMethods: [ShippingMethod]!
-  availablePaymentGateways: [GatewaysEnum]!
+  availablePaymentGateways: [String]!
   email: String!
   isShippingRequired: Boolean!
   lines: [CheckoutLine]
@@ -1601,13 +1610,6 @@ input FulfillmentUpdateTrackingInput {
   notifyCustomer: Boolean
 }
 
-enum GatewaysEnum {
-  DUMMY
-  BRAINTREE
-  RAZORPAY
-  STRIPE
-}
-
 scalar GenericScalar
 
 type Geolocalization {
@@ -1984,6 +1986,9 @@ input MoveProductInput {
 }
 
 type Mutations {
+  webhookCreate(input: WebhookCreateInput!): WebhookCreate
+  webhookDelete(id: ID!): WebhookDelete
+  webhookUpdate(id: ID!, input: WebhookUpdateInput!): WebhookUpdate
   authorizationKeyAdd(input: AuthorizationKeyInput!, keyType: AuthorizationKeyType!): AuthorizationKeyAdd
   authorizationKeyDelete(keyType: AuthorizationKeyType!): AuthorizationKeyDelete
   homepageCollectionUpdate(collection: ID): HomepageCollectionUpdate
@@ -2070,6 +2075,7 @@ type Mutations {
   digitalContentUrlCreate(input: DigitalContentUrlCreateInput!): DigitalContentUrlCreate
   productVariantCreate(input: ProductVariantCreateInput!): ProductVariantCreate
   productVariantDelete(id: ID!): ProductVariantDelete
+  productVariantBulkCreate(product: ID!, variants: [ProductVariantBulkCreateInput]!): ProductVariantBulkCreate
   productVariantBulkDelete(ids: [ID]!): ProductVariantBulkDelete
   productVariantUpdate(id: ID!, input: ProductVariantInput!): ProductVariantUpdate
   productVariantTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): ProductVariantTranslate
@@ -2202,6 +2208,8 @@ type Mutations {
   serviceAccountDelete(id: ID!): ServiceAccountDelete
   serviceAccountUpdatePrivateMetadata(id: ID!, input: MetaInput!): ServiceAccountUpdatePrivateMeta
   serviceAccountClearStoredPrivateMetadata(id: ID!, input: MetaPath!): ServiceAccountClearStoredPrivateMeta
+  serviceAccountTokenCreate(input: ServiceAccountTokenInput!): ServiceAccountTokenCreate
+  serviceAccountTokenDelete(id: ID!): ServiceAccountTokenDelete
   passwordReset(email: String!): PasswordReset
 }
 
@@ -2682,7 +2690,7 @@ enum PaymentErrorCode {
 }
 
 input PaymentInput {
-  gateway: GatewaysEnum!
+  gateway: String!
   token: String!
   amount: Decimal
   billingAddress: AddressInput
@@ -2731,6 +2739,7 @@ enum PermissionEnum {
   MANAGE_SHIPPING
   MANAGE_SETTINGS
   MANAGE_TRANSLATIONS
+  MANAGE_WEBHOOKS
 }
 
 type Plugin implements Node {
@@ -3172,6 +3181,23 @@ type ProductVariant implements Node {
   digitalContent: DigitalContent
 }
 
+type ProductVariantBulkCreate {
+  errors: [Error!]
+  count: Int!
+  productVariants: [ProductVariant!]!
+  bulkProductErrors: [BulkProductError!]
+}
+
+input ProductVariantBulkCreateInput {
+  attributes: [AttributeValueInput]!
+  costPrice: Decimal
+  priceOverride: Decimal
+  sku: String!
+  quantity: Int
+  trackInventory: Boolean
+  weight: WeightScalar
+}
+
 type ProductVariantBulkDelete {
   errors: [Error!]
   count: Int!
@@ -3264,6 +3290,8 @@ type ProductVariantUpdatePrivateMeta {
 }
 
 type Query {
+  webhook(id: ID!): Webhook
+  webhooks(before: String, after: String, first: Int, last: Int): WebhookCountableConnection
   translations(kind: TranslatableKinds!, before: String, after: String, first: Int, last: Int): TranslatableItemConnection
   shop: Shop
   shippingZone(id: ID!): ShippingZone
@@ -3285,7 +3313,7 @@ type Query {
   reportProductSales(period: ReportingPeriod!, before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection
   payment(id: ID!): Payment
   payments(before: String, after: String, first: Int, last: Int): PaymentCountableConnection
-  paymentClientToken(gateway: GatewaysEnum): String
+  paymentClientToken(gateway: String!): String
   page(id: ID, slug: String): Page
   pages(query: String, filter: PageFilterInput, before: String, after: String, first: Int, last: Int): PageCountableConnection
   homepageEvents(before: String, after: String, first: Int, last: Int): OrderEventCountableConnection
@@ -3447,9 +3475,9 @@ input SeoInput {
 
 type ServiceAccount implements Node {
   id: ID!
-  authToken: String
   created: DateTime
   isActive: Boolean
+  tokens: [ServiceAccountToken]
   privateMeta: [MetaStore]!
   meta: [MetaStore]!
   permissions: [PermissionDisplay]
@@ -3495,6 +3523,30 @@ input ServiceAccountInput {
   name: String
   isActive: Boolean
   permissions: [PermissionEnum]
+}
+
+type ServiceAccountToken implements Node {
+  name: String
+  authToken: String
+  id: ID!
+}
+
+type ServiceAccountTokenCreate {
+  errors: [Error!]
+  authToken: String
+  accountErrors: [AccountError!]
+  serviceAccountToken: ServiceAccountToken
+}
+
+type ServiceAccountTokenDelete {
+  errors: [Error!]
+  accountErrors: [AccountError!]
+  serviceAccountToken: ServiceAccountToken
+}
+
+input ServiceAccountTokenInput {
+  name: String
+  serviceAccount: ID!
 }
 
 type ServiceAccountUpdate {
@@ -4168,6 +4220,88 @@ enum VoucherTypeEnum {
 type VoucherUpdate {
   errors: [Error!]
   voucher: Voucher
+}
+
+type Webhook implements Node {
+  serviceAccount: ServiceAccount!
+  targetUrl: String!
+  isActive: Boolean!
+  secretKey: String
+  id: ID!
+  events: [WebhookEvent]
+}
+
+type WebhookCountableConnection {
+  pageInfo: PageInfo!
+  edges: [WebhookCountableEdge!]!
+  totalCount: Int
+}
+
+type WebhookCountableEdge {
+  node: Webhook!
+  cursor: String!
+}
+
+type WebhookCreate {
+  errors: [Error!]
+  webhookErrors: [WebhookError!]
+  webhook: Webhook
+}
+
+input WebhookCreateInput {
+  targetUrl: String
+  events: [WebhookEventTypeEnum]
+  serviceAccount: ID
+  isActive: Boolean
+  secretKey: String
+}
+
+type WebhookDelete {
+  errors: [Error!]
+  webhook: Webhook
+  webhookErrors: [WebhookError!]
+}
+
+type WebhookError {
+  field: String
+  message: String
+  code: WebhookErrorCode
+}
+
+enum WebhookErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+  UNIQUE
+}
+
+type WebhookEvent {
+  eventType: String
+}
+
+enum WebhookEventTypeEnum {
+  ALL_EVENTS
+  ORDER_CREATED
+  ORDER_FULLY_PAID
+  ORDER_UPDATED
+  ORDER_CANCELLED
+  CUSTOMER_CREATED
+  PRODUCT_CREATED
+}
+
+type WebhookUpdate {
+  errors: [Error!]
+  webhook: Webhook
+  webhookErrors: [WebhookError!]
+}
+
+input WebhookUpdateInput {
+  targetUrl: String
+  events: [WebhookEventTypeEnum]
+  serviceAccount: ID
+  isActive: Boolean
+  secretKey: String
 }
 
 type Weight {

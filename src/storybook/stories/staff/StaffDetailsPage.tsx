@@ -2,10 +2,11 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { permissions } from "@saleor/fixtures";
 import StaffDetailsPage, {
   StaffDetailsPageProps
 } from "../../../staff/components/StaffDetailsPage";
-import { permissions, staffMember } from "../../../staff/fixtures";
+import { staffMember } from "../../../staff/fixtures";
 import Decorator from "../../Decorator";
 
 const props: Omit<StaffDetailsPageProps, "classes"> = {

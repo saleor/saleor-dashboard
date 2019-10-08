@@ -16,6 +16,7 @@ import SaveFilterTabDialog, {
 } from "@saleor/components/SaveFilterTabDialog";
 import { APP_MOUNT_URI } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
+import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
@@ -56,6 +57,7 @@ export const StaffList: React.StatelessComponent<StaffListProps> = ({
     ListViews.STAFF_MEMBERS_LIST
   );
   const intl = useIntl();
+  const shop = useShop();
 
   const tabs = getFilterTabs();
 
@@ -147,7 +149,7 @@ export const StaffList: React.StatelessComponent<StaffListProps> = ({
                       firstName: variables.firstName,
                       lastName: variables.lastName,
                       permissions: variables.fullAccess
-                        ? data.shop.permissions.map(perm => perm.code)
+                        ? maybe(() => shop.permissions.map(perm => perm.code))
                         : undefined,
                       redirectUrl: urlJoin(
                         window.location.origin,

@@ -12,8 +12,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
+import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import Skeleton from "@saleor/components/Skeleton";
-import { StaffMemberDetails_shop_permissions } from "../../types/StaffMemberDetails";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -29,8 +29,8 @@ const styles = (theme: Theme) =>
     }
   });
 
-interface StaffPermissionsProps extends WithStyles<typeof styles> {
-  permissions: StaffMemberDetails_shop_permissions[];
+interface AccountPermissionsProps extends WithStyles<typeof styles> {
+  permissions: ShopInfo_shop_permissions[];
   data: {
     hasFullAccess: boolean;
     permissions: string[];
@@ -39,14 +39,14 @@ interface StaffPermissionsProps extends WithStyles<typeof styles> {
   onChange: (event: React.ChangeEvent<any>, cb?: () => void) => void;
 }
 
-const StaffPermissions = withStyles(styles, { name: "StaffPermissions" })(
+const AccountPermissions = withStyles(styles, { name: "AccountPermissions" })(
   ({
     classes,
     data,
     disabled,
     permissions,
     onChange
-  }: StaffPermissionsProps) => {
+  }: AccountPermissionsProps) => {
     const intl = useIntl();
 
     const handleFullAccessChange = (event: React.ChangeEvent<any>) =>
@@ -123,5 +123,5 @@ const StaffPermissions = withStyles(styles, { name: "StaffPermissions" })(
     );
   }
 );
-StaffPermissions.displayName = "StaffPermissions";
-export default StaffPermissions;
+AccountPermissions.displayName = "AccountPermissions";
+export default AccountPermissions;

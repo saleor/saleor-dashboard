@@ -1,3 +1,4 @@
+import Card from "@material-ui/core/Card";
 import { createMuiTheme, Theme } from "@material-ui/core/styles";
 import { darken, fade } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
@@ -84,7 +85,6 @@ export default (colors: IThemeColors): Theme =>
           borderRadius: 8,
           borderStyle: "solid",
           borderWidth: 1,
-          boxShadow: "none",
           overflow: "visible"
         }
       },
@@ -539,4 +539,9 @@ export default (colors: IThemeColors): Theme =>
 TextField.defaultProps = {
   ...TextField.defaultProps,
   variant: "outlined"
+};
+
+Card.defaultProps = {
+  ...Card.defaultProps,
+  elevation: 0
 };

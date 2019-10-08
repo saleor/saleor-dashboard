@@ -28,6 +28,10 @@ const shopInfo = gql`
       includeTaxesInPrices
       name
       trackInventoryByDefault
+      permissions {
+        code
+        name
+      }
     }
   }
 `;
