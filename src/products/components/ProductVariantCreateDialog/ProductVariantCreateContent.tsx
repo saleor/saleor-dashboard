@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     overflowX: "hidden",
     overflowY: "scroll",
     paddingLeft: theme.spacing.unit * 3,
+    paddingRight: theme.spacing.unit * 2,
     position: "relative",
     right: theme.spacing.unit * 3,
     width: `calc(100% + ${theme.spacing.unit * 3}px)`
