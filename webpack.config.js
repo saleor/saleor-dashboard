@@ -3,6 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+require('dotenv').config();
 
 const resolve = path.resolve.bind(path, __dirname);
 
