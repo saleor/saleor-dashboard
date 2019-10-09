@@ -235,7 +235,7 @@ const TranslationFields = withStyles(styles, { name: "TranslationFields" })(
           <CardContent>
             <Typography className={classes.cardCaption} variant="caption">
               <FormattedMessage
-                defaultMessage="{numberOFields} Translations, {numberOfTranslatedFields} Completed"
+                defaultMessage="{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
                 values={{
                   numberOfFields: fields.length,
                   numberOfTranslatedFields: fields.reduce(
