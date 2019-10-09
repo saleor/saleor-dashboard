@@ -21,10 +21,10 @@ import TablePagination from "@saleor/components/TablePagination";
 import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
-import { Plugins_plugins_edges_node } from "../../types/Plugins";
+import { Webhooks_webhooks_edges_node } from "../../types/Webhooks";
 
 export interface WebhooksListProps extends ListProps {
-  webhooks: Plugins_plugins_edges_node[];
+  webhooks: Webhooks_webhooks_edges_node[];
 }
 
 const styles = (theme: Theme) =>

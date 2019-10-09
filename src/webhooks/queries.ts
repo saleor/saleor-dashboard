@@ -7,6 +7,7 @@ import { Webhooks, WebhooksVariables } from "./types/Webhooks";
 export const webhooksFragment = gql`
   fragment WebhookFragment on Webhook {
     id
+    name
     events {
       eventType
     }
@@ -23,7 +24,7 @@ export const webhooksFragment = gql`
 export const webhooksDetailsFragment = gql`
   ${webhooksFragment}
   fragment WebhooksDetailsFragment on Webhook {
-    ...WebhooksFragment
+    ...WebhookFragment
   }
 `;
 
@@ -33,7 +34,7 @@ const webhooksList = gql`
     webhooks(before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
-          ...WebhooksFragment
+          ...WebhookFragment
         }
       }
       pageInfo {
@@ -53,7 +54,7 @@ const webhooksDetails = gql`
   ${webhooksFragment}
   query Webhook($id: ID!) {
     webhook(id: $id) {
-      ...WebhooksFragment
+      ...WebhookFragment
     }
   }
 `;

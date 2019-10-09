@@ -8,21 +8,21 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import React from "react";
 
-import WebhooksListPage from "../components/WebhooksListPage/PluginsListPage";
+import WebhooksListPage from "../components/WebhooksListPage/WebhooksListPage";
 import { TypedWebhooksListQuery } from "../queries";
 import { WebhooksListUrlQueryParams, webhooksUrl } from "../urls";
 
-interface PluginsListProps {
+interface WebhooksListProps {
   params: WebhooksListUrlQueryParams;
 }
 
-export const PluginsList: React.StatelessComponent<PluginsListProps> = ({
+export const WebhooksList: React.StatelessComponent<WebhooksListProps> = ({
   params
 }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
   const { updateListSettings, settings } = useListSettings(
-    ListViews.PLUGINS_LIST
+    ListViews.WEBHOOK_LIST
   );
   const paginationState = createPaginationState(settings.rowNumber, params);
 
@@ -30,7 +30,7 @@ export const PluginsList: React.StatelessComponent<PluginsListProps> = ({
     <TypedWebhooksListQuery displayLoader variables={paginationState}>
       {({ data, loading }) => {
         const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-          maybe(() => data.plugins.pageInfo),
+          maybe(() => data.webhooks.pageInfo),
           paginationState,
           params
         );
@@ -39,7 +39,7 @@ export const PluginsList: React.StatelessComponent<PluginsListProps> = ({
             <WebhooksListPage
               disabled={loading}
               settings={settings}
-              webhooks={maybe(() => data.plugins.edges.map(edge => edge.node))}
+              webhooks={maybe(() => data.webhooks.edges.map(edge => edge.node))}
               pageInfo={pageInfo}
               onAdd={() => navigate(configurationMenuUrl)}
               onBack={() => navigate(configurationMenuUrl)}
@@ -55,4 +55,4 @@ export const PluginsList: React.StatelessComponent<PluginsListProps> = ({
   );
 };
 
-export default PluginsList;
+export default WebhooksList;

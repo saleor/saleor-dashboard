@@ -13,19 +13,28 @@ import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Plugin_plugin } from "../../types/Plugin";
-import WebhookInfo from "../WebhookInfo";
+import {
+  Webhook_webhook,
+  Webhook_webhook_events,
+  Webhook_webhook_serviceAccount
+} from "../../types/Webhook";
 import WebhookEvents from "../WebhookEvents";
+import WebhookInfo from "../WebhookInfo";
+import WebhookStatus from "../WebhookStatus";
 
 export interface FormData {
-  active: boolean;
-  configuration: ConfigurationItemInput[];
+  id: string;
+  events: Webhook_webhook_events;
+  isActive: boolean;
+  secretKey: string | null;
+  targetUrl: string;
+  serviceAccount: Webhook_webhook_serviceAccount;
 }
 
 export interface WebhooksDetailsPageProps {
   disabled: boolean;
   errors: UserError[];
-  plugin: Plugin_plugin;
+  webhook: Webhook_webhook;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: FormData) => void;
@@ -33,16 +42,20 @@ export interface WebhooksDetailsPageProps {
 
 const WebhooksDetailsPage: React.StatelessComponent<
   WebhooksDetailsPageProps
-> = ({ disabled, errors, plugin, saveButtonBarState, onBack, onSubmit }) => {
+> = ({ disabled, errors, webhook, saveButtonBarState, onBack, onSubmit }) => {
   const intl = useIntl();
   const initialForm: FormData = {
-    active: maybe(() => plugin.active, false),
-    configuration: maybe(() => plugin.configuration, [])
+    events: maybe(() => webhook.events, []),
+    id: maybe(() => webhook.id, null),
+    isActive: maybe(() => webhook.isActive, false),
+    secretKey: maybe(() => webhook.secretKey, ""),
+    serviceAccount: maybe(() => webhook.serviceAccount, []),
+    targetUrl: maybe(() => webhook.targetUrl, "")
   };
 
   return (
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({ data, errors, hasChanged, submit, set, triggerChange }) => {
+      {({ data, errors, hasChanged, submit, change }) => {
         return (
           <Container>
             <AppHeader onBack={onBack}>
@@ -60,7 +73,28 @@ const WebhooksDetailsPage: React.StatelessComponent<
               )}
             />
             <Grid variant="inverted">
-              <div></div>
+              <div>
+                <WebhookInfo
+                  data={data}
+                  description={maybe(() => plugin.description, "")}
+                  errors={errors}
+                  onChange={change}
+                />
+              </div>
+              <div>
+                <WebhookEvents
+                  data={data}
+                  errors={errors}
+                  name={maybe(() => plugin.name, "")}
+                  onChange={change}
+                />
+                <WebhookStatus
+                  data={data}
+                  errors={errors}
+                  name={maybe(() => plugin.name, "")}
+                  onChange={change}
+                />
+              </div>
             </Grid>
             <SaveButtonBar
               disabled={disabled || !hasChanged}

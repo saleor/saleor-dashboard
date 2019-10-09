@@ -272,6 +272,16 @@ export enum VoucherTypeEnum {
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }
 
+export enum WebhookEventTypeEnum {
+  ALL_EVENTS = "ALL_EVENTS",
+  CUSTOMER_CREATED = "CUSTOMER_CREATED",
+  ORDER_CANCELLED = "ORDER_CANCELLED",
+  ORDER_CREATED = "ORDER_CREATED",
+  ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
+  ORDER_UPDATED = "ORDER_UPDATED",
+  PRODUCT_CREATED = "PRODUCT_CREATED",
+}
+
 export enum WeightUnitsEnum {
   G = "G",
   KG = "KG",
@@ -773,6 +783,24 @@ export interface VoucherInput {
   applyOncePerOrder?: boolean | null;
   applyOncePerCustomer?: boolean | null;
   usageLimit?: number | null;
+}
+
+export interface WebhookCreateInput {
+  name?: string | null;
+  targetUrl?: string | null;
+  events?: (WebhookEventTypeEnum | null)[] | null;
+  serviceAccount?: string | null;
+  isActive?: boolean | null;
+  secretKey?: string | null;
+}
+
+export interface WebhookUpdateInput {
+  name?: string | null;
+  targetUrl?: string | null;
+  events?: (WebhookEventTypeEnum | null)[] | null;
+  serviceAccount?: string | null;
+  isActive?: boolean | null;
+  secretKey?: string | null;
 }
 
 //==============================================================

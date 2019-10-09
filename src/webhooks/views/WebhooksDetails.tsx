@@ -6,35 +6,35 @@ import { useIntl } from "react-intl";
 
 import { getMutationState, maybe } from "../../misc";
 import WebhooksDetailsPage from "../components/WebhooksDetailsPage";
-import { TypedPluginUpdate } from "../mutations";
-import { TypedPluginsDetailsQuery } from "../queries";
-import { pluginsListUrl, PluginsListUrlQueryParams } from "../urls";
+import { TypedWebhookUpdate } from "../mutations";
+import { TypedWebhooksDetailsQuery } from "../queries";
+import { webhooksListUrl, WebhooksListUrlQueryParams } from "../urls";
 
-export interface PluginsDetailsProps {
+export interface WebhooksDetailsProps {
   id: string;
-  params: PluginsListUrlQueryParams;
+  params: WebhooksListUrlQueryParams;
 }
 
-export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
-  id
-}) => {
+export const WebhooksDetails: React.StatelessComponent<
+  WebhooksDetailsProps
+> = ({ id }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
 
   return (
-    <TypedPluginUpdate>
-      {(pluginUpdate, pluginUpdateOpts) => (
-        <TypedPluginsDetailsQuery variables={{ id }}>
-          {PluginDetails => {
+    <TypedWebhookUpdate>
+      {(webhookUpdate, webhookUpdateOpts) => (
+        <TypedWebhooksDetailsQuery variables={{ id }}>
+          {WebhookDetails => {
             const formTransitionState = getMutationState(
-              pluginUpdateOpts.called,
-              pluginUpdateOpts.loading,
-              maybe(() => pluginUpdateOpts.data.pluginUpdate.errors)
+              webhookUpdateOpts.called,
+              webhookUpdateOpts.loading,
+              maybe(() => webhookUpdateOpts.data.webhookUpdate.errors)
             );
 
             const formErrors = maybe(
-              () => pluginUpdateOpts.data.pluginUpdate.errors,
+              () => webhookUpdateOpts.data.webhookUpdate.errors,
               []
             );
 
@@ -45,7 +45,7 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
                 });
               });
             } else {
-              if (pluginUpdateOpts.data) {
+              if (webhookUpdateOpts.data) {
                 notify({
                   text: intl.formatMessage({
                     defaultMessage: "Succesfully updated plugin settings",
@@ -58,14 +58,14 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
             return (
               <>
                 <WindowTitle
-                  title={maybe(() => PluginDetails.data.plugin.name)}
+                  title={maybe(() => WebhookDetails.data.webhook.name)}
                 />
                 <WebhooksDetailsPage
-                  disabled={PluginDetails.loading}
+                  disabled={WebhookDetails.loading}
                   errors={formErrors}
                   saveButtonBarState={formTransitionState}
-                  plugin={maybe(() => PluginDetails.data.plugin)}
-                  onBack={() => navigate(pluginsListUrl())}
+                  webhook={maybe(() => WebhookDetails.data.webook)}
+                  onBack={() => navigate(webhooksListUrl())}
                   onSubmit={formData => {
                     const configurationInput =
                       formData.configuration &&
@@ -75,7 +75,7 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
                           value: item.value.toString()
                         };
                       });
-                    pluginUpdate({
+                    webhookUpdate({
                       variables: {
                         id,
                         input: {
@@ -91,10 +91,10 @@ export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
               </>
             );
           }}
-        </TypedPluginsDetailsQuery>
+        </TypedWebhooksDetailsQuery>
       )}
-    </TypedPluginUpdate>
+    </TypedWebhookUpdate>
   );
 };
-PluginsDetails.displayName = "PluginsDetails";
-export default PluginsDetails;
+WebhooksDetails.displayName = "WebhooksDetails";
+export default WebhooksDetails;

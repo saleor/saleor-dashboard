@@ -6,11 +6,11 @@ import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
 import { PageListProps } from "@saleor/types";
-import { Plugins_plugins_edges_node } from "../../types/Plugins";
+import { Webhooks_webhooks_edges_node } from "../../types/Webhooks";
 import WebhooksList from "../WebhooksList/WebhooksList";
 
 export interface WebhooksListPageProps extends PageListProps {
-  plugins: Plugins_plugins_edges_node[];
+  webhooks: Webhooks_webhooks_edges_node[];
   onBack: () => void;
 }
 

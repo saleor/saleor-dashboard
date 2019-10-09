@@ -9,7 +9,7 @@ import { WebhookUpdate, WebhookUpdateVariables } from "./types/WebhookUpdate";
 const webhookCreate = gql`
   ${webhooksDetailsFragment}
   mutation WebhookCreate($input: WebhookCreateInput!) {
-    WebhookCreate(input: $input) {
+    webhookCreate(input: $input) {
       errors {
         field
         message
@@ -28,7 +28,7 @@ export const TypedWebhookCreate = TypedMutation<
 const webhookUpdate = gql`
   ${webhooksDetailsFragment}
   mutation WebhookUpdate($id: ID!, $input: WebhookUpdateInput!) {
-    WebhookUpdate(id: $id, input: $input) {
+    webhookUpdate(id: $id, input: $input) {
       errors {
         field
         message
@@ -46,7 +46,7 @@ export const TypedWebhookUpdate = TypedMutation<
 
 const WebhookDelete = gql`
   mutation WebhookDelete($id: ID!) {
-    WebhookDelete(id: $id) {
+    webhookDelete(id: $id) {
       errors {
         field
         message
