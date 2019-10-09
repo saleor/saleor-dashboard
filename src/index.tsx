@@ -48,8 +48,8 @@ import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
 import TaxesSection from "./taxes";
 import TranslationsSection from "./translations";
-import WebhooksSection from "./webhooks";
 import { PermissionEnum } from "./types/globalTypes";
+import WebhooksSection from "./webhooks";
 
 interface ResponseError extends ErrorResponse {
   networkError?: Error & {

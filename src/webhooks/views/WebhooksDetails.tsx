@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { getMutationState, maybe } from "../../misc";
 import WebhooksDetailsPage from "../components/WebhooksDetailsPage";
 import { TypedWebhookUpdate } from "../mutations";
-import { TypedWebhooksDetailsQuery } from "../queries";
+import { TypedServiceListQuery, TypedWebhooksDetailsQuery } from "../queries";
 import { webhooksListUrl, WebhooksListUrlQueryParams } from "../urls";
 
 export interface WebhooksDetailsProps {
@@ -56,39 +56,40 @@ export const WebhooksDetails: React.StatelessComponent<
             }
 
             return (
-              <>
-                <WindowTitle
-                  title={maybe(() => WebhookDetails.data.webhook.name)}
-                />
-                <WebhooksDetailsPage
-                  disabled={WebhookDetails.loading}
-                  errors={formErrors}
-                  saveButtonBarState={formTransitionState}
-                  webhook={maybe(() => WebhookDetails.data.webook)}
-                  onBack={() => navigate(webhooksListUrl())}
-                  onSubmit={formData => {
-                    const configurationInput =
-                      formData.configuration &&
-                      formData.configuration.map(item => {
-                        return {
-                          name: item.name,
-                          value: item.value.toString()
-                        };
-                      });
-                    webhookUpdate({
-                      variables: {
-                        id,
-                        input: {
-                          active: formData.active,
-                          configuration: configurationInput
-                            ? configurationInput
-                            : null
-                        }
-                      }
-                    });
-                  }}
-                />
-              </>
+              <TypedServiceListQuery variables={{ first: 99 }}>
+                {({ data }) => (
+                  <>
+                    <WindowTitle
+                      title={maybe(() => WebhookDetails.data.webhook.name)}
+                    />
+                    <WebhooksDetailsPage
+                      disabled={WebhookDetails.loading}
+                      errors={formErrors}
+                      saveButtonBarState={formTransitionState}
+                      webhook={maybe(() => WebhookDetails.data.webhook)}
+                      services={maybe(() =>
+                        data.serviceAccounts.edges.map(edge => edge.node)
+                      )}
+                      onBack={() => navigate(webhooksListUrl())}
+                      onSubmit={data => {
+                        webhookUpdate({
+                          variables: {
+                            id,
+                            input: {
+                              events: data.events,
+                              isActive: data.isActive,
+                              name: data.name,
+                              secretKey: data.secretKey,
+                              serviceAccount: data.serviceAccount,
+                              targetUrl: data.targetUrl
+                            }
+                          }
+                        });
+                      }}
+                    />
+                  </>
+                )}
+              </TypedServiceListQuery>
             );
           }}
         </TypedWebhooksDetailsQuery>

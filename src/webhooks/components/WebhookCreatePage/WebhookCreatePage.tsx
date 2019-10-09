@@ -9,7 +9,6 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
-import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
@@ -28,7 +27,7 @@ export interface FormData {
   serviceAccount: string;
 }
 
-export interface WebhooksDetailsPageProps {
+export interface WebhookCreatePageProps {
   disabled: boolean;
   errors: UserError[];
   webhook: Webhook_webhook;
@@ -38,9 +37,7 @@ export interface WebhooksDetailsPageProps {
   onSubmit: (data: FormData) => void;
 }
 
-const WebhooksDetailsPage: React.StatelessComponent<
-  WebhooksDetailsPageProps
-> = ({
+const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
   disabled,
   errors,
   webhook,
@@ -54,11 +51,12 @@ const WebhooksDetailsPage: React.StatelessComponent<
     events: maybe(() => webhook.events, []),
     id: maybe(() => webhook.id, null),
     isActive: maybe(() => webhook.isActive, false),
-    name: maybe(() => webhook.name, ""),
+    name: maybe(() => webhook.name, null),
     secretKey: maybe(() => webhook.secretKey, ""),
-    serviceAccount: maybe(() => webhook.serviceAccount.id, ""),
+    serviceAccount: maybe(() => webhook.serviceAccount, ""),
     targetUrl: maybe(() => webhook.targetUrl, "")
   };
+
   return (
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ data, errors, hasChanged, submit, change }) => {
@@ -70,7 +68,7 @@ const WebhooksDetailsPage: React.StatelessComponent<
             <PageHeader
               title={intl.formatMessage(
                 {
-                  defaultMessage: "{pluginName} Details",
+                  defaultMessage: "Create Webhook",
                   description: "header"
                 },
                 {
@@ -114,5 +112,5 @@ const WebhooksDetailsPage: React.StatelessComponent<
     </Form>
   );
 };
-WebhooksDetailsPage.displayName = "WebhooksDetailsPage";
-export default WebhooksDetailsPage;
+WebhookCreatePage.displayName = "WebhookCreatePage";
+export default WebhookCreatePage;

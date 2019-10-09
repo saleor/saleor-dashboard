@@ -10,7 +10,11 @@ import React from "react";
 
 import WebhooksListPage from "../components/WebhooksListPage/WebhooksListPage";
 import { TypedWebhooksListQuery } from "../queries";
-import { WebhooksListUrlQueryParams, webhooksUrl } from "../urls";
+import {
+  webhooksAddUrl,
+  WebhooksListUrlQueryParams,
+  webhooksUrl
+} from "../urls";
 
 interface WebhooksListProps {
   params: WebhooksListUrlQueryParams;
@@ -41,7 +45,7 @@ export const WebhooksList: React.StatelessComponent<WebhooksListProps> = ({
               settings={settings}
               webhooks={maybe(() => data.webhooks.edges.map(edge => edge.node))}
               pageInfo={pageInfo}
-              onAdd={() => navigate(configurationMenuUrl)}
+              onAdd={() => navigate(webhooksAddUrl)}
               onBack={() => navigate(configurationMenuUrl)}
               onNextPage={loadNextPage}
               onPreviousPage={loadPreviousPage}

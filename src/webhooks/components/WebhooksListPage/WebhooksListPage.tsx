@@ -1,5 +1,6 @@
+import Button from "@material-ui/core/Button";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
@@ -17,6 +18,7 @@ export interface WebhooksListPageProps extends PageListProps {
 const WebhooksListPage: React.StatelessComponent<WebhooksListPageProps> = ({
   disabled,
   settings,
+  onAdd,
   onBack,
   onNextPage,
   onPreviousPage,
@@ -31,7 +33,14 @@ const WebhooksListPage: React.StatelessComponent<WebhooksListPageProps> = ({
       <AppHeader onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </AppHeader>
-      <PageHeader title={intl.formatMessage(sectionNames.webhooks)} />
+      <PageHeader title={intl.formatMessage(sectionNames.webhooks)}>
+        <Button onClick={onAdd} variant="contained" color="primary">
+          <FormattedMessage
+            defaultMessage="Create webhook"
+            description="button"
+          />
+        </Button>
+      </PageHeader>
       <WebhooksList
         disabled={disabled}
         settings={settings}

@@ -8,9 +8,12 @@ export const webhooksSection = "/webhooks/";
 export const webhooksListPath = webhooksSection;
 export type WebhooksListUrlQueryParams = Pagination & SingleAction;
 export const webhooksListUrl = (params?: WebhooksListUrlQueryParams) =>
-webhooksListPath + "?" + stringifyQs(params);
+  webhooksListPath + "?" + stringifyQs(params);
 
 export const webhooksPath = (id: string) => urlJoin(webhooksSection, id);
 export type WebhooksUrlQueryParams = SingleAction;
 export const webhooksUrl = (id: string, params?: WebhooksUrlQueryParams) =>
   webhooksPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+export const webhooksAddPath = urlJoin(webhooksSection, "add");
+export const webhooksAddUrl = webhooksAddPath;

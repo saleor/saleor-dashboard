@@ -16,9 +16,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
 import TablePagination from "@saleor/components/TablePagination";
-import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import { Webhooks_webhooks_edges_node } from "../../types/Webhooks";
@@ -107,14 +105,36 @@ const WebhooksList = withStyles(styles, { name: "PluginList" })(
               webhooks,
               webhook => {
                 return (
-                  <div></div>
+                  <TableRow
+                    hover={!!webhook}
+                    className={!!webhook ? classes.link : undefined}
+                    onClick={webhook ? onRowClick(webhook.id) : undefined}
+                    key={webhook ? webhook.id : "skeleton"}
+                  >
+                    <TableCell className={classes.colName}>
+                      {maybe<React.ReactNode>(() => webhook.name, <Skeleton />)}
+                    </TableCell>
+                    <TableCell className={classes.colActive}>
+                      {maybe<React.ReactNode>(
+                        () => webhook.serviceAccount.name,
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell className={classes.colAction}>
+                      <div
+                        onClick={webhook ? onRowClick(webhook.id) : undefined}
+                      >
+                        <EditIcon />
+                      </div>
+                    </TableCell>
+                  </TableRow>
                 );
               },
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
                     {intl.formatMessage({
-                      defaultMessage: "No plugins found"
+                      defaultMessage: "No webhooks found"
                     })}
                   </TableCell>
                 </TableRow>
