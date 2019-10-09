@@ -14,6 +14,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
+import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
@@ -45,6 +46,7 @@ export const ShippingZonesList: React.StatelessComponent<
   const notify = useNotifier();
   const paginate = usePaginator();
   const shop = useShop();
+  const { user } = useUser();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -195,6 +197,7 @@ export const ShippingZonesList: React.StatelessComponent<
                                 <DeleteIcon />
                               </IconButton>
                             }
+                            userPermissions={maybe(() => user.permissions, [])}
                           />
 
                           <ActionDialog
