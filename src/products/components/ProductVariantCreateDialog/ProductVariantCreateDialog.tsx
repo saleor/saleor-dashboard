@@ -8,6 +8,8 @@ import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 import { createInitialForm, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreateContent, {
@@ -90,6 +92,7 @@ const ProductVariantCreateDialog: React.FC<
   const {
     attributes,
     defaultPrice,
+    errors: apiErrors,
     open,
     onClose,
     onSubmit,
@@ -125,14 +128,22 @@ const ProductVariantCreateDialog: React.FC<
     createInitialForm(attributes, defaultPrice)
   );
 
-  React.useEffect(
-    () =>
-      dispatchFormDataAction({
-        data: createInitialForm(attributes, defaultPrice),
-        type: "reload"
-      }),
-    [attributes.length]
-  );
+  const reloadForm = () =>
+    dispatchFormDataAction({
+      data: createInitialForm(attributes, defaultPrice),
+      type: "reload"
+    });
+
+  React.useEffect(reloadForm, [attributes.length]);
+
+  useModalDialogOpen(open, {
+    onClose: () => {
+      reloadForm();
+      setStep("values");
+    }
+  });
+
+  const errors = useModalDialogErrors(apiErrors, open);
 
   return (
     <Dialog open={open} maxWidth="md">
@@ -148,6 +159,7 @@ const ProductVariantCreateDialog: React.FC<
           attributes={attributes}
           data={data}
           dispatchFormDataAction={dispatchFormDataAction}
+          errors={errors}
           step={step}
           onStepClick={step => setStep(step)}
         />
