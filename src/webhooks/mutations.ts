@@ -44,7 +44,7 @@ export const TypedWebhookUpdate = TypedMutation<
   WebhookUpdateVariables
 >(webhookUpdate);
 
-const WebhookDelete = gql`
+const webhookDelete = gql`
   mutation WebhookDelete($id: ID!) {
     webhookDelete(id: $id) {
       errors {

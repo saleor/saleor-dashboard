@@ -10,15 +10,15 @@ import {
   WebhooksListUrlQueryParams,
   webhooksPath
 } from "./urls";
-import PluginsDetailsComponent from "./views/WebhooksDetails";
-import PluginsListComponent from "./views/WebhooksList";
+import WebhooksDetails from "./views/WebhooksDetails";
+import WebhooksList from "./views/WebhooksList";
 
-const PluginList: React.StatelessComponent<RouteComponentProps<any>> = ({
+const WebhookList: React.StatelessComponent<RouteComponentProps<any>> = ({
   location
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: WebhooksListUrlQueryParams = qs;
-  return <PluginsListComponent params={params} />;
+  return <WebhooksList params={params} />;
 };
 
 const PageDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
@@ -28,7 +28,7 @@ const PageDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
   const params: WebhooksListUrlQueryParams = qs;
 
   return (
-    <PluginsDetailsComponent
+    <WebhooksDetails
       id={decodeURIComponent(match.params.id)}
       params={params}
     />
@@ -41,8 +41,8 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.plugins)} />
       <Switch>
-        <Route exact path={webhooksListPath} component={PluginList} />
-        <Route path={webhooksPath(":id")} component={PageDetails} />
+        <Route exact path={webhooksListPath} component={WebhookList} />
+        <Route path={webhooksPath(":id")} component={WebhooksDetails} />
       </Switch>
     </>
   );

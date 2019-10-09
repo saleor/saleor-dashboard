@@ -8,7 +8,7 @@ export const webhooksSection = "/webhooks/";
 export const webhooksListPath = webhooksSection;
 export type WebhooksListUrlQueryParams = Pagination & SingleAction;
 export const webhooksListUrl = (params?: WebhooksListUrlQueryParams) =>
-  webhooksPath + "?" + stringifyQs(params);
+webhooksListPath + "?" + stringifyQs(params);
 
 export const webhooksPath = (id: string) => urlJoin(webhooksSection, id);
 export type WebhooksUrlQueryParams = SingleAction;
