@@ -81,7 +81,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "configurationMenuTaxes"
           }),
           icon: <Taxes fontSize="inherit" viewBox="0 0 44 44" />,
-          permission: PermissionEnum.MANAGE_PRODUCTS,
+          permission: PermissionEnum.MANAGE_SETTINGS,
           title: intl.formatMessage(sectionNames.taxes),
           url: taxSection
         }
@@ -151,7 +151,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
               preserveAspectRatio="xMinYMin meet"
             />
           ),
-          permission: PermissionEnum.MANAGE_SETTINGS,
+          permission: PermissionEnum.MANAGE_PLUGINS,
           title: intl.formatMessage(sectionNames.plugins),
           url: pluginsListUrl()
         },
