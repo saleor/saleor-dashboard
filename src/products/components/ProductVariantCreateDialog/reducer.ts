@@ -1,3 +1,4 @@
+//#region
 import {
   add,
   remove,
@@ -35,16 +36,16 @@ export interface ProductVariantCreateReducerAction {
   valueId?: string;
   variantIndex?: number;
 }
-
+//#endregion
 function selectValue(
   prevState: ProductVariantCreateFormData,
   attributeId: string,
-  valueId: string
+  valueSlug: string
 ): ProductVariantCreateFormData {
   const attribute = prevState.attributes.find(
     attribute => attribute.id === attributeId
   );
-  const values = toggle(valueId, attribute.values, (a, b) => a === b);
+  const values = toggle(valueSlug, attribute.values, (a, b) => a === b);
   const updatedAttributes = add(
     {
       id: attributeId,
@@ -53,20 +54,40 @@ function selectValue(
     remove(attribute, prevState.attributes, (a, b) => a.id === b.id)
   );
 
+  const priceValues =
+    prevState.price.attribute === attributeId
+      ? toggle(
+          {
+            slug: valueSlug,
+            value: ""
+          },
+          prevState.price.values,
+          (a, b) => a.slug === b.slug
+        )
+      : prevState.price.values;
+
+  const stockValues =
+    prevState.stock.attribute === attributeId
+      ? toggle(
+          {
+            slug: valueSlug,
+            value: ""
+          },
+          prevState.stock.values,
+          (a, b) => a.slug === b.slug
+        )
+      : prevState.stock.values;
+
   return {
     ...prevState,
     attributes: updatedAttributes,
     price: {
       ...prevState.price,
-      all: true,
-      attribute: undefined,
-      values: []
+      values: priceValues
     },
     stock: {
       ...prevState.stock,
-      all: true,
-      attribute: undefined,
-      values: []
+      values: stockValues
     }
   };
 }
