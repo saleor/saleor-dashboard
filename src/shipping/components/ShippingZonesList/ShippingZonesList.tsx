@@ -81,7 +81,7 @@ const ShippingZonesList = withStyles(styles, { name: "ShippingZonesList" })(
         <CardTitle
           height="const"
           title={intl.formatMessage({
-            defaultMessage: "Shipping by zone",
+            defaultMessage: "Shipping By Zone",
             description: "sort shipping methods by zone, section header"
           })}
           toolbar={

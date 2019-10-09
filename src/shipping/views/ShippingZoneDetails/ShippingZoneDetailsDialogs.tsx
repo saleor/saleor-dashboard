@@ -220,7 +220,7 @@ const ShippingZoneDetailsDialogs: React.StatelessComponent<
         }
         open={params.action === "unassign-country"}
         title={intl.formatMessage({
-          defaultMessage: "Delete from shipping zone",
+          defaultMessage: "Delete from Shipping Zone",
           description: "unassign country, dialog header"
         })}
         variant="delete"

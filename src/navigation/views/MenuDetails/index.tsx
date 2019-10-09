@@ -238,7 +238,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                                     }
                                     variant="delete"
                                     title={intl.formatMessage({
-                                      defaultMessage: "Delete menu",
+                                      defaultMessage: "Delete Menu",
                                       description: "dialog header",
                                       id: "menuDetailsDeleteMenuHeader"
                                     })}

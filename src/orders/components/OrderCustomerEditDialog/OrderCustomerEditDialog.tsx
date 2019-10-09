@@ -79,7 +79,7 @@ const OrderCustomerEditDialog = withStyles(styles, {
       <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
         <DialogTitle>
           <FormattedMessage
-            defaultMessage="Edit customer details"
+            defaultMessage="Edit Customer Details"
             description="dialog header"
           />
         </DialogTitle>

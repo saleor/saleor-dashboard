@@ -60,7 +60,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Background image (optional)",
+          defaultMessage: "Background Image (optional)",
           description: "section header"
         })}
         toolbar={
