@@ -7,6 +7,7 @@ import {
   TypedProductImageCreateMutation,
   TypedProductImageDeleteMutation,
   TypedProductUpdateMutation,
+  TypedProductVariantBulkCreateMutation,
   TypedProductVariantBulkDeleteMutation,
   TypedSimpleProductUpdateMutation
 } from "../mutations";
@@ -26,6 +27,10 @@ import {
 } from "../types/ProductImageReorder";
 import { ProductUpdate, ProductUpdateVariables } from "../types/ProductUpdate";
 import {
+  ProductVariantBulkCreate,
+  ProductVariantBulkCreateVariables
+} from "../types/ProductVariantBulkCreate";
+import {
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 } from "../types/ProductVariantBulkDelete";
@@ -38,6 +43,10 @@ import ProductImagesReorderProvider from "./ProductImagesReorder";
 interface ProductUpdateOperationsProps {
   product: ProductDetails_product;
   children: (props: {
+    bulkProductVariantCreate: PartialMutationProviderOutput<
+      ProductVariantBulkCreate,
+      ProductVariantBulkCreateVariables
+    >;
     bulkProductVariantDelete: PartialMutationProviderOutput<
       ProductVariantBulkDelete,
       ProductVariantBulkDeleteVariables
@@ -67,6 +76,7 @@ interface ProductUpdateOperationsProps {
       SimpleProductUpdateVariables
     >;
   }) => React.ReactNode;
+  onBulkProductVariantCreate?: (data: ProductVariantBulkCreate) => void;
   onBulkProductVariantDelete?: (data: ProductVariantBulkDelete) => void;
   onDelete?: (data: ProductDelete) => void;
   onImageCreate?: (data: ProductImageCreate) => void;
@@ -80,6 +90,7 @@ const ProductUpdateOperations: React.StatelessComponent<
 > = ({
   product,
   children,
+  onBulkProductVariantCreate,
   onBulkProductVariantDelete,
   onDelete,
   onImageDelete,
@@ -112,31 +123,40 @@ const ProductUpdateOperations: React.StatelessComponent<
                             <TypedProductVariantBulkDeleteMutation
                               onCompleted={onBulkProductVariantDelete}
                             >
-                              {(...bulkProductVariantDelete) =>
-                                children({
-                                  bulkProductVariantDelete: getMutationProviderData(
-                                    ...bulkProductVariantDelete
-                                  ),
-                                  createProductImage: getMutationProviderData(
-                                    ...createProductImage
-                                  ),
-                                  deleteProduct: getMutationProviderData(
-                                    ...deleteProduct
-                                  ),
-                                  deleteProductImage: getMutationProviderData(
-                                    ...deleteProductImage
-                                  ),
-                                  reorderProductImages: getMutationProviderData(
-                                    ...reorderProductImages
-                                  ),
-                                  updateProduct: getMutationProviderData(
-                                    ...updateProduct
-                                  ),
-                                  updateSimpleProduct: getMutationProviderData(
-                                    ...updateSimpleProduct
-                                  )
-                                })
-                              }
+                              {(...bulkProductVariantDelete) => (
+                                <TypedProductVariantBulkCreateMutation
+                                  onCompleted={onBulkProductVariantCreate}
+                                >
+                                  {(...bulkProductVariantCreate) =>
+                                    children({
+                                      bulkProductVariantCreate: getMutationProviderData(
+                                        ...bulkProductVariantCreate
+                                      ),
+                                      bulkProductVariantDelete: getMutationProviderData(
+                                        ...bulkProductVariantDelete
+                                      ),
+                                      createProductImage: getMutationProviderData(
+                                        ...createProductImage
+                                      ),
+                                      deleteProduct: getMutationProviderData(
+                                        ...deleteProduct
+                                      ),
+                                      deleteProductImage: getMutationProviderData(
+                                        ...deleteProductImage
+                                      ),
+                                      reorderProductImages: getMutationProviderData(
+                                        ...reorderProductImages
+                                      ),
+                                      updateProduct: getMutationProviderData(
+                                        ...updateProduct
+                                      ),
+                                      updateSimpleProduct: getMutationProviderData(
+                                        ...updateSimpleProduct
+                                      )
+                                    })
+                                  }
+                                </TypedProductVariantBulkCreateMutation>
+                              )}
                             </TypedProductVariantBulkDeleteMutation>
                           )}
                         </TypedSimpleProductUpdateMutation>

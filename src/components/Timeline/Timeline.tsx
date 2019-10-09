@@ -30,6 +30,9 @@ const styles = (theme: Theme) =>
       "& > div": {
         padding: "0 14px"
       },
+      "& fieldset": {
+        background: theme.palette.background.paper
+      },
       "& textarea": {
         "&::placeholder": {
           opacity: [[1], "!important"] as any

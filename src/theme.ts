@@ -60,7 +60,7 @@ export default (colors: IThemeColors): Theme =>
         },
         flat: {
           "& span": {
-            color: colors.primary
+            color: colors.font.gray
           }
         },
         flatPrimary: {
@@ -281,8 +281,7 @@ export default (colors: IThemeColors): Theme =>
           "& fieldset": {
             "&&:not($error)": {
               borderColor: colors.input.border
-            },
-            background: colors.background.paper
+            }
           },
           "& legend": {
             display: "none"

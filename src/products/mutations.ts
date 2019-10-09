@@ -46,6 +46,10 @@ import {
   productBulkPublishVariables
 } from "./types/productBulkPublish";
 import {
+  ProductVariantBulkCreate,
+  ProductVariantBulkCreateVariables
+} from "./types/ProductVariantBulkCreate";
+import {
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 } from "./types/ProductVariantBulkDelete";
@@ -319,26 +323,8 @@ export const TypedVariantUpdateMutation = TypedMutation<
 
 export const variantCreateMutation = gql`
   ${fragmentVariant}
-  mutation VariantCreate(
-    $attributes: [AttributeValueInput]!
-    $costPrice: Decimal
-    $priceOverride: Decimal
-    $product: ID!
-    $sku: String
-    $quantity: Int
-    $trackInventory: Boolean!
-  ) {
-    productVariantCreate(
-      input: {
-        attributes: $attributes
-        costPrice: $costPrice
-        priceOverride: $priceOverride
-        product: $product
-        sku: $sku
-        quantity: $quantity
-        trackInventory: $trackInventory
-      }
-    ) {
+  mutation VariantCreate($input: ProductVariantCreateInput!) {
+    productVariantCreate(input: $input) {
       errors {
         field
         message
@@ -457,6 +443,30 @@ export const TypedProductBulkPublishMutation = TypedMutation<
   productBulkPublish,
   productBulkPublishVariables
 >(productBulkPublishMutation);
+
+export const ProductVariantBulkCreateMutation = gql`
+  mutation ProductVariantBulkCreate(
+    $id: ID!
+    $inputs: [ProductVariantBulkCreateInput]!
+  ) {
+    productVariantBulkCreate(product: $id, variants: $inputs) {
+      bulkProductErrors {
+        field
+        message
+        code
+        index
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+export const TypedProductVariantBulkCreateMutation = TypedMutation<
+  ProductVariantBulkCreate,
+  ProductVariantBulkCreateVariables
+>(ProductVariantBulkCreateMutation);
 
 export const ProductVariantBulkDeleteMutation = gql`
   mutation ProductVariantBulkDelete($ids: [ID!]!) {

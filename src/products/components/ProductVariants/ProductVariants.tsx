@@ -69,6 +69,7 @@ interface ProductVariantsProps extends ListActions, WithStyles<typeof styles> {
   fallbackPrice?: ProductVariant_costPrice;
   onRowClick: (id: string) => () => void;
   onVariantAdd?();
+  onVariantsAdd?();
 }
 
 const numberOfColumns = 5;
@@ -81,6 +82,7 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
     fallbackPrice,
     onRowClick,
     onVariantAdd,
+    onVariantsAdd,
     isChecked,
     selected,
     toggle,
@@ -98,7 +100,7 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
             description: "section header"
           })}
           toolbar={
-            <>
+            hasVariants ? (
               <Button
                 onClick={onVariantAdd}
                 variant="text"
@@ -110,7 +112,19 @@ export const ProductVariants = withStyles(styles, { name: "ProductVariants" })(
                   description="button"
                 />
               </Button>
-            </>
+            ) : (
+              <Button
+                onClick={onVariantsAdd}
+                variant="text"
+                color="primary"
+                data-tc="button-add-variants"
+              >
+                <FormattedMessage
+                  defaultMessage="Create variants"
+                  description="button"
+                />
+              </Button>
+            )
           }
         />
         {!variants.length && (

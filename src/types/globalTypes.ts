@@ -193,6 +193,20 @@ export enum PermissionEnum {
   MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
 }
 
+export enum ProductErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  ATTRIBUTE_ALREADY_ASSIGNED = "ATTRIBUTE_ALREADY_ASSIGNED",
+  ATTRIBUTE_CANNOT_BE_ASSIGNED = "ATTRIBUTE_CANNOT_BE_ASSIGNED",
+  ATTRIBUTE_VARIANTS_DISABLED = "ATTRIBUTE_VARIANTS_DISABLED",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  NOT_PRODUCTS_IMAGE = "NOT_PRODUCTS_IMAGE",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+  VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT",
+}
+
 export enum ProductOrderField {
   DATE = "DATE",
   MINIMAL_PRICE = "MINIMAL_PRICE",
@@ -612,6 +626,27 @@ export interface ProductTypeInput {
   isDigital?: boolean | null;
   weight?: any | null;
   taxCode?: string | null;
+}
+
+export interface ProductVariantBulkCreateInput {
+  attributes: (AttributeValueInput | null)[];
+  costPrice?: any | null;
+  priceOverride?: any | null;
+  sku: string;
+  quantity?: number | null;
+  trackInventory?: boolean | null;
+  weight?: any | null;
+}
+
+export interface ProductVariantCreateInput {
+  attributes: (AttributeValueInput | null)[];
+  costPrice?: any | null;
+  priceOverride?: any | null;
+  sku?: string | null;
+  quantity?: number | null;
+  trackInventory?: boolean | null;
+  weight?: any | null;
+  product: string;
 }
 
 export interface ProductVariantInput {
