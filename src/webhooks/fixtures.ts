@@ -1,6 +1,21 @@
+import { ServiceList_serviceAccounts_edges_node } from "./types/ServiceList";
 import { Webhook_webhook } from "./types/Webhook";
 import { Webhooks_webhooks_edges_node } from "./types/Webhooks";
 
+export const services: ServiceList_serviceAccounts_edges_node[] = [
+  {
+    __typename: "ServiceAccount",
+    id: "Jzx123sEt==",
+    isActive: true,
+    name: "Facebook"
+  },
+  {
+    __typename: "ServiceAccount",
+    id: "Jzx123sEt==",
+    isActive: false,
+    name: "Twittwe"
+  }
+];
 export const webhookList: Webhooks_webhooks_edges_node[] = [
   {
     __typename: "Webhook",
