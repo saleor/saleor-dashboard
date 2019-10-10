@@ -19,7 +19,7 @@ import { useIntl } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
-import { maybe, renderCollection } from "@saleor/misc";
+import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import { Webhooks_webhooks_edges_node } from "../../types/Webhooks";
 
@@ -125,15 +125,18 @@ const WebhooksList = withStyles(styles, { name: "PluginList" })(
                       )}
                     </TableCell>
                     <TableCell className={classes.colAction}>
-                      <div
+                      <IconButton
+                        color="primary"
                         onClick={webhook ? onRowClick(webhook.id) : undefined}
                       >
                         <EditIcon />
-                      </div>
+                      </IconButton>
                       <IconButton
                         color="primary"
                         onClick={
-                          webhook ? () => onRemove(webhook.id) : undefined
+                          webhook
+                            ? stopPropagation(() => onRemove(webhook.id))
+                            : undefined
                         }
                       >
                         <DeleteIcon />

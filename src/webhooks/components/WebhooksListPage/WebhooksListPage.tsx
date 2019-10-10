@@ -13,7 +13,7 @@ import WebhooksList from "../WebhooksList/WebhooksList";
 export interface WebhooksListPageProps extends PageListProps {
   webhooks: Webhooks_webhooks_edges_node[];
   onBack: () => void;
-  onRemove: () => void;
+  onRemove: (id: string) => void;
 }
 
 const WebhooksListPage: React.StatelessComponent<WebhooksListPageProps> = ({

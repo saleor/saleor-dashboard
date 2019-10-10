@@ -20,8 +20,7 @@ import {
   webhooksAddUrl,
   webhooksListUrl,
   WebhooksListUrlQueryParams,
-  webhooksUrl,
-  WebhookUrlDialog
+  webhooksUrl
 } from "../urls";
 
 interface WebhooksListProps {
@@ -50,90 +49,85 @@ export const WebhooksList: React.StatelessComponent<WebhooksListProps> = ({
       true
     );
 
-  const openModal = (action: WebhookUrlDialog, id?: string) =>
-    navigate(
-      webhooksListUrl({
-        ...params,
-        action,
-        id
-      })
-    );
-
-  const onWebhookDelete = (data: WebhookDelete) => {
-    if (data.webhookDelete.errors.length === 0) {
-      notify({
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-      navigate(webhooksListUrl());
-    }
-  };
-
   return (
     <TypedWebhooksListQuery displayLoader variables={paginationState}>
-      {({ data, loading }) => (
-        <TypedWebhookDelete onCompleted={onWebhookDelete}>
-          {(webhookDelete, webhookDeleteOpts) => {
-            const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.webhooks.pageInfo),
-              paginationState,
-              params
-            );
-            const handleRemove = (id: string) =>
-              navigate(
-                webhooksListUrl({
-                  ...params,
-                  action: "remove",
-                  id
-                })
+      {({ data, loading, refetch }) => {
+        const onWebhookDelete = (data: WebhookDelete) => {
+          if (data.webhookDelete.errors.length === 0) {
+            notify({
+              text: intl.formatMessage(commonMessages.savedChanges)
+            });
+            navigate(webhooksListUrl());
+            refetch();
+          }
+        };
+        return (
+          <TypedWebhookDelete onCompleted={onWebhookDelete}>
+            {(webhookDelete, webhookDeleteOpts) => {
+              const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+                maybe(() => data.webhooks.pageInfo),
+                paginationState,
+                params
               );
-            const handleRemoveConfirm = () =>
-              webhookDelete({
-                variables: {
-                  id
-                }
-              });
+              const handleRemove = (id: string) => {
+                navigate(
+                  webhooksListUrl({
+                    ...params,
+                    action: "remove",
+                    id
+                  })
+                );
+              };
+              const handleRemoveConfirm = () => {
+                webhookDelete({
+                  variables: {
+                    id: params.id
+                  }
+                });
+              };
 
-            const deleteTransitionState = getMutationState(
-              webhookDeleteOpts.called,
-              webhookDeleteOpts.loading,
-              maybe(() => webhookDeleteOpts.data.webhookDelete.errors)
-            );
+              const deleteTransitionState = getMutationState(
+                webhookDeleteOpts.called,
+                webhookDeleteOpts.loading,
+                maybe(() => webhookDeleteOpts.data.webhookDelete.errors)
+              );
 
-            return (
-              <>
-                <WebhooksListPage
-                  disabled={loading}
-                  settings={settings}
-                  webhooks={maybe(() =>
-                    data.webhooks.edges.map(edge => edge.node)
-                  )}
-                  pageInfo={pageInfo}
-                  onAdd={() => navigate(webhooksAddUrl)}
-                  onBack={() => navigate(configurationMenuUrl)}
-                  onNextPage={loadNextPage}
-                  onPreviousPage={loadPreviousPage}
-                  onRemove={handleRemove}
-                  onUpdateListSettings={updateListSettings}
-                  onRowClick={id => () => navigate(webhooksUrl(id))}
-                />
-                <WebhookDeleteDialog
-                  confirmButtonState={deleteTransitionState}
-                  name={maybe(
-                    () =>
-                      data.webhooks.edges.find(
-                        edge => edge.node.id === params.id
-                      ).node.name,
-                    "..."
-                  )}
-                  onClose={closeModal}
-                  onConfirm={handleRemoveConfirm}
-                  open={params.action === "remove"}
-                />
-              </>
-            );
-          }}
-        </TypedWebhookDelete>
-      )}
+              return (
+                <>
+                  <WebhooksListPage
+                    disabled={loading}
+                    settings={settings}
+                    webhooks={maybe(() =>
+                      data.webhooks.edges.map(edge => edge.node)
+                    )}
+                    pageInfo={pageInfo}
+                    onAdd={() => navigate(webhooksAddUrl)}
+                    onBack={() => navigate(configurationMenuUrl)}
+                    onNextPage={loadNextPage}
+                    onPreviousPage={loadPreviousPage}
+                    onRemove={handleRemove}
+                    onUpdateListSettings={updateListSettings}
+                    onRowClick={id => () => navigate(webhooksUrl(id))}
+                  />
+                  <WebhookDeleteDialog
+                    confirmButtonState={deleteTransitionState}
+                    name={maybe(
+                      () =>
+                        data.webhooks.edges.find(
+                          edge => edge.node.id === params.id
+                        ).node.name,
+                      "..."
+                    )}
+                    onClose={closeModal}
+                    onConfirm={handleRemoveConfirm}
+                    open={params.action === "remove"}
+                  />
+                </>
+              );
+            }}
+          </TypedWebhookDelete>
+        );
+      }}
     </TypedWebhooksListQuery>
   );
 };
