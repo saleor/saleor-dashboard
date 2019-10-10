@@ -3,6 +3,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/styles";
 
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -29,14 +31,21 @@ export enum VoucherType {
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT"
 }
 
-const VoucherValue = ({
-  data,
-  defaultCurrency,
-  disabled,
-  errors,
-  variant,
-  onChange
-}: VoucherValueProps) => {
+const useStyles = makeStyles(
+  (theme: Theme) => ({
+    hr: {
+      margin: `${theme.spacing.unit * 2}px 0`
+    }
+  }),
+  {
+    name: "VoucherValue"
+  }
+);
+
+const VoucherValue: React.FC<VoucherValueProps> = props => {
+  const { data, defaultCurrency, disabled, errors, variant, onChange } = props;
+
+  const classes = useStyles(props);
   const intl = useIntl();
 
   const translatedVoucherTypes = translateVoucherTypes(intl);
@@ -81,22 +90,22 @@ const VoucherValue = ({
         <FormSpacer />
         {variant === "update" && (
           <>
+            <Hr className={classes.hr} />
             <RadioGroupField
               choices={voucherTypeChoices}
               disabled={disabled}
               error={!!errors.type}
               hint={errors.type}
               label={intl.formatMessage({
-                defaultMessage: "Discount Specific Information"
+                defaultMessage: "Voucher Specific Information"
               })}
               name={"type" as keyof FormData}
               value={data.type}
               onChange={onChange}
             />
-            <FormSpacer />
           </>
         )}
-        <Hr />
+        <Hr className={classes.hr} />
         <FormSpacer />
         <ControlledCheckbox
           name={"applyOncePerOrder" as keyof FormData}

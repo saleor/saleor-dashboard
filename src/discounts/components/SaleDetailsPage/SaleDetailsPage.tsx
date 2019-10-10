@@ -13,21 +13,21 @@ import { Tab, TabContainer } from "@saleor/components/Tab";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { ListProps, TabListActions, UserError } from "../../../types";
-import { SaleType } from "../../../types/globalTypes";
+import { SaleType as SaleTypeEnum } from "../../../types/globalTypes";
 import { SaleDetails_sale } from "../../types/SaleDetails";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountProducts from "../DiscountProducts";
 import SaleInfo from "../SaleInfo";
-import SalePricing from "../SalePricing";
 import SaleSummary from "../SaleSummary";
+import SaleType from "../SaleType";
 
 export interface FormData {
   name: string;
   startDate: string;
   endDate: string;
   value: string;
-  type: SaleType;
+  type: SaleTypeEnum;
 }
 
 export enum SaleDetailsPageTab {
@@ -109,7 +109,7 @@ const SaleDetailsPage: React.StatelessComponent<SaleDetailsPageProps> = ({
     endDate: maybe(() => (sale.endDate ? sale.endDate : ""), ""),
     name: maybe(() => sale.name, ""),
     startDate: maybe(() => sale.startDate, ""),
-    type: maybe(() => sale.type, SaleType.FIXED),
+    type: maybe(() => sale.type, SaleTypeEnum.FIXED),
     value: maybe(() => sale.value.toString(), "")
   };
   return (
@@ -129,13 +129,7 @@ const SaleDetailsPage: React.StatelessComponent<SaleDetailsPageProps> = ({
                 onChange={change}
               />
               <CardSpacer />
-              <SalePricing
-                data={data}
-                defaultCurrency={defaultCurrency}
-                disabled={disabled}
-                errors={formErrors}
-                onChange={change}
-              />
+              <SaleType data={data} disabled={disabled} onChange={change} />
               <CardSpacer />
               <TabContainer>
                 <CategoriesTab
