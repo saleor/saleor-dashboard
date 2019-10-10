@@ -12,8 +12,8 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -68,24 +68,26 @@ const WebhooksList = withStyles(styles, { name: "PluginList" })(
       <Card>
         <Table>
           <TableHead>
-            <TableCell className={classes.colName} padding="dense">
-              {intl.formatMessage({
-                defaultMessage: "Name",
-                description: "webhook name"
-              })}
-            </TableCell>
-            <TableCell className={classes.colActive} padding="dense">
-              {intl.formatMessage({
-                defaultMessage: "Service Account",
-                description: "webhook service account"
-              })}
-            </TableCell>
-            <TableCell className={classes.colAction} padding="dense">
-              {intl.formatMessage({
-                defaultMessage: "Action",
-                description: "user action bar"
-              })}
-            </TableCell>
+            <TableRow>
+              <TableCell className={classes.colName} padding="dense">
+                {intl.formatMessage({
+                  defaultMessage: "Name",
+                  description: "webhook name"
+                })}
+              </TableCell>
+              <TableCell className={classes.colActive} padding="dense">
+                {intl.formatMessage({
+                  defaultMessage: "Service Account",
+                  description: "webhook service account"
+                })}
+              </TableCell>
+              <TableCell className={classes.colAction} padding="dense">
+                {intl.formatMessage({
+                  defaultMessage: "Action",
+                  description: "user action bar"
+                })}
+              </TableCell>
+            </TableRow>
           </TableHead>
           <TableFooter>
             <TableRow>

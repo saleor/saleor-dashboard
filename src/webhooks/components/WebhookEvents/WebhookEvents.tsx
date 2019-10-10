@@ -1,26 +1,21 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import makeStyles from "@material-ui/styles/makeStyles";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import Hr from "@saleor/components/Hr";
 import React from "react";
 import { useIntl } from "react-intl";
 import { WebhookEventTypeEnum } from "../../../types/globalTypes";
-import { FormData } from "../WebhooksDetailsPage";
 
 interface WebhookEventsProps {
-  data: FormData;
+  data: {
+    allEvents: boolean;
+    events: string[];
+  };
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: React.ChangeEvent<any>, cb?: () => void) => void;
 }
-
-const useStyles = makeStyles(() => ({
-  item: {
-    paddingBottom: 10,
-    paddingTop: 10
-  }
-}));
 
 const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
   data,
@@ -28,27 +23,26 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
   onChange
 }) => {
   const intl = useIntl();
-  const [events, setEvents] = React.useState(data.events);
-
   const eventsEnum = Object.values(WebhookEventTypeEnum);
 
-  const addOrRemove = (array, value) => {
-    const index = array.indexOf(value);
-
-    if (index === -1) {
-      array.push(value);
-    } else {
-      array.splice(index, 1);
-    }
-  };
-
-  console.log(data.events);
-
-  const eventsOnChange = event => {
-    const newData = events;
-    addOrRemove(newData, event.target.name);
-    setEvents(newData);
-    console.log(events.indexOf(event.target.name));
+  const handleAllEventsChange = (event: React.ChangeEvent<any>) =>
+    onChange(event, () =>
+      onChange({
+        target: {
+          name: "events",
+          value: event.target.value ? eventsEnum.map(event => event) : []
+        }
+      } as any)
+    );
+  const handleEventsChange = (event: React.ChangeEvent<any>) => {
+    onChange({
+      target: {
+        name: "events",
+        value: event.target.value
+          ? data.events.concat([event.target.name])
+          : data.events.filter(events => events !== event.target.name)
+      }
+    } as any);
   };
 
   return (
@@ -67,17 +61,33 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
             description: "webhook events"
           })}
         </Typography>
-        {eventsEnum.map((event, index) => (
-          <div key={index}>
-            <ControlledCheckbox
-              name={event}
-              label={event}
-              checked={events.includes(WebhookEventTypeEnum[event])}
-              onChange={eventsOnChange}
-              disabled={disabled}
-            />
-          </div>
-        ))}
+        <ControlledCheckbox
+          checked={data.allEvents}
+          disabled={disabled}
+          label={intl.formatMessage({
+            defaultMessage: "All events",
+            description: "checkbox label"
+          })}
+          name="allEvents"
+          onChange={handleAllEventsChange}
+        />
+        <Hr />
+        {!data.allEvents &&
+          eventsEnum.map((event, index) => {
+            if (index !== 0) {
+              return (
+                <div key={index}>
+                  <ControlledCheckbox
+                    checked={data.events.includes(event)}
+                    disabled={disabled}
+                    label={event.replace(/\./, "")}
+                    name={event}
+                    onChange={handleEventsChange}
+                  />
+                </div>
+              );
+            }
+          })}
       </CardContent>
     </Card>
   );

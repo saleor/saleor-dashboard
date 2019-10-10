@@ -9,6 +9,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
+import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
@@ -18,12 +19,13 @@ import WebhookStatus from "../WebhookStatus";
 
 export interface FormData {
   id: string;
-  events: string[];
+  events: WebhookEventTypeEnum[];
   isActive: boolean;
   name: string;
   secretKey: string | null;
   targetUrl: string;
   serviceAccount: string;
+  allEvents: boolean;
 }
 
 export interface WebhookCreatePageProps {
@@ -45,6 +47,7 @@ const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const initialForm: FormData = {
+    allEvents: false,
     events: [],
     id: null,
     isActive: false,

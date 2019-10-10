@@ -2,13 +2,15 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { WebhookEventTypeEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL fragment: WebhooksDetailsFragment
 // ====================================================
 
 export interface WebhooksDetailsFragment_events {
   __typename: "WebhookEvent";
-  eventType: string | null;
+  eventType: WebhookEventTypeEnum | null;
 }
 
 export interface WebhooksDetailsFragment_serviceAccount {

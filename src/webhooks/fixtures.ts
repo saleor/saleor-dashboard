@@ -1,57 +1,47 @@
-import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
-import { Plugin_plugin } from "./types/Plugin";
-import { Plugins_plugins_edges_node } from "./types/Plugins";
+import { Webhook_webhook } from "./types/Webhook";
+import { Webhooks_webhooks_edges_node } from "./types/Webhooks";
 
-export const pluginList: Plugins_plugins_edges_node[] = [
+export const webhookList: Webhooks_webhooks_edges_node[] = [
   {
-    __typename: "Plugin",
-    active: true,
-    description:
-      "Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna.",
+    __typename: "Webhook",
+    events: [],
     id: "Jzx123sEt==",
-    name: "Avalara"
+    isActive: true,
+    name: "Webhook Test",
+    secretKey: "dsdasdasd_asdas",
+    serviceAccount: {
+      __typename: "ServiceAccount",
+      id: "Jzx123sEt==",
+      name: "Test Account"
+    },
+    targetUrl: "http://www.getsaleor.com"
   },
   {
-    __typename: "Plugin",
-    active: false,
-    description:
-      "Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna.",
+    __typename: "Webhook",
+    events: [],
     id: "Jzx123sEt==",
-    name: "VatLayer"
+    isActive: true,
+    name: "Webhook Test 2",
+    secretKey: "zxczx_asdas",
+    serviceAccount: {
+      __typename: "ServiceAccount",
+      id: "Jzx1ss23sEt==",
+      name: "Test Account 2"
+    },
+    targetUrl: "http://www.getsaleor.com"
   }
 ];
-export const plugin: Plugin_plugin = {
-  __typename: "Plugin",
-  active: true,
-  configuration: [
-    {
-      __typename: "ConfigurationItem",
-      helpText: "Provide user or account details",
-      label: "Username or account",
-      name: "Username or account",
-      type: ConfigurationTypeFieldEnum.STRING,
-      value: ""
-    },
-    {
-      __typename: "ConfigurationItem",
-      helpText: "Provide password or license details",
-      label: "Password or license",
-      name: "Password or license",
-      type: ConfigurationTypeFieldEnum.STRING,
-      value: ""
-    },
-    {
-      __typename: "ConfigurationItem",
-      helpText: "Determines if Saleor should use Avatax sandbox API.",
-      label: "Use sandbox",
-      name: "Use sandbox",
-      type: ConfigurationTypeFieldEnum.BOOLEAN,
-      value: "true"
-    }
-  ],
-  description:
-    "Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna.",
-
-  id: "UGx1Z2luQ29uZmlndXJhdGlvbjoy",
-  name: "Username or account"
+export const webhook: Webhook_webhook = {
+  __typename: "Webhook",
+  events: [],
+  id: "Jzx123sEt==",
+  isActive: true,
+  name: "Webhook Test 2",
+  secretKey: "zxczx_asdas",
+  serviceAccount: {
+    __typename: "ServiceAccount",
+    id: "Jzx1ss23sEt==",
+    name: "Test Account 2"
+  },
+  targetUrl: "http://www.getsaleor.com"
 };

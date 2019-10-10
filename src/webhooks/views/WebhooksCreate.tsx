@@ -2,8 +2,8 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { WebhookCreate as WebhookCreateData } from "@saleor/webhooks/types/WebhookCreate";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
+import { WebhookCreate as WebhookCreateData } from "@saleor/webhooks/types/WebhookCreate";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -47,7 +47,7 @@ export const WebhooksCreate: React.StatelessComponent<
           WebhookCreate({
             variables: {
               input: {
-                events: [WebhookEventTypeEnum.ALL_EVENTS],
+                events: [WebhookEventTypeEnum.ORDER_CREATED],
                 isActive: data.isActive,
                 name: data.name,
                 secretKey: data.secretKey,

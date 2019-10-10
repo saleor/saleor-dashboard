@@ -20,12 +20,13 @@ import WebhookStatus from "../WebhookStatus";
 
 export interface FormData {
   id: string;
-  events: string[];
+  events: WebhookEventTypeEnum[];
   isActive: boolean;
   name: string;
   secretKey: string | null;
   targetUrl: string;
   serviceAccount: string;
+  allEvents: boolean;
 }
 
 export interface WebhooksDetailsPageProps {
@@ -53,6 +54,16 @@ const WebhooksDetailsPage: React.StatelessComponent<
 }) => {
   const intl = useIntl();
   const initialForm: FormData = {
+    allEvents: maybe(
+      () =>
+        Object.values(WebhookEventTypeEnum).filter(
+          perm =>
+            maybe(() => webhook.events, []).filter(
+              event => event.eventType === perm
+            ).length === 0
+        ).length === 0,
+      false
+    ),
     events: maybe(() => webhook.events, []).map(event => event.eventType),
     id: maybe(() => webhook.id, null),
     isActive: maybe(() => webhook.isActive, false),
@@ -93,8 +104,8 @@ const WebhooksDetailsPage: React.StatelessComponent<
               <div>
                 <WebhookEvents
                   data={data}
-                  disabled={disabled}
                   onChange={change}
+                  disabled={disabled}
                 />
                 <FormSpacer />
                 <WebhookStatus

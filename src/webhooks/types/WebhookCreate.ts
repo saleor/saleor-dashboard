@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { WebhookCreateInput } from "./../../types/globalTypes";
+import { WebhookCreateInput, WebhookEventTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: WebhookCreate
@@ -16,7 +16,7 @@ export interface WebhookCreate_webhookCreate_errors {
 
 export interface WebhookCreate_webhookCreate_webhook_events {
   __typename: "WebhookEvent";
-  eventType: string | null;
+  eventType: WebhookEventTypeEnum | null;
 }
 
 export interface WebhookCreate_webhookCreate_webhook_serviceAccount {

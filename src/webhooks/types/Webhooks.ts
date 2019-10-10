@@ -2,13 +2,15 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { WebhookEventTypeEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: Webhooks
 // ====================================================
 
 export interface Webhooks_webhooks_edges_node_events {
   __typename: "WebhookEvent";
-  eventType: string | null;
+  eventType: WebhookEventTypeEnum | null;
 }
 
 export interface Webhooks_webhooks_edges_node_serviceAccount {

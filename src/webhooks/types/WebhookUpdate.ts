@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { WebhookUpdateInput } from "./../../types/globalTypes";
+import { WebhookUpdateInput, WebhookEventTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: WebhookUpdate
@@ -16,7 +16,7 @@ export interface WebhookUpdate_webhookUpdate_errors {
 
 export interface WebhookUpdate_webhookUpdate_webhook_events {
   __typename: "WebhookEvent";
-  eventType: string | null;
+  eventType: WebhookEventTypeEnum | null;
 }
 
 export interface WebhookUpdate_webhookUpdate_webhook_serviceAccount {
