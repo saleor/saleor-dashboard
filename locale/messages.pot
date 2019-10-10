@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-09T15:30:47.333Z\n"
+"POT-Creation-Date: 2019-10-15T15:53:11.572Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -97,6 +97,14 @@ msgstr ""
 #. Active
 msgctxt "staff member status"
 msgid "Active"
+msgstr ""
+
+#: build/locale/src/discounts/components/DiscountDates/DiscountDates.json
+#. [src.discounts.components.DiscountDates.1662220323] - time during discount is active, header
+#. defaultMessage is:
+#. Active Dates
+msgctxt "time during discount is active, header"
+msgid "Active Dates"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
@@ -3235,12 +3243,12 @@ msgctxt "description"
 msgid "Discount Code"
 msgstr ""
 
-#: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
-#. [src.discounts.components.VoucherValue.1971417066]
+#: build/locale/src/discounts/components/SaleType/SaleType.json
+#. [src.discounts.components.SaleType.3216816841] - percentage or fixed, header
 #. defaultMessage is:
-#. Discount Specific Information
-msgctxt "description"
-msgid "Discount Specific Information"
+#. Discount Type
+msgctxt "percentage or fixed, header"
+msgid "Discount Type"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
@@ -3251,10 +3259,6 @@ msgctxt "header"
 msgid "Discount Type"
 msgstr ""
 
-#: build/locale/src/discounts/components/SalePricing/SalePricing.json
-#. [src.discounts.components.SalePricing.1205967018]
-#. defaultMessage is:
-#. Discount Value
 #: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
 #. [src.discounts.components.VoucherValue.1205967018]
 #. defaultMessage is:
@@ -3657,6 +3661,14 @@ msgstr ""
 #. First Name
 msgctxt "description"
 msgid "First Name"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleType/SaleType.json
+#. [src.discounts.components.SaleType.46415128] - discount type
+#. defaultMessage is:
+#. Fixed Amount
+msgctxt "discount type"
+msgid "Fixed Amount"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
@@ -5607,6 +5619,14 @@ msgctxt "order history message"
 msgid "Payment was voided"
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleType/SaleType.json
+#. [src.discounts.components.SaleType.3688224049] - discount type
+#. defaultMessage is:
+#. Percentage
+msgctxt "discount type"
+msgid "Percentage"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
 #. [src.discounts.components.VoucherTypes.3688224049] - voucher discount type
 #. defaultMessage is:
@@ -5873,14 +5893,6 @@ msgstr ""
 #. Prices and SKU
 msgctxt "variant creation step"
 msgid "Prices and SKU"
-msgstr ""
-
-#: build/locale/src/discounts/components/SalePricing/SalePricing.json
-#. [src.discounts.components.SalePricing.1099355007] - sale pricing, header
-#. defaultMessage is:
-#. Pricing
-msgctxt "sale pricing, header"
-msgid "Pricing"
 msgstr ""
 
 #: build/locale/src/products/components/ProductPricing/ProductPricing.json
@@ -7091,6 +7103,10 @@ msgctxt "button"
 msgid "Set as default shipping address"
 msgstr ""
 
+#: build/locale/src/discounts/components/DiscountDates/DiscountDates.json
+#. [src.discounts.components.DiscountDates.1596226028] - voucher end date, switch button
+#. defaultMessage is:
+#. Set end date
 #: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
 #. [src.discounts.components.VoucherDates.1596226028] - voucher end date, switch button
 #. defaultMessage is:
@@ -7877,14 +7893,6 @@ msgstr ""
 #. This will be shown to customers at checkout
 msgctxt "description"
 msgid "This will be shown to customers at checkout"
-msgstr ""
-
-#: build/locale/src/discounts/components/SalePricing/SalePricing.json
-#. [src.discounts.components.SalePricing.2503204759] - time during which sale is active
-#. defaultMessage is:
-#. Time Frame
-msgctxt "time during which sale is active"
-msgid "Time Frame"
 msgstr ""
 
 #: build/locale/src/pages/components/PageInfo/PageInfo.json
@@ -8785,6 +8793,14 @@ msgstr ""
 #. Voucher Name
 msgctxt "description"
 msgid "Voucher Name"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
+#. [src.discounts.components.VoucherValue.1960678372]
+#. defaultMessage is:
+#. Voucher Specific Information
+msgctxt "description"
+msgid "Voucher Specific Information"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
