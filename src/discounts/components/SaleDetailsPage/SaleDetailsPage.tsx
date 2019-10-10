@@ -11,23 +11,27 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { sectionNames } from "@saleor/intl";
-import { maybe } from "../../../misc";
+import { maybe, splitDateTime } from "../../../misc";
 import { ListProps, TabListActions, UserError } from "../../../types";
 import { SaleType as SaleTypeEnum } from "../../../types/globalTypes";
 import { SaleDetails_sale } from "../../types/SaleDetails";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
+import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
 import SaleInfo from "../SaleInfo";
 import SaleSummary from "../SaleSummary";
 import SaleType from "../SaleType";
 
 export interface FormData {
+  endDate: string;
+  endTime: string;
+  hasEndDate: boolean;
   name: string;
   startDate: string;
-  endDate: string;
-  value: string;
+  startTime: string;
   type: SaleTypeEnum;
+  value: string;
 }
 
 export enum SaleDetailsPageTab {
@@ -106,9 +110,12 @@ const SaleDetailsPage: React.StatelessComponent<SaleDetailsPageProps> = ({
   const intl = useIntl();
 
   const initialForm: FormData = {
-    endDate: maybe(() => (sale.endDate ? sale.endDate : ""), ""),
+    endDate: splitDateTime(maybe(() => sale.endDate, "")).date,
+    endTime: splitDateTime(maybe(() => sale.endDate, "")).time,
+    hasEndDate: maybe(() => !!sale.endDate),
     name: maybe(() => sale.name, ""),
-    startDate: maybe(() => sale.startDate, ""),
+    startDate: splitDateTime(maybe(() => sale.startDate, "")).date,
+    startTime: splitDateTime(maybe(() => sale.startDate, "")).time,
     type: maybe(() => sale.type, SaleTypeEnum.FIXED),
     value: maybe(() => sale.value.toString(), "")
   };
@@ -237,6 +244,14 @@ const SaleDetailsPage: React.StatelessComponent<SaleDetailsPageProps> = ({
                   toolbar={productListToolbar}
                 />
               )}
+              <CardSpacer />
+              <DiscountDates
+                data={data}
+                disabled={disabled}
+                defaultCurrency={defaultCurrency}
+                errors={formErrors}
+                onChange={change}
+              />
             </div>
             <div>
               <SaleSummary defaultCurrency={defaultCurrency} sale={sale} />
