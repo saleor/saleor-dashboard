@@ -162,7 +162,7 @@ const ProductVariantCreatePrices: React.FC<
           <Hr className={classes.hrAttribute} />
           {priceAttributeValues &&
             priceAttributeValues.map(attributeValue => (
-              <>
+              <React.Fragment key={attributeValue.id}>
                 <FormSpacer />
                 <Grid variant="uniform">
                   <div className={classes.label}>
@@ -198,7 +198,7 @@ const ProductVariantCreatePrices: React.FC<
                     />
                   </div>
                 </Grid>
-              </>
+              </React.Fragment>
             ))}
         </>
       )}
@@ -272,7 +272,7 @@ const ProductVariantCreatePrices: React.FC<
           <Hr className={classes.hrAttribute} />
           {stockAttributeValues &&
             stockAttributeValues.map(attributeValue => (
-              <>
+              <React.Fragment key={attributeValue.id}>
                 <FormSpacer />
                 <Grid variant="uniform">
                   <div className={classes.label}>
@@ -301,7 +301,7 @@ const ProductVariantCreatePrices: React.FC<
                     />
                   </div>
                 </Grid>
-              </>
+              </React.Fragment>
             ))}
         </>
       )}
