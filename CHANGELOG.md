@@ -32,3 +32,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Allow sorting products by attribute - #180 by @dominik-zeglen
 - Hide variants and attributes if product has none - #179 by @dominik-zeglen
 - Add service account section - #188 by @dominik-zeglen
+- Add webhook section - #206 by @benekex2
