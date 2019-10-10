@@ -83,23 +83,6 @@ export const WebhooksDetails: React.StatelessComponent<
                   []
                 );
 
-                if (formErrors.length) {
-                  formErrors.map(error => {
-                    notify({
-                      text: error.message
-                    });
-                  });
-                } else {
-                  if (webhookUpdateOpts.data) {
-                    notify({
-                      text: intl.formatMessage({
-                        defaultMessage: "Succesfully updated plugin settings",
-                        description: "plugin success message"
-                      })
-                    });
-                  }
-                }
-
                 const deleteTransitionState = getMutationState(
                   webhookDeleteOpts.called,
                   webhookDeleteOpts.loading,
