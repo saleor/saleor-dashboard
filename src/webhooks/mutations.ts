@@ -57,4 +57,4 @@ const webhookDelete = gql`
 export const TypedWebhookDelete = TypedMutation<
   WebhookDelete,
   WebhookDeleteVariables
->(WebhookDelete);
+>(webhookDelete);

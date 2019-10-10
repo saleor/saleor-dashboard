@@ -3,7 +3,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { FormErrors } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

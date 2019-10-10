@@ -1,9 +1,9 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { WebhookCreate as WebhookCreateData } from "@saleor/webhooks/types/WebhookCreate";
+import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -28,7 +28,6 @@ export const WebhooksCreate: React.StatelessComponent<
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const shop = useShop();
 
   const onSubmit = (data: WebhookCreateData) => {
     if (data.webhookCreate.errors.length === 0) {
@@ -48,7 +47,7 @@ export const WebhooksCreate: React.StatelessComponent<
           WebhookCreate({
             variables: {
               input: {
-                events: data.events,
+                events: [WebhookEventTypeEnum.ALL_EVENTS],
                 isActive: data.isActive,
                 name: data.name,
                 secretKey: data.secretKey,
@@ -66,7 +65,7 @@ export const WebhooksCreate: React.StatelessComponent<
 
         return (
           <TypedServiceListQuery displayLoader variables={{ first: 99 }}>
-            {({ data, loading }) => {
+            {({ data }) => {
               return (
                 <>
                   <WindowTitle
@@ -84,10 +83,8 @@ export const WebhooksCreate: React.StatelessComponent<
                     services={maybe(() =>
                       data.serviceAccounts.edges.map(edge => edge.node)
                     )}
-                    loading={loading}
                     onBack={handleBack}
                     onSubmit={handleSubmit}
-                    permissions={maybe(() => shop.permissions)}
                     saveButtonBarState={formTransitionState}
                   />
                 </>

@@ -13,6 +13,7 @@ import WebhooksList from "../WebhooksList/WebhooksList";
 export interface WebhooksListPageProps extends PageListProps {
   webhooks: Webhooks_webhooks_edges_node[];
   onBack: () => void;
+  onRemove: () => void;
 }
 
 const WebhooksListPage: React.StatelessComponent<WebhooksListPageProps> = ({
@@ -23,6 +24,7 @@ const WebhooksListPage: React.StatelessComponent<WebhooksListPageProps> = ({
   onNextPage,
   onPreviousPage,
   onRowClick,
+  onRemove,
   onUpdateListSettings,
   pageInfo,
   webhooks
@@ -47,6 +49,7 @@ const WebhooksListPage: React.StatelessComponent<WebhooksListPageProps> = ({
         webhooks={webhooks}
         onNextPage={onNextPage}
         onPreviousPage={onPreviousPage}
+        onRemove={onRemove}
         onUpdateListSettings={onUpdateListSettings}
         onRowClick={onRowClick}
         pageInfo={pageInfo}

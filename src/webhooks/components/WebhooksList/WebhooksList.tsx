@@ -1,4 +1,5 @@
 import Card from "@material-ui/core/Card";
+import IconButton from "@material-ui/core/IconButton";
 import {
   createStyles,
   Theme,
@@ -12,6 +13,7 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -23,6 +25,7 @@ import { Webhooks_webhooks_edges_node } from "../../types/Webhooks";
 
 export interface WebhooksListProps extends ListProps {
   webhooks: Webhooks_webhooks_edges_node[];
+  onRemove: (id: string) => void;
 }
 
 const styles = (theme: Theme) =>
@@ -56,6 +59,7 @@ const WebhooksList = withStyles(styles, { name: "PluginList" })(
     onNextPage,
     pageInfo,
     onRowClick,
+    onRemove,
     onUpdateListSettings,
     onPreviousPage
   }: WebhooksListProps & WithStyles<typeof styles>) => {
@@ -126,6 +130,14 @@ const WebhooksList = withStyles(styles, { name: "PluginList" })(
                       >
                         <EditIcon />
                       </div>
+                      <IconButton
+                        color="primary"
+                        onClick={
+                          webhook ? () => onRemove(webhook.id) : undefined
+                        }
+                      >
+                        <DeleteIcon />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 );

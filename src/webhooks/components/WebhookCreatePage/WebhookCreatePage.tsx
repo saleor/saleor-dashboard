@@ -12,14 +12,13 @@ import { UserError } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
-import { Webhook_webhook, Webhook_webhook_events } from "../../types/Webhook";
 import WebhookEvents from "../WebhookEvents";
 import WebhookInfo from "../WebhookInfo";
 import WebhookStatus from "../WebhookStatus";
 
 export interface FormData {
   id: string;
-  events: Webhook_webhook_events[];
+  events: string[];
   isActive: boolean;
   name: string;
   secretKey: string | null;
@@ -30,7 +29,6 @@ export interface FormData {
 export interface WebhookCreatePageProps {
   disabled: boolean;
   errors: UserError[];
-  webhook: Webhook_webhook;
   services: ServiceList_serviceAccounts_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -40,7 +38,6 @@ export interface WebhookCreatePageProps {
 const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
   disabled,
   errors,
-  webhook,
   saveButtonBarState,
   services,
   onBack,
@@ -48,13 +45,13 @@ const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const initialForm: FormData = {
-    events: maybe(() => webhook.events, []),
-    id: maybe(() => webhook.id, null),
-    isActive: maybe(() => webhook.isActive, false),
-    name: maybe(() => webhook.name, null),
-    secretKey: maybe(() => webhook.secretKey, ""),
-    serviceAccount: maybe(() => webhook.serviceAccount, ""),
-    targetUrl: maybe(() => webhook.targetUrl, "")
+    events: [],
+    id: null,
+    isActive: false,
+    name: null,
+    secretKey: "",
+    serviceAccount: "",
+    targetUrl: ""
   };
 
   return (
@@ -66,15 +63,10 @@ const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
               {intl.formatMessage(sectionNames.plugins)}
             </AppHeader>
             <PageHeader
-              title={intl.formatMessage(
-                {
-                  defaultMessage: "Create Webhook",
-                  description: "header"
-                },
-                {
-                  pluginName: maybe(() => webhook.name, "...")
-                }
-              )}
+              title={intl.formatMessage({
+                defaultMessage: "Create Webhook",
+                description: "header"
+              })}
             />
             <Grid>
               <div>

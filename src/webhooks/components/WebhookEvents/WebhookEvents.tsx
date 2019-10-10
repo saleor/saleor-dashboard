@@ -28,7 +28,7 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
   onChange
 }) => {
   const intl = useIntl();
-  const [events, setEvents] = React.useState();
+  const [events, setEvents] = React.useState(data.events);
 
   const eventsEnum = Object.values(WebhookEventTypeEnum);
 
@@ -42,10 +42,13 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
     }
   };
 
+  console.log(data.events);
+
   const eventsOnChange = event => {
-    const newData = [events];
-    addOrRemove(newData, event.name);
+    const newData = events;
+    addOrRemove(newData, event.target.name);
     setEvents(newData);
+    console.log(events.indexOf(event.target.name));
   };
 
   return (
@@ -69,7 +72,7 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
             <ControlledCheckbox
               name={event}
               label={event}
-              checked={data.events[event]}
+              checked={events.includes(WebhookEventTypeEnum[event])}
               onChange={eventsOnChange}
               disabled={disabled}
             />

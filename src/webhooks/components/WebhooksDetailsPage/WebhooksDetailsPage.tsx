@@ -13,14 +13,14 @@ import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
-import { Webhook_webhook, Webhook_webhook_events } from "../../types/Webhook";
+import { Webhook_webhook } from "../../types/Webhook";
 import WebhookEvents from "../WebhookEvents";
 import WebhookInfo from "../WebhookInfo";
 import WebhookStatus from "../WebhookStatus";
 
 export interface FormData {
   id: string;
-  events: Webhook_webhook_events[];
+  events: string[];
   isActive: boolean;
   name: string;
   secretKey: string | null;
@@ -35,6 +35,7 @@ export interface WebhooksDetailsPageProps {
   services: ServiceList_serviceAccounts_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
+  onDelete: () => void;
   onSubmit: (data: FormData) => void;
 }
 
@@ -47,11 +48,12 @@ const WebhooksDetailsPage: React.StatelessComponent<
   saveButtonBarState,
   services,
   onBack,
+  onDelete,
   onSubmit
 }) => {
   const intl = useIntl();
   const initialForm: FormData = {
-    events: maybe(() => webhook.events, []),
+    events: maybe(() => webhook.events, []).map(event => event.eventType),
     id: maybe(() => webhook.id, null),
     isActive: maybe(() => webhook.isActive, false),
     name: maybe(() => webhook.name, ""),
@@ -107,6 +109,7 @@ const WebhooksDetailsPage: React.StatelessComponent<
               state={saveButtonBarState}
               onCancel={onBack}
               onSave={submit}
+              onDelete={onDelete}
             />
           </Container>
         );
