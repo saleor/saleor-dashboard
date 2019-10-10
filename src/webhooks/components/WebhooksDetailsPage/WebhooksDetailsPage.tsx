@@ -56,12 +56,8 @@ const WebhooksDetailsPage: React.StatelessComponent<
   const initialForm: FormData = {
     allEvents: maybe(
       () =>
-        Object.values(WebhookEventTypeEnum).filter(
-          perm =>
-            maybe(() => webhook.events, []).filter(
-              event => event.eventType === perm
-            ).length === 0
-        ).length === 0,
+        maybe(() => webhook.events, [])[0].eventType ===
+        WebhookEventTypeEnum.ALL_EVENTS,
       false
     ),
     events: maybe(() => webhook.events, []).map(event => event.eventType),

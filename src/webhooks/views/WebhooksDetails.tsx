@@ -2,6 +2,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
 import { WebhookDelete } from "@saleor/webhooks/types/WebhookDelete";
 import React from "react";
@@ -111,7 +112,9 @@ export const WebhooksDetails: React.StatelessComponent<
                               variables: {
                                 id,
                                 input: {
-                                  events: data.events,
+                                  events: data.allEvents
+                                    ? [WebhookEventTypeEnum.ALL_EVENTS]
+                                    : data.events,
                                   isActive: data.isActive,
                                   name: data.name,
                                   secretKey: data.secretKey,

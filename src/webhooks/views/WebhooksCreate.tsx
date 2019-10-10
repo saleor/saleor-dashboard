@@ -2,6 +2,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import { WebhookCreate as WebhookCreateData } from "@saleor/webhooks/types/WebhookCreate";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -42,11 +43,13 @@ export const WebhooksCreate: React.StatelessComponent<
   return (
     <TypedWebhookCreate onCompleted={onSubmit}>
       {(WebhookCreate, webhookCreateOpts) => {
-        const handleSubmit = (data: FormData) =>
+        const handleSubmit = (data: FormData) => {
           WebhookCreate({
             variables: {
               input: {
-                events: data.events,
+                events: data.allEvents
+                  ? [WebhookEventTypeEnum.ALL_EVENTS]
+                  : data.events,
                 isActive: data.isActive,
                 name: data.name,
                 secretKey: data.secretKey,
@@ -55,6 +58,7 @@ export const WebhooksCreate: React.StatelessComponent<
               }
             }
           });
+        };
 
         const formTransitionState = getMutationState(
           webhookCreateOpts.called,

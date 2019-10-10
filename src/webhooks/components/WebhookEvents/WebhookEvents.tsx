@@ -30,7 +30,7 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
       onChange({
         target: {
           name: "events",
-          value: event.target.value ? eventsEnum.map(event => event) : []
+          value: WebhookEventTypeEnum.ALL_EVENTS
         }
       } as any)
     );
