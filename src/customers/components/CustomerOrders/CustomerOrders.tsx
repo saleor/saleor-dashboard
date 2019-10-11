@@ -51,7 +51,7 @@ const CustomerOrders = withStyles(styles, { name: "CustomerOrders" })(
       <Card>
         <CardTitle
           title={intl.formatMessage({
-            defaultMessage: "Recent orders",
+            defaultMessage: "Recent Orders",
             description: "section header"
           })}
           toolbar={

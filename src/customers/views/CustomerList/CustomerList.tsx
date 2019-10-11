@@ -216,7 +216,7 @@ export const CustomerList: React.StatelessComponent<CustomerListProps> = ({
                     }
                     variant="delete"
                     title={intl.formatMessage({
-                      defaultMessage: "Delete customers",
+                      defaultMessage: "Delete Customers",
                       description: "dialog header"
                     })}
                   >

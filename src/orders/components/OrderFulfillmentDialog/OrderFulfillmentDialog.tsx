@@ -120,7 +120,7 @@ const OrderFulfillmentDialog = withStyles(styles, {
               <>
                 <DialogTitle>
                   <FormattedMessage
-                    defaultMessage="Fulfill products"
+                    defaultMessage="Fulfill Oroducts"
                     description="dialog header"
                   />
                 </DialogTitle>

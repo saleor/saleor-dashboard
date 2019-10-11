@@ -34,4 +34,5 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add service account section - #188 by @dominik-zeglen
 - Add variant creator - #177 by @dominik-zeglen
 - Add git hooks - #209 by @dominik-zeglen
+- Do not send customer invitation email - #211 by @dominik-zeglen
 - Send address update mutation only once - #210 by @dominik-zeglen

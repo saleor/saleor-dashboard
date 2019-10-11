@@ -89,7 +89,7 @@ const CustomerCreatePage: React.StatelessComponent<CustomerCreatePageProps> = ({
             </AppHeader>
             <PageHeader
               title={intl.formatMessage({
-                defaultMessage: "Add customer",
+                defaultMessage: "Add Customer",
                 description: "page header"
               })}
             />

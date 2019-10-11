@@ -78,7 +78,7 @@ const CollectionCreatePage: React.StatelessComponent<
           </AppHeader>
           <PageHeader
             title={intl.formatMessage({
-              defaultMessage: "Add collection",
+              defaultMessage: "Add Collection",
               description: "page header"
             })}
           />
