@@ -2,8 +2,6 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ServiceAccountFilterInput } from "./../../types/globalTypes";
-
 // ====================================================
 // GraphQL query operation: ServiceList
 // ====================================================
@@ -43,5 +41,4 @@ export interface ServiceListVariables {
   after?: string | null;
   last?: number | null;
   before?: string | null;
-  filter?: ServiceAccountFilterInput | null;
 }

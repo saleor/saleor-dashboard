@@ -10,12 +10,11 @@ import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
+import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
+import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
+import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
 import React from "react";
 import { useIntl } from "react-intl";
-import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
-import WebhookEvents from "../WebhookEvents";
-import WebhookInfo from "../WebhookInfo";
-import WebhookStatus from "../WebhookStatus";
 
 export interface FormData {
   id: string;
@@ -59,51 +58,49 @@ const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
 
   return (
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({ data, errors, hasChanged, submit, change }) => {
-        return (
-          <Container>
-            <AppHeader onBack={onBack}>
-              {intl.formatMessage(sectionNames.plugins)}
-            </AppHeader>
-            <PageHeader
-              title={intl.formatMessage({
-                defaultMessage: "Create Webhook",
-                description: "header"
-              })}
-            />
-            <Grid>
-              <div>
-                <WebhookInfo
-                  data={data}
-                  disabled={disabled}
-                  services={maybe(() => services, [])}
-                  errors={errors}
-                  onChange={change}
-                />
-              </div>
-              <div>
-                <WebhookEvents
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <FormSpacer />
-                <WebhookStatus
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                />
-              </div>
-            </Grid>
-            <SaveButtonBar
-              disabled={disabled || !hasChanged}
-              state={saveButtonBarState}
-              onCancel={onBack}
-              onSave={submit}
-            />
-          </Container>
-        );
-      }}
+      {({ data, errors, hasChanged, submit, change }) => (
+        <Container>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.plugins)}
+          </AppHeader>
+          <PageHeader
+            title={intl.formatMessage({
+              defaultMessage: "Create Webhook",
+              description: "header"
+            })}
+          />
+          <Grid>
+            <div>
+              <WebhookInfo
+                data={data}
+                disabled={disabled}
+                services={maybe(() => services, [])}
+                errors={errors}
+                onChange={change}
+              />
+            </div>
+            <div>
+              <WebhookEvents
+                data={data}
+                disabled={disabled}
+                onChange={change}
+              />
+              <FormSpacer />
+              <WebhookStatus
+                data={data}
+                disabled={disabled}
+                onChange={change}
+              />
+            </div>
+          </Grid>
+          <SaveButtonBar
+            disabled={disabled || !hasChanged}
+            state={saveButtonBarState}
+            onCancel={onBack}
+            onSave={submit}
+          />
+        </Container>
+      )}
     </Form>
   );
 };

@@ -10,6 +10,8 @@ import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
+import { SingleAutocompleteSelectField } from "@saleor/components/SingleAutocompleteSelectField";
+import { commonMessages } from "@saleor/intl";
 import { FormErrors } from "@saleor/types";
 import { FormData } from "../WebhooksDetailsPage";
 
@@ -54,10 +56,7 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
       />
       <CardContent>
         <Typography className={classes.title}>
-          {intl.formatMessage({
-            defaultMessage: "General Information",
-            description: "webhook general information"
-          })}
+          {intl.formatMessage(commonMessages.generalInformations)}
         </Typography>
         <TextField
           disabled={disabled}
@@ -81,17 +80,22 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
             description: "webhook specific information"
           })}
         </Typography>
-        <SingleSelectField
+        <SingleAutocompleteSelectField
+          disabled={disabled}
+          displayValue={data.serviceAccount}
+          label={intl.formatMessage({
+            defaultMessage: "Assign to Service Account"
+          })}
+          name="serviceAccount"
+          onChange={onChange}
+          value={data.serviceAccount}
           choices={services.map(service => ({
             label: service.name,
             value: service.id
           }))}
-          name="serviceAccount"
-          value={data.serviceAccount}
-          label={intl.formatMessage({
-            defaultMessage: "Assign to Service Account"
-          })}
-          onChange={onChange}
+          InputProps={{
+            autoComplete: "off"
+          }}
         />
         <FormSpacer />
         <TextField

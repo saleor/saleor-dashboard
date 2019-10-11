@@ -21,7 +21,7 @@ const props: WebhooksListPageProps = {
   webhooks: webhookList
 };
 
-storiesOf("Views / Services / Service list", module)
+storiesOf("Views / Webhook / Webhook list", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhooksListPage {...props} />)
   .add("loading", () => (

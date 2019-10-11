@@ -10,13 +10,13 @@ import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
+import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
+import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
+import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
+import { ServiceList_serviceAccounts_edges_node } from "@saleor/webhooks/types/ServiceList";
+import { Webhook_webhook } from "@saleor/webhooks/types/Webhook";
 import React from "react";
 import { useIntl } from "react-intl";
-import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
-import { Webhook_webhook } from "../../types/Webhook";
-import WebhookEvents from "../WebhookEvents";
-import WebhookInfo from "../WebhookInfo";
-import WebhookStatus from "../WebhookStatus";
 
 export interface FormData {
   id: string;
@@ -54,11 +54,8 @@ const WebhooksDetailsPage: React.StatelessComponent<
 }) => {
   const intl = useIntl();
   const initialForm: FormData = {
-    allEvents: maybe(
-      () =>
-        maybe(() => webhook.events, [])[0].eventType ===
-        WebhookEventTypeEnum.ALL_EVENTS,
-      false
+    allEvents: !!maybe(() => webhook.events, []).find(
+      event => event.eventType === WebhookEventTypeEnum.ALL_EVENTS
     ),
     events: maybe(() => webhook.events, []).map(event => event.eventType),
     id: maybe(() => webhook.id, null),
@@ -70,57 +67,55 @@ const WebhooksDetailsPage: React.StatelessComponent<
   };
   return (
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({ data, errors, hasChanged, submit, change }) => {
-        return (
-          <Container>
-            <AppHeader onBack={onBack}>
-              {intl.formatMessage(sectionNames.plugins)}
-            </AppHeader>
-            <PageHeader
-              title={intl.formatMessage(
-                {
-                  defaultMessage: "{pluginName} Details",
-                  description: "header"
-                },
-                {
-                  pluginName: maybe(() => webhook.name, "...")
-                }
-              )}
-            />
-            <Grid>
-              <div>
-                <WebhookInfo
-                  data={data}
-                  disabled={disabled}
-                  services={maybe(() => services, [])}
-                  errors={errors}
-                  onChange={change}
-                />
-              </div>
-              <div>
-                <WebhookEvents
-                  data={data}
-                  onChange={change}
-                  disabled={disabled}
-                />
-                <FormSpacer />
-                <WebhookStatus
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                />
-              </div>
-            </Grid>
-            <SaveButtonBar
-              disabled={disabled || !hasChanged}
-              state={saveButtonBarState}
-              onCancel={onBack}
-              onSave={submit}
-              onDelete={onDelete}
-            />
-          </Container>
-        );
-      }}
+      {({ data, errors, hasChanged, submit, change }) => (
+        <Container>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.plugins)}
+          </AppHeader>
+          <PageHeader
+            title={intl.formatMessage(
+              {
+                defaultMessage: "{webhookName} Details",
+                description: "header"
+              },
+              {
+                webhookName: maybe(() => webhook.name, "...")
+              }
+            )}
+          />
+          <Grid>
+            <div>
+              <WebhookInfo
+                data={data}
+                disabled={disabled}
+                services={maybe(() => services, [])}
+                errors={errors}
+                onChange={change}
+              />
+            </div>
+            <div>
+              <WebhookEvents
+                data={data}
+                onChange={change}
+                disabled={disabled}
+              />
+              <FormSpacer />
+              <WebhookStatus
+                data={data}
+                disabled={disabled}
+                onChange={change}
+              />
+            </div>
+          </Grid>
+          <SaveButtonBar
+            disabled={disabled || !hasChanged}
+            state={saveButtonBarState}
+            onCancel={onBack}
+            onSave={submit}
+            onDelete={onDelete}
+          />
+        </Container>
+      )}
     </Form>
   );
 };

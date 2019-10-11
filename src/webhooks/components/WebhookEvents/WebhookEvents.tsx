@@ -4,9 +4,10 @@ import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
+import { ChangeEvent } from "@saleor/hooks/useForm";
+import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
-import { WebhookEventTypeEnum } from "../../../types/globalTypes";
 
 interface WebhookEventsProps {
   data: {
@@ -25,16 +26,14 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
   const intl = useIntl();
   const eventsEnum = Object.values(WebhookEventTypeEnum);
 
-  const handleAllEventsChange = (event: React.ChangeEvent<any>) =>
-    onChange(event, () =>
-      onChange({
-        target: {
-          name: "events",
-          value: WebhookEventTypeEnum.ALL_EVENTS
-        }
-      } as any)
-    );
-  const handleEventsChange = (event: React.ChangeEvent<any>) => {
+  const handleAllEventsChange = () =>
+    onChange({
+      target: {
+        name: "events",
+        value: WebhookEventTypeEnum.ALL_EVENTS
+      }
+    } as any);
+  const handleEventsChange = (event: ChangeEvent) => {
     onChange({
       target: {
         name: "events",
@@ -73,20 +72,18 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
         />
         <Hr />
         {!data.allEvents &&
-          eventsEnum.map((event, index) => {
-            if (index !== 0) {
-              return (
-                <div key={index}>
-                  <ControlledCheckbox
-                    checked={data.events.includes(event)}
-                    disabled={disabled}
-                    label={event.replace(/\./, "")}
-                    name={event}
-                    onChange={handleEventsChange}
-                  />
-                </div>
-              );
-            }
+          eventsEnum.slice(1).map(event => {
+            return (
+              <div key={event}>
+                <ControlledCheckbox
+                  checked={data.events.includes(event)}
+                  disabled={disabled}
+                  label={event.replace(/\./, "")}
+                  name={event}
+                  onChange={handleEventsChange}
+                />
+              </div>
+            );
           })}
       </CardContent>
     </Card>

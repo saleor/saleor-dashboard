@@ -10,7 +10,6 @@ import { useIntl } from "react-intl";
 import { getMutationState, maybe } from "../../misc";
 import WebhookCreatePage, { FormData } from "../components/WebhookCreatePage";
 import { TypedWebhookCreate } from "../mutations";
-import { TypedServiceListQuery } from "../queries";
 import {
   webhooksListUrl,
   WebhooksListUrlQueryParams,
@@ -43,7 +42,7 @@ export const WebhooksCreate: React.StatelessComponent<
   return (
     <TypedWebhookCreate onCompleted={onSubmit}>
       {(WebhookCreate, webhookCreateOpts) => {
-        const handleSubmit = (data: FormData) => {
+        const handleSubmit = (data: FormData) =>
           WebhookCreate({
             variables: {
               input: {
@@ -58,7 +57,6 @@ export const WebhooksCreate: React.StatelessComponent<
               }
             }
           });
-        };
 
         const formTransitionState = getMutationState(
           webhookCreateOpts.called,
@@ -67,33 +65,27 @@ export const WebhooksCreate: React.StatelessComponent<
         );
 
         return (
-          <TypedServiceListQuery displayLoader variables={{ first: 99 }}>
-            {({ data }) => {
-              return (
-                <>
-                  <WindowTitle
-                    title={intl.formatMessage({
-                      defaultMessage: "Create Webhook",
-                      description: "window title"
-                    })}
-                  />
-                  <WebhookCreatePage
-                    disabled={false}
-                    errors={maybe(
-                      () => webhookCreateOpts.data.webhookCreate.errors,
-                      []
-                    )}
-                    services={maybe(() =>
-                      data.serviceAccounts.edges.map(edge => edge.node)
-                    )}
-                    onBack={handleBack}
-                    onSubmit={handleSubmit}
-                    saveButtonBarState={formTransitionState}
-                  />
-                </>
-              );
-            }}
-          </TypedServiceListQuery>
+          <>
+            <WindowTitle
+              title={intl.formatMessage({
+                defaultMessage: "Create Webhook",
+                description: "window title"
+              })}
+            />
+            <WebhookCreatePage
+              disabled={false}
+              errors={maybe(
+                () => webhookCreateOpts.data.webhookCreate.errors,
+                []
+              )}
+              services={maybe(() =>
+                data.serviceAccounts.edges.map(edge => edge.node)
+              )}
+              onBack={handleBack}
+              onSubmit={handleSubmit}
+              saveButtonBarState={formTransitionState}
+            />
+          </>
         );
       }}
     </TypedWebhookCreate>

@@ -16,7 +16,7 @@ const props: WebhooksDetailsPageProps = {
   saveButtonBarState: "default",
   services: []
 };
-storiesOf("Views / Services / Service details", module)
+storiesOf("Views / Webhook / Webhook details", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhooksDetailsPage {...props} />)
   .add("loading", () => (

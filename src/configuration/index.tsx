@@ -166,7 +166,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         },
         {
           description: intl.formatMessage({
-            defaultMessage: "View and update your site settings"
+            defaultMessage: "View and update your webhook and their settings"
           }),
           icon: <Webhooks fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_WEBHOOKS,
