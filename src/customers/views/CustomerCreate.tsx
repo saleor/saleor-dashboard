@@ -79,7 +79,7 @@ export const CustomerCreate: React.StatelessComponent<{}> = () => {
                         firstName: formData.customerFirstName,
                         lastName: formData.customerLastName,
                         note: formData.note,
-                        sendPasswordEmail: true
+                        sendPasswordEmail: false
                       }
                     }
                   });
