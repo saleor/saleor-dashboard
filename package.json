@@ -115,6 +115,7 @@
     "file-loader": "^1.1.11",
     "fork-ts-checker-webpack-plugin": "^0.5.2",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.0.8",
     "jest": "^24.8.0",
     "jest-file": "^1.0.0",
     "plop": "^2.4.0",
@@ -157,6 +158,11 @@
       "^lodash-es(.*)$": "lodash/$1"
     }
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run check-types && npm run lint"
+    }
+  },
   "scripts": {
     "build": "webpack -p",
     "extract-json-messages": "rimraf build/locale && babel src 'src/**/*.{ts,tsx}' -o build/dashboard.bundle.js",
@@ -164,6 +170,7 @@
     "extract-messages": "npm run extract-json-messages && npm run extract-pot-messages",
     "build-messages": "rip po2json 'locale/**/*.po' -m 'build/locale/**/*.json' -o 'locale' -c 'description'",
     "build-types": "apollo client:codegen --target=typescript types --globalTypesFile=src/types/globalTypes.ts",
+    "check-types": "tsc --noEmit",
     "generate-component": "plop --plopfile .plop/plopfile.js",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
     "lint-fix": "tslint 'src/**/*.{ts,tsx}' --fix",
