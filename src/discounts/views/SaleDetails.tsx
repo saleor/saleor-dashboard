@@ -22,7 +22,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "../../config";
 import SearchCategories from "../../containers/SearchCategories";
 import SearchCollections from "../../containers/SearchCollections";
 import SearchProducts from "../../containers/SearchProducts";
-import { decimal, getMutationState, maybe, joinDateTime } from "../../misc";
+import { decimal, getMutationState, joinDateTime, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { DiscountValueTypeEnum, SaleType } from "../../types/globalTypes";
 import SaleDetailsPage, {

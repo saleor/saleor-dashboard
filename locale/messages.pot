@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-15T15:53:11.572Z\n"
+"POT-Creation-Date: 2019-10-15T15:56:00.137Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -3257,6 +3257,14 @@ msgstr ""
 #. Discount Type
 msgctxt "header"
 msgid "Discount Type"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleValue/SaleValue.json
+#. [src.discounts.components.SaleValue.1205967018] - sale discount
+#. defaultMessage is:
+#. Discount Value
+msgctxt "sale discount"
+msgid "Discount Value"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
@@ -8560,6 +8568,14 @@ msgstr ""
 #. defaultMessage is:
 #. Value
 msgctxt "sale value"
+msgid "Value"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleValue/SaleValue.json
+#. [src.discounts.components.SaleValue.1148029984] - sale value, header
+#. defaultMessage is:
+#. Value
+msgctxt "sale value, header"
 msgid "Value"
 msgstr ""
 

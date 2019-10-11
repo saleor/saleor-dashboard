@@ -22,6 +22,7 @@ import DiscountProducts from "../DiscountProducts";
 import SaleInfo from "../SaleInfo";
 import SaleSummary from "../SaleSummary";
 import SaleType from "../SaleType";
+import SaleValue from "../SaleValue";
 
 export interface FormData {
   endDate: string;
@@ -137,6 +138,14 @@ const SaleDetailsPage: React.StatelessComponent<SaleDetailsPageProps> = ({
               />
               <CardSpacer />
               <SaleType data={data} disabled={disabled} onChange={change} />
+              <CardSpacer />
+              <SaleValue
+                currencySymbol={defaultCurrency}
+                data={data}
+                disabled={disabled}
+                errors={formErrors}
+                onChange={change}
+              />
               <CardSpacer />
               <TabContainer>
                 <CategoriesTab
