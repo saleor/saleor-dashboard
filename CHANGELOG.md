@@ -33,3 +33,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Hide variants and attributes if product has none - #179 by @dominik-zeglen
 - Add service account section - #188 by @dominik-zeglen
 - Add variant creator - #177 by @dominik-zeglen
+- Add git hooks - #209 by @dominik-zeglen
