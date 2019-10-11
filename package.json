@@ -115,8 +115,10 @@
     "file-loader": "^1.1.11",
     "fork-ts-checker-webpack-plugin": "^0.5.2",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.0.8",
     "jest": "^24.8.0",
     "jest-file": "^1.0.0",
+    "lint-staged": "^9.4.2",
     "plop": "^2.4.0",
     "react-intl-po": "^2.2.2",
     "react-test-renderer": "^16.8.6",
@@ -157,6 +159,18 @@
       "^lodash-es(.*)$": "lodash/$1"
     }
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run check-types"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "tslint --fix",
+      "git add"
+    ]
+  },
   "scripts": {
     "build": "webpack -p",
     "extract-json-messages": "rimraf build/locale && babel src 'src/**/*.{ts,tsx}' -o build/dashboard.bundle.js",
@@ -164,9 +178,8 @@
     "extract-messages": "npm run extract-json-messages && npm run extract-pot-messages",
     "build-messages": "rip po2json 'locale/**/*.po' -m 'build/locale/**/*.json' -o 'locale' -c 'description'",
     "build-types": "apollo client:codegen --target=typescript types --globalTypesFile=src/types/globalTypes.ts",
+    "check-types": "tsc --noEmit",
     "generate-component": "plop --plopfile .plop/plopfile.js",
-    "lint": "tslint 'src/**/*.{ts,tsx}'",
-    "lint-fix": "tslint 'src/**/*.{ts,tsx}' --fix",
     "start": "webpack-dev-server --open -d",
     "storybook": "start-storybook -p 3000 -c src/storybook/",
     "build-storybook": "build-storybook -c src/storybook/ -o build/storybook",
