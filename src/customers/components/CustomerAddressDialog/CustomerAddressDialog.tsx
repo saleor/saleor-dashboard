@@ -88,7 +88,7 @@ const CustomerAddressDialog = withStyles(styles, {})(
         maxWidth="sm"
       >
         <Form initial={initialForm} errors={errors} onSubmit={onConfirm}>
-          {({ change, data, errors, submit }) => {
+          {({ change, data, errors }) => {
             const handleCountrySelect = createSingleAutocompleteSelectHandler(
               change,
               setCountryDisplayName,
@@ -128,7 +128,6 @@ const CustomerAddressDialog = withStyles(styles, {})(
                     transitionState={confirmButtonState}
                     color="primary"
                     variant="contained"
-                    onClick={submit}
                     type="submit"
                   >
                     <FormattedMessage {...buttonMessages.save} />
