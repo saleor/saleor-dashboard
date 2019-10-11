@@ -80,7 +80,7 @@ export const CollectionImage = withStyles(styles)(
       <Card>
         <CardTitle
           title={intl.formatMessage({
-            defaultMessage: "Background image (optional)",
+            defaultMessage: "Background Image (optional)",
             description: "section header"
           })}
           toolbar={

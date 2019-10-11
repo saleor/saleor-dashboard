@@ -83,11 +83,11 @@ const OrderAddressEditDialog = withStyles(styles, {
                 <DialogTitle>
                   {variant === "billing"
                     ? intl.formatMessage({
-                        defaultMessage: "Edit billing address",
+                        defaultMessage: "Edit Billing Address",
                         description: "dialog header"
                       })
                     : intl.formatMessage({
-                        defaultMessage: "Edit shipping address",
+                        defaultMessage: "Edit Shipping Address",
                         description: "dialog header"
                       })}
                 </DialogTitle>

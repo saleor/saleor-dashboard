@@ -37,7 +37,7 @@ const OrderFulfillmentTrackingDialog: React.StatelessComponent<
           <>
             <DialogTitle>
               <FormattedMessage
-                defaultMessage="Add tracking code"
+                defaultMessage="Add Tracking Code"
                 description="dialog header"
               />
             </DialogTitle>

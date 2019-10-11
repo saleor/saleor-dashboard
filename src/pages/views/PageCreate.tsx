@@ -43,7 +43,7 @@ export const PageCreate: React.StatelessComponent<PageCreateProps> = () => {
           <>
             <WindowTitle
               title={intl.formatMessage({
-                defaultMessage: "Create page",
+                defaultMessage: "Create Page",
                 description: "header"
               })}
             />

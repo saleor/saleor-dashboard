@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-09T10:25:56.800Z\n"
+"POT-Creation-Date: 2019-10-09T15:30:47.333Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -131,6 +131,22 @@ msgctxt "dialog title"
 msgid "Add Address"
 msgstr ""
 
+#: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
+#. [src.collections.components.CollectionCreatePage.951411809] - page header
+#. defaultMessage is:
+#. Add Collection
+msgctxt "page header"
+msgid "Add Collection"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
+#. [src.customers.components.CustomerCreatePage.2622255457] - page header
+#. defaultMessage is:
+#. Add Customer
+msgctxt "page header"
+msgid "Add Customer"
+msgstr ""
+
 #: build/locale/src/components/Filter/Filter.json
 #. [src.components.Filter.2852521946] - button
 #. defaultMessage is:
@@ -171,6 +187,14 @@ msgctxt "dialog header"
 msgid "Add Price Rate"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog.json
+#. [src.orders.components.OrderFulfillmentTrackingDialog.606831229] - dialog header
+#. defaultMessage is:
+#. Add Tracking Code
+msgctxt "dialog header"
+msgid "Add Tracking Code"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
 #. [src.attributes.components.AttributeValueEditDialog.1841790893] - add attribute value
 #. defaultMessage is:
@@ -201,22 +225,6 @@ msgstr ""
 #. Add authentication
 msgctxt "button"
 msgid "Add authentication"
-msgstr ""
-
-#: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
-#. [src.collections.components.CollectionCreatePage.3958681866] - page header
-#. defaultMessage is:
-#. Add collection
-msgctxt "page header"
-msgid "Add collection"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
-#. [src.customers.components.CustomerCreatePage.1934221653] - page header
-#. defaultMessage is:
-#. Add customer
-msgctxt "page header"
-msgid "Add customer"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerListPage/CustomerListPage.json
@@ -357,14 +365,6 @@ msgstr ""
 #. Add tracking
 msgctxt "fulfillment group tracking number"
 msgid "Add tracking"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog.json
-#. [src.orders.components.OrderFulfillmentTrackingDialog.3680864271] - dialog header
-#. defaultMessage is:
-#. Add tracking code
-msgctxt "dialog header"
-msgid "Add tracking code"
 msgstr ""
 
 #: build/locale/src/products/components/ProductVariantNavigation/ProductVariantNavigation.json
@@ -1508,15 +1508,15 @@ msgid "Back to login"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryBackground/CategoryBackground.json
-#. [src.categories.components.CategoryBackground.1849089820] - section header
+#. [src.categories.components.CategoryBackground.2224943474] - section header
 #. defaultMessage is:
-#. Background image (optional)
+#. Background Image (optional)
 #: build/locale/src/collections/components/CollectionImage/CollectionImage.json
-#. [src.collections.components.CollectionImage.1849089820] - section header
+#. [src.collections.components.CollectionImage.2224943474] - section header
 #. defaultMessage is:
-#. Background image (optional)
+#. Background Image (optional)
 msgctxt "section header"
-msgid "Background image (optional)"
+msgid "Background Image (optional)"
 msgstr ""
 
 #: build/locale/src/misc.json
@@ -1527,20 +1527,20 @@ msgctxt "tax rate"
 msgid "Bikes"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
+#. [src.customers.components.CustomerAddresses.4282475982] - subsection header
+#. defaultMessage is:
+#. Billing Address
+msgctxt "subsection header"
+msgid "Billing Address"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 #. [src.orders.components.OrderCustomer.4282475982]
 #. defaultMessage is:
 #. Billing Address
 msgctxt "description"
 msgid "Billing Address"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
-#. [src.customers.components.CustomerAddresses.2428885633] - subsection header
-#. defaultMessage is:
-#. Billing address
-msgctxt "subsection header"
-msgid "Billing address"
 msgstr ""
 
 #: build/locale/src/misc.json
@@ -1579,6 +1579,14 @@ msgctxt "dialog header"
 msgid "Cancel Fulfillment"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
+#. [src.orders.components.OrderCancelDialog.1258942306] - dialog header
+#. defaultMessage is:
+#. Cancel Order
+msgctxt "dialog header"
+msgid "Cancel Order"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderBulkCancelDialog/OrderBulkCancelDialog.json
 #. [src.orders.components.OrderBulkCancelDialog.1528036340] - dialog header
 #. defaultMessage is:
@@ -1593,14 +1601,6 @@ msgstr ""
 #. Cancel fulfillment
 msgctxt "button"
 msgid "Cancel fulfillment"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
-#. [src.orders.components.OrderCancelDialog.1854613983] - dialog header
-#. defaultMessage is:
-#. Cancel order
-msgctxt "dialog header"
-msgid "Cancel order"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDetailsPage/OrderDetailsPage.json
@@ -1984,11 +1984,11 @@ msgid "Confirm Password"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
-#. [src.orders.components.OrderCustomer.1111991638] - subheader
+#. [src.orders.components.OrderCustomer.2312694610] - subheader
 #. defaultMessage is:
-#. Contact information
+#. Contact Information
 msgctxt "subheader"
-msgid "Contact information"
+msgid "Contact Information"
 msgstr ""
 
 #: build/locale/src/pages/components/PageInfo/PageInfo.json
@@ -2267,6 +2267,14 @@ msgctxt "page header"
 msgid "Create Page"
 msgstr ""
 
+#: build/locale/src/pages/views/PageCreate.json
+#. [src.pages.views.1068617485] - header
+#. defaultMessage is:
+#. Create Page
+msgctxt "header"
+msgid "Create Page"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
 #. [src.orders.components.OrderProductAddDialog.1542417144] - dialog header
 #. defaultMessage is:
@@ -2447,14 +2455,6 @@ msgctxt "button"
 msgid "Create page"
 msgstr ""
 
-#: build/locale/src/pages/views/PageCreate.json
-#. [src.pages.views.3785394515] - header
-#. defaultMessage is:
-#. Create page
-msgctxt "header"
-msgid "Create page"
-msgstr ""
-
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
 #. [src.shipping.components.ShippingZoneRateDialog.16061680] - button
 #. defaultMessage is:
@@ -2611,6 +2611,14 @@ msgctxt "description"
 msgid "Customer Name"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerCreateDetails/CustomerCreateDetails.json
+#. [src.customers.components.CustomerCreateDetails.3063084773] - header
+#. defaultMessage is:
+#. Customer Overview
+msgctxt "header"
+msgid "Customer Overview"
+msgstr ""
+
 #: build/locale/src/customers/views/CustomerDetails.json
 #. [src.customers.views.3901579344]
 #. defaultMessage is:
@@ -2625,14 +2633,6 @@ msgstr ""
 #. Customer created
 msgctxt "description"
 msgid "Customer created"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerCreateDetails/CustomerCreateDetails.json
-#. [src.customers.components.CustomerCreateDetails.4157831287] - header
-#. defaultMessage is:
-#. Customer overview
-msgctxt "header"
-msgid "Customer overview"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
@@ -2811,12 +2811,56 @@ msgctxt "dialog title"
 msgid "Delete Collection"
 msgstr ""
 
+#: build/locale/src/customers/views/CustomerDetails.json
+#. [src.customers.views.1998583641] - dialog header
+#. defaultMessage is:
+#. Delete Customer
+msgctxt "dialog header"
+msgid "Delete Customer"
+msgstr ""
+
+#: build/locale/src/customers/views/CustomerList/CustomerList.json
+#. [src.customers.views.CustomerList.2136923553] - dialog header
+#. defaultMessage is:
+#. Delete Customers
+msgctxt "dialog header"
+msgid "Delete Customers"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
+#. [src.orders.components.OrderDraftCancelDialog.1961675716] - dialog header
+#. defaultMessage is:
+#. Delete Daft Order
+msgctxt "dialog header"
+msgid "Delete Daft Order"
+msgstr ""
+
 #: build/locale/src/products/views/ProductImage.json
 #. [src.products.views.1731766393] - dialog header
 #. defaultMessage is:
 #. Delete Image
 msgctxt "dialog header"
 msgid "Delete Image"
+msgstr ""
+
+#: build/locale/src/navigation/views/MenuDetails/index.json
+#. [menuDetailsDeleteMenuHeader] - dialog header
+#. defaultMessage is:
+#. Delete Menu
+#: build/locale/src/navigation/views/MenuList.json
+#. [menuListDeleteMenuHeader] - dialog header
+#. defaultMessage is:
+#. Delete Menu
+msgctxt "dialog header"
+msgid "Delete Menu"
+msgstr ""
+
+#: build/locale/src/navigation/views/MenuList.json
+#. [menuListDeleteMenusHeader] - dialog header
+#. defaultMessage is:
+#. Delete Menus
+msgctxt "dialog header"
+msgid "Delete Menus"
 msgstr ""
 
 #: build/locale/src/orders/views/OrderDraftList/OrderDraftList.json
@@ -3059,36 +3103,12 @@ msgctxt "dialog title"
 msgid "Delete collections"
 msgstr ""
 
-#: build/locale/src/customers/views/CustomerDetails.json
-#. [src.customers.views.442409664] - dialog header
-#. defaultMessage is:
-#. Delete customer
-msgctxt "dialog header"
-msgid "Delete customer"
-msgstr ""
-
-#: build/locale/src/customers/views/CustomerList/CustomerList.json
-#. [src.customers.views.CustomerList.1946482599] - dialog header
-#. defaultMessage is:
-#. Delete customers
-msgctxt "dialog header"
-msgid "Delete customers"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
-#. [src.orders.components.OrderDraftCancelDialog.632633254] - dialog header
-#. defaultMessage is:
-#. Delete draft order
-msgctxt "dialog header"
-msgid "Delete draft order"
-msgstr ""
-
 #: build/locale/src/shipping/views/ShippingZoneDetails/ShippingZoneDetailsDialogs.json
-#. [src.shipping.views.ShippingZoneDetails.1947090060] - unassign country, dialog header
+#. [src.shipping.views.ShippingZoneDetails.3133838427] - unassign country, dialog header
 #. defaultMessage is:
-#. Delete from shipping zone
+#. Delete from Shipping Zone
 msgctxt "unassign country, dialog header"
-msgid "Delete from shipping zone"
+msgid "Delete from Shipping Zone"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
@@ -3097,26 +3117,6 @@ msgstr ""
 #. Delete image
 msgctxt "dialog title"
 msgid "Delete image"
-msgstr ""
-
-#: build/locale/src/navigation/views/MenuDetails/index.json
-#. [menuDetailsDeleteMenuHeader] - dialog header
-#. defaultMessage is:
-#. Delete menu
-#: build/locale/src/navigation/views/MenuList.json
-#. [menuListDeleteMenuHeader] - dialog header
-#. defaultMessage is:
-#. Delete menu
-msgctxt "dialog header"
-msgid "Delete menu"
-msgstr ""
-
-#: build/locale/src/navigation/views/MenuList.json
-#. [menuListDeleteMenusHeader] - dialog header
-#. defaultMessage is:
-#. Delete menus
-msgctxt "dialog header"
-msgid "Delete menus"
 msgstr ""
 
 #: build/locale/src/staff/components/StaffProperties/StaffProperties.json
@@ -3391,6 +3391,22 @@ msgctxt "dialog title"
 msgid "Edit Address"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
+#. [src.orders.components.OrderAddressEditDialog.3982060155] - dialog header
+#. defaultMessage is:
+#. Edit Billing Address
+msgctxt "dialog header"
+msgid "Edit Billing Address"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCustomerEditDialog/OrderCustomerEditDialog.json
+#. [src.orders.components.OrderCustomerEditDialog.1549172886] - dialog header
+#. defaultMessage is:
+#. Edit Customer Details
+msgctxt "dialog header"
+msgid "Edit Customer Details"
+msgstr ""
+
 #: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
 #. [menuItemDialogEditItem] - edit menu item, header
 #. defaultMessage is:
@@ -3415,6 +3431,14 @@ msgctxt "dialog header"
 msgid "Edit Price Rate"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
+#. [src.orders.components.OrderAddressEditDialog.3278396777] - dialog header
+#. defaultMessage is:
+#. Edit Shipping Address
+msgctxt "dialog header"
+msgid "Edit Shipping Address"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderShippingMethodEditDialog/OrderShippingMethodEditDialog.json
 #. [src.orders.components.OrderShippingMethodEditDialog.3369240294] - dialog header
 #. defaultMessage is:
@@ -3437,30 +3461,6 @@ msgstr ""
 #. Edit Weight Rate
 msgctxt "edit weight based shipping method, dialog header"
 msgid "Edit Weight Rate"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
-#. [src.orders.components.OrderAddressEditDialog.2935008093] - dialog header
-#. defaultMessage is:
-#. Edit billing address
-msgctxt "dialog header"
-msgid "Edit billing address"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderCustomerEditDialog/OrderCustomerEditDialog.json
-#. [src.orders.components.OrderCustomerEditDialog.1411666943] - dialog header
-#. defaultMessage is:
-#. Edit customer details
-msgctxt "dialog header"
-msgid "Edit customer details"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
-#. [src.orders.components.OrderAddressEditDialog.462765358] - dialog header
-#. defaultMessage is:
-#. Edit shipping address
-msgctxt "dialog header"
-msgid "Edit shipping address"
 msgstr ""
 
 #: build/locale/src/components/SeoForm/SeoForm.json
@@ -3636,19 +3636,19 @@ msgid "Finalize"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.1161061962] - dialog header
+#. defaultMessage is:
+#. Finalize Draft Order
+msgctxt "dialog header"
+msgid "Finalize Draft Order"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
 #. [src.orders.components.OrderDraftFinalizeDialog.678764806] - button
 #. defaultMessage is:
 #. Finalize anyway
 msgctxt "button"
 msgid "Finalize anyway"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
-#. [src.orders.components.OrderDraftFinalizeDialog.845440998] - dialog header
-#. defaultMessage is:
-#. Finalize draft order
-msgctxt "dialog header"
-msgid "Finalize draft order"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -3700,11 +3700,11 @@ msgid "Fulfill"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderFulfillmentDialog/OrderFulfillmentDialog.json
-#. [src.orders.components.OrderFulfillmentDialog.3236546219] - dialog header
+#. [src.orders.components.OrderFulfillmentDialog.3928354289] - dialog header
 #. defaultMessage is:
-#. Fulfill products
+#. Fulfill Oroducts
 msgctxt "dialog header"
-msgid "Fulfill products"
+msgid "Fulfill Oroducts"
 msgstr ""
 
 #: build/locale/src/misc.json
@@ -5900,11 +5900,11 @@ msgid "Pricing"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerCreateAddress/CustomerCreateAddress.json
-#. [src.customers.components.CustomerCreateAddress.1922654050] - page header
+#. [src.customers.components.CustomerCreateAddress.1751533141] - page header
 #. defaultMessage is:
-#. Primary address
+#. Primary Address
 msgctxt "page header"
-msgid "Primary address"
+msgid "Primary Address"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
@@ -6360,11 +6360,11 @@ msgid "Ready to Capture"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
-#. [src.customers.components.CustomerOrders.3878642352] - section header
+#. [src.customers.components.CustomerOrders.1899831623] - section header
 #. defaultMessage is:
-#. Recent orders
+#. Recent Orders
 msgctxt "section header"
-msgid "Recent orders"
+msgid "Recent Orders"
 msgstr ""
 
 #: build/locale/src/taxes/components/CountryList/CountryList.json
@@ -7163,12 +7163,28 @@ msgctxt "header"
 msgid "Shipping"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
+#. [src.customers.components.CustomerAddresses.2758581442] - subsection header
+#. defaultMessage is:
+#. Shipping Address
+msgctxt "subsection header"
+msgid "Shipping Address"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 #. [src.orders.components.OrderCustomer.2758581442]
 #. defaultMessage is:
 #. Shipping Address
 msgctxt "description"
 msgid "Shipping Address"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZonesList/ShippingZonesList.json
+#. [src.shipping.components.ShippingZonesList.120574110] - sort shipping methods by zone, section header
+#. defaultMessage is:
+#. Shipping By Zone
+msgctxt "sort shipping methods by zone, section header"
+msgid "Shipping By Zone"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -7193,22 +7209,6 @@ msgstr ""
 #. Shipping Zone Name
 msgctxt "description"
 msgid "Shipping Zone Name"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
-#. [src.customers.components.CustomerAddresses.3517722732] - subsection header
-#. defaultMessage is:
-#. Shipping address
-msgctxt "subsection header"
-msgid "Shipping address"
-msgstr ""
-
-#: build/locale/src/shipping/components/ShippingZonesList/ShippingZonesList.json
-#. [src.shipping.components.ShippingZonesList.2942726079] - sort shipping methods by zone, section header
-#. defaultMessage is:
-#. Shipping by zone
-msgctxt "sort shipping methods by zone, section header"
-msgid "Shipping by zone"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
@@ -7535,20 +7535,20 @@ msgctxt "description"
 msgid "Store Description"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.229184360] - section header
+#. defaultMessage is:
+#. Store Information
+msgctxt "section header"
+msgid "Store Information"
+msgstr ""
+
 #: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
 #. [src.siteSettings.components.SiteSettingsDetails.529433178]
 #. defaultMessage is:
 #. Store description is shown on taskbar after your store name
 msgctxt "description"
 msgid "Store description is shown on taskbar after your store name"
-msgstr ""
-
-#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
-#. [src.siteSettings.components.SiteSettingsAddress.1150975268] - section header
-#. defaultMessage is:
-#. Store information
-msgctxt "section header"
-msgid "Store information"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
@@ -7926,9 +7926,9 @@ msgstr ""
 #: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
 #. [homeProductsListCardHeader] - header
 #. defaultMessage is:
-#. Top products
+#. Top Products
 msgctxt "header"
-msgid "Top products"
+msgid "Top Products"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json

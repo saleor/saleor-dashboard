@@ -202,7 +202,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                             }
                             variant="delete"
                             title={intl.formatMessage({
-                              defaultMessage: "Delete menu",
+                              defaultMessage: "Delete Menu",
                               description: "dialog header",
                               id: "menuListDeleteMenuHeader"
                             })}
@@ -239,7 +239,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                             }
                             variant="delete"
                             title={intl.formatMessage({
-                              defaultMessage: "Delete menus",
+                              defaultMessage: "Delete Menus",
                               description: "dialog header",
                               id: "menuListDeleteMenusHeader"
                             })}
