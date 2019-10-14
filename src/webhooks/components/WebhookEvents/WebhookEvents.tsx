@@ -15,7 +15,7 @@ interface WebhookEventsProps {
     events: string[];
   };
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>, cb?: () => void) => void;
+  onChange: (event: ChangeEvent, cb?: () => void) => void;
 }
 
 const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
@@ -26,13 +26,18 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
   const intl = useIntl();
   const eventsEnum = Object.values(WebhookEventTypeEnum);
 
-  const handleAllEventsChange = () =>
-    onChange({
-      target: {
-        name: "events",
-        value: WebhookEventTypeEnum.ALL_EVENTS
-      }
-    } as any);
+  const handleAllEventsChange = (event: ChangeEvent) =>
+    onChange(event, () =>
+      onChange({
+        target: {
+          name: "events",
+          value: event.target.value
+            ? WebhookEventTypeEnum.ALL_EVENTS
+            : data.events
+        }
+      } as any)
+    );
+
   const handleEventsChange = (event: ChangeEvent) => {
     onChange({
       target: {
@@ -70,21 +75,24 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
           name="allEvents"
           onChange={handleAllEventsChange}
         />
-        <Hr />
-        {!data.allEvents &&
-          eventsEnum.slice(1).map(event => {
-            return (
-              <div key={event}>
-                <ControlledCheckbox
-                  checked={data.events.includes(event)}
-                  disabled={disabled}
-                  label={event.replace(/\./, "")}
-                  name={event}
-                  onChange={handleEventsChange}
-                />
-              </div>
-            );
-          })}
+        {!data.allEvents && (
+          <>
+            <Hr />
+            {eventsEnum.slice(1).map(event => {
+              return (
+                <div key={event}>
+                  <ControlledCheckbox
+                    checked={data.events.includes(event)}
+                    disabled={disabled}
+                    label={event.replace(/\./, "")}
+                    name={event}
+                    onChange={handleEventsChange}
+                  />
+                </div>
+              );
+            })}
+          </>
+        )}
       </CardContent>
     </Card>
   );

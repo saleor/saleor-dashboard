@@ -3,16 +3,16 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { FormChange } from "@saleor/hooks/useForm";
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { FormData } from "../WebhooksDetailsPage";
 
 interface WebhookStatusProps {
-  data: FormData;
+  data: boolean;
   disabled: boolean;
-  onChange: (event: FormChange) => void;
+  onChange: (event: ChangeEvent, cb?: () => void) => void;
 }
 
 const WebhookStatus: React.FC<WebhookStatusProps> = ({
@@ -43,7 +43,7 @@ const WebhookStatus: React.FC<WebhookStatusProps> = ({
             defaultMessage: "Webhook is active",
             description: "webhooks active"
           })}
-          checked={data.isActive}
+          checked={data}
           onChange={onChange}
           disabled={disabled}
         />

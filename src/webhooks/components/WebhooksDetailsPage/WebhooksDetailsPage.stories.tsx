@@ -10,17 +10,24 @@ import WebhooksDetailsPage, {
 const props: WebhooksDetailsPageProps = {
   disabled: false,
   errors: [],
+  fetchServiceAccount: () => undefined,
   onBack: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default",
-  services: []
+  services: [],
+  webhook: null
 };
 storiesOf("Views / Webhook / Webhook details", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhooksDetailsPage {...props} />)
   .add("loading", () => (
-    <WebhooksDetailsPage {...props} services={undefined} disabled={true} />
+    <WebhooksDetailsPage
+      {...props}
+      webhook={undefined}
+      services={undefined}
+      disabled={true}
+    />
   ))
   .add("form errors", () => (
     <WebhooksDetailsPage

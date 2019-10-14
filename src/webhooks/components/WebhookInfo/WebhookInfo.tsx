@@ -9,20 +9,24 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import SingleSelectField from "@saleor/components/SingleSelectField";
-import { SingleAutocompleteSelectField } from "@saleor/components/SingleAutocompleteSelectField";
+import {
+  SingleAutocompleteChoiceType,
+  SingleAutocompleteSelectField
+} from "@saleor/components/SingleAutocompleteSelectField";
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { FormErrors } from "@saleor/types";
 import { FormData } from "../WebhooksDetailsPage";
 
-import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
-
 interface WebhookInfoProps {
   data: FormData;
   disabled: boolean;
-  services: ServiceList_serviceAccounts_edges_node[];
+  serviceDisplayValue: string;
+  services: SingleAutocompleteChoiceType[];
   errors: FormErrors<"name" | "targetUrl" | "secretKey">;
   onChange: (event: React.ChangeEvent<any>) => void;
+  serviceOnChange: (event: ChangeEvent) => void;
+  fetchServiceAccount: (data: string) => void;
 }
 
 const useStyles = makeStyles(() => ({
@@ -40,8 +44,11 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
   data,
   disabled,
   services,
+  serviceDisplayValue,
+  fetchServiceAccount,
   errors,
-  onChange
+  onChange,
+  serviceOnChange
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -82,17 +89,15 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
         </Typography>
         <SingleAutocompleteSelectField
           disabled={disabled}
-          displayValue={data.serviceAccount}
+          displayValue={serviceDisplayValue}
           label={intl.formatMessage({
             defaultMessage: "Assign to Service Account"
           })}
           name="serviceAccount"
-          onChange={onChange}
+          onChange={serviceOnChange}
           value={data.serviceAccount}
-          choices={services.map(service => ({
-            label: service.name,
-            value: service.id
-          }))}
+          choices={services}
+          fetchChoices={fetchServiceAccount}
           InputProps={{
             autoComplete: "off"
           }}

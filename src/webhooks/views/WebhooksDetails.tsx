@@ -1,4 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import SearchServiceAccount from "@saleor/containers/SearchServiceAccount";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -8,7 +9,7 @@ import { WebhookDelete } from "@saleor/webhooks/types/WebhookDelete";
 import { WebhookUpdate } from "@saleor/webhooks/types/WebhookUpdate";
 import React from "react";
 import { useIntl } from "react-intl";
-
+import { DEFAULT_INITIAL_SEARCH_DATA } from "../../config";
 import { getMutationState, maybe } from "../../misc";
 import WebhooksDetailsPage from "../components/WebhooksDetailsPage";
 import { TypedWebhookDelete, TypedWebhookUpdate } from "../mutations";
@@ -70,87 +71,94 @@ export const WebhooksDetails: React.StatelessComponent<
   };
 
   return (
-    <TypedWebhookUpdate onCompleted={onWebhookUpdate}>
-      {(webhookUpdate, webhookUpdateOpts) => (
-        <TypedWebhookDelete onCompleted={onWebhookDelete}>
-          {(webhookDelete, webhookDeleteOpts) => (
-            <TypedWebhooksDetailsQuery variables={{ id }}>
-              {WebhookDetails => {
-                const formTransitionState = getMutationState(
-                  webhookUpdateOpts.called,
-                  webhookUpdateOpts.loading,
-                  maybe(() => webhookUpdateOpts.data.webhookUpdate.errors)
-                );
+    <SearchServiceAccount variables={DEFAULT_INITIAL_SEARCH_DATA}>
+      {({ search: searchServiceAccount, result: searchServiceAccountOpt }) => (
+        <TypedWebhookUpdate onCompleted={onWebhookUpdate}>
+          {(webhookUpdate, webhookUpdateOpts) => (
+            <TypedWebhookDelete onCompleted={onWebhookDelete}>
+              {(webhookDelete, webhookDeleteOpts) => (
+                <TypedWebhooksDetailsQuery variables={{ id }}>
+                  {WebhookDetails => {
+                    const formTransitionState = getMutationState(
+                      webhookUpdateOpts.called,
+                      webhookUpdateOpts.loading,
+                      maybe(() => webhookUpdateOpts.data.webhookUpdate.errors)
+                    );
 
-                const handleRemoveConfirm = () =>
-                  webhookDelete({
-                    variables: {
-                      id
-                    }
-                  });
+                    const handleRemoveConfirm = () =>
+                      webhookDelete({
+                        variables: {
+                          id
+                        }
+                      });
 
-                const formErrors = maybe(
-                  () => webhookUpdateOpts.data.webhookUpdate.errors,
-                  []
-                );
+                    const formErrors = maybe(
+                      () => webhookUpdateOpts.data.webhookUpdate.errors,
+                      []
+                    );
 
-                const deleteTransitionState = getMutationState(
-                  webhookDeleteOpts.called,
-                  webhookDeleteOpts.loading,
-                  maybe(() => webhookDeleteOpts.data.webhookDelete.errors)
-                );
+                    const deleteTransitionState = getMutationState(
+                      webhookDeleteOpts.called,
+                      webhookDeleteOpts.loading,
+                      maybe(() => webhookDeleteOpts.data.webhookDelete.errors)
+                    );
 
-                return (
-                  <>
-                    <WindowTitle
-                      title={maybe(() => WebhookDetails.data.webhook.name)}
-                    />
-                    <WebhooksDetailsPage
-                      disabled={WebhookDetails.loading}
-                      errors={formErrors}
-                      saveButtonBarState={formTransitionState}
-                      webhook={maybe(() => WebhookDetails.data.webhook)}
-                      services={maybe(() =>
-                        data.serviceAccounts.edges.map(edge => edge.node)
-                      )}
-                      onBack={() => navigate(webhooksListUrl())}
-                      onDelete={() => openModal("remove")}
-                      onSubmit={data => {
-                        webhookUpdate({
-                          variables: {
-                            id,
-                            input: {
-                              events: data.allEvents
-                                ? [WebhookEventTypeEnum.ALL_EVENTS]
-                                : data.events,
-                              isActive: data.isActive,
-                              name: data.name,
-                              secretKey: data.secretKey,
-                              serviceAccount: data.serviceAccount,
-                              targetUrl: data.targetUrl
-                            }
-                          }
-                        });
-                      }}
-                    />
-                    <WebhookDeleteDialog
-                      confirmButtonState={deleteTransitionState}
-                      name={maybe(
-                        () => WebhookDetails.data.webhook.name,
-                        "..."
-                      )}
-                      onClose={closeModal}
-                      onConfirm={handleRemoveConfirm}
-                      open={params.action === "remove"}
-                    />
-                  </>
-                );
-              }}
-            </TypedWebhooksDetailsQuery>
+                    return (
+                      <>
+                        <WindowTitle
+                          title={maybe(() => WebhookDetails.data.webhook.name)}
+                        />
+                        <WebhooksDetailsPage
+                          disabled={WebhookDetails.loading}
+                          errors={formErrors}
+                          saveButtonBarState={formTransitionState}
+                          webhook={maybe(() => WebhookDetails.data.webhook)}
+                          fetchServiceAccount={searchServiceAccount}
+                          services={maybe(() =>
+                            searchServiceAccountOpt.data.serviceAccounts.edges.map(
+                              edge => edge.node
+                            )
+                          )}
+                          onBack={() => navigate(webhooksListUrl())}
+                          onDelete={() => openModal("remove")}
+                          onSubmit={data => {
+                            webhookUpdate({
+                              variables: {
+                                id,
+                                input: {
+                                  events: data.allEvents
+                                    ? [WebhookEventTypeEnum.ALL_EVENTS]
+                                    : data.events,
+                                  isActive: data.isActive,
+                                  name: data.name,
+                                  secretKey: data.secretKey,
+                                  serviceAccount: data.serviceAccount,
+                                  targetUrl: data.targetUrl
+                                }
+                              }
+                            });
+                          }}
+                        />
+                        <WebhookDeleteDialog
+                          confirmButtonState={deleteTransitionState}
+                          name={maybe(
+                            () => WebhookDetails.data.webhook.name,
+                            "..."
+                          )}
+                          onClose={closeModal}
+                          onConfirm={handleRemoveConfirm}
+                          open={params.action === "remove"}
+                        />
+                      </>
+                    );
+                  }}
+                </TypedWebhooksDetailsQuery>
+              )}
+            </TypedWebhookDelete>
           )}
-        </TypedWebhookDelete>
+        </TypedWebhookUpdate>
       )}
-    </TypedWebhookUpdate>
+    </SearchServiceAccount>
   );
 };
 WebhooksDetails.displayName = "WebhooksDetails";
