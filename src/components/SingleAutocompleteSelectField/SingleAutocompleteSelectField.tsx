@@ -1,5 +1,4 @@
 import { Omit } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { InputProps } from "@material-ui/core/Input";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -11,6 +10,7 @@ import SingleAutocompleteSelectFieldContent, {
 } from "./SingleAutocompleteSelectFieldContent";
 
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { FetchMoreProps } from "@saleor/types";
 import ArrowDropdownIcon from "../../icons/ArrowDropdown";
 import Debounce, { DebounceProps } from "../Debounce";
 
@@ -21,15 +21,15 @@ const styles = createStyles({
   }
 });
 
-export interface SingleAutocompleteSelectFieldProps {
+export interface SingleAutocompleteSelectFieldProps
+  extends Partial<FetchMoreProps> {
   error?: boolean;
   name: string;
   displayValue: string;
   emptyOption?: boolean;
   choices: SingleAutocompleteChoiceType[];
-  value?: string;
+  value: string;
   disabled?: boolean;
-  loading?: boolean;
   placeholder?: string;
   allowCustomValues?: boolean;
   helperText?: string;
@@ -61,6 +61,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
     displayValue,
     emptyOption,
     error,
+    hasMore,
     helperText,
     label,
     loading,
@@ -70,6 +71,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
     InputProps,
     fetchChoices,
     onChange,
+    onFetchMore,
     ...props
   }: SingleAutocompleteSelectFieldProps & WithStyles<typeof styles>) => {
     const [prevDisplayValue] = useStateFromProps(displayValue);
@@ -132,11 +134,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                       }),
                       endAdornment: (
                         <div>
-                          {loading ? (
-                            <CircularProgress size={20} />
-                          ) : (
-                            <ArrowDropdownIcon onClick={toggleMenu} />
-                          )}
+                          <ArrowDropdownIcon onClick={toggleMenu} />
                         </div>
                       ),
                       error,
@@ -156,10 +154,13 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                       displayCustomValue={displayCustomValue}
                       emptyOption={emptyOption}
                       getItemProps={getItemProps}
+                      hasMore={hasMore}
                       highlightedIndex={highlightedIndex}
+                      loading={loading}
                       inputValue={inputValue}
                       isCustomValueSelected={isCustomValueSelected}
                       selectedItem={selectedItem}
+                      onFetchMore={onFetchMore}
                     />
                   )}
                 </div>
@@ -208,4 +209,5 @@ export class SingleAutocompleteSelectField extends React.Component<
     );
   }
 }
+
 export default SingleAutocompleteSelectField;

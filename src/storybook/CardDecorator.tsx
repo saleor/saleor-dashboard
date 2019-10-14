@@ -7,6 +7,7 @@ const CardDecorator = storyFn => (
     style={{
       margin: "auto",
       overflow: "visible",
+      position: "relative",
       width: 400
     }}
   >

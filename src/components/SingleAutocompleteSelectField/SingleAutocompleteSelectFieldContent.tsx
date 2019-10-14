@@ -1,3 +1,4 @@
+import CircularProgress from "@material-ui/core/CircularProgress";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
 import { Theme } from "@material-ui/core/styles";
@@ -9,16 +10,19 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import useElementScroll from "@saleor/hooks/useElementScroll";
+import { FetchMoreProps } from "@saleor/types";
 import Hr from "../Hr";
 
 const menuItemHeight = 46;
 const maxMenuItems = 5;
+const offset = 24;
 
 export interface SingleAutocompleteChoiceType {
   label: string;
   value: any;
 }
-interface SingleAutocompleteSelectFieldContentProps {
+export interface SingleAutocompleteSelectFieldContentProps
+  extends Partial<FetchMoreProps> {
   choices: SingleAutocompleteChoiceType[];
   displayCustomValue: boolean;
   emptyOption: boolean;
@@ -43,6 +47,11 @@ const useStyles = makeStyles(
       height: "auto",
       whiteSpace: "normal"
     },
+    progress: {},
+    progressContainer: {
+      display: "flex",
+      justifyContent: "center"
+    },
     root: {
       borderRadius: 4,
       left: 0,
@@ -52,7 +61,9 @@ const useStyles = makeStyles(
       zIndex: 22
     },
     shadow: {
-      boxShadow: `0px -5px 10px 0px ${theme.palette.grey[800]}`
+      "&$shadowLine": {
+        boxShadow: `0px -5px 10px 0px ${theme.palette.grey[800]}`
+      }
     },
     shadowLine: {
       boxShadow: `0px 0px 0px 0px ${theme.palette.grey[50]}`,
@@ -89,20 +100,37 @@ const SingleAutocompleteSelectFieldContent: React.FC<
     displayCustomValue,
     emptyOption,
     getItemProps,
+    hasMore,
     highlightedIndex,
+    loading,
     inputValue,
     isCustomValueSelected,
-    selectedItem
+    selectedItem,
+    onFetchMore
   } = props;
 
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
+  const [calledForMore, setCalledForMore] = React.useState(false);
 
-  const dropShadow = anchor.current
-    ? scrollPosition.y + anchor.current.clientHeight <
+  const scrolledToBottom = anchor.current
+    ? scrollPosition.y + anchor.current.clientHeight + offset >=
       anchor.current.scrollHeight
     : false;
+
+  React.useEffect(() => {
+    if (!calledForMore && onFetchMore && scrolledToBottom) {
+      onFetchMore();
+      setCalledForMore(true);
+    }
+  }, [scrolledToBottom]);
+
+  React.useEffect(() => {
+    if (calledForMore && !loading) {
+      setCalledForMore(false);
+    }
+  }, [loading]);
 
   return (
     <Paper className={classes.root} square>
@@ -172,6 +200,14 @@ const SingleAutocompleteSelectFieldContent: React.FC<
                 </MenuItem>
               );
             })}
+            {hasMore && (
+              <>
+                <Hr className={classes.hr} />
+                <div className={classes.progressContainer}>
+                  <CircularProgress className={classes.progress} size={24} />
+                </div>
+              </>
+            )}
           </>
         ) : (
           <MenuItem
@@ -185,7 +221,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<
       </div>
       <div
         className={classNames(classes.shadowLine, {
-          [classes.shadow]: dropShadow
+          [classes.shadow]: !scrolledToBottom
         })}
       />
     </Paper>

@@ -1,36 +1,41 @@
 import React from "react";
 
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField/SingleAutocompleteSelectFieldContent";
+
 interface ChoiceProviderProps {
   children: (props: {
-    choices: Array<{
-      label: string;
-      value: string;
-    }>;
+    choices: SingleAutocompleteChoiceType[];
+    hasMore: boolean;
     loading: boolean;
-    fetchChoices(value: string);
+    fetchChoices: (value: string) => void;
+    fetchMore: () => void;
   }) => React.ReactElement<any>;
-  choices: Array<{
-    label: string;
-    value: string;
-  }>;
+  choices: SingleAutocompleteChoiceType[];
 }
 interface ChoiceProviderState {
-  choices: Array<{
-    label: string;
-    value: string;
-  }>;
+  choices: SingleAutocompleteChoiceType[];
+  filteredChoices: SingleAutocompleteChoiceType[];
+  first: number;
   loading: boolean;
   timeout: any;
 }
+
+const step = 5;
 
 export class ChoiceProvider extends React.Component<
   ChoiceProviderProps,
   ChoiceProviderState
 > {
-  state = { choices: [], loading: false, timeout: null };
+  state = {
+    choices: [],
+    filteredChoices: [],
+    first: step,
+    loading: false,
+    timeout: null
+  };
 
   handleChange = (inputValue: string) => {
-    if (this.state.loading) {
+    if (!!this.state.timeout) {
       clearTimeout(this.state.timeout);
     }
     const timeout = setTimeout(() => this.fetchChoices(inputValue), 500);
@@ -40,16 +45,35 @@ export class ChoiceProvider extends React.Component<
     });
   };
 
-  fetchChoices = (inputValue: string) => {
+  handleFetchMore = () => {
+    if (!!this.state.timeout) {
+      clearTimeout(this.state.timeout);
+    }
+    const timeout = setTimeout(this.fetchMore, 500);
     this.setState({
-      choices: this.props.choices
-        .filter(
-          suggestion =>
-            !inputValue ||
-            suggestion.label.toLowerCase().indexOf(inputValue.toLowerCase()) !==
-              -1
-        )
-        .slice(0, 10),
+      loading: true,
+      timeout
+    });
+  };
+
+  fetchMore = () =>
+    this.setState(prevState => ({
+      filteredChoices: prevState.choices.slice(0, prevState.first + step),
+      first: prevState.first + step,
+      loading: false,
+      timeout: null
+    }));
+
+  fetchChoices = (inputValue: string) => {
+    const choices = this.props.choices.filter(
+      suggestion =>
+        !inputValue ||
+        suggestion.label.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
+    );
+    this.setState({
+      choices,
+      filteredChoices: choices.slice(0, step),
+      first: step,
       loading: false,
       timeout: null
     });
@@ -57,8 +81,10 @@ export class ChoiceProvider extends React.Component<
 
   render() {
     return this.props.children({
-      choices: this.state.choices,
+      choices: this.state.filteredChoices,
       fetchChoices: this.handleChange,
+      fetchMore: this.handleFetchMore,
+      hasMore: this.state.choices.length > this.state.filteredChoices.length,
       loading: this.state.loading
     });
   }
