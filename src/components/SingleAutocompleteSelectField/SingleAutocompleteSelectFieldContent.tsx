@@ -221,7 +221,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<
       </div>
       <div
         className={classNames(classes.shadowLine, {
-          [classes.shadow]: !scrolledToBottom
+          [classes.shadow]: !scrolledToBottom && choices.length > 0
         })}
       />
     </Paper>
