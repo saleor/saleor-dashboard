@@ -1,16 +1,14 @@
 import React from "react";
 
 interface ChoiceProviderProps {
-  children: ((
-    props: {
-      choices: Array<{
-        label: string;
-        value: string;
-      }>;
-      loading: boolean;
-      fetchChoices(value: string);
-    }
-  ) => React.ReactElement<any>);
+  children: (props: {
+    choices: Array<{
+      label: string;
+      value: string;
+    }>;
+    loading: boolean;
+    fetchChoices(value: string);
+  }) => React.ReactElement<any>;
   choices: Array<{
     label: string;
     value: string;
@@ -31,7 +29,7 @@ export class ChoiceProvider extends React.Component<
 > {
   state = { choices: [], loading: false, timeout: null };
 
-  handleChange = inputValue => {
+  handleChange = (inputValue: string) => {
     if (this.state.loading) {
       clearTimeout(this.state.timeout);
     }
@@ -42,22 +40,16 @@ export class ChoiceProvider extends React.Component<
     });
   };
 
-  fetchChoices = inputValue => {
-    let count = 0;
+  fetchChoices = (inputValue: string) => {
     this.setState({
-      choices: this.props.choices.filter(suggestion => {
-        const keep =
-          (!inputValue ||
+      choices: this.props.choices
+        .filter(
+          suggestion =>
+            !inputValue ||
             suggestion.label.toLowerCase().indexOf(inputValue.toLowerCase()) !==
-              -1) &&
-          count < 5;
-
-        if (keep) {
-          count += 1;
-        }
-
-        return keep;
-      }),
+              -1
+        )
+        .slice(0, 10),
       loading: false,
       timeout: null
     });

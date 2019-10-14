@@ -2,28 +2,16 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Form from "@saleor/components/Form";
+import { maybe } from "@saleor/misc";
+import CardDecorator from "@saleor/storybook/CardDecorator";
+import Decorator from "@saleor/storybook/Decorator";
+import { ChoiceProvider } from "@saleor/storybook/mock";
+import { countries } from "./fixtures";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteSelectFieldProps
-} from "@saleor/components/SingleAutocompleteSelectField";
-import { maybe } from "@saleor/misc";
-import CardDecorator from "../../CardDecorator";
-import Decorator from "../../Decorator";
-import { ChoiceProvider } from "../../mock";
+} from "./SingleAutocompleteSelectField";
 
-const suggestions = [
-  "Afghanistan",
-  "Burundi",
-  "Comoros",
-  "Egypt",
-  "Equatorial Guinea",
-  "Greenland",
-  "Isle of Man",
-  "Israel",
-  "Italy",
-  "United States",
-  "Wallis and Futuna",
-  "Zimbabwe"
-].map(c => ({ label: c, value: c.toLocaleLowerCase().replace(/\s+/, "_") }));
+const suggestions = countries.map(c => ({ label: c.name, value: c.code }));
 
 const props: SingleAutocompleteSelectFieldProps = {
   choices: undefined,
