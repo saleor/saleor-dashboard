@@ -32,7 +32,7 @@ const Story: React.FC<
       enableLoadMore: boolean;
     }
   >
-> = storyProps => {
+> = ({ allowCustomValues, enableLoadMore }) => {
   const { change, data: countries } = useMultiAutocomplete([suggestions[0]]);
 
   return (
@@ -49,9 +49,9 @@ const Story: React.FC<
           onChange={event => change(event, choices)}
           value={countries.map(country => country.value)}
           loading={loading}
-          hasMore={storyProps.enableLoadMore ? hasMore : false}
-          onFetchMore={storyProps.enableLoadMore ? fetchMore : undefined}
-          {...storyProps}
+          hasMore={enableLoadMore ? hasMore : false}
+          onFetchMore={enableLoadMore ? fetchMore : undefined}
+          allowCustomValues={allowCustomValues}
         />
       )}
     </ChoiceProvider>

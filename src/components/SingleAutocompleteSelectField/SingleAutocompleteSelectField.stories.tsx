@@ -33,7 +33,7 @@ const Story: React.FC<
       enableLoadMore: boolean;
     }
   >
-> = storyProps => {
+> = ({ allowCustomValues, emptyOption, enableLoadMore }) => {
   const [displayValue, setDisplayValue] = React.useState(suggestions[0].label);
 
   return (
@@ -57,9 +57,10 @@ const Story: React.FC<
                 loading={loading}
                 onChange={handleSelect}
                 value={data.country}
-                hasMore={storyProps.enableLoadMore ? hasMore : false}
-                onFetchMore={storyProps.enableLoadMore ? fetchMore : undefined}
-                {...storyProps}
+                hasMore={enableLoadMore ? hasMore : false}
+                onFetchMore={enableLoadMore ? fetchMore : undefined}
+                allowCustomValues={allowCustomValues}
+                emptyOption={emptyOption}
               />
             );
           }}
