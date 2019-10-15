@@ -188,6 +188,7 @@ const ProductOrganization = withStyles(styles, { name: "ProductOrganization" })(
             onChange={onCollectionChange}
             fetchChoices={fetchCollections}
             data-tc="collections"
+            {...fetchMoreCollections}
           />
         </CardContent>
       </Card>

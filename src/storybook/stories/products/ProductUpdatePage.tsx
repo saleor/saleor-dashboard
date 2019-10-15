@@ -3,7 +3,7 @@ import React from "react";
 
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { collections } from "@saleor/collections/fixtures";
-import { listActionsProps } from "@saleor/fixtures";
+import { fetchMoreProps, listActionsProps } from "@saleor/fixtures";
 import ProductUpdatePage, {
   ProductUpdatePageProps
 } from "@saleor/products/components/ProductUpdatePage";
@@ -20,6 +20,8 @@ const props: ProductUpdatePageProps = {
   errors: [],
   fetchCategories: () => undefined,
   fetchCollections: () => undefined,
+  fetchMoreCategories: fetchMoreProps,
+  fetchMoreCollections: fetchMoreProps,
   header: product.name,
   images: product.images,
   onBack: () => undefined,

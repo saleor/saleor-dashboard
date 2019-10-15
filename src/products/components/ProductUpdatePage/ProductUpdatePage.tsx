@@ -19,7 +19,7 @@ import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { ListActions, UserError } from "@saleor/types";
+import { FetchMoreProps, ListActions, UserError } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import {
@@ -53,6 +53,8 @@ export interface ProductUpdatePageProps extends ListActions {
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
   disabled: boolean;
+  fetchMoreCategories: FetchMoreProps;
+  fetchMoreCollections: FetchMoreProps;
   variants: ProductDetails_product_variants[];
   images: ProductDetails_product_images[];
   product: ProductDetails_product;
@@ -86,6 +88,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   errors: userErrors,
   fetchCategories,
   fetchCollections,
+  fetchMoreCategories,
+  fetchMoreCollections,
   images,
   header,
   placeholderImage,
@@ -285,6 +289,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     errors={errors}
                     fetchCategories={fetchCategories}
                     fetchCollections={fetchCollections}
+                    fetchMoreCategories={fetchMoreCategories}
+                    fetchMoreCollections={fetchMoreCollections}
                     productType={maybe(() => product.productType)}
                     onCategoryChange={handleCategorySelect}
                     onCollectionChange={handleCollectionSelect}
