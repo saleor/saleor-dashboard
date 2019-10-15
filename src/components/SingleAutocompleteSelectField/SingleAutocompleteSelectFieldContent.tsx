@@ -7,9 +7,13 @@ import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
+import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
-import useElementScroll from "@saleor/hooks/useElementScroll";
+import chevronDown from "@assets/images/ChevronDown.svg";
+import useElementScroll, {
+  isScrolledToBottom
+} from "@saleor/hooks/useElementScroll";
 import { FetchMoreProps } from "@saleor/types";
 import Hr from "../Hr";
 
@@ -35,10 +39,28 @@ export interface SingleAutocompleteSelectFieldContentProps
 
 const useStyles = makeStyles(
   (theme: Theme) => ({
+    arrowContainer: {
+      position: "relative"
+    },
+    arrowInnerContainer: {
+      alignItems: "center",
+      background: theme.palette.grey[50],
+      bottom: 0,
+      display: "flex",
+      height: 30,
+      justifyContent: "center",
+      opacity: 1,
+      position: "absolute",
+      transition: theme.transitions.duration.short + "ms",
+      width: "100%"
+    },
     content: {
       maxHeight: menuItemHeight * maxMenuItems + theme.spacing.unit * 2,
       overflow: "scroll",
       padding: 8
+    },
+    hide: {
+      opacity: 0
     },
     hr: {
       margin: `${theme.spacing.unit}px 0`
@@ -53,22 +75,14 @@ const useStyles = makeStyles(
       justifyContent: "center"
     },
     root: {
-      borderRadius: 4,
+      borderBottomLeftRadius: 8,
+      borderBottomRightRadius: 8,
       left: 0,
       marginTop: theme.spacing.unit,
+      overflow: "hidden",
       position: "absolute",
       right: 0,
       zIndex: 22
-    },
-    shadow: {
-      "&$shadowLine": {
-        boxShadow: `0px -5px 10px 0px ${theme.palette.grey[800]}`
-      }
-    },
-    shadowLine: {
-      boxShadow: `0px 0px 0px 0px ${theme.palette.grey[50]}`,
-      height: 1,
-      transition: theme.transitions.duration.short + "ms"
     }
   }),
   {
@@ -114,10 +128,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<
   const scrollPosition = useElementScroll(anchor);
   const [calledForMore, setCalledForMore] = React.useState(false);
 
-  const scrolledToBottom = anchor.current
-    ? scrollPosition.y + anchor.current.clientHeight + offset >=
-      anchor.current.scrollHeight
-    : false;
+  const scrolledToBottom = isScrolledToBottom(anchor, scrollPosition, 50);
 
   React.useEffect(() => {
     if (!calledForMore && onFetchMore && scrolledToBottom) {
@@ -133,7 +144,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<
   }, [loading]);
 
   return (
-    <Paper className={classes.root} square>
+    <Paper className={classes.root}>
       <div className={classes.content} ref={anchor}>
         {choices.length > 0 || displayCustomValue ? (
           <>
@@ -219,11 +230,15 @@ const SingleAutocompleteSelectFieldContent: React.FC<
           </MenuItem>
         )}
       </div>
-      <div
-        className={classNames(classes.shadowLine, {
-          [classes.shadow]: !scrolledToBottom && choices.length > 0
-        })}
-      />
+      <div className={classes.arrowContainer}>
+        <div
+          className={classNames(classes.arrowInnerContainer, {
+            [classes.hide]: scrolledToBottom && choices.length > 0
+          })}
+        >
+          <SVG src={chevronDown} />
+        </div>
+      </div>
     </Paper>
   );
 };

@@ -2,7 +2,6 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Form from "@saleor/components/Form";
-import { maybe } from "@saleor/misc";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
 import { ChoiceProvider } from "@saleor/storybook/mock";
