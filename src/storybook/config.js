@@ -29,7 +29,6 @@ function loadStories() {
   require("./stories/components/Filter");
   require("./stories/components/Money");
   require("./stories/components/MoneyRange");
-  require("./stories/components/MultiAutocompleteSelectField");
   require("./stories/components/MultiSelectField");
   require("./stories/components/NotFoundPage");
   require("./stories/components/PageHeader");
