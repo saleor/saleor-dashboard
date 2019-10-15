@@ -176,7 +176,9 @@ const MultiAutocompleteSelectFieldContent: React.FC<
   return (
     <Paper className={classes.root}>
       <div className={classes.content} ref={anchor}>
-        {choices.length > 0 || displayCustomValue ? (
+        {choices.length > 0 ||
+        displayValues.length > 0 ||
+        displayCustomValue ? (
           <>
             {displayCustomValue && (
               <MenuItem
