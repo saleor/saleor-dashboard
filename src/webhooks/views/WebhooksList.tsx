@@ -1,3 +1,7 @@
+import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData
+} from "@saleor/components/SaveFilterTabDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -16,12 +20,21 @@ import { useIntl } from "react-intl";
 import WebhooksListPage from "../components/WebhooksListPage/WebhooksListPage";
 import { TypedWebhookDelete } from "../mutations";
 import { TypedWebhooksListQuery } from "../queries";
-import {
+import { WebhookListUrlDialog,
+  WebhookListUrlFilters,
   webhooksAddUrl,
   webhooksListUrl,
   WebhooksListUrlQueryParams,
   webhooksUrl
 } from "../urls";
+import {
+  areFiltersApplied,
+  deleteFilterTab,
+  getActiveFilters,
+  getFilterTabs,
+  getFilterVariables,
+  saveFilterTab
+} from "./filter";
 
 interface WebhooksListProps {
   params: WebhooksListUrlQueryParams;
@@ -37,8 +50,23 @@ export const WebhooksList: React.StatelessComponent<WebhooksListProps> = ({
   const { updateListSettings, settings } = useListSettings(
     ListViews.WEBHOOK_LIST
   );
-  const paginationState = createPaginationState(settings.rowNumber, params);
+  const tabs = getFilterTabs();
 
+  const currentTab =
+    params.activeTab === undefined
+      ? areFiltersApplied(params)
+        ? tabs.length + 1
+        : 0
+      : parseInt(params.activeTab, 0);
+
+  const changeFilterField = (filter: WebhookListUrlFilters) =>
+    navigate(
+      webhooksListUrl({
+        ...getActiveFilters(params),
+        ...filter,
+        activeTab: undefined
+      })
+    );
   const closeModal = () =>
     navigate(
       webhooksListUrl({
@@ -49,8 +77,45 @@ export const WebhooksList: React.StatelessComponent<WebhooksListProps> = ({
       true
     );
 
+  const openModal = (action: WebhookListUrlDialog, id?: string) =>
+    navigate(
+      webhooksListUrl({
+        ...params,
+        action,
+        id
+      })
+    );
+
+  const handleTabChange = (tab: number) => {
+    navigate(
+      webhooksListUrl({
+        activeTab: tab.toString(),
+        ...getFilterTabs()[tab - 1].data
+      })
+    );
+  };
+
+  const handleTabDelete = () => {
+    deleteFilterTab(currentTab);
+    navigate(webhooksListUrl());
+  };
+
+  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
+    saveFilterTab(data.name, getActiveFilters(params));
+    handleTabChange(tabs.length + 1);
+  };
+
+  const paginationState = createPaginationState(settings.rowNumber, params);
+  const queryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: getFilterVariables(params)
+    }),
+    [params]
+  );
+
   return (
-    <TypedWebhooksListQuery displayLoader variables={paginationState}>
+    <TypedWebhooksListQuery displayLoader variables={queryVariables}>
       {({ data, loading, refetch }) => {
         const onWebhookDelete = (data: WebhookDelete) => {
           if (data.webhookDelete.errors.length === 0) {
@@ -95,6 +160,14 @@ export const WebhooksList: React.StatelessComponent<WebhooksListProps> = ({
               return (
                 <>
                   <WebhooksListPage
+                    currentTab={currentTab}
+                    initialSearch={params.query || ""}
+                    onSearchChange={query => changeFilterField({ query })}
+                    onAll={() => navigate(webhooksListUrl())}
+                    onTabChange={handleTabChange}
+                    onTabDelete={() => openModal("delete-search")}
+                    onTabSave={() => openModal("save-search")}
+                    tabs={tabs.map(tab => tab.name)}
                     disabled={loading}
                     settings={settings}
                     webhooks={maybe(() =>
@@ -121,6 +194,19 @@ export const WebhooksList: React.StatelessComponent<WebhooksListProps> = ({
                     onClose={closeModal}
                     onConfirm={handleRemoveConfirm}
                     open={params.action === "remove"}
+                  />
+                  <SaveFilterTabDialog
+                    open={params.action === "save-search"}
+                    confirmButtonState="default"
+                    onClose={closeModal}
+                    onSubmit={handleTabSave}
+                  />
+                  <DeleteFilterTabDialog
+                    open={params.action === "delete-search"}
+                    confirmButtonState="default"
+                    onClose={closeModal}
+                    onSubmit={handleTabDelete}
+                    tabName={maybe(() => tabs[currentTab - 1].name, "...")}
                   />
                 </>
               );

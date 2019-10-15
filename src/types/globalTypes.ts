@@ -273,7 +273,7 @@ export enum VoucherTypeEnum {
 }
 
 export enum WebhookEventTypeEnum {
-  ALL_EVENTS = "ALL_EVENTS",
+  ANY_EVENTS = "ANY_EVENTS",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   ORDER_CANCELLED = "ORDER_CANCELLED",
   ORDER_CREATED = "ORDER_CREATED",
@@ -792,6 +792,11 @@ export interface WebhookCreateInput {
   serviceAccount?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
+}
+
+export interface WebhookFilterInput {
+  search?: string | null;
+  isActive?: boolean | null;
 }
 
 export interface WebhookUpdateInput {

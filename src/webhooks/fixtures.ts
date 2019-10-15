@@ -19,31 +19,25 @@ export const services: ServiceList_serviceAccounts_edges_node[] = [
 export const webhookList: Webhooks_webhooks_edges_node[] = [
   {
     __typename: "Webhook",
-    events: [],
     id: "Jzx123sEt==",
     isActive: true,
     name: "Webhook Test",
-    secretKey: "dsdasdasd_asdas",
     serviceAccount: {
       __typename: "ServiceAccount",
       id: "Jzx123sEt==",
       name: "Test Account"
     },
-    targetUrl: "http://www.getsaleor.com"
   },
   {
     __typename: "Webhook",
-    events: [],
     id: "Jzx123sEt==",
     isActive: true,
     name: "Webhook Test 2",
-    secretKey: "zxczx_asdas",
     serviceAccount: {
       __typename: "ServiceAccount",
       id: "Jzx1ss23sEt==",
       name: "Test Account 2"
     },
-    targetUrl: "http://www.getsaleor.com"
   }
 ];
 export const webhook: Webhook_webhook = {

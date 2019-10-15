@@ -1,13 +1,26 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { Dialog, Pagination, SingleAction } from "../types";
+import {
+  ActiveTab,
+  Dialog,
+  Filters,
+  Pagination,
+  SingleAction,
+  TabActionDialog
+} from "../types";
 
 export const webhooksSection = "/webhooks/";
 
 export const webhooksListPath = webhooksSection;
-export type WebhookListUrlDialog = "remove";
-export type WebhooksListUrlQueryParams = Dialog<WebhookListUrlDialog> &
+export enum WebhookListUrlFiltersEnum {
+  query = "query"
+}
+export type WebhookListUrlFilters = Filters<WebhookListUrlFiltersEnum>;
+export type WebhookListUrlDialog = "remove" | TabActionDialog;
+export type WebhooksListUrlQueryParams = ActiveTab &
+  WebhookListUrlFilters &
+  Dialog<WebhookListUrlDialog> &
   Pagination &
   SingleAction;
 export const webhooksListUrl = (params?: WebhooksListUrlQueryParams) =>

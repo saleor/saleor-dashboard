@@ -38,7 +38,7 @@ const Component = () => {
   const intl = useIntl();
   return (
     <>
-      <WindowTitle title={intl.formatMessage(sectionNames.plugins)} />
+      <WindowTitle title={intl.formatMessage(sectionNames.webhooks)} />
       <Switch>
         <Route exact path={webhooksListPath} component={WebhookList} />
         <Route exact path={webhooksAddUrl} component={WebhookCreate} />

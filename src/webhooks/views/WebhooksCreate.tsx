@@ -50,7 +50,7 @@ export const WebhooksCreate: React.StatelessComponent<
                 variables: {
                   input: {
                     events: data.allEvents
-                      ? [WebhookEventTypeEnum.ALL_EVENTS]
+                      ? [WebhookEventTypeEnum.ANY_EVENTS]
                       : data.events,
                     isActive: data.isActive,
                     name: data.name,

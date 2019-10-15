@@ -62,7 +62,7 @@ const WebhooksDetailsPage: React.StatelessComponent<
   const intl = useIntl();
   const initialForm: FormData = {
     allEvents: !!maybe(() => webhook.events, []).find(
-      event => event.eventType === WebhookEventTypeEnum.ALL_EVENTS
+      event => event.eventType === WebhookEventTypeEnum.ANY_EVENTS
     ),
     events: maybe(() => webhook.events, []).map(event => event.eventType),
     id: maybe(() => webhook.id, null),

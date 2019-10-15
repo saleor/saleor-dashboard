@@ -2,16 +2,11 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { WebhookEventTypeEnum } from "./../../types/globalTypes";
+import { WebhookFilterInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: Webhooks
 // ====================================================
-
-export interface Webhooks_webhooks_edges_node_events {
-  __typename: "WebhookEvent";
-  eventType: WebhookEventTypeEnum | null;
-}
 
 export interface Webhooks_webhooks_edges_node_serviceAccount {
   __typename: "ServiceAccount";
@@ -23,10 +18,7 @@ export interface Webhooks_webhooks_edges_node {
   __typename: "Webhook";
   id: string;
   name: string | null;
-  events: (Webhooks_webhooks_edges_node_events | null)[] | null;
   isActive: boolean;
-  secretKey: string | null;
-  targetUrl: string;
   serviceAccount: Webhooks_webhooks_edges_node_serviceAccount;
 }
 
@@ -58,4 +50,5 @@ export interface WebhooksVariables {
   after?: string | null;
   last?: number | null;
   before?: string | null;
+  filter?: WebhookFilterInput | null;
 }

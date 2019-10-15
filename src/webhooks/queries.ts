@@ -8,12 +8,7 @@ export const webhooksFragment = gql`
   fragment WebhookFragment on Webhook {
     id
     name
-    events {
-      eventType
-    }
     isActive
-    secretKey
-    targetUrl
     serviceAccount {
       id
       name
@@ -30,8 +25,20 @@ export const webhooksDetailsFragment = gql`
 
 const webhooksList = gql`
   ${webhooksFragment}
-  query Webhooks($first: Int, $after: String, $last: Int, $before: String) {
-    webhooks(before: $before, after: $after, first: $first, last: $last) {
+  query Webhooks(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $filter: WebhookFilterInput
+  ) {
+    webhooks(
+      first: $first
+      after: $after
+      before: $before
+      last: $last
+      filter: $filter
+    ) {
       edges {
         node {
           ...WebhookFragment
@@ -55,6 +62,11 @@ const webhooksDetails = gql`
   query WebhookDetails($id: ID!) {
     webhook(id: $id) {
       ...WebhookFragment
+      events {
+        eventType
+      }
+      secretKey
+      targetUrl
     }
   }
 `;
