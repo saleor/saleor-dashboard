@@ -27,7 +27,7 @@ import {
 } from "@saleor/products/utils/data";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { UserError } from "../../../types";
+import { FetchMoreProps, UserError } from "../../../types";
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
@@ -67,6 +67,9 @@ interface ProductCreatePageProps {
   categories: SearchCategories_search_edges_node[];
   currency: string;
   disabled: boolean;
+  fetchMoreCategories: FetchMoreProps;
+  fetchMoreCollections: FetchMoreProps;
+  fetchMoreProductTypes: FetchMoreProps;
   productTypes?: Array<{
     id: string;
     name: string;
@@ -92,6 +95,9 @@ export const ProductCreatePage: React.StatelessComponent<
   errors: userErrors,
   fetchCategories,
   fetchCollections,
+  fetchMoreCategories,
+  fetchMoreCollections,
+  fetchMoreProductTypes,
   header,
   productTypes: productTypeChoiceList,
   saveButtonBarState,
@@ -271,6 +277,9 @@ export const ProductCreatePage: React.StatelessComponent<
                   errors={errors}
                   fetchCategories={fetchCategories}
                   fetchCollections={fetchCollections}
+                  fetchMoreCategories={fetchMoreCategories}
+                  fetchMoreCollections={fetchMoreCollections}
+                  fetchMoreProductTypes={fetchMoreProductTypes}
                   fetchProductTypes={fetchProductTypes}
                   productType={productType}
                   productTypeInputDisplayValue={productType.name}

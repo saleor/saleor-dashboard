@@ -117,6 +117,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
               }
 
               const displayCustomValue =
+                inputValue &&
                 inputValue.length > 0 &&
                 allowCustomValues &&
                 !choices.find(

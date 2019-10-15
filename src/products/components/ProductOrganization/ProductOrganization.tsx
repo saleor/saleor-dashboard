@@ -22,7 +22,7 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { maybe } from "@saleor/misc";
-import { FormErrors } from "@saleor/types";
+import { FetchMoreProps, FormErrors } from "@saleor/types";
 
 interface ProductType {
   hasVariants: boolean;
@@ -62,6 +62,9 @@ interface ProductOrganizationProps extends WithStyles<typeof styles> {
   productTypes?: SingleAutocompleteChoiceType[];
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
+  fetchMoreCategories: FetchMoreProps;
+  fetchMoreCollections: FetchMoreProps;
+  fetchMoreProductTypes?: FetchMoreProps;
   fetchProductTypes?: (data: string) => void;
   onCategoryChange: (event: ChangeEvent) => void;
   onCollectionChange: (event: ChangeEvent) => void;
@@ -81,6 +84,9 @@ const ProductOrganization = withStyles(styles, { name: "ProductOrganization" })(
     errors,
     fetchCategories,
     fetchCollections,
+    fetchMoreCategories,
+    fetchMoreCollections,
+    fetchMoreProductTypes,
     fetchProductTypes,
     productType,
     productTypeInputDisplayValue,
@@ -115,6 +121,7 @@ const ProductOrganization = withStyles(styles, { name: "ProductOrganization" })(
               onChange={onProductTypeChange}
               fetchChoices={fetchProductTypes}
               data-tc="product-type"
+              {...fetchMoreProductTypes}
             />
           ) : (
             <>
@@ -160,6 +167,7 @@ const ProductOrganization = withStyles(styles, { name: "ProductOrganization" })(
             onChange={onCategoryChange}
             fetchChoices={fetchCategories}
             data-tc="category"
+            {...fetchMoreCategories}
           />
           <FormSpacer />
           <Hr />
