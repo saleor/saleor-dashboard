@@ -233,7 +233,9 @@ const SingleAutocompleteSelectFieldContent: React.FC<
       <div className={classes.arrowContainer}>
         <div
           className={classNames(classes.arrowInnerContainer, {
-            [classes.hide]: scrolledToBottom && choices.length > 0
+            // Needs to be explicitely compared to false because
+            // scrolledToBottom can be either true, false or undefined
+            [classes.hide]: scrolledToBottom !== false
           })}
         >
           <SVG src={chevronDown} />
