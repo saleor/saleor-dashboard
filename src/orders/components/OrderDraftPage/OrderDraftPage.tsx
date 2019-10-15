@@ -18,7 +18,8 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
-import { SearchCustomers_customers_edges_node } from "../../../containers/SearchCustomers/types/SearchCustomers";
+import { FetchMoreProps } from "@saleor/types";
+import { SearchCustomers_search_edges_node } from "../../../containers/SearchCustomers/types/SearchCustomers";
 import { maybe } from "../../../misc";
 import { DraftOrderInput } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
@@ -38,10 +39,10 @@ const styles = (theme: Theme) =>
     }
   });
 
-export interface OrderDraftPageProps extends WithStyles<typeof styles> {
+export interface OrderDraftPageProps extends FetchMoreProps {
   disabled: boolean;
   order: OrderDetails_order;
-  users: SearchCustomers_customers_edges_node[];
+  users: SearchCustomers_search_edges_node[];
   usersLoading: boolean;
   countries: Array<{
     code: string;
@@ -72,12 +73,14 @@ const OrderDraftPage = withStyles(styles, { name: "OrderDraftPage" })(
     classes,
     disabled,
     fetchUsers,
+    hasMore,
     saveButtonBarState,
     onBack,
     onBillingAddressEdit,
     onCustomerEdit,
     onDraftFinalize,
     onDraftRemove,
+    onFetchMore,
     onNoteAdd,
     onOrderLineAdd,
     onOrderLineChange,
@@ -88,7 +91,7 @@ const OrderDraftPage = withStyles(styles, { name: "OrderDraftPage" })(
     order,
     users,
     usersLoading
-  }: OrderDraftPageProps) => {
+  }: OrderDraftPageProps & WithStyles<typeof styles>) => {
     const intl = useIntl();
 
     return (
@@ -139,14 +142,16 @@ const OrderDraftPage = withStyles(styles, { name: "OrderDraftPage" })(
             <OrderCustomer
               canEditAddresses={true}
               canEditCustomer={true}
+              fetchUsers={fetchUsers}
+              hasMore={hasMore}
+              loading={usersLoading}
               order={order}
               users={users}
-              loading={usersLoading}
-              fetchUsers={fetchUsers}
               onBillingAddressEdit={onBillingAddressEdit}
               onCustomerEdit={onCustomerEdit}
-              onShippingAddressEdit={onShippingAddressEdit}
+              onFetchMore={onFetchMore}
               onProfileView={onProfileView}
+              onShippingAddressEdit={onShippingAddressEdit}
             />
           </div>
         </Grid>

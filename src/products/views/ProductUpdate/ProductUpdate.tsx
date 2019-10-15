@@ -228,11 +228,11 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                       );
 
                       const categories = maybe(
-                        () => searchCategoriesOpts.data.categories.edges,
+                        () => searchCategoriesOpts.data.search.edges,
                         []
                       ).map(edge => edge.node);
                       const collections = maybe(
-                        () => searchCollectionsOpts.data.collections.edges,
+                        () => searchCollectionsOpts.data.search.edges,
                         []
                       ).map(edge => edge.node);
                       const errors = maybe(

@@ -121,11 +121,11 @@ export const ProductUpdate: React.StatelessComponent<
                           <ProductCreatePage
                             currency={maybe(() => shop.defaultCurrency)}
                             categories={maybe(
-                              () => searchCategoryOpts.data.categories.edges,
+                              () => searchCategoryOpts.data.search.edges,
                               []
                             ).map(edge => edge.node)}
                             collections={maybe(
-                              () => searchCollectionOpts.data.collections.edges,
+                              () => searchCollectionOpts.data.search.edges,
                               []
                             ).map(edge => edge.node)}
                             disabled={productCreateDataLoading}
@@ -141,7 +141,7 @@ export const ProductUpdate: React.StatelessComponent<
                               description: "page header"
                             })}
                             productTypes={maybe(() =>
-                              searchProductTypesOpts.data.productTypes.edges.map(
+                              searchProductTypesOpts.data.search.edges.map(
                                 edge => edge.node
                               )
                             )}

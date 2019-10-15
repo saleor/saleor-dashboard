@@ -20,8 +20,9 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import Skeleton from "@saleor/components/Skeleton";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
+import { FetchMoreProps } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { SearchCustomers_customers_edges_node } from "../../../containers/SearchCustomers/types/SearchCustomers";
+import { SearchCustomers_search_edges_node } from "../../../containers/SearchCustomers/types/SearchCustomers";
 import { customerUrl } from "../../../customers/urls";
 import { createHref, maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
@@ -48,9 +49,9 @@ const styles = (theme: Theme) =>
     }
   });
 
-export interface OrderCustomerProps extends WithStyles<typeof styles> {
+export interface OrderCustomerProps extends Partial<FetchMoreProps> {
   order: OrderDetails_order;
-  users?: SearchCustomers_customers_edges_node[];
+  users?: SearchCustomers_search_edges_node[];
   loading?: boolean;
   canEditAddresses: boolean;
   canEditCustomer: boolean;
@@ -67,14 +68,16 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
     canEditAddresses,
     canEditCustomer,
     fetchUsers,
+    hasMore: hasMoreUsers,
     loading,
     order,
     users,
     onCustomerEdit,
     onBillingAddressEdit,
+    onFetchMore: onFetchMoreUsers,
     onProfileView,
     onShippingAddressEdit
-  }: OrderCustomerProps) => {
+  }: OrderCustomerProps & WithStyles<typeof styles>) => {
     const intl = useIntl();
 
     const user = maybe(() => order.user);
@@ -138,11 +141,13 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
                     choices={userChoices}
                     displayValue={userDisplayName}
                     fetchChoices={fetchUsers}
+                    hasMore={hasMoreUsers}
                     loading={loading}
                     placeholder={intl.formatMessage({
                       defaultMessage: "Search Customers"
                     })}
                     onChange={handleUserChange}
+                    onFetchMore={onFetchMoreUsers}
                     name="query"
                     value={data.query}
                   />

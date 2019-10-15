@@ -111,7 +111,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
 
                     const categories = maybe(
                       () =>
-                        categorySearch.result.data.categories.edges.map(
+                        categorySearch.result.data.search.edges.map(
                           edge => edge.node
                         ),
                       []
@@ -119,7 +119,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
 
                     const collections = maybe(
                       () =>
-                        collectionSearch.result.data.collections.edges.map(
+                        collectionSearch.result.data.search.edges.map(
                           edge => edge.node
                         ),
                       []
@@ -127,7 +127,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
 
                     const pages = maybe(
                       () =>
-                        pageSearch.result.data.pages.edges.map(
+                        pageSearch.result.data.search.edges.map(
                           edge => edge.node
                         ),
                       []

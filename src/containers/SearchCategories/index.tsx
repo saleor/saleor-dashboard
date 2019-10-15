@@ -1,24 +1,29 @@
 import gql from "graphql-tag";
 
-import BaseSearch from "../BaseSearch";
+import { pageInfoFragment } from "@saleor/queries";
+import TopLevelSearch from "../TopLevelSearch";
 import {
   SearchCategories,
   SearchCategoriesVariables
 } from "./types/SearchCategories";
 
 export const searchCategories = gql`
+  ${pageInfoFragment}
   query SearchCategories($after: String, $first: Int!, $query: String!) {
-    categories(after: $after, first: $first, query: $query) {
+    search: categories(after: $after, first: $first, query: $query) {
       edges {
         node {
           id
           name
         }
       }
+      pageInfo {
+        ...PageInfoFragment
+      }
     }
   }
 `;
 
-export default BaseSearch<SearchCategories, SearchCategoriesVariables>(
+export default TopLevelSearch<SearchCategories, SearchCategoriesVariables>(
   searchCategories
 );

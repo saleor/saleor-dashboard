@@ -1,14 +1,20 @@
 import gql from "graphql-tag";
 
-import BaseSearch from "../BaseSearch";
+import { pageInfoFragment } from "@saleor/queries";
+import TopLevelSearch from "../TopLevelSearch";
 import {
   SearchProductTypes,
   SearchProductTypesVariables
 } from "./types/SearchProductTypes";
 
 export const searchProductTypes = gql`
+  ${pageInfoFragment}
   query SearchProductTypes($after: String, $first: Int!, $query: String!) {
-    productTypes(after: $after, first: $first, filter: { search: $query }) {
+    search: productTypes(
+      after: $after
+      first: $first
+      filter: { search: $query }
+    ) {
       edges {
         node {
           id
@@ -28,10 +34,13 @@ export const searchProductTypes = gql`
           }
         }
       }
+      pageInfo {
+        ...PageInfoFragment
+      }
     }
   }
 `;
 
-export default BaseSearch<SearchProductTypes, SearchProductTypesVariables>(
+export default TopLevelSearch<SearchProductTypes, SearchProductTypesVariables>(
   searchProductTypes
 );

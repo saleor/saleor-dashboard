@@ -6,24 +6,33 @@
 // GraphQL query operation: SearchCollections
 // ====================================================
 
-export interface SearchCollections_collections_edges_node {
+export interface SearchCollections_search_edges_node {
   __typename: "Collection";
   id: string;
   name: string;
 }
 
-export interface SearchCollections_collections_edges {
+export interface SearchCollections_search_edges {
   __typename: "CollectionCountableEdge";
-  node: SearchCollections_collections_edges_node;
+  node: SearchCollections_search_edges_node;
 }
 
-export interface SearchCollections_collections {
+export interface SearchCollections_search_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SearchCollections_search {
   __typename: "CollectionCountableConnection";
-  edges: SearchCollections_collections_edges[];
+  edges: SearchCollections_search_edges[];
+  pageInfo: SearchCollections_search_pageInfo;
 }
 
 export interface SearchCollections {
-  collections: SearchCollections_collections | null;
+  search: SearchCollections_search | null;
 }
 
 export interface SearchCollectionsVariables {

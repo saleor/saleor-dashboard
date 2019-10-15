@@ -13,9 +13,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import { SearchCategories_categories_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
-import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
-import { SearchProductTypes_productTypes_edges_node_productAttributes } from "@saleor/containers/SearchProductTypes/types/SearchProductTypes";
+import { SearchCategories_search_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
+import { SearchCollections_search_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
+import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/containers/SearchProductTypes/types/SearchProductTypes";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -63,15 +63,15 @@ export interface ProductCreatePageSubmitData extends FormData {
 
 interface ProductCreatePageProps {
   errors: UserError[];
-  collections: SearchCollections_collections_edges_node[];
-  categories: SearchCategories_categories_edges_node[];
+  collections: SearchCollections_search_edges_node[];
+  categories: SearchCategories_search_edges_node[];
   currency: string;
   disabled: boolean;
   productTypes?: Array<{
     id: string;
     name: string;
     hasVariants: boolean;
-    productAttributes: SearchProductTypes_productTypes_edges_node_productAttributes[];
+    productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
   }>;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;

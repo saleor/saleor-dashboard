@@ -10,26 +10,30 @@ export interface SearchQueryVariables {
   query: string;
 }
 
+interface BaseSearchProps<
+  TQuery,
+  TQueryVariables extends SearchQueryVariables
+> {
+  children: (props: {
+    loadMore: () => void;
+    search: (query: string) => void;
+    result: TypedQueryResult<TQuery, TQueryVariables>;
+  }) => React.ReactElement<any>;
+  variables: TQueryVariables;
+}
+
 function BaseSearch<TQuery, TQueryVariables extends SearchQueryVariables>(
-  query: DocumentNode
+  query: DocumentNode,
+  loadMoreFn: (result: TypedQueryResult<TQuery, TQueryVariables>) => void
 ) {
   const Query = TypedQuery<TQuery, TQueryVariables>(query);
-  interface BaseSearchProps {
-    children: (props: {
-      search: (query: string) => void;
-      result: TypedQueryResult<TQuery, TQueryVariables>;
-    }) => React.ReactElement<any>;
-    variables: TQueryVariables;
-  }
-  interface BaseSearchState {
-    query: string;
-  }
 
   class BaseSearchComponent extends React.Component<
-    BaseSearchProps,
-    BaseSearchState
+    BaseSearchProps<TQuery, TQueryVariables>,
+    SearchQueryVariables
   > {
-    state: BaseSearchState = {
+    state: SearchQueryVariables = {
+      first: this.props.variables.first,
       query: this.props.variables.query
     };
 
@@ -54,7 +58,13 @@ function BaseSearch<TQuery, TQueryVariables extends SearchQueryVariables>(
                 query: this.state.query
               }}
             >
-              {result => children({ search, result })}
+              {result =>
+                children({
+                  loadMore: () => loadMoreFn(result),
+                  result,
+                  search
+                })
+              }
             </Query>
           )}
         </Debounce>
@@ -63,4 +73,5 @@ function BaseSearch<TQuery, TQueryVariables extends SearchQueryVariables>(
   }
   return BaseSearchComponent;
 }
+
 export default BaseSearch;

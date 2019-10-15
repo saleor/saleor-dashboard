@@ -299,7 +299,7 @@ export const CollectionDetails: React.StatelessComponent<
                           })
                         }
                         products={maybe(() =>
-                          result.data.products.edges
+                          result.data.search.edges
                             .map(edge => edge.node)
                             .filter(suggestedProduct => suggestedProduct.id)
                         )}

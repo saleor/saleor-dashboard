@@ -371,7 +371,7 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                                     })
                                   }
                                   products={maybe(() =>
-                                    searchProductsOpts.data.products.edges
+                                    searchProductsOpts.data.search.edges
                                       .map(edge => edge.node)
                                       .filter(
                                         suggestedProduct => suggestedProduct.id
@@ -389,7 +389,7 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                               }) => (
                                 <AssignCategoriesDialog
                                   categories={maybe(() =>
-                                    searchCategoriesOpts.data.categories.edges
+                                    searchCategoriesOpts.data.search.edges
                                       .map(edge => edge.node)
                                       .filter(
                                         suggestedCategory =>
@@ -426,7 +426,7 @@ export const SaleDetails: React.StatelessComponent<SaleDetailsProps> = ({
                               }) => (
                                 <AssignCollectionDialog
                                   collections={maybe(() =>
-                                    searchCollectionsOpts.data.collections.edges
+                                    searchCollectionsOpts.data.search.edges
                                       .map(edge => edge.node)
                                       .filter(
                                         suggestedCategory =>
