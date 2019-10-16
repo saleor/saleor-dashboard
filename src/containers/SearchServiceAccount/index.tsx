@@ -4,7 +4,7 @@ import BaseSearch from "../BaseSearch";
 import {
   SearchServiceAccount,
   SearchServiceAccountVariables
-} from "./types/SearchServiceAccount";
+} from "./types/searchServiceAccount";
 
 export const searchServiceAccount = gql`
   query SearchServiceAccount($after: String, $first: Int!, $query: String!) {
