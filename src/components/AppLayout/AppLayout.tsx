@@ -29,6 +29,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
+import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import Container from "../Container";
 import AppActionContext from "./AppActionContext";
 import AppHeaderContext from "./AppHeaderContext";
@@ -287,8 +288,13 @@ const AppLayout = withStyles(styles, {
       const menuStructure = createMenuStructure(intl);
 
       const handleLogout = () => {
-        close();
+        setMenuState(false);
         logout();
+      };
+
+      const handleViewerProfile = () => {
+        setMenuState(false);
+        navigate(staffMemberDetailsUrl(user.id));
       };
 
       const handleMenuItemClick = (
@@ -434,6 +440,15 @@ const AppLayout = withStyles(styles, {
                                         mouseEvent="onClick"
                                       >
                                         <Menu>
+                                          <MenuItem
+                                            className={classes.userMenuItem}
+                                            onClick={handleViewerProfile}
+                                          >
+                                            <FormattedMessage
+                                              defaultMessage="Account Settings"
+                                              description="button"
+                                            />
+                                          </MenuItem>
                                           <MenuItem
                                             className={classes.userMenuItem}
                                             onClick={handleLogout}
