@@ -68,10 +68,7 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
         <ControlledCheckbox
           checked={data.allEvents}
           disabled={disabled}
-          label={intl.formatMessage({
-            defaultMessage: "All events",
-            description: "checkbox label"
-          })}
+          label={translatedEvents.ANY_EVENTS}
           name="allEvents"
           onChange={handleAllEventsChange}
         />
