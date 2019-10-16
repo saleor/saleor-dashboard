@@ -9,8 +9,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
+import { filter } from "fuzzaldrin";
 import React from "react";
-import { compareTwoStrings } from "string-similarity";
 
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Debounce, { DebounceProps } from "@saleor/components/Debounce";
@@ -210,22 +210,12 @@ const MultiAutocompleteSelectField: React.FC<
     );
   }
 
-  const sortedChoices = choices.sort((a, b) => {
-    const ratingA = compareTwoStrings(query, a.label);
-    const ratingB = compareTwoStrings(query, b.label);
-    if (ratingA > ratingB) {
-      return -1;
-    }
-    if (ratingA < ratingB) {
-      return 1;
-    }
-    return 0;
-  });
-
   return (
     <MultiAutocompleteSelectFieldComponent
       fetchChoices={q => setQuery(q || "")}
-      choices={sortedChoices}
+      choices={filter(choices, query, {
+        key: "label"
+      })}
       {...props}
     />
   );

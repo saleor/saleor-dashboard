@@ -3,8 +3,8 @@ import { InputProps } from "@material-ui/core/Input";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Downshift from "downshift";
+import { filter } from "fuzzaldrin";
 import React from "react";
-import { compareTwoStrings } from "string-similarity";
 import SingleAutocompleteSelectFieldContent, {
   SingleAutocompleteChoiceType
 } from "./SingleAutocompleteSelectFieldContent";
@@ -174,41 +174,32 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
   }
 );
 
-export class SingleAutocompleteSelectField extends React.Component<
-  Omit<SingleAutocompleteSelectFieldProps, "classes">,
-  SingleAutocompleteSelectFieldState
-> {
-  state = { choices: this.props.choices };
-
-  handleInputChange = (value: string) =>
-    this.setState((_, props) => ({
-      choices: props.choices
-        .sort((a, b) => {
-          const ratingA = compareTwoStrings(value || "", a.label);
-          const ratingB = compareTwoStrings(value || "", b.label);
-          if (ratingA > ratingB) {
-            return -1;
-          }
-          if (ratingA < ratingB) {
-            return 1;
-          }
-          return 0;
-        })
-        .slice(0, 5)
-    }));
-
-  render() {
-    if (!!this.props.fetchChoices) {
-      return <SingleAutocompleteSelectFieldComponent {...this.props} />;
-    }
+const SingleAutocompleteSelectField: React.FC<
+  SingleAutocompleteSelectFieldProps
+> = ({ choices, fetchChoices, ...props }) => {
+  const [query, setQuery] = React.useState("");
+  if (fetchChoices) {
     return (
-      <SingleAutocompleteSelectFieldComponent
-        {...this.props}
-        choices={this.state.choices}
-        fetchChoices={this.handleInputChange}
-      />
+      <DebounceAutocomplete debounceFn={fetchChoices}>
+        {debounceFn => (
+          <SingleAutocompleteSelectFieldComponent
+            choices={choices}
+            {...props}
+            fetchChoices={debounceFn}
+          />
+        )}
+      </DebounceAutocomplete>
     );
   }
-}
 
+  return (
+    <SingleAutocompleteSelectFieldComponent
+      fetchChoices={q => setQuery(q || "")}
+      choices={filter(choices, query, {
+        key: "label"
+      })}
+      {...props}
+    />
+  );
+};
 export default SingleAutocompleteSelectField;
