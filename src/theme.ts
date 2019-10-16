@@ -60,7 +60,7 @@ export default (colors: IThemeColors): Theme =>
         },
         flat: {
           "& span": {
-            color: colors.primary
+            color: colors.font.gray
           }
         },
         flatPrimary: {
@@ -106,7 +106,7 @@ export default (colors: IThemeColors): Theme =>
       MuiFormControlLabel: {
         root: {
           display: "grid",
-          gridTemplateColumns: "50px 6fr"
+          gridTemplateColumns: "48px 1fr"
         }
       },
       MuiFormLabel: {
@@ -281,8 +281,7 @@ export default (colors: IThemeColors): Theme =>
           "& fieldset": {
             "&&:not($error)": {
               borderColor: colors.input.border
-            },
-            background: colors.background.paper
+            }
           },
           "& legend": {
             display: "none"
@@ -454,7 +453,8 @@ export default (colors: IThemeColors): Theme =>
         ripple: {
           "&$rippleVisible": {
             backgroundColor: fade(colors.primary, 0.2)
-          }
+          },
+          borderRadius: "100%"
         }
       }
     },

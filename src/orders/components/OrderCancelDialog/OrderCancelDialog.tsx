@@ -67,7 +67,7 @@ const OrderCancelDialog = withStyles(styles, { name: "OrderCancelDialog" })(
               <>
                 <DialogTitle>
                   <FormattedMessage
-                    defaultMessage="Cancel order"
+                    defaultMessage="Cancel Order"
                     description="dialog header"
                   />
                 </DialogTitle>

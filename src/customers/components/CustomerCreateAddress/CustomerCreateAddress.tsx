@@ -47,7 +47,7 @@ const CustomerCreateAddress = withStyles(styles, {
       <Card className={classes.overflow}>
         <CardTitle
           title={intl.formatMessage({
-            defaultMessage: "Primary address",
+            defaultMessage: "Primary Address",
             description: "page header"
           })}
         />

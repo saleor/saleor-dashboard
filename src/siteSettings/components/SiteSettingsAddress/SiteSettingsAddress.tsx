@@ -49,7 +49,7 @@ const SiteSettingsAddress = withStyles(styles, { name: "SiteSettingsAddress" })(
       <Card className={classes.root}>
         <CardTitle
           title={intl.formatMessage({
-            defaultMessage: "Store information",
+            defaultMessage: "Store Information",
             description: "section header"
           })}
         />

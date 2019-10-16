@@ -66,7 +66,7 @@ const CustomerAddresses = withStyles(styles, { name: "CustomerAddresses" })(
               <CardContent>
                 <Typography className={classes.label}>
                   <FormattedMessage
-                    defaultMessage="Billing address"
+                    defaultMessage="Billing Address"
                     description="subsection header"
                   />
                 </Typography>
@@ -84,7 +84,7 @@ const CustomerAddresses = withStyles(styles, { name: "CustomerAddresses" })(
               <CardContent>
                 <Typography className={classes.label}>
                   <FormattedMessage
-                    defaultMessage="Shipping address"
+                    defaultMessage="Shipping Address"
                     description="subsection header"
                   />
                 </Typography>

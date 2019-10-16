@@ -5,28 +5,39 @@ import FormLabel from "@material-ui/core/FormLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const styles = createStyles({
-  formControl: {
-    padding: 0,
-    width: "100%"
-  },
-  formLabel: {
-    marginLeft: "-5px",
-    paddingBottom: "10px"
-  },
-  radioLabel: {
-    "& > span": {
-      padding: "6px"
+const useStyles = makeStyles(
+  (theme: Theme) => ({
+    formLabel: {
+      marginBottom: theme.spacing.unit
+    },
+    radioLabel: {
+      marginBottom: -theme.spacing.unit * 1.5
+    },
+    root: {
+      "& $radioLabel": {
+        "&:last-of-type": {
+          marginBottom: 0
+        }
+      },
+      padding: 0,
+      width: "100%"
+    },
+    rootNoLabel: {
+      marginTop: -theme.spacing.unit * 1.5
     }
+  }),
+  {
+    name: "RadioGroupField"
   }
-});
+);
 
-interface RadioGroupFieldChoice {
+export interface RadioGroupFieldChoice {
   value: string;
   label: React.ReactNode;
 }
@@ -39,16 +50,13 @@ interface RadioGroupFieldProps {
   hint?: string;
   label?: string;
   name?: string;
-  value?: string;
+  value: string;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const RadioGroupField = withStyles(styles, {
-  name: "RadioGroupField"
-})(
-  ({
+export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
+  const {
     className,
-    classes,
     disabled,
     error,
     label,
@@ -57,42 +65,45 @@ export const RadioGroupField = withStyles(styles, {
     onChange,
     name,
     hint
-  }: RadioGroupFieldProps & WithStyles<typeof styles>) => {
-    return (
-      <FormControl
-        className={classNames(classes.formControl, className)}
-        error={error}
-        disabled={disabled}
+  } = props;
+  const classes = useStyles(props);
+
+  return (
+    <FormControl
+      className={classNames(classes.root, className, {
+        [classes.rootNoLabel]: !label
+      })}
+      error={error}
+      disabled={disabled}
+    >
+      {label ? (
+        <FormLabel className={classes.formLabel}>{label}</FormLabel>
+      ) : null}
+      <RadioGroup
+        aria-label={name}
+        name={name}
+        value={value}
+        onChange={onChange}
       >
-        {label ? (
-          <FormLabel className={classes.formLabel}>{label}</FormLabel>
-        ) : null}
-        <RadioGroup
-          aria-label={name}
-          name={name}
-          value={value}
-          onChange={onChange}
-        >
-          {choices.length > 0 ? (
-            choices.map(choice => (
-              <FormControlLabel
-                value={choice.value}
-                className={classes.radioLabel}
-                control={<Radio color="primary" />}
-                label={choice.label}
-                key={choice.value}
-              />
-            ))
-          ) : (
-            <MenuItem disabled={true}>
-              <FormattedMessage defaultMessage="No results found" />
-            </MenuItem>
-          )}
-        </RadioGroup>
-        {hint && <FormHelperText>{hint}</FormHelperText>}
-      </FormControl>
-    );
-  }
-);
+        {choices.length > 0 ? (
+          choices.map(choice => (
+            <FormControlLabel
+              value={choice.value}
+              className={classes.radioLabel}
+              control={<Radio color="primary" />}
+              label={choice.label}
+              key={choice.value}
+            />
+          ))
+        ) : (
+          <MenuItem disabled={true}>
+            <FormattedMessage defaultMessage="No results found" />
+          </MenuItem>
+        )}
+      </RadioGroup>
+      {hint && <FormHelperText>{hint}</FormHelperText>}
+    </FormControl>
+  );
+};
 RadioGroupField.displayName = "RadioGroupField";
 export default RadioGroupField;

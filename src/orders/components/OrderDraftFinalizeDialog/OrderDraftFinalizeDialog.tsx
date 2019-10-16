@@ -64,7 +64,7 @@ const OrderDraftFinalizeDialog: React.StatelessComponent<
       onConfirm={onConfirm}
       open={open}
       title={intl.formatMessage({
-        defaultMessage: "Finalize draft order",
+        defaultMessage: "Finalize Draft Order",
         description: "dialog header"
       })}
       confirmButtonLabel={

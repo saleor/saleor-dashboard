@@ -187,7 +187,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
           <div className={classes.sectionHeader}>
             <Typography className={classes.sectionHeaderTitle}>
               <FormattedMessage
-                defaultMessage="Contact information"
+                defaultMessage="Contact Information"
                 description="subheader"
               />
             </Typography>

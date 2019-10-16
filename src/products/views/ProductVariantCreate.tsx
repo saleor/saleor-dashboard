@@ -58,18 +58,20 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
               ) =>
                 variantCreate({
                   variables: {
-                    attributes: formData.attributes
-                      .filter(attribute => attribute.value !== "")
-                      .map(attribute => ({
-                        id: attribute.id,
-                        values: [attribute.value]
-                      })),
-                    costPrice: decimal(formData.costPrice),
-                    priceOverride: decimal(formData.priceOverride),
-                    product: productId,
-                    quantity: formData.quantity || null,
-                    sku: formData.sku,
-                    trackInventory: true
+                    input: {
+                      attributes: formData.attributes
+                        .filter(attribute => attribute.value !== "")
+                        .map(attribute => ({
+                          id: attribute.id,
+                          values: [attribute.value]
+                        })),
+                      costPrice: decimal(formData.costPrice),
+                      priceOverride: decimal(formData.priceOverride),
+                      product: productId,
+                      quantity: formData.quantity || null,
+                      sku: formData.sku,
+                      trackInventory: true
+                    }
                   }
                 });
               const handleVariantClick = (id: string) =>

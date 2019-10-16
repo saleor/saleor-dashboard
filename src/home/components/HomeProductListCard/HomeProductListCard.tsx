@@ -57,7 +57,7 @@ export const HomeProductList = withStyles(styles, { name: "HomeProductList" })(
       <Card>
         <CardTitle
           title={intl.formatMessage({
-            defaultMessage: "Top products",
+            defaultMessage: "Top Products",
             description: "header",
             id: "homeProductsListCardHeader"
           })}

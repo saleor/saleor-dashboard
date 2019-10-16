@@ -11,16 +11,20 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
 import { UserError } from "../../../types";
-import { SaleType } from "../../../types/globalTypes";
+import { SaleType as SaleTypeEnum } from "../../../types/globalTypes";
+import DiscountDates from "../DiscountDates";
 import SaleInfo from "../SaleInfo";
-import SalePricing from "../SalePricing";
+import SaleType from "../SaleType";
 
 export interface FormData {
+  endDate: string;
+  endTime: string;
+  hasEndDate: boolean;
   name: string;
   startDate: string;
-  endDate: string;
+  startTime: string;
+  type: SaleTypeEnum;
   value: string;
-  type: SaleType;
 }
 
 export interface SaleCreatePageProps {
@@ -44,9 +48,12 @@ const SaleCreatePage: React.StatelessComponent<SaleCreatePageProps> = ({
 
   const initialForm: FormData = {
     endDate: "",
+    endTime: "",
+    hasEndDate: false,
     name: "",
     startDate: "",
-    type: SaleType.FIXED,
+    startTime: "",
+    type: SaleTypeEnum.FIXED,
     value: ""
   };
   return (
@@ -71,10 +78,12 @@ const SaleCreatePage: React.StatelessComponent<SaleCreatePageProps> = ({
                 onChange={change}
               />
               <CardSpacer />
-              <SalePricing
+              <SaleType data={data} disabled={disabled} onChange={change} />
+              <CardSpacer />
+              <DiscountDates
                 data={data}
-                defaultCurrency={defaultCurrency}
                 disabled={disabled}
+                defaultCurrency={defaultCurrency}
                 errors={formErrors}
                 onChange={change}
               />

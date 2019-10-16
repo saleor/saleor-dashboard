@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-04T11:19:12.447Z\n"
+"POT-Creation-Date: 2019-10-15T15:56:00.137Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -99,6 +99,14 @@ msgctxt "staff member status"
 msgid "Active"
 msgstr ""
 
+#: build/locale/src/discounts/components/DiscountDates/DiscountDates.json
+#. [src.discounts.components.DiscountDates.1662220323] - time during discount is active, header
+#. defaultMessage is:
+#. Active Dates
+msgctxt "time during discount is active, header"
+msgid "Active Dates"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
 #. [src.discounts.components.VoucherDates.1662220323] - time during voucher is active, header
 #. defaultMessage is:
@@ -129,6 +137,22 @@ msgstr ""
 #. Add Address
 msgctxt "dialog title"
 msgid "Add Address"
+msgstr ""
+
+#: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
+#. [src.collections.components.CollectionCreatePage.951411809] - page header
+#. defaultMessage is:
+#. Add Collection
+msgctxt "page header"
+msgid "Add Collection"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
+#. [src.customers.components.CustomerCreatePage.2622255457] - page header
+#. defaultMessage is:
+#. Add Customer
+msgctxt "page header"
+msgid "Add Customer"
 msgstr ""
 
 #: build/locale/src/components/Filter/Filter.json
@@ -171,6 +195,14 @@ msgctxt "dialog header"
 msgid "Add Price Rate"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog.json
+#. [src.orders.components.OrderFulfillmentTrackingDialog.606831229] - dialog header
+#. defaultMessage is:
+#. Add Tracking Code
+msgctxt "dialog header"
+msgid "Add Tracking Code"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
 #. [src.attributes.components.AttributeValueEditDialog.1841790893] - add attribute value
 #. defaultMessage is:
@@ -201,22 +233,6 @@ msgstr ""
 #. Add authentication
 msgctxt "button"
 msgid "Add authentication"
-msgstr ""
-
-#: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
-#. [src.collections.components.CollectionCreatePage.3958681866] - page header
-#. defaultMessage is:
-#. Add collection
-msgctxt "page header"
-msgid "Add collection"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
-#. [src.customers.components.CustomerCreatePage.1934221653] - page header
-#. defaultMessage is:
-#. Add customer
-msgctxt "page header"
-msgid "Add customer"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerListPage/CustomerListPage.json
@@ -357,14 +373,6 @@ msgstr ""
 #. Add tracking
 msgctxt "fulfillment group tracking number"
 msgid "Add tracking"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog.json
-#. [src.orders.components.OrderFulfillmentTrackingDialog.3680864271] - dialog header
-#. defaultMessage is:
-#. Add tracking code
-msgctxt "dialog header"
-msgid "Add tracking code"
 msgstr ""
 
 #: build/locale/src/products/components/ProductVariantNavigation/ProductVariantNavigation.json
@@ -637,6 +645,38 @@ msgstr ""
 #. Applies to
 msgctxt "voucher"
 msgid "Applies to"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [src.products.components.ProductVariantCreateDialog.2783195765]
+#. defaultMessage is:
+#. Apply single price to all SKUs
+msgctxt "description"
+msgid "Apply single price to all SKUs"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [src.products.components.ProductVariantCreateDialog.3601538615]
+#. defaultMessage is:
+#. Apply single stock to all SKUs
+msgctxt "description"
+msgid "Apply single stock to all SKUs"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [src.products.components.ProductVariantCreateDialog.3570949907]
+#. defaultMessage is:
+#. Apply unique prices by attribute to each SKU
+msgctxt "description"
+msgid "Apply unique prices by attribute to each SKU"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [src.products.components.ProductVariantCreateDialog.3387090508]
+#. defaultMessage is:
+#. Apply unique stock by attribute to each SKU
+msgctxt "description"
+msgid "Apply unique stock by attribute to each SKU"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
@@ -1139,6 +1179,10 @@ msgctxt "description"
 msgid "Are you sure you want to void this payment?"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog.json
+#. [src.products.components.ProductVariantCreateDialog.3922579741] - dialog header
+#. defaultMessage is:
+#. Assign Attribute
 #: build/locale/src/productTypes/components/AssignAttributeDialog/AssignAttributeDialog.json
 #. [src.productTypes.components.AssignAttributeDialog.3922579741] - dialog header
 #. defaultMessage is:
@@ -1265,6 +1309,14 @@ msgstr ""
 #. Assign value
 msgctxt "assign attribute value button"
 msgid "Assign value"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [src.products.components.ProductVariantCreateDialog.168343345] - variant attribute
+#. defaultMessage is:
+#. Attribute
+msgctxt "variant attribute"
+msgid "Attribute"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -1464,15 +1516,15 @@ msgid "Back to login"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryBackground/CategoryBackground.json
-#. [src.categories.components.CategoryBackground.1849089820] - section header
+#. [src.categories.components.CategoryBackground.2224943474] - section header
 #. defaultMessage is:
-#. Background image (optional)
+#. Background Image (optional)
 #: build/locale/src/collections/components/CollectionImage/CollectionImage.json
-#. [src.collections.components.CollectionImage.1849089820] - section header
+#. [src.collections.components.CollectionImage.2224943474] - section header
 #. defaultMessage is:
-#. Background image (optional)
+#. Background Image (optional)
 msgctxt "section header"
-msgid "Background image (optional)"
+msgid "Background Image (optional)"
 msgstr ""
 
 #: build/locale/src/misc.json
@@ -1483,20 +1535,20 @@ msgctxt "tax rate"
 msgid "Bikes"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
+#. [src.customers.components.CustomerAddresses.4282475982] - subsection header
+#. defaultMessage is:
+#. Billing Address
+msgctxt "subsection header"
+msgid "Billing Address"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 #. [src.orders.components.OrderCustomer.4282475982]
 #. defaultMessage is:
 #. Billing Address
 msgctxt "description"
 msgid "Billing Address"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
-#. [src.customers.components.CustomerAddresses.2428885633] - subsection header
-#. defaultMessage is:
-#. Billing address
-msgctxt "subsection header"
-msgid "Billing address"
 msgstr ""
 
 #: build/locale/src/misc.json
@@ -1509,6 +1561,10 @@ msgstr ""
 
 #: build/locale/src/intl.json
 #. [src.cancel] - button
+#. defaultMessage is:
+#. Cancel
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog.json
+#. [src.products.components.ProductVariantCreateDialog.3528672691] - button
 #. defaultMessage is:
 #. Cancel
 msgctxt "button"
@@ -1531,6 +1587,14 @@ msgctxt "dialog header"
 msgid "Cancel Fulfillment"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
+#. [src.orders.components.OrderCancelDialog.1258942306] - dialog header
+#. defaultMessage is:
+#. Cancel Order
+msgctxt "dialog header"
+msgid "Cancel Order"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderBulkCancelDialog/OrderBulkCancelDialog.json
 #. [src.orders.components.OrderBulkCancelDialog.1528036340] - dialog header
 #. defaultMessage is:
@@ -1545,14 +1609,6 @@ msgstr ""
 #. Cancel fulfillment
 msgctxt "button"
 msgid "Cancel fulfillment"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
-#. [src.orders.components.OrderCancelDialog.1854613983] - dialog header
-#. defaultMessage is:
-#. Cancel order
-msgctxt "dialog header"
-msgid "Cancel order"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDetailsPage/OrderDetailsPage.json
@@ -1751,6 +1807,14 @@ msgctxt "tax rate"
 msgid "Children's clothing"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [src.products.components.ProductVariantCreateDialog.2670525734] - variant attribute
+#. defaultMessage is:
+#. Choose attribute
+msgctxt "variant attribute"
+msgid "Choose attribute"
+msgstr ""
+
 #: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
 #. [src.shipping.components.ShippingZoneCountriesAssignDialog.2404264158]
 #. defaultMessage is:
@@ -1928,11 +1992,11 @@ msgid "Confirm Password"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
-#. [src.orders.components.OrderCustomer.1111991638] - subheader
+#. [src.orders.components.OrderCustomer.2312694610] - subheader
 #. defaultMessage is:
-#. Contact information
+#. Contact Information
 msgctxt "subheader"
-msgid "Contact information"
+msgid "Contact Information"
 msgstr ""
 
 #: build/locale/src/pages/components/PageInfo/PageInfo.json
@@ -2139,6 +2203,14 @@ msgctxt "description"
 msgid "Country area"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog.json
+#. [src.products.components.ProductVariantCreateDialog.4120989039] - create multiple variants, button
+#. defaultMessage is:
+#. Create
+msgctxt "create multiple variants, button"
+msgid "Create"
+msgstr ""
+
 #: build/locale/src/services/components/ServiceTokenCreateDialog/ServiceTokenCreateDialog.json
 #. [src.services.components.ServiceTokenCreateDialog.4120989039] - create service token, button
 #. defaultMessage is:
@@ -2200,6 +2272,14 @@ msgstr ""
 #. defaultMessage is:
 #. Create Page
 msgctxt "page header"
+msgid "Create Page"
+msgstr ""
+
+#: build/locale/src/pages/views/PageCreate.json
+#. [src.pages.views.1068617485] - header
+#. defaultMessage is:
+#. Create Page
+msgctxt "header"
 msgid "Create Page"
 msgstr ""
 
@@ -2383,14 +2463,6 @@ msgctxt "button"
 msgid "Create page"
 msgstr ""
 
-#: build/locale/src/pages/views/PageCreate.json
-#. [src.pages.views.3785394515] - header
-#. defaultMessage is:
-#. Create page
-msgctxt "header"
-msgid "Create page"
-msgstr ""
-
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
 #. [src.shipping.components.ShippingZoneRateDialog.16061680] - button
 #. defaultMessage is:
@@ -2433,6 +2505,14 @@ msgstr ""
 #. Create variant
 msgctxt "window title"
 msgid "Create variant"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariants/ProductVariants.json
+#. [src.products.components.ProductVariants.1721716102] - button
+#. defaultMessage is:
+#. Create variants
+msgctxt "button"
+msgid "Create variants"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherListPage/VoucherListPage.json
@@ -2539,6 +2619,14 @@ msgctxt "description"
 msgid "Customer Name"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerCreateDetails/CustomerCreateDetails.json
+#. [src.customers.components.CustomerCreateDetails.3063084773] - header
+#. defaultMessage is:
+#. Customer Overview
+msgctxt "header"
+msgid "Customer Overview"
+msgstr ""
+
 #: build/locale/src/customers/views/CustomerDetails.json
 #. [src.customers.views.3901579344]
 #. defaultMessage is:
@@ -2553,14 +2641,6 @@ msgstr ""
 #. Customer created
 msgctxt "description"
 msgid "Customer created"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerCreateDetails/CustomerCreateDetails.json
-#. [src.customers.components.CustomerCreateDetails.4157831287] - header
-#. defaultMessage is:
-#. Customer overview
-msgctxt "header"
-msgid "Customer overview"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
@@ -2739,12 +2819,56 @@ msgctxt "dialog title"
 msgid "Delete Collection"
 msgstr ""
 
+#: build/locale/src/customers/views/CustomerDetails.json
+#. [src.customers.views.1998583641] - dialog header
+#. defaultMessage is:
+#. Delete Customer
+msgctxt "dialog header"
+msgid "Delete Customer"
+msgstr ""
+
+#: build/locale/src/customers/views/CustomerList/CustomerList.json
+#. [src.customers.views.CustomerList.2136923553] - dialog header
+#. defaultMessage is:
+#. Delete Customers
+msgctxt "dialog header"
+msgid "Delete Customers"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
+#. [src.orders.components.OrderDraftCancelDialog.1961675716] - dialog header
+#. defaultMessage is:
+#. Delete Daft Order
+msgctxt "dialog header"
+msgid "Delete Daft Order"
+msgstr ""
+
 #: build/locale/src/products/views/ProductImage.json
 #. [src.products.views.1731766393] - dialog header
 #. defaultMessage is:
 #. Delete Image
 msgctxt "dialog header"
 msgid "Delete Image"
+msgstr ""
+
+#: build/locale/src/navigation/views/MenuDetails/index.json
+#. [menuDetailsDeleteMenuHeader] - dialog header
+#. defaultMessage is:
+#. Delete Menu
+#: build/locale/src/navigation/views/MenuList.json
+#. [menuListDeleteMenuHeader] - dialog header
+#. defaultMessage is:
+#. Delete Menu
+msgctxt "dialog header"
+msgid "Delete Menu"
+msgstr ""
+
+#: build/locale/src/navigation/views/MenuList.json
+#. [menuListDeleteMenusHeader] - dialog header
+#. defaultMessage is:
+#. Delete Menus
+msgctxt "dialog header"
+msgid "Delete Menus"
 msgstr ""
 
 #: build/locale/src/orders/views/OrderDraftList/OrderDraftList.json
@@ -2987,36 +3111,12 @@ msgctxt "dialog title"
 msgid "Delete collections"
 msgstr ""
 
-#: build/locale/src/customers/views/CustomerDetails.json
-#. [src.customers.views.442409664] - dialog header
-#. defaultMessage is:
-#. Delete customer
-msgctxt "dialog header"
-msgid "Delete customer"
-msgstr ""
-
-#: build/locale/src/customers/views/CustomerList/CustomerList.json
-#. [src.customers.views.CustomerList.1946482599] - dialog header
-#. defaultMessage is:
-#. Delete customers
-msgctxt "dialog header"
-msgid "Delete customers"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
-#. [src.orders.components.OrderDraftCancelDialog.632633254] - dialog header
-#. defaultMessage is:
-#. Delete draft order
-msgctxt "dialog header"
-msgid "Delete draft order"
-msgstr ""
-
 #: build/locale/src/shipping/views/ShippingZoneDetails/ShippingZoneDetailsDialogs.json
-#. [src.shipping.views.ShippingZoneDetails.1947090060] - unassign country, dialog header
+#. [src.shipping.views.ShippingZoneDetails.3133838427] - unassign country, dialog header
 #. defaultMessage is:
-#. Delete from shipping zone
+#. Delete from Shipping Zone
 msgctxt "unassign country, dialog header"
-msgid "Delete from shipping zone"
+msgid "Delete from Shipping Zone"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
@@ -3025,26 +3125,6 @@ msgstr ""
 #. Delete image
 msgctxt "dialog title"
 msgid "Delete image"
-msgstr ""
-
-#: build/locale/src/navigation/views/MenuDetails/index.json
-#. [menuDetailsDeleteMenuHeader] - dialog header
-#. defaultMessage is:
-#. Delete menu
-#: build/locale/src/navigation/views/MenuList.json
-#. [menuListDeleteMenuHeader] - dialog header
-#. defaultMessage is:
-#. Delete menu
-msgctxt "dialog header"
-msgid "Delete menu"
-msgstr ""
-
-#: build/locale/src/navigation/views/MenuList.json
-#. [menuListDeleteMenusHeader] - dialog header
-#. defaultMessage is:
-#. Delete menus
-msgctxt "dialog header"
-msgid "Delete menus"
 msgstr ""
 
 #: build/locale/src/staff/components/StaffProperties/StaffProperties.json
@@ -3163,12 +3243,12 @@ msgctxt "description"
 msgid "Discount Code"
 msgstr ""
 
-#: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
-#. [src.discounts.components.VoucherValue.1971417066]
+#: build/locale/src/discounts/components/SaleType/SaleType.json
+#. [src.discounts.components.SaleType.3216816841] - percentage or fixed, header
 #. defaultMessage is:
-#. Discount Specific Information
-msgctxt "description"
-msgid "Discount Specific Information"
+#. Discount Type
+msgctxt "percentage or fixed, header"
+msgid "Discount Type"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
@@ -3179,10 +3259,14 @@ msgctxt "header"
 msgid "Discount Type"
 msgstr ""
 
-#: build/locale/src/discounts/components/SalePricing/SalePricing.json
-#. [src.discounts.components.SalePricing.1205967018]
+#: build/locale/src/discounts/components/SaleValue/SaleValue.json
+#. [src.discounts.components.SaleValue.1205967018] - sale discount
 #. defaultMessage is:
 #. Discount Value
+msgctxt "sale discount"
+msgid "Discount Value"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
 #. [src.discounts.components.VoucherValue.1205967018]
 #. defaultMessage is:
@@ -3319,6 +3403,22 @@ msgctxt "dialog title"
 msgid "Edit Address"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
+#. [src.orders.components.OrderAddressEditDialog.3982060155] - dialog header
+#. defaultMessage is:
+#. Edit Billing Address
+msgctxt "dialog header"
+msgid "Edit Billing Address"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCustomerEditDialog/OrderCustomerEditDialog.json
+#. [src.orders.components.OrderCustomerEditDialog.1549172886] - dialog header
+#. defaultMessage is:
+#. Edit Customer Details
+msgctxt "dialog header"
+msgid "Edit Customer Details"
+msgstr ""
+
 #: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
 #. [menuItemDialogEditItem] - edit menu item, header
 #. defaultMessage is:
@@ -3343,6 +3443,14 @@ msgctxt "dialog header"
 msgid "Edit Price Rate"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
+#. [src.orders.components.OrderAddressEditDialog.3278396777] - dialog header
+#. defaultMessage is:
+#. Edit Shipping Address
+msgctxt "dialog header"
+msgid "Edit Shipping Address"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderShippingMethodEditDialog/OrderShippingMethodEditDialog.json
 #. [src.orders.components.OrderShippingMethodEditDialog.3369240294] - dialog header
 #. defaultMessage is:
@@ -3365,30 +3473,6 @@ msgstr ""
 #. Edit Weight Rate
 msgctxt "edit weight based shipping method, dialog header"
 msgid "Edit Weight Rate"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
-#. [src.orders.components.OrderAddressEditDialog.2935008093] - dialog header
-#. defaultMessage is:
-#. Edit billing address
-msgctxt "dialog header"
-msgid "Edit billing address"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderCustomerEditDialog/OrderCustomerEditDialog.json
-#. [src.orders.components.OrderCustomerEditDialog.1411666943] - dialog header
-#. defaultMessage is:
-#. Edit customer details
-msgctxt "dialog header"
-msgid "Edit customer details"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderAddressEditDialog/OrderAddressEditDialog.json
-#. [src.orders.components.OrderAddressEditDialog.462765358] - dialog header
-#. defaultMessage is:
-#. Edit shipping address
-msgctxt "dialog header"
-msgid "Edit shipping address"
 msgstr ""
 
 #: build/locale/src/components/SeoForm/SeoForm.json
@@ -3564,19 +3648,19 @@ msgid "Finalize"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
+#. [src.orders.components.OrderDraftFinalizeDialog.1161061962] - dialog header
+#. defaultMessage is:
+#. Finalize Draft Order
+msgctxt "dialog header"
+msgid "Finalize Draft Order"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
 #. [src.orders.components.OrderDraftFinalizeDialog.678764806] - button
 #. defaultMessage is:
 #. Finalize anyway
 msgctxt "button"
 msgid "Finalize anyway"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
-#. [src.orders.components.OrderDraftFinalizeDialog.845440998] - dialog header
-#. defaultMessage is:
-#. Finalize draft order
-msgctxt "dialog header"
-msgid "Finalize draft order"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -3585,6 +3669,14 @@ msgstr ""
 #. First Name
 msgctxt "description"
 msgid "First Name"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleType/SaleType.json
+#. [src.discounts.components.SaleType.46415128] - discount type
+#. defaultMessage is:
+#. Fixed Amount
+msgctxt "discount type"
+msgid "Fixed Amount"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
@@ -3628,11 +3720,11 @@ msgid "Fulfill"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderFulfillmentDialog/OrderFulfillmentDialog.json
-#. [src.orders.components.OrderFulfillmentDialog.3236546219] - dialog header
+#. [src.orders.components.OrderFulfillmentDialog.3928354289] - dialog header
 #. defaultMessage is:
-#. Fulfill products
+#. Fulfill Oroducts
 msgctxt "dialog header"
-msgid "Fulfill products"
+msgid "Fulfill Oroducts"
 msgstr ""
 
 #: build/locale/src/misc.json
@@ -3928,6 +4020,14 @@ msgstr ""
 #. defaultMessage is:
 #. Inventory
 msgctxt "product stock"
+msgid "Inventory"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateSummary.json
+#. [src.products.components.ProductVariantCreateDialog.3490038570] - variant stock amount
+#. defaultMessage is:
+#. Inventory
+msgctxt "variant stock amount"
 msgid "Inventory"
 msgstr ""
 
@@ -4505,6 +4605,14 @@ msgstr ""
 #. Newspapers
 msgctxt "tax rate"
 msgid "Newspapers"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog.json
+#. [src.products.components.ProductVariantCreateDialog.3673120330] - button
+#. defaultMessage is:
+#. Next
+msgctxt "button"
+msgid "Next"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -5519,6 +5627,14 @@ msgctxt "order history message"
 msgid "Payment was voided"
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleType/SaleType.json
+#. [src.discounts.components.SaleType.3688224049] - discount type
+#. defaultMessage is:
+#. Percentage
+msgctxt "discount type"
+msgid "Percentage"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
 #. [src.discounts.components.VoucherTypes.3688224049] - voucher discount type
 #. defaultMessage is:
@@ -5651,6 +5767,14 @@ msgctxt "order payment"
 msgid "Preauthorized amount"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog.json
+#. [src.products.components.ProductVariantCreateDialog.904693740] - previous step, button
+#. defaultMessage is:
+#. Previous
+msgctxt "previous step, button"
+msgid "Previous"
+msgstr ""
+
 #: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
 #. [src.categories.components.CategoryProductList.1134347598] - product price
 #. defaultMessage is:
@@ -5695,7 +5819,31 @@ msgstr ""
 #. [src.products.components.ProductListFilter.1134347598]
 #. defaultMessage is:
 #. Price
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [productVariantCreatePricesPriceInputLabel]
+#. defaultMessage is:
+#. Price
 msgctxt "description"
+msgid "Price"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [src.products.components.ProductVariantCreateDialog.1134347598] - variant price, header
+#. defaultMessage is:
+#. Price
+msgctxt "variant price, header"
+msgid "Price"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [productVariantCreatePricesSetPricePlaceholder] - variant price
+#. defaultMessage is:
+#. Price
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateSummary.json
+#. [src.products.components.ProductVariantCreateDialog.1134347598] - variant price
+#. defaultMessage is:
+#. Price
+msgctxt "variant price"
 msgid "Price"
 msgstr ""
 
@@ -5747,12 +5895,12 @@ msgctxt "filter by price"
 msgid "Price to {price}"
 msgstr ""
 
-#: build/locale/src/discounts/components/SalePricing/SalePricing.json
-#. [src.discounts.components.SalePricing.1099355007] - sale pricing, header
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateTabs.json
+#. [src.products.components.ProductVariantCreateDialog.705096461] - variant creation step
 #. defaultMessage is:
-#. Pricing
-msgctxt "sale pricing, header"
-msgid "Pricing"
+#. Prices and SKU
+msgctxt "variant creation step"
+msgid "Prices and SKU"
 msgstr ""
 
 #: build/locale/src/products/components/ProductPricing/ProductPricing.json
@@ -5772,11 +5920,11 @@ msgid "Pricing"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerCreateAddress/CustomerCreateAddress.json
-#. [src.customers.components.CustomerCreateAddress.1922654050] - page header
+#. [src.customers.components.CustomerCreateAddress.1751533141] - page header
 #. defaultMessage is:
-#. Primary address
+#. Primary Address
 msgctxt "page header"
-msgid "Primary address"
+msgid "Primary Address"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
@@ -6232,11 +6380,11 @@ msgid "Ready to Capture"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
-#. [src.customers.components.CustomerOrders.3878642352] - section header
+#. [src.customers.components.CustomerOrders.1899831623] - section header
 #. defaultMessage is:
-#. Recent orders
+#. Recent Orders
 msgctxt "section header"
-msgid "Recent orders"
+msgid "Recent Orders"
 msgstr ""
 
 #: build/locale/src/taxes/components/CountryList/CountryList.json
@@ -6387,6 +6535,10 @@ msgctxt "product's sku"
 msgid "SKU"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateSummary.json
+#. [src.products.components.ProductVariantCreateDialog.693960049]
+#. defaultMessage is:
+#. SKU
 #: build/locale/src/products/components/ProductVariants/ProductVariants.json
 #. [src.products.components.ProductVariants.693960049]
 #. defaultMessage is:
@@ -6839,6 +6991,14 @@ msgctxt "description"
 msgid "Select Filter..."
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateTabs.json
+#. [src.products.components.ProductVariantCreateDialog.2478977538] - attribute values, variant creation step
+#. defaultMessage is:
+#. Select Values
+msgctxt "attribute values, variant creation step"
+msgid "Select Values"
+msgstr ""
+
 #: build/locale/src/products/components/ProductVariantImages/ProductVariantImages.json
 #. [src.products.components.ProductVariantImages.3449133076]
 #. defaultMessage is:
@@ -6951,6 +7111,10 @@ msgctxt "button"
 msgid "Set as default shipping address"
 msgstr ""
 
+#: build/locale/src/discounts/components/DiscountDates/DiscountDates.json
+#. [src.discounts.components.DiscountDates.1596226028] - voucher end date, switch button
+#. defaultMessage is:
+#. Set end date
 #: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
 #. [src.discounts.components.VoucherDates.1596226028] - voucher end date, switch button
 #. defaultMessage is:
@@ -7023,12 +7187,28 @@ msgctxt "header"
 msgid "Shipping"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
+#. [src.customers.components.CustomerAddresses.2758581442] - subsection header
+#. defaultMessage is:
+#. Shipping Address
+msgctxt "subsection header"
+msgid "Shipping Address"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 #. [src.orders.components.OrderCustomer.2758581442]
 #. defaultMessage is:
 #. Shipping Address
 msgctxt "description"
 msgid "Shipping Address"
+msgstr ""
+
+#: build/locale/src/shipping/components/ShippingZonesList/ShippingZonesList.json
+#. [src.shipping.components.ShippingZonesList.120574110] - sort shipping methods by zone, section header
+#. defaultMessage is:
+#. Shipping By Zone
+msgctxt "sort shipping methods by zone, section header"
+msgid "Shipping By Zone"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -7053,22 +7233,6 @@ msgstr ""
 #. Shipping Zone Name
 msgctxt "description"
 msgid "Shipping Zone Name"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
-#. [src.customers.components.CustomerAddresses.3517722732] - subsection header
-#. defaultMessage is:
-#. Shipping address
-msgctxt "subsection header"
-msgid "Shipping address"
-msgstr ""
-
-#: build/locale/src/shipping/components/ShippingZonesList/ShippingZonesList.json
-#. [src.shipping.components.ShippingZonesList.2942726079] - sort shipping methods by zone, section header
-#. defaultMessage is:
-#. Shipping by zone
-msgctxt "sort shipping methods by zone, section header"
-msgid "Shipping by zone"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
@@ -7347,6 +7511,30 @@ msgctxt "product stock"
 msgid "Stock"
 msgstr ""
 
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [src.products.components.ProductVariantCreateDialog.3841616483] - variant stock, header
+#. defaultMessage is:
+#. Stock
+msgctxt "variant stock, header"
+msgid "Stock"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [productVariantCreatePricesStockInputLabel]
+#. defaultMessage is:
+#. Stock
+msgctxt "description"
+msgid "Stock"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [productVariantCreatePricesSetStockPlaceholder] - variant stock
+#. defaultMessage is:
+#. Stock
+msgctxt "variant stock"
+msgid "Stock"
+msgstr ""
+
 #: build/locale/src/products/components/ProductVariantStock/ProductVariantStock.json
 #. [src.products.components.ProductVariantStock.3841616483] - product variant stock, section header
 #. defaultMessage is:
@@ -7371,20 +7559,20 @@ msgctxt "description"
 msgid "Store Description"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
+#. [src.siteSettings.components.SiteSettingsAddress.229184360] - section header
+#. defaultMessage is:
+#. Store Information
+msgctxt "section header"
+msgid "Store Information"
+msgstr ""
+
 #: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
 #. [src.siteSettings.components.SiteSettingsDetails.529433178]
 #. defaultMessage is:
 #. Store description is shown on taskbar after your store name
 msgctxt "description"
 msgid "Store description is shown on taskbar after your store name"
-msgstr ""
-
-#: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
-#. [src.siteSettings.components.SiteSettingsAddress.1150975268] - section header
-#. defaultMessage is:
-#. Store information
-msgctxt "section header"
-msgid "Store information"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
@@ -7488,6 +7676,14 @@ msgstr ""
 #. defaultMessage is:
 #. Summary
 msgctxt "description"
+msgid "Summary"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateTabs.json
+#. [src.products.components.ProductVariantCreateDialog.2745385064] - variant creation step
+#. defaultMessage is:
+#. Summary
+msgctxt "variant creation step"
 msgid "Summary"
 msgstr ""
 
@@ -7707,14 +7903,6 @@ msgctxt "description"
 msgid "This will be shown to customers at checkout"
 msgstr ""
 
-#: build/locale/src/discounts/components/SalePricing/SalePricing.json
-#. [src.discounts.components.SalePricing.2503204759] - time during which sale is active
-#. defaultMessage is:
-#. Time Frame
-msgctxt "time during which sale is active"
-msgid "Time Frame"
-msgstr ""
-
 #: build/locale/src/pages/components/PageInfo/PageInfo.json
 #. [src.pages.components.PageInfo.1124600214] - page title
 #. defaultMessage is:
@@ -7754,9 +7942,9 @@ msgstr ""
 #: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
 #. [homeProductsListCardHeader] - header
 #. defaultMessage is:
-#. Top products
+#. Top Products
 msgctxt "header"
-msgid "Top products"
+msgid "Top Products"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
@@ -8383,6 +8571,14 @@ msgctxt "sale value"
 msgid "Value"
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleValue/SaleValue.json
+#. [src.discounts.components.SaleValue.1148029984] - sale value, header
+#. defaultMessage is:
+#. Value
+msgctxt "sale value, header"
+msgid "Value"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherList/VoucherList.json
 #. [src.discounts.components.VoucherList.1148029984] - voucher value
 #. defaultMessage is:
@@ -8457,6 +8653,14 @@ msgstr ""
 #. Values
 msgctxt "attribute values"
 msgid "Values"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateSummary.json
+#. [src.products.components.ProductVariantCreateDialog.998917294] - variant name
+#. defaultMessage is:
+#. Variant
+msgctxt "variant name"
+msgid "Variant"
 msgstr ""
 
 #: build/locale/src/translations/components/TranslationsProductTypesPage/TranslationsProductTypesPage.json
@@ -8607,6 +8811,14 @@ msgctxt "description"
 msgid "Voucher Name"
 msgstr ""
 
+#: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
+#. [src.discounts.components.VoucherValue.1960678372]
+#. defaultMessage is:
+#. Voucher Specific Information
+msgctxt "description"
+msgid "Voucher Specific Information"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
 #. [src.discounts.components.VoucherDetailsPage.2071139683]
 #. defaultMessage is:
@@ -8709,6 +8921,14 @@ msgstr ""
 #. Yes
 msgctxt "description"
 msgid "Yes"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateSummary.json
+#. [src.products.components.ProductVariantCreateDialog.1009678918] - header
+#. defaultMessage is:
+#. You will create variants below
+msgctxt "header"
+msgid "You will create variants below"
 msgstr ""
 
 #: build/locale/src/components/AddressEdit/AddressEdit.json

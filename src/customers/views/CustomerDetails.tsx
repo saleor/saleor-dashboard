@@ -133,7 +133,7 @@ export const CustomerDetailsView: React.StatelessComponent<
                       onClose={() => navigate(customerUrl(id), true)}
                       onConfirm={() => removeCustomer()}
                       title={intl.formatMessage({
-                        defaultMessage: "Delete customer",
+                        defaultMessage: "Delete Customer",
                         description: "dialog header"
                       })}
                       variant="delete"

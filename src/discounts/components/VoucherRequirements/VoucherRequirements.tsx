@@ -70,7 +70,9 @@ const VoucherRequirements = ({
           value={data.requirementsPicker}
           onChange={onChange}
         />
-        <FormSpacer />
+        {[RequirementsPicker.ORDER, RequirementsPicker.ITEM].includes(
+          data.requirementsPicker
+        ) && <FormSpacer />}
         {data.requirementsPicker === RequirementsPicker.ORDER ? (
           <TextField
             disabled={disabled}
