@@ -64,7 +64,7 @@ interface ProductListProps {
 export const ProductList: React.StatelessComponent<ProductListProps> = ({
   params
 }) => {
-  const locale = useLocale();
+  const { locale } = useLocale();
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
