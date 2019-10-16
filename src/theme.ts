@@ -106,7 +106,7 @@ export default (colors: IThemeColors): Theme =>
       MuiFormControlLabel: {
         root: {
           display: "grid",
-          gridTemplateColumns: "50px 6fr"
+          gridTemplateColumns: "48px 1fr"
         }
       },
       MuiFormLabel: {
@@ -453,7 +453,8 @@ export default (colors: IThemeColors): Theme =>
         ripple: {
           "&$rippleVisible": {
             backgroundColor: fade(colors.primary, 0.2)
-          }
+          },
+          borderRadius: "100%"
         }
       }
     },

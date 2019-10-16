@@ -200,6 +200,7 @@ const ProductVariantCreateSummary: React.FC<
                       style={{
                         color: colors[valueIndex % colors.length]
                       }}
+                      key={value}
                     >
                       {value}
                     </span>

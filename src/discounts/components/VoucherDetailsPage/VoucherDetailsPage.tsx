@@ -23,8 +23,8 @@ import {
 import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
+import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
-import VoucherDates from "../VoucherDates";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
@@ -349,7 +349,7 @@ const VoucherDetailsPage: React.StatelessComponent<VoucherDetailsPageProps> = ({
                 onChange={change}
               />
               <CardSpacer />
-              <VoucherDates
+              <DiscountDates
                 data={data}
                 disabled={disabled}
                 defaultCurrency={defaultCurrency}
