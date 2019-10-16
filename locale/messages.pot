@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-16T15:55:00.250Z\n"
+"POT-Creation-Date: 2019-10-17T11:58:34.974Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -57,6 +57,14 @@ msgstr ""
 #. Account Name
 msgctxt "service account"
 msgid "Account Name"
+msgstr ""
+
+#: build/locale/src/components/AppLayout/AppLayout.json
+#. [src.components.AppLayout.248888005] - button
+#. defaultMessage is:
+#. Account Settings
+msgctxt "button"
+msgid "Account Settings"
 msgstr ""
 
 #: build/locale/src/components/AccountStatus/AccountStatus.json
@@ -5755,6 +5763,22 @@ msgctxt "order payment"
 msgid "Preauthorized amount"
 msgstr ""
 
+#: build/locale/src/staff/components/StaffPreferences/StaffPreferences.json
+#. [src.staff.components.StaffPreferences.2340309446] - section header
+#. defaultMessage is:
+#. Preferences
+msgctxt "section header"
+msgid "Preferences"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPreferences/StaffPreferences.json
+#. [src.staff.components.StaffPreferences.2281358617]
+#. defaultMessage is:
+#. Preferred Language
+msgctxt "description"
+msgid "Preferred Language"
+msgstr ""
+
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog.json
 #. [src.products.components.ProductVariantCreateDialog.904693740] - previous step, button
 #. defaultMessage is:
@@ -7017,6 +7041,14 @@ msgstr ""
 #. Selected {number} items
 msgctxt "description"
 msgid "Selected {number} items"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPreferences/StaffPreferences.json
+#. [src.staff.components.StaffPreferences.1332294025]
+#. defaultMessage is:
+#. Selecting this will change the language of your dashboard
+msgctxt "description"
+msgid "Selecting this will change the language of your dashboard"
 msgstr ""
 
 #: build/locale/src/products/components/ProductVariantPrice/ProductVariantPrice.json

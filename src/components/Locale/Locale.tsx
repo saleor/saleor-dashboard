@@ -42,6 +42,7 @@ import locale_UK from "@locale/uk.json";
 import locale_VI from "@locale/vi.json";
 import locale_ZH_HANS from "@locale/zh-Hans.json";
 import locale_ZH_HANT from "@locale/zh-Hant.json";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 
 export enum Locale {
   AR = "ar",
@@ -208,7 +209,8 @@ export const LocaleContext = React.createContext<LocaleContextType>({
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 
 const LocaleProvider: React.FC = ({ children }) => {
-  const [locale, setLocale] = React.useState(
+  const [locale, setLocale] = useLocalStorage(
+    "locale",
     getMatchingLocale(navigator.languages) || defaultLocale
   );
 
