@@ -1,4 +1,3 @@
-import { Omit } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -37,13 +36,6 @@ export interface SingleAutocompleteSelectFieldProps
   InputProps?: InputProps;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
-}
-
-interface SingleAutocompleteSelectFieldState {
-  choices: Array<{
-    label: string;
-    value: string;
-  }>;
 }
 
 const DebounceAutocomplete: React.ComponentType<
