@@ -69,7 +69,7 @@ const WebhooksDetailsPage: React.StatelessComponent<
     isActive: maybe(() => webhook.isActive, false),
     name: maybe(() => webhook.name, ""),
     secretKey: maybe(() => webhook.secretKey, ""),
-    serviceAccount: maybe(() => webhook.serviceAccount.name, ""),
+    serviceAccount: maybe(() => webhook.serviceAccount.id, ""),
     targetUrl: maybe(() => webhook.targetUrl, "")
   };
   const [

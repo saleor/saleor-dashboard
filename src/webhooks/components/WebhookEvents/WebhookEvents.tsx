@@ -5,6 +5,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import { translatedWebhookEvents } from "@saleor/misc";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -25,15 +26,14 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
 }) => {
   const intl = useIntl();
   const eventsEnum = Object.values(WebhookEventTypeEnum);
+  const translatedEvents = translatedWebhookEvents(intl);
 
   const handleAllEventsChange = (event: ChangeEvent) =>
     onChange(event, () =>
       onChange({
         target: {
           name: "events",
-          value: event.target.value
-            ? WebhookEventTypeEnum.ANY_EVENTS
-            : data.events
+          value: event.target.value ? WebhookEventTypeEnum.ANY_EVENTS : []
         }
       } as any)
     );
@@ -84,7 +84,7 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
                   <ControlledCheckbox
                     checked={data.events.includes(event)}
                     disabled={disabled}
-                    label={event.replace(/\./, "")}
+                    label={translatedEvents[event]}
                     name={event}
                     onChange={handleEventsChange}
                   />

@@ -128,7 +128,7 @@ export const WebhooksDetails: React.StatelessComponent<
                                 input: {
                                   events: data.allEvents
                                     ? [WebhookEventTypeEnum.ANY_EVENTS]
-                                    : data.events,
+                                    : data.events.slice(1),
                                   isActive: data.isActive,
                                   name: data.name,
                                   secretKey: data.secretKey,
