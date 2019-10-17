@@ -129,7 +129,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                                 input: {
                                   events: data.allEvents
                                     ? [WebhookEventTypeEnum.ANY_EVENTS]
-                                    : data.events.slice(1),
+                                    : data.events,
                                   isActive: data.isActive,
                                   name: data.name,
                                   secretKey: data.secretKey,

@@ -8,6 +8,7 @@ import { ChangeEvent } from "@saleor/hooks/useForm";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
+import { toggle } from "@saleor/utils/lists";
 
 interface WebhookEventsProps {
   data: {
@@ -57,26 +58,13 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
     })
   };
 
-  const handleAllEventsChange = (event: ChangeEvent) =>
-    onChange(event, () =>
-      onChange({
-        target: {
-          name: "events",
-          value: event.target.value ? WebhookEventTypeEnum.ANY_EVENTS : []
-        }
-      })
-    );
-
-  const handleEventsChange = (event: ChangeEvent) => {
+  const handleEventsChange = (event: ChangeEvent) =>
     onChange({
       target: {
         name: "events",
-        value: event.target.value
-          ? data.events.concat([event.target.name])
-          : data.events.filter(events => events !== event.target.name)
+        value: toggle(event.target.name, data.events, (a, b) => a === b)
       }
     });
-  };
 
   return (
     <Card>
@@ -99,7 +87,7 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
           disabled={disabled}
           label={translatedEvents.ANY_EVENTS}
           name="allEvents"
-          onChange={handleAllEventsChange}
+          onChange={onChange}
         />
         {!data.allEvents && (
           <>

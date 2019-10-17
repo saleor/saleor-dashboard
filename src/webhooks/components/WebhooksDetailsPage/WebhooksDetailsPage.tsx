@@ -60,7 +60,9 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
     allEvents: !!maybe(() => webhook.events, []).find(
       event => event.eventType === WebhookEventTypeEnum.ANY_EVENTS
     ),
-    events: maybe(() => webhook.events, []).map(event => event.eventType),
+    events: maybe(() => webhook.events, [])
+      .map(event => event.eventType)
+      .filter(event => event !== WebhookEventTypeEnum.ANY_EVENTS),
     id: maybe(() => webhook.id, null),
     isActive: maybe(() => webhook.isActive, false),
     name: maybe(() => webhook.name, ""),
