@@ -2,7 +2,8 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderDraftFinalize, {
-  OrderDraftFinalizeDialogProps
+  OrderDraftFinalizeDialogProps,
+  OrderDraftFinalizeWarning
 } from "../../../orders/components/OrderDraftFinalizeDialog";
 import Decorator from "../../Decorator";
 
@@ -21,6 +22,11 @@ storiesOf("Orders / OrderDraftFinalizeDialog", module)
   .add("with warnings", () => (
     <OrderDraftFinalize
       {...props}
-      warnings={["no-shipping-method", "no-shipping", "no-billing", "no-user"]}
+      warnings={[
+        OrderDraftFinalizeWarning.NO_SHIPPING_METHOD,
+        OrderDraftFinalizeWarning.NO_SHIPPING,
+        OrderDraftFinalizeWarning.NO_BILLING,
+        OrderDraftFinalizeWarning.NO_USER
+      ]}
     />
   ));
