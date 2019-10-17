@@ -34,7 +34,7 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
     >
       {({ data, loading: productLoading }) => {
         const handleCreateSuccess = (data: VariantCreate) => {
-          if (data.productVariantCreate.errors.length === 0) {
+          if (data.productVariantCreate.productErrors.length === 0) {
             notify({
               text: intl.formatMessage({
                 defaultMessage: "Product created"
@@ -83,7 +83,8 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
                 variantCreateResult.called,
                 variantCreateResult.loading,
                 maybe(
-                  () => variantCreateResult.data.productVariantCreate.errors
+                  () =>
+                    variantCreateResult.data.productVariantCreate.productErrors
                 )
               );
               return (
@@ -98,7 +99,8 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
                     currencySymbol={maybe(() => shop.defaultCurrency)}
                     errors={maybe(
                       () =>
-                        variantCreateResult.data.productVariantCreate.errors,
+                        variantCreateResult.data.productVariantCreate
+                          .productErrors,
                       []
                     )}
                     header={intl.formatMessage({

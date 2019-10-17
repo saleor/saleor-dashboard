@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { formError } from "@saleor/storybook/misc";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import ProductVariantPage from "../../../products/components/ProductVariantPage";
 import { variant as variantFixture } from "../../../products/fixtures";
 import Decorator from "../../Decorator";
@@ -51,6 +51,23 @@ storiesOf("Views / Products / Product variant details", module)
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
       saveButtonBarState="default"
-      errors={["attributes:Borders", "attributes:Legacy"].map(formError)}
+      errors={[
+        {
+          code: ProductErrorCode.REQUIRED,
+          field: "attributes"
+        },
+        {
+          code: ProductErrorCode.UNIQUE,
+          field: "attributes"
+        },
+        {
+          code: ProductErrorCode.ALREADY_EXISTS,
+          field: "sku"
+        }
+      ].map(error => ({
+        __typename: "ProductError",
+        message: "Generic form error",
+        ...error
+      }))}
     />
   ));

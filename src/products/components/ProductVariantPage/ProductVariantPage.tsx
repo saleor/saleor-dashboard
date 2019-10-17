@@ -12,12 +12,9 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import {
-  getAttributeInputFromVariant,
-  getVariantAttributeErrors
-} from "@saleor/products/utils/data";
+import { VariantUpdate_productVariantUpdate_productErrors } from "@saleor/products/types/VariantUpdate";
+import { getAttributeInputFromVariant } from "@saleor/products/utils/data";
 import { maybe } from "../../../misc";
-import { UserError } from "../../../types";
 import { ProductVariant } from "../../types/ProductVariant";
 import ProductVariantAttributes, {
   VariantAttributeInputData
@@ -42,7 +39,7 @@ export interface ProductVariantPageSubmitData
 
 interface ProductVariantPageProps {
   variant?: ProductVariant;
-  errors: UserError[];
+  errors: VariantUpdate_productVariantUpdate_productErrors[];
   saveButtonBarState: ConfirmButtonTransitionState;
   loading?: boolean;
   placeholderImage?: string;
@@ -56,7 +53,7 @@ interface ProductVariantPageProps {
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
-  errors: formErrors,
+  errors: apiErrors,
   loading,
   header,
   placeholderImage,
@@ -114,7 +111,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
         <PageHeader title={header} />
         <Form
           initial={initialForm}
-          errors={formErrors}
+          errors={apiErrors}
           onSubmit={handleSubmit}
           confirmLeave
         >
@@ -146,14 +143,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     <ProductVariantAttributes
                       attributes={attributes}
                       disabled={loading}
-                      errors={getVariantAttributeErrors(
-                        formErrors,
-                        maybe(() =>
-                          variant.attributes.map(
-                            attribute => attribute.attribute
-                          )
-                        )
-                      )}
+                      errors={apiErrors}
                       onChange={handleAttributeChange}
                     />
                     <CardSpacer />

@@ -13,12 +13,9 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import {
-  getVariantAttributeErrors,
-  getVariantAttributeInputFromProduct
-} from "@saleor/products/utils/data";
+import { VariantCreate_productVariantCreate_productErrors } from "@saleor/products/types/VariantCreate";
+import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { maybe } from "../../../misc";
-import { UserError } from "../../../types";
 import { ProductVariantCreateData_product } from "../../types/ProductVariantCreateData";
 import ProductVariantAttributes, {
   VariantAttributeInputData
@@ -42,7 +39,7 @@ export interface ProductVariantCreatePageSubmitData
 
 interface ProductVariantCreatePageProps {
   currencySymbol: string;
-  errors: UserError[];
+  errors: VariantCreate_productVariantCreate_productErrors[];
   header: string;
   loading: boolean;
   product: ProductVariantCreateData_product;
@@ -54,7 +51,7 @@ interface ProductVariantCreatePageProps {
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   currencySymbol,
-  errors: formErrors,
+  errors: apiErrors,
   loading,
   header,
   product,
@@ -96,7 +93,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     });
 
   return (
-    <Form initial={initialForm} errors={formErrors} onSubmit={handleSubmit}>
+    <Form initial={initialForm} errors={apiErrors} onSubmit={handleSubmit}>
       {({ change, data, errors, hasChanged, submit, triggerChange }) => {
         const handleAttributeChange: FormsetChange = (id, value) => {
           changeAttributeData(id, value);
@@ -123,10 +120,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 <ProductVariantAttributes
                   attributes={attributes}
                   disabled={loading}
-                  errors={getVariantAttributeErrors(
-                    formErrors,
-                    maybe(() => product.productType.variantAttributes)
-                  )}
+                  errors={apiErrors}
                   onChange={handleAttributeChange}
                 />
                 <CardSpacer />

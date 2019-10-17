@@ -306,7 +306,8 @@ export const variantUpdateMutation = gql`
         trackInventory: $trackInventory
       }
     ) {
-      errors {
+      productErrors {
+        code
         field
         message
       }
@@ -325,7 +326,8 @@ export const variantCreateMutation = gql`
   ${fragmentVariant}
   mutation VariantCreate($input: ProductVariantCreateInput!) {
     productVariantCreate(input: $input) {
-      errors {
+      productErrors {
+        code
         field
         message
       }

@@ -2,14 +2,15 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductVariantCreateInput } from "./../../types/globalTypes";
+import { ProductVariantCreateInput, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantCreate
 // ====================================================
 
-export interface VariantCreate_productVariantCreate_errors {
-  __typename: "Error";
+export interface VariantCreate_productVariantCreate_productErrors {
+  __typename: "ProductError";
+  code: ProductErrorCode | null;
   field: string | null;
   message: string | null;
 }
@@ -113,7 +114,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
 
 export interface VariantCreate_productVariantCreate {
   __typename: "ProductVariantCreate";
-  errors: VariantCreate_productVariantCreate_errors[] | null;
+  productErrors: VariantCreate_productVariantCreate_productErrors[] | null;
   productVariant: VariantCreate_productVariantCreate_productVariant | null;
 }
 

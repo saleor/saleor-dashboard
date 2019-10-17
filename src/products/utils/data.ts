@@ -9,17 +9,10 @@ import {
   ProductDetails_product_collections,
   ProductDetails_product_variants
 } from "@saleor/products/types/ProductDetails";
-import { UserError } from "@saleor/types";
 import { ProductAttributeInput } from "../components/ProductAttributes";
 import { VariantAttributeInput } from "../components/ProductVariantAttributes";
-import {
-  ProductVariant,
-  ProductVariant_attributes_attribute
-} from "../types/ProductVariant";
-import {
-  ProductVariantCreateData_product,
-  ProductVariantCreateData_product_productType_variantAttributes
-} from "../types/ProductVariantCreateData";
+import { ProductVariant } from "../types/ProductVariant";
+import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 
 export interface Collection {
   id: string;
@@ -196,29 +189,4 @@ export function getProductUpdatePageFormData(
         : undefined
     )
   };
-}
-
-export function getVariantAttributeErrors(
-  errors: UserError[],
-  variantAttributes: Array<
-    | ProductVariantCreateData_product_productType_variantAttributes
-    | ProductVariant_attributes_attribute
-  >
-): Record<string, string> {
-  return maybe(
-    () =>
-      errors.reduce((acc, err) => {
-        const slug = err.field.split(":")[1];
-        const attribute = variantAttributes.find(
-          attribute => attribute.slug === slug
-        );
-
-        if (!!attribute) {
-          acc[attribute.id] = err.message;
-        }
-
-        return acc;
-      }, {}),
-    {}
-  );
 }
