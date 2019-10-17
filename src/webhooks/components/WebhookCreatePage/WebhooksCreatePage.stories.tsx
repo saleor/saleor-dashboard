@@ -14,7 +14,7 @@ const props: WebhookCreatePageProps = {
   saveButtonBarState: "default",
   services: []
 };
-storiesOf("Views / Webhook / Create webhook", module)
+storiesOf("Views / Webhooks / Create webhook", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhookCreatePage {...props} />)
   .add("loading", () => <WebhookCreatePage {...props} disabled={true} />)

@@ -18,7 +18,7 @@ const props: WebhooksDetailsPageProps = {
   services: [],
   webhook: null
 };
-storiesOf("Views / Webhook / Webhook details", module)
+storiesOf("Views / Webhooks / Webhook details", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhooksDetailsPage {...props} />)
   .add("loading", () => (
