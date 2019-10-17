@@ -116,7 +116,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                           webhook={maybe(() => webhookDetails.data.webhook)}
                           fetchServiceAccounts={searchServiceAccount}
                           services={maybe(() =>
-                            searchServiceAccountOpt.data.serviceAccounts.edges.map(
+                            searchServiceAccountOpt.data.search.edges.map(
                               edge => edge.node
                             )
                           )}

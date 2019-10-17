@@ -9,9 +9,8 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import {
-  SingleAutocompleteChoiceType,
-  SingleAutocompleteSelectField
+import SingleAutocompleteSelectField, {
+  SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";

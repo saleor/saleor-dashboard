@@ -6,7 +6,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { SearchServiceAccount_serviceAccounts_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
+import { SearchServiceAccount_search_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
@@ -32,7 +32,7 @@ export interface FormData {
 export interface WebhookCreatePageProps {
   disabled: boolean;
   errors: UserError[];
-  services?: SearchServiceAccount_serviceAccounts_edges_node[];
+  services?: SearchServiceAccount_search_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchServiceAccounts: (data: string) => void;
   onBack: () => void;

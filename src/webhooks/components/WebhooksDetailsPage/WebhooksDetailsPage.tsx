@@ -6,7 +6,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { SearchServiceAccount_serviceAccounts_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
+import { SearchServiceAccount_search_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
@@ -36,7 +36,7 @@ export interface WebhooksDetailsPageProps {
   disabled: boolean;
   errors: UserError[];
   webhook: WebhookDetails_webhook;
-  services?: SearchServiceAccount_serviceAccounts_edges_node[];
+  services?: SearchServiceAccount_search_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onDelete: () => void;

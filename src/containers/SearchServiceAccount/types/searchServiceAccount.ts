@@ -6,24 +6,33 @@
 // GraphQL query operation: SearchServiceAccount
 // ====================================================
 
-export interface SearchServiceAccount_serviceAccounts_edges_node {
+export interface SearchServiceAccount_search_edges_node {
   __typename: "ServiceAccount";
   id: string;
   name: string | null;
 }
 
-export interface SearchServiceAccount_serviceAccounts_edges {
+export interface SearchServiceAccount_search_edges {
   __typename: "ServiceAccountCountableEdge";
-  node: SearchServiceAccount_serviceAccounts_edges_node;
+  node: SearchServiceAccount_search_edges_node;
 }
 
-export interface SearchServiceAccount_serviceAccounts {
+export interface SearchServiceAccount_search_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SearchServiceAccount_search {
   __typename: "ServiceAccountCountableConnection";
-  edges: SearchServiceAccount_serviceAccounts_edges[];
+  edges: SearchServiceAccount_search_edges[];
+  pageInfo: SearchServiceAccount_search_pageInfo;
 }
 
 export interface SearchServiceAccount {
-  serviceAccounts: SearchServiceAccount_serviceAccounts | null;
+  search: SearchServiceAccount_search | null;
 }
 
 export interface SearchServiceAccountVariables {

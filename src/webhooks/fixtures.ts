@@ -1,8 +1,8 @@
-import { SearchServiceAccount_serviceAccounts_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
+import { SearchServiceAccount_search_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
 import { WebhookDetails_webhook } from "./types/WebhookDetails";
 import { Webhooks_webhooks_edges_node } from "./types/Webhooks";
 
-export const services: SearchServiceAccount_serviceAccounts_edges_node[] = [
+export const services: SearchServiceAccount_search_edges_node[] = [
   {
     __typename: "ServiceAccount",
     id: "Jzx123sEt==",

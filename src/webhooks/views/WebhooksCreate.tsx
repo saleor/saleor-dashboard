@@ -83,7 +83,7 @@ export const WebhooksCreate: React.StatelessComponent<
                   )}
                   fetchServiceAccounts={searchServiceAccount}
                   services={maybe(() =>
-                    searchServiceAccountOpt.data.serviceAccounts.edges.map(
+                    searchServiceAccountOpt.data.search.edges.map(
                       edge => edge.node
                     )
                   )}
