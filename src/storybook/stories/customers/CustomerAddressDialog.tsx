@@ -11,7 +11,10 @@ import Decorator from "../../Decorator";
 const props: CustomerAddressDialogProps = {
   address: customer.addresses[0],
   confirmButtonState: "default",
-  countries,
+  countries: countries.map(c => ({
+    code: c.code,
+    label: c.name
+  })),
   errors: [],
   onClose: () => undefined,
   onConfirm: () => undefined,

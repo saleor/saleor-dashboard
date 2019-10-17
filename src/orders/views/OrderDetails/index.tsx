@@ -93,7 +93,11 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
           );
         return (
           <SearchCustomers variables={DEFAULT_INITIAL_SEARCH_DATA}>
-            {({ search: searchUsers, result: users }) => (
+            {({
+              loadMore: loadMoreCustomers,
+              search: searchUsers,
+              result: users
+            }) => (
               <OrderDetailsMessages>
                 {orderMessages => (
                   <OrderOperations
@@ -400,12 +404,18 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
                                 }
                                 users={maybe(
                                   () =>
-                                    users.data.customers.edges.map(
+                                    users.data.search.edges.map(
                                       edge => edge.node
                                     ),
                                   []
                                 )}
+                                hasMore={maybe(
+                                  () => users.data.search.pageInfo.hasNextPage,
+                                  false
+                                )}
+                                onFetchMore={loadMoreCustomers}
                                 fetchUsers={searchUsers}
+                                loading={users.loading}
                                 usersLoading={users.loading}
                                 onCustomerEdit={data =>
                                   orderDraftUpdate.mutate({
@@ -511,74 +521,46 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
                                 variables={DEFAULT_INITIAL_SEARCH_DATA}
                               >
                                 {({
+                                  loadMore,
                                   search: variantSearch,
                                   result: variantSearchOpts
-                                }) => {
-                                  const fetchMore = () =>
-                                    variantSearchOpts.loadMore(
-                                      (prev, next) => {
-                                        if (
-                                          prev.products.pageInfo.endCursor ===
-                                          next.products.pageInfo.endCursor
-                                        ) {
-                                          return prev;
-                                        }
-                                        return {
-                                          ...prev,
-                                          products: {
-                                            ...prev.products,
-                                            edges: [
-                                              ...prev.products.edges,
-                                              ...next.products.edges
-                                            ],
-                                            pageInfo: next.products.pageInfo
-                                          }
-                                        };
-                                      },
-                                      {
-                                        after:
-                                          variantSearchOpts.data.products
-                                            .pageInfo.endCursor
-                                      }
-                                    );
-                                  return (
-                                    <OrderProductAddDialog
-                                      confirmButtonState={getMutationState(
-                                        orderLinesAdd.opts.called,
-                                        orderLinesAdd.opts.loading,
-                                        maybe(
-                                          () =>
-                                            orderLinesAdd.opts.data
-                                              .draftOrderLinesCreate.errors
-                                        )
-                                      )}
-                                      loading={variantSearchOpts.loading}
-                                      open={params.action === "add-order-line"}
-                                      hasMore={maybe(
+                                }) => (
+                                  <OrderProductAddDialog
+                                    confirmButtonState={getMutationState(
+                                      orderLinesAdd.opts.called,
+                                      orderLinesAdd.opts.loading,
+                                      maybe(
                                         () =>
-                                          variantSearchOpts.data.products
-                                            .pageInfo.hasNextPage
-                                      )}
-                                      products={maybe(() =>
-                                        variantSearchOpts.data.products.edges.map(
-                                          edge => edge.node
-                                        )
-                                      )}
-                                      onClose={closeModal}
-                                      onFetch={variantSearch}
-                                      onFetchMore={fetchMore}
-                                      onSubmit={variants =>
-                                        orderLinesAdd.mutate({
-                                          id,
-                                          input: variants.map(variant => ({
-                                            quantity: 1,
-                                            variantId: variant.id
-                                          }))
-                                        })
-                                      }
-                                    />
-                                  );
-                                }}
+                                          orderLinesAdd.opts.data
+                                            .draftOrderLinesCreate.errors
+                                      )
+                                    )}
+                                    loading={variantSearchOpts.loading}
+                                    open={params.action === "add-order-line"}
+                                    hasMore={maybe(
+                                      () =>
+                                        variantSearchOpts.data.search.pageInfo
+                                          .hasNextPage
+                                    )}
+                                    products={maybe(() =>
+                                      variantSearchOpts.data.search.edges.map(
+                                        edge => edge.node
+                                      )
+                                    )}
+                                    onClose={closeModal}
+                                    onFetch={variantSearch}
+                                    onFetchMore={loadMore}
+                                    onSubmit={variants =>
+                                      orderLinesAdd.mutate({
+                                        id,
+                                        input: variants.map(variant => ({
+                                          quantity: 1,
+                                          variantId: variant.id
+                                        }))
+                                      })
+                                    }
+                                  />
+                                )}
                               </SearchOrderVariant>
                             </>
                           )}

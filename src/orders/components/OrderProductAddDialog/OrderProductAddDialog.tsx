@@ -30,8 +30,8 @@ import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
 import {
-  SearchOrderVariant_products_edges_node,
-  SearchOrderVariant_products_edges_node_variants
+  SearchOrderVariant_search_edges_node,
+  SearchOrderVariant_search_edges_node_variants
 } from "../../types/SearchOrderVariant";
 
 const styles = (theme: Theme) =>
@@ -79,21 +79,21 @@ const styles = (theme: Theme) =>
   });
 
 type SetVariantsAction = (
-  data: SearchOrderVariant_products_edges_node_variants[]
+  data: SearchOrderVariant_search_edges_node_variants[]
 ) => void;
 
 interface OrderProductAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  products: SearchOrderVariant_products_edges_node[];
+  products: SearchOrderVariant_search_edges_node[];
   onClose: () => void;
   onFetch: (query: string) => void;
-  onSubmit: (data: SearchOrderVariant_products_edges_node_variants[]) => void;
+  onSubmit: (data: SearchOrderVariant_search_edges_node_variants[]) => void;
 }
 
 function hasAllVariantsSelected(
-  productVariants: SearchOrderVariant_products_edges_node_variants[],
-  selectedVariantsToProductsMap: SearchOrderVariant_products_edges_node_variants[]
+  productVariants: SearchOrderVariant_search_edges_node_variants[],
+  selectedVariantsToProductsMap: SearchOrderVariant_search_edges_node_variants[]
 ): boolean {
   return productVariants.reduce(
     (acc, productVariant) =>
@@ -106,8 +106,8 @@ function hasAllVariantsSelected(
 }
 
 function isVariantSelected(
-  variant: SearchOrderVariant_products_edges_node_variants,
-  selectedVariantsToProductsMap: SearchOrderVariant_products_edges_node_variants[]
+  variant: SearchOrderVariant_search_edges_node_variants,
+  selectedVariantsToProductsMap: SearchOrderVariant_search_edges_node_variants[]
 ): boolean {
   return !!selectedVariantsToProductsMap.find(
     selectedVariant => selectedVariant.id === variant.id
@@ -115,10 +115,10 @@ function isVariantSelected(
 }
 
 const onProductAdd = (
-  product: SearchOrderVariant_products_edges_node,
+  product: SearchOrderVariant_search_edges_node,
   productIndex: number,
   productsWithAllVariantsSelected: boolean[],
-  variants: SearchOrderVariant_products_edges_node_variants[],
+  variants: SearchOrderVariant_search_edges_node_variants[],
   setVariants: SetVariantsAction
 ) =>
   productsWithAllVariantsSelected[productIndex]
@@ -141,10 +141,10 @@ const onProductAdd = (
       ]);
 
 const onVariantAdd = (
-  variant: SearchOrderVariant_products_edges_node_variants,
+  variant: SearchOrderVariant_search_edges_node_variants,
   variantIndex: number,
   productIndex: number,
-  variants: SearchOrderVariant_products_edges_node_variants[],
+  variants: SearchOrderVariant_search_edges_node_variants[],
   selectedVariantsToProductsMap: boolean[][],
   setVariants: SetVariantsAction
 ) =>
@@ -172,7 +172,7 @@ const OrderProductAddDialog = withStyles(styles, {
     const intl = useIntl();
     const [query, onQueryChange] = useSearchQuery(onFetch);
     const [variants, setVariants] = React.useState<
-      SearchOrderVariant_products_edges_node_variants[]
+      SearchOrderVariant_search_edges_node_variants[]
     >([]);
 
     const selectedVariantsToProductsMap = products

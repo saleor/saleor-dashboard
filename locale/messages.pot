@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-15T15:56:00.137Z\n"
+"POT-Creation-Date: 2019-10-16T15:55:00.250Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -267,15 +267,11 @@ msgctxt "description"
 msgid "Add new menu item to begin creating menu"
 msgstr ""
 
-#: build/locale/src/components/MultiAutocompleteSelectField/MultiAutocompleteSelectField.json
-#. [src.components.MultiAutocompleteSelectField.1477537381] - add custom option to select input
+#: build/locale/src/components/MultiAutocompleteSelectField/MultiAutocompleteSelectFieldContent.json
+#. [src.components.MultiAutocompleteSelectField.1477537381] - add custom select input option
 #. defaultMessage is:
 #. Add new value: {value}
-msgctxt "add custom option to select input"
-msgid "Add new value: {value}"
-msgstr ""
-
-#: build/locale/src/components/SingleAutocompleteSelectField/SingleAutocompleteSelectField.json
+#: build/locale/src/components/SingleAutocompleteSelectField/SingleAutocompleteSelectFieldContent.json
 #. [src.components.SingleAutocompleteSelectField.1477537381] - add custom select input option
 #. defaultMessage is:
 #. Add new value: {value}
@@ -3411,14 +3407,6 @@ msgctxt "dialog header"
 msgid "Edit Billing Address"
 msgstr ""
 
-#: build/locale/src/orders/components/OrderCustomerEditDialog/OrderCustomerEditDialog.json
-#. [src.orders.components.OrderCustomerEditDialog.1549172886] - dialog header
-#. defaultMessage is:
-#. Edit Customer Details
-msgctxt "dialog header"
-msgid "Edit Customer Details"
-msgstr ""
-
 #: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
 #. [menuItemDialogEditItem] - edit menu item, header
 #. defaultMessage is:
@@ -4863,7 +4851,7 @@ msgctxt "description"
 msgid "No results"
 msgstr ""
 
-#: build/locale/src/components/MultiAutocompleteSelectField/MultiAutocompleteSelectField.json
+#: build/locale/src/components/MultiAutocompleteSelectField/MultiAutocompleteSelectFieldContent.json
 #. [src.components.MultiAutocompleteSelectField.4205644805]
 #. defaultMessage is:
 #. No results found
@@ -4875,7 +4863,7 @@ msgstr ""
 #. [src.components.RadioGroupField.4205644805]
 #. defaultMessage is:
 #. No results found
-#: build/locale/src/components/SingleAutocompleteSelectField/SingleAutocompleteSelectField.json
+#: build/locale/src/components/SingleAutocompleteSelectField/SingleAutocompleteSelectFieldContent.json
 #. [src.components.SingleAutocompleteSelectField.4205644805]
 #. defaultMessage is:
 #. No results found
@@ -5047,7 +5035,7 @@ msgctxt "description"
 msgid "No. of Products"
 msgstr ""
 
-#: build/locale/src/components/SingleAutocompleteSelectField/SingleAutocompleteSelectField.json
+#: build/locale/src/components/SingleAutocompleteSelectField/SingleAutocompleteSelectFieldContent.json
 #. [src.components.SingleAutocompleteSelectField.3069107721]
 #. defaultMessage is:
 #. None

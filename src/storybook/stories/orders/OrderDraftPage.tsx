@@ -3,6 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import placeholderImage from "@assets/images/placeholder60x60.png";
+import { fetchMoreProps } from "@saleor/fixtures";
 import OrderDraftPage, {
   OrderDraftPageProps
 } from "../../../orders/components/OrderDraftPage";
@@ -12,6 +13,7 @@ import Decorator from "../../Decorator";
 const order = draftOrder(placeholderImage);
 
 const props: Omit<OrderDraftPageProps, "classes"> = {
+  ...fetchMoreProps,
   countries,
   disabled: false,
   fetchUsers: () => undefined,

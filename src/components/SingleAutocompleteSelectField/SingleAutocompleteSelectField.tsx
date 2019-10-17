@@ -1,59 +1,34 @@
-import { Omit } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { InputProps } from "@material-ui/core/Input";
-import MenuItem from "@material-ui/core/MenuItem";
-import Paper from "@material-ui/core/Paper";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 import Downshift from "downshift";
+import { filter } from "fuzzaldrin";
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { compareTwoStrings } from "string-similarity";
+import SingleAutocompleteSelectFieldContent, {
+  SingleAutocompleteChoiceType
+} from "./SingleAutocompleteSelectFieldContent";
 
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { FetchMoreProps } from "@saleor/types";
 import ArrowDropdownIcon from "../../icons/ArrowDropdown";
 import Debounce, { DebounceProps } from "../Debounce";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    container: {
-      flexGrow: 1,
-      position: "relative"
-    },
-    menuItem: {
-      height: "auto",
-      whiteSpace: "normal"
-    },
-    paper: {
-      borderRadius: 4,
-      left: 0,
-      marginTop: theme.spacing.unit,
-      padding: 8,
-      position: "absolute",
-      right: 0,
-      zIndex: 22
-    }
-  });
+const styles = createStyles({
+  container: {
+    flexGrow: 1,
+    position: "relative"
+  }
+});
 
-export interface SingleAutocompleteChoiceType {
-  label: string;
-  value: any;
-}
-export interface SingleAutocompleteSelectFieldProps {
+export interface SingleAutocompleteSelectFieldProps
+  extends Partial<FetchMoreProps> {
   error?: boolean;
   name: string;
   displayValue: string;
   emptyOption?: boolean;
   choices: SingleAutocompleteChoiceType[];
-  value?: string;
+  value: string;
   disabled?: boolean;
-  loading?: boolean;
   placeholder?: string;
   allowCustomValues?: boolean;
   helperText?: string;
@@ -61,13 +36,6 @@ export interface SingleAutocompleteSelectFieldProps {
   InputProps?: InputProps;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
-}
-
-interface SingleAutocompleteSelectFieldState {
-  choices: Array<{
-    label: string;
-    value: string;
-  }>;
 }
 
 const DebounceAutocomplete: React.ComponentType<
@@ -85,6 +53,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
     displayValue,
     emptyOption,
     error,
+    hasMore,
     helperText,
     label,
     loading,
@@ -94,9 +63,11 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
     InputProps,
     fetchChoices,
     onChange,
+    onFetchMore,
     ...props
   }: SingleAutocompleteSelectFieldProps & WithStyles<typeof styles>) => {
     const [prevDisplayValue] = useStateFromProps(displayValue);
+
     const handleChange = item =>
       onChange({
         target: {
@@ -131,10 +102,20 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                 choices && selectedItem
                   ? choices.filter(c => c.value === selectedItem).length === 0
                   : false;
+              const hasInputValueChanged = prevDisplayValue !== displayValue;
 
-              if (prevDisplayValue !== displayValue) {
+              if (hasInputValueChanged) {
                 reset({ inputValue: displayValue });
               }
+
+              const displayCustomValue =
+                inputValue &&
+                inputValue.length > 0 &&
+                allowCustomValues &&
+                !choices.find(
+                  choice =>
+                    choice.label.toLowerCase() === inputValue.toLowerCase()
+                );
 
               return (
                 <div className={classes.container} {...props}>
@@ -146,11 +127,7 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                       }),
                       endAdornment: (
                         <div>
-                          {loading ? (
-                            <CircularProgress size={20} />
-                          ) : (
-                            <ArrowDropdownIcon onClick={toggleMenu} />
-                          )}
+                          <ArrowDropdownIcon onClick={toggleMenu} />
                         </div>
                       ),
                       error,
@@ -165,82 +142,19 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                     fullWidth={true}
                   />
                   {isOpen && (!!inputValue || !!choices.length) && (
-                    <Paper className={classes.paper} square>
-                      {choices.length > 0 || allowCustomValues ? (
-                        <>
-                          {emptyOption && (
-                            <MenuItem
-                              className={classes.menuItem}
-                              component="div"
-                              {...getItemProps({
-                                item: ""
-                              })}
-                              data-tc="singleautocomplete-select-option"
-                            >
-                              <Typography color="textSecondary">
-                                <FormattedMessage defaultMessage="None" />
-                              </Typography>
-                            </MenuItem>
-                          )}
-                          {choices.map((suggestion, index) => {
-                            const choiceIndex = index + (emptyOption ? 1 : 0);
-
-                            return (
-                              <MenuItem
-                                className={classes.menuItem}
-                                key={JSON.stringify(suggestion)}
-                                selected={
-                                  highlightedIndex === choiceIndex ||
-                                  selectedItem === suggestion.value
-                                }
-                                component="div"
-                                {...getItemProps({
-                                  index: choiceIndex,
-                                  item: suggestion.value
-                                })}
-                                data-tc="singleautocomplete-select-option"
-                              >
-                                {suggestion.label}
-                              </MenuItem>
-                            );
-                          })}
-                          {allowCustomValues &&
-                            !!inputValue &&
-                            !choices.find(
-                              choice =>
-                                choice.label.toLowerCase() ===
-                                inputValue.toLowerCase()
-                            ) && (
-                              <MenuItem
-                                className={classes.menuItem}
-                                key={"customValue"}
-                                selected={isCustomValueSelected}
-                                component="div"
-                                {...getItemProps({
-                                  item: inputValue
-                                })}
-                                data-tc="singleautocomplete-select-option"
-                              >
-                                <FormattedMessage
-                                  defaultMessage="Add new value: {value}"
-                                  description="add custom select input option"
-                                  values={{
-                                    value: inputValue
-                                  }}
-                                />
-                              </MenuItem>
-                            )}
-                        </>
-                      ) : (
-                        <MenuItem
-                          disabled={true}
-                          component="div"
-                          data-tc="singleautocomplete-select-no-options"
-                        >
-                          <FormattedMessage defaultMessage="No results found" />
-                        </MenuItem>
-                      )}
-                    </Paper>
+                    <SingleAutocompleteSelectFieldContent
+                      choices={choices}
+                      displayCustomValue={displayCustomValue}
+                      emptyOption={emptyOption}
+                      getItemProps={getItemProps}
+                      hasMore={hasMore}
+                      highlightedIndex={highlightedIndex}
+                      loading={loading}
+                      inputValue={inputValue}
+                      isCustomValueSelected={isCustomValueSelected}
+                      selectedItem={selectedItem}
+                      onFetchMore={onFetchMore}
+                    />
                   )}
                 </div>
               );
@@ -252,40 +166,32 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
   }
 );
 
-export class SingleAutocompleteSelectField extends React.Component<
-  Omit<SingleAutocompleteSelectFieldProps, "classes">,
-  SingleAutocompleteSelectFieldState
-> {
-  state = { choices: this.props.choices };
-
-  handleInputChange = (value: string) =>
-    this.setState((_, props) => ({
-      choices: props.choices
-        .sort((a, b) => {
-          const ratingA = compareTwoStrings(value || "", a.label);
-          const ratingB = compareTwoStrings(value || "", b.label);
-          if (ratingA > ratingB) {
-            return -1;
-          }
-          if (ratingA < ratingB) {
-            return 1;
-          }
-          return 0;
-        })
-        .slice(0, 5)
-    }));
-
-  render() {
-    if (!!this.props.fetchChoices) {
-      return <SingleAutocompleteSelectFieldComponent {...this.props} />;
-    }
+const SingleAutocompleteSelectField: React.FC<
+  SingleAutocompleteSelectFieldProps
+> = ({ choices, fetchChoices, ...props }) => {
+  const [query, setQuery] = React.useState("");
+  if (fetchChoices) {
     return (
-      <SingleAutocompleteSelectFieldComponent
-        {...this.props}
-        choices={this.state.choices}
-        fetchChoices={this.handleInputChange}
-      />
+      <DebounceAutocomplete debounceFn={fetchChoices}>
+        {debounceFn => (
+          <SingleAutocompleteSelectFieldComponent
+            choices={choices}
+            {...props}
+            fetchChoices={debounceFn}
+          />
+        )}
+      </DebounceAutocomplete>
     );
   }
-}
+
+  return (
+    <SingleAutocompleteSelectFieldComponent
+      fetchChoices={q => setQuery(q || "")}
+      choices={filter(choices, query, {
+        key: "label"
+      })}
+      {...props}
+    />
+  );
+};
 export default SingleAutocompleteSelectField;

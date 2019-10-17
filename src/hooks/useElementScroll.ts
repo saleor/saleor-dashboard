@@ -1,20 +1,30 @@
 import throttle from "lodash-es/throttle";
 import { MutableRefObject, useEffect, useState } from "react";
 
-function getPosition(anchor?: HTMLElement) {
+export type Position = Record<"x" | "y", number>;
+
+function getPosition(anchor?: HTMLElement): Position {
   if (!!anchor) {
     return {
       x: anchor.scrollLeft,
       y: anchor.scrollTop
     };
   }
-  return {
-    x: 0,
-    y: 0
-  };
+  return undefined;
 }
 
-function useElementScroll(anchor: MutableRefObject<HTMLElement>) {
+export function isScrolledToBottom(
+  anchor: MutableRefObject<HTMLElement>,
+  position: Position,
+  offset: number = 0
+) {
+  return !!anchor.current && position
+    ? position.y + anchor.current.clientHeight + offset >=
+        anchor.current.scrollHeight
+    : undefined;
+}
+
+function useElementScroll(anchor: MutableRefObject<HTMLElement>): Position {
   const [scroll, setScroll] = useState(getPosition(anchor.current));
 
   useEffect(() => {
@@ -28,6 +38,10 @@ function useElementScroll(anchor: MutableRefObject<HTMLElement>) {
       return () => anchor.current.removeEventListener("scroll", handleScroll);
     }
   }, [anchor.current]);
+
+  useEffect(() => {
+    setTimeout(() => setScroll(getPosition(anchor.current)), 100);
+  }, []);
 
   return scroll;
 }

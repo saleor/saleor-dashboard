@@ -33,11 +33,20 @@ export const ProductUpdate: React.StatelessComponent<
 
   return (
     <SearchCategories variables={DEFAULT_INITIAL_SEARCH_DATA}>
-      {({ search: searchCategory, result: searchCategoryOpts }) => (
+      {({
+        loadMore: loadMoreCategories,
+        search: searchCategory,
+        result: searchCategoryOpts
+      }) => (
         <SearchCollections variables={DEFAULT_INITIAL_SEARCH_DATA}>
-          {({ search: searchCollection, result: searchCollectionOpts }) => (
+          {({
+            loadMore: loadMoreCollections,
+            search: searchCollection,
+            result: searchCollectionOpts
+          }) => (
             <SearchProductTypes variables={DEFAULT_INITIAL_SEARCH_DATA}>
               {({
+                loadMore: loadMoreProductTypes,
                 search: searchProductTypes,
                 result: searchProductTypesOpts
               }) => {
@@ -121,11 +130,11 @@ export const ProductUpdate: React.StatelessComponent<
                           <ProductCreatePage
                             currency={maybe(() => shop.defaultCurrency)}
                             categories={maybe(
-                              () => searchCategoryOpts.data.categories.edges,
+                              () => searchCategoryOpts.data.search.edges,
                               []
                             ).map(edge => edge.node)}
                             collections={maybe(
-                              () => searchCollectionOpts.data.collections.edges,
+                              () => searchCollectionOpts.data.search.edges,
                               []
                             ).map(edge => edge.node)}
                             disabled={productCreateDataLoading}
@@ -141,13 +150,40 @@ export const ProductUpdate: React.StatelessComponent<
                               description: "page header"
                             })}
                             productTypes={maybe(() =>
-                              searchProductTypesOpts.data.productTypes.edges.map(
+                              searchProductTypesOpts.data.search.edges.map(
                                 edge => edge.node
                               )
                             )}
                             onBack={handleBack}
                             onSubmit={handleSubmit}
                             saveButtonBarState={formTransitionState}
+                            fetchMoreCategories={{
+                              hasMore: maybe(
+                                () =>
+                                  searchCategoryOpts.data.search.pageInfo
+                                    .hasNextPage
+                              ),
+                              loading: searchCategoryOpts.loading,
+                              onFetchMore: loadMoreCategories
+                            }}
+                            fetchMoreCollections={{
+                              hasMore: maybe(
+                                () =>
+                                  searchCollectionOpts.data.search.pageInfo
+                                    .hasNextPage
+                              ),
+                              loading: searchCollectionOpts.loading,
+                              onFetchMore: loadMoreCollections
+                            }}
+                            fetchMoreProductTypes={{
+                              hasMore: maybe(
+                                () =>
+                                  searchProductTypesOpts.data.search.pageInfo
+                                    .hasNextPage
+                              ),
+                              loading: searchProductTypesOpts.loading,
+                              onFetchMore: loadMoreProductTypes
+                            }}
                           />
                         </>
                       );

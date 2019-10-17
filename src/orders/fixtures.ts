@@ -1,5 +1,5 @@
 import { MessageDescriptor } from "react-intl";
-import { SearchCustomers_customers_edges_node } from "../containers/SearchCustomers/types/SearchCustomers";
+import { SearchCustomers_search_edges_node } from "../containers/SearchCustomers/types/SearchCustomers";
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 import {
   FulfillmentStatus,
@@ -11,7 +11,7 @@ import {
 import { OrderDetails_order } from "./types/OrderDetails";
 import { OrderList_orders_edges_node } from "./types/OrderList";
 
-export const clients: SearchCustomers_customers_edges_node[] = [
+export const clients: SearchCustomers_search_edges_node[] = [
   {
     __typename: "User" as "User",
     email: "test.client1@example.com",

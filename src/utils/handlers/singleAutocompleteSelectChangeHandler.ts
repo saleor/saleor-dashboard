@@ -10,7 +10,8 @@ function createSingleAutocompleteSelectHandler(
     change(event);
 
     const value = event.target.value;
-    setSelected(choices.find(category => category.value === value).label);
+    const choice = choices.find(category => category.value === value)
+    setSelected(choice ? choice.label : value);
   };
 }
 

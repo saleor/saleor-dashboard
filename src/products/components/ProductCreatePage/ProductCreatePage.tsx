@@ -13,9 +13,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import { SearchCategories_categories_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
-import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
-import { SearchProductTypes_productTypes_edges_node_productAttributes } from "@saleor/containers/SearchProductTypes/types/SearchProductTypes";
+import { SearchCategories_search_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
+import { SearchCollections_search_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
+import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/containers/SearchProductTypes/types/SearchProductTypes";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -27,7 +27,7 @@ import {
 } from "@saleor/products/utils/data";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { UserError } from "../../../types";
+import { FetchMoreProps, UserError } from "../../../types";
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
@@ -63,15 +63,18 @@ export interface ProductCreatePageSubmitData extends FormData {
 
 interface ProductCreatePageProps {
   errors: UserError[];
-  collections: SearchCollections_collections_edges_node[];
-  categories: SearchCategories_categories_edges_node[];
+  collections: SearchCollections_search_edges_node[];
+  categories: SearchCategories_search_edges_node[];
   currency: string;
   disabled: boolean;
+  fetchMoreCategories: FetchMoreProps;
+  fetchMoreCollections: FetchMoreProps;
+  fetchMoreProductTypes: FetchMoreProps;
   productTypes?: Array<{
     id: string;
     name: string;
     hasVariants: boolean;
-    productAttributes: SearchProductTypes_productTypes_edges_node_productAttributes[];
+    productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
   }>;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -92,6 +95,9 @@ export const ProductCreatePage: React.StatelessComponent<
   errors: userErrors,
   fetchCategories,
   fetchCollections,
+  fetchMoreCategories,
+  fetchMoreCollections,
+  fetchMoreProductTypes,
   header,
   productTypes: productTypeChoiceList,
   saveButtonBarState,
@@ -271,6 +277,9 @@ export const ProductCreatePage: React.StatelessComponent<
                   errors={errors}
                   fetchCategories={fetchCategories}
                   fetchCollections={fetchCollections}
+                  fetchMoreCategories={fetchMoreCategories}
+                  fetchMoreCollections={fetchMoreCollections}
+                  fetchMoreProductTypes={fetchMoreProductTypes}
                   fetchProductTypes={fetchProductTypes}
                   productType={productType}
                   productTypeInputDisplayValue={productType.name}

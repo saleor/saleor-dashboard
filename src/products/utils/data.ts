@@ -2,7 +2,7 @@ import { RawDraftContentState } from "draft-js";
 
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { SearchProductTypes_productTypes_edges_node_productAttributes } from "@saleor/containers/SearchProductTypes/types/SearchProductTypes";
+import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/containers/SearchProductTypes/types/SearchProductTypes";
 import { maybe } from "@saleor/misc";
 import {
   ProductDetails_product,
@@ -35,7 +35,7 @@ export interface ProductType {
   hasVariants: boolean;
   id: string;
   name: string;
-  productAttributes: SearchProductTypes_productTypes_edges_node_productAttributes[];
+  productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
 }
 
 export function getAttributeInputFromProduct(
