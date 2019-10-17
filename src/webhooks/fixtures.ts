@@ -1,19 +1,6 @@
-import { SearchServiceAccount_search_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
 import { WebhookDetails_webhook } from "./types/WebhookDetails";
 import { Webhooks_webhooks_edges_node } from "./types/Webhooks";
 
-export const services: SearchServiceAccount_search_edges_node[] = [
-  {
-    __typename: "ServiceAccount",
-    id: "Jzx123sEt==",
-    name: "Facebook"
-  },
-  {
-    __typename: "ServiceAccount",
-    id: "Jzx123sEt==",
-    name: "Twittwe"
-  }
-];
 export const webhookList: Webhooks_webhooks_edges_node[] = [
   {
     __typename: "Webhook",
