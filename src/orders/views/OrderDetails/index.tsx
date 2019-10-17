@@ -38,13 +38,13 @@ import { OrderDetailsMessages } from "./OrderDetailsMessages";
 const orderDraftFinalizeWarnings = (order: OrderDetails_order) => {
   const warnings = [] as OrderDraftFinalizeWarning[];
   if (!(order && order.shippingAddress)) {
-    warnings.push("no-shipping");
+    warnings.push(OrderDraftFinalizeWarning.NO_SHIPPING);
   }
   if (!(order && order.billingAddress)) {
-    warnings.push("no-billing");
+    warnings.push(OrderDraftFinalizeWarning.NO_BILLING);
   }
   if (!(order && (order.user || order.userEmail))) {
-    warnings.push("no-user");
+    warnings.push(OrderDraftFinalizeWarning.NO_USER);
   }
   if (
     order &&
@@ -52,7 +52,7 @@ const orderDraftFinalizeWarnings = (order: OrderDetails_order) => {
     order.lines.filter(line => line.isShippingRequired).length > 0 &&
     order.shippingMethod === null
   ) {
-    warnings.push("no-shipping-method");
+    warnings.push(OrderDraftFinalizeWarning.NO_SHIPPING_METHOD);
   }
   if (
     order &&
@@ -60,7 +60,7 @@ const orderDraftFinalizeWarnings = (order: OrderDetails_order) => {
     order.lines.filter(line => line.isShippingRequired).length === 0 &&
     order.shippingMethod !== null
   ) {
-    warnings.push("unnecessary-shipping-method");
+    warnings.push(OrderDraftFinalizeWarning.UNNECESSARY_SHIPPING_METHOD);
   }
   return warnings;
 };

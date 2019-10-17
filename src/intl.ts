@@ -1,4 +1,5 @@
 import { defineMessages, IntlShape } from "react-intl";
+import { TaxRateType } from "./types/globalTypes";
 
 export const commonMessages = defineMessages({
   availability: {
