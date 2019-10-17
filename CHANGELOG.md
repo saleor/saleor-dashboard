@@ -37,3 +37,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Do not send customer invitation email - #211 by @dominik-zeglen
 - Send address update mutation only once - #210 by @dominik-zeglen
 - Update sale details design - #207 by @dominik-zeglen
+- Improve autocomplete UX - #212 by @dominik-zeglen

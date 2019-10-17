@@ -6,24 +6,33 @@
 // GraphQL query operation: SearchCategories
 // ====================================================
 
-export interface SearchCategories_categories_edges_node {
+export interface SearchCategories_search_edges_node {
   __typename: "Category";
   id: string;
   name: string;
 }
 
-export interface SearchCategories_categories_edges {
+export interface SearchCategories_search_edges {
   __typename: "CategoryCountableEdge";
-  node: SearchCategories_categories_edges_node;
+  node: SearchCategories_search_edges_node;
 }
 
-export interface SearchCategories_categories {
+export interface SearchCategories_search_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SearchCategories_search {
   __typename: "CategoryCountableConnection";
-  edges: SearchCategories_categories_edges[];
+  edges: SearchCategories_search_edges[];
+  pageInfo: SearchCategories_search_pageInfo;
 }
 
 export interface SearchCategories {
-  categories: SearchCategories_categories | null;
+  search: SearchCategories_search | null;
 }
 
 export interface SearchCategoriesVariables {

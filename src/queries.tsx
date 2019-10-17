@@ -15,7 +15,7 @@ import { RequireAtLeastOne } from "./misc";
 export interface LoadMore<TData, TVariables> {
   loadMore: (
     mergeFunc: (prev: TData, next: TData) => TData,
-    extraVariables: RequireAtLeastOne<TVariables>
+    extraVariables: Partial<TVariables>
   ) => Promise<ApolloQueryResult<TData>>;
 }
 

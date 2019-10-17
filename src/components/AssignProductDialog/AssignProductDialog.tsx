@@ -21,11 +21,11 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { SearchProducts_products_edges_node } from "../../containers/SearchProducts/types/SearchProducts";
+import { SearchProducts_search_edges_node } from "../../containers/SearchProducts/types/SearchProducts";
 import Checkbox from "../Checkbox";
 
 export interface FormData {
-  products: SearchProducts_products_edges_node[];
+  products: SearchProducts_search_edges_node[];
   query: string;
 }
 
@@ -53,18 +53,18 @@ const styles = createStyles({
 export interface AssignProductDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  products: SearchProducts_products_edges_node[];
+  products: SearchProducts_search_edges_node[];
   loading: boolean;
   onClose: () => void;
   onFetch: (value: string) => void;
-  onSubmit: (data: SearchProducts_products_edges_node[]) => void;
+  onSubmit: (data: SearchProducts_search_edges_node[]) => void;
 }
 
 function handleProductAssign(
-  product: SearchProducts_products_edges_node,
+  product: SearchProducts_search_edges_node,
   isSelected: boolean,
-  selectedProducts: SearchProducts_products_edges_node[],
-  setSelectedProducts: (data: SearchProducts_products_edges_node[]) => void
+  selectedProducts: SearchProducts_search_edges_node[],
+  setSelectedProducts: (data: SearchProducts_search_edges_node[]) => void
 ) {
   if (isSelected) {
     setSelectedProducts(
@@ -93,7 +93,7 @@ const AssignProductDialog = withStyles(styles, {
     const intl = useIntl();
     const [query, onQueryChange] = useSearchQuery(onFetch);
     const [selectedProducts, setSelectedProducts] = React.useState<
-      SearchProducts_products_edges_node[]
+      SearchProducts_search_edges_node[]
     >([]);
 
     const handleSubmit = () => onSubmit(selectedProducts);

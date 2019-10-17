@@ -12,14 +12,14 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import { SearchCategories_categories_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
-import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
+import { SearchCategories_search_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
+import { SearchCollections_search_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { ListActions, UserError } from "@saleor/types";
+import { FetchMoreProps, ListActions, UserError } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import {
@@ -50,9 +50,11 @@ import ProductVariants from "../ProductVariants";
 export interface ProductUpdatePageProps extends ListActions {
   errors: UserError[];
   placeholderImage: string;
-  collections: SearchCollections_collections_edges_node[];
-  categories: SearchCategories_categories_edges_node[];
+  collections: SearchCollections_search_edges_node[];
+  categories: SearchCategories_search_edges_node[];
   disabled: boolean;
+  fetchMoreCategories: FetchMoreProps;
+  fetchMoreCollections: FetchMoreProps;
   variants: ProductDetails_product_variants[];
   images: ProductDetails_product_images[];
   product: ProductDetails_product;
@@ -86,6 +88,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   errors: userErrors,
   fetchCategories,
   fetchCollections,
+  fetchMoreCategories,
+  fetchMoreCollections,
   images,
   header,
   placeholderImage,
@@ -285,6 +289,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     errors={errors}
                     fetchCategories={fetchCategories}
                     fetchCollections={fetchCollections}
+                    fetchMoreCategories={fetchMoreCategories}
+                    fetchMoreCollections={fetchMoreCollections}
                     productType={maybe(() => product.productType)}
                     onCategoryChange={handleCategorySelect}
                     onCollectionChange={handleCollectionSelect}

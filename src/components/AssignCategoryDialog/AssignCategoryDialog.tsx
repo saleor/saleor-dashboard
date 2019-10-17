@@ -19,11 +19,11 @@ import ConfirmButton, {
 import FormSpacer from "@saleor/components/FormSpacer";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { SearchCategories_categories_edges_node } from "../../containers/SearchCategories/types/SearchCategories";
+import { SearchCategories_search_edges_node } from "../../containers/SearchCategories/types/SearchCategories";
 import Checkbox from "../Checkbox";
 
 export interface FormData {
-  categories: SearchCategories_categories_edges_node[];
+  categories: SearchCategories_search_edges_node[];
   query: string;
 }
 
@@ -45,22 +45,20 @@ const styles = createStyles({
 });
 
 interface AssignCategoriesDialogProps extends WithStyles<typeof styles> {
-  categories: SearchCategories_categories_edges_node[];
+  categories: SearchCategories_search_edges_node[];
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   loading: boolean;
   onClose: () => void;
   onFetch: (value: string) => void;
-  onSubmit: (data: SearchCategories_categories_edges_node[]) => void;
+  onSubmit: (data: SearchCategories_search_edges_node[]) => void;
 }
 
 function handleCategoryAssign(
-  product: SearchCategories_categories_edges_node,
+  product: SearchCategories_search_edges_node,
   isSelected: boolean,
-  selectedCategories: SearchCategories_categories_edges_node[],
-  setSelectedCategories: (
-    data: SearchCategories_categories_edges_node[]
-  ) => void
+  selectedCategories: SearchCategories_search_edges_node[],
+  setSelectedCategories: (data: SearchCategories_search_edges_node[]) => void
 ) {
   if (isSelected) {
     setSelectedCategories(
@@ -89,7 +87,7 @@ const AssignCategoriesDialog = withStyles(styles, {
     const intl = useIntl();
     const [query, onQueryChange] = useSearchQuery(onFetch);
     const [selectedCategories, setSelectedCategories] = React.useState<
-      SearchCategories_categories_edges_node[]
+      SearchCategories_search_edges_node[]
     >([]);
 
     const handleSubmit = () => onSubmit(selectedCategories);

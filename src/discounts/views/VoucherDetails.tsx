@@ -429,7 +429,7 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                               }) => (
                                 <AssignCategoriesDialog
                                   categories={maybe(() =>
-                                    searchCategoriesOpts.data.categories.edges
+                                    searchCategoriesOpts.data.search.edges
                                       .map(edge => edge.node)
                                       .filter(
                                         suggestedCategory =>
@@ -466,7 +466,7 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                               }) => (
                                 <AssignCollectionDialog
                                   collections={maybe(() =>
-                                    searchCollectionsOpts.data.collections.edges
+                                    searchCollectionsOpts.data.search.edges
                                       .map(edge => edge.node)
                                       .filter(
                                         suggestedCategory =>
@@ -544,7 +544,7 @@ export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
                                     })
                                   }
                                   products={maybe(() =>
-                                    searchProductsOpts.data.products.edges
+                                    searchProductsOpts.data.search.edges
                                       .map(edge => edge.node)
                                       .filter(
                                         suggestedProduct => suggestedProduct.id

@@ -14,9 +14,9 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { SearchCategories_categories_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
-import { SearchCollections_collections_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
-import { SearchPages_pages_edges_node } from "@saleor/containers/SearchPages/types/SearchPages";
+import { SearchCategories_search_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
+import { SearchCollections_search_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
+import { SearchPages_search_edges_node } from "@saleor/containers/SearchPages/types/SearchPages";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -43,9 +43,9 @@ export interface MenuItemDialogProps {
   initialDisplayValue?: string;
   loading: boolean;
   open: boolean;
-  collections: SearchCollections_collections_edges_node[];
-  categories: SearchCategories_categories_edges_node[];
-  pages: SearchPages_pages_edges_node[];
+  collections: SearchCollections_search_edges_node[];
+  categories: SearchCategories_search_edges_node[];
+  pages: SearchPages_search_edges_node[];
   onClose: () => void;
   onSubmit: (data: MenuItemDialogFormData) => void;
   onQueryChange: (query: string) => void;

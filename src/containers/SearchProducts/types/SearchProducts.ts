@@ -6,30 +6,39 @@
 // GraphQL query operation: SearchProducts
 // ====================================================
 
-export interface SearchProducts_products_edges_node_thumbnail {
+export interface SearchProducts_search_edges_node_thumbnail {
   __typename: "Image";
   url: string;
 }
 
-export interface SearchProducts_products_edges_node {
+export interface SearchProducts_search_edges_node {
   __typename: "Product";
   id: string;
   name: string;
-  thumbnail: SearchProducts_products_edges_node_thumbnail | null;
+  thumbnail: SearchProducts_search_edges_node_thumbnail | null;
 }
 
-export interface SearchProducts_products_edges {
+export interface SearchProducts_search_edges {
   __typename: "ProductCountableEdge";
-  node: SearchProducts_products_edges_node;
+  node: SearchProducts_search_edges_node;
 }
 
-export interface SearchProducts_products {
+export interface SearchProducts_search_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SearchProducts_search {
   __typename: "ProductCountableConnection";
-  edges: SearchProducts_products_edges[];
+  edges: SearchProducts_search_edges[];
+  pageInfo: SearchProducts_search_pageInfo;
 }
 
 export interface SearchProducts {
-  products: SearchProducts_products | null;
+  search: SearchProducts_search | null;
 }
 
 export interface SearchProductsVariables {

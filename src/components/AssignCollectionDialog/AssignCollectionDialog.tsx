@@ -15,7 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { SearchCollections_collections_edges_node } from "../../containers/SearchCollections/types/SearchCollections";
+import { SearchCollections_search_edges_node } from "../../containers/SearchCollections/types/SearchCollections";
 import Checkbox from "../Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -23,7 +23,7 @@ import ConfirmButton, {
 import FormSpacer from "../FormSpacer";
 
 export interface FormData {
-  collections: SearchCollections_collections_edges_node[];
+  collections: SearchCollections_search_edges_node[];
   query: string;
 }
 
@@ -45,22 +45,20 @@ const styles = createStyles({
 });
 
 interface AssignCollectionDialogProps extends WithStyles<typeof styles> {
-  collections: SearchCollections_collections_edges_node[];
+  collections: SearchCollections_search_edges_node[];
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   loading: boolean;
   onClose: () => void;
   onFetch: (value: string) => void;
-  onSubmit: (data: SearchCollections_collections_edges_node[]) => void;
+  onSubmit: (data: SearchCollections_search_edges_node[]) => void;
 }
 
 function handleCollectionAssign(
-  product: SearchCollections_collections_edges_node,
+  product: SearchCollections_search_edges_node,
   isSelected: boolean,
-  selectedCollections: SearchCollections_collections_edges_node[],
-  setSelectedCollections: (
-    data: SearchCollections_collections_edges_node[]
-  ) => void
+  selectedCollections: SearchCollections_search_edges_node[],
+  setSelectedCollections: (data: SearchCollections_search_edges_node[]) => void
 ) {
   if (isSelected) {
     setSelectedCollections(
@@ -89,7 +87,7 @@ const AssignCollectionDialog = withStyles(styles, {
     const intl = useIntl();
     const [query, onQueryChange] = useSearchQuery(onFetch);
     const [selectedCollections, setSelectedCollections] = React.useState<
-      SearchCollections_collections_edges_node[]
+      SearchCollections_search_edges_node[]
     >([]);
 
     const handleSubmit = () => onSubmit(selectedCollections);

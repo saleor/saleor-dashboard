@@ -1,15 +1,14 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { fetchMoreProps } from "@saleor/fixtures";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../../../products/components/ProductCreatePage";
-
-import { formError } from "../../misc";
-
 import { product as productFixture } from "../../../products/fixtures";
 import { productTypes } from "../../../productTypes/fixtures";
 import Decorator from "../../Decorator";
+import { formError } from "../../misc";
 
 const product = productFixture("");
 
@@ -25,6 +24,9 @@ storiesOf("Views / Products / Create product", module)
       fetchCategories={() => undefined}
       fetchCollections={() => undefined}
       fetchProductTypes={() => undefined}
+      fetchMoreCategories={fetchMoreProps}
+      fetchMoreCollections={fetchMoreProps}
+      fetchMoreProductTypes={fetchMoreProps}
       productTypes={productTypes}
       categories={[product.category]}
       onBack={() => undefined}
@@ -42,6 +44,9 @@ storiesOf("Views / Products / Create product", module)
       fetchCategories={() => undefined}
       fetchCollections={() => undefined}
       fetchProductTypes={() => undefined}
+      fetchMoreCategories={fetchMoreProps}
+      fetchMoreCollections={fetchMoreProps}
+      fetchMoreProductTypes={fetchMoreProps}
       productTypes={productTypes}
       categories={[product.category]}
       onBack={() => undefined}
@@ -61,6 +66,9 @@ storiesOf("Views / Products / Create product", module)
       fetchCategories={() => undefined}
       fetchCollections={() => undefined}
       fetchProductTypes={() => undefined}
+      fetchMoreCategories={fetchMoreProps}
+      fetchMoreCollections={fetchMoreProps}
+      fetchMoreProductTypes={fetchMoreProps}
       productTypes={productTypes}
       categories={[product.category]}
       onBack={() => undefined}

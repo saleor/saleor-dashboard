@@ -6,24 +6,33 @@
 // GraphQL query operation: SearchCustomers
 // ====================================================
 
-export interface SearchCustomers_customers_edges_node {
+export interface SearchCustomers_search_edges_node {
   __typename: "User";
   id: string;
   email: string;
 }
 
-export interface SearchCustomers_customers_edges {
+export interface SearchCustomers_search_edges {
   __typename: "UserCountableEdge";
-  node: SearchCustomers_customers_edges_node;
+  node: SearchCustomers_search_edges_node;
 }
 
-export interface SearchCustomers_customers {
+export interface SearchCustomers_search_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SearchCustomers_search {
   __typename: "UserCountableConnection";
-  edges: SearchCustomers_customers_edges[];
+  edges: SearchCustomers_search_edges[];
+  pageInfo: SearchCustomers_search_pageInfo;
 }
 
 export interface SearchCustomers {
-  customers: SearchCustomers_customers | null;
+  search: SearchCustomers_search | null;
 }
 
 export interface SearchCustomersVariables {

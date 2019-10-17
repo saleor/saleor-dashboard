@@ -68,9 +68,17 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
 
   return (
     <SearchCategories variables={DEFAULT_INITIAL_SEARCH_DATA}>
-      {({ search: searchCategories, result: searchCategoriesOpts }) => (
+      {({
+        loadMore: loadMoreCategories,
+        search: searchCategories,
+        result: searchCategoriesOpts
+      }) => (
         <SearchCollections variables={DEFAULT_INITIAL_SEARCH_DATA}>
-          {({ search: searchCollections, result: searchCollectionsOpts }) => (
+          {({
+            loadMore: loadMoreCollections,
+            search: searchCollections,
+            result: searchCollectionsOpts
+          }) => (
             <TypedProductDetailsQuery
               displayLoader
               require={["product"]}
@@ -228,11 +236,11 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                       );
 
                       const categories = maybe(
-                        () => searchCategoriesOpts.data.categories.edges,
+                        () => searchCategoriesOpts.data.search.edges,
                         []
                       ).map(edge => edge.node);
                       const collections = maybe(
-                        () => searchCollectionsOpts.data.collections.edges,
+                        () => searchCollectionsOpts.data.search.edges,
                         []
                       ).map(edge => edge.node);
                       const errors = maybe(
@@ -295,6 +303,24 @@ export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
                             selected={listElements.length}
                             toggle={toggle}
                             toggleAll={toggleAll}
+                            fetchMoreCategories={{
+                              hasMore: maybe(
+                                () =>
+                                  searchCategoriesOpts.data.search.pageInfo
+                                    .hasNextPage
+                              ),
+                              loading: searchCategoriesOpts.loading,
+                              onFetchMore: loadMoreCategories
+                            }}
+                            fetchMoreCollections={{
+                              hasMore: maybe(
+                                () =>
+                                  searchCollectionsOpts.data.search.pageInfo
+                                    .hasNextPage
+                              ),
+                              loading: searchCollectionsOpts.loading,
+                              onFetchMore: loadMoreCollections
+                            }}
                           />
                           <ActionDialog
                             open={params.action === "remove"}

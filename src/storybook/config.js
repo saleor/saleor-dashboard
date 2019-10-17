@@ -29,7 +29,6 @@ function loadStories() {
   require("./stories/components/Filter");
   require("./stories/components/Money");
   require("./stories/components/MoneyRange");
-  require("./stories/components/MultiAutocompleteSelectField");
   require("./stories/components/MultiSelectField");
   require("./stories/components/NotFoundPage");
   require("./stories/components/PageHeader");
@@ -39,7 +38,6 @@ function loadStories() {
   require("./stories/components/RichTextEditor");
   require("./stories/components/SaveButtonBar");
   require("./stories/components/SaveFilterTabDialog");
-  require("./stories/components/SingleAutocompleteSelectField");
   require("./stories/components/SingleSelectField");
   require("./stories/components/Skeleton");
   require("./stories/components/StatusLabel");
@@ -125,7 +123,6 @@ function loadStories() {
   require("./stories/orders/OrderBulkCancelDialog");
   require("./stories/orders/OrderCancelDialog");
   require("./stories/orders/OrderCustomer");
-  require("./stories/orders/OrderCustomerEditDialog");
   require("./stories/orders/OrderDetailsPage");
   require("./stories/orders/OrderDraftCancelDialog");
   require("./stories/orders/OrderDraftFinalizeDialog");

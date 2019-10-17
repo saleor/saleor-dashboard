@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import BaseSearch from "../containers/BaseSearch";
+import TopLevelSearch from "../containers/TopLevelSearch";
 import { TypedQuery } from "../queries";
 import { OrderDetails, OrderDetailsVariables } from "./types/OrderDetails";
 import {
@@ -286,7 +286,7 @@ export const TypedOrderDetailsQuery = TypedQuery<
 
 export const searchOrderVariant = gql`
   query SearchOrderVariant($first: Int!, $query: String!, $after: String) {
-    products(query: $query, first: $first, after: $after) {
+    search: products(query: $query, first: $first, after: $after) {
       edges {
         node {
           id
@@ -314,7 +314,7 @@ export const searchOrderVariant = gql`
     }
   }
 `;
-export const SearchOrderVariant = BaseSearch<
+export const SearchOrderVariant = TopLevelSearch<
   SearchOrderVariantType,
   SearchOrderVariantVariables
 >(searchOrderVariant);
