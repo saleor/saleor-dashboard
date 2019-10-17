@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const numberOfColumns = 4;
+const numberOfColumns = 3;
 
 const WebhooksList: React.FC<WebhooksListProps> = ({
   settings,

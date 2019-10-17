@@ -26,9 +26,10 @@ export interface WebhooksDetailsProps {
   params: WebhooksListUrlQueryParams;
 }
 
-export const WebhooksDetails: React.StatelessComponent<
-  WebhooksDetailsProps
-> = ({ id, params }) => {
+export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
+  id,
+  params
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -78,7 +79,7 @@ export const WebhooksDetails: React.StatelessComponent<
             <TypedWebhookDelete onCompleted={onWebhookDelete}>
               {(webhookDelete, webhookDeleteOpts) => (
                 <TypedWebhooksDetailsQuery variables={{ id }}>
-                  {WebhookDetails => {
+                  {webhookDetails => {
                     const formTransitionState = getMutationState(
                       webhookUpdateOpts.called,
                       webhookUpdateOpts.loading,
@@ -106,14 +107,14 @@ export const WebhooksDetails: React.StatelessComponent<
                     return (
                       <>
                         <WindowTitle
-                          title={maybe(() => WebhookDetails.data.webhook.name)}
+                          title={maybe(() => webhookDetails.data.webhook.name)}
                         />
                         <WebhooksDetailsPage
-                          disabled={WebhookDetails.loading}
+                          disabled={webhookDetails.loading}
                           errors={formErrors}
                           saveButtonBarState={formTransitionState}
-                          webhook={maybe(() => WebhookDetails.data.webhook)}
-                          fetchServiceAccount={searchServiceAccount}
+                          webhook={maybe(() => webhookDetails.data.webhook)}
+                          fetchServiceAccounts={searchServiceAccount}
                           services={maybe(() =>
                             searchServiceAccountOpt.data.serviceAccounts.edges.map(
                               edge => edge.node
@@ -142,7 +143,7 @@ export const WebhooksDetails: React.StatelessComponent<
                         <WebhookDeleteDialog
                           confirmButtonState={deleteTransitionState}
                           name={maybe(
-                            () => WebhookDetails.data.webhook.name,
+                            () => webhookDetails.data.webhook.name,
                             "..."
                           )}
                           onClose={closeModal}

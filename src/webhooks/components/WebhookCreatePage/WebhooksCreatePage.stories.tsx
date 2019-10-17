@@ -8,7 +8,7 @@ import WebhookCreatePage, { WebhookCreatePageProps } from "./WebhookCreatePage";
 const props: WebhookCreatePageProps = {
   disabled: false,
   errors: [],
-  fetchServiceAccount: () => undefined,
+  fetchServiceAccounts: () => undefined,
   onBack: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default",

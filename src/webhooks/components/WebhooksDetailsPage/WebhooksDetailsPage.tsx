@@ -6,6 +6,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { SearchServiceAccount_serviceAccounts_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
@@ -15,7 +16,7 @@ import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/single
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
-import { Webhook_webhook } from "@saleor/webhooks/types/Webhook";
+import { WebhookDetails_webhook } from "@saleor/webhooks/types/WebhookDetails";
 
 import React from "react";
 import { useIntl } from "react-intl";
@@ -34,27 +35,22 @@ export interface FormData {
 export interface WebhooksDetailsPageProps {
   disabled: boolean;
   errors: UserError[];
-  webhook: Webhook_webhook;
-  services?: Array<{
-    id: string;
-    name: string;
-  }>;
+  webhook: WebhookDetails_webhook;
+  services?: SearchServiceAccount_serviceAccounts_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onDelete: () => void;
-  fetchServiceAccount: (data: string) => void;
+  fetchServiceAccounts: (data: string) => void;
   onSubmit: (data: FormData) => void;
 }
 
-const WebhooksDetailsPage: React.StatelessComponent<
-  WebhooksDetailsPageProps
-> = ({
+const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
   disabled,
   errors,
   webhook,
   saveButtonBarState,
   services,
-  fetchServiceAccount,
+  fetchServiceAccounts,
   onBack,
   onDelete,
   onSubmit
@@ -115,7 +111,7 @@ const WebhooksDetailsPage: React.StatelessComponent<
                   disabled={disabled}
                   serviceDisplayValue={selectedServiceAcccounts}
                   services={servicesChoiceList}
-                  fetchServiceAccount={fetchServiceAccount}
+                  fetchServiceAccounts={fetchServiceAccounts}
                   errors={errors}
                   serviceOnChange={handleServiceSelect}
                   onChange={change}

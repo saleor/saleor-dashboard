@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
-import { Webhook, WebhookVariables } from "./types/Webhook";
+import { WebhookDetails, WebhookDetailsVariables } from "./types/WebhookDetails";
 import { Webhooks, WebhooksVariables } from "./types/Webhooks";
 
 export const webhooksFragment = gql`
@@ -70,6 +70,6 @@ const webhooksDetails = gql`
     }
   }
 `;
-export const TypedWebhooksDetailsQuery = TypedQuery<Webhook, WebhookVariables>(
+export const TypedWebhooksDetailsQuery = TypedQuery<WebhookDetails, WebhookDetailsVariables>(
   webhooksDetails
 );

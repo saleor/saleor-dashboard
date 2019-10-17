@@ -11,8 +11,7 @@ import {
   AuthorizationKeyType,
   OrderStatus,
   PaymentChargeStatusEnum,
-  TaxRateType,
-  WebhookEventTypeEnum
+  TaxRateType
 } from "./types/globalTypes";
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<

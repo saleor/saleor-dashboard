@@ -26,7 +26,7 @@ interface WebhookInfoProps {
   errors: FormErrors<"name" | "targetUrl" | "secretKey">;
   onChange: (event: React.ChangeEvent<any>) => void;
   serviceOnChange: (event: ChangeEvent) => void;
-  fetchServiceAccount: (data: string) => void;
+  fetchServiceAccounts: (data: string) => void;
 }
 
 const useStyles = makeStyles(() => ({
@@ -45,7 +45,7 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
   disabled,
   services,
   serviceDisplayValue,
-  fetchServiceAccount,
+  fetchServiceAccounts,
   errors,
   onChange,
   serviceOnChange
@@ -97,7 +97,7 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
           onChange={serviceOnChange}
           value={data.serviceAccount}
           choices={services}
-          fetchChoices={fetchServiceAccount}
+          fetchChoices={fetchServiceAccounts}
           InputProps={{
             autoComplete: "off"
           }}
@@ -107,7 +107,7 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
           disabled={disabled}
           error={!!errors.targetUrl}
           helperText={intl.formatMessage({
-            defaultMessage: "This URL will recieve webhook POST requests",
+            defaultMessage: "This URL will receive webhook POST requests",
             description: "webhook target url help text"
           })}
           label={intl.formatMessage({

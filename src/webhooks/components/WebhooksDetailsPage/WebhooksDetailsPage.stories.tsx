@@ -10,7 +10,7 @@ import WebhooksDetailsPage, {
 const props: WebhooksDetailsPageProps = {
   disabled: false,
   errors: [],
-  fetchServiceAccount: () => undefined,
+  fetchServiceAccounts: () => undefined,
   onBack: () => undefined,
   onDelete: () => undefined,
   onSubmit: () => undefined,

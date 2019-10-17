@@ -44,9 +44,9 @@ export const WebhooksCreate: React.StatelessComponent<
     <SearchServiceAccount variables={DEFAULT_INITIAL_SEARCH_DATA}>
       {({ search: searchServiceAccount, result: searchServiceAccountOpt }) => (
         <TypedWebhookCreate onCompleted={onSubmit}>
-          {(WebhookCreate, webhookCreateOpts) => {
+          {(webhookCreate, webhookCreateOpts) => {
             const handleSubmit = (data: FormData) =>
-              WebhookCreate({
+              webhookCreate({
                 variables: {
                   input: {
                     events: data.allEvents
@@ -81,7 +81,7 @@ export const WebhooksCreate: React.StatelessComponent<
                     () => webhookCreateOpts.data.webhookCreate.errors,
                     []
                   )}
-                  fetchServiceAccount={searchServiceAccount}
+                  fetchServiceAccounts={searchServiceAccount}
                   services={maybe(() =>
                     searchServiceAccountOpt.data.serviceAccounts.edges.map(
                       edge => edge.node

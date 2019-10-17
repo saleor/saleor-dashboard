@@ -6,7 +6,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { SearchServiceAccount_serviceAccounts_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
@@ -32,12 +32,9 @@ export interface FormData {
 export interface WebhookCreatePageProps {
   disabled: boolean;
   errors: UserError[];
-  services?: Array<{
-    id: string;
-    name: string;
-  }>;
+  services?: SearchServiceAccount_serviceAccounts_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  fetchServiceAccount: (data: string) => void;
+  fetchServiceAccounts: (data: string) => void;
   onBack: () => void;
   onSubmit: (data: FormData) => void;
 }
@@ -47,7 +44,7 @@ const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
   errors,
   saveButtonBarState,
   services,
-  fetchServiceAccount,
+  fetchServiceAccounts,
   onBack,
   onSubmit
 }) => {
@@ -62,10 +59,9 @@ const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
     serviceAccount: "",
     targetUrl: ""
   };
-  const [
-    selectedServiceAcccounts,
-    setSelectedServiceAcccounts
-  ] = useStateFromProps("");
+  const [selectedServiceAcccount, setSelectedServiceAcccount] = React.useState(
+    ""
+  );
   const servicesChoiceList = maybe(
     () =>
       services.map(node => ({
@@ -80,7 +76,7 @@ const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
       {({ data, errors, hasChanged, submit, change }) => {
         const handleServiceSelect = createSingleAutocompleteSelectHandler(
           change,
-          setSelectedServiceAcccounts,
+          setSelectedServiceAcccount,
           servicesChoiceList
         );
         return (
@@ -99,9 +95,9 @@ const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
                 <WebhookInfo
                   data={data}
                   disabled={disabled}
-                  serviceDisplayValue={selectedServiceAcccounts}
+                  serviceDisplayValue={selectedServiceAcccount}
                   services={servicesChoiceList}
-                  fetchServiceAccount={fetchServiceAccount}
+                  fetchServiceAccounts={fetchServiceAccounts}
                   errors={errors}
                   serviceOnChange={handleServiceSelect}
                   onChange={change}

@@ -20,7 +20,8 @@ import { useIntl } from "react-intl";
 import WebhooksListPage from "../components/WebhooksListPage/WebhooksListPage";
 import { TypedWebhookDelete } from "../mutations";
 import { TypedWebhooksListQuery } from "../queries";
-import { WebhookListUrlDialog,
+import {
+  WebhookListUrlDialog,
   WebhookListUrlFilters,
   webhooksAddUrl,
   webhooksListUrl,
@@ -40,9 +41,7 @@ interface WebhooksListProps {
   params: WebhooksListUrlQueryParams;
 }
 
-export const WebhooksList: React.StatelessComponent<WebhooksListProps> = ({
-  params
-}) => {
+export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
   const notify = useNotifier();

@@ -64,7 +64,7 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
           name: "events",
           value: event.target.value ? WebhookEventTypeEnum.ANY_EVENTS : []
         }
-      } as any)
+      })
     );
 
   const handleEventsChange = (event: ChangeEvent) => {
@@ -75,7 +75,7 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
           ? data.events.concat([event.target.name])
           : data.events.filter(events => events !== event.target.name)
       }
-    } as any);
+    });
   };
 
   return (
@@ -104,19 +104,17 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
         {!data.allEvents && (
           <>
             <Hr />
-            {eventsEnum.slice(1).map(event => {
-              return (
-                <div key={event}>
-                  <ControlledCheckbox
-                    checked={data.events.includes(event)}
-                    disabled={disabled}
-                    label={translatedEvents[event]}
-                    name={event}
-                    onChange={handleEventsChange}
-                  />
-                </div>
-              );
-            })}
+            {eventsEnum.slice(1).map(event => (
+              <div key={event}>
+                <ControlledCheckbox
+                  checked={data.events.includes(event)}
+                  disabled={disabled}
+                  label={translatedEvents[event]}
+                  name={event}
+                  onChange={handleEventsChange}
+                />
+              </div>
+            ))}
           </>
         )}
       </CardContent>
