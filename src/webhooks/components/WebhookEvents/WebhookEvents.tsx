@@ -5,7 +5,6 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { translatedWebhookEvents } from "@saleor/misc";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -26,7 +25,37 @@ const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
 }) => {
   const intl = useIntl();
   const eventsEnum = Object.values(WebhookEventTypeEnum);
-  const translatedEvents = translatedWebhookEvents(intl);
+
+  const translatedEvents = {
+    [WebhookEventTypeEnum.ANY_EVENTS]: intl.formatMessage({
+      defaultMessage: "Any events",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.CUSTOMER_CREATED]: intl.formatMessage({
+      defaultMessage: "Customer created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.ORDER_CANCELLED]: intl.formatMessage({
+      defaultMessage: "Order cancelled",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.ORDER_CREATED]: intl.formatMessage({
+      defaultMessage: "Order created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.ORDER_FULLY_PAID]: intl.formatMessage({
+      defaultMessage: "Order fully paid",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.ORDER_UPDATED]: intl.formatMessage({
+      defaultMessage: "Order updated",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PRODUCT_CREATED]: intl.formatMessage({
+      defaultMessage: "Product created",
+      description: "event"
+    })
+  };
 
   const handleAllEventsChange = (event: ChangeEvent) =>
     onChange(event, () =>

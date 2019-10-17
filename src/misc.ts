@@ -334,61 +334,6 @@ export const translatedTaxRates = (intl: IntlShape) => ({
   [TaxRateType.WATER]: intl.formatMessage(taxRatesMessages.water)
 });
 
-const webhooksEventMessages = defineMessages({
-  anyEvents: {
-    defaultMessage: "Any events",
-    description: "event"
-  },
-  customerCreated: {
-    defaultMessage: "Customer created",
-    description: "event"
-  },
-  orderCancelled: {
-    defaultMessage: "Order cancelled",
-    description: "event"
-  },
-  orderCreated: {
-    defaultMessage: "Order created",
-    description: "event"
-  },
-  orderFullyPaid: {
-    defaultMessage: "Order fully paid",
-    description: "event"
-  },
-  orderUpdated: {
-    defaultMessage: "Order updated",
-    description: "event"
-  },
-  productCreated: {
-    defaultMessage: "Product created",
-    description: "event"
-  }
-});
-
-export const translatedWebhookEvents = (intl: IntlShape) => ({
-  [WebhookEventTypeEnum.ANY_EVENTS]: intl.formatMessage(
-    webhooksEventMessages.anyEvents
-  ),
-  [WebhookEventTypeEnum.CUSTOMER_CREATED]: intl.formatMessage(
-    webhooksEventMessages.customerCreated
-  ),
-  [WebhookEventTypeEnum.ORDER_CANCELLED]: intl.formatMessage(
-    webhooksEventMessages.orderCancelled
-  ),
-  [WebhookEventTypeEnum.ORDER_CREATED]: intl.formatMessage(
-    webhooksEventMessages.orderCreated
-  ),
-  [WebhookEventTypeEnum.ORDER_FULLY_PAID]: intl.formatMessage(
-    webhooksEventMessages.orderFullyPaid
-  ),
-  [WebhookEventTypeEnum.ORDER_UPDATED]: intl.formatMessage(
-    webhooksEventMessages.orderUpdated
-  ),
-  [WebhookEventTypeEnum.PRODUCT_CREATED]: intl.formatMessage(
-    webhooksEventMessages.productCreated
-  )
-});
-
 export const authorizationKeyTypes = {
   [AuthorizationKeyType.FACEBOOK]: "Facebook",
   [AuthorizationKeyType.GOOGLE_OAUTH2]: "Google OAuth2"
