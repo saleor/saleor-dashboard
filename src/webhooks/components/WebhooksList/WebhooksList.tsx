@@ -33,11 +33,21 @@ const useStyles = makeStyles((theme: Theme) => ({
       textAlign: "right"
     },
     colActive: {},
-    colName: {}
+    colName: {
+      "&&": {
+        width: "auto"
+      }
+    }
   },
   colAction: {},
   colActive: {},
-  colName: {},
+  colName: {
+    paddingLeft: 0,
+    width: 250
+  },
+  table: {
+    tableLayout: "fixed"
+  },
   tableRow: {
     cursor: "pointer"
   }
@@ -60,7 +70,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
   const classes = useStyles({});
   return (
     <Card>
-      <Table>
+      <Table className={classes.table}>
         <TableHead>
           <TableRow>
             <TableCell className={classes.colName} padding="dense">
