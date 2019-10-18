@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import { Locale, localeNames } from "@saleor/components/Locale";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
+import { capitalize } from "@saleor/misc";
 
 interface StaffPreferencesProps {
   locale: Locale;
@@ -29,7 +30,7 @@ const StaffPreferences: React.StatelessComponent<StaffPreferencesProps> = ({
       <CardContent>
         <SingleAutocompleteSelectField
           choices={Object.values(Locale).map(locale => ({
-            label: localeNames[locale],
+            label: capitalize(localeNames[locale]),
             value: locale
           }))}
           displayValue={localeNames[locale]}
