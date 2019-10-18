@@ -6,9 +6,9 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
+import { toggle } from "@saleor/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
-import { toggle } from "@saleor/utils/lists";
 
 interface WebhookEventsProps {
   data: {
