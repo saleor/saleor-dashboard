@@ -5,7 +5,7 @@ import TopLevelSearch from "../TopLevelSearch";
 import {
   SearchServiceAccount,
   SearchServiceAccountVariables
-} from "./types/searchServiceAccount";
+} from "./types/SearchServiceAccount";
 
 export const searchServiceAccount = gql`
   ${pageInfoFragment}
