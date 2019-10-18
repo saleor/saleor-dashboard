@@ -10,12 +10,12 @@ import { SearchServiceAccount_search_edges_node } from "@saleor/containers/Searc
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { UserError } from "@saleor/types";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
+import { WebhookCreate_webhookCreate_webhookErrors } from "@saleor/webhooks/types/WebhookCreate";
 import { WebhookDetails_webhook } from "@saleor/webhooks/types/WebhookDetails";
 
 import React from "react";
@@ -34,7 +34,7 @@ export interface FormData {
 
 export interface WebhooksDetailsPageProps {
   disabled: boolean;
-  errors: UserError[];
+  errors: WebhookCreate_webhookCreate_webhookErrors[];
   webhook: WebhookDetails_webhook;
   services?: SearchServiceAccount_search_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -46,7 +46,7 @@ export interface WebhooksDetailsPageProps {
 
 const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
   disabled,
-  errors,
+  errors: apiErrors,
   webhook,
   saveButtonBarState,
   services,
@@ -83,7 +83,7 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
     []
   );
   return (
-    <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
+    <Form errors={apiErrors} initial={initialForm} onSubmit={onSubmit}>
       {({ data, errors, hasChanged, submit, change }) => {
         const handleServiceSelect = createSingleAutocompleteSelectHandler(
           change,
@@ -109,6 +109,7 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
             <Grid>
               <div>
                 <WebhookInfo
+                  apiErrors={apiErrors}
                   data={data}
                   disabled={disabled}
                   serviceDisplayValue={selectedServiceAcccounts}

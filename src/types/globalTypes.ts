@@ -286,6 +286,14 @@ export enum VoucherTypeEnum {
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }
 
+export enum WebhookErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum WebhookEventTypeEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",

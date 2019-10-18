@@ -9,12 +9,12 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { SearchServiceAccount_search_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { UserError } from "@saleor/types";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
+import { WebhookCreate_webhookCreate_webhookErrors } from "@saleor/webhooks/types/WebhookCreate";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -31,7 +31,7 @@ export interface FormData {
 
 export interface WebhookCreatePageProps {
   disabled: boolean;
-  errors: UserError[];
+  errors: WebhookCreate_webhookCreate_webhookErrors[];
   services?: SearchServiceAccount_search_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchServiceAccounts: (data: string) => void;
@@ -39,9 +39,9 @@ export interface WebhookCreatePageProps {
   onSubmit: (data: FormData) => void;
 }
 
-const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
+const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
   disabled,
-  errors,
+  errors: apiErrors,
   saveButtonBarState,
   services,
   fetchServiceAccounts,
@@ -72,7 +72,7 @@ const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
   );
 
   return (
-    <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
+    <Form errors={apiErrors} initial={initialForm} onSubmit={onSubmit}>
       {({ data, errors, hasChanged, submit, change }) => {
         const handleServiceSelect = createSingleAutocompleteSelectHandler(
           change,
@@ -98,6 +98,7 @@ const WebhookCreatePage: React.StatelessComponent<WebhookCreatePageProps> = ({
                   serviceDisplayValue={selectedServiceAcccount}
                   services={servicesChoiceList}
                   fetchServiceAccounts={fetchServiceAccounts}
+                  apiErrors={apiErrors}
                   errors={errors}
                   serviceOnChange={handleServiceSelect}
                   onChange={change}

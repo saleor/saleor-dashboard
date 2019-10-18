@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "@saleor/storybook/Decorator";
-import { formError } from "@saleor/storybook/misc";
+import { WebhookErrorCode } from "@saleor/types/globalTypes";
 import WebhooksDetailsPage, {
   WebhooksDetailsPageProps
 } from "./WebhooksDetailsPage";
@@ -32,6 +32,15 @@ storiesOf("Views / Webhooks / Webhook details", module)
   .add("form errors", () => (
     <WebhooksDetailsPage
       {...props}
-      errors={["name"].map(field => formError(field))}
+      errors={[
+        {
+          code: WebhookErrorCode.INVALID,
+          field: null
+        }
+      ].map(error => ({
+        __typename: "WebhookError",
+        message: "Generic form error",
+        ...error
+      }))}
     />
   ));

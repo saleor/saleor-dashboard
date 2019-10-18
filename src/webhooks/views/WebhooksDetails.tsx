@@ -63,7 +63,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
   };
 
   const onWebhookUpdate = (data: WebhookUpdate) => {
-    if (data.webhookUpdate.errors.length === 0) {
+    if (data.webhookUpdate.webhookErrors.length === 0) {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
       });
@@ -83,7 +83,9 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                     const formTransitionState = getMutationState(
                       webhookUpdateOpts.called,
                       webhookUpdateOpts.loading,
-                      maybe(() => webhookUpdateOpts.data.webhookUpdate.errors)
+                      maybe(
+                        () => webhookUpdateOpts.data.webhookUpdate.webhookErrors
+                      )
                     );
 
                     const handleRemoveConfirm = () =>
@@ -94,7 +96,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                       });
 
                     const formErrors = maybe(
-                      () => webhookUpdateOpts.data.webhookUpdate.errors,
+                      () => webhookUpdateOpts.data.webhookUpdate.webhookErrors,
                       []
                     );
 

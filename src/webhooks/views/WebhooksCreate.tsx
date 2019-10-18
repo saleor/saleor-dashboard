@@ -30,7 +30,7 @@ export const WebhooksCreate: React.StatelessComponent<
   const intl = useIntl();
 
   const onSubmit = (data: WebhookCreateData) => {
-    if (data.webhookCreate.errors.length === 0) {
+    if (data.webhookCreate.webhookErrors.length === 0) {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
       });
@@ -64,7 +64,7 @@ export const WebhooksCreate: React.StatelessComponent<
             const formTransitionState = getMutationState(
               webhookCreateOpts.called,
               webhookCreateOpts.loading,
-              maybe(() => webhookCreateOpts.data.webhookCreate.errors)
+              maybe(() => webhookCreateOpts.data.webhookCreate.webhookErrors)
             );
 
             return (
@@ -78,7 +78,7 @@ export const WebhooksCreate: React.StatelessComponent<
                 <WebhookCreatePage
                   disabled={false}
                   errors={maybe(
-                    () => webhookCreateOpts.data.webhookCreate.errors,
+                    () => webhookCreateOpts.data.webhookCreate.webhookErrors,
                     []
                   )}
                   fetchServiceAccounts={searchServiceAccount}

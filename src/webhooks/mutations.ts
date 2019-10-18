@@ -14,6 +14,11 @@ const webhookCreate = gql`
         field
         message
       }
+      webhookErrors {
+        code
+        message
+        field
+      }
       webhook {
         ...WebhooksDetailsFragment
       }
@@ -32,6 +37,11 @@ const webhookUpdate = gql`
       errors {
         field
         message
+      }
+      webhookErrors {
+        code
+        message
+        field
       }
       webhook {
         ...WebhooksDetailsFragment
