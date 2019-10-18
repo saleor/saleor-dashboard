@@ -62,7 +62,7 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
   function translateErrors(intl: IntlShape) {
     return {
       [WebhookErrorCode.INVALID]: intl.formatMessage({
-        defaultMessage: "Missing token or serviceAccount",
+        defaultMessage: "Missing service account",
         description: "webhook service account error"
       })
     };
@@ -112,7 +112,7 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
           helperText={
             serviceAccountsError &&
             intl.formatMessage({
-              defaultMessage: "Missing token or serviceAccount",
+              defaultMessage: "Missing service account",
               description: "webhook service account error"
             })
           }
