@@ -47,6 +47,9 @@ export const commonMessages = defineMessages({
   properties: {
     defaultMessage: "Properties"
   },
+  requiredField: {
+    defaultMessage: "This field is required"
+  },
   savedChanges: {
     defaultMessage: "Saved changes"
   },

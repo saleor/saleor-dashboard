@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -15,7 +15,6 @@ import SingleAutocompleteSelectField, {
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { FormErrors } from "@saleor/types";
-import { WebhookErrorCode } from "@saleor/types/globalTypes";
 import { WebhookCreate_webhookCreate_webhookErrors } from "@saleor/webhooks/types/WebhookCreate";
 import { FormData } from "../WebhooksDetailsPage";
 
@@ -55,18 +54,8 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const translatedErrors = translateErrors(intl);
   const serviceAccountsError =
     apiErrors.filter(error => error.field === null).length > 0;
-
-  function translateErrors(intl: IntlShape) {
-    return {
-      [WebhookErrorCode.INVALID]: intl.formatMessage({
-        defaultMessage: "Missing service account",
-        description: "webhook service account error"
-      })
-    };
-  }
 
   return (
     <Card>
@@ -111,10 +100,7 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
           error={serviceAccountsError}
           helperText={
             serviceAccountsError &&
-            intl.formatMessage({
-              defaultMessage: "Missing service account",
-              description: "webhook service account error"
-            })
+            intl.formatMessage(commonMessages.requiredField)
           }
           name="serviceAccount"
           onChange={serviceOnChange}
@@ -160,18 +146,6 @@ const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
           value={data.secretKey}
           onChange={onChange}
         />
-        {apiErrors.length > 0 && (
-          <>
-            <FormSpacer />
-            {apiErrors
-              .filter(error => error.field === null)
-              .map(error => (
-                <Typography color="error" key={error.code}>
-                  {translatedErrors[error.code]}
-                </Typography>
-              ))}
-          </>
-        )}
       </CardContent>
     </Card>
   );
