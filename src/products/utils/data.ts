@@ -93,17 +93,17 @@ export function getAttributeInputFromProductType(
 }
 
 export function getAttributeInputFromVariant(
-  product: ProductVariant
+  variant: ProductVariant
 ): VariantAttributeInput[] {
   return maybe(
     (): VariantAttributeInput[] =>
-      product.attributes.map(attribute => ({
+      variant.attributes.map(attribute => ({
         data: {
           values: attribute.attribute.values
         },
         id: attribute.attribute.id,
         label: attribute.attribute.name,
-        value: attribute.value.slug
+        value: maybe(() => attribute.value.slug, null)
       })),
     []
   );
