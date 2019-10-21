@@ -17,6 +17,9 @@ export const shopFragment = gql`
       code
       country
     }
+    customerSetPasswordUrl
+    defaultMailSenderAddress
+    defaultMailSenderName
     description
     domain {
       host

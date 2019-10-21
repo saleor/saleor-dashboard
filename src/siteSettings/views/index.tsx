@@ -142,6 +142,10 @@ export const SiteSettings: React.StatelessComponent<SiteSettingsProps> = ({
                             name: data.name
                           },
                           shopSettingsInput: {
+                            customerSetPasswordUrl: data.customerSetPasswordUrl,
+                            defaultMailSenderAddress:
+                              data.defaultMailSenderAddress,
+                            defaultMailSenderName: data.defaultMailSenderName,
                             description: data.description
                           }
                         }

@@ -15,12 +15,14 @@ import { FormErrors } from "@saleor/types";
 export interface SiteSettingsMailingFormData {
   defaultMailSenderName: string;
   defaultMailSenderAddress: string;
-  passwordResetUrl: string;
+  customerSetPasswordUrl: string;
 }
 interface SiteSettingsMailingProps {
   data: SiteSettingsMailingFormData;
   errors: FormErrors<
-    "defaultMailSenderAddress" | "defaultMailSenderName" | "passwordResetUrl"
+    | "defaultMailSenderAddress"
+    | "defaultMailSenderName"
+    | "customerSetPasswordUrl"
   >;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -82,7 +84,7 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
           disabled={disabled}
           error={!!errors.defaultMailSenderName}
           fullWidth
-          name="defaultMailSenderAddress"
+          name="defaultMailSenderName"
           label={intl.formatMessage({
             defaultMessage: "Mailing email sender"
           })}
@@ -93,7 +95,7 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
               description: "email sender"
             })
           }
-          value={data.defaultMailSenderAddress}
+          value={data.defaultMailSenderName}
           onChange={onChange}
         />
         <FormSpacer />
@@ -101,20 +103,20 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!errors.passwordResetUrl}
+          error={!!errors.customerSetPasswordUrl}
           fullWidth
-          name="passwordResetUrl"
+          name="customerSetPasswordUrl"
           label={intl.formatMessage({
             defaultMessage: "URL address"
           })}
           helperText={
-            errors.passwordResetUrl ||
+            errors.customerSetPasswordUrl ||
             intl.formatMessage({
               defaultMessage:
                 "This URL will be used as a main URL for password resets. It will be sent via email."
             })
           }
-          value={data.passwordResetUrl}
+          value={data.customerSetPasswordUrl}
           onChange={onChange}
         />
       </CardContent>

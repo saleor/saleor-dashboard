@@ -86,18 +86,24 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     maybe(() => shop.companyAddress.country.code, "")
   );
 
-  const initialForm: SiteSettingsPageFormData = {
+  const initialFormAddress: SiteSettingsPageAddressFormData = {
     city: maybe(() => shop.companyAddress.city, ""),
     companyName: maybe(() => shop.companyAddress.companyName, ""),
     country: maybe(() => shop.companyAddress.country.code, ""),
     countryArea: maybe(() => shop.companyAddress.countryArea, ""),
-    description: maybe(() => shop.description, ""),
-    domain: maybe(() => shop.domain.host, ""),
-    name: maybe(() => shop.name, ""),
     phone: maybe(() => shop.companyAddress.phone, ""),
     postalCode: maybe(() => shop.companyAddress.postalCode, ""),
     streetAddress1: maybe(() => shop.companyAddress.streetAddress1, ""),
     streetAddress2: maybe(() => shop.companyAddress.streetAddress2, "")
+  };
+  const initialForm: SiteSettingsPageFormData = {
+    ...initialFormAddress,
+    customerSetPasswordUrl: maybe(() => shop.customerSetPasswordUrl, ""),
+    defaultMailSenderAddress: maybe(() => shop.defaultMailSenderAddress, ""),
+    defaultMailSenderName: maybe(() => shop.defaultMailSenderName, ""),
+    description: maybe(() => shop.description, ""),
+    domain: maybe(() => shop.domain.host, ""),
+    name: maybe(() => shop.name, "")
   };
 
   return (
