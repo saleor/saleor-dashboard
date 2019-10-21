@@ -23,7 +23,9 @@ import { SiteSettings_shop } from "../../types/SiteSettings";
 import SiteSettingsAddress from "../SiteSettingsAddress/SiteSettingsAddress";
 import SiteSettingsDetails from "../SiteSettingsDetails/SiteSettingsDetails";
 import SiteSettingsKeys from "../SiteSettingsKeys/SiteSettingsKeys";
-import SiteSettingsMailing from "../SiteSettingsMailing";
+import SiteSettingsMailing, {
+  SiteSettingsMailingFormData
+} from "../SiteSettingsMailing";
 
 export interface SiteSettingsPageAddressFormData {
   city: string;
@@ -37,12 +39,11 @@ export interface SiteSettingsPageAddressFormData {
 }
 
 export interface SiteSettingsPageFormData
-  extends SiteSettingsPageAddressFormData {
+  extends SiteSettingsPageAddressFormData,
+    SiteSettingsMailingFormData {
   description: string;
   domain: string;
-  email: string;
   name: string;
-  passwordResetUrl: string;
 }
 
 export interface SiteSettingsPageProps {

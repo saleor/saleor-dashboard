@@ -11,11 +11,17 @@ import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { FormErrors } from "@saleor/types";
-import { SiteSettingsPageFormData } from "../SiteSettingsPage";
 
+export interface SiteSettingsMailingFormData {
+  defaultMailSenderName: string;
+  defaultMailSenderAddress: string;
+  passwordResetUrl: string;
+}
 interface SiteSettingsMailingProps {
-  data: SiteSettingsPageFormData;
-  errors: FormErrors<"email" | "passwordResetUrl">;
+  data: SiteSettingsMailingFormData;
+  errors: FormErrors<
+    "defaultMailSenderAddress" | "defaultMailSenderName" | "passwordResetUrl"
+  >;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -61,14 +67,33 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
         </Typography>
         <TextField
           disabled={disabled}
-          error={!!errors.email}
+          error={!!errors.defaultMailSenderAddress}
           fullWidth
-          name="email"
+          name="defaultMailSenderAddress"
           label={intl.formatMessage({
             defaultMessage: "Mailing email address"
           })}
-          helperText={errors.email}
-          value={data.name}
+          helperText={errors.defaultMailSenderAddress}
+          value={data.defaultMailSenderAddress}
+          onChange={onChange}
+        />
+        <FormSpacer />
+        <TextField
+          disabled={disabled}
+          error={!!errors.defaultMailSenderName}
+          fullWidth
+          name="defaultMailSenderAddress"
+          label={intl.formatMessage({
+            defaultMessage: "Mailing email sender"
+          })}
+          helperText={
+            errors.defaultMailSenderName ||
+            intl.formatMessage({
+              defaultMessage: 'This will be visible as "from" name',
+              description: "email sender"
+            })
+          }
+          value={data.defaultMailSenderAddress}
           onChange={onChange}
         />
         <FormSpacer />
@@ -89,7 +114,7 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
                 "This URL will be used as a main URL for password resets. It will be sent via email."
             })
           }
-          value={data.domain}
+          value={data.passwordResetUrl}
           onChange={onChange}
         />
       </CardContent>
