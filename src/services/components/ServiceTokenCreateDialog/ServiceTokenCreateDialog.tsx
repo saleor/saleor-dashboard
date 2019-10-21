@@ -134,7 +134,7 @@ const ServiceTokenCreateDialog: React.FC<
                     color="primary"
                     onClick={onClose}
                   >
-                    <FormattedMessage {...buttonMessages.cancel} />
+                    <FormattedMessage {...buttonMessages.back} />
                   </Button>
                   <ConfirmButton
                     transitionState={confirmButtonState}
