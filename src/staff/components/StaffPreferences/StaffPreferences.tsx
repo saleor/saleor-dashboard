@@ -1,9 +1,11 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
+import FormSpacer from "@saleor/components/FormSpacer";
 import { Locale, localeNames } from "@saleor/components/Locale";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import { capitalize } from "@saleor/misc";
@@ -13,7 +15,7 @@ interface StaffPreferencesProps {
   onLocaleChange: (locale: Locale) => void;
 }
 
-const StaffPreferences: React.StatelessComponent<StaffPreferencesProps> = ({
+const StaffPreferences: React.FC<StaffPreferencesProps> = ({
   locale,
   onLocaleChange
 }) => {
@@ -45,6 +47,10 @@ const StaffPreferences: React.StatelessComponent<StaffPreferencesProps> = ({
           value={locale}
           onChange={event => onLocaleChange(event.target.value)}
         />
+        <FormSpacer />
+        <Typography>
+          <FormattedMessage defaultMessage="Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion." />
+        </Typography>
       </CardContent>
     </Card>
   );

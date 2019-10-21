@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-17T11:58:34.974Z\n"
+"POT-Creation-Date: 2019-10-21T12:10:02.976Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -43,8 +43,8 @@ msgctxt "description"
 msgid "Access token is used to authenticate service accounts"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.accommodation] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.1040021611] - tax rate
 #. defaultMessage is:
 #. Accommodation
 msgctxt "tax rate"
@@ -77,6 +77,10 @@ msgstr ""
 
 #: build/locale/src/plugins/components/PluginsList/PluginsList.json
 #. [src.plugins.components.PluginsList.4120604650] - user action bar
+#. defaultMessage is:
+#. Action
+#: build/locale/src/webhooks/components/WebhooksList/WebhooksList.json
+#. [src.webhooks.components.WebhooksList.4120604650] - user action bar
 #. defaultMessage is:
 #. Action
 msgctxt "user action bar"
@@ -451,40 +455,40 @@ msgctxt "attribute values list: slug column header"
 msgid "Admin"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.admissionToCulturalEvents] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2185495435] - tax rate
 #. defaultMessage is:
 #. Admission to cultural events
 msgctxt "tax rate"
 msgid "Admission to cultural events"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.admissionToEntertainmentEvents] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2557534380] - tax rate
 #. defaultMessage is:
 #. Admission to entertainment events
 msgctxt "tax rate"
 msgid "Admission to entertainment events"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.admissionToSportingEvents] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2616794607] - tax rate
 #. defaultMessage is:
 #. Admission to sporting events
 msgctxt "tax rate"
 msgid "Admission to sporting events"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.advertising] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.3911019760] - tax rate
 #. defaultMessage is:
 #. Advertising
 msgctxt "tax rate"
 msgid "Advertising"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.agriculturalSupplies] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2465450918] - tax rate
 #. defaultMessage is:
 #. Agricultural supplies
 msgctxt "tax rate"
@@ -603,6 +607,14 @@ msgctxt "tab name"
 msgid "All Vouchers"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhooksListPage/WebhooksListPage.json
+#. [src.webhooks.components.WebhooksListPage.3300314452] - tab name
+#. defaultMessage is:
+#. All Webhooks
+msgctxt "tab name"
+msgid "All Webhooks"
+msgstr ""
+
 #: build/locale/src/taxes/components/TaxConfiguration/TaxConfiguration.json
 #. [src.taxes.components.TaxConfiguration.142803418]
 #. defaultMessage is:
@@ -641,6 +653,14 @@ msgstr ""
 #. Anonymous user
 msgctxt "description"
 msgid "Anonymous user"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.3053363669] - event
+#. defaultMessage is:
+#. Any events
+msgctxt "event"
+msgid "Any events"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherSummary/VoucherSummary.json
@@ -1011,6 +1031,14 @@ msgctxt "delete shipping zone"
 msgid "Are you sure you want to delete {name}?"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookDeleteDialog/WebhookDeleteDialog.json
+#. [src.webhooks.components.WebhookDeleteDialog.2297471173] - delete webhook
+#. defaultMessage is:
+#. Are you sure you want to delete {name}?
+msgctxt "delete webhook"
+msgid "Are you sure you want to delete {name}?"
+msgstr ""
+
 #: build/locale/src/discounts/views/SaleDetails.json
 #. [src.discounts.views.1457489953] - dialog content
 #. defaultMessage is:
@@ -1307,6 +1335,14 @@ msgctxt "button"
 msgid "Assign products"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookInfo/WebhookInfo.json
+#. [src.webhooks.components.WebhookInfo.819389696]
+#. defaultMessage is:
+#. Assign to Service Account
+msgctxt "description"
+msgid "Assign to Service Account"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
 #. [src.attributes.components.AttributeValues.351422234] - assign attribute value button
 #. defaultMessage is:
@@ -1487,8 +1523,8 @@ msgctxt "filter products by stock"
 msgid "Available"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.babyFoodstuffs] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2201910191] - tax rate
 #. defaultMessage is:
 #. Baby foodstuffs
 msgctxt "tax rate"
@@ -1531,8 +1567,8 @@ msgctxt "section header"
 msgid "Background Image (optional)"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.bikes] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.1323923780] - tax rate
 #. defaultMessage is:
 #. Bikes
 msgctxt "tax rate"
@@ -1555,8 +1591,8 @@ msgctxt "description"
 msgid "Billing Address"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.books] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2394675125] - tax rate
 #. defaultMessage is:
 #. Books
 msgctxt "tax rate"
@@ -1803,8 +1839,8 @@ msgctxt "description"
 msgid "Charge taxes on shipping rates"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.childrensClothing] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2584490289] - tax rate
 #. defaultMessage is:
 #. Children's clothing
 msgctxt "tax rate"
@@ -2383,6 +2419,22 @@ msgctxt "page header"
 msgid "Create Voucher"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookCreatePage/WebhookCreatePage.json
+#. [src.webhooks.components.WebhookCreatePage.3493926696] - header
+#. defaultMessage is:
+#. Create Webhook
+msgctxt "header"
+msgid "Create Webhook"
+msgstr ""
+
+#: build/locale/src/webhooks/views/WebhooksCreate.json
+#. [src.webhooks.views.3493926696] - window title
+#. defaultMessage is:
+#. Create Webhook
+msgctxt "window title"
+msgid "Create Webhook"
+msgstr ""
+
 #: build/locale/src/services/components/ServiceListPage/ServiceListPage.json
 #. [src.services.components.ServiceListPage.624280156] - button
 #. defaultMessage is:
@@ -2527,6 +2579,14 @@ msgctxt "button"
 msgid "Create voucher"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhooksListPage/WebhooksListPage.json
+#. [src.webhooks.components.WebhooksListPage.2295583901] - button
+#. defaultMessage is:
+#. Create webhook
+msgctxt "button"
+msgid "Create webhook"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionCreate.json
 #. [src.collections.views.1597339737]
 #. defaultMessage is:
@@ -2644,6 +2704,14 @@ msgstr ""
 #. defaultMessage is:
 #. Customer created
 msgctxt "description"
+msgid "Customer created"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.3970234993] - event
+#. defaultMessage is:
+#. Customer created
+msgctxt "event"
 msgid "Customer created"
 msgstr ""
 
@@ -3059,6 +3127,14 @@ msgctxt "dialog header"
 msgid "Delete Vouchers"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookDeleteDialog/WebhookDeleteDialog.json
+#. [src.webhooks.components.WebhookDeleteDialog.3514087611] - dialog header
+#. defaultMessage is:
+#. Delete Webhook
+msgctxt "dialog header"
+msgid "Delete Webhook"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeDeleteDialog/AttributeDeleteDialog.json
 #. [src.attributes.components.AttributeDeleteDialog.1889602489] - dialog title
 #. defaultMessage is:
@@ -3287,16 +3363,16 @@ msgctxt "description"
 msgid "Discounts"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.domesticFuel] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.3500730003] - tax rate
 #. defaultMessage is:
 #. Domestic fuel
 msgctxt "tax rate"
 msgid "Domestic fuel"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.domesticServices] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.231341634] - tax rate
 #. defaultMessage is:
 #. Domestic services
 msgctxt "tax rate"
@@ -3375,8 +3451,8 @@ msgctxt "product attribute type"
 msgid "Dropdown"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.ebooks] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.331757068] - tax rate
 #. defaultMessage is:
 #. E-books
 msgctxt "tax rate"
@@ -3583,6 +3659,14 @@ msgctxt "description"
 msgid "Error"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.1436364351] - section header
+#. defaultMessage is:
+#. Events
+msgctxt "section header"
+msgid "Events"
+msgstr ""
+
 #: build/locale/src/components/AccountPermissions/AccountPermissions.json
 #. [src.components.AccountPermissions.3639008725]
 #. defaultMessage is:
@@ -3597,6 +3681,14 @@ msgstr ""
 #. Expand or restrict user’s permissions to access certain part of saleor system.
 msgctxt "description"
 msgid "Expand or restrict user’s permissions to access certain part of saleor system."
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.3051538277] - webhook events
+#. defaultMessage is:
+#. Expand or restrict webhooks permissions to register certain events in Saleor system.
+msgctxt "webhook events"
+msgid "Expand or restrict webhooks permissions to register certain events in Saleor system."
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionDetailsPage/CollectionDetailsPage.json
@@ -3683,8 +3775,8 @@ msgctxt "voucher discount type"
 msgid "Fixed Amount"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.foodstuffs] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2332795012] - tax rate
 #. defaultMessage is:
 #. Foodstuffs
 msgctxt "tax rate"
@@ -3903,8 +3995,8 @@ msgctxt "home section name"
 msgid "Home"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.hotels] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.331632763] - tax rate
 #. defaultMessage is:
 #. Hotels
 msgctxt "tax rate"
@@ -3965,6 +4057,14 @@ msgstr ""
 #. If you want to disable this account uncheck the box below
 msgctxt "description"
 msgid "If you want to disable this account uncheck the box below"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookStatus/WebhookStatus.json
+#. [src.webhooks.components.WebhookStatus.313090629] - webhook active
+#. defaultMessage is:
+#. If you want to disable this webhook please uncheck the box below.
+msgctxt "webhook active"
+msgid "If you want to disable this webhook please uncheck the box below."
 msgstr ""
 
 #: build/locale/src/products/components/ProductVariantImageSelectDialog/ProductVariantImageSelectDialog.json
@@ -4323,8 +4423,8 @@ msgctxt "description"
 msgid "Maximal Order Weight"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.medical] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2948462144] - tax rate
 #. defaultMessage is:
 #. Medical
 msgctxt "tax rate"
@@ -4547,6 +4647,14 @@ msgctxt "entity (product, collection, shipping method) name"
 msgid "Name"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhooksList/WebhooksList.json
+#. [src.webhooks.components.WebhooksList.636461959] - webhook name
+#. defaultMessage is:
+#. Name
+msgctxt "webhook name"
+msgid "Name"
+msgstr ""
+
 #: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
 #. [src.siteSettings.components.SiteSettingsDetails.2286355060]
 #. defaultMessage is:
@@ -4595,8 +4703,8 @@ msgctxt "variant name"
 msgid "New Variant"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.newspapers] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.1451721797] - tax rate
 #. defaultMessage is:
 #. Newspapers
 msgctxt "tax rate"
@@ -4999,6 +5107,14 @@ msgctxt "description"
 msgid "No vouchers found"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhooksList/WebhooksList.json
+#. [src.webhooks.components.WebhooksList.1153324159]
+#. defaultMessage is:
+#. No webhooks found
+msgctxt "description"
+msgid "No webhooks found"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
 #. [src.customers.components.CustomerOrders.2889196282] - number of order
 #. defaultMessage is:
@@ -5271,12 +5387,28 @@ msgctxt "order history message"
 msgid "Order address was updated"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.3617444329] - event
+#. defaultMessage is:
+#. Order cancelled
+msgctxt "event"
+msgid "Order cancelled"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
 #. [src.orders.components.OrderHistory.2369495522] - order history message
 #. defaultMessage is:
 #. Order confirmation was sent to customer
 msgctxt "order history message"
 msgid "Order confirmation was sent to customer"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.3400883706] - event
+#. defaultMessage is:
+#. Order created
+msgctxt "event"
+msgid "Order created"
 msgstr ""
 
 #: build/locale/src/orders/views/OrderDraftList/OrderDraftList.json
@@ -5289,6 +5421,14 @@ msgstr ""
 #. Order draft succesfully created
 msgctxt "description"
 msgid "Order draft succesfully created"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.3345061702] - event
+#. defaultMessage is:
+#. Order fully paid
+msgctxt "event"
+msgid "Order fully paid"
 msgstr ""
 
 #: build/locale/src/orders/views/OrderDetails/OrderDetailsMessages.json
@@ -5345,6 +5485,14 @@ msgstr ""
 #. Order successfully updated
 msgctxt "description"
 msgid "Order successfully updated"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.1606361075] - event
+#. defaultMessage is:
+#. Order updated
+msgctxt "event"
+msgid "Order updated"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
@@ -5515,8 +5663,8 @@ msgctxt "payment status"
 msgid "Partially refunded"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.passengerTransport] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2553129615] - tax rate
 #. defaultMessage is:
 #. Passenger transport
 msgctxt "tax rate"
@@ -5655,8 +5803,8 @@ msgctxt "description"
 msgid "Permissions"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.pharmaceuticals] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.815189256] - tax rate
 #. defaultMessage is:
 #. Pharmaceuticals
 msgctxt "tax rate"
@@ -5697,6 +5845,14 @@ msgstr ""
 #. Physical
 msgctxt "product type"
 msgid "Physical"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPreferences/StaffPreferences.json
+#. [src.staff.components.StaffPreferences.2162129531]
+#. defaultMessage is:
+#. Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion.
+msgctxt "description"
+msgid "Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
 msgstr ""
 
 #: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
@@ -6043,6 +6199,14 @@ msgctxt "description"
 msgid "Product created"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.2899821092] - event
+#. defaultMessage is:
+#. Product created
+msgctxt "event"
+msgid "Product created"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderFulfillmentDialog/OrderFulfillmentDialog.json
 #. [src.orders.components.OrderFulfillmentDialog.4046223826]
 #. defaultMessage is:
@@ -6163,8 +6327,8 @@ msgctxt "description"
 msgid "Properties"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.propertyRenovations] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.4199760668] - tax rate
 #. defaultMessage is:
 #. Property renovations
 msgctxt "tax rate"
@@ -6515,8 +6679,8 @@ msgctxt "description"
 msgid "Rest of the World"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.restaurants] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.776474251] - tax rate
 #. defaultMessage is:
 #. Restaurants
 msgctxt "tax rate"
@@ -6915,6 +7079,14 @@ msgctxt "description"
 msgid "Search Voucher"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhooksListPage/WebhooksListPage.json
+#. [src.webhooks.components.WebhooksListPage.1432828311]
+#. defaultMessage is:
+#. Search Webhooks
+msgctxt "description"
+msgid "Search Webhooks"
+msgstr ""
+
 #: build/locale/src/productTypes/components/AssignAttributeDialog/AssignAttributeDialog.json
 #. [src.productTypes.components.AssignAttributeDialog.524117994]
 #. defaultMessage is:
@@ -6989,6 +7161,14 @@ msgstr ""
 #. Searchable
 msgctxt "attribute can be searched in dashboard"
 msgid "Searchable"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookInfo/WebhookInfo.json
+#. [src.webhooks.components.WebhookInfo.3995417850] - webhook
+#. defaultMessage is:
+#. Secrect Key
+msgctxt "webhook"
+msgid "Secrect Key"
 msgstr ""
 
 #: build/locale/src/components/Filter/FilterContent.json
@@ -7081,6 +7261,14 @@ msgstr ""
 #. Send invite
 msgctxt "button"
 msgid "Send invite"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhooksList/WebhooksList.json
+#. [src.webhooks.components.WebhooksList.2487865635] - webhook service account
+#. defaultMessage is:
+#. Service Account
+msgctxt "webhook service account"
+msgid "Service Account"
 msgstr ""
 
 #: build/locale/src/services/components/ServiceInfo/ServiceInfo.json
@@ -7347,8 +7535,8 @@ msgctxt "attribute internal name"
 msgid "Slug"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.socialHousing] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.1260218997] - tax rate
 #. defaultMessage is:
 #. Social housing
 msgctxt "tax rate"
@@ -7435,8 +7623,8 @@ msgctxt "description"
 msgid "Staff Settings"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.standard] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.2482229874] - tax rate
 #. defaultMessage is:
 #. Standard
 msgctxt "tax rate"
@@ -7707,6 +7895,14 @@ msgctxt "variant creation step"
 msgid "Summary"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookInfo/WebhookInfo.json
+#. [src.webhooks.components.WebhookInfo.1690209105] - webhook
+#. defaultMessage is:
+#. Target URL
+msgctxt "webhook"
+msgid "Target URL"
+msgstr ""
+
 #: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
 #. [src.productTypes.components.ProductTypeList.1240292548] - tax rate for a product type
 #. defaultMessage is:
@@ -7831,6 +8027,14 @@ msgctxt "description"
 msgid "These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar."
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookInfo/WebhookInfo.json
+#. [src.webhooks.components.WebhookInfo.3763861707] - webhook target url help text
+#. defaultMessage is:
+#. This URL will receive webhook POST requests
+msgctxt "webhook target url help text"
+msgid "This URL will receive webhook POST requests"
+msgstr ""
+
 #: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
 #. [src.plugins.components.PluginsDetailsPage.4241018152]
 #. defaultMessage is:
@@ -7853,6 +8057,14 @@ msgstr ""
 #. This customer has no addresses yet
 msgctxt "description"
 msgid "This customer has no addresses yet"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.requiredField]
+#. defaultMessage is:
+#. This field is required
+msgctxt "description"
+msgid "This field is required"
 msgstr ""
 
 #: build/locale/src/shipping/components/ShippingZoneCreatePage/ShippingZoneCreatePage.json
@@ -8751,6 +8963,14 @@ msgctxt "description"
 msgid "View and update your site settings"
 msgstr ""
 
+#: build/locale/src/configuration/index.json
+#. [src.configuration.1639245766]
+#. defaultMessage is:
+#. View and update your webhook and their settings
+msgctxt "description"
+msgid "View and update your webhook and their settings"
+msgstr ""
+
 #: build/locale/src/components/VisibilityCard/VisibilityCard.json
 #. [src.components.VisibilityCard.1459686496] - section header
 #. defaultMessage is:
@@ -8871,8 +9091,8 @@ msgctxt "description"
 msgid "Vouchers"
 msgstr ""
 
-#: build/locale/src/misc.json
-#. [src.water] - tax rate
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.3525010870] - tax rate
 #. defaultMessage is:
 #. Water
 msgctxt "tax rate"
@@ -8885,6 +9105,54 @@ msgstr ""
 #. We've encountered a problem...
 msgctxt "description"
 msgid "We've encountered a problem..."
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookInfo/WebhookInfo.json
+#. [src.webhooks.components.WebhookInfo.330298209] - section header
+#. defaultMessage is:
+#. Webhook Information
+msgctxt "section header"
+msgid "Webhook Information"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookInfo/WebhookInfo.json
+#. [src.webhooks.components.WebhookInfo.1826224431] - webhook
+#. defaultMessage is:
+#. Webhook Name
+msgctxt "webhook"
+msgid "Webhook Name"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookStatus/WebhookStatus.json
+#. [src.webhooks.components.WebhookStatus.596557805] - section header
+#. defaultMessage is:
+#. Webhook Status
+msgctxt "section header"
+msgid "Webhook Status"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookStatus/WebhookStatus.json
+#. [src.webhooks.components.WebhookStatus.2772025990] - webhooks active
+#. defaultMessage is:
+#. Webhook is active
+msgctxt "webhooks active"
+msgid "Webhook is active"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookInfo/WebhookInfo.json
+#. [src.webhooks.components.WebhookInfo.4194304040] - webhook specific information
+#. defaultMessage is:
+#. Webhook specific information
+msgctxt "webhook specific information"
+msgid "Webhook specific information"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.webhooks] - webhooks section name
+#. defaultMessage is:
+#. Webhooks
+msgctxt "webhooks section name"
+msgid "Webhooks"
 msgstr ""
 
 #: build/locale/src/productTypes/components/ProductTypeShipping/ProductTypeShipping.json
@@ -8933,6 +9201,14 @@ msgstr ""
 #. We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again.
 msgctxt "description"
 msgid "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+msgstr ""
+
+#: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
+#. [src.taxes.components.CountryTaxesPage.752780599] - tax rate
+#. defaultMessage is:
+#. Wine
+msgctxt "tax rate"
+msgid "Wine"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -9065,6 +9341,14 @@ msgstr ""
 #. is set as
 msgctxt "product status is set as"
 msgid "is set as"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookInfo/WebhookInfo.json
+#. [src.webhooks.components.WebhookInfo.3809115222] - webhook secret key help text
+#. defaultMessage is:
+#. secret key is used to create a hash signature with each payload. *optional field
+msgctxt "webhook secret key help text"
+msgid "secret key is used to create a hash signature with each payload. *optional field"
 msgstr ""
 
 #: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
@@ -9297,4 +9581,12 @@ msgstr ""
 #. {value} {unit}
 msgctxt "weight"
 msgid "{value} {unit}"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhooksDetailsPage/WebhooksDetailsPage.json
+#. [src.webhooks.components.WebhooksDetailsPage.408706360] - header
+#. defaultMessage is:
+#. {webhookName} Details
+msgctxt "header"
+msgid "{webhookName} Details"
 msgstr ""
