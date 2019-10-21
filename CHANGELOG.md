@@ -46,3 +46,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix attribute errors - #216 by @dominik-zeglen
 - Fix column picker - #228 by @dominik-zeglen
 - Add readonly mode - #229 by @dominik-zeglen
+- Add mailing configuration - #222 by @dominik-zeglen
