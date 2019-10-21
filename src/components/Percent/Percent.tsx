@@ -8,7 +8,7 @@ interface PercentProps {
 
 const Percent: React.StatelessComponent<PercentProps> = ({ amount }) => (
   <LocaleConsumer>
-    {locale => {
+    {({ locale }) => {
       return (amount / 100).toLocaleString(locale, {
         maximumFractionDigits: 2,
         style: "percent"

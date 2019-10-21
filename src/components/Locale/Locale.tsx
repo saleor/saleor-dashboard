@@ -42,15 +42,7 @@ import locale_UK from "@locale/uk.json";
 import locale_VI from "@locale/vi.json";
 import locale_ZH_HANS from "@locale/zh-Hans.json";
 import locale_ZH_HANT from "@locale/zh-Hant.json";
-
-const defaultLocale = "en";
-
-export type LocaleContextType = string;
-export const LocaleContext = React.createContext<LocaleContextType>(
-  defaultLocale
-);
-
-const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 
 export enum Locale {
   AR = "ar",
@@ -144,6 +136,51 @@ const localeData: Record<Locale, LocaleMessages> = {
   [Locale.ZH_HANT]: locale_ZH_HANT
 };
 
+export const localeNames: Record<Locale, string> = {
+  [Locale.AR]: "العربيّة",
+  [Locale.AZ]: "Azərbaycanca",
+  [Locale.BG]: "български",
+  [Locale.BN]: "বাংলা",
+  [Locale.CA]: "català",
+  [Locale.CS]: "česky",
+  [Locale.DA]: "dansk",
+  [Locale.DE]: "Deutsch",
+  [Locale.EL]: "Ελληνικά",
+  [Locale.EN]: "English",
+  [Locale.ES]: "español",
+  [Locale.ES_CO]: "español de Colombia",
+  [Locale.ET]: "eesti",
+  [Locale.FA]: "فارسی",
+  [Locale.FR]: "français",
+  [Locale.HI]: "Hindi",
+  [Locale.HU]: "Magyar",
+  [Locale.HY]: "հայերեն",
+  [Locale.ID]: "Bahasa Indonesia",
+  [Locale.IS]: "Íslenska",
+  [Locale.IT]: "italiano",
+  [Locale.JA]: "日本語",
+  [Locale.KO]: "한국어",
+  [Locale.MN]: "Mongolian",
+  [Locale.NB]: "norsk (bokmål)",
+  [Locale.NL]: "Nederlands",
+  [Locale.PL]: "polski",
+  [Locale.PT]: "Português",
+  [Locale.PT_BR]: "Português Brasileiro",
+  [Locale.RO]: "Română",
+  [Locale.RU]: "Русский",
+  [Locale.SK]: "Slovensky",
+  [Locale.SL]: "Slovenščina",
+  [Locale.SQ]: "shqip",
+  [Locale.SR]: "српски",
+  [Locale.SV]: "svenska",
+  [Locale.TH]: "ภาษาไทย",
+  [Locale.TR]: "Türkçe",
+  [Locale.UK]: "Українська",
+  [Locale.VI]: "Tiếng Việt",
+  [Locale.ZH_HANS]: "简体中文",
+  [Locale.ZH_HANT]: "繁體中文"
+};
+
 export function getMatchingLocale(languages: readonly string[]): Locale {
   const localeEntries = Object.entries(Locale);
 
@@ -158,8 +195,22 @@ export function getMatchingLocale(languages: readonly string[]): Locale {
   return undefined;
 }
 
+const defaultLocale = Locale.EN;
+
+export interface LocaleContextType {
+  locale: Locale;
+  setLocale: (locale: Locale) => void;
+}
+export const LocaleContext = React.createContext<LocaleContextType>({
+  locale: defaultLocale,
+  setLocale: () => undefined
+});
+
+const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
+
 const LocaleProvider: React.FC = ({ children }) => {
-  const [locale] = React.useState(
+  const [locale, setLocale] = useLocalStorage(
+    "locale",
     getMatchingLocale(navigator.languages) || defaultLocale
   );
 
@@ -175,7 +226,14 @@ const LocaleProvider: React.FC = ({ children }) => {
       }}
       key={locale}
     >
-      <RawLocaleProvider value={locale}>{children}</RawLocaleProvider>
+      <RawLocaleProvider
+        value={{
+          locale,
+          setLocale
+        }}
+      >
+        {children}
+      </RawLocaleProvider>
     </IntlProvider>
   );
 };

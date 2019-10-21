@@ -27,7 +27,7 @@ export const DateTime: React.StatelessComponent<DateTimeProps> = ({
     <TimezoneConsumer>
       {tz => (
         <LocaleConsumer>
-          {locale => (
+          {({ locale }) => (
             <Consumer>
               {currentDate =>
                 plain ? (

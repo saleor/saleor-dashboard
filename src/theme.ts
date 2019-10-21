@@ -526,6 +526,7 @@ export default (colors: IThemeColors): Theme =>
       body2: {
         fontSize: "1rem"
       },
+      fontFamily,
       h4: {
         color: colors.font.default
       },

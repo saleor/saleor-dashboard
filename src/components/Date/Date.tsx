@@ -20,7 +20,7 @@ export const Date: React.FC<DateProps> = ({ date, plain }) => {
 
   return (
     <LocaleConsumer>
-      {locale => (
+      {({ locale }) => (
         <Consumer>
           {currentDate =>
             plain ? (

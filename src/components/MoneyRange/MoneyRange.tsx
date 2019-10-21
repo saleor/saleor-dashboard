@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+
 import { LocaleConsumer } from "../Locale";
 import IMoney from "../Money";
 
@@ -22,7 +23,7 @@ export const MoneyRange: React.StatelessComponent<MoneyRangeProps> = ({
 
   return (
     <LocaleConsumer>
-      {locale =>
+      {({ locale }) =>
         from && to
           ? intl.formatMessage(
               {

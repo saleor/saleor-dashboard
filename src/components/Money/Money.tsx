@@ -12,7 +12,7 @@ export interface MoneyProps {
 
 export const Money: React.StatelessComponent<MoneyProps> = ({ money }) => (
   <LocaleConsumer>
-    {locale => {
+    {({ locale }) => {
       return money.amount.toLocaleString(locale, {
         currency: money.currency,
         style: "currency"

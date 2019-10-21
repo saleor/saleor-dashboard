@@ -332,3 +332,7 @@ export function parseBoolean(a: string): boolean {
   }
   return a === "true";
 }
+
+export function capitalize(s: string) {
+  return s.charAt(0).toLocaleUpperCase() + s.slice(1);
+}
