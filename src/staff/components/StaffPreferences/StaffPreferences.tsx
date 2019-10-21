@@ -15,7 +15,7 @@ interface StaffPreferencesProps {
   onLocaleChange: (locale: Locale) => void;
 }
 
-const StaffPreferences: React.StatelessComponent<StaffPreferencesProps> = ({
+const StaffPreferences: React.FC<StaffPreferencesProps> = ({
   locale,
   onLocaleChange
 }) => {
