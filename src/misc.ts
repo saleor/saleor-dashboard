@@ -1,8 +1,8 @@
 import moment from "moment-timezone";
 import { MutationFunction, MutationResult } from "react-apollo";
+import { defineMessages, IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
-import { defineMessages, IntlShape } from "react-intl";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
 import { APP_MOUNT_URI } from "./config";
 import { AddressType } from "./customers/types";
@@ -10,8 +10,7 @@ import { PartialMutationProviderOutput, UserError } from "./types";
 import {
   AuthorizationKeyType,
   OrderStatus,
-  PaymentChargeStatusEnum,
-  TaxRateType
+  PaymentChargeStatusEnum
 } from "./types/globalTypes";
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
@@ -179,158 +178,6 @@ export const transformAddressToForm = (data: AddressType) => ({
   postalCode: maybe(() => data.postalCode, ""),
   streetAddress1: maybe(() => data.streetAddress1, ""),
   streetAddress2: maybe(() => data.streetAddress2, "")
-});
-
-const taxRatesMessages = defineMessages({
-  accommodation: {
-    defaultMessage: "Accommodation",
-    description: "tax rate"
-  },
-  admissionToCulturalEvents: {
-    defaultMessage: "Admission to cultural events",
-    description: "tax rate"
-  },
-  admissionToEntertainmentEvents: {
-    defaultMessage: "Admission to entertainment events",
-    description: "tax rate"
-  },
-  admissionToSportingEvents: {
-    defaultMessage: "Admission to sporting events",
-    description: "tax rate"
-  },
-  advertising: {
-    defaultMessage: "Advertising",
-    description: "tax rate"
-  },
-  agriculturalSupplies: {
-    defaultMessage: "Agricultural supplies",
-    description: "tax rate"
-  },
-  babyFoodstuffs: {
-    defaultMessage: "Baby foodstuffs",
-    description: "tax rate"
-  },
-  bikes: {
-    defaultMessage: "Bikes",
-    description: "tax rate"
-  },
-  books: {
-    defaultMessage: "Books",
-    description: "tax rate"
-  },
-  childrensClothing: {
-    defaultMessage: "Children's clothing",
-    description: "tax rate"
-  },
-  domesticFuel: {
-    defaultMessage: "Domestic fuel",
-    description: "tax rate"
-  },
-  domesticServices: {
-    defaultMessage: "Domestic services",
-    description: "tax rate"
-  },
-  ebooks: {
-    defaultMessage: "E-books",
-    description: "tax rate"
-  },
-  foodstuffs: {
-    defaultMessage: "Foodstuffs",
-    description: "tax rate"
-  },
-  hotels: {
-    defaultMessage: "Hotels",
-    description: "tax rate"
-  },
-  medical: {
-    defaultMessage: "Medical",
-    description: "tax rate"
-  },
-  newspapers: {
-    defaultMessage: "Newspapers",
-    description: "tax rate"
-  },
-  passengerTransport: {
-    defaultMessage: "Passenger transport",
-    description: "tax rate"
-  },
-  pharmaceuticals: {
-    defaultMessage: "Pharmaceuticals",
-    description: "tax rate"
-  },
-  propertyRenovations: {
-    defaultMessage: "Property renovations",
-    description: "tax rate"
-  },
-  restaurants: {
-    defaultMessage: "Restaurants",
-    description: "tax rate"
-  },
-  socialHousing: {
-    defaultMessage: "Social housing",
-    description: "tax rate"
-  },
-  standard: {
-    defaultMessage: "Standard",
-    description: "tax rate"
-  },
-  water: {
-    defaultMessage: "Water",
-    description: "tax rate"
-  }
-});
-
-export const translatedTaxRates = (intl: IntlShape) => ({
-  [TaxRateType.ACCOMMODATION]: intl.formatMessage(
-    taxRatesMessages.accommodation
-  ),
-  [TaxRateType.ADMISSION_TO_CULTURAL_EVENTS]: intl.formatMessage(
-    taxRatesMessages.admissionToCulturalEvents
-  ),
-  [TaxRateType.ADMISSION_TO_ENTERTAINMENT_EVENTS]: intl.formatMessage(
-    taxRatesMessages.admissionToEntertainmentEvents
-  ),
-  [TaxRateType.ADMISSION_TO_SPORTING_EVENTS]: intl.formatMessage(
-    taxRatesMessages.admissionToSportingEvents
-  ),
-  [TaxRateType.ADVERTISING]: intl.formatMessage(taxRatesMessages.advertising),
-  [TaxRateType.AGRICULTURAL_SUPPLIES]: intl.formatMessage(
-    taxRatesMessages.agriculturalSupplies
-  ),
-  [TaxRateType.BABY_FOODSTUFFS]: intl.formatMessage(
-    taxRatesMessages.babyFoodstuffs
-  ),
-  [TaxRateType.BIKES]: intl.formatMessage(taxRatesMessages.bikes),
-  [TaxRateType.BOOKS]: intl.formatMessage(taxRatesMessages.books),
-  [TaxRateType.CHILDRENS_CLOTHING]: intl.formatMessage(
-    taxRatesMessages.childrensClothing
-  ),
-  [TaxRateType.DOMESTIC_FUEL]: intl.formatMessage(
-    taxRatesMessages.domesticFuel
-  ),
-  [TaxRateType.DOMESTIC_SERVICES]: intl.formatMessage(
-    taxRatesMessages.domesticServices
-  ),
-  [TaxRateType.E_BOOKS]: intl.formatMessage(taxRatesMessages.ebooks),
-  [TaxRateType.FOODSTUFFS]: intl.formatMessage(taxRatesMessages.foodstuffs),
-  [TaxRateType.HOTELS]: intl.formatMessage(taxRatesMessages.hotels),
-  [TaxRateType.MEDICAL]: intl.formatMessage(taxRatesMessages.medical),
-  [TaxRateType.NEWSPAPERS]: intl.formatMessage(taxRatesMessages.newspapers),
-  [TaxRateType.PASSENGER_TRANSPORT]: intl.formatMessage(
-    taxRatesMessages.passengerTransport
-  ),
-  [TaxRateType.PHARMACEUTICALS]: intl.formatMessage(
-    taxRatesMessages.pharmaceuticals
-  ),
-  [TaxRateType.PROPERTY_RENOVATIONS]: intl.formatMessage(
-    taxRatesMessages.propertyRenovations
-  ),
-  [TaxRateType.RESTAURANTS]: intl.formatMessage(taxRatesMessages.restaurants),
-  [TaxRateType.SOCIAL_HOUSING]: intl.formatMessage(
-    taxRatesMessages.socialHousing
-  ),
-  [TaxRateType.STANDARD]: intl.formatMessage(taxRatesMessages.standard),
-  [TaxRateType.WATER]: intl.formatMessage(taxRatesMessages.water)
 });
 
 export const authorizationKeyTypes = {

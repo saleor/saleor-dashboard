@@ -286,6 +286,24 @@ export enum VoucherTypeEnum {
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }
 
+export enum WebhookErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
+export enum WebhookEventTypeEnum {
+  ANY_EVENTS = "ANY_EVENTS",
+  CUSTOMER_CREATED = "CUSTOMER_CREATED",
+  ORDER_CANCELLED = "ORDER_CANCELLED",
+  ORDER_CREATED = "ORDER_CREATED",
+  ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
+  ORDER_UPDATED = "ORDER_UPDATED",
+  PRODUCT_CREATED = "PRODUCT_CREATED",
+}
+
 export enum WeightUnitsEnum {
   G = "G",
   KG = "KG",
@@ -808,6 +826,29 @@ export interface VoucherInput {
   applyOncePerOrder?: boolean | null;
   applyOncePerCustomer?: boolean | null;
   usageLimit?: number | null;
+}
+
+export interface WebhookCreateInput {
+  name?: string | null;
+  targetUrl?: string | null;
+  events?: (WebhookEventTypeEnum | null)[] | null;
+  serviceAccount?: string | null;
+  isActive?: boolean | null;
+  secretKey?: string | null;
+}
+
+export interface WebhookFilterInput {
+  search?: string | null;
+  isActive?: boolean | null;
+}
+
+export interface WebhookUpdateInput {
+  name?: string | null;
+  targetUrl?: string | null;
+  events?: (WebhookEventTypeEnum | null)[] | null;
+  serviceAccount?: string | null;
+  isActive?: boolean | null;
+  secretKey?: string | null;
 }
 
 //==============================================================

@@ -5,12 +5,13 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 
-export type OrderDraftFinalizeWarning =
-  | "no-shipping"
-  | "no-billing"
-  | "no-user"
-  | "no-shipping-method"
-  | "unnecessary-shipping-method";
+export enum OrderDraftFinalizeWarning {
+  NO_SHIPPING,
+  NO_BILLING,
+  NO_USER,
+  NO_SHIPPING_METHOD,
+  UNNECESSARY_SHIPPING_METHOD
+}
 
 export interface OrderDraftFinalizeDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -21,30 +22,29 @@ export interface OrderDraftFinalizeDialogProps {
   onConfirm: () => void;
 }
 
-const warningToText = (warning: OrderDraftFinalizeWarning, intl: IntlShape) => {
-  switch (warning) {
-    case "no-shipping":
-      return intl.formatMessage({
-        defaultMessage: "No shipping address"
-      });
-    case "no-billing":
-      return intl.formatMessage({
-        defaultMessage: "No billing address"
-      });
-    case "no-user":
-      return intl.formatMessage({
-        defaultMessage: "No user information"
-      });
-    case "no-shipping-method":
-      return intl.formatMessage({
-        defaultMessage: "Some products require shipping, but no method provided"
-      });
-    case "unnecessary-shipping-method":
-      return intl.formatMessage({
+function translateWarnings(
+  intl: IntlShape
+): Record<OrderDraftFinalizeWarning, string> {
+  return {
+    [OrderDraftFinalizeWarning.NO_BILLING]: intl.formatMessage({
+      defaultMessage: "No billing address"
+    }),
+    [OrderDraftFinalizeWarning.NO_SHIPPING]: intl.formatMessage({
+      defaultMessage: "No shipping address"
+    }),
+    [OrderDraftFinalizeWarning.NO_SHIPPING_METHOD]: intl.formatMessage({
+      defaultMessage: "Some products require shipping, but no method provided"
+    }),
+    [OrderDraftFinalizeWarning.NO_USER]: intl.formatMessage({
+      defaultMessage: "No user information"
+    }),
+    [OrderDraftFinalizeWarning.UNNECESSARY_SHIPPING_METHOD]: intl.formatMessage(
+      {
         defaultMessage: "Shipping method provided, but no product requires it"
-      });
-  }
-};
+      }
+    )
+  };
+}
 
 const OrderDraftFinalizeDialog: React.StatelessComponent<
   OrderDraftFinalizeDialogProps
@@ -57,6 +57,7 @@ const OrderDraftFinalizeDialog: React.StatelessComponent<
   orderNumber
 }) => {
   const intl = useIntl();
+  const translatedWarnings = translateWarnings(intl);
 
   return (
     <ActionDialog
@@ -89,7 +90,7 @@ const OrderDraftFinalizeDialog: React.StatelessComponent<
             </p>
             <ul>
               {warnings.map(warning => (
-                <li key={warning}>{warningToText(warning, intl)}</li>
+                <li key={warning}>{translatedWarnings[warning]}</li>
               ))}
             </ul>
           </>

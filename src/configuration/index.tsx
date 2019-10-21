@@ -15,6 +15,7 @@ import ShippingMethods from "@saleor/icons/ShippingMethods";
 import SiteSettings from "@saleor/icons/SiteSettings";
 import StaffMembers from "@saleor/icons/StaffMembers";
 import Taxes from "@saleor/icons/Taxes";
+import Webhooks from "@saleor/icons/Webhooks";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { menuListUrl } from "@saleor/navigation/urls";
@@ -27,6 +28,7 @@ import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
 import { taxSection } from "@saleor/taxes/urls";
 import { PermissionEnum } from "@saleor/types/globalTypes";
+import { webhooksListUrl } from "@saleor/webhooks/urls";
 import ConfigurationPage, { MenuSection } from "./ConfigurationPage";
 
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
@@ -161,6 +163,15 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permission: PermissionEnum.MANAGE_SERVICE_ACCOUNTS,
           title: intl.formatMessage(sectionNames.serviceAccounts),
           url: serviceListUrl()
+        },
+        {
+          description: intl.formatMessage({
+            defaultMessage: "View and update your webhook and their settings"
+          }),
+          icon: <Webhooks fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_WEBHOOKS,
+          title: intl.formatMessage(sectionNames.webhooks),
+          url: webhooksListUrl()
         }
       ]
     }
