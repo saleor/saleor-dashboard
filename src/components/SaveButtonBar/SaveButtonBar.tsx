@@ -121,7 +121,7 @@ export const SaveButtonBar = withStyles(styles, { name: "SaveButtonBar" })(
                   >
                     {maybe(
                       () => labels.cancel,
-                      intl.formatMessage(buttonMessages.cancel)
+                      intl.formatMessage(buttonMessages.back)
                     )}
                   </Button>
                   <ConfirmButton
