@@ -47,6 +47,9 @@ export const commonMessages = defineMessages({
   properties: {
     defaultMessage: "Properties"
   },
+  requiredField: {
+    defaultMessage: "This field is required"
+  },
   savedChanges: {
     defaultMessage: "Saved changes"
   },
@@ -202,6 +205,10 @@ export const sectionNames = defineMessages({
   vouchers: {
     defaultMessage: "Vouchers",
     description: "vouchers section name"
+  },
+  webhooks: {
+    defaultMessage: "Webhooks",
+    description: "webhooks section name"
   }
 });
 

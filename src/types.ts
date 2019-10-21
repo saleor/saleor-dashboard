@@ -28,7 +28,8 @@ export enum ListViews {
   SALES_LIST = "SALES_LIST",
   SHIPPING_METHODS_LIST = "SHIPPING_METHODS_LIST",
   STAFF_MEMBERS_LIST = "STAFF_MEMBERS_LIST",
-  VOUCHER_LIST = "VOUCHER_LIST"
+  VOUCHER_LIST = "VOUCHER_LIST",
+  WEBHOOK_LIST = "WEBHOOK_LIST"
 }
 
 export interface ListProps<TColumns extends string = string> {

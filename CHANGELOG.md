@@ -32,9 +32,11 @@ All notable, unreleased changes to this project will be documented in this file.
 - Allow sorting products by attribute - #180 by @dominik-zeglen
 - Hide variants and attributes if product has none - #179 by @dominik-zeglen
 - Add service account section - #188 by @dominik-zeglen
+- Add webhook section - #206 by @benekex2
 - Add variant creator - #177 by @dominik-zeglen
 - Add git hooks - #209 by @dominik-zeglen
 - Do not send customer invitation email - #211 by @dominik-zeglen
 - Send address update mutation only once - #210 by @dominik-zeglen
 - Update sale details design - #207 by @dominik-zeglen
 - Improve autocomplete UX - #212 by @dominik-zeglen
+
