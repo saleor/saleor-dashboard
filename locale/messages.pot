@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-21T12:10:02.976Z\n"
+"POT-Creation-Date: 2019-10-21T14:35:07.777Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1628,10 +1628,18 @@ msgid "Cancel Fulfillment"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
-#. [src.orders.components.OrderCancelDialog.1258942306] - dialog header
+#. [OrderCancelDialogHeader] - dialog header
 #. defaultMessage is:
 #. Cancel Order
 msgctxt "dialog header"
+msgid "Cancel Order"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
+#. [OrderCancelDialogButton] - button
+#. defaultMessage is:
+#. Cancel Order
+msgctxt "button"
 msgid "Cancel Order"
 msgstr ""
 
