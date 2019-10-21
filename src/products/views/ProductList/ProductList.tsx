@@ -84,7 +84,8 @@ export const ProductList: React.StatelessComponent<ProductListProps> = ({
           ...params,
           after: undefined,
           before: undefined
-        })
+        }),
+        true
       ),
     [settings.rowNumber]
   );
