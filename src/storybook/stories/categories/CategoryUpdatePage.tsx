@@ -53,7 +53,13 @@ storiesOf("Views / Categories / Update category", module)
     />
   ))
   .add("no background", () => (
-    <CategoryUpdatePage {...updateProps} category={category} />
+    <CategoryUpdatePage
+      {...updateProps}
+      category={{
+        ...category,
+        backgroundImage: null
+      }}
+    />
   ))
   .add("no subcategories", () => (
     <CategoryUpdatePage {...updateProps} subcategories={[]} />
