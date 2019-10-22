@@ -100,6 +100,9 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiDialogContent: {
         root: {
+          "& label": {
+            width: "calc(100% - 14px)"
+          },
           padding: "5px 24px 24px"
         }
       },
