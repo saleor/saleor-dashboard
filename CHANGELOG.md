@@ -42,3 +42,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix empty attribute values - #218 by @dominik-zeglen
 - Add language switch - #213 by @dominik-zeglen
 - Fix copy - #223, #224 by @dominik-zeglen
+- Fix ui improvements - #226 by @benekex2
