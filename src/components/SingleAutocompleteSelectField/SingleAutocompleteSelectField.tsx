@@ -93,7 +93,6 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
               inputValue,
               selectedItem,
               toggleMenu,
-              openMenu,
               closeMenu,
               highlightedIndex,
               reset
