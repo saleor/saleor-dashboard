@@ -90,7 +90,7 @@ const ProductTypeAttributeEditDialog: React.StatelessComponent<
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.cancel} />
+                <FormattedMessage {...buttonMessages.back} />
               </Button>
               <Button color="primary" variant="contained" type="submit">
                 <FormattedMessage {...buttonMessages.confirm} />

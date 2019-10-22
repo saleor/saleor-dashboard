@@ -89,7 +89,7 @@ const SiteSettingsKeyDialog: React.StatelessComponent<
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.cancel} />
+                <FormattedMessage {...buttonMessages.back} />
               </Button>
               <Button color="primary" type="submit" variant="contained">
                 <FormattedMessage

@@ -104,7 +104,7 @@ const OrderShippingMethodEditDialog = withStyles(styles, {
               </DialogContent>
               <DialogActions>
                 <Button onClick={onClose}>
-                  <FormattedMessage {...buttonMessages.cancel} />
+                  <FormattedMessage {...buttonMessages.back} />
                 </Button>
                 <ConfirmButton
                   transitionState={confirmButtonState}

@@ -41,3 +41,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Improve autocomplete UX - #212 by @dominik-zeglen
 - Fix empty attribute values - #218 by @dominik-zeglen
 - Add language switch - #213 by @dominik-zeglen
+- Fix copy - #223, #224 by @dominik-zeglen
