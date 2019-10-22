@@ -14,7 +14,6 @@ import CRC from "crc-32";
 import React from "react";
 
 import { DateTime } from "../Date";
-import Hr from "../Hr";
 
 const palette = [
   colors.amber,
@@ -49,20 +48,22 @@ const styles = (theme: Theme) =>
     },
     cardContent: {
       "&:last-child": {
-        paddingBottom: 16
-      }
-    },
-    content: {
-      marginTop: theme.spacing.unit * 2
+        padding: 16
+      },
+      boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.05)"
     },
     root: {
       position: "relative"
     },
     title: {
+      "& p": {
+        fontSize: "14px"
+      },
       alignItems: "center",
       display: "flex",
       justifyContent: "space-between",
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing.unit,
+      paddingLeft: theme.spacing.unit * 3
     }
   });
 
@@ -83,17 +84,15 @@ export const TimelineNote = withStyles(styles, { name: "TimelineNote" })(
       >
         <PersonIcon />
       </Avatar>
+      <div className={classes.title}>
+        <Typography>{user.email}</Typography>
+        <Typography>
+          <DateTime date={date} />
+        </Typography>
+      </div>
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
-          <div className={classes.title}>
-            <Typography>{user.email}</Typography>
-            <Typography>
-              <DateTime date={date} />
-            </Typography>
-          </div>
-          <Hr />
           <Typography
-            className={classes.content}
             dangerouslySetInnerHTML={{
               __html: message.replace("\n", "<br />")
             }}
