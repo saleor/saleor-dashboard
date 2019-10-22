@@ -42,9 +42,15 @@ import ThemeSwitch from "./ThemeSwitch";
 const styles = (theme: Theme) =>
   createStyles({
     appAction: {
+      [theme.breakpoints.down("sm")]: {
+        left: 0,
+        width: "100%"
+      },
       bottom: 0,
       gridColumn: 2,
-      position: "sticky",
+      left: 210,
+      position: "fixed",
+      width: "calc(100% - 210px)",
       zIndex: 10
     },
     appLoader: {
@@ -252,10 +258,7 @@ const styles = (theme: Theme) =>
       flex: 1,
       flexGrow: 1,
       marginLeft: 0,
-      paddingBottom: theme.spacing.unit,
-      [theme.breakpoints.up("sm")]: {
-        paddingBottom: theme.spacing.unit * 3
-      }
+      paddingBottom: theme.spacing.unit * 10
     }
   });
 
