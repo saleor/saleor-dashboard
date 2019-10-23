@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import placeholderImage from "@assets/images/placeholder255x255.png";
-import { formError } from "@saleor/storybook/misc";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import ProductVariantCreatePage from "../../../products/components/ProductVariantCreatePage";
 import { product as productFixture } from "../../../products/fixtures";
 import Decorator from "../../Decorator";
@@ -27,7 +27,24 @@ storiesOf("Views / Products / Create product variant", module)
   .add("with errors", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
-      errors={[formError("attributes:color")]}
+      errors={[
+        {
+          code: ProductErrorCode.REQUIRED,
+          field: "attributes"
+        },
+        {
+          code: ProductErrorCode.UNIQUE,
+          field: "attributes"
+        },
+        {
+          code: ProductErrorCode.ALREADY_EXISTS,
+          field: "sku"
+        }
+      ].map(error => ({
+        __typename: "ProductError",
+        message: "Generic form error",
+        ...error
+      }))}
       header="Add variant"
       loading={false}
       product={product}

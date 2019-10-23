@@ -1,4 +1,10 @@
-export const formError = (field: string) => ({
-  field,
-  message: "Generic form error"
-});
+export function formError<TErrorPayload>(
+  field: string,
+  opts?: Partial<Omit<TErrorPayload, "field" | "message">>
+) {
+  return {
+    field,
+    message: "Generic form error",
+    ...opts
+  };
+}

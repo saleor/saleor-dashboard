@@ -2,14 +2,15 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueInput } from "./../../types/globalTypes";
+import { AttributeValueInput, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantUpdate
 // ====================================================
 
-export interface VariantUpdate_productVariantUpdate_errors {
-  __typename: "Error";
+export interface VariantUpdate_productVariantUpdate_productErrors {
+  __typename: "ProductError";
+  code: ProductErrorCode | null;
   field: string | null;
   message: string | null;
 }
@@ -113,7 +114,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
 
 export interface VariantUpdate_productVariantUpdate {
   __typename: "ProductVariantUpdate";
-  errors: VariantUpdate_productVariantUpdate_errors[] | null;
+  productErrors: VariantUpdate_productVariantUpdate_productErrors[] | null;
   productVariant: VariantUpdate_productVariantUpdate_productVariant | null;
 }
 
