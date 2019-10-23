@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-24T13:15:53.475Z\n"
+"POT-Creation-Date: 2019-10-24T13:17:27.157Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -2745,6 +2745,14 @@ msgstr ""
 #. Customer created
 msgctxt "event"
 msgid "Customer created"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
+#. [src.siteSettings.components.SiteSettingsMailing.3211348653]
+#. defaultMessage is:
+#. Customer password reset URL
+msgctxt "description"
+msgid "Customer password reset URL"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json

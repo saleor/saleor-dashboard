@@ -107,6 +107,9 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
           fullWidth
           name="customerSetPasswordUrl"
           label={intl.formatMessage({
+            defaultMessage: "Customer password reset URL"
+          })}
+          placeholder={intl.formatMessage({
             defaultMessage: "URL address"
           })}
           helperText={
