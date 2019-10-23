@@ -6,7 +6,7 @@ import React from "react";
 const styles = (theme: Theme) =>
   createStyles({
     label: {
-      marginLeft: theme.spacing.unit * 2
+      marginLeft: theme.spacing.unit * 3.5
     },
     labelText: {
       fontSize: 14

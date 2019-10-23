@@ -60,7 +60,7 @@ export default (colors: IThemeColors): Theme =>
         },
         flat: {
           "& span": {
-            color: colors.font.gray
+            color: colors.font.default
           }
         },
         flatPrimary: {
@@ -100,6 +100,9 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiDialogContent: {
         root: {
+          "& label": {
+            overflowX: "hidden"
+          },
           padding: "5px 24px 24px"
         }
       },
