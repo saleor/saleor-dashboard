@@ -87,10 +87,11 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
 
-  const dropShadow = anchor.current
-    ? scrollPosition.y + anchor.current.clientHeight <
-      anchor.current.scrollHeight
-    : false;
+  const dropShadow =
+    anchor.current && scrollPosition
+      ? scrollPosition.y + anchor.current.clientHeight <
+        anchor.current.scrollHeight
+      : false;
 
   return (
     <Card className={classes.root}>
