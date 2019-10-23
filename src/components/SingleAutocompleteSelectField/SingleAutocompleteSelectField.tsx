@@ -93,7 +93,6 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
               inputValue,
               selectedItem,
               toggleMenu,
-              openMenu,
               closeMenu,
               highlightedIndex,
               reset
@@ -127,13 +126,13 @@ const SingleAutocompleteSelectFieldComponent = withStyles(styles, {
                       }),
                       endAdornment: (
                         <div>
-                          <ArrowDropdownIcon onClick={toggleMenu} />
+                          <ArrowDropdownIcon />
                         </div>
                       ),
                       error,
                       id: undefined,
                       onBlur: closeMenu,
-                      onFocus: openMenu
+                      onClick: toggleMenu
                     }}
                     error={error}
                     disabled={disabled}

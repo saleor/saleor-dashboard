@@ -28,7 +28,6 @@ const styles = (theme: Theme) =>
       marginBottom: theme.spacing.unit * 3
     },
     cardSubtitle: {
-      color: theme.palette.primary.main,
       fontSize: 12,
       height: "20px",
       lineHeight: 0.9

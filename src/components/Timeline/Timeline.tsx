@@ -71,6 +71,7 @@ interface TimelineProps extends WithStyles<typeof styles> {
 
 interface TimelineAddNoteProps extends WithStyles<typeof styles> {
   message: string;
+  reset: () => void;
   onChange(event: React.ChangeEvent<any>);
   onSubmit(event: React.FormEvent<any>);
 }
@@ -82,8 +83,13 @@ export const Timeline = withStyles(styles, { name: "Timeline" })(
 );
 
 export const TimelineAddNote = withStyles(styles, { name: "TimelineAddNote" })(
-  ({ classes, message, onChange, onSubmit }: TimelineAddNoteProps) => {
+  ({ classes, message, onChange, onSubmit, reset }: TimelineAddNoteProps) => {
     const intl = useIntl();
+
+    const submit = e => {
+      reset();
+      onSubmit(e);
+    };
 
     return (
       <div className={classes.noteRoot}>
@@ -106,7 +112,7 @@ export const TimelineAddNote = withStyles(styles, { name: "TimelineAddNote" })(
             multiline
             InputProps={{
               endAdornment: (
-                <Button color="primary" onClick={onSubmit}>
+                <Button color="primary" onClick={e => submit(e)}>
                   <FormattedMessage
                     defaultMessage="Send"
                     description="add order note, button"
