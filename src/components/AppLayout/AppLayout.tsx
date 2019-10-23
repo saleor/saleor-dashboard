@@ -48,14 +48,18 @@ const styles = (theme: Theme) =>
       },
       bottom: 0,
       gridColumn: 2,
-      left: 210,
-      position: "fixed",
-      width: "calc(100% - 210px)",
+      height: 70,
+      position: "sticky",
       zIndex: 10
     },
     appLoader: {
       height: appLoaderHeight,
+      marginBottom: theme.spacing.unit * 2,
       zIndex: 1201
+    },
+    appLoaderPlaceholder: {
+      height: appLoaderHeight,
+      marginBottom: theme.spacing.unit * 2
     },
     arrow: {
       marginLeft: theme.spacing.unit * 2,
@@ -81,11 +85,7 @@ const styles = (theme: Theme) =>
     header: {
       display: "flex",
       height: 40,
-      marginBottom: theme.spacing.unit * 3,
-      marginTop: theme.spacing.unit * 2
-    },
-    hide: {
-      opacity: 0
+      marginBottom: theme.spacing.unit * 3
     },
     isMenuSmall: {
       "& path": {
@@ -258,7 +258,15 @@ const styles = (theme: Theme) =>
       flex: 1,
       flexGrow: 1,
       marginLeft: 0,
-      paddingBottom: theme.spacing.unit * 10
+      paddingBottom: theme.spacing.unit,
+      [theme.breakpoints.up("sm")]: {
+        paddingBottom: theme.spacing.unit * 3
+      }
+    },
+    viewContainer: {
+      minHeight: `calc(100vh - ${theme.spacing.unit * 2 +
+        appLoaderHeight +
+        70}px)`
     }
   });
 
@@ -319,12 +327,6 @@ const AppLayout = withStyles(styles, {
           {({ isProgress }) => (
             <AppHeaderContext.Provider value={appHeaderAnchor}>
               <AppActionContext.Provider value={appActionAnchor}>
-                <LinearProgress
-                  className={classNames(classes.appLoader, {
-                    [classes.hide]: !isProgress
-                  })}
-                  color="primary"
-                />
                 <div className={classes.root}>
                   <div className={classes.sideBar}>
                     <ResponsiveDrawer
@@ -373,106 +375,121 @@ const AppLayout = withStyles(styles, {
                       [classes.contentToggle]: isMenuSmall
                     })}
                   >
-                    <div>
-                      <Container>
-                        <div className={classes.header}>
-                          <div
-                            className={classNames(classes.menuIcon, {
-                              [classes.menuIconOpen]: isDrawerOpened,
-                              [classes.menuIconDark]: isDark
-                            })}
-                            onClick={() => setDrawerState(!isDrawerOpened)}
-                          >
-                            <span />
-                            <span />
-                            <span />
-                            <span />
-                          </div>
-                          <div ref={appHeaderAnchor} />
-                          <div className={classes.spacer} />
-                          <div className={classes.userBar}>
-                            <ThemeSwitch
-                              className={classes.darkThemeSwitch}
-                              checked={isDark}
-                              onClick={toggleTheme}
-                            />
+                    {isProgress ? (
+                      <LinearProgress
+                        className={classes.appLoader}
+                        color="primary"
+                      />
+                    ) : (
+                      <div className={classes.appLoaderPlaceholder} />
+                    )}
+                    <div className={classes.viewContainer}>
+                      <div>
+                        <Container>
+                          <div className={classes.header}>
                             <div
-                              className={classes.userMenuContainer}
-                              ref={anchor}
+                              className={classNames(classes.menuIcon, {
+                                [classes.menuIconOpen]: isDrawerOpened,
+                                [classes.menuIconDark]: isDark
+                              })}
+                              onClick={() => setDrawerState(!isDrawerOpened)}
                             >
-                              <Chip
-                                avatar={
-                                  user.avatar && (
-                                    <Avatar alt="user" src={user.avatar.url} />
-                                  )
-                                }
-                                className={classes.userChip}
-                                label={
-                                  <>
-                                    {user.email}
-                                    <ArrowDropdown
-                                      className={classNames(classes.arrow, {
-                                        [classes.rotate]: isMenuOpened
-                                      })}
-                                    />
-                                  </>
-                                }
-                                onClick={() => setMenuState(!isMenuOpened)}
+                              <span />
+                              <span />
+                              <span />
+                              <span />
+                            </div>
+                            <div ref={appHeaderAnchor} />
+                            <div className={classes.spacer} />
+                            <div className={classes.userBar}>
+                              <ThemeSwitch
+                                className={classes.darkThemeSwitch}
+                                checked={isDark}
+                                onClick={toggleTheme}
                               />
-                              <Popper
-                                className={classes.popover}
-                                open={isMenuOpened}
-                                anchorEl={anchor.current}
-                                transition
-                                disablePortal
-                                placement="bottom-end"
+                              <div
+                                className={classes.userMenuContainer}
+                                ref={anchor}
                               >
-                                {({ TransitionProps, placement }) => (
-                                  <Grow
-                                    {...TransitionProps}
-                                    style={{
-                                      transformOrigin:
-                                        placement === "bottom"
-                                          ? "right top"
-                                          : "right bottom"
-                                    }}
-                                  >
-                                    <Paper>
-                                      <ClickAwayListener
-                                        onClickAway={() => setMenuState(false)}
-                                        mouseEvent="onClick"
-                                      >
-                                        <Menu>
-                                          <MenuItem
-                                            className={classes.userMenuItem}
-                                            onClick={handleViewerProfile}
-                                          >
-                                            <FormattedMessage
-                                              defaultMessage="Account Settings"
-                                              description="button"
-                                            />
-                                          </MenuItem>
-                                          <MenuItem
-                                            className={classes.userMenuItem}
-                                            onClick={handleLogout}
-                                          >
-                                            <FormattedMessage
-                                              defaultMessage="Log out"
-                                              description="button"
-                                            />
-                                          </MenuItem>
-                                        </Menu>
-                                      </ClickAwayListener>
-                                    </Paper>
-                                  </Grow>
-                                )}
-                              </Popper>
+                                <Chip
+                                  avatar={
+                                    user.avatar && (
+                                      <Avatar
+                                        alt="user"
+                                        src={user.avatar.url}
+                                      />
+                                    )
+                                  }
+                                  className={classes.userChip}
+                                  label={
+                                    <>
+                                      {user.email}
+                                      <ArrowDropdown
+                                        className={classNames(classes.arrow, {
+                                          [classes.rotate]: isMenuOpened
+                                        })}
+                                      />
+                                    </>
+                                  }
+                                  onClick={() => setMenuState(!isMenuOpened)}
+                                />
+                                <Popper
+                                  className={classes.popover}
+                                  open={isMenuOpened}
+                                  anchorEl={anchor.current}
+                                  transition
+                                  disablePortal
+                                  placement="bottom-end"
+                                >
+                                  {({ TransitionProps, placement }) => (
+                                    <Grow
+                                      {...TransitionProps}
+                                      style={{
+                                        transformOrigin:
+                                          placement === "bottom"
+                                            ? "right top"
+                                            : "right bottom"
+                                      }}
+                                    >
+                                      <Paper>
+                                        <ClickAwayListener
+                                          onClickAway={() =>
+                                            setMenuState(false)
+                                          }
+                                          mouseEvent="onClick"
+                                        >
+                                          <Menu>
+                                            <MenuItem
+                                              className={classes.userMenuItem}
+                                              onClick={handleViewerProfile}
+                                            >
+                                              <FormattedMessage
+                                                defaultMessage="Account Settings"
+                                                description="button"
+                                              />
+                                            </MenuItem>
+                                            <MenuItem
+                                              className={classes.userMenuItem}
+                                              onClick={handleLogout}
+                                            >
+                                              <FormattedMessage
+                                                defaultMessage="Log out"
+                                                description="button"
+                                              />
+                                            </MenuItem>
+                                          </Menu>
+                                        </ClickAwayListener>
+                                      </Paper>
+                                    </Grow>
+                                  )}
+                                </Popper>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Container>
+                        </Container>
+                      </div>
+                      <main className={classes.view}>{children}</main>
                     </div>
-                    <main className={classes.view}>{children}</main>
                     <div className={classes.appAction} ref={appActionAnchor} />
                   </div>
                 </div>
