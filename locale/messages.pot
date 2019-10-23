@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-21T14:35:07.777Z\n"
+"POT-Creation-Date: 2019-10-21T14:54:01.519Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -613,6 +613,14 @@ msgstr ""
 #. All Webhooks
 msgctxt "tab name"
 msgid "All Webhooks"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantAttributes/ProductVariantAttributes.json
+#. [src.products.components.ProductVariantAttributes.1536841622] - product attribute error
+#. defaultMessage is:
+#. All attributes should have value
+msgctxt "product attribute error"
+msgid "All attributes should have value"
 msgstr ""
 
 #: build/locale/src/taxes/components/TaxConfiguration/TaxConfiguration.json
@@ -8133,6 +8141,14 @@ msgstr ""
 #. This unit will be used as default shipping weight
 msgctxt "description"
 msgid "This unit will be used as default shipping weight"
+msgstr ""
+
+#: build/locale/src/products/components/ProductVariantAttributes/ProductVariantAttributes.json
+#. [src.products.components.ProductVariantAttributes.258966189] - product attribute error
+#. defaultMessage is:
+#. This variant already exists
+msgctxt "product attribute error"
+msgid "This variant already exists"
 msgstr ""
 
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json

@@ -54,7 +54,7 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
           navigate(productUrl(productId));
         };
         const handleUpdate = (data: VariantUpdate) => {
-          if (!maybe(() => data.productVariantUpdate.errors.length)) {
+          if (!maybe(() => data.productVariantUpdate.productErrors.length)) {
             notify({ text: intl.formatMessage(commonMessages.savedChanges) });
           }
         };
@@ -74,7 +74,10 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
               const formTransitionState = getMutationState(
                 updateVariant.opts.called,
                 updateVariant.opts.loading,
-                maybe(() => updateVariant.opts.data.productVariantUpdate.errors)
+                maybe(
+                  () =>
+                    updateVariant.opts.data.productVariantUpdate.productErrors
+                )
               );
               const removeTransitionState = getMutationState(
                 deleteVariant.opts.called,
@@ -105,7 +108,9 @@ export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
                   <WindowTitle title={maybe(() => data.productVariant.name)} />
                   <ProductVariantPage
                     errors={maybe(
-                      () => updateVariant.opts.data.productVariantUpdate.errors,
+                      () =>
+                        updateVariant.opts.data.productVariantUpdate
+                          .productErrors,
                       []
                     )}
                     saveButtonBarState={formTransitionState}

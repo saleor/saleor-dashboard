@@ -382,7 +382,6 @@ export interface AttributeValueCreateInput {
 
 export interface AttributeValueInput {
   id?: string | null;
-  slug?: string | null;
   values: (string | null)[];
 }
 

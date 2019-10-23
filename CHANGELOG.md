@@ -43,3 +43,5 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add language switch - #213 by @dominik-zeglen
 - Fix copy - #223, #224 by @dominik-zeglen
 - Fix ui improvements - #226 by @benekex2
+- Fix attribute errors - #216 by @dominik-zeglen
+
