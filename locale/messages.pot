@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-21T14:54:01.519Z\n"
+"POT-Creation-Date: 2019-10-24T12:11:32.946Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -6773,6 +6773,14 @@ msgstr ""
 #. Saleor ran into an unexpected problem
 msgctxt "description"
 msgid "Saleor ran into an unexpected problem"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.readOnly]
+#. defaultMessage is:
+#. Saleor runs in read-only mode. Changes not saved.
+msgctxt "description"
+msgid "Saleor runs in read-only mode. Changes not saved."
 msgstr ""
 
 #: build/locale/src/intl.json
