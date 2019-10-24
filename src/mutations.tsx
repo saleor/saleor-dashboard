@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 
 import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
+import { maybe } from "./misc";
 
 export interface TypedMutationInnerProps<TData, TVariables> {
   children: (
@@ -32,9 +33,21 @@ export function TypedMutation<TData, TVariables>(
         mutation={mutation}
         onCompleted={onCompleted}
         onError={(err: ApolloError) => {
-          notify({
-            text: intl.formatMessage(commonMessages.somethingWentWrong)
-          });
+          if (
+            maybe(
+              () =>
+                err.graphQLErrors[0].extensions.exception.code ===
+                "ReadOnlyException"
+            )
+          ) {
+            notify({
+              text: intl.formatMessage(commonMessages.readOnly)
+            });
+          } else {
+            notify({
+              text: intl.formatMessage(commonMessages.somethingWentWrong)
+            });
+          }
           if (onError) {
             onError(err);
           }
