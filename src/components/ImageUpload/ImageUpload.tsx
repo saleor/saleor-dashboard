@@ -54,6 +54,8 @@ const styles = (theme: Theme) =>
     },
     uploadText: {
       color: theme.typography.body2.color,
+      fontSize: 12,
+      fontWeight: 600,
       textTransform: "uppercase"
     }
   });
@@ -93,7 +95,7 @@ export const ImageUpload = withStyles(styles, { name: "ImageUpload" })(
             >
               <input {...getInputProps()} className={classes.fileField} />
               <ImageIcon className={classes.photosIcon} />
-              <Typography className={classes.uploadText} variant="body1">
+              <Typography className={classes.uploadText}>
                 <FormattedMessage
                   defaultMessage="Drop here to upload"
                   description="image upload"

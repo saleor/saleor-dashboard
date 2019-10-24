@@ -523,8 +523,7 @@ export default (colors: IThemeColors): Theme =>
         fontFamily
       },
       body1: {
-        fontSize: "0.75rem",
-        fontWeight: 600 as 600
+        fontSize: 14
       },
       body2: {
         fontSize: "1rem"

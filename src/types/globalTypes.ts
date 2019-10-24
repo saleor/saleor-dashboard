@@ -299,6 +299,7 @@ export enum WebhookEventTypeEnum {
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   ORDER_CANCELLED = "ORDER_CANCELLED",
   ORDER_CREATED = "ORDER_CREATED",
+  ORDER_FULFILLED = "ORDER_FULFILLED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_UPDATED = "ORDER_UPDATED",
   PRODUCT_CREATED = "PRODUCT_CREATED",
@@ -748,6 +749,9 @@ export interface ShopSettingsInput {
   automaticFulfillmentDigitalProducts?: boolean | null;
   defaultDigitalMaxDownloads?: number | null;
   defaultDigitalUrlValidDays?: number | null;
+  defaultMailSenderName?: string | null;
+  defaultMailSenderAddress?: string | null;
+  customerSetPasswordUrl?: string | null;
 }
 
 export interface SiteDomainInput {

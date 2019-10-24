@@ -29,6 +29,13 @@ storiesOf("Views / Site settings / Page", module)
   .add("form errors", () => (
     <SiteSettingsPage
       {...props}
-      errors={["description", "domain", "name"].map(field => formError(field))}
+      errors={[
+        "description",
+        "domain",
+        "name",
+        "defaultMailSenderAddress",
+        "defaultMailSenderName",
+        "customerSetPasswordUrl"
+      ].map(field => formError(field))}
     />
   ));

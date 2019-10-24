@@ -58,6 +58,9 @@ export interface ShopSettingsUpdate_shopSettingsUpdate_shop {
   authorizationKeys: (ShopSettingsUpdate_shopSettingsUpdate_shop_authorizationKeys | null)[];
   companyAddress: ShopSettingsUpdate_shopSettingsUpdate_shop_companyAddress | null;
   countries: (ShopSettingsUpdate_shopSettingsUpdate_shop_countries | null)[];
+  customerSetPasswordUrl: string | null;
+  defaultMailSenderAddress: string | null;
+  defaultMailSenderName: string | null;
   description: string | null;
   domain: ShopSettingsUpdate_shopSettingsUpdate_shop_domain;
   name: string;

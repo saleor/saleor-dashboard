@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-24T12:11:32.946Z\n"
+"POT-Creation-Date: 2019-10-24T13:17:27.157Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1467,6 +1467,14 @@ msgctxt "section header"
 msgid "Authentication Keys"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
+#. [src.siteSettings.components.SiteSettingsPage.4088830385] - section header
+#. defaultMessage is:
+#. Authentication Methods
+msgctxt "section header"
+msgid "Authentication Methods"
+msgstr ""
+
 #: build/locale/src/siteSettings/components/SiteSettingsKeys/SiteSettingsKeys.json
 #. [src.siteSettings.components.SiteSettingsKeys.1270286507] - authentication provider name
 #. defaultMessage is:
@@ -1476,11 +1484,11 @@ msgid "Authentication Type"
 msgstr ""
 
 #: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
-#. [src.siteSettings.components.SiteSettingsPage.2824577864]
+#. [src.siteSettings.components.SiteSettingsPage.3619898341]
 #. defaultMessage is:
-#. Authentication keys
+#. Authentication method defines additional ways that customers can log in to your ecommerce.
 msgctxt "description"
-msgid "Authentication keys"
+msgid "Authentication method defines additional ways that customers can log in to your ecommerce."
 msgstr ""
 
 #: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
@@ -1992,11 +2000,11 @@ msgid "Company"
 msgstr ""
 
 #: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
-#. [src.siteSettings.components.SiteSettingsPage.3817101936]
+#. [src.siteSettings.components.SiteSettingsPage.2768400497] - section header
 #. defaultMessage is:
-#. Company information
-msgctxt "description"
-msgid "Company information"
+#. Company Information
+msgctxt "section header"
+msgid "Company Information"
 msgstr ""
 
 #: build/locale/src/translations/components/TranslationsEntitiesList/TranslationsEntitiesList.json
@@ -2021,6 +2029,14 @@ msgstr ""
 #. Configurable
 msgctxt "product type"
 msgid "Configurable"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
+#. [src.siteSettings.components.SiteSettingsMailing.297689661]
+#. defaultMessage is:
+#. Configurate your email address from which all automatic emails will be sent to your customers.
+msgctxt "description"
+msgid "Configurate your email address from which all automatic emails will be sent to your customers."
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -2729,6 +2745,14 @@ msgstr ""
 #. Customer created
 msgctxt "event"
 msgid "Customer created"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
+#. [src.siteSettings.components.SiteSettingsMailing.3211348653]
+#. defaultMessage is:
+#. Customer password reset URL
+msgctxt "description"
+msgid "Customer password reset URL"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
@@ -3603,6 +3627,14 @@ msgctxt "description"
 msgid "Email Address"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
+#. [src.siteSettings.components.SiteSettingsPage.3657173399]
+#. defaultMessage is:
+#. Email adress you provide here will be used as a contact adress for your customers.
+msgctxt "description"
+msgid "Email adress you provide here will be used as a contact adress for your customers."
+msgstr ""
+
 #: build/locale/src/intl.json
 #. [src.endDate]
 #. defaultMessage is:
@@ -4349,6 +4381,42 @@ msgstr ""
 #. Login
 msgctxt "button"
 msgid "Login"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
+#. [src.siteSettings.components.SiteSettingsMailing.280712237] - section header
+#. defaultMessage is:
+#. Mailing Configuration
+#: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
+#. [src.siteSettings.components.SiteSettingsPage.280712237] - section header
+#. defaultMessage is:
+#. Mailing Configuration
+msgctxt "section header"
+msgid "Mailing Configuration"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
+#. [siteSettingsMailingHelperText] - helper text
+#. defaultMessage is:
+#. Mailing Configuration
+msgctxt "helper text"
+msgid "Mailing Configuration"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
+#. [src.siteSettings.components.SiteSettingsMailing.1124962330]
+#. defaultMessage is:
+#. Mailing email address
+msgctxt "description"
+msgid "Mailing email address"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
+#. [src.siteSettings.components.SiteSettingsMailing.70179174]
+#. defaultMessage is:
+#. Mailing email sender
+msgctxt "description"
+msgid "Mailing email sender"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -8051,12 +8119,36 @@ msgctxt "description"
 msgid "These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar."
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
+#. [src.siteSettings.components.SiteSettingsPage.3799756739]
+#. defaultMessage is:
+#. These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar.
+msgctxt "description"
+msgid "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
+#. [src.siteSettings.components.SiteSettingsMailing.3447841451]
+#. defaultMessage is:
+#. This URL will be used as a main URL for password resets. It will be sent via email.
+msgctxt "description"
+msgid "This URL will be used as a main URL for password resets. It will be sent via email."
+msgstr ""
+
 #: build/locale/src/webhooks/components/WebhookInfo/WebhookInfo.json
 #. [src.webhooks.components.WebhookInfo.3763861707] - webhook target url help text
 #. defaultMessage is:
 #. This URL will receive webhook POST requests
 msgctxt "webhook target url help text"
 msgid "This URL will receive webhook POST requests"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
+#. [src.siteSettings.components.SiteSettingsPage.1004240342]
+#. defaultMessage is:
+#. This adress will be used to generate invoices and calculate shipping rates.
+msgctxt "description"
+msgid "This adress will be used to generate invoices and calculate shipping rates."
 msgstr ""
 
 #: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
@@ -8159,12 +8251,28 @@ msgctxt "product attribute error"
 msgid "This variant already exists"
 msgstr ""
 
+#: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
+#. [src.siteSettings.components.SiteSettingsPage.866304242]
+#. defaultMessage is:
+#. This where you will find all of the settings determining your stores e-mails. You can determine main email address and some of the contents of your emails.
+msgctxt "description"
+msgid "This where you will find all of the settings determining your stores e-mails. You can determine main email address and some of the contents of your emails."
+msgstr ""
+
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
 #. [src.shipping.components.ShippingZoneRateDialog.1486599614]
 #. defaultMessage is:
 #. This will be shown to customers at checkout
 msgctxt "description"
 msgid "This will be shown to customers at checkout"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
+#. [src.siteSettings.components.SiteSettingsMailing.1672275992] - email sender
+#. defaultMessage is:
+#. This will be visible as "from" name
+msgctxt "email sender"
+msgid "This will be visible as \"from\" name"
 msgstr ""
 
 #: build/locale/src/pages/components/PageInfo/PageInfo.json
@@ -8441,6 +8549,14 @@ msgstr ""
 #. URL Linked
 msgctxt "description"
 msgid "URL Linked"
+msgstr ""
+
+#: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
+#. [src.siteSettings.components.SiteSettingsMailing.50742153]
+#. defaultMessage is:
+#. URL address
+msgctxt "description"
+msgid "URL address"
 msgstr ""
 
 #: build/locale/src/siteSettings/components/SiteSettingsDetails/SiteSettingsDetails.json
@@ -8736,19 +8852,19 @@ msgid "Usage Limit"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
+#. [src.attributes.components.AttributeProperties.1318123158] - attribute is filterable in storefront
+#. defaultMessage is:
+#. Use in Faceted Navigation
+msgctxt "attribute is filterable in storefront"
+msgid "Use in Faceted Navigation"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.714335445] - use attribute in filtering
 #. defaultMessage is:
 #. Use in Filtering
 msgctxt "use attribute in filtering"
 msgid "Use in Filtering"
-msgstr ""
-
-#: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
-#. [src.attributes.components.AttributeProperties.1564730914] - attribute is filterable in storefront
-#. defaultMessage is:
-#. Use in faceted navigation
-msgctxt "attribute is filterable in storefront"
-msgid "Use in faceted navigation"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json

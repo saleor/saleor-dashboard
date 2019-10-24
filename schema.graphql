@@ -3327,6 +3327,8 @@ type ProductVariantUpdatePrivateMeta {
 type Query {
   webhook(id: ID!): Webhook
   webhooks(filter: WebhookFilterInput, before: String, after: String, first: Int, last: Int): WebhookCountableConnection
+  webhookEvents: [WebhookEvent]
+  webhookSamplePayload(eventType: WebhookEventTypeEnum!): JSONString
   translations(kind: TranslatableKinds!, before: String, after: String, first: Int, last: Int): TranslatableItemConnection
   shop: Shop
   shippingZone(id: ID!): ShippingZone
@@ -3744,6 +3746,8 @@ type Shop {
   currencies: [String]!
   defaultCurrency: String!
   defaultCountry: CountryDisplay
+  defaultMailSenderName: String
+  defaultMailSenderAddress: String
   description: String
   domain: Domain!
   homepageCollection: Collection
@@ -3763,6 +3767,7 @@ type Shop {
   defaultDigitalMaxDownloads: Int
   defaultDigitalUrlValidDays: Int
   companyAddress: Address
+  customerSetPasswordUrl: String
 }
 
 type ShopAddressUpdate {
@@ -3810,6 +3815,9 @@ input ShopSettingsInput {
   automaticFulfillmentDigitalProducts: Boolean
   defaultDigitalMaxDownloads: Int
   defaultDigitalUrlValidDays: Int
+  defaultMailSenderName: String
+  defaultMailSenderAddress: String
+  customerSetPasswordUrl: String
 }
 
 type ShopSettingsTranslate {
@@ -4317,6 +4325,7 @@ enum WebhookErrorCode {
 
 type WebhookEvent {
   eventType: WebhookEventTypeEnum
+  name: String
 }
 
 enum WebhookEventTypeEnum {
