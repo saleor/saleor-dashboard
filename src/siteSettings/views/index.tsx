@@ -13,6 +13,7 @@ import SiteSettingsKeyDialog, {
   SiteSettingsKeyDialogForm
 } from "../components/SiteSettingsKeyDialog";
 import SiteSettingsPage, {
+  SiteSettingsPageAddressFormData,
   SiteSettingsPageFormData
 } from "../components/SiteSettingsPage";
 import {
@@ -124,10 +125,21 @@ export const SiteSettings: React.StatelessComponent<SiteSettingsProps> = ({
                       });
                     const handleUpdateShopSettings = (
                       data: SiteSettingsPageFormData
-                    ) =>
-                      updateShopSettings({
-                        variables: {
-                          addressInput: {
+                    ) => {
+                      const areAddressInputFieldsModified = ([
+                        "city",
+                        "companyName",
+                        "country",
+                        "countryArea",
+                        "phone",
+                        "postalCode",
+                        "streetAddress1",
+                        "streetAddress2"
+                      ] as Array<keyof SiteSettingsPageAddressFormData>)
+                        .map(key => data[key])
+                        .some(field => field !== "");
+                      const addressInput = areAddressInputFieldsModified
+                        ? {
                             city: data.city,
                             companyName: data.companyName,
                             country: data.country,
@@ -136,7 +148,11 @@ export const SiteSettings: React.StatelessComponent<SiteSettingsProps> = ({
                             postalCode: data.postalCode,
                             streetAddress1: data.streetAddress1,
                             streetAddress2: data.streetAddress2
-                          },
+                          }
+                        : null;
+                      updateShopSettings({
+                        variables: {
+                          addressInput,
                           shopDomainInput: {
                             domain: data.domain,
                             name: data.name
@@ -150,6 +166,7 @@ export const SiteSettings: React.StatelessComponent<SiteSettingsProps> = ({
                           }
                         }
                       });
+                    };
 
                     const formTransitionState = getMutationState(
                       updateShopSettingsOpts.called,

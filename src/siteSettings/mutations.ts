@@ -63,7 +63,7 @@ const shopSettingsUpdate = gql`
   mutation ShopSettingsUpdate(
     $shopDomainInput: SiteDomainInput!
     $shopSettingsInput: ShopSettingsInput!
-    $addressInput: AddressInput!
+    $addressInput: AddressInput
   ) {
     shopSettingsUpdate(input: $shopSettingsInput) {
       errors {
