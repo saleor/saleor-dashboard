@@ -45,3 +45,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix ui improvements - #226 by @benekex2
 - Fix attribute errors - #216 by @dominik-zeglen
 - Fix column picker - #228 by @dominik-zeglen
+- Add readonly mode - #229 by @dominik-zeglen

@@ -47,6 +47,9 @@ export const commonMessages = defineMessages({
   properties: {
     defaultMessage: "Properties"
   },
+  readOnly: {
+    defaultMessage: "Saleor runs in read-only mode. Changes not saved."
+  },
   requiredField: {
     defaultMessage: "This field is required"
   },

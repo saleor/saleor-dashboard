@@ -82,7 +82,7 @@ export function TypedQuery<TData, TVariables>(
             skip={skip}
             context={{ useBatching: true }}
           >
-            {queryData => {
+            {(queryData: QueryResult<TData, TVariables>) => {
               if (queryData.error) {
                 pushMessage({
                   text: intl.formatMessage(commonMessages.somethingWentWrong)
