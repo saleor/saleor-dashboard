@@ -83,7 +83,7 @@ const styles = (theme: Theme) =>
       display: "flex",
       height: 30,
       justifyContent: "center",
-      margin: 9,
+      margin: "5px 9px",
       width: 30
     }
   });

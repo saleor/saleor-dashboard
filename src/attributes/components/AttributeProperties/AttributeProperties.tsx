@@ -74,7 +74,7 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
         <ControlledCheckbox
           name={"filterableInStorefront" as keyof FormData}
           label={intl.formatMessage({
-            defaultMessage: "Use in faceted navigation",
+            defaultMessage: "Use in Faceted Navigation",
             description: "attribute is filterable in storefront"
           })}
           checked={data.filterableInStorefront}
