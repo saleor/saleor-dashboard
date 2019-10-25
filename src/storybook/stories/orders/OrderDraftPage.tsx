@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { fetchMoreProps } from "@saleor/fixtures";
+import { fetchMoreProps, permissions } from "@saleor/fixtures";
 import OrderDraftPage, {
   OrderDraftPageProps
 } from "../../../orders/components/OrderDraftPage";
@@ -32,6 +32,7 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   onShippingMethodEdit: undefined,
   order,
   saveButtonBarState: "default",
+  userPermissions: permissions,
   users: clients,
   usersLoading: false
 };
@@ -44,4 +45,7 @@ storiesOf("Views / Orders / Order draft", module)
   ))
   .add("without lines", () => (
     <OrderDraftPage {...props} order={{ ...order, lines: [] }} />
+  ))
+  .add("no user permissions", () => (
+    <OrderDraftPage {...props} userPermissions={[]} />
   ));

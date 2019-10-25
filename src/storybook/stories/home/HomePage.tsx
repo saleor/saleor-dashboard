@@ -3,6 +3,8 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import placeholderImage from "@assets/images/placeholder60x60.png";
+import { permissions } from "@saleor/fixtures";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import HomePage, { HomePageProps } from "../../../home/components/HomePage";
 import { shop as shopFixture } from "../../../home/fixtures";
 import Decorator from "../../Decorator";
@@ -21,7 +23,8 @@ const homePageProps: Omit<HomePageProps, "classes"> = {
   productsOutOfStock: shop.productsOutOfStock.totalCount,
   sales: shop.salesToday.gross,
   topProducts: shop.productTopToday.edges.map(edge => edge.node),
-  userName: "admin@example.com"
+  userName: "admin@example.com",
+  userPermissions: permissions
 };
 
 storiesOf("Views / HomePage", module)
@@ -42,4 +45,23 @@ storiesOf("Views / HomePage", module)
   ))
   .add("no data", () => (
     <HomePage {...homePageProps} topProducts={[]} activities={[]} />
+  ))
+  .add("no permissions", () => (
+    <HomePage {...homePageProps} userPermissions={[]} />
+  ))
+  .add("product permissions", () => (
+    <HomePage
+      {...homePageProps}
+      userPermissions={permissions.filter(
+        perm => perm.code === PermissionEnum.MANAGE_PRODUCTS
+      )}
+    />
+  ))
+  .add("order permissions", () => (
+    <HomePage
+      {...homePageProps}
+      userPermissions={permissions.filter(
+        perm => perm.code === PermissionEnum.MANAGE_ORDERS
+      )}
+    />
   ));

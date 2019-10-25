@@ -86,6 +86,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
     const intl = useIntl();
 
     const user = maybe(() => order.user);
+    const userEmail = maybe(()=>order.userEmail)
 
     const [userDisplayName, setUserDisplayName] = useStateFromProps(
       maybe(() => user.email, "")
@@ -165,9 +166,13 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
               }}
             </Form>
           ) : user === null ? (
-            <Typography>
-              <FormattedMessage defaultMessage="Anonymous user" />
-            </Typography>
+            userEmail === null ? (
+              <Typography>
+                <FormattedMessage defaultMessage="Anonymous user" />
+              </Typography>
+            ) : (
+              <Typography className={classes.userEmail}>{userEmail}</Typography>
+            )
           ) : (
             <>
               <Typography className={classes.userEmail}>
