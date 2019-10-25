@@ -36,6 +36,9 @@ export const shop: SiteSettings_shop = {
       country: "United Arab Emirates"
     }
   ],
+  customerSetPasswordUrl: "https://example.com/reset-password",
+  defaultMailSenderAddress: "noreply@example.com",
+  defaultMailSenderName: "Saleor",
   description: "Lorem ipsum dolor sit amet",
   domain: {
     __typename: "Domain",

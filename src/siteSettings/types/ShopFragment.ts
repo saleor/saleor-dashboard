@@ -52,6 +52,9 @@ export interface ShopFragment {
   authorizationKeys: (ShopFragment_authorizationKeys | null)[];
   companyAddress: ShopFragment_companyAddress | null;
   countries: (ShopFragment_countries | null)[];
+  customerSetPasswordUrl: string | null;
+  defaultMailSenderAddress: string | null;
+  defaultMailSenderName: string | null;
   description: string | null;
   domain: ShopFragment_domain;
   name: string;
