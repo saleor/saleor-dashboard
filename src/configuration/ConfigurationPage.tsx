@@ -99,7 +99,7 @@ export const ConfigurationPage = withStyles(styles, {
 })(
   ({
     classes,
-    menu,
+    menu: menus,
     user,
     onSectionClick
   }: ConfigurationPageProps & WithStyles<typeof styles>) => {
@@ -110,9 +110,11 @@ export const ConfigurationPage = withStyles(styles, {
           className={classes.header}
           title={intl.formatMessage(sectionNames.configuration)}
         />
-        {menu
+        {menus
           .filter(menu =>
-            menu.menuItems.map(item => hasPermission(item.permission, user))
+            menu.menuItems.some(menuItem =>
+              hasPermission(menuItem.permission, user)
+            )
           )
           .map((menu, menuIndex) => (
             <div className={classes.configurationCategory} key={menuIndex}>
@@ -120,28 +122,30 @@ export const ConfigurationPage = withStyles(styles, {
                 <Typography>{menu.label}</Typography>
               </div>
               <div className={classes.configurationItem}>
-                {menu.menuItems.map((item, itemIndex) => (
-                  <Card
-                    className={item.url ? classes.card : classes.cardDisabled}
-                    onClick={() => onSectionClick(item.url)}
-                    key={itemIndex}
-                  >
-                    <CardContent className={classes.cardContent}>
-                      <div className={classes.icon}>{item.icon}</div>
-                      <div>
-                        <Typography
-                          className={classes.sectionTitle}
-                          color="primary"
-                        >
-                          {item.title}
-                        </Typography>
-                        <Typography className={classes.sectionDescription}>
-                          {item.description}
-                        </Typography>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                {menu.menuItems
+                  .filter(menuItem => hasPermission(menuItem.permission, user))
+                  .map((item, itemIndex) => (
+                    <Card
+                      className={item.url ? classes.card : classes.cardDisabled}
+                      onClick={() => onSectionClick(item.url)}
+                      key={itemIndex}
+                    >
+                      <CardContent className={classes.cardContent}>
+                        <div className={classes.icon}>{item.icon}</div>
+                        <div>
+                          <Typography
+                            className={classes.sectionTitle}
+                            color="primary"
+                          >
+                            {item.title}
+                          </Typography>
+                          <Typography className={classes.sectionDescription}>
+                            {item.description}
+                          </Typography>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
               </div>
             </div>
           ))}

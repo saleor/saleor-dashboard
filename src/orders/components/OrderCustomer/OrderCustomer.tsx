@@ -16,11 +16,13 @@ import ExternalLink from "@saleor/components/ExternalLink";
 import Form from "@saleor/components/Form";
 import Hr from "@saleor/components/Hr";
 import Link from "@saleor/components/Link";
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import { FetchMoreProps } from "@saleor/types";
+import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { SearchCustomers_search_edges_node } from "../../../containers/SearchCustomers/types/SearchCustomers";
 import { customerUrl } from "../../../customers/urls";
@@ -49,7 +51,9 @@ const styles = (theme: Theme) =>
     }
   });
 
-export interface OrderCustomerProps extends Partial<FetchMoreProps> {
+export interface OrderCustomerProps
+  extends Partial<FetchMoreProps>,
+    UserPermissionProps {
   order: OrderDetails_order;
   users?: SearchCustomers_search_edges_node[];
   loading?: boolean;
@@ -72,6 +76,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
     loading,
     order,
     users,
+    userPermissions,
     onCustomerEdit,
     onBillingAddressEdit,
     onFetchMore: onFetchMoreUsers,
@@ -81,6 +86,7 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
     const intl = useIntl();
 
     const user = maybe(() => order.user);
+    const userEmail = maybe(()=>order.userEmail)
 
     const [userDisplayName, setUserDisplayName] = useStateFromProps(
       maybe(() => user.email, "")
@@ -100,14 +106,19 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
           })}
           toolbar={
             !!canEditCustomer && (
-              <Button
-                color="primary"
-                variant="text"
-                disabled={!onCustomerEdit}
-                onClick={toggleEditMode}
+              <RequirePermissions
+                userPermissions={userPermissions}
+                requiredPermissions={[PermissionEnum.MANAGE_USERS]}
               >
-                {intl.formatMessage(buttonMessages.edit)}
-              </Button>
+                <Button
+                  color="primary"
+                  variant="text"
+                  disabled={!onCustomerEdit}
+                  onClick={toggleEditMode}
+                >
+                  {intl.formatMessage(buttonMessages.edit)}
+                </Button>
+              </RequirePermissions>
             )
           }
         />
@@ -155,26 +166,35 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
               }}
             </Form>
           ) : user === null ? (
-            <Typography>
-              <FormattedMessage defaultMessage="Anonymous user" />
-            </Typography>
+            userEmail === null ? (
+              <Typography>
+                <FormattedMessage defaultMessage="Anonymous user" />
+              </Typography>
+            ) : (
+              <Typography className={classes.userEmail}>{userEmail}</Typography>
+            )
           ) : (
             <>
               <Typography className={classes.userEmail}>
                 {user.email}
               </Typography>
-              <div>
-                <Link
-                  underline={false}
-                  href={createHref(customerUrl(user.id))}
-                  onClick={onProfileView}
-                >
-                  <FormattedMessage
-                    defaultMessage="View Profile"
-                    description="link"
-                  />
-                </Link>
-              </div>
+              <RequirePermissions
+                userPermissions={userPermissions}
+                requiredPermissions={[PermissionEnum.MANAGE_USERS]}
+              >
+                <div>
+                  <Link
+                    underline={false}
+                    href={createHref(customerUrl(user.id))}
+                    onClick={onProfileView}
+                  >
+                    <FormattedMessage
+                      defaultMessage="View Profile"
+                      description="link"
+                    />
+                  </Link>
+                </div>
+              </RequirePermissions>
               {/* TODO: Uncomment it after adding ability to filter
                     orders by customer */}
               {/* <div>
@@ -187,36 +207,40 @@ const OrderCustomer = withStyles(styles, { name: "OrderCustomer" })(
             </>
           )}
         </CardContent>
-        <Hr />
-        <CardContent>
-          <div className={classes.sectionHeader}>
-            <Typography className={classes.sectionHeaderTitle}>
-              <FormattedMessage
-                defaultMessage="Contact Information"
-                description="subheader"
-              />
-            </Typography>
-          </div>
+        {!!user && (
+          <>
+            <Hr />
+            <CardContent>
+              <div className={classes.sectionHeader}>
+                <Typography className={classes.sectionHeaderTitle}>
+                  <FormattedMessage
+                    defaultMessage="Contact Information"
+                    description="subheader"
+                  />
+                </Typography>
+              </div>
 
-          {maybe(() => order.userEmail) === undefined ? (
-            <Skeleton />
-          ) : order.userEmail === null ? (
-            <Typography>
-              <FormattedMessage
-                defaultMessage="Not set"
-                description="customer is not set in draft order"
-                id="orderCustomerCustomerNotSet"
-              />
-            </Typography>
-          ) : (
-            <ExternalLink
-              href={`mailto:${maybe(() => order.userEmail)}`}
-              typographyProps={{ color: "primary" }}
-            >
-              {maybe(() => order.userEmail)}
-            </ExternalLink>
-          )}
-        </CardContent>
+              {maybe(() => order.userEmail) === undefined ? (
+                <Skeleton />
+              ) : order.userEmail === null ? (
+                <Typography>
+                  <FormattedMessage
+                    defaultMessage="Not set"
+                    description="customer is not set in draft order"
+                    id="orderCustomerCustomerNotSet"
+                  />
+                </Typography>
+              ) : (
+                <ExternalLink
+                  href={`mailto:${maybe(() => order.userEmail)}`}
+                  typographyProps={{ color: "primary" }}
+                >
+                  {maybe(() => order.userEmail)}
+                </ExternalLink>
+              )}
+            </CardContent>
+          </>
+        )}
         <Hr />
         <CardContent>
           <div className={classes.sectionHeader}>

@@ -1,5 +1,5 @@
 import avatarImage from "@assets/images/avatars/avatar1.png";
-import { PermissionEnum } from "../types/globalTypes";
+import { permissions } from "@saleor/fixtures";
 import { StaffList_staffUsers_edges_node } from "./types/StaffList";
 import { StaffMemberDetails_user } from "./types/StaffMemberDetails";
 
@@ -145,49 +145,5 @@ export const staffMember: StaffMemberDetails_user = {
   id: "VXNlcjoyMQ==",
   isActive: true,
   lastName: "Smith",
-  permissions: [
-    {
-      code: PermissionEnum.IMPERSONATE_USERS,
-      name: "Impersonate customers."
-    },
-    {
-      code: PermissionEnum.MANAGE_DISCOUNTS,
-      name: "Manage sales and vouchers."
-    },
-    {
-      code: PermissionEnum.MANAGE_MENUS,
-      name: "Manage navigation."
-    },
-    {
-      code: PermissionEnum.MANAGE_ORDERS,
-      name: "Manage orders."
-    },
-    {
-      code: PermissionEnum.MANAGE_PAGES,
-      name: "Manage pages."
-    },
-    {
-      code: PermissionEnum.MANAGE_PRODUCTS,
-      name: "Manage products."
-    },
-    {
-      code: PermissionEnum.MANAGE_SETTINGS,
-      name: "Manage settings."
-    },
-    {
-      code: PermissionEnum.MANAGE_SHIPPING,
-      name: "Manage shipping."
-    },
-    {
-      code: PermissionEnum.MANAGE_STAFF,
-      name: "Manage staff."
-    },
-    {
-      code: PermissionEnum.MANAGE_USERS,
-      name: "Manage customers."
-    }
-  ].map(perm => ({
-    __typename: "PermissionDisplay" as "PermissionDisplay",
-    ...perm
-  }))
+  permissions
 };

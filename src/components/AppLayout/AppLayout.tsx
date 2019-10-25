@@ -24,11 +24,13 @@ import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import saleorDarkLogo from "@assets/images/logo-dark.svg";
 import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import AppProgressProvider from "@saleor/components/AppProgress";
+import { createConfigurationMenu } from "@saleor/configuration";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
+import { maybe } from "@saleor/misc";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import Container from "../Container";
 import AppActionContext from "./AppActionContext";
@@ -297,6 +299,17 @@ const AppLayout = withStyles(styles, {
       const intl = useIntl();
 
       const menuStructure = createMenuStructure(intl);
+      const configurationMenu = createConfigurationMenu(intl);
+      const userPermissions = maybe(() => user.permissions, []);
+
+      const renderConfigure = configurationMenu.some(section =>
+        section.menuItems.some(
+          menuItem =>
+            !!userPermissions.find(
+              userPermission => userPermission.code === menuItem.permission
+            )
+        )
+      );
 
       const handleLogout = () => {
         setMenuState(false);
@@ -365,7 +378,7 @@ const AppLayout = withStyles(styles, {
                         isMenuSmall={!isMenuSmall}
                         location={location.pathname}
                         user={user}
-                        renderConfigure={true}
+                        renderConfigure={renderConfigure}
                         onMenuItemClick={handleMenuItemClick}
                       />
                     </ResponsiveDrawer>

@@ -5,14 +5,18 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import { sectionNames } from "@saleor/intl";
-import { ListActions, PageListProps } from "@saleor/types";
-import { WeightUnitsEnum } from "@saleor/types/globalTypes";
+import { ListActions, PageListProps, UserPermissionProps } from "@saleor/types";
+import { PermissionEnum, WeightUnitsEnum } from "@saleor/types/globalTypes";
 import { ShippingZoneFragment } from "../../types/ShippingZoneFragment";
 import ShippingWeightUnitForm from "../ShippingWeightUnitForm";
 import ShippingZonesList from "../ShippingZonesList";
 
-export interface ShippingZonesListPageProps extends PageListProps, ListActions {
+export interface ShippingZonesListPageProps
+  extends PageListProps,
+    ListActions,
+    UserPermissionProps {
   defaultWeightUnit: WeightUnitsEnum;
   shippingZones: ShippingZoneFragment[];
   onBack: () => void;
@@ -22,7 +26,14 @@ export interface ShippingZonesListPageProps extends PageListProps, ListActions {
 
 const ShippingZonesListPage: React.StatelessComponent<
   ShippingZonesListPageProps
-> = ({ defaultWeightUnit, disabled, onBack, onSubmit, ...listProps }) => {
+> = ({
+  defaultWeightUnit,
+  disabled,
+  userPermissions,
+  onBack,
+  onSubmit,
+  ...listProps
+}) => {
   const intl = useIntl();
 
   return (
@@ -41,11 +52,16 @@ const ShippingZonesListPage: React.StatelessComponent<
           <ShippingZonesList disabled={disabled} {...listProps} />
         </div>
         <div>
-          <ShippingWeightUnitForm
-            defaultWeightUnit={defaultWeightUnit}
-            disabled={disabled}
-            onSubmit={onSubmit}
-          />
+          <RequirePermissions
+            userPermissions={userPermissions}
+            requiredPermissions={[PermissionEnum.MANAGE_SETTINGS]}
+          >
+            <ShippingWeightUnitForm
+              defaultWeightUnit={defaultWeightUnit}
+              disabled={disabled}
+              onSubmit={onSubmit}
+            />
+          </RequirePermissions>
         </div>
       </Grid>
     </Container>

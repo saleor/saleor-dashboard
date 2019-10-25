@@ -18,7 +18,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
-import { FetchMoreProps } from "@saleor/types";
+import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import { SearchCustomers_search_edges_node } from "../../../containers/SearchCustomers/types/SearchCustomers";
 import { maybe } from "../../../misc";
 import { DraftOrderInput } from "../../../types/globalTypes";
@@ -39,7 +39,9 @@ const styles = (theme: Theme) =>
     }
   });
 
-export interface OrderDraftPageProps extends FetchMoreProps {
+export interface OrderDraftPageProps
+  extends FetchMoreProps,
+    UserPermissionProps {
   disabled: boolean;
   order: OrderDetails_order;
   users: SearchCustomers_search_edges_node[];
@@ -90,7 +92,8 @@ const OrderDraftPage = withStyles(styles, { name: "OrderDraftPage" })(
     onProfileView,
     order,
     users,
-    usersLoading
+    usersLoading,
+    userPermissions
   }: OrderDraftPageProps & WithStyles<typeof styles>) => {
     const intl = useIntl();
 
@@ -147,6 +150,7 @@ const OrderDraftPage = withStyles(styles, { name: "OrderDraftPage" })(
               loading={usersLoading}
               order={order}
               users={users}
+              userPermissions={userPermissions}
               onBillingAddressEdit={onBillingAddressEdit}
               onCustomerEdit={onCustomerEdit}
               onFetchMore={onFetchMore}

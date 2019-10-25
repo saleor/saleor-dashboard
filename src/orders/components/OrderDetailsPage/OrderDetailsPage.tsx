@@ -17,6 +17,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
+import { UserPermissionProps } from "@saleor/types";
 import { maybe, renderCollection } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
@@ -38,7 +39,7 @@ const styles = (theme: Theme) =>
     }
   });
 
-export interface OrderDetailsPageProps extends WithStyles<typeof styles> {
+export interface OrderDetailsPageProps extends UserPermissionProps {
   order: OrderDetails_order;
   shippingMethods?: Array<{
     id: string;
@@ -68,12 +69,13 @@ const OrderDetailsPage = withStyles(styles, { name: "OrderDetailsPage" })(
   ({
     classes,
     order,
-    onOrderCancel,
+    userPermissions,
     onBack,
     onBillingAddressEdit,
     onFulfillmentCancel,
     onFulfillmentTrackingNumberUpdate,
     onNoteAdd,
+    onOrderCancel,
     onOrderFulfill,
     onPaymentCapture,
     onPaymentPaid,
@@ -81,7 +83,7 @@ const OrderDetailsPage = withStyles(styles, { name: "OrderDetailsPage" })(
     onPaymentVoid,
     onShippingAddressEdit,
     onProfileView
-  }: OrderDetailsPageProps) => {
+  }: OrderDetailsPageProps & WithStyles<typeof styles>) => {
     const intl = useIntl();
 
     const canCancel = maybe(() => order.status) !== OrderStatus.CANCELED;
@@ -170,6 +172,7 @@ const OrderDetailsPage = withStyles(styles, { name: "OrderDetailsPage" })(
               canEditAddresses={canEditAddresses}
               canEditCustomer={false}
               order={order}
+              userPermissions={userPermissions}
               onBillingAddressEdit={onBillingAddressEdit}
               onShippingAddressEdit={onShippingAddressEdit}
               onProfileView={onProfileView}

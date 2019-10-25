@@ -1,5 +1,6 @@
 import { MutationResult } from "react-apollo";
 
+import { User_permissions } from "./auth/types/User";
 import { FilterContentSubmitData } from "./components/Filter";
 import { Filter } from "./components/TableFilter";
 
@@ -158,3 +159,7 @@ export interface FetchMoreProps {
 }
 
 export type TabActionDialog = "save-search" | "delete-search";
+
+export interface UserPermissionProps {
+  userPermissions: User_permissions[];
+}

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-24T13:17:27.157Z\n"
+"POT-Creation-Date: 2019-10-25T13:36:05.943Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -9667,20 +9667,20 @@ msgctxt "button"
 msgid "{languageName} - {languageCode}"
 msgstr ""
 
-#: build/locale/src/translations/components/TranslationFields/TranslationFields.json
-#. [src.translations.components.TranslationFields.282734765]
-#. defaultMessage is:
-#. {numberOFields} Translations, {numberOfTranslatedFields} Completed
-msgctxt "description"
-msgid "{numberOFields} Translations, {numberOfTranslatedFields} Completed"
-msgstr ""
-
 #: build/locale/src/components/SeoForm/SeoForm.json
 #. [src.components.SeoForm.3877274856] - character limit
 #. defaultMessage is:
 #. {numberOfCharacters} of {maxCharacters} characters
 msgctxt "character limit"
 msgid "{numberOfCharacters} of {maxCharacters} characters"
+msgstr ""
+
+#: build/locale/src/translations/components/TranslationFields/TranslationFields.json
+#. [src.translations.components.TranslationFields.1308081812]
+#. defaultMessage is:
+#. {numberOfFields} Translations, {numberOfTranslatedFields} Completed
+msgctxt "description"
+msgid "{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
 msgstr ""
 
 #: build/locale/src/components/ColumnPicker/ColumnPickerContent.json

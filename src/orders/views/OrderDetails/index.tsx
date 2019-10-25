@@ -2,6 +2,7 @@ import React from "react";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useUser from "@saleor/hooks/useUser";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
 import SearchCustomers from "../../../containers/SearchCustomers";
 import { customerUrl } from "../../../customers/urls";
@@ -80,6 +81,7 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
   params
 }) => {
   const navigate = useNavigator();
+  const { user } = useUser();
 
   return (
     <TypedOrderDetailsQuery
@@ -181,6 +183,10 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
                                 order={order}
                                 shippingMethods={maybe(
                                   () => data.order.availableShippingMethods,
+                                  []
+                                )}
+                                userPermissions={maybe(
+                                  () => user.permissions,
                                   []
                                 )}
                                 onOrderCancel={() => openModal("cancel")}
@@ -466,6 +472,10 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
                                 onProfileView={() =>
                                   navigate(customerUrl(order.user.id))
                                 }
+                                userPermissions={maybe(
+                                  () => user.permissions,
+                                  []
+                                )}
                               />
                               <OrderDraftCancelDialog
                                 confirmButtonState={getMutationState(

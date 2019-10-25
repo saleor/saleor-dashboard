@@ -48,3 +48,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add readonly mode - #229 by @dominik-zeglen
 - Add mailing configuration - #222 by @dominik-zeglen
 - Fix minor bugs - #230 by @dominik-zeglen
+- Fix permission handling - #231 by @dominik-zeglen
