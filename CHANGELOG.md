@@ -4,6 +4,10 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+..
+
+## 2.0.0
+
 - Add changelog and github issue/PR templates - #97 by @dominik-zeglen
 - Update dependencies to suppress storybook build errors - #98 by @dominik-zeglen
 - Fix configure menu section - #109 by @benekex2

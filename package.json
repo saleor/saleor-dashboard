@@ -1,7 +1,7 @@
 {
-  "name": "saleor",
-  "version": "0.0.0",
-  "main": "Gruntfile.js",
+  "name": "saleor-dashboard",
+  "version": "2.0.0",
+  "main": "src/index.tsx",
   "repository": {
     "type": "git",
     "url": "git://github.com/mirumee/saleor-dashboard.git"
