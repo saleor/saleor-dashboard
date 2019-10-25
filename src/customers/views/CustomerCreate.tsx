@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { maybe } from "../../misc";
+import { maybe, transformFormToAddress } from "../../misc";
 import CustomerCreatePage from "../components/CustomerCreatePage";
 import { TypedCreateCustomerMutation } from "../mutations";
 import { TypedCustomerCreateDataQuery } from "../queries";
@@ -73,8 +73,8 @@ export const CustomerCreate: React.StatelessComponent<{}> = () => {
                   createCustomer({
                     variables: {
                       input: {
-                        defaultBillingAddress: address,
-                        defaultShippingAddress: address,
+                        defaultBillingAddress: transformFormToAddress(address),
+                        defaultShippingAddress: transformFormToAddress(address),
                         email: formData.email,
                         firstName: formData.customerFirstName,
                         lastName: formData.customerLastName,
