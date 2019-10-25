@@ -7,8 +7,8 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import { useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../configuration";
-import { getMutationState, maybe } from "../../misc";
-import { AuthorizationKeyType } from "../../types/globalTypes";
+import { findInEnum, getMutationState, maybe } from "../../misc";
+import { AuthorizationKeyType, CountryCode } from "../../types/globalTypes";
 import SiteSettingsKeyDialog, {
   SiteSettingsKeyDialogForm
 } from "../components/SiteSettingsKeyDialog";
@@ -130,7 +130,7 @@ export const SiteSettings: React.StatelessComponent<SiteSettingsProps> = ({
                           addressInput: {
                             city: data.city,
                             companyName: data.companyName,
-                            country: data.country,
+                            country: findInEnum(data.country, CountryCode),
                             countryArea: data.countryArea,
                             phone: data.phone,
                             postalCode: data.postalCode,

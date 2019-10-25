@@ -5,10 +5,12 @@ import urlJoin from "url-join";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
 import { APP_MOUNT_URI } from "./config";
-import { AddressType } from "./customers/types";
+import { AddressType, AddressTypeInput } from "./customers/types";
 import { PartialMutationProviderOutput, UserError } from "./types";
 import {
+  AddressInput,
   AuthorizationKeyType,
+  CountryCode,
   OrderStatus,
   PaymentChargeStatusEnum
 } from "./types/globalTypes";
@@ -335,4 +337,13 @@ export function parseBoolean(a: string): boolean {
 
 export function capitalize(s: string) {
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
+}
+
+export function transformFormToAddress(
+  address: AddressTypeInput
+): AddressInput {
+  return {
+    ...address,
+    country: findInEnum(address.country, CountryCode)
+  };
 }
