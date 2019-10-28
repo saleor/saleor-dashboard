@@ -28,7 +28,7 @@ export interface MenuListProps extends ListProps, ListActions {
   onDelete: (id: string) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colItems: {

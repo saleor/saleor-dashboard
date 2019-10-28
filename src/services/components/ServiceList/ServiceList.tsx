@@ -28,7 +28,7 @@ export interface ServiceListProps extends ListProps {
   onRemove: (id: string) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colName: {
@@ -39,7 +39,7 @@ const styles = (theme: Theme) =>
     },
     colAction: {
       "&&": {
-        paddingRight: theme.spacing.unit
+        paddingRight: theme.spacing(1)
       },
       textAlign: "right",
       width: 100

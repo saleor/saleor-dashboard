@@ -19,7 +19,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
 import { CollectionDetails_collection_backgroundImage } from "../../types/CollectionDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     PhotosIcon: {
       height: "64px",
@@ -27,7 +27,7 @@ const styles = (theme: Theme) =>
       width: "64px"
     },
     PhotosIconContainer: {
-      margin: `${theme.spacing.unit * 5}px 0`,
+      margin: theme.spacing(5, 0),
       textAlign: "center"
     },
     fileField: {
@@ -42,11 +42,11 @@ const styles = (theme: Theme) =>
     imageContainer: {
       background: "#ffffff",
       border: "1px solid #eaeaea",
-      borderRadius: theme.spacing.unit,
+      borderRadius: theme.spacing(),
       height: 148,
       justifySelf: "start",
       overflow: "hidden",
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       position: "relative",
       width: 148
     }

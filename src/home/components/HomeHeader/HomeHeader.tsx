@@ -10,10 +10,10 @@ import { FormattedMessage } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     headerContainer: {
-      marginBottom: theme.spacing.unit * 3
+      marginBottom: theme.spacing(3)
     },
     pageHeader: {
       fontWeight: 600 as 600

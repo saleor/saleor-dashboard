@@ -14,7 +14,7 @@ export interface GridProps extends WithStyles<typeof styles> {
   variant?: GridVariant;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     default: {
       gridTemplateColumns: "9fr 4fr"
@@ -24,10 +24,10 @@ const styles = (theme: Theme) =>
     },
     root: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 3 + "px",
-      gridRowGap: theme.spacing.unit * 3 + "px",
+      gridColumnGap: theme.spacing(3),
+      gridRowGap: theme.spacing(3),
       [theme.breakpoints.down("sm")]: {
-        gridRowGap: theme.spacing.unit + "px",
+        gridRowGap: theme.spacing(1),
         gridTemplateColumns: "1fr"
       }
     },

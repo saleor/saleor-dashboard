@@ -12,7 +12,7 @@ import useTheme from "@saleor/hooks/useTheme";
 import classNames from "classnames";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     dark: {
       "& svg": {
@@ -51,7 +51,7 @@ const styles = (theme: Theme) =>
     root: {
       color: theme.palette.text.secondary,
       flexShrink: 0,
-      margin: `0 ${theme.spacing.unit * 2.5}px`
+      margin: theme.spacing(0, 2.5)
     }
   });
 

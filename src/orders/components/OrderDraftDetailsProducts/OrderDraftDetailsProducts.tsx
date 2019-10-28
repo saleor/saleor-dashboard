@@ -30,13 +30,13 @@ export interface FormData {
   quantity: number;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     colAction: {
       "&:last-child": {
         paddingRight: 0
       },
-      width: 76 + theme.spacing.unit / 2
+      width: 76 + theme.spacing(0.5)
     },
     colName: {
       width: "auto"
@@ -130,7 +130,7 @@ const OrderDraftDetailsProducts = withStyles(styles, {
               >
                 {maybe(() => line.productName && line.productSku) ? (
                   <>
-                    <Typography variant="body2">{line.productName}</Typography>
+                    <Typography variant="body1">{line.productName}</Typography>
                     <Typography variant="caption">{line.productSku}</Typography>
                   </>
                 ) : (

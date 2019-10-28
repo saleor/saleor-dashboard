@@ -1,12 +1,11 @@
-import { Theme } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import TableCell, { TableCellProps } from "@material-ui/core/TableCell";
-import makeStyles from "@material-ui/styles/makeStyles";
 import classNames from "classnames";
 import React from "react";
 
 import ArrowSort from "../../icons/ArrowSort";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(theme => ({
   arrow: {
     transition: theme.transitions.duration.short + "ms"
   },

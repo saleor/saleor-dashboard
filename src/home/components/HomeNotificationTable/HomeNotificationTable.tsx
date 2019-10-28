@@ -19,10 +19,10 @@ import Skeleton from "@saleor/components/Skeleton";
 import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     arrowIcon: {
-      width: theme.spacing.unit * 4
+      width: theme.spacing(4)
     },
     tableRow: {
       cursor: "pointer"

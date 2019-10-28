@@ -13,7 +13,7 @@ import React from "react";
 
 import { DateTime } from "../Date";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     date: {
       color: theme.typography.caption.color,
@@ -21,7 +21,7 @@ const styles = (theme: Theme) =>
     dateExpander:{
       color: theme.typography.caption.color,
       position: "absolute",
-      right: theme.spacing.unit * 3
+      right: theme.spacing(3)
     },
     dot: {
       backgroundColor: theme.palette.primary.main,
@@ -36,8 +36,8 @@ const styles = (theme: Theme) =>
       alignItems: "center",
       display: "flex",
       justifyContent: "space-between",
-      marginBottom: theme.spacing.unit,
-      marginLeft: theme.spacing.unit * 3,
+      marginBottom: theme.spacing(),
+      marginLeft: theme.spacing(3),
       width: "100%"
     },
     panel: {
@@ -52,14 +52,14 @@ const styles = (theme: Theme) =>
         background: theme.palette.background.default,
         content: "''",
         height: "calc(50% - 4px)",
-        left: `${-theme.spacing.unit * 3 - 2}px`,
+        left: -theme.spacing(3) - 2,
         position: "absolute",
         top: "calc(50% + 4px)",
         width: "2px"
       },
       alignItems: "center",
       display: "flex",
-      marginBottom: theme.spacing.unit * 3,
+      marginBottom: theme.spacing(3),
       position: "relative",
       width: "100%"
     }

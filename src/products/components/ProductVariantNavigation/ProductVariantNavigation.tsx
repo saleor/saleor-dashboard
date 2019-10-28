@@ -21,7 +21,7 @@ import { maybe, renderCollection } from "../../../misc";
 import { ProductVariantCreateData_product_variants } from "../../types/ProductVariantCreateData";
 import { ProductVariantDetails_productVariant } from "../../types/ProductVariantDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     colName: {
       paddingLeft: 0,

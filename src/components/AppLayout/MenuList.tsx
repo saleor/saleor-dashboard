@@ -24,7 +24,7 @@ import { orderDraftListUrl, orderListUrl } from "../../orders/urls";
 import MenuNested from "./MenuNested";
 import { IMenuItem } from "./menuStructure";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     menuIcon: {
       "& svg": {
@@ -78,14 +78,14 @@ const styles = (theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       height: "100%",
-      marginLeft: theme.spacing.unit * 4,
-      marginTop: theme.spacing.unit * 2,
-      paddingBottom: theme.spacing.unit * 3
+      marginLeft: theme.spacing(4),
+      marginTop: theme.spacing(2),
+      paddingBottom: theme.spacing(3)
     },
     menuListItem: {
       alignItems: "center",
       display: "block",
-      marginBottom: theme.spacing.unit * 5,
+      marginBottom: theme.spacing(5),
       paddingLeft: 0,
       textDecoration: "none",
       transition: theme.transitions.duration.standard + "ms"

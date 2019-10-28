@@ -23,13 +23,13 @@ import { ICONBUTTON_SIZE } from "../../../theme";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 import { SiteSettings_shop_authorizationKeys } from "../../types/SiteSettings";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     iconCell: {
       "&:last-child": {
         paddingRight: 0
       },
-      width: ICONBUTTON_SIZE + theme.spacing.unit / 2
+      width: ICONBUTTON_SIZE + theme.spacing(.5)
     }
   });
 

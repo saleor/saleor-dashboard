@@ -14,11 +14,11 @@ import CardTitle from "@saleor/components/CardTitle";
 import { maybe } from "../../../misc";
 import { ProductDetails_product } from "../../types/ProductDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     root: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
+      gridColumnGap: theme.spacing(2),
       gridTemplateColumns: "1fr 1fr"
     }
   });

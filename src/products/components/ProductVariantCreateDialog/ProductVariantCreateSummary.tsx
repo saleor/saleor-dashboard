@@ -4,11 +4,10 @@ import green from "@material-ui/core/colors/green";
 import purple from "@material-ui/core/colors/purple";
 import yellow from "@material-ui/core/colors/yellow";
 import IconButton from "@material-ui/core/IconButton";
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -37,19 +36,19 @@ export interface ProductVariantCreateSummaryProps {
 const colors = [blue, cyan, green, purple, yellow].map(color => color[800]);
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     attributeValue: {
       display: "inline-block",
-      marginRight: theme.spacing.unit
+      marginRight: theme.spacing(1)
     },
     col: {
-      ...theme.typography.body2,
+      ...theme.typography.body1,
       fontSize: 14,
-      paddingLeft: theme.spacing.unit,
-      paddingRight: theme.spacing.unit
+      paddingLeft: theme.spacing(),
+      paddingRight: theme.spacing(1)
     },
     colHeader: {
-      ...theme.typography.body2,
+      ...theme.typography.body1,
       fontSize: 14
     },
     colName: {
@@ -57,31 +56,31 @@ const useStyles = makeStyles(
         paddingLeft: "0 !important"
       },
       "&:not($colHeader)": {
-        paddingTop: theme.spacing.unit * 2
+        paddingTop: theme.spacing(2)
       }
     },
     colPrice: {},
     colSku: {},
     colStock: {},
     delete: {
-      marginTop: theme.spacing.unit / 2
+      marginTop: theme.spacing(0.5)
     },
     errorRow: {},
     hr: {
-      marginBottom: theme.spacing.unit,
-      marginTop: theme.spacing.unit / 2
+      marginBottom: theme.spacing(),
+      marginTop: theme.spacing(0.5)
     },
     input: {
       "& input": {
         padding: "16px 12px 17px"
       },
-      marginTop: theme.spacing.unit / 2
+      marginTop: theme.spacing(0.5)
     },
     row: {
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "grid",
       gridTemplateColumns: "1fr 180px 120px 180px 64px",
-      padding: `${theme.spacing.unit}px 0`
+      padding: theme.spacing(1, 0)
     }
   }),
   {

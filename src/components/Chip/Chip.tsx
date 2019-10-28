@@ -16,12 +16,12 @@ export interface ChipProps {
   onClose?: () => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     closeIcon: {
       cursor: "pointer",
       fontSize: 16,
-      marginLeft: theme.spacing.unit,
+      marginLeft: theme.spacing(),
       verticalAlign: "middle"
     },
     label: {
@@ -31,7 +31,7 @@ const styles = (theme: Theme) =>
       background: fade(theme.palette.secondary.main, 0.8),
       borderRadius: 8,
       display: "inline-block",
-      marginRight: theme.spacing.unit * 2,
+      marginRight: theme.spacing(2),
       padding: "6px 12px"
     }
   });

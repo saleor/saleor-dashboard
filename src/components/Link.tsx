@@ -8,7 +8,7 @@ import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     primary: {
       color: theme.palette.primary.main

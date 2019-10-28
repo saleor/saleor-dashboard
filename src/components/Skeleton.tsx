@@ -7,7 +7,7 @@ import {
 import classNames from "classnames";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     "@keyframes skeleton-animation": {
       "0%": {

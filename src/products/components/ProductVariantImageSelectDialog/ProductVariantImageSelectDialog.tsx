@@ -16,7 +16,7 @@ import { FormattedMessage } from "react-intl";
 import { buttonMessages } from "@saleor/intl";
 import { ProductImage } from "../../types/ProductImage";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     image: {
       height: "100%",
@@ -27,18 +27,18 @@ const styles = (theme: Theme) =>
     imageContainer: {
       background: "#ffffff",
       border: "1px solid #eaeaea",
-      borderRadius: theme.spacing.unit,
+      borderRadius: theme.spacing(),
       cursor: "pointer",
-      height: theme.spacing.unit * 21.5,
+      height: theme.spacing(21.5),
       overflow: "hidden",
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       position: "relative",
       transitionDuration: theme.transitions.duration.standard + "ms"
     },
     root: {
       display: "grid",
-      gridColumnGap: `${theme.spacing.unit * 2}px`,
-      gridRowGap: `${theme.spacing.unit * 2}px`,
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(2),
       gridTemplateColumns: "repeat(3, 1fr)",
       maxWidth: "100%",
       width: theme.breakpoints.values.lg,

@@ -1,15 +1,10 @@
 import { InputProps } from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     currencySymbol: {
       fontSize: "0.875rem"
@@ -19,15 +14,15 @@ const styles = (theme: Theme) =>
       gridTemplateColumns: "1fr 2rem 1fr"
     },
     pullDown: {
-      marginTop: theme.spacing.unit * 2
+      marginTop: theme.spacing(2)
     },
     separator: {
-      marginTop: theme.spacing.unit * 3,
+      marginTop: theme.spacing(3),
       textAlign: "center",
       width: "100%"
     },
     widgetContainer: {
-      marginTop: theme.spacing.unit * 2
+      marginTop: theme.spacing(2)
     }
   });
 

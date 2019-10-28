@@ -11,7 +11,7 @@ interface HrProps {
   className?: string;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     root: {
       backgroundColor: theme.overrides.MuiCard.root.borderColor,

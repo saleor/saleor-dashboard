@@ -1,14 +1,13 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
-import { Theme } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,7 +22,7 @@ export interface ServiceTokensProps {
   onDelete: (id: string) => void;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(theme => ({
   [theme.breakpoints.down("md")]: {
     colNote: {
       width: 200

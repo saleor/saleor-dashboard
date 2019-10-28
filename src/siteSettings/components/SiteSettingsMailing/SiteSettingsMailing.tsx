@@ -1,9 +1,8 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -29,13 +28,13 @@ interface SiteSettingsMailingProps {
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     cardHelperText: {
       position: "relative",
-      top: -theme.spacing.unit
+      top: -theme.spacing(1)
     },
     cardHelperTextCaption: {
-      marginBottom: theme.spacing.unit * 2
+      marginBottom: theme.spacing(2)
     }
   }),
   {
@@ -64,7 +63,7 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
             id="siteSettingsMailingHelperText"
           />
         </Typography>
-        <Typography className={classes.cardHelperTextCaption} variant="body1">
+        <Typography className={classes.cardHelperTextCaption} variant="body2">
           <FormattedMessage defaultMessage="Configurate your email address from which all automatic emails will be sent to your customers." />
         </Typography>
         <TextField

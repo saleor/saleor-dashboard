@@ -6,10 +6,10 @@ import {
 } from "@material-ui/core/styles";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     spacer: {
-      marginTop: theme.spacing.unit * 3
+      marginTop: theme.spacing(3)
     }
   });
 

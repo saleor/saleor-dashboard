@@ -19,20 +19,20 @@ import ConfirmButton, {
 } from "../ConfirmButton/ConfirmButton";
 import Container from "../Container";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     button: {
-      marginRight: theme.spacing.unit
+      marginRight: theme.spacing(1)
     },
     cancelButton: {
-      marginRight: theme.spacing.unit * 2
+      marginRight: theme.spacing(2)
     },
     container: {
       display: "flex",
-      paddingBottom: theme.spacing.unit * 2,
-      paddingTop: theme.spacing.unit * 2,
+      paddingBottom: theme.spacing(2),
+      paddingTop: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {
-        marginTop: theme.spacing.unit
+        marginTop: theme.spacing(1)
       }
     },
     deleteButton: {

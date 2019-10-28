@@ -1,7 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Theme } from "@material-ui/core/styles";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -20,10 +19,10 @@ export interface SaleTypeProps {
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     root: {
       "&&": {
-        paddingBottom: theme.spacing.unit * 1.5
+        paddingBottom: theme.spacing(1.5)
       }
     }
   }),

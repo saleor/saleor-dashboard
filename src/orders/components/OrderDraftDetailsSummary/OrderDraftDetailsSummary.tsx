@@ -13,10 +13,10 @@ import Skeleton from "@saleor/components/Skeleton";
 import { maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     root: {
-      ...theme.typography.body2,
+      ...theme.typography.body1,
       lineHeight: 1.9,
       width: "100%"
     },

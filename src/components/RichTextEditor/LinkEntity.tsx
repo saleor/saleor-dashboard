@@ -27,7 +27,7 @@ interface LinkEntityProps {
   onRemove: (entityKey: string) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     anchor: {
       display: "inline-block"
@@ -46,15 +46,14 @@ const styles = (theme: Theme) =>
       alignItems: "center",
       display: "flex",
       minHeight: 72,
-      padding: `${theme.spacing.unit * 1.5}px ${theme.spacing.unit *
-        1.5}px ${theme.spacing.unit * 1.5}px ${theme.spacing.unit * 3}px`
+      padding: theme.spacing(1.5, 1.5, 1.5, 3)
     },
     separator: {
       backgroundColor: theme.palette.grey[300],
       display: "inline-block",
       height: 30,
-      marginLeft: theme.spacing.unit * 2,
-      marginRight: theme.spacing.unit,
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(),
       width: 1
     }
   });
@@ -97,7 +96,7 @@ const LinkEntity = withStyles(styles, {
                 <Paper className={classes.root}>
                   <ClickAwayListener onClickAway={disable} mouseEvent="onClick">
                     <div className={classes.container}>
-                      <Typography className={classes.inline} variant="body2">
+                      <Typography className={classes.inline} variant="body1">
                         {contentState.getEntity(entityKey).getData().url}
                       </Typography>
                       <span className={classes.separator} />

@@ -32,13 +32,13 @@ export interface DiscountCategoriesProps extends ListProps, ListActions {
   onCategoryUnassign: (id: string) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     iconCell: {
       "&:last-child": {
         paddingRight: 0
       },
-      width: 48 + theme.spacing.unit / 2
+	    width: 48 + theme.spacing(.5)
     },
     tableRow: {
       cursor: "pointer"

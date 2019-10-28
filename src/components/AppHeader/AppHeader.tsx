@@ -16,36 +16,36 @@ export interface AppHeaderProps {
   onBack();
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     backArrow: {
       fontSize: 30
     },
     menuButton: {
       flex: "0 0 auto",
-      marginLeft: theme.spacing.unit * -2,
-      marginRight: theme.spacing.unit,
-      marginTop: -theme.spacing.unit * 2
+      marginLeft: -theme.spacing(2),
+      marginRight: theme.spacing(),
+      marginTop: -theme.spacing(2)
     },
     root: {
       "&:hover": {
-        color: theme.typography.body2.color
+        color: theme.typography.body1.color
       },
       alignItems: "center",
       color: theme.palette.grey[500],
       cursor: "pointer",
       display: "flex",
-      marginTop: theme.spacing.unit / 2,
+      marginTop: theme.spacing(0.5),
       transition: theme.transitions.duration.standard + "ms"
     },
     skeleton: {
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
       width: "10rem"
     },
     title: {
       color: "inherit",
       flex: 1,
-      marginLeft: theme.spacing.unit,
+      marginLeft: theme.spacing(),
       textTransform: "uppercase"
     }
   });

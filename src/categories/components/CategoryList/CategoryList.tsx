@@ -20,7 +20,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colName: {

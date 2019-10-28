@@ -29,7 +29,7 @@ export interface VoucherListProps extends ListProps, ListActions {
   vouchers: VoucherList_vouchers_edges_node[];
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colEnd: {

@@ -1,8 +1,7 @@
 import Button from "@material-ui/core/Button";
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -11,15 +10,15 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import { commonMessages } from "@saleor/intl";
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     panel: {
       "& span": {
         color: theme.palette.error.contrastText
       },
       background: theme.palette.error.main,
-      borderRadius: theme.spacing.unit,
-      marginBottom: theme.spacing.unit * 3,
-      padding: theme.spacing.unit * 1.5
+      borderRadius: theme.spacing(),
+      marginBottom: theme.spacing(3),
+      padding: theme.spacing(1.5)
     },
     submit: {
       width: "100%"

@@ -45,13 +45,13 @@ export interface RichTextEditorProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     error: {
       color: theme.palette.error.main
     },
     helperText: {
-      marginTop: theme.spacing.unit * 0.75
+      marginTop: theme.spacing(0.75)
     },
     input: {
       position: "relative"
@@ -90,7 +90,7 @@ const styles = (theme: Theme) =>
           position: "relative"
         },
         "&-root": {
-          ...theme.typography.body2
+          ...theme.typography.body1
         }
       },
       "& .Draftail": {
@@ -140,12 +140,12 @@ const styles = (theme: Theme) =>
             background: "none",
             border: "none",
             borderRight: `1px ${theme.overrides.MuiCard.root.borderColor} solid`,
-            color: theme.typography.body2.color,
+            color: theme.typography.body1.color,
             cursor: "pointer",
             display: "inline-flex",
             height: 36,
             justifyContent: "center",
-            padding: theme.spacing.unit + 2,
+            padding: theme.spacing(1) + 2,
             transition: theme.transitions.duration.short + "ms",
             width: 36
           },
@@ -163,7 +163,7 @@ const styles = (theme: Theme) =>
           border: `1px ${theme.overrides.MuiCard.root.borderColor} solid`,
           display: "inline-flex",
           flexWrap: "wrap",
-          marginBottom: theme.spacing.unit,
+          marginBottom: theme.spacing(),
           marginTop: 10,
           [theme.breakpoints.down(460)]: {
             width: "min-content"
@@ -173,7 +173,7 @@ const styles = (theme: Theme) =>
           "&--blockquote": {
             borderLeft: `2px solid ${theme.overrides.MuiCard.root.borderColor}`,
             margin: 0,
-            padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
+            padding: theme.spacing(1, 2)
           }
         }
       },

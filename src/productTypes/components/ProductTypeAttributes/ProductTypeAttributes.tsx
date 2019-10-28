@@ -30,7 +30,7 @@ import {
   ProductTypeDetails_productType_variantAttributes
 } from "../../types/ProductTypeDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     colName: {},
     colSlug: {
@@ -40,7 +40,7 @@ const styles = (theme: Theme) =>
       "&:last-child": {
         paddingRight: 0
       },
-      width: 48 + theme.spacing.unit * 1.5
+      width: 48 + theme.spacing(1.5)
     },
     link: {
       cursor: "pointer"

@@ -27,7 +27,7 @@ export interface PluginListProps extends ListProps {
   plugins: Plugins_plugins_edges_node[];
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colAction: {

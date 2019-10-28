@@ -40,6 +40,8 @@ export type IThemeColors = Record<
     | "textHover",
     string
   >;
+} & {
+  theme: "dark" | "light";
 };
 
 const fontFamily = '"Inter", "roboto", "sans-serif"';
@@ -51,21 +53,21 @@ export default (colors: IThemeColors): Theme =>
         contained: {
           "&$disabled": {
             backgroundColor: fade(colors.primary, 0.12)
-          }
+          },
+          "&:active": {
+            boxShadow: null
+          },
+          "&:hover": {
+            boxShadow: null
+          },
+          boxShadow: null
         },
         containedPrimary: {
+          "&:active": {
+            backgroundColor: darken(colors.primary, 0.4)
+          },
           "&:hover": {
             backgroundColor: darken(colors.primary, 0.1)
-          }
-        },
-        flat: {
-          "& span": {
-            color: colors.font.default
-          }
-        },
-        flatPrimary: {
-          "& span": {
-            color: colors.primary
           }
         },
         label: {
@@ -77,6 +79,16 @@ export default (colors: IThemeColors): Theme =>
             marginLeft: 8
           },
           borderRadius: 4
+        },
+        text: {
+          "& span": {
+            color: colors.font.default
+          }
+        },
+        textPrimary: {
+          "& span": {
+            color: colors.primary
+          }
         }
       },
       MuiCard: {
@@ -173,9 +185,9 @@ export default (colors: IThemeColors): Theme =>
         },
         outlined: {
           "&$shrink": {
-            transform: "translate(12px, 6px) scale(0.75)"
+            transform: "translate(12px, 9px) scale(0.75)"
           },
-          transform: "translate(14px, 14px) scale(1)",
+          transform: "translate(14px, 18px) scale(1)",
           zIndex: 9
         },
         root: {
@@ -226,7 +238,7 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiMenuItem: {
         root: {
-          "&$selected, &$selected:focus": {
+          "&$selected, &$selected:focus, &$selected:hover": {
             backgroundColor: [colors.background.default, "!important"] as any,
             color: colors.primary,
             fontWeight: 700
@@ -262,18 +274,15 @@ export default (colors: IThemeColors): Theme =>
         },
         input: {
           "&:-webkit-autofill": {
+            borderRadius: 4,
             boxShadow: `0 0 0px 1000px rgba(19, 190, 187, 0.1) inset`,
-            left: 1,
-            position: "relative",
-            top: -3,
-            width: `calc(100% - 26px)`,
             zIndex: 0
           },
           "&::placeholder": {
             opacity: [[0], "!important"] as any
           },
           color: colors.input.text,
-          padding: "20px 12px 8px 12px"
+          padding: "23px 12px 10px 12px"
         },
         inputMultiline: {
           left: -2,
@@ -284,7 +293,9 @@ export default (colors: IThemeColors): Theme =>
           "& fieldset": {
             "&&:not($error)": {
               borderColor: colors.input.border
-            }
+            },
+            top: 0,
+            zIndex: 1
           },
           "& legend": {
             display: "none"
@@ -304,8 +315,7 @@ export default (colors: IThemeColors): Theme =>
               "&::placeholder": {
                 opacity: [[1], "!important"] as any
               },
-              color: colors.font.default,
-              zIndex: 2
+              color: colors.font.default
             },
             "&&&": {
               "& fieldset": {
@@ -318,8 +328,7 @@ export default (colors: IThemeColors): Theme =>
           },
           "&:hover": {
             "& input": {
-              color: colors.font.default,
-              zIndex: 2
+              color: colors.font.default
             },
             "&&&": {
               "& fieldset": {
@@ -330,12 +339,8 @@ export default (colors: IThemeColors): Theme =>
               }
             }
           },
-          borderColor: colors.input.border
-        }
-      },
-      MuiSelect: {
-        outlined: {
-          padding: ["20px 12px 8px 12px", "!important"] as any
+          borderColor: colors.input.border,
+          top: 0
         }
       },
       MuiSnackbarContent: {
@@ -484,7 +489,8 @@ export default (colors: IThemeColors): Theme =>
         hint: colors.font.gray,
         primary: colors.font.default,
         secondary: colors.font.gray
-      }
+      },
+      type: colors.theme
     },
     props: {
       MuiFormControl: {
@@ -523,10 +529,7 @@ export default (colors: IThemeColors): Theme =>
         fontFamily
       },
       body1: {
-        fontSize: 14
-      },
-      body2: {
-        fontSize: "1rem"
+        color: colors.font.default
       },
       fontFamily,
       h4: {
@@ -534,8 +537,7 @@ export default (colors: IThemeColors): Theme =>
       },
       h5: {
         fontSize: "1.3125rem"
-      },
-      useNextVariants: true
+      }
     }
   });
 

@@ -15,21 +15,21 @@ import CardTitle from "@saleor/components/CardTitle";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import { DateContext } from "../Date/DateContext";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     children: {
       "& button": {
         margin: "0 9px"
       },
       "& label": {
-        marginTop: `${theme.spacing.unit * 2.5}px`
+        marginTop: theme.spacing(2.5)
       }
     },
     date: {
       "& svg": {
         fill: theme.palette.primary.main
       },
-      marginTop: theme.spacing.unit * 3
+      marginTop: theme.spacing(3)
     },
     label: {
       lineHeight: 1,

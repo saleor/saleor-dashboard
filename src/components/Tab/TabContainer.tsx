@@ -10,7 +10,7 @@ export interface TabContainerProps {
   children: React.ReactNode | React.ReactNodeArray;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     root: {
       borderBottom: `1px solid ${theme.overrides.MuiCard.root.borderColor}`

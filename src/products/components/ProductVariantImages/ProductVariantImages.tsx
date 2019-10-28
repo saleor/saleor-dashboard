@@ -15,7 +15,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductImage } from "../../types/ProductImage";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     gridElement: {
       "& img": {
@@ -33,14 +33,14 @@ const styles = (theme: Theme) =>
     imageContainer: {
       background: "#ffffff",
       border: "1px solid #eaeaea",
-      borderRadius: theme.spacing.unit,
-      height: theme.spacing.unit * 17.5,
-      marginBottom: theme.spacing.unit * 2,
-      padding: theme.spacing.unit * 2
+      borderRadius: theme.spacing(),
+      height: theme.spacing(17.5),
+      marginBottom: theme.spacing(2),
+      padding: theme.spacing(2)
     },
     root: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
+      gridColumnGap: theme.spacing(2),
       gridTemplateColumns: "repeat(4, 1fr)"
     }
   });

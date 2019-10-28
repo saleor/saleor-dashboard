@@ -29,7 +29,7 @@ export interface SaleListProps extends ListProps, ListActions {
   sales: SaleList_sales_edges_node[];
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colEnd: {

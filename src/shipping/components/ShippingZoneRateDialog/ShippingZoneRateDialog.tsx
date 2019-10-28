@@ -50,16 +50,16 @@ export interface ShippingZoneRateDialogProps {
   onSubmit: (data: FormData) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     grid: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
+      gridColumnGap: theme.spacing(2),
       gridTemplateColumns: "1fr 1fr"
     },
     subheading: {
-      marginBottom: theme.spacing.unit * 2,
-      marginTop: theme.spacing.unit * 2
+      marginBottom: theme.spacing(2),
+      marginTop: theme.spacing(2)
     }
   });
 const ShippingZoneRateDialog = withStyles(styles, {

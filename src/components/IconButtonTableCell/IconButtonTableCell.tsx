@@ -17,14 +17,14 @@ export interface IconButtonTableCellProps {
   onClick: () => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     root: {
       "&:last-child": {
         paddingRight: 0
       },
       paddingRight: 0,
-      width: ICONBUTTON_SIZE + theme.spacing.unit / 2
+      width: ICONBUTTON_SIZE + theme.spacing(.5)
     }
   });
 const IconButtonTableCell = withStyles(styles, { name: "IconButtonTableCell" })(

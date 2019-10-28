@@ -35,7 +35,7 @@ export interface FormData {
   trackingNumber: string;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     colName: {
       width: "auto"
@@ -58,7 +58,7 @@ const styles = (theme: Theme) =>
       width: "4rem"
     },
     remainingQuantity: {
-      marginLeft: theme.spacing.unit,
+      marginLeft: theme.spacing(),
       paddingTop: 14
     },
     table: {

@@ -34,7 +34,7 @@ const palette = [
   colors.yellow
 ].map(color => color[500]);
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     avatar: {
       left: -45,
@@ -42,8 +42,8 @@ const styles = (theme: Theme) =>
       top: 0
     },
     card: {
-      marginBottom: theme.spacing.unit * 3,
-      marginLeft: theme.spacing.unit * 3,
+      marginBottom: theme.spacing(3),
+      marginLeft: theme.spacing(3),
       position: "relative"
     },
     cardContent: {
@@ -62,8 +62,8 @@ const styles = (theme: Theme) =>
       alignItems: "center",
       display: "flex",
       justifyContent: "space-between",
-      marginBottom: theme.spacing.unit,
-      paddingLeft: theme.spacing.unit * 3
+      marginBottom: theme.spacing(),
+      paddingLeft: theme.spacing(3)
     }
   });
 

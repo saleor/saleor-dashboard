@@ -14,7 +14,7 @@ import React from "react";
 
 import useForm from "@saleor/hooks/useForm";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     card: {
       border: `1px solid ${theme.overrides.MuiCard.root.borderColor}`
@@ -33,10 +33,10 @@ const styles = (theme: Theme) =>
     },
     root: {
       left: 0,
-      minWidth: theme.spacing.unit * 20,
+      minWidth: theme.spacing(20),
       position: "absolute",
       top: 0,
-      width: `calc(100% + ${4 * theme.spacing.unit}px)`,
+      width: `calc(100% + ${theme.spacing(4)}px)`,
       zIndex: 2
     },
     text: {

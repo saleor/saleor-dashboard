@@ -24,7 +24,7 @@ export interface FormData {
   restock: boolean;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     deleteButton: {
       "&:hover": {

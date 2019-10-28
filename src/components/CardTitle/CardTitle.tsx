@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     children: theme.mixins.gutters({}),
     constantHeight: {
@@ -32,7 +32,7 @@ const styles = (theme: Theme) =>
       lineHeight: 1
     },
     toolbar: {
-      marginRight: -theme.spacing.unit
+      marginRight: -theme.spacing(1)
     }
   });
 

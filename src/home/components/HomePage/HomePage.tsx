@@ -27,14 +27,14 @@ import HomeHeader from "../HomeHeader";
 import HomeNotificationTable from "../HomeNotificationTable/HomeNotificationTable";
 import HomeProductListCard from "../HomeProductListCard";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     cardContainer: {
       display: "grid",
-      gridColumnGap: `${theme.spacing.unit * 3}px`,
+      gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "1fr 1fr",
       [theme.breakpoints.down("sm")]: {
-        gridColumnGap: `${theme.spacing.unit}px`
+        gridColumnGap: theme.spacing(1)
       },
       [theme.breakpoints.down("xs")]: {
         gridTemplateColumns: "1fr"

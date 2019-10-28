@@ -18,7 +18,7 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "../ConfirmButton/ConfirmButton";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     deleteButton: {
       "&:hover": {

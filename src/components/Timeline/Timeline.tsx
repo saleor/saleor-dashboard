@@ -13,7 +13,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     avatar: {
       "& span": {
@@ -21,10 +21,13 @@ const styles = (theme: Theme) =>
         width: "100%"
       },
       alignSelf: "flex-start",
-      marginRight: theme.spacing.unit * 3.5
+      marginRight: theme.spacing(3.5)
+    },
+    button: {
+      zIndex: 2
     },
     cardActionsExpanded: {
-      maxHeight: theme.spacing.unit * 6
+      maxHeight: theme.spacing(6)
     },
     input: {
       "& > div": {
@@ -36,15 +39,16 @@ const styles = (theme: Theme) =>
       "& textarea": {
         "&::placeholder": {
           opacity: [[1], "!important"] as any
-        }
+        },
+        zIndex: 2
       },
       background: theme.palette.background.paper
     },
     noteRoot: {
-      left: -theme.spacing.unit * 8.5 - 1,
-      marginBottom: theme.spacing.unit * 3,
+      left: -theme.spacing(8.5) - 1,
+      marginBottom: theme.spacing(3),
       position: "relative",
-      width: `calc(100% + ${theme.spacing.unit * 8.5}px)`
+      width: `calc(100% + ${theme.spacing(8.5)}px)`
     },
     noteTitle: {
       "&:last-child": {
@@ -54,14 +58,14 @@ const styles = (theme: Theme) =>
       alignItems: "center",
       background: theme.palette.background.default,
       display: "flex",
-      paddingLeft: theme.spacing.unit * 3
+      paddingLeft: theme.spacing(3)
     },
     root: {
       borderColor: theme.overrides.MuiCard.root.borderColor,
       borderStyle: "solid",
       borderWidth: "0 0 0 2px",
       marginLeft: 20,
-      paddingLeft: theme.spacing.unit * 3
+      paddingLeft: theme.spacing(3)
     }
   });
 
@@ -112,7 +116,11 @@ export const TimelineAddNote = withStyles(styles, { name: "TimelineAddNote" })(
             multiline
             InputProps={{
               endAdornment: (
-                <Button color="primary" onClick={e => submit(e)}>
+                <Button
+                  className={classes.button}
+                  color="primary"
+                  onClick={e => submit(e)}
+                >
                   <FormattedMessage
                     defaultMessage="Send"
                     description="add order note, button"

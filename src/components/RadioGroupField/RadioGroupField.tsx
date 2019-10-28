@@ -5,19 +5,18 @@ import FormLabel from "@material-ui/core/FormLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import { Theme } from "@material-ui/core/styles";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     formLabel: {
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing(1)
     },
     radioLabel: {
-      marginBottom: -theme.spacing.unit * 1.5
+      marginBottom: -theme.spacing(1.5)
     },
     root: {
       "& $radioLabel": {
@@ -29,7 +28,7 @@ const useStyles = makeStyles(
       width: "100%"
     },
     rootNoLabel: {
-      marginTop: -theme.spacing.unit * 1.5
+      marginTop: -theme.spacing(1.5)
     }
   }),
   {

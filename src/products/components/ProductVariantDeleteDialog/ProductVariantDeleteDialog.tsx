@@ -18,7 +18,7 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     deleteButton: {
       "&:hover": {

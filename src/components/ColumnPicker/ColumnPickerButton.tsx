@@ -1,8 +1,7 @@
 import Button from "@material-ui/core/Button";
-import { Theme } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import makeStyles from "@material-ui/styles/makeStyles";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -14,16 +13,16 @@ interface ColumnPickerButtonProps {
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     icon: {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
       transition: theme.transitions.duration.short + "ms"
     },
     root: {
       "& span": {
         color: theme.palette.primary.main
       },
-      paddingRight: theme.spacing.unit
+      paddingRight: theme.spacing(1)
     },
     rootActive: {
       background: fade(theme.palette.primary.main, 0.1)

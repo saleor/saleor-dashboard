@@ -28,11 +28,11 @@ import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     date: {
-      marginBottom: theme.spacing.unit * 3,
-      marginLeft: theme.spacing.unit * 7
+      marginBottom: theme.spacing(3),
+      marginLeft: theme.spacing(7)
     },
     header: {
       marginBottom: 0

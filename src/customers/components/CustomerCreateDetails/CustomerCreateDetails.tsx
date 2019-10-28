@@ -15,12 +15,12 @@ import { commonMessages } from "@saleor/intl";
 import { FormErrors } from "../../../types";
 import { CustomerCreatePageFormData } from "../CustomerCreatePage";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     root: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
-      gridRowGap: theme.spacing.unit * 3 + "px",
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(3),
       gridTemplateColumns: "1fr 1fr"
     }
   });

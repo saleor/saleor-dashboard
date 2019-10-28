@@ -18,11 +18,11 @@ import { buttonMessages } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     label: {
       fontWeight: 600,
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing(1)
     }
   });
 

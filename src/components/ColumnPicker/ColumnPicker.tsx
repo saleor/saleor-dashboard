@@ -1,9 +1,8 @@
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
 import Popper from "@material-ui/core/Popper";
-import { Theme } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import makeStyles from "@material-ui/styles/makeStyles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
 
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -26,10 +25,10 @@ export interface ColumnPickerProps
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     popper: {
       boxShadow: `0px 5px 10px 0 ${fade(theme.palette.common.black, 0.05)}`,
-      marginTop: theme.spacing.unit * 2,
+      marginTop: theme.spacing(2),
       zIndex: 1
     }
   }),

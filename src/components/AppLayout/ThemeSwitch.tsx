@@ -5,7 +5,7 @@ import React from "react";
 import MoonIcon from "../../icons/Moon";
 import SunIcon from "../../icons/Sun";
 
-const switchStyles = (theme: Theme) => ({
+const switchStyles = theme => ({
   bar: {
     "$colorPrimary$checked + &": {
       backgroundColor: theme.palette.background.paper

@@ -16,20 +16,20 @@ export interface ErrorPageProps extends WithStyles<typeof styles> {
   onBack: () => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     bottomHeader: {
       fontWeight: 600 as 600,
       textTransform: "uppercase"
     },
     button: {
-      marginTop: theme.spacing.unit * 2,
+      marginTop: theme.spacing(2),
       padding: 20
     },
     container: {
       [theme.breakpoints.down("sm")]: {
         gridTemplateColumns: "1fr",
-        padding: theme.spacing.unit * 3,
+        padding: theme.spacing(3),
         width: "100%"
       },
       display: "grid",

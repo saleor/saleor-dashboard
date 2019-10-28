@@ -9,11 +9,11 @@ import React from "react";
 
 import SingleSelectField from "@saleor/components/SingleSelectField";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     root: {
       display: "grid",
-      gridColumnGap: `${theme.spacing.unit * 2}px`,
+      gridColumnGap: theme.spacing(2),
       gridTemplateColumns: "5rem 1fr"
     }
   });

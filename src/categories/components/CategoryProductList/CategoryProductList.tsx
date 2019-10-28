@@ -25,7 +25,7 @@ import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colName: {

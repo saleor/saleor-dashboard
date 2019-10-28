@@ -22,7 +22,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
 import ProductImageNavigation from "../ProductImageNavigation";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     image: {
       height: "100%",
@@ -32,10 +32,10 @@ const styles = (theme: Theme) =>
     imageContainer: {
       background: "#ffffff",
       border: "1px solid #eaeaea",
-      borderRadius: theme.spacing.unit,
-      margin: `0 auto ${theme.spacing.unit * 2}px`,
+      borderRadius: theme.spacing(),
+      margin: `0 auto ${theme.spacing(2)}px`,
       maxWidth: 552,
-      padding: theme.spacing.unit * 2
+      padding: theme.spacing(2)
     }
   });
 

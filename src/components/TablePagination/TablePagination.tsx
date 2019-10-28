@@ -16,12 +16,12 @@ import { maybe } from "@saleor/misc";
 import { ListSettings } from "../../types";
 import TablePaginationActions from "./TablePaginationActions";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     actions: {
       color: theme.palette.text.secondary,
       flexShrink: 0,
-      marginLeft: theme.spacing.unit * 2.5
+      marginLeft: theme.spacing(2.5)
     },
     caption: {
       flexShrink: 0
@@ -36,16 +36,16 @@ const styles = (theme: Theme) =>
       }
     },
     select: {
-      paddingLeft: theme.spacing.unit,
-      paddingRight: theme.spacing.unit * 2
+      paddingLeft: theme.spacing(),
+      paddingRight: theme.spacing(2)
     },
     selectIcon: {
       top: 1
     },
     selectRoot: {
       color: theme.palette.text.secondary,
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit * 4
+      marginLeft: theme.spacing(),
+      marginRight: theme.spacing(4)
     },
     spacer: {
       flex: "1 1 100%"

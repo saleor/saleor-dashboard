@@ -1,7 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import { Theme } from "@material-ui/core/styles";
-import makeStyles from "@material-ui/styles/makeStyles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -42,9 +41,9 @@ export interface ProductListPageProps
   products: ProductList_products_edges_node[];
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(theme => ({
   columnPicker: {
-    marginRight: theme.spacing.unit * 3
+    marginRight: theme.spacing(3)
   }
 }));
 

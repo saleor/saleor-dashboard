@@ -26,7 +26,7 @@ export interface PageListProps extends ListProps, ListActions {
   pages: PageList_pages_edges_node[];
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colSlug: {

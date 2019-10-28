@@ -1,9 +1,8 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
@@ -38,13 +37,16 @@ export interface SingleAutocompleteSelectFieldContentProps
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     arrowContainer: {
       position: "relative"
     },
     arrowInnerContainer: {
       alignItems: "center",
-      background: theme.palette.grey[50],
+      background:
+        theme.palette.type === "light"
+          ? theme.palette.grey[50]
+          : theme.palette.grey[900],
       bottom: 0,
       display: "flex",
       height: 30,
@@ -55,7 +57,7 @@ const useStyles = makeStyles(
       width: "100%"
     },
     content: {
-      maxHeight: menuItemHeight * maxMenuItems + theme.spacing.unit * 2,
+      maxHeight: menuItemHeight * maxMenuItems + theme.spacing(2),
       overflow: "scroll",
       padding: 8
     },
@@ -63,7 +65,7 @@ const useStyles = makeStyles(
       opacity: 0
     },
     hr: {
-      margin: `${theme.spacing.unit}px 0`
+      margin: theme.spacing(1, 0)
     },
     menuItem: {
       height: "auto",
@@ -78,7 +80,7 @@ const useStyles = makeStyles(
       borderBottomLeftRadius: 8,
       borderBottomRightRadius: 8,
       left: 0,
-      marginTop: theme.spacing.unit,
+      marginTop: theme.spacing(),
       overflow: "hidden",
       position: "absolute",
       right: 0,
@@ -115,7 +117,6 @@ const SingleAutocompleteSelectFieldContent: React.FC<
     emptyOption,
     getItemProps,
     hasMore,
-    highlightedIndex,
     loading,
     inputValue,
     isCustomValueSelected,
@@ -196,10 +197,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<
                 <MenuItem
                   className={classes.menuItem}
                   key={JSON.stringify(suggestion)}
-                  selected={
-                    highlightedIndex === choiceIndex ||
-                    selectedItem === suggestion.value
-                  }
+                  selected={selectedItem === suggestion.value}
                   component="div"
                   {...getItemProps({
                     index: choiceIndex,

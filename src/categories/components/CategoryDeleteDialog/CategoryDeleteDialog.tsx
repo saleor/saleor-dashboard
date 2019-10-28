@@ -15,7 +15,7 @@ import { FormattedMessage } from "react-intl";
 
 import { buttonMessages } from "@saleor/intl";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     deleteButton: {
       "&:hover": {

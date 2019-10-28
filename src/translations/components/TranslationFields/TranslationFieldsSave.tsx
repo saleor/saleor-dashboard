@@ -19,15 +19,15 @@ interface TranslationFieldsSaveProps {
   onSave: () => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     confirmButton: {
-      marginLeft: theme.spacing.unit
+      marginLeft: theme.spacing(1)
     },
     root: {
       display: "flex",
       flexDirection: "row-reverse",
-      marginTop: theme.spacing.unit
+      marginTop: theme.spacing(1)
     }
   });
 

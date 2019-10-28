@@ -17,13 +17,13 @@ interface ListFieldState {
   value: string;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     chip: {
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing(1)
     },
     chipContainer: {
-      marginTop: theme.spacing.unit * 2,
+      marginTop: theme.spacing(2),
       width: 552
     }
   });

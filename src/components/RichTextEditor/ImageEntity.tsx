@@ -23,7 +23,7 @@ interface ImageEntityProps {
   onRemove: (entityKey: string) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     anchor: {
       display: "inline-block"
@@ -40,7 +40,7 @@ const styles = (theme: Theme) =>
       alignItems: "center",
       display: "flex",
       minHeight: 72,
-      padding: theme.spacing.unit * 1.5
+      padding: theme.spacing(1.5)
     }
   });
 

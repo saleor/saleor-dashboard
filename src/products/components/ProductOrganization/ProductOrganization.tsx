@@ -30,17 +30,17 @@ interface ProductType {
   name: string;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     card: {
       overflow: "visible"
     },
     cardSubtitle: {
       fontSize: "1rem",
-      marginBottom: theme.spacing.unit / 2
+      marginBottom: theme.spacing(.5)
     },
     label: {
-      marginBottom: theme.spacing.unit / 2
+      marginBottom: theme.spacing(.5)
     }
   });
 

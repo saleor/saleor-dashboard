@@ -7,11 +7,11 @@ import {
 import Tabs from "@material-ui/core/Tabs";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     tabsRoot: {
       borderBottom: `1px solid ${theme.overrides.MuiCard.root.borderColor}`,
-      paddingLeft: `${theme.spacing.unit * 3}px`
+      paddingLeft: theme.spacing(3)
     }
   });
 

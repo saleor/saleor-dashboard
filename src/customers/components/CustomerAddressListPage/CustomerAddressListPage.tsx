@@ -28,24 +28,24 @@ export interface CustomerAddressListPageProps {
   onSetAsDefault: (id: string, type: AddressTypeEnum) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     addButton: {
-      marginTop: theme.spacing.unit * 2
+      marginTop: theme.spacing(2)
     },
     description: {
-      marginTop: theme.spacing.unit
+      marginTop: theme.spacing(1)
     },
     empty: {
-      margin: `${theme.spacing.unit * 13}px auto 0`,
+      margin: `${theme.spacing(13)}px auto 0`,
       textAlign: "center",
       width: 600
     },
     root: {
-      columnGap: theme.spacing.unit * 3 + "px",
+      columnGap: theme.spacing(3),
       display: "grid",
       gridTemplateColumns: "repeat(3, 1fr)",
-      rowGap: theme.spacing.unit * 3 + "px"
+      rowGap: theme.spacing(3)
     }
   });
 

@@ -3,10 +3,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     label: {
-      marginLeft: theme.spacing.unit * 3.5
+	    marginLeft: theme.spacing(3.5)
     },
     labelText: {
       fontSize: 14

@@ -31,14 +31,14 @@ export interface MenuSection {
   menuItems: MenuItem[];
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     card: {
       "&:hover": {
         boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.15);"
       },
       cursor: "pointer",
-      marginBottom: theme.spacing.unit * 3,
+      marginBottom: theme.spacing(3),
       transition: theme.transitions.duration.standard + "ms"
     },
     cardContent: {
@@ -47,14 +47,14 @@ const styles = (theme: Theme) =>
         paddingBottom: 16
       },
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 4 + "px",
+      gridColumnGap: theme.spacing(4),
       gridTemplateColumns: "48px 1fr"
     },
     cardDisabled: {
       "& $icon, & $sectionTitle, & $sectionDescription": {
         color: theme.palette.text.disabled
       },
-      marginBottom: theme.spacing.unit * 3
+      marginBottom: theme.spacing(3)
     },
     configurationCategory: {
       [theme.breakpoints.down("md")]: {
@@ -62,13 +62,13 @@ const styles = (theme: Theme) =>
       },
       borderTop: `solid 1px ${theme.palette.divider}`,
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 4 + "px",
+      gridColumnGap: theme.spacing(4) + "px",
       gridTemplateColumns: "1fr 3fr",
-      paddingTop: theme.spacing.unit * 3 + "px"
+      paddingTop: theme.spacing(3)
     },
     configurationItem: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 4 + "px",
+      gridColumnGap: theme.spacing(4),
       gridTemplateColumns: "1fr 1fr"
     },
     configurationLabel: {

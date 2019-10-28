@@ -37,7 +37,7 @@ const initialForm: FormData = {
   lastName: ""
 };
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     hr: {
       backgroundColor: "#eaeaea",
@@ -47,12 +47,12 @@ const styles = (theme: Theme) =>
     },
     sectionTitle: {
       fontWeight: 600 as 600,
-      marginBottom: theme.spacing.unit,
-      marginTop: theme.spacing.unit * 2
+      marginBottom: theme.spacing(),
+      marginTop: theme.spacing(2)
     },
     textFieldGrid: {
       display: "grid",
-      gridColumnGap: `${theme.spacing.unit * 2}px`,
+      gridColumnGap: theme.spacing(2),
       gridTemplateColumns: "1fr 1fr"
     }
   });

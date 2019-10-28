@@ -23,7 +23,7 @@ export interface CardMenuProps {
   menuItems: CardMenuItem[];
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     iconButton: {
       background: theme.palette.background.paper,

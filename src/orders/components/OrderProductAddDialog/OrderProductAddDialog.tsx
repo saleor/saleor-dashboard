@@ -34,7 +34,7 @@ import {
   SearchOrderVariant_search_edges_node_variants
 } from "../../types/SearchOrderVariant";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     avatar: {
       paddingLeft: 0
@@ -54,7 +54,7 @@ const styles = (theme: Theme) =>
     loadMoreLoaderContainer: {
       alignItems: "center",
       display: "flex",
-      height: theme.spacing.unit * 3,
+      height: theme.spacing(3),
       justifyContent: "center"
     },
     overflow: {
@@ -70,7 +70,7 @@ const styles = (theme: Theme) =>
       textAlign: "right"
     },
     variantCheckbox: {
-      left: theme.spacing.unit,
+      left: theme.spacing(),
       position: "relative"
     },
     wideCell: {

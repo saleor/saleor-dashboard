@@ -25,7 +25,7 @@ export interface FormData {
   shippingMethod: string;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     dialog: {
       overflowY: "visible"

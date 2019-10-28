@@ -9,13 +9,13 @@ import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 
-const styles = (theme: Theme) => {
+const styles = theme => {
   const dot = {
     borderRadius: "100%",
     content: "''",
     display: "block",
     height: 8,
-    left: -theme.spacing.unit * 2,
+    left: -theme.spacing(2),
     position: "absolute" as "absolute",
     top: "calc(50% - 5px)",
     width: 8
@@ -29,7 +29,7 @@ const styles = (theme: Theme) => {
     },
     root: {
       display: "inline-block",
-      marginLeft: theme.spacing.unit + 8,
+      marginLeft: theme.spacing(1) + 8,
       position: "relative"
     },
     span: {

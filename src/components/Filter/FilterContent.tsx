@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { getMenuItemByValue, isLeaf, walkToRoot } from "../../utils/menu";
 import FormSpacer from "../FormSpacer";
 import SingleSelectField from "../SingleSelectField";

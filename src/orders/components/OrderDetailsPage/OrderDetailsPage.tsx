@@ -28,11 +28,11 @@ import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItems";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     date: {
-      marginBottom: theme.spacing.unit * 3,
-      marginTop: -theme.spacing.unit * 2
+      marginBottom: theme.spacing(3),
+      marginTop: -theme.spacing(2)
     },
     header: {
       marginBottom: 0

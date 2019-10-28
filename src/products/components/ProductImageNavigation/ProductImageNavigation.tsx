@@ -13,10 +13,10 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     card: {
-      marginBottom: 2 * theme.spacing.unit
+      marginBottom: theme.spacing(2)
     },
     highlightedImageContainer: {
       borderColor: theme.palette.primary.main
@@ -30,20 +30,20 @@ const styles = (theme: Theme) =>
     imageContainer: {
       background: "#ffffff",
       border: "2px solid #eaeaea",
-      borderRadius: theme.spacing.unit,
+      borderRadius: theme.spacing(),
       cursor: "pointer",
       height: 48,
       overflow: "hidden",
-      padding: theme.spacing.unit / 2,
+      padding: theme.spacing(.5),
       position: "relative"
     },
     root: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
-      gridRowGap: theme.spacing.unit + "px",
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(1),
       gridTemplateColumns: "repeat(4, 1fr)"
     },
-    toolbar: { marginTop: -theme.spacing.unit / 2 }
+    toolbar: { marginTop: -theme.spacing(.5) }
   });
 
 interface ProductImageNavigationProps extends WithStyles<typeof styles> {

@@ -29,13 +29,13 @@ import { maybe, renderCollection } from "../../../misc";
 import { ListActions, PageListProps } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     colActions: {
       "&:last-child": {
         paddingRight: 0
       },
-      width: 76 + theme.spacing.unit / 2
+	    width: 76 + theme.spacing(0.5)
     },
     colName: {
       paddingLeft: 0,

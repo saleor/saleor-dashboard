@@ -2,12 +2,7 @@ import ButtonBase from "@material-ui/core/ButtonBase";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
@@ -26,7 +21,7 @@ export interface FilterProps<TFilterKeys = string> {
   onFilterAdd: (filter: FilterContentSubmitData) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     addFilterButton: {
       "&$filterButton": {
@@ -37,7 +32,7 @@ const styles = (theme: Theme) =>
         border: `1px solid ${theme.palette.primary.main}`,
         cursor: "pointer",
         marginBottom: 0,
-        marginRight: theme.spacing.unit * 2,
+        marginRight: theme.spacing(2),
         marginTop: 0,
         transition: theme.transitions.duration.short + "ms"
       }
@@ -62,20 +57,19 @@ const styles = (theme: Theme) =>
       backgroundColor: fade(theme.palette.primary.main, 0.6),
       borderRadius: "4px",
       display: "flex",
-      height: "45px",
+      height: 40,
       justifyContent: "space-around",
-      margin: `0 ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
+      margin: theme.spacing(2, 1),
       marginLeft: 0,
-      padding: "0 16px",
-      position: "relative",
-      top: -5
+      padding: theme.spacing(0, 2),
+      position: "relative"
     },
     paper: {
       "& p": {
         paddingBottom: 10
       },
-      marginTop: theme.spacing.unit * 2,
-      padding: theme.spacing.unit * 2,
+      marginTop: theme.spacing(2),
+      padding: theme.spacing(2),
       width: 240
     },
     popover: {

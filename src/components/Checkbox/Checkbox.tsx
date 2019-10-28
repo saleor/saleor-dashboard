@@ -25,7 +25,7 @@ export type CheckboxProps = Omit<
   onChange?: (event: React.ChangeEvent<any>) => void;
 };
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     box: {
       "&$checked": {

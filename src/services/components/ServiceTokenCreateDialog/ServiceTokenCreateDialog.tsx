@@ -4,10 +4,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Paper from "@material-ui/core/Paper";
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -32,18 +31,18 @@ export interface ServiceTokenCreateDialogProps {
 type ServiceTokenCreateStep = "form" | "summary";
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     cancel: {
-      marginRight: theme.spacing.unit
+      marginRight: theme.spacing(1)
     },
     copy: {
-      marginTop: theme.spacing.unit,
+      marginTop: theme.spacing(),
       position: "relative",
-      right: theme.spacing.unit
+      right: theme.spacing(1)
     },
     paper: {
       background: fade(theme.palette.primary.main, 0.05),
-      padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px`
+      padding: theme.spacing(2, 3)
     }
   }),
   {

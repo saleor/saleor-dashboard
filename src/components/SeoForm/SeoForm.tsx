@@ -16,7 +16,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CardTitle from "../CardTitle";
 import FormSpacer from "../FormSpacer";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     addressBar: {
       color: "#006621",
@@ -37,7 +37,7 @@ const styles = (theme: Theme) =>
       overflowWrap: "break-word"
     },
     helperText: {
-      marginBottom: theme.spacing.unit * 3
+      marginBottom: theme.spacing(3)
     },
     label: {
       flex: 1
@@ -49,7 +49,7 @@ const styles = (theme: Theme) =>
       display: "flex"
     },
     preview: {
-      minHeight: theme.spacing.unit * 10
+      minHeight: theme.spacing(10)
     },
     title: {
       padding: 0
@@ -124,16 +124,18 @@ const SeoForm = withStyles(styles, { name: "SeoForm" })(
                     <div className={classes.label}>
                       <FormattedMessage defaultMessage="Search engine title" />
                     </div>
-                    <span>
-                      <FormattedMessage
-                        defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
-                        description="character limit"
-                        values={{
-                          maxCharacters: 70,
-                          numberOfCharacters: title.length
-                        }}
-                      />
-                    </span>
+                    {title.length > 0 && (
+                      <span>
+                        <FormattedMessage
+                          defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
+                          description="character limit"
+                          values={{
+                            maxCharacters: 70,
+                            numberOfCharacters: title.length
+                          }}
+                        />
+                      </span>
+                    )}
                   </div>
                 }
                 helperText={intl.formatMessage({
@@ -154,16 +156,18 @@ const SeoForm = withStyles(styles, { name: "SeoForm" })(
                     <div className={classes.label}>
                       <FormattedMessage defaultMessage="Search engine description" />
                     </div>
-                    <span>
-                      <FormattedMessage
-                        defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
-                        description="character limit"
-                        values={{
-                          maxCharacters: 300,
-                          numberOfCharacters: description.length
-                        }}
-                      />
-                    </span>
+                    {description.length > 0 && (
+                      <span>
+                        <FormattedMessage
+                          defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
+                          description="character limit"
+                          values={{
+                            maxCharacters: 300,
+                            numberOfCharacters: description.length
+                          }}
+                        />
+                      </span>
+                    )}
                   </div>
                 }
                 helperText={intl.formatMessage({

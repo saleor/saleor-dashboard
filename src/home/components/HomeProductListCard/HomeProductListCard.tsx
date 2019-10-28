@@ -21,16 +21,16 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { maybe, renderCollection } from "../../../misc";
 import { Home_productTopToday_edges_node } from "../../types/Home";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     avatarProps: {
       height: 64,
       width: 64
     },
     avatarSpacing: {
-      paddingBottom: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit,
-      paddingTop: theme.spacing.unit * 2
+      paddingBottom: theme.spacing(2),
+      paddingRight: theme.spacing(),
+      paddingTop: theme.spacing(2)
     },
     label: {
       paddingLeft: 0

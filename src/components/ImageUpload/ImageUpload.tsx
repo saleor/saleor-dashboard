@@ -22,7 +22,7 @@ interface ImageUploadProps {
   onImageUpload: (file: File) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     containerDragActive: {
       background: fade(theme.palette.primary.main, 0.1),
@@ -34,11 +34,11 @@ const styles = (theme: Theme) =>
     imageContainer: {
       background: "#ffffff",
       border: "1px solid #eaeaea",
-      borderRadius: theme.spacing.unit,
+      borderRadius: theme.spacing(),
       height: 148,
       justifySelf: "start",
       overflow: "hidden",
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       position: "relative",
       transition: theme.transitions.duration.standard + "s",
       width: 148
@@ -49,11 +49,11 @@ const styles = (theme: Theme) =>
       width: "64px"
     },
     photosIconContainer: {
-      padding: `${theme.spacing.unit * 5}px 0`,
+      padding: theme.spacing(5, 0),
       textAlign: "center"
     },
     uploadText: {
-      color: theme.typography.body2.color,
+      color: theme.typography.body1.color,
       fontSize: 12,
       fontWeight: 600,
       textTransform: "uppercase"

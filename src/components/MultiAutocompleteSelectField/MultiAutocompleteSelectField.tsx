@@ -20,7 +20,7 @@ import MultiAutocompleteSelectFieldContent, {
   MultiAutocompleteChoiceType
 } from "./MultiAutocompleteSelectFieldContent";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     chip: {
       width: "100%"
@@ -33,7 +33,7 @@ const styles = (theme: Theme) =>
     chipContainer: {
       display: "flex",
       flexDirection: "column",
-      marginTop: theme.spacing.unit
+      marginTop: theme.spacing(1)
     },
     chipInner: {
       "& svg": {
@@ -45,9 +45,9 @@ const styles = (theme: Theme) =>
       color: theme.palette.primary.contrastText,
       display: "flex",
       justifyContent: "space-between",
-      margin: `${theme.spacing.unit}px 0`,
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit
+      margin: theme.spacing(1, 0),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(1)
     },
     chipLabel: {
       color: theme.palette.primary.contrastText

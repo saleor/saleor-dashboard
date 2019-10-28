@@ -27,7 +27,7 @@ import { ListActions } from "../../../types";
 import { ProductDetails_product_variants } from "../../types/ProductDetails";
 import { ProductVariant_costPrice } from "../../types/ProductVariant";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colName: {},
@@ -49,7 +49,7 @@ const styles = (theme: Theme) =>
     colStatus: {},
     denseTable: {
       "& td, & th": {
-        paddingRight: theme.spacing.unit * 3
+        paddingRight: theme.spacing(3)
       }
     },
     link: {

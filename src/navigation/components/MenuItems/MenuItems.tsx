@@ -39,7 +39,7 @@ export interface MenuItemsProps {
   onUndo: () => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     actions: {
       flexDirection: "row"
@@ -51,14 +51,14 @@ const styles = (theme: Theme) =>
       background: `${theme.palette.grey[800]} !important`
     },
     deleteButton: {
-      marginRight: theme.spacing.unit
+      marginRight: theme.spacing(1)
     },
     dragIcon: {
       cursor: "grab"
     },
     nodeTitle: {
       cursor: "pointer",
-      marginLeft: theme.spacing.unit * 7
+      marginLeft: theme.spacing(7)
     },
     root: {
       "& .rst__collapseButton": {
@@ -81,7 +81,7 @@ const styles = (theme: Theme) =>
       flexDirection: "row",
       height: NODE_HEIGHT,
       justifyContent: "flex-start",
-      paddingLeft: theme.spacing.unit * 3
+      paddingLeft: theme.spacing(3)
     },
     rowContainer: {
       "& > *": {

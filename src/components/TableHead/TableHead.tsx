@@ -29,7 +29,7 @@ export interface TableHeadProps extends MuiTableHeadProps {
   toggleAll?: (items: Node[], selected: number) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     cell: {
       padding: 0
@@ -58,7 +58,7 @@ const styles = (theme: Theme) =>
       alignItems: "center",
       display: "flex",
       height: 47,
-      marginRight: -theme.spacing.unit * 2
+      marginRight: -theme.spacing(2)
     },
     dragRows: {
       padding: 0,
@@ -79,7 +79,7 @@ const styles = (theme: Theme) =>
     },
     toolbar: {
       "& > *": {
-        marginLeft: theme.spacing.unit
+        marginLeft: theme.spacing(1)
       }
     }
   });

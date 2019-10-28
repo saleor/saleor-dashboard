@@ -18,7 +18,7 @@ import { commonMessages } from "@saleor/intl";
 import { getUserInitials, maybe } from "../../../misc";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     avatar: {
       "& svg": {
@@ -62,7 +62,7 @@ const styles = (theme: Theme) =>
       borderRadius: "100%",
       height: 120,
       opacity: 0,
-      padding: `${theme.spacing.unit * 2.5}px 0`,
+      padding: theme.spacing(2.5, 0),
       position: "absolute",
       textAlign: "center",
       textTransform: "uppercase",
@@ -77,12 +77,12 @@ const styles = (theme: Theme) =>
       display: "none"
     },
     prop: {
-      marginBottom: theme.spacing.unit * 2 + "px"
+      marginBottom: theme.spacing(2)
     },
     propGrid: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
-      gridRowGap: theme.spacing.unit + "px",
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(1),
       gridTemplateColumns: "1fr 1fr",
       [theme.breakpoints.down("xs")]: {
         gridTemplateColumns: "1fr"
@@ -90,7 +90,7 @@ const styles = (theme: Theme) =>
     },
     root: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 4 + "px",
+      gridColumnGap: theme.spacing(4),
       gridTemplateColumns: "120px 1fr"
     }
   });

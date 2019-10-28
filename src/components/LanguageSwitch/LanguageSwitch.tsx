@@ -26,28 +26,28 @@ export interface LanguageSwitchProps {
   onLanguageChange: (lang: LanguageCodeEnum) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     arrow: {
       color: theme.palette.primary.main,
       transition: theme.transitions.duration.standard + "ms"
     },
     container: {
-      paddingBottom: theme.spacing.unit
+      paddingBottom: theme.spacing(1)
     },
     menuContainer: {
       cursor: "pointer",
       display: "flex",
       justifyContent: "space-between",
       minWidth: 90,
-      padding: theme.spacing.unit,
+      padding: theme.spacing(),
       position: "relative"
     },
     menuItem: {
       textAlign: "justify"
     },
     menuPaper: {
-      maxHeight: `calc(100vh - ${theme.spacing.unit * 2}px)`,
+      maxHeight: `calc(100vh - ${theme.spacing(2)}px)`,
       overflow: "scroll"
     },
     popover: {

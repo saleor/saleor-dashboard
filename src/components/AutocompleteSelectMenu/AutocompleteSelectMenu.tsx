@@ -43,20 +43,20 @@ const DebounceAutocomplete: React.ComponentType<
   DebounceProps<string>
 > = Debounce;
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     container: {
       flexGrow: 1,
       position: "relative"
     },
     menuBack: {
-      marginLeft: -theme.spacing.unit / 2,
-      marginRight: theme.spacing.unit
+      marginLeft: -theme.spacing(.5),
+      marginRight: theme.spacing(1)
     },
     paper: {
       left: 0,
-      marginTop: theme.spacing.unit,
-      padding: theme.spacing.unit,
+      marginTop: theme.spacing(),
+      padding: theme.spacing(),
       position: "absolute",
       right: 0,
       zIndex: 2

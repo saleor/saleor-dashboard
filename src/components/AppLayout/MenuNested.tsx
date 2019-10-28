@@ -17,7 +17,7 @@ import { drawerWidthExpanded } from "./consts";
 import { IActiveSubMenu } from "./MenuList";
 import { IMenuItem } from "./menuStructure";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     menuListNested: {
       background: theme.palette.background.paper,
@@ -70,7 +70,7 @@ const styles = (theme: Theme) =>
         }
       },
       display: "block",
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
       padding: "0px 30px",
       textDecoration: "none"
     },

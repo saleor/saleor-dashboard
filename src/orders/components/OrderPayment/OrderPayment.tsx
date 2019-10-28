@@ -20,10 +20,10 @@ import { maybe, transformPaymentStatus } from "../../../misc";
 import { OrderAction, OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     root: {
-      ...theme.typography.body2,
+      ...theme.typography.body1,
       lineHeight: 1.9,
       width: "100%"
     },

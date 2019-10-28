@@ -1,13 +1,12 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,12 +29,12 @@ export interface AttributeValuesProps {
   onValueUpdate: (id: string) => void;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(theme => ({
   columnAdmin: {
     width: "50%"
   },
   columnDrag: {
-    width: 48 + theme.spacing.unit * 1.5
+    width: 48 + theme.spacing(1.5)
   },
   columnStore: {
     width: "50%"
@@ -45,9 +44,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   iconCell: {
     "&:last-child": {
-      paddingRight: theme.spacing.unit
+      paddingRight: theme.spacing()
     },
-    width: 48 + theme.spacing.unit * 1.5
+    width: 48 + theme.spacing(1.5)
   },
   link: {
     cursor: "pointer"

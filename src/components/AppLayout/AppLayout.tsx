@@ -8,12 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -41,7 +36,7 @@ import createMenuStructure from "./menuStructure";
 import ResponsiveDrawer from "./ResponsiveDrawer";
 import ThemeSwitch from "./ThemeSwitch";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     appAction: {
       [theme.breakpoints.down("sm")]: {
@@ -56,15 +51,15 @@ const styles = (theme: Theme) =>
     },
     appLoader: {
       height: appLoaderHeight,
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
       zIndex: 1201
     },
     appLoaderPlaceholder: {
       height: appLoaderHeight,
-      marginBottom: theme.spacing.unit * 2
+      marginBottom: theme.spacing(2)
     },
     arrow: {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
       transition: theme.transitions.duration.standard + "ms"
     },
     content: {
@@ -82,12 +77,12 @@ const styles = (theme: Theme) =>
       paddingLeft: drawerWidth
     },
     darkThemeSwitch: {
-      marginRight: theme.spacing.unit * 2
+      marginRight: theme.spacing(2)
     },
     header: {
       display: "flex",
       height: 40,
-      marginBottom: theme.spacing.unit * 3
+      marginBottom: theme.spacing(3)
     },
     isMenuSmall: {
       "& path": {
@@ -186,8 +181,8 @@ const styles = (theme: Theme) =>
       borderRadius: "50%",
       cursor: "pointer",
       height: 42,
-      left: theme.spacing.unit,
-      marginRight: theme.spacing.unit * 2,
+      left: theme.spacing(),
+      marginRight: theme.spacing(2),
       position: "relative",
       transform: "rotate(0deg)",
       transition: `${theme.transitions.duration.shorter}ms ease-in-out`,
@@ -236,7 +231,7 @@ const styles = (theme: Theme) =>
         padding: 0
       },
       background: theme.palette.background.paper,
-      padding: `0 ${theme.spacing.unit * 4}px`
+      padding: `0 ${theme.spacing(4)}px`
     },
     spacer: {
       flex: 1
@@ -260,15 +255,13 @@ const styles = (theme: Theme) =>
       flex: 1,
       flexGrow: 1,
       marginLeft: 0,
-      paddingBottom: theme.spacing.unit,
+      paddingBottom: theme.spacing(),
       [theme.breakpoints.up("sm")]: {
-        paddingBottom: theme.spacing.unit * 3
+        paddingBottom: theme.spacing(3)
       }
     },
     viewContainer: {
-      minHeight: `calc(100vh - ${theme.spacing.unit * 2 +
-        appLoaderHeight +
-        70}px)`
+      minHeight: `calc(100vh - ${theme.spacing(2) + appLoaderHeight + 70}px)`
     }
   });
 

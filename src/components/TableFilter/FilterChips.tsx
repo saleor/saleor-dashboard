@@ -1,9 +1,8 @@
 import ButtonBase from "@material-ui/core/ButtonBase";
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import ClearIcon from "@material-ui/icons/Clear";
-import { makeStyles, useTheme } from "@material-ui/styles";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -18,7 +17,7 @@ export interface Filter {
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     filterButton: {
       alignItems: "center",
       backgroundColor: fade(theme.palette.primary.main, 0.8),
@@ -26,9 +25,9 @@ const useStyles = makeStyles(
       display: "flex",
       height: "38px",
       justifyContent: "space-around",
-      margin: `0 ${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
+      margin: theme.spacing(2, 1),
       marginLeft: 0,
-      padding: `0 ${theme.spacing.unit * 2}px`
+      padding: theme.spacing(0, 2)
     },
     filterChipContainer: {
       display: "flex",
@@ -37,12 +36,13 @@ const useStyles = makeStyles(
     },
     filterContainer: {
       "& a": {
-        paddingBottom: 10
+        paddingBottom: 10,
+        paddingTop: theme.spacing(1)
       },
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
-      marginTop: theme.spacing.unit,
-      padding: `0 ${theme.spacing.unit * 3}px ${theme.spacing.unit}px`
+      marginTop: -theme.spacing(1),
+      padding: theme.spacing(0, 2)
     },
     filterIcon: {
       color: theme.palette.common.white,
@@ -61,7 +61,7 @@ const useStyles = makeStyles(
       width: 32
     },
     filterLabel: {
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing(1)
     },
     filterText: {
       color: theme.palette.common.white,

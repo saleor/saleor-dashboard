@@ -1,8 +1,8 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 import { useIntl } from "react-intl";
 

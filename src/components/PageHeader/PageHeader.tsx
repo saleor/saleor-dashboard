@@ -10,7 +10,7 @@ import React from "react";
 import ExtendedPageHeader from "../ExtendedPageHeader";
 import Skeleton from "../Skeleton";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     root: {
       display: "flex"
@@ -18,7 +18,7 @@ const styles = (theme: Theme) =>
     title: {
       flex: 1,
       fontSize: 24,
-      paddingBottom: theme.spacing.unit * 2
+      paddingBottom: theme.spacing(2)
     }
   });
 

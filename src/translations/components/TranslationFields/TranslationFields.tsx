@@ -44,18 +44,18 @@ export interface TranslationFieldsProps {
   onSubmit: (field: string, data: string) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     cardCaption: {
       fontSize: 14
     },
     cardContent: {
       "&:last-child": {
-        paddingBottom: theme.spacing.unit
+        paddingBottom: theme.spacing(1)
       }
     },
     columnHeader: {
-      marginBottom: theme.spacing.unit / 2
+      marginBottom: theme.spacing(0.5)
     },
     content: {
       "& a": {
@@ -64,24 +64,24 @@ const styles = (theme: Theme) =>
       "& blockquote": {
         borderLeft: `2px solid ${theme.overrides.MuiCard.root.borderColor}`,
         margin: 0,
-        padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
+        padding: theme.spacing(1, 2)
       },
       "& h2": {
         fontSize: 22,
-        marginBottom: theme.spacing.unit
+        marginBottom: theme.spacing(1)
       },
       "& h3": {
         fontSize: 19,
-        marginBottom: theme.spacing.unit
+        marginBottom: theme.spacing(1)
       },
       "& p": {
         "&:last-child": {
           marginBottom: 0
         },
-        marginBottom: theme.spacing.unit,
+        marginBottom: theme.spacing(),
         marginTop: 0
       },
-      paddingBottom: theme.spacing.unit * 2
+      paddingBottom: theme.spacing(2)
     },
     editButtonContainer: {
       alignItems: "center",
@@ -92,8 +92,8 @@ const styles = (theme: Theme) =>
       color: theme.typography.caption.color,
       fontSize: 14,
       fontWeight: 500,
-      marginBottom: theme.spacing.unit,
-      marginTop: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(),
+      marginTop: theme.spacing(2),
       textTransform: "uppercase"
     },
     grid: {
@@ -139,10 +139,10 @@ const TranslationFields = withStyles(styles, { name: "TranslationFields" })(
         {expanded ? (
           <CardContent className={classes.cardContent}>
             <Grid className={classes.grid} variant="uniform">
-              <Typography className={classes.columnHeader} variant="body2">
+              <Typography className={classes.columnHeader} variant="body1">
                 <FormattedMessage defaultMessage="Original String" />
               </Typography>
-              <Typography className={classes.columnHeader} variant="body2">
+              <Typography className={classes.columnHeader} variant="body1">
                 <FormattedMessage
                   defaultMessage="Translation"
                   description="Translated Name"
@@ -151,7 +151,7 @@ const TranslationFields = withStyles(styles, { name: "TranslationFields" })(
               {fields.map(field => (
                 <React.Fragment key={field.name}>
                   <Hr className={classes.hr} />
-                  <Typography className={classes.fieldName} variant="body2">
+                  <Typography className={classes.fieldName} variant="body1">
                     {field.displayName}
                   </Typography>
                   <div className={classes.editButtonContainer}>

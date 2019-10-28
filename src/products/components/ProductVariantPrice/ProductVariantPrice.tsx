@@ -12,11 +12,11 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     grid: {
       display: "grid",
-      gridColumnGap: `${theme.spacing.unit * 2}px`,
+      gridColumnGap: theme.spacing(2),
       gridTemplateColumns: "1fr 1fr"
     }
   });

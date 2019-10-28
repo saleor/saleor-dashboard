@@ -7,33 +7,33 @@ import {
 import classNames from "classnames";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     action: {
       flex: "0 0 auto"
     },
     grid: {
-      padding: theme.spacing.unit * 2
+      padding: theme.spacing(2)
     },
     menuButton: {
       flex: "0 0 auto",
-      marginLeft: theme.spacing.unit * -2,
-      marginRight: theme.spacing.unit * 3,
-      marginTop: -theme.spacing.unit * 2
+      marginLeft: -theme.spacing(2),
+      marginRight: theme.spacing(3),
+      marginTop: -theme.spacing(2)
     },
     root: {
       alignItems: "center",
       display: "flex",
-      marginBottom: theme.spacing.unit * 3
+      marginBottom: theme.spacing(3)
     },
     subtitle: {
       alignItems: "center",
       display: "flex",
-      marginBottom: theme.spacing.unit * 2
+      marginBottom: theme.spacing(2)
     },
     title: {
       flex: 1,
-      paddingBottom: theme.spacing.unit * 2
+      paddingBottom: theme.spacing(2)
     }
   });
 

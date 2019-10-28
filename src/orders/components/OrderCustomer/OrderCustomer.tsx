@@ -29,12 +29,12 @@ import { customerUrl } from "../../../customers/urls";
 import { createHref, maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     sectionHeader: {
       alignItems: "center",
       display: "flex",
-      marginBottom: theme.spacing.unit * 3
+      marginBottom: theme.spacing(3)
     },
     sectionHeaderTitle: {
       flex: 1,
@@ -43,11 +43,11 @@ const styles = (theme: Theme) =>
       textTransform: "uppercase"
     },
     sectionHeaderToolbar: {
-      marginRight: -theme.spacing.unit * 2
+      marginRight: -theme.spacing(2)
     },
     userEmail: {
       fontWeight: 600 as 600,
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing(1)
     }
   });
 

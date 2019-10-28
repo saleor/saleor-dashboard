@@ -19,7 +19,7 @@ export type ConfirmButtonTransitionState =
   | "error"
   | "default";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     error: {
       "&:hover": {

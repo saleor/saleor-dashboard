@@ -11,21 +11,21 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     cardContent: {
       "&:last-child": {
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px`
+	      padding: theme.spacing(2, 3)
       },
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 3 + "px",
+      gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "1fr 64px"
     },
     cardSpacing: {
       [theme.breakpoints.down("sm")]: {
-        marginBottom: theme.spacing.unit
+        marginBottom: theme.spacing(1)
       },
-      marginBottom: theme.spacing.unit * 3
+      marginBottom: theme.spacing(3)
     },
     cardSubtitle: {
       fontSize: 12,

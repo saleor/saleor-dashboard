@@ -8,16 +8,16 @@ import Tab from "@material-ui/core/Tab";
 import classNames from "classnames";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     selectedTabLabel: {
       "&$tabLabel": {
-        color: theme.typography.body2.color
+        color: theme.typography.body1.color
       }
     },
     tabLabel: {
       "&:hover": {
-        color: theme.typography.body2.color
+        color: theme.typography.body1.color
       },
       color: theme.typography.caption.color,
       fontSize: "1rem",
@@ -26,7 +26,7 @@ const styles = (theme: Theme) =>
     tabRoot: {
       minWidth: "80px",
       opacity: 1,
-      paddingTop: `${theme.spacing.unit * 1}px`,
+      paddingTop: theme.spacing(1),
       textTransform: "initial" as "initial"
     }
   });
@@ -44,10 +44,10 @@ export const FilterTab = withStyles(styles, { name: "FilterTab" })(
       disableRipple
       label={label}
       classes={{
-        label: classNames(classes.tabLabel, {
+        root: classes.tabRoot,
+        wrapper: classNames(classes.tabLabel, {
           [classes.selectedTabLabel]: selected
-        }),
-        root: classes.tabRoot
+        })
       }}
       onClick={onClick}
       value={value}

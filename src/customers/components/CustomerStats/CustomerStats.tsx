@@ -17,10 +17,10 @@ import Skeleton from "@saleor/components/Skeleton";
 import { maybe } from "../../../misc";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     label: {
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing(1)
     },
     value: {
       fontSize: 24

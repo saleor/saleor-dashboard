@@ -19,10 +19,10 @@ import React from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { ProductDetails_product_images } from "../../types/ProductDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     card: {
-      marginTop: theme.spacing.unit * 2,
+      marginTop: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {
         marginTop: 0
       }
@@ -47,11 +47,11 @@ const styles = (theme: Theme) =>
       },
       background: "#ffffff",
       border: "1px solid #eaeaea",
-      borderRadius: theme.spacing.unit,
+      borderRadius: theme.spacing(),
       height: 140,
       margin: "auto",
       overflow: "hidden",
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       position: "relative",
       width: 140
     },
@@ -64,7 +64,7 @@ const styles = (theme: Theme) =>
       display: "none",
       height: 140,
       left: 0,
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       position: "absolute",
       top: 0,
       width: 140
@@ -73,8 +73,8 @@ const styles = (theme: Theme) =>
       alignContent: "flex-end",
       display: "flex",
       position: "relative",
-      right: -theme.spacing.unit * 3,
-      top: -theme.spacing.unit * 2
+      right: -theme.spacing(3),
+      top: -theme.spacing(2)
     },
     imageUpload: {
       height: "100%",
@@ -94,8 +94,8 @@ const styles = (theme: Theme) =>
     },
     root: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
-      gridRowGap: theme.spacing.unit * 2 + "px",
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(2),
       gridTemplateColumns: "repeat(4, 1fr)",
       [theme.breakpoints.down("sm")]: {
         gridTemplateColumns: "repeat(3, 1fr)"

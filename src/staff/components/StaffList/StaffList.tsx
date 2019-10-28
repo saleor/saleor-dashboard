@@ -26,7 +26,7 @@ import {
 import { ListProps } from "@saleor/types";
 import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     avatar: {
       alignItems: "center",
@@ -35,7 +35,7 @@ const styles = (theme: Theme) =>
       float: "left",
       height: 47,
       justifyContent: "center",
-      marginRight: theme.spacing.unit * 1 + "px",
+      marginRight: theme.spacing(1),
       overflow: "hidden",
       width: 47
     },

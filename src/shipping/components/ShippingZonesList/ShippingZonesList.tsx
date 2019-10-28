@@ -32,7 +32,7 @@ export interface ShippingZonesListProps extends ListProps, ListActions {
   onRemove: (id: string) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colCountries: {},
@@ -40,9 +40,9 @@ const styles = (theme: Theme) =>
     },
     alignRight: {
       "&:last-child": {
-        paddingRight: theme.spacing.unit
+        paddingRight: theme.spacing(1)
       },
-      width: ICONBUTTON_SIZE + theme.spacing.unit / 2
+      width: ICONBUTTON_SIZE + theme.spacing(.5)
     },
     colCountries: {},
     colName: {

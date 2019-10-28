@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     active: {
       color: theme.typography.caption.color
@@ -17,7 +17,7 @@ const styles = (theme: Theme) =>
     root: {
       "&$active": {
         borderBottomColor: theme.palette.primary.main,
-        color: theme.typography.body2.color
+        color: theme.typography.body1.color
       },
       "&:focus": {
         color: theme.palette.primary.main
@@ -30,9 +30,9 @@ const styles = (theme: Theme) =>
       cursor: "pointer",
       display: "inline-block",
       fontWeight: theme.typography.fontWeightRegular,
-      marginRight: theme.spacing.unit * 2,
+      marginRight: theme.spacing(2),
       minWidth: 40,
-      padding: `0 ${theme.spacing.unit}px`,
+      padding: theme.spacing(1),
       transition: theme.transitions.duration.short + "ms"
     }
   });

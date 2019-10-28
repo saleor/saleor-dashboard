@@ -1,6 +1,5 @@
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -58,10 +57,10 @@ export interface SiteSettingsPageProps {
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     hr: {
       gridColumnEnd: "span 2",
-      margin: `${theme.spacing.unit}px 0`
+      margin: theme.spacing(1, 0)
     }
   }),
   {
@@ -136,7 +135,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 <Typography>
                   {intl.formatMessage(sectionNames.siteSettings)}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body2">
                   <FormattedMessage defaultMessage="These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar." />
                 </Typography>
               </div>
@@ -154,7 +153,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                     description="section header"
                   />
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body2">
                   <FormattedMessage defaultMessage="This where you will find all of the settings determining your stores e-mails. You can determine main email address and some of the contents of your emails." />
                 </Typography>
               </div>
@@ -172,7 +171,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                     description="section header"
                   />
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body2">
                   <FormattedMessage defaultMessage="This adress will be used to generate invoices and calculate shipping rates." />
                   <FormattedMessage defaultMessage="Email adress you provide here will be used as a contact adress for your customers." />
                 </Typography>
@@ -194,7 +193,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                     description="section header"
                   />
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body2">
                   <FormattedMessage defaultMessage="Authentication method defines additional ways that customers can log in to your ecommerce. " />
                 </Typography>
               </div>

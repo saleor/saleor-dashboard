@@ -19,7 +19,7 @@ export interface FormData {
   password: string;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     buttonContainer: {
       display: "flex",
@@ -38,9 +38,9 @@ const styles = (theme: Theme) =>
         color: theme.palette.error.contrastText
       },
       background: theme.palette.error.main,
-      borderRadius: theme.spacing.unit,
-      marginBottom: theme.spacing.unit * 3,
-      padding: theme.spacing.unit * 1.5
+      borderRadius: theme.spacing(),
+      marginBottom: theme.spacing(3),
+      padding: theme.spacing(1.5)
     }
   });
 

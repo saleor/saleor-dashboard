@@ -28,7 +28,7 @@ import { maybe, renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     clickableRow: {
       cursor: "pointer"
@@ -54,7 +54,7 @@ const styles = (theme: Theme) =>
 
     orderNumber: {
       display: "inline",
-      marginLeft: theme.spacing.unit
+      marginLeft: theme.spacing(1)
     },
     statusBar: {
       paddingTop: 0
@@ -116,7 +116,7 @@ const OrderFulfillment = withStyles(styles, { name: "OrderFulfillment" })(
                             quantity
                           }
                         )}
-                    <Typography className={classes.orderNumber} variant="body2">
+                    <Typography className={classes.orderNumber} variant="body1">
                       {maybe(
                         () => `#${orderNumber}-${fulfillment.fulfillmentOrder}`
                       )}

@@ -15,10 +15,10 @@ import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import Skeleton from "@saleor/components/Skeleton";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     checkboxContainer: {
-      marginTop: theme.spacing.unit
+      marginTop: theme.spacing()
     },
     hr: {
       backgroundColor: theme.overrides.MuiCard.root.borderColor,

@@ -19,15 +19,15 @@ import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     cardTitle: {
       height: 64
     },
     root: {
       display: "grid" as "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
-      gridRowGap: theme.spacing.unit * 3 + "px",
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(3),
       gridTemplateColumns: "1fr 1fr"
     }
   });
@@ -70,7 +70,7 @@ const CustomerDetails = withStyles(styles, { name: "CustomerDetails" })(
             <>
               <FormattedMessage {...commonMessages.generalInformations} />
               {customer && customer.dateJoined ? (
-                <Typography variant="caption">
+                <Typography variant="caption" component="div">
                   <FormattedMessage
                     defaultMessage="Customer since: {date}"
                     description="section subheader"

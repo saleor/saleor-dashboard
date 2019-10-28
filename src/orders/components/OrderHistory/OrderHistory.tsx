@@ -177,15 +177,15 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
   }
 };
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     header: {
       fontWeight: 500,
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing(1)
     },
-    root: { marginTop: theme.spacing.unit * 4 },
+    root: { marginTop: theme.spacing(4) },
     user: {
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing(1)
     }
   });
 

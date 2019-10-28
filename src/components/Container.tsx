@@ -7,7 +7,7 @@ import {
 import classNames from "classnames";
 import React from "react";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     root: {
       [theme.breakpoints.up("lg")]: {
@@ -16,9 +16,9 @@ const styles = (theme: Theme) =>
         maxWidth: theme.breakpoints.width("lg")
       },
       [theme.breakpoints.up("sm")]: {
-        padding: `0 ${theme.spacing.unit * 3}px`
+	      padding: theme.spacing(0, 3)
       },
-      padding: `0 ${theme.spacing.unit}px`
+      padding: theme.spacing(0, 1)
     }
   });
 

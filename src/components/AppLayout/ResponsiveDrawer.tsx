@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { drawerWidth, drawerWidthExpanded } from "./consts";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     drawerDesktop: {
       backgroundColor: theme.palette.background.paper,

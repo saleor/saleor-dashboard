@@ -27,7 +27,7 @@ import {
 import { ListActions, ListProps } from "@saleor/types";
 import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     [theme.breakpoints.up("lg")]: {
       colCustomer: {

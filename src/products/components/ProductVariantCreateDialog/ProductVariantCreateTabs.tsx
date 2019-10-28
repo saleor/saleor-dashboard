@@ -1,6 +1,5 @@
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
@@ -38,7 +37,7 @@ function getSteps(intl: IntlShape): Step[] {
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     label: {
       fontSize: 14,
       textAlign: "center"
@@ -47,11 +46,11 @@ const useStyles = makeStyles(
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       justifyContent: "space-between",
-      marginBottom: theme.spacing.unit * 3
+      marginBottom: theme.spacing(3)
     },
     tab: {
       flex: 1,
-      paddingBottom: theme.spacing.unit,
+      paddingBottom: theme.spacing(),
       userSelect: "none"
     },
     tabActive: {

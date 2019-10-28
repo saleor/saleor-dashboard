@@ -45,7 +45,7 @@ export interface DiscountCountrySelectDialogProps {
   onConfirm: (data: FormData) => void;
 }
 
-const styles = (theme: Theme) =>
+const styles = theme =>
   createStyles({
     checkboxCell: {
       paddingLeft: 0
@@ -54,8 +54,8 @@ const styles = (theme: Theme) =>
       maxHeight: 500
     },
     heading: {
-      marginBottom: theme.spacing.unit * 2,
-      marginTop: theme.spacing.unit * 2
+      marginBottom: theme.spacing(2),
+      marginTop: theme.spacing(2)
     },
     wideCell: {
       width: "100%"
