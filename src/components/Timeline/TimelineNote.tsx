@@ -2,12 +2,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import * as colors from "@material-ui/core/colors";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PersonIcon from "@material-ui/icons/Person";
 import CRC from "crc-32";
@@ -34,40 +29,39 @@ const palette = [
   colors.yellow
 ].map(color => color[500]);
 
-const styles = theme =>
-  createStyles({
-    avatar: {
-      left: -45,
-      position: "absolute",
-      top: 0
+const useStyles = makeStyles(theme => ({
+  avatar: {
+    left: -45,
+    position: "absolute",
+    top: 0
+  },
+  card: {
+    marginBottom: theme.spacing(3),
+    marginLeft: theme.spacing(3),
+    position: "relative"
+  },
+  cardContent: {
+    "&:last-child": {
+      padding: 16
     },
-    card: {
-      marginBottom: theme.spacing(3),
-      marginLeft: theme.spacing(3),
-      position: "relative"
+    boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.05)"
+  },
+  root: {
+    position: "relative"
+  },
+  title: {
+    "& p": {
+      fontSize: "14px"
     },
-    cardContent: {
-      "&:last-child": {
-        padding: 16
-      },
-      boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.05)"
-    },
-    root: {
-      position: "relative"
-    },
-    title: {
-      "& p": {
-        fontSize: "14px"
-      },
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "space-between",
-      marginBottom: theme.spacing(),
-      paddingLeft: theme.spacing(3)
-    }
-  });
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: theme.spacing(),
+    paddingLeft: theme.spacing(3)
+  }
+}));
 
-interface TimelineNoteProps extends WithStyles<typeof styles> {
+interface TimelineNoteProps {
   date: string;
   message: string | null;
   user: {
@@ -75,8 +69,12 @@ interface TimelineNoteProps extends WithStyles<typeof styles> {
   };
 }
 
-export const TimelineNote = withStyles(styles, { name: "TimelineNote" })(
-  ({ classes, date, user, message }: TimelineNoteProps) => (
+export const TimelineNote: React.FC<TimelineNoteProps> = props => {
+  const { date, user, message } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <div className={classes.root}>
       <Avatar
         className={classes.avatar}
@@ -100,7 +98,7 @@ export const TimelineNote = withStyles(styles, { name: "TimelineNote" })(
         </CardContent>
       </Card>
     </div>
-  )
-);
+  );
+};
 TimelineNote.displayName = "TimelineNote";
 export default TimelineNote;

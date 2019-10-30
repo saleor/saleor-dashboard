@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const SiteSettings = createSvgIcon(
+const SiteSettings = createSvgIcon(
   <>
     <path
       fillRule="evenodd"
@@ -10,6 +10,6 @@ export const SiteSettings = createSvgIcon(
       fill="#06847B"
     />
   </>
-);
-SiteSettings.displayName = "SiteSettings";
+, "SiteSettings")
+
 export default SiteSettings;

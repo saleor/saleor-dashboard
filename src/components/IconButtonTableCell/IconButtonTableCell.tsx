@@ -1,10 +1,5 @@
 import IconButton from "@material-ui/core/IconButton";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import React from "react";
 
@@ -17,23 +12,26 @@ export interface IconButtonTableCellProps {
   onClick: () => void;
 }
 
-const styles = theme =>
-  createStyles({
-    root: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      paddingRight: 0,
-      width: ICONBUTTON_SIZE + theme.spacing(.5)
-    }
-  });
-const IconButtonTableCell = withStyles(styles, { name: "IconButtonTableCell" })(
-  ({
+const useStyles = makeStyles(theme => ({
+  root: {
+    "&:last-child": {
+      paddingRight: 0
+    },
+    paddingRight: 0,
+    width: ICONBUTTON_SIZE + theme.spacing(0.5)
+  }
+}));
+const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
+  const {
     children,
-    classes,
+
     disabled,
     onClick
-  }: IconButtonTableCellProps & WithStyles<typeof styles>) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <TableCell className={classes.root}>
       <IconButton
         color="primary"
@@ -43,7 +41,7 @@ const IconButtonTableCell = withStyles(styles, { name: "IconButtonTableCell" })(
         {children}
       </IconButton>
     </TableCell>
-  )
-);
+  );
+};
 IconButtonTableCell.displayName = "IconButtonTableCell";
 export default IconButtonTableCell;

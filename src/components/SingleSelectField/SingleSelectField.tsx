@@ -4,12 +4,12 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select, { SelectProps } from "@material-ui/core/Select";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   formControl: {
     "& label": {
       top: "-3px"
@@ -18,7 +18,7 @@ const styles = createStyles({
   }
 });
 
-interface SingleSelectFieldProps extends WithStyles<typeof styles> {
+interface SingleSelectFieldProps {
   choices: Array<{
     value: string;
     label: string | React.ReactNode;
@@ -35,12 +35,10 @@ interface SingleSelectFieldProps extends WithStyles<typeof styles> {
   onChange(event: any);
 }
 
-export const SingleSelectField = withStyles(styles, {
-  name: "SingleSelectField"
-})(
-  ({
+export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
+  const {
     className,
-    classes,
+
     disabled,
     error,
     label,
@@ -51,49 +49,50 @@ export const SingleSelectField = withStyles(styles, {
     hint,
     selectProps,
     placeholder
-  }: SingleSelectFieldProps) => {
-    const choicesByKey: { [key: string]: string } =
-      choices === undefined
-        ? {}
-        : choices.reduce((prev, curr) => {
-            prev[curr.value] = curr.label;
-            return prev;
-          }, {});
+  } = props;
+  const classes = useStyles(props);
 
-    return (
-      <FormControl
-        className={classNames(classes.formControl, className)}
-        error={error}
-        disabled={disabled}
+  const choicesByKey: { [key: string]: string } =
+    choices === undefined
+      ? {}
+      : choices.reduce((prev, curr) => {
+          prev[curr.value] = curr.label;
+          return prev;
+        }, {});
+
+  return (
+    <FormControl
+      className={classNames(classes.formControl, className)}
+      error={error}
+      disabled={disabled}
+    >
+      <InputLabel shrink={!!value}>{label}</InputLabel>
+      <Select
+        variant="outlined"
+        fullWidth
+        renderValue={choiceValue =>
+          choiceValue ? choicesByKey[choiceValue.toString()] : placeholder
+        }
+        value={value || ""}
+        onChange={onChange}
+        input={<OutlinedInput name={name} labelWidth={180} />}
+        {...selectProps}
       >
-        <InputLabel shrink={!!value}>{label}</InputLabel>
-        <Select
-          variant="outlined"
-          fullWidth
-          renderValue={choiceValue =>
-            choiceValue ? choicesByKey[choiceValue.toString()] : placeholder
-          }
-          value={value || ""}
-          onChange={onChange}
-          input={<OutlinedInput name={name} labelWidth={180} />}
-          {...selectProps}
-        >
-          {choices.length > 0 ? (
-            choices.map(choice => (
-              <MenuItem value={choice.value} key={choice.value}>
-                {choice.label}
-              </MenuItem>
-            ))
-          ) : (
-            <MenuItem disabled={true}>
-              <FormattedMessage defaultMessage="No results found" />
+        {choices.length > 0 ? (
+          choices.map(choice => (
+            <MenuItem value={choice.value} key={choice.value}>
+              {choice.label}
             </MenuItem>
-          )}
-        </Select>
-        {hint && <FormHelperText>{hint}</FormHelperText>}
-      </FormControl>
-    );
-  }
-);
+          ))
+        ) : (
+          <MenuItem disabled={true}>
+            <FormattedMessage defaultMessage="No results found" />
+          </MenuItem>
+        )}
+      </Select>
+      {hint && <FormHelperText>{hint}</FormHelperText>}
+    </FormControl>
+  );
+};
 SingleSelectField.displayName = "SingleSelectField";
 export default SingleSelectField;

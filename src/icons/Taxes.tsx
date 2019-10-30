@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const Taxes = createSvgIcon(
+const Taxes = createSvgIcon(
   <>
     <path
       fillRule="evenodd"
@@ -10,6 +10,6 @@ export const Taxes = createSvgIcon(
       fill="#06847B"
     />
   </>
-);
-Taxes.displayName = "Taxes";
+, "Taxes")
+
 export default Taxes;

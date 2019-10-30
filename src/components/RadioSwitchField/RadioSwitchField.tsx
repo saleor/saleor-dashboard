@@ -2,11 +2,11 @@ import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   formControl: {
     padding: 0,
     width: "100%"
@@ -37,12 +37,9 @@ interface RadioSwitchFieldProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const RadioSwitchField = withStyles(styles, {
-  name: "RadioSwitchField"
-})(
-  ({
+export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
+  const {
     className,
-    classes,
     disabled,
     error,
     firstOptionLabel,
@@ -50,48 +47,49 @@ export const RadioSwitchField = withStyles(styles, {
     name,
     secondOptionLabel,
     value
-  }: RadioSwitchFieldProps & WithStyles<typeof styles>) => {
-    const initialValue = value ? "true" : "false";
+  } = props;
+  const classes = useStyles(props);
 
-    const change = event => {
-      onChange({
-        target: {
-          name: event.target.name,
-          value: event.target.value === "true" ? true : false
-        }
-      } as any);
-    };
+  const initialValue = value ? "true" : "false";
 
-    return (
-      <FormControl
-        className={classNames(classes.formControl, className)}
-        error={error}
-        disabled={disabled}
+  const change = event => {
+    onChange({
+      target: {
+        name: event.target.name,
+        value: event.target.value === "true" ? true : false
+      }
+    } as any);
+  };
+
+  return (
+    <FormControl
+      className={classNames(classes.formControl, className)}
+      error={error}
+      disabled={disabled}
+    >
+      <RadioGroup
+        aria-label={name}
+        name={name}
+        value={initialValue}
+        onChange={event => change(event)}
       >
-        <RadioGroup
-          aria-label={name}
+        <FormControlLabel
+          value="true"
+          className={classes.radioLabel}
+          control={<Radio color="primary" />}
+          label={firstOptionLabel}
           name={name}
-          value={initialValue}
-          onChange={event => change(event)}
-        >
-          <FormControlLabel
-            value="true"
-            className={classes.radioLabel}
-            control={<Radio color="primary" />}
-            label={firstOptionLabel}
-            name={name}
-          />
-          <FormControlLabel
-            value="false"
-            className={classes.radioLabel}
-            control={<Radio color="primary" />}
-            label={secondOptionLabel}
-            name={name}
-          />
-        </RadioGroup>
-      </FormControl>
-    );
-  }
-);
+        />
+        <FormControlLabel
+          value="false"
+          className={classes.radioLabel}
+          control={<Radio color="primary" />}
+          label={secondOptionLabel}
+          name={name}
+        />
+      </RadioGroup>
+    </FormControl>
+  );
+};
 RadioSwitchField.displayName = "RadioSwitchField";
 export default RadioSwitchField;

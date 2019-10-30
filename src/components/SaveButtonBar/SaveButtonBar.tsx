@@ -1,11 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Portal from "@material-ui/core/Portal";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -19,48 +14,47 @@ import ConfirmButton, {
 } from "../ConfirmButton/ConfirmButton";
 import Container from "../Container";
 
-const styles = theme =>
-  createStyles({
-    button: {
-      marginRight: theme.spacing(1)
-    },
-    cancelButton: {
-      marginRight: theme.spacing(2)
-    },
-    container: {
-      display: "flex",
-      paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2),
-      [theme.breakpoints.down("sm")]: {
-        marginTop: theme.spacing(1)
-      }
-    },
-    deleteButton: {
-      "&:hover": {
-        backgroundColor: theme.palette.error.dark
-      },
-      backgroundColor: theme.palette.error.main,
-      color: theme.palette.error.contrastText
-    },
-    root: {
-      background: theme.palette.background.default,
-      borderTop: "1px solid transparent",
-      boxShadow: `0 -5px 5px 0 ${theme.overrides.MuiCard.root.borderColor}`,
-      height: "100%",
-      transition: `box-shadow ${theme.transitions.duration.shortest}ms`
-    },
-    spacer: {
-      flex: "1"
-    },
-    stop: {
-      "&$root": {
-        borderTopColor: theme.overrides.MuiCard.root.borderColor,
-        boxShadow: `0 0 0 0 ${theme.overrides.MuiCard.root.borderColor}`
-      }
+const useStyles = makeStyles(theme => ({
+  button: {
+    marginRight: theme.spacing(1)
+  },
+  cancelButton: {
+    marginRight: theme.spacing(2)
+  },
+  container: {
+    display: "flex",
+    paddingBottom: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      marginTop: theme.spacing(1)
     }
-  });
+  },
+  deleteButton: {
+    "&:hover": {
+      backgroundColor: theme.palette.error.dark
+    },
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText
+  },
+  root: {
+    background: theme.palette.background.default,
+    borderTop: "1px solid transparent",
+    boxShadow: `0 -5px 5px 0 ${theme.palette.divider}`,
+    height: "100%",
+    transition: `box-shadow ${theme.transitions.duration.shortest}ms`
+  },
+  spacer: {
+    flex: "1"
+  },
+  stop: {
+    "&$root": {
+      borderTopColor: theme.palette.divider,
+      boxShadow: `0 0 0 0 ${theme.palette.divider}`
+    }
+  }
+}));
 
-interface SaveButtonBarProps extends WithStyles<typeof styles> {
+interface SaveButtonBarProps {
   disabled: boolean;
   state: ConfirmButtonTransitionState;
   labels?: {
@@ -73,77 +67,77 @@ interface SaveButtonBarProps extends WithStyles<typeof styles> {
   onSave(event: any);
 }
 
-export const SaveButtonBar = withStyles(styles, { name: "SaveButtonBar" })(
-  ({
-    classes,
+export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
+  const {
     disabled,
     labels,
     state,
     onCancel,
     onDelete,
     onSave,
-    ...props
-  }: SaveButtonBarProps) => {
-    const intl = useIntl();
-    const scrollPosition = useWindowScroll();
-    const scrolledToBottom =
-      scrollPosition.y + window.innerHeight >= document.body.scrollHeight;
+    ...rest
+  } = props;
+  const classes = useStyles(props);
 
-    return (
-      <AppActionContext.Consumer>
-        {anchor =>
-          anchor ? (
-            <Portal container={anchor.current}>
-              <div
-                className={classNames(classes.root, {
-                  [classes.stop]: scrolledToBottom
-                })}
-                {...props}
-              >
-                <Container className={classes.container}>
-                  {!!onDelete && (
-                    <Button
-                      variant="contained"
-                      onClick={onDelete}
-                      className={classes.deleteButton}
-                      data-tc="button-bar-delete"
-                    >
-                      {labels && labels.delete
-                        ? labels.delete
-                        : intl.formatMessage(buttonMessages.delete)}
-                    </Button>
-                  )}
-                  <div className={classes.spacer} />
+  const intl = useIntl();
+  const scrollPosition = useWindowScroll();
+  const scrolledToBottom =
+    scrollPosition.y + window.innerHeight >= document.body.scrollHeight;
+
+  return (
+    <AppActionContext.Consumer>
+      {anchor =>
+        anchor ? (
+          <Portal container={anchor.current}>
+            <div
+              className={classNames(classes.root, {
+                [classes.stop]: scrolledToBottom
+              })}
+              {...rest}
+            >
+              <Container className={classes.container}>
+                {!!onDelete && (
                   <Button
-                    className={classes.cancelButton}
-                    variant="text"
-                    onClick={onCancel}
-                    data-tc="button-bar-cancel"
+                    variant="contained"
+                    onClick={onDelete}
+                    className={classes.deleteButton}
+                    data-tc="button-bar-delete"
                   >
-                    {maybe(
-                      () => labels.cancel,
-                      intl.formatMessage(buttonMessages.back)
-                    )}
+                    {labels && labels.delete
+                      ? labels.delete
+                      : intl.formatMessage(buttonMessages.delete)}
                   </Button>
-                  <ConfirmButton
-                    disabled={disabled}
-                    onClick={onSave}
-                    transitionState={state}
-                    data-tc="button-bar-confirm"
-                  >
-                    {maybe(
-                      () => labels.save,
-                      intl.formatMessage(buttonMessages.save)
-                    )}
-                  </ConfirmButton>
-                </Container>
-              </div>
-            </Portal>
-          ) : null
-        }
-      </AppActionContext.Consumer>
-    );
-  }
-);
+                )}
+                <div className={classes.spacer} />
+                <Button
+                  className={classes.cancelButton}
+                  variant="text"
+                  onClick={onCancel}
+                  data-tc="button-bar-cancel"
+                >
+                  {maybe(
+                    () => labels.cancel,
+                    intl.formatMessage(buttonMessages.back)
+                  )}
+                </Button>
+                <ConfirmButton
+                  disabled={disabled}
+                  onClick={onSave}
+                  transitionState={state}
+                  data-tc="button-bar-confirm"
+                >
+                  {maybe(
+                    () => labels.save,
+                    intl.formatMessage(buttonMessages.save)
+                  )}
+                </ConfirmButton>
+              </Container>
+            </div>
+          </Portal>
+        ) : null
+      }
+    </AppActionContext.Consumer>
+  );
+};
 SaveButtonBar.displayName = "SaveButtonBar";
 export default SaveButtonBar;

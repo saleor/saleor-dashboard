@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -177,74 +172,74 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
   }
 };
 
-const styles = theme =>
-  createStyles({
-    header: {
-      fontWeight: 500,
-      marginBottom: theme.spacing(1)
-    },
-    root: { marginTop: theme.spacing(4) },
-    user: {
-      marginBottom: theme.spacing(1)
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  header: {
+    fontWeight: 500,
+    marginBottom: theme.spacing(1)
+  },
+  root: { marginTop: theme.spacing(4) },
+  user: {
+    marginBottom: theme.spacing(1)
+  }
+}));
 
-interface OrderHistoryProps extends WithStyles<typeof styles> {
+interface OrderHistoryProps {
   history: OrderDetails_order_events[];
   onNoteAdd: (data: FormData) => void;
 }
 
-const OrderHistory = withStyles(styles, { name: "OrderHistory" })(
-  ({ classes, history, onNoteAdd }: OrderHistoryProps) => {
-    const intl = useIntl();
+const OrderHistory: React.FC<OrderHistoryProps> = props => {
+  const { history, onNoteAdd } = props;
+  const classes = useStyles(props);
 
-    return (
-      <div className={classes.root}>
-        <Typography className={classes.header} color="textSecondary">
-          <FormattedMessage defaultMessage="Order History" />
-        </Typography>
-        <Hr />
-        {history ? (
-          <Timeline>
-            <Form initial={{ message: "" }} onSubmit={onNoteAdd} resetOnSubmit>
-              {({ change, data, reset, submit }) => (
-                <TimelineAddNote
-                  message={data.message}
-                  reset={reset}
-                  onChange={change}
-                  onSubmit={submit}
-                />
-              )}
-            </Form>
-            {history
-              .slice()
-              .reverse()
-              .map(event => {
-                if (event.type === OrderEventsEnum.NOTE_ADDED) {
-                  return (
-                    <TimelineNote
-                      date={event.date}
-                      user={event.user}
-                      message={event.message}
-                      key={event.id}
-                    />
-                  );
-                }
+  const intl = useIntl();
+
+  return (
+    <div className={classes.root}>
+      <Typography className={classes.header} color="textSecondary">
+        <FormattedMessage defaultMessage="Order History" />
+      </Typography>
+      <Hr />
+      {history ? (
+        <Timeline>
+          <Form initial={{ message: "" }} onSubmit={onNoteAdd} resetOnSubmit>
+            {({ change, data, reset, submit }) => (
+              <TimelineAddNote
+                message={data.message}
+                reset={reset}
+                onChange={change}
+                onSubmit={submit}
+              />
+            )}
+          </Form>
+          {history
+            .slice()
+            .reverse()
+            .map(event => {
+              if (event.type === OrderEventsEnum.NOTE_ADDED) {
                 return (
-                  <TimelineEvent
+                  <TimelineNote
                     date={event.date}
-                    title={getEventMessage(event, intl)}
+                    user={event.user}
+                    message={event.message}
                     key={event.id}
                   />
                 );
-              })}
-          </Timeline>
-        ) : (
-          <Skeleton />
-        )}
-      </div>
-    );
-  }
-);
+              }
+              return (
+                <TimelineEvent
+                  date={event.date}
+                  title={getEventMessage(event, intl)}
+                  key={event.id}
+                />
+              );
+            })}
+        </Timeline>
+      ) : (
+        <Skeleton />
+      )}
+    </div>
+  );
+};
 OrderHistory.displayName = "OrderHistory";
 export default OrderHistory;

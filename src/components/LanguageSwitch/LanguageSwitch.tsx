@@ -5,12 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import classNames from "classnames";
@@ -26,109 +21,104 @@ export interface LanguageSwitchProps {
   onLanguageChange: (lang: LanguageCodeEnum) => void;
 }
 
-const styles = theme =>
-  createStyles({
-    arrow: {
-      color: theme.palette.primary.main,
-      transition: theme.transitions.duration.standard + "ms"
-    },
-    container: {
-      paddingBottom: theme.spacing(1)
-    },
-    menuContainer: {
-      cursor: "pointer",
-      display: "flex",
-      justifyContent: "space-between",
-      minWidth: 90,
-      padding: theme.spacing(),
-      position: "relative"
-    },
-    menuItem: {
-      textAlign: "justify"
-    },
-    menuPaper: {
-      maxHeight: `calc(100vh - ${theme.spacing(2)}px)`,
-      overflow: "scroll"
-    },
-    popover: {
-      zIndex: 1
-    },
-    rotate: {
-      transform: "rotate(180deg)"
-    }
-  });
-const LanguageSwitch = withStyles(styles, { name: "LanguageSwitch" })(
-  ({
-    classes,
-    currentLanguage,
-    languages,
-    onLanguageChange
-  }: LanguageSwitchProps & WithStyles<typeof styles>) => {
-    const [isExpanded, setExpandedState] = React.useState(false);
-    const anchor = React.useRef();
-
-    return (
-      <div className={classes.container} ref={anchor}>
-        <Card
-          className={classes.menuContainer}
-          onClick={() => setExpandedState(!isExpanded)}
-        >
-          <Typography>{currentLanguage}</Typography>
-          <ArrowDropDown
-            className={classNames(classes.arrow, {
-              [classes.rotate]: isExpanded
-            })}
-          />
-        </Card>
-        <Popper
-          className={classes.popover}
-          open={isExpanded}
-          anchorEl={anchor.current}
-          transition
-          disablePortal
-          placement="bottom-end"
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "right top" : "right bottom"
-              }}
-            >
-              <Paper className={classes.menuPaper}>
-                <ClickAwayListener
-                  onClickAway={() => setExpandedState(false)}
-                  mouseEvent="onClick"
-                >
-                  {languages.map(lang => (
-                    <Menu>
-                      <MenuItem
-                        className={classes.menuItem}
-                        onClick={() => {
-                          setExpandedState(false);
-                          onLanguageChange(lang.code);
-                        }}
-                      >
-                        <FormattedMessage
-                          defaultMessage="{languageName} - {languageCode}"
-                          description="button"
-                          values={{
-                            languageCode: lang.code,
-                            languageName: lang.language
-                          }}
-                        />
-                      </MenuItem>
-                    </Menu>
-                  ))}
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
-    );
+const useStyles = makeStyles(theme => ({
+  arrow: {
+    color: theme.palette.primary.main,
+    transition: theme.transitions.duration.standard + "ms"
+  },
+  container: {
+    paddingBottom: theme.spacing(1)
+  },
+  menuContainer: {
+    cursor: "pointer",
+    display: "flex",
+    justifyContent: "space-between",
+    minWidth: 90,
+    padding: theme.spacing(),
+    position: "relative"
+  },
+  menuItem: {
+    textAlign: "justify"
+  },
+  menuPaper: {
+    maxHeight: `calc(100vh - ${theme.spacing(2)}px)`,
+    overflow: "scroll"
+  },
+  popover: {
+    zIndex: 1
+  },
+  rotate: {
+    transform: "rotate(180deg)"
   }
-);
+}));
+const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
+  const { currentLanguage, languages, onLanguageChange } = props;
+  const classes = useStyles(props);
+
+  const [isExpanded, setExpandedState] = React.useState(false);
+  const anchor = React.useRef();
+
+  return (
+    <div className={classes.container} ref={anchor}>
+      <Card
+        className={classes.menuContainer}
+        onClick={() => setExpandedState(!isExpanded)}
+      >
+        <Typography>{currentLanguage}</Typography>
+        <ArrowDropDown
+          className={classNames(classes.arrow, {
+            [classes.rotate]: isExpanded
+          })}
+        />
+      </Card>
+      <Popper
+        className={classes.popover}
+        open={isExpanded}
+        anchorEl={anchor.current}
+        transition
+        disablePortal
+        placement="bottom-end"
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom" ? "right top" : "right bottom"
+            }}
+          >
+            <Paper className={classes.menuPaper}>
+              <ClickAwayListener
+                onClickAway={() => setExpandedState(false)}
+                mouseEvent="onClick"
+              >
+                {languages.map(lang => (
+                  <Menu>
+                    <MenuItem
+                      className={classes.menuItem}
+                      onClick={() => {
+                        setExpandedState(false);
+                        onLanguageChange(lang.code);
+                      }}
+                    >
+                      <FormattedMessage
+                        defaultMessage="{languageName} - {languageCode}"
+                        description="button"
+                        values={{
+                          languageCode: lang.code,
+                          languageName: lang.language
+                        }}
+                      />
+                    </MenuItem>
+                  </Menu>
+                ))}
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </div>
+  );
+};
 LanguageSwitch.displayName = "LanguageSwitch";
 export default LanguageSwitch;

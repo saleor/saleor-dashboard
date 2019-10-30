@@ -1,15 +1,15 @@
-import Money from "./Money";
+import { IMoney } from "./Money";
 
 export { default } from "./Money";
 export * from "./Money";
 
-export function addMoney(init: Money, ...args: Money[]): Money {
+export function addMoney(init: IMoney, ...args: IMoney[]): IMoney {
   return {
     amount: args.reduce((acc, curr) => acc + curr.amount, init.amount),
     currency: init.currency
   };
 }
-export function subtractMoney(init: Money, ...args: Money[]): Money {
+export function subtractMoney(init: IMoney, ...args: IMoney[]): IMoney {
   return {
     amount: args.reduce((acc, curr) => acc - curr.amount, init.amount),
     currency: init.currency

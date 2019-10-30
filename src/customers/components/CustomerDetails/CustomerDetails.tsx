@@ -1,11 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment-timezone";
@@ -19,20 +14,19 @@ import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
-const styles = theme =>
-  createStyles({
-    cardTitle: {
-      height: 64
-    },
-    root: {
-      display: "grid" as "grid",
-      gridColumnGap: theme.spacing(2),
-      gridRowGap: theme.spacing(3),
-      gridTemplateColumns: "1fr 1fr"
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  cardTitle: {
+    height: 64
+  },
+  root: {
+    display: "grid" as "grid",
+    gridColumnGap: theme.spacing(2),
+    gridRowGap: theme.spacing(3),
+    gridTemplateColumns: "1fr 1fr"
+  }
+}));
 
-export interface CustomerDetailsProps extends WithStyles<typeof styles> {
+export interface CustomerDetailsProps {
   customer: CustomerDetails_user;
   data: {
     firstName: string;
@@ -51,107 +45,101 @@ export interface CustomerDetailsProps extends WithStyles<typeof styles> {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CustomerDetails = withStyles(styles, { name: "CustomerDetails" })(
-  ({
-    classes,
-    customer,
-    data,
-    disabled,
-    errors,
-    onChange
-  }: CustomerDetailsProps) => {
-    const intl = useIntl();
+const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
+  const { customer, data, disabled, errors, onChange } = props;
+  const classes = useStyles(props);
 
-    return (
-      <Card>
-        <CardTitle
-          className={classes.cardTitle}
-          title={
-            <>
-              <FormattedMessage {...commonMessages.generalInformations} />
-              {customer && customer.dateJoined ? (
-                <Typography variant="caption" component="div">
-                  <FormattedMessage
-                    defaultMessage="Customer since: {date}"
-                    description="section subheader"
-                    values={{
-                      date: moment(customer.dateJoined).format("MMM YYYY")
-                    }}
-                  />
-                </Typography>
-              ) : (
-                <Skeleton style={{ width: "10rem" }} />
-              )}
-            </>
-          }
+  const intl = useIntl();
+
+  return (
+    <Card>
+      <CardTitle
+        className={classes.cardTitle}
+        title={
+          <>
+            <FormattedMessage {...commonMessages.generalInformations} />
+            {customer && customer.dateJoined ? (
+              <Typography variant="caption" component="div">
+                <FormattedMessage
+                  defaultMessage="Customer since: {date}"
+                  description="section subheader"
+                  values={{
+                    date: moment(customer.dateJoined).format("MMM YYYY")
+                  }}
+                />
+              </Typography>
+            ) : (
+              <Skeleton style={{ width: "10rem" }} />
+            )}
+          </>
+        }
+      />
+      <CardContent>
+        <ControlledCheckbox
+          checked={data.isActive}
+          disabled={disabled}
+          label={intl.formatMessage({
+            defaultMessage: "User account active",
+            description: "check to mark this account as active"
+          })}
+          name="isActive"
+          onChange={onChange}
         />
-        <CardContent>
-          <ControlledCheckbox
-            checked={data.isActive}
-            disabled={disabled}
-            label={intl.formatMessage({
-              defaultMessage: "User account active",
-              description: "check to mark this account as active"
-            })}
-            name="isActive"
-            onChange={onChange}
-          />
-          <FormSpacer />
-          <div className={classes.root}>
-            <TextField
-              disabled={disabled}
-              error={!!errors.firstName}
-              fullWidth
-              helperText={errors.firstName}
-              name="firstName"
-              type="text"
-              label={intl.formatMessage(commonMessages.firstName)}
-              value={data.firstName}
-              onChange={onChange}
-            />
-            <TextField
-              disabled={disabled}
-              error={!!errors.lastName}
-              fullWidth
-              helperText={errors.lastName}
-              name="lastName"
-              type="text"
-              label={intl.formatMessage(commonMessages.lastName)}
-              value={data.lastName}
-              onChange={onChange}
-            />
-          </div>
-          <FormSpacer />
+        <FormSpacer />
+        <div className={classes.root}>
           <TextField
             disabled={disabled}
-            error={!!errors.email}
+            error={!!errors.firstName}
             fullWidth
-            helperText={errors.email}
-            name="email"
-            type="email"
-            label={intl.formatMessage(commonMessages.email)}
-            value={data.email}
+            helperText={errors.firstName}
+            name="firstName"
+            type="text"
+            label={intl.formatMessage(commonMessages.firstName)}
+            value={data.firstName}
             onChange={onChange}
           />
-          <FormSpacer />
           <TextField
             disabled={disabled}
-            error={!!errors.note}
+            error={!!errors.lastName}
             fullWidth
-            multiline
-            helperText={errors.note}
-            name="note"
-            label={intl.formatMessage({
-              defaultMessage: "Note",
-              description: "note about customer"
-            })}
-            value={data.note}
+            helperText={errors.lastName}
+            name="lastName"
+            type="text"
+            label={intl.formatMessage(commonMessages.lastName)}
+            value={data.lastName}
             onChange={onChange}
           />
-        </CardContent>
-      </Card>
-    );
-  }
-);
+        </div>
+        <FormSpacer />
+        <TextField
+          disabled={disabled}
+          error={!!errors.email}
+          fullWidth
+          helperText={errors.email}
+          name="email"
+          type="email"
+          label={intl.formatMessage(commonMessages.email)}
+          value={data.email}
+          onChange={onChange}
+        />
+        <FormSpacer />
+        <TextField
+          disabled={disabled}
+          error={!!errors.note}
+          fullWidth
+          multiline
+          helperText={errors.note}
+          name="note"
+          label={intl.formatMessage({
+            defaultMessage: "Note",
+            description: "note about customer"
+          })}
+          value={data.note}
+          onChange={onChange}
+        />
+      </CardContent>
+    </Card>
+  );
+};
 CustomerDetails.displayName = "CustomerDetails";
 export default CustomerDetails;

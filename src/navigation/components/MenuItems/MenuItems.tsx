@@ -3,12 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -39,252 +34,250 @@ export interface MenuItemsProps {
   onUndo: () => void;
 }
 
-const styles = theme =>
-  createStyles({
-    actions: {
-      flexDirection: "row"
+const useStyles = makeStyles(theme => ({
+  actions: {
+    flexDirection: "row"
+  },
+  container: {
+    background: theme.palette.grey[200]
+  },
+  darkContainer: {
+    background: `${theme.palette.grey[800]} !important`
+  },
+  deleteButton: {
+    marginRight: theme.spacing(1)
+  },
+  dragIcon: {
+    cursor: "grab"
+  },
+  nodeTitle: {
+    cursor: "pointer",
+    marginLeft: theme.spacing(7)
+  },
+  root: {
+    "& .rst__collapseButton": {
+      display: "none"
     },
-    container: {
-      background: theme.palette.grey[200]
-    },
-    darkContainer: {
-      background: `${theme.palette.grey[800]} !important`
-    },
-    deleteButton: {
-      marginRight: theme.spacing(1)
-    },
-    dragIcon: {
-      cursor: "grab"
-    },
-    nodeTitle: {
-      cursor: "pointer",
-      marginLeft: theme.spacing(7)
-    },
-    root: {
-      "& .rst__collapseButton": {
-        display: "none"
-      },
-      "& .rst__node": {
-        "&:first-of-type": {
-          "& $row": {
-            borderTop: `1px ${theme.overrides.MuiCard.root.borderColor} solid`
-          }
+    "& .rst__node": {
+      "&:first-of-type": {
+        "& $row": {
+          borderTop: `1px ${theme.palette.divider} solid`
         }
       }
-    },
-    row: {
-      alignItems: "center",
-      background: theme.palette.background.paper,
-      borderBottom: `1px ${theme.overrides.MuiCard.root.borderColor} solid`,
-      borderRadius: 0,
-      display: "flex",
-      flexDirection: "row",
-      height: NODE_HEIGHT,
-      justifyContent: "flex-start",
-      paddingLeft: theme.spacing(3)
-    },
-    rowContainer: {
-      "& > *": {
-        opacity: 1,
-        transition: `opacity ${theme.transitions.duration.standard}ms`
-      },
-      transition: `margin ${theme.transitions.duration.standard}ms`
-    },
-    rowContainerDragged: {
-      "&$rowContainer": {
-        "&:before": {
-          background: theme.palette.background.paper,
-          border: `1px solid ${theme.palette.primary.main}`,
-          borderRadius: "100%",
-          content: "''",
-          height: 7,
-          left: 0,
-          position: "absolute",
-          top: -3,
-          width: 7
-        },
-        borderTop: `1px solid ${theme.palette.primary.main}`,
-        height: 0,
-        position: "relative",
-        top: -1
-      }
-    },
-    rowContainerPlaceholder: {
-      opacity: 0
-    },
-    spacer: {
-      flex: 1
     }
-  });
+  },
+  row: {
+    alignItems: "center",
+    background: theme.palette.background.paper,
+    borderBottom: `1px ${theme.palette.divider} solid`,
+    borderRadius: 0,
+    display: "flex",
+    flexDirection: "row",
+    height: NODE_HEIGHT,
+    justifyContent: "flex-start",
+    paddingLeft: theme.spacing(3)
+  },
+  rowContainer: {
+    "& > *": {
+      opacity: 1,
+      transition: `opacity ${theme.transitions.duration.standard}ms`
+    },
+    transition: `margin ${theme.transitions.duration.standard}ms`
+  },
+  rowContainerDragged: {
+    "&$rowContainer": {
+      "&:before": {
+        background: theme.palette.background.paper,
+        border: `1px solid ${theme.palette.primary.main}`,
+        borderRadius: "100%",
+        content: "''",
+        height: 7,
+        left: 0,
+        position: "absolute",
+        top: -3,
+        width: 7
+      },
+      borderTop: `1px solid ${theme.palette.primary.main}`,
+      height: 0,
+      position: "relative",
+      top: -1
+    }
+  },
+  rowContainerPlaceholder: {
+    opacity: 0
+  },
+  spacer: {
+    flex: 1
+  }
+}));
 
-const Placeholder = withStyles(styles, {
-  name: "Placeholder"
-})(({ classes }: WithStyles<typeof styles>) => (
-  <Paper className={classes.row} elevation={0}>
-    <Typography>
-      <FormattedMessage
-        defaultMessage="Add new menu item to begin creating menu"
-        id="menuItemsPlaceholder"
-      />
-    </Typography>
-  </Paper>
-));
+const Placeholder: React.FC = props => {
+  const classes = useStyles(props);
 
-const Node = withStyles(styles, {
-  name: "Node"
-})(
-  ({
-    classes,
+  return (
+    <Paper className={classes.row} elevation={0}>
+      <Typography>
+        <FormattedMessage
+          defaultMessage="Add new menu item to begin creating menu"
+          id="menuItemsPlaceholder"
+        />
+      </Typography>
+    </Paper>
+  );
+};
+
+const Node: React.FC<NodeRendererProps> = props => {
+  const {
     node,
     path,
     connectDragPreview,
     connectDragSource,
     isDragging
-  }: NodeRendererProps & WithStyles<typeof styles>) => {
-    const draggedClassName = classNames(
-      classes.rowContainer,
-      classes.rowContainerDragged
-    );
-    const defaultClassName = isDragging
-      ? draggedClassName
-      : classes.rowContainer;
-    const placeholderClassName = classNames(
-      classes.rowContainer,
-      classes.rowContainerPlaceholder
-    );
+  } = props;
+  const classes = useStyles(props);
 
-    const [className, setClassName] = React.useState(defaultClassName);
-    React.useEffect(() => setClassName(defaultClassName), [isDragging]);
+  const draggedClassName = classNames(
+    classes.rowContainer,
+    classes.rowContainerDragged
+  );
+  const defaultClassName = isDragging ? draggedClassName : classes.rowContainer;
+  const placeholderClassName = classNames(
+    classes.rowContainer,
+    classes.rowContainerPlaceholder
+  );
 
-    const handleDragStart = () => {
-      setClassName(placeholderClassName);
-      setTimeout(() => setClassName(defaultClassName), 0);
-    };
+  const [className, setClassName] = React.useState(defaultClassName);
+  React.useEffect(() => setClassName(defaultClassName), [isDragging]);
 
-    return connectDragPreview(
-      <div
-        className={className}
-        style={{
-          marginLeft: NODE_MARGIN * (path.length - 1)
-        }}
-      >
-        <Paper className={classes.row} elevation={0}>
-          {connectDragSource(
-            <div onDragStart={handleDragStart}>
-              <Draggable className={classes.dragIcon} />
-            </div>
-          )}
-          <Typography className={classes.nodeTitle} onClick={node.onEdit}>
-            {node.title}
-          </Typography>
-          <div className={classes.spacer} />
-          <Button color="primary" onClick={node.onClick}>
-            <FormattedMessage {...buttonMessages.show} />
-          </Button>
-          <IconButton color="primary" onClick={node.onEdit}>
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            className={classes.deleteButton}
-            color="primary"
-            onClick={() =>
-              node.onChange({
-                id: node.id as any,
-                type: "remove"
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Paper>
-      </div>
-    );
-  }
-);
+  const handleDragStart = () => {
+    setClassName(placeholderClassName);
+    setTimeout(() => setClassName(defaultClassName), 0);
+  };
 
-const MenuItems = withStyles(styles, { name: "MenuItems" })(
-  ({
+  return connectDragPreview(
+    <div
+      className={className}
+      style={{
+        marginLeft: NODE_MARGIN * (path.length - 1)
+      }}
+    >
+      <Paper className={classes.row} elevation={0}>
+        {connectDragSource(
+          <div onDragStart={handleDragStart}>
+            <Draggable className={classes.dragIcon} />
+          </div>
+        )}
+        <Typography className={classes.nodeTitle} onClick={node.onEdit}>
+          {node.title}
+        </Typography>
+        <div className={classes.spacer} />
+        <Button color="primary" onClick={node.onClick}>
+          <FormattedMessage {...buttonMessages.show} />
+        </Button>
+        <IconButton color="primary" onClick={node.onEdit}>
+          <EditIcon />
+        </IconButton>
+        <IconButton
+          className={classes.deleteButton}
+          color="primary"
+          onClick={() =>
+            node.onChange({
+              id: node.id as any,
+              type: "remove"
+            })
+          }
+        >
+          <DeleteIcon />
+        </IconButton>
+      </Paper>
+    </div>
+  );
+};
+
+const MenuItems: React.FC<MenuItemsProps> = props => {
+  const {
     canUndo,
-    classes,
+
     items,
     onChange,
     onItemAdd,
     onItemClick,
     onItemEdit,
     onUndo
-  }: MenuItemsProps & WithStyles<typeof styles>) => {
-    const intl = useIntl();
-    const { isDark } = useTheme();
+  } = props;
+  const classes = useStyles(props);
 
-    return (
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
-            defaultMessage: "Menu Items",
-            description: "header",
-            id: "menuItemsHeader"
-          })}
-          toolbar={
-            <Button color="primary" disabled={!canUndo} onClick={onUndo}>
-              <FormattedMessage {...buttonMessages.undo} />
-            </Button>
-          }
-        />
-        <div
-          className={classNames(classes.container, {
-            [classes.darkContainer]: isDark
-          })}
-          style={{
-            minHeight: (items ? getNodeQuantity(items) - 1 : 1) * NODE_HEIGHT,
-            padding: !items && "0 24px",
-            paddingTop: !items && 20
-          }}
-        >
-          {items === undefined ? (
-            <Skeleton />
-          ) : (
-            <SortableTree
-              className={classes.root}
-              generateNodeProps={({ path }) => ({
-                className: classes.row,
-                style: {
-                  marginLeft: NODE_MARGIN * (path.length - 1)
-                }
-              })}
-              isVirtualized={false}
-              rowHeight={NODE_HEIGHT}
-              treeData={items.map(item =>
-                getNodeData(item, onChange, onItemClick, onItemEdit)
-              )}
-              theme={{
-                nodeContentRenderer: Node as any
-              }}
-              onChange={newTree =>
-                onChange(
-                  getDiff(
-                    items.map(item =>
-                      getNodeData(item, onChange, onItemClick, onItemEdit)
-                    ),
-                    newTree as TreeItem[]
-                  )
-                )
-              }
-              placeholderRenderer={Placeholder as any}
-            />
-          )}
-        </div>
-        <CardActions className={classes.actions}>
-          <Button color="primary" onClick={onItemAdd}>
-            <FormattedMessage
-              defaultMessage="Create new item"
-              description="add new menu item"
-              id="menuItemsAddItem"
-            />
+  const intl = useIntl();
+  const { isDark } = useTheme();
+
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Menu Items",
+          description: "header",
+          id: "menuItemsHeader"
+        })}
+        toolbar={
+          <Button color="primary" disabled={!canUndo} onClick={onUndo}>
+            <FormattedMessage {...buttonMessages.undo} />
           </Button>
-        </CardActions>
-      </Card>
-    );
-  }
-);
+        }
+      />
+      <div
+        className={classNames(classes.container, {
+          [classes.darkContainer]: isDark
+        })}
+        style={{
+          minHeight: (items ? getNodeQuantity(items) - 1 : 1) * NODE_HEIGHT,
+          padding: !items && "0 24px",
+          paddingTop: !items && 20
+        }}
+      >
+        {items === undefined ? (
+          <Skeleton />
+        ) : (
+          <SortableTree
+            className={classes.root}
+            generateNodeProps={({ path }) => ({
+              className: classes.row,
+              style: {
+                marginLeft: NODE_MARGIN * (path.length - 1)
+              }
+            })}
+            isVirtualized={false}
+            rowHeight={NODE_HEIGHT}
+            treeData={items.map(item =>
+              getNodeData(item, onChange, onItemClick, onItemEdit)
+            )}
+            theme={{
+              nodeContentRenderer: Node as any
+            }}
+            onChange={newTree =>
+              onChange(
+                getDiff(
+                  items.map(item =>
+                    getNodeData(item, onChange, onItemClick, onItemEdit)
+                  ),
+                  newTree as TreeItem[]
+                )
+              )
+            }
+            placeholderRenderer={Placeholder as any}
+          />
+        )}
+      </div>
+      <CardActions className={classes.actions}>
+        <Button color="primary" onClick={onItemAdd}>
+          <FormattedMessage
+            defaultMessage="Create new item"
+            description="add new menu item"
+            id="menuItemsAddItem"
+          />
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
 MenuItems.displayName = "MenuItems";
 export default MenuItems;

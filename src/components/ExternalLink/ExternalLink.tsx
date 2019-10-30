@@ -1,36 +1,31 @@
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import React from "react";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   link: {
     textDecoration: "none"
   }
 });
 
-interface ExternalLinkProps
-  extends React.HTMLProps<HTMLAnchorElement>,
-    WithStyles<typeof styles> {
+interface ExternalLinkProps extends React.HTMLProps<HTMLAnchorElement> {
   href: string;
   className?: string;
   typographyProps?: TypographyProps;
 }
 
-const ExternalLink = withStyles(styles, { name: "ExternalLink" })(
-  ({
-    classes,
-    className,
-    children,
-    href,
-    typographyProps,
-    ...props
-  }: ExternalLinkProps) => (
-    <a href={href} className={classes.link} {...props}>
+const ExternalLink: React.FC<ExternalLinkProps> = props => {
+  const { className, children, href, typographyProps, ...rest } = props;
+
+  const classes = useStyles(props);
+
+  return (
+    <a href={href} className={classes.link} {...rest}>
       <Typography className={className} color="primary" {...typographyProps}>
         {children}
       </Typography>
     </a>
-  )
-);
+  );
+};
 ExternalLink.displayName = "ExternalLink";
 export default ExternalLink;

@@ -62,7 +62,7 @@
     "react-sortable-tree": "^2.6.2",
     "react-svg": "^2.2.11",
     "slugify": "^1.3.4",
-    "typescript": "^3.5.3",
+    "typescript": "^3.6.4",
     "url-join": "^4.0.1",
     "use-react-router": "^1.0.7"
   },

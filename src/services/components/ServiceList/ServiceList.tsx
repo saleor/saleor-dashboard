@@ -1,10 +1,5 @@
 import IconButton from "@material-ui/core/IconButton";
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -28,41 +23,37 @@ export interface ServiceListProps extends ListProps {
   onRemove: (id: string) => void;
 }
 
-const styles = theme =>
-  createStyles({
-    [theme.breakpoints.up("lg")]: {
-      colName: {
-        "&&": {
-          width: "auto"
-        }
-      }
-    },
-    colAction: {
-      "&&": {
-        paddingRight: theme.spacing(1)
-      },
-      textAlign: "right",
-      width: 100
-    },
+const useStyles = makeStyles(theme => ({
+  [theme.breakpoints.up("lg")]: {
     colName: {
-      paddingLeft: 0,
-      width: 250
-    },
-    table: {
-      tableLayout: "fixed"
-    },
-    tableRow: {
-      cursor: "pointer"
+      "&&": {
+        width: "auto"
+      }
     }
-  });
+  },
+  colAction: {
+    "&&": {
+      paddingRight: theme.spacing(1)
+    },
+    textAlign: "right",
+    width: 100
+  },
+  colName: {
+    paddingLeft: 0,
+    width: 250
+  },
+  table: {
+    tableLayout: "fixed"
+  },
+  tableRow: {
+    cursor: "pointer"
+  }
+}));
 
 const numberOfColumns = 2;
 
-const ServiceList = withStyles(styles, {
-  name: "ServiceList"
-})(
-  ({
-    classes,
+const ServiceList: React.FC<ServiceListProps> = props => {
+  const {
     settings,
     disabled,
     onNextPage,
@@ -72,7 +63,11 @@ const ServiceList = withStyles(styles, {
     onRowClick,
     pageInfo,
     services
-  }: ServiceListProps & WithStyles<typeof styles>) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Table className={classes.table}>
       <TableHead>
         <TableRow>
@@ -160,7 +155,7 @@ const ServiceList = withStyles(styles, {
         )}
       </TableBody>
     </Table>
-  )
-);
+  );
+};
 ServiceList.displayName = "ServiceList";
 export default ServiceList;

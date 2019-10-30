@@ -2,12 +2,7 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -32,158 +27,155 @@ export interface CountryListProps {
   onCountryUnassign: (country: string) => void;
 }
 
-const styles = theme =>
-  createStyles({
-    iconCell: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      width: 48 + theme.spacing(2)
+const useStyles = makeStyles(theme => ({
+  iconCell: {
+    "&:last-child": {
+      paddingRight: 0
     },
-    indicator: {
-      color: theme.palette.text.disabled,
-      display: "inline-block",
-      left: 0,
-      marginRight: theme.spacing(.5),
-      position: "absolute"
+    width: 48 + theme.spacing(2)
+  },
+  indicator: {
+    color: theme.palette.text.disabled,
+    display: "inline-block",
+    left: 0,
+    marginRight: theme.spacing(0.5),
+    position: "absolute"
+  },
+  offsetCell: {
+    "&:first-child": {
+      paddingLeft: theme.spacing(3)
     },
-    offsetCell: {
-      "&:first-child": {
-        paddingLeft: theme.spacing(3)
-      },
-      position: "relative"
+    position: "relative"
+  },
+  pointer: {
+    cursor: "pointer"
+  },
+  root: {
+    "&:last-child": {
+      paddingBottom: 0
     },
-    pointer: {
-      cursor: "pointer"
-    },
-    root: {
-      "&:last-child": {
-        paddingBottom: 0
-      },
-      paddingTop: 0
-    },
-    rotate: {
-      transform: "rotate(180deg)"
-    },
-    textRight: {
-      textAlign: "right"
-    },
-    toLeft: {
-      "&:first-child": {
-        paddingLeft: 0
-      }
-    },
-    wideColumn: {
-      width: "100%"
+    paddingTop: 0
+  },
+  rotate: {
+    transform: "rotate(180deg)"
+  },
+  textRight: {
+    textAlign: "right"
+  },
+  toLeft: {
+    "&:first-child": {
+      paddingLeft: 0
     }
-  });
+  },
+  wideColumn: {
+    width: "100%"
+  }
+}));
 
-const CountryList = withStyles(styles, {
-  name: "CountryList"
-})(
-  ({
-    classes,
+const CountryList: React.FC<CountryListProps> = props => {
+  const {
     countries,
     disabled,
     emptyText,
     title,
     onCountryAssign,
     onCountryUnassign
-  }: CountryListProps & WithStyles<typeof styles>) => {
-    const [isCollapsed, setCollapseStatus] = React.useState(true);
-    const toggleCollapse = () => setCollapseStatus(!isCollapsed);
+  } = props;
+  const classes = useStyles(props);
 
-    return (
-      <Card>
-        <CardTitle
-          title={title}
-          toolbar={
-            <Button color="primary" onClick={onCountryAssign}>
-              <FormattedMessage
-                defaultMessage="Assign countries"
-                description="button"
-              />
-            </Button>
-          }
-        />
-        <CardContent className={classes.root}>
-          <Table>
-            <TableBody>
-              <TableRow className={classes.pointer} onClick={toggleCollapse}>
-                <TableCell
-                  className={classNames(classes.wideColumn, classes.toLeft)}
-                >
-                  <FormattedMessage
-                    defaultMessage="{number} Countries"
-                    description="number of countries"
-                    values={{
-                      number: maybe(() => countries.length.toString(), "...")
-                    }}
+  const [isCollapsed, setCollapseStatus] = React.useState(true);
+  const toggleCollapse = () => setCollapseStatus(!isCollapsed);
+
+  return (
+    <Card>
+      <CardTitle
+        title={title}
+        toolbar={
+          <Button color="primary" onClick={onCountryAssign}>
+            <FormattedMessage
+              defaultMessage="Assign countries"
+              description="button"
+            />
+          </Button>
+        }
+      />
+      <CardContent className={classes.root}>
+        <Table>
+          <TableBody>
+            <TableRow className={classes.pointer} onClick={toggleCollapse}>
+              <TableCell
+                className={classNames(classes.wideColumn, classes.toLeft)}
+              >
+                <FormattedMessage
+                  defaultMessage="{number} Countries"
+                  description="number of countries"
+                  values={{
+                    number: maybe(() => countries.length.toString(), "...")
+                  }}
+                />
+              </TableCell>
+              <TableCell
+                className={classNames(classes.textRight, classes.iconCell)}
+              >
+                <IconButton>
+                  <ArrowDropDownIcon
+                    className={classNames({
+                      [classes.rotate]: !isCollapsed
+                    })}
                   />
-                </TableCell>
-                <TableCell
-                  className={classNames(classes.textRight, classes.iconCell)}
-                >
-                  <IconButton>
-                    <ArrowDropDownIcon
-                      className={classNames({
-                        [classes.rotate]: !isCollapsed
-                      })}
-                    />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-              {!isCollapsed &&
-                renderCollection(
-                  countries,
-                  (country, countryIndex) => (
-                    <TableRow key={country ? country.code : "skeleton"}>
-                      <TableCell className={classes.offsetCell}>
-                        {maybe<React.ReactNode>(
-                          () => (
-                            <>
-                              {(countryIndex === 0 ||
-                                countries[countryIndex].country[0] !==
-                                  countries[countryIndex - 1].country[0]) && (
-                                <span className={classes.indicator}>
-                                  {country.country[0]}
-                                </span>
-                              )}
-                              {country.country}
-                            </>
-                          ),
-                          <Skeleton />
-                        )}
-                      </TableCell>
-                      <TableCell
-                        className={classNames(
-                          classes.textRight,
-                          classes.iconCell
-                        )}
+                </IconButton>
+              </TableCell>
+            </TableRow>
+            {!isCollapsed &&
+              renderCollection(
+                countries,
+                (country, countryIndex) => (
+                  <TableRow key={country ? country.code : "skeleton"}>
+                    <TableCell className={classes.offsetCell}>
+                      {maybe<React.ReactNode>(
+                        () => (
+                          <>
+                            {(countryIndex === 0 ||
+                              countries[countryIndex].country[0] !==
+                                countries[countryIndex - 1].country[0]) && (
+                              <span className={classes.indicator}>
+                                {country.country[0]}
+                              </span>
+                            )}
+                            {country.country}
+                          </>
+                        ),
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell
+                      className={classNames(
+                        classes.textRight,
+                        classes.iconCell
+                      )}
+                    >
+                      <IconButton
+                        color="primary"
+                        disabled={!country || disabled}
+                        onClick={() => onCountryUnassign(country.code)}
                       >
-                        <IconButton
-                          color="primary"
-                          disabled={!country || disabled}
-                          onClick={() => onCountryUnassign(country.code)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ),
-                  () => (
-                    <TableRow>
-                      <TableCell className={classes.toLeft} colSpan={2}>
-                        {emptyText}
-                      </TableCell>
-                    </TableRow>
-                  )
-                )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-    );
-  }
-);
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ),
+                () => (
+                  <TableRow>
+                    <TableCell className={classes.toLeft} colSpan={2}>
+                      {emptyText}
+                    </TableCell>
+                  </TableRow>
+                )
+              )}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
+  );
+};
 export default CountryList;

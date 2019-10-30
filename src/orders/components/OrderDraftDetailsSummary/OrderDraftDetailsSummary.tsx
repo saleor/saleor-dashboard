@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -13,27 +8,30 @@ import Skeleton from "@saleor/components/Skeleton";
 import { maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
 
-const styles = theme =>
-  createStyles({
-    root: {
-      ...theme.typography.body1,
-      lineHeight: 1.9,
-      width: "100%"
-    },
-    textRight: {
-      textAlign: "right"
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  root: {
+    ...theme.typography.body1,
+    lineHeight: 1.9,
+    width: "100%"
+  },
+  textRight: {
+    textAlign: "right"
+  }
+}));
 
-interface OrderDraftDetailsSummaryProps extends WithStyles<typeof styles> {
+interface OrderDraftDetailsSummaryProps {
   order: OrderDetails_order;
   onShippingMethodEdit: () => void;
 }
 
-const OrderDraftDetailsSummary = withStyles(styles, {
-  name: "OrderDraftDetailsSummary"
-})(
-  ({ classes, order, onShippingMethodEdit }: OrderDraftDetailsSummaryProps) => (
+const OrderDraftDetailsSummary: React.FC<
+  OrderDraftDetailsSummaryProps
+> = props => {
+  const { order, onShippingMethodEdit } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <table className={classes.root}>
       <tbody>
         <tr>
@@ -134,7 +132,7 @@ const OrderDraftDetailsSummary = withStyles(styles, {
         </tr>
       </tbody>
     </table>
-  )
-);
+  );
+};
 OrderDraftDetailsSummary.displayName = "OrderDraftDetailsSummary";
 export default OrderDraftDetailsSummary;

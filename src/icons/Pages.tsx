@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const Pages = createSvgIcon(
+const Pages = createSvgIcon(
   <>
     <path
       fillRule="evenodd"
@@ -10,6 +10,6 @@ export const Pages = createSvgIcon(
       fill="#06847B"
     />
   </>
-);
-Pages.displayName = "Pages";
+, "Pages")
+
 export default Pages;

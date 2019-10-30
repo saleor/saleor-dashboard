@@ -1,16 +1,11 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 
-const styles = theme =>
-  createStyles({
+const useStyles = makeStyles(
+  theme => ({
     active: {
       color: theme.typography.caption.color
     },
@@ -35,17 +30,23 @@ const styles = theme =>
       padding: theme.spacing(1),
       transition: theme.transitions.duration.short + "ms"
     }
-  });
+  }),
+  { name: "Tab" }
+);
 
-interface TabProps<T> extends WithStyles<typeof styles> {
+interface TabProps<T> {
   children?: React.ReactNode;
   isActive: boolean;
   changeTab: (index: T) => void;
 }
 
 export function Tab<T>(value: T) {
-  return withStyles(styles, { name: "Tab" })(
-    ({ classes, children, isActive, changeTab }: TabProps<T>) => (
+  const Component: React.FC<TabProps<T>> = props => {
+    const { children, isActive, changeTab } = props;
+
+    const classes = useStyles(props);
+
+    return (
       <Typography
         component="span"
         className={classNames({
@@ -56,8 +57,10 @@ export function Tab<T>(value: T) {
       >
         {children}
       </Typography>
-    )
-  );
+    );
+  };
+
+  return Component;
 }
 
 export default Tab;

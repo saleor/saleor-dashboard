@@ -17,6 +17,7 @@ const useInputStyles = makeStyles({
 
 const Search: React.FC<TextFieldProps> = props => {
   const classes = useInputStyles({});
+
   return (
     <TextField
       {...props}

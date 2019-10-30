@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -20,39 +15,34 @@ import { getUserName, maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
 
-const styles = theme =>
-  createStyles({
-    [theme.breakpoints.up("lg")]: {
-      colEmail: {},
-      colName: {},
-      colOrders: {
-        width: 200
-      }
-    },
+const useStyles = makeStyles(theme => ({
+  [theme.breakpoints.up("lg")]: {
     colEmail: {},
-    colName: {
-      paddingLeft: 0
-    },
+    colName: {},
     colOrders: {
-      textAlign: "center"
-    },
-    tableRow: {
-      cursor: "pointer"
+      width: 200
     }
-  });
+  },
+  colEmail: {},
+  colName: {
+    paddingLeft: 0
+  },
+  colOrders: {
+    textAlign: "center"
+  },
+  tableRow: {
+    cursor: "pointer"
+  }
+}));
 
-export interface CustomerListProps
-  extends ListProps,
-    ListActions,
-    WithStyles<typeof styles> {
+export interface CustomerListProps extends ListProps, ListActions {
   customers: ListCustomers_customers_edges_node[];
 }
 
 const numberOfColumns = 4;
 
-const CustomerList = withStyles(styles, { name: "CustomerList" })(
-  ({
-    classes,
+const CustomerList: React.FC<CustomerListProps> = props => {
+  const {
     settings,
     disabled,
     customers,
@@ -66,7 +56,11 @@ const CustomerList = withStyles(styles, { name: "CustomerList" })(
     toggleAll,
     selected,
     isChecked
-  }: CustomerListProps) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Table>
       <TableHead
         colSpan={numberOfColumns}
@@ -148,7 +142,7 @@ const CustomerList = withStyles(styles, { name: "CustomerList" })(
         )}
       </TableBody>
     </Table>
-  )
-);
+  );
+};
 CustomerList.displayName = "CustomerList";
 export default CustomerList;

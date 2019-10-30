@@ -20,13 +20,14 @@ const useStyles = makeStyles(theme => ({
     },
     background: theme.palette.background.paper,
     fontFamily: theme.typography.fontFamily,
-    fontSize: theme.overrides.MuiTableCell.root.fontSize,
+    // FIXME: you damn know what
+    // fontSize: theme.overrides.MuiTableCell.root.fontSize,
     opacity: 0.5
   }
 }));
 
 const SortableTableBody: React.FC<
-  TableBodyProps & SortableTableBodyProps
+  Omit<TableBodyProps & SortableTableBodyProps, "ref">
 > = props => {
   const classes = useStyles({});
 

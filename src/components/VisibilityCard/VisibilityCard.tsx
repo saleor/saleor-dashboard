@@ -1,11 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
@@ -15,39 +10,38 @@ import CardTitle from "@saleor/components/CardTitle";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import { DateContext } from "../Date/DateContext";
 
-const styles = theme =>
-  createStyles({
-    children: {
-      "& button": {
-        margin: "0 9px"
-      },
-      "& label": {
-        marginTop: theme.spacing(2.5)
-      }
+const useStyles = makeStyles(theme => ({
+  children: {
+    "& button": {
+      margin: "0 9px"
     },
-    date: {
-      "& svg": {
-        fill: theme.palette.primary.main
-      },
-      marginTop: theme.spacing(3)
-    },
-    label: {
-      lineHeight: 1,
-      margin: 0
-    },
-    secondLabel: {
-      fontSize: 12
-    },
-    setPublicationDate: {
-      color: theme.palette.primary.main,
-      cursor: "pointer",
-      fontSize: "14px",
-      paddingTop: "15px",
-      textDecoration: "underline"
+    "& label": {
+      marginTop: theme.spacing(2.5)
     }
-  });
+  },
+  date: {
+    "& svg": {
+      fill: theme.palette.primary.main
+    },
+    marginTop: theme.spacing(3)
+  },
+  label: {
+    lineHeight: 1,
+    margin: 0
+  },
+  secondLabel: {
+    fontSize: 12
+  },
+  setPublicationDate: {
+    color: theme.palette.primary.main,
+    cursor: "pointer",
+    fontSize: "14px",
+    paddingTop: "15px",
+    textDecoration: "underline"
+  }
+}));
 
-interface VisibilityCardProps extends WithStyles<typeof styles> {
+interface VisibilityCardProps {
   children?: React.ReactNode | React.ReactNodeArray;
   data: {
     isPublished: boolean;
@@ -60,113 +54,110 @@ interface VisibilityCardProps extends WithStyles<typeof styles> {
   visibleMessage: string;
 }
 
-export const VisibilityCard = withStyles(styles, {
-  name: "VisibilityCard"
-})(
-  ({
+export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
+  const {
     children,
-    classes,
+
     data: { isPublished, publicationDate },
     errors,
     disabled,
     hiddenMessage,
     onChange,
     visibleMessage
-  }: VisibilityCardProps) => {
-    const intl = useIntl();
-    const [isPublicationDate, setPublicationDate] = React.useState(
-      publicationDate === null ? true : false
-    );
-    const dateNow = React.useContext(DateContext);
-    const visibleSecondLabel = publicationDate
-      ? isPublished
-        ? visibleMessage
-        : null
-      : null;
-    const hiddenSecondLabel = publicationDate
-      ? isPublished
-        ? null
-        : Date.parse(publicationDate) > dateNow
-        ? hiddenMessage
-        : null
-      : null;
+  } = props;
+  const classes = useStyles(props);
 
-    return (
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
-            defaultMessage: "Visibility",
-            description: "section header"
-          })}
-        />
-        <CardContent>
-          <RadioSwitchField
-            disabled={disabled}
-            firstOptionLabel={
-              <>
-                <p className={classes.label}>
-                  {intl.formatMessage({
-                    defaultMessage: "Visible"
-                  })}
-                </p>
-                <span className={classes.secondLabel}>
-                  {visibleSecondLabel}
-                </span>
-              </>
-            }
-            name={"isPublished" as keyof FormData}
-            secondOptionLabel={
-              <>
-                <p className={classes.label}>
-                  {intl.formatMessage({
-                    defaultMessage: "Hidden"
-                  })}
-                </p>
-                <span className={classes.secondLabel}>{hiddenSecondLabel}</span>
-              </>
-            }
-            value={isPublished}
-            onChange={onChange}
-          />
-          {!isPublished && (
+  const intl = useIntl();
+  const [isPublicationDate, setPublicationDate] = React.useState(
+    publicationDate === null ? true : false
+  );
+  const dateNow = React.useContext(DateContext);
+  const visibleSecondLabel = publicationDate
+    ? isPublished
+      ? visibleMessage
+      : null
+    : null;
+  const hiddenSecondLabel = publicationDate
+    ? isPublished
+      ? null
+      : Date.parse(publicationDate) > dateNow
+      ? hiddenMessage
+      : null
+    : null;
+
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Visibility",
+          description: "section header"
+        })}
+      />
+      <CardContent>
+        <RadioSwitchField
+          disabled={disabled}
+          firstOptionLabel={
             <>
-              {!isPublished && (
-                <Typography
-                  className={classes.setPublicationDate}
-                  onClick={() => setPublicationDate(!isPublicationDate)}
-                >
-                  {intl.formatMessage({
-                    defaultMessage: "Set publication date"
-                  })}
-                </Typography>
-              )}
-              {isPublicationDate && (
-                <TextField
-                  error={!!errors.publicationDate}
-                  disabled={disabled}
-                  label={intl.formatMessage({
-                    defaultMessage: "Publish on",
-                    description: "publish on date"
-                  })}
-                  name="publicationDate"
-                  type="date"
-                  fullWidth={true}
-                  helperText={errors.publicationDate}
-                  value={publicationDate ? publicationDate : ""}
-                  onChange={onChange}
-                  className={classes.date}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                />
-              )}
+              <p className={classes.label}>
+                {intl.formatMessage({
+                  defaultMessage: "Visible"
+                })}
+              </p>
+              <span className={classes.secondLabel}>{visibleSecondLabel}</span>
             </>
-          )}
-          <div className={classes.children}>{children}</div>
-        </CardContent>
-      </Card>
-    );
-  }
-);
+          }
+          name={"isPublished" as keyof FormData}
+          secondOptionLabel={
+            <>
+              <p className={classes.label}>
+                {intl.formatMessage({
+                  defaultMessage: "Hidden"
+                })}
+              </p>
+              <span className={classes.secondLabel}>{hiddenSecondLabel}</span>
+            </>
+          }
+          value={isPublished}
+          onChange={onChange}
+        />
+        {!isPublished && (
+          <>
+            {!isPublished && (
+              <Typography
+                className={classes.setPublicationDate}
+                onClick={() => setPublicationDate(!isPublicationDate)}
+              >
+                {intl.formatMessage({
+                  defaultMessage: "Set publication date"
+                })}
+              </Typography>
+            )}
+            {isPublicationDate && (
+              <TextField
+                error={!!errors.publicationDate}
+                disabled={disabled}
+                label={intl.formatMessage({
+                  defaultMessage: "Publish on",
+                  description: "publish on date"
+                })}
+                name="publicationDate"
+                type="date"
+                fullWidth={true}
+                helperText={errors.publicationDate}
+                value={publicationDate ? publicationDate : ""}
+                onChange={onChange}
+                className={classes.date}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            )}
+          </>
+        )}
+        <div className={classes.children}>{children}</div>
+      </CardContent>
+    </Card>
+  );
+};
 VisibilityCard.displayName = "VisibilityCard";
 export default VisibilityCard;

@@ -1,12 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -29,13 +24,13 @@ import { maybe, renderCollection } from "../../../misc";
 import { ListActions, PageListProps } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 
-const styles = theme =>
-  createStyles({
+const useStyles = makeStyles(
+  theme => ({
     colActions: {
       "&:last-child": {
         paddingRight: 0
       },
-	    width: 76 + theme.spacing(0.5)
+      width: 76 + theme.spacing(0.5)
     },
     colName: {
       paddingLeft: 0,
@@ -56,21 +51,19 @@ const styles = theme =>
     tableRow: {
       cursor: "pointer"
     }
-  });
+  }),
+  { name: "CollectionProducts" }
+);
 
-export interface CollectionProductsProps
-  extends PageListProps,
-    ListActions,
-    WithStyles<typeof styles> {
+export interface CollectionProductsProps extends PageListProps, ListActions {
   collection: CollectionDetails_collection;
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
 }
 
 const numberOfColumns = 5;
 
-const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
-  ({
-    classes,
+const CollectionProducts: React.FC<CollectionProductsProps> = props => {
+  const {
     collection,
     disabled,
     onAdd,
@@ -84,165 +77,165 @@ const CollectionProducts = withStyles(styles, { name: "CollectionProducts" })(
     toggle,
     toggleAll,
     toolbar
-  }: CollectionProductsProps) => {
-    const intl = useIntl();
+  } = props;
 
-    return (
-      <Card>
-        <CardTitle
-          title={
-            !!collection ? (
-              intl.formatMessage(
-                {
-                  defaultMessage: "Products in {name}",
-                  description: "products in collection"
-                },
-                {
-                  name: maybe(() => collection.name, "...")
-                }
-              )
-            ) : (
-              <Skeleton />
-            )
-          }
-          toolbar={
-            <Button
-              disabled={disabled}
-              variant="text"
-              color="primary"
-              onClick={onAdd}
-            >
-              <FormattedMessage
-                defaultMessage="Assign product"
-                description="button"
-              />
-            </Button>
-          }
-        />
-        <Table className={classes.table}>
-          <TableHead
-            colSpan={numberOfColumns}
-            selected={selected}
-            disabled={disabled}
-            items={maybe(() =>
-              collection.products.edges.map(edge => edge.node)
-            )}
-            toggleAll={toggleAll}
-            toolbar={toolbar}
-          >
-            <TableCell className={classes.colName}>
-              <span className={classes.colNameLabel}>
-                <FormattedMessage
-                  defaultMessage="Name"
-                  description="product name"
-                />
-              </span>
-            </TableCell>
-            <TableCell className={classes.colType}>
-              <FormattedMessage
-                defaultMessage="Type"
-                description="product type"
-              />
-            </TableCell>
-            <TableCell className={classes.colPublished}>
-              <FormattedMessage
-                defaultMessage="Published"
-                description="product is published"
-              />
-            </TableCell>
-            <TableCell className={classes.colActions} />
-          </TableHead>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                colSpan={numberOfColumns}
-                hasNextPage={maybe(() => pageInfo.hasNextPage)}
-                onNextPage={onNextPage}
-                hasPreviousPage={maybe(() => pageInfo.hasPreviousPage)}
-                onPreviousPage={onPreviousPage}
-              />
-            </TableRow>
-          </TableFooter>
-          <TableBody>
-            {renderCollection(
-              maybe(() => collection.products.edges.map(edge => edge.node)),
-              product => {
-                const isSelected = product ? isChecked(product.id) : false;
+  const classes = useStyles(props);
+  const intl = useIntl();
 
-                return (
-                  <TableRow
-                    className={classes.tableRow}
-                    hover={!!product}
-                    onClick={!!product ? onRowClick(product.id) : undefined}
-                    key={product ? product.id : "skeleton"}
-                    selected={isSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        disabled={disabled}
-                        disableClickPropagation
-                        onChange={() => toggle(product.id)}
-                      />
-                    </TableCell>
-                    <TableCellAvatar
-                      className={classes.colName}
-                      thumbnail={maybe(() => product.thumbnail.url)}
-                    >
-                      {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
-                    </TableCellAvatar>
-                    <TableCell className={classes.colType}>
-                      {maybe<React.ReactNode>(
-                        () => product.productType.name,
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.colPublished}>
-                      {maybe(
-                        () => (
-                          <StatusLabel
-                            label={
-                              product.isPublished
-                                ? intl.formatMessage({
-                                    defaultMessage: "Published",
-                                    description: "product is published"
-                                  })
-                                : intl.formatMessage({
-                                    defaultMessage: "Not published",
-                                    description: "product is not published"
-                                  })
-                            }
-                            status={product.isPublished ? "success" : "error"}
-                          />
-                        ),
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.colActions}>
-                      <IconButton
-                        disabled={!product}
-                        onClick={event => onProductUnassign(product.id, event)}
-                      >
-                        <DeleteIcon color="primary" />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
+  return (
+    <Card>
+      <CardTitle
+        title={
+          !!collection ? (
+            intl.formatMessage(
+              {
+                defaultMessage: "Products in {name}",
+                description: "products in collection"
               },
-              () => (
-                <TableRow>
-                  <TableCell />
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No products found" />
+              {
+                name: maybe(() => collection.name, "...")
+              }
+            )
+          ) : (
+            <Skeleton />
+          )
+        }
+        toolbar={
+          <Button
+            disabled={disabled}
+            variant="text"
+            color="primary"
+            onClick={onAdd}
+          >
+            <FormattedMessage
+              defaultMessage="Assign product"
+              description="button"
+            />
+          </Button>
+        }
+      />
+      <Table className={classes.table}>
+        <TableHead
+          colSpan={numberOfColumns}
+          selected={selected}
+          disabled={disabled}
+          items={maybe(() => collection.products.edges.map(edge => edge.node))}
+          toggleAll={toggleAll}
+          toolbar={toolbar}
+        >
+          <TableCell className={classes.colName}>
+            <span className={classes.colNameLabel}>
+              <FormattedMessage
+                defaultMessage="Name"
+                description="product name"
+              />
+            </span>
+          </TableCell>
+          <TableCell className={classes.colType}>
+            <FormattedMessage
+              defaultMessage="Type"
+              description="product type"
+            />
+          </TableCell>
+          <TableCell className={classes.colPublished}>
+            <FormattedMessage
+              defaultMessage="Published"
+              description="product is published"
+            />
+          </TableCell>
+          <TableCell className={classes.colActions} />
+        </TableHead>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={numberOfColumns}
+              hasNextPage={maybe(() => pageInfo.hasNextPage)}
+              onNextPage={onNextPage}
+              hasPreviousPage={maybe(() => pageInfo.hasPreviousPage)}
+              onPreviousPage={onPreviousPage}
+            />
+          </TableRow>
+        </TableFooter>
+        <TableBody>
+          {renderCollection(
+            maybe(() => collection.products.edges.map(edge => edge.node)),
+            product => {
+              const isSelected = product ? isChecked(product.id) : false;
+
+              return (
+                <TableRow
+                  className={classes.tableRow}
+                  hover={!!product}
+                  onClick={!!product ? onRowClick(product.id) : undefined}
+                  key={product ? product.id : "skeleton"}
+                  selected={isSelected}
+                >
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      checked={isSelected}
+                      disabled={disabled}
+                      disableClickPropagation
+                      onChange={() => toggle(product.id)}
+                    />
+                  </TableCell>
+                  <TableCellAvatar
+                    className={classes.colName}
+                    thumbnail={maybe(() => product.thumbnail.url)}
+                  >
+                    {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
+                  </TableCellAvatar>
+                  <TableCell className={classes.colType}>
+                    {maybe<React.ReactNode>(
+                      () => product.productType.name,
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.colPublished}>
+                    {maybe(
+                      () => (
+                        <StatusLabel
+                          label={
+                            product.isPublished
+                              ? intl.formatMessage({
+                                  defaultMessage: "Published",
+                                  description: "product is published"
+                                })
+                              : intl.formatMessage({
+                                  defaultMessage: "Not published",
+                                  description: "product is not published"
+                                })
+                          }
+                          status={product.isPublished ? "success" : "error"}
+                        />
+                      ),
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.colActions}>
+                    <IconButton
+                      disabled={!product}
+                      onClick={event => onProductUnassign(product.id, event)}
+                    >
+                      <DeleteIcon color="primary" />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
-              )
-            )}
-          </TableBody>
-        </Table>
-      </Card>
-    );
-  }
-);
+              );
+            },
+            () => (
+              <TableRow>
+                <TableCell />
+                <TableCell colSpan={numberOfColumns}>
+                  <FormattedMessage defaultMessage="No products found" />
+                </TableCell>
+              </TableRow>
+            )
+          )}
+        </TableBody>
+      </Table>
+    </Card>
+  );
+};
+
 CollectionProducts.displayName = "CollectionProducts";
 export default CollectionProducts;

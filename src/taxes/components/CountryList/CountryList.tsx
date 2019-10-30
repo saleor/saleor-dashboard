@@ -1,5 +1,5 @@
 import Card from "@material-ui/core/Card";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -13,7 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { maybe, renderCollection } from "../../../misc";
 import { CountryList_shop_countries } from "../../types/CountryList";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   tableRow: {
     cursor: "pointer"
   },
@@ -22,13 +22,17 @@ const styles = createStyles({
   }
 });
 
-interface CountryListProps extends WithStyles<typeof styles> {
+interface CountryListProps {
   countries: CountryList_shop_countries[];
   onRowClick: (code: string) => void;
 }
 
-const CountryList = withStyles(styles, { name: "CountryList" })(
-  ({ classes, onRowClick, countries }: CountryListProps) => (
+const CountryList: React.FC<CountryListProps> = props => {
+  const { onRowClick, countries } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Card>
       <Table>
         <TableHead>
@@ -81,7 +85,7 @@ const CountryList = withStyles(styles, { name: "CountryList" })(
         </TableBody>
       </Table>
     </Card>
-  )
-);
+  );
+};
 CountryList.displayName = "CountryList";
 export default CountryList;

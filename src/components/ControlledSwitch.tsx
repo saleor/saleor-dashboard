@@ -1,19 +1,18 @@
-import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import React from "react";
 
-const styles = theme =>
-  createStyles({
-    label: {
-	    marginLeft: theme.spacing(3.5)
-    },
-    labelText: {
-      fontSize: 14
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  label: {
+    marginLeft: theme.spacing(3.5)
+  },
+  labelText: {
+    fontSize: 14
+  }
+}));
 
-interface ControlledSwitchProps extends WithStyles<typeof styles> {
+interface ControlledSwitchProps {
   checked: boolean;
   disabled?: boolean;
   label: string | React.ReactNode;
@@ -23,11 +22,8 @@ interface ControlledSwitchProps extends WithStyles<typeof styles> {
   onChange?(event: React.ChangeEvent<any>);
 }
 
-export const ControlledSwitch = withStyles(styles, {
-  name: "ControlledSwitch"
-})(
-  ({
-    classes,
+export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
+  const {
     checked,
     disabled,
     onChange,
@@ -35,7 +31,11 @@ export const ControlledSwitch = withStyles(styles, {
     name,
     secondLabel,
     uncheckedLabel
-  }: ControlledSwitchProps) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <FormControlLabel
       control={
         <Switch
@@ -65,7 +65,7 @@ export const ControlledSwitch = withStyles(styles, {
       }
       disabled={disabled}
     />
-  )
-);
+  );
+};
 ControlledSwitch.displayName = "ControlledSwitch";
 export default ControlledSwitch;

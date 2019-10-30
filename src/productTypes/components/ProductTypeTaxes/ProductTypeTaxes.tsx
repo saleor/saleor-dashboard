@@ -1,6 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -10,7 +10,7 @@ import { ProductTypeDetails_taxTypes } from "@saleor/productTypes/types/ProductT
 import { maybe } from "../../../misc";
 import { ProductTypeForm } from "../ProductTypeDetailsPage/ProductTypeDetailsPage";
 
-interface ProductTypeTaxesProps extends WithStyles<typeof styles> {
+interface ProductTypeTaxesProps {
   data: {
     taxType: string;
   };
@@ -20,56 +20,50 @@ interface ProductTypeTaxesProps extends WithStyles<typeof styles> {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     overflow: "visible"
   }
 });
 
-const ProductTypeTaxes = withStyles(styles, { name: "ProductTypeTaxes" })(
-  ({
-    classes,
-    data,
-    disabled,
-    taxTypes,
-    taxTypeDisplayName,
-    onChange
-  }: ProductTypeTaxesProps) => {
-    const intl = useIntl();
+const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
+  const { data, disabled, taxTypes, taxTypeDisplayName, onChange } = props;
+  const classes = useStyles(props);
 
-    return (
-      <Card className={classes.root}>
-        <CardTitle
-          title={intl.formatMessage({
+  const intl = useIntl();
+
+  return (
+    <Card className={classes.root}>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Taxes",
+          description: "section header",
+          id: "productTypeTaxesHeader"
+        })}
+      />
+      <CardContent>
+        <SingleAutocompleteSelectField
+          disabled={disabled}
+          displayValue={taxTypeDisplayName}
+          label={intl.formatMessage({
             defaultMessage: "Taxes",
-            description: "section header",
-            id: "productTypeTaxesHeader"
+            id: "productTypeTaxesInputLabel"
           })}
+          name={"taxType" as keyof ProductTypeForm}
+          onChange={onChange}
+          value={data.taxType}
+          choices={maybe(
+            () =>
+              taxTypes.map(c => ({ label: c.description, value: c.taxCode })),
+            []
+          )}
+          InputProps={{
+            autoComplete: "off"
+          }}
         />
-        <CardContent>
-          <SingleAutocompleteSelectField
-            disabled={disabled}
-            displayValue={taxTypeDisplayName}
-            label={intl.formatMessage({
-              defaultMessage: "Taxes",
-              id: "productTypeTaxesInputLabel"
-            })}
-            name={"taxType" as keyof ProductTypeForm}
-            onChange={onChange}
-            value={data.taxType}
-            choices={maybe(
-              () =>
-                taxTypes.map(c => ({ label: c.description, value: c.taxCode })),
-              []
-            )}
-            InputProps={{
-              autoComplete: "off"
-            }}
-          />
-        </CardContent>
-      </Card>
-    );
-  }
-);
+      </CardContent>
+    </Card>
+  );
+};
 ProductTypeTaxes.displayName = "ProductTypeTaxes";
 export default ProductTypeTaxes;

@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
@@ -45,159 +40,158 @@ export interface RichTextEditorProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const styles = theme =>
-  createStyles({
-    error: {
-      color: theme.palette.error.main
-    },
-    helperText: {
-      marginTop: theme.spacing(0.75)
-    },
-    input: {
-      position: "relative"
-    },
-    label: {
-      fontSize: theme.typography.caption.fontSize,
-      left: 12,
-      position: "absolute",
-      top: 9
-    },
-    linkIcon: {
-      marginTop: 2
-    },
-    root: {
-      "& .DraftEditor": {
-        "&-editorContainer": {
-          "& .public-DraftEditor-content": {
-            lineHeight: 1.62
-          },
-          "& a": {
-            color: theme.palette.primary.light
-          },
-          "&:after": {
-            background: theme.palette.getContrastText(
-              theme.palette.background.default
-            ),
-            bottom: -11,
-            content: "''",
-            display: "block",
-            height: 2,
-            left: -12,
-            position: "absolute",
-            transform: "scaleX(0) scaleY(0)",
-            width: "calc(100% + 24px)"
-          },
-          position: "relative"
+const useStyles = makeStyles(theme => ({
+  error: {
+    color: theme.palette.error.main
+  },
+  helperText: {
+    marginTop: theme.spacing(0.75)
+  },
+  input: {
+    position: "relative"
+  },
+  label: {
+    fontSize: theme.typography.caption.fontSize,
+    left: 12,
+    position: "absolute",
+    top: 9
+  },
+  linkIcon: {
+    marginTop: 2
+  },
+  root: {
+    "& .DraftEditor": {
+      "&-editorContainer": {
+        "& .public-DraftEditor-content": {
+          lineHeight: 1.62
         },
-        "&-root": {
-          ...theme.typography.body1
-        }
+        "& a": {
+          color: theme.palette.primary.light
+        },
+        "&:after": {
+          background: theme.palette.getContrastText(
+            theme.palette.background.default
+          ),
+          bottom: -11,
+          content: "''",
+          display: "block",
+          height: 2,
+          left: -12,
+          position: "absolute",
+          transform: "scaleX(0) scaleY(0)",
+          width: "calc(100% + 24px)"
+        },
+        position: "relative"
       },
-      "& .Draftail": {
-        "&-Editor": {
-          "&--focus": {
-            boxShadow: `inset 0px 0px 0px 2px ${theme.palette.primary.main}`
-          },
-          "&:hover": {
-            borderColor: theme.palette.primary.main
-          },
-          border: `1px ${theme.overrides.MuiOutlinedInput.root.borderColor} solid`,
-          borderRadius: 4,
-          padding: "27px 12px 10px",
-          position: "relative",
-          transition: theme.transitions.duration.shortest + "ms"
+      "&-root": {
+        ...theme.typography.body1
+      }
+    },
+    "& .Draftail": {
+      "&-Editor": {
+        "&--focus": {
+          boxShadow: `inset 0px 0px 0px 2px ${theme.palette.primary.main}`
         },
-        "&-Toolbar": {
-          "&Button": {
-            "& svg": {
-              padding: 2
-            },
-            "&--active": {
-              "&:hover": {
-                background: theme.palette.primary.main
-              },
-              "&:not(:hover)": {
-                borderRightColor: theme.palette.primary.main
-              },
+        "&:hover": {
+          borderColor: theme.palette.primary.main
+        },
+        border: `1px ${theme.palette.divider} solid`,
+        borderRadius: 4,
+        padding: "27px 12px 10px",
+        position: "relative",
+        transition: theme.transitions.duration.shortest + "ms"
+      },
+      "&-Toolbar": {
+        "&Button": {
+          "& svg": {
+            padding: 2
+          },
+          "&--active": {
+            "&:hover": {
               background: theme.palette.primary.main
             },
-            "&:focus": {
-              "&:active": {
-                "&:after": {
-                  background: fade(theme.palette.primary.main, 0.3),
-                  borderRadius: "100%",
-                  content: "''",
-                  display: "block",
-                  height: "100%",
-                  width: "100%"
-                }
-              }
+            "&:not(:hover)": {
+              borderRightColor: theme.palette.primary.main
             },
-            "&:hover": {
-              background: fade(theme.palette.primary.main, 0.3)
-            },
-            alignItems: "center",
-            background: "none",
-            border: "none",
-            borderRight: `1px ${theme.overrides.MuiCard.root.borderColor} solid`,
-            color: theme.typography.body1.color,
-            cursor: "pointer",
-            display: "inline-flex",
-            height: 36,
-            justifyContent: "center",
-            padding: theme.spacing(1) + 2,
-            transition: theme.transitions.duration.short + "ms",
-            width: 36
+            background: theme.palette.primary.main
           },
-          "&Group": {
-            "&:last-of-type": {
-              "& .Draftail-ToolbarButton": {
-                "&:last-of-type": {
-                  border: "none"
-                }
+          "&:focus": {
+            "&:active": {
+              "&:after": {
+                background: fade(theme.palette.primary.main, 0.3),
+                borderRadius: "100%",
+                content: "''",
+                display: "block",
+                height: "100%",
+                width: "100%"
               }
-            },
-            display: "flex"
+            }
           },
-          background: theme.palette.background.default,
-          border: `1px ${theme.overrides.MuiCard.root.borderColor} solid`,
+          "&:hover": {
+            background: fade(theme.palette.primary.main, 0.3)
+          },
+          alignItems: "center",
+          background: "none",
+          border: "none",
+          borderRight: `1px ${theme.palette.divider} solid`,
+          color: theme.typography.body1.color,
+          cursor: "pointer",
           display: "inline-flex",
-          flexWrap: "wrap",
-          marginBottom: theme.spacing(),
-          marginTop: 10,
-          [theme.breakpoints.down(460)]: {
-            width: "min-content"
-          }
+          height: 36,
+          justifyContent: "center",
+          padding: theme.spacing(1) + 2,
+          transition: theme.transitions.duration.short + "ms",
+          width: 36
         },
-        "&-block": {
-          "&--blockquote": {
-            borderLeft: `2px solid ${theme.overrides.MuiCard.root.borderColor}`,
-            margin: 0,
-            padding: theme.spacing(1, 2)
-          }
+        "&Group": {
+          "&:last-of-type": {
+            "& .Draftail-ToolbarButton": {
+              "&:last-of-type": {
+                border: "none"
+              }
+            }
+          },
+          display: "flex"
+        },
+        background: theme.palette.background.default,
+        border: `1px ${theme.palette.divider} solid`,
+        display: "inline-flex",
+        flexWrap: "wrap",
+        marginBottom: theme.spacing(),
+        marginTop: 10,
+        [theme.breakpoints.down(460)]: {
+          width: "min-content"
         }
       },
-      "&$error": {
-        "& .Draftail": {
-          "&-Editor": {
-            borderColor: theme.palette.error.main
-          }
+      "&-block": {
+        "&--blockquote": {
+          borderLeft: `2px solid ${theme.palette.divider}`,
+          margin: 0,
+          padding: theme.spacing(1, 2)
         }
       }
     },
-    scroll: {
-      "& .DraftEditor": {
-        "&-editorContainer": {
-          "& .public-DraftEditor-content": {
-            lineHeight: 1.62
-          }
+    "&$error": {
+      "& .Draftail": {
+        "&-Editor": {
+          borderColor: theme.palette.error.main
         }
       }
-    },
-    smallIcon: {
-      marginLeft: 10
     }
-  });
+  },
+  scroll: {
+    "& .DraftEditor": {
+      "&-editorContainer": {
+        "& .public-DraftEditor-content": {
+          lineHeight: 1.62
+        }
+      }
+    }
+  },
+  smallIcon: {
+    marginLeft: 10
+  }
+}));
 
 function handleSave(
   value: any,
@@ -215,17 +209,12 @@ function handleSave(
   }
 }
 
-const RichTextEditor = withStyles(styles, { name: "RichTextEditor" })(
-  ({
-    classes,
-    error,
-    helperText,
-    initial,
-    label,
-    name,
-    scroll,
-    onChange
-  }: RichTextEditorProps & WithStyles<typeof styles>) => (
+const RichTextEditor: React.FC<RichTextEditorProps> = props => {
+  const { error, helperText, initial, label, name, scroll, onChange } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <div
       className={classNames({
         [classes.error]: error,
@@ -302,8 +291,9 @@ const RichTextEditor = withStyles(styles, { name: "RichTextEditor" })(
         </Typography>
       )}
     </div>
-  )
-);
+  );
+};
+
 RichTextEditor.displayName = "RichTextEditor";
 RichTextEditor.defaultProps = {
   scroll: true

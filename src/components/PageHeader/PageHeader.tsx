@@ -1,35 +1,33 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 
 import ExtendedPageHeader from "../ExtendedPageHeader";
 import Skeleton from "../Skeleton";
 
-const styles = theme =>
-  createStyles({
-    root: {
-      display: "flex"
-    },
-    title: {
-      flex: 1,
-      fontSize: 24,
-      paddingBottom: theme.spacing(2)
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex"
+  },
+  title: {
+    flex: 1,
+    fontSize: 24,
+    paddingBottom: theme.spacing(2)
+  }
+}));
 
-interface PageHeaderProps extends WithStyles<typeof styles> {
+interface PageHeaderProps {
   children?: React.ReactNode;
   className?: string;
   title?: string;
 }
 
-const PageHeader = withStyles(styles)(
-  ({ children, classes, className, title }: PageHeaderProps) => (
+const PageHeader: React.FC<PageHeaderProps> = props => {
+  const { children, className, title } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <ExtendedPageHeader
       className={className}
       title={
@@ -40,7 +38,8 @@ const PageHeader = withStyles(styles)(
     >
       <div className={classes.root}>{children}</div>
     </ExtendedPageHeader>
-  )
-);
+  );
+};
+
 PageHeader.displayName = "PageHeader";
 export default PageHeader;

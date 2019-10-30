@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface DebounceProps<T> {
-  children: ((props: (...args: T[]) => void) => React.ReactNode);
+  children: (props: (...args: T[]) => void) => React.ReactNode;
   debounceFn: (...args: T[]) => void;
   time?: number;
 }

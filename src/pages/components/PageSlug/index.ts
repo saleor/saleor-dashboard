@@ -1,2 +1,2 @@
-export { default } from './PageSlug';
-export * from './PageSlug';
+export { default } from "./PageSlug";
+export * from "./PageSlug";

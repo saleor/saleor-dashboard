@@ -1,5 +1,5 @@
 import Card from "@material-ui/core/Card";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,7 +8,6 @@ import TableRow from "@material-ui/core/TableRow";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-// tslint:disable no-submodule-imports
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import Skeleton from "@saleor/components/Skeleton";
 import { maybe, renderCollection } from "../../../misc";
@@ -18,7 +17,7 @@ export interface TranslationsLanguageListProps {
   onRowClick: (code: string) => void;
 }
 
-const styles = createStyles({
+const useStyles = makeStyles({
   capitalize: {
     textTransform: "capitalize"
   },
@@ -27,14 +26,14 @@ const styles = createStyles({
   }
 });
 
-const TranslationsLanguageList = withStyles(styles, {
-  name: "TranslationsLanguageList"
-})(
-  ({
-    classes,
-    languages,
-    onRowClick
-  }: TranslationsLanguageListProps & WithStyles<typeof styles>) => (
+const TranslationsLanguageList: React.FC<
+  TranslationsLanguageListProps
+> = props => {
+  const { languages, onRowClick } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Card>
       <Table>
         <TableHead>
@@ -73,7 +72,7 @@ const TranslationsLanguageList = withStyles(styles, {
         </TableBody>
       </Table>
     </Card>
-  )
-);
+  );
+};
 TranslationsLanguageList.displayName = "TranslationsLanguageList";
 export default TranslationsLanguageList;

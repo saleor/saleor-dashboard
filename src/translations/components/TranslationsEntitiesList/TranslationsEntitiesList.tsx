@@ -1,5 +1,5 @@
 import { Omit } from "@material-ui/core";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -31,7 +31,7 @@ export interface TranslationsEntitiesListProps
   onRowClick: (code: string) => void;
 }
 
-const styles = createStyles({
+const useStyles = makeStyles({
   tableRow: {
     cursor: "pointer"
   },
@@ -42,92 +42,92 @@ const styles = createStyles({
     width: "80%"
   }
 });
-const TranslationsEntitiesList = withStyles(styles, {
-  name: "TranslationsEntitiesList"
-})(
-  ({
-    classes,
+const TranslationsEntitiesList: React.FC<
+  TranslationsEntitiesListProps
+> = props => {
+  const {
     disabled,
     entities,
     onNextPage,
     onPreviousPage,
     onRowClick,
     pageInfo
-  }: TranslationsEntitiesListProps & WithStyles<typeof styles>) => {
-    const intl = useIntl();
+  } = props;
 
-    return (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell className={classes.wideColumn}>
-              <FormattedMessage
-                defaultMessage="Name"
-                description="entity (product, collection, shipping method) name"
-              />
-            </TableCell>
-            <TableCell className={classes.textRight}>
-              <FormattedMessage defaultMessage="Completed Translations" />
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              colSpan={2}
-              hasNextPage={
-                pageInfo && !disabled ? pageInfo.hasNextPage : undefined
-              }
-              onNextPage={onNextPage}
-              hasPreviousPage={
-                pageInfo && !disabled ? pageInfo.hasPreviousPage : undefined
-              }
-              onPreviousPage={onPreviousPage}
+  const classes = useStyles(props);
+  const intl = useIntl();
+
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell className={classes.wideColumn}>
+            <FormattedMessage
+              defaultMessage="Name"
+              description="entity (product, collection, shipping method) name"
             />
-          </TableRow>
-        </TableFooter>
-        <TableBody>
-          {renderCollection(
-            entities,
-            entity => (
-              <TableRow
-                className={classNames({
-                  [classes.tableRow]: !!entity
-                })}
-                hover={!!entity}
-                onClick={entity ? () => onRowClick(entity.id) : undefined}
-                key={entity ? entity.id : "skeleton"}
-              >
-                <TableCell>
-                  {maybe<React.ReactNode>(() => entity.name, <Skeleton />)}
-                </TableCell>
-                <TableCell className={classes.textRight}>
-                  {maybe<React.ReactNode>(
-                    () =>
-                      intl.formatMessage(
-                        {
-                          defaultMessage: "{current} of {max}",
-                          description: "translation progress"
-                        },
-                        entity.completion
-                      ),
-                    <Skeleton />
-                  )}
-                </TableCell>
-              </TableRow>
-            ),
-            () => (
-              <TableRow>
-                <TableCell colSpan={2}>
-                  <FormattedMessage defaultMessage="No translatable entities found" />
-                </TableCell>
-              </TableRow>
-            )
-          )}
-        </TableBody>
-      </Table>
-    );
-  }
-);
+          </TableCell>
+          <TableCell className={classes.textRight}>
+            <FormattedMessage defaultMessage="Completed Translations" />
+          </TableCell>
+        </TableRow>
+      </TableHead>
+      <TableFooter>
+        <TableRow>
+          <TablePagination
+            colSpan={2}
+            hasNextPage={
+              pageInfo && !disabled ? pageInfo.hasNextPage : undefined
+            }
+            onNextPage={onNextPage}
+            hasPreviousPage={
+              pageInfo && !disabled ? pageInfo.hasPreviousPage : undefined
+            }
+            onPreviousPage={onPreviousPage}
+          />
+        </TableRow>
+      </TableFooter>
+      <TableBody>
+        {renderCollection(
+          entities,
+          entity => (
+            <TableRow
+              className={classNames({
+                [classes.tableRow]: !!entity
+              })}
+              hover={!!entity}
+              onClick={entity ? () => onRowClick(entity.id) : undefined}
+              key={entity ? entity.id : "skeleton"}
+            >
+              <TableCell>
+                {maybe<React.ReactNode>(() => entity.name, <Skeleton />)}
+              </TableCell>
+              <TableCell className={classes.textRight}>
+                {maybe<React.ReactNode>(
+                  () =>
+                    intl.formatMessage(
+                      {
+                        defaultMessage: "{current} of {max}",
+                        description: "translation progress"
+                      },
+                      entity.completion
+                    ),
+                  <Skeleton />
+                )}
+              </TableCell>
+            </TableRow>
+          ),
+          () => (
+            <TableRow>
+              <TableCell colSpan={2}>
+                <FormattedMessage defaultMessage="No translatable entities found" />
+              </TableCell>
+            </TableRow>
+          )
+        )}
+      </TableBody>
+    </Table>
+  );
+};
 TranslationsEntitiesList.displayName = "TranslationsEntitiesList";
 export default TranslationsEntitiesList;

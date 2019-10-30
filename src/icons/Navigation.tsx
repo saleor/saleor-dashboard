@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const Navigation = createSvgIcon(
+const Navigation = createSvgIcon(
   <>
     <path
       fillRule="evenodd"
@@ -10,6 +10,6 @@ export const Navigation = createSvgIcon(
       fill="#06847B"
     />
   </>
-);
-Navigation.displayName = "Navigation";
+, "Navigation")
+
 export default Navigation;

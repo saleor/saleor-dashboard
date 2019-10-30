@@ -1,11 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -31,62 +26,61 @@ export interface MenuSection {
   menuItems: MenuItem[];
 }
 
-const styles = theme =>
-  createStyles({
-    card: {
-      "&:hover": {
-        boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.15);"
-      },
-      cursor: "pointer",
-      marginBottom: theme.spacing(3),
-      transition: theme.transitions.duration.standard + "ms"
+const useStyles = makeStyles(theme => ({
+  card: {
+    "&:hover": {
+      boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.15);"
     },
-    cardContent: {
-      // Overrides Material-UI default theme
-      "&:last-child": {
-        paddingBottom: 16
-      },
-      display: "grid",
-      gridColumnGap: theme.spacing(4),
-      gridTemplateColumns: "48px 1fr"
+    cursor: "pointer",
+    marginBottom: theme.spacing(3),
+    transition: theme.transitions.duration.standard + "ms"
+  },
+  cardContent: {
+    // Overrides Material-UI default theme
+    "&:last-child": {
+      paddingBottom: 16
     },
-    cardDisabled: {
-      "& $icon, & $sectionTitle, & $sectionDescription": {
-        color: theme.palette.text.disabled
-      },
-      marginBottom: theme.spacing(3)
+    display: "grid",
+    gridColumnGap: theme.spacing(4),
+    gridTemplateColumns: "48px 1fr"
+  },
+  cardDisabled: {
+    "& $icon, & $sectionTitle, & $sectionDescription": {
+      color: theme.palette.text.disabled
     },
-    configurationCategory: {
-      [theme.breakpoints.down("md")]: {
-        gridTemplateColumns: "1fr"
-      },
-      borderTop: `solid 1px ${theme.palette.divider}`,
-      display: "grid",
-      gridColumnGap: theme.spacing(4) + "px",
-      gridTemplateColumns: "1fr 3fr",
-      paddingTop: theme.spacing(3)
+    marginBottom: theme.spacing(3)
+  },
+  configurationCategory: {
+    [theme.breakpoints.down("md")]: {
+      gridTemplateColumns: "1fr"
     },
-    configurationItem: {
-      display: "grid",
-      gridColumnGap: theme.spacing(4),
-      gridTemplateColumns: "1fr 1fr"
-    },
-    configurationLabel: {
-      paddingBottom: 20
-    },
-    header: {
-      margin: 0
-    },
-    icon: {
-      color: theme.palette.primary.main,
-      fontSize: 48
-    },
-    sectionDescription: {},
-    sectionTitle: {
-      fontSize: 20,
-      fontWeight: 600 as 600
-    }
-  });
+    borderTop: `solid 1px ${theme.palette.divider}`,
+    display: "grid",
+    gridColumnGap: theme.spacing(4) + "px",
+    gridTemplateColumns: "1fr 3fr",
+    paddingTop: theme.spacing(3)
+  },
+  configurationItem: {
+    display: "grid",
+    gridColumnGap: theme.spacing(4),
+    gridTemplateColumns: "1fr 1fr"
+  },
+  configurationLabel: {
+    paddingBottom: 20
+  },
+  header: {
+    margin: 0
+  },
+  icon: {
+    color: theme.palette.primary.main,
+    fontSize: 48
+  },
+  sectionDescription: {},
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 600 as 600
+  }
+}));
 
 export interface ConfigurationPageProps {
   menu: MenuSection[];
@@ -94,64 +88,58 @@ export interface ConfigurationPageProps {
   onSectionClick: (sectionName: string) => void;
 }
 
-export const ConfigurationPage = withStyles(styles, {
-  name: "ConfigurationPage"
-})(
-  ({
-    classes,
-    menu: menus,
-    user,
-    onSectionClick
-  }: ConfigurationPageProps & WithStyles<typeof styles>) => {
-    const intl = useIntl();
-    return (
-      <Container>
-        <PageHeader
-          className={classes.header}
-          title={intl.formatMessage(sectionNames.configuration)}
-        />
-        {menus
-          .filter(menu =>
-            menu.menuItems.some(menuItem =>
-              hasPermission(menuItem.permission, user)
-            )
+export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
+  const { menu: menus, user, onSectionClick } = props;
+  const classes = useStyles(props);
+
+  const intl = useIntl();
+  return (
+    <Container>
+      <PageHeader
+        className={classes.header}
+        title={intl.formatMessage(sectionNames.configuration)}
+      />
+      {menus
+        .filter(menu =>
+          menu.menuItems.some(menuItem =>
+            hasPermission(menuItem.permission, user)
           )
-          .map((menu, menuIndex) => (
-            <div className={classes.configurationCategory} key={menuIndex}>
-              <div className={classes.configurationLabel}>
-                <Typography>{menu.label}</Typography>
-              </div>
-              <div className={classes.configurationItem}>
-                {menu.menuItems
-                  .filter(menuItem => hasPermission(menuItem.permission, user))
-                  .map((item, itemIndex) => (
-                    <Card
-                      className={item.url ? classes.card : classes.cardDisabled}
-                      onClick={() => onSectionClick(item.url)}
-                      key={itemIndex}
-                    >
-                      <CardContent className={classes.cardContent}>
-                        <div className={classes.icon}>{item.icon}</div>
-                        <div>
-                          <Typography
-                            className={classes.sectionTitle}
-                            color="primary"
-                          >
-                            {item.title}
-                          </Typography>
-                          <Typography className={classes.sectionDescription}>
-                            {item.description}
-                          </Typography>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-              </div>
+        )
+        .map((menu, menuIndex) => (
+          <div className={classes.configurationCategory} key={menuIndex}>
+            <div className={classes.configurationLabel}>
+              <Typography>{menu.label}</Typography>
             </div>
-          ))}
-      </Container>
-    );
-  }
-);
+            <div className={classes.configurationItem}>
+              {menu.menuItems
+                .filter(menuItem => hasPermission(menuItem.permission, user))
+                .map((item, itemIndex) => (
+                  <Card
+                    className={item.url ? classes.card : classes.cardDisabled}
+                    onClick={() => onSectionClick(item.url)}
+                    key={itemIndex}
+                  >
+                    <CardContent className={classes.cardContent}>
+                      <div className={classes.icon}>{item.icon}</div>
+                      <div>
+                        <Typography
+                          className={classes.sectionTitle}
+                          color="primary"
+                        >
+                          {item.title}
+                        </Typography>
+                        <Typography className={classes.sectionDescription}>
+                          {item.description}
+                        </Typography>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+            </div>
+          </div>
+        ))}
+    </Container>
+  );
+};
 ConfigurationPage.displayName = "ConfigurationPage";
 export default ConfigurationPage;

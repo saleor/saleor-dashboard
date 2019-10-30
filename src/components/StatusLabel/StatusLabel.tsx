@@ -1,15 +1,10 @@
 import yellow from "@material-ui/core/colors/yellow";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 
-const styles = theme => {
+const useStyles = makeStyles(theme => {
   const dot = {
     borderRadius: "100%",
     content: "''",
@@ -20,7 +15,8 @@ const styles = theme => {
     top: "calc(50% - 5px)",
     width: 8
   };
-  return createStyles({
+
+  return {
     errorDot: {
       "&:before": { backgroundColor: theme.palette.error.main, ...dot }
     },
@@ -38,24 +34,22 @@ const styles = theme => {
     successDot: {
       "&:before": { backgroundColor: theme.palette.primary.main, ...dot }
     }
-  });
-};
+  };
+});
 
-interface StatusLabelProps extends WithStyles<typeof styles> {
+interface StatusLabelProps {
   className?: string;
   label: string | React.ReactNode;
   status: "success" | "neutral" | "error" | string;
   typographyProps?: TypographyProps;
 }
 
-const StatusLabel = withStyles(styles, { name: "StatusLabel" })(
-  ({
-    classes,
-    className,
-    label,
-    status,
-    typographyProps
-  }: StatusLabelProps) => (
+const StatusLabel: React.FC<StatusLabelProps> = props => {
+  const { className, label, status, typographyProps } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <div
       className={classNames({
         [classes.root]: true,
@@ -77,7 +71,7 @@ const StatusLabel = withStyles(styles, { name: "StatusLabel" })(
         label
       )}
     </div>
-  )
-);
+  );
+};
 StatusLabel.displayName = "StatusLabel";
 export default StatusLabel;

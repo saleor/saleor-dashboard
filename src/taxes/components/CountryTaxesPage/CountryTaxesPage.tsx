@@ -1,5 +1,5 @@
 import Card from "@material-ui/core/Card";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,7 +18,7 @@ import { TaxRateType } from "@saleor/types/globalTypes";
 import { maybe, renderCollection } from "../../../misc";
 import { CountryList_shop_countries_vat_reducedRates } from "../../types/CountryList";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   wideColumn: {
     width: "80%"
   }
@@ -135,87 +135,83 @@ export interface CountryTaxesPageProps {
   onBack: () => void;
 }
 
-const CountryTaxesPage = withStyles(styles, { name: "CountryTaxesPage" })(
-  ({
-    classes,
-    countryName,
-    taxCategories,
-    onBack
-  }: CountryTaxesPageProps & WithStyles<typeof styles>) => {
-    const intl = useIntl();
-    const translatedTaxRates = translateTaxRates(intl);
+const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
+  const { countryName, taxCategories, onBack } = props;
 
-    return (
-      <Container>
-        <AppHeader onBack={onBack}>
-          {intl.formatMessage(sectionNames.taxes)}
-        </AppHeader>
-        <PageHeader
-          title={
-            countryName
-              ? intl.formatMessage(
-                  {
-                    defaultMessage: "Tax Rates in {countryName}",
-                    description: "header"
-                  },
-                  {
-                    countryName
-                  }
-                )
-              : undefined
-          }
-        />
-        <Grid>
-          <div>
-            <Card>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.wideColumn}>
-                      <FormattedMessage defaultMessage="Category" />
-                    </TableCell>
-                    <TableCell>
-                      <FormattedMessage defaultMessage="Tax Rate" />
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {renderCollection(
-                    taxCategories,
-                    taxCategory => (
-                      <TableRow
-                        key={taxCategory ? taxCategory.rateType : "skeleton"}
-                      >
-                        <TableCell>
-                          {maybe<React.ReactNode>(
-                            () => translatedTaxRates[taxCategory.rateType],
-                            <Skeleton />
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {maybe<React.ReactNode>(
-                            () => taxCategory.rate,
-                            <Skeleton />
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    ),
-                    () => (
-                      <TableRow>
-                        <TableCell colSpan={2}>
-                          <FormattedMessage defaultMessage="No reduced tax categories found" />
-                        </TableCell>
-                      </TableRow>
-                    )
-                  )}
-                </TableBody>
-              </Table>
-            </Card>
-          </div>
-        </Grid>
-      </Container>
-    );
-  }
-);
+  const classes = useStyles(props);
+  const intl = useIntl();
+  const translatedTaxRates = translateTaxRates(intl);
+
+  return (
+    <Container>
+      <AppHeader onBack={onBack}>
+        {intl.formatMessage(sectionNames.taxes)}
+      </AppHeader>
+      <PageHeader
+        title={
+          countryName
+            ? intl.formatMessage(
+                {
+                  defaultMessage: "Tax Rates in {countryName}",
+                  description: "header"
+                },
+                {
+                  countryName
+                }
+              )
+            : undefined
+        }
+      />
+      <Grid>
+        <div>
+          <Card>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.wideColumn}>
+                    <FormattedMessage defaultMessage="Category" />
+                  </TableCell>
+                  <TableCell>
+                    <FormattedMessage defaultMessage="Tax Rate" />
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {renderCollection(
+                  taxCategories,
+                  taxCategory => (
+                    <TableRow
+                      key={taxCategory ? taxCategory.rateType : "skeleton"}
+                    >
+                      <TableCell>
+                        {maybe<React.ReactNode>(
+                          () => translatedTaxRates[taxCategory.rateType],
+                          <Skeleton />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {maybe<React.ReactNode>(
+                          () => taxCategory.rate,
+                          <Skeleton />
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ),
+                  () => (
+                    <TableRow>
+                      <TableCell colSpan={2}>
+                        <FormattedMessage defaultMessage="No reduced tax categories found" />
+                      </TableCell>
+                    </TableRow>
+                  )
+                )}
+              </TableBody>
+            </Table>
+          </Card>
+        </div>
+      </Grid>
+    </Container>
+  );
+};
 CountryTaxesPage.displayName = "CountryTaxesPage";
 export default CountryTaxesPage;

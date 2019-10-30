@@ -2,15 +2,13 @@ import React from "react";
 
 interface MenuToggleProps {
   ariaOwns?: string;
-  children: ((
-    props: {
-      actions: {
-        open: () => void;
-        close: () => void;
-      };
-      open: boolean;
-    }
-  ) => React.ReactElement<any>);
+  children: (props: {
+    actions: {
+      open: () => void;
+      close: () => void;
+    };
+    open: boolean;
+  }) => React.ReactElement<any>;
 }
 
 interface MenuToggleState {

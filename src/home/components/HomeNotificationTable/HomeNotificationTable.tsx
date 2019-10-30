@@ -1,10 +1,5 @@
 import Card from "@material-ui/core/Card";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -19,15 +14,14 @@ import Skeleton from "@saleor/components/Skeleton";
 import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 
-const styles = theme =>
-  createStyles({
-    arrowIcon: {
-      width: theme.spacing(4)
-    },
-    tableRow: {
-      cursor: "pointer"
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  arrowIcon: {
+    width: theme.spacing(4)
+  },
+  tableRow: {
+    cursor: "pointer"
+  }
+}));
 
 interface HomeNotificationTableProps extends UserPermissionProps {
   ordersToCapture: number;
@@ -38,11 +32,8 @@ interface HomeNotificationTableProps extends UserPermissionProps {
   onProductsOutOfStockClick: () => void;
 }
 
-const HomeNotificationTable = withStyles(styles, {
-  name: "HomeNotificationTable"
-})(
-  ({
-    classes,
+const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
+  const {
     onOrdersToCaptureClick,
     onOrdersToFulfillClick,
     onProductsOutOfStockClick,
@@ -50,7 +41,11 @@ const HomeNotificationTable = withStyles(styles, {
     ordersToFulfill,
     productsOutOfStock,
     userPermissions
-  }: HomeNotificationTableProps & WithStyles<typeof styles>) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Card>
       <Table>
         <TableBody className={classes.tableRow}>
@@ -157,7 +152,7 @@ const HomeNotificationTable = withStyles(styles, {
         </TableBody>
       </Table>
     </Card>
-  )
-);
+  );
+};
 HomeNotificationTable.displayName = "HomeNotificationTable";
 export default HomeNotificationTable;

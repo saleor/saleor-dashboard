@@ -1,27 +1,25 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import React from "react";
 
-const styles = theme =>
-  createStyles({
-    tabsRoot: {
-      borderBottom: `1px solid ${theme.overrides.MuiCard.root.borderColor}`,
-      paddingLeft: theme.spacing(3)
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  tabsRoot: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    paddingLeft: theme.spacing(3)
+  }
+}));
 
-interface FilterTabsProps extends WithStyles<typeof styles> {
+interface FilterTabsProps {
   children?: React.ReactNode;
   currentTab: number;
 }
 
-export const FilterTabs = withStyles(styles, { name: "FilterTabs" })(
-  ({ classes, children, currentTab }: FilterTabsProps) => (
+export const FilterTabs: React.FC<FilterTabsProps> = props => {
+  const { children, currentTab } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Tabs
       className={classes.tabsRoot}
       value={currentTab}
@@ -29,7 +27,7 @@ export const FilterTabs = withStyles(styles, { name: "FilterTabs" })(
     >
       {children}
     </Tabs>
-  )
-);
+  );
+};
 
 export default FilterTabs;

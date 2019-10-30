@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -20,7 +20,7 @@ import TableCellAvatar, {
 import { maybe } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   clickableRow: {
     cursor: "pointer"
   },
@@ -51,15 +51,16 @@ const styles = createStyles({
   }
 });
 
-interface OrderUnfulfilledItemsProps extends WithStyles<typeof styles> {
+interface OrderUnfulfilledItemsProps {
   canFulfill: boolean;
   lines: OrderDetails_order_lines[];
   onFulfill: () => void;
 }
 
-const OrderUnfulfilledItems = withStyles(styles, {
-  name: "OrderUnfulfilledItems"
-})(({ canFulfill, classes, lines, onFulfill }: OrderUnfulfilledItemsProps) => {
+const OrderUnfulfilledItems: React.FC<OrderUnfulfilledItemsProps> = props => {
+  const { canFulfill, lines, onFulfill } = props;
+  const classes = useStyles(props);
+
   const intl = useIntl();
 
   return (
@@ -169,6 +170,6 @@ const OrderUnfulfilledItems = withStyles(styles, {
       )}
     </Card>
   );
-});
+};
 OrderUnfulfilledItems.displayName = "OrderUnfulfilledItems";
 export default OrderUnfulfilledItems;

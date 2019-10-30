@@ -3,12 +3,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -25,27 +20,26 @@ export interface FormData {
   shippingMethod: string;
 }
 
-const styles = theme =>
-  createStyles({
-    dialog: {
-      overflowY: "visible"
-    },
-    menuItem: {
-      display: "flex",
-      width: "100%"
-    },
-    root: {
-      overflowY: "visible",
-      width: theme.breakpoints.values.sm
-    },
-    shippingMethodName: {
-      flex: 1,
-      overflowX: "hidden",
-      textOverflow: "ellipsis"
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  dialog: {
+    overflowY: "visible"
+  },
+  menuItem: {
+    display: "flex",
+    width: "100%"
+  },
+  root: {
+    overflowY: "visible",
+    width: theme.breakpoints.values.sm
+  },
+  shippingMethodName: {
+    flex: 1,
+    overflowX: "hidden",
+    textOverflow: "ellipsis"
+  }
+}));
 
-interface OrderShippingMethodEditDialogProps extends WithStyles<typeof styles> {
+interface OrderShippingMethodEditDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   shippingMethod: string;
@@ -54,73 +48,73 @@ interface OrderShippingMethodEditDialogProps extends WithStyles<typeof styles> {
   onSubmit?(data: FormData);
 }
 
-const OrderShippingMethodEditDialog = withStyles(styles, {
-  name: "OrderShippingMethodEditDialog"
-})(
-  ({
-    classes,
+const OrderShippingMethodEditDialog: React.FC<
+  OrderShippingMethodEditDialogProps
+> = props => {
+  const {
     confirmButtonState,
     open,
     shippingMethod,
     shippingMethods,
     onClose,
     onSubmit
-  }: OrderShippingMethodEditDialogProps) => {
-    const choices = shippingMethods
-      ? shippingMethods.map(s => ({
-          label: (
-            <div className={classes.menuItem}>
-              <span className={classes.shippingMethodName}>{s.name}</span>
-              &nbsp;
-              <span>
-                <Money money={s.price} />
-              </span>
-            </div>
-          ),
-          value: s.id
-        }))
-      : [];
-    const initialForm: FormData = {
-      shippingMethod
-    };
-    return (
-      <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
-        <DialogTitle>
-          <FormattedMessage
-            defaultMessage="Edit Shipping Method"
-            description="dialog header"
-          />
-        </DialogTitle>
-        <Form initial={initialForm} onSubmit={onSubmit}>
-          {({ change, data }) => (
-            <>
-              <DialogContent className={classes.root}>
-                <SingleSelectField
-                  choices={choices}
-                  name="shippingMethod"
-                  value={data.shippingMethod}
-                  onChange={change}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={onClose}>
-                  <FormattedMessage {...buttonMessages.back} />
-                </Button>
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                >
-                  <FormattedMessage {...buttonMessages.confirm} />
-                </ConfirmButton>
-              </DialogActions>
-            </>
-          )}
-        </Form>
-      </Dialog>
-    );
-  }
-);
+  } = props;
+  const classes = useStyles(props);
+
+  const choices = shippingMethods
+    ? shippingMethods.map(s => ({
+        label: (
+          <div className={classes.menuItem}>
+            <span className={classes.shippingMethodName}>{s.name}</span>
+            &nbsp;
+            <span>
+              <Money money={s.price} />
+            </span>
+          </div>
+        ),
+        value: s.id
+      }))
+    : [];
+  const initialForm: FormData = {
+    shippingMethod
+  };
+  return (
+    <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
+      <DialogTitle>
+        <FormattedMessage
+          defaultMessage="Edit Shipping Method"
+          description="dialog header"
+        />
+      </DialogTitle>
+      <Form initial={initialForm} onSubmit={onSubmit}>
+        {({ change, data }) => (
+          <>
+            <DialogContent className={classes.root}>
+              <SingleSelectField
+                choices={choices}
+                name="shippingMethod"
+                value={data.shippingMethod}
+                onChange={change}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={onClose}>
+                <FormattedMessage {...buttonMessages.back} />
+              </Button>
+              <ConfirmButton
+                transitionState={confirmButtonState}
+                color="primary"
+                variant="contained"
+                type="submit"
+              >
+                <FormattedMessage {...buttonMessages.confirm} />
+              </ConfirmButton>
+            </DialogActions>
+          </>
+        )}
+      </Form>
+    </Dialog>
+  );
+};
 OrderShippingMethodEditDialog.displayName = "OrderShippingMethodEditDialog";
 export default OrderShippingMethodEditDialog;

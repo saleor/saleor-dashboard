@@ -12,12 +12,12 @@ import {
 export const PRODUCT_FILTERS_KEY = "productFilters";
 
 export function getFilterVariables(
-    params: AttributeListUrlFilters
-  ): AttributeFilterInput {
-    return {
-      search: params.query
-    };
-  }
+  params: AttributeListUrlFilters
+): AttributeFilterInput {
+  return {
+    search: params.query
+  };
+}
 
 export const {
   deleteFilterTab,

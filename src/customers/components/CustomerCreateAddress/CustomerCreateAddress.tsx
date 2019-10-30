@@ -1,6 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -12,13 +12,13 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import { FormErrors } from "../../../types";
 import { AddressTypeInput } from "../../types";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   overflow: {
     overflow: "visible"
   }
 });
 
-export interface CustomerCreateAddressProps extends WithStyles<typeof styles> {
+export interface CustomerCreateAddressProps {
   countries: SingleAutocompleteChoiceType[];
   countryDisplayName: string;
   data: AddressTypeInput;
@@ -28,11 +28,8 @@ export interface CustomerCreateAddressProps extends WithStyles<typeof styles> {
   onCountryChange(event: React.ChangeEvent<any>);
 }
 
-const CustomerCreateAddress = withStyles(styles, {
-  name: "CustomerCreateAddress"
-})(
-  ({
-    classes,
+const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
+  const {
     countries,
     countryDisplayName,
     data,
@@ -40,35 +37,36 @@ const CustomerCreateAddress = withStyles(styles, {
     errors,
     onChange,
     onCountryChange
-  }: CustomerCreateAddressProps) => {
-    const intl = useIntl();
+  } = props;
+  const classes = useStyles(props);
 
-    return (
-      <Card className={classes.overflow}>
-        <CardTitle
-          title={intl.formatMessage({
-            defaultMessage: "Primary Address",
-            description: "page header"
-          })}
+  const intl = useIntl();
+
+  return (
+    <Card className={classes.overflow}>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Primary Address",
+          description: "page header"
+        })}
+      />
+      <CardContent className={classes.overflow}>
+        <Typography>
+          <FormattedMessage defaultMessage="The primary address of this customer." />
+        </Typography>
+        <FormSpacer />
+        <AddressEdit
+          countries={countries}
+          data={data}
+          disabled={disabled}
+          countryDisplayValue={countryDisplayName}
+          errors={errors}
+          onChange={onChange}
+          onCountryChange={onCountryChange}
         />
-        <CardContent className={classes.overflow}>
-          <Typography>
-            <FormattedMessage defaultMessage="The primary address of this customer." />
-          </Typography>
-          <FormSpacer />
-          <AddressEdit
-            countries={countries}
-            data={data}
-            disabled={disabled}
-            countryDisplayValue={countryDisplayName}
-            errors={errors}
-            onChange={onChange}
-            onCountryChange={onCountryChange}
-          />
-        </CardContent>
-      </Card>
-    );
-  }
-);
+      </CardContent>
+    </Card>
+  );
+};
 CustomerCreateAddress.displayName = "CustomerCreateAddress";
 export default CustomerCreateAddress;

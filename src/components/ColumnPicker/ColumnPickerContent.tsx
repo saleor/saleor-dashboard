@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     padding: 0
   },
   dropShadow: {
-    boxShadow: `0px -5px 10px 0px ${theme.overrides.MuiCard.root.borderColor}`
+    boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
   },
   loadMoreLoaderContainer: {
     alignItems: "center",

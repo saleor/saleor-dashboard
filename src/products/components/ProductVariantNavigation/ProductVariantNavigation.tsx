@@ -1,11 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -21,30 +16,29 @@ import { maybe, renderCollection } from "../../../misc";
 import { ProductVariantCreateData_product_variants } from "../../types/ProductVariantCreateData";
 import { ProductVariantDetails_productVariant } from "../../types/ProductVariantDetails";
 
-const styles = theme =>
-  createStyles({
-    colName: {
-      paddingLeft: 0,
-      textAlign: [["left"], "!important"] as any
+const useStyles = makeStyles(theme => ({
+  colName: {
+    paddingLeft: 0,
+    textAlign: [["left"], "!important"] as any
+  },
+  link: {
+    cursor: "pointer"
+  },
+  tabActive: {
+    "&:before": {
+      background: theme.palette.primary.main,
+      content: '""',
+      height: "100%",
+      left: 0,
+      position: "absolute",
+      top: 0,
+      width: 2
     },
-    link: {
-      cursor: "pointer"
-    },
-    tabActive: {
-      "&:before": {
-        background: theme.palette.primary.main,
-        content: '""',
-        height: "100%",
-        left: 0,
-        position: "absolute",
-        top: 0,
-        width: 2
-      },
-      position: "relative"
-    }
-  });
+    position: "relative"
+  }
+}));
 
-interface ProductVariantNavigationProps extends WithStyles<typeof styles> {
+interface ProductVariantNavigationProps {
   current?: string;
   fallbackThumbnail: string;
   variants:
@@ -54,80 +48,71 @@ interface ProductVariantNavigationProps extends WithStyles<typeof styles> {
   onRowClick: (variantId: string) => void;
 }
 
-const ProductVariantNavigation = withStyles(styles, {
-  name: "ProductVariantNavigation"
-})(
-  ({
-    classes,
-    current,
-    fallbackThumbnail,
-    variants,
-    onAdd,
-    onRowClick
-  }: ProductVariantNavigationProps) => {
-    const intl = useIntl();
+const ProductVariantNavigation: React.FC<
+  ProductVariantNavigationProps
+> = props => {
+  const { current, fallbackThumbnail, variants, onAdd, onRowClick } = props;
 
-    return (
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
-            defaultMessage: "Variants",
-            description: "section header"
-          })}
-        />
-        <Table>
-          <TableBody>
-            {renderCollection(variants, variant => (
-              <TableRow
-                hover={!!variant}
-                key={variant ? variant.id : "skeleton"}
-                className={classes.link}
-                onClick={variant ? () => onRowClick(variant.id) : undefined}
-              >
-                <TableCellAvatar
-                  className={classNames({
-                    [classes.tabActive]: variant && variant.id === current
-                  })}
-                  thumbnail={maybe(
-                    () => variant.images[0].url,
-                    fallbackThumbnail
-                  )}
-                />
-                <TableCell className={classes.colName}>
-                  {variant ? variant.name || variant.sku : <Skeleton />}
-                </TableCell>
-              </TableRow>
-            ))}
-            {onAdd ? (
-              <TableRow>
-                <TableCell colSpan={2}>
-                  <Button color="primary" onClick={onAdd}>
-                    <FormattedMessage
-                      defaultMessage="Add variant"
-                      description="button"
-                    />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ) : (
-              <TableRow>
-                <TableCellAvatar
-                  className={classes.tabActive}
-                  thumbnail={null}
-                />
-                <TableCell className={classes.colName}>
+  const classes = useStyles(props);
+  const intl = useIntl();
+
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Variants",
+          description: "section header"
+        })}
+      />
+      <Table>
+        <TableBody>
+          {renderCollection(variants, variant => (
+            <TableRow
+              hover={!!variant}
+              key={variant ? variant.id : "skeleton"}
+              className={classes.link}
+              onClick={variant ? () => onRowClick(variant.id) : undefined}
+            >
+              <TableCellAvatar
+                className={classNames({
+                  [classes.tabActive]: variant && variant.id === current
+                })}
+                thumbnail={maybe(
+                  () => variant.images[0].url,
+                  fallbackThumbnail
+                )}
+              />
+              <TableCell className={classes.colName}>
+                {variant ? variant.name || variant.sku : <Skeleton />}
+              </TableCell>
+            </TableRow>
+          ))}
+          {onAdd ? (
+            <TableRow>
+              <TableCell colSpan={2}>
+                <Button color="primary" onClick={onAdd}>
                   <FormattedMessage
-                    defaultMessage="New Variant"
-                    description="variant name"
+                    defaultMessage="Add variant"
+                    description="button"
                   />
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </Card>
-    );
-  }
-);
+                </Button>
+              </TableCell>
+            </TableRow>
+          ) : (
+            <TableRow>
+              <TableCellAvatar className={classes.tabActive} thumbnail={null} />
+              <TableCell className={classes.colName}>
+                <FormattedMessage
+                  defaultMessage="New Variant"
+                  description="variant name"
+                />
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </Card>
+  );
+};
 ProductVariantNavigation.displayName = "ProductVariantNavigation";
 export default ProductVariantNavigation;

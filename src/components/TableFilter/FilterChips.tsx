@@ -6,7 +6,6 @@ import ClearIcon from "@material-ui/icons/Clear";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import Filter from "../Filter";
 import FilterActions, { FilterActionsProps } from "../Filter/FilterActions";
 import Hr from "../Hr";
 import Link from "../Link";

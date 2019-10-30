@@ -4,7 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -29,7 +29,7 @@ export interface FormData {
   query: string;
 }
 
-const styles = createStyles({
+const useStyles = makeStyles({
   avatar: {
     "&:first-child": {
       paddingLeft: 0
@@ -77,11 +77,8 @@ function handleProductAssign(
   }
 }
 
-const AssignProductDialog = withStyles(styles, {
-  name: "AssignProductDialog"
-})(
-  ({
-    classes,
+const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
+  const {
     confirmButtonState,
     open,
     loading,
@@ -89,109 +86,110 @@ const AssignProductDialog = withStyles(styles, {
     onClose,
     onFetch,
     onSubmit
-  }: AssignProductDialogProps & WithStyles<typeof styles>) => {
-    const intl = useIntl();
-    const [query, onQueryChange] = useSearchQuery(onFetch);
-    const [selectedProducts, setSelectedProducts] = React.useState<
-      SearchProducts_search_edges_node[]
-    >([]);
+  } = props;
+  const classes = useStyles(props);
 
-    const handleSubmit = () => onSubmit(selectedProducts);
+  const intl = useIntl();
+  const [query, onQueryChange] = useSearchQuery(onFetch);
+  const [selectedProducts, setSelectedProducts] = React.useState<
+    SearchProducts_search_edges_node[]
+  >([]);
 
-    return (
-      <Dialog
-        onClose={onClose}
-        open={open}
-        classes={{ paper: classes.overflow }}
-        fullWidth
-        maxWidth="sm"
-      >
-        <DialogTitle>
-          <FormattedMessage
-            defaultMessage="Assign Product"
-            description="dialog header"
-          />
-        </DialogTitle>
-        <DialogContent>
-          <TextField
-            name="query"
-            value={query}
-            onChange={onQueryChange}
-            label={intl.formatMessage({
-              defaultMessage: "Search Products"
-            })}
-            placeholder={intl.formatMessage({
-              defaultMessage:
-                "Search by product name, attribute, product type etc..."
-            })}
-            fullWidth
-            InputProps={{
-              autoComplete: "off",
-              endAdornment: loading && <CircularProgress size={16} />
-            }}
-          />
-          <FormSpacer />
-          <div className={classes.scrollArea}>
-            <Table>
-              <TableBody>
-                {products &&
-                  products.map(product => {
-                    const isSelected = selectedProducts.some(
-                      selectedProduct => selectedProduct.id === product.id
-                    );
+  const handleSubmit = () => onSubmit(selectedProducts);
 
-                    return (
-                      <TableRow key={product.id}>
-                        <TableCellAvatar
-                          className={classes.avatar}
-                          thumbnail={maybe(() => product.thumbnail.url)}
+  return (
+    <Dialog
+      onClose={onClose}
+      open={open}
+      classes={{ paper: classes.overflow }}
+      fullWidth
+      maxWidth="sm"
+    >
+      <DialogTitle>
+        <FormattedMessage
+          defaultMessage="Assign Product"
+          description="dialog header"
+        />
+      </DialogTitle>
+      <DialogContent>
+        <TextField
+          name="query"
+          value={query}
+          onChange={onQueryChange}
+          label={intl.formatMessage({
+            defaultMessage: "Search Products"
+          })}
+          placeholder={intl.formatMessage({
+            defaultMessage:
+              "Search by product name, attribute, product type etc..."
+          })}
+          fullWidth
+          InputProps={{
+            autoComplete: "off",
+            endAdornment: loading && <CircularProgress size={16} />
+          }}
+        />
+        <FormSpacer />
+        <div className={classes.scrollArea}>
+          <Table>
+            <TableBody>
+              {products &&
+                products.map(product => {
+                  const isSelected = selectedProducts.some(
+                    selectedProduct => selectedProduct.id === product.id
+                  );
+
+                  return (
+                    <TableRow key={product.id}>
+                      <TableCellAvatar
+                        className={classes.avatar}
+                        thumbnail={maybe(() => product.thumbnail.url)}
+                      />
+                      <TableCell className={classes.wideCell}>
+                        {product.name}
+                      </TableCell>
+                      <TableCell
+                        padding="checkbox"
+                        className={classes.checkboxCell}
+                      >
+                        <Checkbox
+                          checked={isSelected}
+                          onChange={() =>
+                            handleProductAssign(
+                              product,
+                              isSelected,
+                              selectedProducts,
+                              setSelectedProducts
+                            )
+                          }
                         />
-                        <TableCell className={classes.wideCell}>
-                          {product.name}
-                        </TableCell>
-                        <TableCell
-                          padding="checkbox"
-                          className={classes.checkboxCell}
-                        >
-                          <Checkbox
-                            checked={isSelected}
-                            onChange={() =>
-                              handleProductAssign(
-                                product,
-                                isSelected,
-                                selectedProducts,
-                                setSelectedProducts
-                              )
-                            }
-                          />
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose}>
-            <FormattedMessage {...buttonMessages.back} />
-          </Button>
-          <ConfirmButton
-            transitionState={confirmButtonState}
-            color="primary"
-            variant="contained"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            <FormattedMessage
-              defaultMessage="Assign products"
-              description="button"
-            />
-          </ConfirmButton>
-        </DialogActions>
-      </Dialog>
-    );
-  }
-);
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </div>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>
+          <FormattedMessage {...buttonMessages.back} />
+        </Button>
+        <ConfirmButton
+          transitionState={confirmButtonState}
+          color="primary"
+          variant="contained"
+          type="submit"
+          onClick={handleSubmit}
+        >
+          <FormattedMessage
+            defaultMessage="Assign products"
+            description="button"
+          />
+        </ConfirmButton>
+      </DialogActions>
+    </Dialog>
+  );
+};
 AssignProductDialog.displayName = "AssignProductDialog";
 export default AssignProductDialog;

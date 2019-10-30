@@ -1,10 +1,5 @@
 import IconButton from "@material-ui/core/IconButton";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -30,59 +25,57 @@ export interface FormData {
   quantity: number;
 }
 
-const styles = theme =>
-  createStyles({
-    colAction: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      width: 76 + theme.spacing(0.5)
+const useStyles = makeStyles(theme => ({
+  colAction: {
+    "&:last-child": {
+      paddingRight: 0
     },
-    colName: {
-      width: "auto"
+    width: 76 + theme.spacing(0.5)
+  },
+  colName: {
+    width: "auto"
+  },
+  colNameLabel: {
+    marginLeft: AVATAR_MARGIN
+  },
+  colPrice: {
+    textAlign: "right",
+    width: 150
+  },
+  colQuantity: {
+    textAlign: "right",
+    width: 80
+  },
+  colTotal: {
+    textAlign: "right",
+    width: 150
+  },
+  quantityField: {
+    "& input": {
+      padding: "12px 12px 10px",
+      textAlign: "right"
     },
-    colNameLabel: {
-      marginLeft: AVATAR_MARGIN
-    },
-    colPrice: {
-      textAlign: "right",
-      width: 150
-    },
-    colQuantity: {
-      textAlign: "right",
-      width: 80
-    },
-    colTotal: {
-      textAlign: "right",
-      width: 150
-    },
-    quantityField: {
-      "& input": {
-        padding: "12px 12px 10px",
-        textAlign: "right"
-      },
-      width: 60
-    },
-    table: {
-      tableLayout: "fixed"
-    }
-  });
+    width: 60
+  },
+  table: {
+    tableLayout: "fixed"
+  }
+}));
 
-interface OrderDraftDetailsProductsProps extends WithStyles<typeof styles> {
+interface OrderDraftDetailsProductsProps {
   lines: OrderDetails_order_lines[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
 }
 
-const OrderDraftDetailsProducts = withStyles(styles, {
-  name: "OrderDraftDetailsProducts"
-})(
-  ({
-    classes,
-    lines,
-    onOrderLineChange,
-    onOrderLineRemove
-  }: OrderDraftDetailsProductsProps) => (
+const OrderDraftDetailsProducts: React.FC<
+  OrderDraftDetailsProductsProps
+> = props => {
+  const { lines, onOrderLineChange, onOrderLineRemove } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Table className={classes.table}>
       {maybe(() => !!lines.length) && (
         <TableHead>
@@ -130,7 +123,7 @@ const OrderDraftDetailsProducts = withStyles(styles, {
               >
                 {maybe(() => line.productName && line.productSku) ? (
                   <>
-                    <Typography variant="body1">{line.productName}</Typography>
+                    <Typography variant="body2">{line.productName}</Typography>
                     <Typography variant="caption">{line.productSku}</Typography>
                   </>
                 ) : (
@@ -195,7 +188,7 @@ const OrderDraftDetailsProducts = withStyles(styles, {
         )}
       </TableBody>
     </Table>
-  )
-);
+  );
+};
 OrderDraftDetailsProducts.displayName = "OrderDraftDetailsProducts";
 export default OrderDraftDetailsProducts;

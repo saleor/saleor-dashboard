@@ -2,6 +2,7 @@ import Card from "@material-ui/core/Card";
 import { createMuiTheme, Theme } from "@material-ui/core/styles";
 import { darken, fade } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 
 const createShadow = (pv, pb, ps, uv, ub, us, av, ab, as) =>
   [
@@ -108,6 +109,14 @@ export default (colors: IThemeColors): Theme =>
       MuiCardContent: {
         root: {
           padding: "24px"
+        }
+      },
+      MuiChip: {
+        avatar: {
+          height: 32,
+          left: -5,
+          position: "relative",
+          width: 32
         }
       },
       MuiDialogContent: {
@@ -359,37 +368,43 @@ export default (colors: IThemeColors): Theme =>
         }
       },
       MuiSwitch: {
-        bar: {
-          "$colorPrimary$checked + &": {
-            backgroundColor: colors.primary
-          },
-          backgroundColor: colors.gray.default,
-          borderRadius: 12,
-          height: 24,
-          marginTop: -12,
-          opacity: [["1"], "!important"] as any,
-          width: 48
-        },
-        icon: {
-          backgroundColor: colors.background.paper,
-          boxShadow: "none",
-          marginLeft: 4
-        },
-        iconChecked: {
-          backgroundColor: colors.background.paper,
-          boxShadow: "none"
+        colorPrimary: {
+          "&$checked": {
+            color: colors.background.paper
+          }
         },
         root: {
-          "& $checked": {
-            transform: "translateX(24px)"
-          },
           "&$disabled": {
             "&$switchBase": {
               "& + $bar": {
                 backgroundColor: colors.gray.disabled
               }
             }
-          }
+          },
+          height: 48,
+          width: 72
+        },
+        switchBase: {
+          "&$checked": {
+            transform: "translateX(23px)"
+          },
+          boxShadow: "none",
+          left: 1,
+          marginLeft: 4,
+          top: 5
+        },
+        thumb: {
+          boxShadow: "none"
+        },
+        track: {
+          "$colorPrimary$checked + &": {
+            backgroundColor: colors.primary
+          },
+          backgroundColor: colors.gray.default,
+          borderRadius: 12,
+          height: 24,
+          opacity: [["1"], "!important"] as any,
+          width: 48
         }
       },
       MuiTable: {
@@ -549,4 +564,8 @@ TextField.defaultProps = {
 Card.defaultProps = {
   ...Card.defaultProps,
   elevation: 0
+};
+
+Typography.defaultProps = {
+  component: "p"
 };

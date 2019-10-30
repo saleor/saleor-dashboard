@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -25,7 +25,7 @@ export interface CustomerAddressProps {
   onSetAsDefault: (type: AddressTypeEnum) => void;
 }
 
-const styles = createStyles({
+const useStyles = makeStyles({
   actions: {
     flexDirection: "row"
   },
@@ -40,82 +40,82 @@ const styles = createStyles({
     flexDirection: "column"
   }
 });
-const CustomerAddress = withStyles(styles, { name: "CustomerAddress" })(
-  ({
+const CustomerAddress: React.FC<CustomerAddressProps> = props => {
+  const {
     address,
-    classes,
     disabled,
     isDefaultBillingAddress,
     isDefaultShippingAddress,
     onEdit,
     onRemove,
     onSetAsDefault
-  }: CustomerAddressProps & WithStyles<typeof styles>) => {
-    const intl = useIntl();
+  } = props;
+  const classes = useStyles(props);
 
-    return (
-      <Card className={classes.card}>
-        <CardTitle
-          title={
-            address ? (
-              <>
-                {isDefaultBillingAddress && isDefaultShippingAddress
-                  ? intl.formatMessage({
-                      defaultMessage: "Default Address"
-                    })
-                  : isDefaultShippingAddress
-                  ? intl.formatMessage({
-                      defaultMessage: "Default Shipping Address"
-                    })
-                  : isDefaultBillingAddress
-                  ? intl.formatMessage({
-                      defaultMessage: "Default Billing Address"
-                    })
-                  : null}
-              </>
-            ) : (
-              <Skeleton />
-            )
-          }
-          height="const"
-          toolbar={
-            <CardMenu
-              disabled={disabled}
-              menuItems={[
-                {
-                  label: intl.formatMessage({
-                    defaultMessage: "Set as default shipping address",
-                    description: "button"
-                  }),
-                  onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING)
-                },
-                {
-                  label: intl.formatMessage({
-                    defaultMessage: "Set as default billing address",
-                    description: "button"
-                  }),
-                  onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING)
-                }
-              ]}
-            />
-          }
-        />
-        <CardContent>
-          <AddressFormatter address={address} />
-        </CardContent>
-        <div className={classes.actionsContainer}>
-          <CardActions className={classes.actions}>
-            <Button color="primary" disabled={disabled} onClick={onEdit}>
-              <FormattedMessage {...buttonMessages.edit} />
-            </Button>
-            <Button color="primary" disabled={disabled} onClick={onRemove}>
-              <FormattedMessage {...buttonMessages.delete} />
-            </Button>
-          </CardActions>
-        </div>
-      </Card>
-    );
-  }
-);
+  const intl = useIntl();
+
+  return (
+    <Card className={classes.card}>
+      <CardTitle
+        title={
+          address ? (
+            <>
+              {isDefaultBillingAddress && isDefaultShippingAddress
+                ? intl.formatMessage({
+                    defaultMessage: "Default Address"
+                  })
+                : isDefaultShippingAddress
+                ? intl.formatMessage({
+                    defaultMessage: "Default Shipping Address"
+                  })
+                : isDefaultBillingAddress
+                ? intl.formatMessage({
+                    defaultMessage: "Default Billing Address"
+                  })
+                : null}
+            </>
+          ) : (
+            <Skeleton />
+          )
+        }
+        height="const"
+        toolbar={
+          <CardMenu
+            disabled={disabled}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Set as default shipping address",
+                  description: "button"
+                }),
+                onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING)
+              },
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Set as default billing address",
+                  description: "button"
+                }),
+                onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING)
+              }
+            ]}
+          />
+        }
+      />
+      <CardContent>
+        <AddressFormatter address={address} />
+      </CardContent>
+      <div className={classes.actionsContainer}>
+        <CardActions className={classes.actions}>
+          <Button color="primary" disabled={disabled} onClick={onEdit}>
+            <FormattedMessage {...buttonMessages.edit} />
+          </Button>
+          <Button color="primary" disabled={disabled} onClick={onRemove}>
+            <FormattedMessage {...buttonMessages.delete} />
+          </Button>
+        </CardActions>
+      </div>
+    </Card>
+  );
+};
 CustomerAddress.displayName = "CustomerAddress";
 export default CustomerAddress;

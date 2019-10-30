@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const Plugins = createSvgIcon(
+const Plugins = createSvgIcon(
   <>
     <g>
       <path
@@ -12,6 +12,6 @@ export const Plugins = createSvgIcon(
       />
     </g>
   </>
-);
-Plugins.displayName = "Plugins";
+, "Plugins")
+
 export default Plugins;

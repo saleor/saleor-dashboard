@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const Draggable = createSvgIcon(
+const Draggable = createSvgIcon(
   <>
     <path
       fillRule="evenodd"
@@ -26,6 +26,6 @@ export const Draggable = createSvgIcon(
       </linearGradient>
     </defs>
   </>
-);
-Draggable.displayName = "Draggable";
+, "Draggable")
+
 export default Draggable;

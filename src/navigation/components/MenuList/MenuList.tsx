@@ -1,10 +1,5 @@
 import Card from "@material-ui/core/Card";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -28,30 +23,28 @@ export interface MenuListProps extends ListProps, ListActions {
   onDelete: (id: string) => void;
 }
 
-const styles = theme =>
-  createStyles({
-    [theme.breakpoints.up("lg")]: {
-      colItems: {
-        width: 200
-      },
-      colTitle: {}
-    },
+const useStyles = makeStyles(theme => ({
+  [theme.breakpoints.up("lg")]: {
     colItems: {
-      textAlign: "right"
+      width: 200
     },
-    colTitle: {
-      paddingLeft: 0
-    },
-    row: {
-      cursor: "pointer"
-    }
-  });
+    colTitle: {}
+  },
+  colItems: {
+    textAlign: "right"
+  },
+  colTitle: {
+    paddingLeft: 0
+  },
+  row: {
+    cursor: "pointer"
+  }
+}));
 
 const numberOfColumns = 4;
 
-const MenuList = withStyles(styles, { name: "MenuList" })(
-  ({
-    classes,
+const MenuList: React.FC<MenuListProps> = props => {
+  const {
     settings,
     disabled,
     isChecked,
@@ -66,7 +59,11 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
     toggle,
     toggleAll,
     toolbar
-  }: MenuListProps & WithStyles<typeof styles>) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Card>
       <Table>
         <TableHead
@@ -161,7 +158,7 @@ const MenuList = withStyles(styles, { name: "MenuList" })(
         </TableBody>
       </Table>
     </Card>
-  )
-);
+  );
+};
 MenuList.displayName = "MenuList";
 export default MenuList;

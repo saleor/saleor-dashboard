@@ -8,16 +8,14 @@ interface ProductTypeUpdateErrorsState {
   formErrors: UserError[];
 }
 interface ProductTypeUpdateErrorsProps {
-  children: (
-    props: {
-      errors: ProductTypeUpdateErrorsState;
-      set: {
-        addAttributeErrors: (errors: UserError[]) => void;
-        editAttributeErrors: (errors: UserError[]) => void;
-        formErrors: (errors: UserError[]) => void;
-      };
-    }
-  ) => React.ReactNode;
+  children: (props: {
+    errors: ProductTypeUpdateErrorsState;
+    set: {
+      addAttributeErrors: (errors: UserError[]) => void;
+      editAttributeErrors: (errors: UserError[]) => void;
+      formErrors: (errors: UserError[]) => void;
+    };
+  }) => React.ReactNode;
 }
 
 export class ProductTypeUpdateErrors extends React.Component<

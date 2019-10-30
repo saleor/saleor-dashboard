@@ -1,10 +1,5 @@
 import Button from "@material-ui/core/Button";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -19,8 +14,8 @@ interface TranslationFieldsSaveProps {
   onSave: () => void;
 }
 
-const styles = theme =>
-  createStyles({
+const useStyles = makeStyles(
+  theme => ({
     confirmButton: {
       marginLeft: theme.spacing(1)
     },
@@ -29,17 +24,18 @@ const styles = theme =>
       flexDirection: "row-reverse",
       marginTop: theme.spacing(1)
     }
-  });
+  }),
+  {
+    name: "TranslationFieldsSave"
+  }
+);
 
-const TranslationFieldsSave = withStyles(styles, {
-  name: "TranslationFieldsSave"
-})(
-  ({
-    classes,
-    saveButtonState,
-    onDiscard,
-    onSave
-  }: TranslationFieldsSaveProps & WithStyles<typeof styles>) => (
+const TranslationFieldsSave: React.FC<TranslationFieldsSaveProps> = props => {
+  const { saveButtonState, onDiscard, onSave } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <div className={classes.root}>
       <ConfirmButton
         className={classes.confirmButton}
@@ -52,7 +48,7 @@ const TranslationFieldsSave = withStyles(styles, {
         <FormattedMessage defaultMessage="Discard" description="button" />
       </Button>
     </div>
-  )
-);
+  );
+};
 TranslationFieldsSave.displayName = "TranslationFieldsSave";
 export default TranslationFieldsSave;

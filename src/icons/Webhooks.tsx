@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const Webhooks = createSvgIcon(
+const Webhooks = createSvgIcon(
   <>
     <path
       fillRule="evenodd"
@@ -10,6 +10,6 @@ export const Webhooks = createSvgIcon(
       fill="#06847B"
     />
   </>
-);
-Webhooks.displayName = "Webhooks";
+, "Webhooks")
+
 export default Webhooks;

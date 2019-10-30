@@ -1,35 +1,31 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 
-const styles = theme =>
-  createStyles({
-    root: {
-      [theme.breakpoints.up("lg")]: {
-        marginLeft: "auto",
-        marginRight: "auto",
-        maxWidth: theme.breakpoints.width("lg")
-      },
-      [theme.breakpoints.up("sm")]: {
-	      padding: theme.spacing(0, 3)
-      },
-      padding: theme.spacing(0, 1)
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  root: {
+    [theme.breakpoints.up("lg")]: {
+      marginLeft: "auto",
+      marginRight: "auto",
+      maxWidth: theme.breakpoints.width("lg")
+    },
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(0, 3)
+    },
+    padding: theme.spacing(0, 1)
+  }
+}));
 
-interface ContainerProps extends WithStyles<typeof styles> {
+interface ContainerProps {
   className?: string;
 }
 
-export const Container = withStyles(styles, {
-  name: "Container"
-})(({ classes, className, ...props }: ContainerProps) => (
-  <div className={classNames(classes.root, className)} {...props} />
-));
+export const Container: React.FC<ContainerProps> = props => {
+  const { className, ...rest } = props;
+
+  const classes = useStyles(props);
+
+  return <div className={classNames(classes.root, className)} {...rest} />;
+};
 Container.displayName = "Container";
 export default Container;

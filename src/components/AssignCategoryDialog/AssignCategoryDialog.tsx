@@ -4,7 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -27,7 +27,7 @@ export interface FormData {
   query: string;
 }
 
-const styles = createStyles({
+const useStyles = makeStyles({
   avatar: {
     "&:first-child": {
       paddingLeft: 0
@@ -44,7 +44,7 @@ const styles = createStyles({
   }
 });
 
-interface AssignCategoriesDialogProps extends WithStyles<typeof styles> {
+interface AssignCategoriesDialogProps {
   categories: SearchCategories_search_edges_node[];
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
@@ -71,11 +71,8 @@ function handleCategoryAssign(
   }
 }
 
-const AssignCategoriesDialog = withStyles(styles, {
-  name: "AssignCategoriesDialog"
-})(
-  ({
-    classes,
+const AssignCategoriesDialog: React.FC<AssignCategoriesDialogProps> = props => {
+  const {
     confirmButtonState,
     open,
     loading,
@@ -83,102 +80,103 @@ const AssignCategoriesDialog = withStyles(styles, {
     onClose,
     onFetch,
     onSubmit
-  }: AssignCategoriesDialogProps) => {
-    const intl = useIntl();
-    const [query, onQueryChange] = useSearchQuery(onFetch);
-    const [selectedCategories, setSelectedCategories] = React.useState<
-      SearchCategories_search_edges_node[]
-    >([]);
+  } = props;
+  const classes = useStyles(props);
 
-    const handleSubmit = () => onSubmit(selectedCategories);
+  const intl = useIntl();
+  const [query, onQueryChange] = useSearchQuery(onFetch);
+  const [selectedCategories, setSelectedCategories] = React.useState<
+    SearchCategories_search_edges_node[]
+  >([]);
 
-    return (
-      <Dialog
-        open={open}
-        onClose={onClose}
-        classes={{ paper: classes.overflow }}
-        fullWidth
-        maxWidth="sm"
-      >
-        <DialogTitle>
+  const handleSubmit = () => onSubmit(selectedCategories);
+
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      classes={{ paper: classes.overflow }}
+      fullWidth
+      maxWidth="sm"
+    >
+      <DialogTitle>
+        <FormattedMessage
+          defaultMessage="Assign Categories"
+          description="dialog header"
+        />
+      </DialogTitle>
+      <DialogContent className={classes.overflow}>
+        <TextField
+          name="query"
+          value={query}
+          onChange={onQueryChange}
+          label={intl.formatMessage({
+            defaultMessage: "Search Categories"
+          })}
+          placeholder={intl.formatMessage({
+            defaultMessage: "Search by category name, etc..."
+          })}
+          fullWidth
+          InputProps={{
+            autoComplete: "off",
+            endAdornment: loading && <CircularProgress size={16} />
+          }}
+        />
+        <FormSpacer />
+        <Table>
+          <TableBody>
+            {categories &&
+              categories.map(category => {
+                const isSelected = !!selectedCategories.find(
+                  selectedCategories => selectedCategories.id === category.id
+                );
+
+                return (
+                  <TableRow key={category.id}>
+                    <TableCell
+                      padding="checkbox"
+                      className={classes.checkboxCell}
+                    >
+                      <Checkbox
+                        checked={isSelected}
+                        onChange={() =>
+                          handleCategoryAssign(
+                            category,
+                            isSelected,
+                            selectedCategories,
+                            setSelectedCategories
+                          )
+                        }
+                      />
+                    </TableCell>
+                    <TableCell className={classes.wideCell}>
+                      {category.name}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+          </TableBody>
+        </Table>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>
+          <FormattedMessage {...buttonMessages.back} />
+        </Button>
+        <ConfirmButton
+          transitionState={confirmButtonState}
+          color="primary"
+          variant="contained"
+          type="submit"
+          onClick={handleSubmit}
+        >
           <FormattedMessage
-            defaultMessage="Assign Categories"
-            description="dialog header"
+            defaultMessage="Assign categories"
+            description="button"
           />
-        </DialogTitle>
-        <DialogContent className={classes.overflow}>
-          <TextField
-            name="query"
-            value={query}
-            onChange={onQueryChange}
-            label={intl.formatMessage({
-              defaultMessage: "Search Categories"
-            })}
-            placeholder={intl.formatMessage({
-              defaultMessage: "Search by category name, etc..."
-            })}
-            fullWidth
-            InputProps={{
-              autoComplete: "off",
-              endAdornment: loading && <CircularProgress size={16} />
-            }}
-          />
-          <FormSpacer />
-          <Table>
-            <TableBody>
-              {categories &&
-                categories.map(category => {
-                  const isSelected = !!selectedCategories.find(
-                    selectedCategories => selectedCategories.id === category.id
-                  );
-
-                  return (
-                    <TableRow key={category.id}>
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.checkboxCell}
-                      >
-                        <Checkbox
-                          checked={isSelected}
-                          onChange={() =>
-                            handleCategoryAssign(
-                              category,
-                              isSelected,
-                              selectedCategories,
-                              setSelectedCategories
-                            )
-                          }
-                        />
-                      </TableCell>
-                      <TableCell className={classes.wideCell}>
-                        {category.name}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose}>
-            <FormattedMessage {...buttonMessages.back} />
-          </Button>
-          <ConfirmButton
-            transitionState={confirmButtonState}
-            color="primary"
-            variant="contained"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            <FormattedMessage
-              defaultMessage="Assign categories"
-              description="button"
-            />
-          </ConfirmButton>
-        </DialogActions>
-      </Dialog>
-    );
-  }
-);
+        </ConfirmButton>
+      </DialogActions>
+    </Dialog>
+  );
+};
 AssignCategoriesDialog.displayName = "AssignCategoriesDialog";
 export default AssignCategoriesDialog;
