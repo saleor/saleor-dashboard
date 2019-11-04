@@ -1,6 +1,5 @@
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -11,6 +10,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { maybe, renderCollection } from "../../../misc";
@@ -58,7 +58,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
           id: "homeProductsListCardHeader"
         })}
       />
-      <Table>
+      <ResponsiveTable>
         <TableBody>
           {renderCollection(
             topProducts,
@@ -139,7 +139,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
             )
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </Card>
   );
 };

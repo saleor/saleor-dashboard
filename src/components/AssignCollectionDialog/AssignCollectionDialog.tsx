@@ -5,7 +5,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -13,6 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { SearchCollections_search_edges_node } from "../../containers/SearchCollections/types/SearchCollections";
@@ -123,7 +123,7 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = props => {
           }}
         />
         <FormSpacer />
-        <Table>
+        <ResponsiveTable>
           <TableBody>
             {collections &&
               collections.map(collection => {
@@ -156,7 +156,7 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = props => {
                 );
               })}
           </TableBody>
-        </Table>
+        </ResponsiveTable>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>

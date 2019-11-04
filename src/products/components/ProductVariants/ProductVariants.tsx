@@ -3,7 +3,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -14,6 +13,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
@@ -133,7 +133,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
         </CardContent>
       )}
       {hasVariants && (
-        <Table className={classes.denseTable}>
+        <ResponsiveTable className={classes.denseTable}>
           <TableHead
             colSpan={numberOfColumns}
             selected={selected}
@@ -237,7 +237,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               );
             })}
           </TableBody>
-        </Table>
+        </ResponsiveTable>
       )}
     </Card>
   );

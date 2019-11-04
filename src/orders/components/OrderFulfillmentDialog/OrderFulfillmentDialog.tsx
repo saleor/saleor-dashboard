@@ -4,7 +4,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -18,6 +17,7 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
@@ -111,7 +111,7 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
                   description="dialog header"
                 />
               </DialogTitle>
-              <Table className={classes.table}>
+              <ResponsiveTable className={classes.table}>
                 <TableHead>
                   <TableRow>
                     <TableCell className={classes.colName}>
@@ -174,7 +174,7 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
                     );
                   })}
                 </TableBody>
-              </Table>
+              </ResponsiveTable>
               <DialogContent>
                 <FormSpacer />
                 <TextField

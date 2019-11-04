@@ -1,7 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -10,6 +9,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { maybe, renderCollection } from "../../../misc";
@@ -64,7 +64,7 @@ const ProductVariantNavigation: React.FC<
           description: "section header"
         })}
       />
-      <Table>
+      <ResponsiveTable>
         <TableBody>
           {renderCollection(variants, variant => (
             <TableRow
@@ -110,7 +110,7 @@ const ProductVariantNavigation: React.FC<
             </TableRow>
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </Card>
   );
 };

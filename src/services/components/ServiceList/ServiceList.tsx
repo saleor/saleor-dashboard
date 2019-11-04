@@ -1,6 +1,5 @@
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -12,6 +11,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
@@ -68,7 +68,7 @@ const ServiceList: React.FC<ServiceListProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <Table className={classes.table}>
+    <ResponsiveTable className={classes.table}>
       <TableHead>
         <TableRow>
           <TableCell className={classes.colName}>
@@ -154,7 +154,7 @@ const ServiceList: React.FC<ServiceListProps> = props => {
           )
         )}
       </TableBody>
-    </Table>
+    </ResponsiveTable>
   );
 };
 ServiceList.displayName = "ServiceList";

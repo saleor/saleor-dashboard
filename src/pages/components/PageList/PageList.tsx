@@ -1,6 +1,5 @@
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -9,6 +8,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
@@ -65,7 +65,7 @@ const PageList: React.FC<PageListProps> = props => {
 
   return (
     <Card>
-      <Table>
+      <ResponsiveTable>
         <TableHead
           colSpan={numberOfColumns}
           selected={selected}
@@ -169,7 +169,7 @@ const PageList: React.FC<PageListProps> = props => {
             )
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </Card>
   );
 };

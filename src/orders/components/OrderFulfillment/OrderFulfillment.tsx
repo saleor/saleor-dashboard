@@ -2,7 +2,6 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -14,6 +13,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CardMenu from "@saleor/components/CardMenu";
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
@@ -142,7 +142,7 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
           )
         }
       />
-      <Table className={classes.table}>
+      <ResponsiveTable className={classes.table}>
         <TableHead>
           <TableRow>
             <TableCell className={classes.colName}>
@@ -226,7 +226,7 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
             </TableRow>
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
       {status === FulfillmentStatus.FULFILLED && !fulfillment.trackingNumber && (
         <CardActions>
           <Button color="primary" onClick={onTrackingCodeAdd}>

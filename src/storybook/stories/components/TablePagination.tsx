@@ -1,7 +1,7 @@
-import Table from "@material-ui/core/Table";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TablePagination from "@saleor/components/TablePagination";
 import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
@@ -10,7 +10,7 @@ storiesOf("Generics / TablePagination", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("no previous / next page", () => (
-    <Table>
+    <ResponsiveTable>
       <TablePagination
         colSpan={1}
         hasNextPage={false}
@@ -18,10 +18,10 @@ storiesOf("Generics / TablePagination", module)
         onPreviousPage={undefined}
         onNextPage={undefined}
       />
-    </Table>
+    </ResponsiveTable>
   ))
   .add("previous page available", () => (
-    <Table>
+    <ResponsiveTable>
       <TablePagination
         colSpan={1}
         hasNextPage={false}
@@ -29,10 +29,10 @@ storiesOf("Generics / TablePagination", module)
         onPreviousPage={undefined}
         onNextPage={undefined}
       />
-    </Table>
+    </ResponsiveTable>
   ))
   .add("next page available", () => (
-    <Table>
+    <ResponsiveTable>
       <TablePagination
         colSpan={1}
         hasNextPage={true}
@@ -40,10 +40,10 @@ storiesOf("Generics / TablePagination", module)
         onPreviousPage={undefined}
         onNextPage={undefined}
       />
-    </Table>
+    </ResponsiveTable>
   ))
   .add("both previous and next pages are available", () => (
-    <Table>
+    <ResponsiveTable>
       <TablePagination
         colSpan={1}
         hasNextPage={true}
@@ -51,5 +51,5 @@ storiesOf("Generics / TablePagination", module)
         onPreviousPage={undefined}
         onNextPage={undefined}
       />
-    </Table>
+    </ResponsiveTable>
   ));

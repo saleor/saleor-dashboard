@@ -1,11 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -98,7 +98,7 @@ export const CategoryProductList: React.FC<
 
   return (
     <div className={classes.tableContainer}>
-      <Table className={classes.table}>
+      <ResponsiveTable className={classes.table}>
         <colgroup>
           <col />
           <col className={classes.colName} />
@@ -229,7 +229,7 @@ export const CategoryProductList: React.FC<
             )
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </div>
   );
 };

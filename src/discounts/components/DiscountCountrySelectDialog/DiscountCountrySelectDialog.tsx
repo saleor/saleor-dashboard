@@ -4,7 +4,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -21,6 +20,7 @@ import ConfirmButton, {
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 // tslint:disable no-submodule-imports
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { buttonMessages } from "@saleor/intl";
@@ -122,7 +122,7 @@ const DiscountCountrySelectDialog: React.FC<
                     description="country selection"
                   />
                 </Typography>
-                <Table>
+                <ResponsiveTable>
                   <TableBody>
                     {filter(countries, data.query, {
                       key: "country"
@@ -164,7 +164,7 @@ const DiscountCountrySelectDialog: React.FC<
                       );
                     })}
                   </TableBody>
-                </Table>
+                </ResponsiveTable>
               </DialogContent>
               <DialogActions>
                 <Button onClick={onClose}>

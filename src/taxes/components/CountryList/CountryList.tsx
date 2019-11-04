@@ -1,6 +1,5 @@
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -9,6 +8,7 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { maybe, renderCollection } from "../../../misc";
 import { CountryList_shop_countries } from "../../types/CountryList";
@@ -34,7 +34,7 @@ const CountryList: React.FC<CountryListProps> = props => {
 
   return (
     <Card>
-      <Table>
+      <ResponsiveTable>
         <TableHead>
           <TableRow>
             <TableCell>
@@ -83,7 +83,7 @@ const CountryList: React.FC<CountryListProps> = props => {
             )
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </Card>
   );
 };

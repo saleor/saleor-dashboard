@@ -1,7 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -12,6 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import { DateTime } from "@saleor/components/Date";
 import Money from "@saleor/components/Money";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { maybe, renderCollection, transformPaymentStatus } from "../../../misc";
@@ -60,7 +60,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
           </Button>
         }
       />
-      <Table>
+      <ResponsiveTable>
         <TableHead>
           <TableRow>
             <TableCell>
@@ -143,7 +143,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
             )
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </Card>
   );
 };

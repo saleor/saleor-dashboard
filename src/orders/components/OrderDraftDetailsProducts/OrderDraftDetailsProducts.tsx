@@ -1,6 +1,5 @@
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -14,6 +13,7 @@ import { FormattedMessage } from "react-intl";
 import { DebounceForm } from "@saleor/components/DebounceForm";
 import Form from "@saleor/components/Form";
 import Money from "@saleor/components/Money";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar, {
   AVATAR_MARGIN
@@ -76,7 +76,7 @@ const OrderDraftDetailsProducts: React.FC<
   const classes = useStyles(props);
 
   return (
-    <Table className={classes.table}>
+    <ResponsiveTable className={classes.table}>
       {maybe(() => !!lines.length) && (
         <TableHead>
           <TableRow>
@@ -187,7 +187,7 @@ const OrderDraftDetailsProducts: React.FC<
           ))
         )}
       </TableBody>
-    </Table>
+    </ResponsiveTable>
   );
 };
 OrderDraftDetailsProducts.displayName = "OrderDraftDetailsProducts";

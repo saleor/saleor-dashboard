@@ -1,6 +1,5 @@
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -10,6 +9,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TablePagination from "@saleor/components/TablePagination";
@@ -59,7 +59,7 @@ const PluginList: React.FC<PluginListProps> = props => {
   const intl = useIntl();
   return (
     <Card>
-      <Table>
+      <ResponsiveTable>
         <TableHead>
           <TableCell className={classes.colName}>
             {intl.formatMessage({
@@ -139,7 +139,7 @@ const PluginList: React.FC<PluginListProps> = props => {
             )
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </Card>
   );
 };

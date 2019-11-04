@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -10,6 +9,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import Checkbox from "@saleor/components/Checkbox";
 import { DateTime } from "@saleor/components/Date";
 import Money from "@saleor/components/Money";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
@@ -83,7 +83,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     : undefined;
 
   return (
-    <Table>
+    <ResponsiveTable>
       <TableHead
         colSpan={numberOfColumns}
         selected={selected}
@@ -194,7 +194,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
           )
         )}
       </TableBody>
-    </Table>
+    </ResponsiveTable>
   );
 };
 OrderDraftList.displayName = "OrderDraftList";
