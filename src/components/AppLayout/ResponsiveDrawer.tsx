@@ -2,7 +2,11 @@ import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
-import { drawerWidth, drawerWidthExpanded } from "./consts";
+import {
+  drawerWidth,
+  drawerWidthExpanded,
+  drawerWidthExpandedMobile
+} from "./consts";
 
 const useStyles = makeStyles(
   theme => ({
@@ -22,7 +26,7 @@ const useStyles = makeStyles(
       width: drawerWidth
     },
     drawerMobile: {
-      width: drawerWidthExpanded
+      width: drawerWidthExpandedMobile
     }
   }),
   { name: "ResponsiveDrawer" }

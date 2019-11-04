@@ -8,7 +8,7 @@ import SVG from "react-inlinesvg";
 import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import useTheme from "@saleor/hooks/useTheme";
 import { createHref } from "@saleor/misc";
-import { drawerWidthExpanded } from "./consts";
+import { drawerWidthExpanded, drawerWidthExpandedMobile } from "./consts";
 import { IActiveSubMenu } from "./MenuList";
 import { IMenuItem } from "./menuStructure";
 
@@ -26,9 +26,9 @@ const useStyles = makeStyles(theme => ({
   menuListNestedClose: {
     "& svg": {
       fill: theme.palette.primary.main,
-      left: 7,
+      left: 11,
       position: "relative",
-      top: -2
+      top: 1
     },
     border: `solid 1px #EAEAEA`,
     borderRadius: "100%",
@@ -71,7 +71,7 @@ const useStyles = makeStyles(theme => ({
   menuListNestedOpen: {
     [theme.breakpoints.down("sm")]: {
       right: 0,
-      width: drawerWidthExpanded,
+      width: drawerWidthExpandedMobile,
       zIndex: 2
     },
     right: -300,
