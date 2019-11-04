@@ -1,20 +1,20 @@
-import { Theme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
-import { makeStyles } from "@material-ui/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
-    [theme.breakpoints.up("sm")]: {
-      "& table": {
-        tableLayout: "fixed"
-      }
-    },
+  theme => ({
     root: {
+      [theme.breakpoints.up("sm")]: {
+        "& table": {
+          tableLayout: "fixed"
+        }
+      },
       "& table": {
         tableLayout: "auto"
       },
-      overflowX: "auto"
+      overflowX: "auto",
+      width: "100%"
     }
   }),
   {
@@ -29,15 +29,13 @@ interface ResponsiveTableProps {
 }
 
 const ResponsiveTable: React.FC<ResponsiveTableProps> = props => {
-  const { children, className, key } = props;
+  const { children, className } = props;
 
   const classes = useStyles(props);
 
   return (
     <div className={classes.root}>
-      <Table className={className} key={key}>
-        {children}
-      </Table>
+      <Table className={className}>{children}</Table>
     </div>
   );
 };
