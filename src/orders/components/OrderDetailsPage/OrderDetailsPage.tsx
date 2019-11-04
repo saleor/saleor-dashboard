@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: -theme.spacing(2)
   },
   header: {
+    display: "flex",
     marginBottom: 0
   }
 }));
