@@ -7,12 +7,12 @@ import React from "react";
 
 import Image from "../../icons/Image";
 
-export const AVATAR_MARGIN = 56;
+export const AVATAR_MARGIN = 32;
 
 const useStyles = makeStyles(theme => ({
   avatar: {
     background: "none",
-    border: `1px solid ${theme.palette}`,
+    border: `1px solid ${theme.palette.divider}`,
     borderRadius: 2,
     color: "#bdbdbd",
     display: "inline-flex",
@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => ({
     display: "flex"
   },
   root: {
+    "&:not(first-child)": {
+      paddingLeft: 0
+    },
     paddingRight: theme.spacing(3),
     width: "1%"
   }

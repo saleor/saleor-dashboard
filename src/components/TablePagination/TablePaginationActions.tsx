@@ -51,7 +51,6 @@ const useStyles = makeStyles(theme => ({
 
 export interface TablePaginationActionsProps {
   backIconButtonProps?: any;
-  classes: any;
   className?: string;
   hasNextPage: boolean;
   hasPreviousPage: boolean;

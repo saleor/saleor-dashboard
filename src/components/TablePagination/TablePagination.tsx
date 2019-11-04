@@ -99,7 +99,6 @@ const TablePagination: React.FC<TablePaginationProps> = props => {
         </div>
         <TablePaginationActions
           backIconButtonProps={backIconButtonProps}
-          classes={classes}
           hasNextPage={hasNextPage}
           hasPreviousPage={hasPreviousPage}
           nextIconButtonProps={nextIconButtonProps}

@@ -7,7 +7,7 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     active: {
-      color: theme.typography.caption.color
+      color: theme.palette.text.secondary
     },
     root: {
       "&$active": {
@@ -21,7 +21,7 @@ const useStyles = makeStyles(
         color: theme.palette.primary.main
       },
       borderBottom: "1px solid transparent",
-      color: fade(theme.typography.caption.color, 0.6),
+      color: fade(theme.palette.text.secondary, 0.6),
       cursor: "pointer",
       display: "inline-block",
       fontWeight: theme.typography.fontWeightRegular,

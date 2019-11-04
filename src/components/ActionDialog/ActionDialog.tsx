@@ -30,6 +30,7 @@ interface ActionDialogProps {
   children?: React.ReactNode;
   confirmButtonLabel?: string;
   confirmButtonState: ConfirmButtonTransitionState;
+  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
   open: boolean;
   title: string;
   variant?: "default" | "delete";
@@ -46,14 +47,15 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
     title,
     variant,
     onConfirm,
-    onClose
+    onClose,
+    ...rest
   } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
 
   return (
-    <Dialog onClose={onClose} open={open}>
+    <Dialog onClose={onClose} open={open} {...rest}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
@@ -79,5 +81,9 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
   );
 };
 
+ActionDialog.defaultProps = {
+  maxWidth: "xs",
+  variant: "default"
+};
 ActionDialog.displayName = "ActionDialog";
 export default ActionDialog;

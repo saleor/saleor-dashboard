@@ -15,7 +15,11 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListActions, ReorderEvent, UserError } from "@saleor/types";
-import { AttributeTypeEnum, WeightUnitsEnum } from "@saleor/types/globalTypes";
+import {
+  AttributeTypeEnum,
+  TaxRateType,
+  WeightUnitsEnum
+} from "@saleor/types/globalTypes";
 import {
   ProductTypeDetails_productType,
   ProductTypeDetails_taxTypes
@@ -93,7 +97,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps(
-    maybe(() => productType.taxType.description)
+    maybe(() => productType.taxType.description, "")
   );
   const formInitialData: ProductTypeForm = {
     hasVariants:

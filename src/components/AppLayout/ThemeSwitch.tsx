@@ -7,12 +7,6 @@ import SunIcon from "../../icons/Sun";
 
 const useStyles = makeStyles(
   theme => ({
-    bar: {
-      "$colorPrimary$checked + &": {
-        backgroundColor: theme.palette.background.paper
-      },
-      background: theme.palette.background.paper
-    },
     checked: {
       "& svg": {
         background: theme.palette.primary.main,
@@ -26,8 +20,13 @@ const useStyles = makeStyles(
         borderRadius: "100%",
         height: 20,
         width: 20
+      }
+    },
+    track: {
+      "$colorPrimary$checked + &": {
+        backgroundColor: theme.palette.background.paper
       },
-      width: 58
+      background: theme.palette.background.paper
     }
   }),
   {

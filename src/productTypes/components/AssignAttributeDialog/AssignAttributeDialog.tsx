@@ -12,6 +12,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import classNames from "classnames";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -20,6 +21,9 @@ import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
+import useElementScroll, {
+  isScrolledToBottom
+} from "@saleor/hooks/useElementScroll";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
@@ -29,8 +33,14 @@ import { FetchMoreProps } from "@saleor/types";
 import { SearchAttributes_productType_availableAttributes_edges_node } from "../../containers/SearchAttributes/types/SearchAttributes";
 
 const useStyles = makeStyles(theme => ({
+  actions: {
+    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
+  },
   checkboxCell: {
     paddingLeft: 0
+  },
+  dropShadow: {
+    boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
   },
   loadMoreLoaderContainer: {
     alignItems: "center",
@@ -78,6 +88,8 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
   const classes = useStyles({});
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
   const errors = useModalDialogErrors(apiErrors, open);
+  const anchor = React.useRef(null);
+  const position = useElementScroll(anchor);
 
   useModalDialogOpen(open, {
     onClose: resetQuery,
@@ -110,7 +122,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           }}
         />
       </DialogContent>
-      <DialogContent className={classes.scrollArea}>
+      <DialogContent className={classes.scrollArea} ref={anchor}>
         <InfiniteScroll
           pageStart={0}
           loadMore={onFetchMore}
@@ -178,7 +190,11 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           ))}
         </DialogContent>
       )}
-      <DialogActions>
+      <DialogActions
+        className={classNames(classes.actions, {
+          [classes.dropShadow]: !isScrolledToBottom(anchor, position)
+        })}
+      >
         <Button onClick={onClose}>
           <FormattedMessage {...buttonMessages.back} />
         </Button>
