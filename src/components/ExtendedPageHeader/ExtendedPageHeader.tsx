@@ -4,7 +4,10 @@ import React from "react";
 
 const useStyles = makeStyles(theme => ({
   action: {
-    flex: "0 0 auto"
+    flex: "0 0 auto",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: 10
+    }
   },
   grid: {
     padding: theme.spacing(2)
@@ -18,7 +21,10 @@ const useStyles = makeStyles(theme => ({
   root: {
     alignItems: "center",
     display: "flex",
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(3),
+    [theme.breakpoints.down("sm")]: {
+      display: "block"
+    }
   },
   subtitle: {
     alignItems: "center",

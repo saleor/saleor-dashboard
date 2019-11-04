@@ -10,6 +10,11 @@ const useStyles = makeStyles(theme => ({
     display: "flex"
   },
   title: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 20,
+      paddingBottom: 20,
+      paddingLeft: 10
+    },
     flex: 1,
     fontSize: 24,
     paddingBottom: theme.spacing(2)
