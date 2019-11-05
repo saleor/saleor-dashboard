@@ -180,7 +180,7 @@
     "extract-messages": "npm run extract-json-messages && npm run extract-pot-messages",
     "build-messages": "rip po2json 'locale/**/*.po' -m 'build/locale/**/*.json' -o 'locale' -c 'description'",
     "build-types": "apollo client:codegen --target=typescript types --globalTypesFile=src/types/globalTypes.ts",
-    "check-types": "tsc --noEmit --skipLibCheck",
+    "check-types": "tsc --noEmit",
     "generate-component": "plop --plopfile .plop/plopfile.js",
     "start": "webpack-dev-server --open -d",
     "storybook": "start-storybook -p 3000 -c src/storybook/",
