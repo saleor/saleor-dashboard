@@ -24,6 +24,12 @@ module.exports = ({ config }) => {
       configFile: "./tsconfig.json"
     })
   ];
-  config.plugins.push(new CheckerPlugin());
+  config.plugins.push(
+    new CheckerPlugin({
+      compilerOptions: {
+        skipLibCheck: true
+      }
+    })
+  );
   return config;
 };
