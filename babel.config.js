@@ -1,4 +1,5 @@
 module.exports = api => {
+  const isExtract = api.env("extract");
   const isTest = api.env("test");
   const isStorybook = api.env("storybook");
 
@@ -30,16 +31,20 @@ module.exports = api => {
       }
     ],
     "@babel/plugin-proposal-object-rest-spread",
-    "react-intl-auto",
-    [
+    "react-intl-auto"
+  ];
+
+  if (isExtract) {
+    plugins.push([
       "react-intl",
       {
         extractFromFormatMessageCall: true,
         messagesDir: "build/locale/"
       }
-    ],
-    "macros"
-  ];
+    ]);
+  }
+
+  plugins.push("macros");
 
   return {
     presets,
