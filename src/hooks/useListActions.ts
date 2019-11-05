@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import useStateFromProps from "./useStateFromProps";
 
 function useListActions<TData>(
   initial: TData[] = [],
   compareFunc: (a: TData, b: TData) => boolean = (a, b) => a === b
 ) {
-  const [listElements, setListElements] = useState(initial);
-
-  useEffect(() => setListElements(initial), [JSON.stringify(initial)]);
+  const [listElements, setListElements] = useStateFromProps(initial);
 
   function isSelected(data: TData) {
     return !!listElements.find(listElement => compareFunc(listElement, data));

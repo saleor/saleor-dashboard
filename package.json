@@ -45,7 +45,7 @@
     "lodash": "^4.17.14",
     "lodash-es": "^4.17.14",
     "moment-timezone": "^0.5.26",
-    "qs": "^6.7.0",
+    "qs": "^6.9.0",
     "react": "^16.9.0",
     "react-apollo": "^3.0.0",
     "react-dom": "^16.9.0",
