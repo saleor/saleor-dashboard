@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-11-06T13:15:56.589Z\n"
+"POT-Creation-Date: 2019-11-07T13:40:04.787Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgid "*Optional. Adding product to collection helps users find it."
 msgstr ""
 
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
-#. [src.attributes.views.AttributeCreate.2348058468] - attribute value edit error
+#. [src.attributes.views.AttributeCreate.354316953] - attribute value edit error
 #. defaultMessage is:
 #. A value named {name} already exists
 msgctxt "attribute value edit error"
@@ -728,7 +728,7 @@ msgid "Are you sure you want to cancel this fulfillment?"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderBulkCancelDialog/OrderBulkCancelDialog.json
-#. [src.orders.components.OrderBulkCancelDialog.276130122]
+#. [src.orders.components.OrderBulkCancelDialog.3011571869]
 #. defaultMessage is:
 #. Are you sure you want to cancel {counter,plural,one{this order} other{{displayQuantity} orders}}?
 msgctxt "description"
@@ -736,7 +736,7 @@ msgid "Are you sure you want to cancel {counter,plural,one{this order} other{{di
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
-#. [src.attributes.components.AttributeValueDeleteDialog.273524270] - delete attribute value
+#. [src.attributes.components.AttributeValueDeleteDialog.1326420604] - delete attribute value
 #. defaultMessage is:
 #. Are you sure you want to delete "{name}" value?
 msgctxt "delete attribute value"
@@ -744,7 +744,7 @@ msgid "Are you sure you want to delete \"{name}\" value?"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
-#. [src.attributes.components.AttributeValueDeleteDialog.1934550550]
+#. [src.attributes.components.AttributeValueDeleteDialog.4031078167]
 #. defaultMessage is:
 #. Are you sure you want to delete "{name}" value? If you delete it you won’t be able to assign it to any of the products with "{attributeName}" attribute.
 msgctxt "description"
@@ -760,11 +760,11 @@ msgid "Are you sure you want to delete collection's image?"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
-#. [src.orders.components.OrderDraftCancelDialog.36681973]
+#. [src.orders.components.OrderDraftCancelDialog.66064347]
 #. defaultMessage is:
-#. Are you sure you want to delete draft #{number}?
+#. Are you sure you want to delete draft #{orderNumber}?
 msgctxt "description"
-msgid "Are you sure you want to delete draft #{number}?"
+msgid "Are you sure you want to delete draft #{orderNumber}?"
 msgstr ""
 
 #: build/locale/src/navigation/views/MenuDetails/index.json
@@ -832,7 +832,7 @@ msgid "Are you sure you want to delete {collectionName}?"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeBulkDeleteDialog/AttributeBulkDeleteDialog.json
-#. [src.attributes.components.AttributeBulkDeleteDialog.2916860383] - dialog content
+#. [src.attributes.components.AttributeBulkDeleteDialog.1860138828] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} attributes}}?
 msgctxt "dialog content"
@@ -840,7 +840,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this attribute} other
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [src.categories.views.299584400]
+#. [src.categories.views.982216972]
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} categories}}?
 msgctxt "description"
@@ -848,7 +848,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this attribute} other
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [src.categories.views.3231188861]
+#. [src.categories.views.3920301974]
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} products}}?
 msgctxt "description"
@@ -856,7 +856,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this attribute} other
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryList/CategoryList.json
-#. [src.categories.views.CategoryList.2144707585]
+#. [src.categories.views.CategoryList.1592907702]
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this category} other{{displayQuantity} categories}}?
 msgctxt "description"
@@ -864,7 +864,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this category} other{
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList/CollectionList.json
-#. [src.collections.views.CollectionList.2497542455]
+#. [src.collections.views.CollectionList.1421224348]
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "description"
@@ -872,7 +872,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this collection} othe
 msgstr ""
 
 #: build/locale/src/customers/views/CustomerList/CustomerList.json
-#. [src.customers.views.CustomerList.409347866]
+#. [src.customers.views.CustomerList.3616300497]
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this customer} other{{displayQuantity} customers}}?
 msgctxt "description"
@@ -888,7 +888,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this menu} other{{dis
 msgstr ""
 
 #: build/locale/src/orders/views/OrderDraftList/OrderDraftList.json
-#. [src.orders.views.OrderDraftList.1389231130] - dialog content
+#. [src.orders.views.OrderDraftList.1398914741] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this order draft} other{{displayQuantity} orderDrafts}}?
 msgctxt "dialog content"
@@ -896,7 +896,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this order draft} oth
 msgstr ""
 
 #: build/locale/src/pages/views/PageList.json
-#. [src.pages.views.3382708469] - dialog content
+#. [src.pages.views.808633099] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this page} other{{displayQuantity} pages}}?
 msgctxt "dialog content"
@@ -904,7 +904,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this page} other{{dis
 msgstr ""
 
 #: build/locale/src/productTypes/views/ProductTypeList/ProductTypeList.json
-#. [src.productTypes.views.ProductTypeList.2294091098] - dialog content
+#. [src.productTypes.views.ProductTypeList.2787668922] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this product type} other{{displayQuantity} product types}}?
 msgctxt "dialog content"
@@ -912,7 +912,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this product type} ot
 msgstr ""
 
 #: build/locale/src/products/views/ProductList/ProductList.json
-#. [src.products.views.ProductList.2742463171] - dialog content
+#. [src.products.views.ProductList.785143617] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this product} other{{displayQuantity} products}}?
 msgctxt "dialog content"
@@ -920,7 +920,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this product} other{{
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleList/SaleList.json
-#. [src.discounts.views.SaleList.2516361175] - dialog content
+#. [src.discounts.views.SaleList.315033130] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this sale} other{{displayQuantity} sales}}?
 msgctxt "dialog content"
@@ -928,7 +928,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this sale} other{{dis
 msgstr ""
 
 #: build/locale/src/shipping/views/ShippingZonesList.json
-#. [src.shipping.views.3698270769] - dialog content
+#. [src.shipping.views.226833304] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this shipping zone} other{{displayQuantity} shipping zones}}?
 msgctxt "dialog content"
@@ -936,7 +936,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this shipping zone} o
 msgstr ""
 
 #: build/locale/src/products/views/ProductUpdate/ProductUpdate.json
-#. [src.products.views.ProductUpdate.2446451819] - dialog content
+#. [src.products.views.ProductUpdate.408018316] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this variant} other{{displayQuantity} variants}}?
 msgctxt "dialog content"
@@ -944,7 +944,7 @@ msgid "Are you sure you want to delete {counter,plural,one{this variant} other{{
 msgstr ""
 
 #: build/locale/src/discounts/views/VoucherList/VoucherList.json
-#. [src.discounts.views.VoucherList.1791926983] - dialog content
+#. [src.discounts.views.VoucherList.3263927472] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this voucher} other{{displayQuantity} vouchers}}?
 msgctxt "dialog content"
@@ -1096,7 +1096,7 @@ msgid "Are you sure you want to mark this order as paid?"
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList/CollectionList.json
-#. [src.collections.views.CollectionList.1348793822]
+#. [src.collections.views.CollectionList.3216529047]
 #. defaultMessage is:
 #. Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "description"
@@ -1104,7 +1104,7 @@ msgid "Are you sure you want to publish {counter,plural,one{this collection} oth
 msgstr ""
 
 #: build/locale/src/pages/views/PageList.json
-#. [src.pages.views.504298570] - dialog content
+#. [src.pages.views.64432778] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to publish {counter,plural,one{this page} other{{displayQuantity} pages}}?
 msgctxt "dialog content"
@@ -1112,7 +1112,7 @@ msgid "Are you sure you want to publish {counter,plural,one{this page} other{{di
 msgstr ""
 
 #: build/locale/src/products/views/ProductList/ProductList.json
-#. [src.products.views.ProductList.740606822] - dialog content
+#. [src.products.views.ProductList.4099592898] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to publish {counter,plural,one{this product} other{{displayQuantity} products}}?
 msgctxt "dialog content"
@@ -1136,7 +1136,7 @@ msgid "Are you sure you want to unassign {attributeName} from {productTypeName}?
 msgstr ""
 
 #: build/locale/src/productTypes/components/ProductTypeBulkAttributeUnassignDialog/ProductTypeBulkAttributeUnassignDialog.json
-#. [src.productTypes.components.ProductTypeBulkAttributeUnassignDialog.2500510112] - unassign multiple attributes from product type
+#. [src.productTypes.components.ProductTypeBulkAttributeUnassignDialog.600602031] - unassign multiple attributes from product type
 #. defaultMessage is:
 #. Are you sure you want to unassign {counter,plural,one{this attribute} other{{displayQuantity} attributes}} from {productTypeName}?
 msgctxt "unassign multiple attributes from product type"
@@ -1144,11 +1144,11 @@ msgid "Are you sure you want to unassign {counter,plural,one{this attribute} oth
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
-#. [src.discounts.views.376977560] - dialog content
+#. [src.discounts.views.1169376180] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to unassign {counter,plural,one{this category} other{{displayQuantity} categories}}?
 #: build/locale/src/discounts/views/VoucherDetails.json
-#. [src.discounts.views.376977560] - dialog content
+#. [src.discounts.views.1169376180] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to unassign {counter,plural,one{this category} other{{displayQuantity} categories}}?
 msgctxt "dialog content"
@@ -1156,11 +1156,11 @@ msgid "Are you sure you want to unassign {counter,plural,one{this category} othe
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
-#. [src.discounts.views.396618268] - dialog content
+#. [src.discounts.views.3809911073] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to unassign {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 #: build/locale/src/discounts/views/VoucherDetails.json
-#. [src.discounts.views.396618268] - dialog content
+#. [src.discounts.views.3809911073] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to unassign {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "dialog content"
@@ -1168,7 +1168,7 @@ msgid "Are you sure you want to unassign {counter,plural,one{this collection} ot
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionDetails.json
-#. [src.collections.views.1908998638]
+#. [src.collections.views.735691989]
 #. defaultMessage is:
 #. Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?
 msgctxt "description"
@@ -1176,11 +1176,11 @@ msgid "Are you sure you want to unassign {counter,plural,one{this product} other
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
-#. [src.discounts.views.786949385] - dialog content
+#. [src.discounts.views.735691989] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?
 #: build/locale/src/discounts/views/VoucherDetails.json
-#. [src.discounts.views.786949385] - dialog content
+#. [src.discounts.views.735691989] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?
 msgctxt "dialog content"
@@ -1188,7 +1188,7 @@ msgid "Are you sure you want to unassign {counter,plural,one{this product} other
 msgstr ""
 
 #: build/locale/src/collections/views/CollectionList/CollectionList.json
-#. [src.collections.views.CollectionList.3944356444]
+#. [src.collections.views.CollectionList.3449136787]
 #. defaultMessage is:
 #. Are you sure you want to unpublish {counter,plural,one{this collection} other{{displayQuantity} collections}}?
 msgctxt "description"
@@ -1196,7 +1196,7 @@ msgid "Are you sure you want to unpublish {counter,plural,one{this collection} o
 msgstr ""
 
 #: build/locale/src/pages/views/PageList.json
-#. [src.pages.views.691980200] - dialog content
+#. [src.pages.views.1265636351] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to unpublish {counter,plural,one{this page} other{{displayQuantity} pages}}?
 msgctxt "dialog content"
@@ -1204,7 +1204,7 @@ msgid "Are you sure you want to unpublish {counter,plural,one{this page} other{{
 msgstr ""
 
 #: build/locale/src/products/views/ProductList/ProductList.json
-#. [src.products.views.ProductList.193914731] - dialog content
+#. [src.products.views.ProductList.1752069132] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to unpublish {counter,plural,one{this product} other{{displayQuantity} products}}?
 msgctxt "dialog content"
@@ -1484,7 +1484,7 @@ msgid "Authentication Type"
 msgstr ""
 
 #: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
-#. [src.siteSettings.components.SiteSettingsPage.3619898341]
+#. [src.siteSettings.components.SiteSettingsPage.1214877701]
 #. defaultMessage is:
 #. Authentication method defines additional ways that customers can log in to your ecommerce.
 msgctxt "description"
@@ -8436,11 +8436,11 @@ msgid "Translation"
 msgstr ""
 
 #: build/locale/src/translations/components/TranslationsCategoriesPage/TranslationsCategoriesPage.json
-#. [src.translations.components.TranslationsCategoriesPage.2043581404]
+#. [src.translations.components.TranslationsCategoriesPage.1611537010]
 #. defaultMessage is:
-#. Translation Category "{categoryNane}" - {languageCode}
+#. Translation Category "{categoryName}" - {languageCode}
 msgctxt "description"
-msgid "Translation Category \"{categoryNane}\" - {languageCode}"
+msgid "Translation Category \"{categoryName}\" - {languageCode}"
 msgstr ""
 
 #: build/locale/src/translations/components/TranslationsCollectionsPage/TranslationsCollectionsPage.json
@@ -9598,33 +9598,45 @@ msgstr ""
 #: build/locale/src/home/components/HomeProductListCard/HomeProductListCard.json
 #. [homeProductListCardOrders] - number of ordered products
 #. defaultMessage is:
-#. {amount,plural,one{One ordered} other{{amount} Ordered}}
+#. {amount, plural,
+#.                               one {One ordered}
+#.                               other {{amount} Ordered}
+#.                             }
 msgctxt "number of ordered products"
-msgid "{amount,plural,one{One ordered} other{{amount} Ordered}}"
+msgid "{amount, plural,\n                              one {One ordered}\n                              other {{amount} Ordered}\n                            }"
 msgstr ""
 
 #: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
 #. [homeNotificationTableOrders]
 #. defaultMessage is:
-#. {amount,plural,one{One order} other{{amount} Orders}} are ready to fulfill
+#. {amount, plural,
+#.                   one {One order}
+#.                   other {{amount} Orders}
+#.                 } are ready to fulfill
 msgctxt "description"
-msgid "{amount,plural,one{One order} other{{amount} Orders}} are ready to fulfill"
+msgid "{amount, plural,\n                  one {One order}\n                  other {{amount} Orders}\n                } are ready to fulfill"
 msgstr ""
 
 #: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
 #. [homeNotificationTablePayments]
 #. defaultMessage is:
-#. {amount,plural,one{One payment} other{{amount} Payments}} to capture
+#. {amount, plural,
+#.                   one {One payment}
+#.                   other {{amount} Payments}
+#.                 } to capture
 msgctxt "description"
-msgid "{amount,plural,one{One payment} other{{amount} Payments}} to capture"
+msgid "{amount, plural,\n                  one {One payment}\n                  other {{amount} Payments}\n                } to capture"
 msgstr ""
 
 #: build/locale/src/home/components/HomeNotificationTable/HomeNotificationTable.json
 #. [homeNotificationTableProducts]
 #. defaultMessage is:
-#. {amount,plural,one{One product} other{{amount} Products}} out of stock
+#. {amount, plural,
+#.                   one {One product}
+#.                   other {{amount} Products}
+#.                 } out of stock
 msgctxt "description"
-msgid "{amount,plural,one{One product} other{{amount} Products}} out of stock"
+msgid "{amount, plural,\n                  one {One product}\n                  other {{amount} Products}\n                } out of stock"
 msgstr ""
 
 #: build/locale/src/translations/components/TranslationsEntitiesList/TranslationsEntitiesList.json

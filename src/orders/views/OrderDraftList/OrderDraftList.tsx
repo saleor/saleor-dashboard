@@ -236,10 +236,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                       >
                         <DialogContentText>
                           <FormattedMessage
-                            defaultMessage="Are you sure you want to delete {counter, plural,
-            one {this order draft}
-            other {{displayQuantity} orderDrafts}
-          }?"
+                            defaultMessage="Are you sure you want to delete {counter,plural,one{this order draft} other{{displayQuantity} orderDrafts}}?"
                             description="dialog content"
                             values={{
                               counter: maybe(() => params.ids.length),

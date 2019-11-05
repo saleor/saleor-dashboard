@@ -36,10 +36,7 @@ const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
     >
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="Are you sure you want to delete {counter, plural,
-            one {this attribute}
-            other {{displayQuantity} attributes}
-          }?"
+          defaultMessage="Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} attributes}}?"
           description="dialog content"
           values={{
             counter: quantity,

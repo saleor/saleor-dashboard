@@ -194,7 +194,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                   />
                 </Typography>
                 <Typography variant="body2">
-                  <FormattedMessage defaultMessage="Authentication method defines additional ways that customers can log in to your ecommerce. " />
+                  <FormattedMessage defaultMessage="Authentication method defines additional ways that customers can log in to your ecommerce." />
                 </Typography>
               </div>
               <SiteSettingsKeys

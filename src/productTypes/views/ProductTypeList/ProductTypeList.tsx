@@ -224,10 +224,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
                   >
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Are you sure you want to delete {counter, plural,
-            one {this product type}
-            other {{displayQuantity} product types}
-          }?"
+                        defaultMessage="Are you sure you want to delete {counter,plural,one{this product type} other{{displayQuantity} product types}}?"
                         description="dialog content"
                         values={{
                           counter: maybe(() => params.ids.length),
