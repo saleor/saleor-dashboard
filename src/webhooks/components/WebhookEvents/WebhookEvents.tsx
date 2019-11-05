@@ -27,9 +27,9 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
   const intl = useIntl();
   const eventsEnum = Object.values(WebhookEventTypeEnum);
 
-  const translatedEvents = {
+  const translatedEvents: Record<WebhookEventTypeEnum, string> = {
     [WebhookEventTypeEnum.ANY_EVENTS]: intl.formatMessage({
-      defaultMessage: "Any events",
+      defaultMessage: "All events",
       description: "event"
     }),
     [WebhookEventTypeEnum.CUSTOMER_CREATED]: intl.formatMessage({
@@ -42,6 +42,10 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
     }),
     [WebhookEventTypeEnum.ORDER_CREATED]: intl.formatMessage({
       defaultMessage: "Order created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.ORDER_FULFILLED]: intl.formatMessage({
+      defaultMessage: "Order fulfilled",
       description: "event"
     }),
     [WebhookEventTypeEnum.ORDER_FULLY_PAID]: intl.formatMessage({

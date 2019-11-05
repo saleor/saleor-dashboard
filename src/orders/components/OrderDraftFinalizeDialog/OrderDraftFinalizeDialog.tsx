@@ -94,7 +94,7 @@ const OrderDraftFinalizeDialog: React.FC<OrderDraftFinalizeDialogProps> = ({
           </>
         )}
         <FormattedMessage
-          defaultMessage="Are you sure you want to finalize draft #{number}?"
+          defaultMessage="Are you sure you want to finalize draft #{orderNumber}?"
           values={{
             orderNumber
           }}

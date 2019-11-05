@@ -39,7 +39,7 @@ const ProductTypeBulkAttributeUnassignDialog: React.FC<
     >
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="Are you sure you want to unassign {counter,plural,one{this attribute} other{{displayQuantity} attributes}} from {productTypeName}?"
+          defaultMessage="Are you sure you want to unassign {counter,plural,one{this attribute} other{{attributeQuantity} attributes}} from {productTypeName}?"
           description="unassign multiple attributes from product type"
           values={{
             attributeQuantity: <strong>{attributeQuantity}</strong>,

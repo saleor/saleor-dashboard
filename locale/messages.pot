@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-11-07T13:40:04.787Z\n"
+"POT-Creation-Date: 2019-11-07T13:41:50.654Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -623,6 +623,14 @@ msgctxt "product attribute error"
 msgid "All attributes should have value"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.2454751033] - event
+#. defaultMessage is:
+#. All events
+msgctxt "event"
+msgid "All events"
+msgstr ""
+
 #: build/locale/src/taxes/components/TaxConfiguration/TaxConfiguration.json
 #. [src.taxes.components.TaxConfiguration.142803418]
 #. defaultMessage is:
@@ -661,14 +669,6 @@ msgstr ""
 #. Anonymous user
 msgctxt "description"
 msgid "Anonymous user"
-msgstr ""
-
-#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
-#. [src.webhooks.components.WebhookEvents.3053363669] - event
-#. defaultMessage is:
-#. Any events
-msgctxt "event"
-msgid "Any events"
 msgstr ""
 
 #: build/locale/src/discounts/components/VoucherSummary/VoucherSummary.json
@@ -1080,11 +1080,11 @@ msgid "Are you sure you want to delete {voucherCode}?"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
-#. [src.orders.components.OrderDraftFinalizeDialog.1489195029]
+#. [src.orders.components.OrderDraftFinalizeDialog.3358029330]
 #. defaultMessage is:
-#. Are you sure you want to finalize draft #{number}?
+#. Are you sure you want to finalize draft #{orderNumber}?
 msgctxt "description"
-msgid "Are you sure you want to finalize draft #{number}?"
+msgid "Are you sure you want to finalize draft #{orderNumber}?"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog.json
@@ -1136,11 +1136,11 @@ msgid "Are you sure you want to unassign {attributeName} from {productTypeName}?
 msgstr ""
 
 #: build/locale/src/productTypes/components/ProductTypeBulkAttributeUnassignDialog/ProductTypeBulkAttributeUnassignDialog.json
-#. [src.productTypes.components.ProductTypeBulkAttributeUnassignDialog.600602031] - unassign multiple attributes from product type
+#. [src.productTypes.components.ProductTypeBulkAttributeUnassignDialog.1465383223] - unassign multiple attributes from product type
 #. defaultMessage is:
-#. Are you sure you want to unassign {counter,plural,one{this attribute} other{{displayQuantity} attributes}} from {productTypeName}?
+#. Are you sure you want to unassign {counter,plural,one{this attribute} other{{attributeQuantity} attributes}} from {productTypeName}?
 msgctxt "unassign multiple attributes from product type"
-msgid "Are you sure you want to unassign {counter,plural,one{this attribute} other{{displayQuantity} attributes}} from {productTypeName}?"
+msgid "Are you sure you want to unassign {counter,plural,one{this attribute} other{{attributeQuantity} attributes}} from {productTypeName}?"
 msgstr ""
 
 #: build/locale/src/discounts/views/SaleDetails.json
@@ -5505,6 +5505,14 @@ msgstr ""
 #. Order draft succesfully created
 msgctxt "description"
 msgid "Order draft succesfully created"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.3907151399] - event
+#. defaultMessage is:
+#. Order fulfilled
+msgctxt "event"
+msgid "Order fulfilled"
 msgstr ""
 
 #: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json

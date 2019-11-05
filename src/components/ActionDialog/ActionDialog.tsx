@@ -55,7 +55,7 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
   const intl = useIntl();
 
   return (
-    <Dialog onClose={onClose} open={open} {...rest}>
+    <Dialog fullWidth onClose={onClose} open={open} {...rest}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>

@@ -11,10 +11,10 @@ import { commonMessages } from "@saleor/intl";
 
 const useStyles = makeStyles(
   theme => ({
+    errorText: {
+      color: theme.palette.error.contrastText
+    },
     panel: {
-      "& span": {
-        color: theme.palette.error.contrastText
-      },
       background: theme.palette.error.main,
       borderRadius: theme.spacing(),
       marginBottom: theme.spacing(3),
@@ -50,7 +50,9 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
         <>
           {!!error && (
             <div className={classes.panel}>
-              <Typography variant="caption">{error}</Typography>
+              <Typography variant="caption" className={classes.errorText}>
+                {error}
+              </Typography>
             </div>
           )}
           <Typography>

@@ -24,14 +24,15 @@ const useStyles = makeStyles(
       display: "flex",
       height: "38px",
       justifyContent: "space-around",
-      margin: theme.spacing(2, 1),
+      margin: theme.spacing(0, 1, 2),
       marginLeft: 0,
       padding: theme.spacing(0, 2)
     },
     filterChipContainer: {
       display: "flex",
       flex: 1,
-      flexWrap: "wrap"
+      flexWrap: "wrap",
+      paddingTop: theme.spacing(2)
     },
     filterContainer: {
       "& a": {
