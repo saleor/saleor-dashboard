@@ -51,7 +51,7 @@ const TranslationsCategoriesPage: React.StatelessComponent<
         title={intl.formatMessage(
           {
             defaultMessage:
-              'Translation Category "{categoryNane}" - {languageCode}'
+              'Translation Category "{categoryName}" - {languageCode}'
           },
           {
             categoryName: maybe(() => category.name, "..."),
