@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-10-25T13:36:05.943Z\n"
+"POT-Creation-Date: 2019-11-06T13:15:56.589Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -7969,6 +7969,14 @@ msgstr ""
 #. Successfully created voucher
 msgctxt "description"
 msgid "Successfully created voucher"
+msgstr ""
+
+#: build/locale/src/taxes/views/CountryList.json
+#. [src.taxes.views.2411670026]
+#. defaultMessage is:
+#. Successfully fetched tax rates
+msgctxt "description"
+msgid "Successfully fetched tax rates"
 msgstr ""
 
 #: build/locale/src/intl.json
