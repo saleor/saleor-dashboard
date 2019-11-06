@@ -9,14 +9,17 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   formControl: {
     "& label": {
       top: "-3px"
     },
     width: "100%"
+  },
+  noLabel: {
+    padding: theme.spacing(2, 1.5)
   }
-});
+}));
 
 interface SingleSelectFieldProps {
   choices: Array<{
@@ -75,7 +78,17 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
         }
         value={value || ""}
         onChange={onChange}
-        input={<OutlinedInput name={name} labelWidth={180} />}
+        input={
+          <OutlinedInput
+            classes={{
+              input: classNames({
+                [classes.noLabel]: !label
+              })
+            }}
+            name={name}
+            labelWidth={180}
+          />
+        }
         {...selectProps}
       >
         {choices.length > 0 ? (

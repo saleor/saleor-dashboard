@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     width: "100%"
   },
+  price: {
+    marginRight: theme.spacing(3)
+  },
   root: {
     overflowY: "visible",
     width: theme.breakpoints.values.sm
@@ -67,7 +70,7 @@ const OrderShippingMethodEditDialog: React.FC<
           <div className={classes.menuItem}>
             <span className={classes.shippingMethodName}>{s.name}</span>
             &nbsp;
-            <span>
+            <span className={classes.price}>
               <Money money={s.price} />
             </span>
           </div>
