@@ -607,9 +607,7 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
                               orderUpdate.mutate({
                                 id,
                                 input: {
-                                  shippingAddress: transformFormToAddress(
-                                    shippingAddress
-                                  )
+                                  shippingAddress
                                 }
                               })
                             }

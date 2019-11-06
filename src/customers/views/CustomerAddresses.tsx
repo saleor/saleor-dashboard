@@ -176,7 +176,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                                 createCustomerAddress({
                                   variables: {
                                     id,
-                                    input: transformFormToAddress(input)
+                                    input
                                   }
                                 })
                               }
@@ -202,7 +202,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                                 updateCustomerAddress({
                                   variables: {
                                     id: params.id,
-                                    input: transformFormToAddress(input)
+                                    input
                                   }
                                 })
                               }
