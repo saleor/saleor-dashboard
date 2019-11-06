@@ -6,12 +6,7 @@ import useUser from "@saleor/hooks/useUser";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
 import SearchCustomers from "../../../containers/SearchCustomers";
 import { customerUrl } from "../../../customers/urls";
-import {
-  getMutationState,
-  maybe,
-  transformAddressToForm,
-  transformFormToAddress
-} from "../../../misc";
+import { getMutationState, maybe, transformAddressToForm } from "../../../misc";
 import { productUrl } from "../../../products/urls";
 import { OrderStatus } from "../../../types/globalTypes";
 import OrderAddressEditDialog from "../../components/OrderAddressEditDialog";
@@ -640,9 +635,7 @@ export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
                               orderUpdate.mutate({
                                 id,
                                 input: {
-                                  billingAddress: transformFormToAddress(
-                                    billingAddress
-                                  )
+                                  billingAddress
                                 }
                               })
                             }
