@@ -4,7 +4,7 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-..
+- Fix minor bugs - #244 by @dominik-zeglen
 
 ## 2.0.0
 
@@ -53,4 +53,3 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add mailing configuration - #222 by @dominik-zeglen
 - Fix minor bugs - #230 by @dominik-zeglen
 - Fix permission handling - #231 by @dominik-zeglen
-- Fix minor bugs - #244 by @dominik-zeglen
