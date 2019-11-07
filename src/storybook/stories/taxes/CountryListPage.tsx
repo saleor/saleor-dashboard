@@ -13,6 +13,7 @@ const props: CountryListPageProps = {
   onBack: () => undefined,
   onSubmit: () => undefined,
   onTaxFetch: () => undefined,
+  saveButtonBarState: "default",
   shop: {
     __typename: "Shop",
     chargeTaxesOnShipping: false,

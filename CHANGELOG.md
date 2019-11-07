@@ -5,6 +5,7 @@ All notable, unreleased changes to this project will be documented in this file.
 ## [Unreleased]
 
 - Fix minor bugs - #244 by @dominik-zeglen
+- Fix tax settings updating - #243 by @dominik-zeglen
 
 ## 2.0.0
 

@@ -46,6 +46,7 @@ const styles = (theme: Theme) =>
       background: theme.palette.background.default,
       borderTop: "1px solid transparent",
       boxShadow: `0 -5px 5px 0 ${theme.overrides.MuiCard.root.borderColor}`,
+      height: "100%",
       transition: `box-shadow ${theme.transitions.duration.shortest}ms`
     },
     spacer: {
