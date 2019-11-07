@@ -36,9 +36,7 @@ export interface CategoryCreatePageProps {
   onBack();
 }
 
-export const CategoryCreatePage: React.StatelessComponent<
-  CategoryCreatePageProps
-> = ({
+export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   disabled,
   onSubmit,
   onBack,

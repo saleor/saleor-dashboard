@@ -39,9 +39,7 @@ export interface CustomerDetailsPageProps {
   onDelete: () => void;
 }
 
-const CustomerDetailsPage: React.StatelessComponent<
-  CustomerDetailsPageProps
-> = ({
+const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   customer,
   disabled,
   errors,

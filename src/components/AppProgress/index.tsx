@@ -9,9 +9,7 @@ export const AppProgressContext = React.createContext<IAppProgressContext>(
   undefined
 );
 
-export const AppProgressProvider: React.StatelessComponent<{}> = ({
-  children
-}) => {
+export const AppProgressProvider: React.FC<{}> = ({ children }) => {
   const [isProgress, setProgressState] = React.useState(false);
 
   return (

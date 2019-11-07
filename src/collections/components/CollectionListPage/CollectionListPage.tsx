@@ -24,7 +24,7 @@ export interface CollectionListPageProps
   collections: CollectionList_collections_edges_node[];
 }
 
-const CollectionListPage: React.StatelessComponent<CollectionListPageProps> = ({
+const CollectionListPage: React.FC<CollectionListPageProps> = ({
   currentTab,
   disabled,
   initialSearch,

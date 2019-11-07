@@ -17,7 +17,7 @@ import { RequirementsPicker } from "../types";
 import { VoucherCreate } from "../types/VoucherCreate";
 import { voucherListUrl, voucherUrl } from "../urls";
 
-export const VoucherDetails: React.StatelessComponent = () => {
+export const VoucherDetails: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

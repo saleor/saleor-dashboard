@@ -14,7 +14,7 @@ interface SectionRouteProps extends RouteProps {
   permissions?: PermissionEnum[];
 }
 
-export const SectionRoute: React.StatelessComponent<SectionRouteProps> = ({
+export const SectionRoute: React.FC<SectionRouteProps> = ({
   permissions,
   ...props
 }) => {

@@ -13,7 +13,7 @@ export interface TranslationsLanguageListPageProps {
   onRowClick: (code: string) => void;
 }
 
-const TranslationsLanguageListPage: React.StatelessComponent<
+const TranslationsLanguageListPage: React.FC<
   TranslationsLanguageListPageProps
 > = ({ languages, onRowClick }) => {
   const intl = useIntl();

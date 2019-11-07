@@ -11,7 +11,7 @@ import { TypedCreateShippingZone } from "../mutations";
 import { CreateShippingZone } from "../types/CreateShippingZone";
 import { shippingZonesListUrl, shippingZoneUrl } from "../urls";
 
-const ShippingZoneCreate: React.StatelessComponent<{}> = () => {
+const ShippingZoneCreate: React.FC<{}> = () => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
   const shop = useShop();

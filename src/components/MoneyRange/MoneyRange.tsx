@@ -15,10 +15,7 @@ const formatMoney = (money: IMoney, locale: string) =>
     style: "currency"
   });
 
-export const MoneyRange: React.StatelessComponent<MoneyRangeProps> = ({
-  from,
-  to
-}) => {
+export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
   const intl = useIntl();
 
   return (

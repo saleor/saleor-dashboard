@@ -96,7 +96,7 @@ const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
 const CollectionsTab = Tab(VoucherDetailsPageTab.collections);
 const ProductsTab = Tab(VoucherDetailsPageTab.products);
 
-const VoucherDetailsPage: React.StatelessComponent<VoucherDetailsPageProps> = ({
+const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
   defaultCurrency,
   disabled,

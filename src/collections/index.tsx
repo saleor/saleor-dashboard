@@ -16,9 +16,7 @@ import CollectionCreate from "./views/CollectionCreate";
 import CollectionDetailsView from "./views/CollectionDetails";
 import CollectionListView from "./views/CollectionList";
 
-const CollectionList: React.StatelessComponent<RouteComponentProps<{}>> = ({
-  location
-}) => {
+const CollectionList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CollectionListUrlQueryParams = qs;
   return <CollectionListView params={params} />;
@@ -27,7 +25,7 @@ const CollectionList: React.StatelessComponent<RouteComponentProps<{}>> = ({
 interface CollectionDetailsRouteProps {
   id: string;
 }
-const CollectionDetails: React.StatelessComponent<
+const CollectionDetails: React.FC<
   RouteComponentProps<CollectionDetailsRouteProps>
 > = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));

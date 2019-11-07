@@ -24,7 +24,7 @@ export interface CustomerListPageProps
   customers: ListCustomers_customers_edges_node[];
 }
 
-const CustomerListPage: React.StatelessComponent<CustomerListPageProps> = ({
+const CustomerListPage: React.FC<CustomerListPageProps> = ({
   currentTab,
   customers,
   disabled,

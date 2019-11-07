@@ -77,7 +77,7 @@ const CategoriesTab = Tab(SaleDetailsPageTab.categories);
 const CollectionsTab = Tab(SaleDetailsPageTab.collections);
 const ProductsTab = Tab(SaleDetailsPageTab.products);
 
-const SaleDetailsPage: React.StatelessComponent<SaleDetailsPageProps> = ({
+const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   activeTab,
   defaultCurrency,
   disabled,

@@ -16,9 +16,7 @@ import ProductTypeCreate from "./views/ProductTypeCreate";
 import ProductTypeListComponent from "./views/ProductTypeList";
 import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
-const ProductTypeList: React.StatelessComponent<RouteComponentProps<{}>> = ({
-  location
-}) => {
+const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductTypeListUrlQueryParams = qs;
   return <ProductTypeListComponent params={params} />;
@@ -27,7 +25,7 @@ const ProductTypeList: React.StatelessComponent<RouteComponentProps<{}>> = ({
 interface ProductTypeUpdateRouteParams {
   id: string;
 }
-const ProductTypeUpdate: React.StatelessComponent<
+const ProductTypeUpdate: React.FC<
   RouteComponentProps<ProductTypeUpdateRouteParams>
 > = ({ match }) => {
   const qs = parseQs(location.search.substr(1));

@@ -8,7 +8,7 @@ import { TypedFetchTaxes, TypedUpdateTaxSettings } from "../mutations";
 import { TypedCountryListQuery } from "../queries";
 import { countryTaxRatesUrl } from "../urls";
 
-export const CountryList: React.StatelessComponent = () => {
+export const CountryList: React.FC = () => {
   const navigate = useNavigator();
 
   return (

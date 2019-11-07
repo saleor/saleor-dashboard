@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const numberOfColumns = 6;
 
-const AttributeList: React.StatelessComponent<AttributeListProps> = ({
+const AttributeList: React.FC<AttributeListProps> = ({
   attributes,
   disabled,
   isChecked,

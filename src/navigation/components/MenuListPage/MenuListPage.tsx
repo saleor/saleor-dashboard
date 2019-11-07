@@ -17,7 +17,7 @@ export interface MenuListPageProps extends PageListProps, ListActions {
   onDelete: (id: string) => void;
 }
 
-const MenuListPage: React.StatelessComponent<MenuListPageProps> = ({
+const MenuListPage: React.FC<MenuListPageProps> = ({
   disabled,
   onAdd,
   onBack,

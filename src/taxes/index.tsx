@@ -10,9 +10,9 @@ import CountryTaxesComponent, {
   CountryTaxesParams
 } from "./views/CountryTaxes";
 
-const CountryTaxes: React.StatelessComponent<
-  RouteComponentProps<CountryTaxesParams>
-> = ({ match }) => <CountryTaxesComponent code={match.params.code} />;
+const CountryTaxes: React.FC<RouteComponentProps<CountryTaxesParams>> = ({
+  match
+}) => <CountryTaxesComponent code={match.params.code} />;
 
 const Component = () => {
   const intl = useIntl();

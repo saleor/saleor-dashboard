@@ -53,3 +53,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add mailing configuration - #222 by @dominik-zeglen
 - Fix minor bugs - #230 by @dominik-zeglen
 - Fix permission handling - #231 by @dominik-zeglen
+- Use React.FC instead of deprecated React.StatelessComponent type - #245 by @dominik-zeglen

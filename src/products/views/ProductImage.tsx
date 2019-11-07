@@ -25,7 +25,7 @@ interface ProductImageProps {
   params: ProductImageUrlQueryParams;
 }
 
-export const ProductImage: React.StatelessComponent<ProductImageProps> = ({
+export const ProductImage: React.FC<ProductImageProps> = ({
   imageId,
   productId,
   params

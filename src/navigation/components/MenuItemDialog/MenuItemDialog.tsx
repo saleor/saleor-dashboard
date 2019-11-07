@@ -73,7 +73,7 @@ function getDisplayValue(menu: IMenu, value: string): string {
   return getMenuItemByValue(menu, value).label.toString();
 }
 
-const MenuItemDialog: React.StatelessComponent<MenuItemDialogProps> = ({
+const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   confirmButtonState,
   disabled,
   errors: apiErrors,

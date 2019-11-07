@@ -22,9 +22,9 @@ interface AuthProviderOperationsProps {
     user: User;
   }) => React.ReactNode;
 }
-const AuthProviderOperations: React.StatelessComponent<
-  AuthProviderOperationsProps
-> = ({ children }) => {
+const AuthProviderOperations: React.FC<AuthProviderOperationsProps> = ({
+  children
+}) => {
   return (
     <TypedTokenAuthMutation>
       {(...tokenAuth) => (

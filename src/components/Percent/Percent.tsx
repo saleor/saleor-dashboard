@@ -6,7 +6,7 @@ interface PercentProps {
   amount: number;
 }
 
-const Percent: React.StatelessComponent<PercentProps> = ({ amount }) => (
+const Percent: React.FC<PercentProps> = ({ amount }) => (
   <LocaleConsumer>
     {({ locale }) => {
       return (amount / 100).toLocaleString(locale, {

@@ -11,9 +11,9 @@ interface OrderCustomerNoteProps {
   note: string;
 }
 
-export const OrderCustomerNote: React.StatelessComponent<
-  OrderCustomerNoteProps
-> = ({ note }) => {
+export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({
+  note
+}) => {
   const intl = useIntl();
 
   return (

@@ -20,9 +20,12 @@ interface SiteSettingsDetailsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const SiteSettingsDetails: React.StatelessComponent<
-  SiteSettingsDetailsProps
-> = ({ data, disabled, errors, onChange }) => {
+const SiteSettingsDetails: React.FC<SiteSettingsDetailsProps> = ({
+  data,
+  disabled,
+  errors,
+  onChange
+}) => {
   const intl = useIntl();
 
   return (

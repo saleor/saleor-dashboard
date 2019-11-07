@@ -14,9 +14,13 @@ export interface OrderBulkCancelDialogProps {
   onConfirm: (restock: boolean) => void;
 }
 
-const OrderBulkCancelDialog: React.StatelessComponent<
-  OrderBulkCancelDialogProps
-> = ({ confirmButtonState, numberOfOrders, open, onClose, onConfirm }) => {
+const OrderBulkCancelDialog: React.FC<OrderBulkCancelDialogProps> = ({
+  confirmButtonState,
+  numberOfOrders,
+  open,
+  onClose,
+  onConfirm
+}) => {
   const intl = useIntl();
   const [restock, setRestock] = React.useState(true);
 

@@ -10,9 +10,7 @@ export interface CountryTaxesParams {
   code: string;
 }
 
-export const CountryTaxes: React.StatelessComponent<CountryTaxesParams> = ({
-  code
-}) => {
+export const CountryTaxes: React.FC<CountryTaxesParams> = ({ code }) => {
   const navigate = useNavigator();
 
   return (

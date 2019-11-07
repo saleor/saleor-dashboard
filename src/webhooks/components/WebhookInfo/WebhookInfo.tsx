@@ -41,7 +41,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const WebhookInfo: React.StatelessComponent<WebhookInfoProps> = ({
+const WebhookInfo: React.FC<WebhookInfoProps> = ({
   apiErrors,
   data,
   disabled,

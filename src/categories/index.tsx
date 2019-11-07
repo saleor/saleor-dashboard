@@ -19,7 +19,7 @@ import CategoryListComponent from "./views/CategoryList";
 interface CategoryDetailsRouteParams {
   id: string;
 }
-const CategoryDetails: React.StatelessComponent<
+const CategoryDetails: React.FC<
   RouteComponentProps<CategoryDetailsRouteParams>
 > = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
@@ -38,7 +38,7 @@ const CategoryDetails: React.StatelessComponent<
 interface CategoryCreateRouteParams {
   id: string;
 }
-const CategoryCreate: React.StatelessComponent<
+const CategoryCreate: React.FC<
   RouteComponentProps<CategoryCreateRouteParams>
 > = ({ match }) => {
   return (
@@ -50,9 +50,7 @@ const CategoryCreate: React.StatelessComponent<
   );
 };
 
-const CategoryList: React.StatelessComponent<RouteComponentProps<{}>> = ({
-  location
-}) => {
+const CategoryList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CategoryListUrlQueryParams = qs;
   return <CategoryListComponent params={params} />;

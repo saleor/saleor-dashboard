@@ -72,9 +72,7 @@ function handleTaxTypeChange(
   );
 }
 
-const ProductTypeDetailsPage: React.StatelessComponent<
-  ProductTypeDetailsPageProps
-> = ({
+const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   defaultWeightUnit,
   disabled,
   errors,

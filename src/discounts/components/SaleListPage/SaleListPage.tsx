@@ -25,7 +25,7 @@ export interface SaleListPageProps
   sales: SaleList_sales_edges_node[];
 }
 
-const SaleListPage: React.StatelessComponent<SaleListPageProps> = ({
+const SaleListPage: React.FC<SaleListPageProps> = ({
   currentTab,
   initialSearch,
   onAdd,

@@ -85,9 +85,7 @@ interface ProductUpdateOperationsProps {
   onUpdate?: (data: ProductUpdate) => void;
 }
 
-const ProductUpdateOperations: React.StatelessComponent<
-  ProductUpdateOperationsProps
-> = ({
+const ProductUpdateOperations: React.FC<ProductUpdateOperationsProps> = ({
   product,
   children,
   onBulkProductVariantCreate,

@@ -7,9 +7,7 @@ interface ErrorMessageCardProps {
   message: string;
 }
 
-const ErrorMessageCard: React.StatelessComponent<ErrorMessageCardProps> = ({
-  message
-}) => (
+const ErrorMessageCard: React.FC<ErrorMessageCardProps> = ({ message }) => (
   <Card>
     <CardContent>
       <Typography variant="h5" component="h2">

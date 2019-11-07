@@ -51,9 +51,10 @@ export function getActiveTab(tabName: string): CategoryPageTab {
     : CategoryPageTab.categories;
 }
 
-export const CategoryDetails: React.StatelessComponent<
-  CategoryDetailsProps
-> = ({ id, params }) => {
+export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
+  id,
+  params
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

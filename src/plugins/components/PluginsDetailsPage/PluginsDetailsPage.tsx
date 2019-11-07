@@ -31,7 +31,7 @@ export interface PluginsDetailsPageProps {
   onSubmit: (data: FormData) => void;
 }
 
-const PluginsDetailsPage: React.StatelessComponent<PluginsDetailsPageProps> = ({
+const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   disabled,
   errors,
   plugin,

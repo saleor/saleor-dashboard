@@ -37,10 +37,7 @@ const createPageInput = (data: FormData): PageInput => {
   };
 };
 
-export const PageDetails: React.StatelessComponent<PageDetailsProps> = ({
-  id,
-  params
-}) => {
+export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

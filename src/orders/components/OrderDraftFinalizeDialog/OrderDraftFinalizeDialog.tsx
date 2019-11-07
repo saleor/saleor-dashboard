@@ -46,9 +46,7 @@ function translateWarnings(
   };
 }
 
-const OrderDraftFinalizeDialog: React.StatelessComponent<
-  OrderDraftFinalizeDialogProps
-> = ({
+const OrderDraftFinalizeDialog: React.FC<OrderDraftFinalizeDialogProps> = ({
   confirmButtonState,
   open,
   warnings,

@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const PluginInfo: React.StatelessComponent<PluginInfoProps> = ({
+const PluginInfo: React.FC<PluginInfoProps> = ({
   data,
   description,
   name,

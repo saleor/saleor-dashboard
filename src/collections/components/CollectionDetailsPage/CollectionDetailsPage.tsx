@@ -47,9 +47,7 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   onSubmit: (data: CollectionDetailsPageFormData) => void;
 }
 
-const CollectionDetailsPage: React.StatelessComponent<
-  CollectionDetailsPageProps
-> = ({
+const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   collection,
   disabled,
   isFeatured,

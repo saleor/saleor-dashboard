@@ -16,9 +16,7 @@ import ShippingZoneCreate from "./views/ShippingZoneCreate";
 import ShippingZoneDetailsComponent from "./views/ShippingZoneDetails";
 import ShippingZonesListComponent from "./views/ShippingZonesList";
 
-const ShippingZonesList: React.StatelessComponent<RouteComponentProps<{}>> = ({
-  location
-}) => {
+const ShippingZonesList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ShippingZonesListUrlQueryParams = qs;
   return <ShippingZonesListComponent params={params} />;
@@ -27,7 +25,7 @@ const ShippingZonesList: React.StatelessComponent<RouteComponentProps<{}>> = ({
 interface ShippingZoneDetailsRouteProps {
   id: string;
 }
-const ShippingZoneDetails: React.StatelessComponent<
+const ShippingZoneDetails: React.FC<
   RouteComponentProps<ShippingZoneDetailsRouteProps>
 > = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));

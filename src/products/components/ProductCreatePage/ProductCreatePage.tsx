@@ -85,9 +85,7 @@ interface ProductCreatePageProps {
   onSubmit?(data: ProductCreatePageSubmitData);
 }
 
-export const ProductCreatePage: React.StatelessComponent<
-  ProductCreatePageProps
-> = ({
+export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   currency,
   disabled,
   categories: categoryChoiceList,

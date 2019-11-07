@@ -15,17 +15,13 @@ import WebhookCreate from "./views/WebhooksCreate";
 import WebhooksDetails from "./views/WebhooksDetails";
 import WebhooksList from "./views/WebhooksList";
 
-const WebhookList: React.StatelessComponent<RouteComponentProps<any>> = ({
-  location
-}) => {
+const WebhookList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: WebhooksListUrlQueryParams = qs;
   return <WebhooksList params={params} />;
 };
 
-const WebhookDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
-  match
-}) => {
+const WebhookDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: WebhooksListUrlQueryParams = qs;
 

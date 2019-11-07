@@ -13,9 +13,13 @@ export interface OrderDraftCancelDialogProps {
   orderNumber: string;
 }
 
-const OrderDraftCancelDialog: React.StatelessComponent<
-  OrderDraftCancelDialogProps
-> = ({ confirmButtonState, onClose, onConfirm, open, orderNumber }) => {
+const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
+  confirmButtonState,
+  onClose,
+  onConfirm,
+  open,
+  orderNumber
+}) => {
   const intl = useIntl();
 
   return (

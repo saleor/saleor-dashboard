@@ -36,7 +36,7 @@ export interface SaleCreatePageProps {
   onSubmit: (data: FormData) => void;
 }
 
-const SaleCreatePage: React.StatelessComponent<SaleCreatePageProps> = ({
+const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
   defaultCurrency,
   disabled,
   errors,

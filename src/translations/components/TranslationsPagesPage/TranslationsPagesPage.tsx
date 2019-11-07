@@ -25,9 +25,7 @@ export const fieldNames = {
   title: "title"
 };
 
-const TranslationsPagesPage: React.StatelessComponent<
-  TranslationsPagesPageProps
-> = ({
+const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   activeField,
   disabled,
   languageCode,

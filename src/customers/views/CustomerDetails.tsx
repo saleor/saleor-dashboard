@@ -29,9 +29,10 @@ interface CustomerDetailsViewProps {
   params: CustomerUrlQueryParams;
 }
 
-export const CustomerDetailsView: React.StatelessComponent<
-  CustomerDetailsViewProps
-> = ({ id, params }) => {
+export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
+  id,
+  params
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

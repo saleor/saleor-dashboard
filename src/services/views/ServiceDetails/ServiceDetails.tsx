@@ -39,7 +39,7 @@ interface OrderListProps {
   onTokenClose: () => void;
 }
 
-export const ServiceDetails: React.StatelessComponent<OrderListProps> = ({
+export const ServiceDetails: React.FC<OrderListProps> = ({
   id,
   params,
   token,

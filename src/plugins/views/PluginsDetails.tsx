@@ -15,9 +15,7 @@ export interface PluginsDetailsProps {
   params: PluginsListUrlQueryParams;
 }
 
-export const PluginsDetails: React.StatelessComponent<PluginsDetailsProps> = ({
-  id
-}) => {
+export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

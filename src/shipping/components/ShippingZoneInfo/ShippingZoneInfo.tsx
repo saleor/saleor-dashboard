@@ -15,7 +15,7 @@ export interface ShippingZoneInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const ShippingZoneInfo: React.StatelessComponent<ShippingZoneInfoProps> = ({
+const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
   data,
   errors,
   onChange

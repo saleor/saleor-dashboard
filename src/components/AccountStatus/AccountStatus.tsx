@@ -16,7 +16,7 @@ interface StaffStatusProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const StaffStatus: React.StatelessComponent<StaffStatusProps> = ({
+const StaffStatus: React.FC<StaffStatusProps> = ({
   data,
   disabled,
   label,

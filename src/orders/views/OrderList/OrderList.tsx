@@ -48,9 +48,7 @@ interface OrderListProps {
   params: OrderListUrlQueryParams;
 }
 
-export const OrderList: React.StatelessComponent<OrderListProps> = ({
-  params
-}) => {
+export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const formatDate = useDateLocalize();
   const navigate = useNavigator();
   const notify = useNotifier();

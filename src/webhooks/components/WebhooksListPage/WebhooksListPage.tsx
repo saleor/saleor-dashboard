@@ -21,7 +21,7 @@ export interface WebhooksListPageProps
   onRemove: (id: string) => void;
 }
 
-const WebhooksListPage: React.StatelessComponent<WebhooksListPageProps> = ({
+const WebhooksListPage: React.FC<WebhooksListPageProps> = ({
   currentTab,
   initialSearch,
   onAdd,

@@ -13,17 +13,13 @@ import {
 import PluginsDetailsComponent from "./views/PluginsDetails";
 import PluginsListComponent from "./views/PluginsList";
 
-const PluginList: React.StatelessComponent<RouteComponentProps<any>> = ({
-  location
-}) => {
+const PluginList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: PluginsListUrlQueryParams = qs;
   return <PluginsListComponent params={params} />;
 };
 
-const PageDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
-  match
-}) => {
+const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: PluginsListUrlQueryParams = qs;
 

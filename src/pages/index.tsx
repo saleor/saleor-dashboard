@@ -16,17 +16,13 @@ import PageCreate from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";
 import PageListComponent from "./views/PageList";
 
-const PageList: React.StatelessComponent<RouteComponentProps<any>> = ({
-  location
-}) => {
+const PageList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: PageListUrlQueryParams = qs;
   return <PageListComponent params={params} />;
 };
 
-const PageDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
-  match
-}) => {
+const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: PageUrlQueryParams = qs;
 

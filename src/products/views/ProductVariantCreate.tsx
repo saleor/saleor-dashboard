@@ -18,9 +18,7 @@ interface ProductUpdateProps {
   productId: string;
 }
 
-export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
-  productId
-}) => {
+export const ProductVariant: React.FC<ProductUpdateProps> = ({ productId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

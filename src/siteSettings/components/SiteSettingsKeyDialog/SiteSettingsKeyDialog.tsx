@@ -29,9 +29,13 @@ export interface SiteSettingsKeyDialogProps
   onClose: () => void;
 }
 
-const SiteSettingsKeyDialog: React.StatelessComponent<
-  SiteSettingsKeyDialogProps
-> = ({ errors, initial, open, onClose, onSubmit }) => {
+const SiteSettingsKeyDialog: React.FC<SiteSettingsKeyDialogProps> = ({
+  errors,
+  initial,
+  open,
+  onClose,
+  onSubmit
+}) => {
   const intl = useIntl();
 
   return (

@@ -25,7 +25,7 @@ export const fieldNames = {
   seoTitle: "seoTitle"
 };
 
-const TranslationsCollectionsPage: React.StatelessComponent<
+const TranslationsCollectionsPage: React.FC<
   TranslationsCollectionsPageProps
 > = ({
   activeField,

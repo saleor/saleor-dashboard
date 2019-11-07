@@ -25,7 +25,7 @@ export interface OrderDraftListPageProps
   orders: OrderDraftList_draftOrders_edges_node[];
 }
 
-const OrderDraftListPage: React.StatelessComponent<OrderDraftListPageProps> = ({
+const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   currentTab,
   disabled,
   initialSearch,

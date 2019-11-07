@@ -21,7 +21,7 @@ export interface StaffListPageProps
   onBack: () => void;
 }
 
-const StaffListPage: React.StatelessComponent<StaffListPageProps> = ({
+const StaffListPage: React.FC<StaffListPageProps> = ({
   currentTab,
   initialSearch,
   onAdd,

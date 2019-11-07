@@ -19,9 +19,12 @@ interface OrderPaymentVoidDialogProps {
   onConfirm?();
 }
 
-const OrderPaymentVoidDialog: React.StatelessComponent<
-  OrderPaymentVoidDialogProps
-> = ({ confirmButtonState, open, onConfirm, onClose }) => (
+const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
+  confirmButtonState,
+  open,
+  onConfirm,
+  onClose
+}) => (
   <Dialog onClose={onClose} open={open}>
     <DialogTitle>
       <FormattedMessage

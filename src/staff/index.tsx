@@ -14,9 +14,7 @@ import {
 import StaffDetailsComponent from "./views/StaffDetails";
 import StaffListComponent from "./views/StaffList";
 
-const StaffList: React.StatelessComponent<RouteComponentProps<{}>> = ({
-  location
-}) => {
+const StaffList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: StaffListUrlQueryParams = qs;
   return <StaffListComponent params={params} />;
@@ -25,9 +23,9 @@ const StaffList: React.StatelessComponent<RouteComponentProps<{}>> = ({
 interface StaffDetailsRouteProps {
   id: string;
 }
-const StaffDetails: React.StatelessComponent<
-  RouteComponentProps<StaffDetailsRouteProps>
-> = ({ match }) => {
+const StaffDetails: React.FC<RouteComponentProps<StaffDetailsRouteProps>> = ({
+  match
+}) => {
   const qs = parseQs(location.search.substr(1));
   const params: StaffMemberDetailsUrlQueryParams = qs;
 

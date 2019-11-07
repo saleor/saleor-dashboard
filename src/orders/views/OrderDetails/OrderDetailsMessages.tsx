@@ -47,9 +47,9 @@ interface OrderDetailsMessages {
   }) => React.ReactElement;
 }
 
-export const OrderDetailsMessages: React.StatelessComponent<
-  OrderDetailsMessages
-> = ({ children }) => {
+export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
+  children
+}) => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
   const intl = useIntl();

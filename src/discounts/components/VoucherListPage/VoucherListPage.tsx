@@ -25,7 +25,7 @@ export interface VoucherListPageProps
   vouchers: VoucherList_vouchers_edges_node[];
 }
 
-const VoucherListPage: React.StatelessComponent<VoucherListPageProps> = ({
+const VoucherListPage: React.FC<VoucherListPageProps> = ({
   currentTab,
   initialSearch,
   onAdd,

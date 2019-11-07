@@ -90,9 +90,7 @@ interface ProductTypeOperationsProps {
   onProductTypeUpdate: (data: ProductTypeUpdate) => void;
 }
 
-const ProductTypeOperations: React.StatelessComponent<
-  ProductTypeOperationsProps
-> = ({
+const ProductTypeOperations: React.FC<ProductTypeOperationsProps> = ({
   children,
   productType,
   onAssignAttribute,

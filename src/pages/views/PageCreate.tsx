@@ -14,7 +14,7 @@ export interface PageCreateProps {
   id: string;
 }
 
-export const PageCreate: React.StatelessComponent<PageCreateProps> = () => {
+export const PageCreate: React.FC<PageCreateProps> = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

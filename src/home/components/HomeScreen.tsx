@@ -14,9 +14,7 @@ interface HomeScreenProps {
   };
 }
 
-export const HomeScreen: React.StatelessComponent<HomeScreenProps> = ({
-  user
-}) => {
+export const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
   const intl = useIntl();
 
   return (

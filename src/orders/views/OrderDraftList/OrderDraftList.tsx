@@ -46,9 +46,7 @@ interface OrderDraftListProps {
   params: OrderDraftListUrlQueryParams;
 }
 
-export const OrderDraftList: React.StatelessComponent<OrderDraftListProps> = ({
-  params
-}) => {
+export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

@@ -21,7 +21,7 @@ export interface ServiceListPageProps
   onRemove: (id: string) => void;
 }
 
-const ServiceListPage: React.StatelessComponent<ServiceListPageProps> = ({
+const ServiceListPage: React.FC<ServiceListPageProps> = ({
   currentTab,
   initialSearch,
   onAdd,

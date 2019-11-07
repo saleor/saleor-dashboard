@@ -59,9 +59,13 @@ interface CollectionUpdateOperationsProps {
   onRemove: (data: RemoveCollection) => void;
 }
 
-const CollectionOperations: React.StatelessComponent<
-  CollectionUpdateOperationsProps
-> = ({ children, onUpdate, onProductAssign, onProductUnassign, onRemove }) => (
+const CollectionOperations: React.FC<CollectionUpdateOperationsProps> = ({
+  children,
+  onUpdate,
+  onProductAssign,
+  onProductUnassign,
+  onRemove
+}) => (
   <TypedCollectionUpdateMutation onCompleted={onUpdate}>
     {(...updateCollection) => (
       <TypedCollectionRemoveMutation onCompleted={onRemove}>

@@ -14,7 +14,7 @@ export interface PluginsListPageProps extends PageListProps {
   onBack: () => void;
 }
 
-const PluginsListPage: React.StatelessComponent<PluginsListPageProps> = ({
+const PluginsListPage: React.FC<PluginsListPageProps> = ({
   disabled,
   settings,
   onBack,

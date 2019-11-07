@@ -26,7 +26,7 @@ export interface CountryListPageProps {
   onTaxFetch: () => void;
 }
 
-const CountryListPage: React.StatelessComponent<CountryListPageProps> = ({
+const CountryListPage: React.FC<CountryListPageProps> = ({
   disabled,
   shop,
   onBack,
