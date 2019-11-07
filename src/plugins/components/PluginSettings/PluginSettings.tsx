@@ -9,6 +9,7 @@ import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
 import { FormData } from "../PluginsDetailsPage";
 
 interface PluginSettingsProps {
@@ -16,19 +17,26 @@ interface PluginSettingsProps {
   errors: FormErrors<"name" | "configuration">;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
-  fields: Array<{
-    name: string;
-    type: ConfigurationTypeFieldEnum | null;
-    value: string;
-    helpText: string | null;
-    label: string | null;
-  }>;
+  fields: Plugin_plugin_configuration[];
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
+  authItem: {
+    display: "flex"
+  },
+  button: {
+    marginRight: theme.spacing()
+  },
   item: {
-    paddingBottom: 10,
-    paddingTop: 10
+    "&:not(:last-child)": {
+      marginBottom: theme.spacing(3)
+    }
+  },
+  itemLabel: {
+    fontWeight: 500
+  },
+  spacer: {
+    flex: 1
   }
 }));
 
@@ -41,6 +49,7 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
+
   return (
     <Card>
       <CardTitle
@@ -50,35 +59,40 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
         })}
       />
       <CardContent>
-        {data.configuration.map((configuration, index) => (
-          <div className={classes.item} key={index}>
-            {fields[index].type === ConfigurationTypeFieldEnum.STRING && (
-              <TextField
-                disabled={disabled}
-                error={!!errors.name}
-                helperText={fields[index].helpText}
-                label={fields[index].label}
-                name={configuration.name}
-                fullWidth
-                value={configuration.value}
-                onChange={onChange}
-              />
-            )}
-            {fields[index].type === ConfigurationTypeFieldEnum.BOOLEAN && (
-              <ControlledCheckbox
-                name={configuration.name}
-                label={fields[index].label}
-                checked={
-                  typeof configuration.value !== "boolean"
-                    ? configuration.value === "true"
-                    : configuration.value
-                }
-                onChange={onChange}
-                disabled={disabled}
-              />
-            )}
-          </div>
-        ))}
+        {data.configuration.map(field => {
+          const fieldData = fields.find(
+            configField => configField.name === field.name
+          );
+
+          return (
+            <div className={classes.item} key={field.name}>
+              {fieldData.type === ConfigurationTypeFieldEnum.BOOLEAN ? (
+                <ControlledCheckbox
+                  name={field.name}
+                  label={fieldData.label}
+                  checked={
+                    typeof field.value !== "boolean"
+                      ? field.value === "true"
+                      : field.value
+                  }
+                  onChange={onChange}
+                  disabled={disabled}
+                />
+              ) : (
+                <TextField
+                  disabled={disabled}
+                  error={!!errors.name}
+                  helperText={fieldData.helpText}
+                  label={fieldData.label}
+                  name={field.name}
+                  fullWidth
+                  value={field.value}
+                  onChange={onChange}
+                />
+              )}
+            </div>
+          );
+        })}
       </CardContent>
     </Card>
   );

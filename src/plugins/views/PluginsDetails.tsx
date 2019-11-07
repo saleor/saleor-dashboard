@@ -4,27 +4,73 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import { getMutationState, maybe } from "../../misc";
 import PluginsDetailsPage from "../components/PluginsDetailsPage";
 import { TypedPluginUpdate } from "../mutations";
 import { TypedPluginsDetailsQuery } from "../queries";
-import { pluginsListUrl, PluginsListUrlQueryParams } from "../urls";
+import { Plugin_plugin_configuration } from "../types/Plugin";
+import {
+  pluginsListUrl,
+  pluginsUrl,
+  PluginsUrlQueryParams,
+  PluginUrlDialog
+} from "../urls";
+import { isSecretField } from "../utils";
 
 export interface PluginsDetailsProps {
   id: string;
-  params: PluginsListUrlQueryParams;
+  params: PluginsUrlQueryParams;
 }
 
-export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id }) => {
+export function getConfigurationInput(
+  config: Plugin_plugin_configuration[] | null,
+  input: ConfigurationItemInput[] | null
+): ConfigurationItemInput[] | null {
+  if (config === null || input === null) {
+    return null;
+  }
+
+  return input
+    .filter(field => !isSecretField(config, field.name))
+    .map(field => ({
+      name: field.name,
+      value: field.value.toString()
+    }));
+}
+
+export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
+  id,
+  params
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
+  const closeModal = () =>
+    navigate(
+      pluginsUrl(id, {
+        ...params,
+        action: undefined,
+        field: undefined
+      }),
+      true
+    );
+
+  const openModal = (action: PluginUrlDialog, field?: string) =>
+    navigate(
+      pluginsUrl(id, {
+        ...params,
+        action,
+        field
+      })
+    );
 
   return (
     <TypedPluginUpdate>
       {(pluginUpdate, pluginUpdateOpts) => (
         <TypedPluginsDetailsQuery variables={{ id }}>
-          {PluginDetails => {
+          {pluginDetails => {
             const formTransitionState = getMutationState(
               pluginUpdateOpts.called,
               pluginUpdateOpts.loading,
@@ -56,35 +102,30 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id }) => {
             return (
               <>
                 <WindowTitle
-                  title={maybe(() => PluginDetails.data.plugin.name)}
+                  title={maybe(() => pluginDetails.data.plugin.name)}
                 />
                 <PluginsDetailsPage
-                  disabled={PluginDetails.loading}
+                  disabled={pluginDetails.loading}
                   errors={formErrors}
                   saveButtonBarState={formTransitionState}
-                  plugin={maybe(() => PluginDetails.data.plugin)}
+                  plugin={maybe(() => pluginDetails.data.plugin)}
                   onBack={() => navigate(pluginsListUrl())}
-                  onSubmit={formData => {
-                    const configurationInput =
-                      formData.configuration &&
-                      formData.configuration.map(item => {
-                        return {
-                          name: item.name,
-                          value: item.value.toString()
-                        };
-                      });
+                  onClear={field => openModal("clear", field)}
+                  onEdit={field => openModal("edit", field)}
+                  onSubmit={formData =>
                     pluginUpdate({
                       variables: {
                         id,
                         input: {
                           active: formData.active,
-                          configuration: configurationInput
-                            ? configurationInput
-                            : null
+                          configuration: getConfigurationInput(
+                            pluginDetails.data.plugin.configuration,
+                            formData.configuration
+                          )
                         }
                       }
-                    });
-                  }}
+                    })
+                  }
                 />
               </>
             );
