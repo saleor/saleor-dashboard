@@ -246,10 +246,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                           >
                             <DialogContentText>
                               <FormattedMessage
-                                defaultMessage="Are you sure you want to delete {counter, plural,
-                              one {this menu}
-                              other {{displayQuantity} menus}
-                            }?"
+                                defaultMessage="Are you sure you want to delete {counter,plural,one{this menu} other{{displayQuantity} menus}}?"
                                 id="menuListDeleteMenusContent"
                                 values={{
                                   counter: maybe(

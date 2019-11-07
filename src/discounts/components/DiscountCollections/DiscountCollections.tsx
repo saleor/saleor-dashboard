@@ -1,12 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -32,33 +27,30 @@ export interface DiscountCollectionsProps extends ListProps, ListActions {
   onCollectionUnassign: (id: string) => void;
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    iconCell: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      width: 48 + theme.spacing.unit / 2
+const useStyles = makeStyles(theme => ({
+  iconCell: {
+    "&:last-child": {
+      paddingRight: 0
     },
-    tableRow: {
-      cursor: "pointer"
-    },
-    textRight: {
-      textAlign: "right"
-    },
-    wideColumn: {
-      width: "60%"
-    }
-  });
+    width: 48 + theme.spacing(0.5)
+  },
+  tableRow: {
+    cursor: "pointer"
+  },
+  textRight: {
+    textAlign: "right"
+  },
+  wideColumn: {
+    width: "60%"
+  }
+}));
 
 const numberOfColumns = 4;
 
-const DiscountCollections = withStyles(styles, {
-  name: "DiscountCollections"
-})(
-  ({
+const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
+  const {
     discount: sale,
-    classes,
+
     disabled,
     pageInfo,
     onCollectionAssign,
@@ -71,122 +63,119 @@ const DiscountCollections = withStyles(styles, {
     toggle,
     toggleAll,
     toolbar
-  }: DiscountCollectionsProps & WithStyles<typeof styles>) => {
-    const intl = useIntl();
+  } = props;
+  const classes = useStyles(props);
 
-    return (
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
-            defaultMessage: "Eligible Collections",
-            description: "section header"
-          })}
-          toolbar={
-            <Button color="primary" onClick={onCollectionAssign}>
-              <FormattedMessage
-                defaultMessage="Assign collections"
-                description="button"
-              />
-            </Button>
-          }
-        />
-        <Table>
-          <TableHead
-            colSpan={numberOfColumns}
-            selected={selected}
-            disabled={disabled}
-            items={maybe(() => sale.collections.edges.map(edge => edge.node))}
-            toggleAll={toggleAll}
-            toolbar={toolbar}
-          >
-            <TableCell className={classes.wideColumn}>
-              <FormattedMessage defaultMessage="Collection name" />
-            </TableCell>
-            <TableCell className={classes.textRight}>
-              <FormattedMessage
-                defaultMessage="Products"
-                description="number of products"
-              />
-            </TableCell>
-            <TableCell />
-          </TableHead>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                colSpan={numberOfColumns}
-                hasNextPage={
-                  pageInfo && !disabled ? pageInfo.hasNextPage : false
-                }
-                onNextPage={onNextPage}
-                hasPreviousPage={
-                  pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-                }
-                onPreviousPage={onPreviousPage}
-              />
-            </TableRow>
-          </TableFooter>
-          <TableBody>
-            {renderCollection(
-              maybe(() => sale.collections.edges.map(edge => edge.node)),
-              collection => {
-                const isSelected = collection
-                  ? isChecked(collection.id)
-                  : false;
-                return (
-                  <TableRow
-                    selected={isSelected}
-                    hover={!!collection}
-                    key={collection ? collection.id : "skeleton"}
-                    onClick={collection && onRowClick(collection.id)}
-                    className={classes.tableRow}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        disabled={disabled}
-                        disableClickPropagation
-                        onChange={() => toggle(collection.id)}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      {maybe<React.ReactNode>(
-                        () => collection.name,
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.textRight}>
-                      {maybe<React.ReactNode>(
-                        () => collection.products.totalCount,
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.iconCell}>
-                      <IconButton
-                        disabled={!collection || disabled}
-                        onClick={event => {
-                          event.stopPropagation();
-                          onCollectionUnassign(collection.id);
-                        }}
-                      >
-                        <DeleteIcon color="primary" />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              },
-              () => (
-                <TableRow>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No collections found" />
+  const intl = useIntl();
+
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Eligible Collections",
+          description: "section header"
+        })}
+        toolbar={
+          <Button color="primary" onClick={onCollectionAssign}>
+            <FormattedMessage
+              defaultMessage="Assign collections"
+              description="button"
+            />
+          </Button>
+        }
+      />
+      <Table>
+        <TableHead
+          colSpan={numberOfColumns}
+          selected={selected}
+          disabled={disabled}
+          items={maybe(() => sale.collections.edges.map(edge => edge.node))}
+          toggleAll={toggleAll}
+          toolbar={toolbar}
+        >
+          <TableCell className={classes.wideColumn}>
+            <FormattedMessage defaultMessage="Collection name" />
+          </TableCell>
+          <TableCell className={classes.textRight}>
+            <FormattedMessage
+              defaultMessage="Products"
+              description="number of products"
+            />
+          </TableCell>
+          <TableCell />
+        </TableHead>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={numberOfColumns}
+              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+              onNextPage={onNextPage}
+              hasPreviousPage={
+                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
+              }
+              onPreviousPage={onPreviousPage}
+            />
+          </TableRow>
+        </TableFooter>
+        <TableBody>
+          {renderCollection(
+            maybe(() => sale.collections.edges.map(edge => edge.node)),
+            collection => {
+              const isSelected = collection ? isChecked(collection.id) : false;
+              return (
+                <TableRow
+                  selected={isSelected}
+                  hover={!!collection}
+                  key={collection ? collection.id : "skeleton"}
+                  onClick={collection && onRowClick(collection.id)}
+                  className={classes.tableRow}
+                >
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      checked={isSelected}
+                      disabled={disabled}
+                      disableClickPropagation
+                      onChange={() => toggle(collection.id)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    {maybe<React.ReactNode>(
+                      () => collection.name,
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.textRight}>
+                    {maybe<React.ReactNode>(
+                      () => collection.products.totalCount,
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.iconCell}>
+                    <IconButton
+                      disabled={!collection || disabled}
+                      onClick={event => {
+                        event.stopPropagation();
+                        onCollectionUnassign(collection.id);
+                      }}
+                    >
+                      <DeleteIcon color="primary" />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
-              )
-            )}
-          </TableBody>
-        </Table>
-      </Card>
-    );
-  }
-);
+              );
+            },
+            () => (
+              <TableRow>
+                <TableCell colSpan={numberOfColumns}>
+                  <FormattedMessage defaultMessage="No collections found" />
+                </TableCell>
+              </TableRow>
+            )
+          )}
+        </TableBody>
+      </Table>
+    </Card>
+  );
+};
 DiscountCollections.displayName = "DiscountCollections";
 export default DiscountCollections;

@@ -3,11 +3,10 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@material-ui/styles";
 import Link from "@saleor/components/Link";
 import useClipboard from "@saleor/hooks/useClipboard";
 import React from "react";
@@ -21,31 +20,31 @@ export interface ServiceDefaultTokenProps {
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     cancel: {
-      marginRight: theme.spacing.unit
+      marginRight: theme.spacing(1)
     },
     closeContainer: {
       display: "flex",
       justifyContent: "flex-end",
       position: "relative",
-      right: -theme.spacing.unit,
-      top: -theme.spacing.unit
+      right: -theme.spacing(),
+      top: -theme.spacing(1)
     },
     content: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 3 + "px",
+      gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "1fr 60px",
-      marginBottom: theme.spacing.unit * 3
+      marginBottom: theme.spacing(3)
     },
     copy: {
-      marginTop: theme.spacing.unit,
+      marginTop: theme.spacing(),
       position: "relative",
-      right: theme.spacing.unit
+      right: theme.spacing(1)
     },
     paper: {
       background: fade(theme.palette.primary.main, 0.05),
-      padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px`
+      padding: theme.spacing(2, 3)
     },
     root: {
       boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.05)"

@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
@@ -22,55 +17,58 @@ interface ImageUploadProps {
   onImageUpload: (file: File) => void;
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    containerDragActive: {
-      background: fade(theme.palette.primary.main, 0.1),
-      color: theme.palette.primary.main
-    },
-    fileField: {
-      display: "none"
-    },
-    imageContainer: {
-      background: "#ffffff",
-      border: "1px solid #eaeaea",
-      borderRadius: theme.spacing.unit,
-      height: 148,
-      justifySelf: "start",
-      overflow: "hidden",
-      padding: theme.spacing.unit * 2,
-      position: "relative",
-      transition: theme.transitions.duration.standard + "s",
-      width: 148
-    },
-    photosIcon: {
-      height: "64px",
-      margin: "0 auto",
-      width: "64px"
-    },
-    photosIconContainer: {
-      padding: `${theme.spacing.unit * 5}px 0`,
-      textAlign: "center"
-    },
-    uploadText: {
-      color: theme.typography.body2.color,
-      fontSize: 12,
-      fontWeight: 600,
-      textTransform: "uppercase"
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  containerDragActive: {
+    background: fade(theme.palette.primary.main, 0.1),
+    color: theme.palette.primary.main
+  },
+  fileField: {
+    display: "none"
+  },
+  imageContainer: {
+    background: "#ffffff",
+    border: "1px solid #eaeaea",
+    borderRadius: theme.spacing(),
+    height: 148,
+    justifySelf: "start",
+    overflow: "hidden",
+    padding: theme.spacing(2),
+    position: "relative",
+    transition: theme.transitions.duration.standard + "s",
+    width: 148
+  },
+  photosIcon: {
+    height: "64px",
+    margin: "0 auto",
+    width: "64px"
+  },
+  photosIconContainer: {
+    padding: theme.spacing(5, 0),
+    textAlign: "center"
+  },
+  uploadText: {
+    color: theme.typography.body1.color,
+    fontSize: 12,
+    fontWeight: 600,
+    textTransform: "uppercase"
+  }
+}));
 
-export const ImageUpload = withStyles(styles, { name: "ImageUpload" })(
-  ({
+export const ImageUpload: React.FC<ImageUploadProps> = props => {
+  const {
     children,
-    classes,
+
     className,
     disableClick,
     isActiveClassName,
     iconContainerActiveClassName,
     iconContainerClassName,
     onImageUpload
-  }: ImageUploadProps & WithStyles<typeof styles>) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Dropzone
       disableClick={disableClick}
       onDrop={files => onImageUpload(files[0])}
@@ -107,7 +105,7 @@ export const ImageUpload = withStyles(styles, { name: "ImageUpload" })(
         </>
       )}
     </Dropzone>
-  )
-);
+  );
+};
 ImageUpload.displayName = "ImageUpload";
 export default ImageUpload;

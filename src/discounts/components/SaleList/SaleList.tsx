@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -29,44 +24,40 @@ export interface SaleListProps extends ListProps, ListActions {
   sales: SaleList_sales_edges_node[];
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    [theme.breakpoints.up("lg")]: {
-      colEnd: {
-        width: 250
-      },
-      colName: {},
-      colStart: {
-        width: 250
-      },
-      colValue: {
-        width: 200
-      }
-    },
+const useStyles = makeStyles(theme => ({
+  [theme.breakpoints.up("lg")]: {
     colEnd: {
-      textAlign: "right"
+      width: 250
     },
-    colName: {
-      paddingLeft: 0
-    },
+    colName: {},
     colStart: {
-      textAlign: "right"
+      width: 250
     },
     colValue: {
-      textAlign: "right"
-    },
-    tableRow: {
-      cursor: "pointer"
+      width: 200
     }
-  });
+  },
+  colEnd: {
+    textAlign: "right"
+  },
+  colName: {
+    paddingLeft: 0
+  },
+  colStart: {
+    textAlign: "right"
+  },
+  colValue: {
+    textAlign: "right"
+  },
+  tableRow: {
+    cursor: "pointer"
+  }
+}));
 
 const numberOfColumns = 5;
 
-const SaleList = withStyles(styles, {
-  name: "SaleList"
-})(
-  ({
-    classes,
+const SaleList: React.FC<SaleListProps> = props => {
+  const {
     settings,
     defaultCurrency,
     disabled,
@@ -81,7 +72,11 @@ const SaleList = withStyles(styles, {
     toggle,
     toggleAll,
     toolbar
-  }: SaleListProps & WithStyles<typeof styles>) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Table>
       <TableHead
         colSpan={numberOfColumns}
@@ -195,7 +190,7 @@ const SaleList = withStyles(styles, {
         )}
       </TableBody>
     </Table>
-  )
-);
+  );
+};
 SaleList.displayName = "SaleList";
 export default SaleList;

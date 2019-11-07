@@ -1,10 +1,10 @@
 import Button from "@material-ui/core/Button";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   fileUploadField: {
     display: "none"
   },
@@ -16,15 +16,19 @@ const styles = createStyles({
   }
 });
 
-interface FileUploadProps extends WithStyles<typeof styles> {
+interface FileUploadProps {
   disabled?: boolean;
   name?: string;
   value?: any;
   onChange?(event: React.ChangeEvent<any>);
 }
 
-const FileUpload = withStyles(styles, { name: "FileUpload" })(
-  ({ classes, disabled, name, value, onChange }: FileUploadProps) => (
+const FileUpload: React.FC<FileUploadProps> = props => {
+  const { disabled, name, value, onChange } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <div className={classes.root}>
       <input
         disabled={disabled}
@@ -48,7 +52,7 @@ const FileUpload = withStyles(styles, { name: "FileUpload" })(
         />
       </Button>
     </div>
-  )
-);
+  );
+};
 FileUpload.displayName = "FileUpload";
 export default FileUpload;

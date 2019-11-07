@@ -1,10 +1,5 @@
 import IconButton from "@material-ui/core/IconButton";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
@@ -20,43 +15,42 @@ import MultiAutocompleteSelectFieldContent, {
   MultiAutocompleteChoiceType
 } from "./MultiAutocompleteSelectFieldContent";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    chip: {
-      width: "100%"
-    },
-    chipClose: {
-      height: 32,
-      padding: 0,
-      width: 32
-    },
-    chipContainer: {
-      display: "flex",
-      flexDirection: "column",
-      marginTop: theme.spacing.unit
-    },
-    chipInner: {
-      "& svg": {
-        color: theme.palette.primary.contrastText
-      },
-      alignItems: "center",
-      background: fade(theme.palette.primary.main, 0.8),
-      borderRadius: 18,
-      color: theme.palette.primary.contrastText,
-      display: "flex",
-      justifyContent: "space-between",
-      margin: `${theme.spacing.unit}px 0`,
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit
-    },
-    chipLabel: {
+const useStyles = makeStyles(theme => ({
+  chip: {
+    width: "100%"
+  },
+  chipClose: {
+    height: 32,
+    padding: 0,
+    width: 32
+  },
+  chipContainer: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: theme.spacing(1)
+  },
+  chipInner: {
+    "& svg": {
       color: theme.palette.primary.contrastText
     },
-    container: {
-      flexGrow: 1,
-      position: "relative"
-    }
-  });
+    alignItems: "center",
+    background: fade(theme.palette.primary.main, 0.8),
+    borderRadius: 18,
+    color: theme.palette.primary.contrastText,
+    display: "flex",
+    justifyContent: "space-between",
+    margin: theme.spacing(1, 0),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(1)
+  },
+  chipLabel: {
+    color: theme.palette.primary.contrastText
+  },
+  container: {
+    flexGrow: 1,
+    position: "relative"
+  }
+}));
 
 export interface MultiAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
@@ -77,14 +71,15 @@ const DebounceAutocomplete: React.ComponentType<
   DebounceProps<string>
 > = Debounce;
 
-export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
-  name: "MultiAutocompleteSelectField"
-})(
-  ({
+const MultiAutocompleteSelectFieldComponent: React.FC<
+  MultiAutocompleteSelectFieldProps
+> = props => {
+  const {
     allowCustomValues,
     choices,
-    classes,
+
     displayValues,
+
     hasMore,
     helperText,
     label,
@@ -95,107 +90,109 @@ export const MultiAutocompleteSelectFieldComponent = withStyles(styles, {
     fetchChoices,
     onChange,
     onFetchMore,
-    ...props
-  }: MultiAutocompleteSelectFieldProps & WithStyles<typeof styles>) => {
-    const handleSelect = (
-      item: string,
-      downshiftOpts?: ControllerStateAndHelpers
-    ) => {
-      if (downshiftOpts) {
-        downshiftOpts.reset({ inputValue: "" });
-      }
-      onChange({
-        target: { name, value: item }
-      } as any);
-    };
+    ...rest
+  } = props;
+  const classes = useStyles(props);
 
-    return (
-      <>
-        <Downshift
-          onInputValueChange={fetchChoices}
-          onSelect={handleSelect}
-          itemToString={() => ""}
-        >
-          {({
-            getInputProps,
-            getItemProps,
-            isOpen,
-            toggleMenu,
-            highlightedIndex,
-            inputValue
-          }) => {
-            const displayCustomValue =
-              inputValue &&
-              inputValue.length > 0 &&
-              allowCustomValues &&
-              !choices.find(
-                choice =>
-                  choice.label.toLowerCase() === inputValue.toLowerCase()
-              );
+  const handleSelect = (
+    item: string,
+    downshiftOpts?: ControllerStateAndHelpers
+  ) => {
+    if (downshiftOpts) {
+      downshiftOpts.reset({ inputValue: "" });
+    }
+    onChange({
+      target: { name, value: item }
+    } as any);
+  };
 
-            return (
-              <div className={classes.container} {...props}>
-                <TextField
-                  InputProps={{
-                    ...getInputProps({
-                      placeholder
-                    }),
-                    endAdornment: (
-                      <div>
-                        <ArrowDropdownIcon onClick={toggleMenu} />
-                      </div>
-                    ),
-                    id: undefined,
-                    onClick: toggleMenu
-                  }}
-                  helperText={helperText}
-                  label={label}
-                  fullWidth={true}
-                />
-                {isOpen && (!!inputValue || !!choices.length) && (
-                  <MultiAutocompleteSelectFieldContent
-                    choices={choices.filter(
-                      choice => !value.includes(choice.value)
-                    )}
-                    displayCustomValue={displayCustomValue}
-                    displayValues={displayValues}
-                    getItemProps={getItemProps}
-                    hasMore={hasMore}
-                    highlightedIndex={highlightedIndex}
-                    loading={loading}
-                    inputValue={inputValue}
-                    onFetchMore={onFetchMore}
-                  />
-                )}
-              </div>
+  return (
+    <>
+      <Downshift
+        onInputValueChange={fetchChoices}
+        onSelect={handleSelect}
+        itemToString={() => ""}
+      >
+        {({
+          getInputProps,
+          getItemProps,
+          isOpen,
+          toggleMenu,
+          highlightedIndex,
+          inputValue
+        }) => {
+          const displayCustomValue =
+            inputValue &&
+            inputValue.length > 0 &&
+            allowCustomValues &&
+            !choices.find(
+              choice => choice.label.toLowerCase() === inputValue.toLowerCase()
             );
-          }}
-        </Downshift>
-        <div className={classes.chipContainer}>
-          {displayValues.map(value => (
-            <div className={classes.chip} key={value.value}>
-              <div className={classes.chipInner}>
-                <Typography className={classes.chipLabel}>
-                  {value.label}
-                </Typography>
-                <IconButton
-                  className={classes.chipClose}
-                  onClick={() => handleSelect(value.value)}
-                >
-                  <CloseIcon fontSize="small" />
-                </IconButton>
-              </div>
+
+          return (
+            <div className={classes.container} {...rest}>
+              <TextField
+                InputProps={{
+                  ...getInputProps({
+                    placeholder
+                  }),
+                  endAdornment: (
+                    <div>
+                      <ArrowDropdownIcon onClick={() => toggleMenu()} />
+                    </div>
+                  ),
+                  id: undefined,
+                  onClick: toggleMenu
+                }}
+                helperText={helperText}
+                label={label}
+                fullWidth={true}
+              />
+              {isOpen && (!!inputValue || !!choices.length) && (
+                <MultiAutocompleteSelectFieldContent
+                  choices={choices.filter(
+                    choice => !value.includes(choice.value)
+                  )}
+                  displayCustomValue={displayCustomValue}
+                  displayValues={displayValues}
+                  getItemProps={getItemProps}
+                  hasMore={hasMore}
+                  highlightedIndex={highlightedIndex}
+                  loading={loading}
+                  inputValue={inputValue}
+                  onFetchMore={onFetchMore}
+                />
+              )}
             </div>
-          ))}
-        </div>
-      </>
-    );
-  }
-);
+          );
+        }}
+      </Downshift>
+      <div className={classes.chipContainer}>
+        {displayValues.map(value => (
+          <div className={classes.chip} key={value.value}>
+            <div className={classes.chipInner}>
+              <Typography className={classes.chipLabel}>
+                {value.label}
+              </Typography>
+              <IconButton
+                className={classes.chipClose}
+                onClick={() => handleSelect(value.value)}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};
+
 const MultiAutocompleteSelectField: React.FC<
   MultiAutocompleteSelectFieldProps
 > = ({ choices, fetchChoices, ...props }) => {
   const [query, setQuery] = React.useState("");
+
   if (fetchChoices) {
     return (
       <DebounceAutocomplete debounceFn={fetchChoices}>
@@ -220,5 +217,6 @@ const MultiAutocompleteSelectField: React.FC<
     />
   );
 };
+
 MultiAutocompleteSelectField.displayName = "MultiAutocompleteSelectField";
 export default MultiAutocompleteSelectField;

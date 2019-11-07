@@ -1,6 +1,5 @@
-import { Theme } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
-import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 
 import Button from "@material-ui/core/Button";
@@ -16,7 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { CategoryDetails_category_backgroundImage } from "../../types/CategoryDetails";
 import { FormData } from "../CategoryUpdatePage";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(theme => ({
   fileField: {
     display: "none"
   },
@@ -29,11 +28,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   imageContainer: {
     background: "#ffffff",
     border: "1px solid #eaeaea",
-    borderRadius: theme.spacing.unit,
+    borderRadius: theme.spacing(),
     height: 148,
     justifySelf: "start",
     overflow: "hidden",
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     position: "relative",
     width: 148
   }

@@ -221,10 +221,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
                     {canOpenBulkActionDialog && (
                       <DialogContentText>
                         <FormattedMessage
-                          defaultMessage="Are you sure you want to delete {counter, plural,
-                                    one {this sale}
-                                    other {{displayQuantity} sales}
-                                  }?"
+                          defaultMessage="Are you sure you want to delete {counter,plural,one{this sale} other{{displayQuantity} sales}}?"
                           description="dialog content"
                           values={{
                             counter: params.ids.length,

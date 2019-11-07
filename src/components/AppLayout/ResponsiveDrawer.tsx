@@ -1,16 +1,11 @@
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { drawerWidth, drawerWidthExpanded } from "./consts";
 
-const styles = (theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles(
+  theme => ({
     drawerDesktop: {
       backgroundColor: theme.palette.background.paper,
       border: "none",
@@ -29,17 +24,23 @@ const styles = (theme: Theme) =>
     drawerMobile: {
       width: drawerWidthExpanded
     }
-  });
+  }),
+  { name: "ResponsiveDrawer" }
+);
 
-interface ResponsiveDrawerProps extends WithStyles<typeof styles> {
+interface ResponsiveDrawerProps {
   children?: React.ReactNode;
   open: boolean;
   small: boolean;
   onClose?();
 }
 
-const ResponsiveDrawer = withStyles(styles, { name: "ResponsiveDrawer" })(
-  ({ children, classes, onClose, open, small }: ResponsiveDrawerProps) => (
+const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = props => {
+  const { children, onClose, open, small } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <>
       <Hidden smDown>
         <Drawer
@@ -63,6 +64,6 @@ const ResponsiveDrawer = withStyles(styles, { name: "ResponsiveDrawer" })(
         </Drawer>
       </Hidden>
     </>
-  )
-);
+  );
+};
 export default ResponsiveDrawer;

@@ -93,7 +93,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps(
-    maybe(() => productType.taxType.description)
+    maybe(() => productType.taxType.description, "")
   );
   const formInitialData: ProductTypeForm = {
     hasVariants:

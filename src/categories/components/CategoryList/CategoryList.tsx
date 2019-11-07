@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -20,8 +15,8 @@ import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 
-const styles = (theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles(
+  theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
         width: 840
@@ -45,7 +40,9 @@ const styles = (theme: Theme) =>
     tableRow: {
       cursor: "pointer"
     }
-  });
+  }),
+  { name: "CategoryList" }
+);
 
 interface CategoryListProps extends ListProps, ListActions {
   categories?: CategoryFragment[];
@@ -55,10 +52,9 @@ interface CategoryListProps extends ListProps, ListActions {
 
 const numberOfColumns = 4;
 
-const CategoryList = withStyles(styles, { name: "CategoryList" })(
-  ({
+const CategoryList: React.FC<CategoryListProps> = props => {
+  const {
     categories,
-    classes,
     disabled,
     settings,
     pageInfo,
@@ -72,7 +68,11 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
     onPreviousPage,
     onUpdateListSettings,
     onRowClick
-  }: CategoryListProps & WithStyles<typeof styles>) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Table>
       <TableHead
         colSpan={numberOfColumns}
@@ -175,7 +175,8 @@ const CategoryList = withStyles(styles, { name: "CategoryList" })(
         )}
       </TableBody>
     </Table>
-  )
-);
+  );
+};
+
 CategoryList.displayName = "CategoryList";
 export default CategoryList;

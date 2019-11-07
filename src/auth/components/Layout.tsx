@@ -1,5 +1,4 @@
-import { Theme } from "@material-ui/core/styles";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import SVG from "react-inlinesvg";
 
@@ -9,24 +8,24 @@ import saleorLightLogo from "@assets/images/logo-light.svg";
 import useTheme from "@saleor/hooks/useTheme";
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     logo: {
       "& svg": {
         display: "block",
         height: 40,
-        marginBottom: theme.spacing.unit * 4
+        marginBottom: theme.spacing(4)
       }
     },
     mainPanel: {
       [theme.breakpoints.down("sm")]: {
-        padding: theme.spacing.unit * 2
+        padding: theme.spacing(2)
       },
       background: theme.palette.background.paper,
       display: "flex",
       flexDirection: "column",
       height: "100vh",
       justifyContent: "center",
-      padding: theme.spacing.unit * 6,
+      padding: theme.spacing(6),
       width: "100%"
     },
     mainPanelContent: {

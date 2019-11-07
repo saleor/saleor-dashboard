@@ -1,12 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -15,46 +10,48 @@ import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductImage } from "../../types/ProductImage";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    gridElement: {
-      "& img": {
-        width: "100%"
-      }
-    },
-    helpText: {
-      gridColumnEnd: "span 4"
-    },
-    image: {
-      height: "100%",
-      objectFit: "contain",
+const useStyles = makeStyles(theme => ({
+  gridElement: {
+    "& img": {
       width: "100%"
-    },
-    imageContainer: {
-      background: "#ffffff",
-      border: "1px solid #eaeaea",
-      borderRadius: theme.spacing.unit,
-      height: theme.spacing.unit * 17.5,
-      marginBottom: theme.spacing.unit * 2,
-      padding: theme.spacing.unit * 2
-    },
-    root: {
-      display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
-      gridTemplateColumns: "repeat(4, 1fr)"
     }
-  });
+  },
+  helpText: {
+    gridColumnEnd: "span 4"
+  },
+  image: {
+    height: "100%",
+    objectFit: "contain",
+    width: "100%"
+  },
+  imageContainer: {
+    background: "#ffffff",
+    border: "1px solid #eaeaea",
+    borderRadius: theme.spacing(),
+    height: theme.spacing(17.5),
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(2)
+  },
+  root: {
+    display: "grid",
+    gridColumnGap: theme.spacing(2),
+    gridTemplateColumns: "repeat(4, 1fr)"
+  }
+}));
 
-interface ProductVariantImagesProps extends WithStyles<typeof styles> {
+interface ProductVariantImagesProps {
   images?: ProductImage[];
   placeholderImage?: string;
   disabled: boolean;
   onImageAdd();
 }
 
-export const ProductVariantImages = withStyles(styles, {
-  name: "ProductVariantImages"
-})(({ classes, disabled, images, onImageAdd }: ProductVariantImagesProps) => {
+export const ProductVariantImages: React.FC<
+  ProductVariantImagesProps
+> = props => {
+  const { disabled, images, onImageAdd } = props;
+
+  const classes = useStyles(props);
   const intl = useIntl();
 
   return (
@@ -99,6 +96,6 @@ export const ProductVariantImages = withStyles(styles, {
       </CardContent>
     </Card>
   );
-});
+};
 ProductVariantImages.displayName = "ProductVariantImages";
 export default ProductVariantImages;

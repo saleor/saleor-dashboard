@@ -85,7 +85,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                       title={maybe(() => customerDetails.data.user.email)}
                     />
                     <CustomerDetailsPage
-                      customer={customerDetails.data.user}
+                      customer={maybe(() => customerDetails.data.user)}
                       disabled={
                         customerDetails.loading ||
                         updateCustomerOpts.loading ||

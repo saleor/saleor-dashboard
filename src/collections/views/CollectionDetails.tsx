@@ -231,7 +231,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                     onAdd={() => openModal("assign")}
                     onBack={() => navigate(collectionListUrl())}
                     disabled={loading}
-                    collection={data.collection}
+                    collection={maybe(() => data.collection)}
                     isFeatured={maybe(
                       () =>
                         data.shop.homepageCollection.id === data.collection.id,
@@ -349,10 +349,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                   >
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Are you sure you want to unassign {counter, plural,
-                          one {this product}
-                          other {{displayQuantity} products}
-                        }?"
+                        defaultMessage="Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?"
                         values={{
                           counter: maybe(() => params.ids.length),
                           displayQuantity: (

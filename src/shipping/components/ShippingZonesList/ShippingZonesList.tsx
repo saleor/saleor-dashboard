@@ -1,12 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -32,32 +27,30 @@ export interface ShippingZonesListProps extends ListProps, ListActions {
   onRemove: (id: string) => void;
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    [theme.breakpoints.up("lg")]: {
-      colCountries: {},
-      colName: { width: 200 }
-    },
-    alignRight: {
-      "&:last-child": {
-        paddingRight: theme.spacing.unit
-      },
-      width: ICONBUTTON_SIZE + theme.spacing.unit / 2
-    },
+const useStyles = makeStyles(theme => ({
+  [theme.breakpoints.up("lg")]: {
     colCountries: {},
-    colName: {
-      paddingLeft: 0
+    colName: { width: 200 }
+  },
+  alignRight: {
+    "&:last-child": {
+      paddingRight: theme.spacing(1)
     },
-    row: {
-      cursor: "pointer"
-    }
-  });
+    width: ICONBUTTON_SIZE + theme.spacing(0.5)
+  },
+  colCountries: {},
+  colName: {
+    paddingLeft: 0
+  },
+  row: {
+    cursor: "pointer"
+  }
+}));
 
 const numberOfColumns = 4;
 
-const ShippingZonesList = withStyles(styles, { name: "ShippingZonesList" })(
-  ({
-    classes,
+const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
+  const {
     disabled,
     settings,
     onAdd,
@@ -73,127 +66,126 @@ const ShippingZonesList = withStyles(styles, { name: "ShippingZonesList" })(
     toggle,
     toggleAll,
     toolbar
-  }: ShippingZonesListProps & WithStyles<typeof styles>) => {
-    const intl = useIntl();
+  } = props;
 
-    return (
-      <Card>
-        <CardTitle
-          height="const"
-          title={intl.formatMessage({
-            defaultMessage: "Shipping By Zone",
-            description: "sort shipping methods by zone, section header"
-          })}
-          toolbar={
-            <Button color="primary" onClick={onAdd}>
-              <FormattedMessage
-                defaultMessage="Create shipping zone"
-                description="button"
-              />
-            </Button>
-          }
-        />
-        <Table>
-          <TableHead
-            colSpan={numberOfColumns}
-            selected={selected}
-            disabled={disabled}
-            items={shippingZones}
-            toggleAll={toggleAll}
-            toolbar={toolbar}
-          >
-            <TableCell className={classes.colName}>
-              <FormattedMessage
-                defaultMessage="Name"
-                description="shipping zone"
-              />
-            </TableCell>
-            <TableCell className={classes.colCountries}>
-              <FormattedMessage defaultMessage="Countries" />
-            </TableCell>
-            <TableCell />
-          </TableHead>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                colSpan={4}
-                settings={settings}
-                hasNextPage={
-                  pageInfo && !disabled ? pageInfo.hasNextPage : false
-                }
-                onNextPage={onNextPage}
-                onUpdateListSettings={onUpdateListSettings}
-                hasPreviousPage={
-                  pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-                }
-                onPreviousPage={onPreviousPage}
-              />
-            </TableRow>
-          </TableFooter>
-          <TableBody>
-            {renderCollection(
-              shippingZones,
-              shippingZone => {
-                const isSelected = shippingZone
-                  ? isChecked(shippingZone.id)
-                  : false;
+  const classes = useStyles(props);
+  const intl = useIntl();
 
-                return (
-                  <TableRow
-                    className={classes.row}
-                    hover={!!shippingZone}
-                    key={shippingZone ? shippingZone.id : "skeleton"}
-                    onClick={shippingZone && onRowClick(shippingZone.id)}
-                    selected={isSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        disabled={disabled}
-                        disableClickPropagation
-                        onChange={() => toggle(shippingZone.id)}
-                      />
-                    </TableCell>
-                    <TableCell className={classes.colName}>
-                      {maybe<React.ReactNode>(
-                        () => shippingZone.name,
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.colCountries}>
-                      {maybe<React.ReactNode>(
-                        () => shippingZone.countries.length,
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.alignRight}>
-                      <IconButton
-                        color="primary"
-                        disabled={disabled}
-                        onClick={event => {
-                          event.stopPropagation();
-                          onRemove(shippingZone.id);
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              },
-              () => (
-                <TableRow>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No shipping zones found" />
+  return (
+    <Card>
+      <CardTitle
+        height="const"
+        title={intl.formatMessage({
+          defaultMessage: "Shipping By Zone",
+          description: "sort shipping methods by zone, section header"
+        })}
+        toolbar={
+          <Button color="primary" onClick={onAdd}>
+            <FormattedMessage
+              defaultMessage="Create shipping zone"
+              description="button"
+            />
+          </Button>
+        }
+      />
+      <Table>
+        <TableHead
+          colSpan={numberOfColumns}
+          selected={selected}
+          disabled={disabled}
+          items={shippingZones}
+          toggleAll={toggleAll}
+          toolbar={toolbar}
+        >
+          <TableCell className={classes.colName}>
+            <FormattedMessage
+              defaultMessage="Name"
+              description="shipping zone"
+            />
+          </TableCell>
+          <TableCell className={classes.colCountries}>
+            <FormattedMessage defaultMessage="Countries" />
+          </TableCell>
+          <TableCell />
+        </TableHead>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={4}
+              settings={settings}
+              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+              onNextPage={onNextPage}
+              onUpdateListSettings={onUpdateListSettings}
+              hasPreviousPage={
+                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
+              }
+              onPreviousPage={onPreviousPage}
+            />
+          </TableRow>
+        </TableFooter>
+        <TableBody>
+          {renderCollection(
+            shippingZones,
+            shippingZone => {
+              const isSelected = shippingZone
+                ? isChecked(shippingZone.id)
+                : false;
+
+              return (
+                <TableRow
+                  className={classes.row}
+                  hover={!!shippingZone}
+                  key={shippingZone ? shippingZone.id : "skeleton"}
+                  onClick={shippingZone && onRowClick(shippingZone.id)}
+                  selected={isSelected}
+                >
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      checked={isSelected}
+                      disabled={disabled}
+                      disableClickPropagation
+                      onChange={() => toggle(shippingZone.id)}
+                    />
+                  </TableCell>
+                  <TableCell className={classes.colName}>
+                    {maybe<React.ReactNode>(
+                      () => shippingZone.name,
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.colCountries}>
+                    {maybe<React.ReactNode>(
+                      () => shippingZone.countries.length,
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.alignRight}>
+                    <IconButton
+                      color="primary"
+                      disabled={disabled}
+                      onClick={event => {
+                        event.stopPropagation();
+                        onRemove(shippingZone.id);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
-              )
-            )}
-          </TableBody>
-        </Table>
-      </Card>
-    );
-  }
-);
+              );
+            },
+            () => (
+              <TableRow>
+                <TableCell colSpan={numberOfColumns}>
+                  <FormattedMessage defaultMessage="No shipping zones found" />
+                </TableCell>
+              </TableRow>
+            )
+          )}
+        </TableBody>
+      </Table>
+    </Card>
+  );
+};
 ShippingZonesList.displayName = "ShippingZonesList";
 export default ShippingZonesList;

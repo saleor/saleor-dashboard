@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const ArrowSort = createSvgIcon(
+const ArrowSort = createSvgIcon(
   <>
     <rect width="24" height="24" fill="transparent" />
     <path
@@ -11,6 +11,6 @@ export const ArrowSort = createSvgIcon(
       fill="currentColor"
     />
   </>
-);
-ArrowSort.displayName = "ArrowSort";
+, "ArrowSort")
+
 export default ArrowSort;

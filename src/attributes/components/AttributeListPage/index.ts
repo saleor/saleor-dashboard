@@ -1,2 +1,2 @@
-export { default } from './AttributeListPage';
-export * from './AttributeListPage';
+export { default } from "./AttributeListPage";
+export * from "./AttributeListPage";

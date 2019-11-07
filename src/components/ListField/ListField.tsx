@@ -1,4 +1,3 @@
-import { Omit } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {
   createStyles,
@@ -20,10 +19,10 @@ interface ListFieldState {
 const styles = (theme: Theme) =>
   createStyles({
     chip: {
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing(1)
     },
     chipContainer: {
-      marginTop: theme.spacing.unit * 2,
+      marginTop: theme.spacing(2),
       width: 552
     }
   });

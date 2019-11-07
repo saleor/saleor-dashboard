@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -29,59 +24,55 @@ export interface VoucherListProps extends ListProps, ListActions {
   vouchers: VoucherList_vouchers_edges_node[];
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    [theme.breakpoints.up("lg")]: {
-      colEnd: {
-        width: 180
-      },
-      colMinSpent: {
-        width: 150
-      },
-      colName: {},
-      colStart: {
-        width: 180
-      },
-      colUses: {
-        width: 150
-      },
-      colValue: {
-        width: 150
-      }
-    },
+const useStyles = makeStyles(theme => ({
+  [theme.breakpoints.up("lg")]: {
     colEnd: {
-      textAlign: "right"
+      width: 180
     },
     colMinSpent: {
-      textAlign: "right"
+      width: 150
     },
-    colName: {
-      paddingLeft: 0
-    },
+    colName: {},
     colStart: {
-      textAlign: "right"
+      width: 180
     },
     colUses: {
-      textAlign: "right"
+      width: 150
     },
     colValue: {
-      textAlign: "right"
-    },
-    tableRow: {
-      cursor: "pointer"
-    },
-    textRight: {
-      textAlign: "right"
+      width: 150
     }
-  });
+  },
+  colEnd: {
+    textAlign: "right"
+  },
+  colMinSpent: {
+    textAlign: "right"
+  },
+  colName: {
+    paddingLeft: 0
+  },
+  colStart: {
+    textAlign: "right"
+  },
+  colUses: {
+    textAlign: "right"
+  },
+  colValue: {
+    textAlign: "right"
+  },
+  tableRow: {
+    cursor: "pointer"
+  },
+  textRight: {
+    textAlign: "right"
+  }
+}));
 
 const numberOfColumns = 7;
 
-const VoucherList = withStyles(styles, {
-  name: "VoucherList"
-})(
-  ({
-    classes,
+const VoucherList: React.FC<VoucherListProps> = props => {
+  const {
     settings,
     defaultCurrency,
     disabled,
@@ -96,7 +87,11 @@ const VoucherList = withStyles(styles, {
     toggle,
     toggleAll,
     toolbar
-  }: VoucherListProps & WithStyles<typeof styles>) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Table>
       <TableHead
         colSpan={numberOfColumns}
@@ -246,7 +241,7 @@ const VoucherList = withStyles(styles, {
         )}
       </TableBody>
     </Table>
-  )
-);
+  );
+};
 VoucherList.displayName = "VoucherList";
 export default VoucherList;

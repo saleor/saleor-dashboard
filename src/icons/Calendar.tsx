@@ -22,7 +22,7 @@ export const Calendar = createSvgIcon(
         <stop offset="1" stopColor="#3EE7CD" />
       </linearGradient>
     </defs>
-  </>
+  </>,
+  "Calendar"
 );
-Calendar.displayName = "Calendar";
 export default Calendar;

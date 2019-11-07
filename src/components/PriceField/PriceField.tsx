@@ -1,37 +1,31 @@
 import { InputProps } from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    currencySymbol: {
-      fontSize: "0.875rem"
-    },
-    inputContainer: {
-      display: "grid",
-      gridTemplateColumns: "1fr 2rem 1fr"
-    },
-    pullDown: {
-      marginTop: theme.spacing.unit * 2
-    },
-    separator: {
-      marginTop: theme.spacing.unit * 3,
-      textAlign: "center",
-      width: "100%"
-    },
-    widgetContainer: {
-      marginTop: theme.spacing.unit * 2
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  currencySymbol: {
+    fontSize: "0.875rem"
+  },
+  inputContainer: {
+    display: "grid",
+    gridTemplateColumns: "1fr 2rem 1fr"
+  },
+  pullDown: {
+    marginTop: theme.spacing(2)
+  },
+  separator: {
+    marginTop: theme.spacing(3),
+    textAlign: "center",
+    width: "100%"
+  },
+  widgetContainer: {
+    marginTop: theme.spacing(2)
+  }
+}));
 
-interface PriceFieldProps extends WithStyles<typeof styles> {
+interface PriceFieldProps {
   className?: string;
   currencySymbol?: string;
   disabled?: boolean;
@@ -44,8 +38,8 @@ interface PriceFieldProps extends WithStyles<typeof styles> {
   onChange(event: any);
 }
 
-export const PriceField = withStyles(styles, { name: "PriceField" })(
-  ({
+export const PriceField: React.FC<PriceFieldProps> = props => {
+  const {
     className,
     disabled,
     error,
@@ -53,11 +47,14 @@ export const PriceField = withStyles(styles, { name: "PriceField" })(
     hint,
     currencySymbol,
     name,
-    classes,
     onChange,
     value,
     InputProps
-  }: PriceFieldProps) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <TextField
       className={className}
       error={error}
@@ -80,8 +77,8 @@ export const PriceField = withStyles(styles, { name: "PriceField" })(
       disabled={disabled}
       onChange={onChange}
     />
-  )
-);
+  );
+};
 PriceField.defaultProps = {
   name: "price"
 };

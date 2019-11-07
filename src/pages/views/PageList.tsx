@@ -189,10 +189,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                       >
                         <DialogContentText>
                           <FormattedMessage
-                            defaultMessage="Are you sure you want to publish {counter, plural,
-            one {this page}
-            other {{displayQuantity} pages}
-          }?"
+                            defaultMessage="Are you sure you want to publish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
                             description="dialog content"
                             values={{
                               counter: maybe(() => params.ids.length),
@@ -223,10 +220,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                         })}
                       >
                         <FormattedMessage
-                          defaultMessage="Are you sure you want to unpublish {counter, plural,
-            one {this page}
-            other {{displayQuantity} pages}
-          }?"
+                          defaultMessage="Are you sure you want to unpublish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
                           description="dialog content"
                           values={{
                             counter: maybe(() => params.ids.length),
@@ -254,10 +248,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                         })}
                       >
                         <FormattedMessage
-                          defaultMessage="Are you sure you want to delete {counter, plural,
-            one {this page}
-            other {{displayQuantity} pages}
-          }?"
+                          defaultMessage="Are you sure you want to delete {counter,plural,one{this page} other{{displayQuantity} pages}}?"
                           description="dialog content"
                           values={{
                             counter: maybe(() => params.ids.length),

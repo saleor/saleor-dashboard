@@ -2,12 +2,7 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ArrowIcon from "@material-ui/icons/ArrowDropDown";
 import CardTitle from "@saleor/components/CardTitle";
@@ -44,73 +39,72 @@ export interface TranslationFieldsProps {
   onSubmit: (field: string, data: string) => void;
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    cardCaption: {
-      fontSize: 14
-    },
-    cardContent: {
-      "&:last-child": {
-        paddingBottom: theme.spacing.unit
-      }
-    },
-    columnHeader: {
-      marginBottom: theme.spacing.unit / 2
-    },
-    content: {
-      "& a": {
-        color: theme.palette.secondary.light
-      },
-      "& blockquote": {
-        borderLeft: `2px solid ${theme.overrides.MuiCard.root.borderColor}`,
-        margin: 0,
-        padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
-      },
-      "& h2": {
-        fontSize: 22,
-        marginBottom: theme.spacing.unit
-      },
-      "& h3": {
-        fontSize: 19,
-        marginBottom: theme.spacing.unit
-      },
-      "& p": {
-        "&:last-child": {
-          marginBottom: 0
-        },
-        marginBottom: theme.spacing.unit,
-        marginTop: 0
-      },
-      paddingBottom: theme.spacing.unit * 2
-    },
-    editButtonContainer: {
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "flex-end"
-    },
-    fieldName: {
-      color: theme.typography.caption.color,
-      fontSize: 14,
-      fontWeight: 500,
-      marginBottom: theme.spacing.unit,
-      marginTop: theme.spacing.unit * 2,
-      textTransform: "uppercase"
-    },
-    grid: {
-      gridRowGap: 0
-    },
-    hr: {
-      gridColumnEnd: "span 2"
-    },
-
-    rotate: {
-      transform: "rotate(180deg)"
+const useStyles = makeStyles(theme => ({
+  cardCaption: {
+    fontSize: 14
+  },
+  cardContent: {
+    "&:last-child": {
+      paddingBottom: theme.spacing(1)
     }
-  });
-const TranslationFields = withStyles(styles, { name: "TranslationFields" })(
-  ({
+  },
+  columnHeader: {
+    marginBottom: theme.spacing(0.5)
+  },
+  content: {
+    "& a": {
+      color: theme.palette.secondary.light
+    },
+    "& blockquote": {
+      borderLeft: `2px solid ${theme.palette.divider}`,
+      margin: 0,
+      padding: theme.spacing(1, 2)
+    },
+    "& h2": {
+      fontSize: 22,
+      marginBottom: theme.spacing(1)
+    },
+    "& h3": {
+      fontSize: 19,
+      marginBottom: theme.spacing(1)
+    },
+    "& p": {
+      "&:last-child": {
+        marginBottom: 0
+      },
+      marginBottom: theme.spacing(),
+      marginTop: 0
+    },
+    paddingBottom: theme.spacing(2)
+  },
+  editButtonContainer: {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  fieldName: {
+    color: theme.typography.caption.color,
+    fontSize: 14,
+    fontWeight: 500,
+    marginBottom: theme.spacing(),
+    marginTop: theme.spacing(2),
+    textTransform: "uppercase"
+  },
+  grid: {
+    gridRowGap: 0
+  },
+  hr: {
+    gridColumnEnd: "span 2"
+  },
+
+  rotate: {
+    transform: "rotate(180deg)"
+  }
+}));
+const TranslationFields: React.FC<TranslationFieldsProps> = props => {
+  const {
     activeField,
-    classes,
+
     disabled,
     fields,
     initialState,
@@ -119,137 +113,138 @@ const TranslationFields = withStyles(styles, { name: "TranslationFields" })(
     onEdit,
     onDiscard,
     onSubmit
-  }: TranslationFieldsProps & WithStyles<typeof styles>) => {
-    const [expanded, setExpandedState] = React.useState(initialState);
+  } = props;
+  const classes = useStyles(props);
 
-    return (
-      <Card>
-        <CardTitle
-          title={title}
-          toolbar={
-            <IconButton onClick={() => setExpandedState(!expanded)}>
-              <ArrowIcon
-                className={classNames({
-                  [classes.rotate]: expanded
-                })}
-              />
-            </IconButton>
-          }
-        />
-        {expanded ? (
-          <CardContent className={classes.cardContent}>
-            <Grid className={classes.grid} variant="uniform">
-              <Typography className={classes.columnHeader} variant="body2">
-                <FormattedMessage defaultMessage="Original String" />
-              </Typography>
-              <Typography className={classes.columnHeader} variant="body2">
-                <FormattedMessage
-                  defaultMessage="Translation"
-                  description="Translated Name"
-                />
-              </Typography>
-              {fields.map(field => (
-                <React.Fragment key={field.name}>
-                  <Hr className={classes.hr} />
-                  <Typography className={classes.fieldName} variant="body2">
-                    {field.displayName}
-                  </Typography>
-                  <div className={classes.editButtonContainer}>
-                    <Button color="primary" onClick={() => onEdit(field.name)}>
-                      <FormattedMessage {...buttonMessages.edit} />
-                    </Button>
-                  </div>
-                  <div className={classes.content}>
-                    {field && field.value !== undefined ? (
-                      field.type === "short" ? (
-                        <TranslationFieldsShort
-                          disabled={disabled}
-                          edit={false}
-                          initial={field.value}
-                          saveButtonState="default"
-                          onDiscard={onDiscard}
-                          onSubmit={undefined}
-                        />
-                      ) : field.type === "long" ? (
-                        <TranslationFieldsLong
-                          disabled={disabled}
-                          edit={false}
-                          initial={field.value}
-                          saveButtonState="default"
-                          onDiscard={onDiscard}
-                          onSubmit={undefined}
-                        />
-                      ) : (
-                        <TranslationFieldsRich
-                          disabled={disabled}
-                          edit={false}
-                          initial={field.value}
-                          saveButtonState="default"
-                          onDiscard={onDiscard}
-                          onSubmit={undefined}
-                        />
-                      )
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </div>
-                  <Typography className={classes.content}>
-                    {field && field.translation !== undefined ? (
-                      field.type === "short" ? (
-                        <TranslationFieldsShort
-                          disabled={disabled}
-                          edit={activeField === field.name}
-                          initial={field.translation}
-                          saveButtonState={saveButtonState}
-                          onDiscard={onDiscard}
-                          onSubmit={data => onSubmit(field.name, data)}
-                        />
-                      ) : field.type === "long" ? (
-                        <TranslationFieldsLong
-                          disabled={disabled}
-                          edit={activeField === field.name}
-                          initial={field.translation}
-                          saveButtonState={saveButtonState}
-                          onDiscard={onDiscard}
-                          onSubmit={data => onSubmit(field.name, data)}
-                        />
-                      ) : (
-                        <TranslationFieldsRich
-                          disabled={disabled}
-                          edit={activeField === field.name}
-                          initial={field.translation}
-                          saveButtonState={saveButtonState}
-                          onDiscard={onDiscard}
-                          onSubmit={data => onSubmit(field.name, data)}
-                        />
-                      )
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </Typography>
-                </React.Fragment>
-              ))}
-            </Grid>
-          </CardContent>
-        ) : (
-          <CardContent>
-            <Typography className={classes.cardCaption} variant="caption">
+  const [expanded, setExpandedState] = React.useState(initialState);
+
+  return (
+    <Card>
+      <CardTitle
+        title={title}
+        toolbar={
+          <IconButton onClick={() => setExpandedState(!expanded)}>
+            <ArrowIcon
+              className={classNames({
+                [classes.rotate]: expanded
+              })}
+            />
+          </IconButton>
+        }
+      />
+      {expanded ? (
+        <CardContent className={classes.cardContent}>
+          <Grid className={classes.grid} variant="uniform">
+            <Typography className={classes.columnHeader} variant="body1">
+              <FormattedMessage defaultMessage="Original String" />
+            </Typography>
+            <Typography className={classes.columnHeader} variant="body1">
               <FormattedMessage
-                defaultMessage="{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
-                values={{
-                  numberOfFields: fields.length,
-                  numberOfTranslatedFields: fields.reduce(
-                    (acc, field) => acc + +(field.translation !== null),
-                    0
-                  )
-                }}
+                defaultMessage="Translation"
+                description="Translated Name"
               />
             </Typography>
-          </CardContent>
-        )}
-      </Card>
-    );
-  }
-);
+            {fields.map(field => (
+              <React.Fragment key={field.name}>
+                <Hr className={classes.hr} />
+                <Typography className={classes.fieldName} variant="body1">
+                  {field.displayName}
+                </Typography>
+                <div className={classes.editButtonContainer}>
+                  <Button color="primary" onClick={() => onEdit(field.name)}>
+                    <FormattedMessage {...buttonMessages.edit} />
+                  </Button>
+                </div>
+                <div className={classes.content}>
+                  {field && field.value !== undefined ? (
+                    field.type === "short" ? (
+                      <TranslationFieldsShort
+                        disabled={disabled}
+                        edit={false}
+                        initial={field.value}
+                        saveButtonState="default"
+                        onDiscard={onDiscard}
+                        onSubmit={undefined}
+                      />
+                    ) : field.type === "long" ? (
+                      <TranslationFieldsLong
+                        disabled={disabled}
+                        edit={false}
+                        initial={field.value}
+                        saveButtonState="default"
+                        onDiscard={onDiscard}
+                        onSubmit={undefined}
+                      />
+                    ) : (
+                      <TranslationFieldsRich
+                        disabled={disabled}
+                        edit={false}
+                        initial={field.value}
+                        saveButtonState="default"
+                        onDiscard={onDiscard}
+                        onSubmit={undefined}
+                      />
+                    )
+                  ) : (
+                    <Skeleton />
+                  )}
+                </div>
+                <Typography className={classes.content}>
+                  {field && field.translation !== undefined ? (
+                    field.type === "short" ? (
+                      <TranslationFieldsShort
+                        disabled={disabled}
+                        edit={activeField === field.name}
+                        initial={field.translation}
+                        saveButtonState={saveButtonState}
+                        onDiscard={onDiscard}
+                        onSubmit={data => onSubmit(field.name, data)}
+                      />
+                    ) : field.type === "long" ? (
+                      <TranslationFieldsLong
+                        disabled={disabled}
+                        edit={activeField === field.name}
+                        initial={field.translation}
+                        saveButtonState={saveButtonState}
+                        onDiscard={onDiscard}
+                        onSubmit={data => onSubmit(field.name, data)}
+                      />
+                    ) : (
+                      <TranslationFieldsRich
+                        disabled={disabled}
+                        edit={activeField === field.name}
+                        initial={field.translation}
+                        saveButtonState={saveButtonState}
+                        onDiscard={onDiscard}
+                        onSubmit={data => onSubmit(field.name, data)}
+                      />
+                    )
+                  ) : (
+                    <Skeleton />
+                  )}
+                </Typography>
+              </React.Fragment>
+            ))}
+          </Grid>
+        </CardContent>
+      ) : (
+        <CardContent>
+          <Typography className={classes.cardCaption} variant="caption">
+            <FormattedMessage
+              defaultMessage="{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
+              values={{
+                numberOfFields: fields.length,
+                numberOfTranslatedFields: fields.reduce(
+                  (acc, field) => acc + +(field.translation !== null),
+                  0
+                )
+              }}
+            />
+          </Typography>
+        </CardContent>
+      )}
+    </Card>
+  );
+};
 TranslationFields.displayName = "TranslationFields";
 export default TranslationFields;

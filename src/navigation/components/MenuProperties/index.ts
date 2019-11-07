@@ -1,2 +1,2 @@
-export { default } from './MenuProperties';
-export * from './MenuProperties';
+export { default } from "./MenuProperties";
+export * from "./MenuProperties";

@@ -35,7 +35,11 @@ function useElementScroll(anchor: MutableRefObject<HTMLElement>): Position {
       );
       anchor.current.addEventListener("scroll", handleScroll);
 
-      return () => anchor.current.removeEventListener("scroll", handleScroll);
+      return () => {
+        if (!!anchor.current) {
+          anchor.current.removeEventListener("scroll", handleScroll);
+        }
+      };
     }
   }, [anchor.current]);
 

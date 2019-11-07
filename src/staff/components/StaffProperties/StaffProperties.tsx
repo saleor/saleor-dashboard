@@ -1,11 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
@@ -18,8 +13,8 @@ import { commonMessages } from "@saleor/intl";
 import { getUserInitials, maybe } from "../../../misc";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 
-const styles = (theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles(
+  theme => ({
     avatar: {
       "& svg": {
         fill: "#fff"
@@ -62,7 +57,7 @@ const styles = (theme: Theme) =>
       borderRadius: "100%",
       height: 120,
       opacity: 0,
-      padding: `${theme.spacing.unit * 2.5}px 0`,
+      padding: theme.spacing(2.5, 0),
       position: "absolute",
       textAlign: "center",
       textTransform: "uppercase",
@@ -77,12 +72,12 @@ const styles = (theme: Theme) =>
       display: "none"
     },
     prop: {
-      marginBottom: theme.spacing.unit * 2 + "px"
+      marginBottom: theme.spacing(2)
     },
     propGrid: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 2 + "px",
-      gridRowGap: theme.spacing.unit + "px",
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(1),
       gridTemplateColumns: "1fr 1fr",
       [theme.breakpoints.down("xs")]: {
         gridTemplateColumns: "1fr"
@@ -90,12 +85,14 @@ const styles = (theme: Theme) =>
     },
     root: {
       display: "grid",
-      gridColumnGap: theme.spacing.unit * 4 + "px",
+      gridColumnGap: theme.spacing(4),
       gridTemplateColumns: "120px 1fr"
     }
-  });
+  }),
+  { name: "StaffProperties" }
+);
 
-interface StaffPropertiesProps extends WithStyles<typeof styles> {
+interface StaffPropertiesProps {
   canEditAvatar: boolean;
   className?: string;
   data: {
@@ -110,106 +107,106 @@ interface StaffPropertiesProps extends WithStyles<typeof styles> {
   onImageUpload: (file: File) => void;
 }
 
-const StaffProperties = withStyles(styles, { name: "StaffProperties" })(
-  ({
+const StaffProperties: React.FC<StaffPropertiesProps> = props => {
+  const {
     canEditAvatar,
-    classes,
     className,
     data,
     staffMember,
     onChange,
     onImageDelete,
     onImageUpload
-  }: StaffPropertiesProps) => {
-    const intl = useIntl();
-    const imgInputAnchor = React.createRef<HTMLInputElement>();
+  } = props;
 
-    const clickImgInput = () => imgInputAnchor.current.click();
+  const classes = useStyles(props);
+  const intl = useIntl();
+  const imgInputAnchor = React.createRef<HTMLInputElement>();
 
-    return (
-      <Card className={className}>
-        <CardTitle
-          title={intl.formatMessage({
-            defaultMessage: "Staff Member Information",
-            description: "section header"
-          })}
-        />
-        <CardContent>
-          <div className={classes.root}>
-            <div>
-              <div className={classes.avatar}>
-                {maybe(() => staffMember.avatar.url) ? (
-                  <img
-                    className={classes.avatarImage}
-                    src={maybe(() => staffMember.avatar.url)}
-                  />
-                ) : (
-                  <div className={classes.avatarDefault}>
-                    <Typography>{getUserInitials(data)}</Typography>
-                  </div>
-                )}
-                {canEditAvatar && (
-                  <div className={classes.avatarHover}>
-                    <SVG src={photoIcon} />
-                    <Typography onClick={clickImgInput}>
-                      <FormattedMessage
-                        defaultMessage="Change photo"
-                        description="button"
-                      />
-                    </Typography>
-                    <Typography onClick={onImageDelete}>
-                      <FormattedMessage
-                        defaultMessage="Delete photo"
-                        description="button"
-                      />
-                    </Typography>
-                    <input
-                      className={classes.fileField}
-                      id="fileUpload"
-                      onChange={event => onImageUpload(event.target.files[0])}
-                      type="file"
-                      ref={imgInputAnchor}
+  const clickImgInput = () => imgInputAnchor.current.click();
+
+  return (
+    <Card className={className}>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Staff Member Information",
+          description: "section header"
+        })}
+      />
+      <CardContent>
+        <div className={classes.root}>
+          <div>
+            <div className={classes.avatar}>
+              {maybe(() => staffMember.avatar.url) ? (
+                <img
+                  className={classes.avatarImage}
+                  src={maybe(() => staffMember.avatar.url)}
+                />
+              ) : (
+                <div className={classes.avatarDefault}>
+                  <Typography>{getUserInitials(data)}</Typography>
+                </div>
+              )}
+              {canEditAvatar && (
+                <div className={classes.avatarHover}>
+                  <SVG src={photoIcon} />
+                  <Typography onClick={clickImgInput}>
+                    <FormattedMessage
+                      defaultMessage="Change photo"
+                      description="button"
                     />
-                  </div>
-                )}
-              </div>
+                  </Typography>
+                  <Typography onClick={onImageDelete}>
+                    <FormattedMessage
+                      defaultMessage="Delete photo"
+                      description="button"
+                    />
+                  </Typography>
+                  <input
+                    className={classes.fileField}
+                    id="fileUpload"
+                    onChange={event => onImageUpload(event.target.files[0])}
+                    type="file"
+                    ref={imgInputAnchor}
+                  />
+                </div>
+              )}
             </div>
-            <div>
-              <div className={classes.propGrid}>
-                <div className={classes.prop}>
-                  <TextField
-                    label={intl.formatMessage(commonMessages.firstName)}
-                    value={data.firstName}
-                    name="firstName"
-                    onChange={onChange}
-                    fullWidth
-                  />
-                </div>
-                <div className={classes.prop}>
-                  <TextField
-                    label={intl.formatMessage(commonMessages.lastName)}
-                    value={data.lastName}
-                    name="lastName"
-                    onChange={onChange}
-                    fullWidth
-                  />
-                </div>
-                <div className={classes.prop}>
-                  <TextField
-                    label={intl.formatMessage(commonMessages.email)}
-                    value={data.email}
-                    name="email"
-                    onChange={onChange}
-                    fullWidth
-                  />
-                </div>
+          </div>
+          <div>
+            <div className={classes.propGrid}>
+              <div className={classes.prop}>
+                <TextField
+                  label={intl.formatMessage(commonMessages.firstName)}
+                  value={data.firstName}
+                  name="firstName"
+                  onChange={onChange}
+                  fullWidth
+                />
+              </div>
+              <div className={classes.prop}>
+                <TextField
+                  label={intl.formatMessage(commonMessages.lastName)}
+                  value={data.lastName}
+                  name="lastName"
+                  onChange={onChange}
+                  fullWidth
+                />
+              </div>
+              <div className={classes.prop}>
+                <TextField
+                  label={intl.formatMessage(commonMessages.email)}
+                  value={data.email}
+                  name="email"
+                  onChange={onChange}
+                  fullWidth
+                />
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
-    );
-  }
-);
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
 StaffProperties.displayName = "StaffProperties";
 export default StaffProperties;

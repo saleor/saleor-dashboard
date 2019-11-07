@@ -224,10 +224,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
                     {canOpenBulkActionDialog && (
                       <DialogContentText>
                         <FormattedMessage
-                          defaultMessage="Are you sure you want to delete {counter, plural,
-                      one {this voucher}
-                      other {{displayQuantity} vouchers}
-                    }?"
+                          defaultMessage="Are you sure you want to delete {counter,plural,one{this voucher} other{{displayQuantity} vouchers}}?"
                           description="dialog content"
                           values={{
                             counter: params.ids.length,

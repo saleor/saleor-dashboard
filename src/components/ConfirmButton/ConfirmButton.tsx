@@ -1,11 +1,10 @@
-import { Omit } from "@material-ui/core";
 import Button, { ButtonProps } from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   createStyles,
   Theme,
-  withStyles,
-  WithStyles
+  WithStyles,
+  withStyles
 } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/Check";
 import { buttonMessages } from "@saleor/intl";

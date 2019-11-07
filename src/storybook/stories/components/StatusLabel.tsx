@@ -6,8 +6,8 @@ import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 
 storiesOf("Generics / StatusLabel", module)
-.addDecorator(CardDecorator)
-.addDecorator(Decorator)
+  .addDecorator(CardDecorator)
+  .addDecorator(Decorator)
   .add("when success", () => (
     <StatusLabel label="Example label" status="success" />
   ))

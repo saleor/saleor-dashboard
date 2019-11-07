@@ -35,6 +35,7 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
       ? findInEnum(qs.sort, ProductListUrlSortField)
       : ProductListUrlSortField.name
   };
+
   return <ProductListComponent params={params} />;
 };
 

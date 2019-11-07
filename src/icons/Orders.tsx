@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const Orders = createSvgIcon(
+const Orders = createSvgIcon(
   <>
     <path
       fillRule="evenodd"
@@ -10,6 +10,6 @@ export const Orders = createSvgIcon(
       fill="#06847B"
     />
   </>
-);
-Orders.displayName = "Orders";
+, "Orders")
+
 export default Orders;

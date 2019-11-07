@@ -1,2 +1,2 @@
-export { default } from './CustomerAddress';
-export * from './CustomerAddress';
+export { default } from "./CustomerAddress";
+export * from "./CustomerAddress";

@@ -220,10 +220,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
                   >
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Are you sure you want to delete {counter, plural,
-                          one {this customer}
-                          other {{displayQuantity} customers}
-                        }?"
+                        defaultMessage="Are you sure you want to delete {counter,plural,one{this customer} other{{displayQuantity} customers}}?"
                         values={{
                           counter: maybe(() => params.ids.length),
                           displayQuantity: (

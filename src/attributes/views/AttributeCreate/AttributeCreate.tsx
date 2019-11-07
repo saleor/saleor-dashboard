@@ -91,7 +91,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           field: "name",
           message: intl.formatMessage(
             {
-              defaultMessage: "A value named { name } already exists",
+              defaultMessage: "A value named {name} already exists",
               description: "attribute value edit error"
             },
             {
@@ -112,7 +112,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           field: "name",
           message: intl.formatMessage(
             {
-              defaultMessage: "A value named { name } already exists",
+              defaultMessage: "A value named {name} already exists",
               description: "attribute value edit error"
             },
             {

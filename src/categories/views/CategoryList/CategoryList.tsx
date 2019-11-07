@@ -222,10 +222,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
                   >
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Are you sure you want to delete {counter, plural,
-                        one {this category}
-                        other {{displayQuantity} categories}
-                      }?"
+                        defaultMessage="Are you sure you want to delete {counter,plural,one{this category} other{{displayQuantity} categories}}?"
                         values={{
                           counter: maybe(() => params.ids.length),
                           displayQuantity: (

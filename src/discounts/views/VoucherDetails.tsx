@@ -572,10 +572,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               {canOpenBulkActionDialog && (
                                 <DialogContentText>
                                   <FormattedMessage
-                                    defaultMessage="Are you sure you want to unassign {counter, plural,
-                                    one {this category}
-                                    other {{displayQuantity} categories}
-                                  }?"
+                                    defaultMessage="Are you sure you want to unassign {counter,plural,one{this category} other{{displayQuantity} categories}}?"
                                     description="dialog content"
                                     values={{
                                       counter: params.ids.length,
@@ -606,10 +603,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               {canOpenBulkActionDialog && (
                                 <DialogContentText>
                                   <FormattedMessage
-                                    defaultMessage="Are you sure you want to unassign {counter, plural,
-                                    one {this collection}
-                                    other {{displayQuantity} collections}
-                                  }?"
+                                    defaultMessage="Are you sure you want to unassign {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
                                     description="dialog content"
                                     values={{
                                       counter: params.ids.length,
@@ -640,10 +634,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               {canOpenBulkActionDialog && (
                                 <DialogContentText>
                                   <FormattedMessage
-                                    defaultMessage="Are you sure you want to unassign {counter, plural,
-                                    one {this product}
-                                    other {{displayQuantity} products}
-                                  }?"
+                                    defaultMessage="Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?"
                                     description="dialog content"
                                     values={{
                                       counter: params.ids.length,

@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const Ballot = createSvgIcon(
+const Ballot = createSvgIcon(
   <>
     <rect width="24" height="24" fill="black" fillOpacity="0" />
     <rect width="18" height="18" fillOpacity="0" transform="translate(3 3)" />
@@ -12,6 +12,6 @@ export const Ballot = createSvgIcon(
     <path d="M11 6H6V11H11V6ZM10 10H7V7H10V10Z" />
     <path d="M11 13H6V18H11V13ZM10 17H7V14H10V17Z" />
   </>
-);
-Ballot.displayName = "Ballot";
+, "Ballot")
+
 export default Ballot;

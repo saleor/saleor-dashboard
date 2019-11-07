@@ -1,8 +1,7 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -32,9 +31,9 @@ export enum VoucherType {
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     hr: {
-      margin: `${theme.spacing.unit * 2}px 0`
+      margin: theme.spacing(2, 0)
     }
   }),
   {

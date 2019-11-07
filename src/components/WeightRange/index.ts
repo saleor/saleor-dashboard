@@ -1,2 +1,2 @@
-export { default } from './WeightRange';
-export * from './WeightRange';
+export { default } from "./WeightRange";
+export * from "./WeightRange";

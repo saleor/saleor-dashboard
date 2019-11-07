@@ -3,6 +3,7 @@ import React from "react";
 
 import Decorator from "@saleor/storybook/Decorator";
 import { WebhookErrorCode } from "@saleor/types/globalTypes";
+import { webhook } from "../../fixtures";
 import WebhooksDetailsPage, {
   WebhooksDetailsPageProps
 } from "./WebhooksDetailsPage";
@@ -16,7 +17,7 @@ const props: WebhooksDetailsPageProps = {
   onSubmit: () => undefined,
   saveButtonBarState: "default",
   services: [],
-  webhook: null
+  webhook
 };
 storiesOf("Views / Webhooks / Webhook details", module)
   .addDecorator(Decorator)

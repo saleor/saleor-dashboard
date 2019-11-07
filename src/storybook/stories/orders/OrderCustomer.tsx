@@ -40,9 +40,6 @@ storiesOf("Orders / OrderCustomer", module)
   .add("editable", () => (
     <OrderCustomer {...props} canEditAddresses={true} canEditCustomer={true} />
   ))
-  .add("editable", () => (
-    <OrderCustomer {...props} canEditAddresses={true} canEditCustomer={true} />
-  ))
   .add("no user permissions", () => (
     <OrderCustomer {...props} userPermissions={[]} />
   ));

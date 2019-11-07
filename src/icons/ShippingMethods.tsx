@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const ShippingMethods = createSvgIcon(
+const ShippingMethods = createSvgIcon(
   <>
     <path
       fillRule="evenodd"
@@ -10,6 +10,6 @@ export const ShippingMethods = createSvgIcon(
       fill="#06847B"
     />
   </>
-);
-ShippingMethods.displayName = "ShippingMethods";
+, "ShippingMethods")
+
 export default ShippingMethods;

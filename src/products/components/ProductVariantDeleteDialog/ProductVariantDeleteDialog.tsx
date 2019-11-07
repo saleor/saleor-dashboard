@@ -4,12 +4,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -18,19 +13,17 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    deleteButton: {
-      "&:hover": {
-        backgroundColor: theme.palette.error.main
-      },
-      backgroundColor: theme.palette.error.main,
-      color: theme.palette.error.contrastText
-    }
-  });
+const useStyles = makeStyles(theme => ({
+  deleteButton: {
+    "&:hover": {
+      backgroundColor: theme.palette.error.main
+    },
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText
+  }
+}));
 
-export interface ProductVariantDeleteDialogProps
-  extends WithStyles<typeof styles> {
+export interface ProductVariantDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name: string;
@@ -38,17 +31,14 @@ export interface ProductVariantDeleteDialogProps
   onConfirm?();
 }
 
-const ProductVariantDeleteDialog = withStyles(styles, {
-  name: "ProductVariantDeleteDialog"
-})(
-  ({
-    classes,
-    confirmButtonState,
-    name,
-    open,
-    onConfirm,
-    onClose
-  }: ProductVariantDeleteDialogProps) => (
+const ProductVariantDeleteDialog: React.FC<
+  ProductVariantDeleteDialogProps
+> = props => {
+  const { confirmButtonState, name, open, onConfirm, onClose } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
         <FormattedMessage
@@ -84,7 +74,7 @@ const ProductVariantDeleteDialog = withStyles(styles, {
         </ConfirmButton>
       </DialogActions>
     </Dialog>
-  )
-);
+  );
+};
 ProductVariantDeleteDialog.displayName = "ProductVariantDeleteDialog";
 export default ProductVariantDeleteDialog;

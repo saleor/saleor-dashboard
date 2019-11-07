@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -19,15 +14,15 @@ import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
 import { CollectionDetails_collection_backgroundImage } from "../../types/CollectionDetails";
 
-const styles = (theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles(
+  theme => ({
     PhotosIcon: {
       height: "64px",
       margin: "0 auto",
       width: "64px"
     },
     PhotosIconContainer: {
-      margin: `${theme.spacing.unit * 5}px 0`,
+      margin: theme.spacing(5, 0),
       textAlign: "center"
     },
     fileField: {
@@ -42,15 +37,19 @@ const styles = (theme: Theme) =>
     imageContainer: {
       background: "#ffffff",
       border: "1px solid #eaeaea",
-      borderRadius: theme.spacing.unit,
+      borderRadius: theme.spacing(),
       height: 148,
       justifySelf: "start",
       overflow: "hidden",
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       position: "relative",
       width: 148
     }
-  });
+  }),
+  {
+    name: "CollectionImage"
+  }
+);
 
 export interface CollectionImageProps {
   data: {
@@ -62,83 +61,78 @@ export interface CollectionImageProps {
   onImageUpload: (file: File) => void;
 }
 
-export const CollectionImage = withStyles(styles)(
-  ({
-    classes,
-    data,
-    onImageUpload,
-    image,
-    onChange,
-    onImageDelete
-  }: CollectionImageProps & WithStyles<typeof styles>) => {
-    const anchor = React.useRef<HTMLInputElement>();
-    const intl = useIntl();
+export const CollectionImage: React.FC<CollectionImageProps> = props => {
+  const { data, onImageUpload, image, onChange, onImageDelete } = props;
 
-    const handleImageUploadButtonClick = () => anchor.current.click();
+  const anchor = React.useRef<HTMLInputElement>();
+  const classes = useStyles(props);
+  const intl = useIntl();
 
-    return (
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
-            defaultMessage: "Background Image (optional)",
-            description: "section header"
-          })}
-          toolbar={
-            <>
-              <Button
-                variant="text"
-                color="primary"
-                onClick={handleImageUploadButtonClick}
-              >
-                <FormattedMessage {...commonMessages.uploadImage} />
-              </Button>
-              <input
-                className={classes.fileField}
-                id="fileUpload"
-                onChange={event => onImageUpload(event.target.files[0])}
-                type="file"
-                ref={anchor}
-              />
-            </>
-          }
-        />
-        {image === undefined ? (
-          <CardContent>
-            <div>
-              <div className={classes.imageContainer}>
-                <Skeleton />
-              </div>
-            </div>
-          </CardContent>
-        ) : image === null ? (
-          <ImageUpload onImageUpload={onImageUpload} />
-        ) : (
-          <CardContent>
-            <ImageTile image={image} onImageDelete={onImageDelete} />
-          </CardContent>
-        )}
-        {image && (
+  const handleImageUploadButtonClick = () => anchor.current.click();
+
+  return (
+    <Card>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Background Image (optional)",
+          description: "section header"
+        })}
+        toolbar={
           <>
-            <Hr />
-            <CardContent>
-              <TextField
-                name="backgroundImageAlt"
-                label={intl.formatMessage(commonMessages.description)}
-                helperText={intl.formatMessage({
-                  defaultMessage: "(Optional)",
-                  description: "field is optional"
-                })}
-                value={data.backgroundImageAlt}
-                onChange={onChange}
-                fullWidth
-                multiline
-              />
-            </CardContent>
+            <Button
+              variant="text"
+              color="primary"
+              onClick={handleImageUploadButtonClick}
+            >
+              <FormattedMessage {...commonMessages.uploadImage} />
+            </Button>
+            <input
+              className={classes.fileField}
+              id="fileUpload"
+              onChange={event => onImageUpload(event.target.files[0])}
+              type="file"
+              ref={anchor}
+            />
           </>
-        )}
-      </Card>
-    );
-  }
-);
+        }
+      />
+      {image === undefined ? (
+        <CardContent>
+          <div>
+            <div className={classes.imageContainer}>
+              <Skeleton />
+            </div>
+          </div>
+        </CardContent>
+      ) : image === null ? (
+        <ImageUpload onImageUpload={onImageUpload} />
+      ) : (
+        <CardContent>
+          <ImageTile image={image} onImageDelete={onImageDelete} />
+        </CardContent>
+      )}
+      {image && (
+        <>
+          <Hr />
+          <CardContent>
+            <TextField
+              name="backgroundImageAlt"
+              label={intl.formatMessage(commonMessages.description)}
+              helperText={intl.formatMessage({
+                defaultMessage: "(Optional)",
+                description: "field is optional"
+              })}
+              value={data.backgroundImageAlt}
+              onChange={onChange}
+              fullWidth
+              multiline
+            />
+          </CardContent>
+        </>
+      )}
+    </Card>
+  );
+};
+
 CollectionImage.displayName = "CollectionImage";
 export default CollectionImage;

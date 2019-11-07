@@ -1,10 +1,11 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const NoPhoto = createSvgIcon(
+const ArrowDropdown = createSvgIcon(
   <g style={{ fillRule: "evenodd" }}>
     <path d="M7 10l5 5 5-5z" />
-  </g>
+  </g>,
+  "ArrowDropdown"
 );
-NoPhoto.displayName = "NoPhoto";
-export default NoPhoto;
+
+export default ArrowDropdown;

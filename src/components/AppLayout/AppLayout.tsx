@@ -8,12 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -41,8 +36,8 @@ import createMenuStructure from "./menuStructure";
 import ResponsiveDrawer from "./ResponsiveDrawer";
 import ThemeSwitch from "./ThemeSwitch";
 
-const styles = (theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles(
+  theme => ({
     appAction: {
       [theme.breakpoints.down("sm")]: {
         left: 0,
@@ -56,15 +51,15 @@ const styles = (theme: Theme) =>
     },
     appLoader: {
       height: appLoaderHeight,
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
       zIndex: 1201
     },
     appLoaderPlaceholder: {
       height: appLoaderHeight,
-      marginBottom: theme.spacing.unit * 2
+      marginBottom: theme.spacing(2)
     },
     arrow: {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
       transition: theme.transitions.duration.standard + "ms"
     },
     content: {
@@ -82,12 +77,12 @@ const styles = (theme: Theme) =>
       paddingLeft: drawerWidth
     },
     darkThemeSwitch: {
-      marginRight: theme.spacing.unit * 2
+      marginRight: theme.spacing(2)
     },
     header: {
       display: "flex",
       height: 40,
-      marginBottom: theme.spacing.unit * 3
+      marginBottom: theme.spacing(3)
     },
     isMenuSmall: {
       "& path": {
@@ -186,8 +181,8 @@ const styles = (theme: Theme) =>
       borderRadius: "50%",
       cursor: "pointer",
       height: 42,
-      left: theme.spacing.unit,
-      marginRight: theme.spacing.unit * 2,
+      left: theme.spacing(),
+      marginRight: theme.spacing(2),
       position: "relative",
       transform: "rotate(0deg)",
       transition: `${theme.transitions.duration.shorter}ms ease-in-out`,
@@ -236,7 +231,7 @@ const styles = (theme: Theme) =>
         padding: 0
       },
       background: theme.palette.background.paper,
-      padding: `0 ${theme.spacing.unit * 4}px`
+      padding: `0 ${theme.spacing(4)}px`
     },
     spacer: {
       flex: 1
@@ -260,259 +255,240 @@ const styles = (theme: Theme) =>
       flex: 1,
       flexGrow: 1,
       marginLeft: 0,
-      paddingBottom: theme.spacing.unit,
+      paddingBottom: theme.spacing(),
       [theme.breakpoints.up("sm")]: {
-        paddingBottom: theme.spacing.unit * 3
+        paddingBottom: theme.spacing(3)
       }
     },
     viewContainer: {
-      minHeight: `calc(100vh - ${theme.spacing.unit * 2 +
-        appLoaderHeight +
-        70}px)`
+      minHeight: `calc(100vh - ${theme.spacing(2) + appLoaderHeight + 70}px)`
     }
-  });
+  }),
+  {
+    name: "AppLayout"
+  }
+);
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
 
-const AppLayout = withStyles(styles, {
-  name: "AppLayout"
-})(
-  withRouter<AppLayoutProps & RouteComponentProps<any>, any>(
-    ({
-      classes,
-      children,
-      location
-    }: AppLayoutProps &
-      WithStyles<typeof styles> &
-      RouteComponentProps<any>) => {
-      const { isDark, toggleTheme } = useTheme();
-      const [isMenuSmall, setMenuSmall] = useLocalStorage("isMenuSmall", false);
-      const [isDrawerOpened, setDrawerState] = React.useState(false);
-      const [isMenuOpened, setMenuState] = React.useState(false);
-      const appActionAnchor = React.useRef<HTMLDivElement>();
-      const appHeaderAnchor = React.useRef<HTMLDivElement>();
-      const anchor = React.useRef<HTMLDivElement>();
-      const { logout, user } = useUser();
-      const navigate = useNavigator();
-      const intl = useIntl();
+const AppLayout = withRouter<AppLayoutProps & RouteComponentProps<any>, any>(
+  ({ children, location }: AppLayoutProps & RouteComponentProps<any>) => {
+    const classes = useStyles({});
+    const { isDark, toggleTheme } = useTheme();
+    const [isMenuSmall, setMenuSmall] = useLocalStorage("isMenuSmall", false);
+    const [isDrawerOpened, setDrawerState] = React.useState(false);
+    const [isMenuOpened, setMenuState] = React.useState(false);
+    const appActionAnchor = React.useRef<HTMLDivElement>();
+    const appHeaderAnchor = React.useRef<HTMLDivElement>();
+    const anchor = React.useRef<HTMLDivElement>();
+    const { logout, user } = useUser();
+    const navigate = useNavigator();
+    const intl = useIntl();
 
-      const menuStructure = createMenuStructure(intl);
-      const configurationMenu = createConfigurationMenu(intl);
-      const userPermissions = maybe(() => user.permissions, []);
+    const menuStructure = createMenuStructure(intl);
+    const configurationMenu = createConfigurationMenu(intl);
+    const userPermissions = maybe(() => user.permissions, []);
 
-      const renderConfigure = configurationMenu.some(section =>
-        section.menuItems.some(
-          menuItem =>
-            !!userPermissions.find(
-              userPermission => userPermission.code === menuItem.permission
-            )
-        )
-      );
+    const renderConfigure = configurationMenu.some(section =>
+      section.menuItems.some(
+        menuItem =>
+          !!userPermissions.find(
+            userPermission => userPermission.code === menuItem.permission
+          )
+      )
+    );
 
-      const handleLogout = () => {
-        setMenuState(false);
-        logout();
-      };
+    const handleLogout = () => {
+      setMenuState(false);
+      logout();
+    };
 
-      const handleViewerProfile = () => {
-        setMenuState(false);
-        navigate(staffMemberDetailsUrl(user.id));
-      };
+    const handleViewerProfile = () => {
+      setMenuState(false);
+      navigate(staffMemberDetailsUrl(user.id));
+    };
 
-      const handleMenuItemClick = (
-        url: string,
-        event: React.MouseEvent<any>
-      ) => {
-        event.stopPropagation();
-        event.preventDefault();
-        setDrawerState(false);
-        navigate(url);
-      };
+    const handleMenuItemClick = (url: string, event: React.MouseEvent<any>) => {
+      event.stopPropagation();
+      event.preventDefault();
+      setDrawerState(false);
+      navigate(url);
+    };
 
-      const handleIsMenuSmall = () => {
-        setMenuSmall(!isMenuSmall);
-      };
+    const handleIsMenuSmall = () => {
+      setMenuSmall(!isMenuSmall);
+    };
 
-      return (
-        <AppProgressProvider>
-          {({ isProgress }) => (
-            <AppHeaderContext.Provider value={appHeaderAnchor}>
-              <AppActionContext.Provider value={appActionAnchor}>
-                <div className={classes.root}>
-                  <div className={classes.sideBar}>
-                    <ResponsiveDrawer
-                      onClose={() => setDrawerState(false)}
-                      open={isDrawerOpened}
-                      small={!isMenuSmall}
-                    >
-                      <div
-                        className={classNames(classes.logo, {
-                          [classes.logoSmall]: isMenuSmall,
-                          [classes.logoDark]: isDark
-                        })}
-                      >
-                        <SVG
-                          src={
-                            isMenuSmall ? saleorDarkLogoSmall : saleorDarkLogo
-                          }
-                        />
-                      </div>
-                      <Hidden smDown>
-                        <div
-                          className={classNames(classes.isMenuSmall, {
-                            [classes.isMenuSmallHide]: isMenuSmall,
-                            [classes.isMenuSmallDark]: isDark
-                          })}
-                          onClick={handleIsMenuSmall}
-                        >
-                          <SVG src={menuArrowIcon} />
-                        </div>
-                      </Hidden>
-                      <MenuList
-                        className={
-                          isMenuSmall ? classes.menuSmall : classes.menu
-                        }
-                        menuItems={menuStructure}
-                        isMenuSmall={!isMenuSmall}
-                        location={location.pathname}
-                        user={user}
-                        renderConfigure={renderConfigure}
-                        onMenuItemClick={handleMenuItemClick}
-                      />
-                    </ResponsiveDrawer>
-                  </div>
-                  <div
-                    className={classNames(classes.content, {
-                      [classes.contentToggle]: isMenuSmall
-                    })}
+    return (
+      <AppProgressProvider>
+        {({ isProgress }) => (
+          <AppHeaderContext.Provider value={appHeaderAnchor}>
+            <AppActionContext.Provider value={appActionAnchor}>
+              <div className={classes.root}>
+                <div className={classes.sideBar}>
+                  <ResponsiveDrawer
+                    onClose={() => setDrawerState(false)}
+                    open={isDrawerOpened}
+                    small={!isMenuSmall}
                   >
-                    {isProgress ? (
-                      <LinearProgress
-                        className={classes.appLoader}
-                        color="primary"
+                    <div
+                      className={classNames(classes.logo, {
+                        [classes.logoSmall]: isMenuSmall,
+                        [classes.logoDark]: isDark
+                      })}
+                    >
+                      <SVG
+                        src={isMenuSmall ? saleorDarkLogoSmall : saleorDarkLogo}
                       />
-                    ) : (
-                      <div className={classes.appLoaderPlaceholder} />
-                    )}
-                    <div className={classes.viewContainer}>
-                      <div>
-                        <Container>
-                          <div className={classes.header}>
+                    </div>
+                    <Hidden smDown>
+                      <div
+                        className={classNames(classes.isMenuSmall, {
+                          [classes.isMenuSmallHide]: isMenuSmall,
+                          [classes.isMenuSmallDark]: isDark
+                        })}
+                        onClick={handleIsMenuSmall}
+                      >
+                        <SVG src={menuArrowIcon} />
+                      </div>
+                    </Hidden>
+                    <MenuList
+                      className={isMenuSmall ? classes.menuSmall : classes.menu}
+                      menuItems={menuStructure}
+                      isMenuSmall={!isMenuSmall}
+                      location={location.pathname}
+                      user={user}
+                      renderConfigure={renderConfigure}
+                      onMenuItemClick={handleMenuItemClick}
+                    />
+                  </ResponsiveDrawer>
+                </div>
+                <div
+                  className={classNames(classes.content, {
+                    [classes.contentToggle]: isMenuSmall
+                  })}
+                >
+                  {isProgress ? (
+                    <LinearProgress
+                      className={classes.appLoader}
+                      color="primary"
+                    />
+                  ) : (
+                    <div className={classes.appLoaderPlaceholder} />
+                  )}
+                  <div className={classes.viewContainer}>
+                    <div>
+                      <Container>
+                        <div className={classes.header}>
+                          <div
+                            className={classNames(classes.menuIcon, {
+                              [classes.menuIconOpen]: isDrawerOpened,
+                              [classes.menuIconDark]: isDark
+                            })}
+                            onClick={() => setDrawerState(!isDrawerOpened)}
+                          >
+                            <span />
+                            <span />
+                            <span />
+                            <span />
+                          </div>
+                          <div ref={appHeaderAnchor} />
+                          <div className={classes.spacer} />
+                          <div className={classes.userBar}>
+                            <ThemeSwitch
+                              className={classes.darkThemeSwitch}
+                              checked={isDark}
+                              onClick={toggleTheme}
+                            />
                             <div
-                              className={classNames(classes.menuIcon, {
-                                [classes.menuIconOpen]: isDrawerOpened,
-                                [classes.menuIconDark]: isDark
-                              })}
-                              onClick={() => setDrawerState(!isDrawerOpened)}
+                              className={classes.userMenuContainer}
+                              ref={anchor}
                             >
-                              <span />
-                              <span />
-                              <span />
-                              <span />
-                            </div>
-                            <div ref={appHeaderAnchor} />
-                            <div className={classes.spacer} />
-                            <div className={classes.userBar}>
-                              <ThemeSwitch
-                                className={classes.darkThemeSwitch}
-                                checked={isDark}
-                                onClick={toggleTheme}
+                              <Chip
+                                avatar={
+                                  user.avatar && (
+                                    <Avatar alt="user" src={user.avatar.url} />
+                                  )
+                                }
+                                className={classes.userChip}
+                                label={
+                                  <>
+                                    {user.email}
+                                    <ArrowDropdown
+                                      className={classNames(classes.arrow, {
+                                        [classes.rotate]: isMenuOpened
+                                      })}
+                                    />
+                                  </>
+                                }
+                                onClick={() => setMenuState(!isMenuOpened)}
                               />
-                              <div
-                                className={classes.userMenuContainer}
-                                ref={anchor}
+                              <Popper
+                                className={classes.popover}
+                                open={isMenuOpened}
+                                anchorEl={anchor.current}
+                                transition
+                                disablePortal
+                                placement="bottom-end"
                               >
-                                <Chip
-                                  avatar={
-                                    user.avatar && (
-                                      <Avatar
-                                        alt="user"
-                                        src={user.avatar.url}
-                                      />
-                                    )
-                                  }
-                                  className={classes.userChip}
-                                  label={
-                                    <>
-                                      {user.email}
-                                      <ArrowDropdown
-                                        className={classNames(classes.arrow, {
-                                          [classes.rotate]: isMenuOpened
-                                        })}
-                                      />
-                                    </>
-                                  }
-                                  onClick={() => setMenuState(!isMenuOpened)}
-                                />
-                                <Popper
-                                  className={classes.popover}
-                                  open={isMenuOpened}
-                                  anchorEl={anchor.current}
-                                  transition
-                                  disablePortal
-                                  placement="bottom-end"
-                                >
-                                  {({ TransitionProps, placement }) => (
-                                    <Grow
-                                      {...TransitionProps}
-                                      style={{
-                                        transformOrigin:
-                                          placement === "bottom"
-                                            ? "right top"
-                                            : "right bottom"
-                                      }}
-                                    >
-                                      <Paper>
-                                        <ClickAwayListener
-                                          onClickAway={() =>
-                                            setMenuState(false)
-                                          }
-                                          mouseEvent="onClick"
-                                        >
-                                          <Menu>
-                                            <MenuItem
-                                              className={classes.userMenuItem}
-                                              onClick={handleViewerProfile}
-                                            >
-                                              <FormattedMessage
-                                                defaultMessage="Account Settings"
-                                                description="button"
-                                              />
-                                            </MenuItem>
-                                            <MenuItem
-                                              className={classes.userMenuItem}
-                                              onClick={handleLogout}
-                                            >
-                                              <FormattedMessage
-                                                defaultMessage="Log out"
-                                                description="button"
-                                              />
-                                            </MenuItem>
-                                          </Menu>
-                                        </ClickAwayListener>
-                                      </Paper>
-                                    </Grow>
-                                  )}
-                                </Popper>
-                              </div>
+                                {({ TransitionProps, placement }) => (
+                                  <Grow
+                                    {...TransitionProps}
+                                    style={{
+                                      transformOrigin:
+                                        placement === "bottom"
+                                          ? "right top"
+                                          : "right bottom"
+                                    }}
+                                  >
+                                    <Paper>
+                                      <ClickAwayListener
+                                        onClickAway={() => setMenuState(false)}
+                                        mouseEvent="onClick"
+                                      >
+                                        <Menu>
+                                          <MenuItem
+                                            className={classes.userMenuItem}
+                                            onClick={handleViewerProfile}
+                                          >
+                                            <FormattedMessage
+                                              defaultMessage="Account Settings"
+                                              description="button"
+                                            />
+                                          </MenuItem>
+                                          <MenuItem
+                                            className={classes.userMenuItem}
+                                            onClick={handleLogout}
+                                          >
+                                            <FormattedMessage
+                                              defaultMessage="Log out"
+                                              description="button"
+                                            />
+                                          </MenuItem>
+                                        </Menu>
+                                      </ClickAwayListener>
+                                    </Paper>
+                                  </Grow>
+                                )}
+                              </Popper>
                             </div>
                           </div>
-                        </Container>
-                      </div>
-                      <main className={classes.view}>{children}</main>
+                        </div>
+                      </Container>
                     </div>
-                    <div className={classes.appAction} ref={appActionAnchor} />
+                    <main className={classes.view}>{children}</main>
                   </div>
+                  <div className={classes.appAction} ref={appActionAnchor} />
                 </div>
-              </AppActionContext.Provider>
-            </AppHeaderContext.Provider>
-          )}
-        </AppProgressProvider>
-      );
-    }
-  )
+              </div>
+            </AppActionContext.Provider>
+          </AppHeaderContext.Provider>
+        )}
+      </AppProgressProvider>
+    );
+  }
 );
 
 export default AppLayout;

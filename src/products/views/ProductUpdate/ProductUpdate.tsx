@@ -359,10 +359,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                           >
                             <DialogContentText>
                               <FormattedMessage
-                                defaultMessage="Are you sure you want to delete {counter, plural,
-            one {this variant}
-            other {{displayQuantity} variants}
-          }?"
+                                defaultMessage="Are you sure you want to delete {counter,plural,one{this variant} other{{displayQuantity} variants}}?"
                                 description="dialog content"
                                 values={{
                                   counter: maybe(() => params.ids.length),

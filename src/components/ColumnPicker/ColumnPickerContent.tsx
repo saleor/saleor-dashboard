@@ -2,9 +2,8 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { Theme } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
-import makeStyles from "@material-ui/styles/makeStyles";
 import classNames from "classnames";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
@@ -31,7 +30,7 @@ export interface ColumnPickerContentProps extends Partial<FetchMoreProps> {
   onSave: () => void;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(theme => ({
   actionBar: {
     display: "flex",
     justifyContent: "space-between"
@@ -41,28 +40,28 @@ const useStyles = makeStyles((theme: Theme) => ({
     transition: theme.transitions.duration.short + "ms"
   },
   cancelButton: {
-    marginRight: theme.spacing.unit * 2
+    marginRight: theme.spacing(2)
   },
   content: {
     display: "grid",
-    gridColumnGap: theme.spacing.unit * 3,
+    gridColumnGap: theme.spacing(3),
     gridTemplateColumns: "repeat(3, 1fr)",
     maxHeight: 256,
     overflowX: "visible",
     overflowY: "scroll",
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px`
+    padding: theme.spacing(2, 3)
   },
   contentContainer: {
     padding: 0
   },
   dropShadow: {
-    boxShadow: `0px -5px 10px 0px ${theme.overrides.MuiCard.root.borderColor}`
+    boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
   },
   loadMoreLoaderContainer: {
     alignItems: "center",
     display: "flex",
     gridColumnEnd: "span 3",
-    height: theme.spacing.unit * 3,
+    height: theme.spacing(3),
     justifyContent: "center"
   },
   root: {

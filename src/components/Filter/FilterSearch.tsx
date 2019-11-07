@@ -1,5 +1,4 @@
-import { Theme } from "@material-ui/core/styles";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -17,7 +16,7 @@ export interface FilterSearchProps extends SearchPageProps {
 }
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     tabAction: {
       display: "inline-block"
     },
@@ -25,8 +24,8 @@ const useStyles = makeStyles(
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       justifyContent: "flex-end",
-      marginTop: theme.spacing.unit,
-      padding: `0 ${theme.spacing.unit * 3}px ${theme.spacing.unit}px`
+      marginTop: theme.spacing(),
+      padding: theme.spacing(0, 1, 3, 1)
     }
   }),
   {

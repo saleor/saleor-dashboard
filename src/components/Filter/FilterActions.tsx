@@ -1,6 +1,6 @@
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField, { TextFieldProps } from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/styles";
+import classNames from "classnames";
 import React from "react";
 
 import { FilterContentSubmitData, IFilter } from "../Filter";
@@ -8,7 +8,7 @@ import Filter from "./Filter";
 
 const useInputStyles = makeStyles({
   input: {
-    padding: "10px 12px"
+    padding: "10.5px 12px"
   },
   root: {
     flex: 1
@@ -17,6 +17,7 @@ const useInputStyles = makeStyles({
 
 const Search: React.FC<TextFieldProps> = props => {
   const classes = useInputStyles({});
+
   return (
     <TextField
       {...props}
@@ -29,13 +30,14 @@ const Search: React.FC<TextFieldProps> = props => {
 };
 
 const useStyles = makeStyles(
-  (theme: Theme) => ({
+  theme => ({
     actionContainer: {
       display: "flex",
       flexWrap: "wrap",
-      padding: `${theme.spacing.unit * 1.5}px ${theme.spacing.unit * 3}px ${
-        theme.spacing.unit
-      }px`
+      padding: theme.spacing(1, 3)
+    },
+    searchOnly: {
+      paddingBottom: theme.spacing(1.5)
     }
   }),
   {
@@ -62,7 +64,7 @@ export const FilterActionsOnlySearch: React.FC<
   const classes = useStyles(props);
 
   return (
-    <div className={classes.actionContainer}>
+    <div className={classNames(classes.actionContainer, classes.searchOnly)}>
       <Search
         fullWidth
         placeholder={placeholder}

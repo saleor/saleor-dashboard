@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-export const Attributes = createSvgIcon(
+const Attributes = createSvgIcon(
   <>
     <path
       fillRule="evenodd"
@@ -10,6 +10,6 @@ export const Attributes = createSvgIcon(
       fill="#06847B"
     />
   </>
-);
-Attributes.displayName = "Attributes";
+, "Attributes")
+
 export default Attributes;

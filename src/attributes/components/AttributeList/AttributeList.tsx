@@ -1,10 +1,9 @@
-import { Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import makeStyles from "@material-ui/styles/makeStyles";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -21,7 +20,7 @@ export interface AttributeListProps extends ListProps, ListActions {
   attributes: AttributeList_attributes_edges_node[];
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(theme => ({
   [theme.breakpoints.up("lg")]: {
     colFaceted: {
       width: 150

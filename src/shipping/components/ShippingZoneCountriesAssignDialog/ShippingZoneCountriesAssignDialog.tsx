@@ -3,12 +3,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -26,7 +21,6 @@ import ConfirmButton, {
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-// tslint:disable no-submodule-imports
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { buttonMessages } from "@saleor/intl";
 
@@ -46,30 +40,28 @@ export interface ShippingZoneCountriesAssignDialogProps {
   onConfirm: (data: FormData) => void;
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    checkboxCell: {
-      paddingLeft: 0
-    },
-    container: {
-      maxHeight: 400
-    },
-    heading: {
-      marginBottom: theme.spacing.unit * 2,
-      marginTop: theme.spacing.unit * 2
-    },
-    table: {
-      border: "1px solid " + theme.palette.grey[200]
-    },
-    wideCell: {
-      width: "100%"
-    }
-  });
-const ShippingZoneCountriesAssignDialog = withStyles(styles, {
-  name: "ShippingZoneCountriesAssignDialog"
-})(
-  ({
-    classes,
+const useStyles = makeStyles(theme => ({
+  checkboxCell: {
+    paddingLeft: 0
+  },
+  container: {
+    maxHeight: 400
+  },
+  heading: {
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2)
+  },
+  table: {
+    border: "1px solid " + theme.palette.grey[200]
+  },
+  wideCell: {
+    width: "100%"
+  }
+}));
+const ShippingZoneCountriesAssignDialog: React.FC<
+  ShippingZoneCountriesAssignDialogProps
+> = props => {
+  const {
     confirmButtonState,
     isDefault,
     onClose,
@@ -77,165 +69,163 @@ const ShippingZoneCountriesAssignDialog = withStyles(styles, {
     open,
     initial,
     onConfirm
-  }: ShippingZoneCountriesAssignDialogProps & WithStyles<typeof styles>) => {
-    const intl = useIntl();
+  } = props;
 
-    const initialForm: FormData = {
-      countries: initial,
-      query: "",
-      restOfTheWorld: isDefault
-    };
-    return (
-      <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-        <Form initial={initialForm} onSubmit={onConfirm}>
-          {({ data, change }) => {
-            const countrySelectionMap = countries.reduce((acc, country) => {
-              acc[country.code] = !!data.countries.find(
-                selectedCountries => selectedCountries === country.code
-              );
-              return acc;
-            }, {});
+  const classes = useStyles(props);
+  const intl = useIntl();
 
-            return (
-              <>
-                <DialogTitle>
-                  <FormattedMessage
-                    defaultMessage="Assign Countries"
-                    description="dialog header"
-                  />
-                </DialogTitle>
-                <DialogContent>
-                  <Typography>
-                    <FormattedMessage defaultMessage="Choose countries you want to add to shipping zone from list below" />
-                  </Typography>
-                  <FormSpacer />
-                  <TextField
-                    name="query"
-                    value={data.query}
-                    onChange={event => change(event, () => fetch(data.query))}
-                    label={intl.formatMessage({
-                      defaultMessage: "Search Countries"
-                    })}
-                    placeholder={intl.formatMessage({
-                      defaultMessage: "Search by country name"
-                    })}
-                    fullWidth
-                  />
-                </DialogContent>
-                <Hr />
-
-                <DialogContent className={classes.container}>
-                  <Typography className={classes.heading} variant="subtitle1">
-                    <FormattedMessage defaultMessage="Quick Pick" />
-                  </Typography>
-                  <Table className={classes.table}>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell className={classes.wideCell}>
-                          <FormattedMessage defaultMessage="Rest of the World" />
-                          <Typography variant="caption">
-                            <FormattedMessage defaultMessage="If selected, this will add all of the countries not selected to other shipping zones" />
-                          </Typography>
-                        </TableCell>
-                        <TableCell
-                          padding="checkbox"
-                          className={classes.checkboxCell}
-                        >
-                          <Checkbox
-                            checked={data.restOfTheWorld}
-                            onChange={() =>
-                              change({
-                                target: {
-                                  name: "restOfTheWorld" as keyof FormData,
-                                  value: !data.restOfTheWorld
-                                }
-                              } as any)
-                            }
-                          />
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </DialogContent>
-
-                <DialogContent className={classes.container}>
-                  <Typography className={classes.heading} variant="subtitle1">
-                    <FormattedMessage
-                      defaultMessage="Countries A to Z"
-                      description="country selection"
-                    />
-                  </Typography>
-                  <Table className={classes.table}>
-                    <TableBody>
-                      {filter(countries, data.query, {
-                        key: "country"
-                      }).map(country => {
-                        const isChecked = countrySelectionMap[country.code];
-
-                        return (
-                          <TableRow key={country.code}>
-                            <TableCell className={classes.wideCell}>
-                              {country.country}
-                            </TableCell>
-                            <TableCell
-                              padding="checkbox"
-                              className={classes.checkboxCell}
-                            >
-                              <Checkbox
-                                checked={isChecked}
-                                onChange={() =>
-                                  isChecked
-                                    ? change({
-                                        target: {
-                                          name: "countries" as keyof FormData,
-                                          value: data.countries.filter(
-                                            selectedCountries =>
-                                              selectedCountries !== country.code
-                                          )
-                                        }
-                                      } as any)
-                                    : change({
-                                        target: {
-                                          name: "countries" as keyof FormData,
-                                          value: [
-                                            ...data.countries,
-                                            country.code
-                                          ]
-                                        }
-                                      } as any)
-                                }
-                              />
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={onClose}>
-                    <FormattedMessage {...buttonMessages.back} />
-                  </Button>
-                  <ConfirmButton
-                    transitionState={confirmButtonState}
-                    color="primary"
-                    variant="contained"
-                    type="submit"
-                  >
-                    <FormattedMessage
-                      defaultMessage="Assign countries"
-                      description="button"
-                    />
-                  </ConfirmButton>
-                </DialogActions>
-              </>
+  const initialForm: FormData = {
+    countries: initial,
+    query: "",
+    restOfTheWorld: isDefault
+  };
+  return (
+    <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
+      <Form initial={initialForm} onSubmit={onConfirm}>
+        {({ data, change }) => {
+          const countrySelectionMap = countries.reduce((acc, country) => {
+            acc[country.code] = !!data.countries.find(
+              selectedCountries => selectedCountries === country.code
             );
-          }}
-        </Form>
-      </Dialog>
-    );
-  }
-);
+            return acc;
+          }, {});
+
+          return (
+            <>
+              <DialogTitle>
+                <FormattedMessage
+                  defaultMessage="Assign Countries"
+                  description="dialog header"
+                />
+              </DialogTitle>
+              <DialogContent>
+                <Typography>
+                  <FormattedMessage defaultMessage="Choose countries you want to add to shipping zone from list below" />
+                </Typography>
+                <FormSpacer />
+                <TextField
+                  name="query"
+                  value={data.query}
+                  onChange={event => change(event, () => fetch(data.query))}
+                  label={intl.formatMessage({
+                    defaultMessage: "Search Countries"
+                  })}
+                  placeholder={intl.formatMessage({
+                    defaultMessage: "Search by country name"
+                  })}
+                  fullWidth
+                />
+              </DialogContent>
+              <Hr />
+
+              <DialogContent className={classes.container}>
+                <Typography className={classes.heading} variant="subtitle1">
+                  <FormattedMessage defaultMessage="Quick Pick" />
+                </Typography>
+                <Table className={classes.table}>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className={classes.wideCell}>
+                        <FormattedMessage defaultMessage="Rest of the World" />
+                        <Typography variant="caption">
+                          <FormattedMessage defaultMessage="If selected, this will add all of the countries not selected to other shipping zones" />
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        padding="checkbox"
+                        className={classes.checkboxCell}
+                      >
+                        <Checkbox
+                          checked={data.restOfTheWorld}
+                          onChange={() =>
+                            change({
+                              target: {
+                                name: "restOfTheWorld" as keyof FormData,
+                                value: !data.restOfTheWorld
+                              }
+                            } as any)
+                          }
+                        />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </DialogContent>
+
+              <DialogContent className={classes.container}>
+                <Typography className={classes.heading} variant="subtitle1">
+                  <FormattedMessage
+                    defaultMessage="Countries A to Z"
+                    description="country selection"
+                  />
+                </Typography>
+                <Table className={classes.table}>
+                  <TableBody>
+                    {filter(countries, data.query, {
+                      key: "country"
+                    }).map(country => {
+                      const isChecked = countrySelectionMap[country.code];
+
+                      return (
+                        <TableRow key={country.code}>
+                          <TableCell className={classes.wideCell}>
+                            {country.country}
+                          </TableCell>
+                          <TableCell
+                            padding="checkbox"
+                            className={classes.checkboxCell}
+                          >
+                            <Checkbox
+                              checked={isChecked}
+                              onChange={() =>
+                                isChecked
+                                  ? change({
+                                      target: {
+                                        name: "countries" as keyof FormData,
+                                        value: data.countries.filter(
+                                          selectedCountries =>
+                                            selectedCountries !== country.code
+                                        )
+                                      }
+                                    } as any)
+                                  : change({
+                                      target: {
+                                        name: "countries" as keyof FormData,
+                                        value: [...data.countries, country.code]
+                                      }
+                                    } as any)
+                              }
+                            />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={onClose}>
+                  <FormattedMessage {...buttonMessages.back} />
+                </Button>
+                <ConfirmButton
+                  transitionState={confirmButtonState}
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                >
+                  <FormattedMessage
+                    defaultMessage="Assign countries"
+                    description="button"
+                  />
+                </ConfirmButton>
+              </DialogActions>
+            </>
+          );
+        }}
+      </Form>
+    </Dialog>
+  );
+};
 ShippingZoneCountriesAssignDialog.displayName =
   "ShippingZoneCountriesAssignDialog";
 export default ShippingZoneCountriesAssignDialog;

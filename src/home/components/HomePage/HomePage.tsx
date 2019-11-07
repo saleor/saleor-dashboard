@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -27,20 +22,19 @@ import HomeHeader from "../HomeHeader";
 import HomeNotificationTable from "../HomeNotificationTable/HomeNotificationTable";
 import HomeProductListCard from "../HomeProductListCard";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    cardContainer: {
-      display: "grid",
-      gridColumnGap: `${theme.spacing.unit * 3}px`,
-      gridTemplateColumns: "1fr 1fr",
-      [theme.breakpoints.down("sm")]: {
-        gridColumnGap: `${theme.spacing.unit}px`
-      },
-      [theme.breakpoints.down("xs")]: {
-        gridTemplateColumns: "1fr"
-      }
+const useStyles = makeStyles(theme => ({
+  cardContainer: {
+    display: "grid",
+    gridColumnGap: theme.spacing(3),
+    gridTemplateColumns: "1fr 1fr",
+    [theme.breakpoints.down("sm")]: {
+      gridColumnGap: theme.spacing(1)
+    },
+    [theme.breakpoints.down("xs")]: {
+      gridTemplateColumns: "1fr"
     }
-  });
+  }
+}));
 
 export interface HomePageProps extends UserPermissionProps {
   activities: Home_activities_edges_node[];
@@ -57,9 +51,8 @@ export interface HomePageProps extends UserPermissionProps {
   onProductsOutOfStockClick: () => void;
 }
 
-const HomePage = withStyles(styles, { name: "HomePage" })(
-  ({
-    classes,
+const HomePage: React.FC<HomePageProps> = props => {
+  const {
     userName,
     orders,
     sales,
@@ -73,7 +66,11 @@ const HomePage = withStyles(styles, { name: "HomePage" })(
     ordersToFulfill,
     productsOutOfStock,
     userPermissions
-  }: HomePageProps & WithStyles<typeof styles>) => (
+  } = props;
+
+  const classes = useStyles(props);
+
+  return (
     <Container>
       <HomeHeader userName={userName} />
       <CardSpacer />
@@ -140,7 +137,7 @@ const HomePage = withStyles(styles, { name: "HomePage" })(
         </div>
       </Grid>
     </Container>
-  )
-);
+  );
+};
 HomePage.displayName = "HomePage";
 export default HomePage;

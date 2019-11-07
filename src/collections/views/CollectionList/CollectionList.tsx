@@ -268,10 +268,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                       >
                         <DialogContentText>
                           <FormattedMessage
-                            defaultMessage="Are you sure you want to publish {counter, plural,
-                              one {this collection}
-                              other {{displayQuantity} collections}
-                            }?"
+                            defaultMessage="Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
                             values={{
                               counter: maybe(() => params.ids.length),
                               displayQuantity: (
@@ -306,10 +303,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                       >
                         <DialogContentText>
                           <FormattedMessage
-                            defaultMessage="Are you sure you want to unpublish {counter, plural,
-                              one {this collection}
-                              other {{displayQuantity} collections}
-                            }?"
+                            defaultMessage="Are you sure you want to unpublish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
                             values={{
                               counter: maybe(() => params.ids.length),
                               displayQuantity: (
@@ -343,10 +337,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                       >
                         <DialogContentText>
                           <FormattedMessage
-                            defaultMessage="Are you sure you want to delete {counter, plural,
-                              one {this collection}
-                              other {{displayQuantity} collections}
-                            }?"
+                            defaultMessage="Are you sure you want to delete {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
                             values={{
                               counter: maybe(() => params.ids.length),
                               displayQuantity: (
