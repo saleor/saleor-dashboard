@@ -26,17 +26,16 @@ import VoucherCreateView from "./views/VoucherCreate";
 import VoucherDetailsViewComponent from "./views/VoucherDetails";
 import VoucherListViewComponent from "./views/VoucherList";
 
-const SaleListView: React.StatelessComponent<RouteComponentProps<{}>> = ({
-  location
-}) => {
+const SaleListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: SaleListUrlQueryParams = qs;
   return <SaleListViewComponent params={params} />;
 };
 
-const SaleDetailsView: React.StatelessComponent<
-  RouteComponentProps<{ id: string }>
-> = ({ match, location }) => {
+const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match,
+  location
+}) => {
   const { activeTab, ...qs } = parseQs(location.search.substr(1));
   const params: SaleUrlQueryParams = {
     ...qs,
@@ -50,17 +49,16 @@ const SaleDetailsView: React.StatelessComponent<
   );
 };
 
-const VoucherListView: React.StatelessComponent<RouteComponentProps<{}>> = ({
-  location
-}) => {
+const VoucherListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: VoucherListUrlQueryParams = qs;
   return <VoucherListViewComponent params={params} />;
 };
 
-const VoucherDetailsView: React.StatelessComponent<
-  RouteComponentProps<{ id: string }>
-> = ({ match, location }) => {
+const VoucherDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match,
+  location
+}) => {
   const { activeTab, ...qs } = parseQs(location.search.substr(1));
   const params: VoucherUrlQueryParams = {
     ...qs,
@@ -74,7 +72,7 @@ const VoucherDetailsView: React.StatelessComponent<
   );
 };
 
-export const DiscountSection: React.StatelessComponent<{}> = () => {
+export const DiscountSection: React.FC<{}> = () => {
   const intl = useIntl();
 
   return (

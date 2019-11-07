@@ -157,7 +157,7 @@ interface OrderOperationsProps {
   onOrderLineUpdate: (data: OrderLineUpdate) => void;
 }
 
-const OrderOperations: React.StatelessComponent<OrderOperationsProps> = ({
+const OrderOperations: React.FC<OrderOperationsProps> = ({
   children,
   onDraftUpdate,
   onOrderFulfillmentCreate,

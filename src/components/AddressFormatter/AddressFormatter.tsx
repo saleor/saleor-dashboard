@@ -8,9 +8,7 @@ interface AddressFormatterProps {
   address?: AddressType;
 }
 
-const AddressFormatter: React.StatelessComponent<AddressFormatterProps> = ({
-  address
-}) => {
+const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
   if (!address) {
     return <Skeleton />;
   }

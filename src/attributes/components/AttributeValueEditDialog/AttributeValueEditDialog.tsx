@@ -30,9 +30,7 @@ export interface AttributeValueEditDialogProps {
   onClose: () => void;
 }
 
-const AttributeValueEditDialog: React.StatelessComponent<
-  AttributeValueEditDialogProps
-> = ({
+const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
   attributeValue,
   confirmButtonState,
   disabled,

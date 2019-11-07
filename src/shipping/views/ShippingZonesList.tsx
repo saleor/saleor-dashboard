@@ -39,9 +39,9 @@ interface ShippingZonesListProps {
   params: ShippingZonesListUrlQueryParams;
 }
 
-export const ShippingZonesList: React.StatelessComponent<
-  ShippingZonesListProps
-> = ({ params }) => {
+export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
+  params
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

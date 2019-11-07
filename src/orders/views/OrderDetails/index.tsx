@@ -76,10 +76,7 @@ interface OrderDetailsProps {
   params: OrderUrlQueryParams;
 }
 
-export const OrderDetails: React.StatelessComponent<OrderDetailsProps> = ({
-  id,
-  params
-}) => {
+export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const { user } = useUser();
 

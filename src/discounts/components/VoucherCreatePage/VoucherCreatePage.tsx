@@ -51,7 +51,7 @@ export interface VoucherCreatePageProps {
   onSubmit: (data: FormData) => void;
 }
 
-const VoucherCreatePage: React.StatelessComponent<VoucherCreatePageProps> = ({
+const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   defaultCurrency,
   disabled,
   errors,

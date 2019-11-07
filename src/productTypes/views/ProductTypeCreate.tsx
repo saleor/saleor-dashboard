@@ -13,7 +13,7 @@ import { TypedProductTypeCreateDataQuery } from "../queries";
 import { ProductTypeCreate as ProductTypeCreateMutation } from "../types/ProductTypeCreate";
 import { productTypeListUrl, productTypeUrl } from "../urls";
 
-export const ProductTypeCreate: React.StatelessComponent = () => {
+export const ProductTypeCreate: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

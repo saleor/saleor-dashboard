@@ -21,9 +21,7 @@ interface ProductUpdateProps {
   id: string;
 }
 
-export const ProductUpdate: React.StatelessComponent<
-  ProductUpdateProps
-> = () => {
+export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

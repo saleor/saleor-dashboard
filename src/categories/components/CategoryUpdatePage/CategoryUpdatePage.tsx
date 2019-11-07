@@ -70,9 +70,7 @@ export interface CategoryUpdatePageProps
 const CategoriesTab = Tab(CategoryPageTab.categories);
 const ProductsTab = Tab(CategoryPageTab.products);
 
-export const CategoryUpdatePage: React.StatelessComponent<
-  CategoryUpdatePageProps
-> = ({
+export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   changeTab,
   currentTab,
   category,

@@ -31,9 +31,7 @@ export interface SiteSettingsProps {
   params: SiteSettingsUrlQueryParams;
 }
 
-export const SiteSettings: React.StatelessComponent<SiteSettingsProps> = ({
-  params
-}) => {
+export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

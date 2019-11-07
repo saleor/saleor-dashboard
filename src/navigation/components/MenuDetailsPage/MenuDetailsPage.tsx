@@ -37,7 +37,7 @@ export interface MenuDetailsPageProps {
   onSubmit: (data: MenuDetailsSubmitData) => Promise<boolean>;
 }
 
-const MenuDetailsPage: React.StatelessComponent<MenuDetailsPageProps> = ({
+const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   disabled,
   menu,
   saveButtonState,

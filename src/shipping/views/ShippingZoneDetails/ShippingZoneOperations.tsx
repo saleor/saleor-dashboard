@@ -61,9 +61,7 @@ interface ShippingZoneOperationsProps {
   onShippingZoneUpdate: (data: UpdateShippingZone) => void;
 }
 
-const ShippingZoneOperations: React.StatelessComponent<
-  ShippingZoneOperationsProps
-> = ({
+const ShippingZoneOperations: React.FC<ShippingZoneOperationsProps> = ({
   children,
   onShippingRateCreate,
   onShippingRateDelete,

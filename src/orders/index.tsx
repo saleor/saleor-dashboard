@@ -17,22 +17,18 @@ import OrderDetailsComponent from "./views/OrderDetails";
 import OrderDraftListComponent from "./views/OrderDraftList";
 import OrderListComponent from "./views/OrderList";
 
-const OrderList: React.StatelessComponent<RouteComponentProps<any>> = ({
-  location
-}) => {
+const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: OrderListUrlQueryParams = qs;
   return <OrderListComponent params={params} />;
 };
-const OrderDraftList: React.StatelessComponent<RouteComponentProps<any>> = ({
-  location
-}) => {
+const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: OrderDraftListUrlQueryParams = qs;
   return <OrderDraftListComponent params={params} />;
 };
 
-const OrderDetails: React.StatelessComponent<RouteComponentProps<any>> = ({
+const OrderDetails: React.FC<RouteComponentProps<any>> = ({
   location,
   match
 }) => {

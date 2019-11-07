@@ -56,7 +56,7 @@ interface VoucherDetailsProps {
   params: VoucherUrlQueryParams;
 }
 
-export const VoucherDetails: React.StatelessComponent<VoucherDetailsProps> = ({
+export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   id,
   params
 }) => {

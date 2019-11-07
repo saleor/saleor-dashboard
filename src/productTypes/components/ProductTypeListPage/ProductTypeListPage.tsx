@@ -26,9 +26,7 @@ export interface ProductTypeListPageProps
   onBack: () => void;
 }
 
-const ProductTypeListPage: React.StatelessComponent<
-  ProductTypeListPageProps
-> = ({
+const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   currentTab,
   initialSearch,
   onAdd,

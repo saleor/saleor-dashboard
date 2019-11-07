@@ -19,7 +19,7 @@ interface WebhookEventsProps {
   onChange: (event: ChangeEvent, cb?: () => void) => void;
 }
 
-const WebhookEvents: React.StatelessComponent<WebhookEventsProps> = ({
+const WebhookEvents: React.FC<WebhookEventsProps> = ({
   data,
   disabled,
   onChange

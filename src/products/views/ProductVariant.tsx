@@ -27,7 +27,7 @@ interface ProductUpdateProps {
   params: ProductVariantEditUrlQueryParams;
 }
 
-export const ProductVariant: React.StatelessComponent<ProductUpdateProps> = ({
+export const ProductVariant: React.FC<ProductUpdateProps> = ({
   variantId,
   productId,
   params

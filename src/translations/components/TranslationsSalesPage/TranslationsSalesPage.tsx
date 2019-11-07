@@ -21,9 +21,7 @@ export const fieldNames = {
   name: "name"
 };
 
-const TranslationsSalesPage: React.StatelessComponent<
-  TranslationsSalesPageProps
-> = ({
+const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
   activeField,
   disabled,
   languageCode,

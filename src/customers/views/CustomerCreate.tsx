@@ -11,7 +11,7 @@ import { TypedCustomerCreateDataQuery } from "../queries";
 import { CreateCustomer } from "../types/CreateCustomer";
 import { customerListUrl, customerUrl } from "../urls";
 
-export const CustomerCreate: React.StatelessComponent<{}> = () => {
+export const CustomerCreate: React.FC<{}> = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

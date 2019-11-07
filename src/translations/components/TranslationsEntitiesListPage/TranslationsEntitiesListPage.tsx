@@ -88,7 +88,7 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
   "productTypes"
 ];
 
-const TranslationsEntitiesListPage: React.StatelessComponent<
+const TranslationsEntitiesListPage: React.FC<
   TranslationsEntitiesListPageProps
 > = ({ filters, language, onBack, children, ...searchProps }) => {
   const intl = useIntl();

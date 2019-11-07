@@ -47,10 +47,7 @@ interface ProductUpdateProps {
   params: ProductUrlQueryParams;
 }
 
-export const ProductUpdate: React.StatelessComponent<ProductUpdateProps> = ({
-  id,
-  params
-}) => {
+export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(

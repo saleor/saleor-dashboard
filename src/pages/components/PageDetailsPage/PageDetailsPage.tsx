@@ -45,7 +45,7 @@ export interface PageDetailsPageProps {
   onSubmit: (data: FormData) => void;
 }
 
-const PageDetailsPage: React.StatelessComponent<PageDetailsPageProps> = ({
+const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   disabled,
   errors,
   page,

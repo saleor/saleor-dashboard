@@ -26,9 +26,7 @@ import ProductUpdateComponent from "./views/ProductUpdate";
 import ProductVariantComponent from "./views/ProductVariant";
 import ProductVariantCreateComponent from "./views/ProductVariantCreate";
 
-const ProductList: React.StatelessComponent<RouteComponentProps<any>> = ({
-  location
-}) => {
+const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductListUrlQueryParams = {
     ...qs,
@@ -40,9 +38,7 @@ const ProductList: React.StatelessComponent<RouteComponentProps<any>> = ({
   return <ProductListComponent params={params} />;
 };
 
-const ProductUpdate: React.StatelessComponent<RouteComponentProps<any>> = ({
-  match
-}) => {
+const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductUrlQueryParams = qs;
 
@@ -54,9 +50,7 @@ const ProductUpdate: React.StatelessComponent<RouteComponentProps<any>> = ({
   );
 };
 
-const ProductVariant: React.StatelessComponent<RouteComponentProps<any>> = ({
-  match
-}) => {
+const ProductVariant: React.FC<RouteComponentProps<any>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductVariantEditUrlQueryParams = qs;
 
@@ -69,7 +63,7 @@ const ProductVariant: React.StatelessComponent<RouteComponentProps<any>> = ({
   );
 };
 
-const ProductImage: React.StatelessComponent<RouteComponentProps<any>> = ({
+const ProductImage: React.FC<RouteComponentProps<any>> = ({
   location,
   match
 }) => {
@@ -85,9 +79,9 @@ const ProductImage: React.StatelessComponent<RouteComponentProps<any>> = ({
   );
 };
 
-const ProductVariantCreate: React.StatelessComponent<
-  RouteComponentProps<any>
-> = ({ match }) => {
+const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
+  match
+}) => {
   return (
     <ProductVariantCreateComponent
       productId={decodeURIComponent(match.params.id)}

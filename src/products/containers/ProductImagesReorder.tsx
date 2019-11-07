@@ -19,7 +19,7 @@ interface ProductImagesReorderProviderProps
   }>;
 }
 
-const ProductImagesReorderProvider: React.StatelessComponent<
+const ProductImagesReorderProvider: React.FC<
   ProductImagesReorderProviderProps
 > = ({ children, productId, productImages, ...mutationProps }) => (
   <TypedProductImagesReorder {...mutationProps}>

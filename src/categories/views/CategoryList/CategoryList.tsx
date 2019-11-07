@@ -42,9 +42,7 @@ interface CategoryListProps {
   params: CategoryListUrlQueryParams;
 }
 
-export const CategoryList: React.StatelessComponent<CategoryListProps> = ({
-  params
-}) => {
+export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
   const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(

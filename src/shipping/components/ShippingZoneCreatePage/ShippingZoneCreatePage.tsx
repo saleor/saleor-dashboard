@@ -31,9 +31,14 @@ export interface ShippingZoneCreatePageProps {
   onSubmit: (data: FormData) => void;
 }
 
-const ShippingZoneCreatePage: React.StatelessComponent<
-  ShippingZoneCreatePageProps
-> = ({ countries, disabled, errors, onBack, onSubmit, saveButtonBarState }) => {
+const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
+  countries,
+  disabled,
+  errors,
+  onBack,
+  onSubmit,
+  saveButtonBarState
+}) => {
   const intl = useIntl();
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);

@@ -46,9 +46,7 @@ interface VoucherListProps {
   params: VoucherListUrlQueryParams;
 }
 
-export const VoucherList: React.StatelessComponent<VoucherListProps> = ({
-  params
-}) => {
+export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

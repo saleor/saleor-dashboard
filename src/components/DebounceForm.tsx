@@ -3,14 +3,12 @@ import Debounce from "./Debounce";
 
 export interface DebounceFormProps {
   change: (event: React.ChangeEvent<any>, cb?: () => void) => void;
-  children: ((
-    props: (event: React.ChangeEvent<any>) => void
-  ) => React.ReactNode);
+  children: (props: (event: React.ChangeEvent<any>) => void) => React.ReactNode;
   submit: (event: React.FormEvent<any>) => void;
   time?: number;
 }
 
-export const DebounceForm: React.StatelessComponent<DebounceFormProps> = ({
+export const DebounceForm: React.FC<DebounceFormProps> = ({
   change,
   children,
   submit,

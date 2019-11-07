@@ -7,9 +7,7 @@ interface WindowTitleProps {
   title: string;
 }
 
-export const WindowTitle: React.StatelessComponent<WindowTitleProps> = ({
-  title
-}) => {
+export const WindowTitle: React.FC<WindowTitleProps> = ({ title }) => {
   const shop = useShop();
 
   return shop === undefined || !title ? null : (

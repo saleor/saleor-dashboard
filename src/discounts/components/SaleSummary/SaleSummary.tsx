@@ -22,10 +22,7 @@ export interface SaleSummaryProps {
   sale: SaleDetails_sale;
 }
 
-const SaleSummary: React.StatelessComponent<SaleSummaryProps> = ({
-  defaultCurrency,
-  sale
-}) => {
+const SaleSummary: React.FC<SaleSummaryProps> = ({ defaultCurrency, sale }) => {
   const intl = useIntl();
 
   return (

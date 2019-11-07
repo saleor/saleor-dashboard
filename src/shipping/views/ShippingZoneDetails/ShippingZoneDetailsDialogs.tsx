@@ -27,9 +27,7 @@ export interface ShippingZoneDetailsDialogsProps {
   updateRateTransitionState: ConfirmButtonTransitionState;
 }
 
-const ShippingZoneDetailsDialogs: React.StatelessComponent<
-  ShippingZoneDetailsDialogsProps
-> = ({
+const ShippingZoneDetailsDialogs: React.FC<ShippingZoneDetailsDialogsProps> = ({
   assignCountryTransitionState,
   createRateTransitionState,
   deleteRateTransitionState,

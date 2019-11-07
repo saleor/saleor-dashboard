@@ -61,9 +61,7 @@ interface ProductListProps {
   params: ProductListUrlQueryParams;
 }
 
-export const ProductList: React.StatelessComponent<ProductListProps> = ({
-  params
-}) => {
+export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { locale } = useLocale();
   const navigate = useNavigator();
   const notify = useNotifier();

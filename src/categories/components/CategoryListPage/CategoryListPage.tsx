@@ -24,7 +24,7 @@ export interface CategoryTableProps
   categories: CategoryFragment[];
 }
 
-export const CategoryListPage: React.StatelessComponent<CategoryTableProps> = ({
+export const CategoryListPage: React.FC<CategoryTableProps> = ({
   categories,
   currentTab,
   disabled,

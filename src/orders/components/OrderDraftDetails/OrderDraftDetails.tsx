@@ -23,7 +23,7 @@ interface OrderDraftDetailsProps {
   onShippingMethodEdit: () => void;
 }
 
-const OrderDraftDetails: React.StatelessComponent<OrderDraftDetailsProps> = ({
+const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   order,
   onOrderLineAdd,
   onOrderLineChange,

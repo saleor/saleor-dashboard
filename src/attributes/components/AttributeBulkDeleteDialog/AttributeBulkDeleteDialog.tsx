@@ -13,9 +13,13 @@ export interface AttributeBulkDeleteDialogProps {
   onClose: () => void;
 }
 
-const AttributeBulkDeleteDialog: React.StatelessComponent<
-  AttributeBulkDeleteDialogProps
-> = ({ confirmButtonState, quantity, onClose, onConfirm, open }) => {
+const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
+  confirmButtonState,
+  quantity,
+  onClose,
+  onConfirm,
+  open
+}) => {
   const intl = useIntl();
 
   return (

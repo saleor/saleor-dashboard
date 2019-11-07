@@ -47,9 +47,7 @@ interface StaffListProps {
   params: StaffListUrlQueryParams;
 }
 
-export const StaffList: React.StatelessComponent<StaffListProps> = ({
-  params
-}) => {
+export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

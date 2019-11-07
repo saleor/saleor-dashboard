@@ -19,7 +19,7 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
     : DiscountValueTypeEnum.PERCENTAGE;
 }
 
-export const SaleDetails: React.StatelessComponent = () => {
+export const SaleDetails: React.FC = () => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
   const shop = useShop();

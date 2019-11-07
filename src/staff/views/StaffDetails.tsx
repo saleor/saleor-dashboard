@@ -33,10 +33,7 @@ interface OrderListProps {
   params: StaffMemberDetailsUrlQueryParams;
 }
 
-export const StaffDetails: React.StatelessComponent<OrderListProps> = ({
-  id,
-  params
-}) => {
+export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const user = useUser();

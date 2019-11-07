@@ -18,9 +18,12 @@ interface ProductTypeShippingProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const ProductTypeShipping: React.StatelessComponent<
-  ProductTypeShippingProps
-> = ({ data, defaultWeightUnit, disabled, onChange }) => {
+const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
+  data,
+  defaultWeightUnit,
+  disabled,
+  onChange
+}) => {
   const intl = useIntl();
 
   return (

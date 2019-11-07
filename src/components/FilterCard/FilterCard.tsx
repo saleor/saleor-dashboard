@@ -10,10 +10,7 @@ export interface FilterCardProps {
   handleClear();
 }
 
-const FilterCard: React.StatelessComponent<FilterCardProps> = ({
-  children,
-  handleClear
-}) => {
+const FilterCard: React.FC<FilterCardProps> = ({ children, handleClear }) => {
   const intl = useIntl();
 
   return (

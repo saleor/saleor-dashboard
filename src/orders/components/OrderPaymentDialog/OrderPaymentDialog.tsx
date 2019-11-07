@@ -26,7 +26,7 @@ interface OrderPaymentDialogProps {
   onSubmit: (data: FormData) => void;
 }
 
-const OrderPaymentDialog: React.StatelessComponent<OrderPaymentDialogProps> = ({
+const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
   confirmButtonState,
   open,
   initial,

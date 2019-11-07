@@ -46,9 +46,7 @@ interface SaleListProps {
   params: SaleListUrlQueryParams;
 }
 
-export const SaleList: React.StatelessComponent<SaleListProps> = ({
-  params
-}) => {
+export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

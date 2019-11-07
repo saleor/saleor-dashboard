@@ -49,9 +49,7 @@ interface CollectionListProps {
   params: CollectionListUrlQueryParams;
 }
 
-export const CollectionList: React.StatelessComponent<CollectionListProps> = ({
-  params
-}) => {
+export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

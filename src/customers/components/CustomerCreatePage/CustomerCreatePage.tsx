@@ -52,7 +52,7 @@ export interface CustomerCreatePageProps {
   onSubmit: (data: CustomerCreatePageFormData) => void;
 }
 
-const CustomerCreatePage: React.StatelessComponent<CustomerCreatePageProps> = ({
+const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   countries,
   disabled,
   errors,

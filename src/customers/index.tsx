@@ -19,9 +19,7 @@ import CustomerCreateView from "./views/CustomerCreate";
 import CustomerDetailsViewComponent from "./views/CustomerDetails";
 import CustomerListViewComponent from "./views/CustomerList";
 
-const CustomerListView: React.StatelessComponent<RouteComponentProps<{}>> = ({
-  location
-}) => {
+const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomerListUrlQueryParams = qs;
   return <CustomerListViewComponent params={params} />;
@@ -30,7 +28,7 @@ const CustomerListView: React.StatelessComponent<RouteComponentProps<{}>> = ({
 interface CustomerDetailsRouteParams {
   id: string;
 }
-const CustomerDetailsView: React.StatelessComponent<
+const CustomerDetailsView: React.FC<
   RouteComponentProps<CustomerDetailsRouteParams>
 > = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
@@ -47,7 +45,7 @@ const CustomerDetailsView: React.StatelessComponent<
 interface CustomerAddressesRouteParams {
   id: string;
 }
-const CustomerAddressesView: React.StatelessComponent<
+const CustomerAddressesView: React.FC<
   RouteComponentProps<CustomerAddressesRouteParams>
 > = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
@@ -61,7 +59,7 @@ const CustomerAddressesView: React.StatelessComponent<
   );
 };
 
-export const CustomerSection: React.StatelessComponent<{}> = () => {
+export const CustomerSection: React.FC<{}> = () => {
   const intl = useIntl();
 
   return (

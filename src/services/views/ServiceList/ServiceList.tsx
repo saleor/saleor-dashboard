@@ -42,9 +42,7 @@ interface ServiceListProps {
   params: ServiceListUrlQueryParams;
 }
 
-export const ServiceList: React.StatelessComponent<ServiceListProps> = ({
-  params
-}) => {
+export const ServiceList: React.FC<ServiceListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

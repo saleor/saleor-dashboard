@@ -23,7 +23,7 @@ export const fieldNames = {
   value: "attributeValue"
 };
 
-const TranslationsProductTypesPage: React.StatelessComponent<
+const TranslationsProductTypesPage: React.FC<
   TranslationsProductTypesPageProps
 > = ({
   activeField,

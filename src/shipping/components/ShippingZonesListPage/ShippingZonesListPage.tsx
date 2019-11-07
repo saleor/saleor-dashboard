@@ -24,9 +24,7 @@ export interface ShippingZonesListPageProps
   onSubmit: (unit: WeightUnitsEnum) => void;
 }
 
-const ShippingZonesListPage: React.StatelessComponent<
-  ShippingZonesListPageProps
-> = ({
+const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
   defaultWeightUnit,
   disabled,
   userPermissions,

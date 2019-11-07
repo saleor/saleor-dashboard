@@ -21,9 +21,7 @@ export const fieldNames = {
   name: "name"
 };
 
-const TranslationsVouchersPage: React.StatelessComponent<
-  TranslationsVouchersPageProps
-> = ({
+const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   activeField,
   disabled,
   languages,

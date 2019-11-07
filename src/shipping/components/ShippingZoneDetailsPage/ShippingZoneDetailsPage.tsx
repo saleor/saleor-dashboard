@@ -38,9 +38,7 @@ export interface ShippingZoneDetailsPageProps {
   onWeightRateEdit: (id: string) => void;
 }
 
-const ShippingZoneDetailsPage: React.StatelessComponent<
-  ShippingZoneDetailsPageProps
-> = ({
+const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   disabled,
   errors,
   onBack,

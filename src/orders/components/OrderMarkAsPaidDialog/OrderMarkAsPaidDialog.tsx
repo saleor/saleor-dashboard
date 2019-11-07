@@ -12,9 +12,12 @@ export interface OrderMarkAsPaidDialogProps {
   onConfirm: () => void;
 }
 
-const OrderMarkAsPaidDialog: React.StatelessComponent<
-  OrderMarkAsPaidDialogProps
-> = ({ confirmButtonState, onClose, onConfirm, open }) => {
+const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
+  confirmButtonState,
+  onClose,
+  onConfirm,
+  open
+}) => {
   const intl = useIntl();
 
   return (

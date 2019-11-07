@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const PluginSettings: React.StatelessComponent<PluginSettingsProps> = ({
+const PluginSettings: React.FC<PluginSettingsProps> = ({
   data,
   disabled,
   errors,

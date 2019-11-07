@@ -45,9 +45,7 @@ interface ProductTypeListProps {
   params: ProductTypeListUrlQueryParams;
 }
 
-export const ProductTypeList: React.StatelessComponent<
-  ProductTypeListProps
-> = ({ params }) => {
+export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

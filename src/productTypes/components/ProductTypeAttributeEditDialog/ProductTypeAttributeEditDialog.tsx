@@ -37,7 +37,7 @@ export interface ProductTypeAttributeEditDialogProps {
   onConfirm: (data: FormData) => void;
 }
 
-const ProductTypeAttributeEditDialog: React.StatelessComponent<
+const ProductTypeAttributeEditDialog: React.FC<
   ProductTypeAttributeEditDialogProps
 > = ({ disabled, errors, name, opened, title, values, onClose, onConfirm }) => {
   const intl = useIntl();

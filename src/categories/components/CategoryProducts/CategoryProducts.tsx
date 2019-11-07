@@ -13,9 +13,7 @@ interface CategoryProductsProps extends PageListProps, ListActions {
   categoryName: string;
 }
 
-export const CategoryProducts: React.StatelessComponent<
-  CategoryProductsProps
-> = ({
+export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   products,
   disabled,
   pageInfo,

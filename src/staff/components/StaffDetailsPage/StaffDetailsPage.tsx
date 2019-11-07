@@ -45,7 +45,7 @@ export interface StaffDetailsPageProps {
   onImageUpload(file: File);
 }
 
-const StaffDetailsPage: React.StatelessComponent<StaffDetailsPageProps> = ({
+const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   canEditAvatar,
   canEditPreferences,
   canEditStatus,

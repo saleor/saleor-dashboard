@@ -44,9 +44,7 @@ interface CustomerListProps {
   params: CustomerListUrlQueryParams;
 }
 
-export const CustomerList: React.StatelessComponent<CustomerListProps> = ({
-  params
-}) => {
+export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

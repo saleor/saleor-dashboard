@@ -16,7 +16,7 @@ export interface PageListPageProps extends PageListProps, ListActions {
   onBack: () => void;
 }
 
-const PageListPage: React.StatelessComponent<PageListPageProps> = ({
+const PageListPage: React.FC<PageListPageProps> = ({
   disabled,
   settings,
   onAdd,

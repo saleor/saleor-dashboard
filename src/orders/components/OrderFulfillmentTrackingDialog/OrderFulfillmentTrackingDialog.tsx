@@ -25,7 +25,7 @@ interface OrderFulfillmentTrackingDialogProps {
   onConfirm(data: FormData);
 }
 
-const OrderFulfillmentTrackingDialog: React.StatelessComponent<
+const OrderFulfillmentTrackingDialog: React.FC<
   OrderFulfillmentTrackingDialogProps
 > = ({ confirmButtonState, open, trackingNumber, onConfirm, onClose }) => {
   const intl = useIntl();

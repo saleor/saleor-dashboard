@@ -33,9 +33,7 @@ interface PageListProps {
   params: PageListUrlQueryParams;
 }
 
-export const PageList: React.StatelessComponent<PageListProps> = ({
-  params
-}) => {
+export const PageList: React.FC<PageListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();

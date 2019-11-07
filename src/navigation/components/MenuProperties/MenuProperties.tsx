@@ -14,7 +14,7 @@ export interface MenuPropertiesProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const MenuProperties: React.StatelessComponent<MenuPropertiesProps> = ({
+const MenuProperties: React.FC<MenuPropertiesProps> = ({
   data,
   disabled,
   onChange

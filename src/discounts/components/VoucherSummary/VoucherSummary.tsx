@@ -23,7 +23,7 @@ export interface VoucherSummaryProps {
   voucher: VoucherDetails_voucher;
 }
 
-const VoucherSummary: React.StatelessComponent<VoucherSummaryProps> = ({
+const VoucherSummary: React.FC<VoucherSummaryProps> = ({
   defaultCurrency,
   voucher
 }) => {

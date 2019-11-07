@@ -57,9 +57,7 @@ const initialForm: CollectionCreatePageFormData = {
   seoTitle: ""
 };
 
-const CollectionCreatePage: React.StatelessComponent<
-  CollectionCreatePageProps
-> = ({
+const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
   disabled,
   errors,
   saveButtonBarState,

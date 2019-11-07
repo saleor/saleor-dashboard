@@ -16,9 +16,7 @@ interface PluginsListProps {
   params: PluginsListUrlQueryParams;
 }
 
-export const PluginsList: React.StatelessComponent<PluginsListProps> = ({
-  params
-}) => {
+export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
   const { updateListSettings, settings } = useListSettings(

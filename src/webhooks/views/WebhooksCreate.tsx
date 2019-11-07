@@ -22,9 +22,7 @@ export interface WebhooksCreateProps {
   params: WebhooksListUrlQueryParams;
 }
 
-export const WebhooksCreate: React.StatelessComponent<
-  WebhooksCreateProps
-> = () => {
+export const WebhooksCreate: React.FC<WebhooksCreateProps> = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

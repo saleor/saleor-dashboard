@@ -9,7 +9,7 @@ export interface WeightProps {
   weight: Weight;
 }
 
-const Weight: React.StatelessComponent<WeightProps> = ({ weight }) => (
+const Weight: React.FC<WeightProps> = ({ weight }) => (
   <FormattedMessage
     defaultMessage="{value} {unit}"
     description="weight"

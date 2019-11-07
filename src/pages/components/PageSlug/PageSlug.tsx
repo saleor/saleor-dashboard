@@ -15,7 +15,7 @@ export interface PageSlugProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const PageSlug: React.StatelessComponent<PageSlugProps> = ({
+const PageSlug: React.FC<PageSlugProps> = ({
   data,
   disabled,
   errors,
