@@ -36,9 +36,9 @@ const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
     >
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="Are you sure you want to delete draft #{number}?"
+          defaultMessage="Are you sure you want to delete draft #{orderNumber}?"
           values={{
-            orderNumber
+            orderNumber: <strong>{orderNumber}</strong>
           }}
         />
       </DialogContentText>

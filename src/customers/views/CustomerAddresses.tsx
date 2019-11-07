@@ -8,7 +8,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe, transformFormToAddress } from "../../misc";
+import { getMutationState, maybe } from "../../misc";
 import CustomerAddressDialog from "../components/CustomerAddressDialog";
 import CustomerAddressListPage from "../components/CustomerAddressListPage";
 import {
@@ -176,7 +176,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                                 createCustomerAddress({
                                   variables: {
                                     id,
-                                    input: transformFormToAddress(input)
+                                    input
                                   }
                                 })
                               }
@@ -202,7 +202,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                                 updateCustomerAddress({
                                   variables: {
                                     id: params.id,
-                                    input: transformFormToAddress(input)
+                                    input
                                   }
                                 })
                               }

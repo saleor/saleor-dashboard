@@ -8,6 +8,7 @@ import { maybe, transformFormToAddress } from "../../misc";
 import CustomerCreatePage from "../components/CustomerCreatePage";
 import { TypedCreateCustomerMutation } from "../mutations";
 import { TypedCustomerCreateDataQuery } from "../queries";
+import { AddressTypeInput } from "../types";
 import { CreateCustomer } from "../types/CreateCustomer";
 import { customerListUrl, customerUrl } from "../urls";
 
@@ -57,6 +58,21 @@ export const CustomerCreate: React.FC<{}> = () => {
                 }
                 onBack={() => navigate(customerListUrl())}
                 onSubmit={formData => {
+                  const areAddressInputFieldsModified = ([
+                    "city",
+                    "companyName",
+                    "country",
+                    "countryArea",
+                    "firstName",
+                    "lastName",
+                    "phone",
+                    "postalCode",
+                    "streetAddress1",
+                    "streetAddress2"
+                  ] as Array<keyof AddressTypeInput>)
+                    .map(key => formData[key])
+                    .some(field => field !== "");
+
                   const address = {
                     city: formData.city,
                     cityArea: formData.cityArea,
@@ -73,8 +89,12 @@ export const CustomerCreate: React.FC<{}> = () => {
                   createCustomer({
                     variables: {
                       input: {
-                        defaultBillingAddress: transformFormToAddress(address),
-                        defaultShippingAddress: transformFormToAddress(address),
+                        defaultBillingAddress: areAddressInputFieldsModified
+                          ? transformFormToAddress(address)
+                          : null,
+                        defaultShippingAddress: areAddressInputFieldsModified
+                          ? transformFormToAddress(address)
+                          : null,
                         email: formData.email,
                         firstName: formData.customerFirstName,
                         lastName: formData.customerLastName,

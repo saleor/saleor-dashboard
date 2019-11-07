@@ -4,7 +4,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
-
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -13,10 +12,13 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
+import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
+import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { AddressTypeInput } from "../../types";
 import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses";
@@ -32,7 +34,7 @@ export interface CustomerAddressDialogProps {
   open: boolean;
   variant: "create" | "edit";
   onClose: () => void;
-  onConfirm: (data: AddressTypeInput) => void;
+  onConfirm: (data: AddressInput) => void;
 }
 
 const styles = createStyles({
@@ -56,6 +58,15 @@ const CustomerAddressDialog = withStyles(styles, {})(
     const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
       maybe(() => address.country.country, "")
     );
+    const {
+      errors: validationErrors,
+      submit: handleSubmit
+    } = useAddressValidation(onConfirm);
+    const dialogErrors = useModalDialogErrors(
+      [...errors, ...validationErrors],
+      open
+    );
+
     const initialForm: AddressTypeInput = {
       city: maybe(() => address.city, ""),
       cityArea: maybe(() => address.cityArea, ""),
@@ -87,8 +98,12 @@ const CustomerAddressDialog = withStyles(styles, {})(
         fullWidth
         maxWidth="sm"
       >
-        <Form initial={initialForm} errors={errors} onSubmit={onConfirm}>
-          {({ change, data, errors }) => {
+        <Form
+          initial={initialForm}
+          errors={dialogErrors}
+          onSubmit={handleSubmit}
+        >
+          {({ change, data, errors: formErrors }) => {
             const handleCountrySelect = createSingleAutocompleteSelectHandler(
               change,
               setCountryDisplayName,
@@ -115,7 +130,7 @@ const CustomerAddressDialog = withStyles(styles, {})(
                     countries={countryChoices}
                     data={data}
                     countryDisplayValue={countryDisplayName}
-                    errors={errors}
+                    errors={formErrors}
                     onChange={change}
                     onCountryChange={handleCountrySelect}
                   />

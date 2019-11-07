@@ -12,12 +12,15 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
+import { AddressTypeInput } from "@saleor/customers/types";
+import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import { UserError } from "@saleor/types";
+import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { AddressTypeInput } from "../../../customers/types";
-import { UserError } from "../../../types";
 
 const styles = createStyles({
   overflow: {
@@ -36,7 +39,7 @@ interface OrderAddressEditDialogProps extends WithStyles<typeof styles> {
     label: string;
   }>;
   onClose();
-  onConfirm(data: AddressTypeInput);
+  onConfirm(data: AddressInput);
 }
 
 const OrderAddressEditDialog = withStyles(styles, {
@@ -59,6 +62,15 @@ const OrderAddressEditDialog = withStyles(styles, {
         () => countries.find(country => address.country === country.code).label
       )
     );
+    const {
+      errors: validationErrors,
+      submit: handleSubmit
+    } = useAddressValidation(onConfirm);
+    const dialogErrors = useModalDialogErrors(
+      [...errors, ...validationErrors],
+      open
+    );
+
     const countryChoices = countries.map(country => ({
       label: country.label,
       value: country.code
@@ -70,7 +82,7 @@ const OrderAddressEditDialog = withStyles(styles, {
         open={open}
         classes={{ paper: classes.overflow }}
       >
-        <Form initial={address} errors={errors} onSubmit={onConfirm}>
+        <Form initial={address} errors={dialogErrors} onSubmit={handleSubmit}>
           {({ change, data, errors, submit }) => {
             const handleCountrySelect = createSingleAutocompleteSelectHandler(
               change,
