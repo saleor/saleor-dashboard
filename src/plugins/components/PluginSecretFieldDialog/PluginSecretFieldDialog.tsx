@@ -15,11 +15,12 @@ import Skeleton from "@saleor/components/Skeleton";
 import { buttonMessages } from "@saleor/intl";
 import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
 import { DialogProps } from "@saleor/types";
+import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 
-interface PluginSecretFieldDialogFormData {
+export interface PluginSecretFieldDialogFormData {
   value: string;
 }
-interface PluginSecretFieldDialogProps extends DialogProps {
+export interface PluginSecretFieldDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   field: Plugin_plugin_configuration;
   onConfirm: (data: PluginSecretFieldDialogFormData) => void;
@@ -65,6 +66,10 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
                 fullWidth
                 label={field && field.label}
                 name="value"
+                type={
+                  field.type === ConfigurationTypeFieldEnum.PASSWORD &&
+                  "password"
+                }
                 value={data.value || ""}
                 onChange={change}
               />

@@ -8,7 +8,8 @@ import { WindowTitle } from "../components/WindowTitle";
 import {
   pluginsListPath,
   PluginsListUrlQueryParams,
-  pluginsPath
+  pluginsPath,
+  PluginsUrlQueryParams
 } from "./urls";
 import PluginsDetailsComponent from "./views/PluginsDetails";
 import PluginsListComponent from "./views/PluginsList";
@@ -21,7 +22,7 @@ const PluginList: React.FC<RouteComponentProps<any>> = ({ location }) => {
 
 const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: PluginsListUrlQueryParams = qs;
+  const params: PluginsUrlQueryParams = qs;
 
   return (
     <PluginsDetailsComponent
