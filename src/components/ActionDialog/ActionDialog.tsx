@@ -9,6 +9,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { buttonMessages } from "@saleor/intl";
+import { DialogProps } from "@saleor/types";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "../ConfirmButton/ConfirmButton";
@@ -26,15 +27,13 @@ const useStyles = makeStyles(
   { name: "ActionDialog" }
 );
 
-interface ActionDialogProps {
+interface ActionDialogProps extends DialogProps {
   children?: React.ReactNode;
   confirmButtonLabel?: string;
   confirmButtonState: ConfirmButtonTransitionState;
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
-  open: boolean;
   title: string;
   variant?: "default" | "delete";
-  onClose?();
   onConfirm();
 }
 

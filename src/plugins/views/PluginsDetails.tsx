@@ -1,15 +1,20 @@
+import DialogContentText from "@material-ui/core/DialogContentText";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import React from "react";
-import { useIntl } from "react-intl";
-
+import { commonMessages } from "@saleor/intl";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import { getMutationState, maybe } from "../../misc";
 import PluginsDetailsPage from "../components/PluginsDetailsPage";
+import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
 import { TypedPluginUpdate } from "../mutations";
 import { TypedPluginsDetailsQuery } from "../queries";
 import { Plugin_plugin_configuration } from "../types/Plugin";
+import { PluginUpdate } from "../types/PluginUpdate";
 import {
   pluginsListUrl,
   pluginsUrl,
@@ -66,11 +71,20 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
       })
     );
 
+  const handleUpdate = (data: PluginUpdate) => {
+    if (data.pluginUpdate.errors.length === 0) {
+      notify({
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      closeModal();
+    }
+  };
+
   return (
-    <TypedPluginUpdate>
-      {(pluginUpdate, pluginUpdateOpts) => (
-        <TypedPluginsDetailsQuery variables={{ id }}>
-          {pluginDetails => {
+    <TypedPluginsDetailsQuery variables={{ id }}>
+      {pluginDetails => (
+        <TypedPluginUpdate onCompleted={handleUpdate}>
+          {(pluginUpdate, pluginUpdateOpts) => {
             const formTransitionState = getMutationState(
               pluginUpdateOpts.called,
               pluginUpdateOpts.loading,
@@ -82,22 +96,20 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
               []
             );
 
-            if (formErrors.length) {
-              formErrors.map(error => {
-                notify({
-                  text: error.message
-                });
+            const handleFieldUpdate = (value: string) =>
+              pluginUpdate({
+                variables: {
+                  id,
+                  input: {
+                    configuration: [
+                      {
+                        name: params.field,
+                        value
+                      }
+                    ]
+                  }
+                }
               });
-            } else {
-              if (pluginUpdateOpts.data) {
-                notify({
-                  text: intl.formatMessage({
-                    defaultMessage: "Succesfully updated plugin settings",
-                    description: "plugin success message"
-                  })
-                });
-              }
-            }
 
             return (
               <>
@@ -107,7 +119,9 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                 <PluginsDetailsPage
                   disabled={pluginDetails.loading}
                   errors={formErrors}
-                  saveButtonBarState={formTransitionState}
+                  saveButtonBarState={
+                    !params.action ? formTransitionState : "default"
+                  }
                   plugin={maybe(() => pluginDetails.data.plugin)}
                   onBack={() => navigate(pluginsListUrl())}
                   onClear={field => openModal("clear", field)}
@@ -127,12 +141,45 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                     })
                   }
                 />
+                {maybe(() => pluginDetails.data.plugin.configuration) && (
+                  <>
+                    <ActionDialog
+                      confirmButtonState={
+                        !!params.action ? formTransitionState : "default"
+                      }
+                      onClose={closeModal}
+                      open={params.action === "clear" && !!params.field}
+                      title={intl.formatMessage({
+                        defaultMessage: "Authorization Field Delete",
+                        description: "header"
+                      })}
+                      onConfirm={() => handleFieldUpdate(null)}
+                    >
+                      <DialogContentText>
+                        <FormattedMessage defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?" />
+                      </DialogContentText>
+                    </ActionDialog>
+                    <PluginSecretFieldDialog
+                      confirmButtonState={
+                        !!params.action ? formTransitionState : "default"
+                      }
+                      field={maybe(() =>
+                        pluginDetails.data.plugin.configuration.find(
+                          field => field.name === params.field
+                        )
+                      )}
+                      onClose={closeModal}
+                      onConfirm={formData => handleFieldUpdate(formData.value)}
+                      open={params.action === "edit" && !!params.field}
+                    />
+                  </>
+                )}
               </>
             );
           }}
-        </TypedPluginsDetailsQuery>
+        </TypedPluginUpdate>
       )}
-    </TypedPluginUpdate>
+    </TypedPluginsDetailsQuery>
   );
 };
 PluginsDetails.displayName = "PluginsDetails";

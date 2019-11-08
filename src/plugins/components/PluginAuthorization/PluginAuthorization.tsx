@@ -21,7 +21,7 @@ interface PluginAuthorizationProps {
 
 const useStyles = makeStyles(theme => ({
   button: {
-    marginRight: theme.spacing()
+    marginLeft: theme.spacing()
   },
   hr: {
     margin: theme.spacing(2, 0)
@@ -55,7 +55,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
       />
       <CardContent>
         {secretFields.map((field, fieldIndex) => (
-          <>
+          <React.Fragment key={field.name}>
             <div className={classes.item} key={field.name}>
               {field.type === ConfigurationTypeFieldEnum.SECRET ? (
                 <div>
@@ -78,14 +78,14 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
                 </Button>
               ) : (
                 <>
+                  <Button color="primary" onClick={() => onClear(field.name)}>
+                    <FormattedMessage {...buttonMessages.clear} />
+                  </Button>
                   <Button
                     className={classes.button}
                     color="primary"
-                    onClick={() => onClear(field.name)}
+                    onClick={() => onEdit(field.name)}
                   >
-                    <FormattedMessage {...buttonMessages.clear} />
-                  </Button>
-                  <Button color="primary" onClick={() => onEdit(field.name)}>
                     <FormattedMessage {...buttonMessages.edit} />
                   </Button>
                 </>
@@ -94,7 +94,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
             {fieldIndex !== secretFields.length - 1 && (
               <Hr className={classes.hr} />
             )}
-          </>
+          </React.Fragment>
         ))}
       </CardContent>
     </Card>
