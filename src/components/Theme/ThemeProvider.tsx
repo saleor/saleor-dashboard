@@ -1,5 +1,6 @@
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import React from "react";
+import Helmet from "react-helmet";
 
 import Baseline from "../../Baseline";
 import createTheme from "../../theme";
@@ -27,6 +28,8 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     localStorage.setItem("theme", (!isDark).toString());
   };
 
+  const theme = createTheme(isDark ? dark : light);
+
   return (
     <ThemeContext.Provider
       value={{
@@ -34,7 +37,10 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
         toggleTheme
       }}
     >
-      <MuiThemeProvider theme={createTheme(isDark ? dark : light)}>
+      <Helmet>
+        <meta name="theme-color" content={theme.palette.background.default} />
+      </Helmet>
+      <MuiThemeProvider theme={theme}>
         <Baseline />
         {children}
       </MuiThemeProvider>
