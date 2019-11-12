@@ -2,7 +2,12 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { SiteDomainInput, ShopSettingsInput, AddressInput, AuthorizationKeyType } from "./../../types/globalTypes";
+import {
+  SiteDomainInput,
+  ShopSettingsInput,
+  AddressInput,
+  AuthorizationKeyType
+} from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ShopSettingsUpdate
@@ -143,5 +148,5 @@ export interface ShopSettingsUpdate {
 export interface ShopSettingsUpdateVariables {
   shopDomainInput: SiteDomainInput;
   shopSettingsInput: ShopSettingsInput;
-  addressInput: AddressInput;
+  addressInput?: AddressInput | null;
 }
