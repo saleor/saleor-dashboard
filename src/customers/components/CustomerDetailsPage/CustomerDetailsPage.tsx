@@ -84,7 +84,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               />
               <CardSpacer />
               <CustomerInfo
-                customer={customer}
                 data={data}
                 disabled={disabled}
                 errors={formErrors}
