@@ -67,9 +67,12 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
   const initialForm: FormData = {
     active: maybe(() => plugin.active, false),
     configuration: maybe(() =>
-      plugin.configuration.filter(
-        field => !isSecretField(plugin.configuration, field.name)
-      )
+      plugin.configuration
+        .filter(field => !isSecretField(plugin.configuration, field.name))
+        .map(field => ({
+          ...field,
+          value: field.value || ""
+        }))
     )
   };
 
@@ -157,17 +160,19 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
                       disabled={disabled}
                       onChange={onChange}
                     />
-                    <CardSpacer />
                     {maybe(() =>
                       plugin.configuration.some(field =>
                         isSecretField(plugin.configuration, field.name)
                       )
                     ) && (
-                      <PluginAuthorization
-                        fields={plugin.configuration}
-                        onClear={onClear}
-                        onEdit={onEdit}
-                      />
+                      <>
+                        <CardSpacer />
+                        <PluginAuthorization
+                          fields={plugin.configuration}
+                          onClear={onClear}
+                          onEdit={onEdit}
+                        />
+                      </>
                     )}
                   </div>
                 </>

@@ -13,6 +13,7 @@ import ConfirmButton, {
 import Form from "@saleor/components/Form";
 import Skeleton from "@saleor/components/Skeleton";
 import { buttonMessages } from "@saleor/intl";
+import { maybe } from "@saleor/misc";
 import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
 import { DialogProps } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
@@ -67,8 +68,8 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
                 label={field && field.label}
                 name="value"
                 type={
-                  field.type === ConfigurationTypeFieldEnum.PASSWORD &&
-                  "password"
+                  maybe(() => field.type) ===
+                    ConfigurationTypeFieldEnum.PASSWORD && "password"
                 }
                 value={data.value || ""}
                 onChange={change}
