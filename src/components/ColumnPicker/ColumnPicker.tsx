@@ -29,7 +29,7 @@ const useStyles = makeStyles(
     popper: {
       boxShadow: `0px 5px 10px 0 ${fade(theme.palette.common.black, 0.05)}`,
       marginTop: theme.spacing(2),
-      zIndex: 1
+      zIndex: 2
     }
   }),
   {

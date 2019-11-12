@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
   action: {
     flex: "0 0 auto",
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: 10
+      marginTop: theme.spacing()
     }
   },
   grid: {

@@ -75,6 +75,7 @@ const useStyles = makeStyles(theme => ({
       zIndex: 2
     },
     right: -300,
+    width: drawerWidthExpanded,
     zIndex: -1
   },
   subHeader: {

@@ -43,6 +43,9 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   content: {
+    [theme.breakpoints.down("sm")]: {
+      gridTemplateColumns: "repeat(2, 1fr)"
+    },
     display: "grid",
     gridColumnGap: theme.spacing(3),
     gridTemplateColumns: "repeat(3, 1fr)",

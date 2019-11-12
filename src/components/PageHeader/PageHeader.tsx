@@ -12,8 +12,8 @@ const useStyles = makeStyles(theme => ({
   title: {
     [theme.breakpoints.down("sm")]: {
       fontSize: 20,
-      paddingBottom: 20,
-      paddingLeft: 10
+      marginTop: theme.spacing(2),
+      padding: 0
     },
     flex: 1,
     fontSize: 24,
