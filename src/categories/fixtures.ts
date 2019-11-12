@@ -93,7 +93,14 @@ export const category: (
   },
   children: {
     __typename: "CategoryCountableConnection",
-    edges: []
+    edges: [],
+    pageInfo: {
+      __typename: "PageInfo",
+      endCursor: "YXJyYXljb25uZWN0aW9uOjk=",
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: "YXJyYXljb25uZWN0aW9uOjA="
+    }
   },
   descriptionJson: JSON.stringify(content),
   id: "Q2F0ZWdvcnk6NA==",

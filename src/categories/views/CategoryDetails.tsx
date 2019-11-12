@@ -162,7 +162,9 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                   };
 
                   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-                    maybe(() => data.category.products.pageInfo),
+                    params.activeTab === CategoryPageTab.categories
+                      ? maybe(() => data.category.children.pageInfo)
+                      : maybe(() => data.category.products.pageInfo),
                     paginationState,
                     params
                   );
