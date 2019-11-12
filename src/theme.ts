@@ -342,6 +342,9 @@ export default (colors: IThemeColors): Theme =>
             }
           }
         },
+        message: {
+          fontSize: 16
+        },
         root: {
           backgroundColor: colors.background.paper,
           boxShadow:
