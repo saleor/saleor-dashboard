@@ -4,6 +4,7 @@ import React from "react";
 import Checkbox from "./Checkbox";
 
 interface ControlledCheckboxProps {
+  className?: string;
   name: string;
   label?: React.ReactNode;
   checked: boolean;
@@ -16,7 +17,8 @@ export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
   disabled,
   name,
   label,
-  onChange
+  onChange,
+  ...props
 }) => (
   <FormControlLabel
     disabled={disabled}
@@ -29,6 +31,7 @@ export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
       />
     }
     label={label}
+    {...props}
   />
 );
 ControlledCheckbox.displayName = "ControlledCheckbox";

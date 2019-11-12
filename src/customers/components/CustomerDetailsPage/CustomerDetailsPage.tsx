@@ -13,10 +13,11 @@ import { sectionNames } from "@saleor/intl";
 import { getUserName, maybe } from "../../../misc";
 import { UserError } from "../../../types";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
-import CustomerAddresses from "../CustomerAddresses/CustomerAddresses";
-import CustomerDetails from "../CustomerDetails/CustomerDetails";
-import CustomerOrders from "../CustomerOrders/CustomerOrders";
-import CustomerStats from "../CustomerStats/CustomerStats";
+import CustomerAddresses from "../CustomerAddresses";
+import CustomerDetails from "../CustomerDetails";
+import CustomerInfo from "../CustomerInfo";
+import CustomerOrders from "../CustomerOrders";
+import CustomerStats from "../CustomerStats";
 
 export interface CustomerDetailsPageFormData {
   firstName: string;
@@ -75,6 +76,14 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
           <Grid>
             <div>
               <CustomerDetails
+                customer={customer}
+                data={data}
+                disabled={disabled}
+                errors={formErrors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <CustomerInfo
                 customer={customer}
                 data={data}
                 disabled={disabled}

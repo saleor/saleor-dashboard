@@ -397,12 +397,12 @@ export default (colors: IThemeColors): Theme =>
       },
       MuiTableCell: {
         body: {
-          fontSize: ".875rem",
+          fontSize: "1rem",
           paddingBottom: 8,
           paddingTop: 8
         },
         head: {
-          fontSize: ".875rem"
+          fontSize: "1rem"
         },
         paddingCheckbox: {
           "&:first-child": {
