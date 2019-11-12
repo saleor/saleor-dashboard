@@ -40,9 +40,18 @@ export interface CategoryDetails_category_children_edges {
   node: CategoryDetails_category_children_edges_node;
 }
 
+export interface CategoryDetails_category_children_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
 export interface CategoryDetails_category_children {
   __typename: "CategoryCountableConnection";
   edges: CategoryDetails_category_children_edges[];
+  pageInfo: CategoryDetails_category_children_pageInfo;
 }
 
 export interface CategoryDetails_category_products_pageInfo {
