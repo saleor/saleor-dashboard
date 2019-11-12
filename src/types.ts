@@ -9,6 +9,11 @@ export interface UserError {
   message: string;
 }
 
+export interface DialogProps {
+  open: boolean;
+  onClose: () => void;
+}
+
 export interface ListSettings<TColumn extends string = string> {
   columns?: TColumn[];
   rowNumber: number;

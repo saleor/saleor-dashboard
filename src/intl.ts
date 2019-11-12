@@ -86,8 +86,16 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Cancel",
     description: "button"
   },
+  clear: {
+    defaultMessage: "Clear",
+    description: "button"
+  },
   confirm: {
     defaultMessage: "Confirm",
+    description: "button"
+  },
+  create: {
+    defaultMessage: "Create",
     description: "button"
   },
   delete: {

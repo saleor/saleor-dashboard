@@ -13,6 +13,8 @@ const props: PluginsDetailsPageProps = {
   disabled: false,
   errors: [],
   onBack: () => undefined,
+  onClear: () => undefined,
+  onEdit: () => undefined,
   onSubmit: () => undefined,
   plugin,
   saveButtonBarState: "default"
@@ -32,5 +34,14 @@ storiesOf("Views / Plugins / Plugin details", module)
         "Username or account",
         "Password or license"
       ] as Array<keyof FormData>).map(formError)}
+    />
+  ))
+  .add("not configurable", () => (
+    <PluginsDetailsPage
+      {...props}
+      plugin={{
+        ...plugin,
+        configuration: null
+      }}
     />
   ));

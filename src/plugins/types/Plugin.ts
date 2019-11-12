@@ -12,7 +12,7 @@ export interface Plugin_plugin_configuration {
   __typename: "ConfigurationItem";
   name: string;
   type: ConfigurationTypeFieldEnum | null;
-  value: string;
+  value: string | null;
   helpText: string | null;
   label: string | null;
 }

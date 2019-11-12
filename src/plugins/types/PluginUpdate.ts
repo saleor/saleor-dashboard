@@ -2,7 +2,10 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PluginUpdateInput, ConfigurationTypeFieldEnum } from "./../../types/globalTypes";
+import {
+  PluginUpdateInput,
+  ConfigurationTypeFieldEnum
+} from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: PluginUpdate
@@ -18,7 +21,7 @@ export interface PluginUpdate_pluginUpdate_plugin_configuration {
   __typename: "ConfigurationItem";
   name: string;
   type: ConfigurationTypeFieldEnum | null;
-  value: string;
+  value: string | null;
   helpText: string | null;
   label: string | null;
 }
@@ -29,7 +32,9 @@ export interface PluginUpdate_pluginUpdate_plugin {
   name: string;
   description: string;
   active: boolean;
-  configuration: (PluginUpdate_pluginUpdate_plugin_configuration | null)[] | null;
+  configuration:
+    | (PluginUpdate_pluginUpdate_plugin_configuration | null)[]
+    | null;
 }
 
 export interface PluginUpdate_pluginUpdate {

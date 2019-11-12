@@ -1,3 +1,4 @@
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -13,7 +14,12 @@ import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import CardSpacer from "@saleor/components/CardSpacer";
+import Hr from "@saleor/components/Hr";
+import { ChangeEvent } from "@saleor/hooks/useForm";
+import { isSecretField } from "@saleor/plugins/utils";
 import { Plugin_plugin } from "../../types/Plugin";
+import PluginAuthorization from "../PluginAuthorization";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
 
@@ -28,27 +34,52 @@ export interface PluginsDetailsPageProps {
   plugin: Plugin_plugin;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
+  onClear: (field: string) => void;
+  onEdit: (field: string) => void;
   onSubmit: (data: FormData) => void;
 }
 
-const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
-  disabled,
-  errors,
-  plugin,
-  saveButtonBarState,
-  onBack,
-  onSubmit
-}) => {
+const useStyles = makeStyles(
+  {
+    spacer: {
+      gridColumnEnd: "span 2"
+    }
+  },
+  {
+    name: "PluginsDetailsPage"
+  }
+);
+
+const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
+  const {
+    disabled,
+    errors,
+    plugin,
+    saveButtonBarState,
+    onBack,
+    onClear,
+    onEdit,
+    onSubmit
+  } = props;
+
+  const classes = useStyles(props);
   const intl = useIntl();
   const initialForm: FormData = {
     active: maybe(() => plugin.active, false),
-    configuration: maybe(() => plugin.configuration, [])
+    configuration: maybe(() =>
+      plugin.configuration
+        .filter(field => !isSecretField(plugin.configuration, field.name))
+        .map(field => ({
+          ...field,
+          value: field.value || ""
+        }))
+    )
   };
 
   return (
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ data, errors, hasChanged, submit, set, triggerChange }) => {
-        const onChange = event => {
+        const onChange = (event: ChangeEvent) => {
           const newData = {
             active: data.active,
             configuration: data.configuration
@@ -94,7 +125,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                 <Typography>
                   {intl.formatMessage({
                     defaultMessage:
-                      "These are general information about your store. They define what is the URL of your store and what is shown in brow sers taskbar."
+                      "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
                   })}
                 </Typography>
               </div>
@@ -106,6 +137,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
               />
               {data.configuration && (
                 <>
+                  <Hr className={classes.spacer} />
                   <div>
                     <Typography variant="h6">
                       {intl.formatMessage({
@@ -120,13 +152,29 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                       })}
                     </Typography>
                   </div>
-                  <PluginSettings
-                    data={data}
-                    fields={maybe(() => plugin.configuration, [])}
-                    errors={errors}
-                    disabled={disabled}
-                    onChange={onChange}
-                  />
+                  <div>
+                    <PluginSettings
+                      data={data}
+                      fields={maybe(() => plugin.configuration, [])}
+                      errors={errors}
+                      disabled={disabled}
+                      onChange={onChange}
+                    />
+                    {maybe(() =>
+                      plugin.configuration.some(field =>
+                        isSecretField(plugin.configuration, field.name)
+                      )
+                    ) && (
+                      <>
+                        <CardSpacer />
+                        <PluginAuthorization
+                          fields={plugin.configuration}
+                          onClear={onClear}
+                          onEdit={onEdit}
+                        />
+                      </>
+                    )}
+                  </div>
                 </>
               )}
             </Grid>
