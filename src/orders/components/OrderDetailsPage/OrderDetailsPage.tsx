@@ -23,16 +23,21 @@ import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItems";
 
-const useStyles = makeStyles(theme => ({
-  date: {
-    marginBottom: theme.spacing(3),
-    marginTop: -theme.spacing(2)
-  },
-  header: {
-    display: "flex",
-    marginBottom: 0
+const useStyles = makeStyles(
+  theme => ({
+    date: {
+      marginBottom: theme.spacing(3),
+      marginTop: -theme.spacing(2)
+    },
+    header: {
+      display: "flex",
+      marginBottom: 0
+    }
+  }),
+  {
+    name: "OrderDetailsPage"
   }
-}));
+);
 
 export interface OrderDetailsPageProps extends UserPermissionProps {
   order: OrderDetails_order;
@@ -96,6 +101,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
       </AppHeader>
       <PageHeader
         className={classes.header}
+        inline
         title={maybe(() => order.number) ? "#" + order.number : undefined}
       >
         {canCancel && (

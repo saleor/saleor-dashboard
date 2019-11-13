@@ -25,10 +25,10 @@ import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 
 const useStyles = makeStyles(theme => ({
   date: {
-    marginBottom: theme.spacing(3),
-    marginLeft: theme.spacing(7)
+    marginBottom: theme.spacing(3)
   },
   header: {
+    display: "flex",
     marginBottom: 0
   }
 }));
@@ -99,6 +99,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       </AppHeader>
       <PageHeader
         className={classes.header}
+        inline
         title={maybe(() => order.number) ? "#" + order.number : undefined}
       >
         <CardMenu

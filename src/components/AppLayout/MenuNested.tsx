@@ -8,7 +8,11 @@ import SVG from "react-inlinesvg";
 import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import useTheme from "@saleor/hooks/useTheme";
 import { createHref } from "@saleor/misc";
-import { drawerWidthExpanded, drawerWidthExpandedMobile } from "./consts";
+import {
+  drawerNestedMenuWidth,
+  drawerWidthExpanded,
+  drawerWidthExpandedMobile
+} from "./consts";
 import { IActiveSubMenu } from "./MenuList";
 import { IMenuItem } from "./menuStructure";
 
@@ -20,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     right: 0,
     top: 0,
     transition: `right  ${theme.transitions.duration.shorter}ms ease`,
-    width: 300,
+    width: drawerNestedMenuWidth,
     zIndex: -1
   },
   menuListNestedClose: {
@@ -74,8 +78,8 @@ const useStyles = makeStyles(theme => ({
       width: drawerWidthExpandedMobile,
       zIndex: 2
     },
-    right: -300,
-    width: drawerWidthExpanded,
+    right: -drawerNestedMenuWidth,
+    width: drawerNestedMenuWidth,
     zIndex: -1
   },
   subHeader: {
