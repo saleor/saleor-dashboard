@@ -8,14 +8,14 @@ import { UserError } from "@saleor/types";
 import { AddressInput } from "@saleor/types/globalTypes";
 import { add, remove } from "@saleor/utils/lists";
 
-interface UseAddressValidation {
+interface UseAddressValidation<T> {
   errors: UserError[];
-  submit: (data: AddressTypeInput) => void;
+  submit: (data: T & AddressTypeInput) => void;
 }
 
-function useAddressValidation(
-  onSubmit: (address: AddressInput) => void
-): UseAddressValidation {
+function useAddressValidation<T>(
+  onSubmit: (address: T & AddressInput) => void
+): UseAddressValidation<T> {
   const intl = useIntl();
   const [validationErrors, setValidationErrors] = useState<UserError[]>([]);
 
@@ -26,7 +26,7 @@ function useAddressValidation(
 
   return {
     errors: validationErrors,
-    submit: (data: AddressTypeInput) => {
+    submit: (data: T & AddressTypeInput) => {
       try {
         setValidationErrors(
           remove(

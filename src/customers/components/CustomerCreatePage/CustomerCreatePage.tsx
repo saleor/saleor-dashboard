@@ -9,6 +9,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { sectionNames } from "@saleor/intl";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { UserError } from "../../../types";
@@ -67,12 +68,16 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
     label: country.country,
     value: country.code
   }));
+  const {
+    errors: validationErrors,
+    submit: handleSubmit
+  } = useAddressValidation(onSubmit);
 
   return (
     <Form
       initial={initialForm}
-      onSubmit={onSubmit}
-      errors={errors}
+      onSubmit={handleSubmit}
+      errors={[...errors, ...validationErrors]}
       confirmLeave
     >
       {({ change, data, errors: formErrors, hasChanged, submit }) => {
