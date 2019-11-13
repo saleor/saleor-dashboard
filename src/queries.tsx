@@ -6,7 +6,7 @@ import { Query, QueryResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
 import AppProgress from "./components/AppProgress";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
+import NotFoundPage from "./components/NotFoundPage";
 import useNavigator from "./hooks/useNavigator";
 import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
@@ -129,7 +129,9 @@ export function TypedQuery<TData, TVariables>(
                   true
                 )
               ) {
-                childrenOrNotFound = <ErrorPage onBack={() => navigate("/")} />;
+                childrenOrNotFound = (
+                  <NotFoundPage onBack={() => navigate("/")} />
+                );
               }
 
               if (displayLoader) {
