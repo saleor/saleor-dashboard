@@ -11,6 +11,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update customer's details page design - #248 by @dominik-zeglen
 - Use Apollo Hooks - #254 by @dominik-zeglen
 - Fix disappearing products description - #259 by @dominik-zeglen
+- Improve mobile appearance - #240 by @benekex2 and @dominik-zeglen
 
 ## 2.0.0
 
@@ -61,4 +62,3 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix permission handling - #231 by @dominik-zeglen
 - Use React.FC instead of deprecated React.StatelessComponent type - #245 by @dominik-zeglen
 - Update @material-ui to v4 - #234 by @dominik-zeglen
-- Improve mobile appearance - #240 by @benekex2
