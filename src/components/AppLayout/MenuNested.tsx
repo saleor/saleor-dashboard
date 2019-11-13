@@ -8,11 +8,7 @@ import SVG from "react-inlinesvg";
 import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import useTheme from "@saleor/hooks/useTheme";
 import { createHref } from "@saleor/misc";
-import {
-  drawerNestedMenuWidth,
-  drawerWidthExpanded,
-  drawerWidthExpandedMobile
-} from "./consts";
+import { drawerNestedMenuWidth, drawerWidthExpandedMobile } from "./consts";
 import { IActiveSubMenu } from "./MenuList";
 import { IMenuItem } from "./menuStructure";
 
