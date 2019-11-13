@@ -20,10 +20,10 @@ import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useElementScroll, {
   isScrolledToBottom
 } from "@saleor/hooks/useElementScroll";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";

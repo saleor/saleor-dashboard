@@ -1,5 +1,5 @@
-import Table from "@material-ui/core/Table";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Table from "@material-ui/core/Table";
 import React from "react";
 
 const useStyles = makeStyles(
