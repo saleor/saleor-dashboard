@@ -18,7 +18,7 @@ import usePaginator, {
 import { getMutationState, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
-import { TypedCategoryBulkDeleteMutation } from "../../mutations";
+import { useCategoryBulkDeleteMutation } from "../../mutations";
 import { TypedRootCategoriesQuery } from "../../queries";
 import { CategoryBulkDelete } from "../../types/CategoryBulkDelete";
 import {
@@ -138,120 +138,118 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
             reset();
           }
         };
-        return (
-          <TypedCategoryBulkDeleteMutation
-            onCompleted={handleCategoryBulkDelete}
-          >
-            {(categoryBulkDelete, categoryBulkDeleteOpts) => {
-              const bulkDeleteState = getMutationState(
-                categoryBulkDeleteOpts.called,
-                categoryBulkDeleteOpts.loading,
-                maybe(
-                  () => categoryBulkDeleteOpts.data.categoryBulkDelete.errors
-                )
-              );
 
-              return (
-                <>
-                  <CategoryListPage
-                    categories={maybe(
-                      () => data.categories.edges.map(edge => edge.node),
-                      []
-                    )}
-                    currentTab={currentTab}
-                    initialSearch={params.query || ""}
-                    onSearchChange={query => changeFilterField({ query })}
-                    onAll={() => navigate(categoryListUrl())}
-                    onTabChange={handleTabChange}
-                    onTabDelete={() => openModal("delete-search")}
-                    onTabSave={() => openModal("save-search")}
-                    tabs={tabs.map(tab => tab.name)}
-                    settings={settings}
-                    onAdd={() => navigate(categoryAddUrl())}
-                    onRowClick={id => () => navigate(categoryUrl(id))}
-                    disabled={loading}
-                    onNextPage={loadNextPage}
-                    onPreviousPage={loadPreviousPage}
-                    onUpdateListSettings={updateListSettings}
-                    pageInfo={pageInfo}
-                    isChecked={isSelected}
-                    selected={listElements.length}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                    toolbar={
-                      <IconButton
-                        color="primary"
-                        onClick={() =>
-                          navigate(
-                            categoryListUrl({
-                              ...params,
-                              action: "delete",
-                              ids: listElements
-                            })
-                          )
-                        }
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    }
-                  />
-                  <ActionDialog
-                    confirmButtonState={bulkDeleteState}
-                    onClose={() =>
-                      navigate(
-                        categoryListUrl({
-                          ...params,
-                          action: undefined,
-                          ids: undefined
-                        })
-                      )
-                    }
-                    onConfirm={() =>
-                      categoryBulkDelete({
-                        variables: {
-                          ids: params.ids
-                        }
+        const [
+          categoryBulkDelete,
+          categoryBulkDeleteOpts
+        ] = useCategoryBulkDeleteMutation({
+          onCompleted: handleCategoryBulkDelete
+        });
+
+        const bulkDeleteState = getMutationState(
+          categoryBulkDeleteOpts.called,
+          categoryBulkDeleteOpts.loading,
+          maybe(() => categoryBulkDeleteOpts.data.categoryBulkDelete.errors)
+        );
+
+        return (
+          <>
+            <CategoryListPage
+              categories={maybe(
+                () => data.categories.edges.map(edge => edge.node),
+                []
+              )}
+              currentTab={currentTab}
+              initialSearch={params.query || ""}
+              onSearchChange={query => changeFilterField({ query })}
+              onAll={() => navigate(categoryListUrl())}
+              onTabChange={handleTabChange}
+              onTabDelete={() => openModal("delete-search")}
+              onTabSave={() => openModal("save-search")}
+              tabs={tabs.map(tab => tab.name)}
+              settings={settings}
+              onAdd={() => navigate(categoryAddUrl())}
+              onRowClick={id => () => navigate(categoryUrl(id))}
+              disabled={loading}
+              onNextPage={loadNextPage}
+              onPreviousPage={loadPreviousPage}
+              onUpdateListSettings={updateListSettings}
+              pageInfo={pageInfo}
+              isChecked={isSelected}
+              selected={listElements.length}
+              toggle={toggle}
+              toggleAll={toggleAll}
+              toolbar={
+                <IconButton
+                  color="primary"
+                  onClick={() =>
+                    navigate(
+                      categoryListUrl({
+                        ...params,
+                        action: "delete",
+                        ids: listElements
                       })
-                    }
-                    open={params.action === "delete"}
-                    title={intl.formatMessage({
-                      defaultMessage: "Delete categories",
-                      description: "dialog title"
-                    })}
-                    variant="delete"
-                  >
-                    <DialogContentText>
-                      <FormattedMessage
-                        defaultMessage="Are you sure you want to delete {counter,plural,one{this category} other{{displayQuantity} categories}}?"
-                        values={{
-                          counter: maybe(() => params.ids.length),
-                          displayQuantity: (
-                            <strong>{maybe(() => params.ids.length)}</strong>
-                          )
-                        }}
-                      />
-                    </DialogContentText>
-                    <DialogContentText>
-                      <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
-                    </DialogContentText>
-                  </ActionDialog>
-                  <SaveFilterTabDialog
-                    open={params.action === "save-search"}
-                    confirmButtonState="default"
-                    onClose={closeModal}
-                    onSubmit={handleTabSave}
-                  />
-                  <DeleteFilterTabDialog
-                    open={params.action === "delete-search"}
-                    confirmButtonState="default"
-                    onClose={closeModal}
-                    onSubmit={handleTabDelete}
-                    tabName={maybe(() => tabs[currentTab - 1].name, "...")}
-                  />
-                </>
-              );
-            }}
-          </TypedCategoryBulkDeleteMutation>
+                    )
+                  }
+                >
+                  <DeleteIcon />
+                </IconButton>
+              }
+            />
+            <ActionDialog
+              confirmButtonState={bulkDeleteState}
+              onClose={() =>
+                navigate(
+                  categoryListUrl({
+                    ...params,
+                    action: undefined,
+                    ids: undefined
+                  })
+                )
+              }
+              onConfirm={() =>
+                categoryBulkDelete({
+                  variables: {
+                    ids: params.ids
+                  }
+                })
+              }
+              open={params.action === "delete"}
+              title={intl.formatMessage({
+                defaultMessage: "Delete categories",
+                description: "dialog title"
+              })}
+              variant="delete"
+            >
+              <DialogContentText>
+                <FormattedMessage
+                  defaultMessage="Are you sure you want to delete {counter,plural,one{this category} other{{displayQuantity} categories}}?"
+                  values={{
+                    counter: maybe(() => params.ids.length),
+                    displayQuantity: (
+                      <strong>{maybe(() => params.ids.length)}</strong>
+                    )
+                  }}
+                />
+              </DialogContentText>
+              <DialogContentText>
+                <FormattedMessage defaultMessage="Remember this will also delete all products assigned to this category." />
+              </DialogContentText>
+            </ActionDialog>
+            <SaveFilterTabDialog
+              open={params.action === "save-search"}
+              confirmButtonState="default"
+              onClose={closeModal}
+              onSubmit={handleTabSave}
+            />
+            <DeleteFilterTabDialog
+              open={params.action === "delete-search"}
+              confirmButtonState="default"
+              onClose={closeModal}
+              onSubmit={handleTabDelete}
+              tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+            />
+          </>
         );
       }}
     </TypedRootCategoriesQuery>
