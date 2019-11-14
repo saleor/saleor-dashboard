@@ -98,7 +98,9 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
     })
   );
 
-  const handleSubmit = (formData: CustomerCreatePageFormData) => {
+  const handleSubmit = (
+    formData: CustomerCreatePageFormData & AddressTypeInput
+  ) => {
     const areAddressInputFieldsModified = ([
       "city",
       "companyName",
@@ -115,7 +117,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
       .some(field => field !== "");
 
     if (areAddressInputFieldsModified) {
-      handleSubmitWithAddress(formData as any);
+      handleSubmitWithAddress(formData);
     } else {
       onSubmit({
         address: null,
