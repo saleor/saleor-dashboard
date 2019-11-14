@@ -43,8 +43,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     alignItems: "center",
     display: "flex",
-    height: "100vh",
-    width: "100vw"
+    height: "calc(100vh - 180px)"
   }
 }));
 
