@@ -58,43 +58,11 @@ export const CustomerCreate: React.FC<{}> = () => {
                 }
                 onBack={() => navigate(customerListUrl())}
                 onSubmit={formData => {
-                  const areAddressInputFieldsModified = ([
-                    "city",
-                    "companyName",
-                    "country",
-                    "countryArea",
-                    "firstName",
-                    "lastName",
-                    "phone",
-                    "postalCode",
-                    "streetAddress1",
-                    "streetAddress2"
-                  ] as Array<keyof AddressTypeInput>)
-                    .map(key => formData[key])
-                    .some(field => field !== "");
-
-                  const address = {
-                    city: formData.city,
-                    cityArea: formData.cityArea,
-                    companyName: formData.companyName,
-                    country: formData.country,
-                    countryArea: formData.countryArea,
-                    firstName: formData.firstName,
-                    lastName: formData.lastName,
-                    phone: formData.phone,
-                    postalCode: formData.postalCode,
-                    streetAddress1: formData.streetAddress1,
-                    streetAddress2: formData.streetAddress2
-                  };
                   createCustomer({
                     variables: {
                       input: {
-                        defaultBillingAddress: areAddressInputFieldsModified
-                          ? transformFormToAddress(address)
-                          : null,
-                        defaultShippingAddress: areAddressInputFieldsModified
-                          ? transformFormToAddress(address)
-                          : null,
+                        defaultBillingAddress: formData.address,
+                        defaultShippingAddress: formData.address,
                         email: formData.email,
                         firstName: formData.customerFirstName,
                         lastName: formData.customerLastName,

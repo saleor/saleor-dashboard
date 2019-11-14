@@ -11,6 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { sectionNames } from "@saleor/intl";
+import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { UserError } from "../../../types";
 import { AddressTypeInput } from "../../types";
@@ -19,14 +20,18 @@ import CustomerCreateAddress from "../CustomerCreateAddress/CustomerCreateAddres
 import CustomerCreateDetails from "../CustomerCreateDetails";
 import CustomerCreateNote from "../CustomerCreateNote/CustomerCreateNote";
 
-export interface CustomerCreatePageFormData extends AddressTypeInput {
+export interface CustomerCreatePageFormData {
   customerFirstName: string;
   customerLastName: string;
   email: string;
   note: string;
 }
+export interface CustomerCreatePageSubmitData
+  extends CustomerCreatePageFormData {
+  address: AddressInput;
+}
 
-const initialForm: CustomerCreatePageFormData = {
+const initialForm: CustomerCreatePageFormData & AddressTypeInput = {
   city: "",
   cityArea: "",
   companyName: "",
@@ -50,7 +55,7 @@ export interface CustomerCreatePageProps {
   errors: UserError[];
   saveButtonBar: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: CustomerCreatePageFormData) => void;
+  onSubmit: (data: CustomerCreatePageSubmitData) => void;
 }
 
 const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
@@ -70,8 +75,57 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   }));
   const {
     errors: validationErrors,
-    submit: handleSubmit
-  } = useAddressValidation(onSubmit);
+    submit: handleSubmitWithAddress
+  } = useAddressValidation<CustomerCreatePageFormData>(formData =>
+    onSubmit({
+      address: {
+        city: formData.city,
+        cityArea: formData.cityArea,
+        companyName: formData.companyName,
+        country: formData.country,
+        countryArea: formData.countryArea,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phone,
+        postalCode: formData.postalCode,
+        streetAddress1: formData.streetAddress1,
+        streetAddress2: formData.streetAddress2
+      },
+      customerFirstName: formData.customerFirstName,
+      customerLastName: formData.customerLastName,
+      email: formData.email,
+      note: formData.note
+    })
+  );
+
+  const handleSubmit = (formData: CustomerCreatePageFormData) => {
+    const areAddressInputFieldsModified = ([
+      "city",
+      "companyName",
+      "country",
+      "countryArea",
+      "firstName",
+      "lastName",
+      "phone",
+      "postalCode",
+      "streetAddress1",
+      "streetAddress2"
+    ] as Array<keyof AddressTypeInput>)
+      .map(key => formData[key])
+      .some(field => field !== "");
+
+    if (areAddressInputFieldsModified) {
+      handleSubmitWithAddress(formData as any);
+    } else {
+      onSubmit({
+        address: null,
+        customerFirstName: formData.customerFirstName,
+        customerLastName: formData.customerLastName,
+        email: formData.email,
+        note: formData.note
+      });
+    }
+  };
 
   return (
     <Form
