@@ -174,19 +174,23 @@ export function getProductUpdatePageFormData(
     publicationDate: maybe(() => product.publicationDate, ""),
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),
-    sku: maybe(() =>
-      product.productType.hasVariants
-        ? undefined
-        : variants && variants[0]
-        ? variants[0].sku
-        : undefined
+    sku: maybe(
+      () =>
+        product.productType.hasVariants
+          ? undefined
+          : variants && variants[0]
+          ? variants[0].sku
+          : undefined,
+      ""
     ),
-    stockQuantity: maybe(() =>
-      product.productType.hasVariants
-        ? undefined
-        : variants && variants[0]
-        ? variants[0].quantity
-        : undefined
+    stockQuantity: maybe(
+      () =>
+        product.productType.hasVariants
+          ? undefined
+          : variants && variants[0]
+          ? variants[0].quantity
+          : undefined,
+      0
     )
   };
 }
