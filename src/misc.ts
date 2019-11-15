@@ -339,9 +339,9 @@ export function capitalize(s: string) {
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
 }
 
-export function transformFormToAddress(
-  address: AddressTypeInput
-): AddressInput {
+export function transformFormToAddress<T>(
+  address: T & AddressTypeInput
+): T & AddressInput {
   return {
     ...address,
     country: findInEnum(address.country, CountryCode)

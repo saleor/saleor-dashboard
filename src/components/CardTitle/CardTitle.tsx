@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => ({
   }),
   title: {
     flex: 1,
+    fontWeight: 500,
     lineHeight: 1
   },
   toolbar: {
