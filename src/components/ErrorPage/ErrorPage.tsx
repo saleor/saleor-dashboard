@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     alignItems: "center",
     display: "flex",
-    height: "calc(100vh - 88px)"
+    height: "calc(100vh - 180px)"
   },
   upperHeader: {
     fontWeight: 600 as 600

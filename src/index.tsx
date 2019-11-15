@@ -8,9 +8,11 @@ import { createUploadLink } from "apollo-upload-client";
 import React from "react";
 import { ApolloProvider } from "react-apollo";
 import { render } from "react-dom";
+import ErrorBoundary from "react-error-boundary";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import useAppState from "@saleor/hooks/useAppState";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth, { getAuthToken, removeAuthToken } from "./auth";
@@ -20,7 +22,7 @@ import SectionRoute from "./auth/components/SectionRoute";
 import { hasPermission } from "./auth/misc";
 import CategorySection from "./categories";
 import CollectionSection from "./collections";
-import { AppProgressProvider } from "./components/AppProgress";
+import AppLayout from "./components/AppLayout";
 import { DateProvider } from "./components/Date";
 import { LocaleProvider } from "./components/Locale";
 import { MessageManager } from "./components/messages";
@@ -29,6 +31,7 @@ import ThemeProvider from "./components/Theme";
 import { WindowTitle } from "./components/WindowTitle";
 import { API_URI, APP_MOUNT_URI } from "./config";
 import ConfigurationSection, { createConfigurationMenu } from "./configuration";
+import AppStateProvider from "./containers/AppState";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import HomePage from "./home";
@@ -119,11 +122,11 @@ const App: React.FC = () => {
           <DateProvider>
             <LocaleProvider>
               <MessageManager>
-                <AppProgressProvider>
+                <AppStateProvider>
                   <ShopProvider>
                     <Routes />
                   </ShopProvider>
-                </AppProgressProvider>
+                </AppStateProvider>
               </MessageManager>
             </LocaleProvider>
           </DateProvider>
@@ -135,6 +138,7 @@ const App: React.FC = () => {
 
 const Routes: React.FC = () => {
   const intl = useIntl();
+  const [, dispatchAppState] = useAppState();
 
   return (
     <>
@@ -148,109 +152,124 @@ const Routes: React.FC = () => {
           user
         }) =>
           isAuthenticated && !tokenAuthLoading && !tokenVerifyLoading ? (
-            <Switch>
-              <SectionRoute exact path="/" component={HomePage} />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                path="/categories"
-                component={CategorySection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                path="/collections"
-                component={CollectionSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_USERS]}
-                path="/customers"
-                component={CustomerSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                path="/discounts"
-                component={DiscountSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PAGES]}
-                path="/pages"
-                component={PageSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PLUGINS]}
-                path="/plugins"
-                component={PluginsSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_ORDERS]}
-                path="/orders"
-                component={OrdersSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                path="/products"
-                component={ProductSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                path="/product-types"
-                component={ProductTypesSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_STAFF]}
-                path="/staff"
-                component={StaffSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_SETTINGS]}
-                path="/site-settings"
-                component={SiteSettingsSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_SETTINGS]}
-                path="/taxes"
-                component={TaxesSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_SHIPPING]}
-                path="/shipping"
-                component={ShippingSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_TRANSLATIONS]}
-                path="/translations"
-                component={TranslationsSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_WEBHOOKS]}
-                path="/webhooks"
-                component={WebhooksSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_MENUS]}
-                path={navigationSection}
-                component={NavigationSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                path={attributeSection}
-                component={AttributeSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_SERVICE_ACCOUNTS]}
-                path={serviceSection}
-                component={ServiceSection}
-              />
-              {createConfigurationMenu(intl).filter(menu =>
-                menu.menuItems.map(item => hasPermission(item.permission, user))
-              ).length > 0 && (
-                <SectionRoute
-                  exact
-                  path="/configuration"
-                  component={ConfigurationSection}
-                />
-              )}
-              <Route component={NotFound} />
-            </Switch>
+            <AppLayout>
+              <ErrorBoundary
+                onError={() =>
+                  dispatchAppState({
+                    payload: {
+                      error: "unhandled"
+                    },
+                    type: "displayError"
+                  })
+                }
+              >
+                <Switch>
+                  <SectionRoute exact path="/" component={HomePage} />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                    path="/categories"
+                    component={CategorySection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                    path="/collections"
+                    component={CollectionSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_USERS]}
+                    path="/customers"
+                    component={CustomerSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                    path="/discounts"
+                    component={DiscountSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_PAGES]}
+                    path="/pages"
+                    component={PageSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_PLUGINS]}
+                    path="/plugins"
+                    component={PluginsSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_ORDERS]}
+                    path="/orders"
+                    component={OrdersSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                    path="/products"
+                    component={ProductSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                    path="/product-types"
+                    component={ProductTypesSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_STAFF]}
+                    path="/staff"
+                    component={StaffSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                    path="/site-settings"
+                    component={SiteSettingsSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                    path="/taxes"
+                    component={TaxesSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_SHIPPING]}
+                    path="/shipping"
+                    component={ShippingSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_TRANSLATIONS]}
+                    path="/translations"
+                    component={TranslationsSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_WEBHOOKS]}
+                    path="/webhooks"
+                    component={WebhooksSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_MENUS]}
+                    path={navigationSection}
+                    component={NavigationSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                    path={attributeSection}
+                    component={AttributeSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_SERVICE_ACCOUNTS]}
+                    path={serviceSection}
+                    component={ServiceSection}
+                  />
+                  {createConfigurationMenu(intl).filter(menu =>
+                    menu.menuItems.map(item =>
+                      hasPermission(item.permission, user)
+                    )
+                  ).length > 0 && (
+                    <SectionRoute
+                      exact
+                      path="/configuration"
+                      component={ConfigurationSection}
+                    />
+                  )}
+                  <Route component={NotFound} />
+                </Switch>
+              </ErrorBoundary>
+            </AppLayout>
           ) : hasToken && tokenVerifyLoading ? (
             <LoginLoading />
           ) : (

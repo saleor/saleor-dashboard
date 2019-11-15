@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { TypedMutation } from "../mutations";
+import makeMutation from "@saleor/hooks/makeMutation";
 import { categoryDetailsFragment } from "./queries";
 import {
   CategoryBulkDelete,
@@ -29,7 +29,7 @@ export const categoryDeleteMutation = gql`
     }
   }
 `;
-export const TypedCategoryDeleteMutation = TypedMutation<
+export const useCategoryDeleteMutation = makeMutation<
   CategoryDelete,
   CategoryDeleteVariables
 >(categoryDeleteMutation);
@@ -48,7 +48,7 @@ export const categoryCreateMutation = gql`
     }
   }
 `;
-export const TypedCategoryCreateMutation = TypedMutation<
+export const useCategoryCreateMutation = makeMutation<
   CategoryCreate,
   CategoryCreateVariables
 >(categoryCreateMutation);
@@ -67,7 +67,7 @@ export const categoryUpdateMutation = gql`
     }
   }
 `;
-export const TypedCategoryUpdateMutation = TypedMutation<
+export const useCategoryUpdateMutation = makeMutation<
   CategoryUpdate,
   CategoryUpdateVariables
 >(categoryUpdateMutation);
@@ -82,7 +82,7 @@ export const categoryBulkDeleteMutation = gql`
     }
   }
 `;
-export const TypedCategoryBulkDeleteMutation = TypedMutation<
+export const useCategoryBulkDeleteMutation = makeMutation<
   CategoryBulkDelete,
   CategoryBulkDeleteVariables
 >(categoryBulkDeleteMutation);

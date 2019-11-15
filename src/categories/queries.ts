@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
-import { pageInfoFragment, TypedQuery } from "../queries";
+import makeQuery from "@saleor/hooks/makeQuery";
+import { pageInfoFragment } from "../queries";
 import {
   CategoryDetails,
   CategoryDetailsVariables
@@ -65,7 +66,7 @@ export const rootCategories = gql`
     }
   }
 `;
-export const TypedRootCategoriesQuery = TypedQuery<RootCategories, {}>(
+export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(
   rootCategories
 );
 
@@ -119,7 +120,7 @@ export const categoryDetails = gql`
     }
   }
 `;
-export const TypedCategoryDetailsQuery = TypedQuery<
+export const useCategoryDetailsQuery = makeQuery<
   CategoryDetails,
   CategoryDetailsVariables
 >(categoryDetails);

@@ -6,7 +6,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getMutationState, maybe } from "../../misc";
 import CategoryCreatePage from "../components/CategoryCreatePage";
-import { TypedCategoryCreateMutation } from "../mutations";
+import { useCategoryCreateMutation } from "../mutations";
 import { CategoryCreate } from "../types/CategoryCreate";
 import { categoryListUrl, categoryUrl } from "../urls";
 
@@ -31,55 +31,54 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
       navigate(categoryUrl(data.categoryCreate.category.id));
     }
   };
+
+  const [createCategory, createCategoryResult] = useCategoryCreateMutation({
+    onCompleted: handleSuccess
+  });
+
+  const errors = maybe(
+    () => createCategoryResult.data.categoryCreate.errors,
+    []
+  );
+
+  const formTransitionState = getMutationState(
+    createCategoryResult.called,
+    createCategoryResult.loading,
+    errors
+  );
+
   return (
-    <TypedCategoryCreateMutation onCompleted={handleSuccess}>
-      {(createCategory, createCategoryResult) => {
-        const errors = maybe(
-          () => createCategoryResult.data.categoryCreate.errors,
-          []
-        );
-
-        const formTransitionState = getMutationState(
-          createCategoryResult.called,
-          createCategoryResult.loading,
-          errors
-        );
-
-        return (
-          <>
-            <WindowTitle
-              title={intl.formatMessage({
-                defaultMessage: "Create category",
-                description: "window title"
-              })}
-            />
-            <CategoryCreatePage
-              saveButtonBarState={formTransitionState}
-              errors={errors}
-              disabled={createCategoryResult.loading}
-              onBack={() =>
-                navigate(parentId ? categoryUrl(parentId) : categoryListUrl())
-              }
-              onSubmit={formData =>
-                createCategory({
-                  variables: {
-                    input: {
-                      descriptionJson: JSON.stringify(formData.description),
-                      name: formData.name,
-                      seo: {
-                        description: formData.seoDescription,
-                        title: formData.seoTitle
-                      }
-                    },
-                    parent: parentId || null
-                  }
-                })
-              }
-            />
-          </>
-        );
-      }}
-    </TypedCategoryCreateMutation>
+    <>
+      <WindowTitle
+        title={intl.formatMessage({
+          defaultMessage: "Create category",
+          description: "window title"
+        })}
+      />
+      <CategoryCreatePage
+        saveButtonBarState={formTransitionState}
+        errors={errors}
+        disabled={createCategoryResult.loading}
+        onBack={() =>
+          navigate(parentId ? categoryUrl(parentId) : categoryListUrl())
+        }
+        onSubmit={formData =>
+          createCategory({
+            variables: {
+              input: {
+                descriptionJson: JSON.stringify(formData.description),
+                name: formData.name,
+                seo: {
+                  description: formData.seoDescription,
+                  title: formData.seoTitle
+                }
+              },
+              parent: parentId || null
+            }
+          })
+        }
+      />
+    </>
   );
 };
 export default CategoryCreateView;

@@ -5,9 +5,7 @@ import React from "react";
 import { Query, QueryResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
-import AppProgress from "./components/AppProgress";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
-import useNavigator from "./hooks/useNavigator";
+import useAppState from "./hooks/useAppState";
 import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
 import { maybe, RequireAtLeastOne } from "./misc";
@@ -68,87 +66,108 @@ export function TypedQuery<TData, TVariables>(
   query: DocumentNode
 ): React.FC<TypedQueryInnerProps<TData, TVariables>> {
   return ({ children, displayLoader, skip, variables, require }) => {
-    const navigate = useNavigator();
     const pushMessage = useNotifier();
+    const [, dispatchAppState] = useAppState();
     const intl = useIntl();
 
     return (
-      <AppProgress>
-        {({ setProgressState }) => (
-          <Query
-            fetchPolicy="cache-and-network"
-            query={query}
-            variables={variables}
-            skip={skip}
-            context={{ useBatching: true }}
-            errorPolicy="all"
-          >
-            {(queryData: QueryResult<TData, TVariables>) => {
-              if (queryData.error) {
-                if (
-                  !queryData.error.graphQLErrors.every(
-                    err =>
-                      maybe(() => err.extensions.exception.code) ===
-                      "PermissionDenied"
-                  )
-                ) {
-                  pushMessage({
-                    text: intl.formatMessage(commonMessages.somethingWentWrong)
-                  });
+      <Query
+        fetchPolicy="cache-and-network"
+        query={query}
+        variables={variables}
+        skip={skip}
+        context={{ useBatching: true }}
+        errorPolicy="all"
+      >
+        {(queryData: QueryResult<TData, TVariables>) => {
+          if (queryData.error) {
+            if (
+              !queryData.error.graphQLErrors.every(
+                err =>
+                  maybe(() => err.extensions.exception.code) ===
+                  "PermissionDenied"
+              )
+            ) {
+              pushMessage({
+                text: intl.formatMessage(commonMessages.somethingWentWrong)
+              });
+            }
+          }
+
+          const loadMore = (
+            mergeFunc: (
+              previousResults: TData,
+              fetchMoreResult: TData
+            ) => TData,
+            extraVariables: RequireAtLeastOne<TVariables>
+          ) =>
+            queryData.fetchMore({
+              query,
+              updateQuery: (previousResults, { fetchMoreResult }) => {
+                if (!fetchMoreResult) {
+                  return previousResults;
                 }
-              }
+                return mergeFunc(previousResults, fetchMoreResult);
+              },
+              variables: { ...variables, ...extraVariables }
+            });
 
-              const loadMore = (
-                mergeFunc: (
-                  previousResults: TData,
-                  fetchMoreResult: TData
-                ) => TData,
-                extraVariables: RequireAtLeastOne<TVariables>
-              ) =>
-                queryData.fetchMore({
-                  query,
-                  updateQuery: (previousResults, { fetchMoreResult }) => {
-                    if (!fetchMoreResult) {
-                      return previousResults;
-                    }
-                    return mergeFunc(previousResults, fetchMoreResult);
-                  },
-                  variables: { ...variables, ...extraVariables }
-                });
+          if (
+            !queryData.loading &&
+            require &&
+            queryData.data &&
+            !require.reduce(
+              (acc, key) => acc && queryData.data[key] !== null,
+              true
+            )
+          ) {
+            dispatchAppState({
+              payload: {
+                error: "not-found"
+              },
+              type: "displayError"
+            });
+          }
 
-              let childrenOrNotFound = children({
+          if (displayLoader) {
+            return (
+              <QueryProgress
+                loading={queryData.loading}
+                onCompleted={() =>
+                  dispatchAppState({
+                    payload: {
+                      value: false
+                    },
+                    type: "displayLoader"
+                  })
+                }
+                onLoading={() =>
+                  dispatchAppState({
+                    payload: {
+                      value: true
+                    },
+                    type: "displayLoader"
+                  })
+                }
+              >
+                {children({
+                  ...queryData,
+                  loadMore
+                })}
+              </QueryProgress>
+            );
+          }
+
+          return (
+            <>
+              {children({
                 ...queryData,
                 loadMore
-              });
-              if (
-                !queryData.loading &&
-                require &&
-                queryData.data &&
-                !require.reduce(
-                  (acc, key) => acc && queryData.data[key] !== null,
-                  true
-                )
-              ) {
-                childrenOrNotFound = <ErrorPage onBack={() => navigate("/")} />;
-              }
-
-              if (displayLoader) {
-                return (
-                  <QueryProgress
-                    loading={queryData.loading}
-                    onCompleted={() => setProgressState(false)}
-                    onLoading={() => setProgressState(true)}
-                  >
-                    {childrenOrNotFound}
-                  </QueryProgress>
-                );
-              }
-
-              return <>{childrenOrNotFound}</>;
-            }}
-          </Query>
-        )}
-      </AppProgress>
+              })}
+            </>
+          );
+        }}
+      </Query>
     );
   };
 }
