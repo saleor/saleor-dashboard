@@ -15,7 +15,7 @@ import SearchPages from "../../../containers/SearchPages";
 import { getMutationState, maybe } from "../../../misc";
 import { pageUrl } from "../../../pages/urls";
 import MenuDetailsPage, {
-  MenuDetailsSubmitData
+  MenuDetailsFormData
 } from "../../components/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
 import MenuItemDialog, {
@@ -50,9 +50,7 @@ import {
   findMenuItem,
   getInitialDisplayValue,
   getMenuItemCreateInputData,
-  getMenuItemInputData,
-  getMoves,
-  getRemoveIds
+  getMenuItemInputData
 } from "./utils";
 
 interface MenuDetailsProps {
@@ -193,7 +191,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                   maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors)
                 );
 
-                const handleSubmit = (data: MenuDetailsSubmitData) =>
+                const handleSubmit = (data: MenuDetailsFormData) =>
                   menuUpdate({
                     variables: {
                       id,

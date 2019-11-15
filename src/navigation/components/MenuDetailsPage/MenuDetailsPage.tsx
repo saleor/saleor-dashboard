@@ -19,7 +19,7 @@ import MenuProperties from "../MenuProperties";
 import { computeTree } from "./tree";
 
 export interface MenuDetailsFormData {
-  name?: string;
+  name: string;
 }
 
 export interface MenuDetailsPageProps {
@@ -33,7 +33,7 @@ export interface MenuDetailsPageProps {
   onItemDelete: (id: string) => void;
   onItemEdit: (id: string) => void;
   onItemMove: (move: MenuItemMoveInput) => void;
-  onSubmit: (data: MenuDetailsSubmitData) => void;
+  onSubmit: (data: MenuDetailsFormData) => void;
 }
 
 const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
@@ -62,11 +62,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     JSON.stringify(maybe(() => menu.items))
   ]);
 
-  const handleSubmit = (data: MenuDetailsFormData) =>
-    onSubmit({
-      name: data.name,
-      operations: []
-    });
+  const handleSubmit = (data: MenuDetailsFormData) => onSubmit(data);
 
   const handleChange = (operation: TreeOperation) => {
     if (!!operation) {

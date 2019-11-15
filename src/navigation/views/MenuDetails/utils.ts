@@ -2,12 +2,7 @@ import {
   findNode,
   getNode
 } from "@saleor/navigation/components/MenuDetailsPage/tree";
-import {
-  MenuItemCreateInput,
-  MenuItemInput,
-  MenuItemMoveInput
-} from "../../../types/globalTypes";
-import { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
+import { MenuItemCreateInput, MenuItemInput } from "../../../types/globalTypes";
 import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
 import { unknownTypeError } from "../../components/MenuItems";
 import {
@@ -92,22 +87,6 @@ export function getInitialDisplayValue(item: MenuDetails_menu_items): string {
   } else {
     return "";
   }
-}
-
-export function getMoves(data: MenuDetailsSubmitData): MenuItemMoveInput[] {
-  return data.operations
-    .filter(operation => operation.type === "move")
-    .map(move => ({
-      itemId: move.id,
-      parentId: move.parentId,
-      sortOrder: move.sortOrder
-    }));
-}
-
-export function getRemoveIds(data: MenuDetailsSubmitData): string[] {
-  return data.operations
-    .filter(operation => operation.type === "remove")
-    .map(operation => operation.id);
 }
 
 export function findMenuItem(
