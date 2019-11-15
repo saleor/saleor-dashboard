@@ -25,13 +25,11 @@ const NODE_HEIGHT = 56;
 const NODE_MARGIN = 40;
 
 export interface MenuItemsProps {
-  canUndo: boolean;
   items: MenuDetails_menu_items[];
   onChange: (operation: TreeOperation) => void;
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
-  onUndo: () => void;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -195,16 +193,7 @@ const Node: React.FC<NodeRendererProps> = props => {
 };
 
 const MenuItems: React.FC<MenuItemsProps> = props => {
-  const {
-    canUndo,
-
-    items,
-    onChange,
-    onItemAdd,
-    onItemClick,
-    onItemEdit,
-    onUndo
-  } = props;
+  const { items, onChange, onItemAdd, onItemClick, onItemEdit } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -218,11 +207,6 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
           description: "header",
           id: "menuItemsHeader"
         })}
-        toolbar={
-          <Button color="primary" disabled={!canUndo} onClick={onUndo}>
-            <FormattedMessage {...buttonMessages.undo} />
-          </Button>
-        }
       />
       <div
         className={classNames(classes.container, {

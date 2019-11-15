@@ -10,6 +10,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
+import { MenuItemMoveInput } from "@saleor/types/globalTypes";
 import { maybe } from "../../../misc";
 import { MenuDetails_menu } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
@@ -18,11 +19,7 @@ import MenuProperties from "../MenuProperties";
 import { computeTree } from "./tree";
 
 export interface MenuDetailsFormData {
-  name: string;
-}
-
-export interface MenuDetailsSubmitData extends MenuDetailsFormData {
-  operations: TreeOperation[];
+  name?: string;
 }
 
 export interface MenuDetailsPageProps {
@@ -33,8 +30,10 @@ export interface MenuDetailsPageProps {
   onDelete: () => void;
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
+  onItemDelete: (id: string) => void;
   onItemEdit: (id: string) => void;
-  onSubmit: (data: MenuDetailsSubmitData) => Promise<boolean>;
+  onItemMove: (move: MenuItemMoveInput) => void;
+  onSubmit: (data: MenuDetailsSubmitData) => void;
 }
 
 const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
@@ -45,7 +44,9 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   onDelete,
   onItemAdd,
   onItemClick,
+  onItemDelete,
   onItemEdit,
+  onItemMove,
   onSubmit
 }) => {
   const intl = useIntl();
@@ -57,21 +58,35 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>(
     []
   );
+  React.useEffect(() => setTreeOperations([]), [
+    JSON.stringify(maybe(() => menu.items))
+  ]);
 
-  const handleSubmit = async (data: MenuDetailsFormData) => {
-    if (
-      await onSubmit({
-        name: data.name,
-        operations: treeOperations
-      })
-    ) {
-      setTreeOperations([]);
-    }
-  };
+  const handleSubmit = (data: MenuDetailsFormData) =>
+    onSubmit({
+      name: data.name,
+      operations: []
+    });
 
   const handleChange = (operation: TreeOperation) => {
     if (!!operation) {
-      setTreeOperations([...treeOperations, operation]);
+      switch (operation.type) {
+        case "move":
+          setTreeOperations([...treeOperations, operation]);
+          onItemMove({
+            itemId: operation.id,
+            parentId: operation.parentId,
+            sortOrder: operation.sortOrder
+          });
+          break;
+
+        case "remove":
+          onItemDelete(operation.id);
+          break;
+
+        default:
+          throw new Error("Unknown operation");
+      }
     }
   };
 
@@ -102,7 +117,6 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
               />
               <CardSpacer />
               <MenuItems
-                canUndo={treeOperations.length > 0}
                 items={maybe(() =>
                   computeTree(menu.items, [...treeOperations])
                 )}
@@ -110,16 +124,11 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                 onItemAdd={onItemAdd}
                 onItemClick={onItemClick}
                 onItemEdit={onItemEdit}
-                onUndo={() =>
-                  setTreeOperations(
-                    treeOperations.slice(0, treeOperations.length - 1)
-                  )
-                }
               />
             </div>
           </Grid>
           <SaveButtonBar
-            disabled={disabled || (!hasChanged && treeOperations.length === 0)}
+            disabled={disabled || !hasChanged}
             onCancel={onBack}
             onDelete={onDelete}
             onSave={submit}

@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
-import { pageInfoFragment, TypedQuery } from "../queries";
+
+import makeQuery from "@saleor/hooks/makeQuery";
+import { pageInfoFragment } from "../queries";
 import { MenuDetails, MenuDetailsVariables } from "./types/MenuDetails";
 import { MenuList, MenuListVariables } from "./types/MenuList";
 
@@ -88,7 +90,9 @@ const menuList = gql`
     }
   }
 `;
-export const MenuListQuery = TypedQuery<MenuList, MenuListVariables>(menuList);
+export const useMenuListQuery = makeQuery<MenuList, MenuListVariables>(
+  menuList
+);
 
 const menuDetails = gql`
   ${menuDetailsFragment}
@@ -98,6 +102,6 @@ const menuDetails = gql`
     }
   }
 `;
-export const MenuDetailsQuery = TypedQuery<MenuDetails, MenuDetailsVariables>(
+export const useMenuDetailsQuery = makeQuery<MenuDetails, MenuDetailsVariables>(
   menuDetails
 );

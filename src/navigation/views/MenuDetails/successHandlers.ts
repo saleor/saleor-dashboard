@@ -1,6 +1,7 @@
 import { IntlShape } from "react-intl";
 
 import { commonMessages } from "@saleor/intl";
+import { MenuItemDelete } from "@saleor/navigation/types/MenuItemDelete";
 import { UseNavigatorResult } from "../../../hooks/useNavigator";
 import { UseNotifierResult } from "../../../hooks/useNotifier";
 import { MenuDelete } from "../../types/MenuDelete";
@@ -20,6 +21,28 @@ export function handleItemCreate(
     notify({
       text: intl.formatMessage(commonMessages.savedChanges)
     });
+  }
+}
+
+export function handleItemDelete(
+  data: MenuItemDelete,
+  id: string,
+  navigate: UseNavigatorResult,
+  notify: UseNotifierResult,
+  refetch: () => void,
+  intl: IntlShape
+) {
+  if (data.menuItemDelete.errors.length === 0) {
+    notify({
+      text: intl.formatMessage(commonMessages.savedChanges)
+    });
+    navigate(
+      menuUrl(id, {
+        action: undefined,
+        id: undefined
+      })
+    );
+    refetch();
   }
 }
 
@@ -63,11 +86,7 @@ export function handleUpdate(
   refetch: () => void,
   intl: IntlShape
 ) {
-  if (
-    data.menuItemBulkDelete.errors.length === 0 &&
-    data.menuItemMove.errors.length === 0 &&
-    data.menuUpdate.errors.length === 0
-  ) {
+  if (data.menuUpdate.errors.length === 0) {
     notify({
       text: intl.formatMessage(commonMessages.savedChanges)
     });

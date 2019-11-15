@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
-import { TypedMutation } from "../mutations";
+
+import makeMutation from "@saleor/hooks/makeMutation";
 import { menuItemFragment, menuItemNestedFragment } from "./queries";
 import {
   MenuBulkDelete,
@@ -11,6 +12,11 @@ import {
   MenuItemCreate,
   MenuItemCreateVariables
 } from "./types/MenuItemCreate";
+import {
+  MenuItemDelete,
+  MenuItemDeleteVariables
+} from "./types/MenuItemDelete";
+import { MenuItemMove, MenuItemMoveVariables } from "./types/MenuItemMove";
 import {
   MenuItemUpdate,
   MenuItemUpdateVariables
@@ -30,7 +36,7 @@ const menuCreate = gql`
     }
   }
 `;
-export const MenuCreateMutation = TypedMutation<
+export const useMenuCreateMutation = makeMutation<
   MenuCreate,
   MenuCreateVariables
 >(menuCreate);
@@ -45,7 +51,7 @@ const menuBulkDelete = gql`
     }
   }
 `;
-export const MenuBulkDeleteMutation = TypedMutation<
+export const useMenuBulkDeleteMutation = makeMutation<
   MenuBulkDelete,
   MenuBulkDeleteVariables
 >(menuBulkDelete);
@@ -60,7 +66,7 @@ const menuDelete = gql`
     }
   }
 `;
-export const MenuDeleteMutation = TypedMutation<
+export const useMenuDeleteMutation = makeMutation<
   MenuDelete,
   MenuDeleteVariables
 >(menuDelete);
@@ -84,33 +90,14 @@ const menuItemCreate = gql`
     }
   }
 `;
-export const MenuItemCreateMutation = TypedMutation<
+export const useMenuItemCreateMutation = makeMutation<
   MenuItemCreate,
   MenuItemCreateVariables
 >(menuItemCreate);
 
 const menuUpdate = gql`
-  mutation MenuUpdate(
-    $id: ID!
-    $name: String!
-    $moves: [MenuItemMoveInput]!
-    $removeIds: [ID]!
-  ) {
+  mutation MenuUpdate($id: ID!, $name: String) {
     menuUpdate(id: $id, input: { name: $name }) {
-      errors {
-        field
-        message
-      }
-    }
-
-    menuItemMove(menu: $id, moves: $moves) {
-      errors {
-        field
-        message
-      }
-    }
-
-    menuItemBulkDelete(ids: $removeIds) {
       errors {
         field
         message
@@ -118,10 +105,40 @@ const menuUpdate = gql`
     }
   }
 `;
-export const MenuUpdateMutation = TypedMutation<
+export const useMenuUpdateMutation = makeMutation<
   MenuUpdate,
   MenuUpdateVariables
 >(menuUpdate);
+
+const menuItemMove = gql`
+  mutation MenuItemMove($id: ID!, $move: MenuItemMoveInput!) {
+    menuItemMove(menu: $id, moves: [$move]) {
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+export const useMenuItemMoveMutation = makeMutation<
+  MenuItemMove,
+  MenuItemMoveVariables
+>(menuItemMove);
+
+const menuItemDelete = gql`
+  mutation MenuItemDelete($id: ID!) {
+    menuItemDelete(id: $id) {
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+export const useMenuItemDeleteMutation = makeMutation<
+  MenuItemDelete,
+  MenuItemDeleteVariables
+>(menuItemDelete);
 
 const menuItemUpdate = gql`
   ${menuItemFragment}
@@ -137,7 +154,7 @@ const menuItemUpdate = gql`
     }
   }
 `;
-export const MenuItemUpdateMutation = TypedMutation<
+export const useMenuItemUpdateMutation = makeMutation<
   MenuItemUpdate,
   MenuItemUpdateVariables
 >(menuItemUpdate);

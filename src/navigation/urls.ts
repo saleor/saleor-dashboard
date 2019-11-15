@@ -15,7 +15,7 @@ export const menuListUrl = (params?: MenuListUrlQueryParams) =>
   menuListPath + "?" + stringifyQs(params);
 
 export const menuPath = (id: string) => urlJoin(navigationSection, id);
-export type MenuUrlDialog = "add-item" | "edit-item" | "remove";
+export type MenuUrlDialog = "add-item" | "edit-item" | "remove" | "remove-item";
 export type MenuUrlQueryParams = Dialog<MenuUrlDialog> & SingleAction;
 export const menuUrl = (id: string, params?: MenuUrlQueryParams) =>
   menuPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

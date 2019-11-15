@@ -5,6 +5,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { MenuItemMoveInput } from "@saleor/types/globalTypes";
 import { categoryUrl } from "../../../categories/urls";
 import { collectionUrl } from "../../../collections/urls";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
@@ -27,22 +28,26 @@ import {
   unknownTypeError
 } from "../../components/MenuItems";
 import {
-  MenuDeleteMutation,
-  MenuItemCreateMutation,
-  MenuItemUpdateMutation,
-  MenuUpdateMutation
+  useMenuDeleteMutation,
+  useMenuItemCreateMutation,
+  useMenuItemDeleteMutation,
+  useMenuItemMoveMutation,
+  useMenuItemUpdateMutation,
+  useMenuUpdateMutation
 } from "../../mutations";
-import { MenuDetailsQuery } from "../../queries";
+import { useMenuDetailsQuery } from "../../queries";
 import { MenuItemCreateVariables } from "../../types/MenuItemCreate";
 import { MenuItemUpdateVariables } from "../../types/MenuItemUpdate";
 import { menuListUrl, menuUrl, MenuUrlQueryParams } from "../../urls";
 import {
   handleDelete,
   handleItemCreate,
+  handleItemDelete,
   handleItemUpdate,
   handleUpdate
 } from "./successHandlers";
 import {
+  findMenuItem,
   getInitialDisplayValue,
   getMenuItemCreateInputData,
   getMenuItemInputData,
@@ -59,6 +64,31 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
+  const { data, loading, refetch } = useMenuDetailsQuery({
+    displayLoader: true,
+    require: ["menu"],
+    variables: { id }
+  });
+
+  const [menuDelete, menuDeleteOpts] = useMenuDeleteMutation({
+    onCompleted: data => handleDelete(data, navigate, notify, intl)
+  });
+  const [menuUpdate, menuUpdateOpts] = useMenuUpdateMutation({
+    onCompleted: data => handleUpdate(data, notify, refetch, intl)
+  });
+
+  const [menuItemCreate, menuItemCreateOpts] = useMenuItemCreateMutation({
+    onCompleted: data => handleItemCreate(data, notify, closeModal, intl)
+  });
+  const [menuItemDelete, menuItemDeleteOpts] = useMenuItemDeleteMutation({
+    onCompleted: data =>
+      handleItemDelete(data, id, navigate, notify, refetch, intl)
+  });
+  const [menuItemMove] = useMenuItemMoveMutation({});
+  const [menuItemUpdate, menuItemUpdateOpts] = useMenuItemUpdateMutation({
+    onCompleted: data => handleItemUpdate(data, id, navigate, notify, intl)
+  });
 
   const closeModal = () =>
     navigate(
@@ -100,318 +130,257 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         <SearchCategories variables={DEFAULT_INITIAL_SEARCH_DATA}>
           {categorySearch => (
             <SearchCollections variables={DEFAULT_INITIAL_SEARCH_DATA}>
-              {collectionSearch => (
-                <MenuDetailsQuery displayLoader variables={{ id }}>
-                  {({ data, loading, refetch }) => {
-                    const handleQueryChange = (query: string) => {
-                      categorySearch.search(query);
-                      collectionSearch.search(query);
-                      pageSearch.search(query);
-                    };
+              {collectionSearch => {
+                const handleQueryChange = (query: string) => {
+                  categorySearch.search(query);
+                  collectionSearch.search(query);
+                  pageSearch.search(query);
+                };
 
-                    const categories = maybe(
-                      () =>
-                        categorySearch.result.data.search.edges.map(
-                          edge => edge.node
-                        ),
-                      []
-                    );
+                const categories = maybe(
+                  () =>
+                    categorySearch.result.data.search.edges.map(
+                      edge => edge.node
+                    ),
+                  []
+                );
 
-                    const collections = maybe(
-                      () =>
-                        collectionSearch.result.data.search.edges.map(
-                          edge => edge.node
-                        ),
-                      []
-                    );
+                const collections = maybe(
+                  () =>
+                    collectionSearch.result.data.search.edges.map(
+                      edge => edge.node
+                    ),
+                  []
+                );
 
-                    const pages = maybe(
-                      () =>
-                        pageSearch.result.data.search.edges.map(
-                          edge => edge.node
-                        ),
-                      []
-                    );
+                const pages = maybe(
+                  () =>
+                    pageSearch.result.data.search.edges.map(edge => edge.node),
+                  []
+                );
 
-                    return (
-                      <MenuDeleteMutation
-                        onCompleted={data =>
-                          handleDelete(data, navigate, notify, intl)
-                        }
-                      >
-                        {(menuDelete, menuDeleteOpts) => (
-                          <MenuUpdateMutation
-                            onCompleted={data =>
-                              handleUpdate(data, notify, refetch, intl)
-                            }
-                          >
-                            {(menuUpdate, menuUpdateOpts) => {
-                              const deleteState = getMutationState(
-                                menuDeleteOpts.called,
-                                menuDeleteOpts.loading,
-                                maybe(
-                                  () => menuDeleteOpts.data.menuDelete.errors
-                                )
-                              );
+                const menuItem = maybe(() =>
+                  getNode(data.menu.items, findNode(data.menu.items, params.id))
+                );
 
-                              const updateState = getMutationState(
-                                menuUpdateOpts.called,
-                                menuUpdateOpts.loading,
-                                maybe(
-                                  () => menuUpdateOpts.data.menuUpdate.errors
-                                ),
-                                maybe(
-                                  () => menuUpdateOpts.data.menuItemMove.errors
-                                )
-                              );
+                const deleteState = getMutationState(
+                  menuDeleteOpts.called,
+                  menuDeleteOpts.loading,
+                  maybe(() => menuDeleteOpts.data.menuDelete.errors)
+                );
 
-                              // This is a workaround to let know <MenuDetailsPage />
-                              // that it should clean operation stack if mutations
-                              // were successful
-                              const handleSubmit = async (
-                                data: MenuDetailsSubmitData
-                              ) => {
-                                try {
-                                  const result = await menuUpdate({
-                                    variables: {
-                                      id,
-                                      moves: getMoves(data),
-                                      name: data.name,
-                                      removeIds: getRemoveIds(data)
-                                    }
-                                  });
-                                  if (result) {
-                                    if (
-                                      result.data.menuItemBulkDelete.errors
-                                        .length > 0 ||
-                                      result.data.menuItemMove.errors.length >
-                                        0 ||
-                                      result.data.menuUpdate.errors.length > 0
-                                    ) {
-                                      return false;
-                                    }
-                                  }
-                                  return true;
-                                } catch {
-                                  return false;
-                                }
-                              };
+                const updateState = getMutationState(
+                  menuUpdateOpts.called,
+                  menuUpdateOpts.loading,
+                  maybe(() => menuUpdateOpts.data.menuUpdate.errors)
+                );
 
-                              return (
-                                <>
-                                  <MenuDetailsPage
-                                    disabled={loading}
-                                    menu={maybe(() => data.menu)}
-                                    onBack={() => navigate(menuListUrl())}
-                                    onDelete={() =>
-                                      navigate(
-                                        menuUrl(id, {
-                                          action: "remove"
-                                        })
-                                      )
-                                    }
-                                    onItemAdd={() =>
-                                      navigate(
-                                        menuUrl(id, {
-                                          action: "add-item"
-                                        })
-                                      )
-                                    }
-                                    onItemClick={handleItemClick}
-                                    onItemEdit={itemId =>
-                                      navigate(
-                                        menuUrl(id, {
-                                          action: "edit-item",
-                                          id: itemId
-                                        })
-                                      )
-                                    }
-                                    onSubmit={handleSubmit}
-                                    saveButtonState={updateState}
-                                  />
-                                  <ActionDialog
-                                    open={params.action === "remove"}
-                                    onClose={closeModal}
-                                    confirmButtonState={deleteState}
-                                    onConfirm={() =>
-                                      menuDelete({ variables: { id } })
-                                    }
-                                    variant="delete"
-                                    title={intl.formatMessage({
-                                      defaultMessage: "Delete Menu",
-                                      description: "dialog header",
-                                      id: "menuDetailsDeleteMenuHeader"
-                                    })}
-                                  >
-                                    <DialogContentText>
-                                      <FormattedMessage
-                                        defaultMessage="Are you sure you want to delete menu {menuName}?"
-                                        id="menuDetailsDeleteMenuContent"
-                                        values={{
-                                          menuName: (
-                                            <strong>
-                                              {maybe(
-                                                () => data.menu.name,
-                                                "..."
-                                              )}
-                                            </strong>
-                                          )
-                                        }}
-                                      />
-                                    </DialogContentText>
-                                  </ActionDialog>
+                const createItemState = getMutationState(
+                  menuItemCreateOpts.called,
+                  menuItemCreateOpts.loading,
+                  maybe(() => menuItemCreateOpts.data.menuItemCreate.errors)
+                );
 
-                                  <MenuItemCreateMutation
-                                    onCompleted={data =>
-                                      handleItemCreate(
-                                        data,
-                                        notify,
-                                        closeModal,
-                                        intl
-                                      )
-                                    }
-                                  >
-                                    {(menuItemCreate, menuItemCreateOpts) => {
-                                      const handleSubmit = (
-                                        data: MenuItemDialogFormData
-                                      ) => {
-                                        const variables: MenuItemCreateVariables = {
-                                          input: getMenuItemCreateInputData(
-                                            id,
-                                            data
-                                          )
-                                        };
+                const deleteItemState = getMutationState(
+                  menuItemDeleteOpts.called,
+                  menuItemDeleteOpts.loading,
+                  maybe(() => menuItemDeleteOpts.data.menuItemDelete.errors)
+                );
 
-                                        menuItemCreate({ variables });
-                                      };
+                const updateItemState = getMutationState(
+                  menuItemUpdateOpts.called,
+                  menuItemUpdateOpts.loading,
+                  maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors)
+                );
 
-                                      const formTransitionState = getMutationState(
-                                        menuItemCreateOpts.called,
-                                        menuItemCreateOpts.loading,
-                                        maybe(
-                                          () =>
-                                            menuItemCreateOpts.data
-                                              .menuItemCreate.errors
-                                        )
-                                      );
+                const handleSubmit = (data: MenuDetailsSubmitData) =>
+                  menuUpdate({
+                    variables: {
+                      id,
+                      name: data.name
+                    }
+                  });
 
-                                      return (
-                                        <MenuItemDialog
-                                          open={params.action === "add-item"}
-                                          categories={categories}
-                                          collections={collections}
-                                          errors={maybe(
-                                            () =>
-                                              menuItemCreateOpts.data
-                                                .menuItemCreate.errors,
-                                            []
-                                          )}
-                                          pages={pages}
-                                          loading={
-                                            categorySearch.result.loading ||
-                                            collectionSearch.result.loading
-                                          }
-                                          confirmButtonState={
-                                            formTransitionState
-                                          }
-                                          disabled={menuItemCreateOpts.loading}
-                                          onClose={closeModal}
-                                          onSubmit={handleSubmit}
-                                          onQueryChange={handleQueryChange}
-                                        />
-                                      );
-                                    }}
-                                  </MenuItemCreateMutation>
-                                  <MenuItemUpdateMutation
-                                    onCompleted={data =>
-                                      handleItemUpdate(
-                                        data,
-                                        id,
-                                        navigate,
-                                        notify,
-                                        intl
-                                      )
-                                    }
-                                  >
-                                    {(menuItemUpdate, menuItemUpdateOpts) => {
-                                      const handleSubmit = (
-                                        data: MenuItemDialogFormData
-                                      ) => {
-                                        const variables: MenuItemUpdateVariables = {
-                                          id: params.id,
-                                          input: getMenuItemInputData(data)
-                                        };
+                const handleItemDeleteSubmit = () =>
+                  menuItemDelete({
+                    variables: {
+                      id: params.id
+                    }
+                  });
 
-                                        menuItemUpdate({ variables });
-                                      };
+                const handleItemCreateSubmit = (
+                  data: MenuItemDialogFormData
+                ) => {
+                  const variables: MenuItemCreateVariables = {
+                    input: getMenuItemCreateInputData(id, data)
+                  };
 
-                                      const menuItem = maybe(() =>
-                                        getNode(
-                                          data.menu.items,
-                                          findNode(data.menu.items, params.id)
-                                        )
-                                      );
+                  menuItemCreate({ variables });
+                };
 
-                                      const formTransitionState = getMutationState(
-                                        menuItemUpdateOpts.called,
-                                        menuItemUpdateOpts.loading,
-                                        maybe(
-                                          () =>
-                                            menuItemUpdateOpts.data
-                                              .menuItemUpdate.errors
-                                        )
-                                      );
+                const handleItemMove = (move: MenuItemMoveInput) =>
+                  menuItemMove({
+                    variables: {
+                      id,
+                      move
+                    }
+                  });
 
-                                      const initialFormData: MenuItemDialogFormData = {
-                                        id: maybe(() => getItemId(menuItem)),
-                                        name: maybe(() => menuItem.name, "..."),
-                                        type: maybe<MenuItemType>(
-                                          () => getItemType(menuItem),
-                                          "category"
-                                        )
-                                      };
+                const handleItemUpdateSubmit = (
+                  data: MenuItemDialogFormData
+                ) => {
+                  const variables: MenuItemUpdateVariables = {
+                    id: params.id,
+                    input: getMenuItemInputData(data)
+                  };
 
-                                      return (
-                                        <MenuItemDialog
-                                          open={params.action === "edit-item"}
-                                          categories={categories}
-                                          collections={collections}
-                                          errors={maybe(
-                                            () =>
-                                              menuItemUpdateOpts.data
-                                                .menuItemUpdate.errors,
-                                            []
-                                          )}
-                                          pages={pages}
-                                          initial={initialFormData}
-                                          initialDisplayValue={getInitialDisplayValue(
-                                            menuItem
-                                          )}
-                                          loading={
-                                            categorySearch.result.loading ||
-                                            collectionSearch.result.loading
-                                          }
-                                          confirmButtonState={
-                                            formTransitionState
-                                          }
-                                          disabled={menuItemUpdateOpts.loading}
-                                          onClose={closeModal}
-                                          onSubmit={handleSubmit}
-                                          onQueryChange={handleQueryChange}
-                                        />
-                                      );
-                                    }}
-                                  </MenuItemUpdateMutation>
-                                </>
-                              );
-                            }}
-                          </MenuUpdateMutation>
-                        )}
-                      </MenuDeleteMutation>
-                    );
-                  }}
-                </MenuDetailsQuery>
-              )}
+                  menuItemUpdate({ variables });
+                };
+
+                return (
+                  <>
+                    <MenuDetailsPage
+                      disabled={loading}
+                      menu={maybe(() => data.menu)}
+                      onBack={() => navigate(menuListUrl())}
+                      onDelete={() =>
+                        navigate(
+                          menuUrl(id, {
+                            action: "remove"
+                          })
+                        )
+                      }
+                      onItemAdd={() =>
+                        navigate(
+                          menuUrl(id, {
+                            action: "add-item"
+                          })
+                        )
+                      }
+                      onItemClick={handleItemClick}
+                      onItemDelete={itemId =>
+                        navigate(
+                          menuUrl(id, {
+                            action: "remove-item",
+                            id: itemId
+                          })
+                        )
+                      }
+                      onItemEdit={itemId =>
+                        navigate(
+                          menuUrl(id, {
+                            action: "edit-item",
+                            id: itemId
+                          })
+                        )
+                      }
+                      onItemMove={handleItemMove}
+                      onSubmit={handleSubmit}
+                      saveButtonState={updateState}
+                    />
+                    <ActionDialog
+                      open={params.action === "remove-item"}
+                      onClose={closeModal}
+                      confirmButtonState={deleteItemState}
+                      onConfirm={handleItemDeleteSubmit}
+                      variant="delete"
+                      title={intl.formatMessage({
+                        defaultMessage: "Delete Menu Item",
+                        description: "dialog header"
+                      })}
+                    >
+                      <DialogContentText>
+                        <FormattedMessage
+                          defaultMessage="Are you sure you want to delete {menuItemName}?"
+                          values={{
+                            menuItemName: (
+                              <strong>
+                                {maybe(
+                                  () => findMenuItem(params.id, data.menu).name,
+                                  "..."
+                                )}
+                              </strong>
+                            )
+                          }}
+                        />
+                      </DialogContentText>
+                    </ActionDialog>
+                    <ActionDialog
+                      open={params.action === "remove"}
+                      onClose={closeModal}
+                      confirmButtonState={deleteState}
+                      onConfirm={() => menuDelete({ variables: { id } })}
+                      variant="delete"
+                      title={intl.formatMessage({
+                        defaultMessage: "Delete Menu",
+                        description: "dialog header",
+                        id: "menuDetailsDeleteMenuHeader"
+                      })}
+                    >
+                      <DialogContentText>
+                        <FormattedMessage
+                          defaultMessage="Are you sure you want to delete menu {menuName}?"
+                          id="menuDetailsDeleteMenuContent"
+                          values={{
+                            menuName: (
+                              <strong>
+                                {maybe(() => data.menu.name, "...")}
+                              </strong>
+                            )
+                          }}
+                        />
+                      </DialogContentText>
+                    </ActionDialog>
+                    <MenuItemDialog
+                      open={params.action === "add-item"}
+                      categories={categories}
+                      collections={collections}
+                      errors={maybe(
+                        () => menuItemCreateOpts.data.menuItemCreate.errors,
+                        []
+                      )}
+                      pages={pages}
+                      loading={
+                        categorySearch.result.loading ||
+                        collectionSearch.result.loading
+                      }
+                      confirmButtonState={createItemState}
+                      disabled={menuItemCreateOpts.loading}
+                      onClose={closeModal}
+                      onSubmit={handleItemCreateSubmit}
+                      onQueryChange={handleQueryChange}
+                    />
+                    <MenuItemDialog
+                      open={params.action === "edit-item"}
+                      categories={categories}
+                      collections={collections}
+                      errors={maybe(
+                        () => menuItemUpdateOpts.data.menuItemUpdate.errors,
+                        []
+                      )}
+                      pages={pages}
+                      initial={{
+                        id: maybe(() => getItemId(menuItem)),
+                        name: maybe(() => menuItem.name, "..."),
+                        type: maybe<MenuItemType>(
+                          () => getItemType(menuItem),
+                          "category"
+                        )
+                      }}
+                      initialDisplayValue={getInitialDisplayValue(menuItem)}
+                      loading={
+                        categorySearch.result.loading ||
+                        collectionSearch.result.loading
+                      }
+                      confirmButtonState={updateItemState}
+                      disabled={menuItemUpdateOpts.loading}
+                      onClose={closeModal}
+                      onSubmit={handleItemUpdateSubmit}
+                      onQueryChange={handleQueryChange}
+                    />
+                  </>
+                );
+              }}
             </SearchCollections>
           )}
         </SearchCategories>

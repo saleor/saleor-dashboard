@@ -1,4 +1,8 @@
 import {
+  findNode,
+  getNode
+} from "@saleor/navigation/components/MenuDetailsPage/tree";
+import {
   MenuItemCreateInput,
   MenuItemInput,
   MenuItemMoveInput
@@ -6,7 +10,10 @@ import {
 import { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
 import { unknownTypeError } from "../../components/MenuItems";
-import { MenuDetails_menu_items } from "../../types/MenuDetails";
+import {
+  MenuDetails_menu,
+  MenuDetails_menu_items
+} from "../../types/MenuDetails";
 
 export function getMenuItemInputData(
   data: MenuItemDialogFormData
@@ -101,4 +108,11 @@ export function getRemoveIds(data: MenuDetailsSubmitData): string[] {
   return data.operations
     .filter(operation => operation.type === "remove")
     .map(operation => operation.id);
+}
+
+export function findMenuItem(
+  id: string,
+  data: MenuDetails_menu
+): MenuDetails_menu_items {
+  return getNode(data.items, findNode(data.items, id));
 }
