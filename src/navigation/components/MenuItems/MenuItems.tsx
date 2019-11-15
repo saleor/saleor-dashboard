@@ -26,10 +26,11 @@ const NODE_MARGIN = 40;
 
 export interface MenuItemsProps {
   items: MenuDetails_menu_items[];
-  onChange: (operation: TreeOperation) => void;
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
+  onItemDelete: (id: string) => void;
   onItemEdit: (id: string) => void;
+  onItemMove: (operation: TreeOperation) => void;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -178,12 +179,7 @@ const Node: React.FC<NodeRendererProps> = props => {
         <IconButton
           className={classes.deleteButton}
           color="primary"
-          onClick={() =>
-            node.onChange({
-              id: node.id as any,
-              type: "remove"
-            })
-          }
+          onClick={() => node.onDelete(node.id)}
         >
           <DeleteIcon />
         </IconButton>
@@ -193,7 +189,14 @@ const Node: React.FC<NodeRendererProps> = props => {
 };
 
 const MenuItems: React.FC<MenuItemsProps> = props => {
-  const { items, onChange, onItemAdd, onItemClick, onItemEdit } = props;
+  const {
+    items,
+    onItemAdd,
+    onItemClick,
+    onItemDelete,
+    onItemEdit,
+    onItemMove
+  } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -232,16 +235,28 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
             isVirtualized={false}
             rowHeight={NODE_HEIGHT}
             treeData={items.map(item =>
-              getNodeData(item, onChange, onItemClick, onItemEdit)
+              getNodeData(
+                item,
+                onItemMove,
+                onItemClick,
+                onItemDelete,
+                onItemEdit
+              )
             )}
             theme={{
               nodeContentRenderer: Node as any
             }}
             onChange={newTree =>
-              onChange(
+              onItemMove(
                 getDiff(
                   items.map(item =>
-                    getNodeData(item, onChange, onItemClick, onItemEdit)
+                    getNodeData(
+                      item,
+                      onItemMove,
+                      onItemClick,
+                      onItemDelete,
+                      onItemEdit
+                    )
                   ),
                   newTree as TreeItem[]
                 )

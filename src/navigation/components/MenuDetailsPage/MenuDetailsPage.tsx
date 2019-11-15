@@ -54,36 +54,14 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     name: maybe(() => menu.name, "")
   };
 
-  const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>(
-    []
-  );
-  React.useEffect(() => setTreeOperations([]), [
-    JSON.stringify(maybe(() => menu.items))
-  ]);
-
   const handleSubmit = (data: MenuDetailsFormData) => onSubmit(data);
 
-  const handleChange = (operation: TreeOperation) => {
-    if (!!operation) {
-      switch (operation.type) {
-        case "move":
-          setTreeOperations([...treeOperations, operation]);
-          onItemMove({
-            itemId: operation.id,
-            parentId: operation.parentId,
-            sortOrder: operation.sortOrder
-          });
-          break;
-
-        case "remove":
-          onItemDelete(operation.id);
-          break;
-
-        default:
-          throw new Error("Unknown operation");
-      }
-    }
-  };
+  const handleItemMove = (operation: TreeOperation) =>
+    onItemMove({
+      itemId: operation.id,
+      parentId: operation.parentId,
+      sortOrder: operation.sortOrder
+    });
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
@@ -113,10 +91,11 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
               <CardSpacer />
               <MenuItems
                 items={maybe(() => menu.items)}
-                onChange={handleChange}
                 onItemAdd={onItemAdd}
                 onItemClick={onItemClick}
+                onItemDelete={onItemDelete}
                 onItemEdit={onItemEdit}
+                onItemMove={handleItemMove}
               />
             </div>
           </Grid>

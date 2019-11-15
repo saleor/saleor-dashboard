@@ -4,10 +4,8 @@ import { TreeItem } from "react-sortable-tree";
 import { MenuDetails_menu_items } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
 
-export type TreeOperationType = "move" | "remove";
 export interface TreeOperation {
   id: string;
-  type: TreeOperationType;
   parentId?: string;
   sortOrder?: number;
 }
@@ -80,8 +78,7 @@ export function getDiff(
         return {
           id: addedNode.items[0],
           parentId: key === "root" ? undefined : key,
-          sortOrder: addedNode.newPos,
-          type: "move" as TreeOperationType
+          sortOrder: addedNode.newPos
         };
       }
     }
@@ -94,16 +91,18 @@ export function getNodeData(
   item: MenuDetails_menu_items,
   onChange: (operation: TreeOperation) => void,
   onClick: (id: string, type: MenuItemType) => void,
+  onDelete: (id: string) => void,
   onEdit: (id: string) => void
 ): TreeItem {
   return {
     children: item.children.map(child =>
-      getNodeData(child, onChange, onClick, onEdit)
+      getNodeData(child, onChange, onClick, onDelete, onEdit)
     ),
     expanded: true,
     id: item.id,
     onChange,
     onClick: () => onClick(getItemId(item), getItemType(item)),
+    onDelete: () => onDelete(item.id),
     onEdit: () => onEdit(item.id),
     title: item.name
   };

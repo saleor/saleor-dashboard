@@ -1,8 +1,14 @@
 import {
   findNode,
-  getNode
+  getNode,
+  permuteNode
 } from "@saleor/navigation/components/MenuDetailsPage/tree";
-import { MenuItemCreateInput, MenuItemInput } from "../../../types/globalTypes";
+import { MenuItemMove } from "@saleor/navigation/types/MenuItemMove";
+import {
+  MenuItemCreateInput,
+  MenuItemInput,
+  MenuItemMoveInput
+} from "../../../types/globalTypes";
 import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
 import { unknownTypeError } from "../../components/MenuItems";
 import {
@@ -94,4 +100,24 @@ export function findMenuItem(
   data: MenuDetails_menu
 ): MenuDetails_menu_items {
   return getNode(data.items, findNode(data.items, id));
+}
+
+export function getItemMoveOptimisticResponse(
+  menu: MenuDetails_menu,
+  move: MenuItemMoveInput
+): MenuItemMove {
+  return {
+    menuItemMove: {
+      __typename: "MenuItemMove",
+      errors: [],
+      menu: {
+        ...menu,
+        items: permuteNode(menu.items, {
+          id: move.itemId,
+          parentId: move.parentId,
+          sortOrder: move.sortOrder
+        })
+      }
+    }
+  };
 }

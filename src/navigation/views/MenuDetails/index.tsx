@@ -49,6 +49,7 @@ import {
 import {
   findMenuItem,
   getInitialDisplayValue,
+  getItemMoveOptimisticResponse,
   getMenuItemCreateInputData,
   getMenuItemInputData
 } from "./utils";
@@ -217,6 +218,10 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
 
                 const handleItemMove = (move: MenuItemMoveInput) =>
                   menuItemMove({
+                    optimisticResponse: getItemMoveOptimisticResponse(
+                      data.menu,
+                      move
+                    ),
                     variables: {
                       id,
                       move

@@ -66,30 +66,7 @@ function insertNode(
   return tree;
 }
 
-function removeNodeAndChildren(
-  tree: MenuDetails_menu_items[],
-  operation: TreeOperation
-): MenuDetails_menu_items[] {
-  const sourcePath = findNode(tree, operation.id);
-  const node = getNode(tree, sourcePath);
-
-  if (node.children) {
-    const treeAfterChildrenRemoval = node.children.reduce(
-      (acc, child) =>
-        removeNodeAndChildren(acc, {
-          id: child.id,
-          type: "remove"
-        }),
-      tree
-    );
-
-    return removeNode(treeAfterChildrenRemoval, sourcePath);
-  }
-
-  return removeNode(tree, sourcePath);
-}
-
-function permuteNode(
+export function permuteNode(
   tree: MenuDetails_menu_items[],
   permutation: TreeOperation
 ): MenuDetails_menu_items[] {
@@ -110,25 +87,4 @@ function permuteNode(
   );
 
   return treeAfterInsertion;
-}
-
-function executeOperation(
-  tree: MenuDetails_menu_items[],
-  operation: TreeOperation
-): MenuDetails_menu_items[] {
-  return operation.type === "move"
-    ? permuteNode(tree, operation)
-    : removeNodeAndChildren(tree, operation);
-}
-
-export function computeTree(
-  tree: MenuDetails_menu_items[],
-  operations: TreeOperation[]
-) {
-  const newTree = operations.reduce(
-    (acc, operation) => executeOperation(acc, operation),
-    // FIXME: 😡
-    JSON.parse(JSON.stringify(tree))
-  );
-  return newTree;
 }
