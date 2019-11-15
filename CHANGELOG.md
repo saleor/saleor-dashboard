@@ -10,6 +10,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix subcategories pagination - #249 by @dominik-zeglen
 - Update customer's details page design - #248 by @dominik-zeglen
 - Use Apollo Hooks - #254 by @dominik-zeglen
+- Add autosave to menu details - #256 by @dominik-zeglen
 
 ## 2.0.0
 
