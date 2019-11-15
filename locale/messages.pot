@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-11-08T10:47:25.155Z\n"
+"POT-Creation-Date: 2019-11-13T13:13:30.128Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -125,6 +125,14 @@ msgstr ""
 #. Active Dates
 msgctxt "time during voucher is active, header"
 msgid "Active Dates"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
+#. [src.customers.components.CustomerDetails.3298169382] - section subheader
+#. defaultMessage is:
+#. Active member since {date}
+msgctxt "section subheader"
+msgid "Active member since {date}"
 msgstr ""
 
 #: build/locale/src/home/components/HomeActivityCard/HomeActivityCard.json
@@ -2103,6 +2111,14 @@ msgctxt "subheader"
 msgid "Contact Information"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerInfo/CustomerInfo.json
+#. [src.customers.components.CustomerInfo.778526801] - customer contact section, header
+#. defaultMessage is:
+#. Contact Informations
+msgctxt "customer contact section, header"
+msgid "Contact Informations"
+msgstr ""
+
 #: build/locale/src/pages/components/PageInfo/PageInfo.json
 #. [src.pages.components.PageInfo.1116746286] - page content
 #. defaultMessage is:
@@ -2793,14 +2809,6 @@ msgstr ""
 #. Customer password reset URL
 msgctxt "description"
 msgid "Customer password reset URL"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
-#. [src.customers.components.CustomerDetails.2200102325] - section subheader
-#. defaultMessage is:
-#. Customer since: {date}
-msgctxt "section subheader"
-msgid "Customer since: {date}"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -5941,6 +5949,14 @@ msgstr ""
 #. Permissions
 msgctxt "description"
 msgid "Permissions"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerInfo/CustomerInfo.json
+#. [src.customers.components.CustomerInfo.252313757] - customer informations, header
+#. defaultMessage is:
+#. Personal Informations
+msgctxt "customer informations, header"
+msgid "Personal Informations"
 msgstr ""
 
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json

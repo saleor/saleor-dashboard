@@ -9,39 +9,34 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
-import { FormSpacer } from "@saleor/components/FormSpacer";
 import Skeleton from "@saleor/components/Skeleton";
-import { commonMessages } from "@saleor/intl";
+import { maybe } from "@saleor/misc";
+import { FormErrors } from "@saleor/types";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(theme => ({
   cardTitle: {
-    height: 64
+    height: 72
   },
-  root: {
-    display: "grid" as "grid",
-    gridColumnGap: theme.spacing(2),
-    gridRowGap: theme.spacing(3),
-    gridTemplateColumns: "1fr 1fr"
+  checkbox: {
+    marginBottom: theme.spacing()
+  },
+  content: {
+    paddingTop: theme.spacing()
+  },
+  subtitle: {
+    marginTop: theme.spacing()
   }
 }));
 
 export interface CustomerDetailsProps {
   customer: CustomerDetails_user;
   data: {
-    firstName: string;
-    lastName: string;
-    email: string;
     isActive: boolean;
     note: string;
   };
   disabled: boolean;
-  errors: {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    note?: string;
-  };
+  errors: FormErrors<"isActive" | "note">;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -57,11 +52,15 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
         className={classes.cardTitle}
         title={
           <>
-            <FormattedMessage {...commonMessages.generalInformations} />
+            {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
             {customer && customer.dateJoined ? (
-              <Typography variant="caption" component="div">
+              <Typography
+                className={classes.subtitle}
+                variant="caption"
+                component="div"
+              >
                 <FormattedMessage
-                  defaultMessage="Customer since: {date}"
+                  defaultMessage="Active member since {date}"
                   description="section subheader"
                   values={{
                     date: moment(customer.dateJoined).format("MMM YYYY")
@@ -74,9 +73,10 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           </>
         }
       />
-      <CardContent>
+      <CardContent className={classes.content}>
         <ControlledCheckbox
           checked={data.isActive}
+          className={classes.checkbox}
           disabled={disabled}
           label={intl.formatMessage({
             defaultMessage: "User account active",
@@ -85,44 +85,6 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           name="isActive"
           onChange={onChange}
         />
-        <FormSpacer />
-        <div className={classes.root}>
-          <TextField
-            disabled={disabled}
-            error={!!errors.firstName}
-            fullWidth
-            helperText={errors.firstName}
-            name="firstName"
-            type="text"
-            label={intl.formatMessage(commonMessages.firstName)}
-            value={data.firstName}
-            onChange={onChange}
-          />
-          <TextField
-            disabled={disabled}
-            error={!!errors.lastName}
-            fullWidth
-            helperText={errors.lastName}
-            name="lastName"
-            type="text"
-            label={intl.formatMessage(commonMessages.lastName)}
-            value={data.lastName}
-            onChange={onChange}
-          />
-        </div>
-        <FormSpacer />
-        <TextField
-          disabled={disabled}
-          error={!!errors.email}
-          fullWidth
-          helperText={errors.email}
-          name="email"
-          type="email"
-          label={intl.formatMessage(commonMessages.email)}
-          value={data.email}
-          onChange={onChange}
-        />
-        <FormSpacer />
         <TextField
           disabled={disabled}
           error={!!errors.note}
