@@ -63,7 +63,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const { data, loading, refetch } = useMenuDetailsQuery({
+  const { data, loading } = useMenuDetailsQuery({
     displayLoader: true,
     require: ["menu"],
     variables: { id }
@@ -73,15 +73,14 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
     onCompleted: data => handleDelete(data, navigate, notify, intl)
   });
   const [menuUpdate, menuUpdateOpts] = useMenuUpdateMutation({
-    onCompleted: data => handleUpdate(data, notify, refetch, intl)
+    onCompleted: data => handleUpdate(data, notify, intl)
   });
 
   const [menuItemCreate, menuItemCreateOpts] = useMenuItemCreateMutation({
     onCompleted: data => handleItemCreate(data, notify, closeModal, intl)
   });
   const [menuItemDelete, menuItemDeleteOpts] = useMenuItemDeleteMutation({
-    onCompleted: data =>
-      handleItemDelete(data, id, navigate, notify, refetch, intl)
+    onCompleted: data => handleItemDelete(data, id, navigate, notify, intl)
   });
   const [menuItemMove] = useMenuItemMoveMutation({});
   const [menuItemUpdate, menuItemUpdateOpts] = useMenuItemUpdateMutation({

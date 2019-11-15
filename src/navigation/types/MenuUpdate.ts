@@ -12,9 +12,16 @@ export interface MenuUpdate_menuUpdate_errors {
   message: string | null;
 }
 
+export interface MenuUpdate_menuUpdate_menu {
+  __typename: "Menu";
+  id: string;
+  name: string;
+}
+
 export interface MenuUpdate_menuUpdate {
   __typename: "MenuUpdate";
   errors: MenuUpdate_menuUpdate_errors[] | null;
+  menu: MenuUpdate_menuUpdate_menu | null;
 }
 
 export interface MenuUpdate {

@@ -16,7 +16,6 @@ import { MenuDetails_menu } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
 import MenuItems, { TreeOperation } from "../MenuItems";
 import MenuProperties from "../MenuProperties";
-import { computeTree } from "./tree";
 
 export interface MenuDetailsFormData {
   name: string;
@@ -113,9 +112,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
               />
               <CardSpacer />
               <MenuItems
-                items={maybe(() =>
-                  computeTree(menu.items, [...treeOperations])
-                )}
+                items={maybe(() => menu.items)}
                 onChange={handleChange}
                 onItemAdd={onItemAdd}
                 onItemClick={onItemClick}

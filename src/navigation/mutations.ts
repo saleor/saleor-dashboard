@@ -102,6 +102,10 @@ const menuUpdate = gql`
         field
         message
       }
+      menu {
+        id
+        name
+      }
     }
   }
 `;
@@ -111,11 +115,18 @@ export const useMenuUpdateMutation = makeMutation<
 >(menuUpdate);
 
 const menuItemMove = gql`
+  ${menuItemNestedFragment}
   mutation MenuItemMove($id: ID!, $move: MenuItemMoveInput!) {
     menuItemMove(menu: $id, moves: [$move]) {
       errors {
         field
         message
+      }
+      menu {
+        id
+        items {
+          ...MenuItemNestedFragment
+        }
       }
     }
   }
@@ -126,11 +137,21 @@ export const useMenuItemMoveMutation = makeMutation<
 >(menuItemMove);
 
 const menuItemDelete = gql`
+  ${menuItemNestedFragment}
   mutation MenuItemDelete($id: ID!) {
     menuItemDelete(id: $id) {
       errors {
         field
         message
+      }
+      menuItem {
+        id
+        menu {
+          id
+          items {
+            ...MenuItemNestedFragment
+          }
+        }
       }
     }
   }

@@ -29,7 +29,6 @@ export function handleItemDelete(
   id: string,
   navigate: UseNavigatorResult,
   notify: UseNotifierResult,
-  refetch: () => void,
   intl: IntlShape
 ) {
   if (data.menuItemDelete.errors.length === 0) {
@@ -42,7 +41,6 @@ export function handleItemDelete(
         id: undefined
       })
     );
-    refetch();
   }
 }
 
@@ -83,13 +81,11 @@ export function handleDelete(
 export function handleUpdate(
   data: MenuUpdate,
   notify: UseNotifierResult,
-  refetch: () => void,
   intl: IntlShape
 ) {
   if (data.menuUpdate.errors.length === 0) {
     notify({
       text: intl.formatMessage(commonMessages.savedChanges)
     });
-    refetch();
   }
 }
