@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-11-13T13:13:30.128Z\n"
+"POT-Creation-Date: 2019-11-15T16:14:03.027Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -856,21 +856,9 @@ msgid "Are you sure you want to delete {counter,plural,one{this attribute} other
 msgstr ""
 
 #: build/locale/src/categories/views/CategoryDetails.json
-#. [src.categories.views.982216972]
+#. [src.categories.views.1592907702]
 #. defaultMessage is:
-#. Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} categories}}?
-msgctxt "description"
-msgid "Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} categories}}?"
-msgstr ""
-
-#: build/locale/src/categories/views/CategoryDetails.json
-#. [src.categories.views.3920301974]
-#. defaultMessage is:
-#. Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} products}}?
-msgctxt "description"
-msgid "Are you sure you want to delete {counter,plural,one{this attribute} other{{displayQuantity} products}}?"
-msgstr ""
-
+#. Are you sure you want to delete {counter,plural,one{this category} other{{displayQuantity} categories}}?
 #: build/locale/src/categories/views/CategoryList/CategoryList.json
 #. [src.categories.views.CategoryList.1592907702]
 #. defaultMessage is:
@@ -925,6 +913,14 @@ msgstr ""
 #. Are you sure you want to delete {counter,plural,one{this product type} other{{displayQuantity} product types}}?
 msgctxt "dialog content"
 msgid "Are you sure you want to delete {counter,plural,one{this product type} other{{displayQuantity} product types}}?"
+msgstr ""
+
+#: build/locale/src/categories/views/CategoryDetails.json
+#. [src.categories.views.785143617]
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this product} other{{displayQuantity} products}}?
+msgctxt "description"
+msgid "Are you sure you want to delete {counter,plural,one{this product} other{{displayQuantity} products}}?"
 msgstr ""
 
 #: build/locale/src/products/views/ProductList/ProductList.json
@@ -989,6 +985,14 @@ msgstr ""
 #. Are you sure you want to delete {email}?
 msgctxt "delete customer, dialog content"
 msgid "Are you sure you want to delete {email}?"
+msgstr ""
+
+#: build/locale/src/navigation/views/MenuDetails/index.json
+#. [src.navigation.views.MenuDetails.3093885324]
+#. defaultMessage is:
+#. Are you sure you want to delete {menuItemName}?
+msgctxt "description"
+msgid "Are you sure you want to delete {menuItemName}?"
 msgstr ""
 
 #: build/locale/src/navigation/views/MenuList.json
@@ -3021,6 +3025,14 @@ msgstr ""
 #. Delete Menu
 msgctxt "dialog header"
 msgid "Delete Menu"
+msgstr ""
+
+#: build/locale/src/navigation/views/MenuDetails/index.json
+#. [src.navigation.views.MenuDetails.3079120138] - dialog header
+#. defaultMessage is:
+#. Delete Menu Item
+msgctxt "dialog header"
+msgid "Delete Menu Item"
 msgstr ""
 
 #: build/locale/src/navigation/views/MenuList.json
