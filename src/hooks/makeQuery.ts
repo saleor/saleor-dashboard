@@ -16,7 +16,7 @@ export interface LoadMore<TData, TVariables> {
   ) => Promise<ApolloQueryResult<TData>>;
 }
 
-type UseQuery<TData, TVariables> = QueryResult<TData, TVariables> &
+export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> &
   LoadMore<TData, TVariables>;
 type UseQueryOpts<TData, TVariables> = Partial<{
   displayLoader: boolean;
@@ -26,7 +26,7 @@ type UseQueryOpts<TData, TVariables> = Partial<{
 }>;
 type UseQueryHook<TData, TVariables> = (
   opts: UseQueryOpts<TData, TVariables>
-) => UseQuery<TData, TVariables>;
+) => UseQueryResult<TData, TVariables>;
 
 function makeQuery<TData, TVariables>(
   query: DocumentNode
@@ -36,7 +36,7 @@ function makeQuery<TData, TVariables>(
     require,
     skip,
     variables
-  }: UseQueryOpts<TData, TVariables>): UseQuery<TData, TVariables> {
+  }: UseQueryOpts<TData, TVariables>): UseQueryResult<TData, TVariables> {
     const notify = useNotifier();
     const intl = useIntl();
     const [, dispatchAppState] = useAppState();
