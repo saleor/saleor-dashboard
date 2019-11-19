@@ -16,10 +16,10 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import useCategorySearch from "@saleor/searches/useCategorySearch";
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "../../config";
-import SearchCategories from "../../containers/SearchCategories";
 import SearchCollections from "../../containers/SearchCollections";
 import SearchProducts from "../../containers/SearchProducts";
 import { decimal, getMutationState, joinDateTime, maybe } from "../../misc";
@@ -66,6 +66,12 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     params.ids
   );
   const intl = useIntl();
+  const {
+    search: searchCategories,
+    result: searchCategoriesOpts
+  } = useCategorySearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const changeTab = (tab: SaleDetailsPageTab) => {
@@ -377,43 +383,33 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 />
                               )}
                             </SearchProducts>
-                            <SearchCategories
-                              variables={DEFAULT_INITIAL_SEARCH_DATA}
-                            >
-                              {({
-                                search: searchCategories,
-                                result: searchCategoriesOpts
-                              }) => (
-                                <AssignCategoriesDialog
-                                  categories={maybe(() =>
-                                    searchCategoriesOpts.data.search.edges
-                                      .map(edge => edge.node)
-                                      .filter(
-                                        suggestedCategory =>
-                                          suggestedCategory.id
-                                      )
-                                  )}
-                                  confirmButtonState={assignTransitionState}
-                                  open={params.action === "assign-category"}
-                                  onFetch={searchCategories}
-                                  loading={searchCategoriesOpts.loading}
-                                  onClose={closeModal}
-                                  onSubmit={categories =>
-                                    saleCataloguesAdd({
-                                      variables: {
-                                        ...paginationState,
-                                        id,
-                                        input: {
-                                          categories: categories.map(
-                                            product => product.id
-                                          )
-                                        }
-                                      }
-                                    })
-                                  }
-                                />
+                            <AssignCategoriesDialog
+                              categories={maybe(() =>
+                                searchCategoriesOpts.data.search.edges
+                                  .map(edge => edge.node)
+                                  .filter(
+                                    suggestedCategory => suggestedCategory.id
+                                  )
                               )}
-                            </SearchCategories>
+                              confirmButtonState={assignTransitionState}
+                              open={params.action === "assign-category"}
+                              onFetch={searchCategories}
+                              loading={searchCategoriesOpts.loading}
+                              onClose={closeModal}
+                              onSubmit={categories =>
+                                saleCataloguesAdd({
+                                  variables: {
+                                    ...paginationState,
+                                    id,
+                                    input: {
+                                      categories: categories.map(
+                                        product => product.id
+                                      )
+                                    }
+                                  }
+                                })
+                              }
+                            />
                             <SearchCollections
                               variables={DEFAULT_INITIAL_SEARCH_DATA}
                             >

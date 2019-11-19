@@ -19,7 +19,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { SearchCategories_search_edges_node } from "../../containers/SearchCategories/types/SearchCategories";
+import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import Checkbox from "../Checkbox";
 
 export interface FormData {
