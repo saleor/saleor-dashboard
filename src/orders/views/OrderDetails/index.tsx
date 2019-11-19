@@ -3,8 +3,8 @@ import React from "react";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
+import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
-import SearchCustomers from "../../../containers/SearchCustomers";
 import { customerUrl } from "../../../customers/urls";
 import { getMutationState, maybe, transformAddressToForm } from "../../../misc";
 import { productUrl } from "../../../products/urls";
@@ -74,6 +74,13 @@ interface OrderDetailsProps {
 export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const { user } = useUser();
+  const {
+    loadMore: loadMoreCustomers,
+    search: searchUsers,
+    result: users
+  } = useCustomerSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
 
   return (
     <TypedOrderDetailsQuery
@@ -91,560 +98,525 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
             })
           );
         return (
-          <SearchCustomers variables={DEFAULT_INITIAL_SEARCH_DATA}>
-            {({
-              loadMore: loadMoreCustomers,
-              search: searchUsers,
-              result: users
-            }) => (
-              <OrderDetailsMessages>
-                {orderMessages => (
-                  <OrderOperations
-                    order={id}
-                    onOrderFulfillmentCreate={
-                      orderMessages.handleOrderFulfillmentCreate
-                    }
-                    onNoteAdd={orderMessages.handleNoteAdd}
-                    onOrderCancel={orderMessages.handleOrderCancel}
-                    onOrderVoid={orderMessages.handleOrderVoid}
-                    onPaymentCapture={orderMessages.handlePaymentCapture}
-                    onPaymentRefund={orderMessages.handlePaymentRefund}
-                    onUpdate={orderMessages.handleUpdate}
-                    onDraftUpdate={orderMessages.handleDraftUpdate}
-                    onShippingMethodUpdate={
-                      orderMessages.handleShippingMethodUpdate
-                    }
-                    onOrderLineDelete={orderMessages.handleOrderLineDelete}
-                    onOrderLinesAdd={orderMessages.handleOrderLinesAdd}
-                    onOrderLineUpdate={orderMessages.handleOrderLineUpdate}
-                    onOrderFulfillmentCancel={
-                      orderMessages.handleOrderFulfillmentCancel
-                    }
-                    onOrderFulfillmentUpdate={
-                      orderMessages.handleOrderFulfillmentUpdate
-                    }
-                    onDraftFinalize={orderMessages.handleDraftFinalize}
-                    onDraftCancel={orderMessages.handleDraftCancel}
-                    onOrderMarkAsPaid={orderMessages.handleOrderMarkAsPaid}
-                  >
-                    {({
-                      orderAddNote,
-                      orderCancel,
-                      orderCreateFulfillment,
-                      orderDraftUpdate,
-                      orderLinesAdd,
-                      orderLineDelete,
-                      orderLineUpdate,
-                      orderPaymentCapture,
-                      orderPaymentRefund,
-                      orderVoid,
-                      orderShippingMethodUpdate,
-                      orderUpdate,
-                      orderFulfillmentCancel,
-                      orderFulfillmentUpdateTracking,
-                      orderDraftCancel,
-                      orderDraftFinalize,
-                      orderPaymentMarkAsPaid
-                    }) => {
-                      const finalizeTransitionState = getMutationState(
-                        orderDraftFinalize.opts.called,
-                        orderDraftFinalize.opts.loading,
-                        maybe(
-                          () =>
-                            orderDraftFinalize.opts.data.draftOrderComplete
-                              .errors
-                        )
-                      );
-                      return (
+          <OrderDetailsMessages>
+            {orderMessages => (
+              <OrderOperations
+                order={id}
+                onOrderFulfillmentCreate={
+                  orderMessages.handleOrderFulfillmentCreate
+                }
+                onNoteAdd={orderMessages.handleNoteAdd}
+                onOrderCancel={orderMessages.handleOrderCancel}
+                onOrderVoid={orderMessages.handleOrderVoid}
+                onPaymentCapture={orderMessages.handlePaymentCapture}
+                onPaymentRefund={orderMessages.handlePaymentRefund}
+                onUpdate={orderMessages.handleUpdate}
+                onDraftUpdate={orderMessages.handleDraftUpdate}
+                onShippingMethodUpdate={
+                  orderMessages.handleShippingMethodUpdate
+                }
+                onOrderLineDelete={orderMessages.handleOrderLineDelete}
+                onOrderLinesAdd={orderMessages.handleOrderLinesAdd}
+                onOrderLineUpdate={orderMessages.handleOrderLineUpdate}
+                onOrderFulfillmentCancel={
+                  orderMessages.handleOrderFulfillmentCancel
+                }
+                onOrderFulfillmentUpdate={
+                  orderMessages.handleOrderFulfillmentUpdate
+                }
+                onDraftFinalize={orderMessages.handleDraftFinalize}
+                onDraftCancel={orderMessages.handleDraftCancel}
+                onOrderMarkAsPaid={orderMessages.handleOrderMarkAsPaid}
+              >
+                {({
+                  orderAddNote,
+                  orderCancel,
+                  orderCreateFulfillment,
+                  orderDraftUpdate,
+                  orderLinesAdd,
+                  orderLineDelete,
+                  orderLineUpdate,
+                  orderPaymentCapture,
+                  orderPaymentRefund,
+                  orderVoid,
+                  orderShippingMethodUpdate,
+                  orderUpdate,
+                  orderFulfillmentCancel,
+                  orderFulfillmentUpdateTracking,
+                  orderDraftCancel,
+                  orderDraftFinalize,
+                  orderPaymentMarkAsPaid
+                }) => {
+                  const finalizeTransitionState = getMutationState(
+                    orderDraftFinalize.opts.called,
+                    orderDraftFinalize.opts.loading,
+                    maybe(
+                      () =>
+                        orderDraftFinalize.opts.data.draftOrderComplete.errors
+                    )
+                  );
+                  return (
+                    <>
+                      {maybe(() => order.status !== OrderStatus.DRAFT) ? (
                         <>
-                          {maybe(() => order.status !== OrderStatus.DRAFT) ? (
-                            <>
-                              <WindowTitle
-                                title={maybe(
-                                  () => "Order #" + data.order.number
-                                )}
-                              />
-                              <OrderDetailsPage
-                                onNoteAdd={variables =>
-                                  orderAddNote.mutate({
-                                    input: variables,
-                                    order: id
-                                  })
-                                }
-                                onBack={() => navigate(orderListUrl())}
-                                order={order}
-                                shippingMethods={maybe(
-                                  () => data.order.availableShippingMethods,
-                                  []
-                                )}
-                                userPermissions={maybe(
-                                  () => user.permissions,
-                                  []
-                                )}
-                                onOrderCancel={() => openModal("cancel")}
-                                onOrderFulfill={() => openModal("fulfill")}
-                                onFulfillmentCancel={fulfillmentId =>
-                                  navigate(
-                                    orderUrl(id, {
-                                      action: "cancel-fulfillment",
-                                      id: fulfillmentId
-                                    })
-                                  )
-                                }
-                                onFulfillmentTrackingNumberUpdate={fulfillmentId =>
-                                  navigate(
-                                    orderUrl(id, {
-                                      action: "edit-fulfillment",
-                                      id: fulfillmentId
-                                    })
-                                  )
-                                }
-                                onPaymentCapture={() => openModal("capture")}
-                                onPaymentVoid={() => openModal("void")}
-                                onPaymentRefund={() => openModal("refund")}
-                                onProductClick={id => () =>
-                                  navigate(productUrl(id))}
-                                onBillingAddressEdit={() =>
-                                  openModal("edit-billing-address")
-                                }
-                                onShippingAddressEdit={() =>
-                                  openModal("edit-shipping-address")
-                                }
-                                onPaymentPaid={() => openModal("mark-paid")}
-                                onProfileView={() =>
-                                  navigate(customerUrl(order.user.id))
-                                }
-                              />
-                              <OrderCancelDialog
-                                confirmButtonState={getMutationState(
-                                  orderCancel.opts.called,
-                                  orderCancel.opts.loading,
-                                  maybe(
-                                    () =>
-                                      orderCancel.opts.data.orderCancel.errors
-                                  )
-                                )}
-                                number={maybe(() => order.number)}
-                                open={params.action === "cancel"}
-                                onClose={closeModal}
-                                onSubmit={variables =>
-                                  orderCancel.mutate({
-                                    id,
-                                    ...variables
-                                  })
-                                }
-                              />
-                              <OrderMarkAsPaidDialog
-                                confirmButtonState={getMutationState(
-                                  orderPaymentMarkAsPaid.opts.called,
-                                  orderPaymentMarkAsPaid.opts.loading,
-                                  maybe(
-                                    () =>
-                                      orderPaymentMarkAsPaid.opts.data
-                                        .orderMarkAsPaid.errors
-                                  )
-                                )}
-                                onClose={closeModal}
-                                onConfirm={() =>
-                                  orderPaymentMarkAsPaid.mutate({
-                                    id
-                                  })
-                                }
-                                open={params.action === "mark-paid"}
-                              />
-                              <OrderPaymentVoidDialog
-                                confirmButtonState={getMutationState(
-                                  orderVoid.opts.called,
-                                  orderVoid.opts.loading,
-                                  maybe(
-                                    () => orderVoid.opts.data.orderVoid.errors
-                                  )
-                                )}
-                                open={params.action === "void"}
-                                onClose={closeModal}
-                                onConfirm={() => orderVoid.mutate({ id })}
-                              />
-                              <OrderPaymentDialog
-                                confirmButtonState={getMutationState(
-                                  orderPaymentCapture.opts.called,
-                                  orderPaymentCapture.opts.loading,
-                                  maybe(
-                                    () =>
-                                      orderPaymentCapture.opts.data.orderCapture
-                                        .errors
-                                  )
-                                )}
-                                initial={maybe(() => order.total.gross.amount)}
-                                open={params.action === "capture"}
-                                variant="capture"
-                                onClose={closeModal}
-                                onSubmit={variables =>
-                                  orderPaymentCapture.mutate({
-                                    ...variables,
-                                    id
-                                  })
-                                }
-                              />
-                              <OrderPaymentDialog
-                                confirmButtonState={getMutationState(
-                                  orderPaymentRefund.opts.called,
-                                  orderPaymentRefund.opts.loading,
-                                  maybe(
-                                    () =>
-                                      orderPaymentRefund.opts.data.orderRefund
-                                        .errors
-                                  )
-                                )}
-                                initial={maybe(() => order.total.gross.amount)}
-                                open={params.action === "refund"}
-                                variant="refund"
-                                onClose={closeModal}
-                                onSubmit={variables =>
-                                  orderPaymentRefund.mutate({
-                                    ...variables,
-                                    id
-                                  })
-                                }
-                              />
-                              <OrderFulfillmentDialog
-                                confirmButtonState={getMutationState(
-                                  orderCreateFulfillment.opts.called,
-                                  orderCreateFulfillment.opts.loading,
-                                  maybe(
-                                    () =>
-                                      orderCreateFulfillment.opts.data
-                                        .orderFulfillmentCreate.errors
-                                  )
-                                )}
-                                open={params.action === "fulfill"}
-                                lines={maybe(() => order.lines, []).filter(
-                                  line => line.quantityFulfilled < line.quantity
-                                )}
-                                onClose={closeModal}
-                                onSubmit={variables =>
-                                  orderCreateFulfillment.mutate({
-                                    input: {
-                                      ...variables,
-                                      lines: maybe(() => order.lines, [])
-                                        .filter(
-                                          line =>
-                                            line.quantityFulfilled <
-                                            line.quantity
-                                        )
-                                        .map((line, lineIndex) => ({
-                                          orderLineId: line.id,
-                                          quantity: variables.lines[lineIndex]
-                                        }))
-                                        .filter(line => line.quantity > 0)
-                                    },
-                                    order: order.id
-                                  })
-                                }
-                              />
-                              <OrderFulfillmentCancelDialog
-                                confirmButtonState={getMutationState(
-                                  orderFulfillmentCancel.opts.called,
-                                  orderFulfillmentCancel.opts.loading,
-                                  maybe(
-                                    () =>
-                                      orderFulfillmentCancel.opts.data
-                                        .orderFulfillmentCancel.errors
-                                  )
-                                )}
-                                open={params.action === "cancel-fulfillment"}
-                                onConfirm={variables =>
-                                  orderFulfillmentCancel.mutate({
-                                    id: params.id,
-                                    input: variables
-                                  })
-                                }
-                                onClose={closeModal}
-                              />
-                              <OrderFulfillmentTrackingDialog
-                                confirmButtonState={getMutationState(
-                                  orderFulfillmentUpdateTracking.opts.called,
-                                  orderFulfillmentUpdateTracking.opts.loading,
-                                  maybe(
-                                    () =>
-                                      orderFulfillmentUpdateTracking.opts.data
-                                        .orderFulfillmentUpdateTracking.errors
-                                  )
-                                )}
-                                open={params.action === "edit-fulfillment"}
-                                trackingNumber={maybe(
-                                  () =>
-                                    data.order.fulfillments.find(
-                                      fulfillment =>
-                                        fulfillment.id === params.id
-                                    ).trackingNumber
-                                )}
-                                onConfirm={variables =>
-                                  orderFulfillmentUpdateTracking.mutate({
-                                    id: params.id,
-                                    input: {
-                                      ...variables,
-                                      notifyCustomer: true
-                                    }
-                                  })
-                                }
-                                onClose={closeModal}
-                              />
-                            </>
-                          ) : (
-                            <>
-                              <WindowTitle
-                                title={maybe(
-                                  () => "Draft order #" + data.order.number
-                                )}
-                              />
-                              <OrderDraftPage
-                                disabled={loading}
-                                onNoteAdd={variables =>
-                                  orderAddNote.mutate({
-                                    input: variables,
-                                    order: id
-                                  })
-                                }
-                                users={maybe(
-                                  () =>
-                                    users.data.search.edges.map(
-                                      edge => edge.node
-                                    ),
-                                  []
-                                )}
-                                hasMore={maybe(
-                                  () => users.data.search.pageInfo.hasNextPage,
-                                  false
-                                )}
-                                onFetchMore={loadMoreCustomers}
-                                fetchUsers={searchUsers}
-                                loading={users.loading}
-                                usersLoading={users.loading}
-                                onCustomerEdit={data =>
-                                  orderDraftUpdate.mutate({
-                                    id,
-                                    input: data
-                                  })
-                                }
-                                onDraftFinalize={() => openModal("finalize")}
-                                onDraftRemove={() => openModal("cancel")}
-                                onOrderLineAdd={() =>
-                                  openModal("add-order-line")
-                                }
-                                onBack={() => navigate(orderListUrl())}
-                                order={order}
-                                countries={maybe(
-                                  () => data.shop.countries,
-                                  []
-                                ).map(country => ({
-                                  code: country.code,
-                                  label: country.country
-                                }))}
-                                onProductClick={id => () =>
-                                  navigate(productUrl(encodeURIComponent(id)))}
-                                onBillingAddressEdit={() =>
-                                  openModal("edit-billing-address")
-                                }
-                                onShippingAddressEdit={() =>
-                                  openModal("edit-shipping-address")
-                                }
-                                onShippingMethodEdit={() =>
-                                  openModal("edit-shipping")
-                                }
-                                onOrderLineRemove={id =>
-                                  orderLineDelete.mutate({ id })
-                                }
-                                onOrderLineChange={(id, data) =>
-                                  orderLineUpdate.mutate({
-                                    id,
-                                    input: data
-                                  })
-                                }
-                                saveButtonBarState="default"
-                                onProfileView={() =>
-                                  navigate(customerUrl(order.user.id))
-                                }
-                                userPermissions={maybe(
-                                  () => user.permissions,
-                                  []
-                                )}
-                              />
-                              <OrderDraftCancelDialog
-                                confirmButtonState={getMutationState(
-                                  orderDraftCancel.opts.called,
-                                  orderDraftCancel.opts.loading,
-                                  maybe(
-                                    () =>
-                                      orderDraftCancel.opts.data
-                                        .draftOrderDelete.errors
-                                  )
-                                )}
-                                onClose={closeModal}
-                                onConfirm={() =>
-                                  orderDraftCancel.mutate({ id })
-                                }
-                                open={params.action === "cancel"}
-                                orderNumber={maybe(() => order.number)}
-                              />
-                              <OrderDraftFinalizeDialog
-                                confirmButtonState={finalizeTransitionState}
-                                onClose={closeModal}
-                                onConfirm={() =>
-                                  orderDraftFinalize.mutate({ id })
-                                }
-                                open={params.action === "finalize"}
-                                orderNumber={maybe(() => order.number)}
-                                warnings={orderDraftFinalizeWarnings(order)}
-                              />
-                              <OrderShippingMethodEditDialog
-                                confirmButtonState={getMutationState(
-                                  orderShippingMethodUpdate.opts.called,
-                                  orderShippingMethodUpdate.opts.loading,
-                                  maybe(
-                                    () =>
-                                      orderShippingMethodUpdate.opts.data
-                                        .orderUpdateShipping.errors
-                                  )
-                                )}
-                                open={params.action === "edit-shipping"}
-                                shippingMethod={maybe(
-                                  () => order.shippingMethod.id,
-                                  "..."
-                                )}
-                                shippingMethods={maybe(
-                                  () => order.availableShippingMethods
-                                )}
-                                onClose={closeModal}
-                                onSubmit={variables =>
-                                  orderShippingMethodUpdate.mutate({
-                                    id,
-                                    input: {
-                                      shippingMethod: variables.shippingMethod
-                                    }
-                                  })
-                                }
-                              />
-                              <SearchOrderVariant
-                                variables={DEFAULT_INITIAL_SEARCH_DATA}
-                              >
-                                {({
-                                  loadMore,
-                                  search: variantSearch,
-                                  result: variantSearchOpts
-                                }) => (
-                                  <OrderProductAddDialog
-                                    confirmButtonState={getMutationState(
-                                      orderLinesAdd.opts.called,
-                                      orderLinesAdd.opts.loading,
-                                      maybe(
-                                        () =>
-                                          orderLinesAdd.opts.data
-                                            .draftOrderLinesCreate.errors
-                                      )
-                                    )}
-                                    loading={variantSearchOpts.loading}
-                                    open={params.action === "add-order-line"}
-                                    hasMore={maybe(
-                                      () =>
-                                        variantSearchOpts.data.search.pageInfo
-                                          .hasNextPage
-                                    )}
-                                    products={maybe(() =>
-                                      variantSearchOpts.data.search.edges.map(
-                                        edge => edge.node
-                                      )
-                                    )}
-                                    onClose={closeModal}
-                                    onFetch={variantSearch}
-                                    onFetchMore={loadMore}
-                                    onSubmit={variants =>
-                                      orderLinesAdd.mutate({
-                                        id,
-                                        input: variants.map(variant => ({
-                                          quantity: 1,
-                                          variantId: variant.id
-                                        }))
-                                      })
-                                    }
-                                  />
-                                )}
-                              </SearchOrderVariant>
-                            </>
-                          )}
-                          <OrderAddressEditDialog
-                            confirmButtonState={getMutationState(
-                              orderUpdate.opts.called,
-                              orderUpdate.opts.loading,
-                              maybe(
-                                () => orderUpdate.opts.data.orderUpdate.errors
-                              )
-                            )}
-                            address={transformAddressToForm(
-                              maybe(() => order.shippingAddress)
-                            )}
-                            countries={maybe(() => data.shop.countries, []).map(
-                              country => ({
-                                code: country.code,
-                                label: country.country
+                          <WindowTitle
+                            title={maybe(() => "Order #" + data.order.number)}
+                          />
+                          <OrderDetailsPage
+                            onNoteAdd={variables =>
+                              orderAddNote.mutate({
+                                input: variables,
+                                order: id
                               })
-                            )}
-                            errors={maybe(
-                              () => orderUpdate.opts.data.orderUpdate.errors,
+                            }
+                            onBack={() => navigate(orderListUrl())}
+                            order={order}
+                            shippingMethods={maybe(
+                              () => data.order.availableShippingMethods,
                               []
                             )}
-                            open={params.action === "edit-shipping-address"}
-                            variant="shipping"
+                            userPermissions={maybe(() => user.permissions, [])}
+                            onOrderCancel={() => openModal("cancel")}
+                            onOrderFulfill={() => openModal("fulfill")}
+                            onFulfillmentCancel={fulfillmentId =>
+                              navigate(
+                                orderUrl(id, {
+                                  action: "cancel-fulfillment",
+                                  id: fulfillmentId
+                                })
+                              )
+                            }
+                            onFulfillmentTrackingNumberUpdate={fulfillmentId =>
+                              navigate(
+                                orderUrl(id, {
+                                  action: "edit-fulfillment",
+                                  id: fulfillmentId
+                                })
+                              )
+                            }
+                            onPaymentCapture={() => openModal("capture")}
+                            onPaymentVoid={() => openModal("void")}
+                            onPaymentRefund={() => openModal("refund")}
+                            onProductClick={id => () =>
+                              navigate(productUrl(id))}
+                            onBillingAddressEdit={() =>
+                              openModal("edit-billing-address")
+                            }
+                            onShippingAddressEdit={() =>
+                              openModal("edit-shipping-address")
+                            }
+                            onPaymentPaid={() => openModal("mark-paid")}
+                            onProfileView={() =>
+                              navigate(customerUrl(order.user.id))
+                            }
+                          />
+                          <OrderCancelDialog
+                            confirmButtonState={getMutationState(
+                              orderCancel.opts.called,
+                              orderCancel.opts.loading,
+                              maybe(
+                                () => orderCancel.opts.data.orderCancel.errors
+                              )
+                            )}
+                            number={maybe(() => order.number)}
+                            open={params.action === "cancel"}
                             onClose={closeModal}
-                            onConfirm={shippingAddress =>
-                              orderUpdate.mutate({
+                            onSubmit={variables =>
+                              orderCancel.mutate({
                                 id,
-                                input: {
-                                  shippingAddress
-                                }
+                                ...variables
                               })
                             }
                           />
-                          <OrderAddressEditDialog
+                          <OrderMarkAsPaidDialog
                             confirmButtonState={getMutationState(
-                              orderUpdate.opts.called,
-                              orderUpdate.opts.loading,
+                              orderPaymentMarkAsPaid.opts.called,
+                              orderPaymentMarkAsPaid.opts.loading,
                               maybe(
-                                () => orderUpdate.opts.data.orderUpdate.errors
+                                () =>
+                                  orderPaymentMarkAsPaid.opts.data
+                                    .orderMarkAsPaid.errors
                               )
                             )}
-                            address={transformAddressToForm(
-                              maybe(() => order.billingAddress)
-                            )}
-                            countries={maybe(() => data.shop.countries, []).map(
-                              country => ({
-                                code: country.code,
-                                label: country.country
-                              })
-                            )}
-                            errors={maybe(
-                              () => orderUpdate.opts.data.orderUpdate.errors,
-                              []
-                            )}
-                            open={params.action === "edit-billing-address"}
-                            variant="billing"
                             onClose={closeModal}
-                            onConfirm={billingAddress =>
-                              orderUpdate.mutate({
-                                id,
+                            onConfirm={() =>
+                              orderPaymentMarkAsPaid.mutate({
+                                id
+                              })
+                            }
+                            open={params.action === "mark-paid"}
+                          />
+                          <OrderPaymentVoidDialog
+                            confirmButtonState={getMutationState(
+                              orderVoid.opts.called,
+                              orderVoid.opts.loading,
+                              maybe(() => orderVoid.opts.data.orderVoid.errors)
+                            )}
+                            open={params.action === "void"}
+                            onClose={closeModal}
+                            onConfirm={() => orderVoid.mutate({ id })}
+                          />
+                          <OrderPaymentDialog
+                            confirmButtonState={getMutationState(
+                              orderPaymentCapture.opts.called,
+                              orderPaymentCapture.opts.loading,
+                              maybe(
+                                () =>
+                                  orderPaymentCapture.opts.data.orderCapture
+                                    .errors
+                              )
+                            )}
+                            initial={maybe(() => order.total.gross.amount)}
+                            open={params.action === "capture"}
+                            variant="capture"
+                            onClose={closeModal}
+                            onSubmit={variables =>
+                              orderPaymentCapture.mutate({
+                                ...variables,
+                                id
+                              })
+                            }
+                          />
+                          <OrderPaymentDialog
+                            confirmButtonState={getMutationState(
+                              orderPaymentRefund.opts.called,
+                              orderPaymentRefund.opts.loading,
+                              maybe(
+                                () =>
+                                  orderPaymentRefund.opts.data.orderRefund
+                                    .errors
+                              )
+                            )}
+                            initial={maybe(() => order.total.gross.amount)}
+                            open={params.action === "refund"}
+                            variant="refund"
+                            onClose={closeModal}
+                            onSubmit={variables =>
+                              orderPaymentRefund.mutate({
+                                ...variables,
+                                id
+                              })
+                            }
+                          />
+                          <OrderFulfillmentDialog
+                            confirmButtonState={getMutationState(
+                              orderCreateFulfillment.opts.called,
+                              orderCreateFulfillment.opts.loading,
+                              maybe(
+                                () =>
+                                  orderCreateFulfillment.opts.data
+                                    .orderFulfillmentCreate.errors
+                              )
+                            )}
+                            open={params.action === "fulfill"}
+                            lines={maybe(() => order.lines, []).filter(
+                              line => line.quantityFulfilled < line.quantity
+                            )}
+                            onClose={closeModal}
+                            onSubmit={variables =>
+                              orderCreateFulfillment.mutate({
                                 input: {
-                                  billingAddress
+                                  ...variables,
+                                  lines: maybe(() => order.lines, [])
+                                    .filter(
+                                      line =>
+                                        line.quantityFulfilled < line.quantity
+                                    )
+                                    .map((line, lineIndex) => ({
+                                      orderLineId: line.id,
+                                      quantity: variables.lines[lineIndex]
+                                    }))
+                                    .filter(line => line.quantity > 0)
+                                },
+                                order: order.id
+                              })
+                            }
+                          />
+                          <OrderFulfillmentCancelDialog
+                            confirmButtonState={getMutationState(
+                              orderFulfillmentCancel.opts.called,
+                              orderFulfillmentCancel.opts.loading,
+                              maybe(
+                                () =>
+                                  orderFulfillmentCancel.opts.data
+                                    .orderFulfillmentCancel.errors
+                              )
+                            )}
+                            open={params.action === "cancel-fulfillment"}
+                            onConfirm={variables =>
+                              orderFulfillmentCancel.mutate({
+                                id: params.id,
+                                input: variables
+                              })
+                            }
+                            onClose={closeModal}
+                          />
+                          <OrderFulfillmentTrackingDialog
+                            confirmButtonState={getMutationState(
+                              orderFulfillmentUpdateTracking.opts.called,
+                              orderFulfillmentUpdateTracking.opts.loading,
+                              maybe(
+                                () =>
+                                  orderFulfillmentUpdateTracking.opts.data
+                                    .orderFulfillmentUpdateTracking.errors
+                              )
+                            )}
+                            open={params.action === "edit-fulfillment"}
+                            trackingNumber={maybe(
+                              () =>
+                                data.order.fulfillments.find(
+                                  fulfillment => fulfillment.id === params.id
+                                ).trackingNumber
+                            )}
+                            onConfirm={variables =>
+                              orderFulfillmentUpdateTracking.mutate({
+                                id: params.id,
+                                input: {
+                                  ...variables,
+                                  notifyCustomer: true
                                 }
                               })
                             }
+                            onClose={closeModal}
                           />
                         </>
-                      );
-                    }}
-                  </OrderOperations>
-                )}
-              </OrderDetailsMessages>
+                      ) : (
+                        <>
+                          <WindowTitle
+                            title={maybe(
+                              () => "Draft order #" + data.order.number
+                            )}
+                          />
+                          <OrderDraftPage
+                            disabled={loading}
+                            onNoteAdd={variables =>
+                              orderAddNote.mutate({
+                                input: variables,
+                                order: id
+                              })
+                            }
+                            users={maybe(
+                              () =>
+                                users.data.search.edges.map(edge => edge.node),
+                              []
+                            )}
+                            hasMore={maybe(
+                              () => users.data.search.pageInfo.hasNextPage,
+                              false
+                            )}
+                            onFetchMore={loadMoreCustomers}
+                            fetchUsers={searchUsers}
+                            loading={users.loading}
+                            usersLoading={users.loading}
+                            onCustomerEdit={data =>
+                              orderDraftUpdate.mutate({
+                                id,
+                                input: data
+                              })
+                            }
+                            onDraftFinalize={() => openModal("finalize")}
+                            onDraftRemove={() => openModal("cancel")}
+                            onOrderLineAdd={() => openModal("add-order-line")}
+                            onBack={() => navigate(orderListUrl())}
+                            order={order}
+                            countries={maybe(() => data.shop.countries, []).map(
+                              country => ({
+                                code: country.code,
+                                label: country.country
+                              })
+                            )}
+                            onProductClick={id => () =>
+                              navigate(productUrl(encodeURIComponent(id)))}
+                            onBillingAddressEdit={() =>
+                              openModal("edit-billing-address")
+                            }
+                            onShippingAddressEdit={() =>
+                              openModal("edit-shipping-address")
+                            }
+                            onShippingMethodEdit={() =>
+                              openModal("edit-shipping")
+                            }
+                            onOrderLineRemove={id =>
+                              orderLineDelete.mutate({ id })
+                            }
+                            onOrderLineChange={(id, data) =>
+                              orderLineUpdate.mutate({
+                                id,
+                                input: data
+                              })
+                            }
+                            saveButtonBarState="default"
+                            onProfileView={() =>
+                              navigate(customerUrl(order.user.id))
+                            }
+                            userPermissions={maybe(() => user.permissions, [])}
+                          />
+                          <OrderDraftCancelDialog
+                            confirmButtonState={getMutationState(
+                              orderDraftCancel.opts.called,
+                              orderDraftCancel.opts.loading,
+                              maybe(
+                                () =>
+                                  orderDraftCancel.opts.data.draftOrderDelete
+                                    .errors
+                              )
+                            )}
+                            onClose={closeModal}
+                            onConfirm={() => orderDraftCancel.mutate({ id })}
+                            open={params.action === "cancel"}
+                            orderNumber={maybe(() => order.number)}
+                          />
+                          <OrderDraftFinalizeDialog
+                            confirmButtonState={finalizeTransitionState}
+                            onClose={closeModal}
+                            onConfirm={() => orderDraftFinalize.mutate({ id })}
+                            open={params.action === "finalize"}
+                            orderNumber={maybe(() => order.number)}
+                            warnings={orderDraftFinalizeWarnings(order)}
+                          />
+                          <OrderShippingMethodEditDialog
+                            confirmButtonState={getMutationState(
+                              orderShippingMethodUpdate.opts.called,
+                              orderShippingMethodUpdate.opts.loading,
+                              maybe(
+                                () =>
+                                  orderShippingMethodUpdate.opts.data
+                                    .orderUpdateShipping.errors
+                              )
+                            )}
+                            open={params.action === "edit-shipping"}
+                            shippingMethod={maybe(
+                              () => order.shippingMethod.id,
+                              "..."
+                            )}
+                            shippingMethods={maybe(
+                              () => order.availableShippingMethods
+                            )}
+                            onClose={closeModal}
+                            onSubmit={variables =>
+                              orderShippingMethodUpdate.mutate({
+                                id,
+                                input: {
+                                  shippingMethod: variables.shippingMethod
+                                }
+                              })
+                            }
+                          />
+                          <SearchOrderVariant
+                            variables={DEFAULT_INITIAL_SEARCH_DATA}
+                          >
+                            {({
+                              loadMore,
+                              search: variantSearch,
+                              result: variantSearchOpts
+                            }) => (
+                              <OrderProductAddDialog
+                                confirmButtonState={getMutationState(
+                                  orderLinesAdd.opts.called,
+                                  orderLinesAdd.opts.loading,
+                                  maybe(
+                                    () =>
+                                      orderLinesAdd.opts.data
+                                        .draftOrderLinesCreate.errors
+                                  )
+                                )}
+                                loading={variantSearchOpts.loading}
+                                open={params.action === "add-order-line"}
+                                hasMore={maybe(
+                                  () =>
+                                    variantSearchOpts.data.search.pageInfo
+                                      .hasNextPage
+                                )}
+                                products={maybe(() =>
+                                  variantSearchOpts.data.search.edges.map(
+                                    edge => edge.node
+                                  )
+                                )}
+                                onClose={closeModal}
+                                onFetch={variantSearch}
+                                onFetchMore={loadMore}
+                                onSubmit={variants =>
+                                  orderLinesAdd.mutate({
+                                    id,
+                                    input: variants.map(variant => ({
+                                      quantity: 1,
+                                      variantId: variant.id
+                                    }))
+                                  })
+                                }
+                              />
+                            )}
+                          </SearchOrderVariant>
+                        </>
+                      )}
+                      <OrderAddressEditDialog
+                        confirmButtonState={getMutationState(
+                          orderUpdate.opts.called,
+                          orderUpdate.opts.loading,
+                          maybe(() => orderUpdate.opts.data.orderUpdate.errors)
+                        )}
+                        address={transformAddressToForm(
+                          maybe(() => order.shippingAddress)
+                        )}
+                        countries={maybe(() => data.shop.countries, []).map(
+                          country => ({
+                            code: country.code,
+                            label: country.country
+                          })
+                        )}
+                        errors={maybe(
+                          () => orderUpdate.opts.data.orderUpdate.errors,
+                          []
+                        )}
+                        open={params.action === "edit-shipping-address"}
+                        variant="shipping"
+                        onClose={closeModal}
+                        onConfirm={shippingAddress =>
+                          orderUpdate.mutate({
+                            id,
+                            input: {
+                              shippingAddress
+                            }
+                          })
+                        }
+                      />
+                      <OrderAddressEditDialog
+                        confirmButtonState={getMutationState(
+                          orderUpdate.opts.called,
+                          orderUpdate.opts.loading,
+                          maybe(() => orderUpdate.opts.data.orderUpdate.errors)
+                        )}
+                        address={transformAddressToForm(
+                          maybe(() => order.billingAddress)
+                        )}
+                        countries={maybe(() => data.shop.countries, []).map(
+                          country => ({
+                            code: country.code,
+                            label: country.country
+                          })
+                        )}
+                        errors={maybe(
+                          () => orderUpdate.opts.data.orderUpdate.errors,
+                          []
+                        )}
+                        open={params.action === "edit-billing-address"}
+                        variant="billing"
+                        onClose={closeModal}
+                        onConfirm={billingAddress =>
+                          orderUpdate.mutate({
+                            id,
+                            input: {
+                              billingAddress
+                            }
+                          })
+                        }
+                      />
+                    </>
+                  );
+                }}
+              </OrderOperations>
             )}
-          </SearchCustomers>
+          </OrderDetailsMessages>
         );
       }}
     </TypedOrderDetailsQuery>

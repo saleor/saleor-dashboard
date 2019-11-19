@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
+import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import { pageInfoFragment } from "@saleor/queries";
-import TopLevelSearch from "../TopLevelSearch";
 import {
   SearchCustomers,
   SearchCustomersVariables
@@ -24,6 +24,6 @@ export const searchCustomers = gql`
   }
 `;
 
-export default TopLevelSearch<SearchCustomers, SearchCustomersVariables>(
+export default makeTopLevelSearch<SearchCustomers, SearchCustomersVariables>(
   searchCustomers
 );

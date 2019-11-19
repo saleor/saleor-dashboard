@@ -1,5 +1,5 @@
+import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { MessageDescriptor } from "react-intl";
-import { SearchCustomers_search_edges_node } from "../containers/SearchCustomers/types/SearchCustomers";
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 import {
   FulfillmentStatus,
