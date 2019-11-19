@@ -18,10 +18,10 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "../../config";
-import SearchProducts from "../../containers/SearchProducts";
 import { decimal, getMutationState, joinDateTime, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { DiscountValueTypeEnum, SaleType } from "../../types/globalTypes";
@@ -76,6 +76,12 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     search: searchCollections,
     result: searchCollectionsOpts
   } = useCollectionSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    search: searchProducts,
+    result: searchProductsOpts
+  } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
@@ -353,42 +359,33 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               toggle={toggle}
                               toggleAll={toggleAll}
                             />
-                            <SearchProducts
-                              variables={DEFAULT_INITIAL_SEARCH_DATA}
-                            >
-                              {({
-                                search: searchProducts,
-                                result: searchProductsOpts
-                              }) => (
-                                <AssignProductDialog
-                                  confirmButtonState={assignTransitionState}
-                                  open={params.action === "assign-product"}
-                                  onFetch={searchProducts}
-                                  loading={searchProductsOpts.loading}
-                                  onClose={closeModal}
-                                  onSubmit={products =>
-                                    saleCataloguesAdd({
-                                      variables: {
-                                        ...paginationState,
-                                        id,
-                                        input: {
-                                          products: products.map(
-                                            product => product.id
-                                          )
-                                        }
-                                      }
-                                    })
-                                  }
-                                  products={maybe(() =>
-                                    searchProductsOpts.data.search.edges
-                                      .map(edge => edge.node)
-                                      .filter(
-                                        suggestedProduct => suggestedProduct.id
+                            <AssignProductDialog
+                              confirmButtonState={assignTransitionState}
+                              open={params.action === "assign-product"}
+                              onFetch={searchProducts}
+                              loading={searchProductsOpts.loading}
+                              onClose={closeModal}
+                              onSubmit={products =>
+                                saleCataloguesAdd({
+                                  variables: {
+                                    ...paginationState,
+                                    id,
+                                    input: {
+                                      products: products.map(
+                                        product => product.id
                                       )
-                                  )}
-                                />
+                                    }
+                                  }
+                                })
+                              }
+                              products={maybe(() =>
+                                searchProductsOpts.data.search.edges
+                                  .map(edge => edge.node)
+                                  .filter(
+                                    suggestedProduct => suggestedProduct.id
+                                  )
                               )}
-                            </SearchProducts>
+                            />
                             <AssignCategoriesDialog
                               categories={maybe(() =>
                                 searchCategoriesOpts.data.search.edges
