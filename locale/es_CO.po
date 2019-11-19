@@ -1,12 +1,12 @@
 # Translators:
-# Leonardo <gomezgleonardob@gmail.com>, 2019
 # Richard Palacios G <apalaciosg91@gmail.com>, 2019
 # ildebrando mora <diskaunco@gmail.com>, 2019
+# Leonardo <gomezgleonardob@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-11-07T13:41:50.654Z\n"
-"Last-Translator: ildebrando mora <diskaunco@gmail.com>, 2019\n"
+"POT-Creation-Date: 2019-11-13T13:13:30.128Z\n"
+"Last-Translator: Leonardo <gomezgleonardob@gmail.com>, 2019\n"
 "Language-Team: Spanish (Colombia) (https://www.transifex.com/mirumee/teams/34782/es_CO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,6 +140,14 @@ msgctxt "time during voucher is active, header"
 msgid "Active Dates"
 msgstr ""
 
+#. [src.customers.components.CustomerDetails.3298169382] - section subheader
+#. defaultMessage is:
+#. Active member since {date}
+#: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
+msgctxt "section subheader"
+msgid "Active member since {date}"
+msgstr ""
+
 #. [homeActivityCardHeader] - header
 #. defaultMessage is:
 #. Activity
@@ -237,6 +245,14 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
 msgctxt "add attribute value"
 msgid "Add Value"
+msgstr ""
+
+#. [src.plugins.components.PluginSecretFieldDialog.3032939398] - header
+#. defaultMessage is:
+#. Add Value to Authorization Field
+#: build/locale/src/plugins/components/PluginSecretFieldDialog/PluginSecretFieldDialog.json
+msgctxt "header"
+msgid "Add Value to Authorization Field"
 msgstr ""
 
 #. [src.shipping.components.ShippingZoneRateDialog.1397795758] - add weight
@@ -1648,6 +1664,22 @@ msgctxt "authentication provider name"
 msgid "Authentication type"
 msgstr ""
 
+#. [src.plugins.components.PluginAuthorization.768575093] - section header
+#. defaultMessage is:
+#. Authorization
+#: build/locale/src/plugins/components/PluginAuthorization/PluginAuthorization.json
+msgctxt "section header"
+msgid "Authorization"
+msgstr ""
+
+#. [src.plugins.views.1096544448] - header
+#. defaultMessage is:
+#. Authorization Field Delete
+#: build/locale/src/plugins/views/PluginsDetails.json
+msgctxt "header"
+msgid "Authorization Field Delete"
+msgstr ""
+
 #. [src.collections.components.CollectionList.3326160357] - collection
 #. availability
 #. defaultMessage is:
@@ -2071,6 +2103,14 @@ msgctxt "description"
 msgid "City"
 msgstr "Ciudad"
 
+#. [src.clear] - button
+#. defaultMessage is:
+#. Clear
+#: build/locale/src/intl.json
+msgctxt "button"
+msgid "Clear"
+msgstr "Limpiar"
+
 #. [src.discounts.components.VoucherList.78726751] - voucher code
 #. defaultMessage is:
 #. Code
@@ -2230,6 +2270,15 @@ msgstr ""
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 msgctxt "subheader"
 msgid "Contact Information"
+msgstr ""
+
+#. [src.customers.components.CustomerInfo.778526801] - customer contact
+#. section, header
+#. defaultMessage is:
+#. Contact Informations
+#: build/locale/src/customers/components/CustomerInfo/CustomerInfo.json
+msgctxt "customer contact section, header"
+msgid "Contact Informations"
 msgstr ""
 
 #. [src.pages.components.PageInfo.1116746286] - page content
@@ -2438,6 +2487,14 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
 msgctxt "description"
 msgid "Country area"
+msgstr ""
+
+#. [src.create] - button
+#. defaultMessage is:
+#. Create
+#: build/locale/src/intl.json
+msgctxt "button"
+msgid "Create"
 msgstr ""
 
 #. [src.products.components.ProductVariantCreateDialog.4120989039] - create
@@ -2927,14 +2984,6 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
 msgctxt "description"
 msgid "Customer password reset URL"
-msgstr ""
-
-#. [src.customers.components.CustomerDetails.2200102325] - section subheader
-#. defaultMessage is:
-#. Customer since: {date}
-#: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
-msgctxt "section subheader"
-msgid "Customer since: {date}"
 msgstr ""
 
 #. [src.customers] - customers section name
@@ -3707,6 +3756,14 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerAddressDialog/CustomerAddressDialog.json
 msgctxt "dialog title"
 msgid "Edit Address"
+msgstr ""
+
+#. [src.plugins.components.PluginSecretFieldDialog.4269236107] - header
+#. defaultMessage is:
+#. Edit Authorization Field
+#: build/locale/src/plugins/components/PluginSecretFieldDialog/PluginSecretFieldDialog.json
+msgctxt "header"
+msgid "Edit Authorization Field"
 msgstr ""
 
 #. [src.orders.components.OrderAddressEditDialog.3982060155] - dialog header
@@ -6139,6 +6196,15 @@ msgctxt "description"
 msgid "Permissions"
 msgstr ""
 
+#. [src.customers.components.CustomerInfo.252313757] - customer informations,
+#. header
+#. defaultMessage is:
+#. Personal Informations
+#: build/locale/src/customers/components/CustomerInfo/CustomerInfo.json
+msgctxt "customer informations, header"
+msgid "Personal Informations"
+msgstr ""
+
 #. [src.taxes.components.CountryTaxesPage.815189256] - tax rate
 #. defaultMessage is:
 #. Pharmaceuticals
@@ -8219,14 +8285,6 @@ msgctxt "order subtotal price"
 msgid "Subtotal"
 msgstr ""
 
-#. [src.plugins.views.100549097] - plugin success message
-#. defaultMessage is:
-#. Succesfully updated plugin settings
-#: build/locale/src/plugins/views/PluginsDetails.json
-msgctxt "plugin success message"
-msgid "Succesfully updated plugin settings"
-msgstr ""
-
 #. [src.auth.components.ResetPasswordSuccessPage.4066297200]
 #. defaultMessage is:
 #. Success! In a few minutes you’ll receive a message with instructions on how
@@ -8399,6 +8457,17 @@ msgctxt "description"
 msgid "The new dashboard and the GraphQL API are preview-quality software."
 msgstr ""
 
+#. [src.plugins.views.955370043]
+#. defaultMessage is:
+#. The plugin may stop working after this field is cleared. Are you sure you
+#. want to proceed?
+#: build/locale/src/plugins/views/PluginsDetails.json
+msgctxt "description"
+msgid ""
+"The plugin may stop working after this field is cleared. Are you sure you "
+"want to proceed?"
+msgstr ""
+
 #. [src.customers.components.CustomerCreateAddress.401345057]
 #. defaultMessage is:
 #. The primary address of this customer.
@@ -8432,21 +8501,15 @@ msgctxt "description"
 msgid "There is no address to show for this customer"
 msgstr ""
 
-#. [src.plugins.components.PluginsDetailsPage.2277745418]
+#. [src.plugins.components.PluginsDetailsPage.3799756739]
 #. defaultMessage is:
 #. These are general information about your store. They define what is the URL
-#. of your store and what is shown in brow sers taskbar.
-#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
-msgctxt "description"
-msgid ""
-"These are general information about your store. They define what is the URL "
-"of your store and what is shown in brow sers taskbar."
-msgstr ""
-
+#. of your store and what is shown in browsers taskbar.
 #. [src.siteSettings.components.SiteSettingsPage.3799756739]
 #. defaultMessage is:
 #. These are general information about your store. They define what is the URL
 #. of your store and what is shown in browsers taskbar.
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
 #: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
 msgctxt "description"
 msgid ""

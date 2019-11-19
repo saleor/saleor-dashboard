@@ -8,11 +8,12 @@
 # Николай Инкогнито <mmmsvit@gmail.com>, 2019
 # Marysya Rudska <rudmari@gmail.com>, 2019
 # Yevhenii Dehtiar <yevhenii.dehtiar@gmail.com>, 2019
+# Mykola Levchenko <qupadlive@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-11-07T13:41:50.654Z\n"
-"Last-Translator: Yevhenii Dehtiar <yevhenii.dehtiar@gmail.com>, 2019\n"
+"POT-Creation-Date: 2019-11-13T13:13:30.128Z\n"
+"Last-Translator: Mykola Levchenko <qupadlive@gmail.com>, 2019\n"
 "Language-Team: Ukrainian (https://www.transifex.com/mirumee/teams/34782/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,7 +33,7 @@ msgstr ""
 #: build/locale/src/collections/components/CollectionImage/CollectionImage.json
 msgctxt "field is optional"
 msgid "(Optional)"
-msgstr ""
+msgstr "(необов'язково)"
 
 #. [src.products.components.ProductOrganization.2805838453] - field is
 #. optional
@@ -42,6 +43,8 @@ msgstr ""
 msgctxt "field is optional"
 msgid "*Optional. Adding product to collection helps users find it."
 msgstr ""
+"Не обов'язково. Додавання продукту до колекції допомагає користувачу знайти "
+"його."
 
 #. [src.attributes.views.AttributeCreate.354316953] - attribute value edit
 #. error
@@ -50,7 +53,7 @@ msgstr ""
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
 msgctxt "attribute value edit error"
 msgid "A value named {name} already exists"
-msgstr ""
+msgstr "Значення з назвою {name} вже існує"
 
 #. [src.services.components.ServiceTokenCreateDialog.2530792168]
 #. defaultMessage is:
@@ -58,7 +61,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceTokenCreateDialog/ServiceTokenCreateDialog.json
 msgctxt "description"
 msgid "Access token is used to authenticate service accounts"
-msgstr ""
+msgstr "Токен доступу використовується для автентифікації в акаунтах сервісів"
 
 #. [src.taxes.components.CountryTaxesPage.1040021611] - tax rate
 #. defaultMessage is:
@@ -66,7 +69,7 @@ msgstr ""
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
 msgctxt "tax rate"
 msgid "Accommodation"
-msgstr ""
+msgstr "Проживання"
 
 #. [src.services.components.ServiceInfo.3789449123] - service account
 #. defaultMessage is:
@@ -74,7 +77,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceInfo/ServiceInfo.json
 msgctxt "service account"
 msgid "Account Name"
-msgstr ""
+msgstr "Назва акаунту"
 
 #. [src.components.AppLayout.248888005] - button
 #. defaultMessage is:
@@ -82,7 +85,7 @@ msgstr ""
 #: build/locale/src/components/AppLayout/AppLayout.json
 msgctxt "button"
 msgid "Account Settings"
-msgstr ""
+msgstr "Налаштування акаунту"
 
 #. [src.components.AccountStatus.2183517419] - section header
 #. defaultMessage is:
@@ -90,7 +93,7 @@ msgstr ""
 #: build/locale/src/components/AccountStatus/AccountStatus.json
 msgctxt "section header"
 msgid "Account Status"
-msgstr ""
+msgstr "Статус акаунту"
 
 #. [src.plugins.components.PluginsList.4120604650] - user action bar
 #. defaultMessage is:
@@ -102,7 +105,7 @@ msgstr ""
 #: build/locale/src/webhooks/components/WebhooksList/WebhooksList.json
 msgctxt "user action bar"
 msgid "Action"
-msgstr ""
+msgstr "Дія"
 
 #. [src.services.components.ServiceTokens.4190792473] - table actions
 #. defaultMessage is:
@@ -110,7 +113,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceTokens/ServiceTokens.json
 msgctxt "table actions"
 msgid "Actions"
-msgstr ""
+msgstr "Дії"
 
 #. [src.plugins.components.PluginsList.3247064221] - plugin status
 #. defaultMessage is:
@@ -135,7 +138,7 @@ msgstr "Активний"
 #: build/locale/src/discounts/components/DiscountDates/DiscountDates.json
 msgctxt "time during discount is active, header"
 msgid "Active Dates"
-msgstr ""
+msgstr "Активні дати"
 
 #. [src.discounts.components.VoucherDates.1662220323] - time during voucher is
 #. active, header
@@ -144,6 +147,14 @@ msgstr ""
 #: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
 msgctxt "time during voucher is active, header"
 msgid "Active Dates"
+msgstr "Активні дати"
+
+#. [src.customers.components.CustomerDetails.3298169382] - section subheader
+#. defaultMessage is:
+#. Active member since {date}
+#: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
+msgctxt "section subheader"
+msgid "Active member since {date}"
 msgstr ""
 
 #. [homeActivityCardHeader] - header
@@ -176,7 +187,7 @@ msgstr "Добавити адресу"
 #: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
 msgctxt "page header"
 msgid "Add Collection"
-msgstr ""
+msgstr "Додати колекцію"
 
 #. [src.customers.components.CustomerCreatePage.2622255457] - page header
 #. defaultMessage is:
@@ -184,7 +195,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
 msgctxt "page header"
 msgid "Add Customer"
-msgstr ""
+msgstr "Додати клієнта"
 
 #. [src.components.Filter.2852521946] - button
 #. defaultMessage is:
@@ -225,7 +236,7 @@ msgstr "Додати новий авторизаціний ключ"
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
 msgctxt "dialog header"
 msgid "Add Price Rate"
-msgstr ""
+msgstr "Додати ціну"
 
 #. [src.orders.components.OrderFulfillmentTrackingDialog.606831229] - dialog
 #. header
@@ -234,7 +245,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog.json
 msgctxt "dialog header"
 msgid "Add Tracking Code"
-msgstr ""
+msgstr "Додати код відстеження"
 
 #. [src.attributes.components.AttributeValueEditDialog.1841790893] - add
 #. attribute value
@@ -245,6 +256,14 @@ msgctxt "add attribute value"
 msgid "Add Value"
 msgstr "Додати значення"
 
+#. [src.plugins.components.PluginSecretFieldDialog.3032939398] - header
+#. defaultMessage is:
+#. Add Value to Authorization Field
+#: build/locale/src/plugins/components/PluginSecretFieldDialog/PluginSecretFieldDialog.json
+msgctxt "header"
+msgid "Add Value to Authorization Field"
+msgstr ""
+
 #. [src.shipping.components.ShippingZoneRateDialog.1397795758] - add weight
 #. based shipping method, dialog header
 #. defaultMessage is:
@@ -252,7 +271,7 @@ msgstr "Додати значення"
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
 msgctxt "add weight based shipping method, dialog header"
 msgid "Add Weight Rate"
-msgstr ""
+msgstr "Додати розмір"
 
 #. [src.customers.components.CustomerAddressListPage.3623935073] - button
 #. defaultMessage is:
@@ -268,7 +287,7 @@ msgstr "Додати адресу"
 #: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
 msgctxt "button"
 msgid "Add authentication"
-msgstr ""
+msgstr "Додати автентифікацію"
 
 #. [src.customers.components.CustomerListPage.1934221653] - button
 #. defaultMessage is:
@@ -292,7 +311,7 @@ msgstr "Додати фільтр"
 #: build/locale/src/siteSettings/components/SiteSettingsKeys/SiteSettingsKeys.json
 msgctxt "button"
 msgid "Add key"
-msgstr ""
+msgstr "Додати ключ"
 
 #. [menuItemsPlaceholder]
 #. defaultMessage is:
@@ -300,7 +319,7 @@ msgstr ""
 #: build/locale/src/navigation/components/MenuItems/MenuItems.json
 msgctxt "description"
 msgid "Add new menu item to begin creating menu"
-msgstr ""
+msgstr "Додати новий пункт меню, щоб розпочати роботу з меню"
 
 #. [src.components.MultiAutocompleteSelectField.1477537381] - add custom
 #. select input option
@@ -314,7 +333,7 @@ msgstr ""
 #: build/locale/src/components/SingleAutocompleteSelectField/SingleAutocompleteSelectFieldContent.json
 msgctxt "add custom select input option"
 msgid "Add new value: {value}"
-msgstr ""
+msgstr "Додати нове значення: {value}"
 
 #. [src.components.RichTextEditor.2160163587] - button
 #. defaultMessage is:
@@ -322,7 +341,7 @@ msgstr ""
 #: build/locale/src/components/RichTextEditor/LinkSource.json
 msgctxt "button"
 msgid "Add or Edit Link"
-msgstr ""
+msgstr "Додати / Редагувати посилання"
 
 #. [src.categories.components.CategoryProducts.3554578821] - button
 #. defaultMessage is:
@@ -338,7 +357,7 @@ msgstr "Додати продукт"
 #: build/locale/src/orders/components/OrderDraftDetails/OrderDraftDetails.json
 msgctxt "button"
 msgid "Add products"
-msgstr ""
+msgstr "Додати товари"
 
 #. [src.categories.components.CategoryCreatePage.2563994280]
 #. defaultMessage is:
@@ -354,6 +373,8 @@ msgctxt "description"
 msgid ""
 "Add search engine title and description to make this category easier to find"
 msgstr ""
+"Додати заголовок та опис для пошукової системи, щоб полегшити пошук цієї "
+"категорії"
 
 #. [src.collections.components.CollectionCreatePage.946315389]
 #. defaultMessage is:
@@ -370,6 +391,8 @@ msgid ""
 "Add search engine title and description to make this collection easier to "
 "find"
 msgstr ""
+"Додати заголовок та опис для пошукової системи, щоб полегшити пошук цієї "
+"колекції"
 
 #. [src.pages.components.PageDetailsPage.1996767833]
 #. defaultMessage is:
@@ -379,6 +402,8 @@ msgctxt "description"
 msgid ""
 "Add search engine title and description to make this page easier to find"
 msgstr ""
+"Додати заголовок та опис для пошукової системи, щоб полегшити пошук цієї "
+"сторінки"
 
 #. [src.products.components.ProductCreatePage.2706108815]
 #. defaultMessage is:
@@ -392,6 +417,8 @@ msgctxt "description"
 msgid ""
 "Add search engine title and description to make this product easier to find"
 msgstr ""
+"Додати заголовок та опис для пошукової системи, щоб полегшити пошук цього "
+"товару"
 
 #. [src.orders.components.OrderDraftDetailsSummary.2429341469] - button
 #. defaultMessage is:
@@ -399,7 +426,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderDraftDetailsSummary/OrderDraftDetailsSummary.json
 msgctxt "button"
 msgid "Add shipping carrier"
-msgstr ""
+msgstr "Додати перевізника"
 
 #. [src.attributes.components.AttributeProperties.673770329] - add attribute
 #. as column in product list table
@@ -408,7 +435,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 msgctxt "add attribute as column in product list table"
 msgid "Add to Column Options"
-msgstr ""
+msgstr "Додати в параметри стовпця"
 
 #. [src.orders.components.OrderFulfillment.1119771899] - fulfillment group
 #. tracking number
@@ -417,7 +444,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
 msgctxt "fulfillment group tracking number"
 msgid "Add tracking"
-msgstr ""
+msgstr "Додати відстеження"
 
 #. [src.products.components.ProductVariantNavigation.2845381934] - button
 #. defaultMessage is:
@@ -434,7 +461,7 @@ msgstr "Додати варіант"
 #: build/locale/src/attributes/views/AttributeDetails/AttributeDetails.json
 msgctxt "added new attribute value"
 msgid "Added new value"
-msgstr ""
+msgstr "Нове значення додано"
 
 #. [src.collections.views.2001540731]
 #. defaultMessage is:
@@ -442,7 +469,7 @@ msgstr ""
 #: build/locale/src/collections/views/CollectionDetails.json
 msgctxt "description"
 msgid "Added product to collection"
-msgstr ""
+msgstr "Товар доданий до колекції"
 
 #. [src.customers.components.CustomerAddresses.359810770] - subsection header
 #. defaultMessage is:
@@ -458,7 +485,7 @@ msgstr "Адреса"
 #: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
 msgctxt "header"
 msgid "Address Information"
-msgstr ""
+msgstr "Інформація про адресу"
 
 #. [src.components.AddressEdit.1363074570]
 #. defaultMessage is:
@@ -470,7 +497,7 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
 msgctxt "description"
 msgid "Address line 1"
-msgstr ""
+msgstr "Адреса 1"
 
 #. [src.components.AddressEdit.3121963259]
 #. defaultMessage is:
@@ -482,7 +509,7 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
 msgctxt "description"
 msgid "Address line 2"
-msgstr ""
+msgstr "Адреса 2"
 
 #. [src.attributes.components.AttributeValues.1565474525] - attribute values
 #. list: slug column header
@@ -539,7 +566,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeListPage/AttributeListPage.json
 msgctxt "tab name"
 msgid "All Attributes"
-msgstr ""
+msgstr "Всі атрибути"
 
 #. [src.categories.components.CategoryListPage.4294878092] - tab name
 #. defaultMessage is:
@@ -547,7 +574,7 @@ msgstr ""
 #: build/locale/src/categories/components/CategoryListPage/CategoryListPage.json
 msgctxt "tab name"
 msgid "All Categories"
-msgstr ""
+msgstr "Всі категорії"
 
 #. [src.collections.components.CollectionListPage.1631917001] - tab name
 #. defaultMessage is:
@@ -555,7 +582,7 @@ msgstr ""
 #: build/locale/src/collections/components/CollectionListPage/CollectionListPage.json
 msgctxt "tab name"
 msgid "All Collections"
-msgstr ""
+msgstr "Всі колекції"
 
 #. [src.customers.components.CustomerListPage.477293306] - tab name
 #. defaultMessage is:
@@ -563,7 +590,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerListPage/CustomerListPage.json
 msgctxt "tab name"
 msgid "All Customers"
-msgstr ""
+msgstr "Всі клієнти"
 
 #. [src.orders.components.OrderDraftListPage.551325728] - tab name
 #. defaultMessage is:
@@ -571,7 +598,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderDraftListPage/OrderDraftListPage.json
 msgctxt "tab name"
 msgid "All Drafts"
-msgstr ""
+msgstr "Всі чернетки"
 
 #. [src.orders.components.OrderListPage.875489544] - tab name
 #. defaultMessage is:
@@ -579,7 +606,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderListPage/OrderListPage.json
 msgctxt "tab name"
 msgid "All Orders"
-msgstr ""
+msgstr "Всі замовлення"
 
 #. [src.products.components.ProductImageNavigation.3060635772] - section
 #. header
@@ -588,7 +615,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductImageNavigation/ProductImageNavigation.json
 msgctxt "section header"
 msgid "All Photos"
-msgstr ""
+msgstr "Всі фотографії"
 
 #. [src.productTypes.components.ProductTypeListPage.1776073799] - tab name
 #. defaultMessage is:
@@ -596,7 +623,7 @@ msgstr ""
 #: build/locale/src/productTypes/components/ProductTypeListPage/ProductTypeListPage.json
 msgctxt "tab name"
 msgid "All Product Types"
-msgstr ""
+msgstr "Всі типи товарів"
 
 #. [src.products.components.ProductListFilter.821159718] - tab name
 #. defaultMessage is:
@@ -604,7 +631,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 msgctxt "tab name"
 msgid "All Products"
-msgstr ""
+msgstr "Всі товари"
 
 #. [src.discounts.components.SaleListPage.3907768880] - tab name
 #. defaultMessage is:
@@ -612,7 +639,7 @@ msgstr ""
 #: build/locale/src/discounts/components/SaleListPage/SaleListPage.json
 msgctxt "tab name"
 msgid "All Sales"
-msgstr ""
+msgstr "Всі продажі"
 
 #. [src.services.components.ServiceListPage.4040605455] - tab name
 #. defaultMessage is:
@@ -620,7 +647,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceListPage/ServiceListPage.json
 msgctxt "tab name"
 msgid "All Service Accounts"
-msgstr ""
+msgstr "Всі сервісні акаунти"
 
 #. [src.staff.components.StaffListPage.2852350932] - tab name
 #. defaultMessage is:
@@ -628,7 +655,7 @@ msgstr ""
 #: build/locale/src/staff/components/StaffListPage/StaffListPage.json
 msgctxt "tab name"
 msgid "All Staff Members"
-msgstr ""
+msgstr "Всі співробітники"
 
 #. [src.categories.components.CategoryUpdatePage.3229914152] - section header
 #. defaultMessage is:
@@ -636,7 +663,7 @@ msgstr ""
 #: build/locale/src/categories/components/CategoryUpdatePage/CategoryUpdatePage.json
 msgctxt "section header"
 msgid "All Subcategories"
-msgstr ""
+msgstr "Всі підкатегорії"
 
 #. [src.discounts.components.VoucherListPage.1112241061] - tab name
 #. defaultMessage is:
@@ -644,7 +671,7 @@ msgstr ""
 #: build/locale/src/discounts/components/VoucherListPage/VoucherListPage.json
 msgctxt "tab name"
 msgid "All Vouchers"
-msgstr ""
+msgstr "Всі ваучери"
 
 #. [src.webhooks.components.WebhooksListPage.3300314452] - tab name
 #. defaultMessage is:
@@ -1654,6 +1681,22 @@ msgctxt "authentication provider name"
 msgid "Authentication type"
 msgstr ""
 
+#. [src.plugins.components.PluginAuthorization.768575093] - section header
+#. defaultMessage is:
+#. Authorization
+#: build/locale/src/plugins/components/PluginAuthorization/PluginAuthorization.json
+msgctxt "section header"
+msgid "Authorization"
+msgstr ""
+
+#. [src.plugins.views.1096544448] - header
+#. defaultMessage is:
+#. Authorization Field Delete
+#: build/locale/src/plugins/views/PluginsDetails.json
+msgctxt "header"
+msgid "Authorization Field Delete"
+msgstr ""
+
 #. [src.collections.components.CollectionList.3326160357] - collection
 #. availability
 #. defaultMessage is:
@@ -2077,6 +2120,14 @@ msgctxt "description"
 msgid "City"
 msgstr "місто"
 
+#. [src.clear] - button
+#. defaultMessage is:
+#. Clear
+#: build/locale/src/intl.json
+msgctxt "button"
+msgid "Clear"
+msgstr ""
+
 #. [src.discounts.components.VoucherList.78726751] - voucher code
 #. defaultMessage is:
 #. Code
@@ -2236,6 +2287,15 @@ msgstr ""
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 msgctxt "subheader"
 msgid "Contact Information"
+msgstr ""
+
+#. [src.customers.components.CustomerInfo.778526801] - customer contact
+#. section, header
+#. defaultMessage is:
+#. Contact Informations
+#: build/locale/src/customers/components/CustomerInfo/CustomerInfo.json
+msgctxt "customer contact section, header"
+msgid "Contact Informations"
 msgstr ""
 
 #. [src.pages.components.PageInfo.1116746286] - page content
@@ -2444,6 +2504,14 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
 msgctxt "description"
 msgid "Country area"
+msgstr ""
+
+#. [src.create] - button
+#. defaultMessage is:
+#. Create
+#: build/locale/src/intl.json
+msgctxt "button"
+msgid "Create"
 msgstr ""
 
 #. [src.products.components.ProductVariantCreateDialog.4120989039] - create
@@ -2933,14 +3001,6 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsMailing/SiteSettingsMailing.json
 msgctxt "description"
 msgid "Customer password reset URL"
-msgstr ""
-
-#. [src.customers.components.CustomerDetails.2200102325] - section subheader
-#. defaultMessage is:
-#. Customer since: {date}
-#: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
-msgctxt "section subheader"
-msgid "Customer since: {date}"
 msgstr ""
 
 #. [src.customers] - customers section name
@@ -3713,6 +3773,14 @@ msgstr "Редагувати"
 #: build/locale/src/customers/components/CustomerAddressDialog/CustomerAddressDialog.json
 msgctxt "dialog title"
 msgid "Edit Address"
+msgstr ""
+
+#. [src.plugins.components.PluginSecretFieldDialog.4269236107] - header
+#. defaultMessage is:
+#. Edit Authorization Field
+#: build/locale/src/plugins/components/PluginSecretFieldDialog/PluginSecretFieldDialog.json
+msgctxt "header"
+msgid "Edit Authorization Field"
 msgstr ""
 
 #. [src.orders.components.OrderAddressEditDialog.3982060155] - dialog header
@@ -6145,6 +6213,15 @@ msgctxt "description"
 msgid "Permissions"
 msgstr "Дозволи"
 
+#. [src.customers.components.CustomerInfo.252313757] - customer informations,
+#. header
+#. defaultMessage is:
+#. Personal Informations
+#: build/locale/src/customers/components/CustomerInfo/CustomerInfo.json
+msgctxt "customer informations, header"
+msgid "Personal Informations"
+msgstr ""
+
 #. [src.taxes.components.CountryTaxesPage.815189256] - tax rate
 #. defaultMessage is:
 #. Pharmaceuticals
@@ -8225,14 +8302,6 @@ msgctxt "order subtotal price"
 msgid "Subtotal"
 msgstr "Загалом"
 
-#. [src.plugins.views.100549097] - plugin success message
-#. defaultMessage is:
-#. Succesfully updated plugin settings
-#: build/locale/src/plugins/views/PluginsDetails.json
-msgctxt "plugin success message"
-msgid "Succesfully updated plugin settings"
-msgstr ""
-
 #. [src.auth.components.ResetPasswordSuccessPage.4066297200]
 #. defaultMessage is:
 #. Success! In a few minutes you’ll receive a message with instructions on how
@@ -8405,6 +8474,17 @@ msgctxt "description"
 msgid "The new dashboard and the GraphQL API are preview-quality software."
 msgstr ""
 
+#. [src.plugins.views.955370043]
+#. defaultMessage is:
+#. The plugin may stop working after this field is cleared. Are you sure you
+#. want to proceed?
+#: build/locale/src/plugins/views/PluginsDetails.json
+msgctxt "description"
+msgid ""
+"The plugin may stop working after this field is cleared. Are you sure you "
+"want to proceed?"
+msgstr ""
+
 #. [src.customers.components.CustomerCreateAddress.401345057]
 #. defaultMessage is:
 #. The primary address of this customer.
@@ -8438,21 +8518,15 @@ msgctxt "description"
 msgid "There is no address to show for this customer"
 msgstr ""
 
-#. [src.plugins.components.PluginsDetailsPage.2277745418]
+#. [src.plugins.components.PluginsDetailsPage.3799756739]
 #. defaultMessage is:
 #. These are general information about your store. They define what is the URL
-#. of your store and what is shown in brow sers taskbar.
-#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
-msgctxt "description"
-msgid ""
-"These are general information about your store. They define what is the URL "
-"of your store and what is shown in brow sers taskbar."
-msgstr ""
-
+#. of your store and what is shown in browsers taskbar.
 #. [src.siteSettings.components.SiteSettingsPage.3799756739]
 #. defaultMessage is:
 #. These are general information about your store. They define what is the URL
 #. of your store and what is shown in browsers taskbar.
+#: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
 #: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
 msgctxt "description"
 msgid ""
