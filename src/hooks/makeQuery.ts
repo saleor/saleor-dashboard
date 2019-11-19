@@ -31,7 +31,7 @@ type UseQueryHook<TData, TVariables> = (
 function makeQuery<TData, TVariables>(
   query: DocumentNode
 ): UseQueryHook<TData, TVariables> {
-  function useQuery<TData, TVariables>({
+  function useQuery({
     displayLoader,
     require,
     skip,
