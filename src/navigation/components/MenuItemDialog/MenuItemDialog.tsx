@@ -14,13 +14,13 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { SearchCollections_search_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/containers/SearchPages/types/SearchPages";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages, sectionNames } from "@saleor/intl";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
+import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { UserError } from "@saleor/types";
 import { getErrors, getFieldError } from "@saleor/utils/errors";
 import { getMenuItemByValue, IMenu } from "@saleor/utils/menu";

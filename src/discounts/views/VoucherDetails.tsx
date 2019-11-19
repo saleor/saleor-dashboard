@@ -17,10 +17,10 @@ import usePaginator, {
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
+import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "../../config";
-import SearchCollections from "../../containers/SearchCollections";
 import SearchProducts from "../../containers/SearchProducts";
 import { decimal, getMutationState, joinDateTime, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
@@ -72,6 +72,12 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     search: searchCategories,
     result: searchCategoriesOpts
   } = useCategorySearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    search: searchCollections,
+    result: searchCollectionsOpts
+  } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
@@ -453,43 +459,33 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 })
                               }
                             />
-                            <SearchCollections
-                              variables={DEFAULT_INITIAL_SEARCH_DATA}
-                            >
-                              {({
-                                search: searchCollections,
-                                result: searchCollectionsOpts
-                              }) => (
-                                <AssignCollectionDialog
-                                  collections={maybe(() =>
-                                    searchCollectionsOpts.data.search.edges
-                                      .map(edge => edge.node)
-                                      .filter(
-                                        suggestedCategory =>
-                                          suggestedCategory.id
-                                      )
-                                  )}
-                                  confirmButtonState={assignTransitionState}
-                                  open={params.action === "assign-collection"}
-                                  onFetch={searchCollections}
-                                  loading={searchCollectionsOpts.loading}
-                                  onClose={closeModal}
-                                  onSubmit={collections =>
-                                    voucherCataloguesAdd({
-                                      variables: {
-                                        ...paginationState,
-                                        id,
-                                        input: {
-                                          collections: collections.map(
-                                            product => product.id
-                                          )
-                                        }
-                                      }
-                                    })
-                                  }
-                                />
+                            <AssignCollectionDialog
+                              collections={maybe(() =>
+                                searchCollectionsOpts.data.search.edges
+                                  .map(edge => edge.node)
+                                  .filter(
+                                    suggestedCategory => suggestedCategory.id
+                                  )
                               )}
-                            </SearchCollections>
+                              confirmButtonState={assignTransitionState}
+                              open={params.action === "assign-collection"}
+                              onFetch={searchCollections}
+                              loading={searchCollectionsOpts.loading}
+                              onClose={closeModal}
+                              onSubmit={collections =>
+                                voucherCataloguesAdd({
+                                  variables: {
+                                    ...paginationState,
+                                    id,
+                                    input: {
+                                      collections: collections.map(
+                                        product => product.id
+                                      )
+                                    }
+                                  }
+                                })
+                              }
+                            />
                             <DiscountCountrySelectDialog
                               confirmButtonState={formTransitionState}
                               countries={maybe(() => shop.countries, [])}
