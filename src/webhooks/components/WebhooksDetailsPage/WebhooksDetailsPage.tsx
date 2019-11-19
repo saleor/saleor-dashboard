@@ -1,3 +1,6 @@
+import React from "react";
+import { useIntl } from "react-intl";
+
 import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -6,10 +9,10 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { SearchServiceAccount_search_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import { SearchServiceAccount_search_edges_node } from "@saleor/searches/types/SearchServiceAccount";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
@@ -18,11 +21,7 @@ import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
 import { WebhookCreate_webhookCreate_webhookErrors } from "@saleor/webhooks/types/WebhookCreate";
 import { WebhookDetails_webhook } from "@saleor/webhooks/types/WebhookDetails";
 
-import React from "react";
-import { useIntl } from "react-intl";
-
 export interface FormData {
-  id: string;
   events: WebhookEventTypeEnum[];
   isActive: boolean;
   name: string;
@@ -63,7 +62,6 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
     events: maybe(() => webhook.events, [])
       .map(event => event.eventType)
       .filter(event => event !== WebhookEventTypeEnum.ANY_EVENTS),
-    id: maybe(() => webhook.id, null),
     isActive: maybe(() => webhook.isActive, false),
     name: maybe(() => webhook.name, ""),
     secretKey: maybe(() => webhook.secretKey, ""),

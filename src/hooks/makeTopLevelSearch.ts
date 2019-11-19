@@ -43,3 +43,5 @@ function makeTopLevelSearch<
     }
   });
 }
+
+export default makeTopLevelSearch;
