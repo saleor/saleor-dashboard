@@ -3,7 +3,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -14,6 +13,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { maybe, renderCollection } from "../../misc";
 import { CountryFragment } from "../../taxes/types/CountryFragment";
@@ -100,7 +100,7 @@ const CountryList: React.FC<CountryListProps> = props => {
         }
       />
       <CardContent className={classes.root}>
-        <Table>
+        <ResponsiveTable>
           <TableBody>
             <TableRow className={classes.pointer} onClick={toggleCollapse}>
               <TableCell
@@ -173,7 +173,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                 )
               )}
           </TableBody>
-        </Table>
+        </ResponsiveTable>
       </CardContent>
     </Card>
   );

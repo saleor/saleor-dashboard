@@ -43,6 +43,9 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   content: {
+    [theme.breakpoints.down("sm")]: {
+      gridTemplateColumns: "repeat(2, 1fr)"
+    },
     display: "grid",
     gridColumnGap: theme.spacing(3),
     gridTemplateColumns: "repeat(3, 1fr)",
@@ -66,6 +69,9 @@ const useStyles = makeStyles(theme => ({
   },
   root: {
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
+  },
+  titleContainer: {
+    padding: theme.spacing(1.5, 3.5)
   }
 }));
 
@@ -94,7 +100,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
 
   return (
     <Card className={classes.root}>
-      <CardContent>
+      <CardContent className={classes.titleContainer}>
         <Typography color="textSecondary">
           <FormattedMessage
             defaultMessage="{numberOfSelected} columns selected out of {numberOfTotal}"

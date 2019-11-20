@@ -1,4 +1,3 @@
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -7,6 +6,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import EditableTableCell from "@saleor/components/EditableTableCell";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 
@@ -14,7 +14,7 @@ storiesOf("Generics / EditableTableCell", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => (
-    <Table>
+    <ResponsiveTable>
       <TableHead>
         <TableCell>Some header</TableCell>
         <TableCell>Some header</TableCell>
@@ -30,5 +30,5 @@ storiesOf("Generics / EditableTableCell", module)
           <TableCell>Some value</TableCell>
         </TableRow>
       </TableBody>
-    </Table>
+    </ResponsiveTable>
   ));

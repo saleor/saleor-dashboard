@@ -6,7 +6,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -21,6 +20,7 @@ import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useElementScroll, {
   isScrolledToBottom
 } from "@saleor/hooks/useElementScroll";
@@ -136,7 +136,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           threshold={100}
           key="infinite-scroll"
         >
-          <Table key="table">
+          <ResponsiveTable key="table">
             <TableBody>
               {renderCollection(
                 attributes,
@@ -178,7 +178,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                   )
               )}
             </TableBody>
-          </Table>
+          </ResponsiveTable>
         </InfiniteScroll>
       </DialogContent>
       {errors.length > 0 && (

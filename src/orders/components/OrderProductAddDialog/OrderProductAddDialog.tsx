@@ -5,7 +5,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -19,6 +18,7 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import Money from "@saleor/components/Money";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
@@ -227,7 +227,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           }
           threshold={10}
         >
-          <Table key="table">
+          <ResponsiveTable key="table">
             <TableBody>
               {renderCollection(
                 products,
@@ -316,7 +316,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                 )
               )}
             </TableBody>
-          </Table>
+          </ResponsiveTable>
         </InfiniteScroll>
       </DialogContent>
       <DialogActions>

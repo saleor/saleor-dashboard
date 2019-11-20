@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -10,6 +9,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
@@ -131,7 +131,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
 
   return (
     <div className={classes.tableContainer}>
-      <Table className={classes.table}>
+      <ResponsiveTable className={classes.table}>
         <colgroup>
           <col />
           <col className={classes.colName} />
@@ -392,7 +392,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
             )
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </div>
   );
 };

@@ -2,7 +2,6 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -11,6 +10,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   SortableTableBody,
@@ -111,7 +111,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
           </Button>
         }
       />
-      <Table>
+      <ResponsiveTable>
         <TableHead
           colSpan={numberOfColumns}
           disabled={disabled}
@@ -196,7 +196,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
             )
           )}
         </SortableTableBody>
-      </Table>
+      </ResponsiveTable>
     </Card>
   );
 };

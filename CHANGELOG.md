@@ -11,6 +11,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update customer's details page design - #248 by @dominik-zeglen
 - Use Apollo Hooks - #254 by @dominik-zeglen
 - Fix disappearing products description - #259 by @dominik-zeglen
+- Improve mobile appearance - #240 by @benekex2 and @dominik-zeglen
 
 ## 2.0.0
 

@@ -5,7 +5,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -17,6 +16,7 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
@@ -131,7 +131,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
         />
         <FormSpacer />
         <div className={classes.scrollArea}>
-          <Table>
+          <ResponsiveTable>
             <TableBody>
               {products &&
                 products.map(product => {
@@ -168,7 +168,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                   );
                 })}
             </TableBody>
-          </Table>
+          </ResponsiveTable>
         </div>
       </DialogContent>
       <DialogActions>

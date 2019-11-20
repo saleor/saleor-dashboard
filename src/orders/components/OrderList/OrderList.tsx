@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -10,6 +9,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import Checkbox from "@saleor/components/Checkbox";
 import { DateTime } from "@saleor/components/Date";
 import Money from "@saleor/components/Money";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
@@ -87,7 +87,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
       }))
     : undefined;
   return (
-    <Table>
+    <ResponsiveTable>
       <TableHead
         colSpan={numberOfColumns}
         selected={selected}
@@ -232,7 +232,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
           )
         )}
       </TableBody>
-    </Table>
+    </ResponsiveTable>
   );
 };
 OrderList.displayName = "OrderList";

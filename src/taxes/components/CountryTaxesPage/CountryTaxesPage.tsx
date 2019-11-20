@@ -1,6 +1,5 @@
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -12,6 +11,7 @@ import AppHeader from "@saleor/components/AppHeader";
 import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
 import { TaxRateType } from "@saleor/types/globalTypes";
@@ -165,7 +165,7 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
       <Grid>
         <div>
           <Card>
-            <Table>
+            <ResponsiveTable>
               <TableHead>
                 <TableRow>
                   <TableCell className={classes.wideColumn}>
@@ -206,7 +206,7 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
                   )
                 )}
               </TableBody>
-            </Table>
+            </ResponsiveTable>
           </Card>
         </div>
       </Grid>

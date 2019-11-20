@@ -4,7 +4,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -21,6 +20,7 @@ import ConfirmButton, {
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { buttonMessages } from "@saleor/intl";
 
@@ -122,7 +122,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                 <Typography className={classes.heading} variant="subtitle1">
                   <FormattedMessage defaultMessage="Quick Pick" />
                 </Typography>
-                <Table className={classes.table}>
+                <ResponsiveTable className={classes.table}>
                   <TableBody>
                     <TableRow>
                       <TableCell className={classes.wideCell}>
@@ -149,7 +149,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                       </TableCell>
                     </TableRow>
                   </TableBody>
-                </Table>
+                </ResponsiveTable>
               </DialogContent>
 
               <DialogContent className={classes.container}>
@@ -159,7 +159,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                     description="country selection"
                   />
                 </Typography>
-                <Table className={classes.table}>
+                <ResponsiveTable className={classes.table}>
                   <TableBody>
                     {filter(countries, data.query, {
                       key: "country"
@@ -201,7 +201,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<
                       );
                     })}
                   </TableBody>
-                </Table>
+                </ResponsiveTable>
               </DialogContent>
               <DialogActions>
                 <Button onClick={onClose}>

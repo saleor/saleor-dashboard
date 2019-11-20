@@ -1,6 +1,5 @@
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -10,6 +9,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import RequirePermissions from "@saleor/components/RequirePermissions";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
@@ -47,7 +47,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
 
   return (
     <Card>
-      <Table>
+      <ResponsiveTable>
         <TableBody className={classes.tableRow}>
           <RequirePermissions
             userPermissions={userPermissions}
@@ -150,7 +150,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
             </TableRow>
           </RequirePermissions>
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </Card>
   );
 };

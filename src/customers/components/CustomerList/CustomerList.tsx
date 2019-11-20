@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -8,6 +7,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
@@ -61,7 +61,7 @@ const CustomerList: React.FC<CustomerListProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <Table>
+    <ResponsiveTable>
       <TableHead
         colSpan={numberOfColumns}
         selected={selected}
@@ -141,7 +141,7 @@ const CustomerList: React.FC<CustomerListProps> = props => {
           )
         )}
       </TableBody>
-    </Table>
+    </ResponsiveTable>
   );
 };
 CustomerList.displayName = "CustomerList";

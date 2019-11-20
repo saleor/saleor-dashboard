@@ -1,6 +1,5 @@
 import { Omit } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -12,6 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListProps } from "../../../types";
 
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "../../../misc";
@@ -58,7 +58,7 @@ const TranslationsEntitiesList: React.FC<
   const intl = useIntl();
 
   return (
-    <Table>
+    <ResponsiveTable>
       <TableHead>
         <TableRow>
           <TableCell className={classes.wideColumn}>
@@ -126,7 +126,7 @@ const TranslationsEntitiesList: React.FC<
           )
         )}
       </TableBody>
-    </Table>
+    </ResponsiveTable>
   );
 };
 TranslationsEntitiesList.displayName = "TranslationsEntitiesList";

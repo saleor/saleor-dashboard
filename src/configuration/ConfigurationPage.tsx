@@ -61,6 +61,9 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(3)
   },
   configurationItem: {
+    [theme.breakpoints.down("md")]: {
+      gridTemplateColumns: "1fr"
+    },
     display: "grid",
     gridColumnGap: theme.spacing(4),
     gridTemplateColumns: "1fr 1fr"

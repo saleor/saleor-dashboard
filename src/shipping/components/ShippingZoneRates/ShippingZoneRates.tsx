@@ -1,7 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -15,6 +14,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import IconButtonTableCell from "@saleor/components/IconButtonTableCell";
 import Money from "@saleor/components/Money";
 import MoneyRange from "@saleor/components/MoneyRange";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import WeightRange from "@saleor/components/WeightRange";
 import { maybe, renderCollection } from "../../../misc";
@@ -82,7 +82,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
           </Button>
         }
       />
-      <Table>
+      <ResponsiveTable>
         <TableHead>
           <TableRow>
             <TableCell className={classes.nameColumn}>
@@ -172,7 +172,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
             )
           )}
         </TableBody>
-      </Table>
+      </ResponsiveTable>
     </Card>
   );
 };
