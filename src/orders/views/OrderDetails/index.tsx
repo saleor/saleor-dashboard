@@ -26,7 +26,7 @@ import OrderPaymentVoidDialog from "../../components/OrderPaymentVoidDialog";
 import OrderProductAddDialog from "../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../components/OrderShippingMethodEditDialog";
 import OrderOperations from "../../containers/OrderOperations";
-import { SearchOrderVariant, TypedOrderDetailsQuery } from "../../queries";
+import { TypedOrderDetailsQuery, useOrderVariantSearch } from "../../queries";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import {
   orderListUrl,
@@ -79,6 +79,13 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     search: searchUsers,
     result: users
   } = useCustomerSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    loadMore,
+    search: variantSearch,
+    result: variantSearchOpts
+  } = useOrderVariantSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
@@ -502,51 +509,41 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                               })
                             }
                           />
-                          <SearchOrderVariant
-                            variables={DEFAULT_INITIAL_SEARCH_DATA}
-                          >
-                            {({
-                              loadMore,
-                              search: variantSearch,
-                              result: variantSearchOpts
-                            }) => (
-                              <OrderProductAddDialog
-                                confirmButtonState={getMutationState(
-                                  orderLinesAdd.opts.called,
-                                  orderLinesAdd.opts.loading,
-                                  maybe(
-                                    () =>
-                                      orderLinesAdd.opts.data
-                                        .draftOrderLinesCreate.errors
-                                  )
-                                )}
-                                loading={variantSearchOpts.loading}
-                                open={params.action === "add-order-line"}
-                                hasMore={maybe(
-                                  () =>
-                                    variantSearchOpts.data.search.pageInfo
-                                      .hasNextPage
-                                )}
-                                products={maybe(() =>
-                                  variantSearchOpts.data.search.edges.map(
-                                    edge => edge.node
-                                  )
-                                )}
-                                onClose={closeModal}
-                                onFetch={variantSearch}
-                                onFetchMore={loadMore}
-                                onSubmit={variants =>
-                                  orderLinesAdd.mutate({
-                                    id,
-                                    input: variants.map(variant => ({
-                                      quantity: 1,
-                                      variantId: variant.id
-                                    }))
-                                  })
-                                }
-                              />
+                          <OrderProductAddDialog
+                            confirmButtonState={getMutationState(
+                              orderLinesAdd.opts.called,
+                              orderLinesAdd.opts.loading,
+                              maybe(
+                                () =>
+                                  orderLinesAdd.opts.data.draftOrderLinesCreate
+                                    .errors
+                              )
                             )}
-                          </SearchOrderVariant>
+                            loading={variantSearchOpts.loading}
+                            open={params.action === "add-order-line"}
+                            hasMore={maybe(
+                              () =>
+                                variantSearchOpts.data.search.pageInfo
+                                  .hasNextPage
+                            )}
+                            products={maybe(() =>
+                              variantSearchOpts.data.search.edges.map(
+                                edge => edge.node
+                              )
+                            )}
+                            onClose={closeModal}
+                            onFetch={variantSearch}
+                            onFetchMore={loadMore}
+                            onSubmit={variants =>
+                              orderLinesAdd.mutate({
+                                id,
+                                input: variants.map(variant => ({
+                                  quantity: 1,
+                                  variantId: variant.id
+                                }))
+                              })
+                            }
+                          />
                         </>
                       )}
                       <OrderAddressEditDialog

@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
+import makeSearch from "@saleor/hooks/makeSearch";
 import { pageInfoFragment } from "@saleor/queries";
-import BaseSearch from "../../../containers/BaseSearch";
 import {
   SearchAttributes,
   SearchAttributesVariables
@@ -37,24 +37,33 @@ export const searchAttributes = gql`
   }
 `;
 
-export default BaseSearch<SearchAttributes, SearchAttributesVariables>(
+export default makeSearch<SearchAttributes, SearchAttributesVariables>(
   searchAttributes,
   result =>
     result.loadMore(
-      (prev, next) => ({
-        ...prev,
-        productType: {
-          ...prev.productType,
-          availableAttributes: {
-            ...prev.productType.availableAttributes,
-            edges: [
-              ...prev.productType.availableAttributes.edges,
-              ...next.productType.availableAttributes.edges
-            ],
-            pageInfo: next.productType.availableAttributes.pageInfo
-          }
+      (prev, next) => {
+        if (
+          prev.productType.availableAttributes.pageInfo.endCursor ===
+          next.productType.availableAttributes.pageInfo.endCursor
+        ) {
+          return prev;
         }
-      }),
+
+        return {
+          ...prev,
+          productType: {
+            ...prev.productType,
+            availableAttributes: {
+              ...prev.productType.availableAttributes,
+              edges: [
+                ...prev.productType.availableAttributes.edges,
+                ...next.productType.availableAttributes.edges
+              ],
+              pageInfo: next.productType.availableAttributes.pageInfo
+            }
+          }
+        };
+      },
       {
         after: result.data.productType.availableAttributes.pageInfo.endCursor
       }

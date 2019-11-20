@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import TopLevelSearch from "../containers/TopLevelSearch";
+import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import { TypedQuery } from "../queries";
 import { OrderDetails, OrderDetailsVariables } from "./types/OrderDetails";
 import {
@@ -314,7 +314,7 @@ export const searchOrderVariant = gql`
     }
   }
 `;
-export const SearchOrderVariant = TopLevelSearch<
+export const useOrderVariantSearch = makeTopLevelSearch<
   SearchOrderVariantType,
   SearchOrderVariantVariables
 >(searchOrderVariant);

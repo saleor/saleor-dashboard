@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { attributeUrl } from "@saleor/attributes/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -19,7 +20,7 @@ import ProductTypeDetailsPage, {
   ProductTypeForm
 } from "../../components/ProductTypeDetailsPage";
 import ProductTypeOperations from "../../containers/ProductTypeOperations";
-import SearchAttributes from "../../containers/SearchAttributes";
+import useAvailableAttributeSearch from "../../hooks/useAvailableAttributeSearch";
 import { TypedProductTypeDetailsQuery } from "../../queries";
 import { AssignAttribute } from "../../types/AssignAttribute";
 import { ProductTypeDelete } from "../../types/ProductTypeDelete";
@@ -46,6 +47,12 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   const productAttributeListActions = useBulkActions();
   const variantAttributeListActions = useBulkActions();
   const intl = useIntl();
+  const { loadMore, search, result } = useAvailableAttributeSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      id
+    }
+  });
 
   return (
     <ProductTypeUpdateErrors>
@@ -330,109 +337,55 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                           )
                         }}
                       />
-                      {!dataLoading && (
-                        <SearchAttributes
-                          variables={{
-                            first: 15,
-                            id,
-                            query: ""
-                          }}
-                        >
-                          {({ search, result }) => {
-                            const fetchMore = () =>
-                              result.loadMore(
-                                (prev, next) => {
-                                  if (
-                                    prev.productType.availableAttributes
-                                      .pageInfo.endCursor ===
-                                    next.productType.availableAttributes
-                                      .pageInfo.endCursor
-                                  ) {
-                                    return prev;
-                                  }
-                                  return {
-                                    ...prev,
-                                    productType: {
-                                      ...prev.productType,
-                                      availableAttributes: {
-                                        ...prev.productType.availableAttributes,
-                                        edges: [
-                                          ...prev.productType
-                                            .availableAttributes.edges,
-                                          ...next.productType
-                                            .availableAttributes.edges
-                                        ],
-                                        pageInfo:
-                                          next.productType.availableAttributes
-                                            .pageInfo
-                                      }
-                                    }
-                                  };
-                                },
-                                {
-                                  after:
-                                    result.data.productType.availableAttributes
-                                      .pageInfo.endCursor
-                                }
-                              );
-
-                            return (
-                              <>
-                                {Object.keys(AttributeTypeEnum).map(key => (
-                                  <AssignAttributeDialog
-                                    attributes={maybe(() =>
-                                      result.data.productType.availableAttributes.edges.map(
-                                        edge => edge.node
+                      {!dataLoading &&
+                        Object.keys(AttributeTypeEnum).map(key => (
+                          <AssignAttributeDialog
+                            attributes={maybe(() =>
+                              result.data.productType.availableAttributes.edges.map(
+                                edge => edge.node
+                              )
+                            )}
+                            confirmButtonState={assignTransactionState}
+                            errors={maybe(
+                              () =>
+                                assignAttribute.opts.data.attributeAssign.errors.map(
+                                  err => err.message
+                                ),
+                              []
+                            )}
+                            loading={result.loading}
+                            onClose={closeModal}
+                            onSubmit={handleAssignAttribute}
+                            onFetch={search}
+                            onFetchMore={loadMore}
+                            onOpen={result.refetch}
+                            hasMore={maybe(
+                              () =>
+                                result.data.productType.availableAttributes
+                                  .pageInfo.hasNextPage,
+                              false
+                            )}
+                            open={
+                              params.action === "assign-attribute" &&
+                              params.type === AttributeTypeEnum[key]
+                            }
+                            selected={maybe(() => params.ids, [])}
+                            onToggle={attributeId => {
+                              const ids = maybe(() => params.ids, []);
+                              navigate(
+                                productTypeUrl(id, {
+                                  ...params,
+                                  ids: ids.includes(attributeId)
+                                    ? params.ids.filter(
+                                        selectedId => selectedId !== attributeId
                                       )
-                                    )}
-                                    confirmButtonState={assignTransactionState}
-                                    errors={maybe(
-                                      () =>
-                                        assignAttribute.opts.data.attributeAssign.errors.map(
-                                          err => err.message
-                                        ),
-                                      []
-                                    )}
-                                    loading={result.loading}
-                                    onClose={closeModal}
-                                    onSubmit={handleAssignAttribute}
-                                    onFetch={search}
-                                    onFetchMore={fetchMore}
-                                    onOpen={result.refetch}
-                                    hasMore={maybe(
-                                      () =>
-                                        result.data.productType
-                                          .availableAttributes.pageInfo
-                                          .hasNextPage,
-                                      false
-                                    )}
-                                    open={
-                                      params.action === "assign-attribute" &&
-                                      params.type === AttributeTypeEnum[key]
-                                    }
-                                    selected={maybe(() => params.ids, [])}
-                                    onToggle={attributeId => {
-                                      const ids = maybe(() => params.ids, []);
-                                      navigate(
-                                        productTypeUrl(id, {
-                                          ...params,
-                                          ids: ids.includes(attributeId)
-                                            ? params.ids.filter(
-                                                selectedId =>
-                                                  selectedId !== attributeId
-                                              )
-                                            : [...ids, attributeId]
-                                        })
-                                      );
-                                    }}
-                                    key={key}
-                                  />
-                                ))}
-                              </>
-                            );
-                          }}
-                        </SearchAttributes>
-                      )}
+                                    : [...ids, attributeId]
+                                })
+                              );
+                            }}
+                            key={key}
+                          />
+                        ))}
                       <ProductTypeDeleteDialog
                         confirmButtonState={deleteTransactionState}
                         name={maybe(() => data.productType.name, "...")}
