@@ -2,12 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import {
-  SiteDomainInput,
-  ShopSettingsInput,
-  AddressInput,
-  AuthorizationKeyType
-} from "./../../types/globalTypes";
+import { SiteDomainInput, ShopSettingsInput, AddressInput, AuthorizationKeyType } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ShopSettingsUpdate

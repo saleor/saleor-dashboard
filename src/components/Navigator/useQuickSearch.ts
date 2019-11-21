@@ -3,7 +3,10 @@ import { useIntl } from "react-intl";
 
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
+import { maybe } from "@saleor/misc";
 import getModeActions from "./modes";
+import { getGqlOrderId, isQueryValidOrderNumber } from "./modes/orders";
+import useCheckIfOrderExists from "./queries/useCheckIfOrderExists";
 import { QuickSearchAction, QuickSearchMode } from "./types";
 
 type UseQuickSearch = [
@@ -19,6 +22,7 @@ function useQuickSearch(
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<QuickSearchMode>("default");
   const intl = useIntl();
+  const [{ data: orderData }, getOrderData] = useCheckIfOrderExists();
 
   useModalDialogOpen(open, {
     onClose: () => {
@@ -60,11 +64,21 @@ function useQuickSearch(
           setQuery(value);
       }
     } else {
+      if (mode === "orders" && isQueryValidOrderNumber(value)) {
+        getOrderData(getGqlOrderId(value));
+      }
       setQuery(value);
     }
   };
 
-  return [query, mode, change, getModeActions(mode, query, intl)];
+  return [
+    query,
+    mode,
+    change,
+    getModeActions(mode, query, intl, {
+      order: maybe(() => orderData.order)
+    })
+  ];
 }
 
 export default useQuickSearch;

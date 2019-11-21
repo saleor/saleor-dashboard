@@ -8,41 +8,41 @@
 
 export enum AddressTypeEnum {
   BILLING = "BILLING",
-  SHIPPING = "SHIPPING"
+  SHIPPING = "SHIPPING",
 }
 
 export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
-  MULTISELECT = "MULTISELECT"
+  MULTISELECT = "MULTISELECT",
 }
 
 export enum AttributeTypeEnum {
   PRODUCT = "PRODUCT",
-  VARIANT = "VARIANT"
+  VARIANT = "VARIANT",
 }
 
 export enum AttributeValueType {
   COLOR = "COLOR",
   GRADIENT = "GRADIENT",
   STRING = "STRING",
-  URL = "URL"
+  URL = "URL",
 }
 
 export enum AuthorizationKeyType {
   FACEBOOK = "FACEBOOK",
-  GOOGLE_OAUTH2 = "GOOGLE_OAUTH2"
+  GOOGLE_OAUTH2 = "GOOGLE_OAUTH2",
 }
 
 export enum CollectionPublished {
   HIDDEN = "HIDDEN",
-  PUBLISHED = "PUBLISHED"
+  PUBLISHED = "PUBLISHED",
 }
 
 export enum ConfigurationTypeFieldEnum {
   BOOLEAN = "BOOLEAN",
   PASSWORD = "PASSWORD",
   SECRET = "SECRET",
-  STRING = "STRING"
+  STRING = "STRING",
 }
 
 export enum CountryCode {
@@ -295,23 +295,23 @@ export enum CountryCode {
   YT = "YT",
   ZA = "ZA",
   ZM = "ZM",
-  ZW = "ZW"
+  ZW = "ZW",
 }
 
 export enum DiscountStatusEnum {
   ACTIVE = "ACTIVE",
   EXPIRED = "EXPIRED",
-  SCHEDULED = "SCHEDULED"
+  SCHEDULED = "SCHEDULED",
 }
 
 export enum DiscountValueTypeEnum {
   FIXED = "FIXED",
-  PERCENTAGE = "PERCENTAGE"
+  PERCENTAGE = "PERCENTAGE",
 }
 
 export enum FulfillmentStatus {
   CANCELED = "CANCELED",
-  FULFILLED = "FULFILLED"
+  FULFILLED = "FULFILLED",
 }
 
 export enum LanguageCodeEnum {
@@ -357,19 +357,19 @@ export enum LanguageCodeEnum {
   UK = "UK",
   VI = "VI",
   ZH_HANS = "ZH_HANS",
-  ZH_HANT = "ZH_HANT"
+  ZH_HANT = "ZH_HANT",
 }
 
 export enum OrderAction {
   CAPTURE = "CAPTURE",
   MARK_AS_PAID = "MARK_AS_PAID",
   REFUND = "REFUND",
-  VOID = "VOID"
+  VOID = "VOID",
 }
 
 export enum OrderDirection {
   ASC = "ASC",
-  DESC = "DESC"
+  DESC = "DESC",
 }
 
 export enum OrderEventsEmailsEnum {
@@ -378,7 +378,7 @@ export enum OrderEventsEmailsEnum {
   ORDER_CONFIRMATION = "ORDER_CONFIRMATION",
   PAYMENT_CONFIRMATION = "PAYMENT_CONFIRMATION",
   SHIPPING_CONFIRMATION = "SHIPPING_CONFIRMATION",
-  TRACKING_UPDATED = "TRACKING_UPDATED"
+  TRACKING_UPDATED = "TRACKING_UPDATED",
 }
 
 export enum OrderEventsEnum {
@@ -402,7 +402,7 @@ export enum OrderEventsEnum {
   PLACED = "PLACED",
   PLACED_FROM_DRAFT = "PLACED_FROM_DRAFT",
   TRACKING_UPDATED = "TRACKING_UPDATED",
-  UPDATED_ADDRESS = "UPDATED_ADDRESS"
+  UPDATED_ADDRESS = "UPDATED_ADDRESS",
 }
 
 export enum OrderStatus {
@@ -410,7 +410,7 @@ export enum OrderStatus {
   DRAFT = "DRAFT",
   FULFILLED = "FULFILLED",
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
-  UNFULFILLED = "UNFULFILLED"
+  UNFULFILLED = "UNFULFILLED",
 }
 
 export enum OrderStatusFilter {
@@ -419,7 +419,7 @@ export enum OrderStatusFilter {
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
   READY_TO_CAPTURE = "READY_TO_CAPTURE",
   READY_TO_FULFILL = "READY_TO_FULFILL",
-  UNFULFILLED = "UNFULFILLED"
+  UNFULFILLED = "UNFULFILLED",
 }
 
 export enum PaymentChargeStatusEnum {
@@ -427,7 +427,7 @@ export enum PaymentChargeStatusEnum {
   FULLY_REFUNDED = "FULLY_REFUNDED",
   NOT_CHARGED = "NOT_CHARGED",
   PARTIALLY_CHARGED = "PARTIALLY_CHARGED",
-  PARTIALLY_REFUNDED = "PARTIALLY_REFUNDED"
+  PARTIALLY_REFUNDED = "PARTIALLY_REFUNDED",
 }
 
 export enum PermissionEnum {
@@ -445,7 +445,7 @@ export enum PermissionEnum {
   MANAGE_STAFF = "MANAGE_STAFF",
   MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
   MANAGE_USERS = "MANAGE_USERS",
-  MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS"
+  MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
 }
 
 export enum ProductErrorCode {
@@ -459,7 +459,7 @@ export enum ProductErrorCode {
   NOT_PRODUCTS_IMAGE = "NOT_PRODUCTS_IMAGE",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
-  VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT"
+  VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT",
 }
 
 export enum ProductOrderField {
@@ -468,37 +468,37 @@ export enum ProductOrderField {
   NAME = "NAME",
   PRICE = "PRICE",
   PUBLISHED = "PUBLISHED",
-  TYPE = "TYPE"
+  TYPE = "TYPE",
 }
 
 export enum ProductTypeConfigurable {
   CONFIGURABLE = "CONFIGURABLE",
-  SIMPLE = "SIMPLE"
+  SIMPLE = "SIMPLE",
 }
 
 export enum ProductTypeEnum {
   DIGITAL = "DIGITAL",
-  SHIPPABLE = "SHIPPABLE"
+  SHIPPABLE = "SHIPPABLE",
 }
 
 export enum SaleType {
   FIXED = "FIXED",
-  PERCENTAGE = "PERCENTAGE"
+  PERCENTAGE = "PERCENTAGE",
 }
 
 export enum ShippingMethodTypeEnum {
   PRICE = "PRICE",
-  WEIGHT = "WEIGHT"
+  WEIGHT = "WEIGHT",
 }
 
 export enum StaffMemberStatus {
   ACTIVE = "ACTIVE",
-  DEACTIVATED = "DEACTIVATED"
+  DEACTIVATED = "DEACTIVATED",
 }
 
 export enum StockAvailability {
   IN_STOCK = "IN_STOCK",
-  OUT_OF_STOCK = "OUT_OF_STOCK"
+  OUT_OF_STOCK = "OUT_OF_STOCK",
 }
 
 export enum TaxRateType {
@@ -526,19 +526,19 @@ export enum TaxRateType {
   SOCIAL_HOUSING = "SOCIAL_HOUSING",
   STANDARD = "STANDARD",
   WATER = "WATER",
-  WINE = "WINE"
+  WINE = "WINE",
 }
 
 export enum VoucherDiscountType {
   FIXED = "FIXED",
   PERCENTAGE = "PERCENTAGE",
-  SHIPPING = "SHIPPING"
+  SHIPPING = "SHIPPING",
 }
 
 export enum VoucherTypeEnum {
   ENTIRE_ORDER = "ENTIRE_ORDER",
   SHIPPING = "SHIPPING",
-  SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT"
+  SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }
 
 export enum WebhookErrorCode {
@@ -546,7 +546,7 @@ export enum WebhookErrorCode {
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
   REQUIRED = "REQUIRED",
-  UNIQUE = "UNIQUE"
+  UNIQUE = "UNIQUE",
 }
 
 export enum WebhookEventTypeEnum {
@@ -557,14 +557,14 @@ export enum WebhookEventTypeEnum {
   ORDER_FULFILLED = "ORDER_FULFILLED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_UPDATED = "ORDER_UPDATED",
-  PRODUCT_CREATED = "PRODUCT_CREATED"
+  PRODUCT_CREATED = "PRODUCT_CREATED",
 }
 
 export enum WeightUnitsEnum {
   G = "G",
   KG = "KG",
   LB = "LB",
-  OZ = "OZ"
+  OZ = "OZ",
 }
 
 export interface AddressInput {
