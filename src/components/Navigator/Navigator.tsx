@@ -5,17 +5,19 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import useNavigator from "@saleor/hooks/useNavigator";
+import { getActions, hasActions } from "./modes/default";
+import { getViews, hasViews } from "./modes/default/views";
 import NavigatorInput from "./NavigatorInput";
 import NavigatorSection from "./NavigatorSection";
 import { QuickSearchAction } from "./types";
 import useQuickSearch from "./useQuickSearch";
-import { getViews, hasViews } from "./views";
 
 const navigatorHotkey = "ctrl+m, command+m";
 
 const Navigator: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
-  const [query, change, actions] = useQuickSearch(visible);
+  const input = React.useRef(null);
+  const [query, mode, change, actions] = useQuickSearch(visible, input);
   const navigate = useNavigator();
   const intl = useIntl();
 
@@ -51,11 +53,25 @@ const Navigator: React.FC = () => {
         {({ getInputProps, getItemProps, highlightedIndex }) => (
           <div>
             <NavigatorInput
+              mode={mode}
               value={query}
               {...getInputProps({
                 value: query
               })}
+              ref={input}
             />
+            {hasActions(actions) && (
+              <NavigatorSection
+                label={intl.formatMessage({
+                  defaultMessage: "Quick Actions",
+                  description: "navigator section header"
+                })}
+                getItemProps={getItemProps}
+                highlightedIndex={highlightedIndex}
+                items={getActions(actions)}
+                offset={0}
+              />
+            )}
             {hasViews(actions) && (
               <NavigatorSection
                 label={intl.formatMessage({
@@ -65,7 +81,7 @@ const Navigator: React.FC = () => {
                 getItemProps={getItemProps}
                 highlightedIndex={highlightedIndex}
                 items={getViews(actions)}
-                offset={0}
+                offset={getActions(actions).length}
               />
             )}
           </div>

@@ -20,7 +20,7 @@ import { staffListUrl } from "@saleor/staff/urls";
 import { countryListUrl } from "@saleor/taxes/urls";
 import { languageListUrl } from "@saleor/translations/urls";
 import { webhooksListUrl } from "@saleor/webhooks/urls";
-import { QuickSearchAction } from "./types";
+import { QuickSearchAction } from "../../types";
 
 interface View {
   label: string;
