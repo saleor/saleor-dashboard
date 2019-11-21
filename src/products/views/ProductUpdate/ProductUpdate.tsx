@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -16,7 +17,6 @@ import ProductVariantCreateDialog from "@saleor/products/components/ProductVaria
 import { ProductVariantBulkCreate } from "@saleor/products/types/ProductVariantBulkCreate";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
 import { getMutationState, maybe } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import ProductUpdateOperations from "../../containers/ProductUpdateOperations";

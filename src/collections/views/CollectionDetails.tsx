@@ -6,6 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -14,7 +15,6 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "../../config";
 import { getMutationState, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { CollectionInput } from "../../types/globalTypes";

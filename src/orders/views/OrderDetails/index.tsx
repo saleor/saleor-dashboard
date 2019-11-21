@@ -1,10 +1,10 @@
 import React from "react";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "../../../config";
 import { customerUrl } from "../../../customers/urls";
 import { getMutationState, maybe, transformAddressToForm } from "../../../misc";
 import { productUrl } from "../../../products/urls";

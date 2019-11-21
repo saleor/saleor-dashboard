@@ -2,13 +2,13 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "../../config";
 import { decimal, getMutationState, maybe } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData

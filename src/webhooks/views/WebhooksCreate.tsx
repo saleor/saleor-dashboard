@@ -1,4 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -7,7 +8,6 @@ import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import { WebhookCreate as WebhookCreateData } from "@saleor/webhooks/types/WebhookCreate";
 import React from "react";
 import { useIntl } from "react-intl";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "../../config";
 import { getMutationState, maybe } from "../../misc";
 import WebhookCreatePage, { FormData } from "../components/WebhookCreatePage";
 import { TypedWebhookCreate } from "../mutations";
