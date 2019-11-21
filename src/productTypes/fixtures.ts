@@ -1,7 +1,7 @@
 import {
   SearchProductTypes_search_edges_node,
   SearchProductTypes_search_edges_node_productAttributes
-} from "@saleor/containers/SearchProductTypes/types/SearchProductTypes";
+} from "@saleor/searches/types/SearchProductTypes";
 import { AttributeInputTypeEnum } from "../types/globalTypes";
 import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
 import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";

@@ -6,9 +6,9 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { SearchServiceAccount_search_edges_node } from "@saleor/containers/SearchServiceAccount/types/SearchServiceAccount";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import { SearchServiceAccount_search_edges_node } from "@saleor/searches/types/SearchServiceAccount";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
@@ -19,7 +19,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 export interface FormData {
-  id: string;
   events: WebhookEventTypeEnum[];
   isActive: boolean;
   name: string;
@@ -52,9 +51,8 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
   const initialForm: FormData = {
     allEvents: false,
     events: [],
-    id: null,
     isActive: false,
-    name: null,
+    name: "",
     secretKey: "",
     serviceAccount: "",
     targetUrl: ""

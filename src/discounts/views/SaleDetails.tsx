@@ -8,6 +8,7 @@ import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -16,12 +17,11 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import useCategorySearch from "@saleor/searches/useCategorySearch";
+import useCollectionSearch from "@saleor/searches/useCollectionSearch";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "../../config";
-import SearchCategories from "../../containers/SearchCategories";
-import SearchCollections from "../../containers/SearchCollections";
-import SearchProducts from "../../containers/SearchProducts";
 import { decimal, getMutationState, joinDateTime, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { DiscountValueTypeEnum, SaleType } from "../../types/globalTypes";
@@ -66,6 +66,24 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     params.ids
   );
   const intl = useIntl();
+  const {
+    search: searchCategories,
+    result: searchCategoriesOpts
+  } = useCategorySearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    search: searchCollections,
+    result: searchCollectionsOpts
+  } = useCollectionSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    search: searchProducts,
+    result: searchProductsOpts
+  } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const changeTab = (tab: SaleDetailsPageTab) => {
@@ -341,116 +359,87 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               toggle={toggle}
                               toggleAll={toggleAll}
                             />
-                            <SearchProducts
-                              variables={DEFAULT_INITIAL_SEARCH_DATA}
-                            >
-                              {({
-                                search: searchProducts,
-                                result: searchProductsOpts
-                              }) => (
-                                <AssignProductDialog
-                                  confirmButtonState={assignTransitionState}
-                                  open={params.action === "assign-product"}
-                                  onFetch={searchProducts}
-                                  loading={searchProductsOpts.loading}
-                                  onClose={closeModal}
-                                  onSubmit={products =>
-                                    saleCataloguesAdd({
-                                      variables: {
-                                        ...paginationState,
-                                        id,
-                                        input: {
-                                          products: products.map(
-                                            product => product.id
-                                          )
-                                        }
-                                      }
-                                    })
-                                  }
-                                  products={maybe(() =>
-                                    searchProductsOpts.data.search.edges
-                                      .map(edge => edge.node)
-                                      .filter(
-                                        suggestedProduct => suggestedProduct.id
+                            <AssignProductDialog
+                              confirmButtonState={assignTransitionState}
+                              open={params.action === "assign-product"}
+                              onFetch={searchProducts}
+                              loading={searchProductsOpts.loading}
+                              onClose={closeModal}
+                              onSubmit={products =>
+                                saleCataloguesAdd({
+                                  variables: {
+                                    ...paginationState,
+                                    id,
+                                    input: {
+                                      products: products.map(
+                                        product => product.id
                                       )
-                                  )}
-                                />
-                              )}
-                            </SearchProducts>
-                            <SearchCategories
-                              variables={DEFAULT_INITIAL_SEARCH_DATA}
-                            >
-                              {({
-                                search: searchCategories,
-                                result: searchCategoriesOpts
-                              }) => (
-                                <AssignCategoriesDialog
-                                  categories={maybe(() =>
-                                    searchCategoriesOpts.data.search.edges
-                                      .map(edge => edge.node)
-                                      .filter(
-                                        suggestedCategory =>
-                                          suggestedCategory.id
-                                      )
-                                  )}
-                                  confirmButtonState={assignTransitionState}
-                                  open={params.action === "assign-category"}
-                                  onFetch={searchCategories}
-                                  loading={searchCategoriesOpts.loading}
-                                  onClose={closeModal}
-                                  onSubmit={categories =>
-                                    saleCataloguesAdd({
-                                      variables: {
-                                        ...paginationState,
-                                        id,
-                                        input: {
-                                          categories: categories.map(
-                                            product => product.id
-                                          )
-                                        }
-                                      }
-                                    })
+                                    }
                                   }
-                                />
+                                })
+                              }
+                              products={maybe(() =>
+                                searchProductsOpts.data.search.edges
+                                  .map(edge => edge.node)
+                                  .filter(
+                                    suggestedProduct => suggestedProduct.id
+                                  )
                               )}
-                            </SearchCategories>
-                            <SearchCollections
-                              variables={DEFAULT_INITIAL_SEARCH_DATA}
-                            >
-                              {({
-                                search: searchCollections,
-                                result: searchCollectionsOpts
-                              }) => (
-                                <AssignCollectionDialog
-                                  collections={maybe(() =>
-                                    searchCollectionsOpts.data.search.edges
-                                      .map(edge => edge.node)
-                                      .filter(
-                                        suggestedCategory =>
-                                          suggestedCategory.id
+                            />
+                            <AssignCategoriesDialog
+                              categories={maybe(() =>
+                                searchCategoriesOpts.data.search.edges
+                                  .map(edge => edge.node)
+                                  .filter(
+                                    suggestedCategory => suggestedCategory.id
+                                  )
+                              )}
+                              confirmButtonState={assignTransitionState}
+                              open={params.action === "assign-category"}
+                              onFetch={searchCategories}
+                              loading={searchCategoriesOpts.loading}
+                              onClose={closeModal}
+                              onSubmit={categories =>
+                                saleCataloguesAdd({
+                                  variables: {
+                                    ...paginationState,
+                                    id,
+                                    input: {
+                                      categories: categories.map(
+                                        product => product.id
                                       )
-                                  )}
-                                  confirmButtonState={assignTransitionState}
-                                  open={params.action === "assign-collection"}
-                                  onFetch={searchCollections}
-                                  loading={searchCollectionsOpts.loading}
-                                  onClose={closeModal}
-                                  onSubmit={collections =>
-                                    saleCataloguesAdd({
-                                      variables: {
-                                        ...paginationState,
-                                        id,
-                                        input: {
-                                          collections: collections.map(
-                                            product => product.id
-                                          )
-                                        }
-                                      }
-                                    })
+                                    }
                                   }
-                                />
+                                })
+                              }
+                            />
+                            <AssignCollectionDialog
+                              collections={maybe(() =>
+                                searchCollectionsOpts.data.search.edges
+                                  .map(edge => edge.node)
+                                  .filter(
+                                    suggestedCategory => suggestedCategory.id
+                                  )
                               )}
-                            </SearchCollections>
+                              confirmButtonState={assignTransitionState}
+                              open={params.action === "assign-collection"}
+                              onFetch={searchCollections}
+                              loading={searchCollectionsOpts.loading}
+                              onClose={closeModal}
+                              onSubmit={collections =>
+                                saleCataloguesAdd({
+                                  variables: {
+                                    ...paginationState,
+                                    id,
+                                    input: {
+                                      collections: collections.map(
+                                        product => product.id
+                                      )
+                                    }
+                                  }
+                                })
+                              }
+                            />
                             <ActionDialog
                               open={
                                 params.action === "unassign-category" &&

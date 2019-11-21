@@ -21,7 +21,7 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { SearchProducts_search_edges_node } from "../../containers/SearchProducts/types/SearchProducts";
+import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import Checkbox from "../Checkbox";
 
 export interface FormData {

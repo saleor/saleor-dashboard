@@ -15,7 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { SearchCollections_search_edges_node } from "../../containers/SearchCollections/types/SearchCollections";
+import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import Checkbox from "../Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState

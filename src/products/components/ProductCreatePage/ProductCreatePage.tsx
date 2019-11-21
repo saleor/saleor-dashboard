@@ -13,9 +13,6 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
-import { SearchCategories_search_edges_node } from "@saleor/containers/SearchCategories/types/SearchCategories";
-import { SearchCollections_search_edges_node } from "@saleor/containers/SearchCollections/types/SearchCollections";
-import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/containers/SearchProductTypes/types/SearchProductTypes";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -25,6 +22,9 @@ import {
   ProductAttributeValueChoices,
   ProductType
 } from "@saleor/products/utils/data";
+import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
+import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
+import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { FetchMoreProps, UserError } from "../../../types";

@@ -6,6 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -13,8 +14,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "../../config";
-import SearchProducts from "../../containers/SearchProducts";
+import useProductSearch from "@saleor/searches/useProductSearch";
 import { getMutationState, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { CollectionInput } from "../../types/globalTypes";
@@ -50,6 +50,9 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   );
   const paginate = usePaginator();
   const intl = useIntl();
+  const { search, result } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
 
   const closeModal = () =>
     navigate(
@@ -284,29 +287,25 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                     toggle={toggle}
                     toggleAll={toggleAll}
                   />
-                  <SearchProducts variables={DEFAULT_INITIAL_SEARCH_DATA}>
-                    {({ search, result }) => (
-                      <AssignProductDialog
-                        confirmButtonState={assignTransitionState}
-                        open={params.action === "assign"}
-                        onFetch={search}
-                        loading={result.loading}
-                        onClose={closeModal}
-                        onSubmit={products =>
-                          assignProduct.mutate({
-                            ...paginationState,
-                            collectionId: id,
-                            productIds: products.map(product => product.id)
-                          })
-                        }
-                        products={maybe(() =>
-                          result.data.search.edges
-                            .map(edge => edge.node)
-                            .filter(suggestedProduct => suggestedProduct.id)
-                        )}
-                      />
+                  <AssignProductDialog
+                    confirmButtonState={assignTransitionState}
+                    open={params.action === "assign"}
+                    onFetch={search}
+                    loading={result.loading}
+                    onClose={closeModal}
+                    onSubmit={products =>
+                      assignProduct.mutate({
+                        ...paginationState,
+                        collectionId: id,
+                        productIds: products.map(product => product.id)
+                      })
+                    }
+                    products={maybe(() =>
+                      result.data.search.edges
+                        .map(edge => edge.node)
+                        .filter(suggestedProduct => suggestedProduct.id)
                     )}
-                  </SearchProducts>
+                  />
                   <ActionDialog
                     confirmButtonState={removeTransitionState}
                     onClose={closeModal}

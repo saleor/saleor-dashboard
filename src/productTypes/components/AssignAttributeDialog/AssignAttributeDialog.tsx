@@ -30,7 +30,7 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
-import { SearchAttributes_productType_availableAttributes_edges_node } from "../../containers/SearchAttributes/types/SearchAttributes";
+import { SearchAttributes_productType_availableAttributes_edges_node } from "../../hooks/useAvailableAttributeSearch/types/SearchAttributes";
 
 const useStyles = makeStyles(theme => ({
   actions: {
