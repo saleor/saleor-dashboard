@@ -66,7 +66,7 @@ const Navigator: React.FC = () => {
                 getItemProps={getItemProps}
                 highlightedIndex={highlightedIndex}
                 items={getViews(actions)}
-                offset={getActions(actions).length}
+                offset={0}
               />
             )}
             {hasActions(actions) && (
@@ -78,7 +78,7 @@ const Navigator: React.FC = () => {
                 getItemProps={getItemProps}
                 highlightedIndex={highlightedIndex}
                 items={getActions(actions)}
-                offset={0}
+                offset={getViews(actions).length}
               />
             )}
           </div>
