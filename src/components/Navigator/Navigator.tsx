@@ -4,9 +4,7 @@ import hotkeys from "hotkeys-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import useNavigator from "@saleor/hooks/useNavigator";
-import { getActions, hasActions } from "./modes/default";
-import { getViews, hasViews } from "./modes/default/views";
+import { getActions, getViews, hasActions, hasViews } from "./modes/utils";
 import NavigatorInput from "./NavigatorInput";
 import NavigatorSection from "./NavigatorSection";
 import { QuickSearchAction } from "./types";
@@ -18,7 +16,6 @@ const Navigator: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
   const input = React.useRef(null);
   const [query, mode, change, actions] = useQuickSearch(visible, input);
-  const navigate = useNavigator();
   const intl = useIntl();
 
   React.useEffect(() => {
@@ -37,8 +34,8 @@ const Navigator: React.FC = () => {
       <Downshift
         itemToString={(item: QuickSearchAction) => (item ? item.label : "")}
         onSelect={(item: QuickSearchAction) => {
-          navigate(item.url);
           setVisible(false);
+          item.onClick();
         }}
         onInputValueChange={value =>
           change({
@@ -60,18 +57,6 @@ const Navigator: React.FC = () => {
               })}
               ref={input}
             />
-            {hasActions(actions) && (
-              <NavigatorSection
-                label={intl.formatMessage({
-                  defaultMessage: "Quick Actions",
-                  description: "navigator section header"
-                })}
-                getItemProps={getItemProps}
-                highlightedIndex={highlightedIndex}
-                items={getActions(actions)}
-                offset={0}
-              />
-            )}
             {hasViews(actions) && (
               <NavigatorSection
                 label={intl.formatMessage({
@@ -82,6 +67,18 @@ const Navigator: React.FC = () => {
                 highlightedIndex={highlightedIndex}
                 items={getViews(actions)}
                 offset={getActions(actions).length}
+              />
+            )}
+            {hasActions(actions) && (
+              <NavigatorSection
+                label={intl.formatMessage({
+                  defaultMessage: "Quick Actions",
+                  description: "navigator section header"
+                })}
+                getItemProps={getItemProps}
+                highlightedIndex={highlightedIndex}
+                items={getActions(actions)}
+                offset={0}
               />
             )}
           </div>

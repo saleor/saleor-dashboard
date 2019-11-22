@@ -3,7 +3,10 @@ import { useIntl } from "react-intl";
 
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { maybe } from "@saleor/misc";
+import { useOrderDraftCreateMutation } from "@saleor/orders/mutations";
+import { orderUrl } from "@saleor/orders/urls";
 import getModeActions from "./modes";
 import { getGqlOrderId, isQueryValidOrderNumber } from "./modes/orders";
 import useCheckIfOrderExists from "./queries/useCheckIfOrderExists";
@@ -22,7 +25,15 @@ function useQuickSearch(
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<QuickSearchMode>("default");
   const intl = useIntl();
+  const navigate = useNavigator();
   const [{ data: orderData }, getOrderData] = useCheckIfOrderExists();
+  const [createOrder] = useOrderDraftCreateMutation({
+    onCompleted: result => {
+      if (result.draftOrderCreate.errors.length === 0) {
+        navigate(orderUrl(result.draftOrderCreate.order.id));
+      }
+    }
+  });
 
   useModalDialogOpen(open, {
     onClose: () => {
@@ -58,8 +69,12 @@ function useQuickSearch(
 
     if (mode === "default") {
       switch (value) {
+        case "> ":
+          setMode("commands");
+          break;
         case "# ":
           setMode("orders");
+          break;
         default:
           setQuery(value);
       }
@@ -75,9 +90,18 @@ function useQuickSearch(
     query,
     mode,
     change,
-    getModeActions(mode, query, intl, {
-      order: maybe(() => orderData.order)
-    })
+    getModeActions(
+      mode,
+      query,
+      intl,
+      {
+        order: maybe(() => orderData.order)
+      },
+      {
+        createOrder,
+        navigate
+      }
+    )
   ];
 }
 

@@ -50,7 +50,11 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>(
 
     return (
       <div className={classes.root}>
-        {mode === "orders" && <span className={classes.adornment}>#</span>}
+        {mode !== "default" && (
+          <span className={classes.adornment}>
+            {mode === "orders" ? "#" : ">"}
+          </span>
+        )}
         <input
           autoFocus
           autoComplete="off"
@@ -59,6 +63,11 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>(
             mode === "orders"
               ? intl.formatMessage({
                   defaultMessage: "Order Number",
+                  description: "navigator placeholder"
+                })
+              : mode === "commands"
+              ? intl.formatMessage({
+                  defaultMessage: "Type Command",
                   description: "navigator placeholder"
                 })
               : intl.formatMessage({

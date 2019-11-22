@@ -6,6 +6,7 @@ import { categoryListUrl } from "@saleor/categories/urls";
 import { collectionListUrl } from "@saleor/collections/urls";
 import { customerListUrl } from "@saleor/customers/urls";
 import { saleListUrl, voucherListUrl } from "@saleor/discounts/urls";
+import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { orderDraftListUrl, orderListUrl } from "@saleor/orders/urls";
@@ -26,7 +27,11 @@ interface View {
   label: string;
   url: string;
 }
-function searchInViews(search: string, intl: IntlShape): QuickSearchAction[] {
+function searchInViews(
+  search: string,
+  intl: IntlShape,
+  navigate: UseNavigatorResult
+): QuickSearchAction[] {
   const views: View[] = [
     {
       label: intl.formatMessage(sectionNames.attributes),
@@ -116,17 +121,10 @@ function searchInViews(search: string, intl: IntlShape): QuickSearchAction[] {
 
   return views.map(view => ({
     label: view.label,
+    onClick: () => navigate(view.url),
     score: score(view.label, search),
-    type: "view",
-    url: view.url
+    type: "view"
   }));
-}
-
-export function getViews(actions: QuickSearchAction[]): QuickSearchAction[] {
-  return actions.filter(action => action.type === "view");
-}
-export function hasViews(actions: QuickSearchAction[]): boolean {
-  return getViews(actions).length > 0;
 }
 
 export default searchInViews;

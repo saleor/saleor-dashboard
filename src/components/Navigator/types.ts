@@ -4,7 +4,7 @@ export interface QuickSearchAction {
   label: string;
   score: number;
   type: QuickSearchActionType;
-  url: string;
+  onClick: () => void;
 }
 
-export type QuickSearchMode = "default" | "orders" | "customers";
+export type QuickSearchMode = "default" | "commands" | "orders" | "customers";
