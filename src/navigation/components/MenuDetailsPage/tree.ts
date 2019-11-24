@@ -106,7 +106,7 @@ function permuteNode(
     treeAfterRemoval,
     targetPath,
     node,
-    permutation.sortOrder
+    permutation.position
   );
 
   return treeAfterInsertion;

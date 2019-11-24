@@ -10,6 +10,7 @@ export interface TreeOperation {
   type: TreeOperationType;
   parentId?: string;
   sortOrder?: number;
+  position?: number;
 }
 
 export const unknownTypeError = Error("Unknown type");
@@ -76,11 +77,17 @@ export function getDiff(
 
     if (patch.length > 0) {
       const addedNode = patch.find(operation => operation.type === "add");
+      const removedNode = patch.find(operation => operation.type === "remove");
       if (!!addedNode) {
+        let sortOrder = 0;
+        if (!!removedNode) {
+          sortOrder = addedNode.newPos - removedNode.oldPos;
+        }
         return {
           id: addedNode.items[0],
           parentId: key === "root" ? undefined : key,
-          sortOrder: addedNode.newPos,
+          position: addedNode.newPos,
+          sortOrder,
           type: "move" as TreeOperationType
         };
       }
