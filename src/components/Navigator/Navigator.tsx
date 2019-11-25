@@ -19,7 +19,7 @@ import NavigatorSection from "./NavigatorSection";
 import { QuickSearchAction } from "./types";
 import useQuickSearch from "./useQuickSearch";
 
-const navigatorHotkey = "ctrl+m, command+m";
+const navigatorHotkey = "ctrl+k, command+k";
 
 function getItemOffset(
   actions: QuickSearchAction[],
@@ -35,7 +35,10 @@ const Navigator: React.FC = () => {
   const intl = useIntl();
 
   React.useEffect(() => {
-    hotkeys(navigatorHotkey, () => setVisible(true));
+    hotkeys(navigatorHotkey, event => {
+      event.preventDefault();
+      setVisible(!visible);
+    });
 
     return () => hotkeys.unbind(navigatorHotkey);
   }, []);
