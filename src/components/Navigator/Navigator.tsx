@@ -3,7 +3,11 @@ import Downshift from "downshift";
 import hotkeys from "hotkeys-js";
 import React from "react";
 import { useIntl } from "react-intl";
+import cmp from "semver-compare";
 
+import { APP_VERSION } from "@saleor/config";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
+import useNotifier from "@saleor/hooks/useNotifier";
 import {
   getActions,
   getCatalog,
@@ -20,6 +24,7 @@ import { QuickSearchAction } from "./types";
 import useQuickSearch from "./useQuickSearch";
 
 const navigatorHotkey = "ctrl+k, command+k";
+const navigatorNotificationStorageKey = "notifiedAboutNavigator";
 
 function getItemOffset(
   actions: QuickSearchAction[],
@@ -33,12 +38,32 @@ const Navigator: React.FC = () => {
   const input = React.useRef(null);
   const [query, mode, change, actions] = useQuickSearch(visible, input);
   const intl = useIntl();
+  const notify = useNotifier();
+  const [notifiedAboutNavigator, setNotifiedAboutNavigator] = useLocalStorage(
+    navigatorNotificationStorageKey,
+    false
+  );
 
   React.useEffect(() => {
     hotkeys(navigatorHotkey, event => {
       event.preventDefault();
       setVisible(!visible);
     });
+
+    if (cmp(APP_VERSION, "2.1.0") !== 1 && !notifiedAboutNavigator) {
+      notify({
+        text: intl.formatMessage({
+          defaultMessage:
+            "Our new feature to help you with your daily task. Run Navigator using Ctrl+K shortcut. (Cmd+K for Mac users)",
+          description: "navigator notification"
+        }),
+        title: intl.formatMessage({
+          defaultMessage: "Navigator is here to help",
+          description: "navigator notification title"
+        })
+      });
+      setNotifiedAboutNavigator(true);
+    }
 
     return () => hotkeys.unbind(navigatorHotkey);
   }, []);

@@ -1,6 +1,7 @@
 import { createContext } from "react";
 
 export interface IMessage {
+  title?: string;
   text: string;
   onUndo?: () => void;
 }

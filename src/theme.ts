@@ -340,7 +340,8 @@ export default (colors: IThemeColors): Theme =>
             "& svg": {
               color: colors.font.default
             }
-          }
+          },
+          alignSelf: "baseline"
         },
         message: {
           fontSize: 16
@@ -349,7 +350,10 @@ export default (colors: IThemeColors): Theme =>
           backgroundColor: colors.background.paper,
           boxShadow:
             "0 6px 10px 0px rgba(0, 0, 0, 0.15), 0 1px 18px 0px rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.10)",
-          color: colors.font.default
+          color: colors.font.default,
+          display: "grid",
+          gridTemplateColumns: "1fr 56px",
+          maxWidth: 480
         }
       },
       MuiSwitch: {

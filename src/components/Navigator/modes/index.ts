@@ -31,13 +31,7 @@ function getModeActions(
     case "orders":
       return getOrdersModeActions(query, intl, cbs.navigate, queries.order);
     default:
-      return getDefaultModeActions(
-        query,
-        intl,
-        cbs.navigate,
-        queries.customers,
-        cbs.createOrder
-      );
+      return getDefaultModeActions(query, intl, cbs.navigate, cbs.createOrder);
   }
 }
 
