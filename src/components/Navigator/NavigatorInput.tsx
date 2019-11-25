@@ -52,7 +52,13 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>(
       <div className={classes.root}>
         {mode !== "default" && (
           <span className={classes.adornment}>
-            {mode === "orders" ? "#" : mode === "customers" ? "@" : ">"}
+            {mode === "orders"
+              ? "#"
+              : mode === "customers"
+              ? "@"
+              : mode === "catalog"
+              ? "$"
+              : ">"}
           </span>
         )}
         <input

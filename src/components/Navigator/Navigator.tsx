@@ -6,9 +6,11 @@ import { useIntl } from "react-intl";
 
 import {
   getActions,
+  getCatalog,
   getCustomers,
   getViews,
   hasActions,
+  hasCatalog,
   hasCustomers,
   hasViews
 } from "./modes/utils";
@@ -105,6 +107,18 @@ const Navigator: React.FC = () => {
                 highlightedIndex={highlightedIndex}
                 items={getCustomers(actions)}
                 offset={getItemOffset(actions, [getViews, getActions])}
+              />
+            )}
+            {hasCatalog(actions) && (
+              <NavigatorSection
+                label={intl.formatMessage({
+                  defaultMessage: "Search in Catalog",
+                  description: "navigator section header"
+                })}
+                getItemProps={getItemProps}
+                highlightedIndex={highlightedIndex}
+                items={getCatalog(actions)}
+                offset={0}
               />
             )}
           </div>

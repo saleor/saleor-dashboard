@@ -22,3 +22,10 @@ export function getCustomers(
 export function hasCustomers(actions: QuickSearchAction[]): boolean {
   return getCustomers(actions).length > 0;
 }
+
+export function getCatalog(actions: QuickSearchAction[]): QuickSearchAction[] {
+  return actions.filter(action => action.type === "catalog");
+}
+export function hasCatalog(actions: QuickSearchAction[]): boolean {
+  return getCatalog(actions).length > 0;
+}

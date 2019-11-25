@@ -4,6 +4,7 @@ import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { OrderDraftCreate } from "@saleor/orders/types/OrderDraftCreate";
 import { MutationFunction } from "react-apollo";
 import { QuickSearchAction, QuickSearchMode } from "../types";
+import getCatalogModeActions from "./catalog";
 import getCommandModeActions from "./commands";
 import getCustomersModeActions from "./customers";
 import getDefaultModeActions from "./default";
@@ -21,6 +22,8 @@ function getModeActions(
   }
 ): QuickSearchAction[] {
   switch (mode) {
+    case "catalog":
+      return getCatalogModeActions(query, intl, cbs.navigate, queries.catalog);
     case "commands":
       return getCommandModeActions(query, intl, cbs.navigate, cbs.createOrder);
     case "customers":

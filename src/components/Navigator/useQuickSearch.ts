@@ -11,6 +11,7 @@ import { orderUrl } from "@saleor/orders/urls";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import getModeActions from "./modes";
 import { getGqlOrderId, isQueryValidOrderNumber } from "./modes/orders";
+import useSearchCatalog from "./queries/useCatalogSearch";
 import useCheckIfOrderExists from "./queries/useCheckIfOrderExists";
 import { QuickSearchAction, QuickSearchMode } from "./types";
 
@@ -35,6 +36,7 @@ function useQuickSearch(
       first: 5
     }
   });
+  const [{ data: catalog }, searchCatalog] = useSearchCatalog(5);
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: result => {
       if (result.draftOrderCreate.errors.length === 0) {
@@ -86,12 +88,18 @@ function useQuickSearch(
         case "# ":
           setMode("orders");
           break;
+        case "$ ":
+          setMode("catalog");
+          break;
         default:
           setQuery(value);
       }
     } else {
       if (mode === "orders" && isQueryValidOrderNumber(value)) {
         getOrderData(getGqlOrderId(value));
+      }
+      if (mode === "catalog") {
+        searchCatalog(value);
       }
       setQuery(value);
     }
@@ -110,6 +118,7 @@ function useQuickSearch(
       query,
       intl,
       {
+        catalog,
         customers: maybe(
           () => customers.data.search.edges.map(edge => edge.node),
           []

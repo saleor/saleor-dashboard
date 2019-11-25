@@ -21,6 +21,14 @@ const messages = defineMessages({
     defaultMessage: "Add Voucher",
     description: "button"
   },
+  category: {
+    defaultMessage: "Category",
+    description: "catalog item type"
+  },
+  collection: {
+    defaultMessage: "Collection",
+    description: "catalog item type"
+  },
   createOrder: {
     defaultMessage: "Create Order",
     description: "button"
@@ -31,6 +39,10 @@ const messages = defineMessages({
   goToOrder: {
     defaultMessage: "Go to order #{orderNumber}",
     description: "navigator action"
+  },
+  product: {
+    defaultMessage: "Product",
+    description: "catalog item type"
   }
 });
 
