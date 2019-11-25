@@ -56,7 +56,7 @@ export class MessageManager extends React.Component<{}, MessageManagerState> {
   };
 
   render() {
-    const { title, text, key, onUndo } = this.state.message;
+    const { autohide = 3000, title, text, key, onUndo } = this.state.message;
     return (
       <>
         <Snackbar
@@ -66,7 +66,7 @@ export class MessageManager extends React.Component<{}, MessageManagerState> {
             vertical: "top"
           }}
           open={this.state.opened}
-          autoHideDuration={3000}
+          autoHideDuration={autohide}
           onClose={this.handleClose}
           onExited={this.handleExited}
           ContentProps={{

@@ -52,11 +52,20 @@ const Navigator: React.FC = () => {
 
     if (cmp(APP_VERSION, "2.1.0") !== 1 && !notifiedAboutNavigator) {
       notify({
-        text: intl.formatMessage({
-          defaultMessage:
-            "Our new feature to help you with your daily task. Run Navigator using Ctrl+K shortcut. (Cmd+K for Mac users)",
-          description: "navigator notification"
-        }),
+        autohide: null,
+        text: intl.formatMessage(
+          {
+            defaultMessage:
+              "Our new feature to help you with your daily tasks. Run Navigator using {keyboardShortcut} shortcut.",
+            description: "navigator notification"
+          },
+          {
+            keyboardShortcut:
+              navigator.platform.toLowerCase().indexOf("mac") >= 0
+                ? "⌘+K"
+                : "Ctrl+K"
+          }
+        ),
         title: intl.formatMessage({
           defaultMessage: "Navigator is here to help",
           description: "navigator notification title"
