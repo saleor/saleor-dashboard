@@ -11,6 +11,7 @@ import { productAddUrl } from "@saleor/products/urls";
 import { MutationFunction } from "react-apollo";
 import { QuickSearchActionInput } from "../../types";
 import messages from "../messages";
+import { sortScores } from "../utils";
 
 const threshold = 0.05;
 const maxActions = 5;
@@ -69,7 +70,7 @@ function getCommandModeActions(
 ): QuickSearchActionInput[] {
   return [...searchInCommands(query, intl, navigate, createOrder)]
     .filter(action => action.score >= threshold)
-    .sort((a, b) => (a.score <= b.score ? 1 : -1))
+    .sort(sortScores)
     .slice(0, maxActions);
 }
 

@@ -1,4 +1,4 @@
-import { QuickSearchAction } from "../types";
+import { QuickSearchAction, QuickSearchActionInput } from "../types";
 
 export function getActions(actions: QuickSearchAction[]): QuickSearchAction[] {
   return actions.filter(action => action.type === "action");
@@ -28,4 +28,11 @@ export function getCatalog(actions: QuickSearchAction[]): QuickSearchAction[] {
 }
 export function hasCatalog(actions: QuickSearchAction[]): boolean {
   return getCatalog(actions).length > 0;
+}
+
+export function sortScores(
+  a: QuickSearchActionInput,
+  b: QuickSearchActionInput
+) {
+  return a.score <= b.score ? 1 : -1;
 }

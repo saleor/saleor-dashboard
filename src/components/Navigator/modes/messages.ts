@@ -29,6 +29,14 @@ const messages = defineMessages({
     defaultMessage: "Collection",
     description: "catalog item type"
   },
+  collectionPublished: {
+    defaultMessage: "Published",
+    description: "collection"
+  },
+  collectionUnpublished: {
+    defaultMessage: "Not Published",
+    description: "collection"
+  },
   createOrder: {
     defaultMessage: "Create Order",
     description: "button"

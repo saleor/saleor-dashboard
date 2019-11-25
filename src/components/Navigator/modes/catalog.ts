@@ -9,6 +9,7 @@ import { productUrl } from "@saleor/products/urls";
 import { SearchCatalog } from "../queries/types/SearchCatalog";
 import { QuickSearchAction, QuickSearchActionInput } from "../types";
 import messages from "./messages";
+import { sortScores } from "./utils";
 
 const threshold = 0.05;
 const maxActions = 5;
@@ -22,40 +23,65 @@ export function searchInCatalog(
   const categories: QuickSearchActionInput[] = maybe(
     () => catalog.categories.edges.map(edge => edge.node),
     []
-  ).map(category => ({
-    caption: intl.formatMessage(messages.category),
-    label: category.name,
-    onClick: () => navigate(categoryUrl(category.id)),
-    score: score(category.name, search),
-    text: category.name,
-    type: "catalog"
-  }));
+  )
+    .map<QuickSearchActionInput>(category => ({
+      caption: intl.formatMessage(messages.category),
+      label: category.name,
+      onClick: () => navigate(categoryUrl(category.id)),
+      score: score(category.name, search),
+      text: category.name,
+      type: "catalog"
+    }))
+    .sort(sortScores);
 
   const collections: QuickSearchActionInput[] = maybe(
     () => catalog.collections.edges.map(edge => edge.node),
     []
-  ).map(collection => ({
-    caption: intl.formatMessage(messages.collection),
-    label: collection.name,
-    onClick: () => navigate(collectionUrl(collection.id)),
-    score: score(collection.name, search),
-    text: collection.name,
-    type: "catalog"
-  }));
+  )
+    .map<QuickSearchActionInput>(collection => ({
+      caption: intl.formatMessage(messages.collection),
+      extraInfo: intl.formatMessage(
+        collection.isPublished
+          ? messages.collectionPublished
+          : messages.collectionUnpublished
+      ),
+      label: collection.name,
+      onClick: () => navigate(collectionUrl(collection.id)),
+      score: score(collection.name, search),
+      text: collection.name,
+      type: "catalog"
+    }))
+    .sort(sortScores);
 
   const products: QuickSearchActionInput[] = maybe(
     () => catalog.products.edges.map(edge => edge.node),
     []
-  ).map(product => ({
-    caption: intl.formatMessage(messages.product),
-    label: product.name,
-    onClick: () => navigate(productUrl(product.id)),
-    score: score(product.name, search),
-    text: product.name,
-    type: "catalog"
-  }));
+  )
+    .map<QuickSearchActionInput>(product => ({
+      caption: intl.formatMessage(messages.product),
+      extraInfo: product.category.name,
+      label: product.name,
+      onClick: () => navigate(productUrl(product.id)),
+      score: score(product.name, search),
+      text: product.name,
+      type: "catalog"
+    }))
+    .sort(sortScores);
 
-  return [...categories, ...collections, ...products];
+  const baseActions = [
+    ...categories.slice(0, 1),
+    ...collections.slice(0, 1),
+    ...products.slice(0, 1)
+  ];
+
+  return [
+    ...baseActions,
+    ...[
+      ...categories.slice(1),
+      ...collections.slice(1),
+      ...products.slice(1)
+    ].sort(sortScores)
+  ].sort(sortScores);
 }
 
 function getCatalogModeActions(

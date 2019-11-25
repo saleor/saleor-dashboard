@@ -7,6 +7,7 @@ import { SearchCustomers_search_edges_node } from "@saleor/searches/types/Search
 import { QuickSearchAction } from "../../types";
 import { searchInCommands } from "../commands";
 import { searchInCustomers } from "../customers";
+import { sortScores } from "../utils";
 import searchInViews from "./views";
 
 const threshold = 0.05;
@@ -24,7 +25,7 @@ function getDefaultModeActions(
     ...searchInCommands(query, intl, navigate, createOrder)
   ]
     .filter(action => action.score >= threshold)
-    .sort((a, b) => (a.score <= b.score ? 1 : -1))
+    .sort(sortScores)
     .slice(0, maxActions);
 
   if (query !== "") {
