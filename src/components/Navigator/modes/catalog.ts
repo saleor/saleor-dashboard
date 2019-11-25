@@ -11,7 +11,6 @@ import { QuickSearchAction, QuickSearchActionInput } from "../types";
 import messages from "./messages";
 import { sortScores } from "./utils";
 
-const threshold = 0.05;
 const maxActions = 5;
 
 export function searchInCatalog(
@@ -76,11 +75,9 @@ export function searchInCatalog(
 
   return [
     ...baseActions,
-    ...[
-      ...categories.slice(1),
-      ...collections.slice(1),
-      ...products.slice(1)
-    ].sort(sortScores)
+    ...[...categories.slice(1), ...collections.slice(1), ...products.slice(1)]
+      .sort(sortScores)
+      .slice(0, maxActions - baseActions.length)
   ].sort(sortScores);
 }
 
