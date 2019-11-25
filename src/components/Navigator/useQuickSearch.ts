@@ -101,11 +101,10 @@ function useQuickSearch(
       if (mode === "catalog") {
         searchCatalog(value);
       }
+      if (mode === "customers") {
+        searchCustomers(value);
+      }
       setQuery(value);
-    }
-
-    if ((["customers", "default"] as QuickSearchMode[]).includes(mode)) {
-      searchCustomers(value);
     }
   };
 
