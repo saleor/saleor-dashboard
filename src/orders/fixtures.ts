@@ -15,22 +15,30 @@ export const clients: SearchCustomers_search_edges_node[] = [
   {
     __typename: "User" as "User",
     email: "test.client1@example.com",
-    id: "c1"
+    firstName: "John",
+    id: "c1",
+    lastName: "Doe"
   },
   {
     __typename: "User" as "User",
     email: "test.client2@example.com",
-    id: "c2"
+    firstName: "Dough",
+    id: "c2",
+    lastName: "Jones"
   },
   {
     __typename: "User" as "User",
     email: "test.client3@example.com",
-    id: "c3"
+    firstName: "Jonas",
+    id: "c3",
+    lastName: "Dough"
   },
   {
     __typename: "User" as "User",
     email: "test.client4@example.com",
-    id: "c4"
+    firstName: "Bill",
+    id: "c4",
+    lastName: "Jonas"
   }
 ];
 export const orders: OrderList_orders_edges_node[] = [

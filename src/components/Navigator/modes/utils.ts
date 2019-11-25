@@ -13,3 +13,12 @@ export function getViews(actions: QuickSearchAction[]): QuickSearchAction[] {
 export function hasViews(actions: QuickSearchAction[]): boolean {
   return getViews(actions).length > 0;
 }
+
+export function getCustomers(
+  actions: QuickSearchAction[]
+): QuickSearchAction[] {
+  return actions.filter(action => action.type === "customer");
+}
+export function hasCustomers(actions: QuickSearchAction[]): boolean {
+  return getCustomers(actions).length > 0;
+}

@@ -25,6 +25,9 @@ const messages = defineMessages({
     defaultMessage: "Create Order",
     description: "button"
   },
+  customerWithName: {
+    defaultMessage: "{firstName} {lastName}"
+  },
   goToOrder: {
     defaultMessage: "Go to order #{orderNumber}",
     description: "navigator action"

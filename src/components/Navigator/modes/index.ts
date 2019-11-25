@@ -5,6 +5,7 @@ import { OrderDraftCreate } from "@saleor/orders/types/OrderDraftCreate";
 import { MutationFunction } from "react-apollo";
 import { QuickSearchAction, QuickSearchMode } from "../types";
 import getCommandModeActions from "./commands";
+import getCustomersModeActions from "./customers";
 import getDefaultModeActions from "./default";
 import getOrdersModeActions from "./orders";
 import { ActionQueries } from "./types";
@@ -22,10 +23,18 @@ function getModeActions(
   switch (mode) {
     case "commands":
       return getCommandModeActions(query, intl, cbs.navigate, cbs.createOrder);
+    case "customers":
+      return getCustomersModeActions(intl, cbs.navigate, queries.customers);
     case "orders":
       return getOrdersModeActions(query, intl, cbs.navigate, queries.order);
     default:
-      return getDefaultModeActions(query, intl, cbs.navigate, cbs.createOrder);
+      return getDefaultModeActions(
+        query,
+        intl,
+        cbs.navigate,
+        queries.customers,
+        cbs.createOrder
+      );
   }
 }
 

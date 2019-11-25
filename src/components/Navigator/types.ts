@@ -1,4 +1,4 @@
-export type QuickSearchActionType = "action" | "view";
+export type QuickSearchActionType = "action" | "customer" | "view";
 
 export interface QuickSearchAction {
   label: string;

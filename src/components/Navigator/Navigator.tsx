@@ -4,13 +4,27 @@ import hotkeys from "hotkeys-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getActions, getViews, hasActions, hasViews } from "./modes/utils";
+import {
+  getActions,
+  getCustomers,
+  getViews,
+  hasActions,
+  hasCustomers,
+  hasViews
+} from "./modes/utils";
 import NavigatorInput from "./NavigatorInput";
 import NavigatorSection from "./NavigatorSection";
 import { QuickSearchAction } from "./types";
 import useQuickSearch from "./useQuickSearch";
 
 const navigatorHotkey = "ctrl+m, command+m";
+
+function getItemOffset(
+  actions: QuickSearchAction[],
+  cbs: Array<typeof getViews>
+): number {
+  return cbs.reduce((acc, cb) => cb(actions).length + acc, 0);
+}
 
 const Navigator: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
@@ -78,7 +92,19 @@ const Navigator: React.FC = () => {
                 getItemProps={getItemProps}
                 highlightedIndex={highlightedIndex}
                 items={getActions(actions)}
-                offset={getViews(actions).length}
+                offset={getItemOffset(actions, [getViews])}
+              />
+            )}
+            {hasCustomers(actions) && (
+              <NavigatorSection
+                label={intl.formatMessage({
+                  defaultMessage: "Search in Customers",
+                  description: "navigator section header"
+                })}
+                getItemProps={getItemProps}
+                highlightedIndex={highlightedIndex}
+                items={getCustomers(actions)}
+                offset={getItemOffset(actions, [getViews, getActions])}
               />
             )}
           </div>
