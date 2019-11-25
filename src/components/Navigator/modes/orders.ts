@@ -1,7 +1,7 @@
 import { IntlShape } from "react-intl";
 
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { maybe } from "@saleor/misc";
+import { maybe, transformOrderStatus } from "@saleor/misc";
 import { orderUrl } from "@saleor/orders/urls";
 import { CheckIfOrderExists_order } from "../queries/types/CheckIfOrderExists";
 import { QuickSearchAction } from "../types";
@@ -26,11 +26,11 @@ function getOrdersModeActions(
   if (isQueryValidOrderNumber(query) && maybe(() => order.id === gqlId)) {
     return [
       {
+        extraInfo: transformOrderStatus(order.status, intl).localized,
         label: intl.formatMessage(messages.goToOrder, {
           orderNumber: query
         }),
         onClick: () => navigate(orderUrl(gqlId)),
-        score: 1,
         type: "action"
       }
     ];

@@ -21,7 +21,7 @@ import { staffListUrl } from "@saleor/staff/urls";
 import { countryListUrl } from "@saleor/taxes/urls";
 import { languageListUrl } from "@saleor/translations/urls";
 import { webhooksListUrl } from "@saleor/webhooks/urls";
-import { QuickSearchAction } from "../../types";
+import { QuickSearchActionInput } from "../../types";
 
 interface View {
   label: string;
@@ -31,7 +31,7 @@ function searchInViews(
   search: string,
   intl: IntlShape,
   navigate: UseNavigatorResult
-): QuickSearchAction[] {
+): QuickSearchActionInput[] {
   const views: View[] = [
     {
       label: intl.formatMessage(sectionNames.attributes),
@@ -123,6 +123,7 @@ function searchInViews(
     label: view.label,
     onClick: () => navigate(view.url),
     score: score(view.label, search),
+    text: view.label,
     type: "view"
   }));
 }

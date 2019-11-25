@@ -22,7 +22,11 @@ const useStyles = makeStyles(
         color: theme.palette.text.secondary,
         fontWeight: 400
       },
+      display: "flex",
       margin: theme.spacing(1, 0)
+    },
+    itemLabel: {
+      display: "inline-block"
     },
     label: {
       paddingLeft: theme.spacing(2),
@@ -34,6 +38,9 @@ const useStyles = makeStyles(
       },
       margin: theme.spacing(2, 0),
       padding: theme.spacing(0, 1)
+    },
+    spacer: {
+      flex: 1
     }
   }),
   {
@@ -70,7 +77,14 @@ const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
             selected={highlightedIndex === index}
             key={[item.label, item.type].join(":")}
           >
-            {item.label}
+            <span className={classes.itemLabel}>
+              <span>{item.label}</span>
+              {item.caption && (
+                <Typography variant="caption">{item.caption}</Typography>
+              )}
+            </span>
+            <span className={classes.spacer} />
+            {item.extraInfo}
           </MenuItem>
         );
       })}

@@ -9,7 +9,7 @@ import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { OrderDraftCreate } from "@saleor/orders/types/OrderDraftCreate";
 import { productAddUrl } from "@saleor/products/urls";
 import { MutationFunction } from "react-apollo";
-import { QuickSearchAction } from "../../types";
+import { QuickSearchActionInput } from "../../types";
 import messages from "../messages";
 
 const threshold = 0.05;
@@ -24,7 +24,7 @@ export function searchInCommands(
   intl: IntlShape,
   navigate: UseNavigatorResult,
   createOrder: MutationFunction<OrderDraftCreate, {}>
-): QuickSearchAction[] {
+): QuickSearchActionInput[] {
   const actions: Command[] = [
     {
       label: intl.formatMessage(messages.addCategory),
@@ -56,6 +56,7 @@ export function searchInCommands(
     label: action.label,
     onClick: action.onClick,
     score: score(action.label, search),
+    text: action.label,
     type: "action"
   }));
 }
@@ -65,7 +66,7 @@ function getCommandModeActions(
   intl: IntlShape,
   navigate: UseNavigatorResult,
   createOrder: MutationFunction<OrderDraftCreate, {}>
-): QuickSearchAction[] {
+): QuickSearchActionInput[] {
   return [...searchInCommands(query, intl, navigate, createOrder)]
     .filter(action => action.score >= threshold)
     .sort((a, b) => (a.score <= b.score ? 1 : -1))

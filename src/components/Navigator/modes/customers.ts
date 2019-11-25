@@ -12,6 +12,7 @@ export function searchInCustomers(
   customers: SearchCustomers_search_edges_node[]
 ): QuickSearchAction[] {
   return customers.map(customer => ({
+    caption: customer.email,
     label:
       customer.firstName && customer.lastName
         ? intl.formatMessage(messages.customerWithName, {
