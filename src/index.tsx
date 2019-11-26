@@ -12,6 +12,7 @@ import ErrorBoundary from "react-error-boundary";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import Navigator from "@saleor/components/Navigator";
 import useAppState from "@saleor/hooks/useAppState";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
@@ -153,6 +154,7 @@ const Routes: React.FC = () => {
         }) =>
           isAuthenticated && !tokenAuthLoading && !tokenVerifyLoading ? (
             <AppLayout>
+              <Navigator />
               <ErrorBoundary
                 onError={() =>
                   dispatchAppState({

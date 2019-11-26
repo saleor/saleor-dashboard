@@ -150,7 +150,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
             </AppHeader>
             <PageHeader
               title={intl.formatMessage({
-                defaultMessage: "Add Customer",
+                defaultMessage: "Create Customer",
                 description: "page header"
               })}
             />

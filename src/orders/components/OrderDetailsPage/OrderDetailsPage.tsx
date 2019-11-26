@@ -26,8 +26,7 @@ import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItem
 const useStyles = makeStyles(
   theme => ({
     date: {
-      marginBottom: theme.spacing(3),
-      marginTop: -theme.spacing(2)
+      marginBottom: theme.spacing(3)
     },
     header: {
       display: "flex",

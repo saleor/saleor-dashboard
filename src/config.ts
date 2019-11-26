@@ -1,3 +1,4 @@
+import packageInfo from "../package.json";
 import { SearchVariables } from "./hooks/makeSearch";
 import { ListSettings, ListViews } from "./types";
 
@@ -74,3 +75,5 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY
   }
 };
+
+export const APP_VERSION = packageInfo.version;

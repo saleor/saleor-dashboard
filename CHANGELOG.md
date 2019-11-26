@@ -13,6 +13,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix disappearing products description - #259 by @dominik-zeglen
 - Improve mobile appearance - #240 by @benekex2 and @dominik-zeglen
 - Use searches as hooks instead of components - #262 by @dominik-zeglen
+- Add navigator - #267 by @dominik-zeglen
 - Fix voucher limit - #271 by @dominik-zeglen
 
 ## 2.0.0

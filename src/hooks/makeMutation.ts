@@ -11,15 +11,15 @@ import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import useNotifier from "./useNotifier";
 
-type UseMutation<TData, TVariables> = [
+export type UseMutation<TData, TVariables> = [
   MutationFunction<TData, TVariables>,
   MutationResult<TData>
 ];
-type UseMutationCbs<TData> = Partial<{
+export type UseMutationCbs<TData> = Partial<{
   onCompleted: (data: TData) => void;
   onError: (error: ApolloError) => void;
 }>;
-type UseMutationHook<TData, TVariables> = (
+export type UseMutationHook<TData, TVariables> = (
   cbs: UseMutationCbs<TData>
 ) => UseMutation<TData, TVariables>;
 
