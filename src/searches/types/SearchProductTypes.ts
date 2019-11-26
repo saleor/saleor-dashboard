@@ -22,9 +22,7 @@ export interface SearchProductTypes_search_edges_node_productAttributes {
   slug: string | null;
   name: string | null;
   valueRequired: boolean;
-  values:
-    | (SearchProductTypes_search_edges_node_productAttributes_values | null)[]
-    | null;
+  values: (SearchProductTypes_search_edges_node_productAttributes_values | null)[] | null;
 }
 
 export interface SearchProductTypes_search_edges_node {
@@ -32,9 +30,7 @@ export interface SearchProductTypes_search_edges_node {
   id: string;
   name: string;
   hasVariants: boolean;
-  productAttributes:
-    | (SearchProductTypes_search_edges_node_productAttributes | null)[]
-    | null;
+  productAttributes: (SearchProductTypes_search_edges_node_productAttributes | null)[] | null;
 }
 
 export interface SearchProductTypes_search_edges {

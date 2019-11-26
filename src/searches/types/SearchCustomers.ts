@@ -10,6 +10,8 @@ export interface SearchCustomers_search_edges_node {
   __typename: "User";
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface SearchCustomers_search_edges {

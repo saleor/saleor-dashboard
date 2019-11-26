@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Snackbar from "@material-ui/core/Snackbar";
+import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import React from "react";
 
@@ -15,7 +16,7 @@ interface MessageManagerState {
 }
 
 export class MessageManager extends React.Component<{}, MessageManagerState> {
-  state = {
+  state: MessageManagerState = {
     message: { text: "", key: "0", onUndo: undefined },
     opened: false
   };
@@ -55,7 +56,7 @@ export class MessageManager extends React.Component<{}, MessageManagerState> {
   };
 
   render() {
-    const { text, key, onUndo } = this.state.message;
+    const { autohide = 3000, title, text, key, onUndo } = this.state.message;
     return (
       <>
         <Snackbar
@@ -65,7 +66,7 @@ export class MessageManager extends React.Component<{}, MessageManagerState> {
             vertical: "top"
           }}
           open={this.state.opened}
-          autoHideDuration={3000}
+          autoHideDuration={autohide}
           onClose={this.handleClose}
           onExited={this.handleExited}
           ContentProps={{
@@ -73,9 +74,15 @@ export class MessageManager extends React.Component<{}, MessageManagerState> {
           }}
           message={
             <span id="message-id" data-tc="notification">
+              {title && (
+                <Typography variant="h5" style={{ marginBottom: "1rem" }}>
+                  {title}
+                </Typography>
+              )}
               {text}
             </span>
           }
+          title={title}
           action={[
             !!onUndo ? (
               <Button

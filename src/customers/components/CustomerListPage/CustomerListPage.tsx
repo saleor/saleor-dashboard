@@ -50,7 +50,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
           onClick={onAdd}
         >
           <FormattedMessage
-            defaultMessage="Add customer"
+            defaultMessage="Create customer"
             description="button"
           />
         </Button>

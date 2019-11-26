@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import makeMutation from "@saleor/hooks/makeMutation";
 import { TypedMutation } from "../mutations";
 import {
   fragmentAddress,
@@ -409,10 +410,9 @@ const orderDraftCreateMutation = gql`
     }
   }
 `;
-export const TypedOrderDraftCreateMutation = TypedMutation<
-  OrderDraftCreate,
-  {}
->(orderDraftCreateMutation);
+export const useOrderDraftCreateMutation = makeMutation<OrderDraftCreate, {}>(
+  orderDraftCreateMutation
+);
 
 const orderLineDeleteMutation = gql`
   ${fragmentOrderDetails}

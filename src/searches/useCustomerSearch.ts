@@ -15,6 +15,8 @@ export const searchCustomers = gql`
         node {
           id
           email
+          firstName
+          lastName
         }
       }
       pageInfo {
