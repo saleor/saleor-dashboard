@@ -29,35 +29,35 @@ export function searchInCommands(
 ): QuickSearchActionInput[] {
   const actions: Command[] = [
     {
-      label: intl.formatMessage(messages.addCategory),
+      label: intl.formatMessage(messages.createCategory),
       onClick: () => {
         navigate(categoryAddUrl());
         return false;
       }
     },
     {
-      label: intl.formatMessage(messages.addCollection),
+      label: intl.formatMessage(messages.createCollection),
       onClick: () => {
         navigate(collectionAddUrl);
         return false;
       }
     },
     {
-      label: intl.formatMessage(messages.addProduct),
+      label: intl.formatMessage(messages.createProduct),
       onClick: () => {
         navigate(productAddUrl);
         return false;
       }
     },
     {
-      label: intl.formatMessage(messages.addCustomer),
+      label: intl.formatMessage(messages.createCustomer),
       onClick: () => {
         navigate(customerAddUrl);
         return false;
       }
     },
     {
-      label: intl.formatMessage(messages.addVoucher),
+      label: intl.formatMessage(messages.createVoucher),
       onClick: () => {
         navigate(voucherAddUrl);
         return false;

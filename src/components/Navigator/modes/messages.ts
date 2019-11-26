@@ -1,33 +1,11 @@
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
-  addCategory: {
-    defaultMessage: "Add Category",
-    description: "button"
-  },
-  addCollection: {
-    defaultMessage: "Add Collection",
-    description: "button"
-  },
-  addCustomer: {
-    defaultMessage: "Add Customer",
-    description: "button"
-  },
-  addProduct: {
-    defaultMessage: "Add Product",
-    description: "button"
-  },
-  addVoucher: {
-    defaultMessage: "Add Voucher",
-    description: "button"
-  },
   category: {
-    defaultMessage: "Category",
-    description: "catalog item type"
+    defaultMessage: "Category"
   },
   collection: {
-    defaultMessage: "Collection",
-    description: "catalog item type"
+    defaultMessage: "Collection"
   },
   collectionPublished: {
     defaultMessage: "Published",
@@ -37,8 +15,28 @@ const messages = defineMessages({
     defaultMessage: "Not Published",
     description: "collection"
   },
+  createCategory: {
+    defaultMessage: "Create Category",
+    description: "button"
+  },
+  createCollection: {
+    defaultMessage: "Create Collection",
+    description: "button"
+  },
+  createCustomer: {
+    defaultMessage: "Create Customer",
+    description: "button"
+  },
   createOrder: {
     defaultMessage: "Create Order",
+    description: "button"
+  },
+  createProduct: {
+    defaultMessage: "Create Product",
+    description: "button"
+  },
+  createVoucher: {
+    defaultMessage: "Create Voucher",
     description: "button"
   },
   customerWithName: {
@@ -76,8 +74,7 @@ const messages = defineMessages({
     defaultMessage: "No Results"
   },
   product: {
-    defaultMessage: "Product",
-    description: "catalog item type"
+    defaultMessage: "Product"
   }
 });
 

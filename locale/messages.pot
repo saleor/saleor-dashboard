@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-11-26T14:15:31.985Z\n"
+"POT-Creation-Date: 2019-11-26T14:34:48.426Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -159,44 +159,12 @@ msgctxt "dialog title"
 msgid "Add Address"
 msgstr ""
 
-#: build/locale/src/components/Navigator/modes/messages.json
-#. [src.components.Navigator.modes.addCategory] - button
-#. defaultMessage is:
-#. Add Category
-msgctxt "button"
-msgid "Add Category"
-msgstr ""
-
 #: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
 #. [src.collections.components.CollectionCreatePage.951411809] - page header
 #. defaultMessage is:
 #. Add Collection
 msgctxt "page header"
 msgid "Add Collection"
-msgstr ""
-
-#: build/locale/src/components/Navigator/modes/messages.json
-#. [src.components.Navigator.modes.addCollection] - button
-#. defaultMessage is:
-#. Add Collection
-msgctxt "button"
-msgid "Add Collection"
-msgstr ""
-
-#: build/locale/src/components/Navigator/modes/messages.json
-#. [src.components.Navigator.modes.addCustomer] - button
-#. defaultMessage is:
-#. Add Customer
-msgctxt "button"
-msgid "Add Customer"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
-#. [src.customers.components.CustomerCreatePage.2622255457] - page header
-#. defaultMessage is:
-#. Add Customer
-msgctxt "page header"
-msgid "Add Customer"
 msgstr ""
 
 #: build/locale/src/components/Filter/Filter.json
@@ -239,14 +207,6 @@ msgctxt "dialog header"
 msgid "Add Price Rate"
 msgstr ""
 
-#: build/locale/src/components/Navigator/modes/messages.json
-#. [src.components.Navigator.modes.addProduct] - button
-#. defaultMessage is:
-#. Add Product
-msgctxt "button"
-msgid "Add Product"
-msgstr ""
-
 #: build/locale/src/orders/components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog.json
 #. [src.orders.components.OrderFulfillmentTrackingDialog.606831229] - dialog header
 #. defaultMessage is:
@@ -271,14 +231,6 @@ msgctxt "header"
 msgid "Add Value to Authorization Field"
 msgstr ""
 
-#: build/locale/src/components/Navigator/modes/messages.json
-#. [src.components.Navigator.modes.addVoucher] - button
-#. defaultMessage is:
-#. Add Voucher
-msgctxt "button"
-msgid "Add Voucher"
-msgstr ""
-
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
 #. [src.shipping.components.ShippingZoneRateDialog.1397795758] - add weight based shipping method, dialog header
 #. defaultMessage is:
@@ -301,14 +253,6 @@ msgstr ""
 #. Add authentication
 msgctxt "button"
 msgid "Add authentication"
-msgstr ""
-
-#: build/locale/src/customers/components/CustomerListPage/CustomerListPage.json
-#. [src.customers.components.CustomerListPage.1934221653] - button
-#. defaultMessage is:
-#. Add customer
-msgctxt "button"
-msgid "Add customer"
 msgstr ""
 
 #: build/locale/src/components/Filter/FilterContent.json
@@ -1840,13 +1784,9 @@ msgid "Categories ({quantity})"
 msgstr ""
 
 #: build/locale/src/components/Navigator/modes/messages.json
-#. [src.components.Navigator.modes.category] - catalog item type
+#. [src.components.Navigator.modes.category]
 #. defaultMessage is:
 #. Category
-msgctxt "catalog item type"
-msgid "Category"
-msgstr ""
-
 #: build/locale/src/products/components/ProductCategoryAndCollectionsForm/ProductCategoryAndCollectionsForm.json
 #. [src.products.components.ProductCategoryAndCollectionsForm.1755013298]
 #. defaultMessage is:
@@ -2012,10 +1952,10 @@ msgid "Code"
 msgstr ""
 
 #: build/locale/src/components/Navigator/modes/messages.json
-#. [src.components.Navigator.modes.collection] - catalog item type
+#. [src.components.Navigator.modes.collection]
 #. defaultMessage is:
 #. Collection
-msgctxt "catalog item type"
+msgctxt "description"
 msgid "Collection"
 msgstr ""
 
@@ -2399,6 +2339,38 @@ msgctxt "create service token, button"
 msgid "Create"
 msgstr ""
 
+#: build/locale/src/components/Navigator/modes/messages.json
+#. [src.components.Navigator.modes.createCategory] - button
+#. defaultMessage is:
+#. Create Category
+msgctxt "button"
+msgid "Create Category"
+msgstr ""
+
+#: build/locale/src/components/Navigator/modes/messages.json
+#. [src.components.Navigator.modes.createCollection] - button
+#. defaultMessage is:
+#. Create Collection
+msgctxt "button"
+msgid "Create Collection"
+msgstr ""
+
+#: build/locale/src/components/Navigator/modes/messages.json
+#. [src.components.Navigator.modes.createCustomer] - button
+#. defaultMessage is:
+#. Create Customer
+msgctxt "button"
+msgid "Create Customer"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
+#. [src.customers.components.CustomerCreatePage.4025686004] - page header
+#. defaultMessage is:
+#. Create Customer
+msgctxt "page header"
+msgid "Create Customer"
+msgstr ""
+
 #: build/locale/src/navigation/components/MenuCreateDialog/MenuCreateDialog.json
 #. [menuCreateDialogHeader] - dialog header
 #. defaultMessage is:
@@ -2471,19 +2443,23 @@ msgctxt "header"
 msgid "Create Page"
 msgstr ""
 
-#: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
-#. [src.orders.components.OrderProductAddDialog.1542417144] - dialog header
+#: build/locale/src/components/Navigator/modes/messages.json
+#. [src.components.Navigator.modes.createProduct] - button
 #. defaultMessage is:
 #. Create Product
-msgctxt "dialog header"
-msgid "Create Product"
-msgstr ""
-
 #: build/locale/src/products/components/ProductListPage/ProductListPage.json
 #. [src.products.components.ProductListPage.1542417144] - button
 #. defaultMessage is:
 #. Create Product
 msgctxt "button"
+msgid "Create Product"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
+#. [src.orders.components.OrderProductAddDialog.1542417144] - dialog header
+#. defaultMessage is:
+#. Create Product
+msgctxt "dialog header"
 msgid "Create Product"
 msgstr ""
 
@@ -2559,6 +2535,14 @@ msgctxt "header"
 msgid "Create Variant"
 msgstr ""
 
+#: build/locale/src/components/Navigator/modes/messages.json
+#. [src.components.Navigator.modes.createVoucher] - button
+#. defaultMessage is:
+#. Create Voucher
+msgctxt "button"
+msgid "Create Voucher"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherCreatePage/VoucherCreatePage.json
 #. [src.discounts.components.VoucherCreatePage.1357216572] - page header
 #. defaultMessage is:
@@ -2629,6 +2613,14 @@ msgstr ""
 #. Create collection
 msgctxt "window title"
 msgid "Create collection"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerListPage/CustomerListPage.json
+#. [src.customers.components.CustomerListPage.2859116187] - button
+#. defaultMessage is:
+#. Create customer
+msgctxt "button"
+msgid "Create customer"
 msgstr ""
 
 #: build/locale/src/customers/views/CustomerCreate.json
@@ -6376,13 +6368,9 @@ msgid "Primary Address"
 msgstr ""
 
 #: build/locale/src/components/Navigator/modes/messages.json
-#. [src.components.Navigator.modes.product] - catalog item type
+#. [src.components.Navigator.modes.product]
 #. defaultMessage is:
 #. Product
-msgctxt "catalog item type"
-msgid "Product"
-msgstr ""
-
 #: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
 #. [src.orders.components.OrderDraftDetailsProducts.1895667608]
 #. defaultMessage is:
@@ -7207,6 +7195,14 @@ msgctxt "description"
 msgid "Search Countries"
 msgstr ""
 
+#: build/locale/src/components/Navigator/NavigatorInput.json
+#. [src.components.Navigator.1643417013] - navigator placeholder
+#. defaultMessage is:
+#. Search Customer
+msgctxt "navigator placeholder"
+msgid "Search Customer"
+msgstr ""
+
 #: build/locale/src/customers/components/CustomerListPage/CustomerListPage.json
 #. [src.customers.components.CustomerListPage.1643417013]
 #. defaultMessage is:
@@ -7512,6 +7508,14 @@ msgstr ""
 #. defaultMessage is:
 #. Search in Catalog
 msgctxt "navigator section header"
+msgid "Search in Catalog"
+msgstr ""
+
+#: build/locale/src/components/Navigator/NavigatorInput.json
+#. [src.components.Navigator.2935523260] - navigator placeholder
+#. defaultMessage is:
+#. Search in Catalog
+msgctxt "navigator placeholder"
 msgid "Search in Catalog"
 msgstr ""
 
@@ -8823,6 +8827,14 @@ msgctxt "product type name"
 msgid "Type Name"
 msgstr ""
 
+#: build/locale/src/components/Navigator/NavigatorInput.json
+#. [src.components.Navigator.2874620973] - navigator placeholder
+#. defaultMessage is:
+#. Type {key} to see available actions
+msgctxt "navigator placeholder"
+msgid "Type {key} to see available actions"
+msgstr ""
+
 #: build/locale/src/pages/components/PageSlug/PageSlug.json
 #. [src.pages.components.PageSlug.1324178587]
 #. defaultMessage is:
@@ -9137,14 +9149,6 @@ msgstr ""
 #. Usage Limit
 msgctxt "voucher value requirement"
 msgid "Usage Limit"
-msgstr ""
-
-#: build/locale/src/components/Navigator/NavigatorInput.json
-#. [src.components.Navigator.3921504214] - navigator placeholder
-#. defaultMessage is:
-#. Use Navigator to move through Saleor
-msgctxt "navigator placeholder"
-msgid "Use Navigator to move through Saleor"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
