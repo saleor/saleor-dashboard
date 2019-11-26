@@ -11,6 +11,7 @@ import { orderUrl } from "@saleor/orders/urls";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import getModeActions from "./modes";
 import { getGqlOrderId, isQueryValidOrderNumber } from "./modes/orders";
+import { getMode } from "./modes/utils";
 import useSearchCatalog from "./queries/useCatalogSearch";
 import useCheckIfOrderExists from "./queries/useCheckIfOrderExists";
 import { QuickSearchAction, QuickSearchMode } from "./types";
@@ -77,35 +78,23 @@ function useQuickSearch(
   const change = (event: ChangeEvent) => {
     const value = event.target.value;
 
-    if (mode === "default") {
-      switch (value) {
-        case "> ":
-          setMode("commands");
-          break;
-        case "@ ":
-          setMode("customers");
-          break;
-        case "# ":
-          setMode("orders");
-          break;
-        case "$ ":
-          setMode("catalog");
-          break;
-        default:
-          setQuery(value);
+    if (mode === "default" || mode === "help") {
+      const newMode = getMode(value);
+      if (newMode) {
+        setMode(newMode);
       }
-    } else {
-      if (mode === "orders" && isQueryValidOrderNumber(value)) {
-        getOrderData(getGqlOrderId(value));
-      }
-      if (mode === "catalog") {
-        searchCatalog(value);
-      }
-      if (mode === "customers") {
-        searchCustomers(value);
-      }
-      setQuery(value);
     }
+    if (mode === "orders" && isQueryValidOrderNumber(value)) {
+      getOrderData(getGqlOrderId(value));
+    }
+    if (mode === "catalog") {
+      searchCatalog(value);
+    }
+    if (mode === "customers") {
+      searchCustomers(value);
+    }
+
+    setQuery(value);
   };
 
   return [
@@ -126,7 +115,8 @@ function useQuickSearch(
       },
       {
         createOrder,
-        navigate
+        navigate,
+        setMode
       }
     )
   ];

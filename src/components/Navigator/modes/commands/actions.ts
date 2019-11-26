@@ -9,7 +9,7 @@ import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { OrderDraftCreate } from "@saleor/orders/types/OrderDraftCreate";
 import { productAddUrl } from "@saleor/products/urls";
 import { MutationFunction } from "react-apollo";
-import { QuickSearchActionInput } from "../../types";
+import { QuickSearchActionInput, QuickSearchMode } from "../../types";
 import messages from "../messages";
 import { sortScores } from "../utils";
 
@@ -18,38 +18,64 @@ const maxActions = 5;
 
 interface Command {
   label: string;
-  onClick: () => void;
+  onClick: () => boolean;
 }
 export function searchInCommands(
   search: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  createOrder: MutationFunction<OrderDraftCreate, {}>
+  createOrder: MutationFunction<OrderDraftCreate, {}>,
+  setMode: (mode: QuickSearchMode) => void
 ): QuickSearchActionInput[] {
   const actions: Command[] = [
     {
       label: intl.formatMessage(messages.addCategory),
-      onClick: () => navigate(categoryAddUrl())
+      onClick: () => {
+        navigate(categoryAddUrl());
+        return false;
+      }
     },
     {
       label: intl.formatMessage(messages.addCollection),
-      onClick: () => navigate(collectionAddUrl)
+      onClick: () => {
+        navigate(collectionAddUrl);
+        return false;
+      }
     },
     {
       label: intl.formatMessage(messages.addProduct),
-      onClick: () => navigate(productAddUrl)
+      onClick: () => {
+        navigate(productAddUrl);
+        return false;
+      }
     },
     {
       label: intl.formatMessage(messages.addCustomer),
-      onClick: () => navigate(customerAddUrl)
+      onClick: () => {
+        navigate(customerAddUrl);
+        return false;
+      }
     },
     {
       label: intl.formatMessage(messages.addVoucher),
-      onClick: () => navigate(voucherAddUrl)
+      onClick: () => {
+        navigate(voucherAddUrl);
+        return false;
+      }
     },
     {
       label: intl.formatMessage(messages.createOrder),
-      onClick: createOrder
+      onClick: () => {
+        createOrder();
+        return false;
+      }
+    },
+    {
+      label: intl.formatMessage(messages.helpMode),
+      onClick: () => {
+        setMode("help");
+        return true;
+      }
     }
   ];
 
@@ -66,9 +92,10 @@ function getCommandModeActions(
   query: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  createOrder: MutationFunction<OrderDraftCreate, {}>
+  createOrder: MutationFunction<OrderDraftCreate, {}>,
+  setMode: (mode: QuickSearchMode) => void
 ): QuickSearchActionInput[] {
-  return [...searchInCommands(query, intl, navigate, createOrder)]
+  return [...searchInCommands(query, intl, navigate, createOrder, setMode)]
     .filter(action => action.score >= threshold)
     .sort(sortScores)
     .slice(0, maxActions);

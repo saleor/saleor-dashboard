@@ -1,4 +1,8 @@
-import Dialog from "@material-ui/core/Dialog";
+import Fade from "@material-ui/core/Fade";
+import Modal from "@material-ui/core/Modal";
+import Paper from "@material-ui/core/Paper";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import useTheme from "@material-ui/core/styles/useTheme";
 import Downshift from "downshift";
 import hotkeys from "hotkeys-js";
 import React from "react";
@@ -33,6 +37,29 @@ function getItemOffset(
   return cbs.reduce((acc, cb) => cb(actions).length + acc, 0);
 }
 
+const useStyles = makeStyles(
+  theme => ({
+    modal: {
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "center",
+      padding: theme.spacing(3)
+    },
+    paper: {
+      overflow: "hidden"
+    },
+    root: {
+      height: 500,
+      maxWidth: 600,
+      outline: 0,
+      width: "100%"
+    }
+  }),
+  {
+    name: "Navigator"
+  }
+);
+
 const Navigator: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
   const input = React.useRef(null);
@@ -43,6 +70,8 @@ const Navigator: React.FC = () => {
     navigatorNotificationStorageKey,
     false
   );
+  const classes = useStyles({});
+  const theme = useTheme();
 
   React.useEffect(() => {
     hotkeys(navigatorHotkey, event => {
@@ -78,90 +107,99 @@ const Navigator: React.FC = () => {
   }, []);
 
   return (
-    <Dialog
+    <Modal
+      className={classes.modal}
       open={visible}
       onClose={() => setVisible(false)}
-      fullWidth
-      maxWidth="sm"
     >
-      <Downshift
-        itemToString={(item: QuickSearchAction) => (item ? item.label : "")}
-        onSelect={(item: QuickSearchAction) => {
-          setVisible(false);
-          item.onClick();
-        }}
-        onInputValueChange={value =>
-          change({
-            target: {
-              name: "query",
-              value
-            }
-          })
-        }
-        defaultHighlightedIndex={0}
-      >
-        {({ getInputProps, getItemProps, highlightedIndex }) => (
-          <div>
-            <NavigatorInput
-              mode={mode}
-              value={query}
-              {...getInputProps({
-                value: query
-              })}
-              ref={input}
-            />
-            {hasViews(actions) && (
-              <NavigatorSection
-                label={intl.formatMessage({
-                  defaultMessage: "Navigate to",
-                  description: "navigator section header"
-                })}
-                getItemProps={getItemProps}
-                highlightedIndex={highlightedIndex}
-                items={getViews(actions)}
-                offset={0}
-              />
-            )}
-            {hasActions(actions) && (
-              <NavigatorSection
-                label={intl.formatMessage({
-                  defaultMessage: "Quick Actions",
-                  description: "navigator section header"
-                })}
-                getItemProps={getItemProps}
-                highlightedIndex={highlightedIndex}
-                items={getActions(actions)}
-                offset={getItemOffset(actions, [getViews])}
-              />
-            )}
-            {hasCustomers(actions) && (
-              <NavigatorSection
-                label={intl.formatMessage({
-                  defaultMessage: "Search in Customers",
-                  description: "navigator section header"
-                })}
-                getItemProps={getItemProps}
-                highlightedIndex={highlightedIndex}
-                items={getCustomers(actions)}
-                offset={getItemOffset(actions, [getViews, getActions])}
-              />
-            )}
-            {hasCatalog(actions) && (
-              <NavigatorSection
-                label={intl.formatMessage({
-                  defaultMessage: "Search in Catalog",
-                  description: "navigator section header"
-                })}
-                getItemProps={getItemProps}
-                highlightedIndex={highlightedIndex}
-                items={getCatalog(actions)}
-                offset={0}
-              />
-            )}
-          </div>
-        )}
-      </Downshift>
-    </Dialog>
+      <Fade appear in={visible} timeout={theme.transitions.duration.short}>
+        <div className={classes.root}>
+          <Paper className={classes.paper}>
+            <Downshift
+              itemToString={(item: QuickSearchAction) =>
+                item ? item.label : ""
+              }
+              onSelect={(item: QuickSearchAction) => {
+                const shouldRemainVisible = item.onClick();
+                if (!shouldRemainVisible) {
+                  setVisible(false);
+                }
+              }}
+              onInputValueChange={value =>
+                change({
+                  target: {
+                    name: "query",
+                    value
+                  }
+                })
+              }
+              defaultHighlightedIndex={0}
+            >
+              {({ getInputProps, getItemProps, highlightedIndex }) => (
+                <div>
+                  <NavigatorInput
+                    mode={mode}
+                    value={query}
+                    {...getInputProps({
+                      value: query
+                    })}
+                    ref={input}
+                  />
+                  {hasViews(actions) && (
+                    <NavigatorSection
+                      label={intl.formatMessage({
+                        defaultMessage: "Navigate to",
+                        description: "navigator section header"
+                      })}
+                      getItemProps={getItemProps}
+                      highlightedIndex={highlightedIndex}
+                      items={getViews(actions)}
+                      offset={0}
+                    />
+                  )}
+                  {hasActions(actions) && (
+                    <NavigatorSection
+                      label={intl.formatMessage({
+                        defaultMessage: "Quick Actions",
+                        description: "navigator section header"
+                      })}
+                      getItemProps={getItemProps}
+                      highlightedIndex={highlightedIndex}
+                      items={getActions(actions)}
+                      offset={getItemOffset(actions, [getViews])}
+                    />
+                  )}
+                  {hasCustomers(actions) && (
+                    <NavigatorSection
+                      label={intl.formatMessage({
+                        defaultMessage: "Search in Customers",
+                        description: "navigator section header"
+                      })}
+                      getItemProps={getItemProps}
+                      highlightedIndex={highlightedIndex}
+                      items={getCustomers(actions)}
+                      offset={getItemOffset(actions, [getViews, getActions])}
+                    />
+                  )}
+                  {hasCatalog(actions) && (
+                    <NavigatorSection
+                      label={intl.formatMessage({
+                        defaultMessage: "Search in Catalog",
+                        description: "navigator section header"
+                      })}
+                      getItemProps={getItemProps}
+                      highlightedIndex={highlightedIndex}
+                      items={getCatalog(actions)}
+                      offset={0}
+                    />
+                  )}
+                </div>
+              )}
+            </Downshift>
+          </Paper>
+        </div>
+      </Fade>
+    </Modal>
   );
 };
 

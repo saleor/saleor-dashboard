@@ -58,6 +58,8 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>(
               ? "@"
               : mode === "catalog"
               ? "$"
+              : mode === "help"
+              ? "?"
               : ">"}
           </span>
         )}

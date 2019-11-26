@@ -26,7 +26,10 @@ export function searchInCatalog(
     .map<QuickSearchActionInput>(category => ({
       caption: intl.formatMessage(messages.category),
       label: category.name,
-      onClick: () => navigate(categoryUrl(category.id)),
+      onClick: () => {
+        navigate(categoryUrl(category.id));
+        return false;
+      },
       score: score(category.name, search),
       text: category.name,
       type: "catalog"
@@ -45,7 +48,10 @@ export function searchInCatalog(
           : messages.collectionUnpublished
       ),
       label: collection.name,
-      onClick: () => navigate(collectionUrl(collection.id)),
+      onClick: () => {
+        navigate(collectionUrl(collection.id));
+        return false;
+      },
       score: score(collection.name, search),
       text: collection.name,
       type: "catalog"
@@ -60,7 +66,10 @@ export function searchInCatalog(
       caption: intl.formatMessage(messages.product),
       extraInfo: product.category.name,
       label: product.name,
-      onClick: () => navigate(productUrl(product.id)),
+      onClick: () => {
+        navigate(productUrl(product.id));
+        return false;
+      },
       score: score(product.name, search),
       text: product.name,
       type: "catalog"

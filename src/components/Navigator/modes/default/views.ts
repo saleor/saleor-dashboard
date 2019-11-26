@@ -121,7 +121,10 @@ function searchInViews(
 
   return views.map(view => ({
     label: view.label,
-    onClick: () => navigate(view.url),
+    onClick: () => {
+      navigate(view.url);
+      return false;
+    },
     score: score(view.label, search),
     text: view.label,
     type: "view"

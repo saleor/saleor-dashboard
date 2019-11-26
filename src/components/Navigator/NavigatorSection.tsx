@@ -33,14 +33,19 @@ const useStyles = makeStyles(
       textTransform: "uppercase"
     },
     root: {
-      "&:not(:last-child)": {
-        marginBottom: theme.spacing(3)
+      "&:last-child": {
+        marginBottom: 0
       },
       margin: theme.spacing(2, 0),
       padding: theme.spacing(0, 1)
     },
     spacer: {
       flex: 1
+    },
+    symbol: {
+      display: "inline-block",
+      fontWeight: 600,
+      width: theme.spacing(4)
     }
   }),
   {
@@ -78,6 +83,9 @@ const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
             key={[item.label, item.type].join(":")}
           >
             <span className={classes.itemLabel}>
+              {item.symbol && (
+                <span className={classes.symbol}>{item.symbol}</span>
+              )}
               <span>{item.label}</span>
               {item.caption && (
                 <Typography variant="caption">{item.caption}</Typography>

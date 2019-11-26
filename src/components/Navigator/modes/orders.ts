@@ -30,7 +30,10 @@ function getOrdersModeActions(
         label: intl.formatMessage(messages.goToOrder, {
           orderNumber: query
         }),
-        onClick: () => navigate(orderUrl(gqlId)),
+        onClick: () => {
+          navigate(orderUrl(gqlId));
+          return false;
+        },
         type: "action"
       }
     ];

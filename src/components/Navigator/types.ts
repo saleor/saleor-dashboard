@@ -5,8 +5,9 @@ export interface QuickSearchAction {
   extraInfo?: string;
   label: string;
   price?: number;
+  symbol?: string;
   type: QuickSearchActionType;
-  onClick: () => void;
+  onClick: () => boolean;
 }
 
 export interface QuickSearchActionInput extends QuickSearchAction {
@@ -18,5 +19,6 @@ export type QuickSearchMode =
   | "default"
   | "catalog"
   | "commands"
-  | "orders"
-  | "customers";
+  | "customers"
+  | "help"
+  | "orders";

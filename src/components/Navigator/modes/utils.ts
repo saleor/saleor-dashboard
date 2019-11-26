@@ -1,4 +1,8 @@
-import { QuickSearchAction, QuickSearchActionInput } from "../types";
+import {
+  QuickSearchAction,
+  QuickSearchActionInput,
+  QuickSearchMode
+} from "../types";
 
 export function getActions(actions: QuickSearchAction[]): QuickSearchAction[] {
   return actions.filter(action => action.type === "action");
@@ -35,4 +39,22 @@ export function sortScores(
   b: QuickSearchActionInput
 ) {
   return a.score <= b.score ? 1 : -1;
+}
+
+export function getMode(command: string): QuickSearchMode {
+  switch (command) {
+    case ">":
+      return "commands";
+    case "@":
+      return "customers";
+    case "#":
+      return "orders";
+    case "$":
+      return "catalog";
+    case "?":
+      return "help";
+
+    default:
+      return null;
+  }
 }
