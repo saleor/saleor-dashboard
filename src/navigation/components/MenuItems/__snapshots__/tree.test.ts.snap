@@ -4,6 +4,7 @@ exports[`Properly computes diffs # 1`] = `
 Object {
   "id": "1glasses",
   "parentId": "0jewelry",
+  "position": 0,
   "sortOrder": 0,
   "type": "move",
 }
@@ -13,7 +14,8 @@ exports[`Properly computes diffs # 2`] = `
 Object {
   "id": "1glasses",
   "parentId": "2accessories",
-  "sortOrder": 0,
+  "position": 0,
+  "sortOrder": -1,
   "type": "move",
 }
 `;
@@ -22,6 +24,7 @@ exports[`Properly computes diffs # 3`] = `
 Object {
   "id": "2accessories",
   "parentId": "4apparel",
+  "position": 0,
   "sortOrder": 0,
   "type": "move",
 }
