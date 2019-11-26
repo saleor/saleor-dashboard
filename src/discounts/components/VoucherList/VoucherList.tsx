@@ -220,11 +220,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   )}
                 </TableCell>
                 <TableCell className={classes.colUses}>
-                  {voucher && voucher.usageLimit ? (
-                    voucher.usageLimit
-                  ) : voucher && voucher.usageLimit === null ? (
-                    "-"
-                  ) : (
+                  {maybe<React.ReactNode>(
+                    () =>
+                      voucher.usageLimit === null ? "-" : voucher.usageLimit,
                     <Skeleton />
                   )}
                 </TableCell>
