@@ -4,7 +4,7 @@ import { TypedMutation } from "../mutations";
 import {
   categoryTranslationFragment,
   collectionTranslationFragment,
-  pageTranslationFragment,
+  pageTranslatableFragment,
   productTranslationFragment,
   saleTranslationFragment,
   voucherTranslationFragment
@@ -112,7 +112,7 @@ export const TypedUpdateCollectionTranslations = TypedMutation<
 >(updateCollectionTranslations);
 
 const updatePageTranslations = gql`
-  ${pageTranslationFragment}
+  ${pageTranslatableFragment}
   mutation UpdatePageTranslations(
     $id: ID!
     $input: PageTranslationInput!
@@ -124,7 +124,7 @@ const updatePageTranslations = gql`
         message
       }
       page {
-        ...PageTranslationFragment
+        ...PageTranslatableFragment
       }
     }
   }

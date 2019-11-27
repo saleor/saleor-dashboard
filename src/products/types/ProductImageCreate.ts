@@ -159,7 +159,7 @@ export interface ProductImageCreate_productImageCreate_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
-  category: ProductImageCreate_productImageCreate_product_category;
+  category: ProductImageCreate_productImageCreate_product_category | null;
   collections: (ProductImageCreate_productImageCreate_product_collections | null)[] | null;
   basePrice: ProductImageCreate_productImageCreate_product_basePrice | null;
   margin: ProductImageCreate_productImageCreate_product_margin | null;

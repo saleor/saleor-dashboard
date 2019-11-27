@@ -153,7 +153,7 @@ export interface Product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
-  category: Product_category;
+  category: Product_category | null;
   collections: (Product_collections | null)[] | null;
   basePrice: Product_basePrice | null;
   margin: Product_margin | null;

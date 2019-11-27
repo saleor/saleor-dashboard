@@ -698,7 +698,7 @@ export interface CollectionInput {
 
 export interface ConfigurationItemInput {
   name: string;
-  value: string;
+  value?: string | null;
 }
 
 export interface CustomerFilterInput {
@@ -737,6 +737,7 @@ export interface DraftOrderInput {
   shippingAddress?: AddressInput | null;
   shippingMethod?: string | null;
   voucher?: string | null;
+  customerNote?: string | null;
 }
 
 export interface FulfillmentCancelInput {
@@ -870,6 +871,7 @@ export interface ProductFilterInput {
   isPublished?: boolean | null;
   collections?: (string | null)[] | null;
   categories?: (string | null)[] | null;
+  hasCategory?: boolean | null;
   price?: PriceRangeInput | null;
   attributes?: (AttributeInput | null)[] | null;
   stockAvailability?: StockAvailability | null;

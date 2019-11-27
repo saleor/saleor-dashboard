@@ -179,6 +179,27 @@ export const pageTranslationFragment = gql`
     }
   }
 `;
+export const pageTranslatableFragment = gql`
+  fragment PageTranslatableFragment on PageTranslatableContent {
+    id
+    contentJson
+    seoDescription
+    seoTitle
+    title
+
+    translation(languageCode: $language) {
+      id
+      contentJson
+      seoDescription
+      seoTitle
+      title
+      language {
+        code
+        language
+      }
+    }
+  }
+`;
 export const productTypeTranslationFragment = gql`
   fragment AttributeTranslationFragment on Attribute {
     id

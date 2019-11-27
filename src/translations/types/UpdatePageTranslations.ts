@@ -31,7 +31,7 @@ export interface UpdatePageTranslations_pageTranslate_page_translation {
 }
 
 export interface UpdatePageTranslations_pageTranslate_page {
-  __typename: "Page";
+  __typename: "PageTranslatableContent";
   id: string;
   contentJson: any;
   seoDescription: string | null;
