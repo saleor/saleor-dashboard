@@ -49,7 +49,7 @@ export interface SearchCatalog_products_edges_node_category {
 export interface SearchCatalog_products_edges_node {
   __typename: "Product";
   id: string;
-  category: SearchCatalog_products_edges_node_category;
+  category: SearchCatalog_products_edges_node_category | null;
   name: string;
 }
 

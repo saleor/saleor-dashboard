@@ -159,7 +159,7 @@ export interface ProductImageUpdate_productImageUpdate_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
-  category: ProductImageUpdate_productImageUpdate_product_category;
+  category: ProductImageUpdate_productImageUpdate_product_category | null;
   collections: (ProductImageUpdate_productImageUpdate_product_collections | null)[] | null;
   basePrice: ProductImageUpdate_productImageUpdate_product_basePrice | null;
   margin: ProductImageUpdate_productImageUpdate_product_margin | null;

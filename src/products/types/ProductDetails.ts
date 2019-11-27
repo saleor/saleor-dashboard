@@ -168,7 +168,7 @@ export interface ProductDetails_product {
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
-  category: ProductDetails_product_category;
+  category: ProductDetails_product_category | null;
   collections: (ProductDetails_product_collections | null)[] | null;
   basePrice: ProductDetails_product_basePrice | null;
   margin: ProductDetails_product_margin | null;
