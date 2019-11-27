@@ -381,7 +381,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                           : formData.type,
                                       usageLimit: formData.hasUsageLimit
                                         ? parseInt(formData.usageLimit, 10)
-                                        : 0
+                                        : null
                                     }
                                   }
                                 })
