@@ -14,11 +14,11 @@ interface ImageUploadProps {
   isActiveClassName?: string;
   iconContainerClassName?: string;
   iconContainerActiveClassName?: string;
-  onImageUpload: (file: File) => void;
+  onImageUpload: (file: FileList) => void;
 }
 
 const useStyles = makeStyles(theme => ({
-  containerDragActive: {
+  backdrop: {
     background: fade(theme.palette.primary.main, 0.1),
     color: theme.palette.primary.main
   },
@@ -57,41 +57,37 @@ const useStyles = makeStyles(theme => ({
 export const ImageUpload: React.FC<ImageUploadProps> = props => {
   const {
     children,
-
     className,
     disableClick,
-    isActiveClassName,
     iconContainerActiveClassName,
     iconContainerClassName,
+    isActiveClassName,
     onImageUpload
   } = props;
 
   const classes = useStyles(props);
 
   return (
-    <Dropzone
-      disableClick={disableClick}
-      onDrop={files => onImageUpload(files[0])}
-    >
+    <Dropzone disableClick={disableClick} onDrop={onImageUpload}>
       {({ isDragActive, getInputProps, getRootProps }) => (
         <>
           <div
             {...getRootProps()}
-            className={classNames({
-              [classes.photosIconContainer]: true,
-              [classes.containerDragActive]: isDragActive,
-              [className]: !!className,
-              [isActiveClassName]: !!isActiveClassName && isDragActive
+            className={classNames(className, classes.photosIconContainer, {
+              [classes.backdrop]: isDragActive,
+              [isActiveClassName]: isDragActive
             })}
           >
             <div
-              className={classNames({
-                [iconContainerClassName]: !!iconContainerClassName,
-                [iconContainerActiveClassName]:
-                  !!iconContainerActiveClassName && isDragActive
+              className={classNames(iconContainerClassName, {
+                [iconContainerActiveClassName]: isDragActive
               })}
             >
-              <input {...getInputProps()} className={classes.fileField} />
+              <input
+                {...getInputProps()}
+                className={classes.fileField}
+                accept="image/*"
+              />
               <ImageIcon className={classes.photosIcon} />
               <Typography className={classes.uploadText}>
                 <FormattedMessage
