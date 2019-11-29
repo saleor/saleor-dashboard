@@ -1,4 +1,4 @@
-type CreateMultiFileUploadHandlerCallbacks = Partial<{
+export type CreateMultiFileUploadHandlerCallbacks = Partial<{
   onAfterUpload: (index: number, all: number) => void;
   onBeforeUpload: (index: number, all: number) => void;
   onCompleted: (files: FileList) => void;
@@ -6,7 +6,7 @@ type CreateMultiFileUploadHandlerCallbacks = Partial<{
   onStart: (files: FileList) => void;
 }>;
 
-export function createMultiFileUploadHandler<T>(
+function createMultiFileUploadHandler<T>(
   upload: (file: File) => Promise<T>,
   {
     onAfterUpload,
@@ -52,3 +52,5 @@ export function createMultiFileUploadHandler<T>(
     }
   };
 }
+
+export default createMultiFileUploadHandler;

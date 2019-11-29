@@ -7,7 +7,7 @@ import ImageTile from "@saleor/components/ImageTile";
 import ImageUpload from "@saleor/components/ImageUpload";
 import { commonMessages } from "@saleor/intl";
 import { ReorderAction } from "@saleor/types";
-import { createMultiFileUploadHandler } from "@saleor/utils/handlers/multiFileUploadHandler";
+import createMultiFileUploadHandler from "@saleor/utils/handlers/multiFileUploadHandler";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
