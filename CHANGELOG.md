@@ -15,6 +15,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Use searches as hooks instead of components - #262 by @dominik-zeglen
 - Add navigator - #267 by @dominik-zeglen
 - Fix voucher limit - #271 by @dominik-zeglen
+- Fix dropdown clickable areas - #281 by @dominik-zeglen
 
 ## 2.0.0
 
