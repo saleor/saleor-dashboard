@@ -1,13 +1,13 @@
 export type CreateMultiFileUploadHandlerCallbacks = Partial<{
-  onAfterUpload: (index: number, all: number) => void;
-  onBeforeUpload: (index: number, all: number) => void;
-  onCompleted: (files: FileList) => void;
-  onError: (index: number, all: number) => void;
-  onStart: (files: FileList) => void;
+  onAfterUpload: (index: number, files: File[]) => void;
+  onBeforeUpload: (index: number, files: File[]) => void;
+  onCompleted: (files: File[]) => void;
+  onError: (index: number, files: File[]) => void;
+  onStart: (files: File[]) => void;
 }>;
 
 function createMultiFileUploadHandler<T>(
-  upload: (file: File) => Promise<T>,
+  upload: (file: File, fileIndex: number) => Promise<T>,
   {
     onAfterUpload,
     onBeforeUpload,
@@ -16,39 +16,41 @@ function createMultiFileUploadHandler<T>(
     onStart
   }: CreateMultiFileUploadHandlerCallbacks
 ) {
-  async function uploadImage(files: FileList, fileIndex: number) {
+  async function uploadImage(files: File[], fileIndex: number): Promise<void> {
     if (files.length > fileIndex) {
       try {
         if (onBeforeUpload) {
-          onBeforeUpload(fileIndex, files.length);
+          onBeforeUpload(fileIndex, files);
         }
 
-        await upload(files[fileIndex]);
+        await upload(files[fileIndex], fileIndex);
 
         if (onAfterUpload) {
-          onAfterUpload(fileIndex, files.length);
+          onAfterUpload(fileIndex, files);
         }
       } catch (exception) {
         console.error(
           `Could not upload file #${fileIndex + 1}. Reason: ${exception}`
         );
         if (onError) {
-          onError(fileIndex, files.length);
+          onError(fileIndex, files);
         }
       } finally {
         await uploadImage(files, fileIndex + 1);
       }
     }
   }
-  return async (files: FileList) => {
+  return async (files: FileList): Promise<void> => {
+    const fileArray = Array.from(files);
+
     if (onStart) {
-      onStart(files);
+      onStart(fileArray);
     }
 
-    await uploadImage(files, 0);
+    await uploadImage(fileArray, 0);
 
     if (onCompleted) {
-      onCompleted(files);
+      onCompleted(fileArray);
     }
   };
 }
