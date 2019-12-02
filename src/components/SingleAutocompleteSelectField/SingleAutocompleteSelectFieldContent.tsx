@@ -62,7 +62,8 @@ const useStyles = makeStyles(
       padding: 8
     },
     hide: {
-      opacity: 0
+      opacity: 0,
+      zIndex: -1
     },
     hr: {
       margin: theme.spacing(1, 0)
