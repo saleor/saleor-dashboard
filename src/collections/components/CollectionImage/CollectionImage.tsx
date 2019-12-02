@@ -92,6 +92,7 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
               onChange={event => onImageUpload(event.target.files[0])}
               type="file"
               ref={anchor}
+              accept="image/*"
             />
           </>
         }
@@ -105,7 +106,7 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
           </div>
         </CardContent>
       ) : image === null ? (
-        <ImageUpload onImageUpload={onImageUpload} />
+        <ImageUpload onImageUpload={files => onImageUpload(files[0])} />
       ) : (
         <CardContent>
           <ImageTile image={image} onImageDelete={onImageDelete} />
