@@ -104,80 +104,76 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
           itemToString={item => (item ? item.label : "")}
           onSelect={handleChange}
         >
-          {({ getItemProps, isOpen, openMenu, closeMenu, selectItem }) => {
-            return (
-              <div className={classes.container}>
-                <TextField
-                  InputProps={{
-                    endAdornment: loading && <CircularProgress size={16} />,
-                    id: undefined,
-                    onBlur: () => {
-                      closeMenu();
-                      setMenuPath([]);
-                      setInputValue(displayValue);
-                    },
-                    onChange: event => {
-                      debounceFn(event.target.value);
-                      setInputValue(event.target.value);
-                    },
-                    onFocus: () => openMenu(),
-                    placeholder
-                  }}
-                  disabled={disabled}
-                  error={error}
-                  helperText={helperText}
-                  label={label}
-                  fullWidth={true}
-                  value={inputValue}
-                />
-                {isOpen && (
-                  <Paper className={classes.paper} square>
-                    {options.length ? (
-                      <>
-                        {menuPath.length > 0 && (
-                          <MenuItem
-                            component="div"
-                            {...getItemProps({
-                              item: null
-                            })}
-                            onClick={() =>
-                              setMenuPath(
-                                menuPath.slice(0, menuPath.length - 2)
-                              )
-                            }
-                          >
-                            <ArrowBack className={classes.menuBack} />
-                            <FormattedMessage {...buttonMessages.back} />
-                          </MenuItem>
-                        )}
-                        {(menuPath.length
-                          ? getMenuItemByPath(options, menuPath).children
-                          : options
-                        ).map((suggestion, index) => (
-                          <MenuItem
-                            key={suggestion.value}
-                            component="div"
-                            {...getItemProps({ item: suggestion })}
-                            onClick={() =>
-                              suggestion.value
-                                ? selectItem(suggestion.value)
-                                : setMenuPath([...menuPath, index])
-                            }
-                          >
-                            {suggestion.label}
-                          </MenuItem>
-                        ))}
-                      </>
-                    ) : (
-                      <MenuItem disabled component="div">
-                        <FormattedMessage defaultMessage="No results" />
-                      </MenuItem>
-                    )}
-                  </Paper>
-                )}
-              </div>
-            );
-          }}
+          {({ getItemProps, isOpen, openMenu, closeMenu, selectItem }) => (
+            <div className={classes.container}>
+              <TextField
+                InputProps={{
+                  endAdornment: loading && <CircularProgress size={16} />,
+                  id: undefined,
+                  onBlur: () => {
+                    closeMenu();
+                    setMenuPath([]);
+                    setInputValue(displayValue);
+                  },
+                  onChange: event => {
+                    debounceFn(event.target.value);
+                    setInputValue(event.target.value);
+                  },
+                  onFocus: () => openMenu(),
+                  placeholder
+                }}
+                disabled={disabled}
+                error={error}
+                helperText={helperText}
+                label={label}
+                fullWidth={true}
+                value={inputValue}
+              />
+              {isOpen && (
+                <Paper className={classes.paper} square>
+                  {options.length ? (
+                    <>
+                      {menuPath.length > 0 && (
+                        <MenuItem
+                          component="div"
+                          {...getItemProps({
+                            item: null
+                          })}
+                          onClick={() =>
+                            setMenuPath(menuPath.slice(0, menuPath.length - 2))
+                          }
+                        >
+                          <ArrowBack className={classes.menuBack} />
+                          <FormattedMessage {...buttonMessages.back} />
+                        </MenuItem>
+                      )}
+                      {(menuPath.length
+                        ? getMenuItemByPath(options, menuPath).children
+                        : options
+                      ).map((suggestion, index) => (
+                        <MenuItem
+                          key={suggestion.value}
+                          component="div"
+                          {...getItemProps({ item: suggestion })}
+                          onClick={() =>
+                            suggestion.value
+                              ? selectItem(suggestion.value)
+                              : setMenuPath([...menuPath, index])
+                          }
+                        >
+                          {suggestion.label}
+                        </MenuItem>
+                      ))}
+                    </>
+                  ) : (
+                    <MenuItem disabled component="div">
+                      <FormattedMessage defaultMessage="No results" />
+                    </MenuItem>
+                  )}
+                </Paper>
+              )}
+            </div>
+          )}
         </Downshift>
       )}
     </DebounceAutocomplete>

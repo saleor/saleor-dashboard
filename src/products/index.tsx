@@ -82,13 +82,11 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
 
 const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
   match
-}) => {
-  return (
-    <ProductVariantCreateComponent
-      productId={decodeURIComponent(match.params.id)}
-    />
-  );
-};
+}) => (
+  <ProductVariantCreateComponent
+    productId={decodeURIComponent(match.params.id)}
+  />
+);
 
 const Component = () => {
   const intl = useIntl();

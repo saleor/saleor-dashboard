@@ -9,11 +9,10 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ListProps } from "../../../types";
-
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
+import Skeleton from "@saleor/components/Skeleton";
+import { ListProps } from "../../../types";
 import { maybe, renderCollection } from "../../../misc";
 
 export interface TranslatableEntity {

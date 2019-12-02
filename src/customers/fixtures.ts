@@ -987,8 +987,6 @@ export const customer: CustomerDetails_user & CustomerAddresses_user = {
     }
   ],
   dateJoined: "2017-05-07T09:37:30.124154+00:00",
-  firstName: "Tom",
-
   defaultBillingAddress: {
     __typename: "Address",
     city: "Port Danielshire",
@@ -1028,6 +1026,7 @@ export const customer: CustomerDetails_user & CustomerAddresses_user = {
     streetAddress2: ""
   },
   email: "elizabeth.vaughn@example.com",
+  firstName: "Tom",
   id: "VXNlcjoy",
   isActive: true,
   lastLogin: "2018-05-07T09:37:30.124154+00:00",

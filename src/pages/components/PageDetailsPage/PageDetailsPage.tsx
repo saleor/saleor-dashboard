@@ -99,11 +99,13 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               <SeoForm
                 description={data.seoDescription}
                 disabled={disabled}
-                descriptionPlaceholder={maybe(() => {
-                  return convertFromRaw(data.content)
-                    .getPlainText()
-                    .slice(0, 300);
-                }, "")}
+                descriptionPlaceholder={maybe(
+                  () =>
+                    convertFromRaw(data.content)
+                      .getPlainText()
+                      .slice(0, 300),
+                  ""
+                )}
                 onChange={change}
                 title={data.seoTitle}
                 titlePlaceholder={data.title}

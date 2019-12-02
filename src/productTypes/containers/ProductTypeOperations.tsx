@@ -98,88 +98,84 @@ const ProductTypeOperations: React.FC<ProductTypeOperationsProps> = ({
   onProductTypeAttributeReorder,
   onProductTypeDelete,
   onProductTypeUpdate
-}) => {
-  return (
-    <TypedProductTypeDeleteMutation onCompleted={onProductTypeDelete}>
-      {(...deleteProductType) => (
-        <TypedProductTypeUpdateMutation onCompleted={onProductTypeUpdate}>
-          {(...updateProductType) => (
-            <TypedAssignAttributeMutation onCompleted={onAssignAttribute}>
-              {(...assignAttribute) => (
-                <TypedUnassignAttributeMutation
-                  onCompleted={onUnassignAttribute}
-                >
-                  {(...unassignAttribute) => (
-                    <ProductTypeAttributeReorderMutation
-                      onCompleted={onProductTypeAttributeReorder}
-                    >
-                      {(
-                        reorderAttributeMutation,
-                        reorderAttributeMutationResult
-                      ) => {
-                        const reorderAttributeMutationFn: MutationFunction<
-                          ProductTypeAttributeReorder,
-                          ProductTypeAttributeReorderVariables
-                        > = opts => {
-                          const optimisticResponse: ProductTypeAttributeReorder = {
-                            productTypeReorderAttributes: {
-                              __typename: "ProductTypeReorderAttributes" as "ProductTypeReorderAttributes",
-                              errors: [],
-                              productType: {
-                                ...productType,
-                                productAttributes:
-                                  opts.variables.type ===
-                                  AttributeTypeEnum.PRODUCT
-                                    ? moveAttribute(
-                                        productType.productAttributes,
-                                        opts.variables.move
-                                      )
-                                    : productType.productAttributes,
-                                variantAttributes:
-                                  opts.variables.type ===
-                                  AttributeTypeEnum.VARIANT
-                                    ? moveAttribute(
-                                        productType.variantAttributes,
-                                        opts.variables.move
-                                      )
-                                    : productType.variantAttributes
-                              }
+}) => (
+  <TypedProductTypeDeleteMutation onCompleted={onProductTypeDelete}>
+    {(...deleteProductType) => (
+      <TypedProductTypeUpdateMutation onCompleted={onProductTypeUpdate}>
+        {(...updateProductType) => (
+          <TypedAssignAttributeMutation onCompleted={onAssignAttribute}>
+            {(...assignAttribute) => (
+              <TypedUnassignAttributeMutation onCompleted={onUnassignAttribute}>
+                {(...unassignAttribute) => (
+                  <ProductTypeAttributeReorderMutation
+                    onCompleted={onProductTypeAttributeReorder}
+                  >
+                    {(
+                      reorderAttributeMutation,
+                      reorderAttributeMutationResult
+                    ) => {
+                      const reorderAttributeMutationFn: MutationFunction<
+                        ProductTypeAttributeReorder,
+                        ProductTypeAttributeReorderVariables
+                      > = opts => {
+                        const optimisticResponse: ProductTypeAttributeReorder = {
+                          productTypeReorderAttributes: {
+                            __typename: "ProductTypeReorderAttributes" as "ProductTypeReorderAttributes",
+                            errors: [],
+                            productType: {
+                              ...productType,
+                              productAttributes:
+                                opts.variables.type ===
+                                AttributeTypeEnum.PRODUCT
+                                  ? moveAttribute(
+                                      productType.productAttributes,
+                                      opts.variables.move
+                                    )
+                                  : productType.productAttributes,
+                              variantAttributes:
+                                opts.variables.type ===
+                                AttributeTypeEnum.VARIANT
+                                  ? moveAttribute(
+                                      productType.variantAttributes,
+                                      opts.variables.move
+                                    )
+                                  : productType.variantAttributes
                             }
-                          };
-                          return reorderAttributeMutation({
-                            ...opts,
-                            optimisticResponse
-                          });
+                          }
                         };
-
-                        return children({
-                          assignAttribute: getMutationProviderData(
-                            ...assignAttribute
-                          ),
-                          deleteProductType: getMutationProviderData(
-                            ...deleteProductType
-                          ),
-                          reorderAttribute: getMutationProviderData(
-                            reorderAttributeMutationFn,
-                            reorderAttributeMutationResult
-                          ),
-                          unassignAttribute: getMutationProviderData(
-                            ...unassignAttribute
-                          ),
-                          updateProductType: getMutationProviderData(
-                            ...updateProductType
-                          )
+                        return reorderAttributeMutation({
+                          ...opts,
+                          optimisticResponse
                         });
-                      }}
-                    </ProductTypeAttributeReorderMutation>
-                  )}
-                </TypedUnassignAttributeMutation>
-              )}
-            </TypedAssignAttributeMutation>
-          )}
-        </TypedProductTypeUpdateMutation>
-      )}
-    </TypedProductTypeDeleteMutation>
-  );
-};
+                      };
+
+                      return children({
+                        assignAttribute: getMutationProviderData(
+                          ...assignAttribute
+                        ),
+                        deleteProductType: getMutationProviderData(
+                          ...deleteProductType
+                        ),
+                        reorderAttribute: getMutationProviderData(
+                          reorderAttributeMutationFn,
+                          reorderAttributeMutationResult
+                        ),
+                        unassignAttribute: getMutationProviderData(
+                          ...unassignAttribute
+                        ),
+                        updateProductType: getMutationProviderData(
+                          ...updateProductType
+                        )
+                      });
+                    }}
+                  </ProductTypeAttributeReorderMutation>
+                )}
+              </TypedUnassignAttributeMutation>
+            )}
+          </TypedAssignAttributeMutation>
+        )}
+      </TypedProductTypeUpdateMutation>
+    )}
+  </TypedProductTypeDeleteMutation>
+);
 export default ProductTypeOperations;

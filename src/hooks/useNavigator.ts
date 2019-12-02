@@ -13,8 +13,13 @@ function useNavigator(): UseNavigatorResult {
 
   return (url: string, replace = false, preserveQs = false) => {
     const targetUrl = preserveQs ? url + search : url;
-    replace ? history.replace(targetUrl) : history.push(targetUrl);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (replace) {
+      history.replace(targetUrl);
+    } else {
+      history.push(targetUrl);
+    }
+
+    window.scrollTo({ behavior: "smooth", top: 0 });
   };
 }
 

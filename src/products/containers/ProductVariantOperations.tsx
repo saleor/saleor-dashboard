@@ -50,30 +50,28 @@ const VariantUpdateOperations: React.FC<VariantDeleteOperationsProps> = ({
   onUpdate,
   onImageAssign,
   onImageUnassign
-}) => {
-  return (
-    <TypedVariantImageAssignMutation onCompleted={onImageAssign}>
-      {(...assignImage) => (
-        <TypedVariantImageUnassignMutation onCompleted={onImageUnassign}>
-          {(...unassignImage) => (
-            <TypedVariantUpdateMutation onCompleted={onUpdate}>
-              {(...updateVariant) => (
-                <TypedVariantDeleteMutation onCompleted={onDelete}>
-                  {(...deleteVariant) =>
-                    children({
-                      assignImage: getMutationProviderData(...assignImage),
-                      deleteVariant: getMutationProviderData(...deleteVariant),
-                      unassignImage: getMutationProviderData(...unassignImage),
-                      updateVariant: getMutationProviderData(...updateVariant)
-                    })
-                  }
-                </TypedVariantDeleteMutation>
-              )}
-            </TypedVariantUpdateMutation>
-          )}
-        </TypedVariantImageUnassignMutation>
-      )}
-    </TypedVariantImageAssignMutation>
-  );
-};
+}) => (
+  <TypedVariantImageAssignMutation onCompleted={onImageAssign}>
+    {(...assignImage) => (
+      <TypedVariantImageUnassignMutation onCompleted={onImageUnassign}>
+        {(...unassignImage) => (
+          <TypedVariantUpdateMutation onCompleted={onUpdate}>
+            {(...updateVariant) => (
+              <TypedVariantDeleteMutation onCompleted={onDelete}>
+                {(...deleteVariant) =>
+                  children({
+                    assignImage: getMutationProviderData(...assignImage),
+                    deleteVariant: getMutationProviderData(...deleteVariant),
+                    unassignImage: getMutationProviderData(...unassignImage),
+                    updateVariant: getMutationProviderData(...updateVariant)
+                  })
+                }
+              </TypedVariantDeleteMutation>
+            )}
+          </TypedVariantUpdateMutation>
+        )}
+      </TypedVariantImageUnassignMutation>
+    )}
+  </TypedVariantImageAssignMutation>
+);
 export default VariantUpdateOperations;

@@ -98,36 +98,34 @@ const PluginList: React.FC<PluginListProps> = props => {
         <TableBody>
           {renderCollection(
             plugins,
-            plugin => {
-              return (
-                <TableRow
-                  hover={!!plugin}
-                  className={!!plugin ? classes.link : undefined}
-                  onClick={plugin ? onRowClick(plugin.id) : undefined}
-                  key={plugin ? plugin.id : "skeleton"}
-                >
-                  <TableCell className={classes.colName}>
-                    {maybe<React.ReactNode>(() => plugin.name, <Skeleton />)}
-                  </TableCell>
-                  <TableCell className={classes.colActive}>
-                    {maybe<React.ReactNode>(
-                      () => (
-                        <StatusLabel
-                          label={translateBoolean(plugin.active, intl)}
-                          status={plugin.active ? "success" : "error"}
-                        />
-                      ),
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.colAction}>
-                    <div onClick={plugin ? onRowClick(plugin.id) : undefined}>
-                      <EditIcon />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            },
+            plugin => (
+              <TableRow
+                hover={!!plugin}
+                className={!!plugin ? classes.link : undefined}
+                onClick={plugin ? onRowClick(plugin.id) : undefined}
+                key={plugin ? plugin.id : "skeleton"}
+              >
+                <TableCell className={classes.colName}>
+                  {maybe<React.ReactNode>(() => plugin.name, <Skeleton />)}
+                </TableCell>
+                <TableCell className={classes.colActive}>
+                  {maybe<React.ReactNode>(
+                    () => (
+                      <StatusLabel
+                        label={translateBoolean(plugin.active, intl)}
+                        status={plugin.active ? "success" : "error"}
+                      />
+                    ),
+                    <Skeleton />
+                  )}
+                </TableCell>
+                <TableCell className={classes.colAction}>
+                  <div onClick={plugin ? onRowClick(plugin.id) : undefined}>
+                    <EditIcon />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ),
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>

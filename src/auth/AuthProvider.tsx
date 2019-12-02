@@ -6,12 +6,12 @@ import {
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
 import { MutationFunction, MutationResult } from "react-apollo";
-import { UserContext } from "./";
 import { TypedTokenAuthMutation, TypedVerifyTokenMutation } from "./mutations";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { User } from "./types/User";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 import { getAuthToken, removeAuthToken, setAuthToken } from "./utils";
+import { UserContext } from "./";
 
 interface AuthProviderOperationsProps {
   children: (props: {
@@ -24,21 +24,19 @@ interface AuthProviderOperationsProps {
 }
 const AuthProviderOperations: React.FC<AuthProviderOperationsProps> = ({
   children
-}) => {
-  return (
-    <TypedTokenAuthMutation>
-      {(...tokenAuth) => (
-        <TypedVerifyTokenMutation>
-          {(...tokenVerify) => (
-            <AuthProvider tokenAuth={tokenAuth} tokenVerify={tokenVerify}>
-              {children}
-            </AuthProvider>
-          )}
-        </TypedVerifyTokenMutation>
-      )}
-    </TypedTokenAuthMutation>
-  );
-};
+}) => (
+  <TypedTokenAuthMutation>
+    {(...tokenAuth) => (
+      <TypedVerifyTokenMutation>
+        {(...tokenVerify) => (
+          <AuthProvider tokenAuth={tokenAuth} tokenVerify={tokenVerify}>
+            {children}
+          </AuthProvider>
+        )}
+      </TypedVerifyTokenMutation>
+    )}
+  </TypedTokenAuthMutation>
+);
 
 interface AuthProviderProps {
   children: (props: {
@@ -69,7 +67,7 @@ class AuthProvider extends React.Component<
 > {
   constructor(props) {
     super(props);
-    this.state = { user: undefined, persistToken: false };
+    this.state = { persistToken: false, user: undefined };
   }
 
   componentWillReceiveProps(props: AuthProviderProps) {

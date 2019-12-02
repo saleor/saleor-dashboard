@@ -25,7 +25,11 @@ function useListActions<TData>(
   }
 
   function toggle(data: TData) {
-    isSelected(data) ? remove(data) : add(data);
+    if (isSelected(data)) {
+      remove(data);
+    } else {
+      add(data);
+    }
   }
 
   function set(data: TData[]) {
