@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import placeholderImg from "@assets/images/placeholder255x255.png";
@@ -35,6 +35,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const [errors, setErrors] = useState([]);
+  useEffect(() => {
+    setErrors([]);
+  }, [variantId]);
 
   return (
     <TypedProductVariantQuery
@@ -43,7 +47,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       require={["productVariant"]}
     >
       {({ data, loading }) => {
-        const [errors, setErrors] = useState([]);
         const variant = data ? data.productVariant : undefined;
         const handleBack = () => navigate(productUrl(productId));
         const handleDelete = () => {
@@ -144,7 +147,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                     }}
                     onVariantClick={variantId => {
                       navigate(productVariantEditUrl(productId, variantId));
-                      setErrors([]);
                     }}
                   />
                   <ProductVariantDeleteDialog
