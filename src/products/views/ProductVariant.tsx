@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import placeholderImg from "@assets/images/placeholder255x255.png";
@@ -35,6 +35,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const [errors, setErrors] = useState([]);
+  useEffect(() => {
+    setErrors([]);
+  }, [variantId]);
 
   return (
     <TypedProductVariantQuery
@@ -54,8 +58,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           navigate(productUrl(productId));
         };
         const handleUpdate = (data: VariantUpdate) => {
-          if (!maybe(() => data.productVariantUpdate.productErrors.length)) {
+          if (!data.productVariantUpdate.productErrors.length) {
             notify({ text: intl.formatMessage(commonMessages.savedChanges) });
+          } else {
+            setErrors(data.productVariantUpdate.productErrors);
           }
         };
 
@@ -107,12 +113,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                 <>
                   <WindowTitle title={maybe(() => data.productVariant.name)} />
                   <ProductVariantPage
-                    errors={maybe(
-                      () =>
-                        updateVariant.opts.data.productVariantUpdate
-                          .productErrors,
-                      []
-                    )}
+                    errors={errors}
                     saveButtonBarState={formTransitionState}
                     loading={disableFormSave}
                     placeholderImage={placeholderImg}
