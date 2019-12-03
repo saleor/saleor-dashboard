@@ -17,8 +17,8 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 
 interface StaffPasswordResetDialogFormData {
-  password: string;
-  previousPassword: string;
+  newPassword: string;
+  oldPassword: string;
 }
 export interface StaffPasswordResetDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -27,8 +27,8 @@ export interface StaffPasswordResetDialogProps extends DialogProps {
 }
 
 const initialForm: StaffPasswordResetDialogFormData = {
-  password: "",
-  previousPassword: ""
+  newPassword: "",
+  oldPassword: ""
 };
 
 const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
@@ -54,33 +54,33 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
           <>
             <DialogContent>
               <TextField
-                error={!!errors.previousPassword}
+                error={!!errors.oldPassword}
                 fullWidth
-                helperText={errors.previousPassword}
+                helperText={errors.oldPassword}
                 label={intl.formatMessage({
                   defaultMessage: "Previous Password",
                   description: "input label"
                 })}
-                name="previousPassword"
+                name="oldPassword"
                 type="password"
                 onChange={change}
               />
               <FormSpacer />
               <TextField
-                error={!!errors.password}
+                error={!!errors.newPassword}
                 fullWidth
                 helperText={
-                  errors.password ||
+                  errors.newPassword ||
                   intl.formatMessage({
                     defaultMessage:
-                      "New password must be at least 5 characters long"
+                      "New newPassword must be at least 8 characters long"
                   })
                 }
                 label={intl.formatMessage({
                   defaultMessage: "New Password",
                   description: "input label"
                 })}
-                name="password"
+                name="newPassword"
                 type="password"
                 onChange={change}
               />
@@ -90,7 +90,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                 <FormattedMessage {...buttonMessages.back} />
               </Button>
               <ConfirmButton
-                disabled={data.password.length <= 4}
+                disabled={!(data.newPassword.length >= 8)}
                 transitionState={confirmButtonState}
                 color="primary"
                 variant="contained"

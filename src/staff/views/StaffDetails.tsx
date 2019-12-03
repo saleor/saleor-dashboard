@@ -261,10 +261,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 onClose={closeModal}
                                 onSubmit={data =>
                                   changePassword({
-                                    variables: {
-                                      newPassword: data.password,
-                                      oldPassword: data.previousPassword
-                                    }
+                                    variables: data
                                   })
                                 }
                               />
