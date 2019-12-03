@@ -70,7 +70,8 @@ const useStyles = makeStyles(
       padding: 8
     },
     hide: {
-      opacity: 0
+      opacity: 0,
+      zIndex: -1
     },
     hr: {
       margin: theme.spacing(1, 0)
@@ -275,17 +276,19 @@ const MultiAutocompleteSelectFieldContent: React.FC<
           </MenuItem>
         )}
       </div>
-      <div className={classes.arrowContainer}>
-        <div
-          className={classNames(classes.arrowInnerContainer, {
-            // Needs to be explicitely compared to false because
-            // scrolledToBottom can be either true, false or undefined
-            [classes.hide]: scrolledToBottom !== false
-          })}
-        >
-          <SVG src={chevronDown} />
+      {choices.length > maxMenuItems && (
+        <div className={classes.arrowContainer}>
+          <div
+            className={classNames(classes.arrowInnerContainer, {
+              // Needs to be explicitely compared to false because
+              // scrolledToBottom can be either true, false or undefined
+              [classes.hide]: scrolledToBottom !== false
+            })}
+          >
+            <SVG src={chevronDown} />
+          </div>
         </div>
-      </div>
+      )}
     </Paper>
   );
 };
