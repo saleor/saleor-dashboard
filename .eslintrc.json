@@ -73,7 +73,7 @@
     "import/no-internal-modules": "off",
     "import/order": "error",
     "linebreak-style": "off",
-    "local-rules/named-styles": "warn",
+    "local-rules/named-styles": "error",
     "max-classes-per-file": "off",
     "max-len": "off",
     "new-parens": "off",
