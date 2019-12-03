@@ -140,7 +140,9 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                         ? {
                             city: data.city,
                             companyName: data.companyName,
-                            country: findInEnum(data.country, CountryCode),
+                            country: maybe(() =>
+                              findInEnum(data.country, CountryCode)
+                            ),
                             countryArea: data.countryArea,
                             phone: data.phone,
                             postalCode: data.postalCode,
