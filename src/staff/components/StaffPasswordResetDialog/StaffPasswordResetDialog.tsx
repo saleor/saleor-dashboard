@@ -14,6 +14,7 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 
 interface StaffPasswordResetDialogFormData {
   password: string;
@@ -38,6 +39,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
+  const dialogErrors = useModalDialogErrors(apiErrors, open);
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
@@ -47,7 +49,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
           description="dialog header"
         />
       </DialogTitle>
-      <Form errors={apiErrors} initial={initialForm} onSubmit={onSubmit}>
+      <Form errors={dialogErrors} initial={initialForm} onSubmit={onSubmit}>
         {({ change, data, errors, submit }) => (
           <>
             <DialogContent>

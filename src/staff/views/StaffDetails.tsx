@@ -15,7 +15,8 @@ import {
   TypedStaffAvatarDeleteMutation,
   TypedStaffAvatarUpdateMutation,
   TypedStaffMemberDeleteMutation,
-  TypedStaffMemberUpdateMutation
+  TypedStaffMemberUpdateMutation,
+  useChangeStaffPassword
 } from "../mutations";
 import { TypedStaffMemberDetailsQuery } from "../queries";
 import { StaffAvatarDelete } from "../types/StaffAvatarDelete";
@@ -28,6 +29,7 @@ import {
   StaffMemberDetailsUrlQueryParams
 } from "../urls";
 import StaffPasswordResetDialog from "../components/StaffPasswordResetDialog";
+import { ChangeStaffPassword } from "../types/ChangeStaffPassword";
 
 interface OrderListProps {
   id: string;
@@ -48,6 +50,24 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         action: undefined
       })
     );
+
+  const handleChangePassword = (data: ChangeStaffPassword) => {
+    if (data.passwordChange.errors.length === 0) {
+      notify({
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      closeModal();
+    }
+  };
+  const [changePassword, changePasswordOpts] = useChangeStaffPassword({
+    onCompleted: handleChangePassword
+  });
+
+  const changePasswordTransitionState = getMutationState(
+    changePasswordOpts.called,
+    changePasswordOpts.loading,
+    maybe(() => changePasswordOpts.data.passwordChange.errors)
+  );
 
   return (
     <TypedStaffMemberDetailsQuery
@@ -228,11 +248,25 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 </DialogContentText>
                               </ActionDialog>
                               <StaffPasswordResetDialog
-                                confirmButtonState="default"
-                                errors={[]}
+                                confirmButtonState={
+                                  changePasswordTransitionState
+                                }
+                                errors={maybe(
+                                  () =>
+                                    changePasswordOpts.data.passwordChange
+                                      .errors,
+                                  []
+                                )}
                                 open={params.action === "change-password"}
                                 onClose={closeModal}
-                                onSubmit={() => undefined}
+                                onSubmit={data =>
+                                  changePassword({
+                                    variables: {
+                                      newPassword: data.password,
+                                      oldPassword: data.previousPassword
+                                    }
+                                  })
+                                }
                               />
                             </>
                           );
