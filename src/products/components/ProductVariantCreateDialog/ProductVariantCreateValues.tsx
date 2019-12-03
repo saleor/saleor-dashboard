@@ -17,18 +17,21 @@ export interface ProductVariantCreateValuesProps {
   onValueClick: (attributeId: string, valueId: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  hr: {
-    marginBottom: theme.spacing(),
-    marginTop: theme.spacing(0.5)
-  },
-  valueContainer: {
-    display: "grid",
-    gridColumnGap: theme.spacing(3),
-    gridTemplateColumns: "repeat(3, 1fr)",
-    marginBottom: theme.spacing(3)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    hr: {
+      marginBottom: theme.spacing(),
+      marginTop: theme.spacing(0.5)
+    },
+    valueContainer: {
+      display: "grid",
+      gridColumnGap: theme.spacing(3),
+      gridTemplateColumns: "repeat(3, 1fr)",
+      marginBottom: theme.spacing(3)
+    }
+  }),
+  { name: "ProductVariantCreateValues" }
+);
 
 const ProductVariantCreateValues: React.FC<
   ProductVariantCreateValuesProps

@@ -25,42 +25,45 @@ export interface FormData {
   quantity: number;
 }
 
-const useStyles = makeStyles(theme => ({
-  colAction: {
-    "&:last-child": {
-      paddingRight: 0
+const useStyles = makeStyles(
+  theme => ({
+    colAction: {
+      "&:last-child": {
+        paddingRight: 0
+      },
+      width: 76 + theme.spacing(0.5)
     },
-    width: 76 + theme.spacing(0.5)
-  },
-  colName: {
-    width: "auto"
-  },
-  colNameLabel: {
-    marginLeft: AVATAR_MARGIN
-  },
-  colPrice: {
-    textAlign: "right",
-    width: 150
-  },
-  colQuantity: {
-    textAlign: "right",
-    width: 80
-  },
-  colTotal: {
-    textAlign: "right",
-    width: 150
-  },
-  quantityField: {
-    "& input": {
-      padding: "12px 12px 10px",
-      textAlign: "right"
+    colName: {
+      width: "auto"
     },
-    width: 60
-  },
-  table: {
-    tableLayout: "fixed"
-  }
-}));
+    colNameLabel: {
+      marginLeft: AVATAR_MARGIN
+    },
+    colPrice: {
+      textAlign: "right",
+      width: 150
+    },
+    colQuantity: {
+      textAlign: "right",
+      width: 80
+    },
+    colTotal: {
+      textAlign: "right",
+      width: 150
+    },
+    quantityField: {
+      "& input": {
+        padding: "12px 12px 10px",
+        textAlign: "right"
+      },
+      width: 60
+    },
+    table: {
+      tableLayout: "fixed"
+    }
+  }),
+  { name: "OrderDraftDetailsProducts" }
+);
 
 interface OrderDraftDetailsProductsProps {
   lines: OrderDetails_order_lines[];

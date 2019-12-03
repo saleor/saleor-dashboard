@@ -4,17 +4,20 @@ import TextField from "@material-ui/core/TextField";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles({
-  fileUploadField: {
-    display: "none"
+const useStyles = makeStyles(
+  {
+    fileUploadField: {
+      display: "none"
+    },
+    root: {
+      display: "flex"
+    },
+    textField: {
+      flex: 1
+    }
   },
-  root: {
-    display: "flex"
-  },
-  textField: {
-    flex: 1
-  }
-});
+  { name: "FileUpload" }
+);
 
 interface FileUploadProps {
   disabled?: boolean;

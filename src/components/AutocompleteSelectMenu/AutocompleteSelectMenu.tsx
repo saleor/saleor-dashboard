@@ -38,25 +38,28 @@ const DebounceAutocomplete: React.ComponentType<
   DebounceProps<string>
 > = Debounce;
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    flexGrow: 1,
-    position: "relative"
-  },
-  menuBack: {
-    marginLeft: -theme.spacing(0.5),
-    marginRight: theme.spacing(1)
-  },
-  paper: {
-    left: 0,
-    marginTop: theme.spacing(),
-    padding: theme.spacing(),
-    position: "absolute",
-    right: 0,
-    zIndex: 2
-  },
-  root: {}
-}));
+const useStyles = makeStyles(
+  theme => ({
+    container: {
+      flexGrow: 1,
+      position: "relative"
+    },
+    menuBack: {
+      marginLeft: -theme.spacing(0.5),
+      marginRight: theme.spacing(1)
+    },
+    paper: {
+      left: 0,
+      marginTop: theme.spacing(),
+      padding: theme.spacing(),
+      position: "absolute",
+      right: 0,
+      zIndex: 2
+    },
+    root: {}
+  }),
+  { name: "AutocompleteSelectMenu" }
+);
 const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
   const {
     disabled,

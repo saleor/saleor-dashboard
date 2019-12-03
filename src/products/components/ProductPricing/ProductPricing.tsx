@@ -8,13 +8,16 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import PriceField from "@saleor/components/PriceField";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "grid",
-    gridColumnGap: theme.spacing(2),
-    gridTemplateColumns: "1fr 1fr"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      display: "grid",
+      gridColumnGap: theme.spacing(2),
+      gridTemplateColumns: "1fr 1fr"
+    }
+  }),
+  { name: "ProductPricing" }
+);
 
 interface ProductPricingProps {
   currency?: string;

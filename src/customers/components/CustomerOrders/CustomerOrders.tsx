@@ -17,14 +17,17 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import { maybe, renderCollection, transformPaymentStatus } from "../../../misc";
 import { CustomerDetails_user_orders_edges_node } from "../../types/CustomerDetails";
 
-const useStyles = makeStyles({
-  link: {
-    cursor: "pointer"
+const useStyles = makeStyles(
+  {
+    link: {
+      cursor: "pointer"
+    },
+    textRight: {
+      textAlign: "right"
+    }
   },
-  textRight: {
-    textAlign: "right"
-  }
-});
+  { name: "CustomerOrders" }
+);
 
 export interface CustomerOrdersProps {
   orders: CustomerDetails_user_orders_edges_node[];

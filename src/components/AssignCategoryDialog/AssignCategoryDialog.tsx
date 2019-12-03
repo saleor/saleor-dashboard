@@ -27,22 +27,25 @@ export interface FormData {
   query: string;
 }
 
-const useStyles = makeStyles({
-  avatar: {
-    "&:first-child": {
+const useStyles = makeStyles(
+  {
+    avatar: {
+      "&:first-child": {
+        paddingLeft: 0
+      }
+    },
+    checkboxCell: {
       paddingLeft: 0
+    },
+    overflow: {
+      overflowY: "visible"
+    },
+    wideCell: {
+      width: "100%"
     }
   },
-  checkboxCell: {
-    paddingLeft: 0
-  },
-  overflow: {
-    overflowY: "visible"
-  },
-  wideCell: {
-    width: "100%"
-  }
-});
+  { name: "AssignCategoryDialog" }
+);
 
 interface AssignCategoriesDialogProps {
   categories: SearchCategories_search_edges_node[];

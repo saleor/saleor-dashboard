@@ -27,23 +27,26 @@ export interface DiscountCollectionsProps extends ListProps, ListActions {
   onCollectionUnassign: (id: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  iconCell: {
-    "&:last-child": {
-      paddingRight: 0
+const useStyles = makeStyles(
+  theme => ({
+    iconCell: {
+      "&:last-child": {
+        paddingRight: 0
+      },
+      width: 48 + theme.spacing(0.5)
     },
-    width: 48 + theme.spacing(0.5)
-  },
-  tableRow: {
-    cursor: "pointer"
-  },
-  textRight: {
-    textAlign: "right"
-  },
-  wideColumn: {
-    width: "60%"
-  }
-}));
+    tableRow: {
+      cursor: "pointer"
+    },
+    textRight: {
+      textAlign: "right"
+    },
+    wideColumn: {
+      width: "60%"
+    }
+  }),
+  { name: "DiscountCollections" }
+);
 
 const numberOfColumns = 4;
 

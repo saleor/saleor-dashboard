@@ -30,17 +30,20 @@ export interface TranslationsEntitiesListProps
   onRowClick: (code: string) => void;
 }
 
-const useStyles = makeStyles({
-  tableRow: {
-    cursor: "pointer"
+const useStyles = makeStyles(
+  {
+    tableRow: {
+      cursor: "pointer"
+    },
+    textRight: {
+      textAlign: "right"
+    },
+    wideColumn: {
+      width: "80%"
+    }
   },
-  textRight: {
-    textAlign: "right"
-  },
-  wideColumn: {
-    width: "80%"
-  }
-});
+  { name: "TranslationsEntitiesList" }
+);
 const TranslationsEntitiesList: React.FC<
   TranslationsEntitiesListProps
 > = props => {

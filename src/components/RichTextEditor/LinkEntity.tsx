@@ -22,35 +22,38 @@ interface LinkEntityProps {
   onRemove: (entityKey: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  anchor: {
-    display: "inline-block"
-  },
-  container: {
-    alignItems: "center",
-    display: "flex"
-  },
-  inline: {
-    display: "inline-block"
-  },
-  popover: {
-    zIndex: 1
-  },
-  root: {
-    alignItems: "center",
-    display: "flex",
-    minHeight: 72,
-    padding: theme.spacing(1.5, 1.5, 1.5, 3)
-  },
-  separator: {
-    backgroundColor: theme.palette.grey[300],
-    display: "inline-block",
-    height: 30,
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(),
-    width: 1
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    anchor: {
+      display: "inline-block"
+    },
+    container: {
+      alignItems: "center",
+      display: "flex"
+    },
+    inline: {
+      display: "inline-block"
+    },
+    popover: {
+      zIndex: 1
+    },
+    root: {
+      alignItems: "center",
+      display: "flex",
+      minHeight: 72,
+      padding: theme.spacing(1.5, 1.5, 1.5, 3)
+    },
+    separator: {
+      backgroundColor: theme.palette.grey[300],
+      display: "inline-block",
+      height: 30,
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(),
+      width: 1
+    }
+  }),
+  { name: "LinkEntity" }
+);
 
 const LinkEntity: React.FC<LinkEntityProps> = props => {
   const { children, contentState, entityKey, onEdit, onRemove } = props;

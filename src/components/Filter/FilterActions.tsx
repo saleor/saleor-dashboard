@@ -6,14 +6,17 @@ import React from "react";
 import { FilterContentSubmitData, IFilter } from "../Filter";
 import Filter from "./Filter";
 
-const useInputStyles = makeStyles({
-  input: {
-    padding: "10.5px 12px"
+const useInputStyles = makeStyles(
+  {
+    input: {
+      padding: "10.5px 12px"
+    },
+    root: {
+      flex: 1
+    }
   },
-  root: {
-    flex: 1
-  }
-});
+  { name: "FilterActions" }
+);
 
 const Search: React.FC<TextFieldProps> = props => {
   const classes = useInputStyles({});

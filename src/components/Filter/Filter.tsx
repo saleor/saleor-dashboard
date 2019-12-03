@@ -21,63 +21,66 @@ export interface FilterProps<TFilterKeys = string> {
   onFilterAdd: (filter: FilterContentSubmitData) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  addFilterButton: {
-    "&$filterButton": {
-      "&:hover, &:focus": {
-        backgroundColor: fade(theme.palette.primary.main, 0.1)
-      },
-      backgroundColor: theme.palette.background.paper,
-      border: `1px solid ${theme.palette.primary.main}`,
-      cursor: "pointer",
-      marginBottom: 0,
-      marginRight: theme.spacing(2),
-      marginTop: 0,
-      transition: theme.transitions.duration.short + "ms"
-    }
-  },
-  addFilterButtonActive: {
-    "&$addFilterButton": {
-      backgroundColor: fade(theme.palette.primary.main, 0.1)
-    }
-  },
-  addFilterIcon: {
-    transition: theme.transitions.duration.short + "ms"
-  },
-  addFilterText: {
-    color: theme.palette.primary.main,
-    fontSize: 14,
-    fontWeight: 600 as 600,
-    marginRight: 4,
-    textTransform: "uppercase"
-  },
-  filterButton: {
-    alignItems: "center",
-    backgroundColor: fade(theme.palette.primary.main, 0.6),
-    borderRadius: "4px",
-    display: "flex",
-    height: 40,
-    justifyContent: "space-around",
-    margin: theme.spacing(2, 1),
-    marginLeft: 0,
-    padding: theme.spacing(0, 2),
-    position: "relative"
-  },
-  paper: {
-    "& p": {
-      paddingBottom: 10
+const useStyles = makeStyles(
+  theme => ({
+    addFilterButton: {
+      "&$filterButton": {
+        "&:hover, &:focus": {
+          backgroundColor: fade(theme.palette.primary.main, 0.1)
+        },
+        backgroundColor: theme.palette.background.paper,
+        border: `1px solid ${theme.palette.primary.main}`,
+        cursor: "pointer",
+        marginBottom: 0,
+        marginRight: theme.spacing(2),
+        marginTop: 0,
+        transition: theme.transitions.duration.short + "ms"
+      }
     },
-    marginTop: theme.spacing(2),
-    padding: theme.spacing(2),
-    width: 240
-  },
-  popover: {
-    zIndex: 1
-  },
-  rotate: {
-    transform: "rotate(180deg)"
-  }
-}));
+    addFilterButtonActive: {
+      "&$addFilterButton": {
+        backgroundColor: fade(theme.palette.primary.main, 0.1)
+      }
+    },
+    addFilterIcon: {
+      transition: theme.transitions.duration.short + "ms"
+    },
+    addFilterText: {
+      color: theme.palette.primary.main,
+      fontSize: 14,
+      fontWeight: 600 as 600,
+      marginRight: 4,
+      textTransform: "uppercase"
+    },
+    filterButton: {
+      alignItems: "center",
+      backgroundColor: fade(theme.palette.primary.main, 0.6),
+      borderRadius: "4px",
+      display: "flex",
+      height: 40,
+      justifyContent: "space-around",
+      margin: theme.spacing(2, 1),
+      marginLeft: 0,
+      padding: theme.spacing(0, 2),
+      position: "relative"
+    },
+    paper: {
+      "& p": {
+        paddingBottom: 10
+      },
+      marginTop: theme.spacing(2),
+      padding: theme.spacing(2),
+      width: 240
+    },
+    popover: {
+      zIndex: 1
+    },
+    rotate: {
+      transform: "rotate(180deg)"
+    }
+  }),
+  { name: "Filter" }
+);
 const Filter: React.FC<FilterProps> = props => {
   const { currencySymbol, filterLabel, menu, onFilterAdd } = props;
   const classes = useStyles(props);

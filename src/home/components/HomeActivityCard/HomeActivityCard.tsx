@@ -14,16 +14,19 @@ import { renderCollection } from "../../../misc";
 import { Home_activities_edges_node } from "../../types/Home";
 import { getActivityMessage } from "./activityMessages";
 
-const useStyles = makeStyles({
-  loadingProducts: {
-    paddingBottom: "10px",
-    paddingTop: "10px"
+const useStyles = makeStyles(
+  {
+    loadingProducts: {
+      paddingBottom: "10px",
+      paddingTop: "10px"
+    },
+    noProducts: {
+      paddingBottom: "16px",
+      paddingTop: "16px"
+    }
   },
-  noProducts: {
-    paddingBottom: "16px",
-    paddingTop: "16px"
-  }
-});
+  { name: "HomeActivityCard" }
+);
 
 interface HomeActivityCardProps {
   activities: Home_activities_edges_node[];

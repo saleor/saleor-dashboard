@@ -14,21 +14,24 @@ import SingleSelectField from "@saleor/components/SingleSelectField";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { ProductVariantCreateFormData } from "./form";
 
-const useStyles = makeStyles(theme => ({
-  hr: {
-    marginBottom: theme.spacing(),
-    marginTop: theme.spacing(0.5)
-  },
-  hrAttribute: {
-    marginTop: theme.spacing(2)
-  },
-  label: {
-    alignSelf: "center"
-  },
-  shortInput: {
-    width: "50%"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    hr: {
+      marginBottom: theme.spacing(),
+      marginTop: theme.spacing(0.5)
+    },
+    hrAttribute: {
+      marginTop: theme.spacing(2)
+    },
+    label: {
+      alignSelf: "center"
+    },
+    shortInput: {
+      width: "50%"
+    }
+  }),
+  { name: "ProductVariantCreatePrices" }
+);
 
 export type PriceOrStock = "price" | "stock";
 export interface ProductVariantCreatePricesProps {

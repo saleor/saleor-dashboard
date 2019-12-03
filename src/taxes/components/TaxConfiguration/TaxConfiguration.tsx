@@ -20,11 +20,14 @@ interface TaxConfigurationProps {
   onTaxFetch: () => void;
 }
 
-const useStyles = makeStyles({
-  content: {
-    paddingBottom: 0
-  }
-});
+const useStyles = makeStyles(
+  {
+    content: {
+      paddingBottom: 0
+    }
+  },
+  { name: "TaxConfiguration" }
+);
 
 export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
   const { data, disabled, onChange, onTaxFetch } = props;

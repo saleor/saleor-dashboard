@@ -22,19 +22,22 @@ import HomeHeader from "../HomeHeader";
 import HomeNotificationTable from "../HomeNotificationTable/HomeNotificationTable";
 import HomeProductListCard from "../HomeProductListCard";
 
-const useStyles = makeStyles(theme => ({
-  cardContainer: {
-    display: "grid",
-    gridColumnGap: theme.spacing(3),
-    gridTemplateColumns: "1fr 1fr",
-    [theme.breakpoints.down("sm")]: {
-      gridColumnGap: theme.spacing(1)
-    },
-    [theme.breakpoints.down("xs")]: {
-      gridTemplateColumns: "1fr"
+const useStyles = makeStyles(
+  theme => ({
+    cardContainer: {
+      display: "grid",
+      gridColumnGap: theme.spacing(3),
+      gridTemplateColumns: "1fr 1fr",
+      [theme.breakpoints.down("sm")]: {
+        gridColumnGap: theme.spacing(1)
+      },
+      [theme.breakpoints.down("xs")]: {
+        gridTemplateColumns: "1fr"
+      }
     }
-  }
-}));
+  }),
+  { name: "HomePage" }
+);
 
 export interface HomePageProps extends UserPermissionProps {
   activities: Home_activities_edges_node[];

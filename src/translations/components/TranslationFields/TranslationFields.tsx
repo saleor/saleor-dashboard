@@ -39,68 +39,71 @@ export interface TranslationFieldsProps {
   onSubmit: (field: string, data: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  cardCaption: {
-    fontSize: 14
-  },
-  cardContent: {
-    "&:last-child": {
-      paddingBottom: theme.spacing(1)
-    }
-  },
-  columnHeader: {
-    marginBottom: theme.spacing(0.5)
-  },
-  content: {
-    "& a": {
-      color: theme.palette.secondary.light
+const useStyles = makeStyles(
+  theme => ({
+    cardCaption: {
+      fontSize: 14
     },
-    "& blockquote": {
-      borderLeft: `2px solid ${theme.palette.divider}`,
-      margin: 0,
-      padding: theme.spacing(1, 2)
-    },
-    "& h2": {
-      fontSize: 22,
-      marginBottom: theme.spacing(1)
-    },
-    "& h3": {
-      fontSize: 19,
-      marginBottom: theme.spacing(1)
-    },
-    "& p": {
+    cardContent: {
       "&:last-child": {
-        marginBottom: 0
-      },
-      marginBottom: theme.spacing(),
-      marginTop: 0
+        paddingBottom: theme.spacing(1)
+      }
     },
-    paddingBottom: theme.spacing(2)
-  },
-  editButtonContainer: {
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "flex-end"
-  },
-  fieldName: {
-    color: theme.typography.caption.color,
-    fontSize: 14,
-    fontWeight: 500,
-    marginBottom: theme.spacing(),
-    marginTop: theme.spacing(2),
-    textTransform: "uppercase"
-  },
-  grid: {
-    gridRowGap: 0
-  },
-  hr: {
-    gridColumnEnd: "span 2"
-  },
+    columnHeader: {
+      marginBottom: theme.spacing(0.5)
+    },
+    content: {
+      "& a": {
+        color: theme.palette.secondary.light
+      },
+      "& blockquote": {
+        borderLeft: `2px solid ${theme.palette.divider}`,
+        margin: 0,
+        padding: theme.spacing(1, 2)
+      },
+      "& h2": {
+        fontSize: 22,
+        marginBottom: theme.spacing(1)
+      },
+      "& h3": {
+        fontSize: 19,
+        marginBottom: theme.spacing(1)
+      },
+      "& p": {
+        "&:last-child": {
+          marginBottom: 0
+        },
+        marginBottom: theme.spacing(),
+        marginTop: 0
+      },
+      paddingBottom: theme.spacing(2)
+    },
+    editButtonContainer: {
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "flex-end"
+    },
+    fieldName: {
+      color: theme.typography.caption.color,
+      fontSize: 14,
+      fontWeight: 500,
+      marginBottom: theme.spacing(),
+      marginTop: theme.spacing(2),
+      textTransform: "uppercase"
+    },
+    grid: {
+      gridRowGap: 0
+    },
+    hr: {
+      gridColumnEnd: "span 2"
+    },
 
-  rotate: {
-    transform: "rotate(180deg)"
-  }
-}));
+    rotate: {
+      transform: "rotate(180deg)"
+    }
+  }),
+  { name: "TranslationFields" }
+);
 const TranslationFields: React.FC<TranslationFieldsProps> = props => {
   const {
     activeField,

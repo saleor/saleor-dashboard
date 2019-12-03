@@ -4,26 +4,29 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 
-const useStyles = makeStyles(theme => ({
-  currencySymbol: {
-    fontSize: "0.875rem"
-  },
-  inputContainer: {
-    display: "grid",
-    gridTemplateColumns: "1fr 2rem 1fr"
-  },
-  pullDown: {
-    marginTop: theme.spacing(2)
-  },
-  separator: {
-    marginTop: theme.spacing(3),
-    textAlign: "center",
-    width: "100%"
-  },
-  widgetContainer: {
-    marginTop: theme.spacing(2)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    currencySymbol: {
+      fontSize: "0.875rem"
+    },
+    inputContainer: {
+      display: "grid",
+      gridTemplateColumns: "1fr 2rem 1fr"
+    },
+    pullDown: {
+      marginTop: theme.spacing(2)
+    },
+    separator: {
+      marginTop: theme.spacing(3),
+      textAlign: "center",
+      width: "100%"
+    },
+    widgetContainer: {
+      marginTop: theme.spacing(2)
+    }
+  }),
+  { name: "PriceField" }
+);
 
 interface PriceFieldProps {
   className?: string;

@@ -13,12 +13,15 @@ import { buttonMessages } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
-const useStyles = makeStyles(theme => ({
-  label: {
-    fontWeight: 600,
-    marginBottom: theme.spacing(1)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    label: {
+      fontWeight: 600,
+      marginBottom: theme.spacing(1)
+    }
+  }),
+  { name: "CustomerAddresses" }
+);
 
 export interface CustomerAddressesProps {
   customer: CustomerDetails_user;

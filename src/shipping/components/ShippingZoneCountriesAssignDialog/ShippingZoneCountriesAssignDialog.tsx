@@ -40,24 +40,27 @@ export interface ShippingZoneCountriesAssignDialogProps {
   onConfirm: (data: FormData) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  checkboxCell: {
-    paddingLeft: 0
-  },
-  container: {
-    maxHeight: 400
-  },
-  heading: {
-    marginBottom: theme.spacing(2),
-    marginTop: theme.spacing(2)
-  },
-  table: {
-    border: "1px solid " + theme.palette.grey[200]
-  },
-  wideCell: {
-    width: "100%"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    checkboxCell: {
+      paddingLeft: 0
+    },
+    container: {
+      maxHeight: 400
+    },
+    heading: {
+      marginBottom: theme.spacing(2),
+      marginTop: theme.spacing(2)
+    },
+    table: {
+      border: "1px solid " + theme.palette.grey[200]
+    },
+    wideCell: {
+      width: "100%"
+    }
+  }),
+  { name: "ShippingZoneCountriesAssignDialog" }
+);
 const ShippingZoneCountriesAssignDialog: React.FC<
   ShippingZoneCountriesAssignDialogProps
 > = props => {

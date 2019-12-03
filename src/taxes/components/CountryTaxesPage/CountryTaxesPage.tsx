@@ -18,11 +18,14 @@ import { TaxRateType } from "@saleor/types/globalTypes";
 import { maybe, renderCollection } from "../../../misc";
 import { CountryList_shop_countries_vat_reducedRates } from "../../types/CountryList";
 
-const useStyles = makeStyles({
-  wideColumn: {
-    width: "80%"
-  }
-});
+const useStyles = makeStyles(
+  {
+    wideColumn: {
+      width: "80%"
+    }
+  },
+  { name: "CountryTaxesPage" }
+);
 
 function translateTaxRates(intl: IntlShape): Record<TaxRateType, string> {
   return {

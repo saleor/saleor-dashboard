@@ -14,45 +14,48 @@ import ConfirmButton, {
 } from "../ConfirmButton/ConfirmButton";
 import Container from "../Container";
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    marginRight: theme.spacing(1)
-  },
-  cancelButton: {
-    marginRight: theme.spacing(2)
-  },
-  container: {
-    display: "flex",
-    paddingBottom: theme.spacing(2),
-    paddingTop: theme.spacing(2),
-    [theme.breakpoints.down("sm")]: {
-      marginTop: theme.spacing(1)
-    }
-  },
-  deleteButton: {
-    "&:hover": {
-      backgroundColor: theme.palette.error.dark
+const useStyles = makeStyles(
+  theme => ({
+    button: {
+      marginRight: theme.spacing(1)
     },
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.error.contrastText
-  },
-  root: {
-    background: theme.palette.background.default,
-    borderTop: "1px solid transparent",
-    boxShadow: `0 -5px 5px 0 ${theme.palette.divider}`,
-    height: "100%",
-    transition: `box-shadow ${theme.transitions.duration.shortest}ms`
-  },
-  spacer: {
-    flex: "1"
-  },
-  stop: {
-    "&$root": {
-      borderTopColor: theme.palette.divider,
-      boxShadow: `0 0 0 0 ${theme.palette.divider}`
+    cancelButton: {
+      marginRight: theme.spacing(2)
+    },
+    container: {
+      display: "flex",
+      paddingBottom: theme.spacing(2),
+      paddingTop: theme.spacing(2),
+      [theme.breakpoints.down("sm")]: {
+        marginTop: theme.spacing(1)
+      }
+    },
+    deleteButton: {
+      "&:hover": {
+        backgroundColor: theme.palette.error.dark
+      },
+      backgroundColor: theme.palette.error.main,
+      color: theme.palette.error.contrastText
+    },
+    root: {
+      background: theme.palette.background.default,
+      borderTop: "1px solid transparent",
+      boxShadow: `0 -5px 5px 0 ${theme.palette.divider}`,
+      height: "100%",
+      transition: `box-shadow ${theme.transitions.duration.shortest}ms`
+    },
+    spacer: {
+      flex: "1"
+    },
+    stop: {
+      "&$root": {
+        borderTopColor: theme.palette.divider,
+        boxShadow: `0 0 0 0 ${theme.palette.divider}`
+      }
     }
-  }
-}));
+  }),
+  { name: "SaveButtonBar" }
+);
 
 interface SaveButtonBarProps {
   disabled: boolean;

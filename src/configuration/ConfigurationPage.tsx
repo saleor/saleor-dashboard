@@ -26,64 +26,67 @@ export interface MenuSection {
   menuItems: MenuItem[];
 }
 
-const useStyles = makeStyles(theme => ({
-  card: {
-    "&:hover": {
-      boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.15);"
+const useStyles = makeStyles(
+  theme => ({
+    card: {
+      "&:hover": {
+        boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.15);"
+      },
+      cursor: "pointer",
+      marginBottom: theme.spacing(3),
+      transition: theme.transitions.duration.standard + "ms"
     },
-    cursor: "pointer",
-    marginBottom: theme.spacing(3),
-    transition: theme.transitions.duration.standard + "ms"
-  },
-  cardContent: {
-    // Overrides Material-UI default theme
-    "&:last-child": {
-      paddingBottom: 16
+    cardContent: {
+      // Overrides Material-UI default theme
+      "&:last-child": {
+        paddingBottom: 16
+      },
+      display: "grid",
+      gridColumnGap: theme.spacing(4),
+      gridTemplateColumns: "48px 1fr"
     },
-    display: "grid",
-    gridColumnGap: theme.spacing(4),
-    gridTemplateColumns: "48px 1fr"
-  },
-  cardDisabled: {
-    "& $icon, & $sectionTitle, & $sectionDescription": {
-      color: theme.palette.text.disabled
+    cardDisabled: {
+      "& $icon, & $sectionTitle, & $sectionDescription": {
+        color: theme.palette.text.disabled
+      },
+      marginBottom: theme.spacing(3)
     },
-    marginBottom: theme.spacing(3)
-  },
-  configurationCategory: {
-    [theme.breakpoints.down("md")]: {
-      gridTemplateColumns: "1fr"
+    configurationCategory: {
+      [theme.breakpoints.down("md")]: {
+        gridTemplateColumns: "1fr"
+      },
+      borderTop: `solid 1px ${theme.palette.divider}`,
+      display: "grid",
+      gridColumnGap: theme.spacing(4) + "px",
+      gridTemplateColumns: "1fr 3fr",
+      paddingTop: theme.spacing(3)
     },
-    borderTop: `solid 1px ${theme.palette.divider}`,
-    display: "grid",
-    gridColumnGap: theme.spacing(4) + "px",
-    gridTemplateColumns: "1fr 3fr",
-    paddingTop: theme.spacing(3)
-  },
-  configurationItem: {
-    [theme.breakpoints.down("md")]: {
-      gridTemplateColumns: "1fr"
+    configurationItem: {
+      [theme.breakpoints.down("md")]: {
+        gridTemplateColumns: "1fr"
+      },
+      display: "grid",
+      gridColumnGap: theme.spacing(4),
+      gridTemplateColumns: "1fr 1fr"
     },
-    display: "grid",
-    gridColumnGap: theme.spacing(4),
-    gridTemplateColumns: "1fr 1fr"
-  },
-  configurationLabel: {
-    paddingBottom: 20
-  },
-  header: {
-    margin: 0
-  },
-  icon: {
-    color: theme.palette.primary.main,
-    fontSize: 48
-  },
-  sectionDescription: {},
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: 600 as 600
-  }
-}));
+    configurationLabel: {
+      paddingBottom: 20
+    },
+    header: {
+      margin: 0
+    },
+    icon: {
+      color: theme.palette.primary.main,
+      fontSize: 48
+    },
+    sectionDescription: {},
+    sectionTitle: {
+      fontSize: 20,
+      fontWeight: 600 as 600
+    }
+  }),
+  { name: "ConfigurationPage" }
+);
 
 export interface ConfigurationPageProps {
   menu: MenuSection[];

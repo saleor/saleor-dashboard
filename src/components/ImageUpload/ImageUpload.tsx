@@ -17,42 +17,45 @@ interface ImageUploadProps {
   onImageUpload: (file: FileList) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  backdrop: {
-    background: fade(theme.palette.primary.main, 0.1),
-    color: theme.palette.primary.main
-  },
-  fileField: {
-    display: "none"
-  },
-  imageContainer: {
-    background: "#ffffff",
-    border: "1px solid #eaeaea",
-    borderRadius: theme.spacing(),
-    height: 148,
-    justifySelf: "start",
-    overflow: "hidden",
-    padding: theme.spacing(2),
-    position: "relative",
-    transition: theme.transitions.duration.standard + "s",
-    width: 148
-  },
-  photosIcon: {
-    height: "64px",
-    margin: "0 auto",
-    width: "64px"
-  },
-  photosIconContainer: {
-    padding: theme.spacing(5, 0),
-    textAlign: "center"
-  },
-  uploadText: {
-    color: theme.typography.body1.color,
-    fontSize: 12,
-    fontWeight: 600,
-    textTransform: "uppercase"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    backdrop: {
+      background: fade(theme.palette.primary.main, 0.1),
+      color: theme.palette.primary.main
+    },
+    fileField: {
+      display: "none"
+    },
+    imageContainer: {
+      background: "#ffffff",
+      border: "1px solid #eaeaea",
+      borderRadius: theme.spacing(),
+      height: 148,
+      justifySelf: "start",
+      overflow: "hidden",
+      padding: theme.spacing(2),
+      position: "relative",
+      transition: theme.transitions.duration.standard + "s",
+      width: 148
+    },
+    photosIcon: {
+      height: "64px",
+      margin: "0 auto",
+      width: "64px"
+    },
+    photosIconContainer: {
+      padding: theme.spacing(5, 0),
+      textAlign: "center"
+    },
+    uploadText: {
+      color: theme.typography.body1.color,
+      fontSize: 12,
+      fontWeight: 600,
+      textTransform: "uppercase"
+    }
+  }),
+  { name: "ImageUpload" }
+);
 
 export const ImageUpload: React.FC<ImageUploadProps> = props => {
   const {

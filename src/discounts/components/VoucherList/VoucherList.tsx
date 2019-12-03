@@ -24,50 +24,53 @@ export interface VoucherListProps extends ListProps, ListActions {
   vouchers: VoucherList_vouchers_edges_node[];
 }
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colEnd: {
+        width: 180
+      },
+      colMinSpent: {
+        width: 150
+      },
+      colName: {},
+      colStart: {
+        width: 180
+      },
+      colUses: {
+        width: 150
+      },
+      colValue: {
+        width: 150
+      }
+    },
     colEnd: {
-      width: 180
+      textAlign: "right"
     },
     colMinSpent: {
-      width: 150
+      textAlign: "right"
     },
-    colName: {},
+    colName: {
+      paddingLeft: 0
+    },
     colStart: {
-      width: 180
+      textAlign: "right"
     },
     colUses: {
-      width: 150
+      textAlign: "right"
     },
     colValue: {
-      width: 150
+      textAlign: "right"
+    },
+    tableRow: {
+      cursor: "pointer"
+    },
+    textRight: {
+      textAlign: "right"
     }
-  },
-  colEnd: {
-    textAlign: "right"
-  },
-  colMinSpent: {
-    textAlign: "right"
-  },
-  colName: {
-    paddingLeft: 0
-  },
-  colStart: {
-    textAlign: "right"
-  },
-  colUses: {
-    textAlign: "right"
-  },
-  colValue: {
-    textAlign: "right"
-  },
-  tableRow: {
-    cursor: "pointer"
-  },
-  textRight: {
-    textAlign: "right"
-  }
-}));
+  }),
+  { name: "VoucherList" }
+);
 
 const numberOfColumns = 7;
 

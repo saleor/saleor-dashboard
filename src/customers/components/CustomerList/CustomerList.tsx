@@ -15,25 +15,28 @@ import { getUserName, maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colEmail: {},
+      colName: {},
+      colOrders: {
+        width: 200
+      }
+    },
     colEmail: {},
-    colName: {},
+    colName: {
+      paddingLeft: 0
+    },
     colOrders: {
-      width: 200
+      textAlign: "center"
+    },
+    tableRow: {
+      cursor: "pointer"
     }
-  },
-  colEmail: {},
-  colName: {
-    paddingLeft: 0
-  },
-  colOrders: {
-    textAlign: "center"
-  },
-  tableRow: {
-    cursor: "pointer"
-  }
-}));
+  }),
+  { name: "CustomerList" }
+);
 
 export interface CustomerListProps extends ListProps, ListActions {
   customers: ListCustomers_customers_edges_node[];

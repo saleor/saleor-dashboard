@@ -27,25 +27,28 @@ export interface ShippingZonesListProps extends ListProps, ListActions {
   onRemove: (id: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
-    colCountries: {},
-    colName: { width: 200 }
-  },
-  alignRight: {
-    "&:last-child": {
-      paddingRight: theme.spacing(1)
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colCountries: {},
+      colName: { width: 200 }
     },
-    width: ICONBUTTON_SIZE + theme.spacing(0.5)
-  },
-  colCountries: {},
-  colName: {
-    paddingLeft: 0
-  },
-  row: {
-    cursor: "pointer"
-  }
-}));
+    alignRight: {
+      "&:last-child": {
+        paddingRight: theme.spacing(1)
+      },
+      width: ICONBUTTON_SIZE + theme.spacing(0.5)
+    },
+    colCountries: {},
+    colName: {
+      paddingLeft: 0
+    },
+    row: {
+      cursor: "pointer"
+    }
+  }),
+  { name: "ShippingZonesList" }
+);
 
 const numberOfColumns = 4;
 

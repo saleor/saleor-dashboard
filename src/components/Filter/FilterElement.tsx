@@ -17,14 +17,17 @@ export interface FilterElementProps<TFilterKeys = string> {
   onChange: (value: string | string[]) => void;
 }
 
-const useStyles = makeStyles({
-  calendar: {
-    margin: 8
+const useStyles = makeStyles(
+  {
+    calendar: {
+      margin: 8
+    },
+    input: {
+      padding: "20px 12px 17px"
+    }
   },
-  input: {
-    padding: "20px 12px 17px"
-  }
-});
+  { name: "FilterElement" }
+);
 
 export interface FilterElementProps<TFilterKeys = string> {
   className?: string;

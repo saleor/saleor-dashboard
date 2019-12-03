@@ -29,48 +29,51 @@ import {
   SearchOrderVariant_search_edges_node_variants
 } from "../../types/SearchOrderVariant";
 
-const useStyles = makeStyles(theme => ({
-  avatar: {
-    paddingLeft: 0
-  },
-  colName: {
-    paddingLeft: 0
-  },
-  colVariantCheckbox: {
-    padding: 0
-  },
-  content: {
-    overflowY: "scroll"
-  },
-  grayText: {
-    color: theme.palette.text.disabled
-  },
-  loadMoreLoaderContainer: {
-    alignItems: "center",
-    display: "flex",
-    height: theme.spacing(3),
-    justifyContent: "center"
-  },
-  overflow: {
-    overflowY: "visible"
-  },
-  productCheckboxCell: {
-    "&:first-child": {
-      paddingLeft: 0,
-      paddingRight: 0
+const useStyles = makeStyles(
+  theme => ({
+    avatar: {
+      paddingLeft: 0
+    },
+    colName: {
+      paddingLeft: 0
+    },
+    colVariantCheckbox: {
+      padding: 0
+    },
+    content: {
+      overflowY: "scroll"
+    },
+    grayText: {
+      color: theme.palette.text.disabled
+    },
+    loadMoreLoaderContainer: {
+      alignItems: "center",
+      display: "flex",
+      height: theme.spacing(3),
+      justifyContent: "center"
+    },
+    overflow: {
+      overflowY: "visible"
+    },
+    productCheckboxCell: {
+      "&:first-child": {
+        paddingLeft: 0,
+        paddingRight: 0
+      }
+    },
+    textRight: {
+      textAlign: "right"
+    },
+    variantCheckbox: {
+      left: theme.spacing(),
+      position: "relative"
+    },
+    wideCell: {
+      width: "100%"
     }
-  },
-  textRight: {
-    textAlign: "right"
-  },
-  variantCheckbox: {
-    left: theme.spacing(),
-    position: "relative"
-  },
-  wideCell: {
-    width: "100%"
-  }
-}));
+  }),
+  { name: "OrderProductAddDialog" }
+);
 
 type SetVariantsAction = (
   data: SearchOrderVariant_search_edges_node_variants[]

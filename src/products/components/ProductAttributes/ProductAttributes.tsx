@@ -38,48 +38,51 @@ export interface ProductAttributesProps {
   onMultiChange: FormsetChange;
 }
 
-const useStyles = makeStyles(theme => ({
-  attributeSection: {
-    "&:last-of-type": {
-      paddingBottom: 0
+const useStyles = makeStyles(
+  theme => ({
+    attributeSection: {
+      "&:last-of-type": {
+        paddingBottom: 0
+      },
+      padding: theme.spacing(2, 0)
     },
-    padding: theme.spacing(2, 0)
-  },
-  attributeSectionLabel: {
-    alignItems: "center",
-    display: "flex"
-  },
-  card: {
-    overflow: "visible"
-  },
-  cardContent: {
-    "&:last-child": {
-      paddingBottom: theme.spacing(1)
+    attributeSectionLabel: {
+      alignItems: "center",
+      display: "flex"
     },
-    paddingTop: theme.spacing(1)
-  },
-  expansionBar: {
-    display: "flex"
-  },
-  expansionBarButton: {
-    marginBottom: theme.spacing(1)
-  },
-  expansionBarButtonIcon: {
-    transition: theme.transitions.duration.short + "ms"
-  },
-  expansionBarLabel: {
-    color: theme.palette.text.disabled,
-    fontSize: 14
-  },
-  expansionBarLabelContainer: {
-    alignItems: "center",
-    display: "flex",
-    flex: 1
-  },
-  rotate: {
-    transform: "rotate(180deg)"
-  }
-}));
+    card: {
+      overflow: "visible"
+    },
+    cardContent: {
+      "&:last-child": {
+        paddingBottom: theme.spacing(1)
+      },
+      paddingTop: theme.spacing(1)
+    },
+    expansionBar: {
+      display: "flex"
+    },
+    expansionBarButton: {
+      marginBottom: theme.spacing(1)
+    },
+    expansionBarButtonIcon: {
+      transition: theme.transitions.duration.short + "ms"
+    },
+    expansionBarLabel: {
+      color: theme.palette.text.disabled,
+      fontSize: 14
+    },
+    expansionBarLabelContainer: {
+      alignItems: "center",
+      display: "flex",
+      flex: 1
+    },
+    rotate: {
+      transform: "rotate(180deg)"
+    }
+  }),
+  { name: "ProductAttributes" }
+);
 
 function getMultiChoices(
   values: ProductDetails_product_attributes_attribute_values[]

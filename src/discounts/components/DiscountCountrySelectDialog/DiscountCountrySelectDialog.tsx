@@ -40,21 +40,24 @@ export interface DiscountCountrySelectDialogProps {
   onConfirm: (data: FormData) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  checkboxCell: {
-    paddingLeft: 0
-  },
-  container: {
-    maxHeight: 500
-  },
-  heading: {
-    marginBottom: theme.spacing(2),
-    marginTop: theme.spacing(2)
-  },
-  wideCell: {
-    width: "100%"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    checkboxCell: {
+      paddingLeft: 0
+    },
+    container: {
+      maxHeight: 500
+    },
+    heading: {
+      marginBottom: theme.spacing(2),
+      marginTop: theme.spacing(2)
+    },
+    wideCell: {
+      width: "100%"
+    }
+  }),
+  { name: "DiscountCountrySelectDialog" }
+);
 const DiscountCountrySelectDialog: React.FC<
   DiscountCountrySelectDialogProps
 > = props => {

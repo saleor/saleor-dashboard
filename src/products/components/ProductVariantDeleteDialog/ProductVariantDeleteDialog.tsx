@@ -13,15 +13,18 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
 
-const useStyles = makeStyles(theme => ({
-  deleteButton: {
-    "&:hover": {
-      backgroundColor: theme.palette.error.main
-    },
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.error.contrastText
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    deleteButton: {
+      "&:hover": {
+        backgroundColor: theme.palette.error.main
+      },
+      backgroundColor: theme.palette.error.main,
+      color: theme.palette.error.contrastText
+    }
+  }),
+  { name: "ProductVariantDeleteDialog" }
+);
 
 export interface ProductVariantDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

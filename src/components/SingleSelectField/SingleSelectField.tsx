@@ -9,17 +9,20 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles(theme => ({
-  formControl: {
-    "& label": {
-      top: "-3px"
+const useStyles = makeStyles(
+  theme => ({
+    formControl: {
+      "& label": {
+        top: "-3px"
+      },
+      width: "100%"
     },
-    width: "100%"
-  },
-  noLabel: {
-    padding: theme.spacing(2, 1.5)
-  }
-}));
+    noLabel: {
+      padding: theme.spacing(2, 1.5)
+    }
+  }),
+  { name: "SingleSelectField" }
+);
 
 interface SingleSelectFieldProps {
   choices: Array<{

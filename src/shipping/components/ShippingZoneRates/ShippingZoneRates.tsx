@@ -30,21 +30,24 @@ export interface ShippingZoneRatesProps {
   onRateRemove: (id: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  alignRight: {
-    "&:last-child": {
-      paddingRight: 0
+const useStyles = makeStyles(
+  theme => ({
+    alignRight: {
+      "&:last-child": {
+        paddingRight: 0
+      },
+      paddingRight: 0,
+      width: ICONBUTTON_SIZE + theme.spacing(0.5)
     },
-    paddingRight: 0,
-    width: ICONBUTTON_SIZE + theme.spacing(0.5)
-  },
-  nameColumn: {
-    width: 300
-  },
-  valueColumn: {
-    width: 300
-  }
-}));
+    nameColumn: {
+      width: 300
+    },
+    valueColumn: {
+      width: 300
+    }
+  }),
+  { name: "ShippingZoneRates" }
+);
 const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
   const {
     disabled,

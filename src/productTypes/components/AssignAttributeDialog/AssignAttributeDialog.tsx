@@ -32,29 +32,32 @@ import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
 import { SearchAttributes_productType_availableAttributes_edges_node } from "../../hooks/useAvailableAttributeSearch/types/SearchAttributes";
 
-const useStyles = makeStyles(theme => ({
-  actions: {
-    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
-  },
-  checkboxCell: {
-    paddingLeft: 0
-  },
-  dropShadow: {
-    boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
-  },
-  loadMoreLoaderContainer: {
-    alignItems: "center",
-    display: "flex",
-    height: theme.spacing(3),
-    justifyContent: "center"
-  },
-  scrollArea: {
-    overflowY: "scroll"
-  },
-  wideCell: {
-    width: "100%"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    actions: {
+      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
+    },
+    checkboxCell: {
+      paddingLeft: 0
+    },
+    dropShadow: {
+      boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
+    },
+    loadMoreLoaderContainer: {
+      alignItems: "center",
+      display: "flex",
+      height: theme.spacing(3),
+      justifyContent: "center"
+    },
+    scrollArea: {
+      overflowY: "scroll"
+    },
+    wideCell: {
+      width: "100%"
+    }
+  }),
+  { name: "AssignAttributeDialog" }
+);
 
 export interface AssignAttributeDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;

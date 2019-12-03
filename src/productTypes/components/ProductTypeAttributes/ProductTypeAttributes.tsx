@@ -25,24 +25,27 @@ import {
   ProductTypeDetails_productType_variantAttributes
 } from "../../types/ProductTypeDetails";
 
-const useStyles = makeStyles(theme => ({
-  colName: {},
-  colSlug: {
-    width: 300
-  },
-  iconCell: {
-    "&:last-child": {
-      paddingRight: 0
+const useStyles = makeStyles(
+  theme => ({
+    colName: {},
+    colSlug: {
+      width: 300
     },
-    width: 48 + theme.spacing(1.5)
-  },
-  link: {
-    cursor: "pointer"
-  },
-  textLeft: {
-    textAlign: "left"
-  }
-}));
+    iconCell: {
+      "&:last-child": {
+        paddingRight: 0
+      },
+      width: 48 + theme.spacing(1.5)
+    },
+    link: {
+      cursor: "pointer"
+    },
+    textLeft: {
+      textAlign: "left"
+    }
+  }),
+  { name: "ProductTypeAttributes" }
+);
 
 interface ProductTypeAttributesProps extends ListActions {
   attributes:

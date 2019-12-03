@@ -18,25 +18,28 @@ interface ImageEntityProps {
   onRemove: (entityKey: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  anchor: {
-    display: "inline-block"
-  },
-  container: {
-    alignItems: "center",
-    display: "flex"
-  },
-  image: { maxWidth: "100%" },
-  inline: {
-    display: "inline-block"
-  },
-  root: {
-    alignItems: "center",
-    display: "flex",
-    minHeight: 72,
-    padding: theme.spacing(1.5)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    anchor: {
+      display: "inline-block"
+    },
+    container: {
+      alignItems: "center",
+      display: "flex"
+    },
+    image: { maxWidth: "100%" },
+    inline: {
+      display: "inline-block"
+    },
+    root: {
+      alignItems: "center",
+      display: "flex",
+      minHeight: 72,
+      padding: theme.spacing(1.5)
+    }
+  }),
+  { name: "ImageEntity" }
+);
 
 const ImageEntity: React.FC<ImageEntityProps> = props => {
   const { contentState, entityKey, onEdit, onRemove } = props;

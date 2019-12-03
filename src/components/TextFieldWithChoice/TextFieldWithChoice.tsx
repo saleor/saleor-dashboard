@@ -23,16 +23,19 @@ export type TextFieldWithChoiceProps<TValue = string> = TextFieldProps & {
   };
 };
 
-const useStyles = makeStyles({
-  adornment: {
-    alignItems: "center",
-    cursor: "pointer",
-    display: "flex"
+const useStyles = makeStyles(
+  {
+    adornment: {
+      alignItems: "center",
+      cursor: "pointer",
+      display: "flex"
+    },
+    menu: {
+      zIndex: 10
+    }
   },
-  menu: {
-    zIndex: 10
-  }
-});
+  { name: "TextFieldWithChoice" }
+);
 
 const TextFieldWithChoice: React.FC<TextFieldWithChoiceProps> = props => {
   const { ChoiceProps, InputProps, onChange, ...rest } = props;

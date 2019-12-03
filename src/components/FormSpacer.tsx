@@ -1,11 +1,14 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 
-const useStyles = makeStyles(theme => ({
-  spacer: {
-    marginTop: theme.spacing(3)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    spacer: {
+      marginTop: theme.spacing(3)
+    }
+  }),
+  { name: "FormSpacer" }
+);
 
 interface FormSpacerProps {
   children?: React.ReactNode;

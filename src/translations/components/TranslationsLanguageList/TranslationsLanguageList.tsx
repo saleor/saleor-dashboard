@@ -17,14 +17,17 @@ export interface TranslationsLanguageListProps {
   onRowClick: (code: string) => void;
 }
 
-const useStyles = makeStyles({
-  capitalize: {
-    textTransform: "capitalize"
+const useStyles = makeStyles(
+  {
+    capitalize: {
+      textTransform: "capitalize"
+    },
+    link: {
+      cursor: "pointer"
+    }
   },
-  link: {
-    cursor: "pointer"
-  }
-});
+  { name: "TranslationsLanguageList" }
+);
 
 const TranslationsLanguageList: React.FC<
   TranslationsLanguageListProps

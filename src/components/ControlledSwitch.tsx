@@ -3,14 +3,17 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import React from "react";
 
-const useStyles = makeStyles(theme => ({
-  label: {
-    marginLeft: theme.spacing(3.5)
-  },
-  labelText: {
-    fontSize: 14
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    label: {
+      marginLeft: theme.spacing(3.5)
+    },
+    labelText: {
+      fontSize: 14
+    }
+  }),
+  { name: "ControlledSwitch" }
+);
 
 interface ControlledSwitchProps {
   checked: boolean;

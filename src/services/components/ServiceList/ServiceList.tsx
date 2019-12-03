@@ -23,32 +23,35 @@ export interface ServiceListProps extends ListProps {
   onRemove: (id: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
-    colName: {
-      "&&": {
-        width: "auto"
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colName: {
+        "&&": {
+          width: "auto"
+        }
       }
-    }
-  },
-  colAction: {
-    "&&": {
-      paddingRight: theme.spacing(1)
     },
-    textAlign: "right",
-    width: 100
-  },
-  colName: {
-    paddingLeft: 0,
-    width: 250
-  },
-  table: {
-    tableLayout: "fixed"
-  },
-  tableRow: {
-    cursor: "pointer"
-  }
-}));
+    colAction: {
+      "&&": {
+        paddingRight: theme.spacing(1)
+      },
+      textAlign: "right",
+      width: 100
+    },
+    colName: {
+      paddingLeft: 0,
+      width: 250
+    },
+    table: {
+      tableLayout: "fixed"
+    },
+    tableRow: {
+      cursor: "pointer"
+    }
+  }),
+  { name: "ServiceList" }
+);
 
 const numberOfColumns = 2;
 

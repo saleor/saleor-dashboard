@@ -10,20 +10,23 @@ import { FormattedMessage } from "react-intl";
 
 import Checkbox from "../Checkbox";
 
-const useStyles = makeStyles(theme => ({
-  checkbox: {
-    marginRight: -theme.spacing(2)
-  },
-  formControl: {
-    width: "100%"
-  },
-  menuItem: {
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "space-between",
-    width: "100%"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    checkbox: {
+      marginRight: -theme.spacing(2)
+    },
+    formControl: {
+      width: "100%"
+    },
+    menuItem: {
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "space-between",
+      width: "100%"
+    }
+  }),
+  { name: "MultiSelectField" }
+);
 
 interface MultiSelectFieldProps {
   choices: Array<{

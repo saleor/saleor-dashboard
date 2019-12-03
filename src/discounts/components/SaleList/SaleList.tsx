@@ -24,35 +24,38 @@ export interface SaleListProps extends ListProps, ListActions {
   sales: SaleList_sales_edges_node[];
 }
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
-    colEnd: {
-      width: 250
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colEnd: {
+        width: 250
+      },
+      colName: {},
+      colStart: {
+        width: 250
+      },
+      colValue: {
+        width: 200
+      }
     },
-    colName: {},
+    colEnd: {
+      textAlign: "right"
+    },
+    colName: {
+      paddingLeft: 0
+    },
     colStart: {
-      width: 250
+      textAlign: "right"
     },
     colValue: {
-      width: 200
+      textAlign: "right"
+    },
+    tableRow: {
+      cursor: "pointer"
     }
-  },
-  colEnd: {
-    textAlign: "right"
-  },
-  colName: {
-    paddingLeft: 0
-  },
-  colStart: {
-    textAlign: "right"
-  },
-  colValue: {
-    textAlign: "right"
-  },
-  tableRow: {
-    cursor: "pointer"
-  }
-}));
+  }),
+  { name: "SaleList" }
+);
 
 const numberOfColumns = 5;
 

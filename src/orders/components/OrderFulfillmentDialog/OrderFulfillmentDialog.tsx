@@ -30,35 +30,38 @@ export interface FormData {
   trackingNumber: string;
 }
 
-const useStyles = makeStyles(theme => ({
-  colName: {
-    width: "auto"
-  },
-  colNameLabel: {
-    marginLeft: AVATAR_MARGIN
-  },
-  colQuantity: {
-    textAlign: "right",
-    width: 150
-  },
-  colQuantityContent: {
-    alignItems: "center",
-    display: "inline-flex"
-  },
-  colSku: {
-    width: 120
-  },
-  quantityInput: {
-    width: "4rem"
-  },
-  remainingQuantity: {
-    marginLeft: theme.spacing(),
-    paddingTop: 14
-  },
-  table: {
-    tableLayout: "fixed"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    colName: {
+      width: "auto"
+    },
+    colNameLabel: {
+      marginLeft: AVATAR_MARGIN
+    },
+    colQuantity: {
+      textAlign: "right",
+      width: 150
+    },
+    colQuantityContent: {
+      alignItems: "center",
+      display: "inline-flex"
+    },
+    colSku: {
+      width: 120
+    },
+    quantityInput: {
+      width: "4rem"
+    },
+    remainingQuantity: {
+      marginLeft: theme.spacing(),
+      paddingTop: 14
+    },
+    table: {
+      tableLayout: "fixed"
+    }
+  }),
+  { name: "OrderFulfillmentDialog" }
+);
 
 export interface OrderFulfillmentDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

@@ -17,21 +17,24 @@ import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
 import ProductImageNavigation from "../ProductImageNavigation";
 
-const useStyles = makeStyles(theme => ({
-  image: {
-    height: "100%",
-    objectFit: "contain",
-    width: "100%"
-  },
-  imageContainer: {
-    background: "#ffffff",
-    border: "1px solid #eaeaea",
-    borderRadius: theme.spacing(),
-    margin: `0 auto ${theme.spacing(2)}px`,
-    maxWidth: 552,
-    padding: theme.spacing(2)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    image: {
+      height: "100%",
+      objectFit: "contain",
+      width: "100%"
+    },
+    imageContainer: {
+      background: "#ffffff",
+      border: "1px solid #eaeaea",
+      borderRadius: theme.spacing(),
+      margin: `0 auto ${theme.spacing(2)}px`,
+      maxWidth: 552,
+      padding: theme.spacing(2)
+    }
+  }),
+  { name: "ProductImagePage" }
+);
 
 interface ProductImagePageProps {
   image?: {

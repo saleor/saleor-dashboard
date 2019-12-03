@@ -13,14 +13,17 @@ import Skeleton from "@saleor/components/Skeleton";
 import { maybe, renderCollection } from "../../../misc";
 import { CountryList_shop_countries } from "../../types/CountryList";
 
-const useStyles = makeStyles({
-  tableRow: {
-    cursor: "pointer"
+const useStyles = makeStyles(
+  {
+    tableRow: {
+      cursor: "pointer"
+    },
+    textRight: {
+      textAlign: "right"
+    }
   },
-  textRight: {
-    textAlign: "right"
-  }
-});
+  { name: "CountryList" }
+);
 
 interface CountryListProps {
   countries: CountryList_shop_countries[];

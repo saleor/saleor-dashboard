@@ -3,33 +3,36 @@ import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 
-const useStyles = makeStyles(theme => ({
-  children: theme.mixins.gutters({}),
-  constantHeight: {
-    height: 56
-  },
-  hr: {
-    border: "none",
-    borderTop: `1px solid ${theme.palette.divider}`,
-    height: 0,
-    marginBottom: 0,
-    marginTop: 0,
-    width: "100%"
-  },
-  root: theme.mixins.gutters({
-    alignItems: "center",
-    display: "flex",
-    minHeight: 56
+const useStyles = makeStyles(
+  theme => ({
+    children: theme.mixins.gutters({}),
+    constantHeight: {
+      height: 56
+    },
+    hr: {
+      border: "none",
+      borderTop: `1px solid ${theme.palette.divider}`,
+      height: 0,
+      marginBottom: 0,
+      marginTop: 0,
+      width: "100%"
+    },
+    root: theme.mixins.gutters({
+      alignItems: "center",
+      display: "flex",
+      minHeight: 56
+    }),
+    title: {
+      flex: 1,
+      fontWeight: 500,
+      lineHeight: 1
+    },
+    toolbar: {
+      marginRight: -theme.spacing(1)
+    }
   }),
-  title: {
-    flex: 1,
-    fontWeight: 500,
-    lineHeight: 1
-  },
-  toolbar: {
-    marginRight: -theme.spacing(1)
-  }
-}));
+  { name: "CardTitle" }
+);
 
 interface CardTitleProps {
   children?: React.ReactNode;

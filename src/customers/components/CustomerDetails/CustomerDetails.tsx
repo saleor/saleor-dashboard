@@ -14,20 +14,23 @@ import { maybe } from "@saleor/misc";
 import { FormErrors } from "@saleor/types";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
-const useStyles = makeStyles(theme => ({
-  cardTitle: {
-    height: 72
-  },
-  checkbox: {
-    marginBottom: theme.spacing()
-  },
-  content: {
-    paddingTop: theme.spacing()
-  },
-  subtitle: {
-    marginTop: theme.spacing()
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    cardTitle: {
+      height: 72
+    },
+    checkbox: {
+      marginBottom: theme.spacing()
+    },
+    content: {
+      paddingTop: theme.spacing()
+    },
+    subtitle: {
+      marginTop: theme.spacing()
+    }
+  }),
+  { name: "CustomerDetails" }
+);
 
 export interface CustomerDetailsProps {
   customer: CustomerDetails_user;

@@ -12,15 +12,18 @@ export interface IconButtonTableCellProps {
   onClick: () => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    "&:last-child": {
-      paddingRight: 0
-    },
-    paddingRight: 0,
-    width: ICONBUTTON_SIZE + theme.spacing(0.5)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      "&:last-child": {
+        paddingRight: 0
+      },
+      paddingRight: 0,
+      width: ICONBUTTON_SIZE + theme.spacing(0.5)
+    }
+  }),
+  { name: "IconButtonTableCell" }
+);
 const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
   const {
     children,

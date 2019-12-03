@@ -23,25 +23,28 @@ export interface CustomerAddressListPageProps {
   onSetAsDefault: (id: string, type: AddressTypeEnum) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  addButton: {
-    marginTop: theme.spacing(2)
-  },
-  description: {
-    marginTop: theme.spacing(1)
-  },
-  empty: {
-    margin: `${theme.spacing(13)}px auto 0`,
-    textAlign: "center",
-    width: 600
-  },
-  root: {
-    columnGap: theme.spacing(3),
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    rowGap: theme.spacing(3)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    addButton: {
+      marginTop: theme.spacing(2)
+    },
+    description: {
+      marginTop: theme.spacing(1)
+    },
+    empty: {
+      margin: `${theme.spacing(13)}px auto 0`,
+      textAlign: "center",
+      width: 600
+    },
+    root: {
+      columnGap: theme.spacing(3),
+      display: "grid",
+      gridTemplateColumns: "repeat(3, 1fr)",
+      rowGap: theme.spacing(3)
+    }
+  }),
+  { name: "CustomerAddressListPage" }
+);
 
 const CustomerAddressListPage: React.FC<
   CustomerAddressListPageProps

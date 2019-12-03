@@ -4,38 +4,41 @@ import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 
-const useStyles = makeStyles(theme => {
-  const dot = {
-    borderRadius: "100%",
-    content: "''",
-    display: "block",
-    height: 8,
-    left: -theme.spacing(2),
-    position: "absolute" as "absolute",
-    top: "calc(50% - 5px)",
-    width: 8
-  };
+const useStyles = makeStyles(
+  theme => {
+    const dot = {
+      borderRadius: "100%",
+      content: "''",
+      display: "block",
+      height: 8,
+      left: -theme.spacing(2),
+      position: "absolute" as "absolute",
+      top: "calc(50% - 5px)",
+      width: 8
+    };
 
-  return {
-    errorDot: {
-      "&:before": { backgroundColor: theme.palette.error.main, ...dot }
-    },
-    neutralDot: {
-      "&:before": { backgroundColor: yellow[500], ...dot }
-    },
-    root: {
-      display: "inline-block",
-      marginLeft: theme.spacing(1) + 8,
-      position: "relative"
-    },
-    span: {
-      display: "inline"
-    },
-    successDot: {
-      "&:before": { backgroundColor: theme.palette.primary.main, ...dot }
-    }
-  };
-});
+    return {
+      errorDot: {
+        "&:before": { backgroundColor: theme.palette.error.main, ...dot }
+      },
+      neutralDot: {
+        "&:before": { backgroundColor: yellow[500], ...dot }
+      },
+      root: {
+        display: "inline-block",
+        marginLeft: theme.spacing(1) + 8,
+        position: "relative"
+      },
+      span: {
+        display: "inline"
+      },
+      successDot: {
+        "&:before": { backgroundColor: theme.palette.primary.main, ...dot }
+      }
+    };
+  },
+  { name: "StatusLabel" }
+);
 
 interface StatusLabelProps {
   className?: string;

@@ -9,35 +9,38 @@ import React from "react";
 
 import useForm from "@saleor/hooks/useForm";
 
-const useStyles = makeStyles(theme => ({
-  card: {
-    border: `1px solid ${theme.palette.divider}`
-  },
-  container: {
-    position: "relative"
-  },
-  overlay: {
-    cursor: "pointer",
-    height: "100vh",
-    left: 0,
-    position: "fixed",
-    top: 0,
-    width: "100vw",
-    zIndex: 1
-  },
-  root: {
-    left: 0,
-    minWidth: theme.spacing(20),
-    position: "absolute",
-    top: 0,
-    width: `calc(100% + ${theme.spacing(4)}px)`,
-    zIndex: 2
-  },
-  text: {
-    cursor: "pointer",
-    fontSize: "0.8125rem"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    card: {
+      border: `1px solid ${theme.palette.divider}`
+    },
+    container: {
+      position: "relative"
+    },
+    overlay: {
+      cursor: "pointer",
+      height: "100vh",
+      left: 0,
+      position: "fixed",
+      top: 0,
+      width: "100vw",
+      zIndex: 1
+    },
+    root: {
+      left: 0,
+      minWidth: theme.spacing(20),
+      position: "absolute",
+      top: 0,
+      width: `calc(100% + ${theme.spacing(4)}px)`,
+      zIndex: 2
+    },
+    text: {
+      cursor: "pointer",
+      fontSize: "0.8125rem"
+    }
+  }),
+  { name: "EditableTableCell" }
+);
 
 interface EditableTableCellProps {
   className?: string;

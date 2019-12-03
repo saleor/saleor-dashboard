@@ -8,37 +8,40 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 
-const useStyles = makeStyles(theme => ({
-  card: {
-    marginBottom: theme.spacing(2)
-  },
-  highlightedImageContainer: {
-    borderColor: theme.palette.primary.main
-  },
-  image: {
-    height: "100%",
-    objectFit: "contain",
-    userSelect: "none",
-    width: "100%"
-  },
-  imageContainer: {
-    background: "#ffffff",
-    border: "2px solid #eaeaea",
-    borderRadius: theme.spacing(),
-    cursor: "pointer",
-    height: 48,
-    overflow: "hidden",
-    padding: theme.spacing(0.5),
-    position: "relative"
-  },
-  root: {
-    display: "grid",
-    gridColumnGap: theme.spacing(2),
-    gridRowGap: theme.spacing(1),
-    gridTemplateColumns: "repeat(4, 1fr)"
-  },
-  toolbar: { marginTop: -theme.spacing(0.5) }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    card: {
+      marginBottom: theme.spacing(2)
+    },
+    highlightedImageContainer: {
+      borderColor: theme.palette.primary.main
+    },
+    image: {
+      height: "100%",
+      objectFit: "contain",
+      userSelect: "none",
+      width: "100%"
+    },
+    imageContainer: {
+      background: "#ffffff",
+      border: "2px solid #eaeaea",
+      borderRadius: theme.spacing(),
+      cursor: "pointer",
+      height: 48,
+      overflow: "hidden",
+      padding: theme.spacing(0.5),
+      position: "relative"
+    },
+    root: {
+      display: "grid",
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(1),
+      gridTemplateColumns: "repeat(4, 1fr)"
+    },
+    toolbar: { marginTop: -theme.spacing(0.5) }
+  }),
+  { name: "ProductImageNavigation" }
+);
 
 interface ProductImageNavigationProps {
   disabled: boolean;

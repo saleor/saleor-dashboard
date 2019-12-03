@@ -4,13 +4,16 @@ import React from "react";
 
 import SingleSelectField from "@saleor/components/SingleSelectField";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "grid",
-    gridColumnGap: theme.spacing(2),
-    gridTemplateColumns: "5rem 1fr"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      display: "grid",
+      gridColumnGap: theme.spacing(2),
+      gridTemplateColumns: "5rem 1fr"
+    }
+  }),
+  { name: "PhoneField" }
+);
 
 interface PhoneFieldProps {
   name: string;

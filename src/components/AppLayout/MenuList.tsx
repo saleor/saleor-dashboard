@@ -19,41 +19,92 @@ import { orderDraftListUrl, orderListUrl } from "../../orders/urls";
 import MenuNested from "./MenuNested";
 import { IMenuItem } from "./menuStructure";
 
-const useStyles = makeStyles(theme => ({
-  menuIcon: {
-    "& svg": {
-      height: 32,
-      width: 32
+const useStyles = makeStyles(
+  theme => ({
+    menuIcon: {
+      "& svg": {
+        height: 32,
+        width: 32
+      },
+      display: "inline-block",
+      position: "relative",
+      top: 8
     },
-    display: "inline-block",
-    position: "relative",
-    top: 8
-  },
-  menuIconDark: {
-    "& path": {
-      fill: theme.palette.common.white
-    }
-  },
-  menuIconSmall: {
-    left: -5
-  },
-  menuIsActive: {
-    boxShadow: "0px 0px 12px 1px rgba(0,0,0,0.2)"
-  },
-  menuItemHover: {
-    "& p": {
-      fontSize: 14,
-      transition: "color 0.5s ease, opacity 0.3s ease-out"
+    menuIconDark: {
+      "& path": {
+        fill: theme.palette.common.white
+      }
     },
-    "& path": {
-      transition: "fill 0.5s ease"
+    menuIconSmall: {
+      left: -5
     },
-    "&:hover": {
+    menuIsActive: {
+      boxShadow: "0px 0px 12px 1px rgba(0,0,0,0.2)"
+    },
+    menuItemHover: {
       "& p": {
+        fontSize: 14,
+        transition: "color 0.5s ease, opacity 0.3s ease-out"
+      },
+      "& path": {
+        transition: "fill 0.5s ease"
+      },
+      "&:hover": {
+        "& p": {
+          color: theme.palette.primary.main
+        },
+        "& path": {
+          fill: theme.palette.primary.main
+        },
+        "&:before": {
+          borderLeft: `solid 2px ${theme.palette.primary.main}`,
+          content: "''",
+          height: 33,
+          left: -20,
+          position: "absolute",
+          top: 8
+        },
+        color: theme.palette.primary.main
+      },
+      cursor: "pointer",
+      position: "relative"
+    },
+    menuList: {
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      marginLeft: theme.spacing(4),
+      marginTop: theme.spacing(2),
+      paddingBottom: theme.spacing(3)
+    },
+    menuListItem: {
+      alignItems: "center",
+      display: "block",
+      marginBottom: theme.spacing(5),
+      paddingLeft: 0,
+      textDecoration: "none",
+      transition: theme.transitions.duration.standard + "ms"
+    },
+    menuListItemActive: {
+      "& $menuListItemText": {
         color: theme.palette.primary.main
       },
       "& path": {
+        color: theme.palette.primary.main,
         fill: theme.palette.primary.main
+      }
+    },
+    menuListItemOpen: {
+      "&:after": {
+        borderBottom: `10px solid transparent`,
+        borderLeft: `10px solid ${theme.palette.background.paper}`,
+        borderTop: `10px solid transparent`,
+        content: "''",
+        height: 0,
+        position: "absolute",
+        right: -30,
+        top: 15,
+        width: 0
       },
       "&:before": {
         borderLeft: `solid 2px ${theme.palette.primary.main}`,
@@ -63,97 +114,49 @@ const useStyles = makeStyles(theme => ({
         position: "absolute",
         top: 8
       },
-      color: theme.palette.primary.main
+      position: "relative"
     },
-    cursor: "pointer",
-    position: "relative"
-  },
-  menuList: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-    marginLeft: theme.spacing(4),
-    marginTop: theme.spacing(2),
-    paddingBottom: theme.spacing(3)
-  },
-  menuListItem: {
-    alignItems: "center",
-    display: "block",
-    marginBottom: theme.spacing(5),
-    paddingLeft: 0,
-    textDecoration: "none",
-    transition: theme.transitions.duration.standard + "ms"
-  },
-  menuListItemActive: {
-    "& $menuListItemText": {
-      color: theme.palette.primary.main
+    menuListItemText: {
+      "&:hover": {
+        color: theme.palette.primary.main
+      },
+      bottom: 0,
+      cursor: "pointer",
+      fontSize: "1rem",
+      fontWeight: 500,
+      left: 30,
+      opacity: 1,
+      paddingLeft: 16,
+      position: "absolute",
+      textTransform: "uppercase",
+      transition: "opacity 0.5s ease"
     },
-    "& path": {
-      color: theme.palette.primary.main,
-      fill: theme.palette.primary.main
+    menuListItemTextHide: {
+      bottom: 0,
+      left: 30,
+      opacity: 0,
+      position: "absolute"
+    },
+    subMenu: {
+      padding: "0 15px"
+    },
+    subMenuDrawer: {
+      background: "#000",
+      cursor: "pointer",
+      height: "100vh",
+      left: 0,
+      opacity: 0.2,
+      position: "absolute",
+      top: 0,
+      width: 0,
+      zIndex: -2
+    },
+    subMenuDrawerOpen: {
+      width: `100vw`
     }
-  },
-  menuListItemOpen: {
-    "&:after": {
-      borderBottom: `10px solid transparent`,
-      borderLeft: `10px solid ${theme.palette.background.paper}`,
-      borderTop: `10px solid transparent`,
-      content: "''",
-      height: 0,
-      position: "absolute",
-      right: -30,
-      top: 15,
-      width: 0
-    },
-    "&:before": {
-      borderLeft: `solid 2px ${theme.palette.primary.main}`,
-      content: "''",
-      height: 33,
-      left: -20,
-      position: "absolute",
-      top: 8
-    },
-    position: "relative"
-  },
-  menuListItemText: {
-    "&:hover": {
-      color: theme.palette.primary.main
-    },
-    bottom: 0,
-    cursor: "pointer",
-    fontSize: "1rem",
-    fontWeight: 500,
-    left: 30,
-    opacity: 1,
-    paddingLeft: 16,
-    position: "absolute",
-    textTransform: "uppercase",
-    transition: "opacity 0.5s ease"
-  },
-  menuListItemTextHide: {
-    bottom: 0,
-    left: 30,
-    opacity: 0,
-    position: "absolute"
-  },
-  subMenu: {
-    padding: "0 15px"
-  },
-  subMenuDrawer: {
-    background: "#000",
-    cursor: "pointer",
-    height: "100vh",
-    left: 0,
-    opacity: 0.2,
-    position: "absolute",
-    top: 0,
-    width: 0,
-    zIndex: -2
-  },
-  subMenuDrawerOpen: {
-    width: `100vw`
-  }
-}));
+  }),
+  { name: "MenuList" }
+);
 
 interface MenuListProps {
   className?: string;

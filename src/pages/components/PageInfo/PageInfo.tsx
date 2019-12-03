@@ -22,11 +22,14 @@ export interface PageInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const useStyles = makeStyles({
-  root: {
-    overflow: "visible"
-  }
-});
+const useStyles = makeStyles(
+  {
+    root: {
+      overflow: "visible"
+    }
+  },
+  { name: "PageInfo" }
+);
 
 const PageInfo: React.FC<PageInfoProps> = props => {
   const { data, disabled, errors, page, onChange } = props;
