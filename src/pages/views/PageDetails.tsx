@@ -19,23 +19,21 @@ export interface PageDetailsProps {
   params: PageUrlQueryParams;
 }
 
-const createPageInput = (data: FormData): PageInput => {
-  return {
-    contentJson: JSON.stringify(data.content),
-    isPublished: data.isPublished,
-    publicationDate: data.isPublished
-      ? null
-      : data.publicationDate === ""
-      ? null
-      : data.publicationDate,
-    seo: {
-      description: data.seoDescription,
-      title: data.seoTitle
-    },
-    slug: data.slug === "" ? null : data.slug,
-    title: data.title
-  };
-};
+const createPageInput = (data: FormData): PageInput => ({
+  contentJson: JSON.stringify(data.content),
+  isPublished: data.isPublished,
+  publicationDate: data.isPublished
+    ? null
+    : data.publicationDate === ""
+    ? null
+    : data.publicationDate,
+  seo: {
+    description: data.seoDescription,
+    title: data.seoTitle
+  },
+  slug: data.slug === "" ? null : data.slug,
+  title: data.title
+});
 
 export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();

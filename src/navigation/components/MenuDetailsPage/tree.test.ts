@@ -171,7 +171,7 @@ describe("Properly computes trees", () => {
     [{ id: "2accessories", type: "remove" }],
     [
       { id: "2accessories", type: "remove" },
-      { id: "4apparel", type: "move", sortOrder: 0 },
+      { id: "4apparel", sortOrder: 0, type: "move" },
       { id: "3groceries", type: "remove" }
     ]
   ];

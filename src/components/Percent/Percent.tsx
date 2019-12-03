@@ -8,12 +8,12 @@ interface PercentProps {
 
 const Percent: React.FC<PercentProps> = ({ amount }) => (
   <LocaleConsumer>
-    {({ locale }) => {
-      return (amount / 100).toLocaleString(locale, {
+    {({ locale }) =>
+      (amount / 100).toLocaleString(locale, {
         maximumFractionDigits: 2,
         style: "percent"
-      });
-    }}
+      })
+    }
   </LocaleConsumer>
 );
 Percent.displayName = "Percent";

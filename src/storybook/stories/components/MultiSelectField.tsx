@@ -7,10 +7,10 @@ import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 
 const choices = [
-  { value: "1", label: "Apparel" },
-  { value: "2", label: "Groceries" },
-  { value: "3", label: "Books" },
-  { value: "4", label: "Accessories" }
+  { label: "Apparel", value: "1" },
+  { label: "Groceries", value: "2" },
+  { label: "Books", value: "3" },
+  { label: "Accessories", value: "4" }
 ];
 
 storiesOf("Generics / MultiSelectField", module)

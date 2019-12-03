@@ -17,7 +17,7 @@ interface MessageManagerState {
 
 export class MessageManager extends React.Component<{}, MessageManagerState> {
   state: MessageManagerState = {
-    message: { text: "", key: "0", onUndo: undefined },
+    message: { key: "0", onUndo: undefined, text: "" },
     opened: false
   };
   queue = [];

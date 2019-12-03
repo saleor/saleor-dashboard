@@ -12,20 +12,17 @@ import {
 import isEqual from "lodash-es/isEqual";
 import React from "react";
 
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import BoldIcon from "../../icons/BoldIcon";
-import HeaderOne from "../../icons/HeaderOne";
-import HeaderThree from "../../icons/HeaderThree";
 import HeaderTwo from "../../icons/HeaderTwo";
+import HeaderThree from "../../icons/HeaderThree";
 import ItalicIcon from "../../icons/ItalicIcon";
 import LinkIcon from "../../icons/LinkIcon";
 import OrderedListIcon from "../../icons/OrderedListIcon";
+import HeaderOne from "../../icons/HeaderOne";
 import QuotationIcon from "../../icons/QuotationIcon";
 import StrikethroughIcon from "../../icons/StrikethroughIcon";
 import UnorderedListIcon from "../../icons/UnorderedListIcon";
-
-// import ImageEntity from "./ImageEntity";
-// import ImageSource from "./ImageSource";
-import { ChangeEvent } from "@saleor/hooks/useForm";
 import LinkEntity from "./LinkEntity";
 import LinkSource from "./LinkSource";
 
@@ -33,10 +30,10 @@ export interface RichTextEditorProps {
   disabled: boolean;
   error: boolean;
   helperText: string;
+  initial?: RawDraftContentState;
   label: string;
   name: string;
   scroll?: boolean;
-  initial?: RawDraftContentState;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 

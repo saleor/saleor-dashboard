@@ -80,14 +80,12 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
     <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
       {({ data, errors, hasChanged, submit, set, triggerChange }) => {
         const onChange = (event: ChangeEvent) => {
+          const { name, value } = event.target;
           const newData = {
-            active: data.active,
+            active: name === "active" ? value : data.active,
             configuration: data.configuration
           };
-          const { name, value } = event.target;
-          name === "active"
-            ? (newData.active = value)
-            : (newData.active = data.active);
+
           if (newData.configuration) {
             newData.configuration.map(item => {
               if (item.name === name) {

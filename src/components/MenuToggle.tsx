@@ -33,7 +33,7 @@ class MenuToggle extends React.Component<MenuToggleProps, MenuToggleState> {
     const { open } = this.state;
 
     return children({
-      actions: { open: this.handleClick, close: this.handleClose },
+      actions: { close: this.handleClose, open: this.handleClick },
       open
     });
   }

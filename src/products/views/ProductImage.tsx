@@ -49,80 +49,78 @@ export const ProductImage: React.FC<ProductImageProps> = ({
       }}
       require={["product"]}
     >
-      {({ data, loading }) => {
-        return (
-          <TypedProductImageUpdateMutation onCompleted={handleUpdateSuccess}>
-            {(updateImage, updateResult) => (
-              <TypedProductImageDeleteMutation onCompleted={handleBack}>
-                {(deleteImage, deleteResult) => {
-                  const handleDelete = () =>
-                    deleteImage({ variables: { id: imageId } });
-                  const handleImageClick = (id: string) => () =>
-                    navigate(productImageUrl(productId, id));
-                  const handleUpdate = (formData: { description: string }) => {
-                    updateImage({
-                      variables: {
-                        alt: formData.description,
-                        id: imageId
-                      }
-                    });
-                  };
-                  const image = data && data.product && data.product.mainImage;
+      {({ data, loading }) => (
+        <TypedProductImageUpdateMutation onCompleted={handleUpdateSuccess}>
+          {(updateImage, updateResult) => (
+            <TypedProductImageDeleteMutation onCompleted={handleBack}>
+              {(deleteImage, deleteResult) => {
+                const handleDelete = () =>
+                  deleteImage({ variables: { id: imageId } });
+                const handleImageClick = (id: string) => () =>
+                  navigate(productImageUrl(productId, id));
+                const handleUpdate = (formData: { description: string }) => {
+                  updateImage({
+                    variables: {
+                      alt: formData.description,
+                      id: imageId
+                    }
+                  });
+                };
+                const image = data && data.product && data.product.mainImage;
 
-                  const formTransitionState = getMutationState(
-                    updateResult.called,
-                    updateResult.loading,
-                    maybe(() => updateResult.data.productImageUpdate.errors)
-                  );
-                  const deleteTransitionState = getMutationState(
-                    deleteResult.called,
-                    deleteResult.loading,
-                    []
-                  );
-                  return (
-                    <>
-                      <ProductImagePage
-                        disabled={loading}
-                        product={maybe(() => data.product.name)}
-                        image={image || null}
-                        images={maybe(() => data.product.images)}
-                        onBack={handleBack}
-                        onDelete={() =>
-                          navigate(
-                            productImageUrl(productId, imageId, {
-                              action: "remove"
-                            })
-                          )
-                        }
-                        onRowClick={handleImageClick}
-                        onSubmit={handleUpdate}
-                        saveButtonBarState={formTransitionState}
-                      />
-                      <ActionDialog
-                        onClose={() =>
-                          navigate(productImageUrl(productId, imageId), true)
-                        }
-                        onConfirm={handleDelete}
-                        open={params.action === "remove"}
-                        title={intl.formatMessage({
-                          defaultMessage: "Delete Image",
-                          description: "dialog header"
-                        })}
-                        variant="delete"
-                        confirmButtonState={deleteTransitionState}
-                      >
-                        <DialogContentText>
-                          <FormattedMessage defaultMessage="Are you sure you want to delete this image?" />
-                        </DialogContentText>
-                      </ActionDialog>
-                    </>
-                  );
-                }}
-              </TypedProductImageDeleteMutation>
-            )}
-          </TypedProductImageUpdateMutation>
-        );
-      }}
+                const formTransitionState = getMutationState(
+                  updateResult.called,
+                  updateResult.loading,
+                  maybe(() => updateResult.data.productImageUpdate.errors)
+                );
+                const deleteTransitionState = getMutationState(
+                  deleteResult.called,
+                  deleteResult.loading,
+                  []
+                );
+                return (
+                  <>
+                    <ProductImagePage
+                      disabled={loading}
+                      product={maybe(() => data.product.name)}
+                      image={image || null}
+                      images={maybe(() => data.product.images)}
+                      onBack={handleBack}
+                      onDelete={() =>
+                        navigate(
+                          productImageUrl(productId, imageId, {
+                            action: "remove"
+                          })
+                        )
+                      }
+                      onRowClick={handleImageClick}
+                      onSubmit={handleUpdate}
+                      saveButtonBarState={formTransitionState}
+                    />
+                    <ActionDialog
+                      onClose={() =>
+                        navigate(productImageUrl(productId, imageId), true)
+                      }
+                      onConfirm={handleDelete}
+                      open={params.action === "remove"}
+                      title={intl.formatMessage({
+                        defaultMessage: "Delete Image",
+                        description: "dialog header"
+                      })}
+                      variant="delete"
+                      confirmButtonState={deleteTransitionState}
+                    >
+                      <DialogContentText>
+                        <FormattedMessage defaultMessage="Are you sure you want to delete this image?" />
+                      </DialogContentText>
+                    </ActionDialog>
+                  </>
+                );
+              }}
+            </TypedProductImageDeleteMutation>
+          )}
+        </TypedProductImageUpdateMutation>
+      )}
     </TypedProductImageQuery>
   );
 };

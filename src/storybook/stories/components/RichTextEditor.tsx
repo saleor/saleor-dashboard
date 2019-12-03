@@ -12,7 +12,7 @@ export const content: RawDraftContentState = {
       data: {},
       depth: 0,
       entityRanges: [],
-      inlineStyleRanges: [{ offset: 0, length: 4, style: "BOLD" }],
+      inlineStyleRanges: [{ length: 4, offset: 0, style: "BOLD" }],
       key: "rosn",
       text: "bold",
       type: "unstyled"
@@ -21,7 +21,7 @@ export const content: RawDraftContentState = {
       data: {},
       depth: 0,
       entityRanges: [],
-      inlineStyleRanges: [{ offset: 0, length: 6, style: "ITALIC" }],
+      inlineStyleRanges: [{ length: 6, offset: 0, style: "ITALIC" }],
       key: "6tbch",
       text: "italic",
       type: "unstyled"
@@ -30,7 +30,7 @@ export const content: RawDraftContentState = {
       data: {},
       depth: 0,
       entityRanges: [],
-      inlineStyleRanges: [{ offset: 0, length: 13, style: "STRIKETHROUGH" }],
+      inlineStyleRanges: [{ length: 13, offset: 0, style: "STRIKETHROUGH" }],
       key: "1p044",
       text: "strikethrough",
       type: "unstyled"
@@ -92,7 +92,7 @@ export const content: RawDraftContentState = {
     {
       data: {},
       depth: 0,
-      entityRanges: [{ offset: 0, length: 4, key: 0 }],
+      entityRanges: [{ key: 0, length: 4, offset: 0 }],
       inlineStyleRanges: [],
       key: "5aejo",
       text: "link",
@@ -100,7 +100,7 @@ export const content: RawDraftContentState = {
     }
   ],
   entityMap: {
-    "0": { type: "LINK", mutability: "MUTABLE", data: { url: "#" } }
+    "0": { data: { url: "#" }, mutability: "MUTABLE", type: "LINK" }
   }
 };
 storiesOf("Generics / Rich text editor", module)

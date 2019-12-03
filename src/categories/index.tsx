@@ -40,15 +40,11 @@ interface CategoryCreateRouteParams {
 }
 const CategoryCreate: React.FC<
   RouteComponentProps<CategoryCreateRouteParams>
-> = ({ match }) => {
-  return (
-    <CategoryCreateView
-      parentId={
-        match.params.id ? decodeURIComponent(match.params.id) : undefined
-      }
-    />
-  );
-};
+> = ({ match }) => (
+  <CategoryCreateView
+    parentId={match.params.id ? decodeURIComponent(match.params.id) : undefined}
+  />
+);
 
 const CategoryList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));

@@ -5,7 +5,7 @@ import placeholder from "@assets/images/placeholder1080x1080.png";
 import ProductImagePage from "../../../products/components/ProductImagePage";
 import Decorator from "../../Decorator";
 
-const image = { id: "", url: placeholder, alt: "Lorem ipsum" };
+const image = { alt: "Lorem ipsum", id: "", url: placeholder };
 const images = (Array(8) as any)
   .fill({ id: "img", url: placeholder })
   .map((image, imageIndex) => ({ ...image, id: image.id + imageIndex }));

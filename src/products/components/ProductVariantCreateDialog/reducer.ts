@@ -1,4 +1,3 @@
-//#region
 import {
   add,
   remove,
@@ -36,7 +35,7 @@ export interface ProductVariantCreateReducerAction {
   valueId?: string;
   variantIndex?: number;
 }
-//#endregion
+
 function selectValue(
   prevState: ProductVariantCreateFormData,
   attributeId: string,

@@ -1160,8 +1160,8 @@ export const countries = [
   { code: "AS", label: "American Samoa" }
 ];
 export const shippingMethods = [
-  { id: "s1", name: "DHL", country: "whole world", price: {} },
-  { id: "s2", name: "UPS", country: "Afghanistan" }
+  { country: "whole world", id: "s1", name: "DHL", price: {} },
+  { country: "Afghanistan", id: "s2", name: "UPS" }
 ];
 export const orderLineSearch = (placeholderImage: string) => [
   {
@@ -1177,21 +1177,21 @@ export const orderLineSearch = (placeholderImage: string) => [
         __typename: "ProductVariant" as "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6MjAy",
         name: "500ml",
-        price: { amount: 3.0, currency: "USD", __typename: "Money" as "Money" },
+        price: { __typename: "Money" as "Money", amount: 3.0, currency: "USD" },
         sku: "93855755"
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
         name: "1l",
-        price: { amount: 5.0, currency: "USD", __typename: "Money" as "Money" },
+        price: { __typename: "Money" as "Money", amount: 5.0, currency: "USD" },
         sku: "43226647"
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6MjA0",
         name: "2l",
-        price: { amount: 7.0, currency: "USD", __typename: "Money" as "Money" },
+        price: { __typename: "Money" as "Money", amount: 7.0, currency: "USD" },
         sku: "80884671"
       }
     ]
@@ -1209,21 +1209,21 @@ export const orderLineSearch = (placeholderImage: string) => [
         __typename: "ProductVariant" as "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6MjEx",
         name: "500ml",
-        price: { amount: 3.0, currency: "USD", __typename: "Money" as "Money" },
+        price: { __typename: "Money" as "Money", amount: 3.0, currency: "USD" },
         sku: "43200242"
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6MjEy",
         name: "1l",
-        price: { amount: 5.0, currency: "USD", __typename: "Money" as "Money" },
+        price: { __typename: "Money" as "Money", amount: 5.0, currency: "USD" },
         sku: "79129513"
       },
       {
         __typename: "ProductVariant" as "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6MjEz",
         name: "2l",
-        price: { amount: 7.0, currency: "USD", __typename: "Money" as "Money" },
+        price: { __typename: "Money" as "Money", amount: 7.0, currency: "USD" },
         sku: "75799450"
       }
     ]
