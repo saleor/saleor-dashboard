@@ -22,7 +22,7 @@ interface StaffPasswordResetDialogFormData {
 export interface StaffPasswordResetDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: UserError[];
-  onSubmit: (password: string) => void;
+  onSubmit: (data: StaffPasswordResetDialogFormData) => void;
 }
 
 const initialForm: StaffPasswordResetDialogFormData = {
@@ -47,11 +47,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
           description="dialog header"
         />
       </DialogTitle>
-      <Form
-        errors={apiErrors}
-        initial={initialForm}
-        onSubmit={data => onSubmit(data.password)}
-      >
+      <Form errors={apiErrors} initial={initialForm} onSubmit={onSubmit}>
         {({ change, data, errors, submit }) => (
           <>
             <DialogContent>

@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import makeMutation from "@saleor/hooks/makeMutation";
 import { TypedMutation } from "../mutations";
 import { staffMemberDetailsFragment } from "./queries";
 import { StaffAvatarDelete } from "./types/StaffAvatarDelete";
@@ -19,6 +20,10 @@ import {
   StaffMemberUpdate,
   StaffMemberUpdateVariables
 } from "./types/StaffMemberUpdate";
+import {
+  ChangeStaffPassword,
+  ChangeStaffPasswordVariables
+} from "./types/ChangeStaffPassword";
 
 const staffMemberAddMutation = gql`
   ${staffMemberDetailsFragment}
@@ -114,3 +119,18 @@ export const TypedStaffAvatarDeleteMutation = TypedMutation<
   StaffAvatarDelete,
   StaffMemberDeleteVariables
 >(staffAvatarDeleteMutation);
+
+const changeStaffPassword = gql`
+  mutation ChangeStaffPassword($newPassword: String!, $oldPassword: String!) {
+    passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+export const useChangeStaffPassword = makeMutation<
+  ChangeStaffPassword,
+  ChangeStaffPasswordVariables
+>(changeStaffPassword);
