@@ -27,6 +27,7 @@ import {
   staffMemberDetailsUrl,
   StaffMemberDetailsUrlQueryParams
 } from "../urls";
+import StaffPasswordResetDialog from "../components/StaffPasswordResetDialog";
 
 interface OrderListProps {
   id: string;
@@ -39,6 +40,14 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const user = useUser();
   const intl = useIntl();
   const shop = useShop();
+
+  const closeModal = () =>
+    navigate(
+      staffMemberDetailsUrl(id, {
+        ...params,
+        action: undefined
+      })
+    );
 
   return (
     <TypedStaffMemberDetailsQuery
@@ -182,9 +191,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 })}
                                 confirmButtonState={deleteTransitionState}
                                 variant="delete"
-                                onClose={() =>
-                                  navigate(staffMemberDetailsUrl(id))
-                                }
+                                onClose={closeModal}
                                 onConfirm={deleteStaffMember}
                               >
                                 <DialogContentText>
@@ -204,9 +211,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 })}
                                 confirmButtonState={deleteAvatarTransitionState}
                                 variant="delete"
-                                onClose={() =>
-                                  navigate(staffMemberDetailsUrl(id))
-                                }
+                                onClose={closeModal}
                                 onConfirm={deleteStaffAvatar}
                               >
                                 <DialogContentText>
@@ -222,6 +227,13 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                   />
                                 </DialogContentText>
                               </ActionDialog>
+                              <StaffPasswordResetDialog
+                                confirmButtonState="default"
+                                errors={[]}
+                                open={params.action === "change-password"}
+                                onClose={closeModal}
+                                onSubmit={() => undefined}
+                              />
                             </>
                           );
                         }}
