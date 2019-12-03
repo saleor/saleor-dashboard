@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { RuleTester } = require("eslint");
 
 const namedStylesRule = require("./named-styles");
@@ -43,16 +44,15 @@ const ruleTester = new RuleTester({
 });
 
 ruleTester.run("named-styles", namedStylesRule, {
-  valid: [
-    {
-      code: okCode
-    }
-  ],
-
   invalid: [
     {
       code: badCode,
       errors: [{ message: "makeStyles hook should be named." }]
+    }
+  ],
+  valid: [
+    {
+      code: okCode
     }
   ]
 });
