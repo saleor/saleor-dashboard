@@ -73,7 +73,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                   errors.newPassword ||
                   intl.formatMessage({
                     defaultMessage:
-                      "New newPassword must be at least 8 characters long"
+                      "New password must be at least 8 characters long"
                   })
                 }
                 label={intl.formatMessage({
