@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import placeholderImg from "@assets/images/placeholder255x255.png";
@@ -43,6 +43,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       require={["productVariant"]}
     >
       {({ data, loading }) => {
+        const [errors, setErrors] = useState([]);
         const variant = data ? data.productVariant : undefined;
         const handleBack = () => navigate(productUrl(productId));
         const handleDelete = () => {
@@ -54,8 +55,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           navigate(productUrl(productId));
         };
         const handleUpdate = (data: VariantUpdate) => {
-          if (!maybe(() => data.productVariantUpdate.productErrors.length)) {
+          if (!data.productVariantUpdate.productErrors.length) {
             notify({ text: intl.formatMessage(commonMessages.savedChanges) });
+          } else {
+            setErrors(data.productVariantUpdate.productErrors);
           }
         };
 
@@ -107,12 +110,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                 <>
                   <WindowTitle title={maybe(() => data.productVariant.name)} />
                   <ProductVariantPage
-                    errors={maybe(
-                      () =>
-                        updateVariant.opts.data.productVariantUpdate
-                          .productErrors,
-                      []
-                    )}
+                    errors={errors}
                     saveButtonBarState={formTransitionState}
                     loading={disableFormSave}
                     placeholderImage={placeholderImg}
@@ -146,6 +144,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                     }}
                     onVariantClick={variantId => {
                       navigate(productVariantEditUrl(productId, variantId));
+                      setErrors([]);
                     }}
                   />
                   <ProductVariantDeleteDialog
