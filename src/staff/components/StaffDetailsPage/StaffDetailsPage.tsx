@@ -19,6 +19,7 @@ import { PermissionEnum } from "../../../types/globalTypes";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 import StaffPreferences from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
+import StaffPassword from "../StaffPassword/StaffPassword";
 
 interface FormData {
   hasFullAccess: boolean;
@@ -39,6 +40,7 @@ export interface StaffDetailsPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   staffMember: StaffMemberDetails_user;
   onBack: () => void;
+  onChangePassword: () => void;
   onDelete: () => void;
   onImageDelete: () => void;
   onSubmit: (data: FormData) => void;
@@ -55,6 +57,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   saveButtonBarState,
   staffMember,
   onBack,
+  onChangePassword,
   onDelete,
   onImageDelete,
   onImageUpload,
@@ -100,6 +103,12 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 onImageUpload={onImageUpload}
                 onImageDelete={onImageDelete}
               />
+              {canEditPreferences && (
+                <>
+                  <CardSpacer />
+                  <StaffPassword onChangePassword={onChangePassword} />
+                </>
+              )}
             </div>
             <div>
               {canEditPreferences && (

@@ -128,6 +128,13 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 canRemove={!isUserSameAsViewer}
                                 disabled={loading}
                                 onBack={() => navigate(staffListUrl())}
+                                onChangePassword={() =>
+                                  navigate(
+                                    staffMemberDetailsUrl(id, {
+                                      action: "change-password"
+                                    })
+                                  )
+                                }
                                 onDelete={() =>
                                   navigate(
                                     staffMemberDetailsUrl(id, {
