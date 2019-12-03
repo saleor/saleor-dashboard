@@ -4,18 +4,19 @@
 # Thomas LOSBAR <thomas.losbar@monkeyed.fr>, 2019
 # Laurent Constantin <laurent.constantin@liip.ch>, 2019
 # Benoît Burgener <benoit.burgener@liip.ch>, 2019
-# Rémi de Chazelles <remidechazelles@gmail.com>, 2019
-# Da Costa Faro Rémy <remy@dacostafaro.com>, 2019
 # benoit barthelet <benoit.barthelet@gmail.com>, 2019
 # Romain de Wolff <rdewolff@gmail.com>, 2019
-# Roxanne Pons <roxanne.pons@liip.ch>, 2019
 # Marouane Fawzi <glamarouane@gmail.com>, 2019
 # NyаnKiyoshi <hello@vanille.bid>, 2019
+# symen <symen.b@gmail.com>, 2019
+# Rémi de Chazelles <remidechazelles@gmail.com>, 2019
+# Da Costa Faro Rémy <remy@dacostafaro.com>, 2019
+# Roxanne Pons <roxanne.pons@liip.ch>, 2019
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-11-13T13:13:30.128Z\n"
-"Last-Translator: NyаnKiyoshi <hello@vanille.bid>, 2019\n"
+"POT-Creation-Date: 2019-11-26T14:34:48.426Z\n"
+"Last-Translator: Roxanne Pons <roxanne.pons@liip.ch>, 2019\n"
 "Language-Team: French (https://www.transifex.com/mirumee/teams/34782/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -192,14 +193,6 @@ msgctxt "page header"
 msgid "Add Collection"
 msgstr "Ajouter une collection "
 
-#. [src.customers.components.CustomerCreatePage.2622255457] - page header
-#. defaultMessage is:
-#. Add Customer
-#: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
-msgctxt "page header"
-msgid "Add Customer"
-msgstr "Ajouter un client "
-
 #. [src.components.Filter.2852521946] - button
 #. defaultMessage is:
 #. Add Filter
@@ -291,14 +284,6 @@ msgstr "Ajouter une adresse"
 msgctxt "button"
 msgid "Add authentication"
 msgstr "Ajouter une authentification"
-
-#. [src.customers.components.CustomerListPage.1934221653] - button
-#. defaultMessage is:
-#. Add customer
-#: build/locale/src/customers/components/CustomerListPage/CustomerListPage.json
-msgctxt "button"
-msgid "Add customer"
-msgstr "Ajouter le client"
 
 #. [src.components.Filter.2851720415] - button
 #. defaultMessage is:
@@ -935,36 +920,15 @@ msgstr ""
 "Êtes-vous certain de vouloir supprimer {counter,plural,one{this attribute} "
 "other{{displayQuantity} attributes}}?"
 
-#. [src.categories.views.982216972]
+#. [src.categories.views.1592907702]
 #. defaultMessage is:
-#. Are you sure you want to delete {counter,plural,one{this attribute}
+#. Are you sure you want to delete {counter,plural,one{this category}
 #. other{{displayQuantity} categories}}?
-#: build/locale/src/categories/views/CategoryDetails.json
-msgctxt "description"
-msgid ""
-"Are you sure you want to delete {counter,plural,one{this attribute} "
-"other{{displayQuantity} categories}}?"
-msgstr ""
-"Êtes-vous certain de vouloir supprimer {counter,plural,one{this attribute} "
-"other{{displayQuantity} categories}}?"
-
-#. [src.categories.views.3920301974]
-#. defaultMessage is:
-#. Are you sure you want to delete {counter,plural,one{this attribute}
-#. other{{displayQuantity} products}}?
-#: build/locale/src/categories/views/CategoryDetails.json
-msgctxt "description"
-msgid ""
-"Are you sure you want to delete {counter,plural,one{this attribute} "
-"other{{displayQuantity} products}}?"
-msgstr ""
-"Êtes-vous certain de vouloir supprimer {counter,plural,one{this attribute} "
-"other{{displayQuantity} products}}?"
-
 #. [src.categories.views.CategoryList.1592907702]
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this category}
 #. other{{displayQuantity} categories}}?
+#: build/locale/src/categories/views/CategoryDetails.json
 #: build/locale/src/categories/views/CategoryList/CategoryList.json
 msgctxt "description"
 msgid ""
@@ -1051,6 +1015,19 @@ msgid ""
 msgstr ""
 "Êtes-vous certain de vouloir supprimer {counter,plural,one{this product "
 "type} other{{displayQuantity} product types}}?"
+
+#. [src.categories.views.785143617]
+#. defaultMessage is:
+#. Are you sure you want to delete {counter,plural,one{this product}
+#. other{{displayQuantity} products}}?
+#: build/locale/src/categories/views/CategoryDetails.json
+msgctxt "description"
+msgid ""
+"Are you sure you want to delete {counter,plural,one{this product} "
+"other{{displayQuantity} products}}?"
+msgstr ""
+"Êtes-vous certain de vouloir supprimer {counter,plural,one{this product} "
+"other{{displayQuantity} products}}?"
 
 #. [src.products.views.ProductList.785143617] - dialog content
 #. defaultMessage is:
@@ -2040,6 +2017,9 @@ msgctxt "number of categories"
 msgid "Categories ({quantity})"
 msgstr "Catégories ({quantité})"
 
+#. [src.components.Navigator.modes.category]
+#. defaultMessage is:
+#. Category
 #. [src.products.components.ProductCategoryAndCollectionsForm.1755013298]
 #. defaultMessage is:
 #. Category
@@ -2049,6 +2029,7 @@ msgstr "Catégories ({quantité})"
 #. [src.taxes.components.CountryTaxesPage.1755013298]
 #. defaultMessage is:
 #. Category
+#: build/locale/src/components/Navigator/modes/messages.json
 #: build/locale/src/products/components/ProductCategoryAndCollectionsForm/ProductCategoryAndCollectionsForm.json
 #: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
@@ -2209,6 +2190,14 @@ msgstr "Effacer"
 msgctxt "voucher code"
 msgid "Code"
 msgstr "Code"
+
+#. [src.components.Navigator.modes.collection]
+#. defaultMessage is:
+#. Collection
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "description"
+msgid "Collection"
+msgstr "Collection"
 
 #. [src.translations.components.TranslationsCollectionsPage.2759199473]
 #. defaultMessage is:
@@ -2602,6 +2591,38 @@ msgctxt "create service token, button"
 msgid "Create"
 msgstr "Créer"
 
+#. [src.components.Navigator.modes.createCategory] - button
+#. defaultMessage is:
+#. Create Category
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "button"
+msgid "Create Category"
+msgstr ""
+
+#. [src.components.Navigator.modes.createCollection] - button
+#. defaultMessage is:
+#. Create Collection
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "button"
+msgid "Create Collection"
+msgstr ""
+
+#. [src.components.Navigator.modes.createCustomer] - button
+#. defaultMessage is:
+#. Create Customer
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "button"
+msgid "Create Customer"
+msgstr ""
+
+#. [src.customers.components.CustomerCreatePage.4025686004] - page header
+#. defaultMessage is:
+#. Create Customer
+#: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
+msgctxt "page header"
+msgid "Create Customer"
+msgstr ""
+
 #. [menuCreateDialogHeader] - dialog header
 #. defaultMessage is:
 #. Create Menu
@@ -2650,6 +2671,14 @@ msgctxt "header"
 msgid "Create New Shipping Zone"
 msgstr "Créer nouvelle zone d'envoi"
 
+#. [src.components.Navigator.modes.createOrder] - button
+#. defaultMessage is:
+#. Create Order
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "button"
+msgid "Create Order"
+msgstr ""
+
 #. [src.pages.components.PageDetailsPage.1068617485] - page header
 #. defaultMessage is:
 #. Create Page
@@ -2666,19 +2695,23 @@ msgctxt "header"
 msgid "Create Page"
 msgstr "Créer page"
 
+#. [src.components.Navigator.modes.createProduct] - button
+#. defaultMessage is:
+#. Create Product
+#. [src.products.components.ProductListPage.1542417144] - button
+#. defaultMessage is:
+#. Create Product
+#: build/locale/src/components/Navigator/modes/messages.json
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
+msgctxt "button"
+msgid "Create Product"
+msgstr "Créer produit"
+
 #. [src.orders.components.OrderProductAddDialog.1542417144] - dialog header
 #. defaultMessage is:
 #. Create Product
 #: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
 msgctxt "dialog header"
-msgid "Create Product"
-msgstr "Créer produit"
-
-#. [src.products.components.ProductListPage.1542417144] - button
-#. defaultMessage is:
-#. Create Product
-#: build/locale/src/products/components/ProductListPage/ProductListPage.json
-msgctxt "button"
 msgid "Create Product"
 msgstr "Créer produit"
 
@@ -2754,6 +2787,14 @@ msgctxt "header"
 msgid "Create Variant"
 msgstr "Créer une variante"
 
+#. [src.components.Navigator.modes.createVoucher] - button
+#. defaultMessage is:
+#. Create Voucher
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "button"
+msgid "Create Voucher"
+msgstr "Créer un bon d'achat"
+
 #. [src.discounts.components.VoucherCreatePage.1357216572] - page header
 #. defaultMessage is:
 #. Create Voucher
@@ -2825,6 +2866,14 @@ msgstr "Créer une collection"
 msgctxt "window title"
 msgid "Create collection"
 msgstr "Créer une collection"
+
+#. [src.customers.components.CustomerListPage.2859116187] - button
+#. defaultMessage is:
+#. Create customer
+#: build/locale/src/customers/components/CustomerListPage/CustomerListPage.json
+msgctxt "button"
+msgid "Create customer"
+msgstr "Créer un client"
 
 #. [src.customers.views.2859116187] - window title
 #. defaultMessage is:
@@ -3729,6 +3778,14 @@ msgctxt "description"
 msgid "Discounts"
 msgstr "Réductions"
 
+#. [src.components.Navigator.modes.helpMode] - navigator help mode description
+#. defaultMessage is:
+#. Display Help
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "navigator help mode description"
+msgid "Display Help"
+msgstr ""
+
 #. [src.taxes.components.CountryTaxesPage.3500730003] - tax rate
 #. defaultMessage is:
 #. Domestic fuel
@@ -4101,7 +4158,7 @@ msgstr ""
 #: build/locale/src/collections/components/CollectionDetailsPage/CollectionDetailsPage.json
 msgctxt "switch button"
 msgid "Feature on Homepage"
-msgstr "Fonctionnalité sur la page d'accueil "
+msgstr "Mettre en avant sur la page d'accueil "
 
 #. [src.taxes.components.TaxConfiguration.3375540052] - button
 #. defaultMessage is:
@@ -4350,6 +4407,14 @@ msgstr "Clé d'accès générée"
 msgctxt "button"
 msgid "Go back to dashboard"
 msgstr "Retourner au tableau de bord"
+
+#. [src.components.Navigator.modes.goToOrder] - navigator action
+#. defaultMessage is:
+#. Go to order #{orderNumber}
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "navigator action"
+msgid "Go to order #{orderNumber}"
+msgstr ""
 
 #. [homeHeaderText] - header
 #. defaultMessage is:
@@ -5154,6 +5219,14 @@ msgid "Name of your store is shown on tab in web browser"
 msgstr ""
 "Le nom de votre magasin est affiché sur l'onglet de votre navigateur web"
 
+#. [src.components.Navigator.3060198201] - navigator section header
+#. defaultMessage is:
+#. Navigate to
+#: build/locale/src/components/Navigator/Navigator.json
+msgctxt "navigator section header"
+msgid "Navigate to"
+msgstr ""
+
 #. [src.navigation] - navigation section name
 #. defaultMessage is:
 #. Navigation
@@ -5161,6 +5234,14 @@ msgstr ""
 msgctxt "navigation section name"
 msgid "Navigation"
 msgstr "Navigation"
+
+#. [src.components.Navigator.4290208300] - navigator notification title
+#. defaultMessage is:
+#. Navigator is here to help
+#: build/locale/src/components/Navigator/Navigator.json
+msgctxt "navigator notification title"
+msgid "Navigator is here to help"
+msgstr ""
 
 #. [src.auth.components.NewPasswordPage.1254879564]
 #. defaultMessage is:
@@ -5218,6 +5299,14 @@ msgstr "Non"
 msgctxt "description"
 msgid "No Products added to Order"
 msgstr "Aucun produit ajouté à la commande"
+
+#. [src.components.Navigator.modes.noResults]
+#. defaultMessage is:
+#. No Results
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "description"
+msgid "No Results"
+msgstr ""
 
 #. [homeActivityCardNoActivities]
 #. defaultMessage is:
@@ -5662,13 +5751,21 @@ msgctxt "voucher has no requirements"
 msgid "None"
 msgstr "Aucun"
 
+#. [src.components.Navigator.modes.collectionUnpublished] - collection
+#. defaultMessage is:
+#. Not Published
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "collection"
+msgid "Not Published"
+msgstr "Non Publiée"
+
 #. [src.pages.components.PageList.3767550649] - page status
 #. defaultMessage is:
 #. Not Published
 #: build/locale/src/pages/components/PageList/PageList.json
 msgctxt "page status"
 msgid "Not Published"
-msgstr "Non Publié"
+msgstr "Non Publiée"
 
 #. [src.categories.components.CategoryProductList.2341910657] - product
 #. defaultMessage is:
@@ -5685,7 +5782,7 @@ msgstr "Non publié"
 #: build/locale/src/collections/components/CollectionList/CollectionList.json
 msgctxt "collection is not published"
 msgid "Not published"
-msgstr "Non publié"
+msgstr "Non publiée"
 
 #. [src.collections.components.CollectionProducts.2341910657] - product is not
 #. published
@@ -5866,6 +5963,14 @@ msgstr "Détails de commande"
 msgctxt "description"
 msgid "Order History"
 msgstr "Historique de commande"
+
+#. [src.components.Navigator.1116468870] - navigator placeholder
+#. defaultMessage is:
+#. Order Number
+#: build/locale/src/components/Navigator/NavigatorInput.json
+msgctxt "navigator placeholder"
+msgid "Order Number"
+msgstr ""
 
 #. [src.orders.components.OrderListFilter.2222765704]
 #. defaultMessage is:
@@ -6071,6 +6176,17 @@ msgstr "Organiser le produit"
 msgctxt "description"
 msgid "Original String"
 msgstr "Chaîne originale"
+
+#. [src.components.Navigator.3384551821] - navigator notification
+#. defaultMessage is:
+#. Our new feature to help you with your daily tasks. Run Navigator using
+#. {keyboardShortcut} shortcut.
+#: build/locale/src/components/Navigator/Navigator.json
+msgctxt "navigator notification"
+msgid ""
+"Our new feature to help you with your daily tasks. Run Navigator using "
+"{keyboardShortcut} shortcut."
+msgstr ""
 
 #. [src.products.components.ProductListFilter.1640493122] - product status
 #. defaultMessage is:
@@ -6624,9 +6740,13 @@ msgctxt "page header"
 msgid "Primary Address"
 msgstr "Adresse principale"
 
+#. [src.components.Navigator.modes.product]
+#. defaultMessage is:
+#. Product
 #. [src.orders.components.OrderDraftDetailsProducts.1895667608]
 #. defaultMessage is:
 #. Product
+#: build/locale/src/components/Navigator/modes/messages.json
 #: build/locale/src/orders/components/OrderDraftDetailsProducts/OrderDraftDetailsProducts.json
 msgctxt "description"
 msgid "Product"
@@ -6950,7 +7070,7 @@ msgstr "Publier le"
 #: build/locale/src/products/components/ProductListPage/ProductListPage.json
 msgctxt "product status"
 msgid "Published"
-msgstr "Publiée"
+msgstr "Publié"
 
 #. [productStatusLabel] - product
 #. defaultMessage is:
@@ -6958,7 +7078,7 @@ msgstr "Publiée"
 #: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
 msgctxt "product"
 msgid "Published"
-msgstr "Publiée"
+msgstr "Publié"
 
 #. [src.collections.components.CollectionList.3640454975] - collection is
 #. published
@@ -6981,7 +7101,15 @@ msgstr "Publiée"
 #: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
 msgctxt "product is published"
 msgid "Published"
-msgstr "Publiée"
+msgstr "Publié"
+
+#. [src.components.Navigator.modes.collectionPublished] - collection
+#. defaultMessage is:
+#. Published
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "collection"
+msgid "Published"
+msgstr "Publié"
 
 #. [src.pages.components.PageList.3640454975] - page status
 #. defaultMessage is:
@@ -6997,7 +7125,7 @@ msgstr "Publiée"
 #: build/locale/src/products/views/ProductList/filters.json
 msgctxt "filter products by visibility"
 msgid "Published"
-msgstr "Publiée"
+msgstr "Publié"
 
 #. [src.pages.views.2543350562] - notification
 #. defaultMessage is:
@@ -7041,6 +7169,14 @@ msgstr "Quantité"
 msgctxt "ordered products"
 msgid "Quantity"
 msgstr "Quantité"
+
+#. [src.components.Navigator.3636839115] - navigator section header
+#. defaultMessage is:
+#. Quick Actions
+#: build/locale/src/components/Navigator/Navigator.json
+msgctxt "navigator section header"
+msgid "Quick Actions"
+msgstr ""
 
 #. [src.shipping.components.ShippingZoneCountriesAssignDialog.1440682557]
 #. defaultMessage is:
@@ -7436,6 +7572,15 @@ msgctxt "description"
 msgid "Search Collection"
 msgstr "Rechercher la collection"
 
+#. [src.components.Navigator.modes.helpCommandsMode] - navigator command mode
+#. description
+#. defaultMessage is:
+#. Search Command
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "navigator command mode description"
+msgid "Search Command"
+msgstr ""
+
 #. [src.shipping.components.ShippingZoneCountriesAssignDialog.3510295703]
 #. defaultMessage is:
 #. Search Countries
@@ -7444,6 +7589,14 @@ msgctxt "description"
 msgid "Search Countries"
 msgstr "Rechercher pays"
 
+#. [src.components.Navigator.1643417013] - navigator placeholder
+#. defaultMessage is:
+#. Search Customer
+#: build/locale/src/components/Navigator/NavigatorInput.json
+msgctxt "navigator placeholder"
+msgid "Search Customer"
+msgstr "Rechercher le client"
+
 #. [src.customers.components.CustomerListPage.1643417013]
 #. defaultMessage is:
 #. Search Customer
@@ -7451,6 +7604,15 @@ msgstr "Rechercher pays"
 msgctxt "description"
 msgid "Search Customer"
 msgstr "Rechercher le client"
+
+#. [src.components.Navigator.modes.helpCustomersMode] - navigator customer
+#. mode description
+#. defaultMessage is:
+#. Search Customers
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "navigator customer mode description"
+msgid "Search Customers"
+msgstr "Rechercher les clients"
 
 #. [src.orders.components.OrderCustomer.2433460203]
 #. defaultMessage is:
@@ -7540,6 +7702,15 @@ msgctxt "save search tab"
 msgid "Search Name"
 msgstr "Rechercher le nom"
 
+#. [src.components.Navigator.modes.helpOrdersMode] - navigator order mode
+#. description
+#. defaultMessage is:
+#. Search Orders
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "navigator order mode description"
+msgid "Search Orders"
+msgstr ""
+
 #. [src.orders.components.OrderListPage.355376157]
 #. defaultMessage is:
 #. Search Orders...
@@ -7623,6 +7794,15 @@ msgstr "Chercher les comptes service"
 msgctxt "description"
 msgid "Search Staff Member"
 msgstr "Rechercher un membre du personnel"
+
+#. [src.components.Navigator.modes.helpDefaultMode] - navigator default mode
+#. description
+#. defaultMessage is:
+#. Search Views and Actions
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "navigator default mode description"
+msgid "Search Views and Actions"
+msgstr ""
 
 #. [src.discounts.components.VoucherListPage.1930485532]
 #. defaultMessage is:
@@ -7712,6 +7892,39 @@ msgstr "Description du moteur de recherche"
 msgctxt "description"
 msgid "Search engine title"
 msgstr "Titre du moteur de recherche"
+
+#. [src.components.Navigator.modes.helpCatalogMode] - navigator catalog mode
+#. description
+#. defaultMessage is:
+#. Search in Catalog
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "navigator catalog mode description"
+msgid "Search in Catalog"
+msgstr ""
+
+#. [src.components.Navigator.2935523260] - navigator section header
+#. defaultMessage is:
+#. Search in Catalog
+#: build/locale/src/components/Navigator/Navigator.json
+msgctxt "navigator section header"
+msgid "Search in Catalog"
+msgstr ""
+
+#. [src.components.Navigator.2935523260] - navigator placeholder
+#. defaultMessage is:
+#. Search in Catalog
+#: build/locale/src/components/Navigator/NavigatorInput.json
+msgctxt "navigator placeholder"
+msgid "Search in Catalog"
+msgstr ""
+
+#. [src.components.Navigator.1809988825] - navigator section header
+#. defaultMessage is:
+#. Search in Customers
+#: build/locale/src/components/Navigator/Navigator.json
+msgctxt "navigator section header"
+msgid "Search in Customers"
+msgstr ""
 
 #. [src.attributes.components.AttributeList.2235596452] - attribute can be
 #. searched in dashboard
@@ -9094,6 +9307,14 @@ msgctxt "product type is either simple or configurable"
 msgid "Type"
 msgstr "Type"
 
+#. [src.components.Navigator.1167695965] - navigator placeholder
+#. defaultMessage is:
+#. Type Command
+#: build/locale/src/components/Navigator/NavigatorInput.json
+msgctxt "navigator placeholder"
+msgid "Type Command"
+msgstr ""
+
 #. [src.productTypes.components.ProductTypeList.2253986440] - product type
 #. name
 #. defaultMessage is:
@@ -9102,6 +9323,14 @@ msgstr "Type"
 msgctxt "product type name"
 msgid "Type Name"
 msgstr "Nom du type"
+
+#. [src.components.Navigator.2874620973] - navigator placeholder
+#. defaultMessage is:
+#. Type {key} to see available actions
+#: build/locale/src/components/Navigator/NavigatorInput.json
+msgctxt "navigator placeholder"
+msgid "Type {key} to see available actions"
+msgstr ""
 
 #. [src.pages.components.PageSlug.1324178587]
 #. defaultMessage is:
@@ -9725,7 +9954,7 @@ msgstr ""
 #: build/locale/src/components/VisibilityCard/VisibilityCard.json
 msgctxt "section header"
 msgid "Visibility"
-msgstr "Visibilitée"
+msgstr "Visibilité"
 
 #. [src.pages.components.PageList.1459686496] - page status
 #. defaultMessage is:
@@ -9733,7 +9962,7 @@ msgstr "Visibilitée"
 #: build/locale/src/pages/components/PageList/PageList.json
 msgctxt "page status"
 msgid "Visibility"
-msgstr "Visibilitée"
+msgstr "Visibilité"
 
 #. [src.products.components.ProductListFilter.1459686496] - product visibility
 #. defaultMessage is:
@@ -9741,7 +9970,7 @@ msgstr "Visibilitée"
 #: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
 msgctxt "product visibility"
 msgid "Visibility"
-msgstr "Visibilitée"
+msgstr "Visibilité"
 
 #. [src.attributes.components.AttributeList.643174786] - attribute is visible
 #. defaultMessage is:
@@ -10275,6 +10504,14 @@ msgstr ""
 msgctxt "translation progress"
 msgid "{current} of {max}"
 msgstr "{current} de {max}"
+
+#. [src.components.Navigator.modes.customerWithName]
+#. defaultMessage is:
+#. {firstName} {lastName}
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "description"
+msgid "{firstName} {lastName}"
+msgstr ""
 
 #. [src.components.MoneyRange.1316359951] - money
 #. defaultMessage is:
