@@ -13,12 +13,15 @@ import SingleAutocompleteSelectFieldContent, {
   SingleAutocompleteChoiceType
 } from "./SingleAutocompleteSelectFieldContent";
 
-const useStyles = makeStyles({
-  container: {
-    flexGrow: 1,
-    position: "relative"
-  }
-});
+const useStyles = makeStyles(
+  {
+    container: {
+      flexGrow: 1,
+      position: "relative"
+    }
+  },
+  { name: "SingleAutocompleteSelectField" }
+);
 
 export interface SingleAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {

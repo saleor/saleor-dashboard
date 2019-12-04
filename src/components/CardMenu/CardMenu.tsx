@@ -18,15 +18,18 @@ export interface CardMenuProps {
   menuItems: CardMenuItem[];
 }
 
-const useStyles = makeStyles(theme => ({
-  iconButton: {
-    background: theme.palette.background.paper,
-    borderRadius: "100%",
-    height: 32,
-    padding: 0,
-    width: 32
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    iconButton: {
+      background: theme.palette.background.paper,
+      borderRadius: "100%",
+      height: 32,
+      padding: 0,
+      width: 32
+    }
+  }),
+  { name: "CardMenu" }
+);
 
 const CardMenu: React.FC<CardMenuProps> = props => {
   const { className, disabled, menuItems } = props;

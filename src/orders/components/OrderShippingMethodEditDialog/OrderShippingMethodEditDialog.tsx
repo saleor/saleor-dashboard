@@ -20,27 +20,30 @@ export interface FormData {
   shippingMethod: string;
 }
 
-const useStyles = makeStyles(theme => ({
-  dialog: {
-    overflowY: "visible"
-  },
-  menuItem: {
-    display: "flex",
-    width: "100%"
-  },
-  price: {
-    marginRight: theme.spacing(3)
-  },
-  root: {
-    overflowY: "visible",
-    width: theme.breakpoints.values.sm
-  },
-  shippingMethodName: {
-    flex: 1,
-    overflowX: "hidden",
-    textOverflow: "ellipsis"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    dialog: {
+      overflowY: "visible"
+    },
+    menuItem: {
+      display: "flex",
+      width: "100%"
+    },
+    price: {
+      marginRight: theme.spacing(3)
+    },
+    root: {
+      overflowY: "visible",
+      width: theme.breakpoints.values.sm
+    },
+    shippingMethodName: {
+      flex: 1,
+      overflowX: "hidden",
+      textOverflow: "ellipsis"
+    }
+  }),
+  { name: "OrderShippingMethodEditDialog" }
+);
 
 interface OrderShippingMethodEditDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

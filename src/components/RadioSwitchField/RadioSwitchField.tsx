@@ -6,25 +6,28 @@ import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 
-const useStyles = makeStyles({
-  formControl: {
-    padding: 0,
-    width: "100%"
-  },
-  formLabel: {
-    marginLeft: "-5px",
-    paddingBottom: "10px"
-  },
-  radioLabel: {
-    "& > span": {
-      padding: "10px 6px"
+const useStyles = makeStyles(
+  {
+    formControl: {
+      padding: 0,
+      width: "100%"
+    },
+    formLabel: {
+      marginLeft: "-5px",
+      paddingBottom: "10px"
+    },
+    radioLabel: {
+      "& > span": {
+        padding: "10px 6px"
+      }
+    },
+    secondLabel: {
+      display: "block",
+      fontSize: "12px"
     }
   },
-  secondLabel: {
-    display: "block",
-    fontSize: "12px"
-  }
-});
+  { name: "RadioSwitchField" }
+);
 
 interface RadioSwitchFieldProps {
   className?: string;

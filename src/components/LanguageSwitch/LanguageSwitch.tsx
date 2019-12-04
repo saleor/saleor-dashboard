@@ -21,36 +21,39 @@ export interface LanguageSwitchProps {
   onLanguageChange: (lang: LanguageCodeEnum) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  arrow: {
-    color: theme.palette.primary.main,
-    transition: theme.transitions.duration.standard + "ms"
-  },
-  container: {
-    paddingBottom: theme.spacing(1)
-  },
-  menuContainer: {
-    cursor: "pointer",
-    display: "flex",
-    justifyContent: "space-between",
-    minWidth: 90,
-    padding: theme.spacing(),
-    position: "relative"
-  },
-  menuItem: {
-    textAlign: "justify"
-  },
-  menuPaper: {
-    maxHeight: `calc(100vh - ${theme.spacing(2)}px)`,
-    overflow: "scroll"
-  },
-  popover: {
-    zIndex: 1
-  },
-  rotate: {
-    transform: "rotate(180deg)"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    arrow: {
+      color: theme.palette.primary.main,
+      transition: theme.transitions.duration.standard + "ms"
+    },
+    container: {
+      paddingBottom: theme.spacing(1)
+    },
+    menuContainer: {
+      cursor: "pointer",
+      display: "flex",
+      justifyContent: "space-between",
+      minWidth: 90,
+      padding: theme.spacing(),
+      position: "relative"
+    },
+    menuItem: {
+      textAlign: "justify"
+    },
+    menuPaper: {
+      maxHeight: `calc(100vh - ${theme.spacing(2)}px)`,
+      overflow: "scroll"
+    },
+    popover: {
+      zIndex: 1
+    },
+    rotate: {
+      transform: "rotate(180deg)"
+    }
+  }),
+  { name: "LanguageSwitch" }
+);
 const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
   const { currentLanguage, languages, onLanguageChange } = props;
   const classes = useStyles(props);

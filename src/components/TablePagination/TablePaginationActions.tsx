@@ -7,47 +7,50 @@ import useTheme from "@saleor/hooks/useTheme";
 import classNames from "classnames";
 import React from "react";
 
-const useStyles = makeStyles(theme => ({
-  dark: {
-    "& svg": {
-      color: theme.palette.primary.main
-    },
-    "&$disabled": {
+const useStyles = makeStyles(
+  theme => ({
+    dark: {
       "& svg": {
-        color: fade(theme.palette.primary.main, 0.2)
-      }
-    },
-    "&:focus, &:hover": {
-      "& > span:first-of-type": {
-        backgroundColor: fade(theme.palette.primary.main, 0.2)
-      }
-    }
-  },
-  disabled: {},
-  iconButton: {
-    "& > span:first-of-type": {
-      backgroundColor: theme.palette.background.default,
-      borderRadius: "100%",
-      transition: theme.transitions.duration.standard + "ms"
-    },
-    "& svg": {
-      border: `solid 1px #BDBDBD`,
-      borderRadius: "50%"
-    },
-    "&:focus, &:hover": {
-      "& > span:first-of-type": {
-        backgroundColor: fade(theme.palette.primary.main, 0.2)
+        color: theme.palette.primary.main
       },
-      backgroundColor: "transparent"
+      "&$disabled": {
+        "& svg": {
+          color: fade(theme.palette.primary.main, 0.2)
+        }
+      },
+      "&:focus, &:hover": {
+        "& > span:first-of-type": {
+          backgroundColor: fade(theme.palette.primary.main, 0.2)
+        }
+      }
     },
-    padding: 6
-  },
-  root: {
-    color: theme.palette.text.secondary,
-    flexShrink: 0,
-    margin: theme.spacing(0, 2.5)
-  }
-}));
+    disabled: {},
+    iconButton: {
+      "& > span:first-of-type": {
+        backgroundColor: theme.palette.background.default,
+        borderRadius: "100%",
+        transition: theme.transitions.duration.standard + "ms"
+      },
+      "& svg": {
+        border: `solid 1px #BDBDBD`,
+        borderRadius: "50%"
+      },
+      "&:focus, &:hover": {
+        "& > span:first-of-type": {
+          backgroundColor: fade(theme.palette.primary.main, 0.2)
+        },
+        backgroundColor: "transparent"
+      },
+      padding: 6
+    },
+    root: {
+      color: theme.palette.text.secondary,
+      flexShrink: 0,
+      margin: theme.spacing(0, 2.5)
+    }
+  }),
+  { name: "TablePaginationActions" }
+);
 
 export interface TablePaginationActionsProps {
   backIconButtonProps?: any;

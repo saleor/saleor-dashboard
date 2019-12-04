@@ -17,19 +17,22 @@ import ProductVariantCreateContent, {
 import reduceProductVariantCreateFormData from "./reducer";
 import { ProductVariantCreateStep } from "./types";
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    marginLeft: theme.spacing(2)
-  },
-  content: {
-    overflowX: "visible",
-    overflowY: "hidden",
-    width: 800
-  },
-  spacer: {
-    flex: 1
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    button: {
+      marginLeft: theme.spacing(2)
+    },
+    content: {
+      overflowX: "visible",
+      overflowY: "hidden",
+      width: 800
+    },
+    spacer: {
+      flex: 1
+    }
+  }),
+  { name: "ProductVariantCreateDialog" }
+);
 
 function canHitNext(
   step: ProductVariantCreateStep,

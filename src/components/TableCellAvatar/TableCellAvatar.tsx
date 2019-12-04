@@ -9,32 +9,35 @@ import Image from "../../icons/Image";
 
 export const AVATAR_MARGIN = 32;
 
-const useStyles = makeStyles(theme => ({
-  avatar: {
-    background: "none",
-    border: `1px solid ${theme.palette.divider}`,
-    borderRadius: 2,
-    color: "#bdbdbd",
-    display: "inline-flex",
-    padding: theme.spacing(0.5)
-  },
-  children: {
-    alignSelf: "center",
-    marginLeft: theme.spacing(2),
-    width: "100%"
-  },
-  content: {
-    alignItems: "center",
-    display: "flex"
-  },
-  root: {
-    "&:not(first-child)": {
-      paddingLeft: 0
+const useStyles = makeStyles(
+  theme => ({
+    avatar: {
+      background: "none",
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: 2,
+      color: "#bdbdbd",
+      display: "inline-flex",
+      padding: theme.spacing(0.5)
     },
-    paddingRight: theme.spacing(3),
-    width: "1%"
-  }
-}));
+    children: {
+      alignSelf: "center",
+      marginLeft: theme.spacing(2),
+      width: "100%"
+    },
+    content: {
+      alignItems: "center",
+      display: "flex"
+    },
+    root: {
+      "&:not(first-child)": {
+        paddingLeft: 0
+      },
+      paddingRight: theme.spacing(3),
+      width: "1%"
+    }
+  }),
+  { name: "TableCellAvatar" }
+);
 
 interface TableCellAvatarProps {
   className?: string;

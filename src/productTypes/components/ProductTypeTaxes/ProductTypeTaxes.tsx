@@ -20,11 +20,14 @@ interface ProductTypeTaxesProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const useStyles = makeStyles({
-  root: {
-    overflow: "visible"
-  }
-});
+const useStyles = makeStyles(
+  {
+    root: {
+      overflow: "visible"
+    }
+  },
+  { name: "ProductTypeTaxes" }
+);
 
 const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
   const { data, disabled, taxTypes, taxTypeDisplayName, onChange } = props;

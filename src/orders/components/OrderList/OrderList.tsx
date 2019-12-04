@@ -23,35 +23,38 @@ import {
 import { ListActions, ListProps } from "@saleor/types";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
-    colCustomer: {
-      width: 220
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colCustomer: {
+        width: 220
+      },
+      colDate: {},
+      colFulfillment: {
+        width: 230
+      },
+      colNumber: {
+        width: 120
+      },
+      colPayment: {
+        width: 220
+      },
+      colTotal: {}
     },
+    colCustomer: {},
     colDate: {},
-    colFulfillment: {
-      width: 230
+    colFulfillment: {},
+    colNumber: {},
+    colPayment: {},
+    colTotal: {
+      textAlign: "right"
     },
-    colNumber: {
-      width: 120
-    },
-    colPayment: {
-      width: 220
-    },
-    colTotal: {}
-  },
-  colCustomer: {},
-  colDate: {},
-  colFulfillment: {},
-  colNumber: {},
-  colPayment: {},
-  colTotal: {
-    textAlign: "right"
-  },
-  link: {
-    cursor: "pointer"
-  }
-}));
+    link: {
+      cursor: "pointer"
+    }
+  }),
+  { name: "OrderList" }
+);
 
 interface OrderListProps extends ListProps, ListActions {
   orders: OrderList_orders_edges_node[];

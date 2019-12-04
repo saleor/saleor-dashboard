@@ -29,26 +29,29 @@ export interface FormData {
   query: string;
 }
 
-const useStyles = makeStyles({
-  avatar: {
-    "&:first-child": {
+const useStyles = makeStyles(
+  {
+    avatar: {
+      "&:first-child": {
+        paddingLeft: 0
+      }
+    },
+    checkboxCell: {
       paddingLeft: 0
+    },
+    overflow: {
+      overflowY: "visible"
+    },
+    scrollArea: {
+      overflowY: "scroll"
+    },
+    wideCell: {
+      paddingLeft: 0,
+      width: "100%"
     }
   },
-  checkboxCell: {
-    paddingLeft: 0
-  },
-  overflow: {
-    overflowY: "visible"
-  },
-  scrollArea: {
-    overflowY: "scroll"
-  },
-  wideCell: {
-    paddingLeft: 0,
-    width: "100%"
-  }
-});
+  { name: "AssignProductDialog" }
+);
 
 export interface AssignProductDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

@@ -36,7 +36,7 @@ interface ListFieldProps
   }>;
 }
 
-const ListField = withStyles(styles)(
+const ListField = withStyles(styles, { name: "ListField" })(
   class ListFieldComponent extends React.Component<
     ListFieldProps,
     ListFieldState

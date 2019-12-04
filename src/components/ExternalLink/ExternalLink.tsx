@@ -2,11 +2,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import React from "react";
 
-const useStyles = makeStyles({
-  link: {
-    textDecoration: "none"
-  }
-});
+const useStyles = makeStyles(
+  {
+    link: {
+      textDecoration: "none"
+    }
+  },
+  { name: "ExternalLink" }
+);
 
 interface ExternalLinkProps extends React.HTMLProps<HTMLAnchorElement> {
   href: string;

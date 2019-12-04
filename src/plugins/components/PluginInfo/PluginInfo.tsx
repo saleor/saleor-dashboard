@@ -19,15 +19,18 @@ interface PluginInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const useStyles = makeStyles(() => ({
-  status: {
-    paddingTop: 20
-  },
-  title: {
-    fontSize: 14,
-    paddingTop: 10
-  }
-}));
+const useStyles = makeStyles(
+  () => ({
+    status: {
+      paddingTop: 20
+    },
+    title: {
+      fontSize: 14,
+      paddingTop: 10
+    }
+  }),
+  { name: "PluginInfo" }
+);
 
 const PluginInfo: React.FC<PluginInfoProps> = ({
   data,

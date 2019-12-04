@@ -26,11 +26,14 @@ interface SiteSettingsAddressProps {
   onCountryChange: (event: ChangeEvent) => void;
 }
 
-const useStyles = makeStyles({
-  root: {
-    overflow: "visible"
-  }
-});
+const useStyles = makeStyles(
+  {
+    root: {
+      overflow: "visible"
+    }
+  },
+  { name: "SiteSettingsAddress" }
+);
 
 const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
   const {

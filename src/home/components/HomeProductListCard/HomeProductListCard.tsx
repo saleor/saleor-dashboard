@@ -16,27 +16,30 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { maybe, renderCollection } from "../../../misc";
 import { Home_productTopToday_edges_node } from "../../types/Home";
 
-const useStyles = makeStyles(theme => ({
-  avatarProps: {
-    height: 64,
-    width: 64
-  },
-  avatarSpacing: {
-    paddingBottom: theme.spacing(2),
-    paddingRight: theme.spacing(),
-    paddingTop: theme.spacing(2)
-  },
-  label: {
-    paddingLeft: 0
-  },
-  noProducts: {
-    paddingBottom: 20,
-    paddingTop: 20
-  },
-  tableRow: {
-    cursor: "pointer"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    avatarProps: {
+      height: 64,
+      width: 64
+    },
+    avatarSpacing: {
+      paddingBottom: theme.spacing(2),
+      paddingRight: theme.spacing(),
+      paddingTop: theme.spacing(2)
+    },
+    label: {
+      paddingLeft: 0
+    },
+    noProducts: {
+      paddingBottom: 20,
+      paddingTop: 20
+    },
+    tableRow: {
+      cursor: "pointer"
+    }
+  }),
+  { name: "HomeProductListCard" }
+);
 
 interface HomeProductListProps {
   topProducts: Home_productTopToday_edges_node[];

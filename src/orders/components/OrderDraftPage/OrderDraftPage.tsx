@@ -23,15 +23,18 @@ import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 
-const useStyles = makeStyles(theme => ({
-  date: {
-    marginBottom: theme.spacing(3)
-  },
-  header: {
-    display: "flex",
-    marginBottom: 0
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    date: {
+      marginBottom: theme.spacing(3)
+    },
+    header: {
+      display: "flex",
+      marginBottom: 0
+    }
+  }),
+  { name: "OrderDraftPage" }
+);
 
 export interface OrderDraftPageProps
   extends FetchMoreProps,

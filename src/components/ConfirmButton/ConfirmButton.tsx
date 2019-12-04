@@ -67,7 +67,7 @@ interface ConfirmButtonState {
   displayCompletedActionState: boolean;
 }
 
-const ConfirmButton = withStyles(styles)(
+const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
   class ConfirmButtonComponent extends React.Component<
     ConfirmButtonProps &
       WithStyles<

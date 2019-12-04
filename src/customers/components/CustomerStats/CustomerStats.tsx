@@ -12,14 +12,17 @@ import Skeleton from "@saleor/components/Skeleton";
 import { maybe } from "../../../misc";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
-const useStyles = makeStyles(theme => ({
-  label: {
-    marginBottom: theme.spacing(1)
-  },
-  value: {
-    fontSize: 24
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    label: {
+      marginBottom: theme.spacing(1)
+    },
+    value: {
+      fontSize: 24
+    }
+  }),
+  { name: "CustomerStats" }
+);
 
 export interface CustomerStatsProps {
   customer: CustomerDetails_user;

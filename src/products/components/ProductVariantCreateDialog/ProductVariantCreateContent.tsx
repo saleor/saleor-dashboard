@@ -12,18 +12,21 @@ import ProductVariantCreateValues from "./ProductVariantCreateValues";
 import { ProductVariantCreateReducerAction } from "./reducer";
 import { ProductVariantCreateStep } from "./types";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    maxHeight: 400,
-    overflowX: "hidden",
-    overflowY: "scroll",
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(2),
-    position: "relative",
-    right: theme.spacing(3),
-    width: `calc(100% + ${theme.spacing(3)}px)`
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      maxHeight: 400,
+      overflowX: "hidden",
+      overflowY: "scroll",
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(2),
+      position: "relative",
+      right: theme.spacing(3),
+      width: `calc(100% + ${theme.spacing(3)}px)`
+    }
+  }),
+  { name: "ProductVariantCreateContent" }
+);
 
 export interface ProductVariantCreateContentProps {
   attributes: ProductDetails_product_productType_variantAttributes[];

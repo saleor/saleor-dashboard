@@ -19,67 +19,70 @@ export type CheckboxProps = Omit<
   onChange?: (event: React.ChangeEvent<any>) => void;
 };
 
-const useStyles = makeStyles(theme => ({
-  box: {
-    "&$checked": {
-      "&:before": {
-        background: theme.palette.primary.main,
-        color: theme.palette.background.paper,
-        content: '"\\2713"',
-        fontWeight: "bold",
-        textAlign: "center"
+const useStyles = makeStyles(
+  theme => ({
+    box: {
+      "&$checked": {
+        "&:before": {
+          background: theme.palette.primary.main,
+          color: theme.palette.background.paper,
+          content: '"\\2713"',
+          fontWeight: "bold",
+          textAlign: "center"
+        },
+        borderColor: theme.palette.primary.main
       },
-      borderColor: theme.palette.primary.main
-    },
-    "&$disabled": {
-      borderColor: theme.palette.grey[200]
-    },
-    "&$indeterminate": {
-      "&:before": {
-        background: theme.palette.primary.main,
-        height: 2,
-        top: 5
+      "&$disabled": {
+        borderColor: theme.palette.grey[200]
       },
-      borderColor: theme.palette.primary.main
-    },
-    "&:before": {
-      background: "rgba(0, 0, 0, 0)",
-      content: '""',
+      "&$indeterminate": {
+        "&:before": {
+          background: theme.palette.primary.main,
+          height: 2,
+          top: 5
+        },
+        borderColor: theme.palette.primary.main
+      },
+      "&:before": {
+        background: "rgba(0, 0, 0, 0)",
+        content: '""',
+        height: 14,
+        left: -1,
+        position: "absolute",
+        top: -1,
+        transition: theme.transitions.duration.short + "ms",
+        width: 14
+      },
+
+      WebkitAppearance: "none",
+      border: `1px solid ${theme.palette.action.active}`,
+      boxSizing: "border-box",
+      cursor: "pointer",
       height: 14,
-      left: -1,
-      position: "absolute",
-      top: -1,
-      transition: theme.transitions.duration.short + "ms",
+      outline: "0",
+      position: "relative",
+      userSelect: "none",
       width: 14
     },
-
-    WebkitAppearance: "none",
-    border: `1px solid ${theme.palette.action.active}`,
-    boxSizing: "border-box",
-    cursor: "pointer",
-    height: 14,
-    outline: "0",
-    position: "relative",
-    userSelect: "none",
-    width: 14
-  },
-  checked: {},
-  disabled: {},
-  indeterminate: {},
-  root: {
-    "&:hover": {
-      background: fade(theme.palette.primary.main, 0.1)
-    },
-    alignSelf: "start",
-    borderRadius: "100%",
-    cursor: "pointer",
-    display: "flex",
-    height: 30,
-    justifyContent: "center",
-    margin: "5px 9px",
-    width: 30
-  }
-}));
+    checked: {},
+    disabled: {},
+    indeterminate: {},
+    root: {
+      "&:hover": {
+        background: fade(theme.palette.primary.main, 0.1)
+      },
+      alignSelf: "start",
+      borderRadius: "100%",
+      cursor: "pointer",
+      display: "flex",
+      height: 30,
+      justifyContent: "center",
+      margin: "5px 9px",
+      width: 30
+    }
+  }),
+  { name: "Checkbox" }
+);
 const Checkbox: React.FC<CheckboxProps> = props => {
   const {
     checked,

@@ -15,19 +15,22 @@ import { maybe, transformPaymentStatus } from "../../../misc";
 import { OrderAction, OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    ...theme.typography.body1,
-    lineHeight: 1.9,
-    width: "100%"
-  },
-  textRight: {
-    textAlign: "right"
-  },
-  totalRow: {
-    fontWeight: 600
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      ...theme.typography.body1,
+      lineHeight: 1.9,
+      width: "100%"
+    },
+    textRight: {
+      textAlign: "right"
+    },
+    totalRow: {
+      fontWeight: 600
+    }
+  }),
+  { name: "OrderPayment" }
+);
 
 interface OrderPaymentProps {
   order: OrderDetails_order;

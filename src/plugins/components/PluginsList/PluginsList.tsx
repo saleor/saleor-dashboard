@@ -22,24 +22,27 @@ export interface PluginListProps extends ListProps {
   plugins: Plugins_plugins_edges_node[];
 }
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
-    colAction: {
-      "& svg": {
-        color: theme.palette.primary.main
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colAction: {
+        "& svg": {
+          color: theme.palette.primary.main
+        },
+        textAlign: "right" as "right"
       },
-      textAlign: "right" as "right"
+      colActive: {},
+      colName: {}
     },
+    colAction: {},
     colActive: {},
-    colName: {}
-  },
-  colAction: {},
-  colActive: {},
-  colName: {},
-  link: {
-    cursor: "pointer"
-  }
-}));
+    colName: {},
+    link: {
+      cursor: "pointer"
+    }
+  }),
+  { name: "PluginsList" }
+);
 
 const numberOfColumns = 4;
 

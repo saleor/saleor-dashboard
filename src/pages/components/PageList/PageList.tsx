@@ -21,25 +21,28 @@ export interface PageListProps extends ListProps, ListActions {
   pages: PageList_pages_edges_node[];
 }
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
-    colSlug: {
-      width: 250
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colSlug: {
+        width: 250
+      },
+      colTitle: {},
+      colVisibility: {
+        width: 200
+      }
     },
-    colTitle: {},
-    colVisibility: {
-      width: 200
+    colSlug: {},
+    colTitle: {
+      paddingLeft: 0
+    },
+    colVisibility: {},
+    link: {
+      cursor: "pointer"
     }
-  },
-  colSlug: {},
-  colTitle: {
-    paddingLeft: 0
-  },
-  colVisibility: {},
-  link: {
-    cursor: "pointer"
-  }
-}));
+  }),
+  { name: "PageList" }
+);
 
 const numberOfColumns = 4;
 

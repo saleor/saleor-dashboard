@@ -5,21 +5,24 @@ import React from "react";
 import ExtendedPageHeader from "../ExtendedPageHeader";
 import Skeleton from "../Skeleton";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex"
-  },
-  title: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: 20,
-      marginTop: theme.spacing(2),
-      padding: 0
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      display: "flex"
     },
-    alignSelf: "flex-start",
-    flex: 1,
-    fontSize: 24
-  }
-}));
+    title: {
+      [theme.breakpoints.down("sm")]: {
+        fontSize: 20,
+        marginTop: theme.spacing(2),
+        padding: 0
+      },
+      alignSelf: "flex-start",
+      flex: 1,
+      fontSize: 24
+    }
+  }),
+  { name: "PageHeader" }
+);
 
 interface PageHeaderProps {
   children?: React.ReactNode;

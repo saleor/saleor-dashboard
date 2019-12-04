@@ -29,37 +29,40 @@ const palette = [
   colors.yellow
 ].map(color => color[500]);
 
-const useStyles = makeStyles(theme => ({
-  avatar: {
-    left: -45,
-    position: "absolute",
-    top: 0
-  },
-  card: {
-    marginBottom: theme.spacing(3),
-    marginLeft: theme.spacing(3),
-    position: "relative"
-  },
-  cardContent: {
-    "&:last-child": {
-      padding: 16
+const useStyles = makeStyles(
+  theme => ({
+    avatar: {
+      left: -45,
+      position: "absolute",
+      top: 0
     },
-    boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.05)"
-  },
-  root: {
-    position: "relative"
-  },
-  title: {
-    "& p": {
-      fontSize: "14px"
+    card: {
+      marginBottom: theme.spacing(3),
+      marginLeft: theme.spacing(3),
+      position: "relative"
     },
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: theme.spacing(),
-    paddingLeft: theme.spacing(3)
-  }
-}));
+    cardContent: {
+      "&:last-child": {
+        padding: 16
+      },
+      boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.05)"
+    },
+    root: {
+      position: "relative"
+    },
+    title: {
+      "& p": {
+        fontSize: "14px"
+      },
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: theme.spacing(),
+      paddingLeft: theme.spacing(3)
+    }
+  }),
+  { name: "TimelineNote" }
+);
 
 interface TimelineNoteProps {
   date: string;

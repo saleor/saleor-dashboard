@@ -16,25 +16,28 @@ import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps } from "../../../types";
 import { ProductTypeList_productTypes_edges_node } from "../../types/ProductTypeList";
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
-    colName: {},
-    colTax: {
-      width: 300
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colName: {},
+      colTax: {
+        width: 300
+      },
+      colType: {
+        width: 300
+      }
     },
-    colType: {
-      width: 300
+    colName: {
+      paddingLeft: 0
+    },
+    colTax: {},
+    colType: {},
+    link: {
+      cursor: "pointer"
     }
-  },
-  colName: {
-    paddingLeft: 0
-  },
-  colTax: {},
-  colType: {},
-  link: {
-    cursor: "pointer"
-  }
-}));
+  }),
+  { name: "ProductTypeList" }
+);
 
 interface ProductTypeListProps extends ListProps, ListActions {
   productTypes: ProductTypeList_productTypes_edges_node[];

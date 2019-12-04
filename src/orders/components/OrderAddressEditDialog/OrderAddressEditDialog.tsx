@@ -22,11 +22,14 @@ import { UserError } from "@saleor/types";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 
-const useStyles = makeStyles({
-  overflow: {
-    overflowY: "visible"
-  }
-});
+const useStyles = makeStyles(
+  {
+    overflow: {
+      overflowY: "visible"
+    }
+  },
+  { name: "OrderAddressEditDialog" }
+);
 
 interface OrderAddressEditDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

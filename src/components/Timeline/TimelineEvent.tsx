@@ -8,56 +8,59 @@ import React from "react";
 
 import { DateTime } from "../Date";
 
-const useStyles = makeStyles(theme => ({
-  date: {
-    color: theme.typography.caption.color
-  },
-  dateExpander: {
-    color: theme.typography.caption.color,
-    position: "absolute",
-    right: theme.spacing(3)
-  },
-  dot: {
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: "100%",
-    height: 8,
-    left: -29,
-    position: "absolute",
-    top: 6,
-    width: 8
-  },
-  noExpander: {
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: theme.spacing(),
-    marginLeft: theme.spacing(3),
-    width: "100%"
-  },
-  panel: {
-    "&:before": {
-      display: "none"
+const useStyles = makeStyles(
+  theme => ({
+    date: {
+      color: theme.typography.caption.color
     },
-    background: "none",
-    width: "100%"
-  },
-  root: {
-    "&:last-child:after": {
-      background: theme.palette.background.default,
-      content: "''",
-      height: "calc(50% - 4px)",
-      left: -theme.spacing(3) - 2,
+    dateExpander: {
+      color: theme.typography.caption.color,
       position: "absolute",
-      top: "calc(50% + 4px)",
-      width: "2px"
+      right: theme.spacing(3)
     },
-    alignItems: "center",
-    display: "flex",
-    marginBottom: theme.spacing(3),
-    position: "relative",
-    width: "100%"
-  }
-}));
+    dot: {
+      backgroundColor: theme.palette.primary.main,
+      borderRadius: "100%",
+      height: 8,
+      left: -29,
+      position: "absolute",
+      top: 6,
+      width: 8
+    },
+    noExpander: {
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: theme.spacing(),
+      marginLeft: theme.spacing(3),
+      width: "100%"
+    },
+    panel: {
+      "&:before": {
+        display: "none"
+      },
+      background: "none",
+      width: "100%"
+    },
+    root: {
+      "&:last-child:after": {
+        background: theme.palette.background.default,
+        content: "''",
+        height: "calc(50% - 4px)",
+        left: -theme.spacing(3) - 2,
+        position: "absolute",
+        top: "calc(50% + 4px)",
+        width: "2px"
+      },
+      alignItems: "center",
+      display: "flex",
+      marginBottom: theme.spacing(3),
+      position: "relative",
+      width: "100%"
+    }
+  }),
+  { name: "TimelineEvent" }
+);
 
 interface TimelineEventProps {
   children?: React.ReactNode;

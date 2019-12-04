@@ -32,24 +32,27 @@ const initialForm: FormData = {
   lastName: ""
 };
 
-const useStyles = makeStyles(theme => ({
-  hr: {
-    backgroundColor: "#eaeaea",
-    border: "none",
-    height: 1,
-    marginBottom: 0
-  },
-  sectionTitle: {
-    fontWeight: 600 as 600,
-    marginBottom: theme.spacing(),
-    marginTop: theme.spacing(2)
-  },
-  textFieldGrid: {
-    display: "grid",
-    gridColumnGap: theme.spacing(2),
-    gridTemplateColumns: "1fr 1fr"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    hr: {
+      backgroundColor: "#eaeaea",
+      border: "none",
+      height: 1,
+      marginBottom: 0
+    },
+    sectionTitle: {
+      fontWeight: 600 as 600,
+      marginBottom: theme.spacing(),
+      marginTop: theme.spacing(2)
+    },
+    textFieldGrid: {
+      display: "grid",
+      gridColumnGap: theme.spacing(2),
+      gridTemplateColumns: "1fr 1fr"
+    }
+  }),
+  { name: "StaffAddMemberDialog" }
+);
 
 interface StaffAddMemberDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

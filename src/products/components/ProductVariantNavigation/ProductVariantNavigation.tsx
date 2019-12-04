@@ -16,27 +16,30 @@ import { maybe, renderCollection } from "../../../misc";
 import { ProductVariantCreateData_product_variants } from "../../types/ProductVariantCreateData";
 import { ProductVariantDetails_productVariant } from "../../types/ProductVariantDetails";
 
-const useStyles = makeStyles(theme => ({
-  colName: {
-    paddingLeft: 0,
-    textAlign: [["left"], "!important"] as any
-  },
-  link: {
-    cursor: "pointer"
-  },
-  tabActive: {
-    "&:before": {
-      background: theme.palette.primary.main,
-      content: '""',
-      height: "100%",
-      left: 0,
-      position: "absolute",
-      top: 0,
-      width: 2
+const useStyles = makeStyles(
+  theme => ({
+    colName: {
+      paddingLeft: 0,
+      textAlign: [["left"], "!important"] as any
     },
-    position: "relative"
-  }
-}));
+    link: {
+      cursor: "pointer"
+    },
+    tabActive: {
+      "&:before": {
+        background: theme.palette.primary.main,
+        content: '""',
+        height: "100%",
+        left: 0,
+        position: "absolute",
+        top: 0,
+        width: 2
+      },
+      position: "relative"
+    }
+  }),
+  { name: "ProductVariantNavigation" }
+);
 
 interface ProductVariantNavigationProps {
   current?: string;

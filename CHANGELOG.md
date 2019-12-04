@@ -18,6 +18,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Allow multiple images to be uploaded - #277 by @dominik-zeglen
 - Fix dropdown clickable areas - #281 by @dominik-zeglen
 - Use eslint - #285 by @dominik-zeglen
+- Enforce using "name" property in style hooks - #288 by @dominik-zeglen
 
 ## 2.0.0
 

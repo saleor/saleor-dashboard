@@ -34,11 +34,14 @@ function getFilterChoices(items: IFilter<string>) {
   }));
 }
 
-const useStyles = makeStyles({
-  input: {
-    padding: "20px 12px 17px"
-  }
-});
+const useStyles = makeStyles(
+  {
+    input: {
+      padding: "20px 12px 17px"
+    }
+  },
+  { name: "FilterContent" }
+);
 
 const FilterContent: React.FC<FilterContentProps> = ({
   currencySymbol,

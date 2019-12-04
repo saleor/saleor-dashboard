@@ -24,59 +24,62 @@ export interface TableHeadProps extends MuiTableHeadProps {
   toggleAll?: (items: Node[], selected: number) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  cell: {
-    padding: 0
-  },
-  checkboxPartialSelect: {
-    "& input": {
-      "&:before": {
-        background: [theme.palette.background.paper, "!important"] as any,
-        border: `solid 1px ${theme.palette.primary.main}`,
-        content: "''"
-      },
-      background: theme.palette.background.paper
-    },
-    "&:after": {
-      background: theme.palette.primary.main,
-      content: "''",
-      height: 2,
-      position: "absolute",
-      width: 6
-    }
-  },
-  checkboxSelected: {
-    backgroundColor: fade(theme.palette.primary.main, 0.05)
-  },
-  container: {
-    alignItems: "center",
-    display: "flex",
-    height: 47,
-    marginRight: -theme.spacing(2)
-  },
-  dragRows: {
-    padding: 0,
-    width: 52
-  },
-  padding: {
-    "&:last-child": {
+const useStyles = makeStyles(
+  theme => ({
+    cell: {
       padding: 0
+    },
+    checkboxPartialSelect: {
+      "& input": {
+        "&:before": {
+          background: [theme.palette.background.paper, "!important"] as any,
+          border: `solid 1px ${theme.palette.primary.main}`,
+          content: "''"
+        },
+        background: theme.palette.background.paper
+      },
+      "&:after": {
+        background: theme.palette.primary.main,
+        content: "''",
+        height: 2,
+        position: "absolute",
+        width: 6
+      }
+    },
+    checkboxSelected: {
+      backgroundColor: fade(theme.palette.primary.main, 0.05)
+    },
+    container: {
+      alignItems: "center",
+      display: "flex",
+      height: 47,
+      marginRight: -theme.spacing(2)
+    },
+    dragRows: {
+      padding: 0,
+      width: 52
+    },
+    padding: {
+      "&:last-child": {
+        padding: 0
+      }
+    },
+    root: {
+      backgroundColor: fade(theme.palette.primary.main, 0.05),
+      paddingLeft: 0,
+      paddingRight: 24
+    },
+    spacer: {
+      flex: 1
+    },
+    toolbar: {
+      "& > *": {
+        marginLeft: theme.spacing(1)
+      }
     }
-  },
-  root: {
-    backgroundColor: fade(theme.palette.primary.main, 0.05),
-    paddingLeft: 0,
-    paddingRight: 24
-  },
-  spacer: {
-    flex: 1
-  },
-  toolbar: {
-    "& > *": {
-      marginLeft: theme.spacing(1)
-    }
-  }
-}));
+  }),
+  { name: "TableHead" }
+);
 
 const TableHead: React.FC<TableHeadProps> = props => {
   const {

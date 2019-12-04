@@ -7,7 +7,7 @@
   "parserOptions": {
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "import"],
+  "plugins": ["@typescript-eslint", "import", "local-rules"],
   "rules": {
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": [
@@ -73,6 +73,7 @@
     "import/no-internal-modules": "off",
     "import/order": "error",
     "linebreak-style": "off",
+    "local-rules/named-styles": "error",
     "max-classes-per-file": "off",
     "max-len": "off",
     "new-parens": "off",

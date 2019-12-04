@@ -10,34 +10,37 @@ import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductImage } from "../../types/ProductImage";
 
-const useStyles = makeStyles(theme => ({
-  gridElement: {
-    "& img": {
+const useStyles = makeStyles(
+  theme => ({
+    gridElement: {
+      "& img": {
+        width: "100%"
+      }
+    },
+    helpText: {
+      gridColumnEnd: "span 4"
+    },
+    image: {
+      height: "100%",
+      objectFit: "contain",
       width: "100%"
+    },
+    imageContainer: {
+      background: "#ffffff",
+      border: "1px solid #eaeaea",
+      borderRadius: theme.spacing(),
+      height: theme.spacing(17.5),
+      marginBottom: theme.spacing(2),
+      padding: theme.spacing(2)
+    },
+    root: {
+      display: "grid",
+      gridColumnGap: theme.spacing(2),
+      gridTemplateColumns: "repeat(4, 1fr)"
     }
-  },
-  helpText: {
-    gridColumnEnd: "span 4"
-  },
-  image: {
-    height: "100%",
-    objectFit: "contain",
-    width: "100%"
-  },
-  imageContainer: {
-    background: "#ffffff",
-    border: "1px solid #eaeaea",
-    borderRadius: theme.spacing(),
-    height: theme.spacing(17.5),
-    marginBottom: theme.spacing(2),
-    padding: theme.spacing(2)
-  },
-  root: {
-    display: "grid",
-    gridColumnGap: theme.spacing(2),
-    gridTemplateColumns: "repeat(4, 1fr)"
-  }
-}));
+  }),
+  { name: "ProductVariantImages" }
+);
 
 interface ProductVariantImagesProps {
   images?: ProductImage[];

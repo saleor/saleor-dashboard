@@ -20,36 +20,39 @@ import TableCellAvatar, {
 import { maybe } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 
-const useStyles = makeStyles({
-  clickableRow: {
-    cursor: "pointer"
+const useStyles = makeStyles(
+  {
+    clickableRow: {
+      cursor: "pointer"
+    },
+    colName: {
+      paddingLeft: 0,
+      width: "auto"
+    },
+    colNameLabel: {
+      marginLeft: AVATAR_MARGIN
+    },
+    colPrice: {
+      textAlign: "right",
+      width: 120
+    },
+    colQuantity: {
+      textAlign: "center",
+      width: 120
+    },
+    colTotal: {
+      textAlign: "right",
+      width: 120
+    },
+    statusBar: {
+      paddingTop: 0
+    },
+    table: {
+      tableLayout: "fixed"
+    }
   },
-  colName: {
-    paddingLeft: 0,
-    width: "auto"
-  },
-  colNameLabel: {
-    marginLeft: AVATAR_MARGIN
-  },
-  colPrice: {
-    textAlign: "right",
-    width: 120
-  },
-  colQuantity: {
-    textAlign: "center",
-    width: 120
-  },
-  colTotal: {
-    textAlign: "right",
-    width: 120
-  },
-  statusBar: {
-    paddingTop: 0
-  },
-  table: {
-    tableLayout: "fixed"
-  }
-});
+  { name: "OrderUnfulfilledItems" }
+);
 
 interface OrderUnfulfilledItemsProps {
   canFulfill: boolean;

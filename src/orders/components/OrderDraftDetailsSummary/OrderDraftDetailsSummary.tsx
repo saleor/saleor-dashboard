@@ -8,16 +8,19 @@ import Skeleton from "@saleor/components/Skeleton";
 import { maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    ...theme.typography.body1,
-    lineHeight: 1.9,
-    width: "100%"
-  },
-  textRight: {
-    textAlign: "right"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      ...theme.typography.body1,
+      lineHeight: 1.9,
+      width: "100%"
+    },
+    textRight: {
+      textAlign: "right"
+    }
+  }),
+  { name: "OrderDraftDetailsSummary" }
+);
 
 interface OrderDraftDetailsSummaryProps {
   order: OrderDetails_order;

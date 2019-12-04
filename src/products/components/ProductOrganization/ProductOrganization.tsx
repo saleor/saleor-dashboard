@@ -25,18 +25,21 @@ interface ProductType {
   name: string;
 }
 
-const useStyles = makeStyles(theme => ({
-  card: {
-    overflow: "visible"
-  },
-  cardSubtitle: {
-    fontSize: "1rem",
-    marginBottom: theme.spacing(0.5)
-  },
-  label: {
-    marginBottom: theme.spacing(0.5)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    card: {
+      overflow: "visible"
+    },
+    cardSubtitle: {
+      fontSize: "1rem",
+      marginBottom: theme.spacing(0.5)
+    },
+    label: {
+      marginBottom: theme.spacing(0.5)
+    }
+  }),
+  { name: "ProductOrganization" }
+);
 
 interface ProductOrganizationProps {
   canChangeType: boolean;

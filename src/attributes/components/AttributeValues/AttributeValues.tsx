@@ -29,29 +29,32 @@ export interface AttributeValuesProps {
   onValueUpdate: (id: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  columnAdmin: {
-    width: "50%"
-  },
-  columnDrag: {
-    width: 48 + theme.spacing(1.5)
-  },
-  columnStore: {
-    width: "50%"
-  },
-  dragIcon: {
-    cursor: "grab"
-  },
-  iconCell: {
-    "&:last-child": {
-      paddingRight: theme.spacing()
+const useStyles = makeStyles(
+  theme => ({
+    columnAdmin: {
+      width: "50%"
     },
-    width: 48 + theme.spacing(1.5)
-  },
-  link: {
-    cursor: "pointer"
-  }
-}));
+    columnDrag: {
+      width: 48 + theme.spacing(1.5)
+    },
+    columnStore: {
+      width: "50%"
+    },
+    dragIcon: {
+      cursor: "grab"
+    },
+    iconCell: {
+      "&:last-child": {
+        paddingRight: theme.spacing()
+      },
+      width: 48 + theme.spacing(1.5)
+    },
+    link: {
+      cursor: "pointer"
+    }
+  }),
+  { name: "AttributeValues" }
+);
 
 const AttributeValues: React.FC<AttributeValuesProps> = ({
   disabled,

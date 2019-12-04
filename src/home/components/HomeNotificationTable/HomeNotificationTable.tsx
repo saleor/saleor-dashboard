@@ -14,14 +14,17 @@ import Skeleton from "@saleor/components/Skeleton";
 import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 
-const useStyles = makeStyles(theme => ({
-  arrowIcon: {
-    width: theme.spacing(4)
-  },
-  tableRow: {
-    cursor: "pointer"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    arrowIcon: {
+      width: theme.spacing(4)
+    },
+    tableRow: {
+      cursor: "pointer"
+    }
+  }),
+  { name: "HomeNotificationTable" }
+);
 
 interface HomeNotificationTableProps extends UserPermissionProps {
   ordersToCapture: number;

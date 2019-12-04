@@ -23,23 +23,26 @@ export interface MenuListProps extends ListProps, ListActions {
   onDelete: (id: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
-    colItems: {
-      width: 200
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colItems: {
+        width: 200
+      },
+      colTitle: {}
     },
-    colTitle: {}
-  },
-  colItems: {
-    textAlign: "right"
-  },
-  colTitle: {
-    paddingLeft: 0
-  },
-  row: {
-    cursor: "pointer"
-  }
-}));
+    colItems: {
+      textAlign: "right"
+    },
+    colTitle: {
+      paddingLeft: 0
+    },
+    row: {
+      cursor: "pointer"
+    }
+  }),
+  { name: "MenuList" }
+);
 
 const numberOfColumns = 4;
 

@@ -22,31 +22,34 @@ import {
 import { ListActions, ListProps } from "@saleor/types";
 import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
-    colCustomer: {
-      width: 300
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colCustomer: {
+        width: 300
+      },
+      colDate: {
+        width: 300
+      },
+      colNumber: {
+        width: 120
+      },
+      colTotal: {}
     },
-    colDate: {
-      width: 300
-    },
+    colCustomer: {},
+    colDate: {},
     colNumber: {
-      width: 120
+      paddingLeft: 0
     },
-    colTotal: {}
-  },
-  colCustomer: {},
-  colDate: {},
-  colNumber: {
-    paddingLeft: 0
-  },
-  colTotal: {
-    textAlign: "right"
-  },
-  link: {
-    cursor: "pointer"
-  }
-}));
+    colTotal: {
+      textAlign: "right"
+    },
+    link: {
+      cursor: "pointer"
+    }
+  }),
+  { name: "OrderDraftList" }
+);
 
 interface OrderDraftListProps extends ListProps, ListActions {
   orders: OrderDraftList_draftOrders_edges_node[];

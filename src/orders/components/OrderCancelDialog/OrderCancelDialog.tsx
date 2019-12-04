@@ -19,15 +19,18 @@ export interface FormData {
   restock: boolean;
 }
 
-const useStyles = makeStyles(theme => ({
-  deleteButton: {
-    "&:hover": {
-      backgroundColor: theme.palette.error.main
-    },
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.error.contrastText
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    deleteButton: {
+      "&:hover": {
+        backgroundColor: theme.palette.error.main
+      },
+      backgroundColor: theme.palette.error.main,
+      color: theme.palette.error.contrastText
+    }
+  }),
+  { name: "OrderCancelDialog" }
+);
 
 interface OrderCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

@@ -18,14 +18,17 @@ import { ICONBUTTON_SIZE } from "../../../theme";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 import { SiteSettings_shop_authorizationKeys } from "../../types/SiteSettings";
 
-const useStyles = makeStyles(theme => ({
-  iconCell: {
-    "&:last-child": {
-      paddingRight: 0
-    },
-    width: ICONBUTTON_SIZE + theme.spacing(0.5)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    iconCell: {
+      "&:last-child": {
+        paddingRight: 0
+      },
+      width: ICONBUTTON_SIZE + theme.spacing(0.5)
+    }
+  }),
+  { name: "SiteSettingsKeys" }
+);
 
 interface SiteSettingsKeysProps {
   disabled: boolean;

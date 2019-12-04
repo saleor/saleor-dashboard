@@ -11,17 +11,20 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import { commonMessages } from "@saleor/intl";
 
-const useStyles = makeStyles(theme => ({
-  content: {
-    paddingTop: theme.spacing(2)
-  },
-  hr: {
-    margin: theme.spacing(3, 0)
-  },
-  sectionHeader: {
-    marginBottom: theme.spacing()
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    content: {
+      paddingTop: theme.spacing(2)
+    },
+    hr: {
+      margin: theme.spacing(3, 0)
+    },
+    sectionHeader: {
+      marginBottom: theme.spacing()
+    }
+  }),
+  { name: "CustomerInfo" }
+);
 
 export interface CustomerInfoProps {
   data: {

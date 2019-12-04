@@ -19,21 +19,24 @@ interface PluginAuthorizationProps {
   onEdit: (field: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    marginLeft: theme.spacing()
-  },
-  hr: {
-    margin: theme.spacing(2, 0)
-  },
-  item: {
-    alignItems: "center",
-    display: "flex"
-  },
-  spacer: {
-    flex: 1
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    button: {
+      marginLeft: theme.spacing()
+    },
+    hr: {
+      margin: theme.spacing(2, 0)
+    },
+    item: {
+      alignItems: "center",
+      display: "flex"
+    },
+    spacer: {
+      flex: 1
+    }
+  }),
+  { name: "PluginAuthorization" }
+);
 
 const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
   const { fields, onClear, onEdit } = props;

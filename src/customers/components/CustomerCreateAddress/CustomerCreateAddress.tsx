@@ -12,11 +12,14 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import { FormErrors } from "../../../types";
 import { AddressTypeInput } from "../../types";
 
-const useStyles = makeStyles({
-  overflow: {
-    overflow: "visible"
-  }
-});
+const useStyles = makeStyles(
+  {
+    overflow: {
+      overflow: "visible"
+    }
+  },
+  { name: "CustomerCreateAddress" }
+);
 
 export interface CustomerCreateAddressProps {
   countries: SingleAutocompleteChoiceType[];

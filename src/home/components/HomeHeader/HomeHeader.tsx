@@ -5,17 +5,20 @@ import { FormattedMessage } from "react-intl";
 
 import Skeleton from "@saleor/components/Skeleton";
 
-const useStyles = makeStyles(theme => ({
-  headerContainer: {
-    marginBottom: theme.spacing(3)
-  },
-  pageHeader: {
-    fontWeight: 600 as 600
-  },
-  subtitle: {
-    color: theme.typography.caption.color
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    headerContainer: {
+      marginBottom: theme.spacing(3)
+    },
+    pageHeader: {
+      fontWeight: 600 as 600
+    },
+    subtitle: {
+      color: theme.typography.caption.color
+    }
+  }),
+  { name: "HomeHeader" }
+);
 
 interface HomeOrdersCardProps {
   userName: string;

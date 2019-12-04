@@ -10,14 +10,17 @@ import { commonMessages } from "@saleor/intl";
 import { FormErrors } from "../../../types";
 import { CustomerCreatePageFormData } from "../CustomerCreatePage";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "grid",
-    gridColumnGap: theme.spacing(2),
-    gridRowGap: theme.spacing(3),
-    gridTemplateColumns: "1fr 1fr"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      display: "grid",
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(3),
+      gridTemplateColumns: "1fr 1fr"
+    }
+  }),
+  { name: "CustomerCreateDetails" }
+);
 
 export interface CustomerCreateDetailsProps {
   data: CustomerCreatePageFormData;

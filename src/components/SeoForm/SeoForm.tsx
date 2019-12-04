@@ -11,52 +11,55 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CardTitle from "../CardTitle";
 import FormSpacer from "../FormSpacer";
 
-const useStyles = makeStyles(theme => ({
-  addressBar: {
-    color: "#006621",
-    fontSize: "13px",
-    lineHeight: "16px",
-    marginBottom: "2px",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap"
-  },
-  container: {
-    width: "100%"
-  },
-  descriptionBar: {
-    color: "#545454",
-    fontSize: "13px",
-    lineHeight: "18px",
-    overflowWrap: "break-word"
-  },
-  helperText: {
-    marginBottom: theme.spacing(3)
-  },
-  label: {
-    flex: 1
-  },
-  labelContainer: {
-    "& span": {
-      paddingRight: 30
+const useStyles = makeStyles(
+  theme => ({
+    addressBar: {
+      color: "#006621",
+      fontSize: "13px",
+      lineHeight: "16px",
+      marginBottom: "2px",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap"
     },
-    display: "flex"
-  },
-  preview: {
-    minHeight: theme.spacing(10)
-  },
-  title: {
-    padding: 0
-  },
-  titleBar: {
-    color: "#1a0dab",
-    fontSize: "18px",
-    lineHeight: "21px",
-    overflowWrap: "break-word",
-    textDecoration: "none",
-    wordWrap: "break-word"
-  }
-}));
+    container: {
+      width: "100%"
+    },
+    descriptionBar: {
+      color: "#545454",
+      fontSize: "13px",
+      lineHeight: "18px",
+      overflowWrap: "break-word"
+    },
+    helperText: {
+      marginBottom: theme.spacing(3)
+    },
+    label: {
+      flex: 1
+    },
+    labelContainer: {
+      "& span": {
+        paddingRight: 30
+      },
+      display: "flex"
+    },
+    preview: {
+      minHeight: theme.spacing(10)
+    },
+    title: {
+      padding: 0
+    },
+    titleBar: {
+      color: "#1a0dab",
+      fontSize: "18px",
+      lineHeight: "21px",
+      overflowWrap: "break-word",
+      textDecoration: "none",
+      wordWrap: "break-word"
+    }
+  }),
+  { name: "SeoForm" }
+);
 
 interface SeoFormProps {
   description?: string;

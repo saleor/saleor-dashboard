@@ -9,11 +9,14 @@ import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
 import { FormErrors } from "@saleor/types";
 
-const useStyles = makeStyles({
-  root: {
-    overflow: "visible"
-  }
-});
+const useStyles = makeStyles(
+  {
+    root: {
+      overflow: "visible"
+    }
+  },
+  { name: "ProductTypeDetails" }
+);
 
 interface ProductTypeDetailsProps {
   data?: {

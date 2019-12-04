@@ -15,42 +15,45 @@ import MultiAutocompleteSelectFieldContent, {
   MultiAutocompleteChoiceType
 } from "./MultiAutocompleteSelectFieldContent";
 
-const useStyles = makeStyles(theme => ({
-  chip: {
-    width: "100%"
-  },
-  chipClose: {
-    height: 32,
-    padding: 0,
-    width: 32
-  },
-  chipContainer: {
-    display: "flex",
-    flexDirection: "column",
-    marginTop: theme.spacing(1)
-  },
-  chipInner: {
-    "& svg": {
+const useStyles = makeStyles(
+  theme => ({
+    chip: {
+      width: "100%"
+    },
+    chipClose: {
+      height: 32,
+      padding: 0,
+      width: 32
+    },
+    chipContainer: {
+      display: "flex",
+      flexDirection: "column",
+      marginTop: theme.spacing(1)
+    },
+    chipInner: {
+      "& svg": {
+        color: theme.palette.primary.contrastText
+      },
+      alignItems: "center",
+      background: fade(theme.palette.primary.main, 0.8),
+      borderRadius: 18,
+      color: theme.palette.primary.contrastText,
+      display: "flex",
+      justifyContent: "space-between",
+      margin: theme.spacing(1, 0),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(1)
+    },
+    chipLabel: {
       color: theme.palette.primary.contrastText
     },
-    alignItems: "center",
-    background: fade(theme.palette.primary.main, 0.8),
-    borderRadius: 18,
-    color: theme.palette.primary.contrastText,
-    display: "flex",
-    justifyContent: "space-between",
-    margin: theme.spacing(1, 0),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1)
-  },
-  chipLabel: {
-    color: theme.palette.primary.contrastText
-  },
-  container: {
-    flexGrow: 1,
-    position: "relative"
-  }
-}));
+    container: {
+      flexGrow: 1,
+      position: "relative"
+    }
+  }),
+  { name: "MultiAutocompleteSelectField" }
+);
 
 export interface MultiAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {

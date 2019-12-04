@@ -23,40 +23,43 @@ import { maybe, renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 
-const useStyles = makeStyles(theme => ({
-  clickableRow: {
-    cursor: "pointer"
-  },
-  colName: {
-    width: "auto"
-  },
-  colNameLabel: {
-    marginLeft: AVATAR_MARGIN
-  },
-  colPrice: {
-    textAlign: "right",
-    width: 120
-  },
-  colQuantity: {
-    textAlign: "center",
-    width: 120
-  },
-  colTotal: {
-    textAlign: "right",
-    width: 120
-  },
+const useStyles = makeStyles(
+  theme => ({
+    clickableRow: {
+      cursor: "pointer"
+    },
+    colName: {
+      width: "auto"
+    },
+    colNameLabel: {
+      marginLeft: AVATAR_MARGIN
+    },
+    colPrice: {
+      textAlign: "right",
+      width: 120
+    },
+    colQuantity: {
+      textAlign: "center",
+      width: 120
+    },
+    colTotal: {
+      textAlign: "right",
+      width: 120
+    },
 
-  orderNumber: {
-    display: "inline",
-    marginLeft: theme.spacing(1)
-  },
-  statusBar: {
-    paddingTop: 0
-  },
-  table: {
-    tableLayout: "fixed"
-  }
-}));
+    orderNumber: {
+      display: "inline",
+      marginLeft: theme.spacing(1)
+    },
+    statusBar: {
+      paddingTop: 0
+    },
+    table: {
+      tableLayout: "fixed"
+    }
+  }),
+  { name: "OrderFulfillment" }
+);
 
 interface OrderFulfillmentProps {
   fulfillment: OrderDetails_order_fulfillments;

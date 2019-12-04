@@ -30,16 +30,19 @@ interface WebhookInfoProps {
   fetchServiceAccounts: (data: string) => void;
 }
 
-const useStyles = makeStyles(() => ({
-  status: {
-    paddingTop: 20
-  },
-  title: {
-    fontSize: 16,
-    lineHeight: 1.9,
-    paddingBottom: 10
-  }
-}));
+const useStyles = makeStyles(
+  () => ({
+    status: {
+      paddingTop: 20
+    },
+    title: {
+      fontSize: 16,
+      lineHeight: 1.9,
+      paddingBottom: 10
+    }
+  }),
+  { name: "WebhookInfo" }
+);
 
 const WebhookInfo: React.FC<WebhookInfoProps> = ({
   apiErrors,

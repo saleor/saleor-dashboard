@@ -25,21 +25,24 @@ export interface CustomerAddressProps {
   onSetAsDefault: (type: AddressTypeEnum) => void;
 }
 
-const useStyles = makeStyles({
-  actions: {
-    flexDirection: "row"
+const useStyles = makeStyles(
+  {
+    actions: {
+      flexDirection: "row"
+    },
+    actionsContainer: {
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      justifyContent: "flex-end"
+    },
+    card: {
+      display: "flex",
+      flexDirection: "column"
+    }
   },
-  actionsContainer: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-    justifyContent: "flex-end"
-  },
-  card: {
-    display: "flex",
-    flexDirection: "column"
-  }
-});
+  { name: "CustomerAddress" }
+);
 const CustomerAddress: React.FC<CustomerAddressProps> = props => {
   const {
     address,

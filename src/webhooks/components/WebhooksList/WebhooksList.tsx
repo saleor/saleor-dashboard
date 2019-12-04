@@ -22,34 +22,37 @@ export interface WebhooksListProps extends ListProps {
   onRemove: (id: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
-    colAction: {
-      "& svg": {
-        color: theme.palette.primary.main
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colAction: {
+        "& svg": {
+          color: theme.palette.primary.main
+        },
+        textAlign: "right" as "right"
       },
-      textAlign: "right" as "right"
+      colActive: {},
+      colName: {
+        "&&": {
+          width: "auto"
+        }
+      }
     },
+    colAction: {},
     colActive: {},
     colName: {
-      "&&": {
-        width: "auto"
-      }
+      paddingLeft: 0,
+      width: 250
+    },
+    table: {
+      tableLayout: "fixed"
+    },
+    tableRow: {
+      cursor: "pointer"
     }
-  },
-  colAction: {},
-  colActive: {},
-  colName: {
-    paddingLeft: 0,
-    width: 250
-  },
-  table: {
-    tableLayout: "fixed"
-  },
-  tableRow: {
-    cursor: "pointer"
-  }
-}));
+  }),
+  { name: "WebhooksList" }
+);
 
 const numberOfColumns = 3;
 

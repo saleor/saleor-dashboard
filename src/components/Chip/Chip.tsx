@@ -11,24 +11,27 @@ export interface ChipProps {
   onClose?: () => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  closeIcon: {
-    cursor: "pointer",
-    fontSize: 16,
-    marginLeft: theme.spacing(),
-    verticalAlign: "middle"
-  },
-  label: {
-    color: theme.palette.common.white
-  },
-  root: {
-    background: fade(theme.palette.secondary.main, 0.8),
-    borderRadius: 8,
-    display: "inline-block",
-    marginRight: theme.spacing(2),
-    padding: "6px 12px"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    closeIcon: {
+      cursor: "pointer",
+      fontSize: 16,
+      marginLeft: theme.spacing(),
+      verticalAlign: "middle"
+    },
+    label: {
+      color: theme.palette.common.white
+    },
+    root: {
+      background: fade(theme.palette.secondary.main, 0.8),
+      borderRadius: 8,
+      display: "inline-block",
+      marginRight: theme.spacing(2),
+      padding: "6px 12px"
+    }
+  }),
+  { name: "Chip" }
+);
 const Chip: React.FC<ChipProps> = props => {
   const { className, label, onClose } = props;
 

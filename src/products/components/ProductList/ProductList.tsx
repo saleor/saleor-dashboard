@@ -33,58 +33,61 @@ import TDisplayColumn, {
 } from "@saleor/utils/columns/DisplayColumn";
 import { getArrowDirection } from "@saleor/utils/sort";
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colName: {
+        width: "auto"
+      },
+      colPrice: {
+        width: 200
+      },
+      colPublished: {
+        width: 200
+      },
+      colType: {
+        width: 200
+      }
+    },
+    colAttribute: {
+      width: 150
+    },
+    colFill: {
+      padding: 0,
+      width: "100%"
+    },
     colName: {
-      width: "auto"
+      "&$colNameFixed": {
+        width: 250
+      }
+    },
+    colNameFixed: {},
+    colNameHeader: {
+      marginLeft: AVATAR_MARGIN
     },
     colPrice: {
-      width: 200
+      textAlign: "right"
     },
-    colPublished: {
-      width: 200
+    colPublished: {},
+    colType: {},
+    link: {
+      cursor: "pointer"
     },
-    colType: {
-      width: 200
+    table: {
+      tableLayout: "fixed"
+    },
+    tableContainer: {
+      overflowX: "scroll"
+    },
+    textLeft: {
+      textAlign: "left"
+    },
+    textRight: {
+      textAlign: "right"
     }
-  },
-  colAttribute: {
-    width: 150
-  },
-  colFill: {
-    padding: 0,
-    width: "100%"
-  },
-  colName: {
-    "&$colNameFixed": {
-      width: 250
-    }
-  },
-  colNameFixed: {},
-  colNameHeader: {
-    marginLeft: AVATAR_MARGIN
-  },
-  colPrice: {
-    textAlign: "right"
-  },
-  colPublished: {},
-  colType: {},
-  link: {
-    cursor: "pointer"
-  },
-  table: {
-    tableLayout: "fixed"
-  },
-  tableContainer: {
-    overflowX: "scroll"
-  },
-  textLeft: {
-    textAlign: "left"
-  },
-  textRight: {
-    textAlign: "right"
-  }
-}));
+  }),
+  { name: "ProductList" }
+);
 
 const DisplayColumn = TDisplayColumn as React.FunctionComponent<
   DisplayColumnProps<ProductListColumns>

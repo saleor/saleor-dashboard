@@ -30,50 +30,53 @@ export interface ColumnPickerContentProps extends Partial<FetchMoreProps> {
   onSave: () => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  actionBar: {
-    display: "flex",
-    justifyContent: "space-between"
-  },
-  actionBarContainer: {
-    boxShadow: `0px 0px 0px 0px ${theme.palette.background.paper}`,
-    transition: theme.transitions.duration.short + "ms"
-  },
-  cancelButton: {
-    marginRight: theme.spacing(2)
-  },
-  content: {
-    [theme.breakpoints.down("sm")]: {
-      gridTemplateColumns: "repeat(2, 1fr)"
+const useStyles = makeStyles(
+  theme => ({
+    actionBar: {
+      display: "flex",
+      justifyContent: "space-between"
     },
-    display: "grid",
-    gridColumnGap: theme.spacing(3),
-    gridTemplateColumns: "repeat(3, 1fr)",
-    maxHeight: 256,
-    overflowX: "visible",
-    overflowY: "scroll",
-    padding: theme.spacing(2, 3)
-  },
-  contentContainer: {
-    padding: 0
-  },
-  dropShadow: {
-    boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
-  },
-  loadMoreLoaderContainer: {
-    alignItems: "center",
-    display: "flex",
-    gridColumnEnd: "span 3",
-    height: theme.spacing(3),
-    justifyContent: "center"
-  },
-  root: {
-    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
-  },
-  titleContainer: {
-    padding: theme.spacing(1.5, 3.5)
-  }
-}));
+    actionBarContainer: {
+      boxShadow: `0px 0px 0px 0px ${theme.palette.background.paper}`,
+      transition: theme.transitions.duration.short + "ms"
+    },
+    cancelButton: {
+      marginRight: theme.spacing(2)
+    },
+    content: {
+      [theme.breakpoints.down("sm")]: {
+        gridTemplateColumns: "repeat(2, 1fr)"
+      },
+      display: "grid",
+      gridColumnGap: theme.spacing(3),
+      gridTemplateColumns: "repeat(3, 1fr)",
+      maxHeight: 256,
+      overflowX: "visible",
+      overflowY: "scroll",
+      padding: theme.spacing(2, 3)
+    },
+    contentContainer: {
+      padding: 0
+    },
+    dropShadow: {
+      boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
+    },
+    loadMoreLoaderContainer: {
+      alignItems: "center",
+      display: "flex",
+      gridColumnEnd: "span 3",
+      height: theme.spacing(3),
+      justifyContent: "center"
+    },
+    root: {
+      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
+    },
+    titleContainer: {
+      padding: theme.spacing(1.5, 3.5)
+    }
+  }),
+  { name: "ColumnPickerContent" }
+);
 
 const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
   const {

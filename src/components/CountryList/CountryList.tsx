@@ -27,50 +27,53 @@ export interface CountryListProps {
   onCountryUnassign: (country: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  iconCell: {
-    "&:last-child": {
-      paddingRight: 0
+const useStyles = makeStyles(
+  theme => ({
+    iconCell: {
+      "&:last-child": {
+        paddingRight: 0
+      },
+      width: 48 + theme.spacing(2)
     },
-    width: 48 + theme.spacing(2)
-  },
-  indicator: {
-    color: theme.palette.text.disabled,
-    display: "inline-block",
-    left: 0,
-    marginRight: theme.spacing(0.5),
-    position: "absolute"
-  },
-  offsetCell: {
-    "&:first-child": {
-      paddingLeft: theme.spacing(3)
+    indicator: {
+      color: theme.palette.text.disabled,
+      display: "inline-block",
+      left: 0,
+      marginRight: theme.spacing(0.5),
+      position: "absolute"
     },
-    position: "relative"
-  },
-  pointer: {
-    cursor: "pointer"
-  },
-  root: {
-    "&:last-child": {
-      paddingBottom: 0
+    offsetCell: {
+      "&:first-child": {
+        paddingLeft: theme.spacing(3)
+      },
+      position: "relative"
     },
-    paddingTop: 0
-  },
-  rotate: {
-    transform: "rotate(180deg)"
-  },
-  textRight: {
-    textAlign: "right"
-  },
-  toLeft: {
-    "&:first-child": {
-      paddingLeft: 0
+    pointer: {
+      cursor: "pointer"
+    },
+    root: {
+      "&:last-child": {
+        paddingBottom: 0
+      },
+      paddingTop: 0
+    },
+    rotate: {
+      transform: "rotate(180deg)"
+    },
+    textRight: {
+      textAlign: "right"
+    },
+    toLeft: {
+      "&:first-child": {
+        paddingLeft: 0
+      }
+    },
+    wideColumn: {
+      width: "100%"
     }
-  },
-  wideColumn: {
-    width: "100%"
-  }
-}));
+  }),
+  { name: "CountryList" }
+);
 
 const CountryList: React.FC<CountryListProps> = props => {
   const {

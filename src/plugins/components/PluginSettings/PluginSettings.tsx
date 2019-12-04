@@ -20,25 +20,28 @@ interface PluginSettingsProps {
   fields: Plugin_plugin_configuration[];
 }
 
-const useStyles = makeStyles(theme => ({
-  authItem: {
-    display: "flex"
-  },
-  button: {
-    marginRight: theme.spacing()
-  },
-  item: {
-    "&:not(:last-child)": {
-      marginBottom: theme.spacing(3)
+const useStyles = makeStyles(
+  theme => ({
+    authItem: {
+      display: "flex"
+    },
+    button: {
+      marginRight: theme.spacing()
+    },
+    item: {
+      "&:not(:last-child)": {
+        marginBottom: theme.spacing(3)
+      }
+    },
+    itemLabel: {
+      fontWeight: 500
+    },
+    spacer: {
+      flex: 1
     }
-  },
-  itemLabel: {
-    fontWeight: 500
-  },
-  spacer: {
-    flex: 1
-  }
-}));
+  }),
+  { name: "PluginSettings" }
+);
 
 const PluginSettings: React.FC<PluginSettingsProps> = ({
   data,

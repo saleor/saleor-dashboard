@@ -41,11 +41,14 @@ export interface ProductListPageProps
   products: ProductList_products_edges_node[];
 }
 
-const useStyles = makeStyles(theme => ({
-  columnPicker: {
-    marginRight: theme.spacing(3)
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    columnPicker: {
+      marginRight: theme.spacing(3)
+    }
+  }),
+  { name: "ProductListPage" }
+);
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {

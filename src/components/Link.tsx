@@ -3,21 +3,24 @@ import Typography, { TypographyProps } from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 
-const useStyles = makeStyles(theme => ({
-  primary: {
-    color: theme.palette.primary.main
-  },
-  root: {
-    cursor: "pointer",
-    display: "inline"
-  },
-  secondary: {
-    color: theme.palette.primary.main
-  },
-  underline: {
-    textDecoration: "underline"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    primary: {
+      color: theme.palette.primary.main
+    },
+    root: {
+      cursor: "pointer",
+      display: "inline"
+    },
+    secondary: {
+      color: theme.palette.primary.main
+    },
+    underline: {
+      textDecoration: "underline"
+    }
+  }),
+  { name: "Link" }
+);
 
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   color?: "primary" | "secondary";

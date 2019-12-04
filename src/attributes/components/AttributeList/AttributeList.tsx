@@ -20,41 +20,44 @@ export interface AttributeListProps extends ListProps, ListActions {
   attributes: AttributeList_attributes_edges_node[];
 }
 
-const useStyles = makeStyles(theme => ({
-  [theme.breakpoints.up("lg")]: {
+const useStyles = makeStyles(
+  theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colFaceted: {
+        width: 150
+      },
+      colName: {
+        width: "auto"
+      },
+      colSearchable: {
+        width: 150
+      },
+      colSlug: {
+        width: 200
+      },
+      colVisible: {
+        width: 150
+      }
+    },
     colFaceted: {
-      width: 150
+      textAlign: "center"
     },
-    colName: {
-      width: "auto"
-    },
+    colName: {},
     colSearchable: {
-      width: 150
+      textAlign: "center"
     },
     colSlug: {
-      width: 200
+      paddingLeft: 0
     },
     colVisible: {
-      width: 150
+      textAlign: "center"
+    },
+    link: {
+      cursor: "pointer"
     }
-  },
-  colFaceted: {
-    textAlign: "center"
-  },
-  colName: {},
-  colSearchable: {
-    textAlign: "center"
-  },
-  colSlug: {
-    paddingLeft: 0
-  },
-  colVisible: {
-    textAlign: "center"
-  },
-  link: {
-    cursor: "pointer"
-  }
-}));
+  }),
+  { name: "AttributeList" }
+);
 
 const numberOfColumns = 6;
 

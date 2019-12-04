@@ -31,33 +31,36 @@ export interface SaleProductsProps extends ListProps, ListActions {
   onProductUnassign: (id: string) => void;
 }
 
-const useStyles = makeStyles(theme => ({
-  colActions: {
-    "&:last-child": {
-      paddingRight: 0
+const useStyles = makeStyles(
+  theme => ({
+    colActions: {
+      "&:last-child": {
+        paddingRight: 0
+      },
+      width: 76 + theme.spacing(0.5)
     },
-    width: 76 + theme.spacing(0.5)
-  },
-  colName: {
-    paddingLeft: 0,
-    width: "auto"
-  },
-  colNameLabel: {
-    marginLeft: AVATAR_MARGIN
-  },
-  colPublished: {
-    width: 150
-  },
-  colType: {
-    width: 200
-  },
-  table: {
-    tableLayout: "fixed"
-  },
-  tableRow: {
-    cursor: "pointer"
-  }
-}));
+    colName: {
+      paddingLeft: 0,
+      width: "auto"
+    },
+    colNameLabel: {
+      marginLeft: AVATAR_MARGIN
+    },
+    colPublished: {
+      width: 150
+    },
+    colType: {
+      width: 200
+    },
+    table: {
+      tableLayout: "fixed"
+    },
+    tableRow: {
+      cursor: "pointer"
+    }
+  }),
+  { name: "DiscountProducts" }
+);
 
 const numberOfColumns = 5;
 

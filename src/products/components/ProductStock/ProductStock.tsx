@@ -9,13 +9,16 @@ import CardTitle from "@saleor/components/CardTitle";
 import { maybe } from "../../../misc";
 import { ProductDetails_product } from "../../types/ProductDetails";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "grid",
-    gridColumnGap: theme.spacing(2),
-    gridTemplateColumns: "1fr 1fr"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      display: "grid",
+      gridColumnGap: theme.spacing(2),
+      gridTemplateColumns: "1fr 1fr"
+    }
+  }),
+  { name: "ProductStock" }
+);
 
 interface ProductStockProps {
   data: {

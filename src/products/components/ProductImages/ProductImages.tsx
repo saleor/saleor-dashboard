@@ -14,95 +14,98 @@ import { useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { ProductDetails_product_images } from "../../types/ProductDetails";
 
-const useStyles = makeStyles(theme => ({
-  card: {
-    marginTop: theme.spacing(2),
-    [theme.breakpoints.down("sm")]: {
-      marginTop: 0
-    }
-  },
-  fileField: {
-    display: "none"
-  },
-  icon: {
-    color: "rgba(255, 255, 255, 0.54)"
-  },
-  image: {
-    height: "100%",
-    objectFit: "contain",
-    userSelect: "none",
-    width: "100%"
-  },
-  imageContainer: {
-    "&:hover, &.dragged": {
-      "& $imageOverlay": {
-        display: "block"
+const useStyles = makeStyles(
+  theme => ({
+    card: {
+      marginTop: theme.spacing(2),
+      [theme.breakpoints.down("sm")]: {
+        marginTop: 0
       }
     },
-    background: "#ffffff",
-    border: "1px solid #eaeaea",
-    borderRadius: theme.spacing(),
-    height: 140,
-    margin: "auto",
-    overflow: "hidden",
-    padding: theme.spacing(2),
-    position: "relative",
-    width: 140
-  },
-  imageGridContainer: {
-    position: "relative"
-  },
-  imageOverlay: {
-    background: "rgba(0, 0, 0, 0.6)",
-    cursor: "move",
-    display: "none",
-    height: 140,
-    left: 0,
-    padding: theme.spacing(2),
-    position: "absolute",
-    top: 0,
-    width: 140
-  },
-  imageOverlayToolbar: {
-    alignContent: "flex-end",
-    display: "flex",
-    position: "relative",
-    right: -theme.spacing(3),
-    top: -theme.spacing(2)
-  },
-  imageUpload: {
-    height: "100%",
-    left: 0,
-    outline: 0,
-    position: "absolute",
-    top: 0,
-    width: "100%"
-  },
-  imageUploadActive: {
-    zIndex: 1
-  },
-  imageUploadIcon: {
-    display: "none"
-  },
-  imageUploadIconActive: {
-    display: "block"
-  },
-  root: {
-    display: "grid",
-    gridColumnGap: theme.spacing(2),
-    gridRowGap: theme.spacing(2),
-    gridTemplateColumns: "repeat(4, 1fr)",
-    [theme.breakpoints.down("sm")]: {
-      gridTemplateColumns: "repeat(3, 1fr)"
+    fileField: {
+      display: "none"
     },
-    [theme.breakpoints.down("xs")]: {
-      gridTemplateColumns: "repeat(2, 1fr)"
+    icon: {
+      color: "rgba(255, 255, 255, 0.54)"
+    },
+    image: {
+      height: "100%",
+      objectFit: "contain",
+      userSelect: "none",
+      width: "100%"
+    },
+    imageContainer: {
+      "&:hover, &.dragged": {
+        "& $imageOverlay": {
+          display: "block"
+        }
+      },
+      background: "#ffffff",
+      border: "1px solid #eaeaea",
+      borderRadius: theme.spacing(),
+      height: 140,
+      margin: "auto",
+      overflow: "hidden",
+      padding: theme.spacing(2),
+      position: "relative",
+      width: 140
+    },
+    imageGridContainer: {
+      position: "relative"
+    },
+    imageOverlay: {
+      background: "rgba(0, 0, 0, 0.6)",
+      cursor: "move",
+      display: "none",
+      height: 140,
+      left: 0,
+      padding: theme.spacing(2),
+      position: "absolute",
+      top: 0,
+      width: 140
+    },
+    imageOverlayToolbar: {
+      alignContent: "flex-end",
+      display: "flex",
+      position: "relative",
+      right: -theme.spacing(3),
+      top: -theme.spacing(2)
+    },
+    imageUpload: {
+      height: "100%",
+      left: 0,
+      outline: 0,
+      position: "absolute",
+      top: 0,
+      width: "100%"
+    },
+    imageUploadActive: {
+      zIndex: 1
+    },
+    imageUploadIcon: {
+      display: "none"
+    },
+    imageUploadIconActive: {
+      display: "block"
+    },
+    root: {
+      display: "grid",
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(2),
+      gridTemplateColumns: "repeat(4, 1fr)",
+      [theme.breakpoints.down("sm")]: {
+        gridTemplateColumns: "repeat(3, 1fr)"
+      },
+      [theme.breakpoints.down("xs")]: {
+        gridTemplateColumns: "repeat(2, 1fr)"
+      }
+    },
+    rootDragActive: {
+      opacity: 0.2
     }
-  },
-  rootDragActive: {
-    opacity: 0.2
-  }
-}));
+  }),
+  { name: "ProductImages" }
+);
 
 interface ProductImagesProps {
   placeholderImage?: string;

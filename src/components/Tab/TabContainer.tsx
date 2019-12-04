@@ -5,11 +5,14 @@ export interface TabContainerProps {
   children: React.ReactNode | React.ReactNodeArray;
 }
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    borderBottom: `1px solid ${theme.palette.divider}`
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      borderBottom: `1px solid ${theme.palette.divider}`
+    }
+  }),
+  { name: "TabContainer" }
+);
 
 const TabContainer: React.FC<TabContainerProps> = props => {
   const { children } = props;
