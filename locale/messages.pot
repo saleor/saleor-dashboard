@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-11-26T14:34:48.426Z\n"
+"POT-Creation-Date: 2019-12-04T14:17:34.264Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1855,12 +1855,28 @@ msgctxt "description"
 msgid "Category name"
 msgstr ""
 
+#: build/locale/src/staff/components/StaffPasswordResetDialog/StaffPasswordResetDialog.json
+#. [src.staff.components.StaffPasswordResetDialog.2521568990] - dialog header
+#. defaultMessage is:
+#. Change Password
+msgctxt "dialog header"
+msgid "Change Password"
+msgstr ""
+
 #: build/locale/src/staff/components/StaffProperties/StaffProperties.json
 #. [src.staff.components.StaffProperties.2771097267] - button
 #. defaultMessage is:
 #. Change photo
 msgctxt "button"
 msgid "Change photo"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPassword/StaffPassword.json
+#. [src.staff.components.StaffPassword.1434811103] - button
+#. defaultMessage is:
+#. Change your password
+msgctxt "button"
+msgid "Change your password"
 msgstr ""
 
 #: build/locale/src/products/components/ProductPricing/ProductPricing.json
@@ -4911,6 +4927,14 @@ msgctxt "description"
 msgid "New Password"
 msgstr ""
 
+#: build/locale/src/staff/components/StaffPasswordResetDialog/StaffPasswordResetDialog.json
+#. [src.staff.components.StaffPasswordResetDialog.1254879564] - input label
+#. defaultMessage is:
+#. New Password
+msgctxt "input label"
+msgid "New Password"
+msgstr ""
+
 #: build/locale/src/products/views/ProductCreate.json
 #. [src.products.views.1591632382] - page header
 #. defaultMessage is:
@@ -4925,6 +4949,14 @@ msgstr ""
 #. New Variant
 msgctxt "variant name"
 msgid "New Variant"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPasswordResetDialog/StaffPasswordResetDialog.json
+#. [src.staff.components.StaffPasswordResetDialog.1651415182]
+#. defaultMessage is:
+#. New password must be at least 8 characters long
+msgctxt "description"
+msgid "New password must be at least 8 characters long"
 msgstr ""
 
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
@@ -5947,6 +5979,14 @@ msgctxt "description"
 msgid "Password"
 msgstr ""
 
+#: build/locale/src/staff/components/StaffPassword/StaffPassword.json
+#. [src.staff.components.StaffPassword.2237029987] - header
+#. defaultMessage is:
+#. Password
+msgctxt "header"
+msgid "Password"
+msgstr ""
+
 #: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
 #. [src.auth.components.NewPasswordPage.4253911811]
 #. defaultMessage is:
@@ -6213,6 +6253,14 @@ msgstr ""
 #. Previous
 msgctxt "previous step, button"
 msgid "Previous"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPasswordResetDialog/StaffPasswordResetDialog.json
+#. [src.staff.components.StaffPasswordResetDialog.53359254] - input label
+#. defaultMessage is:
+#. Previous Password
+msgctxt "input label"
+msgid "Previous Password"
 msgstr ""
 
 #: build/locale/src/categories/components/CategoryProductList/CategoryProductList.json
@@ -9665,6 +9713,14 @@ msgstr ""
 #. Yes
 msgctxt "description"
 msgid "Yes"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPassword/StaffPassword.json
+#. [src.staff.components.StaffPassword.1274006906]
+#. defaultMessage is:
+#. You should change your password every month to avoid security issues.
+msgctxt "description"
+msgid "You should change your password every month to avoid security issues."
 msgstr ""
 
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateSummary.json

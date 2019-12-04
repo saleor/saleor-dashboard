@@ -19,6 +19,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix dropdown clickable areas - #281 by @dominik-zeglen
 - Use eslint - #285 by @dominik-zeglen
 - Enforce using "name" property in style hooks - #288 by @dominik-zeglen
+- Add ability to reset own password - #289 by @dominik-zeglen
 
 ## 2.0.0
 

@@ -15,7 +15,8 @@ import {
   TypedStaffAvatarDeleteMutation,
   TypedStaffAvatarUpdateMutation,
   TypedStaffMemberDeleteMutation,
-  TypedStaffMemberUpdateMutation
+  TypedStaffMemberUpdateMutation,
+  useChangeStaffPassword
 } from "../mutations";
 import { TypedStaffMemberDetailsQuery } from "../queries";
 import { StaffAvatarDelete } from "../types/StaffAvatarDelete";
@@ -27,6 +28,8 @@ import {
   staffMemberDetailsUrl,
   StaffMemberDetailsUrlQueryParams
 } from "../urls";
+import StaffPasswordResetDialog from "../components/StaffPasswordResetDialog";
+import { ChangeStaffPassword } from "../types/ChangeStaffPassword";
 
 interface OrderListProps {
   id: string;
@@ -39,6 +42,32 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const user = useUser();
   const intl = useIntl();
   const shop = useShop();
+
+  const closeModal = () =>
+    navigate(
+      staffMemberDetailsUrl(id, {
+        ...params,
+        action: undefined
+      })
+    );
+
+  const handleChangePassword = (data: ChangeStaffPassword) => {
+    if (data.passwordChange.errors.length === 0) {
+      notify({
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      closeModal();
+    }
+  };
+  const [changePassword, changePasswordOpts] = useChangeStaffPassword({
+    onCompleted: handleChangePassword
+  });
+
+  const changePasswordTransitionState = getMutationState(
+    changePasswordOpts.called,
+    changePasswordOpts.loading,
+    maybe(() => changePasswordOpts.data.passwordChange.errors)
+  );
 
   return (
     <TypedStaffMemberDetailsQuery
@@ -128,6 +157,13 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 canRemove={!isUserSameAsViewer}
                                 disabled={loading}
                                 onBack={() => navigate(staffListUrl())}
+                                onChangePassword={() =>
+                                  navigate(
+                                    staffMemberDetailsUrl(id, {
+                                      action: "change-password"
+                                    })
+                                  )
+                                }
                                 onDelete={() =>
                                   navigate(
                                     staffMemberDetailsUrl(id, {
@@ -175,9 +211,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 })}
                                 confirmButtonState={deleteTransitionState}
                                 variant="delete"
-                                onClose={() =>
-                                  navigate(staffMemberDetailsUrl(id))
-                                }
+                                onClose={closeModal}
                                 onConfirm={deleteStaffMember}
                               >
                                 <DialogContentText>
@@ -197,9 +231,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 })}
                                 confirmButtonState={deleteAvatarTransitionState}
                                 variant="delete"
-                                onClose={() =>
-                                  navigate(staffMemberDetailsUrl(id))
-                                }
+                                onClose={closeModal}
                                 onConfirm={deleteStaffAvatar}
                               >
                                 <DialogContentText>
@@ -215,6 +247,24 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                   />
                                 </DialogContentText>
                               </ActionDialog>
+                              <StaffPasswordResetDialog
+                                confirmButtonState={
+                                  changePasswordTransitionState
+                                }
+                                errors={maybe(
+                                  () =>
+                                    changePasswordOpts.data.passwordChange
+                                      .errors,
+                                  []
+                                )}
+                                open={params.action === "change-password"}
+                                onClose={closeModal}
+                                onSubmit={data =>
+                                  changePassword({
+                                    variables: data
+                                  })
+                                }
+                              />
                             </>
                           );
                         }}

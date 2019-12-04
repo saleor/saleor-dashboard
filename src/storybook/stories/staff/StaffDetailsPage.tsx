@@ -16,6 +16,7 @@ const props: Omit<StaffDetailsPageProps, "classes"> = {
   canRemove: true,
   disabled: false,
   onBack: () => undefined,
+  onChangePassword: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
