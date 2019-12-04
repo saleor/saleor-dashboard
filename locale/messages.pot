@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-12-03T16:48:22.955Z\n"
+"POT-Creation-Date: 2019-12-04T10:13:32.661Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1239,10 +1239,6 @@ msgstr ""
 #. [src.components.AssignCollectionDialog.3992923611] - dialog header
 #. defaultMessage is:
 #. Assign Collection
-#: build/locale/src/staff/components/StaffPasswordResetDialog/StaffPasswordResetDialog.json
-#. [src.staff.components.StaffPasswordResetDialog.3992923611] - dialog header
-#. defaultMessage is:
-#. Assign Collection
 msgctxt "dialog header"
 msgid "Assign Collection"
 msgstr ""
@@ -1857,6 +1853,14 @@ msgstr ""
 #. Category name
 msgctxt "description"
 msgid "Category name"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffPasswordResetDialog/StaffPasswordResetDialog.json
+#. [src.staff.components.StaffPasswordResetDialog.2521568990] - dialog header
+#. defaultMessage is:
+#. Change Password
+msgctxt "dialog header"
+msgid "Change Password"
 msgstr ""
 
 #: build/locale/src/staff/components/StaffProperties/StaffProperties.json

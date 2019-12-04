@@ -45,7 +45,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle>
         <FormattedMessage
-          defaultMessage="Assign Collection"
+          defaultMessage="Change Password"
           description="dialog header"
         />
       </DialogTitle>
