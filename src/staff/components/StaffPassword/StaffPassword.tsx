@@ -25,7 +25,7 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
           <Button color="primary" onClick={onChangePassword}>
             <FormattedMessage
               defaultMessage="Change your password"
-              description=" utton"
+              description="button"
             />
           </Button>
         }

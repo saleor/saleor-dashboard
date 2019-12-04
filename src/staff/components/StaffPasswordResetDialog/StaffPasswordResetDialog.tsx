@@ -90,7 +90,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                 <FormattedMessage {...buttonMessages.back} />
               </Button>
               <ConfirmButton
-                disabled={!(data.newPassword.length >= 8)}
+                disabled={data.newPassword.length < 8}
                 transitionState={confirmButtonState}
                 color="primary"
                 variant="contained"

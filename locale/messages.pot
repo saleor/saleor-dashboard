@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-12-04T10:13:32.661Z\n"
+"POT-Creation-Date: 2019-12-04T14:17:34.264Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1872,10 +1872,10 @@ msgid "Change photo"
 msgstr ""
 
 #: build/locale/src/staff/components/StaffPassword/StaffPassword.json
-#. [src.staff.components.StaffPassword.1434811103] -  utton
+#. [src.staff.components.StaffPassword.1434811103] - button
 #. defaultMessage is:
 #. Change your password
-msgctxt " utton"
+msgctxt "button"
 msgid "Change your password"
 msgstr ""
 
