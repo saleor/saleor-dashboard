@@ -89,6 +89,10 @@ const CountryList: React.FC<CountryListProps> = props => {
   const [isCollapsed, setCollapseStatus] = React.useState(true);
   const toggleCollapse = () => setCollapseStatus(!isCollapsed);
 
+  function sortCountries(countries: CountryFragment[]): CountryFragment[] {
+    return [...countries].sort((a, b) => a.country.localeCompare(b.country));
+  }
+
   return (
     <Card>
       <CardTitle
@@ -131,7 +135,7 @@ const CountryList: React.FC<CountryListProps> = props => {
             </TableRow>
             {!isCollapsed &&
               renderCollection(
-                countries,
+                sortCountries(countries),
                 (country, countryIndex) => (
                   <TableRow key={country ? country.code : "skeleton"}>
                     <TableCell className={classes.offsetCell}>
