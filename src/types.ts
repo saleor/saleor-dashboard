@@ -114,9 +114,7 @@ export interface PartialMutationProviderOutput<
   TData extends {} = {},
   TVariables extends {} = {}
 > {
-  opts: MutationResult<TData> & {
-    state: ConfirmButtonTransitionState;
-  };
+  opts: MutationResult<TData> & MutationResultAdditionalProps;
   mutate: (variables: TVariables) => void;
 }
 
@@ -170,4 +168,8 @@ export type TabActionDialog = "save-search" | "delete-search";
 
 export interface UserPermissionProps {
   userPermissions: User_permissions[];
+}
+
+export interface MutationResultAdditionalProps {
+  state: ConfirmButtonTransitionState;
 }

@@ -6,7 +6,11 @@ import urlJoin from "url-join";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
 import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
-import { PartialMutationProviderOutput, UserError } from "./types";
+import {
+  PartialMutationProviderOutput,
+  UserError,
+  MutationResultAdditionalProps
+} from "./types";
 import {
   AddressInput,
   AuthorizationKeyType,
@@ -250,9 +254,7 @@ export function getMutationStatus<
 
 export function getMutationProviderData<TData, TVariables>(
   mutateFn: MutationFunction<TData, TVariables>,
-  opts: MutationResult<TData> & {
-    state: ConfirmButtonTransitionState;
-  }
+  opts: MutationResult<TData> & MutationResultAdditionalProps
 ): PartialMutationProviderOutput<TData, TVariables> {
   return {
     mutate: variables => mutateFn({ variables }),

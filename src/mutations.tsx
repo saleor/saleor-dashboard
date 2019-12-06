@@ -7,14 +7,12 @@ import { useIntl } from "react-intl";
 import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
 import { maybe, getMutationStatus } from "./misc";
-import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
+import { MutationResultAdditionalProps } from "./types";
 
 export interface TypedMutationInnerProps<TData, TVariables> {
   children: (
     mutateFn: MutationFunction<TData, TVariables>,
-    result: MutationResult<TData> & {
-      state: ConfirmButtonTransitionState;
-    }
+    result: MutationResult<TData> & MutationResultAdditionalProps
   ) => React.ReactNode;
   onCompleted?: (data: TData) => void;
   onError?: (error: ApolloError) => void;
