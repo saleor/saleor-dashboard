@@ -239,7 +239,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
                     }
                   />
                   <OrderBulkCancelDialog
-                    confirmButtonState={orderBulkCancelOpts.state}
+                    confirmButtonState={orderBulkCancelOpts.status}
                     numberOfOrders={maybe(
                       () => params.ids.length.toString(),
                       "..."

@@ -68,7 +68,7 @@ export const ServiceCreate: React.FC<ServiceCreateProps> = ({ setToken }) => {
               onBack={handleBack}
               onSubmit={handleSubmit}
               permissions={maybe(() => shop.permissions)}
-              saveButtonBarState={serviceCreateOpts.state}
+              saveButtonBarState={serviceCreateOpts.status}
             />
           </>
         );

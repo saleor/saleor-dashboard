@@ -105,7 +105,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                     <WebhooksDetailsPage
                       disabled={webhookDetails.loading}
                       errors={formErrors}
-                      saveButtonBarState={webhookUpdateOpts.state}
+                      saveButtonBarState={webhookUpdateOpts.status}
                       webhook={maybe(() => webhookDetails.data.webhook)}
                       fetchServiceAccounts={searchServiceAccount}
                       services={maybe(() =>
@@ -134,7 +134,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                       }}
                     />
                     <WebhookDeleteDialog
-                      confirmButtonState={webhookDeleteOpts.state}
+                      confirmButtonState={webhookDeleteOpts.status}
                       name={maybe(
                         () => webhookDetails.data.webhook.name,
                         "..."

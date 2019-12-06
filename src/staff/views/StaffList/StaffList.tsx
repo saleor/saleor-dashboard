@@ -196,7 +196,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
                     onRowClick={id => () => navigate(staffMemberDetailsUrl(id))}
                   />
                   <StaffAddMemberDialog
-                    confirmButtonState={addStaffMemberData.state}
+                    confirmButtonState={addStaffMemberData.status}
                     errors={maybe(
                       () => addStaffMemberData.data.staffCreate.errors,
                       []

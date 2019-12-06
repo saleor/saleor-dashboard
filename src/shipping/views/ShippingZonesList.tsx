@@ -182,7 +182,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
 
                           <ActionDialog
                             open={params.action === "remove"}
-                            confirmButtonState={deleteShippingZoneOpts.state}
+                            confirmButtonState={deleteShippingZoneOpts.status}
                             variant="delete"
                             title={intl.formatMessage({
                               defaultMessage: "Delete Shipping Zone",
@@ -217,7 +217,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
                           <ActionDialog
                             open={params.action === "remove-many"}
                             confirmButtonState={
-                              bulkDeleteShippingZoneOpts.state
+                              bulkDeleteShippingZoneOpts.status
                             }
                             variant="delete"
                             title={intl.formatMessage({

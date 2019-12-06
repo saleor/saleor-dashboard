@@ -43,7 +43,7 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
           <PageDetailsPage
             disabled={pageCreateOpts.loading}
             errors={maybe(() => pageCreateOpts.data.pageCreate.errors, [])}
-            saveButtonBarState={pageCreateOpts.state}
+            saveButtonBarState={pageCreateOpts.status}
             page={null}
             onBack={() => navigate(pageListUrl())}
             onRemove={() => undefined}

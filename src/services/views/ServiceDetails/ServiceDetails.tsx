@@ -183,10 +183,10 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
                                 }
                                 permissions={maybe(() => shop.permissions)}
                                 service={maybe(() => data.serviceAccount)}
-                                saveButtonBarState={updateServiceOpts.state}
+                                saveButtonBarState={updateServiceOpts.status}
                               />
                               <ServiceDeleteDialog
-                                confirmButtonState={deleteServiceOpts.state}
+                                confirmButtonState={deleteServiceOpts.status}
                                 name={maybe(
                                   () => data.serviceAccount.name,
                                   "..."
@@ -196,7 +196,7 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
                                 open={params.action === "remove"}
                               />
                               <ServiceTokenCreateDialog
-                                confirmButtonState={createTokenOpts.state}
+                                confirmButtonState={createTokenOpts.status}
                                 onClose={closeModal}
                                 onCreate={handleTokenCreate}
                                 open={params.action === "create-token"}
@@ -207,7 +207,7 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
                                 )}
                               />
                               <ServiceTokenDeleteDialog
-                                confirmButtonState={deleteTokenOpts.state}
+                                confirmButtonState={deleteTokenOpts.status}
                                 name={maybe(() => {
                                   const token = data.serviceAccount.tokens.find(
                                     token => token.id === params.id

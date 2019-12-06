@@ -195,7 +195,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
                     maybe(() => params.ids.length > 0)
                   }
                   onClose={closeModal}
-                  confirmButtonState={bulkRemoveCustomersOpts.state}
+                  confirmButtonState={bulkRemoveCustomersOpts.status}
                   onConfirm={() =>
                     bulkRemoveCustomers({
                       variables: {

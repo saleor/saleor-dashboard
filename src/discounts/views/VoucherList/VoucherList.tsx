@@ -207,7 +207,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
                     }
                   />
                   <ActionDialog
-                    confirmButtonState={voucherBulkDeleteOpts.state}
+                    confirmButtonState={voucherBulkDeleteOpts.status}
                     onClose={closeModal}
                     onConfirm={onVoucherBulkDelete}
                     open={params.action === "remove" && canOpenBulkActionDialog}

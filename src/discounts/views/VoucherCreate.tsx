@@ -85,7 +85,7 @@ export const VoucherDetails: React.FC = () => {
                 }
               })
             }
-            saveButtonBarState={voucherCreateOpts.state}
+            saveButtonBarState={voucherCreateOpts.status}
           />
         </>
       )}

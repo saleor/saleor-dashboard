@@ -162,7 +162,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
             onValueDelete={id => openModal("remove-value", id)}
             onValueReorder={handleValueReorder}
             onValueUpdate={id => openModal("edit-value", id)}
-            saveButtonBarState={attributeCreateOpts.state}
+            saveButtonBarState={attributeCreateOpts.status}
             values={values.map((value, valueIndex) => ({
               __typename: "AttributeValue" as "AttributeValue",
               id: valueIndex.toString(),

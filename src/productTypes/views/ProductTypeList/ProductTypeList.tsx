@@ -203,7 +203,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
                     }
                   />
                   <ActionDialog
-                    confirmButtonState={productTypeBulkDeleteOpts.state}
+                    confirmButtonState={productTypeBulkDeleteOpts.status}
                     onClose={closeModal}
                     onConfirm={onProductTypeBulkDelete}
                     open={params.action === "remove"}

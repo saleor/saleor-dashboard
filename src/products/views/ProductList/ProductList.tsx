@@ -356,7 +356,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                         />
                         <ActionDialog
                           open={params.action === "delete"}
-                          confirmButtonState={productBulkDeleteOpts.state}
+                          confirmButtonState={productBulkDeleteOpts.status}
                           onClose={closeModal}
                           onConfirm={() =>
                             productBulkDelete({
@@ -386,7 +386,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                         </ActionDialog>
                         <ActionDialog
                           open={params.action === "publish"}
-                          confirmButtonState={productBulkPublishOpts.state}
+                          confirmButtonState={productBulkPublishOpts.status}
                           onClose={closeModal}
                           onConfirm={() =>
                             productBulkPublish({
@@ -418,7 +418,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                         </ActionDialog>
                         <ActionDialog
                           open={params.action === "unpublish"}
-                          confirmButtonState={productBulkPublishOpts.state}
+                          confirmButtonState={productBulkPublishOpts.status}
                           onClose={closeModal}
                           onConfirm={() =>
                             productBulkPublish({

@@ -220,7 +220,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                         errors={errors.formErrors}
                         pageTitle={maybe(() => data.productType.name)}
                         productType={maybe(() => data.productType)}
-                        saveButtonBarState={updateProductType.opts.state}
+                        saveButtonBarState={updateProductType.opts.status}
                         taxTypes={maybe(() => data.taxTypes, [])}
                         onAttributeAdd={type =>
                           navigate(
@@ -313,7 +313,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                                 edge => edge.node
                               )
                             )}
-                            confirmButtonState={assignAttribute.opts.state}
+                            confirmButtonState={assignAttribute.opts.status}
                             errors={maybe(
                               () =>
                                 assignAttribute.opts.data.attributeAssign.errors.map(
@@ -355,7 +355,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                           />
                         ))}
                       <ProductTypeDeleteDialog
-                        confirmButtonState={deleteProductType.opts.state}
+                        confirmButtonState={deleteProductType.opts.status}
                         name={maybe(() => data.productType.name, "...")}
                         open={params.action === "remove"}
                         onClose={() => navigate(productTypeUrl(id))}
@@ -363,7 +363,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                       />
                       <ProductTypeBulkAttributeUnassignDialog
                         attributeQuantity={maybe(() => params.ids.length)}
-                        confirmButtonState={unassignAttribute.opts.state}
+                        confirmButtonState={unassignAttribute.opts.status}
                         onClose={closeModal}
                         onConfirm={handleBulkAttributeUnassign}
                         open={params.action === "unassign-attributes"}
@@ -382,7 +382,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                               .name,
                           "..."
                         )}
-                        confirmButtonState={unassignAttribute.opts.state}
+                        confirmButtonState={unassignAttribute.opts.status}
                         onClose={closeModal}
                         onConfirm={handleAttributeUnassign}
                         open={params.action === "unassign-attribute"}

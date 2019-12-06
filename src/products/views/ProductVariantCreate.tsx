@@ -102,7 +102,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ productId }) => {
                     onBack={handleBack}
                     onSubmit={handleSubmit}
                     onVariantClick={handleVariantClick}
-                    saveButtonBarState={variantCreateResult.state}
+                    saveButtonBarState={variantCreateResult.status}
                   />
                 </>
               );

@@ -159,7 +159,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                         />
                         <MenuCreateDialog
                           open={params.action === "add"}
-                          confirmButtonState={menuCreateOpts.state}
+                          confirmButtonState={menuCreateOpts.status}
                           disabled={menuCreateOpts.loading}
                           onClose={closeModal}
                           onConfirm={formData =>
@@ -171,7 +171,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                         <ActionDialog
                           open={params.action === "remove"}
                           onClose={closeModal}
-                          confirmButtonState={menuDeleteOpts.state}
+                          confirmButtonState={menuDeleteOpts.status}
                           onConfirm={() =>
                             menuDelete({
                               variables: {
@@ -208,7 +208,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                             maybe(() => params.ids.length > 0)
                           }
                           onClose={closeModal}
-                          confirmButtonState={menuBulkDeleteOpts.state}
+                          confirmButtonState={menuBulkDeleteOpts.status}
                           onConfirm={() =>
                             menuBulkDelete({
                               variables: {

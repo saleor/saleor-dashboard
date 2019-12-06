@@ -203,7 +203,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
                     }
                   />
                   <ActionDialog
-                    confirmButtonState={saleBulkDeleteOpts.state}
+                    confirmButtonState={saleBulkDeleteOpts.status}
                     onClose={closeModal}
                     onConfirm={onSaleBulkDelete}
                     open={params.action === "remove" && canOpenBulkActionDialog}

@@ -233,7 +233,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
               products={maybe(() =>
                 data.category.products.edges.map(edge => edge.node)
               )}
-              saveButtonBarState={updateResult.state}
+              saveButtonBarState={updateResult.status}
               subcategories={maybe(() =>
                 data.category.children.edges.map(edge => edge.node)
               )}
@@ -259,7 +259,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
               toggleAll={toggleAll}
             />
             <ActionDialog
-              confirmButtonState={deleteResult.state}
+              confirmButtonState={deleteResult.status}
               onClose={closeModal}
               onConfirm={() => deleteCategory({ variables: { id } })}
               open={params.action === "delete"}
@@ -288,7 +288,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                 params.action === "delete-categories" &&
                 maybe(() => params.ids.length > 0)
               }
-              confirmButtonState={categoryBulkDeleteOpts.state}
+              confirmButtonState={categoryBulkDeleteOpts.status}
               onClose={closeModal}
               onConfirm={() =>
                 categoryBulkDelete({
@@ -318,7 +318,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             </ActionDialog>
             <ActionDialog
               open={params.action === "delete-products"}
-              confirmButtonState={productBulkDeleteOpts.state}
+              confirmButtonState={productBulkDeleteOpts.status}
               onClose={closeModal}
               onConfirm={() =>
                 productBulkDelete({

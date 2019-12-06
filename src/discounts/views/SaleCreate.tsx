@@ -64,7 +64,7 @@ export const SaleDetails: React.FC = () => {
                 }
               })
             }
-            saveButtonBarState={saleCreateOpts.state}
+            saveButtonBarState={saleCreateOpts.status}
           />
         </>
       )}

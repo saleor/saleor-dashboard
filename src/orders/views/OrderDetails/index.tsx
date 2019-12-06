@@ -463,7 +463,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           orderNumber={maybe(() => order.number)}
                         />
                         <OrderDraftFinalizeDialog
-                          confirmButtonState={orderDraftFinalize.opts.state}
+                          confirmButtonState={orderDraftFinalize.opts.status}
                           onClose={closeModal}
                           onConfirm={() => orderDraftFinalize.mutate({ id })}
                           open={params.action === "finalize"}

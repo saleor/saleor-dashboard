@@ -228,7 +228,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                         maybe(() => params.ids.length > 0)
                       }
                       onClose={closeModal}
-                      confirmButtonState={collectionBulkPublishOpts.state}
+                      confirmButtonState={collectionBulkPublishOpts.status}
                       onConfirm={() =>
                         collectionBulkPublish({
                           variables: {
@@ -261,7 +261,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                         maybe(() => params.ids.length > 0)
                       }
                       onClose={closeModal}
-                      confirmButtonState={collectionBulkPublishOpts.state}
+                      confirmButtonState={collectionBulkPublishOpts.status}
                       onConfirm={() =>
                         collectionBulkPublish({
                           variables: {
@@ -294,7 +294,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                         maybe(() => params.ids.length > 0)
                       }
                       onClose={closeModal}
-                      confirmButtonState={collectionBulkDeleteOpts.state}
+                      confirmButtonState={collectionBulkDeleteOpts.status}
                       onConfirm={() =>
                         collectionBulkDelete({
                           variables: {

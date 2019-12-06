@@ -114,7 +114,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                   disabled={pluginDetails.loading}
                   errors={formErrors}
                   saveButtonBarState={
-                    !params.action ? pluginUpdateOpts.state : "default"
+                    !params.action ? pluginUpdateOpts.status : "default"
                   }
                   plugin={maybe(() => pluginDetails.data.plugin)}
                   onBack={() => navigate(pluginsListUrl())}
@@ -139,7 +139,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                   <>
                     <ActionDialog
                       confirmButtonState={
-                        !!params.action ? pluginUpdateOpts.state : "default"
+                        !!params.action ? pluginUpdateOpts.status : "default"
                       }
                       onClose={closeModal}
                       open={params.action === "clear" && !!params.field}
@@ -155,7 +155,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                     </ActionDialog>
                     <PluginSecretFieldDialog
                       confirmButtonState={
-                        !!params.action ? pluginUpdateOpts.state : "default"
+                        !!params.action ? pluginUpdateOpts.status : "default"
                       }
                       field={maybe(() =>
                         pluginDetails.data.plugin.configuration.find(

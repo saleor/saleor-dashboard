@@ -50,7 +50,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
         })}
       />
       <CategoryCreatePage
-        saveButtonBarState={createCategoryResult.state}
+        saveButtonBarState={createCategoryResult.status}
         errors={errors}
         disabled={createCategoryResult.loading}
         onBack={() =>

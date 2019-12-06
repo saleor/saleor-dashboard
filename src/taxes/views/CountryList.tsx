@@ -63,7 +63,7 @@ export const CountryList: React.FC = () => {
                     })
                   }
                   onTaxFetch={fetchTaxes}
-                  saveButtonBarState={updateTaxSettingsOpts.state}
+                  saveButtonBarState={updateTaxSettingsOpts.status}
                   shop={maybe(() => ({
                     ...data.shop,
                     countries: data.shop.countries.filter(

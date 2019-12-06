@@ -83,7 +83,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = () => {
               )}
               onBack={handleBack}
               onSubmit={handleSubmit}
-              saveButtonBarState={webhookCreateOpts.state}
+              saveButtonBarState={webhookCreateOpts.status}
             />
           </>
         );

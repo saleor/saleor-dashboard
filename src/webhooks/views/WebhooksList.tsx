@@ -176,7 +176,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
                     onRowClick={id => () => navigate(webhooksUrl(id))}
                   />
                   <WebhookDeleteDialog
-                    confirmButtonState={webhookDeleteOpts.state}
+                    confirmButtonState={webhookDeleteOpts.status}
                     name={maybe(
                       () =>
                         data.webhooks.edges.find(

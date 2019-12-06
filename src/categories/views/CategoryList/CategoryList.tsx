@@ -193,7 +193,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         }
       />
       <ActionDialog
-        confirmButtonState={categoryBulkDeleteOpts.state}
+        confirmButtonState={categoryBulkDeleteOpts.status}
         onClose={() =>
           navigate(
             categoryListUrl({

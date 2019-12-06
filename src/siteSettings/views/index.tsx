@@ -189,7 +189,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                             })
                           }
                           onSubmit={handleUpdateShopSettings}
-                          saveButtonBarState={updateShopSettingsOpts.state}
+                          saveButtonBarState={updateShopSettingsOpts.status}
                         />
                         <SiteSettingsKeyDialog
                           errors={maybe(

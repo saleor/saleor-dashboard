@@ -61,7 +61,7 @@ function makeMutation<TData, TVariables>(
       mutateFn,
       {
         ...result,
-        state: getMutationStatus(result)
+        status: getMutationStatus(result)
       }
     ];
   }

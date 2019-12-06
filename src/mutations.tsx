@@ -60,7 +60,7 @@ export function TypedMutation<TData, TVariables>(
           <>
             {children(mutateFn, {
               ...result,
-              state: getMutationStatus(result)
+              status: getMutationStatus(result)
             })}
           </>
         )}

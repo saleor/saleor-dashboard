@@ -136,7 +136,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
               )}
               onBack={handleBack}
               onSubmit={handleSubmit}
-              saveButtonBarState={productCreateOpts.state}
+              saveButtonBarState={productCreateOpts.status}
               fetchMoreCategories={{
                 hasMore: maybe(
                   () => searchCategoryOpts.data.search.pageInfo.hasNextPage

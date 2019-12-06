@@ -171,5 +171,5 @@ export interface UserPermissionProps {
 }
 
 export interface MutationResultAdditionalProps {
-  state: ConfirmButtonTransitionState;
+  status: ConfirmButtonTransitionState;
 }

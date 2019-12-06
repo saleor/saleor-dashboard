@@ -158,7 +158,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                     <ActionDialog
                       open={params.action === "publish"}
                       onClose={closeModal}
-                      confirmButtonState={bulkPagePublishOpts.state}
+                      confirmButtonState={bulkPagePublishOpts.status}
                       onConfirm={() =>
                         bulkPagePublish({
                           variables: {
@@ -188,7 +188,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                     <ActionDialog
                       open={params.action === "unpublish"}
                       onClose={closeModal}
-                      confirmButtonState={bulkPagePublishOpts.state}
+                      confirmButtonState={bulkPagePublishOpts.status}
                       onConfirm={() =>
                         bulkPagePublish({
                           variables: {
@@ -216,7 +216,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                     <ActionDialog
                       open={params.action === "remove"}
                       onClose={closeModal}
-                      confirmButtonState={bulkPageRemoveOpts.state}
+                      confirmButtonState={bulkPageRemoveOpts.status}
                       onConfirm={() =>
                         bulkPageRemove({
                           variables: {

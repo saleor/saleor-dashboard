@@ -89,7 +89,7 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
                 }
                 languages={maybe(() => shop.languages, [])}
                 languageCode={languageCode}
-                saveButtonState={updateTranslationsOpts.state}
+                saveButtonState={updateTranslationsOpts.status}
                 onBack={() =>
                   navigate(
                     languageEntitiesUrl(languageCode, {

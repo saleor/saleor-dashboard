@@ -42,7 +42,7 @@ const ShippingZoneCreate: React.FC<{}> = () => {
               }
             })
           }
-          saveButtonBarState={createShippingZoneOpts.state}
+          saveButtonBarState={createShippingZoneOpts.status}
         />
       )}
     </TypedCreateShippingZone>

@@ -95,7 +95,7 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
                 }
                 languageCode={languageCode}
                 languages={maybe(() => shop.languages, [])}
-                saveButtonState={updateTranslationsOpts.state}
+                saveButtonState={updateTranslationsOpts.status}
                 onEdit={onEdit}
                 onDiscard={onDiscard}
                 onBack={() =>

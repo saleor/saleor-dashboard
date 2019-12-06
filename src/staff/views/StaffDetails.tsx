@@ -177,7 +177,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 }
                                 permissions={maybe(() => shop.permissions)}
                                 staffMember={maybe(() => data.user)}
-                                saveButtonBarState={updateResult.state}
+                                saveButtonBarState={updateResult.status}
                               />
                               <ActionDialog
                                 open={params.action === "remove"}
@@ -185,7 +185,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                   defaultMessage: "delete Staff User",
                                   description: "dialog header"
                                 })}
-                                confirmButtonState={deleteResult.state}
+                                confirmButtonState={deleteResult.status}
                                 variant="delete"
                                 onClose={closeModal}
                                 onConfirm={deleteStaffMember}
@@ -205,7 +205,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                   defaultMessage: "Delete Staff User Avatar",
                                   description: "dialog header"
                                 })}
-                                confirmButtonState={deleteAvatarResult.state}
+                                confirmButtonState={deleteAvatarResult.status}
                                 variant="delete"
                                 onClose={closeModal}
                                 onConfirm={deleteStaffAvatar}
@@ -224,7 +224,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 </DialogContentText>
                               </ActionDialog>
                               <StaffPasswordResetDialog
-                                confirmButtonState={changePasswordOpts.state}
+                                confirmButtonState={changePasswordOpts.status}
                                 errors={maybe(
                                   () =>
                                     changePasswordOpts.data.passwordChange

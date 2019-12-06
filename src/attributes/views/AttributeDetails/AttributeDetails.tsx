@@ -207,7 +207,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                         openModal("edit-value", id)
                                       }
                                       saveButtonBarState={
-                                        attributeUpdateOpts.state
+                                        attributeUpdateOpts.status
                                       }
                                       values={maybe(
                                         () => data.attribute.values
@@ -220,7 +220,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                         "..."
                                       )}
                                       confirmButtonState={
-                                        attributeDeleteOpts.state
+                                        attributeDeleteOpts.status
                                       }
                                       onClose={closeModal}
                                       onConfirm={() =>
@@ -246,7 +246,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                       )}
                                       useName={true}
                                       confirmButtonState={
-                                        attributeValueDeleteOpts.state
+                                        attributeValueDeleteOpts.status
                                       }
                                       onClose={closeModal}
                                       onConfirm={() =>
@@ -260,7 +260,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                     <AttributeValueEditDialog
                                       attributeValue={null}
                                       confirmButtonState={
-                                        attributeValueCreateOpts.state
+                                        attributeValueCreateOpts.status
                                       }
                                       disabled={loading}
                                       errors={maybe(
@@ -287,7 +287,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                         )
                                       )}
                                       confirmButtonState={
-                                        attributeValueUpdateOpts.state
+                                        attributeValueUpdateOpts.status
                                       }
                                       disabled={loading}
                                       errors={maybe(

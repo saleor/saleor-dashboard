@@ -102,7 +102,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                   <WindowTitle title={maybe(() => data.productVariant.name)} />
                   <ProductVariantPage
                     errors={errors}
-                    saveButtonBarState={updateVariant.opts.state}
+                    saveButtonBarState={updateVariant.opts.status}
                     loading={disableFormSave}
                     placeholderImage={placeholderImg}
                     variant={variant}
@@ -138,7 +138,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                     }}
                   />
                   <ProductVariantDeleteDialog
-                    confirmButtonState={deleteVariant.opts.state}
+                    confirmButtonState={deleteVariant.opts.status}
                     onClose={() =>
                       navigate(productVariantEditUrl(productId, variantId))
                     }

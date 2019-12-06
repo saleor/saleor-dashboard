@@ -85,7 +85,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
                       }
                       onRowClick={handleImageClick}
                       onSubmit={handleUpdate}
-                      saveButtonBarState={updateResult.state}
+                      saveButtonBarState={updateResult.status}
                     />
                     <ActionDialog
                       onClose={() =>
@@ -98,7 +98,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
                         description: "dialog header"
                       })}
                       variant="delete"
-                      confirmButtonState={deleteResult.state}
+                      confirmButtonState={deleteResult.status}
                     >
                       <DialogContentText>
                         <FormattedMessage defaultMessage="Are you sure you want to delete this image?" />

@@ -170,22 +170,24 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
                     })
                   )
                 }
-                saveButtonBarState={ops.shippingZoneUpdate.opts.state}
+                saveButtonBarState={ops.shippingZoneUpdate.opts.status}
                 shippingZone={maybe(() => data.shippingZone)}
               />
               <ShippingZoneDetailsDialogs
-                assignCountryTransitionState={ops.shippingZoneUpdate.opts.state}
-                createRateTransitionState={ops.shippingRateCreate.opts.state}
-                deleteRateTransitionState={ops.shippingRateDelete.opts.state}
-                deleteZoneTransitionState={ops.shippingZoneDelete.opts.state}
+                assignCountryTransitionState={
+                  ops.shippingZoneUpdate.opts.status
+                }
+                createRateTransitionState={ops.shippingRateCreate.opts.status}
+                deleteRateTransitionState={ops.shippingRateDelete.opts.status}
+                deleteZoneTransitionState={ops.shippingZoneDelete.opts.status}
                 id={id}
                 ops={ops}
                 params={params}
                 shippingZone={maybe(() => data.shippingZone)}
                 unassignCountryTransitionState={
-                  ops.shippingZoneUpdate.opts.state
+                  ops.shippingZoneUpdate.opts.status
                 }
-                updateRateTransitionState={ops.shippingRateUpdate.opts.state}
+                updateRateTransitionState={ops.shippingRateUpdate.opts.status}
               />
             </>
           )}

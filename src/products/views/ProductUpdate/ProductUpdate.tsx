@@ -293,7 +293,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                   <ActionDialog
                     open={params.action === "remove"}
                     onClose={() => navigate(productUrl(id), true)}
-                    confirmButtonState={deleteProduct.opts.state}
+                    confirmButtonState={deleteProduct.opts.status}
                     onConfirm={() => deleteProduct.mutate({ id })}
                     variant="delete"
                     title={intl.formatMessage({
@@ -314,7 +314,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                   <ActionDialog
                     open={params.action === "remove-variants"}
                     onClose={() => navigate(productUrl(id), true)}
-                    confirmButtonState={bulkProductVariantDelete.opts.state}
+                    confirmButtonState={bulkProductVariantDelete.opts.status}
                     onConfirm={() =>
                       bulkProductVariantDelete.mutate({
                         ids: params.ids

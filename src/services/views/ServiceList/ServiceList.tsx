@@ -180,7 +180,7 @@ export const ServiceList: React.FC<ServiceListProps> = ({ params }) => {
                     onRemove={handleRemove}
                   />
                   <ServiceDeleteDialog
-                    confirmButtonState={deleteServiceOpts.state}
+                    confirmButtonState={deleteServiceOpts.status}
                     name={maybe(
                       () =>
                         data.serviceAccounts.edges.find(

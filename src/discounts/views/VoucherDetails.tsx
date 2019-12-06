@@ -355,7 +355,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 })
                               }
                               onRemove={() => openModal("remove")}
-                              saveButtonBarState={voucherUpdateOpts.state}
+                              saveButtonBarState={voucherUpdateOpts.status}
                               categoryListToolbar={
                                 <Button
                                   color="primary"
@@ -415,7 +415,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                   )
                               )}
                               confirmButtonState={
-                                voucherCataloguesAddOpts.state
+                                voucherCataloguesAddOpts.status
                               }
                               open={params.action === "assign-category"}
                               onFetch={searchCategories}
@@ -444,7 +444,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                   )
                               )}
                               confirmButtonState={
-                                voucherCataloguesAddOpts.state
+                                voucherCataloguesAddOpts.status
                               }
                               open={params.action === "assign-collection"}
                               onFetch={searchCollections}
@@ -465,7 +465,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               }
                             />
                             <DiscountCountrySelectDialog
-                              confirmButtonState={voucherUpdateOpts.state}
+                              confirmButtonState={voucherUpdateOpts.status}
                               countries={maybe(() => shop.countries, [])}
                               onClose={() => navigate(voucherUrl(id))}
                               onConfirm={formData =>
@@ -489,7 +489,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             />
                             <AssignProductDialog
                               confirmButtonState={
-                                voucherCataloguesAddOpts.state
+                                voucherCataloguesAddOpts.status
                               }
                               open={params.action === "assign-product"}
                               onFetch={searchProducts}
@@ -527,7 +527,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 description: "dialog header"
                               })}
                               confirmButtonState={
-                                voucherCataloguesRemoveOpts.state
+                                voucherCataloguesRemoveOpts.status
                               }
                               onClose={closeModal}
                               onConfirm={() =>
@@ -560,7 +560,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 description: "dialog header"
                               })}
                               confirmButtonState={
-                                voucherCataloguesRemoveOpts.state
+                                voucherCataloguesRemoveOpts.status
                               }
                               onClose={closeModal}
                               onConfirm={() =>
@@ -593,7 +593,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 description: "dialog header"
                               })}
                               confirmButtonState={
-                                voucherCataloguesRemoveOpts.state
+                                voucherCataloguesRemoveOpts.status
                               }
                               onClose={closeModal}
                               onConfirm={() =>
@@ -621,7 +621,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 defaultMessage: "Delete Voucher",
                                 description: "dialog header"
                               })}
-                              confirmButtonState={voucherDeleteOpts.state}
+                              confirmButtonState={voucherDeleteOpts.status}
                               onClose={closeModal}
                               variant="delete"
                               onConfirm={() =>

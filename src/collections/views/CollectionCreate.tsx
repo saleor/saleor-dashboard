@@ -70,7 +70,7 @@ export const CollectionCreate: React.FC = () => {
                 }
               })
             }
-            saveButtonBarState={createCollectionOpts.state}
+            saveButtonBarState={createCollectionOpts.status}
           />
         </>
       )}

@@ -180,7 +180,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
                   }
                 />
                 <AttributeBulkDeleteDialog
-                  confirmButtonState={attributeBulkDeleteOpts.state}
+                  confirmButtonState={attributeBulkDeleteOpts.status}
                   open={
                     params.action === "remove" &&
                     maybe(() => params.ids.length > 0)

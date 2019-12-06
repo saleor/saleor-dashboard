@@ -82,7 +82,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                     errors={maybe(
                       () => updateCustomerOpts.data.customerUpdate.errors
                     )}
-                    saveButtonBar={updateCustomerOpts.state}
+                    saveButtonBar={updateCustomerOpts.status}
                     onAddressManageClick={() =>
                       navigate(customerAddressesUrl(id))
                     }
@@ -118,7 +118,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                     }
                   />
                   <ActionDialog
-                    confirmButtonState={removeCustomerOpts.state}
+                    confirmButtonState={removeCustomerOpts.status}
                     onClose={() => navigate(customerUrl(id), true)}
                     onConfirm={() => removeCustomer()}
                     title={intl.formatMessage({

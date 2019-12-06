@@ -217,7 +217,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                     }
                   />
                   <ActionDialog
-                    confirmButtonState={orderDraftBulkDeleteOpts.state}
+                    confirmButtonState={orderDraftBulkDeleteOpts.status}
                     onClose={closeModal}
                     onConfirm={onOrderDraftBulkDelete}
                     open={params.action === "remove"}

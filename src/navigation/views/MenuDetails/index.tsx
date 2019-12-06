@@ -195,12 +195,12 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                           )
                         }
                         onSubmit={handleSubmit}
-                        saveButtonState={menuUpdateOpts.state}
+                        saveButtonState={menuUpdateOpts.status}
                       />
                       <ActionDialog
                         open={params.action === "remove"}
                         onClose={closeModal}
-                        confirmButtonState={menuDeleteOpts.state}
+                        confirmButtonState={menuDeleteOpts.status}
                         onConfirm={() => menuDelete({ variables: { id } })}
                         variant="delete"
                         title={intl.formatMessage({
@@ -255,7 +255,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                                 categorySearch.result.loading ||
                                 collectionSearch.result.loading
                               }
-                              confirmButtonState={menuItemCreateOpts.state}
+                              confirmButtonState={menuItemCreateOpts.status}
                               disabled={menuItemCreateOpts.loading}
                               onClose={closeModal}
                               onSubmit={handleSubmit}
@@ -316,7 +316,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                                 categorySearch.result.loading ||
                                 collectionSearch.result.loading
                               }
-                              confirmButtonState={menuItemUpdateOpts.state}
+                              confirmButtonState={menuItemUpdateOpts.status}
                               disabled={menuItemUpdateOpts.loading}
                               onClose={closeModal}
                               onSubmit={handleSubmit}

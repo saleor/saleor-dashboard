@@ -66,7 +66,7 @@ export const ProductTypeCreate: React.FC = () => {
                     description: "header",
                     id: "productTypeCreatePageHeader"
                   })}
-                  saveButtonBarState={createProductTypeOpts.state}
+                  saveButtonBarState={createProductTypeOpts.status}
                   taxTypes={maybe(() => data.taxTypes, [])}
                   onBack={() => navigate(productTypeListUrl())}
                   onSubmit={handleCreate}

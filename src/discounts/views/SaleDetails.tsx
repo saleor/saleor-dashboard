@@ -280,7 +280,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 })
                               }
                               onRemove={() => openModal("remove")}
-                              saveButtonBarState={saleUpdateOpts.state}
+                              saveButtonBarState={saleUpdateOpts.status}
                               categoryListToolbar={
                                 <Button
                                   color="primary"
@@ -332,7 +332,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               toggleAll={toggleAll}
                             />
                             <AssignProductDialog
-                              confirmButtonState={saleCataloguesAddOpts.state}
+                              confirmButtonState={saleCataloguesAddOpts.status}
                               open={params.action === "assign-product"}
                               onFetch={searchProducts}
                               loading={searchProductsOpts.loading}
@@ -366,7 +366,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                     suggestedCategory => suggestedCategory.id
                                   )
                               )}
-                              confirmButtonState={saleCataloguesAddOpts.state}
+                              confirmButtonState={saleCataloguesAddOpts.status}
                               open={params.action === "assign-category"}
                               onFetch={searchCategories}
                               loading={searchCategoriesOpts.loading}
@@ -393,7 +393,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                     suggestedCategory => suggestedCategory.id
                                   )
                               )}
-                              confirmButtonState={saleCataloguesAddOpts.state}
+                              confirmButtonState={saleCataloguesAddOpts.status}
                               open={params.action === "assign-collection"}
                               onFetch={searchCollections}
                               loading={searchCollectionsOpts.loading}
@@ -422,7 +422,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 description: "dialog header"
                               })}
                               confirmButtonState={
-                                saleCataloguesRemoveOpts.state
+                                saleCataloguesRemoveOpts.status
                               }
                               onClose={closeModal}
                               onConfirm={() =>
@@ -455,7 +455,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 description: "dialog header"
                               })}
                               confirmButtonState={
-                                saleCataloguesRemoveOpts.state
+                                saleCataloguesRemoveOpts.status
                               }
                               onClose={closeModal}
                               onConfirm={() =>
@@ -487,7 +487,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 description: "dialog header"
                               })}
                               confirmButtonState={
-                                saleCataloguesRemoveOpts.state
+                                saleCataloguesRemoveOpts.status
                               }
                               onClose={closeModal}
                               onConfirm={() =>
@@ -515,7 +515,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 defaultMessage: "Delete Sale",
                                 description: "dialog header"
                               })}
-                              confirmButtonState={saleDeleteOpts.state}
+                              confirmButtonState={saleDeleteOpts.status}
                               onClose={closeModal}
                               variant="delete"
                               onConfirm={() =>

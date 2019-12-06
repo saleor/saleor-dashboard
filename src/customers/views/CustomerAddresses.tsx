@@ -129,7 +129,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                             <CustomerAddressDialog
                               address={undefined}
                               confirmButtonState={
-                                createCustomerAddressOpts.state
+                                createCustomerAddressOpts.status
                               }
                               countries={countryChoices}
                               errors={maybe(
@@ -157,7 +157,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                                 )
                               )}
                               confirmButtonState={
-                                updateCustomerAddressOpts.state
+                                updateCustomerAddressOpts.status
                               }
                               countries={countryChoices}
                               errors={maybe(
@@ -186,7 +186,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                                 description: "dialog header"
                               })}
                               confirmButtonState={
-                                removeCustomerAddressOpts.state
+                                removeCustomerAddressOpts.status
                               }
                               onClose={closeModal}
                               onConfirm={() =>

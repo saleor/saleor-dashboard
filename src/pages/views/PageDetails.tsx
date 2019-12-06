@@ -67,7 +67,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
                       () => pageUpdateOpts.data.pageUpdate.errors,
                       []
                     )}
-                    saveButtonBarState={pageUpdateOpts.state}
+                    saveButtonBarState={pageUpdateOpts.status}
                     page={maybe(() => pageDetails.data.page)}
                     onBack={() => navigate(pageListUrl())}
                     onRemove={() =>
@@ -88,7 +88,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
                   />
                   <ActionDialog
                     open={params.action === "remove"}
-                    confirmButtonState={pageRemoveOpts.state}
+                    confirmButtonState={pageRemoveOpts.status}
                     title={intl.formatMessage({
                       defaultMessage: "Delete Page",
                       description: "dialog header"

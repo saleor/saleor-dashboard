@@ -263,7 +263,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                     toggleAll={toggleAll}
                   />
                   <AssignProductDialog
-                    confirmButtonState={assignProduct.opts.state}
+                    confirmButtonState={assignProduct.opts.status}
                     open={params.action === "assign"}
                     onFetch={search}
                     loading={result.loading}
@@ -282,7 +282,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                     )}
                   />
                   <ActionDialog
-                    confirmButtonState={removeCollection.opts.state}
+                    confirmButtonState={removeCollection.opts.status}
                     onClose={closeModal}
                     onConfirm={() => removeCollection.mutate({ id })}
                     open={params.action === "remove"}
@@ -306,7 +306,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                     </DialogContentText>
                   </ActionDialog>
                   <ActionDialog
-                    confirmButtonState={unassignProduct.opts.state}
+                    confirmButtonState={unassignProduct.opts.status}
                     onClose={closeModal}
                     onConfirm={() =>
                       unassignProduct.mutate({
@@ -334,7 +334,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                     </DialogContentText>
                   </ActionDialog>
                   <ActionDialog
-                    confirmButtonState={updateCollection.opts.state}
+                    confirmButtonState={updateCollection.opts.status}
                     onClose={closeModal}
                     onConfirm={() =>
                       updateCollection.mutate({
