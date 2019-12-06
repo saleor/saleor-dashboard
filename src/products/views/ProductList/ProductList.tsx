@@ -25,6 +25,7 @@ import { maybe } from "@saleor/misc";
 import { ProductListVariables } from "@saleor/products/types/ProductList";
 import { ListViews } from "@saleor/types";
 import { getSortUrlVariables } from "@saleor/utils/sort";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -39,11 +40,11 @@ import { productBulkPublish } from "../../types/productBulkPublish";
 import {
   productAddUrl,
   productListUrl,
-  ProductListUrlDialog,
   ProductListUrlFilters,
   ProductListUrlQueryParams,
   ProductListUrlSortField,
-  productUrl
+  productUrl,
+  ProductListUrlDialog
 } from "../../urls";
 import {
   areFiltersApplied,
@@ -97,15 +98,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const closeModal = () =>
-    navigate(
-      productListUrl({
-        ...params,
-        action: undefined,
-        ids: undefined
-      }),
-      true
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductListUrlDialog,
+    ProductListUrlQueryParams
+  >(navigate, productListUrl, params);
 
   const changeFilters = (filters: ProductListUrlFilters) => {
     reset();
@@ -122,15 +118,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       })
     );
   };
-
-  const openModal = (action: ProductListUrlDialog, ids?: string[]) =>
-    navigate(
-      productListUrl({
-        ...params,
-        action,
-        ids
-      })
-    );
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -311,7 +298,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                               <Button
                                 color="primary"
                                 onClick={() =>
-                                  openModal("unpublish", listElements)
+                                  openModal("unpublish", {
+                                    ids: listElements
+                                  })
                                 }
                               >
                                 <FormattedMessage
@@ -322,7 +311,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                               <Button
                                 color="primary"
                                 onClick={() =>
-                                  openModal("publish", listElements)
+                                  openModal("publish", {
+                                    ids: listElements
+                                  })
                                 }
                               >
                                 <FormattedMessage
@@ -333,7 +324,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                               <IconButton
                                 color="primary"
                                 onClick={() =>
-                                  openModal("delete", listElements)
+                                  openModal("delete", {
+                                    ids: listElements
+                                  })
                                 }
                               >
                                 <DeleteIcon />

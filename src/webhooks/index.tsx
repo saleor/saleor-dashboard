@@ -7,10 +7,11 @@ import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
-  webhooksAddUrl,
-  webhooksListPath,
+  webhookAddUrl,
+  webhookListPath,
   WebhookListUrlQueryParams,
-  webhooksPath,
+  webhookPath,
+  WebhookUrlQueryParams,
   WebhookListUrlSortField
 } from "./urls";
 import WebhookCreate from "./views/WebhooksCreate";
@@ -29,7 +30,7 @@ const WebhookList: React.FC<RouteComponentProps<any>> = ({ location }) => {
 
 const WebhookDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: WebhookListUrlQueryParams = qs;
+  const params: WebhookUrlQueryParams = qs;
 
   return (
     <WebhooksDetails id={decodeURIComponent(match.params.id)} params={params} />
@@ -42,9 +43,9 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.webhooks)} />
       <Switch>
-        <Route exact path={webhooksListPath} component={WebhookList} />
-        <Route exact path={webhooksAddUrl} component={WebhookCreate} />
-        <Route path={webhooksPath(":id")} component={WebhookDetails} />
+        <Route exact path={webhookListPath} component={WebhookList} />
+        <Route exact path={webhookAddUrl} component={WebhookCreate} />
+        <Route path={webhookPath(":id")} component={WebhookDetails} />
       </Switch>
     </>
   );

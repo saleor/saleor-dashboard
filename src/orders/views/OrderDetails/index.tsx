@@ -5,6 +5,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { customerUrl } from "../../../customers/urls";
 import { getMutationState, maybe, transformAddressToForm } from "../../../misc";
 import { productUrl } from "../../../products/urls";
@@ -31,8 +32,8 @@ import { OrderDetails_order } from "../../types/OrderDetails";
 import {
   orderListUrl,
   orderUrl,
-  OrderUrlDialog,
-  OrderUrlQueryParams
+  OrderUrlQueryParams,
+  OrderUrlDialog
 } from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 
@@ -97,13 +98,11 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     >
       {({ data, loading }) => {
         const order = maybe(() => data.order);
-        const closeModal = () => navigate(orderUrl(id), true);
-        const openModal = (action: OrderUrlDialog) =>
-          navigate(
-            orderUrl(id, {
-              action
-            })
-          );
+        const [openModal, closeModal] = createDialogActionHandlers<
+          OrderUrlDialog,
+          OrderUrlQueryParams
+        >(navigate, params => orderUrl(id, params), params);
+
         return (
           <OrderDetailsMessages>
             {orderMessages => (

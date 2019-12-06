@@ -12,11 +12,7 @@ import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import PluginsListPage from "../../components/PluginsListPage/PluginsListPage";
 import { usePluginsListQuery } from "../../queries";
-import {
-  PluginListUrlQueryParams,
-  pluginListUrl,
-  pluginsUrl
-} from "../../urls";
+import { PluginListUrlQueryParams, pluginListUrl, pluginUrl } from "../../urls";
 import { getSortQueryVariables } from "./sort";
 
 interface PluginsListProps {
@@ -65,7 +61,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
         onPreviousPage={loadPreviousPage}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
-        onRowClick={id => () => navigate(pluginsUrl(id))}
+        onRowClick={id => () => navigate(pluginUrl(id))}
       />
     </>
   );

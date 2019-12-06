@@ -21,6 +21,7 @@ import { ServiceDelete } from "@saleor/services/types/ServiceDelete";
 import { ServiceTokenCreate } from "@saleor/services/types/ServiceTokenCreate";
 import { ServiceTokenDelete } from "@saleor/services/types/ServiceTokenDelete";
 import { ServiceUpdate } from "@saleor/services/types/ServiceUpdate";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import ServiceDetailsPage, {
   ServiceDetailsPageFormData
 } from "../../components/ServiceDetailsPage";
@@ -52,24 +53,10 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
 
   React.useEffect(() => onTokenClose, []);
 
-  const closeModal = () =>
-    navigate(
-      serviceUrl(id, {
-        ...params,
-        action: undefined,
-        id: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: ServiceUrlDialog, tokenId?: string) =>
-    navigate(
-      serviceUrl(id, {
-        ...params,
-        action,
-        id: tokenId
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ServiceUrlDialog,
+    ServiceUrlQueryParams
+  >(navigate, params => serviceUrl(id, params), params);
 
   const onServiceUpdate = (data: ServiceUpdate) => {
     if (maybe(() => data.serviceAccountUpdate.errors.length === 0)) {
@@ -170,7 +157,11 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
                               <ServiceDetailsPage
                                 apiUri={API_URI}
                                 disabled={loading}
-                                errors={[]}
+                                errors={maybe(
+                                  () =>
+                                    updateServiceOpts.data.serviceAccountUpdate
+                                      .errors
+                                )}
                                 token={token}
                                 onApiUriClick={() => open(API_URI, "blank")}
                                 onBack={handleBack}
@@ -179,7 +170,9 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
                                 onTokenClose={onTokenClose}
                                 onTokenCreate={() => openModal("create-token")}
                                 onTokenDelete={id =>
-                                  openModal("remove-token", id)
+                                  openModal("remove-token", {
+                                    id
+                                  })
                                 }
                                 permissions={maybe(() => shop.permissions)}
                                 service={maybe(() => data.serviceAccount)}

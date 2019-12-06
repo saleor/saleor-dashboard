@@ -28,7 +28,7 @@ import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
 import { taxSection } from "@saleor/taxes/urls";
 import { PermissionEnum } from "@saleor/types/globalTypes";
-import { webhooksListUrl } from "@saleor/webhooks/urls";
+import { webhookListUrl } from "@saleor/webhooks/urls";
 import ConfigurationPage, { MenuSection } from "./ConfigurationPage";
 
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
@@ -171,7 +171,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <Webhooks fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_WEBHOOKS,
           title: intl.formatMessage(sectionNames.webhooks),
-          url: webhooksListUrl()
+          url: webhookListUrl()
         }
       ]
     }

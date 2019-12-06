@@ -20,6 +20,7 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
 import { decimal, joinDateTime, maybe } from "../../misc";
@@ -42,8 +43,8 @@ import { SaleUpdate } from "../types/SaleUpdate";
 import {
   saleListUrl,
   saleUrl,
-  SaleUrlDialog,
-  SaleUrlQueryParams
+  SaleUrlQueryParams,
+  SaleUrlDialog
 } from "../urls";
 
 interface SaleDetailsProps {
@@ -114,24 +115,10 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     }
   };
 
-  const closeModal = () =>
-    navigate(
-      saleUrl(id, {
-        ...params,
-        action: undefined,
-        ids: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: SaleUrlDialog, ids?: string[]) =>
-    navigate(
-      saleUrl(id, {
-        ...params,
-        action,
-        ids
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    SaleUrlDialog,
+    SaleUrlQueryParams
+  >(navigate, params => saleUrl(id, params), params);
 
   const handleCatalogueAdd = (data: SaleCataloguesAdd) => {
     if (data.saleCataloguesAdd.errors.length === 0) {
@@ -285,7 +272,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 <Button
                                   color="primary"
                                   onClick={() =>
-                                    openModal("unassign-category", listElements)
+                                    openModal("unassign-category", {
+                                      ids: listElements
+                                    })
                                   }
                                 >
                                   <FormattedMessage
@@ -299,10 +288,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 <Button
                                   color="primary"
                                   onClick={() =>
-                                    openModal(
-                                      "unassign-collection",
-                                      listElements
-                                    )
+                                    openModal("unassign-collection", {
+                                      ids: listElements
+                                    })
                                   }
                                 >
                                   <FormattedMessage
@@ -316,7 +304,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 <Button
                                   color="primary"
                                   onClick={() =>
-                                    openModal("unassign-product", listElements)
+                                    openModal("unassign-product", {
+                                      ids: listElements
+                                    })
                                   }
                                 >
                                   <FormattedMessage
