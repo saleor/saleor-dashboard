@@ -232,9 +232,27 @@ export function getMutationState(
   return "default";
 }
 
+interface SaleorMutationResult {
+  errors?: UserError[];
+}
+export function getMutationStatus<
+  TData extends Record<string, SaleorMutationResult | any>
+>(opts: MutationResult<TData>): ConfirmButtonTransitionState {
+  const errors = opts.data
+    ? Object.values(opts.data).reduce(
+        (acc: UserError[], mut) => [...acc, ...maybe(() => mut.errors, [])],
+        []
+      )
+    : [];
+
+  return getMutationState(opts.called, opts.loading, errors);
+}
+
 export function getMutationProviderData<TData, TVariables>(
   mutateFn: MutationFunction<TData, TVariables>,
-  opts: MutationResult<TData>
+  opts: MutationResult<TData> & {
+    state: ConfirmButtonTransitionState;
+  }
 ): PartialMutationProviderOutput<TData, TVariables> {
   return {
     mutate: variables => mutateFn({ variables }),

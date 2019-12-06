@@ -3,6 +3,7 @@ import { MutationResult } from "react-apollo";
 import { User_permissions } from "./auth/types/User";
 import { FilterContentSubmitData } from "./components/Filter";
 import { Filter } from "./components/TableFilter";
+import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
 
 export interface UserError {
   field: string;
@@ -113,7 +114,9 @@ export interface PartialMutationProviderOutput<
   TData extends {} = {},
   TVariables extends {} = {}
 > {
-  opts: MutationResult<TData>;
+  opts: MutationResult<TData> & {
+    state: ConfirmButtonTransitionState;
+  };
   mutate: (variables: TVariables) => void;
 }
 

@@ -8,12 +8,15 @@ import {
 import { useIntl } from "react-intl";
 
 import { commonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
+import { maybe, getMutationStatus } from "@saleor/misc";
+import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import useNotifier from "./useNotifier";
 
 export type UseMutation<TData, TVariables> = [
   MutationFunction<TData, TVariables>,
-  MutationResult<TData>
+  MutationResult<TData> & {
+    state: ConfirmButtonTransitionState;
+  }
 ];
 export type UseMutationCbs<TData> = Partial<{
   onCompleted: (data: TData) => void;
@@ -56,7 +59,13 @@ function makeMutation<TData, TVariables>(
       }
     });
 
-    return [mutateFn, result];
+    return [
+      mutateFn,
+      {
+        ...result,
+        state: getMutationStatus(result)
+      }
+    ];
   }
 
   return useMutation;
