@@ -5,7 +5,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import ProductImagePage from "../components/ProductImagePage";
 import {
   TypedProductImageDeleteMutation,
@@ -68,16 +68,6 @@ export const ProductImage: React.FC<ProductImageProps> = ({
                 };
                 const image = data && data.product && data.product.mainImage;
 
-                const formTransitionState = getMutationState(
-                  updateResult.called,
-                  updateResult.loading,
-                  maybe(() => updateResult.data.productImageUpdate.errors)
-                );
-                const deleteTransitionState = getMutationState(
-                  deleteResult.called,
-                  deleteResult.loading,
-                  []
-                );
                 return (
                   <>
                     <ProductImagePage
@@ -95,7 +85,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
                       }
                       onRowClick={handleImageClick}
                       onSubmit={handleUpdate}
-                      saveButtonBarState={formTransitionState}
+                      saveButtonBarState={updateResult.state}
                     />
                     <ActionDialog
                       onClose={() =>
@@ -108,7 +98,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
                         description: "dialog header"
                       })}
                       variant="delete"
-                      confirmButtonState={deleteTransitionState}
+                      confirmButtonState={deleteResult.state}
                     >
                       <DialogContentText>
                         <FormattedMessage defaultMessage="Are you sure you want to delete this image?" />

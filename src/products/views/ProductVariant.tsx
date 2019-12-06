@@ -6,7 +6,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { decimal, getMutationState, maybe } from "../../misc";
+import { decimal, maybe } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage, {
   ProductVariantPageSubmitData
@@ -77,19 +77,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                 updateVariant.opts.loading ||
                 assignImage.opts.loading ||
                 unassignImage.opts.loading;
-              const formTransitionState = getMutationState(
-                updateVariant.opts.called,
-                updateVariant.opts.loading,
-                maybe(
-                  () =>
-                    updateVariant.opts.data.productVariantUpdate.productErrors
-                )
-              );
-              const removeTransitionState = getMutationState(
-                deleteVariant.opts.called,
-                deleteVariant.opts.loading,
-                maybe(() => deleteVariant.opts.data.productVariantDelete.errors)
-              );
+
               const handleImageSelect = (id: string) => () => {
                 if (variant) {
                   if (
@@ -114,7 +102,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                   <WindowTitle title={maybe(() => data.productVariant.name)} />
                   <ProductVariantPage
                     errors={errors}
-                    saveButtonBarState={formTransitionState}
+                    saveButtonBarState={updateVariant.opts.state}
                     loading={disableFormSave}
                     placeholderImage={placeholderImg}
                     variant={variant}
@@ -150,7 +138,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                     }}
                   />
                   <ProductVariantDeleteDialog
-                    confirmButtonState={removeTransitionState}
+                    confirmButtonState={deleteVariant.opts.state}
                     onClose={() =>
                       navigate(productVariantEditUrl(productId, variantId))
                     }

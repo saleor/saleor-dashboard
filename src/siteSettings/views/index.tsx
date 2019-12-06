@@ -7,7 +7,7 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import { useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../configuration";
-import { findInEnum, getMutationState, maybe } from "../../misc";
+import { findInEnum, maybe } from "../../misc";
 import { AuthorizationKeyType, CountryCode } from "../../types/globalTypes";
 import SiteSettingsKeyDialog, {
   SiteSettingsKeyDialogForm
@@ -166,24 +166,6 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                       });
                     };
 
-                    const formTransitionState = getMutationState(
-                      updateShopSettingsOpts.called,
-                      updateShopSettingsOpts.loading,
-                      [
-                        ...maybe(
-                          () =>
-                            updateShopSettingsOpts.data.shopDomainUpdate.errors,
-                          []
-                        ),
-                        ...maybe(
-                          () =>
-                            updateShopSettingsOpts.data.shopSettingsUpdate
-                              .errors,
-                          []
-                        )
-                      ]
-                    );
-
                     return (
                       <>
                         <WindowTitle
@@ -207,7 +189,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                             })
                           }
                           onSubmit={handleUpdateShopSettings}
-                          saveButtonBarState={formTransitionState}
+                          saveButtonBarState={updateShopSettingsOpts.state}
                         />
                         <SiteSettingsKeyDialog
                           errors={maybe(

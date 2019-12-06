@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "../../../misc";
+import { maybe } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
 import { TypedShippingZone } from "../../queries";
@@ -91,143 +91,104 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     >
       {ops => (
         <TypedShippingZone variables={{ id }}>
-          {({ data, loading }) => {
-            const formTransitionState = getMutationState(
-              ops.shippingZoneUpdate.opts.called,
-              ops.shippingZoneUpdate.opts.loading,
-              maybe(
-                () => ops.shippingZoneUpdate.opts.data.shippingZoneUpdate.errors
-              )
-            );
-            const createRateTransitionState = getMutationState(
-              ops.shippingRateCreate.opts.called,
-              ops.shippingRateCreate.opts.loading,
-              maybe(
-                () =>
-                  ops.shippingRateCreate.opts.data.shippingPriceCreate.errors
-              )
-            );
-            const deleteRateTransitionState = getMutationState(
-              ops.shippingRateDelete.opts.called,
-              ops.shippingRateDelete.opts.loading,
-              maybe(
-                () =>
-                  ops.shippingRateDelete.opts.data.shippingPriceDelete.errors
-              )
-            );
-            const updateRateTransitionState = getMutationState(
-              ops.shippingRateUpdate.opts.called,
-              ops.shippingRateUpdate.opts.loading,
-              maybe(
-                () =>
-                  ops.shippingRateUpdate.opts.data.shippingPriceUpdate.errors
-              )
-            );
-            const deleteZoneTransitionState = getMutationState(
-              ops.shippingZoneDelete.opts.called,
-              ops.shippingZoneDelete.opts.loading,
-              maybe(
-                () => ops.shippingZoneDelete.opts.data.shippingZoneDelete.errors
-              )
-            );
-
-            return (
-              <>
-                <ShippingZoneDetailsPage
-                  disabled={loading}
-                  errors={maybe(
-                    () =>
-                      ops.shippingZoneUpdate.opts.data.shippingZoneUpdate.errors
-                  )}
-                  onBack={() => navigate(shippingZonesListUrl())}
-                  onCountryAdd={() =>
-                    navigate(
-                      shippingZoneUrl(id, {
-                        action: "assign-country"
-                      })
-                    )
-                  }
-                  onCountryRemove={code =>
-                    navigate(
-                      shippingZoneUrl(id, {
-                        action: "unassign-country",
-                        id: code
-                      })
-                    )
-                  }
-                  onDelete={() =>
-                    navigate(
-                      shippingZoneUrl(id, {
-                        action: "remove"
-                      })
-                    )
-                  }
-                  onPriceRateAdd={() =>
-                    navigate(
-                      shippingZoneUrl(id, {
-                        action: "add-rate",
-                        type: ShippingMethodTypeEnum.PRICE
-                      })
-                    )
-                  }
-                  onPriceRateEdit={rateId =>
-                    navigate(
-                      shippingZoneUrl(id, {
-                        action: "edit-rate",
-                        id: rateId
-                      })
-                    )
-                  }
-                  onRateRemove={rateId =>
-                    navigate(
-                      shippingZoneUrl(id, {
-                        action: "remove-rate",
-                        id: rateId
-                      })
-                    )
-                  }
-                  onSubmit={formData =>
-                    ops.shippingZoneUpdate.mutate({
-                      id,
-                      input: {
-                        name: formData.name
-                      }
+          {({ data, loading }) => (
+            <>
+              <ShippingZoneDetailsPage
+                disabled={loading}
+                errors={maybe(
+                  () =>
+                    ops.shippingZoneUpdate.opts.data.shippingZoneUpdate.errors
+                )}
+                onBack={() => navigate(shippingZonesListUrl())}
+                onCountryAdd={() =>
+                  navigate(
+                    shippingZoneUrl(id, {
+                      action: "assign-country"
                     })
-                  }
-                  onWeightRateAdd={() =>
-                    navigate(
-                      shippingZoneUrl(id, {
-                        action: "add-rate",
-                        type: ShippingMethodTypeEnum.WEIGHT
-                      })
-                    )
-                  }
-                  onWeightRateEdit={rateId =>
-                    navigate(
-                      shippingZoneUrl(id, {
-                        action: "edit-rate",
-                        id: rateId
-                      })
-                    )
-                  }
-                  saveButtonBarState={formTransitionState}
-                  shippingZone={maybe(() => data.shippingZone)}
-                />
-                <ShippingZoneDetailsDialogs
-                  assignCountryTransitionState={formTransitionState}
-                  createRateTransitionState={createRateTransitionState}
-                  deleteRateTransitionState={deleteRateTransitionState}
-                  deleteZoneTransitionState={deleteZoneTransitionState}
-                  id={id}
-                  ops={ops}
-                  params={params}
-                  shippingZone={maybe(() => data.shippingZone)}
-                  unassignCountryTransitionState={formTransitionState}
-                  updateRateTransitionState={updateRateTransitionState}
-                />
-              </>
-            );
-          }}
+                  )
+                }
+                onCountryRemove={code =>
+                  navigate(
+                    shippingZoneUrl(id, {
+                      action: "unassign-country",
+                      id: code
+                    })
+                  )
+                }
+                onDelete={() =>
+                  navigate(
+                    shippingZoneUrl(id, {
+                      action: "remove"
+                    })
+                  )
+                }
+                onPriceRateAdd={() =>
+                  navigate(
+                    shippingZoneUrl(id, {
+                      action: "add-rate",
+                      type: ShippingMethodTypeEnum.PRICE
+                    })
+                  )
+                }
+                onPriceRateEdit={rateId =>
+                  navigate(
+                    shippingZoneUrl(id, {
+                      action: "edit-rate",
+                      id: rateId
+                    })
+                  )
+                }
+                onRateRemove={rateId =>
+                  navigate(
+                    shippingZoneUrl(id, {
+                      action: "remove-rate",
+                      id: rateId
+                    })
+                  )
+                }
+                onSubmit={formData =>
+                  ops.shippingZoneUpdate.mutate({
+                    id,
+                    input: {
+                      name: formData.name
+                    }
+                  })
+                }
+                onWeightRateAdd={() =>
+                  navigate(
+                    shippingZoneUrl(id, {
+                      action: "add-rate",
+                      type: ShippingMethodTypeEnum.WEIGHT
+                    })
+                  )
+                }
+                onWeightRateEdit={rateId =>
+                  navigate(
+                    shippingZoneUrl(id, {
+                      action: "edit-rate",
+                      id: rateId
+                    })
+                  )
+                }
+                saveButtonBarState={ops.shippingZoneUpdate.opts.state}
+                shippingZone={maybe(() => data.shippingZone)}
+              />
+              <ShippingZoneDetailsDialogs
+                assignCountryTransitionState={ops.shippingZoneUpdate.opts.state}
+                createRateTransitionState={ops.shippingRateCreate.opts.state}
+                deleteRateTransitionState={ops.shippingRateDelete.opts.state}
+                deleteZoneTransitionState={ops.shippingZoneDelete.opts.state}
+                id={id}
+                ops={ops}
+                params={params}
+                shippingZone={maybe(() => data.shippingZone)}
+                unassignCountryTransitionState={
+                  ops.shippingZoneUpdate.opts.state
+                }
+                updateRateTransitionState={ops.shippingRateUpdate.opts.state}
+              />
+            </>
+          )}
         </TypedShippingZone>
       )}
     </ShippingZoneOperations>

@@ -10,7 +10,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
 import { WebhookDelete } from "@saleor/webhooks/types/WebhookDelete";
@@ -150,12 +150,6 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
                 });
               };
 
-              const deleteTransitionState = getMutationState(
-                webhookDeleteOpts.called,
-                webhookDeleteOpts.loading,
-                maybe(() => webhookDeleteOpts.data.webhookDelete.errors)
-              );
-
               return (
                 <>
                   <WebhooksListPage
@@ -182,7 +176,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
                     onRowClick={id => () => navigate(webhooksUrl(id))}
                   />
                   <WebhookDeleteDialog
-                    confirmButtonState={deleteTransitionState}
+                    confirmButtonState={webhookDeleteOpts.state}
                     name={maybe(
                       () =>
                         data.webhooks.edges.find(

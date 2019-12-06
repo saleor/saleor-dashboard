@@ -18,7 +18,7 @@ import { APP_MOUNT_URI } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import StaffAddMemberDialog, {
   FormData as AddStaffMemberForm
@@ -158,11 +158,6 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
                     }
                   }
                 });
-              const addTransitionState = getMutationState(
-                addStaffMemberData.called,
-                addStaffMemberData.loading,
-                maybe(() => addStaffMemberData.data.staffCreate.errors)
-              );
 
               const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
                 maybe(() => data.staffUsers.pageInfo),
@@ -201,7 +196,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
                     onRowClick={id => () => navigate(staffMemberDetailsUrl(id))}
                   />
                   <StaffAddMemberDialog
-                    confirmButtonState={addTransitionState}
+                    confirmButtonState={addStaffMemberData.state}
                     errors={maybe(
                       () => addStaffMemberData.data.staffCreate.errors,
                       []

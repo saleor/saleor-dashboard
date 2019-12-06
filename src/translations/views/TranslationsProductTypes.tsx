@@ -114,9 +114,9 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
 
                 const saveButtonState = getMutationState(
                   updateAttributeTranslationsOpts.called ||
-                    updateAttributeTranslationsOpts.called,
+                    updateAttributeValueTranslationsOpts.called,
                   updateAttributeTranslationsOpts.loading ||
-                    updateAttributeTranslationsOpts.loading,
+                    updateAttributeValueTranslationsOpts.loading,
                   maybe(
                     () =>
                       updateAttributeTranslationsOpts.data.attributeTranslate

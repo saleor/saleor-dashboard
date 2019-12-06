@@ -8,7 +8,7 @@ import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import { WebhookCreate as WebhookCreateData } from "@saleor/webhooks/types/WebhookCreate";
 import React from "react";
 import { useIntl } from "react-intl";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import WebhookCreatePage, { FormData } from "../components/WebhookCreatePage";
 import { TypedWebhookCreate } from "../mutations";
 import {
@@ -63,12 +63,6 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = () => {
             }
           });
 
-        const formTransitionState = getMutationState(
-          webhookCreateOpts.called,
-          webhookCreateOpts.loading,
-          maybe(() => webhookCreateOpts.data.webhookCreate.webhookErrors)
-        );
-
         return (
           <>
             <WindowTitle
@@ -89,7 +83,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = () => {
               )}
               onBack={handleBack}
               onSubmit={handleSubmit}
-              saveButtonBarState={formTransitionState}
+              saveButtonBarState={webhookCreateOpts.state}
             />
           </>
         );

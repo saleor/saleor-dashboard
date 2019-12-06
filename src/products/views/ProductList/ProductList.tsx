@@ -21,7 +21,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ProductListVariables } from "@saleor/products/types/ProductList";
 import { ListViews } from "@saleor/types";
 import { getSortUrlVariables } from "@saleor/utils/sort";
@@ -216,281 +216,256 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                   <TypedProductBulkPublishMutation
                     onCompleted={handleBulkPublish}
                   >
-                    {(productBulkPublish, productBulkPublishOpts) => {
-                      const bulkDeleteMutationState = getMutationState(
-                        productBulkDeleteOpts.called,
-                        productBulkDeleteOpts.loading,
-                        maybe(
-                          () =>
-                            productBulkDeleteOpts.data.productBulkDelete.errors
-                        )
-                      );
-
-                      const bulkPublishMutationState = getMutationState(
-                        productBulkPublishOpts.called,
-                        productBulkPublishOpts.loading,
-                        maybe(
-                          () =>
-                            productBulkPublishOpts.data.productBulkPublish
-                              .errors
-                        )
-                      );
-
-                      return (
-                        <>
-                          <ProductListPage
-                            activeAttributeSortId={params.attributeId}
-                            sort={{
-                              asc: params.asc,
-                              sort: params.sort
-                            }}
-                            onSort={handleSort}
-                            availableInGridAttributes={maybe(
-                              () =>
-                                attributes.data.availableInGrid.edges.map(
-                                  edge => edge.node
-                                ),
-                              []
-                            )}
-                            currencySymbol={currencySymbol}
-                            currentTab={currentTab}
-                            defaultSettings={
-                              defaultListSettings[ListViews.PRODUCT_LIST]
-                            }
-                            gridAttributes={maybe(
-                              () =>
-                                attributes.data.grid.edges.map(
-                                  edge => edge.node
-                                ),
-                              []
-                            )}
-                            totalGridAttributes={maybe(
-                              () => attributes.data.availableInGrid.totalCount,
-                              0
-                            )}
-                            settings={settings}
-                            loading={attributes.loading}
-                            hasMore={maybe(
-                              () =>
-                                attributes.data.availableInGrid.pageInfo
-                                  .hasNextPage,
-                              false
-                            )}
-                            filtersList={createFilterChips(
-                              params,
-                              {
-                                currencySymbol,
-                                locale
+                    {(productBulkPublish, productBulkPublishOpts) => (
+                      <>
+                        <ProductListPage
+                          activeAttributeSortId={params.attributeId}
+                          sort={{
+                            asc: params.asc,
+                            sort: params.sort
+                          }}
+                          onSort={handleSort}
+                          availableInGridAttributes={maybe(
+                            () =>
+                              attributes.data.availableInGrid.edges.map(
+                                edge => edge.node
+                              ),
+                            []
+                          )}
+                          currencySymbol={currencySymbol}
+                          currentTab={currentTab}
+                          defaultSettings={
+                            defaultListSettings[ListViews.PRODUCT_LIST]
+                          }
+                          gridAttributes={maybe(
+                            () =>
+                              attributes.data.grid.edges.map(edge => edge.node),
+                            []
+                          )}
+                          totalGridAttributes={maybe(
+                            () => attributes.data.availableInGrid.totalCount,
+                            0
+                          )}
+                          settings={settings}
+                          loading={attributes.loading}
+                          hasMore={maybe(
+                            () =>
+                              attributes.data.availableInGrid.pageInfo
+                                .hasNextPage,
+                            false
+                          )}
+                          filtersList={createFilterChips(
+                            params,
+                            {
+                              currencySymbol,
+                              locale
+                            },
+                            changeFilterField,
+                            intl
+                          )}
+                          onAdd={() => navigate(productAddUrl)}
+                          disabled={loading}
+                          products={maybe(() =>
+                            data.products.edges.map(edge => edge.node)
+                          )}
+                          onFetchMore={() =>
+                            attributes.loadMore(
+                              (prev, next) => {
+                                if (
+                                  prev.availableInGrid.pageInfo.endCursor ===
+                                  next.availableInGrid.pageInfo.endCursor
+                                ) {
+                                  return prev;
+                                }
+                                return {
+                                  ...prev,
+                                  availableInGrid: {
+                                    ...prev.availableInGrid,
+                                    edges: [
+                                      ...prev.availableInGrid.edges,
+                                      ...next.availableInGrid.edges
+                                    ],
+                                    pageInfo: next.availableInGrid.pageInfo
+                                  }
+                                };
                               },
-                              changeFilterField,
-                              intl
-                            )}
-                            onAdd={() => navigate(productAddUrl)}
-                            disabled={loading}
-                            products={maybe(() =>
-                              data.products.edges.map(edge => edge.node)
-                            )}
-                            onFetchMore={() =>
-                              attributes.loadMore(
-                                (prev, next) => {
-                                  if (
-                                    prev.availableInGrid.pageInfo.endCursor ===
-                                    next.availableInGrid.pageInfo.endCursor
-                                  ) {
-                                    return prev;
-                                  }
-                                  return {
-                                    ...prev,
-                                    availableInGrid: {
-                                      ...prev.availableInGrid,
-                                      edges: [
-                                        ...prev.availableInGrid.edges,
-                                        ...next.availableInGrid.edges
-                                      ],
-                                      pageInfo: next.availableInGrid.pageInfo
-                                    }
-                                  };
-                                },
-                                {
-                                  after:
-                                    attributes.data.availableInGrid.pageInfo
-                                      .endCursor
+                              {
+                                after:
+                                  attributes.data.availableInGrid.pageInfo
+                                    .endCursor
+                              }
+                            )
+                          }
+                          onNextPage={loadNextPage}
+                          onPreviousPage={loadPreviousPage}
+                          onUpdateListSettings={updateListSettings}
+                          pageInfo={pageInfo}
+                          onRowClick={id => () => navigate(productUrl(id))}
+                          onAll={() =>
+                            changeFilters({
+                              status: undefined
+                            })
+                          }
+                          toolbar={
+                            <>
+                              <Button
+                                color="primary"
+                                onClick={() =>
+                                  openModal("unpublish", listElements)
                                 }
-                              )
-                            }
-                            onNextPage={loadNextPage}
-                            onPreviousPage={loadPreviousPage}
-                            onUpdateListSettings={updateListSettings}
-                            pageInfo={pageInfo}
-                            onRowClick={id => () => navigate(productUrl(id))}
-                            onAll={() =>
-                              changeFilters({
-                                status: undefined
-                              })
-                            }
-                            toolbar={
-                              <>
-                                <Button
-                                  color="primary"
-                                  onClick={() =>
-                                    openModal("unpublish", listElements)
-                                  }
-                                >
-                                  <FormattedMessage
-                                    defaultMessage="Unpublish"
-                                    description="unpublish product, button"
-                                  />
-                                </Button>
-                                <Button
-                                  color="primary"
-                                  onClick={() =>
-                                    openModal("publish", listElements)
-                                  }
-                                >
-                                  <FormattedMessage
-                                    defaultMessage="Publish"
-                                    description="publish product, button"
-                                  />
-                                </Button>
-                                <IconButton
-                                  color="primary"
-                                  onClick={() =>
-                                    openModal("delete", listElements)
-                                  }
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </>
-                            }
-                            isChecked={isSelected}
-                            selected={listElements.length}
-                            toggle={toggle}
-                            toggleAll={toggleAll}
-                            onSearchChange={query =>
-                              changeFilterField({ query })
-                            }
-                            onFilterAdd={filter =>
-                              changeFilterField(createFilter(filter))
-                            }
-                            onTabSave={() => openModal("save-search")}
-                            onTabDelete={() => openModal("delete-search")}
-                            onTabChange={handleTabChange}
-                            initialSearch={params.query || ""}
-                            tabs={getFilterTabs().map(tab => tab.name)}
-                          />
-                          <ActionDialog
-                            open={params.action === "delete"}
-                            confirmButtonState={bulkDeleteMutationState}
-                            onClose={closeModal}
-                            onConfirm={() =>
-                              productBulkDelete({
-                                variables: { ids: params.ids }
-                              })
-                            }
-                            title={intl.formatMessage({
-                              defaultMessage: "Delete Products",
-                              description: "dialog header"
-                            })}
-                            variant="delete"
-                          >
-                            <DialogContentText>
-                              <FormattedMessage
-                                defaultMessage="Are you sure you want to delete {counter,plural,one{this product} other{{displayQuantity} products}}?"
-                                description="dialog content"
-                                values={{
-                                  counter: maybe(() => params.ids.length),
-                                  displayQuantity: (
-                                    <strong>
-                                      {maybe(() => params.ids.length)}
-                                    </strong>
-                                  )
-                                }}
-                              />
-                            </DialogContentText>
-                          </ActionDialog>
-                          <ActionDialog
-                            open={params.action === "publish"}
-                            confirmButtonState={bulkPublishMutationState}
-                            onClose={closeModal}
-                            onConfirm={() =>
-                              productBulkPublish({
-                                variables: {
-                                  ids: params.ids,
-                                  isPublished: true
+                              >
+                                <FormattedMessage
+                                  defaultMessage="Unpublish"
+                                  description="unpublish product, button"
+                                />
+                              </Button>
+                              <Button
+                                color="primary"
+                                onClick={() =>
+                                  openModal("publish", listElements)
                                 }
-                              })
-                            }
-                            title={intl.formatMessage({
-                              defaultMessage: "Publish Products",
-                              description: "dialog header"
-                            })}
-                          >
-                            <DialogContentText>
-                              <FormattedMessage
-                                defaultMessage="Are you sure you want to publish {counter,plural,one{this product} other{{displayQuantity} products}}?"
-                                description="dialog content"
-                                values={{
-                                  counter: maybe(() => params.ids.length),
-                                  displayQuantity: (
-                                    <strong>
-                                      {maybe(() => params.ids.length)}
-                                    </strong>
-                                  )
-                                }}
-                              />
-                            </DialogContentText>
-                          </ActionDialog>
-                          <ActionDialog
-                            open={params.action === "unpublish"}
-                            confirmButtonState={bulkPublishMutationState}
-                            onClose={closeModal}
-                            onConfirm={() =>
-                              productBulkPublish({
-                                variables: {
-                                  ids: params.ids,
-                                  isPublished: false
+                              >
+                                <FormattedMessage
+                                  defaultMessage="Publish"
+                                  description="publish product, button"
+                                />
+                              </Button>
+                              <IconButton
+                                color="primary"
+                                onClick={() =>
+                                  openModal("delete", listElements)
                                 }
-                              })
-                            }
-                            title={intl.formatMessage({
-                              defaultMessage: "Unpublish Products",
-                              description: "dialog header"
-                            })}
-                          >
-                            <DialogContentText>
-                              <FormattedMessage
-                                defaultMessage="Are you sure you want to unpublish {counter,plural,one{this product} other{{displayQuantity} products}}?"
-                                description="dialog content"
-                                values={{
-                                  counter: maybe(() => params.ids.length),
-                                  displayQuantity: (
-                                    <strong>
-                                      {maybe(() => params.ids.length)}
-                                    </strong>
-                                  )
-                                }}
-                              />
-                            </DialogContentText>
-                          </ActionDialog>
-                          <SaveFilterTabDialog
-                            open={params.action === "save-search"}
-                            confirmButtonState="default"
-                            onClose={closeModal}
-                            onSubmit={handleFilterTabSave}
-                          />
-                          <DeleteFilterTabDialog
-                            open={params.action === "delete-search"}
-                            confirmButtonState="default"
-                            onClose={closeModal}
-                            onSubmit={handleFilterTabDelete}
-                            tabName={maybe(
-                              () => tabs[currentTab - 1].name,
-                              "..."
-                            )}
-                          />
-                        </>
-                      );
-                    }}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </>
+                          }
+                          isChecked={isSelected}
+                          selected={listElements.length}
+                          toggle={toggle}
+                          toggleAll={toggleAll}
+                          onSearchChange={query => changeFilterField({ query })}
+                          onFilterAdd={filter =>
+                            changeFilterField(createFilter(filter))
+                          }
+                          onTabSave={() => openModal("save-search")}
+                          onTabDelete={() => openModal("delete-search")}
+                          onTabChange={handleTabChange}
+                          initialSearch={params.query || ""}
+                          tabs={getFilterTabs().map(tab => tab.name)}
+                        />
+                        <ActionDialog
+                          open={params.action === "delete"}
+                          confirmButtonState={productBulkDeleteOpts.state}
+                          onClose={closeModal}
+                          onConfirm={() =>
+                            productBulkDelete({
+                              variables: { ids: params.ids }
+                            })
+                          }
+                          title={intl.formatMessage({
+                            defaultMessage: "Delete Products",
+                            description: "dialog header"
+                          })}
+                          variant="delete"
+                        >
+                          <DialogContentText>
+                            <FormattedMessage
+                              defaultMessage="Are you sure you want to delete {counter,plural,one{this product} other{{displayQuantity} products}}?"
+                              description="dialog content"
+                              values={{
+                                counter: maybe(() => params.ids.length),
+                                displayQuantity: (
+                                  <strong>
+                                    {maybe(() => params.ids.length)}
+                                  </strong>
+                                )
+                              }}
+                            />
+                          </DialogContentText>
+                        </ActionDialog>
+                        <ActionDialog
+                          open={params.action === "publish"}
+                          confirmButtonState={productBulkPublishOpts.state}
+                          onClose={closeModal}
+                          onConfirm={() =>
+                            productBulkPublish({
+                              variables: {
+                                ids: params.ids,
+                                isPublished: true
+                              }
+                            })
+                          }
+                          title={intl.formatMessage({
+                            defaultMessage: "Publish Products",
+                            description: "dialog header"
+                          })}
+                        >
+                          <DialogContentText>
+                            <FormattedMessage
+                              defaultMessage="Are you sure you want to publish {counter,plural,one{this product} other{{displayQuantity} products}}?"
+                              description="dialog content"
+                              values={{
+                                counter: maybe(() => params.ids.length),
+                                displayQuantity: (
+                                  <strong>
+                                    {maybe(() => params.ids.length)}
+                                  </strong>
+                                )
+                              }}
+                            />
+                          </DialogContentText>
+                        </ActionDialog>
+                        <ActionDialog
+                          open={params.action === "unpublish"}
+                          confirmButtonState={productBulkPublishOpts.state}
+                          onClose={closeModal}
+                          onConfirm={() =>
+                            productBulkPublish({
+                              variables: {
+                                ids: params.ids,
+                                isPublished: false
+                              }
+                            })
+                          }
+                          title={intl.formatMessage({
+                            defaultMessage: "Unpublish Products",
+                            description: "dialog header"
+                          })}
+                        >
+                          <DialogContentText>
+                            <FormattedMessage
+                              defaultMessage="Are you sure you want to unpublish {counter,plural,one{this product} other{{displayQuantity} products}}?"
+                              description="dialog content"
+                              values={{
+                                counter: maybe(() => params.ids.length),
+                                displayQuantity: (
+                                  <strong>
+                                    {maybe(() => params.ids.length)}
+                                  </strong>
+                                )
+                              }}
+                            />
+                          </DialogContentText>
+                        </ActionDialog>
+                        <SaveFilterTabDialog
+                          open={params.action === "save-search"}
+                          confirmButtonState="default"
+                          onClose={closeModal}
+                          onSubmit={handleFilterTabSave}
+                        />
+                        <DeleteFilterTabDialog
+                          open={params.action === "delete-search"}
+                          confirmButtonState="default"
+                          onClose={closeModal}
+                          onSubmit={handleFilterTabDelete}
+                          tabName={maybe(
+                            () => tabs[currentTab - 1].name,
+                            "..."
+                          )}
+                        />
+                      </>
+                    )}
                   </TypedProductBulkPublishMutation>
                 )}
               </TypedProductBulkDeleteMutation>

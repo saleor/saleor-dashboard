@@ -14,7 +14,7 @@ import SaveFilterTabDialog, {
 } from "@saleor/components/SaveFilterTabDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ServiceDeleteMutation } from "@saleor/services/mutations";
 import { ServiceDelete } from "@saleor/services/types/ServiceDelete";
 import { ListViews } from "@saleor/types";
@@ -154,12 +154,6 @@ export const ServiceList: React.FC<ServiceListProps> = ({ params }) => {
                   }
                 });
 
-              const removeTransitionState = getMutationState(
-                deleteServiceOpts.called,
-                deleteServiceOpts.loading,
-                maybe(() => deleteServiceOpts.data.serviceAccountDelete.errors)
-              );
-
               return (
                 <>
                   <ServiceListPage
@@ -186,7 +180,7 @@ export const ServiceList: React.FC<ServiceListProps> = ({ params }) => {
                     onRemove={handleRemove}
                   />
                   <ServiceDeleteDialog
-                    confirmButtonState={removeTransitionState}
+                    confirmButtonState={deleteServiceOpts.state}
                     name={maybe(
                       () =>
                         data.serviceAccounts.edges.find(

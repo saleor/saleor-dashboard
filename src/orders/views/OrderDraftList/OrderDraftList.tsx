@@ -16,7 +16,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import OrderDraftListPage from "../../components/OrderDraftListPage";
 import {
@@ -167,14 +167,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
             onCompleted={handleOrderDraftBulkCancel}
           >
             {(orderDraftBulkDelete, orderDraftBulkDeleteOpts) => {
-              const bulkRemoveTransitionState = getMutationState(
-                orderDraftBulkDeleteOpts.called,
-                orderDraftBulkDeleteOpts.loading,
-                maybe(
-                  () =>
-                    orderDraftBulkDeleteOpts.data.draftOrderBulkDelete.errors
-                )
-              );
               const onOrderDraftBulkDelete = () =>
                 orderDraftBulkDelete({
                   variables: {
@@ -225,7 +217,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                     }
                   />
                   <ActionDialog
-                    confirmButtonState={bulkRemoveTransitionState}
+                    confirmButtonState={orderDraftBulkDeleteOpts.state}
                     onClose={closeModal}
                     onConfirm={onOrderDraftBulkDelete}
                     open={params.action === "remove"}

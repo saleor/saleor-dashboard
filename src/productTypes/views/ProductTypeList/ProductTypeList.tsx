@@ -19,7 +19,7 @@ import usePaginator, {
 import { commonMessages } from "@saleor/intl";
 import { ListViews } from "@saleor/types";
 import { configurationMenuUrl } from "../../../configuration";
-import { getMutationState, maybe } from "../../../misc";
+import { maybe } from "../../../misc";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
 import { TypedProductTypeBulkDeleteMutation } from "../../mutations";
 import { TypedProductTypeListQuery } from "../../queries";
@@ -155,15 +155,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
             onCompleted={handleProductTypeBulkDelete}
           >
             {(productTypeBulkDelete, productTypeBulkDeleteOpts) => {
-              const bulkRemoveTransitionState = getMutationState(
-                productTypeBulkDeleteOpts.called,
-                productTypeBulkDeleteOpts.loading,
-                maybe(
-                  () =>
-                    productTypeBulkDeleteOpts.data.productTypeBulkDelete.errors
-                )
-              );
-
               const onProductTypeBulkDelete = () =>
                 productTypeBulkDelete({
                   variables: {
@@ -212,7 +203,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
                     }
                   />
                   <ActionDialog
-                    confirmButtonState={bulkRemoveTransitionState}
+                    confirmButtonState={productTypeBulkDeleteOpts.state}
                     onClose={closeModal}
                     onConfirm={onProductTypeBulkDelete}
                     open={params.action === "remove"}

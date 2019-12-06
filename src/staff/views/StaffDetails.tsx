@@ -9,7 +9,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import StaffDetailsPage from "../components/StaffDetailsPage/StaffDetailsPage";
 import {
   TypedStaffAvatarDeleteMutation,
@@ -62,12 +62,6 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const [changePassword, changePasswordOpts] = useChangeStaffPassword({
     onCompleted: handleChangePassword
   });
-
-  const changePasswordTransitionState = getMutationState(
-    changePasswordOpts.called,
-    changePasswordOpts.loading,
-    maybe(() => changePasswordOpts.data.passwordChange.errors)
-  );
 
   return (
     <TypedStaffMemberDetailsQuery
@@ -122,24 +116,6 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                         onCompleted={handleStaffMemberAvatarDelete}
                       >
                         {(deleteStaffAvatar, deleteAvatarResult) => {
-                          const formTransitionState = getMutationState(
-                            updateResult.called,
-                            updateResult.loading,
-                            maybe(() => updateResult.data.staffUpdate.errors)
-                          );
-                          const deleteTransitionState = getMutationState(
-                            deleteResult.called,
-                            deleteResult.loading,
-                            maybe(() => deleteResult.data.staffDelete.errors)
-                          );
-                          const deleteAvatarTransitionState = getMutationState(
-                            deleteAvatarResult.called,
-                            deleteAvatarResult.loading,
-                            maybe(
-                              () =>
-                                deleteAvatarResult.data.userAvatarDelete.errors
-                            )
-                          );
                           const isUserSameAsViewer = maybe(
                             () => user.user.id === data.user.id,
                             true
@@ -201,7 +177,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 }
                                 permissions={maybe(() => shop.permissions)}
                                 staffMember={maybe(() => data.user)}
-                                saveButtonBarState={formTransitionState}
+                                saveButtonBarState={updateResult.state}
                               />
                               <ActionDialog
                                 open={params.action === "remove"}
@@ -209,7 +185,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                   defaultMessage: "delete Staff User",
                                   description: "dialog header"
                                 })}
-                                confirmButtonState={deleteTransitionState}
+                                confirmButtonState={deleteResult.state}
                                 variant="delete"
                                 onClose={closeModal}
                                 onConfirm={deleteStaffMember}
@@ -229,7 +205,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                   defaultMessage: "Delete Staff User Avatar",
                                   description: "dialog header"
                                 })}
-                                confirmButtonState={deleteAvatarTransitionState}
+                                confirmButtonState={deleteAvatarResult.state}
                                 variant="delete"
                                 onClose={closeModal}
                                 onConfirm={deleteStaffAvatar}
@@ -248,9 +224,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 </DialogContentText>
                               </ActionDialog>
                               <StaffPasswordResetDialog
-                                confirmButtonState={
-                                  changePasswordTransitionState
-                                }
+                                confirmButtonState={changePasswordOpts.state}
                                 errors={maybe(
                                   () =>
                                     changePasswordOpts.data.passwordChange
