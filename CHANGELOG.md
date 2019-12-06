@@ -22,6 +22,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add ability to reset own password - #289 by @dominik-zeglen
 - Move mutation state to mutation - #297 by @dominik-zeglen
 - Add table sorting - #292 by @dominik-zeglen
+- Unify dialog handling - #296 by @dominik-zeglen
 
 ## 2.0.0
 
