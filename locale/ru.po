@@ -7,15 +7,15 @@
 # Weronika Terpilowska <weronika@mirumee.com>, 2019
 # Dima Veselov <d.a.veselov@yandex.ru>, 2019
 # danSamara <dan.samara@gmail.com>, 2019
-# Evgeny Semenov, 2019
 # Dmitriy D, 2019
 # Дмитрий К <kriv@sngy.ru>, 2019
 # Maxim <astra1@users.noreply.github.com>, 2019
+# Evgeny Semenov, 2019
 # Optimus Prime <thebadfatrat@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-11-26T14:34:48.426Z\n"
+"POT-Creation-Date: 2019-12-04T14:17:34.264Z\n"
 "Last-Translator: Optimus Prime <thebadfatrat@gmail.com>, 2019\n"
 "Language-Team: Russian (https://www.transifex.com/mirumee/teams/34782/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -2026,12 +2026,28 @@ msgctxt "description"
 msgid "Category name"
 msgstr ""
 
+#. [src.staff.components.StaffPasswordResetDialog.2521568990] - dialog header
+#. defaultMessage is:
+#. Change Password
+#: build/locale/src/staff/components/StaffPasswordResetDialog/StaffPasswordResetDialog.json
+msgctxt "dialog header"
+msgid "Change Password"
+msgstr "Изменить пароль"
+
 #. [src.staff.components.StaffProperties.2771097267] - button
 #. defaultMessage is:
 #. Change photo
 #: build/locale/src/staff/components/StaffProperties/StaffProperties.json
 msgctxt "button"
 msgid "Change photo"
+msgstr ""
+
+#. [src.staff.components.StaffPassword.1434811103] - button
+#. defaultMessage is:
+#. Change your password
+#: build/locale/src/staff/components/StaffPassword/StaffPassword.json
+msgctxt "button"
+msgid "Change your password"
 msgstr ""
 
 #. [src.products.components.ProductPricing.3015886868]
@@ -5161,6 +5177,14 @@ msgctxt "description"
 msgid "New Password"
 msgstr "Новый пароль"
 
+#. [src.staff.components.StaffPasswordResetDialog.1254879564] - input label
+#. defaultMessage is:
+#. New Password
+#: build/locale/src/staff/components/StaffPasswordResetDialog/StaffPasswordResetDialog.json
+msgctxt "input label"
+msgid "New Password"
+msgstr "Новый пароль"
+
 #. [src.products.views.1591632382] - page header
 #. defaultMessage is:
 #. New Product
@@ -5176,6 +5200,14 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantNavigation/ProductVariantNavigation.json
 msgctxt "variant name"
 msgid "New Variant"
+msgstr ""
+
+#. [src.staff.components.StaffPasswordResetDialog.1651415182]
+#. defaultMessage is:
+#. New password must be at least 8 characters long
+#: build/locale/src/staff/components/StaffPasswordResetDialog/StaffPasswordResetDialog.json
+msgctxt "description"
+msgid "New password must be at least 8 characters long"
 msgstr ""
 
 #. [src.taxes.components.CountryTaxesPage.1451721797] - tax rate
@@ -6214,6 +6246,14 @@ msgctxt "description"
 msgid "Password"
 msgstr "Пароль"
 
+#. [src.staff.components.StaffPassword.2237029987] - header
+#. defaultMessage is:
+#. Password
+#: build/locale/src/staff/components/StaffPassword/StaffPassword.json
+msgctxt "header"
+msgid "Password"
+msgstr "Пароль"
+
 #. [src.auth.components.NewPasswordPage.4253911811]
 #. defaultMessage is:
 #. Passwords do not match
@@ -6486,6 +6526,14 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog.json
 msgctxt "previous step, button"
 msgid "Previous"
+msgstr ""
+
+#. [src.staff.components.StaffPasswordResetDialog.53359254] - input label
+#. defaultMessage is:
+#. Previous Password
+#: build/locale/src/staff/components/StaffPasswordResetDialog/StaffPasswordResetDialog.json
+msgctxt "input label"
+msgid "Previous Password"
 msgstr ""
 
 #. [src.categories.components.CategoryProductList.1134347598] - product price
@@ -10083,6 +10131,14 @@ msgstr ""
 msgctxt "description"
 msgid "Yes"
 msgstr "Да"
+
+#. [src.staff.components.StaffPassword.1274006906]
+#. defaultMessage is:
+#. You should change your password every month to avoid security issues.
+#: build/locale/src/staff/components/StaffPassword/StaffPassword.json
+msgctxt "description"
+msgid "You should change your password every month to avoid security issues."
+msgstr ""
 
 #. [src.products.components.ProductVariantCreateDialog.1009678918] - header
 #. defaultMessage is:
