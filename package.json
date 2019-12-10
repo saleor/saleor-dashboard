@@ -79,7 +79,7 @@
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
-    "@babel/runtime": "^7.5.4",
+    "@babel/runtime": "^7.7.6",
     "@storybook/addon-storyshots": "^5.1.9",
     "@storybook/react": "^5.1.9",
     "@testing-library/react-hooks": "^1.1.0",
