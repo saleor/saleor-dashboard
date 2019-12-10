@@ -11,6 +11,7 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { UserError } from "@saleor/types";
@@ -56,6 +57,22 @@ export interface SiteSettingsPageProps {
   onSubmit: (data: SiteSettingsPageFormData) => void;
 }
 
+export function areAddressInputFieldsModified(
+  data: SiteSettingsPageAddressFormData
+): boolean {
+  return ([
+    "city",
+    "country",
+    "countryArea",
+    "phone",
+    "postalCode",
+    "streetAddress1",
+    "streetAddress2"
+  ] as Array<keyof SiteSettingsPageAddressFormData>)
+    .map(key => data[key])
+    .some(field => field !== "");
+}
+
 const useStyles = makeStyles(
   theme => ({
     hr: {
@@ -85,6 +102,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     maybe(() => shop.companyAddress.country.code, "")
   );
 
+  const {
+    errors: validationErrors,
+    submit: handleSubmitWithAddress
+  } = useAddressValidation<SiteSettingsPageFormData>(onSubmit);
+
   const initialFormAddress: SiteSettingsPageAddressFormData = {
     city: maybe(() => shop.companyAddress.city, ""),
     companyName: maybe(() => shop.companyAddress.companyName, ""),
@@ -107,12 +129,18 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
 
   return (
     <Form
-      errors={errors}
+      errors={[...errors, ...validationErrors]}
       initial={initialForm}
-      onSubmit={onSubmit}
+      onSubmit={data => {
+        const submitFunc = areAddressInputFieldsModified(data)
+          ? handleSubmitWithAddress
+          : onSubmit;
+        submitFunc(data);
+      }}
       confirmLeave
     >
       {({ change, data, errors: formErrors, hasChanged, submit }) => {
+        const siteFormErrors = { ...formErrors };
         const countryChoices = mapCountriesToChoices(
           maybe(() => shop.countries, [])
         );
@@ -141,7 +169,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               </div>
               <SiteSettingsDetails
                 data={data}
-                errors={formErrors}
+                errors={siteFormErrors}
                 disabled={disabled}
                 onChange={change}
               />
@@ -159,7 +187,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               </div>
               <SiteSettingsMailing
                 data={data}
-                errors={formErrors}
+                errors={siteFormErrors}
                 disabled={disabled}
                 onChange={change}
               />
@@ -180,7 +208,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 data={data}
                 displayCountry={displayCountry}
                 countries={countryChoices}
-                errors={formErrors}
+                errors={siteFormErrors}
                 disabled={disabled}
                 onChange={change}
                 onCountryChange={handleCountryChange}

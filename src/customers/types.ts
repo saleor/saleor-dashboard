@@ -4,8 +4,8 @@ export interface AddressTypeInput {
   companyName?: string;
   country: string;
   countryArea?: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   phone: string;
   postalCode: string;
   streetAddress1: string;

@@ -13,7 +13,7 @@ import SiteSettingsKeyDialog, {
   SiteSettingsKeyDialogForm
 } from "../components/SiteSettingsKeyDialog";
 import SiteSettingsPage, {
-  SiteSettingsPageAddressFormData,
+  areAddressInputFieldsModified,
   SiteSettingsPageFormData
 } from "../components/SiteSettingsPage";
 import {
@@ -76,6 +76,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
       });
     }
   };
+
   return (
     <TypedSiteSettingsQuery displayLoader>
       {siteSettings => (
@@ -124,19 +125,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                     const handleUpdateShopSettings = (
                       data: SiteSettingsPageFormData
                     ) => {
-                      const areAddressInputFieldsModified = ([
-                        "city",
-                        "companyName",
-                        "country",
-                        "countryArea",
-                        "phone",
-                        "postalCode",
-                        "streetAddress1",
-                        "streetAddress2"
-                      ] as Array<keyof SiteSettingsPageAddressFormData>)
-                        .map(key => data[key])
-                        .some(field => field !== "");
-                      const addressInput = areAddressInputFieldsModified
+                      const addressInput = areAddressInputFieldsModified(data)
                         ? {
                             city: data.city,
                             companyName: data.companyName,
@@ -147,7 +136,9 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                             streetAddress1: data.streetAddress1,
                             streetAddress2: data.streetAddress2
                           }
-                        : null;
+                        : {
+                            companyName: data.companyName
+                          };
                       updateShopSettings({
                         variables: {
                           addressInput,
