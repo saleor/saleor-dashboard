@@ -102,7 +102,7 @@
     "@types/semver-compare": "^1.0.1",
     "@types/storybook__addon-storyshots": "^3.4.9",
     "@types/storybook__react": "^4.0.2",
-    "@types/url-join": "^0.8.3",
+    "@types/url-join": "^4.0.0",
     "@types/webappsec-credential-management": "^0.5.1",
     "@typescript-eslint/eslint-plugin": "^2.9.0",
     "@typescript-eslint/parser": "^2.9.0",
