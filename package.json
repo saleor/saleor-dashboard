@@ -111,7 +111,7 @@
     "babel-plugin-react-intl": "^4.1.12",
     "babel-plugin-react-intl-auto": "^2.3.0",
     "codecov": "^3.5.0",
-    "core-js": "^3.2.1",
+    "core-js": "^3.5.0",
     "cross-env": "^6.0.3",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
