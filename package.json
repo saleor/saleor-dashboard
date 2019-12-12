@@ -109,7 +109,7 @@
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-react-intl": "^4.1.12",
-    "babel-plugin-react-intl-auto": "^2.3.0",
+    "babel-plugin-react-intl-auto": "^3.1.0",
     "codecov": "^3.5.0",
     "core-js": "^3.2.1",
     "cross-env": "^6.0.3",
