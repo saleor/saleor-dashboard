@@ -16,7 +16,7 @@ import usePaginator, {
 import useShop from "@saleor/hooks/useShop";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import ShippingZonesListPage from "../components/ShippingZonesListPage";
 import {
@@ -111,26 +111,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
                     onCompleted={handleBulkDeleteShippingZone}
                   >
                     {(bulkDeleteShippingZone, bulkDeleteShippingZoneOpts) => {
-                      const deleteTransitionState = getMutationState(
-                        deleteShippingZoneOpts.called,
-                        deleteShippingZoneOpts.loading,
-                        maybe(
-                          () =>
-                            deleteShippingZoneOpts.data.shippingZoneDelete
-                              .errors
-                        )
-                      );
-
-                      const bulkDeleteTransitionState = getMutationState(
-                        bulkDeleteShippingZoneOpts.called,
-                        bulkDeleteShippingZoneOpts.loading,
-                        maybe(
-                          () =>
-                            bulkDeleteShippingZoneOpts.data
-                              .shippingZoneBulkDelete.errors
-                        )
-                      );
-
                       const {
                         loadNextPage,
                         loadPreviousPage,
@@ -202,7 +182,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
 
                           <ActionDialog
                             open={params.action === "remove"}
-                            confirmButtonState={deleteTransitionState}
+                            confirmButtonState={deleteShippingZoneOpts.status}
                             variant="delete"
                             title={intl.formatMessage({
                               defaultMessage: "Delete Shipping Zone",
@@ -236,7 +216,9 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
                           </ActionDialog>
                           <ActionDialog
                             open={params.action === "remove-many"}
-                            confirmButtonState={bulkDeleteTransitionState}
+                            confirmButtonState={
+                              bulkDeleteShippingZoneOpts.status
+                            }
                             variant="delete"
                             title={intl.formatMessage({
                               defaultMessage: "Delete Shipping Zones",

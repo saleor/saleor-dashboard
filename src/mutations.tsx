@@ -6,12 +6,13 @@ import { useIntl } from "react-intl";
 
 import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
-import { maybe } from "./misc";
+import { maybe, getMutationStatus } from "./misc";
+import { MutationResultAdditionalProps } from "./types";
 
 export interface TypedMutationInnerProps<TData, TVariables> {
   children: (
     mutateFn: MutationFunction<TData, TVariables>,
-    result: MutationResult<TData>
+    result: MutationResult<TData> & MutationResultAdditionalProps
   ) => React.ReactNode;
   onCompleted?: (data: TData) => void;
   onError?: (error: ApolloError) => void;
@@ -55,7 +56,14 @@ export function TypedMutation<TData, TVariables>(
         variables={variables}
         update={update}
       >
-        {(mutateFn, result) => <>{children(mutateFn, result)}</>}
+        {(mutateFn, result) => (
+          <>
+            {children(mutateFn, {
+              ...result,
+              status: getMutationStatus(result)
+            })}
+          </>
+        )}
       </Mutation>
     );
   };

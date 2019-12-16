@@ -22,7 +22,7 @@ import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
-import { decimal, getMutationState, joinDateTime, maybe } from "../../misc";
+import { decimal, joinDateTime, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import {
   DiscountValueTypeEnum,
@@ -171,38 +171,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               VoucherDetailsPageTab.collections
                             ? maybe(() => data.voucher.collections.pageInfo)
                             : maybe(() => data.voucher.products.pageInfo);
-                        const formTransitionState = getMutationState(
-                          voucherUpdateOpts.called,
-                          voucherUpdateOpts.loading,
-                          maybe(
-                            () => voucherUpdateOpts.data.voucherUpdate.errors
-                          )
-                        );
-                        const assignTransitionState = getMutationState(
-                          voucherCataloguesAddOpts.called,
-                          voucherCataloguesAddOpts.loading,
-                          maybe(
-                            () =>
-                              voucherCataloguesAddOpts.data.voucherCataloguesAdd
-                                .errors
-                          )
-                        );
-                        const unassignTransitionState = getMutationState(
-                          voucherCataloguesRemoveOpts.called,
-                          voucherCataloguesRemoveOpts.loading,
-                          maybe(
-                            () =>
-                              voucherCataloguesRemoveOpts.data
-                                .voucherCataloguesRemove.errors
-                          )
-                        );
-                        const removeTransitionState = getMutationState(
-                          voucherDeleteOpts.called,
-                          voucherDeleteOpts.loading,
-                          maybe(
-                            () => voucherDeleteOpts.data.voucherDelete.errors
-                          )
-                        );
 
                         const handleCategoriesUnassign = (ids: string[]) =>
                           voucherCataloguesRemove({
@@ -387,7 +355,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 })
                               }
                               onRemove={() => openModal("remove")}
-                              saveButtonBarState={formTransitionState}
+                              saveButtonBarState={voucherUpdateOpts.status}
                               categoryListToolbar={
                                 <Button
                                   color="primary"
@@ -446,7 +414,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                     suggestedCategory => suggestedCategory.id
                                   )
                               )}
-                              confirmButtonState={assignTransitionState}
+                              confirmButtonState={
+                                voucherCataloguesAddOpts.status
+                              }
                               open={params.action === "assign-category"}
                               onFetch={searchCategories}
                               loading={searchCategoriesOpts.loading}
@@ -473,7 +443,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                     suggestedCategory => suggestedCategory.id
                                   )
                               )}
-                              confirmButtonState={assignTransitionState}
+                              confirmButtonState={
+                                voucherCataloguesAddOpts.status
+                              }
                               open={params.action === "assign-collection"}
                               onFetch={searchCollections}
                               loading={searchCollectionsOpts.loading}
@@ -493,7 +465,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               }
                             />
                             <DiscountCountrySelectDialog
-                              confirmButtonState={formTransitionState}
+                              confirmButtonState={voucherUpdateOpts.status}
                               countries={maybe(() => shop.countries, [])}
                               onClose={() => navigate(voucherUrl(id))}
                               onConfirm={formData =>
@@ -516,7 +488,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               )}
                             />
                             <AssignProductDialog
-                              confirmButtonState={assignTransitionState}
+                              confirmButtonState={
+                                voucherCataloguesAddOpts.status
+                              }
                               open={params.action === "assign-product"}
                               onFetch={searchProducts}
                               loading={searchProductsOpts.loading}
@@ -552,7 +526,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                   "Unassign Categories From Voucher",
                                 description: "dialog header"
                               })}
-                              confirmButtonState={unassignTransitionState}
+                              confirmButtonState={
+                                voucherCataloguesRemoveOpts.status
+                              }
                               onClose={closeModal}
                               onConfirm={() =>
                                 handleCategoriesUnassign(params.ids)
@@ -583,7 +559,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                   "Unassign Collections From Voucher",
                                 description: "dialog header"
                               })}
-                              confirmButtonState={unassignTransitionState}
+                              confirmButtonState={
+                                voucherCataloguesRemoveOpts.status
+                              }
                               onClose={closeModal}
                               onConfirm={() =>
                                 handleCollectionsUnassign(params.ids)
@@ -614,7 +592,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                   "Unassign Products From Voucher",
                                 description: "dialog header"
                               })}
-                              confirmButtonState={unassignTransitionState}
+                              confirmButtonState={
+                                voucherCataloguesRemoveOpts.status
+                              }
                               onClose={closeModal}
                               onConfirm={() =>
                                 handleProductsUnassign(params.ids)
@@ -641,7 +621,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 defaultMessage: "Delete Voucher",
                                 description: "dialog header"
                               })}
-                              confirmButtonState={removeTransitionState}
+                              confirmButtonState={voucherDeleteOpts.status}
                               onClose={closeModal}
                               variant="delete"
                               onConfirm={() =>

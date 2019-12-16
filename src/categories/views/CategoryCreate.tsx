@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import CategoryCreatePage from "../components/CategoryCreatePage";
 import { useCategoryCreateMutation } from "../mutations";
 import { CategoryCreate } from "../types/CategoryCreate";
@@ -41,12 +41,6 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
     []
   );
 
-  const formTransitionState = getMutationState(
-    createCategoryResult.called,
-    createCategoryResult.loading,
-    errors
-  );
-
   return (
     <>
       <WindowTitle
@@ -56,7 +50,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
         })}
       />
       <CategoryCreatePage
-        saveButtonBarState={formTransitionState}
+        saveButtonBarState={createCategoryResult.status}
         errors={errors}
         disabled={createCategoryResult.loading}
         onBack={() =>

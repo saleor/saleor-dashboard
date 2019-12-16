@@ -113,26 +113,15 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
           </Container>
           <ShippingZoneCountriesAssignDialog
             open={isModalOpened}
-            onConfirm={formData =>
-              change(
-                {
-                  target: {
-                    name: "default",
-                    value: formData.restOfTheWorld
-                  }
-                } as any,
-                () =>
-                  change(
-                    {
-                      target: {
-                        name: "countries",
-                        value: formData.restOfTheWorld ? [] : formData.countries
-                      }
-                    } as any,
-                    toggleModal
-                  )
-              )
-            }
+            onConfirm={formData => {
+              change({
+                target: {
+                  name: "countries",
+                  value: formData.restOfTheWorld ? [] : formData.countries
+                }
+              } as any);
+              toggleModal();
+            }}
             confirmButtonState="default"
             countries={countries}
             initial={data.countries}

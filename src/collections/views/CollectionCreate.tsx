@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import { CollectionCreateInput } from "../../types/globalTypes";
 import CollectionCreatePage from "../components/CollectionCreatePage/CollectionCreatePage";
 import { TypedCollectionCreateMutation } from "../mutations";
@@ -38,46 +38,42 @@ export const CollectionCreate: React.FC = () => {
   };
   return (
     <TypedCollectionCreateMutation onCompleted={handleCollectionCreateSuccess}>
-      {(createCollection, { called, data, loading }) => {
-        const formTransitionState = getMutationState(
-          called,
-          loading,
-          maybe(() => data.collectionCreate.errors)
-        );
-        return (
-          <>
-            <WindowTitle
-              title={intl.formatMessage({
-                defaultMessage: "Create collection",
-                description: "window title"
-              })}
-            />
-            <CollectionCreatePage
-              errors={maybe(() => data.collectionCreate.errors, [])}
-              onBack={() => navigate(collectionListUrl())}
-              disabled={loading}
-              onSubmit={formData =>
-                createCollection({
-                  variables: {
-                    input: {
-                      backgroundImage: formData.backgroundImage.value,
-                      backgroundImageAlt: formData.backgroundImageAlt,
-                      descriptionJson: JSON.stringify(formData.description),
-                      isPublished: formData.isPublished,
-                      name: formData.name,
-                      seo: {
-                        description: formData.seoDescription,
-                        title: formData.seoTitle
-                      }
+      {(createCollection, createCollectionOpts) => (
+        <>
+          <WindowTitle
+            title={intl.formatMessage({
+              defaultMessage: "Create collection",
+              description: "window title"
+            })}
+          />
+          <CollectionCreatePage
+            errors={maybe(
+              () => createCollectionOpts.data.collectionCreate.errors,
+              []
+            )}
+            onBack={() => navigate(collectionListUrl())}
+            disabled={createCollectionOpts.loading}
+            onSubmit={formData =>
+              createCollection({
+                variables: {
+                  input: {
+                    backgroundImage: formData.backgroundImage.value,
+                    backgroundImageAlt: formData.backgroundImageAlt,
+                    descriptionJson: JSON.stringify(formData.description),
+                    isPublished: formData.isPublished,
+                    name: formData.name,
+                    seo: {
+                      description: formData.seoDescription,
+                      title: formData.seoTitle
                     }
                   }
-                })
-              }
-              saveButtonBarState={formTransitionState}
-            />
-          </>
-        );
-      }}
+                }
+              })
+            }
+            saveButtonBarState={createCollectionOpts.status}
+          />
+        </>
+      )}
     </TypedCollectionCreateMutation>
   );
 };

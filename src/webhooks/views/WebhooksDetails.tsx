@@ -11,7 +11,7 @@ import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
 import { WebhookDelete } from "@saleor/webhooks/types/WebhookDelete";
 import { WebhookUpdate } from "@saleor/webhooks/types/WebhookUpdate";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import WebhooksDetailsPage from "../components/WebhooksDetailsPage";
 import { TypedWebhookDelete, TypedWebhookUpdate } from "../mutations";
 import { TypedWebhooksDetailsQuery } from "../queries";
@@ -85,14 +85,6 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
           {(webhookDelete, webhookDeleteOpts) => (
             <TypedWebhooksDetailsQuery variables={{ id }}>
               {webhookDetails => {
-                const formTransitionState = getMutationState(
-                  webhookUpdateOpts.called,
-                  webhookUpdateOpts.loading,
-                  maybe(
-                    () => webhookUpdateOpts.data.webhookUpdate.webhookErrors
-                  )
-                );
-
                 const handleRemoveConfirm = () =>
                   webhookDelete({
                     variables: {
@@ -105,12 +97,6 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                   []
                 );
 
-                const deleteTransitionState = getMutationState(
-                  webhookDeleteOpts.called,
-                  webhookDeleteOpts.loading,
-                  maybe(() => webhookDeleteOpts.data.webhookDelete.errors)
-                );
-
                 return (
                   <>
                     <WindowTitle
@@ -119,7 +105,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                     <WebhooksDetailsPage
                       disabled={webhookDetails.loading}
                       errors={formErrors}
-                      saveButtonBarState={formTransitionState}
+                      saveButtonBarState={webhookUpdateOpts.status}
                       webhook={maybe(() => webhookDetails.data.webhook)}
                       fetchServiceAccounts={searchServiceAccount}
                       services={maybe(() =>
@@ -148,7 +134,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                       }}
                     />
                     <WebhookDeleteDialog
-                      confirmButtonState={deleteTransitionState}
+                      confirmButtonState={webhookDeleteOpts.status}
                       name={maybe(
                         () => webhookDetails.data.webhook.name,
                         "..."

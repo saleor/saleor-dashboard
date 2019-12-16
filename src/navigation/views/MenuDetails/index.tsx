@@ -11,7 +11,7 @@ import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import { categoryUrl } from "../../../categories/urls";
 import { collectionUrl } from "../../../collections/urls";
-import { getMutationState, maybe } from "../../../misc";
+import { maybe } from "../../../misc";
 import { pageUrl } from "../../../pages/urls";
 import MenuDetailsPage, {
   MenuDetailsSubmitData
@@ -137,19 +137,6 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                 onCompleted={data => handleUpdate(data, notify, refetch, intl)}
               >
                 {(menuUpdate, menuUpdateOpts) => {
-                  const deleteState = getMutationState(
-                    menuDeleteOpts.called,
-                    menuDeleteOpts.loading,
-                    maybe(() => menuDeleteOpts.data.menuDelete.errors)
-                  );
-
-                  const updateState = getMutationState(
-                    menuUpdateOpts.called,
-                    menuUpdateOpts.loading,
-                    maybe(() => menuUpdateOpts.data.menuUpdate.errors),
-                    maybe(() => menuUpdateOpts.data.menuItemMove.errors)
-                  );
-
                   // This is a workaround to let know <MenuDetailsPage />
                   // that it should clean operation stack if mutations
                   // were successful
@@ -208,12 +195,12 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                           )
                         }
                         onSubmit={handleSubmit}
-                        saveButtonState={updateState}
+                        saveButtonState={menuUpdateOpts.status}
                       />
                       <ActionDialog
                         open={params.action === "remove"}
                         onClose={closeModal}
-                        confirmButtonState={deleteState}
+                        confirmButtonState={menuDeleteOpts.status}
                         onConfirm={() => menuDelete({ variables: { id } })}
                         variant="delete"
                         title={intl.formatMessage({
@@ -253,15 +240,6 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                             menuItemCreate({ variables });
                           };
 
-                          const formTransitionState = getMutationState(
-                            menuItemCreateOpts.called,
-                            menuItemCreateOpts.loading,
-                            maybe(
-                              () =>
-                                menuItemCreateOpts.data.menuItemCreate.errors
-                            )
-                          );
-
                           return (
                             <MenuItemDialog
                               open={params.action === "add-item"}
@@ -277,7 +255,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                                 categorySearch.result.loading ||
                                 collectionSearch.result.loading
                               }
-                              confirmButtonState={formTransitionState}
+                              confirmButtonState={menuItemCreateOpts.status}
                               disabled={menuItemCreateOpts.loading}
                               onClose={closeModal}
                               onSubmit={handleSubmit}
@@ -310,15 +288,6 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                             )
                           );
 
-                          const formTransitionState = getMutationState(
-                            menuItemUpdateOpts.called,
-                            menuItemUpdateOpts.loading,
-                            maybe(
-                              () =>
-                                menuItemUpdateOpts.data.menuItemUpdate.errors
-                            )
-                          );
-
                           const initialFormData: MenuItemDialogFormData = {
                             id: maybe(() => getItemId(menuItem)),
                             name: maybe(() => menuItem.name, "..."),
@@ -347,7 +316,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                                 categorySearch.result.loading ||
                                 collectionSearch.result.loading
                               }
-                              confirmButtonState={formTransitionState}
+                              confirmButtonState={menuItemUpdateOpts.status}
                               disabled={menuItemUpdateOpts.loading}
                               onClose={closeModal}
                               onSubmit={handleSubmit}

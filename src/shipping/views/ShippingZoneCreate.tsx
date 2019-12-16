@@ -5,7 +5,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import ShippingZoneCreatePage from "../components/ShippingZoneCreatePage";
 import { TypedCreateShippingZone } from "../mutations";
 import { CreateShippingZone } from "../types/CreateShippingZone";
@@ -27,32 +27,24 @@ const ShippingZoneCreate: React.FC<{}> = () => {
   };
   return (
     <TypedCreateShippingZone onCompleted={onShippingZoneCreate}>
-      {(createShippingZone, createShippingZoneOpts) => {
-        const formTransitionState = getMutationState(
-          createShippingZoneOpts.called,
-          createShippingZoneOpts.loading,
-          maybe(() => createShippingZoneOpts.data.shippingZoneCreate.errors, [])
-        );
-
-        return (
-          <ShippingZoneCreatePage
-            countries={maybe(() => shop.countries, [])}
-            disabled={createShippingZoneOpts.loading}
-            errors={maybe(
-              () => createShippingZoneOpts.data.shippingZoneCreate.errors
-            )}
-            onBack={() => navigate(shippingZonesListUrl())}
-            onSubmit={formData =>
-              createShippingZone({
-                variables: {
-                  input: formData
-                }
-              })
-            }
-            saveButtonBarState={formTransitionState}
-          />
-        );
-      }}
+      {(createShippingZone, createShippingZoneOpts) => (
+        <ShippingZoneCreatePage
+          countries={maybe(() => shop.countries, [])}
+          disabled={createShippingZoneOpts.loading}
+          errors={maybe(
+            () => createShippingZoneOpts.data.shippingZoneCreate.errors
+          )}
+          onBack={() => navigate(shippingZonesListUrl())}
+          onSubmit={formData =>
+            createShippingZone({
+              variables: {
+                input: formData
+              }
+            })
+          }
+          saveButtonBarState={createShippingZoneOpts.status}
+        />
+      )}
     </TypedCreateShippingZone>
   );
 };

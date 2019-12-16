@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
@@ -135,52 +135,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                               onCompleted={handleValueReorderMutation}
                             >
                               {attributeValueReorder => {
-                                const deleteTransitionState = getMutationState(
-                                  attributeDeleteOpts.called,
-                                  attributeDeleteOpts.loading,
-                                  maybe(
-                                    () =>
-                                      attributeDeleteOpts.data.attributeDelete
-                                        .errors
-                                  )
-                                );
-                                const deleteValueTransitionState = getMutationState(
-                                  attributeValueDeleteOpts.called,
-                                  attributeValueDeleteOpts.loading,
-                                  maybe(
-                                    () =>
-                                      attributeValueDeleteOpts.data
-                                        .attributeValueDelete.errors
-                                  )
-                                );
-                                const updateTransitionState = getMutationState(
-                                  attributeUpdateOpts.called,
-                                  attributeUpdateOpts.loading,
-                                  maybe(
-                                    () =>
-                                      attributeUpdateOpts.data.attributeUpdate
-                                        .errors
-                                  )
-                                );
-                                const updateValueTransitionState = getMutationState(
-                                  attributeValueUpdateOpts.called,
-                                  attributeValueUpdateOpts.loading,
-                                  maybe(
-                                    () =>
-                                      attributeValueUpdateOpts.data
-                                        .attributeValueUpdate.errors
-                                  )
-                                );
-                                const createValueTransitionState = getMutationState(
-                                  attributeValueCreateOpts.called,
-                                  attributeValueCreateOpts.loading,
-                                  maybe(
-                                    () =>
-                                      attributeValueCreateOpts.data
-                                        .attributeValueCreate.errors
-                                  )
-                                );
-
                                 const handleValueReorder = ({
                                   newIndex,
                                   oldIndex
@@ -252,7 +206,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                       onValueUpdate={id =>
                                         openModal("edit-value", id)
                                       }
-                                      saveButtonBarState={updateTransitionState}
+                                      saveButtonBarState={
+                                        attributeUpdateOpts.status
+                                      }
                                       values={maybe(
                                         () => data.attribute.values
                                       )}
@@ -263,7 +219,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                         () => data.attribute.name,
                                         "..."
                                       )}
-                                      confirmButtonState={deleteTransitionState}
+                                      confirmButtonState={
+                                        attributeDeleteOpts.status
+                                      }
                                       onClose={closeModal}
                                       onConfirm={() =>
                                         attributeDelete({
@@ -288,7 +246,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                       )}
                                       useName={true}
                                       confirmButtonState={
-                                        deleteValueTransitionState
+                                        attributeValueDeleteOpts.status
                                       }
                                       onClose={closeModal}
                                       onConfirm={() =>
@@ -302,7 +260,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                     <AttributeValueEditDialog
                                       attributeValue={null}
                                       confirmButtonState={
-                                        createValueTransitionState
+                                        attributeValueCreateOpts.status
                                       }
                                       disabled={loading}
                                       errors={maybe(
@@ -329,7 +287,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                         )
                                       )}
                                       confirmButtonState={
-                                        updateValueTransitionState
+                                        attributeValueUpdateOpts.status
                                       }
                                       disabled={loading}
                                       errors={maybe(

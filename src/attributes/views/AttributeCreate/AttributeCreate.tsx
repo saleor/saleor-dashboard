@@ -4,7 +4,7 @@ import slugify from "slugify";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ReorderEvent, UserError } from "@saleor/types";
 import {
   add,
@@ -131,88 +131,80 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
 
   return (
     <AttributeCreateMutation onCompleted={handleCreate}>
-      {(attributeCreate, attributeCreateOpts) => {
-        const createTransitionState = getMutationState(
-          attributeCreateOpts.called,
-          attributeCreateOpts.loading,
-          maybe(() => attributeCreateOpts.data.attributeCreate.errors)
-        );
-
-        return (
-          <>
-            <AttributePage
-              attribute={null}
-              disabled={false}
-              errors={maybe(
-                () => attributeCreateOpts.data.attributeCreate.errors,
-                []
-              )}
-              onBack={() => navigate(attributeListUrl())}
-              onDelete={undefined}
-              onSubmit={input =>
-                attributeCreate({
-                  variables: {
-                    input: {
-                      ...input,
-                      storefrontSearchPosition: parseInt(
-                        input.storefrontSearchPosition,
-                        0
-                      ),
-                      values: values.map(value => ({
-                        name: value.name
-                      }))
-                    }
-                  }
-                })
-              }
-              onValueAdd={() => openModal("add-value")}
-              onValueDelete={id => openModal("remove-value", id)}
-              onValueReorder={handleValueReorder}
-              onValueUpdate={id => openModal("edit-value", id)}
-              saveButtonBarState={createTransitionState}
-              values={values.map((value, valueIndex) => ({
-                __typename: "AttributeValue" as "AttributeValue",
-                id: valueIndex.toString(),
-                slug: slugify(value.name).toLowerCase(),
-                sortOrder: valueIndex,
-                type: null,
-                value: null,
-                ...value
-              }))}
-            />
-            <AttributeValueEditDialog
-              attributeValue={null}
-              confirmButtonState="default"
-              disabled={false}
-              errors={valueErrors}
-              open={params.action === "add-value"}
-              onClose={closeModal}
-              onSubmit={handleValueCreate}
-            />
-            {values.length > 0 && (
-              <>
-                <AttributeValueDeleteDialog
-                  attributeName={undefined}
-                  open={params.action === "remove-value"}
-                  name={maybe(() => values[id].name, "...")}
-                  confirmButtonState="default"
-                  onClose={closeModal}
-                  onConfirm={handleValueDelete}
-                />
-                <AttributeValueEditDialog
-                  attributeValue={maybe(() => values[params.id])}
-                  confirmButtonState="default"
-                  disabled={false}
-                  errors={valueErrors}
-                  open={params.action === "edit-value"}
-                  onClose={closeModal}
-                  onSubmit={handleValueUpdate}
-                />
-              </>
+      {(attributeCreate, attributeCreateOpts) => (
+        <>
+          <AttributePage
+            attribute={null}
+            disabled={false}
+            errors={maybe(
+              () => attributeCreateOpts.data.attributeCreate.errors,
+              []
             )}
-          </>
-        );
-      }}
+            onBack={() => navigate(attributeListUrl())}
+            onDelete={undefined}
+            onSubmit={input =>
+              attributeCreate({
+                variables: {
+                  input: {
+                    ...input,
+                    storefrontSearchPosition: parseInt(
+                      input.storefrontSearchPosition,
+                      0
+                    ),
+                    values: values.map(value => ({
+                      name: value.name
+                    }))
+                  }
+                }
+              })
+            }
+            onValueAdd={() => openModal("add-value")}
+            onValueDelete={id => openModal("remove-value", id)}
+            onValueReorder={handleValueReorder}
+            onValueUpdate={id => openModal("edit-value", id)}
+            saveButtonBarState={attributeCreateOpts.status}
+            values={values.map((value, valueIndex) => ({
+              __typename: "AttributeValue" as "AttributeValue",
+              id: valueIndex.toString(),
+              slug: slugify(value.name).toLowerCase(),
+              sortOrder: valueIndex,
+              type: null,
+              value: null,
+              ...value
+            }))}
+          />
+          <AttributeValueEditDialog
+            attributeValue={null}
+            confirmButtonState="default"
+            disabled={false}
+            errors={valueErrors}
+            open={params.action === "add-value"}
+            onClose={closeModal}
+            onSubmit={handleValueCreate}
+          />
+          {values.length > 0 && (
+            <>
+              <AttributeValueDeleteDialog
+                attributeName={undefined}
+                open={params.action === "remove-value"}
+                name={maybe(() => values[id].name, "...")}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onConfirm={handleValueDelete}
+              />
+              <AttributeValueEditDialog
+                attributeValue={maybe(() => values[params.id])}
+                confirmButtonState="default"
+                disabled={false}
+                errors={valueErrors}
+                open={params.action === "edit-value"}
+                onClose={closeModal}
+                onSubmit={handleValueUpdate}
+              />
+            </>
+          )}
+        </>
+      )}
     </AttributeCreateMutation>
   );
 };

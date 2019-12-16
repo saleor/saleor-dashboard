@@ -5,7 +5,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { configurationMenuUrl } from "../../configuration";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import CountryListPage from "../components/CountryListPage";
 import { TypedFetchTaxes, TypedUpdateTaxSettings } from "../mutations";
 import { TypedCountryListQuery } from "../queries";
@@ -42,47 +42,36 @@ export const CountryList: React.FC = () => {
         <TypedFetchTaxes onCompleted={handleFetchTaxes}>
           {(fetchTaxes, fetchTaxesOpts) => (
             <TypedCountryListQuery displayLoader={true}>
-              {({ data, loading }) => {
-                const updateTaxSettingsTransitionState = getMutationState(
-                  updateTaxSettingsOpts.called,
-                  updateTaxSettingsOpts.loading,
-                  maybe(
-                    () => updateTaxSettingsOpts.data.shopSettingsUpdate.errors
-                  )
-                );
-
-                return (
-                  <CountryListPage
-                    disabled={
-                      loading ||
-                      fetchTaxesOpts.loading ||
-                      updateTaxSettingsOpts.loading
-                    }
-                    onBack={() => navigate(configurationMenuUrl)}
-                    onRowClick={code => navigate(countryTaxRatesUrl(code))}
-                    onSubmit={formData =>
-                      updateTaxSettings({
-                        variables: {
-                          input: {
-                            chargeTaxesOnShipping:
-                              formData.chargeTaxesOnShipping,
-                            displayGrossPrices: formData.showGross,
-                            includeTaxesInPrices: formData.includeTax
-                          }
+              {({ data, loading }) => (
+                <CountryListPage
+                  disabled={
+                    loading ||
+                    fetchTaxesOpts.loading ||
+                    updateTaxSettingsOpts.loading
+                  }
+                  onBack={() => navigate(configurationMenuUrl)}
+                  onRowClick={code => navigate(countryTaxRatesUrl(code))}
+                  onSubmit={formData =>
+                    updateTaxSettings({
+                      variables: {
+                        input: {
+                          chargeTaxesOnShipping: formData.chargeTaxesOnShipping,
+                          displayGrossPrices: formData.showGross,
+                          includeTaxesInPrices: formData.includeTax
                         }
-                      })
-                    }
-                    onTaxFetch={fetchTaxes}
-                    saveButtonBarState={updateTaxSettingsTransitionState}
-                    shop={maybe(() => ({
-                      ...data.shop,
-                      countries: data.shop.countries.filter(
-                        country => country.vat
-                      )
-                    }))}
-                  />
-                );
-              }}
+                      }
+                    })
+                  }
+                  onTaxFetch={fetchTaxes}
+                  saveButtonBarState={updateTaxSettingsOpts.status}
+                  shop={maybe(() => ({
+                    ...data.shop,
+                    countries: data.shop.countries.filter(
+                      country => country.vat
+                    )
+                  }))}
+                />
+              )}
             </TypedCountryListQuery>
           )}
         </TypedFetchTaxes>

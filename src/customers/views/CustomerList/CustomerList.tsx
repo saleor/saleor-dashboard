@@ -17,7 +17,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import CustomerListPage from "../../components/CustomerListPage";
 import { TypedBulkRemoveCustomers } from "../../mutations";
@@ -147,105 +147,95 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
 
         return (
           <TypedBulkRemoveCustomers onCompleted={handleBulkCustomerDelete}>
-            {(bulkRemoveCustomers, bulkRemoveCustomersOpts) => {
-              const removeTransitionState = getMutationState(
-                bulkRemoveCustomersOpts.called,
-                bulkRemoveCustomersOpts.loading,
-                maybe(
-                  () => bulkRemoveCustomersOpts.data.customerBulkDelete.errors
-                )
-              );
-
-              return (
-                <>
-                  <CustomerListPage
-                    currentTab={currentTab}
-                    initialSearch={params.query || ""}
-                    onSearchChange={query => changeFilterField({ query })}
-                    onAll={() => navigate(customerListUrl())}
-                    onTabChange={handleTabChange}
-                    onTabDelete={() => openModal("delete-search")}
-                    onTabSave={() => openModal("save-search")}
-                    tabs={tabs.map(tab => tab.name)}
-                    customers={maybe(() =>
-                      data.customers.edges.map(edge => edge.node)
-                    )}
-                    settings={settings}
-                    disabled={loading}
-                    pageInfo={pageInfo}
-                    onAdd={() => navigate(customerAddUrl)}
-                    onNextPage={loadNextPage}
-                    onPreviousPage={loadPreviousPage}
-                    onUpdateListSettings={updateListSettings}
-                    onRowClick={id => () => navigate(customerUrl(id))}
-                    toolbar={
-                      <IconButton
-                        color="primary"
-                        onClick={() =>
-                          navigate(
-                            customerListUrl({
-                              action: "remove",
-                              ids: listElements
-                            })
-                          )
-                        }
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    }
-                    isChecked={isSelected}
-                    selected={listElements.length}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                  />
-                  <ActionDialog
-                    open={
-                      params.action === "remove" &&
-                      maybe(() => params.ids.length > 0)
-                    }
-                    onClose={closeModal}
-                    confirmButtonState={removeTransitionState}
-                    onConfirm={() =>
-                      bulkRemoveCustomers({
-                        variables: {
-                          ids: params.ids
-                        }
-                      })
-                    }
-                    variant="delete"
-                    title={intl.formatMessage({
-                      defaultMessage: "Delete Customers",
-                      description: "dialog header"
-                    })}
-                  >
-                    <DialogContentText>
-                      <FormattedMessage
-                        defaultMessage="Are you sure you want to delete {counter,plural,one{this customer} other{{displayQuantity} customers}}?"
-                        values={{
-                          counter: maybe(() => params.ids.length),
-                          displayQuantity: (
-                            <strong>{maybe(() => params.ids.length)}</strong>
-                          )
-                        }}
-                      />
-                    </DialogContentText>
-                  </ActionDialog>
-                  <SaveFilterTabDialog
-                    open={params.action === "save-search"}
-                    confirmButtonState="default"
-                    onClose={closeModal}
-                    onSubmit={handleTabSave}
-                  />
-                  <DeleteFilterTabDialog
-                    open={params.action === "delete-search"}
-                    confirmButtonState="default"
-                    onClose={closeModal}
-                    onSubmit={handleTabDelete}
-                    tabName={maybe(() => tabs[currentTab - 1].name, "...")}
-                  />
-                </>
-              );
-            }}
+            {(bulkRemoveCustomers, bulkRemoveCustomersOpts) => (
+              <>
+                <CustomerListPage
+                  currentTab={currentTab}
+                  initialSearch={params.query || ""}
+                  onSearchChange={query => changeFilterField({ query })}
+                  onAll={() => navigate(customerListUrl())}
+                  onTabChange={handleTabChange}
+                  onTabDelete={() => openModal("delete-search")}
+                  onTabSave={() => openModal("save-search")}
+                  tabs={tabs.map(tab => tab.name)}
+                  customers={maybe(() =>
+                    data.customers.edges.map(edge => edge.node)
+                  )}
+                  settings={settings}
+                  disabled={loading}
+                  pageInfo={pageInfo}
+                  onAdd={() => navigate(customerAddUrl)}
+                  onNextPage={loadNextPage}
+                  onPreviousPage={loadPreviousPage}
+                  onUpdateListSettings={updateListSettings}
+                  onRowClick={id => () => navigate(customerUrl(id))}
+                  toolbar={
+                    <IconButton
+                      color="primary"
+                      onClick={() =>
+                        navigate(
+                          customerListUrl({
+                            action: "remove",
+                            ids: listElements
+                          })
+                        )
+                      }
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  }
+                  isChecked={isSelected}
+                  selected={listElements.length}
+                  toggle={toggle}
+                  toggleAll={toggleAll}
+                />
+                <ActionDialog
+                  open={
+                    params.action === "remove" &&
+                    maybe(() => params.ids.length > 0)
+                  }
+                  onClose={closeModal}
+                  confirmButtonState={bulkRemoveCustomersOpts.status}
+                  onConfirm={() =>
+                    bulkRemoveCustomers({
+                      variables: {
+                        ids: params.ids
+                      }
+                    })
+                  }
+                  variant="delete"
+                  title={intl.formatMessage({
+                    defaultMessage: "Delete Customers",
+                    description: "dialog header"
+                  })}
+                >
+                  <DialogContentText>
+                    <FormattedMessage
+                      defaultMessage="Are you sure you want to delete {counter,plural,one{this customer} other{{displayQuantity} customers}}?"
+                      values={{
+                        counter: maybe(() => params.ids.length),
+                        displayQuantity: (
+                          <strong>{maybe(() => params.ids.length)}</strong>
+                        )
+                      }}
+                    />
+                  </DialogContentText>
+                </ActionDialog>
+                <SaveFilterTabDialog
+                  open={params.action === "save-search"}
+                  confirmButtonState="default"
+                  onClose={closeModal}
+                  onSubmit={handleTabSave}
+                />
+                <DeleteFilterTabDialog
+                  open={params.action === "delete-search"}
+                  confirmButtonState="default"
+                  onClose={closeModal}
+                  onSubmit={handleTabDelete}
+                  tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+                />
+              </>
+            )}
           </TypedBulkRemoveCustomers>
         );
       }}

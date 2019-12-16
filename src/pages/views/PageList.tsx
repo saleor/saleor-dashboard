@@ -14,7 +14,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import PageListPage from "../components/PageListPage/PageListPage";
 import { TypedPageBulkPublish, TypedPageBulkRemove } from "../mutations";
@@ -107,160 +107,142 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           <TypedPageBulkRemove onCompleted={handlePageBulkRemove}>
             {(bulkPageRemove, bulkPageRemoveOpts) => (
               <TypedPageBulkPublish onCompleted={handlePageBulkPublish}>
-                {(bulkPagePublish, bulkPagePublishOpts) => {
-                  const deleteTransitionState = getMutationState(
-                    bulkPageRemoveOpts.called,
-                    bulkPageRemoveOpts.loading,
-                    maybe(() => bulkPageRemoveOpts.data.pageBulkDelete.errors)
-                  );
-
-                  const publishTransitionState = getMutationState(
-                    bulkPagePublishOpts.called,
-                    bulkPagePublishOpts.loading,
-                    maybe(() => bulkPagePublishOpts.data.pageBulkPublish.errors)
-                  );
-
-                  return (
-                    <>
-                      <PageListPage
-                        disabled={loading}
-                        settings={settings}
-                        pages={maybe(() =>
-                          data.pages.edges.map(edge => edge.node)
-                        )}
-                        pageInfo={pageInfo}
-                        onAdd={() => navigate(pageCreateUrl)}
-                        onBack={() => navigate(configurationMenuUrl)}
-                        onNextPage={loadNextPage}
-                        onPreviousPage={loadPreviousPage}
-                        onUpdateListSettings={updateListSettings}
-                        onRowClick={id => () => navigate(pageUrl(id))}
-                        toolbar={
-                          <>
-                            <Button
-                              color="primary"
-                              onClick={() =>
-                                openModal("unpublish", listElements)
-                              }
-                            >
-                              <FormattedMessage
-                                defaultMessage="Unpublish"
-                                description="unpublish page, button"
-                              />
-                            </Button>
-                            <Button
-                              color="primary"
-                              onClick={() => openModal("publish", listElements)}
-                            >
-                              <FormattedMessage
-                                defaultMessage="Publish"
-                                description="publish page, button"
-                              />
-                            </Button>
-                            <IconButton
-                              color="primary"
-                              onClick={() => openModal("remove", listElements)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </>
-                        }
-                        isChecked={isSelected}
-                        selected={listElements.length}
-                        toggle={toggle}
-                        toggleAll={toggleAll}
+                {(bulkPagePublish, bulkPagePublishOpts) => (
+                  <>
+                    <PageListPage
+                      disabled={loading}
+                      settings={settings}
+                      pages={maybe(() =>
+                        data.pages.edges.map(edge => edge.node)
+                      )}
+                      pageInfo={pageInfo}
+                      onAdd={() => navigate(pageCreateUrl)}
+                      onBack={() => navigate(configurationMenuUrl)}
+                      onNextPage={loadNextPage}
+                      onPreviousPage={loadPreviousPage}
+                      onUpdateListSettings={updateListSettings}
+                      onRowClick={id => () => navigate(pageUrl(id))}
+                      toolbar={
+                        <>
+                          <Button
+                            color="primary"
+                            onClick={() => openModal("unpublish", listElements)}
+                          >
+                            <FormattedMessage
+                              defaultMessage="Unpublish"
+                              description="unpublish page, button"
+                            />
+                          </Button>
+                          <Button
+                            color="primary"
+                            onClick={() => openModal("publish", listElements)}
+                          >
+                            <FormattedMessage
+                              defaultMessage="Publish"
+                              description="publish page, button"
+                            />
+                          </Button>
+                          <IconButton
+                            color="primary"
+                            onClick={() => openModal("remove", listElements)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </>
+                      }
+                      isChecked={isSelected}
+                      selected={listElements.length}
+                      toggle={toggle}
+                      toggleAll={toggleAll}
+                    />
+                    <ActionDialog
+                      open={params.action === "publish"}
+                      onClose={closeModal}
+                      confirmButtonState={bulkPagePublishOpts.status}
+                      onConfirm={() =>
+                        bulkPagePublish({
+                          variables: {
+                            ids: params.ids,
+                            isPublished: true
+                          }
+                        })
+                      }
+                      title={intl.formatMessage({
+                        defaultMessage: "Publish Pages",
+                        description: "dialog header"
+                      })}
+                    >
+                      <DialogContentText>
+                        <FormattedMessage
+                          defaultMessage="Are you sure you want to publish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
+                          description="dialog content"
+                          values={{
+                            counter: maybe(() => params.ids.length),
+                            displayQuantity: (
+                              <strong>{maybe(() => params.ids.length)}</strong>
+                            )
+                          }}
+                        />
+                      </DialogContentText>
+                    </ActionDialog>
+                    <ActionDialog
+                      open={params.action === "unpublish"}
+                      onClose={closeModal}
+                      confirmButtonState={bulkPagePublishOpts.status}
+                      onConfirm={() =>
+                        bulkPagePublish({
+                          variables: {
+                            ids: params.ids,
+                            isPublished: false
+                          }
+                        })
+                      }
+                      title={intl.formatMessage({
+                        defaultMessage: "Unpublish Pages",
+                        description: "dialog header"
+                      })}
+                    >
+                      <FormattedMessage
+                        defaultMessage="Are you sure you want to unpublish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
+                        description="dialog content"
+                        values={{
+                          counter: maybe(() => params.ids.length),
+                          displayQuantity: (
+                            <strong>{maybe(() => params.ids.length)}</strong>
+                          )
+                        }}
                       />
-                      <ActionDialog
-                        open={params.action === "publish"}
-                        onClose={closeModal}
-                        confirmButtonState={publishTransitionState}
-                        onConfirm={() =>
-                          bulkPagePublish({
-                            variables: {
-                              ids: params.ids,
-                              isPublished: true
-                            }
-                          })
-                        }
-                        title={intl.formatMessage({
-                          defaultMessage: "Publish Pages",
-                          description: "dialog header"
-                        })}
-                      >
-                        <DialogContentText>
-                          <FormattedMessage
-                            defaultMessage="Are you sure you want to publish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
-                            description="dialog content"
-                            values={{
-                              counter: maybe(() => params.ids.length),
-                              displayQuantity: (
-                                <strong>
-                                  {maybe(() => params.ids.length)}
-                                </strong>
-                              )
-                            }}
-                          />
-                        </DialogContentText>
-                      </ActionDialog>
-                      <ActionDialog
-                        open={params.action === "unpublish"}
-                        onClose={closeModal}
-                        confirmButtonState={publishTransitionState}
-                        onConfirm={() =>
-                          bulkPagePublish({
-                            variables: {
-                              ids: params.ids,
-                              isPublished: false
-                            }
-                          })
-                        }
-                        title={intl.formatMessage({
-                          defaultMessage: "Unpublish Pages",
-                          description: "dialog header"
-                        })}
-                      >
-                        <FormattedMessage
-                          defaultMessage="Are you sure you want to unpublish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
-                          description="dialog content"
-                          values={{
-                            counter: maybe(() => params.ids.length),
-                            displayQuantity: (
-                              <strong>{maybe(() => params.ids.length)}</strong>
-                            )
-                          }}
-                        />
-                      </ActionDialog>
-                      <ActionDialog
-                        open={params.action === "remove"}
-                        onClose={closeModal}
-                        confirmButtonState={deleteTransitionState}
-                        onConfirm={() =>
-                          bulkPageRemove({
-                            variables: {
-                              ids: params.ids
-                            }
-                          })
-                        }
-                        variant="delete"
-                        title={intl.formatMessage({
-                          defaultMessage: "Delete Pages",
-                          description: "dialog header"
-                        })}
-                      >
-                        <FormattedMessage
-                          defaultMessage="Are you sure you want to delete {counter,plural,one{this page} other{{displayQuantity} pages}}?"
-                          description="dialog content"
-                          values={{
-                            counter: maybe(() => params.ids.length),
-                            displayQuantity: (
-                              <strong>{maybe(() => params.ids.length)}</strong>
-                            )
-                          }}
-                        />
-                      </ActionDialog>
-                    </>
-                  );
-                }}
+                    </ActionDialog>
+                    <ActionDialog
+                      open={params.action === "remove"}
+                      onClose={closeModal}
+                      confirmButtonState={bulkPageRemoveOpts.status}
+                      onConfirm={() =>
+                        bulkPageRemove({
+                          variables: {
+                            ids: params.ids
+                          }
+                        })
+                      }
+                      variant="delete"
+                      title={intl.formatMessage({
+                        defaultMessage: "Delete Pages",
+                        description: "dialog header"
+                      })}
+                    >
+                      <FormattedMessage
+                        defaultMessage="Are you sure you want to delete {counter,plural,one{this page} other{{displayQuantity} pages}}?"
+                        description="dialog content"
+                        values={{
+                          counter: maybe(() => params.ids.length),
+                          displayQuantity: (
+                            <strong>{maybe(() => params.ids.length)}</strong>
+                          )
+                        }}
+                      />
+                    </ActionDialog>
+                  </>
+                )}
               </TypedPageBulkPublish>
             )}
           </TypedPageBulkRemove>

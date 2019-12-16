@@ -5,7 +5,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import { decimal, getMutationState, maybe } from "../../misc";
+import { decimal, maybe } from "../../misc";
 import ProductVariantCreatePage, {
   ProductVariantCreatePageSubmitData
 } from "../components/ProductVariantCreatePage";
@@ -77,14 +77,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ productId }) => {
 
               const disableForm = productLoading || variantCreateResult.loading;
 
-              const formTransitionstate = getMutationState(
-                variantCreateResult.called,
-                variantCreateResult.loading,
-                maybe(
-                  () =>
-                    variantCreateResult.data.productVariantCreate.productErrors
-                )
-              );
               return (
                 <>
                   <WindowTitle
@@ -110,7 +102,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ productId }) => {
                     onBack={handleBack}
                     onSubmit={handleSubmit}
                     onVariantClick={handleVariantClick}
-                    saveButtonBarState={formTransitionstate}
+                    saveButtonBarState={variantCreateResult.status}
                   />
                 </>
               );

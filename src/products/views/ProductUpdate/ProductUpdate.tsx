@@ -206,21 +206,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                     updateSimpleProduct.opts.data.productVariantUpdate.errors
                 )
               );
-              const deleteTransitionState = getMutationState(
-                deleteProduct.opts.called,
-                deleteProduct.opts.loading,
-                maybe(() => deleteProduct.opts.data.productDelete.errors)
-              );
-
-              const bulkProductVariantDeleteTransitionState = getMutationState(
-                bulkProductVariantDelete.opts.called,
-                bulkProductVariantDelete.opts.loading,
-                maybe(
-                  () =>
-                    bulkProductVariantDelete.opts.data.productVariantBulkDelete
-                      .errors
-                )
-              );
 
               const categories = maybe(
                 () => searchCategoriesOpts.data.search.edges,
@@ -308,7 +293,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                   <ActionDialog
                     open={params.action === "remove"}
                     onClose={() => navigate(productUrl(id), true)}
-                    confirmButtonState={deleteTransitionState}
+                    confirmButtonState={deleteProduct.opts.status}
                     onConfirm={() => deleteProduct.mutate({ id })}
                     variant="delete"
                     title={intl.formatMessage({
@@ -329,7 +314,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                   <ActionDialog
                     open={params.action === "remove-variants"}
                     onClose={() => navigate(productUrl(id), true)}
-                    confirmButtonState={bulkProductVariantDeleteTransitionState}
+                    confirmButtonState={bulkProductVariantDelete.opts.status}
                     onConfirm={() =>
                       bulkProductVariantDelete.mutate({
                         ids: params.ids
