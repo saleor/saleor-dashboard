@@ -6,7 +6,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import {
   LanguageCodeEnum,
   NameTranslationInput
@@ -81,15 +81,6 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
               });
             };
 
-            const saveButtonState = getMutationState(
-              updateTranslationsOpts.called,
-              updateTranslationsOpts.loading,
-              maybe(
-                () => updateTranslationsOpts.data.voucherTranslate.errors,
-                []
-              )
-            );
-
             return (
               <TranslationsVouchersPage
                 activeField={params.activeField}
@@ -98,7 +89,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
                 }
                 languages={maybe(() => shop.languages, [])}
                 languageCode={languageCode}
-                saveButtonState={saveButtonState}
+                saveButtonState={updateTranslationsOpts.status}
                 onBack={() =>
                   navigate(
                     languageEntitiesUrl(languageCode, {

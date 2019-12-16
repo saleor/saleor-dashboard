@@ -9,7 +9,7 @@ import useShop from "@saleor/hooks/useShop";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import { decimal, getMutationState, maybe } from "../../misc";
+import { decimal, maybe } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
@@ -70,14 +70,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
 
   return (
     <TypedProductCreateMutation onCompleted={handleSuccess}>
-      {(
-        productCreate,
-        {
-          called: productCreateCalled,
-          data: productCreateData,
-          loading: productCreateDataLoading
-        }
-      ) => {
+      {(productCreate, productCreateOpts) => {
         const handleSubmit = (formData: ProductCreatePageSubmitData) => {
           productCreate({
             variables: {
@@ -108,11 +101,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
           });
         };
 
-        const formTransitionState = getMutationState(
-          productCreateCalled,
-          productCreateDataLoading,
-          maybe(() => productCreateData.productCreate.errors)
-        );
         return (
           <>
             <WindowTitle
@@ -131,8 +119,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
                 () => searchCollectionOpts.data.search.edges,
                 []
               ).map(edge => edge.node)}
-              disabled={productCreateDataLoading}
-              errors={maybe(() => productCreateData.productCreate.errors, [])}
+              disabled={productCreateOpts.loading}
+              errors={maybe(
+                () => productCreateOpts.data.productCreate.errors,
+                []
+              )}
               fetchCategories={searchCategory}
               fetchCollections={searchCollection}
               fetchProductTypes={searchProductTypes}
@@ -145,7 +136,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
               )}
               onBack={handleBack}
               onSubmit={handleSubmit}
-              saveButtonBarState={formTransitionState}
+              saveButtonBarState={productCreateOpts.status}
               fetchMoreCategories={{
                 hasMore: maybe(
                   () => searchCategoryOpts.data.search.pageInfo.hasNextPage

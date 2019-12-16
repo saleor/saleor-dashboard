@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import PageDetailsPage from "../components/PageDetailsPage";
 import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
@@ -32,53 +32,45 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
 
   return (
     <TypedPageCreate onCompleted={handlePageCreate}>
-      {(pageCreate, pageCreateOpts) => {
-        const formTransitionState = getMutationState(
-          pageCreateOpts.called,
-          pageCreateOpts.loading,
-          maybe(() => pageCreateOpts.data.pageCreate.errors)
-        );
-
-        return (
-          <>
-            <WindowTitle
-              title={intl.formatMessage({
-                defaultMessage: "Create Page",
-                description: "header"
-              })}
-            />
-            <PageDetailsPage
-              disabled={pageCreateOpts.loading}
-              errors={maybe(() => pageCreateOpts.data.pageCreate.errors, [])}
-              saveButtonBarState={formTransitionState}
-              page={null}
-              onBack={() => navigate(pageListUrl())}
-              onRemove={() => undefined}
-              onSubmit={formData =>
-                pageCreate({
-                  variables: {
-                    input: {
-                      contentJson: JSON.stringify(formData.content),
-                      isPublished: formData.isPublished,
-                      publicationDate: formData.isPublished
-                        ? null
-                        : formData.publicationDate === ""
-                        ? null
-                        : formData.publicationDate,
-                      seo: {
-                        description: formData.seoDescription,
-                        title: formData.seoTitle
-                      },
-                      slug: formData.slug === "" ? null : formData.slug,
-                      title: formData.title
-                    }
+      {(pageCreate, pageCreateOpts) => (
+        <>
+          <WindowTitle
+            title={intl.formatMessage({
+              defaultMessage: "Create Page",
+              description: "header"
+            })}
+          />
+          <PageDetailsPage
+            disabled={pageCreateOpts.loading}
+            errors={maybe(() => pageCreateOpts.data.pageCreate.errors, [])}
+            saveButtonBarState={pageCreateOpts.status}
+            page={null}
+            onBack={() => navigate(pageListUrl())}
+            onRemove={() => undefined}
+            onSubmit={formData =>
+              pageCreate({
+                variables: {
+                  input: {
+                    contentJson: JSON.stringify(formData.content),
+                    isPublished: formData.isPublished,
+                    publicationDate: formData.isPublished
+                      ? null
+                      : formData.publicationDate === ""
+                      ? null
+                      : formData.publicationDate,
+                    seo: {
+                      description: formData.seoDescription,
+                      title: formData.seoTitle
+                    },
+                    slug: formData.slug === "" ? null : formData.slug,
+                    title: formData.title
                   }
-                })
-              }
-            />
-          </>
-        );
-      }}
+                }
+              })
+            }
+          />
+        </>
+      )}
     </TypedPageCreate>
   );
 };

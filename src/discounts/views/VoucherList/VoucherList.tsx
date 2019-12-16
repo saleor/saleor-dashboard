@@ -19,7 +19,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import VoucherListPage from "../../components/VoucherListPage";
 import { TypedVoucherBulkDelete } from "../../mutations";
@@ -153,17 +153,13 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         return (
           <TypedVoucherBulkDelete onCompleted={handleVoucherBulkDelete}>
             {(voucherBulkDelete, voucherBulkDeleteOpts) => {
-              const bulkRemoveTransitionState = getMutationState(
-                voucherBulkDeleteOpts.called,
-                voucherBulkDeleteOpts.loading,
-                maybe(() => voucherBulkDeleteOpts.data.voucherBulkDelete.errors)
-              );
               const onVoucherBulkDelete = () =>
                 voucherBulkDelete({
                   variables: {
                     ids: params.ids
                   }
                 });
+
               return (
                 <>
                   <WindowTitle
@@ -211,7 +207,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
                     }
                   />
                   <ActionDialog
-                    confirmButtonState={bulkRemoveTransitionState}
+                    confirmButtonState={voucherBulkDeleteOpts.status}
                     onClose={closeModal}
                     onConfirm={onVoucherBulkDelete}
                     open={params.action === "remove" && canOpenBulkActionDialog}

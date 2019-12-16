@@ -8,7 +8,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import CustomerAddressDialog from "../components/CustomerAddressDialog";
 import CustomerAddressListPage from "../components/CustomerAddressListPage";
 import {
@@ -97,39 +97,6 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                   {(removeCustomerAddress, removeCustomerAddressOpts) => (
                     <TypedCustomerAddressesQuery variables={{ id }}>
                       {customerData => {
-                        const createAddressTransitionState = getMutationState(
-                          createCustomerAddressOpts.called,
-                          createCustomerAddressOpts.loading,
-                          maybe(
-                            () =>
-                              createCustomerAddressOpts.data.addressCreate
-                                .errors,
-                            []
-                          )
-                        );
-
-                        const updateAddressTransitionState = getMutationState(
-                          updateCustomerAddressOpts.called,
-                          updateCustomerAddressOpts.loading,
-                          maybe(
-                            () =>
-                              updateCustomerAddressOpts.data.addressUpdate
-                                .errors,
-                            []
-                          )
-                        );
-
-                        const removeAddressTransitionState = getMutationState(
-                          removeCustomerAddressOpts.called,
-                          removeCustomerAddressOpts.loading,
-                          maybe(
-                            () =>
-                              removeCustomerAddressOpts.data.addressDelete
-                                .errors,
-                            []
-                          )
-                        );
-
                         const countryChoices = maybe(
                           () =>
                             shop.countries.map(country => ({
@@ -161,7 +128,9 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                             />
                             <CustomerAddressDialog
                               address={undefined}
-                              confirmButtonState={createAddressTransitionState}
+                              confirmButtonState={
+                                createCustomerAddressOpts.status
+                              }
                               countries={countryChoices}
                               errors={maybe(
                                 () =>
@@ -187,7 +156,9 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                                   addr => addr.id === params.id
                                 )
                               )}
-                              confirmButtonState={updateAddressTransitionState}
+                              confirmButtonState={
+                                updateCustomerAddressOpts.status
+                              }
                               countries={countryChoices}
                               errors={maybe(
                                 () =>
@@ -214,7 +185,9 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                                 defaultMessage: "Delete Address",
                                 description: "dialog header"
                               })}
-                              confirmButtonState={removeAddressTransitionState}
+                              confirmButtonState={
+                                removeCustomerAddressOpts.status
+                              }
                               onClose={closeModal}
                               onConfirm={() =>
                                 removeCustomerAddress({

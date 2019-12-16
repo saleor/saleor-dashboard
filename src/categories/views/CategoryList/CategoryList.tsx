@@ -15,7 +15,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
 import { useCategoryBulkDeleteMutation } from "../../mutations";
@@ -148,12 +148,6 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     onCompleted: handleCategoryBulkDelete
   });
 
-  const bulkDeleteState = getMutationState(
-    categoryBulkDeleteOpts.called,
-    categoryBulkDeleteOpts.loading,
-    maybe(() => categoryBulkDeleteOpts.data.categoryBulkDelete.errors)
-  );
-
   return (
     <>
       <CategoryListPage
@@ -199,7 +193,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         }
       />
       <ActionDialog
-        confirmButtonState={bulkDeleteState}
+        confirmButtonState={categoryBulkDeleteOpts.status}
         onClose={() =>
           navigate(
             categoryListUrl({

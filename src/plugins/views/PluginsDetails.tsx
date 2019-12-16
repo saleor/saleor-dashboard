@@ -8,7 +8,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import PluginsDetailsPage from "../components/PluginsDetailsPage";
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
 import { TypedPluginUpdate } from "../mutations";
@@ -85,12 +85,6 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
       {pluginDetails => (
         <TypedPluginUpdate onCompleted={handleUpdate}>
           {(pluginUpdate, pluginUpdateOpts) => {
-            const formTransitionState = getMutationState(
-              pluginUpdateOpts.called,
-              pluginUpdateOpts.loading,
-              maybe(() => pluginUpdateOpts.data.pluginUpdate.errors)
-            );
-
             const formErrors = maybe(
               () => pluginUpdateOpts.data.pluginUpdate.errors,
               []
@@ -120,7 +114,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                   disabled={pluginDetails.loading}
                   errors={formErrors}
                   saveButtonBarState={
-                    !params.action ? formTransitionState : "default"
+                    !params.action ? pluginUpdateOpts.status : "default"
                   }
                   plugin={maybe(() => pluginDetails.data.plugin)}
                   onBack={() => navigate(pluginsListUrl())}
@@ -145,7 +139,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                   <>
                     <ActionDialog
                       confirmButtonState={
-                        !!params.action ? formTransitionState : "default"
+                        !!params.action ? pluginUpdateOpts.status : "default"
                       }
                       onClose={closeModal}
                       open={params.action === "clear" && !!params.field}
@@ -161,7 +155,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                     </ActionDialog>
                     <PluginSecretFieldDialog
                       confirmButtonState={
-                        !!params.action ? formTransitionState : "default"
+                        !!params.action ? pluginUpdateOpts.status : "default"
                       }
                       field={maybe(() =>
                         pluginDetails.data.plugin.configuration.find(

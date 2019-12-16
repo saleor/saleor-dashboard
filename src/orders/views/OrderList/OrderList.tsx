@@ -15,7 +15,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import OrderBulkCancelDialog from "../../components/OrderBulkCancelDialog";
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
@@ -176,11 +176,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         return (
           <TypedOrderBulkCancelMutation onCompleted={handleOrderBulkCancel}>
             {(orderBulkCancel, orderBulkCancelOpts) => {
-              const orderBulkCancelTransitionState = getMutationState(
-                orderBulkCancelOpts.called,
-                orderBulkCancelOpts.loading,
-                maybe(() => orderBulkCancelOpts.data.orderBulkCancel.errors)
-              );
               const onOrderBulkCancel = (restock: boolean) =>
                 orderBulkCancel({
                   variables: {
@@ -244,7 +239,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
                     }
                   />
                   <OrderBulkCancelDialog
-                    confirmButtonState={orderBulkCancelTransitionState}
+                    confirmButtonState={orderBulkCancelOpts.status}
                     numberOfOrders={maybe(
                       () => params.ids.length.toString(),
                       "..."

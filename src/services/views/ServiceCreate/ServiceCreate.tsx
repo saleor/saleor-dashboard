@@ -6,7 +6,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ServiceCreateMutation } from "@saleor/services/mutations";
 import { ServiceCreate as ServiceCreateData } from "@saleor/services/types/ServiceCreate";
 import ServiceCreatePage, {
@@ -51,12 +51,6 @@ export const ServiceCreate: React.FC<ServiceCreateProps> = ({ setToken }) => {
             }
           });
 
-        const formTransitionState = getMutationState(
-          serviceCreateOpts.called,
-          serviceCreateOpts.loading,
-          maybe(() => serviceCreateOpts.data.serviceAccountCreate.errors)
-        );
-
         return (
           <>
             <WindowTitle
@@ -74,7 +68,7 @@ export const ServiceCreate: React.FC<ServiceCreateProps> = ({ setToken }) => {
               onBack={handleBack}
               onSubmit={handleSubmit}
               permissions={maybe(() => shop.permissions)}
-              saveButtonBarState={formTransitionState}
+              saveButtonBarState={serviceCreateOpts.status}
             />
           </>
         );

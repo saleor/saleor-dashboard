@@ -6,7 +6,7 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import { PageInput } from "../../types/globalTypes";
 import PageDetailsPage, { FormData } from "../components/PageDetailsPage";
 import { TypedPageRemove, TypedPageUpdate } from "../mutations";
@@ -56,79 +56,63 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         <TypedPageUpdate>
           {(pageUpdate, pageUpdateOpts) => (
             <TypedPageDetailsQuery variables={{ id }}>
-              {pageDetails => {
-                const formTransitionState = getMutationState(
-                  pageUpdateOpts.called,
-                  pageUpdateOpts.loading,
-                  maybe(() => pageUpdateOpts.data.pageUpdate.errors)
-                );
-                const removeTransitionState = getMutationState(
-                  pageRemoveOpts.called,
-                  pageRemoveOpts.loading,
-                  maybe(() => pageRemoveOpts.data.pageDelete.errors)
-                );
-
-                return (
-                  <>
-                    <WindowTitle
-                      title={maybe(() => pageDetails.data.page.title)}
-                    />
-                    <PageDetailsPage
-                      disabled={pageDetails.loading}
-                      errors={maybe(
-                        () => pageUpdateOpts.data.pageUpdate.errors,
-                        []
-                      )}
-                      saveButtonBarState={formTransitionState}
-                      page={maybe(() => pageDetails.data.page)}
-                      onBack={() => navigate(pageListUrl())}
-                      onRemove={() =>
-                        navigate(
-                          pageUrl(id, {
-                            action: "remove"
-                          })
-                        )
-                      }
-                      onSubmit={formData =>
-                        pageUpdate({
-                          variables: {
-                            id,
-                            input: createPageInput(formData)
-                          }
+              {pageDetails => (
+                <>
+                  <WindowTitle
+                    title={maybe(() => pageDetails.data.page.title)}
+                  />
+                  <PageDetailsPage
+                    disabled={pageDetails.loading}
+                    errors={maybe(
+                      () => pageUpdateOpts.data.pageUpdate.errors,
+                      []
+                    )}
+                    saveButtonBarState={pageUpdateOpts.status}
+                    page={maybe(() => pageDetails.data.page)}
+                    onBack={() => navigate(pageListUrl())}
+                    onRemove={() =>
+                      navigate(
+                        pageUrl(id, {
+                          action: "remove"
                         })
-                      }
-                    />
-                    <ActionDialog
-                      open={params.action === "remove"}
-                      confirmButtonState={removeTransitionState}
-                      title={intl.formatMessage({
-                        defaultMessage: "Delete Page",
-                        description: "dialog header"
-                      })}
-                      onClose={() => navigate(pageUrl(id))}
-                      onConfirm={pageRemove}
-                      variant="delete"
-                    >
-                      <DialogContentText>
-                        <FormattedMessage
-                          defaultMessage="Are you sure you want to delete {title}?"
-                          description="delete page"
-                          values={{
-                            title: (
-                              <strong>
-                                {maybe(
-                                  () => pageDetails.data.page.title,
-                                  "..."
-                                )}
-                              </strong>
-                            )
-                          }}
-                        />
-                      </DialogContentText>
-                    </ActionDialog>
-                  </>
-                );
-              }}
+                      )
+                    }
+                    onSubmit={formData =>
+                      pageUpdate({
+                        variables: {
+                          id,
+                          input: createPageInput(formData)
+                        }
+                      })
+                    }
+                  />
+                  <ActionDialog
+                    open={params.action === "remove"}
+                    confirmButtonState={pageRemoveOpts.status}
+                    title={intl.formatMessage({
+                      defaultMessage: "Delete Page",
+                      description: "dialog header"
+                    })}
+                    onClose={() => navigate(pageUrl(id))}
+                    onConfirm={pageRemove}
+                    variant="delete"
+                  >
+                    <DialogContentText>
+                      <FormattedMessage
+                        defaultMessage="Are you sure you want to delete {title}?"
+                        description="delete page"
+                        values={{
+                          title: (
+                            <strong>
+                              {maybe(() => pageDetails.data.page.title, "...")}
+                            </strong>
+                          )
+                        }}
+                      />
+                    </DialogContentText>
+                  </ActionDialog>
+                </>
+              )}
             </TypedPageDetailsQuery>
           )}
         </TypedPageUpdate>

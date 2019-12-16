@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationState, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import ProductTypeCreatePage, {
   ProductTypeForm
 } from "../components/ProductTypeCreatePage";
@@ -30,11 +30,7 @@ export const ProductTypeCreate: React.FC = () => {
   };
   return (
     <TypedProductTypeCreateMutation onCompleted={handleCreateSuccess}>
-      {(
-        createProductType,
-        { called, loading, data: createProductTypeData }
-      ) => {
-        const formTransitionState = getMutationState(loading, called);
+      {(createProductType, createProductTypeOpts) => {
         const handleCreate = (formData: ProductTypeForm) =>
           createProductType({
             variables: {
@@ -61,17 +57,16 @@ export const ProductTypeCreate: React.FC = () => {
                 <ProductTypeCreatePage
                   defaultWeightUnit={maybe(() => data.shop.defaultWeightUnit)}
                   disabled={loading}
-                  errors={
-                    createProductTypeData
-                      ? createProductTypeData.productTypeCreate.errors
-                      : undefined
-                  }
+                  errors={maybe(
+                    () => createProductTypeOpts.data.productTypeCreate.errors,
+                    []
+                  )}
                   pageTitle={intl.formatMessage({
                     defaultMessage: "Create Product Type",
                     description: "header",
                     id: "productTypeCreatePageHeader"
                   })}
-                  saveButtonBarState={formTransitionState}
+                  saveButtonBarState={createProductTypeOpts.status}
                   taxTypes={maybe(() => data.taxTypes, [])}
                   onBack={() => navigate(productTypeListUrl())}
                   onSubmit={handleCreate}

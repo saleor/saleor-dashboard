@@ -9,7 +9,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import AssignAttributeDialog from "@saleor/productTypes/components/AssignAttributeDialog";
 import { ReorderEvent } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
@@ -190,38 +190,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
 
                   const loading = updateProductType.opts.loading || dataLoading;
 
-                  const assignTransactionState = getMutationState(
-                    assignAttribute.opts.called,
-                    assignAttribute.opts.loading,
-                    maybe(
-                      () => assignAttribute.opts.data.attributeAssign.errors
-                    )
-                  );
-
-                  const unassignTransactionState = getMutationState(
-                    unassignAttribute.opts.called,
-                    unassignAttribute.opts.loading,
-                    maybe(
-                      () => unassignAttribute.opts.data.attributeUnassign.errors
-                    )
-                  );
-
-                  const deleteTransactionState = getMutationState(
-                    deleteProductType.opts.called,
-                    deleteProductType.opts.loading,
-                    maybe(
-                      () => deleteProductType.opts.data.productTypeDelete.errors
-                    )
-                  );
-
-                  const formTransitionState = getMutationState(
-                    updateProductType.opts.called,
-                    updateProductType.opts.loading,
-                    maybe(
-                      () => updateProductType.opts.data.productTypeUpdate.errors
-                    )
-                  );
-
                   const handleAttributeReorder = (
                     event: ReorderEvent,
                     type: AttributeTypeEnum
@@ -252,7 +220,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                         errors={errors.formErrors}
                         pageTitle={maybe(() => data.productType.name)}
                         productType={maybe(() => data.productType)}
-                        saveButtonBarState={formTransitionState}
+                        saveButtonBarState={updateProductType.opts.status}
                         taxTypes={maybe(() => data.taxTypes, [])}
                         onAttributeAdd={type =>
                           navigate(
@@ -345,7 +313,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                                 edge => edge.node
                               )
                             )}
-                            confirmButtonState={assignTransactionState}
+                            confirmButtonState={assignAttribute.opts.status}
                             errors={maybe(
                               () =>
                                 assignAttribute.opts.data.attributeAssign.errors.map(
@@ -387,7 +355,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                           />
                         ))}
                       <ProductTypeDeleteDialog
-                        confirmButtonState={deleteTransactionState}
+                        confirmButtonState={deleteProductType.opts.status}
                         name={maybe(() => data.productType.name, "...")}
                         open={params.action === "remove"}
                         onClose={() => navigate(productTypeUrl(id))}
@@ -395,7 +363,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                       />
                       <ProductTypeBulkAttributeUnassignDialog
                         attributeQuantity={maybe(() => params.ids.length)}
-                        confirmButtonState={unassignTransactionState}
+                        confirmButtonState={unassignAttribute.opts.status}
                         onClose={closeModal}
                         onConfirm={handleBulkAttributeUnassign}
                         open={params.action === "unassign-attributes"}
@@ -414,7 +382,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                               .name,
                           "..."
                         )}
-                        confirmButtonState={unassignTransactionState}
+                        confirmButtonState={unassignAttribute.opts.status}
                         onClose={closeModal}
                         onConfirm={handleAttributeUnassign}
                         open={params.action === "unassign-attribute"}

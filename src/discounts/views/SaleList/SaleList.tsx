@@ -19,7 +19,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { getMutationState, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import SaleListPage from "../../components/SaleListPage";
 import { TypedSaleBulkDelete } from "../../mutations";
@@ -153,11 +153,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         return (
           <TypedSaleBulkDelete onCompleted={handleSaleBulkDelete}>
             {(saleBulkDelete, saleBulkDeleteOpts) => {
-              const bulkRemoveTransitionState = getMutationState(
-                saleBulkDeleteOpts.called,
-                saleBulkDeleteOpts.loading,
-                maybe(() => saleBulkDeleteOpts.data.saleBulkDelete.errors)
-              );
               const onSaleBulkDelete = () =>
                 saleBulkDelete({
                   variables: {
@@ -208,7 +203,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
                     }
                   />
                   <ActionDialog
-                    confirmButtonState={bulkRemoveTransitionState}
+                    confirmButtonState={saleBulkDeleteOpts.status}
                     onClose={closeModal}
                     onConfirm={onSaleBulkDelete}
                     open={params.action === "remove" && canOpenBulkActionDialog}
