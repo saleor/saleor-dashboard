@@ -34,7 +34,7 @@
     "downshift": "^1.31.16",
     "draft-js": "^0.10.5",
     "draftail": "^1.2.1",
-    "draftjs-to-html": "^0.8.4",
+    "draftjs-to-html": "^0.9.1",
     "fast-array-diff": "^0.2.0",
     "fuzzaldrin": "^2.1.0",
     "graphql": "^14.4.2",
