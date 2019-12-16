@@ -30,6 +30,14 @@ export function move<TData>(
   return addAtIndex(data, remove(data, list, compare), index);
 }
 
+export function update<TData>(
+  data: TData,
+  list: List<TData>,
+  compare: Compare<TData>
+) {
+  return add(data, remove(data, list, compare));
+}
+
 export function updateAtIndex<TData>(
   data: TData,
   list: List<TData>,
