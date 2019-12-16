@@ -210,6 +210,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               }
             };
 
+            const nonArraySageCount = maybe(() =>
+              Array.isArray(params.ids) ? params.ids.length : 1
+            );
+
             return (
               <TypedProductBulkDeleteMutation onCompleted={handleBulkDelete}>
                 {(productBulkDelete, productBulkDeleteOpts) => (
@@ -398,11 +402,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                                 defaultMessage="Are you sure you want to delete {counter,plural,one{this product} other{{displayQuantity} products}}?"
                                 description="dialog content"
                                 values={{
-                                  counter: maybe(() => params.ids.length),
+                                  counter: nonArraySageCount,
                                   displayQuantity: (
-                                    <strong>
-                                      {maybe(() => params.ids.length)}
-                                    </strong>
+                                    <strong>{nonArraySageCount}</strong>
                                   )
                                 }}
                               />
@@ -430,11 +432,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                                 defaultMessage="Are you sure you want to publish {counter,plural,one{this product} other{{displayQuantity} products}}?"
                                 description="dialog content"
                                 values={{
-                                  counter: maybe(() => params.ids.length),
+                                  counter: nonArraySageCount,
                                   displayQuantity: (
-                                    <strong>
-                                      {maybe(() => params.ids.length)}
-                                    </strong>
+                                    <strong>{nonArraySageCount}</strong>
                                   )
                                 }}
                               />
@@ -462,11 +462,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                                 defaultMessage="Are you sure you want to unpublish {counter,plural,one{this product} other{{displayQuantity} products}}?"
                                 description="dialog content"
                                 values={{
-                                  counter: maybe(() => params.ids.length),
+                                  counter: nonArraySageCount,
                                   displayQuantity: (
-                                    <strong>
-                                      {maybe(() => params.ids.length)}
-                                    </strong>
+                                    <strong>{nonArraySageCount}</strong>
                                   )
                                 }}
                               />

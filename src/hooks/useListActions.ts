@@ -7,7 +7,9 @@ function useListActions<TData>(
   const [listElements, setListElements] = useStateFromProps(initial);
 
   function isSelected(data: TData) {
-    return !!listElements.find(listElement => compareFunc(listElement, data));
+    return Array.isArray(listElements)
+      ? !!listElements.find(listElement => compareFunc(listElement, data))
+      : !!compareFunc(listElements, data);
   }
 
   function add(data: TData) {
