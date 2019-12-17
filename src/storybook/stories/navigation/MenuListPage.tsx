@@ -1,7 +1,12 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { listActionsProps, pageListProps } from "../../../fixtures";
+import { MenuListUrlSortField } from "@saleor/navigation/urls";
+import {
+  listActionsProps,
+  pageListProps,
+  sortPageProps
+} from "../../../fixtures";
 import MenuListPage, {
   MenuListPageProps
 } from "../../../navigation/components/MenuListPage";
@@ -11,9 +16,14 @@ import Decorator from "../../Decorator";
 const props: MenuListPageProps = {
   ...pageListProps.default,
   ...listActionsProps,
+  ...sortPageProps,
   menus: menuList,
   onBack: () => undefined,
-  onDelete: () => undefined
+  onDelete: () => undefined,
+  sort: {
+    ...sortPageProps.sort,
+    sort: MenuListUrlSortField.name
+  }
 };
 
 storiesOf("Views / Navigation / Menu list", module)

@@ -15,11 +15,17 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps } from "@saleor/types";
+import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { SaleType } from "@saleor/types/globalTypes";
+import { SaleListUrlSortField } from "@saleor/discounts/urls";
+import TableCellHeader from "@saleor/components/TableCellHeader";
+import { getArrowDirection } from "@saleor/utils/sort";
 import { SaleList_sales_edges_node } from "../../types/SaleList";
 
-export interface SaleListProps extends ListProps, ListActions {
+export interface SaleListProps
+  extends ListProps,
+    ListActions,
+    SortPage<SaleListUrlSortField> {
   defaultCurrency: string;
   sales: SaleList_sales_edges_node[];
 }
@@ -68,10 +74,12 @@ const SaleList: React.FC<SaleListProps> = props => {
     onPreviousPage,
     onUpdateListSettings,
     onRowClick,
+    onSort,
     pageInfo,
     sales,
     isChecked,
     selected,
+    sort,
     toggle,
     toggleAll,
     toolbar
@@ -89,21 +97,57 @@ const SaleList: React.FC<SaleListProps> = props => {
         toggleAll={toggleAll}
         toolbar={toolbar}
       >
-        <TableCell className={classes.colName}>
+        <TableCellHeader
+          direction={
+            sort.sort === SaleListUrlSortField.name
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          arrowPosition="right"
+          onClick={() => onSort(SaleListUrlSortField.name)}
+          className={classes.colName}
+        >
           <FormattedMessage defaultMessage="Name" description="sale name" />
-        </TableCell>
-        <TableCell className={classes.colStart}>
+        </TableCellHeader>
+        <TableCellHeader
+          direction={
+            sort.sort === SaleListUrlSortField.startDate
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          textAlign="right"
+          onClick={() => onSort(SaleListUrlSortField.startDate)}
+          className={classes.colStart}
+        >
           <FormattedMessage
             defaultMessage="Starts"
             description="sale start date"
           />
-        </TableCell>
-        <TableCell className={classes.colEnd}>
+        </TableCellHeader>
+        <TableCellHeader
+          direction={
+            sort.sort === SaleListUrlSortField.endDate
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          textAlign="right"
+          onClick={() => onSort(SaleListUrlSortField.endDate)}
+          className={classes.colEnd}
+        >
           <FormattedMessage defaultMessage="Ends" description="sale end date" />
-        </TableCell>
-        <TableCell className={classes.colValue}>
+        </TableCellHeader>
+        <TableCellHeader
+          direction={
+            sort.sort === SaleListUrlSortField.value
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          textAlign="right"
+          onClick={() => onSort(SaleListUrlSortField.value)}
+          className={classes.colValue}
+        >
           <FormattedMessage defaultMessage="Value" description="sale value" />
-        </TableCell>
+        </TableCellHeader>
       </TableHead>
       <TableFooter>
         <TableRow>

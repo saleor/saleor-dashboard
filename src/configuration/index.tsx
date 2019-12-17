@@ -20,7 +20,7 @@ import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { pageListUrl } from "@saleor/pages/urls";
-import { pluginsListUrl } from "@saleor/plugins/urls";
+import { pluginListUrl } from "@saleor/plugins/urls";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
 import { serviceListUrl } from "@saleor/services/urls";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
@@ -153,7 +153,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           ),
           permission: PermissionEnum.MANAGE_PLUGINS,
           title: intl.formatMessage(sectionNames.plugins),
-          url: pluginsListUrl()
+          url: pluginListUrl()
         },
         {
           description: intl.formatMessage({

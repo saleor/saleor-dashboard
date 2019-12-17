@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import makeQuery from "@saleor/hooks/makeQuery";
 import { TypedQuery } from "../queries";
 import { StaffList, StaffListVariables } from "./types/StaffList";
 import {
@@ -36,6 +37,7 @@ const staffList = gql`
     $last: Int
     $before: String
     $filter: StaffUserInput
+    $sort: UserSortingInput
   ) {
     staffUsers(
       before: $before
@@ -43,6 +45,7 @@ const staffList = gql`
       first: $first
       last: $last
       filter: $filter
+      sortBy: $sort
     ) {
       edges {
         cursor
@@ -59,7 +62,7 @@ const staffList = gql`
     }
   }
 `;
-export const TypedStaffListQuery = TypedQuery<StaffList, StaffListVariables>(
+export const useStaffListQuery = makeQuery<StaffList, StaffListVariables>(
   staffList
 );
 

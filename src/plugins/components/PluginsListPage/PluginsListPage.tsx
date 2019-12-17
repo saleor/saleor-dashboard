@@ -5,43 +5,31 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
-import { PageListProps } from "@saleor/types";
+import { PageListProps, SortPage } from "@saleor/types";
+import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
 import PluginsList from "../PluginsList/PluginsList";
 
-export interface PluginsListPageProps extends PageListProps {
+export interface PluginsListPageProps
+  extends PageListProps,
+    SortPage<PluginListUrlSortField> {
   plugins: Plugins_plugins_edges_node[];
   onBack: () => void;
 }
 
 const PluginsListPage: React.FC<PluginsListPageProps> = ({
-  disabled,
-  settings,
   onBack,
-  onNextPage,
-  onPreviousPage,
-  onRowClick,
-  onUpdateListSettings,
-  pageInfo,
-  plugins
+  ...listProps
 }) => {
   const intl = useIntl();
+
   return (
     <Container>
       <AppHeader onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </AppHeader>
       <PageHeader title={intl.formatMessage(sectionNames.plugins)} />
-      <PluginsList
-        disabled={disabled}
-        settings={settings}
-        plugins={plugins}
-        onNextPage={onNextPage}
-        onPreviousPage={onPreviousPage}
-        onUpdateListSettings={onUpdateListSettings}
-        onRowClick={onRowClick}
-        pageInfo={pageInfo}
-      />
+      <PluginsList {...listProps} />
     </Container>
   );
 };

@@ -8,13 +8,20 @@ import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
-import { PageListProps, SearchPageProps, TabPageProps } from "@saleor/types";
+import {
+  PageListProps,
+  SearchPageProps,
+  TabPageProps,
+  SortPage
+} from "@saleor/types";
+import { ServiceListUrlSortField } from "@saleor/services/urls";
 import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
 import ServiceList from "../ServiceList";
 
 export interface ServiceListPageProps
   extends PageListProps,
     SearchPageProps,
+    SortPage<ServiceListUrlSortField>,
     TabPageProps {
   services: ServiceList_serviceAccounts_edges_node[];
   onBack: () => void;

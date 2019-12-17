@@ -1,7 +1,12 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { listActionsProps, pageListProps } from "../../../fixtures";
+import { PageListUrlSortField } from "@saleor/pages/urls";
+import {
+  listActionsProps,
+  pageListProps,
+  sortPageProps
+} from "../../../fixtures";
 import PageListPage, {
   PageListPageProps
 } from "../../../pages/components/PageListPage";
@@ -11,8 +16,13 @@ import Decorator from "../../Decorator";
 const props: PageListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
+  ...sortPageProps,
   onBack: () => undefined,
-  pages: pageList
+  pages: pageList,
+  sort: {
+    ...sortPageProps.sort,
+    sort: PageListUrlSortField.title
+  }
 };
 
 storiesOf("Views / Pages / Page list", module)

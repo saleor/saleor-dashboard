@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeFilterInput } from "./../../types/globalTypes";
+import { AttributeFilterInput, AttributeSortingInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: AttributeList
@@ -57,4 +57,5 @@ export interface AttributeListVariables {
   after?: string | null;
   first?: number | null;
   last?: number | null;
+  sort?: AttributeSortingInput | null;
 }

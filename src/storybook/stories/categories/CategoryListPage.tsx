@@ -1,24 +1,33 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import CategoryListPage from "../../../categories/components/CategoryListPage";
-import { categories } from "../../../categories/fixtures";
+import CategoryListPage, {
+  CategoryTableProps
+} from "@saleor/categories/components/CategoryListPage";
+import { categories } from "@saleor/categories/fixtures";
 import {
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps
-} from "../../../fixtures";
+  tabPageProps,
+  sortPageProps
+} from "@saleor/fixtures";
+import { CategoryListUrlSortField } from "@saleor/categories/urls";
 import Decorator from "../../Decorator";
 
-const categoryTableProps = {
+const categoryTableProps: CategoryTableProps = {
   categories,
-  onAddCategory: undefined,
-  onCategoryClick: () => undefined,
+  onAdd: undefined,
+  onRowClick: () => undefined,
   ...listActionsProps,
   ...tabPageProps,
+  ...pageListProps.default,
   ...searchPageProps,
-  ...pageListProps.default
+  ...sortPageProps,
+  sort: {
+    ...sortPageProps.sort,
+    sort: CategoryListUrlSortField.name
+  }
 };
 
 storiesOf("Views / Categories / Category list", module)

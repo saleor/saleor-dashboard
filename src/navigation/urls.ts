@@ -1,14 +1,20 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination, SingleAction } from "../types";
+import { BulkAction, Dialog, Pagination, SingleAction, Sort } from "../types";
 
 export const navigationSection = "/navigation";
 
 export const menuListPath = navigationSection;
 export type MenuListUrlDialog = "add" | "remove" | "remove-many";
+export enum MenuListUrlSortField {
+  name = "name",
+  items = "items"
+}
+export type MenuListUrlSort = Sort<MenuListUrlSortField>;
 export type MenuListUrlQueryParams = BulkAction &
   Dialog<MenuListUrlDialog> &
+  MenuListUrlSort &
   Pagination &
   SingleAction;
 export const menuListUrl = (params?: MenuListUrlQueryParams) =>

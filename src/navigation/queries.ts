@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import makeQuery from "@saleor/hooks/makeQuery";
 import { pageInfoFragment, TypedQuery } from "../queries";
 import { MenuDetails, MenuDetailsVariables } from "./types/MenuDetails";
 import { MenuList, MenuListVariables } from "./types/MenuList";
@@ -75,8 +76,20 @@ export const menuDetailsFragment = gql`
 const menuList = gql`
   ${menuFragment}
   ${pageInfoFragment}
-  query MenuList($first: Int, $after: String, $last: Int, $before: String) {
-    menus(first: $first, after: $after, before: $before, last: $last) {
+  query MenuList(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $sort: MenuSortingInput
+  ) {
+    menus(
+      first: $first
+      after: $after
+      before: $before
+      last: $last
+      sortBy: $sort
+    ) {
       edges {
         node {
           ...MenuFragment
@@ -88,7 +101,9 @@ const menuList = gql`
     }
   }
 `;
-export const MenuListQuery = TypedQuery<MenuList, MenuListVariables>(menuList);
+export const useMenuListQuery = makeQuery<MenuList, MenuListVariables>(
+  menuList
+);
 
 const menuDetails = gql`
   ${menuDetailsFragment}

@@ -16,6 +16,20 @@ export enum AttributeInputTypeEnum {
   MULTISELECT = "MULTISELECT",
 }
 
+export enum AttributeSortField {
+  AVAILABLE_IN_GRID = "AVAILABLE_IN_GRID",
+  DASHBOARD_PRODUCT_POSITION = "DASHBOARD_PRODUCT_POSITION",
+  DASHBOARD_VARIANT_POSITION = "DASHBOARD_VARIANT_POSITION",
+  FILTERABLE_IN_DASHBOARD = "FILTERABLE_IN_DASHBOARD",
+  FILTERABLE_IN_STOREFRONT = "FILTERABLE_IN_STOREFRONT",
+  IS_VARIANT_ONLY = "IS_VARIANT_ONLY",
+  NAME = "NAME",
+  SLUG = "SLUG",
+  STOREFRONT_SEARCH_POSITION = "STOREFRONT_SEARCH_POSITION",
+  VALUE_REQUIRED = "VALUE_REQUIRED",
+  VISIBLE_IN_STOREFRONT = "VISIBLE_IN_STOREFRONT",
+}
+
 export enum AttributeTypeEnum {
   PRODUCT = "PRODUCT",
   VARIANT = "VARIANT",
@@ -33,9 +47,21 @@ export enum AuthorizationKeyType {
   GOOGLE_OAUTH2 = "GOOGLE_OAUTH2",
 }
 
+export enum CategorySortField {
+  NAME = "NAME",
+  PRODUCT_COUNT = "PRODUCT_COUNT",
+  SUBCATEGORY_COUNT = "SUBCATEGORY_COUNT",
+}
+
 export enum CollectionPublished {
   HIDDEN = "HIDDEN",
   PUBLISHED = "PUBLISHED",
+}
+
+export enum CollectionSortField {
+  AVAILABILITY = "AVAILABILITY",
+  NAME = "NAME",
+  PRODUCT_COUNT = "PRODUCT_COUNT",
 }
 
 export enum ConfigurationTypeFieldEnum {
@@ -360,6 +386,11 @@ export enum LanguageCodeEnum {
   ZH_HANT = "ZH_HANT",
 }
 
+export enum MenuSortField {
+  ITEMS_COUNT = "ITEMS_COUNT",
+  NAME = "NAME",
+}
+
 export enum OrderAction {
   CAPTURE = "CAPTURE",
   MARK_AS_PAID = "MARK_AS_PAID",
@@ -405,6 +436,15 @@ export enum OrderEventsEnum {
   UPDATED_ADDRESS = "UPDATED_ADDRESS",
 }
 
+export enum OrderSortField {
+  CREATION_DATE = "CREATION_DATE",
+  CUSTOMER = "CUSTOMER",
+  FULFILLMENT_STATUS = "FULFILLMENT_STATUS",
+  NUMBER = "NUMBER",
+  PAYMENT = "PAYMENT",
+  TOTAL = "TOTAL",
+}
+
 export enum OrderStatus {
   CANCELED = "CANCELED",
   DRAFT = "DRAFT",
@@ -420,6 +460,14 @@ export enum OrderStatusFilter {
   READY_TO_CAPTURE = "READY_TO_CAPTURE",
   READY_TO_FULFILL = "READY_TO_FULFILL",
   UNFULFILLED = "UNFULFILLED",
+}
+
+export enum PageSortField {
+  CREATION_DATE = "CREATION_DATE",
+  PUBLICATION_DATE = "PUBLICATION_DATE",
+  SLUG = "SLUG",
+  TITLE = "TITLE",
+  VISIBILITY = "VISIBILITY",
 }
 
 export enum PaymentChargeStatusEnum {
@@ -446,6 +494,11 @@ export enum PermissionEnum {
   MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
   MANAGE_USERS = "MANAGE_USERS",
   MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
+}
+
+export enum PluginSortField {
+  IS_ACTIVE = "IS_ACTIVE",
+  NAME = "NAME",
 }
 
 export enum ProductErrorCode {
@@ -481,9 +534,28 @@ export enum ProductTypeEnum {
   SHIPPABLE = "SHIPPABLE",
 }
 
+export enum ProductTypeSortField {
+  DIGITAL = "DIGITAL",
+  NAME = "NAME",
+  SHIPPING_REQUIRED = "SHIPPING_REQUIRED",
+}
+
+export enum SaleSortField {
+  END_DATE = "END_DATE",
+  NAME = "NAME",
+  START_DATE = "START_DATE",
+  TYPE = "TYPE",
+  VALUE = "VALUE",
+}
+
 export enum SaleType {
   FIXED = "FIXED",
   PERCENTAGE = "PERCENTAGE",
+}
+
+export enum ServiceAccountSortField {
+  CREATION_DATE = "CREATION_DATE",
+  NAME = "NAME",
 }
 
 export enum ShippingMethodTypeEnum {
@@ -529,10 +601,27 @@ export enum TaxRateType {
   WINE = "WINE",
 }
 
+export enum UserSortField {
+  EMAIL = "EMAIL",
+  FIRST_NAME = "FIRST_NAME",
+  LAST_NAME = "LAST_NAME",
+  ORDER_COUNT = "ORDER_COUNT",
+}
+
 export enum VoucherDiscountType {
   FIXED = "FIXED",
   PERCENTAGE = "PERCENTAGE",
   SHIPPING = "SHIPPING",
+}
+
+export enum VoucherSortField {
+  CODE = "CODE",
+  END_DATE = "END_DATE",
+  MINIMUM_SPENT_AMOUNT = "MINIMUM_SPENT_AMOUNT",
+  START_DATE = "START_DATE",
+  TYPE = "TYPE",
+  USAGE_LIMIT = "USAGE_LIMIT",
+  VALUE = "VALUE",
 }
 
 export enum VoucherTypeEnum {
@@ -558,6 +647,12 @@ export enum WebhookEventTypeEnum {
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_UPDATED = "ORDER_UPDATED",
   PRODUCT_CREATED = "PRODUCT_CREATED",
+}
+
+export enum WebhookSortField {
+  NAME = "NAME",
+  SERVICE_ACCOUNT = "SERVICE_ACCOUNT",
+  TARGET_URL = "TARGET_URL",
 }
 
 export enum WeightUnitsEnum {
@@ -618,6 +713,11 @@ export interface AttributeInput {
   value: string;
 }
 
+export interface AttributeSortingInput {
+  direction: OrderDirection;
+  field?: AttributeSortField | null;
+}
+
 export interface AttributeUpdateInput {
   name?: string | null;
   slug?: string | null;
@@ -666,6 +766,11 @@ export interface CategoryInput {
   backgroundImageAlt?: string | null;
 }
 
+export interface CategorySortingInput {
+  direction: OrderDirection;
+  field?: CategorySortField | null;
+}
+
 export interface CollectionCreateInput {
   isPublished?: boolean | null;
   name?: string | null;
@@ -694,6 +799,11 @@ export interface CollectionInput {
   backgroundImageAlt?: string | null;
   seo?: SeoInput | null;
   publicationDate?: any | null;
+}
+
+export interface CollectionSortingInput {
+  direction: OrderDirection;
+  field?: CollectionSortField | null;
 }
 
 export interface ConfigurationItemInput {
@@ -794,6 +904,11 @@ export interface MenuItemMoveInput {
   sortOrder?: number | null;
 }
 
+export interface MenuSortingInput {
+  direction: OrderDirection;
+  field?: MenuSortField | null;
+}
+
 export interface NameTranslationInput {
   name?: string | null;
 }
@@ -825,6 +940,11 @@ export interface OrderLineInput {
   quantity: number;
 }
 
+export interface OrderSortingInput {
+  direction: OrderDirection;
+  field?: OrderSortField | null;
+}
+
 export interface OrderUpdateInput {
   billingAddress?: AddressInput | null;
   userEmail?: string | null;
@@ -849,12 +969,22 @@ export interface PageInput {
   seo?: SeoInput | null;
 }
 
+export interface PageSortingInput {
+  direction: OrderDirection;
+  field?: PageSortField | null;
+}
+
 export interface PageTranslationInput {
   seoTitle?: string | null;
   seoDescription?: string | null;
   title?: string | null;
   content?: string | null;
   contentJson?: any | null;
+}
+
+export interface PluginSortingInput {
+  direction: OrderDirection;
+  field?: PluginSortField | null;
 }
 
 export interface PluginUpdateInput {
@@ -881,9 +1011,9 @@ export interface ProductFilterInput {
 }
 
 export interface ProductOrder {
-  field?: ProductOrderField | null;
-  attributeId?: string | null;
   direction: OrderDirection;
+  attributeId?: string | null;
+  field?: ProductOrderField | null;
 }
 
 export interface ProductTypeFilterInput {
@@ -901,6 +1031,11 @@ export interface ProductTypeInput {
   isDigital?: boolean | null;
   weight?: any | null;
   taxCode?: string | null;
+}
+
+export interface ProductTypeSortingInput {
+  direction: OrderDirection;
+  field?: ProductTypeSortField | null;
 }
 
 export interface ProductVariantBulkCreateInput {
@@ -957,6 +1092,11 @@ export interface SaleInput {
   endDate?: any | null;
 }
 
+export interface SaleSortingInput {
+  direction: OrderDirection;
+  field?: SaleSortField | null;
+}
+
 export interface SeoInput {
   title?: string | null;
   description?: string | null;
@@ -971,6 +1111,11 @@ export interface ServiceAccountInput {
   name?: string | null;
   isActive?: boolean | null;
   permissions?: (PermissionEnum | null)[] | null;
+}
+
+export interface ServiceAccountSortingInput {
+  direction: OrderDirection;
+  field?: ServiceAccountSortField | null;
 }
 
 export interface ServiceAccountTokenInput {
@@ -1061,6 +1206,11 @@ export interface UserCreateInput {
   redirectUrl?: string | null;
 }
 
+export interface UserSortingInput {
+  direction: OrderDirection;
+  field?: UserSortField | null;
+}
+
 export interface VoucherFilterInput {
   status?: (DiscountStatusEnum | null)[] | null;
   timesUsed?: IntRangeInput | null;
@@ -1088,6 +1238,11 @@ export interface VoucherInput {
   usageLimit?: number | null;
 }
 
+export interface VoucherSortingInput {
+  direction: OrderDirection;
+  field?: VoucherSortField | null;
+}
+
 export interface WebhookCreateInput {
   name?: string | null;
   targetUrl?: string | null;
@@ -1100,6 +1255,11 @@ export interface WebhookCreateInput {
 export interface WebhookFilterInput {
   search?: string | null;
   isActive?: boolean | null;
+}
+
+export interface WebhookSortingInput {
+  direction: OrderDirection;
+  field?: WebhookSortField | null;
 }
 
 export interface WebhookUpdateInput {

@@ -7,7 +7,8 @@ import {
   Dialog,
   Filters,
   Pagination,
-  TabActionDialog
+  TabActionDialog,
+  Sort
 } from "../types";
 
 const staffSection = "/staff/";
@@ -18,11 +19,17 @@ export enum StaffListUrlFiltersEnum {
 }
 export type StaffListUrlFilters = Filters<StaffListUrlFiltersEnum>;
 export type StaffListUrlDialog = "add" | "remove" | TabActionDialog;
+export enum StaffListUrlSortField {
+  name = "name",
+  email = "email"
+}
+export type StaffListUrlSort = Sort<StaffListUrlSortField>;
 export type StaffListUrlQueryParams = ActiveTab &
   BulkAction &
   Dialog<StaffListUrlDialog> &
   Pagination &
-  StaffListUrlFilters;
+  StaffListUrlFilters &
+  StaffListUrlSort;
 export const staffListUrl = (params?: StaffListUrlQueryParams) =>
   staffListPath + "?" + stringifyQs(params);
 

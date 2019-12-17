@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { StaffUserInput } from "./../../types/globalTypes";
+import { StaffUserInput, UserSortingInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: StaffList
@@ -53,4 +53,5 @@ export interface StaffListVariables {
   last?: number | null;
   before?: string | null;
   filter?: StaffUserInput | null;
+  sort?: UserSortingInput | null;
 }
