@@ -2,8 +2,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { SearchPageProps, TabPageProps } from "@saleor/types";
-import FilterSearch from "../Filter/FilterSearch";
 import FilterTabs, { FilterTab } from "../TableFilter";
+import SearchInput from "./SearchInput";
 
 export interface SearchBarProps extends SearchPageProps, TabPageProps {
   allTabLabel: string;
@@ -47,7 +47,7 @@ const SearchBar: React.FC<SearchBarProps> = props => {
           />
         )}
       </FilterTabs>
-      <FilterSearch
+      <SearchInput
         displaySearchAction={
           !!initialSearch ? (isCustom ? "save" : "delete") : null
         }

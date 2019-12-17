@@ -1,30 +1,33 @@
-import { IMenu, IMenuItem } from "../../utils/menu";
+import { FetchMoreProps } from "@saleor/types";
+import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 
 export enum FieldType {
   date,
-  hidden,
   number,
   price,
-  range,
-  rangeDate,
-  rangePrice,
-  select,
+  options,
   text
 }
 
-export interface FilterChoice {
+export interface IFilterElementMutableData<T extends string = string> {
+  active: boolean;
+  multiple: boolean;
+  options?: MultiAutocompleteChoiceType[];
+  value: T[];
+}
+export interface IFilterElement<T extends string = string>
+  extends Partial<FetchMoreProps>,
+    IFilterElementMutableData {
+  autocomplete?: boolean;
+  currencySymbol?: string;
   label: string;
-  value: string | boolean;
-}
-
-export interface FilterData {
-  additionalText?: string;
-  fieldLabel: string;
-  options?: FilterChoice[];
+  name: T;
   type: FieldType;
-  value?: string;
 }
 
-export type IFilterItem<TKeys> = IMenuItem<FilterData, TKeys>;
+export type IFilter<T extends string = string> = Array<IFilterElement<T>>;
 
-export type IFilter<TKeys> = IMenu<FilterData, TKeys>;
+export enum FilterType {
+  MULTIPLE = "MULTIPLE",
+  SINGULAR = "SINGULAR"
+}

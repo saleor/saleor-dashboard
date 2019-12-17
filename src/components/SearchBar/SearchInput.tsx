@@ -8,7 +8,7 @@ import { FilterActionsOnlySearch } from "../Filter/FilterActions";
 import Hr from "../Hr";
 import Link from "../Link";
 
-export interface FilterSearchProps extends SearchPageProps {
+export interface SearchInputProps extends SearchPageProps {
   displaySearchAction: "save" | "delete" | null;
   searchPlaceholder: string;
   onSearchDelete?: () => void;
@@ -29,11 +29,11 @@ const useStyles = makeStyles(
     }
   }),
   {
-    name: "FilterSearch"
+    name: "SearchInput"
   }
 );
 
-const FilterSearch: React.FC<FilterSearchProps> = props => {
+const SearchInput: React.FC<SearchInputProps> = props => {
   const {
     displaySearchAction,
     initialSearch,
@@ -93,5 +93,5 @@ const FilterSearch: React.FC<FilterSearchProps> = props => {
   );
 };
 
-FilterSearch.displayName = "FilterSearch";
-export default FilterSearch;
+SearchInput.displayName = "SearchInput";
+export default SearchInput;

@@ -4,9 +4,8 @@ import { IntlShape, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
-import FilterSearch from "@saleor/components/Filter/FilterSearch";
+import SearchInput from "@saleor/components/SearchBar/SearchInput";
 import PageHeader from "@saleor/components/PageHeader";
-// tslint:disable no-submodule-imports
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import FilterTabs, { FilterTab } from "@saleor/components/TableFilter";
 import { maybe } from "@saleor/misc";
@@ -88,9 +87,13 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
   "productTypes"
 ];
 
-const TranslationsEntitiesListPage: React.FC<
-  TranslationsEntitiesListPageProps
-> = ({ filters, language, onBack, children, ...searchProps }) => {
+const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> = ({
+  filters,
+  language,
+  onBack,
+  children,
+  ...searchProps
+}) => {
   const intl = useIntl();
   const currentTab = tabs.indexOf(filters.current);
 
@@ -157,7 +160,7 @@ const TranslationsEntitiesListPage: React.FC<
             onClick={filters.onProductTypesTabClick}
           />
         </FilterTabs>
-        <FilterSearch
+        <SearchInput
           displaySearchAction={null}
           searchPlaceholder={getSearchPlaceholder(filters.current, intl)}
           {...searchProps}
