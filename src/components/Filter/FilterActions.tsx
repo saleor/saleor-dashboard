@@ -56,13 +56,10 @@ export interface FilterActionsPropsSearch {
 export interface FilterActionsPropsFilters<TKeys = string> {
   currencySymbol: string;
   menu: IFilter<TKeys>;
-  filterLabel: string;
   onFilterAdd: (filter: FilterContentSubmitData<TKeys>) => void;
 }
 
-export const FilterActionsOnlySearch: React.FC<
-  FilterActionsPropsSearch
-> = props => {
+export const FilterActionsOnlySearch: React.FC<FilterActionsPropsSearch> = props => {
   const { onSearchChange, placeholder, search } = props;
   const classes = useStyles(props);
 
@@ -83,7 +80,6 @@ export type FilterActionsProps = FilterActionsPropsSearch &
 const FilterActions: React.FC<FilterActionsProps> = props => {
   const {
     currencySymbol,
-    filterLabel,
     menu,
     onFilterAdd,
     onSearchChange,
@@ -97,7 +93,6 @@ const FilterActions: React.FC<FilterActionsProps> = props => {
       <Filter
         currencySymbol={currencySymbol}
         menu={menu}
-        filterLabel={filterLabel}
         onFilterAdd={onFilterAdd}
       />
       <Search

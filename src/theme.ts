@@ -330,6 +330,7 @@ export default (colors: IThemeColors): Theme =>
               }
             }
           },
+          backgroundColor: colors.background.paper,
           borderColor: colors.input.border,
           top: 0
         }
