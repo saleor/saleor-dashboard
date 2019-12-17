@@ -1,6 +1,5 @@
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
@@ -17,7 +16,6 @@ import { FilterContent } from ".";
 export interface FilterProps<TFilterKeys = string> {
   currencySymbol: string;
   menu: IFilter<TFilterKeys>;
-  filterLabel: string;
   onFilterAdd: (filter: FilterContentSubmitData) => void;
 }
 
@@ -82,7 +80,7 @@ const useStyles = makeStyles(
   { name: "Filter" }
 );
 const Filter: React.FC<FilterProps> = props => {
-  const { currencySymbol, filterLabel, menu, onFilterAdd } = props;
+  const { currencySymbol, menu, onFilterAdd } = props;
   const classes = useStyles(props);
 
   const anchor = React.useRef<HTMLDivElement>();
@@ -122,17 +120,14 @@ const Filter: React.FC<FilterProps> = props => {
                 placement === "bottom" ? "right top" : "right bottom"
             }}
           >
-            <Paper className={classes.paper}>
-              <Typography>{filterLabel}</Typography>
-              <FilterContent
-                currencySymbol={currencySymbol}
-                filters={menu}
-                onSubmit={data => {
-                  onFilterAdd(data);
-                  setFilterMenuOpened(false);
-                }}
-              />
-            </Paper>
+            <FilterContent
+              currencySymbol={currencySymbol}
+              filters={menu}
+              onSubmit={data => {
+                onFilterAdd(data);
+                setFilterMenuOpened(false);
+              }}
+            />
           </Grow>
         )}
       </Popper>
