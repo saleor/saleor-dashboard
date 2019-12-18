@@ -13,7 +13,10 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps } from "@saleor/types";
+import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { CollectionListUrlSortField } from "@saleor/collections/urls";
+import TableCellHeader from "@saleor/components/TableCellHeader";
+import { getArrowDirection } from "@saleor/utils/sort";
 import { CollectionList_collections_edges_node } from "../../types/CollectionList";
 
 const useStyles = makeStyles(
@@ -41,7 +44,10 @@ const useStyles = makeStyles(
   { name: "CollectionList" }
 );
 
-interface CollectionListProps extends ListProps, ListActions {
+interface CollectionListProps
+  extends ListProps,
+    ListActions,
+    SortPage<CollectionListUrlSortField> {
   collections: CollectionList_collections_edges_node[];
 }
 
@@ -52,10 +58,12 @@ const CollectionList: React.FC<CollectionListProps> = props => {
     collections,
     disabled,
     settings,
+    sort,
     onNextPage,
     onPreviousPage,
     onUpdateListSettings,
     onRowClick,
+    onSort,
     pageInfo,
     isChecked,
     selected,
@@ -77,18 +85,43 @@ const CollectionList: React.FC<CollectionListProps> = props => {
         toggleAll={toggleAll}
         toolbar={toolbar}
       >
-        <TableCell className={classes.colName}>
-          <FormattedMessage defaultMessage="Category Name" />
-        </TableCell>
-        <TableCell className={classes.colProducts}>
+        <TableCellHeader
+          direction={
+            sort.sort === CollectionListUrlSortField.name
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          arrowPosition="right"
+          onClick={() => onSort(CollectionListUrlSortField.name)}
+          className={classes.colName}
+        >
+          <FormattedMessage defaultMessage="Collection Name" />
+        </TableCellHeader>
+        <TableCellHeader
+          direction={
+            sort.sort === CollectionListUrlSortField.productCount
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          onClick={() => onSort(CollectionListUrlSortField.productCount)}
+          className={classes.colProducts}
+        >
           <FormattedMessage defaultMessage="No. of Products" />
-        </TableCell>
-        <TableCell className={classes.colAvailability}>
+        </TableCellHeader>
+        <TableCellHeader
+          direction={
+            sort.sort === CollectionListUrlSortField.available
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          onClick={() => onSort(CollectionListUrlSortField.available)}
+          className={classes.colAvailability}
+        >
           <FormattedMessage
             defaultMessage="Availability"
             description="collection availability"
           />
-        </TableCell>
+        </TableCellHeader>
       </TableHead>
       <TableFooter>
         <TableRow>

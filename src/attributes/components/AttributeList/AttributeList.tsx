@@ -13,10 +13,16 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps } from "@saleor/types";
+import { ListActions, ListProps, SortPage } from "@saleor/types";
+import TableCellHeader from "@saleor/components/TableCellHeader";
+import { AttributeListUrlSortField } from "@saleor/attributes/urls";
+import { getArrowDirection } from "@saleor/utils/sort";
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 
-export interface AttributeListProps extends ListProps, ListActions {
+export interface AttributeListProps
+  extends ListProps,
+    ListActions,
+    SortPage<AttributeListUrlSortField> {
   attributes: AttributeList_attributes_edges_node[];
 }
 
@@ -24,19 +30,19 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colFaceted: {
-        width: 150
+        width: 180
       },
       colName: {
         width: "auto"
       },
       colSearchable: {
-        width: 150
+        width: 180
       },
       colSlug: {
         width: 200
       },
       colVisible: {
-        width: 150
+        width: 180
       }
     },
     colFaceted: {
@@ -70,9 +76,11 @@ const AttributeList: React.FC<AttributeListProps> = ({
   onRowClick,
   pageInfo,
   selected,
+  sort,
   toggle,
   toggleAll,
-  toolbar
+  toolbar,
+  onSort
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -87,33 +95,77 @@ const AttributeList: React.FC<AttributeListProps> = ({
         toggleAll={toggleAll}
         toolbar={toolbar}
       >
-        <TableCell className={classes.colSlug}>
+        <TableCellHeader
+          className={classes.colSlug}
+          direction={
+            sort.sort === AttributeListUrlSortField.slug
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          arrowPosition="right"
+          onClick={() => onSort(AttributeListUrlSortField.slug)}
+        >
           <FormattedMessage defaultMessage="Attribute Code" />
-        </TableCell>
-        <TableCell className={classes.colName}>
+        </TableCellHeader>
+        <TableCellHeader
+          className={classes.colName}
+          direction={
+            sort.sort === AttributeListUrlSortField.name
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          onClick={() => onSort(AttributeListUrlSortField.name)}
+        >
           <FormattedMessage
             defaultMessage="Default Label"
             description="attribute's label'"
           />
-        </TableCell>
-        <TableCell className={classes.colVisible}>
+        </TableCellHeader>
+        <TableCellHeader
+          className={classes.colVisible}
+          direction={
+            sort.sort === AttributeListUrlSortField.visible
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          textAlign="center"
+          onClick={() => onSort(AttributeListUrlSortField.visible)}
+        >
           <FormattedMessage
             defaultMessage="Visible"
             description="attribute is visible"
           />
-        </TableCell>
-        <TableCell className={classes.colSearchable}>
+        </TableCellHeader>
+        <TableCellHeader
+          className={classes.colSearchable}
+          direction={
+            sort.sort === AttributeListUrlSortField.searchable
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          textAlign="center"
+          onClick={() => onSort(AttributeListUrlSortField.searchable)}
+        >
           <FormattedMessage
             defaultMessage="Searchable"
             description="attribute can be searched in dashboard"
           />
-        </TableCell>
-        <TableCell className={classes.colFaceted}>
+        </TableCellHeader>
+        <TableCellHeader
+          className={classes.colFaceted}
+          direction={
+            sort.sort === AttributeListUrlSortField.useInFacetedSearch
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          textAlign="center"
+          onClick={() => onSort(AttributeListUrlSortField.useInFacetedSearch)}
+        >
           <FormattedMessage
             defaultMessage="Use in faceted search"
             description="attribute can be searched in storefront"
           />
-        </TableCell>
+        </TableCellHeader>
       </TableHead>
       <TableFooter>
         <TableRow>

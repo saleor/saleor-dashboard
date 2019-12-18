@@ -4,13 +4,15 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   categoryAddPath,
   categoryListPath,
   CategoryListUrlQueryParams,
   categoryPath,
-  CategoryUrlQueryParams
+  CategoryUrlQueryParams,
+  CategoryListUrlSortField
 } from "./urls";
 import { CategoryCreateView } from "./views/CategoryCreate";
 import CategoryDetailsView, { getActiveTab } from "./views/CategoryDetails";
@@ -19,14 +21,15 @@ import CategoryListComponent from "./views/CategoryList";
 interface CategoryDetailsRouteParams {
   id: string;
 }
-const CategoryDetails: React.FC<
-  RouteComponentProps<CategoryDetailsRouteParams>
-> = ({ location, match }) => {
+const CategoryDetails: React.FC<RouteComponentProps<
+  CategoryDetailsRouteParams
+>> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CategoryUrlQueryParams = {
     ...qs,
     activeTab: getActiveTab(qs.activeTab)
   };
+
   return (
     <CategoryDetailsView
       id={decodeURIComponent(match.params.id)}
@@ -38,9 +41,9 @@ const CategoryDetails: React.FC<
 interface CategoryCreateRouteParams {
   id: string;
 }
-const CategoryCreate: React.FC<
-  RouteComponentProps<CategoryCreateRouteParams>
-> = ({ match }) => (
+const CategoryCreate: React.FC<RouteComponentProps<
+  CategoryCreateRouteParams
+>> = ({ match }) => (
   <CategoryCreateView
     parentId={match.params.id ? decodeURIComponent(match.params.id) : undefined}
   />
@@ -48,7 +51,10 @@ const CategoryCreate: React.FC<
 
 const CategoryList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: CategoryListUrlQueryParams = qs;
+  const params: CategoryListUrlQueryParams = {
+    ...asSortParams(qs, CategoryListUrlSortField)
+  };
+
   return <CategoryListComponent params={params} />;
 };
 

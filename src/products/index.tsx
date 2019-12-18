@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { sectionNames } from "@saleor/intl";
-import { findInEnum, parseBoolean } from "@saleor/misc";
+import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   productAddPath,
@@ -28,13 +28,10 @@ import ProductVariantCreateComponent from "./views/ProductVariantCreate";
 
 const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: ProductListUrlQueryParams = {
-    ...qs,
-    asc: parseBoolean(qs.asc),
-    sort: qs.sort
-      ? findInEnum(qs.sort, ProductListUrlSortField)
-      : ProductListUrlSortField.name
-  };
+  const params: ProductListUrlQueryParams = asSortParams(
+    qs,
+    ProductListUrlSortField
+  );
 
   return <ProductListComponent params={params} />;
 };

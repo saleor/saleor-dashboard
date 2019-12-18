@@ -21,9 +21,11 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
+import { getSortParams } from "@saleor/utils/sort";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import VoucherListPage from "../../components/VoucherListPage";
 import { TypedVoucherBulkDelete } from "../../mutations";
-import { TypedVoucherList } from "../../queries";
+import { useVoucherListQuery } from "../../queries";
 import { VoucherBulkDelete } from "../../types/VoucherBulkDelete";
 import {
   voucherAddUrl,
@@ -41,6 +43,7 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filter";
+import { getSortQueryVariables } from "./sort";
 
 interface VoucherListProps {
   params: VoucherListUrlQueryParams;
@@ -58,6 +61,20 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     ListViews.VOUCHER_LIST
   );
   const intl = useIntl();
+
+  const paginationState = createPaginationState(settings.rowNumber, params);
+  const queryVariables = React.useMemo(
+    () => ({
+      ...paginationState,
+      filter: getFilterVariables(params),
+      sort: getSortQueryVariables(params)
+    }),
+    [params]
+  );
+  const { data, loading, refetch } = useVoucherListQuery({
+    displayLoader: true,
+    variables: queryVariables
+  });
 
   const tabs = getFilterTabs();
 
@@ -119,139 +136,122 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
-    () => ({
-      ...paginationState,
-      filter: getFilterVariables(params)
-    }),
-    [params]
-  );
-
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
-  return (
-    <TypedVoucherList displayLoader variables={queryVariables}>
-      {({ data, loading, refetch }) => {
-        const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-          maybe(() => data.vouchers.pageInfo),
-          paginationState,
-          params
-        );
+  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+    maybe(() => data.vouchers.pageInfo),
+    paginationState,
+    params
+  );
 
-        const handleVoucherBulkDelete = (data: VoucherBulkDelete) => {
-          if (data.voucherBulkDelete.errors.length === 0) {
-            notify({
-              text: intl.formatMessage(commonMessages.savedChanges)
-            });
-            reset();
-            closeModal();
-            refetch();
-          }
-        };
+  const handleVoucherBulkDelete = (data: VoucherBulkDelete) => {
+    if (data.voucherBulkDelete.errors.length === 0) {
+      notify({
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      reset();
+      closeModal();
+      refetch();
+    }
+  };
+
+  const handleSort = createSortHandler(navigate, voucherListUrl, params);
+
+  return (
+    <TypedVoucherBulkDelete onCompleted={handleVoucherBulkDelete}>
+      {(voucherBulkDelete, voucherBulkDeleteOpts) => {
+        const onVoucherBulkDelete = () =>
+          voucherBulkDelete({
+            variables: {
+              ids: params.ids
+            }
+          });
 
         return (
-          <TypedVoucherBulkDelete onCompleted={handleVoucherBulkDelete}>
-            {(voucherBulkDelete, voucherBulkDeleteOpts) => {
-              const onVoucherBulkDelete = () =>
-                voucherBulkDelete({
-                  variables: {
-                    ids: params.ids
+          <>
+            <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
+            <VoucherListPage
+              currentTab={currentTab}
+              initialSearch={params.query || ""}
+              onSearchChange={query => changeFilterField({ query })}
+              onAll={() => navigate(voucherListUrl())}
+              onTabChange={handleTabChange}
+              onTabDelete={() => openModal("delete-search")}
+              onTabSave={() => openModal("save-search")}
+              tabs={tabs.map(tab => tab.name)}
+              defaultCurrency={maybe(() => shop.defaultCurrency)}
+              settings={settings}
+              vouchers={maybe(() => data.vouchers.edges.map(edge => edge.node))}
+              disabled={loading}
+              pageInfo={pageInfo}
+              onAdd={() => navigate(voucherAddUrl)}
+              onNextPage={loadNextPage}
+              onPreviousPage={loadPreviousPage}
+              onUpdateListSettings={updateListSettings}
+              onRowClick={id => () => navigate(voucherUrl(id))}
+              onSort={handleSort}
+              isChecked={isSelected}
+              selected={listElements.length}
+              sort={getSortParams(params)}
+              toggle={toggle}
+              toggleAll={toggleAll}
+              toolbar={
+                <IconButton
+                  color="primary"
+                  onClick={() =>
+                    navigate(
+                      voucherListUrl({
+                        action: "remove",
+                        ids: listElements
+                      })
+                    )
                   }
-                });
-
-              return (
-                <>
-                  <WindowTitle
-                    title={intl.formatMessage(sectionNames.vouchers)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              }
+            />
+            <ActionDialog
+              confirmButtonState={voucherBulkDeleteOpts.status}
+              onClose={closeModal}
+              onConfirm={onVoucherBulkDelete}
+              open={params.action === "remove" && canOpenBulkActionDialog}
+              title={intl.formatMessage({
+                defaultMessage: "Delete Vouchers",
+                description: "dialog header"
+              })}
+              variant="delete"
+            >
+              {canOpenBulkActionDialog && (
+                <DialogContentText>
+                  <FormattedMessage
+                    defaultMessage="Are you sure you want to delete {counter,plural,one{this voucher} other{{displayQuantity} vouchers}}?"
+                    description="dialog content"
+                    values={{
+                      counter: params.ids.length,
+                      displayQuantity: <strong>{params.ids.length}</strong>
+                    }}
                   />
-                  <VoucherListPage
-                    currentTab={currentTab}
-                    initialSearch={params.query || ""}
-                    onSearchChange={query => changeFilterField({ query })}
-                    onAll={() => navigate(voucherListUrl())}
-                    onTabChange={handleTabChange}
-                    onTabDelete={() => openModal("delete-search")}
-                    onTabSave={() => openModal("save-search")}
-                    tabs={tabs.map(tab => tab.name)}
-                    defaultCurrency={maybe(() => shop.defaultCurrency)}
-                    settings={settings}
-                    vouchers={maybe(() =>
-                      data.vouchers.edges.map(edge => edge.node)
-                    )}
-                    disabled={loading}
-                    pageInfo={pageInfo}
-                    onAdd={() => navigate(voucherAddUrl)}
-                    onNextPage={loadNextPage}
-                    onPreviousPage={loadPreviousPage}
-                    onUpdateListSettings={updateListSettings}
-                    onRowClick={id => () => navigate(voucherUrl(id))}
-                    isChecked={isSelected}
-                    selected={listElements.length}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                    toolbar={
-                      <IconButton
-                        color="primary"
-                        onClick={() =>
-                          navigate(
-                            voucherListUrl({
-                              action: "remove",
-                              ids: listElements
-                            })
-                          )
-                        }
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    }
-                  />
-                  <ActionDialog
-                    confirmButtonState={voucherBulkDeleteOpts.status}
-                    onClose={closeModal}
-                    onConfirm={onVoucherBulkDelete}
-                    open={params.action === "remove" && canOpenBulkActionDialog}
-                    title={intl.formatMessage({
-                      defaultMessage: "Delete Vouchers",
-                      description: "dialog header"
-                    })}
-                    variant="delete"
-                  >
-                    {canOpenBulkActionDialog && (
-                      <DialogContentText>
-                        <FormattedMessage
-                          defaultMessage="Are you sure you want to delete {counter,plural,one{this voucher} other{{displayQuantity} vouchers}}?"
-                          description="dialog content"
-                          values={{
-                            counter: params.ids.length,
-                            displayQuantity: (
-                              <strong>{params.ids.length}</strong>
-                            )
-                          }}
-                        />
-                      </DialogContentText>
-                    )}
-                  </ActionDialog>
-                  <SaveFilterTabDialog
-                    open={params.action === "save-search"}
-                    confirmButtonState="default"
-                    onClose={closeModal}
-                    onSubmit={handleTabSave}
-                  />
-                  <DeleteFilterTabDialog
-                    open={params.action === "delete-search"}
-                    confirmButtonState="default"
-                    onClose={closeModal}
-                    onSubmit={handleTabDelete}
-                    tabName={maybe(() => tabs[currentTab - 1].name, "...")}
-                  />
-                </>
-              );
-            }}
-          </TypedVoucherBulkDelete>
+                </DialogContentText>
+              )}
+            </ActionDialog>
+            <SaveFilterTabDialog
+              open={params.action === "save-search"}
+              confirmButtonState="default"
+              onClose={closeModal}
+              onSubmit={handleTabSave}
+            />
+            <DeleteFilterTabDialog
+              open={params.action === "delete-search"}
+              confirmButtonState="default"
+              onClose={closeModal}
+              onSubmit={handleTabDelete}
+              tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+            />
+          </>
         );
       }}
-    </TypedVoucherList>
+    </TypedVoucherBulkDelete>
   );
 };
 export default VoucherList;

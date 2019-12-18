@@ -4,19 +4,25 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   staffListPath,
   StaffListUrlQueryParams,
   staffMemberDetailsPath,
-  StaffMemberDetailsUrlQueryParams
+  StaffMemberDetailsUrlQueryParams,
+  StaffListUrlSortField
 } from "./urls";
 import StaffDetailsComponent from "./views/StaffDetails";
 import StaffListComponent from "./views/StaffList";
 
 const StaffList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: StaffListUrlQueryParams = qs;
+  const params: StaffListUrlQueryParams = asSortParams(
+    qs,
+    StaffListUrlSortField
+  );
+
   return <StaffListComponent params={params} />;
 };
 

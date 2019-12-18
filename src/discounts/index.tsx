@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import { saleDetailsPageTab } from "./components/SaleDetailsPage";
 import { voucherDetailsPageTab } from "./components/VoucherDetailsPage";
@@ -17,7 +18,9 @@ import {
   voucherListPath,
   VoucherListUrlQueryParams,
   voucherPath,
-  VoucherUrlQueryParams
+  VoucherUrlQueryParams,
+  SaleListUrlSortField,
+  VoucherListUrlSortField
 } from "./urls";
 import SaleCreateView from "./views/SaleCreate";
 import SaleDetailsViewComponent from "./views/SaleDetails";
@@ -28,7 +31,7 @@ import VoucherListViewComponent from "./views/VoucherList";
 
 const SaleListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: SaleListUrlQueryParams = qs;
+  const params: SaleListUrlQueryParams = asSortParams(qs, SaleListUrlSortField);
   return <SaleListViewComponent params={params} />;
 };
 
@@ -41,6 +44,7 @@ const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
     ...qs,
     activeTab: saleDetailsPageTab(activeTab)
   };
+
   return (
     <SaleDetailsViewComponent
       id={decodeURIComponent(match.params.id)}
@@ -51,7 +55,11 @@ const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
 
 const VoucherListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: VoucherListUrlQueryParams = qs;
+  const params: VoucherListUrlQueryParams = asSortParams(
+    qs,
+    VoucherListUrlSortField,
+    VoucherListUrlSortField.code
+  );
   return <VoucherListViewComponent params={params} />;
 };
 

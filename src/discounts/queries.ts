@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import makeQuery from "@saleor/hooks/makeQuery";
 import { pageInfoFragment, TypedQuery } from "../queries";
 import { SaleDetails, SaleDetailsVariables } from "./types/SaleDetails";
 import { SaleList, SaleListVariables } from "./types/SaleList";
@@ -172,6 +173,7 @@ export const saleList = gql`
     $first: Int
     $last: Int
     $filter: SaleFilterInput
+    $sort: SaleSortingInput
   ) {
     sales(
       after: $after
@@ -179,6 +181,7 @@ export const saleList = gql`
       first: $first
       last: $last
       filter: $filter
+      sortBy: $sort
     ) {
       edges {
         node {
@@ -191,7 +194,9 @@ export const saleList = gql`
     }
   }
 `;
-export const TypedSaleList = TypedQuery<SaleList, SaleListVariables>(saleList);
+export const useSaleListQuery = makeQuery<SaleList, SaleListVariables>(
+  saleList
+);
 
 export const voucherList = gql`
   ${pageInfoFragment}
@@ -202,6 +207,7 @@ export const voucherList = gql`
     $first: Int
     $last: Int
     $filter: VoucherFilterInput
+    $sort: VoucherSortingInput
   ) {
     vouchers(
       after: $after
@@ -209,6 +215,7 @@ export const voucherList = gql`
       first: $first
       last: $last
       filter: $filter
+      sortBy: $sort
     ) {
       edges {
         node {
@@ -221,7 +228,7 @@ export const voucherList = gql`
     }
   }
 `;
-export const TypedVoucherList = TypedQuery<VoucherList, VoucherListVariables>(
+export const useVoucherListQuery = makeQuery<VoucherList, VoucherListVariables>(
   voucherList
 );
 

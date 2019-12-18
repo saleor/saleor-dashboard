@@ -1,11 +1,13 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import {
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps
+  tabPageProps,
+  sortPageProps
 } from "../../../fixtures";
 import ProductTypeListPage, {
   ProductTypeListPageProps
@@ -17,6 +19,11 @@ const props: ProductTypeListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
   ...searchPageProps,
+  ...sortPageProps,
+  sort: {
+    ...sortPageProps.sort,
+    sort: ProductTypeListUrlSortField.name
+  },
   ...tabPageProps,
   onBack: () => undefined,
   productTypes

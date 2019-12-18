@@ -15,10 +15,15 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TablePagination from "@saleor/components/TablePagination";
 import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListProps } from "@saleor/types";
+import { ListProps, SortPage } from "@saleor/types";
+import { PluginListUrlSortField } from "@saleor/plugins/urls";
+import TableCellHeader from "@saleor/components/TableCellHeader";
+import { getArrowDirection } from "@saleor/utils/sort";
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
 
-export interface PluginListProps extends ListProps {
+export interface PluginListProps
+  extends ListProps,
+    SortPage<PluginListUrlSortField> {
   plugins: Plugins_plugins_edges_node[];
 }
 
@@ -53,7 +58,9 @@ const PluginList: React.FC<PluginListProps> = props => {
     disabled,
     onNextPage,
     pageInfo,
+    sort,
     onRowClick,
+    onSort,
     onUpdateListSettings,
     onPreviousPage
   } = props;
@@ -64,18 +71,35 @@ const PluginList: React.FC<PluginListProps> = props => {
     <Card>
       <ResponsiveTable>
         <TableHead>
-          <TableCell className={classes.colName}>
+          <TableCellHeader
+            direction={
+              sort.sort === PluginListUrlSortField.name
+                ? getArrowDirection(sort.asc)
+                : undefined
+            }
+            arrowPosition="right"
+            onClick={() => onSort(PluginListUrlSortField.name)}
+            className={classes.colName}
+          >
             {intl.formatMessage({
               defaultMessage: "Name",
               description: "plugin name"
             })}
-          </TableCell>
-          <TableCell className={classes.colActive}>
+          </TableCellHeader>
+          <TableCellHeader
+            direction={
+              sort.sort === PluginListUrlSortField.active
+                ? getArrowDirection(sort.asc)
+                : undefined
+            }
+            onClick={() => onSort(PluginListUrlSortField.active)}
+            className={classes.colActive}
+          >
             {intl.formatMessage({
               defaultMessage: "Active",
               description: "plugin status"
             })}
-          </TableCell>
+          </TableCellHeader>
           <TableCell className={classes.colAction}>
             {intl.formatMessage({
               defaultMessage: "Action",

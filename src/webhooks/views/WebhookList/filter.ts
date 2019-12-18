@@ -1,10 +1,10 @@
 import { WebhookFilterInput } from "@saleor/types/globalTypes";
-import { createFilterTabUtils, createFilterUtils } from "../../utils/filters";
+import { createFilterTabUtils, createFilterUtils } from "@saleor/utils/filters";
 import {
   WebhookListUrlFilters,
   WebhookListUrlFiltersEnum,
-  WebhooksListUrlQueryParams
-} from "../urls";
+  WebhookListUrlQueryParams
+} from "../../urls";
 
 export const WEBHOOK_FILTERS_KEY = "webhookFilters";
 
@@ -23,6 +23,6 @@ export const {
 } = createFilterTabUtils<WebhookListUrlFilters>(WEBHOOK_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  WebhooksListUrlQueryParams,
+  WebhookListUrlQueryParams,
   WebhookListUrlFilters
 >(WebhookListUrlFiltersEnum);

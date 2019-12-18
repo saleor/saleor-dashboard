@@ -7,7 +7,8 @@ import {
   Filters,
   Pagination,
   SingleAction,
-  TabActionDialog
+  TabActionDialog,
+  Sort
 } from "../types";
 
 export const webhooksSection = "/webhooks/";
@@ -18,12 +19,18 @@ export enum WebhookListUrlFiltersEnum {
 }
 export type WebhookListUrlFilters = Filters<WebhookListUrlFiltersEnum>;
 export type WebhookListUrlDialog = "remove" | TabActionDialog;
-export type WebhooksListUrlQueryParams = ActiveTab &
-  WebhookListUrlFilters &
+export enum WebhookListUrlSortField {
+  name = "name",
+  serviceAccount = "account"
+}
+export type WebhookListUrlSort = Sort<WebhookListUrlSortField>;
+export type WebhookListUrlQueryParams = ActiveTab &
   Dialog<WebhookListUrlDialog> &
   Pagination &
-  SingleAction;
-export const webhooksListUrl = (params?: WebhooksListUrlQueryParams) =>
+  SingleAction &
+  WebhookListUrlFilters &
+  WebhookListUrlSort;
+export const webhooksListUrl = (params?: WebhookListUrlQueryParams) =>
   webhooksListPath + "?" + stringifyQs(params);
 
 export const webhooksPath = (id: string) => urlJoin(webhooksSection, id);

@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import makeQuery from "@saleor/hooks/makeQuery";
 import { TypedQuery } from "../queries";
 import { PageDetails, PageDetailsVariables } from "./types/PageDetails";
 import { PageList, PageListVariables } from "./types/PageList";
@@ -26,8 +27,20 @@ export const pageDetailsFragment = gql`
 
 const pageList = gql`
   ${pageFragment}
-  query PageList($first: Int, $after: String, $last: Int, $before: String) {
-    pages(before: $before, after: $after, first: $first, last: $last) {
+  query PageList(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $sort: PageSortingInput
+  ) {
+    pages(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      sortBy: $sort
+    ) {
       edges {
         node {
           ...PageFragment
@@ -42,7 +55,7 @@ const pageList = gql`
     }
   }
 `;
-export const TypedPageListQuery = TypedQuery<PageList, PageListVariables>(
+export const usePageListQuery = makeQuery<PageList, PageListVariables>(
   pageList
 );
 

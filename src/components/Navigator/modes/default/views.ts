@@ -11,7 +11,7 @@ import { sectionNames } from "@saleor/intl";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { orderDraftListUrl, orderListUrl } from "@saleor/orders/urls";
 import { pageListUrl } from "@saleor/pages/urls";
-import { pluginsListUrl } from "@saleor/plugins/urls";
+import { pluginListUrl } from "@saleor/plugins/urls";
 import { productListUrl } from "@saleor/products/urls";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
 import { serviceListUrl } from "@saleor/services/urls";
@@ -71,7 +71,7 @@ function searchInViews(
     },
     {
       label: intl.formatMessage(sectionNames.plugins),
-      url: pluginsListUrl()
+      url: pluginListUrl()
     },
     {
       label: intl.formatMessage(sectionNames.productTypes),

@@ -205,12 +205,14 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 isRoot={false}
                 pageInfo={pageInfo}
                 selected={selected}
+                sort={undefined}
                 toggle={toggle}
                 toggleAll={toggleAll}
                 toolbar={subcategoryListToolbar}
                 onNextPage={onNextPage}
                 onPreviousPage={onPreviousPage}
                 onRowClick={onCategoryClick}
+                onSort={() => undefined}
               />
             </Card>
           )}

@@ -46,6 +46,7 @@ export const rootCategories = gql`
     $last: Int
     $before: String
     $filter: CategoryFilterInput
+    $sort: CategorySortingInput
   ) {
     categories(
       level: 0
@@ -54,6 +55,7 @@ export const rootCategories = gql`
       last: $last
       before: $before
       filter: $filter
+      sortBy: $sort
     ) {
       edges {
         node {

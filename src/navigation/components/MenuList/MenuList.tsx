@@ -15,10 +15,16 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps } from "@saleor/types";
+import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { MenuListUrlSortField } from "@saleor/navigation/urls";
+import TableCellHeader from "@saleor/components/TableCellHeader";
+import { getArrowDirection } from "@saleor/utils/sort";
 import { MenuList_menus_edges_node } from "../../types/MenuList";
 
-export interface MenuListProps extends ListProps, ListActions {
+export interface MenuListProps
+  extends ListProps,
+    ListActions,
+    SortPage<MenuListUrlSortField> {
   menus: MenuList_menus_edges_node[];
   onDelete: (id: string) => void;
 }
@@ -57,8 +63,10 @@ const MenuList: React.FC<MenuListProps> = props => {
     onPreviousPage,
     onUpdateListSettings,
     onRowClick,
+    onSort,
     pageInfo,
     selected,
+    sort,
     toggle,
     toggleAll,
     toolbar
@@ -77,19 +85,37 @@ const MenuList: React.FC<MenuListProps> = props => {
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
-          <TableCell className={classes.colTitle}>
+          <TableCellHeader
+            direction={
+              sort.sort === MenuListUrlSortField.name
+                ? getArrowDirection(sort.asc)
+                : undefined
+            }
+            arrowPosition="right"
+            onClick={() => onSort(MenuListUrlSortField.name)}
+            className={classes.colTitle}
+          >
             <FormattedMessage
               defaultMessage="Menu Title"
               id="menuListMenutitle"
             />
-          </TableCell>
-          <TableCell className={classes.colItems}>
+          </TableCellHeader>
+          <TableCellHeader
+            direction={
+              sort.sort === MenuListUrlSortField.items
+                ? getArrowDirection(sort.asc)
+                : undefined
+            }
+            textAlign="right"
+            onClick={() => onSort(MenuListUrlSortField.items)}
+            className={classes.colItems}
+          >
             <FormattedMessage
               defaultMessage="Items"
               description="number of menu items"
               id="menuListItems"
             />
-          </TableCell>
+          </TableCellHeader>
           <TableCell />
         </TableHead>
         <TableFooter>

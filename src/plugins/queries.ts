@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import makeQuery from "@saleor/hooks/makeQuery";
 import { TypedQuery } from "../queries";
 import { Plugin, PluginVariables } from "./types/Plugin";
 import { Plugins, PluginsVariables } from "./types/Plugins";
@@ -29,8 +30,20 @@ export const pluginsDetailsFragment = gql`
 
 const pluginsList = gql`
   ${pluginsFragment}
-  query Plugins($first: Int, $after: String, $last: Int, $before: String) {
-    plugins(before: $before, after: $after, first: $first, last: $last) {
+  query Plugins(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $sort: PluginSortingInput
+  ) {
+    plugins(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      sortBy: $sort
+    ) {
       edges {
         node {
           ...PluginFragment
@@ -45,7 +58,7 @@ const pluginsList = gql`
     }
   }
 `;
-export const TypedPluginsListQuery = TypedQuery<Plugins, PluginsVariables>(
+export const usePluginsListQuery = makeQuery<Plugins, PluginsVariables>(
   pluginsList
 );
 

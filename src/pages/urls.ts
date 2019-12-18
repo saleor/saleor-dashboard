@@ -1,14 +1,21 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination } from "../types";
+import { BulkAction, Dialog, Pagination, Sort } from "../types";
 
 export const pagesSection = "/pages/";
 
 export const pageListPath = pagesSection;
 export type PageListUrlDialog = "publish" | "unpublish" | "remove";
+export enum PageListUrlSortField {
+  title = "title",
+  slug = "slug",
+  visible = "visible"
+}
+export type PageListUrlSort = Sort<PageListUrlSortField>;
 export type PageListUrlQueryParams = BulkAction &
   Dialog<PageListUrlDialog> &
+  PageListUrlSort &
   Pagination;
 export const pageListUrl = (params?: PageListUrlQueryParams) =>
   pageListPath + "?" + stringifyQs(params);

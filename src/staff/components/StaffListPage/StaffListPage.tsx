@@ -8,13 +8,20 @@ import { Container } from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
-import { ListProps, SearchPageProps, TabPageProps } from "@saleor/types";
+import {
+  ListProps,
+  SearchPageProps,
+  TabPageProps,
+  SortPage
+} from "@saleor/types";
+import { StaffListUrlSortField } from "@saleor/staff/urls";
 import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 import StaffList from "../StaffList/StaffList";
 
 export interface StaffListPageProps
   extends ListProps,
     SearchPageProps,
+    SortPage<StaffListUrlSortField>,
     TabPageProps {
   staffMembers: StaffList_staffUsers_edges_node[];
   onAdd: () => void;

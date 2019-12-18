@@ -15,10 +15,15 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
-import { ListProps } from "@saleor/types";
+import { ListProps, SortPage } from "@saleor/types";
+import { ServiceListUrlSortField } from "@saleor/services/urls";
+import TableCellHeader from "@saleor/components/TableCellHeader";
+import { getArrowDirection } from "@saleor/utils/sort";
 import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
 
-export interface ServiceListProps extends ListProps {
+export interface ServiceListProps
+  extends ListProps,
+    SortPage<ServiceListUrlSortField> {
   services: ServiceList_serviceAccounts_edges_node[];
   onRemove: (id: string) => void;
 }
@@ -37,7 +42,7 @@ const useStyles = makeStyles(
         paddingRight: theme.spacing(1)
       },
       textAlign: "right",
-      width: 100
+      width: 140
     },
     colName: {
       paddingLeft: 0,
@@ -64,8 +69,10 @@ const ServiceList: React.FC<ServiceListProps> = props => {
     onUpdateListSettings,
     onRemove,
     onRowClick,
+    onSort,
     pageInfo,
-    services
+    services,
+    sort
   } = props;
 
   const classes = useStyles(props);
@@ -74,12 +81,21 @@ const ServiceList: React.FC<ServiceListProps> = props => {
     <ResponsiveTable className={classes.table}>
       <TableHead>
         <TableRow>
-          <TableCell className={classes.colName}>
+          <TableCellHeader
+            direction={
+              sort.sort === ServiceListUrlSortField.name
+                ? getArrowDirection(sort.asc)
+                : undefined
+            }
+            arrowPosition="right"
+            onClick={() => onSort(ServiceListUrlSortField.name)}
+            className={classes.colName}
+          >
             <FormattedMessage
               defaultMessage="Name"
               description="service name"
             />
-          </TableCell>
+          </TableCellHeader>
           <TableCell />
         </TableRow>
       </TableHead>

@@ -1,11 +1,13 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
 import {
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps
+  tabPageProps,
+  sortPageProps
 } from "../../../fixtures";
 import OrderDraftListPage, {
   OrderDraftListPageProps
@@ -17,9 +19,14 @@ const props: OrderDraftListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
   ...searchPageProps,
+  ...sortPageProps,
   ...tabPageProps,
   onAdd: () => undefined,
-  orders
+  orders,
+  sort: {
+    ...sortPageProps.sort,
+    sort: OrderDraftListUrlSortField.number
+  }
 };
 
 storiesOf("Views / Orders / Draft order list", module)

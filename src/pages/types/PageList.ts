@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { PageSortingInput } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: PageList
 // ====================================================
@@ -42,4 +44,5 @@ export interface PageListVariables {
   after?: string | null;
   last?: number | null;
   before?: string | null;
+  sort?: PageSortingInput | null;
 }

@@ -19,7 +19,10 @@ import {
   transformOrderStatus,
   transformPaymentStatus
 } from "@saleor/misc";
-import { ListActions, ListProps } from "@saleor/types";
+import { ListActions, ListProps, SortPage } from "@saleor/types";
+import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
+import TableCellHeader from "@saleor/components/TableCellHeader";
+import { getArrowDirection } from "@saleor/utils/sort";
 import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
 
 const useStyles = makeStyles(
@@ -32,7 +35,7 @@ const useStyles = makeStyles(
         width: 300
       },
       colNumber: {
-        width: 120
+        width: 160
       },
       colTotal: {}
     },
@@ -51,7 +54,10 @@ const useStyles = makeStyles(
   { name: "OrderDraftList" }
 );
 
-interface OrderDraftListProps extends ListProps, ListActions {
+interface OrderDraftListProps
+  extends ListProps,
+    ListActions,
+    SortPage<OrderDraftListUrlSortField> {
   orders: OrderDraftList_draftOrders_edges_node[];
 }
 
@@ -67,8 +73,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     onNextPage,
     onUpdateListSettings,
     onRowClick,
+    onSort,
     isChecked,
     selected,
+    sort,
     toggle,
     toggleAll,
     toolbar
@@ -95,24 +103,58 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
         toggleAll={toggleAll}
         toolbar={toolbar}
       >
-        <TableCell className={classes.colNumber}>
+        <TableCellHeader
+          direction={
+            sort.sort === OrderDraftListUrlSortField.number
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          arrowPosition="right"
+          onClick={() => onSort(OrderDraftListUrlSortField.number)}
+          className={classes.colNumber}
+        >
           <FormattedMessage defaultMessage="No. of Order" />
-        </TableCell>
-        <TableCell className={classes.colDate}>
+        </TableCellHeader>
+        <TableCellHeader
+          direction={
+            sort.sort === OrderDraftListUrlSortField.date
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          onClick={() => onSort(OrderDraftListUrlSortField.date)}
+          className={classes.colDate}
+        >
           <FormattedMessage
             defaultMessage="Date"
             description="order draft creation date"
           />
-        </TableCell>
-        <TableCell className={classes.colCustomer}>
+        </TableCellHeader>
+        <TableCellHeader
+          direction={
+            sort.sort === OrderDraftListUrlSortField.customer
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          onClick={() => onSort(OrderDraftListUrlSortField.customer)}
+          className={classes.colCustomer}
+        >
           <FormattedMessage defaultMessage="Customer" />
-        </TableCell>
-        <TableCell className={classes.colTotal}>
+        </TableCellHeader>
+        <TableCellHeader
+          direction={
+            sort.sort === OrderDraftListUrlSortField.total
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          textAlign="right"
+          onClick={() => onSort(OrderDraftListUrlSortField.total)}
+          className={classes.colTotal}
+        >
           <FormattedMessage
             defaultMessage="Total"
             description="order draft total price"
           />
-        </TableCell>
+        </TableCellHeader>
       </TableHead>
       <TableFooter>
         <TableRow>

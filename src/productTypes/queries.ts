@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
 import { attributeFragment } from "@saleor/attributes/queries";
+import makeQuery from "@saleor/hooks/makeQuery";
 import { pageInfoFragment, TypedQuery } from "../queries";
 import { ProductTypeCreateData } from "./types/ProductTypeCreateData";
 import {
@@ -52,6 +53,7 @@ export const productTypeListQuery = gql`
     $first: Int
     $last: Int
     $filter: ProductTypeFilterInput
+    $sort: ProductTypeSortingInput
   ) {
     productTypes(
       after: $after
@@ -59,6 +61,7 @@ export const productTypeListQuery = gql`
       first: $first
       last: $last
       filter: $filter
+      sortBy: $sort
     ) {
       edges {
         node {
@@ -71,7 +74,7 @@ export const productTypeListQuery = gql`
     }
   }
 `;
-export const TypedProductTypeListQuery = TypedQuery<
+export const useProductTypeListQuery = makeQuery<
   ProductTypeList,
   ProductTypeListVariables
 >(productTypeListQuery);

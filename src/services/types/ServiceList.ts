@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ServiceAccountFilterInput } from "./../../types/globalTypes";
+import { ServiceAccountFilterInput, ServiceAccountSortingInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ServiceList
@@ -44,4 +44,5 @@ export interface ServiceListVariables {
   last?: number | null;
   before?: string | null;
   filter?: ServiceAccountFilterInput | null;
+  sort?: ServiceAccountSortingInput | null;
 }

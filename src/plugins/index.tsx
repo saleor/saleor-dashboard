@@ -4,25 +4,30 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
-  pluginsListPath,
-  PluginsListUrlQueryParams,
-  pluginsPath,
-  PluginsUrlQueryParams
+  pluginListPath,
+  PluginListUrlQueryParams,
+  pluginPath,
+  PluginUrlQueryParams,
+  PluginListUrlSortField
 } from "./urls";
 import PluginsDetailsComponent from "./views/PluginsDetails";
-import PluginsListComponent from "./views/PluginsList";
+import PluginsListComponent from "./views/PluginList";
 
 const PluginList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: PluginsListUrlQueryParams = qs;
+  const params: PluginListUrlQueryParams = asSortParams(
+    qs,
+    PluginListUrlSortField
+  );
   return <PluginsListComponent params={params} />;
 };
 
 const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: PluginsUrlQueryParams = qs;
+  const params: PluginUrlQueryParams = qs;
 
   return (
     <PluginsDetailsComponent
@@ -38,8 +43,8 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.plugins)} />
       <Switch>
-        <Route exact path={pluginsListPath} component={PluginList} />
-        <Route path={pluginsPath(":id")} component={PageDetails} />
+        <Route exact path={pluginListPath} component={PluginList} />
+        <Route path={pluginPath(":id")} component={PageDetails} />
       </Switch>
     </>
   );

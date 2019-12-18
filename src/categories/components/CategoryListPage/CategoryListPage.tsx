@@ -12,14 +12,17 @@ import {
   ListActions,
   PageListProps,
   SearchPageProps,
-  TabPageProps
+  TabPageProps,
+  SortPage
 } from "@saleor/types";
+import { CategoryListUrlSortField } from "@saleor/categories/urls";
 import CategoryList from "../CategoryList";
 
 export interface CategoryTableProps
   extends PageListProps,
     ListActions,
     SearchPageProps,
+    SortPage<CategoryListUrlSortField>,
     TabPageProps {
   categories: CategoryFragment[];
 }
@@ -46,7 +49,8 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   onTabChange,
   onTabDelete,
   onTabSave,
-  onUpdateListSettings
+  onUpdateListSettings,
+  ...listProps
 }) => {
   const intl = useIntl();
 
@@ -94,6 +98,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
           onPreviousPage={onPreviousPage}
           onRowClick={onRowClick}
           onUpdateListSettings={onUpdateListSettings}
+          {...listProps}
         />
       </Card>
     </Container>
