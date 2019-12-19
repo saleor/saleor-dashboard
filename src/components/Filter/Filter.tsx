@@ -9,14 +9,14 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { FilterContentSubmitData } from "./FilterContent";
-import { IFilter } from "./types";
+import { IFilter, IFilterElement } from "./types";
+import useFilter from "./useFilter";
 import { FilterContent } from ".";
 
-export interface FilterProps<TFilterKeys = string> {
+export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol: string;
   menu: IFilter<TFilterKeys>;
-  onFilterAdd: (filter: FilterContentSubmitData) => void;
+  onFilterAdd: (filter: Array<IFilterElement<string>>) => void;
 }
 
 const useStyles = makeStyles(
@@ -71,7 +71,8 @@ const useStyles = makeStyles(
       width: 240
     },
     popover: {
-      zIndex: 1
+      width: 376,
+      zIndex: 3
     },
     rotate: {
       transform: "rotate(180deg)"
@@ -85,6 +86,7 @@ const Filter: React.FC<FilterProps> = props => {
 
   const anchor = React.useRef<HTMLDivElement>();
   const [isFilterMenuOpened, setFilterMenuOpened] = React.useState(false);
+  const [data, dispatch, reset] = useFilter(menu);
 
   return (
     <div ref={anchor}>
@@ -122,8 +124,10 @@ const Filter: React.FC<FilterProps> = props => {
           >
             <FilterContent
               currencySymbol={currencySymbol}
-              filters={menu}
-              onSubmit={data => {
+              filters={data}
+              onClear={reset}
+              onFilterPropertyChange={dispatch}
+              onSubmit={() => {
                 onFilterAdd(data);
                 setFilterMenuOpened(false);
               }}

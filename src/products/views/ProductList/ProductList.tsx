@@ -13,7 +13,6 @@ import SaveFilterTabDialog, {
 import { defaultListSettings, ProductListColumns } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
-import useLocale from "@saleor/hooks/useLocale";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -26,6 +25,7 @@ import { ProductListVariables } from "@saleor/products/types/ProductList";
 import { ListViews } from "@saleor/types";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { IFilter } from "@saleor/components/Filter";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -48,13 +48,13 @@ import {
 } from "../../urls";
 import {
   areFiltersApplied,
-  createFilter,
-  createFilterChips,
   deleteFilterTab,
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
+  ProductFilterKeys,
+  createFilterQueryParams
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -63,7 +63,6 @@ interface ProductListProps {
 }
 
 export const ProductList: React.FC<ProductListProps> = ({ params }) => {
-  const { locale } = useLocale();
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
@@ -108,13 +107,24 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     navigate(productListUrl(filters));
   };
 
-  const changeFilterField = (filter: ProductListUrlFilters) => {
+  const changeFilterField = (filter: IFilter<ProductFilterKeys>) => {
     reset();
     navigate(
       productListUrl({
-        ...getActiveFilters(params),
-        ...filter,
+        ...params,
+        ...createFilterQueryParams(filter),
         activeTab: undefined
+      })
+    );
+  };
+
+  const handleSearchChange = (query: string) => {
+    reset();
+    navigate(
+      productListUrl({
+        ...params,
+        activeTab: undefined,
+        query
       })
     );
   };
@@ -241,15 +251,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                                 .hasNextPage,
                             false
                           )}
-                          filtersList={createFilterChips(
-                            params,
-                            {
-                              currencySymbol,
-                              locale
-                            },
-                            changeFilterField,
-                            intl
-                          )}
                           onAdd={() => navigate(productAddUrl)}
                           disabled={loading}
                           products={maybe(() =>
@@ -337,10 +338,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           selected={listElements.length}
                           toggle={toggle}
                           toggleAll={toggleAll}
-                          onSearchChange={query => changeFilterField({ query })}
-                          onFilterAdd={filter =>
-                            changeFilterField(createFilter(filter))
-                          }
+                          onSearchChange={handleSearchChange}
+                          onFilterChange={filter => changeFilterField(filter)}
                           onTabSave={() => openModal("save-search")}
                           onTabDelete={() => openModal("delete-search")}
                           onTabChange={handleTabChange}
