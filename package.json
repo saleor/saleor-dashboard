@@ -22,7 +22,7 @@
     "@material-ui/styles": "^4.5.2",
     "apollo": "^2.21.1",
     "apollo-cache-inmemory": "^1.6.5",
-    "apollo-client": "^2.6.4",
+    "apollo-client": "^2.6.8",
     "apollo-client-preset": "^1.0.6",
     "apollo-link": "^1.2.12",
     "apollo-link-batch-http": "^1.2.12",
