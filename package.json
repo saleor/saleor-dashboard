@@ -84,7 +84,7 @@
     "@testing-library/react-hooks": "^1.1.0",
     "@types/classnames": "^2.2.9",
     "@types/draft-js": "^0.10.34",
-    "@types/enzyme": "^3.10.2",
+    "@types/enzyme": "^3.10.4",
     "@types/fuzzaldrin": "^2.1.2",
     "@types/jest": "^23.3.14",
     "@types/lodash-es": "^4.17.3",
