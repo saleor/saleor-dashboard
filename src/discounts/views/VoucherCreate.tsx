@@ -80,7 +80,7 @@ export const VoucherDetails: React.FC = () => {
                         : formData.type,
                     usageLimit: formData.hasUsageLimit
                       ? parseInt(formData.usageLimit, 10)
-                      : 0
+                      : null
                   }
                 }
               })
