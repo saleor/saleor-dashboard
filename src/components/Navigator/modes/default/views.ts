@@ -20,7 +20,7 @@ import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
 import { countryListUrl } from "@saleor/taxes/urls";
 import { languageListUrl } from "@saleor/translations/urls";
-import { webhooksListUrl } from "@saleor/webhooks/urls";
+import { webhookListUrl } from "@saleor/webhooks/urls";
 import { QuickSearchActionInput } from "../../types";
 
 interface View {
@@ -115,7 +115,7 @@ function searchInViews(
     },
     {
       label: intl.formatMessage(sectionNames.webhooks),
-      url: webhooksListUrl()
+      url: webhookListUrl()
     }
   ];
 

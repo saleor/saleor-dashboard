@@ -25,10 +25,10 @@ import { useWebhooksListQuery } from "../../queries";
 import {
   WebhookListUrlDialog,
   WebhookListUrlFilters,
-  webhooksAddUrl,
-  webhooksListUrl,
+  webhookAddUrl,
+  webhookListUrl,
   WebhookListUrlQueryParams,
-  webhooksUrl
+  webhookUrl
 } from "../../urls";
 import { getSortQueryVariables } from "./sort";
 import {
@@ -78,7 +78,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
 
   const changeFilterField = (filter: WebhookListUrlFilters) =>
     navigate(
-      webhooksListUrl({
+      webhookListUrl({
         ...getActiveFilters(params),
         ...filter,
         activeTab: undefined
@@ -86,7 +86,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
     );
   const closeModal = () =>
     navigate(
-      webhooksListUrl({
+      webhookListUrl({
         ...params,
         action: undefined,
         id: undefined
@@ -96,7 +96,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
 
   const openModal = (action: WebhookListUrlDialog, id?: string) =>
     navigate(
-      webhooksListUrl({
+      webhookListUrl({
         ...params,
         action,
         id
@@ -105,7 +105,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
 
   const handleTabChange = (tab: number) => {
     navigate(
-      webhooksListUrl({
+      webhookListUrl({
         activeTab: tab.toString(),
         ...getFilterTabs()[tab - 1].data
       })
@@ -114,7 +114,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
 
   const handleTabDelete = () => {
     deleteFilterTab(currentTab);
-    navigate(webhooksListUrl());
+    navigate(webhookListUrl());
   };
 
   const handleTabSave = (data: SaveFilterTabDialogFormData) => {
@@ -127,12 +127,12 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate(webhooksListUrl());
+      navigate(webhookListUrl());
       refetch();
     }
   };
 
-  const handleSort = createSortHandler(navigate, webhooksListUrl, params);
+  const handleSort = createSortHandler(navigate, webhookListUrl, params);
 
   return (
     <TypedWebhookDelete onCompleted={onWebhookDelete}>
@@ -144,7 +144,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
         );
         const handleRemove = (id: string) => {
           navigate(
-            webhooksListUrl({
+            webhookListUrl({
               ...params,
               action: "remove",
               id
@@ -165,7 +165,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
               currentTab={currentTab}
               initialSearch={params.query || ""}
               onSearchChange={query => changeFilterField({ query })}
-              onAll={() => navigate(webhooksListUrl())}
+              onAll={() => navigate(webhookListUrl())}
               onTabChange={handleTabChange}
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}
@@ -175,14 +175,14 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
               sort={getSortParams(params)}
               webhooks={maybe(() => data.webhooks.edges.map(edge => edge.node))}
               pageInfo={pageInfo}
-              onAdd={() => navigate(webhooksAddUrl)}
+              onAdd={() => navigate(webhookAddUrl)}
               onBack={() => navigate(configurationMenuUrl)}
               onNextPage={loadNextPage}
               onPreviousPage={loadPreviousPage}
               onRemove={handleRemove}
               onSort={handleSort}
               onUpdateListSettings={updateListSettings}
-              onRowClick={id => () => navigate(webhooksUrl(id))}
+              onRowClick={id => () => navigate(webhookUrl(id))}
             />
             <WebhookDeleteDialog
               confirmButtonState={webhookDeleteOpts.status}

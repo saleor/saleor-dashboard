@@ -23,6 +23,7 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import VoucherListPage from "../../components/VoucherListPage";
 import { TypedVoucherBulkDelete } from "../../mutations";
 import { useVoucherListQuery } from "../../queries";
@@ -30,10 +31,10 @@ import { VoucherBulkDelete } from "../../types/VoucherBulkDelete";
 import {
   voucherAddUrl,
   voucherListUrl,
-  VoucherListUrlDialog,
   VoucherListUrlFilters,
   VoucherListUrlQueryParams,
-  voucherUrl
+  voucherUrl,
+  VoucherListUrlDialog
 } from "../../urls";
 import {
   areFiltersApplied,
@@ -96,24 +97,10 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     );
   };
 
-  const closeModal = () =>
-    navigate(
-      voucherListUrl({
-        ...params,
-        action: undefined,
-        ids: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: VoucherListUrlDialog, ids?: string[]) =>
-    navigate(
-      voucherListUrl({
-        ...params,
-        action,
-        ids
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    VoucherListUrlDialog,
+    VoucherListUrlQueryParams
+  >(navigate, voucherListUrl, params);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -199,12 +186,9 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
                 <IconButton
                   color="primary"
                   onClick={() =>
-                    navigate(
-                      voucherListUrl({
-                        action: "remove",
-                        ids: listElements
-                      })
-                    )
+                    openModal("remove", {
+                      ids: listElements
+                    })
                   }
                 >
                   <DeleteIcon />

@@ -22,6 +22,7 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import StaffAddMemberDialog, {
   FormData as AddStaffMemberForm
 } from "../../components/StaffAddMemberDialog";
@@ -92,24 +93,10 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
       })
     );
 
-  const closeModal = () =>
-    navigate(
-      staffListUrl({
-        ...params,
-        action: undefined,
-        ids: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: StaffListUrlDialog, ids?: string[]) =>
-    navigate(
-      staffListUrl({
-        ...params,
-        action,
-        ids
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    StaffListUrlDialog,
+    StaffListUrlQueryParams
+  >(navigate, staffListUrl, params);
 
   const handleTabChange = (tab: number) => {
     navigate(
@@ -188,13 +175,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
               staffMembers={maybe(() =>
                 data.staffUsers.edges.map(edge => edge.node)
               )}
-              onAdd={() =>
-                navigate(
-                  staffListUrl({
-                    action: "add"
-                  })
-                )
-              }
+              onAdd={() => openModal("add")}
               onBack={() => navigate(configurationMenuUrl)}
               onNextPage={loadNextPage}
               onPreviousPage={loadPreviousPage}

@@ -19,6 +19,7 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
 import { useCategoryBulkDeleteMutation } from "../../mutations";
 import { useRootCategoriesQuery } from "../../queries";
@@ -26,10 +27,10 @@ import { CategoryBulkDelete } from "../../types/CategoryBulkDelete";
 import {
   categoryAddUrl,
   categoryListUrl,
-  CategoryListUrlDialog,
   CategoryListUrlFilters,
   CategoryListUrlQueryParams,
-  categoryUrl
+  categoryUrl,
+  CategoryListUrlDialog
 } from "../../urls";
 import {
   areFiltersApplied,
@@ -91,24 +92,10 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     );
   };
 
-  const closeModal = () =>
-    navigate(
-      categoryListUrl({
-        ...params,
-        action: undefined,
-        ids: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: CategoryListUrlDialog, ids?: string[]) =>
-    navigate(
-      categoryListUrl({
-        ...params,
-        action,
-        ids
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    CategoryListUrlDialog,
+    CategoryListUrlQueryParams
+  >(navigate, categoryListUrl, params);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -187,13 +174,9 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
           <IconButton
             color="primary"
             onClick={() =>
-              navigate(
-                categoryListUrl({
-                  ...params,
-                  action: "delete",
-                  ids: listElements
-                })
-              )
+              openModal("delete", {
+                ids: listElements
+              })
             }
           >
             <DeleteIcon />

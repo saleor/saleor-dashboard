@@ -7,6 +7,7 @@ import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
 import AttributePage from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
@@ -29,8 +30,8 @@ import { AttributeValueUpdate } from "../../types/AttributeValueUpdate";
 import {
   attributeListUrl,
   attributeUrl,
-  AttributeUrlDialog,
-  AttributeUrlQueryParams
+  AttributeUrlQueryParams,
+  AttributeUrlDialog
 } from "../../urls";
 
 interface AttributeDetailsProps {
@@ -43,25 +44,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const closeModal = () =>
-    navigate(
-      attributeUrl(id, {
-        ...params,
-        action: undefined,
-        id: undefined,
-        ids: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: AttributeUrlDialog, valueId?: string) =>
-    navigate(
-      attributeUrl(id, {
-        ...params,
-        action,
-        id: valueId
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    AttributeUrlDialog,
+    AttributeUrlQueryParams
+  >(navigate, params => attributeUrl(id, params), params);
 
   const handleDelete = (data: AttributeDelete) => {
     if (data.attributeDelete.errors.length === 0) {
@@ -200,11 +186,15 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                       }}
                                       onValueAdd={() => openModal("add-value")}
                                       onValueDelete={id =>
-                                        openModal("remove-value", id)
+                                        openModal("remove-value", {
+                                          id
+                                        })
                                       }
                                       onValueReorder={handleValueReorder}
                                       onValueUpdate={id =>
-                                        openModal("edit-value", id)
+                                        openModal("edit-value", {
+                                          id
+                                        })
                                       }
                                       saveButtonBarState={
                                         attributeUpdateOpts.status

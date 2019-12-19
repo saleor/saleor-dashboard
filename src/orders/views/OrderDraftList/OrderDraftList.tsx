@@ -20,6 +20,7 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import OrderDraftListPage from "../../components/OrderDraftListPage";
 import {
   TypedOrderDraftBulkCancelMutation,
@@ -30,10 +31,10 @@ import { OrderDraftBulkCancel } from "../../types/OrderDraftBulkCancel";
 import { OrderDraftCreate } from "../../types/OrderDraftCreate";
 import {
   orderDraftListUrl,
-  OrderDraftListUrlDialog,
   OrderDraftListUrlFilters,
   OrderDraftListUrlQueryParams,
-  orderUrl
+  orderUrl,
+  OrderDraftListUrlDialog
 } from "../../urls";
 import {
   areFiltersApplied,
@@ -94,24 +95,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     );
   };
 
-  const closeModal = () =>
-    navigate(
-      orderDraftListUrl({
-        ...params,
-        action: undefined,
-        ids: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: OrderDraftListUrlDialog, ids?: string[]) =>
-    navigate(
-      orderDraftListUrl({
-        ...params,
-        action,
-        ids
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    OrderDraftListUrlDialog,
+    OrderDraftListUrlQueryParams
+  >(navigate, orderDraftListUrl, params);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -211,12 +198,9 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                 <IconButton
                   color="primary"
                   onClick={() =>
-                    navigate(
-                      orderDraftListUrl({
-                        action: "remove",
-                        ids: listElements
-                      })
-                    )
+                    openModal("remove", {
+                      ids: listElements
+                    })
                   }
                 >
                   <DeleteIcon />

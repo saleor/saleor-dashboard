@@ -15,6 +15,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { getMutationState, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { CollectionInput } from "../../types/globalTypes";
@@ -30,8 +31,8 @@ import { UnassignCollectionProduct } from "../types/UnassignCollectionProduct";
 import {
   collectionListUrl,
   collectionUrl,
-  CollectionUrlDialog,
-  CollectionUrlQueryParams
+  CollectionUrlQueryParams,
+  CollectionUrlDialog
 } from "../urls";
 
 interface CollectionDetailsProps {
@@ -54,22 +55,10 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
-  const closeModal = () =>
-    navigate(
-      collectionUrl(id, {
-        ...params,
-        action: undefined
-      }),
-      true
-    );
-  const openModal = (action: CollectionUrlDialog) =>
-    navigate(
-      collectionUrl(id, {
-        ...params,
-        action
-      }),
-      false
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    CollectionUrlDialog,
+    CollectionUrlQueryParams
+  >(navigate, params => collectionUrl(id, params), params);
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
 
@@ -243,12 +232,9 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                       <Button
                         color="primary"
                         onClick={() =>
-                          navigate(
-                            collectionUrl(id, {
-                              action: "unassign",
-                              ids: listElements
-                            })
-                          )
+                          openModal("unassign", {
+                            ids: listElements
+                          })
                         }
                       >
                         <FormattedMessage

@@ -13,6 +13,7 @@ import {
   remove,
   updateAtIndex
 } from "@saleor/utils/lists";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import AttributePage from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog, {
@@ -22,10 +23,10 @@ import { AttributeCreateMutation } from "../../mutations";
 import { AttributeCreate } from "../../types/AttributeCreate";
 import {
   attributeAddUrl,
-  AttributeAddUrlDialog,
   AttributeAddUrlQueryParams,
   attributeListUrl,
-  attributeUrl
+  attributeUrl,
+  AttributeAddUrlDialog
 } from "../../urls";
 
 interface AttributeDetailsProps {
@@ -51,24 +52,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
 
   const id = params.id ? parseInt(params.id, 0) : undefined;
 
-  const closeModal = () =>
-    navigate(
-      attributeAddUrl({
-        ...params,
-        action: undefined,
-        id: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: AttributeAddUrlDialog, valueId?: string) =>
-    navigate(
-      attributeAddUrl({
-        ...params,
-        action,
-        id: valueId
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    AttributeAddUrlDialog,
+    AttributeAddUrlQueryParams
+  >(navigate, attributeAddUrl, params);
 
   const handleValueDelete = () => {
     setValues(remove(values[params.id], values, areValuesEqual));
@@ -159,9 +146,17 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
               })
             }
             onValueAdd={() => openModal("add-value")}
-            onValueDelete={id => openModal("remove-value", id)}
+            onValueDelete={id =>
+              openModal("remove-value", {
+                id
+              })
+            }
             onValueReorder={handleValueReorder}
-            onValueUpdate={id => openModal("edit-value", id)}
+            onValueUpdate={id =>
+              openModal("edit-value", {
+                id
+              })
+            }
             saveButtonBarState={attributeCreateOpts.status}
             values={values.map((value, valueIndex) => ({
               __typename: "AttributeValue" as "AttributeValue",

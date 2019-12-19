@@ -20,6 +20,7 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
 import { decimal, joinDateTime, maybe } from "../../misc";
@@ -47,8 +48,8 @@ import { VoucherUpdate } from "../types/VoucherUpdate";
 import {
   voucherListUrl,
   voucherUrl,
-  VoucherUrlDialog,
-  VoucherUrlQueryParams
+  VoucherUrlQueryParams,
+  VoucherUrlDialog
 } from "../urls";
 
 interface VoucherDetailsProps {
@@ -117,23 +118,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     }
   };
 
-  const closeModal = () =>
-    navigate(
-      voucherUrl(id, {
-        ...params,
-        action: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: VoucherUrlDialog, ids?: string[]) =>
-    navigate(
-      voucherUrl(id, {
-        ...params,
-        action,
-        ids
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    VoucherUrlDialog,
+    VoucherUrlQueryParams
+  >(navigate, params => voucherUrl(id, params), params);
 
   const handleCatalogueAdd = (data: VoucherCataloguesAdd) => {
     if (data.voucherCataloguesAdd.errors.length === 0) {
@@ -360,7 +348,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 <Button
                                   color="primary"
                                   onClick={() =>
-                                    openModal("unassign-category", listElements)
+                                    openModal("unassign-category", {
+                                      ids: listElements
+                                    })
                                   }
                                 >
                                   <FormattedMessage
@@ -374,10 +364,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 <Button
                                   color="primary"
                                   onClick={() =>
-                                    openModal(
-                                      "unassign-collection",
-                                      listElements
-                                    )
+                                    openModal("unassign-collection", {
+                                      ids: listElements
+                                    })
                                   }
                                 >
                                   <FormattedMessage
@@ -391,7 +380,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 <Button
                                   color="primary"
                                   onClick={() =>
-                                    openModal("unassign-product", listElements)
+                                    openModal("unassign-product", {
+                                      ids: listElements
+                                    })
                                   }
                                 >
                                   <FormattedMessage

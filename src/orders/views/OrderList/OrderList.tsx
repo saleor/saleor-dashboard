@@ -19,6 +19,7 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import OrderBulkCancelDialog from "../../components/OrderBulkCancelDialog";
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
 import {
@@ -30,10 +31,10 @@ import { OrderBulkCancel } from "../../types/OrderBulkCancel";
 import { OrderDraftCreate } from "../../types/OrderDraftCreate";
 import {
   orderListUrl,
-  OrderListUrlDialog,
   OrderListUrlFilters,
   OrderListUrlQueryParams,
-  orderUrl
+  orderUrl,
+  OrderListUrlDialog
 } from "../../urls";
 import {
   areFiltersApplied,
@@ -87,16 +88,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const closeModal = () =>
-    navigate(
-      orderListUrl({
-        ...params,
-        action: undefined,
-        ids: undefined
-      }),
-      true
-    );
-
   const changeFilters = (filters: OrderListUrlFilters) => {
     reset();
     navigate(orderListUrl(filters));
@@ -113,14 +104,10 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     );
   };
 
-  const openModal = (action: OrderListUrlDialog, ids?: string[]) =>
-    navigate(
-      orderListUrl({
-        ...params,
-        action,
-        ids
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    OrderListUrlDialog,
+    OrderListUrlQueryParams
+  >(navigate, orderListUrl, params);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -222,7 +209,11 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
               toolbar={
                 <Button
                   color="primary"
-                  onClick={() => openModal("cancel", listElements)}
+                  onClick={() =>
+                    openModal("cancel", {
+                      ids: listElements
+                    })
+                  }
                 >
                   <FormattedMessage
                     defaultMessage="Cancel"

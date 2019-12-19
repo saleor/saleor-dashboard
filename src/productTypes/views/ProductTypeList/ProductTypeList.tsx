@@ -20,6 +20,7 @@ import { commonMessages } from "@saleor/intl";
 import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { configurationMenuUrl } from "../../../configuration";
 import { maybe } from "../../../misc";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
@@ -92,24 +93,10 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     );
   };
 
-  const closeModal = () =>
-    navigate(
-      productTypeListUrl({
-        ...params,
-        action: undefined,
-        ids: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: ProductTypeListUrlDialog, ids?: string[]) =>
-    navigate(
-      productTypeListUrl({
-        ...params,
-        action,
-        ids
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductTypeListUrlDialog,
+    ProductTypeListUrlQueryParams
+  >(navigate, productTypeListUrl, params);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -200,12 +187,9 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
                 <IconButton
                   color="primary"
                   onClick={() =>
-                    navigate(
-                      productTypeListUrl({
-                        action: "remove",
-                        ids: listElements
-                      })
-                    )
+                    openModal("remove", {
+                      ids: listElements
+                    })
                   }
                 >
                   <DeleteIcon />

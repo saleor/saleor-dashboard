@@ -18,6 +18,7 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import PageListPage from "../../components/PageListPage/PageListPage";
 import { TypedPageBulkPublish, TypedPageBulkRemove } from "../../mutations";
 import { usePageListQuery } from "../../queries";
@@ -67,24 +68,10 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     params
   );
 
-  const closeModal = () =>
-    navigate(
-      pageListUrl({
-        ...params,
-        action: undefined,
-        ids: undefined
-      }),
-      true
-    );
-
-  const openModal = (action: PageListUrlDialog, ids: string[]) =>
-    navigate(
-      pageListUrl({
-        ...params,
-        action,
-        ids
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    PageListUrlDialog,
+    PageListUrlQueryParams
+  >(navigate, pageListUrl, params);
 
   const handlePageBulkPublish = (data: PageBulkPublish) => {
     if (data.pageBulkPublish.errors.length === 0) {
@@ -138,7 +125,11 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                   <>
                     <Button
                       color="primary"
-                      onClick={() => openModal("unpublish", listElements)}
+                      onClick={() =>
+                        openModal("unpublish", {
+                          ids: listElements
+                        })
+                      }
                     >
                       <FormattedMessage
                         defaultMessage="Unpublish"
@@ -147,7 +138,11 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                     </Button>
                     <Button
                       color="primary"
-                      onClick={() => openModal("publish", listElements)}
+                      onClick={() =>
+                        openModal("publish", {
+                          ids: listElements
+                        })
+                      }
                     >
                       <FormattedMessage
                         defaultMessage="Publish"
@@ -156,7 +151,11 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                     </Button>
                     <IconButton
                       color="primary"
-                      onClick={() => openModal("remove", listElements)}
+                      onClick={() =>
+                        openModal("remove", {
+                          ids: listElements
+                        })
+                      }
                     >
                       <DeleteIcon />
                     </IconButton>

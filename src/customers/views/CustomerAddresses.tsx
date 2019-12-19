@@ -8,6 +8,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { maybe } from "../../misc";
 import CustomerAddressDialog from "../components/CustomerAddressDialog";
 import CustomerAddressListPage from "../components/CustomerAddressListPage";
@@ -24,9 +25,9 @@ import { SetCustomerDefaultAddress } from "../types/SetCustomerDefaultAddress";
 import { UpdateCustomerAddress } from "../types/UpdateCustomerAddress";
 import {
   customerAddressesUrl,
-  CustomerAddressesUrlDialog,
   CustomerAddressesUrlQueryParams,
-  customerUrl
+  customerUrl,
+  CustomerAddressesUrlDialog
 } from "../urls";
 
 interface CustomerAddressesProps {
@@ -43,9 +44,10 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
   const shop = useShop();
   const intl = useIntl();
 
-  const closeModal = () => navigate(customerAddressesUrl(id), true);
-  const openModal = (action: CustomerAddressesUrlDialog, addressId?: string) =>
-    navigate(customerAddressesUrl(id, { action, id: addressId }));
+  const [openModal, closeModal] = createDialogActionHandlers<
+    CustomerAddressesUrlDialog,
+    CustomerAddressesUrlQueryParams
+  >(navigate, params => customerAddressesUrl(id, params), params);
 
   const handleSetAddressAsDefault = (data: SetCustomerDefaultAddress) => {
     if (data.addressSetDefault.errors.length === 0) {
@@ -116,9 +118,15 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                               disabled={customerData.loading}
                               onAdd={() => openModal("add")}
                               onBack={() => navigate(customerUrl(id))}
-                              onEdit={addressId => openModal("edit", addressId)}
-                              onRemove={addressId =>
-                                openModal("remove", addressId)
+                              onEdit={id =>
+                                openModal("edit", {
+                                  id
+                                })
+                              }
+                              onRemove={id =>
+                                openModal("remove", {
+                                  id
+                                })
                               }
                               onSetAsDefault={(addressId, type) =>
                                 setCustomerDefaultAddress({
