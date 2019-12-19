@@ -1,47 +1,31 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import TextField from "@material-ui/core/TextField";
 
 import { SearchPageProps } from "../../types";
 import Debounce from "../Debounce";
-import { FilterActionsOnlySearch } from "../Filter/FilterActions";
-import Hr from "../Hr";
-import Link from "../Link";
 
 export interface SearchInputProps extends SearchPageProps {
-  displaySearchAction: "save" | "delete" | null;
-  searchPlaceholder: string;
-  onSearchDelete?: () => void;
-  onSearchSave?: () => void;
+  placeholder: string;
 }
 
 const useStyles = makeStyles(
-  theme => ({
-    tabAction: {
-      display: "inline-block"
+  {
+    input: {
+      padding: "10.5px 12px"
     },
-    tabActionContainer: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
-      display: "flex",
-      justifyContent: "flex-end",
-      marginTop: theme.spacing(),
-      padding: theme.spacing(0, 1, 3, 1)
+    root: {
+      flex: 1
     }
-  }),
+  },
   {
     name: "SearchInput"
   }
 );
 
 const SearchInput: React.FC<SearchInputProps> = props => {
-  const {
-    displaySearchAction,
-    initialSearch,
-    onSearchChange,
-    onSearchDelete,
-    onSearchSave,
-    searchPlaceholder
-  } = props;
+  const { initialSearch, onSearchChange, placeholder } = props;
+
   const classes = useStyles(props);
   const [search, setSearch] = React.useState(initialSearch);
   React.useEffect(() => setSearch(initialSearch), [initialSearch]);
@@ -56,37 +40,15 @@ const SearchInput: React.FC<SearchInputProps> = props => {
         };
 
         return (
-          <>
-            <FilterActionsOnlySearch
-              {...props}
-              placeholder={searchPlaceholder}
-              search={search}
-              onSearchChange={handleSearchChange}
-            />
-            {!!displaySearchAction ? (
-              <div className={classes.tabActionContainer}>
-                <div className={classes.tabAction}>
-                  {displaySearchAction === "save" ? (
-                    <Link onClick={onSearchSave}>
-                      <FormattedMessage
-                        defaultMessage="Save Custom Search"
-                        description="button"
-                      />
-                    </Link>
-                  ) : (
-                    <Link onClick={onSearchDelete}>
-                      <FormattedMessage
-                        defaultMessage="Delete Search"
-                        description="button"
-                      />
-                    </Link>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <Hr />
-            )}
-          </>
+          <TextField
+            className={classes.root}
+            inputProps={{
+              className: classes.input,
+              placeholder
+            }}
+            value={search}
+            onChange={handleSearchChange}
+          />
         );
       }}
     </Debounce>

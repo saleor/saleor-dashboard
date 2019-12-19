@@ -1,14 +1,35 @@
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 import { SearchPageProps, TabPageProps } from "@saleor/types";
 import FilterTabs, { FilterTab } from "../TableFilter";
+import Link from "../Link";
+import Hr from "../Hr";
 import SearchInput from "./SearchInput";
 
 export interface SearchBarProps extends SearchPageProps, TabPageProps {
   allTabLabel: string;
   searchPlaceholder: string;
 }
+
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      display: "flex",
+      flexWrap: "wrap",
+      padding: theme.spacing(1, 3)
+    },
+    tabActions: {
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      padding: theme.spacing(1, 3, 2),
+      textAlign: "right"
+    }
+  }),
+  {
+    name: "SearchBar"
+  }
+);
 
 const SearchBar: React.FC<SearchBarProps> = props => {
   const {
@@ -23,9 +44,16 @@ const SearchBar: React.FC<SearchBarProps> = props => {
     onTabDelete,
     onTabSave
   } = props;
+
+  const classes = useStyles(props);
   const intl = useIntl();
 
   const isCustom = currentTab === tabs.length + 1;
+  const displayTabAction = isCustom
+    ? "save"
+    : currentTab === 0
+    ? null
+    : "delete";
 
   return (
     <>
@@ -47,16 +75,36 @@ const SearchBar: React.FC<SearchBarProps> = props => {
           />
         )}
       </FilterTabs>
-      <SearchInput
-        displaySearchAction={
-          !!initialSearch ? (isCustom ? "save" : "delete") : null
-        }
-        initialSearch={initialSearch}
-        searchPlaceholder={searchPlaceholder}
-        onSearchChange={onSearchChange}
-        onSearchDelete={onTabDelete}
-        onSearchSave={onTabSave}
-      />
+      <div className={classes.root}>
+        <SearchInput
+          initialSearch={initialSearch}
+          placeholder={searchPlaceholder}
+          onSearchChange={onSearchChange}
+        />
+      </div>
+      {displayTabAction === null ? (
+        <Hr />
+      ) : (
+        <div className={classes.tabActions}>
+          {displayTabAction === "save" ? (
+            <Link onClick={onTabSave}>
+              <FormattedMessage
+                defaultMessage="Save Custom Search"
+                description="button"
+              />
+            </Link>
+          ) : (
+            displayTabAction === "delete" && (
+              <Link onClick={onTabDelete}>
+                <FormattedMessage
+                  defaultMessage="Delete Search"
+                  description="button"
+                />
+              </Link>
+            )
+          )}
+        </div>
+      )}
     </>
   );
 };

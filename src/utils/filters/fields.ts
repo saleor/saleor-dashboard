@@ -6,14 +6,12 @@ type MinMax = Record<"min" | "max", string>;
 export function createPriceField<T extends string>(
   name: T,
   label: string,
-  currencySymbol: string,
   defaultValue: MinMax
 ): IFilterElement<T> {
   return {
     active: false,
-    currencySymbol,
     label,
-    multiple: true,
+    multiple: defaultValue.min !== defaultValue.max,
     name,
     type: FieldType.price,
     value: [defaultValue.min, defaultValue.max]

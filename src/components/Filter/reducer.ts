@@ -30,14 +30,14 @@ function reduceFilter<T extends string>(
   action: FilterReducerAction<T>
 ): IFilter<T> {
   switch (action.type) {
-    case "clear":
-      return prevState;
     case "set-property":
       return setProperty(prevState, action.payload.name, action.payload.update);
     case "reset":
       return action.payload.reset;
+
+    default:
+      return prevState;
   }
-  return prevState;
 }
 
 export default reduceFilter;

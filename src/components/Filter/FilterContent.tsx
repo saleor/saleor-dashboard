@@ -19,27 +19,12 @@ import { IFilter, FieldType, FilterType } from "./types";
 import Arrow from "./Arrow";
 import { FilterReducerAction } from "./reducer";
 
-export interface FilterContentSubmitData<TKeys = string> {
-  name: TKeys;
-  value: string[];
-}
 export interface FilterContentProps<T extends string = string> {
   currencySymbol: string;
   filters: IFilter<T>;
   onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
   onClear: () => void;
   onSubmit: () => void;
-}
-
-function checkFilterValue(value: string[]): boolean {
-  return value.some(v => !!v);
-}
-
-function getFilterChoices(items: IFilter<string>) {
-  return items.map(filterItem => ({
-    label: filterItem.label,
-    value: filterItem.value.toString()
-  }));
 }
 
 const useStyles = makeStyles(

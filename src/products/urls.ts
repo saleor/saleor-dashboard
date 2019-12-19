@@ -24,10 +24,10 @@ export type ProductListUrlDialog =
   | "delete"
   | TabActionDialog;
 export enum ProductListUrlFiltersEnum {
-  isPublished = "isPublished",
   priceFrom = "priceFrom",
   priceTo = "priceTo",
   status = "status",
+  stockStatus = "stockStatus",
   query = "query"
 }
 export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum>;
