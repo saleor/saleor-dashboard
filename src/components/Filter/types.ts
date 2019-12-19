@@ -19,7 +19,6 @@ export interface IFilterElement<T extends string = string>
   extends Partial<FetchMoreProps>,
     IFilterElementMutableData {
   autocomplete?: boolean;
-  currencySymbol?: string;
   label: string;
   name: T;
   type: FieldType;

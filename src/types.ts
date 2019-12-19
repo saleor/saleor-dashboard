@@ -1,9 +1,8 @@
 import { MutationResult } from "react-apollo";
 
 import { User_permissions } from "./auth/types/User";
-import { FilterContentSubmitData } from "./components/Filter";
-import { Filter } from "./components/TableFilter";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
+import { IFilter } from "./components/Filter";
 
 export interface UserError {
   field: string;
@@ -83,22 +82,20 @@ export interface SearchPageProps {
   initialSearch: string;
   onSearchChange: (value: string) => void;
 }
-export interface FilterPageProps<TKeys = string>
+export interface FilterPageProps<TKeys extends string>
   extends SearchPageProps,
     TabPageProps {
   currencySymbol: string;
-  filtersList: Filter[];
-  onFilterAdd: (filter: FilterContentSubmitData<TKeys>) => void;
+  onFilterChange: (filter: IFilter<TKeys>) => void;
 }
 
 export interface SearchProps {
   searchPlaceholder: string;
 }
-export interface FilterProps<TKeys = string>
+export interface FilterProps<TKeys extends string>
   extends FilterPageProps<TKeys>,
     SearchProps {
-  allTabLabel: string;
-  filterLabel: string;
+  currencySymbol: string;
 }
 
 export interface TabPageProps {
