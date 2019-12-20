@@ -3,12 +3,6 @@ import { useReducer, useEffect, Dispatch } from "react";
 import reduceFilter, { FilterReducerAction } from "./reducer";
 import { IFilter, IFilterElement } from "./types";
 
-function createInitialFilter<T extends string>(
-  initialFilter: IFilter<T>
-): IFilter<T> {
-  return initialFilter;
-}
-
 export type UseFilter<T extends string> = [
   Array<IFilterElement<T>>,
   Dispatch<FilterReducerAction<T>>,
@@ -16,10 +10,9 @@ export type UseFilter<T extends string> = [
 ];
 
 function useFilter<T extends string>(initialFilter: IFilter<T>): UseFilter<T> {
-  const [data, dispatchFilterAction] = useReducer(
-    reduceFilter,
-    createInitialFilter(initialFilter)
-  );
+  const [data, dispatchFilterAction] = useReducer<
+    React.Reducer<IFilter<T>, FilterReducerAction<T>>
+  >(reduceFilter, initialFilter);
 
   const reset = () =>
     dispatchFilterAction({
