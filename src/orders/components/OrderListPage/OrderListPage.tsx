@@ -73,12 +73,12 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           onTabSave={onTabSave}
           tabs={tabs}
           allTabLabel={intl.formatMessage({
-            defaultMessage: "All Products",
+            defaultMessage: "All Orders",
             description: "tab name"
           })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
-            defaultMessage: "Search Products..."
+            defaultMessage: "Search Orders..."
           })}
         />
         <OrderList {...listProps} />
