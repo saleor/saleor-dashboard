@@ -115,7 +115,7 @@ export const transformPaymentStatus = (status: string, intl: IntlShape) => {
   }
 };
 
-const orderStatusMessages = defineMessages({
+export const orderStatusMessages = defineMessages({
   cancelled: {
     defaultMessage: "Cancelled",
     description: "order status"

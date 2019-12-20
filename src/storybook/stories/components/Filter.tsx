@@ -13,7 +13,7 @@ import Decorator from "../../Decorator";
 const props: FilterContentProps = {
   currencySymbol: "USD",
   filters: [
-    createPriceField("price", "Price", "USD", {
+    createPriceField("price", "Price", {
       max: "100.00",
       min: "20.00"
     }),
