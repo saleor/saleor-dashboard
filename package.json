@@ -20,7 +20,7 @@
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/styles": "^4.5.2",
-    "apollo": "^2.21.1",
+    "apollo": "^2.21.2",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-client-preset": "^1.0.6",
