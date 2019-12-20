@@ -46,7 +46,6 @@ const useStyles = makeStyles(
       color: theme.palette.primary.main,
       fontSize: 14,
       fontWeight: 600 as 600,
-      marginRight: 4,
       textTransform: "uppercase"
     },
     filterButton: {
@@ -75,6 +74,13 @@ const useStyles = makeStyles(
     },
     rotate: {
       transform: "rotate(180deg)"
+    },
+    separator: {
+      backgroundColor: theme.palette.primary.main,
+      display: "inline-block",
+      height: 28,
+      margin: theme.spacing(0, 1.5, 0, 1),
+      width: 1
     }
   }),
   { name: "Filter" }
@@ -87,17 +93,30 @@ const Filter: React.FC<FilterProps> = props => {
   const [isFilterMenuOpened, setFilterMenuOpened] = React.useState(false);
   const [data, dispatch, reset] = useFilter(menu);
 
+  const isFilterActive = menu.some(filterElement => filterElement.active);
+
   return (
     <div ref={anchor}>
       <ButtonBase
         className={classNames(classes.filterButton, classes.addFilterButton, {
-          [classes.addFilterButtonActive]: isFilterMenuOpened
+          [classes.addFilterButtonActive]: isFilterMenuOpened || isFilterActive
         })}
         onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
       >
         <Typography className={classes.addFilterText}>
           <FormattedMessage defaultMessage="Filters" description="button" />
         </Typography>
+        {isFilterActive && (
+          <>
+            <span className={classes.separator} />
+            <Typography className={classes.addFilterText}>
+              {menu.reduce(
+                (acc, filterElement) => acc + (filterElement.active ? 1 : 0),
+                0
+              )}
+            </Typography>
+          </>
+        )}
       </ButtonBase>
       <Popper
         className={classes.popover}
