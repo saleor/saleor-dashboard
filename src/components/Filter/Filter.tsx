@@ -4,7 +4,6 @@ import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -97,14 +96,8 @@ const Filter: React.FC<FilterProps> = props => {
         onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
       >
         <Typography className={classes.addFilterText}>
-          <FormattedMessage defaultMessage="Add Filter" description="button" />
+          <FormattedMessage defaultMessage="Filters" description="button" />
         </Typography>
-        <ArrowDropDownIcon
-          color="primary"
-          className={classNames(classes.addFilterIcon, {
-            [classes.rotate]: isFilterMenuOpened
-          })}
-        />
       </ButtonBase>
       <Popper
         className={classes.popover}
