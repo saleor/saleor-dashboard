@@ -135,31 +135,45 @@ export function getFilterQueryParam(
 ): ProductListUrlFilters {
   const { active, multiple, name, value } = filter;
 
-  if (active) {
-    switch (name) {
-      case ProductFilterKeys.price:
-        if (multiple) {
-          return {
-            priceFrom: value[0],
-            priceTo: value[1]
-          };
-        }
-
+  switch (name) {
+    case ProductFilterKeys.price:
+      if (!active) {
+        return {
+          priceFrom: undefined,
+          priceTo: undefined
+        };
+      }
+      if (multiple) {
         return {
           priceFrom: value[0],
-          priceTo: value[0]
+          priceTo: value[1]
         };
+      }
 
-      case ProductFilterKeys.status:
-        return {
-          status: findValueInEnum(value[0], ProductStatus)
-        };
+      return {
+        priceFrom: value[0],
+        priceTo: value[0]
+      };
 
-      case ProductFilterKeys.stock:
+    case ProductFilterKeys.status:
+      if (!active) {
         return {
-          stockStatus: findValueInEnum(value[0], StockAvailability)
+          status: undefined
         };
-    }
+      }
+      return {
+        status: findValueInEnum(value[0], ProductStatus)
+      };
+
+    case ProductFilterKeys.stock:
+      if (!active) {
+        return {
+          stockStatus: undefined
+        };
+      }
+      return {
+        stockStatus: findValueInEnum(value[0], StockAvailability)
+      };
   }
 }
 export function createFilterQueryParams(
