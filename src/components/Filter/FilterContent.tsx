@@ -78,14 +78,14 @@ function getIsFilterMultipleChoices(
   return [
     {
       label: intl.formatMessage({
-        defaultMessage: "is equal to",
+        defaultMessage: "equal to",
         description: "is filter range or value"
       }),
       value: FilterType.SINGULAR
     },
     {
       label: intl.formatMessage({
-        defaultMessage: "is between",
+        defaultMessage: "between",
         description: "is filter range or value"
       }),
       value: FilterType.MULTIPLE
