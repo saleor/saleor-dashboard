@@ -41,6 +41,7 @@ import {
   deleteFilterTab,
   getActiveFilters,
   getFilterTabs,
+  getFilterOpts,
   getFilterVariables,
   saveFilterTab,
   OrderFilterKeys,
@@ -200,6 +201,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
               settings={settings}
               currentTab={currentTab}
               disabled={loading}
+              filterOpts={getFilterOpts(params)}
               orders={maybe(() => data.orders.edges.map(edge => edge.node))}
               pageInfo={pageInfo}
               sort={getSortParams(params)}

@@ -21,11 +21,12 @@ import {
 import FilterBar from "@saleor/components/FilterBar";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
 import OrderList from "../OrderList";
+import { OrderListFilterOpts } from "../../types";
 
 export interface OrderListPageProps
   extends PageListProps,
     ListActions,
-    FilterPageProps<OrderFilterKeys>,
+    FilterPageProps<OrderFilterKeys, OrderListFilterOpts>,
     SortPage<OrderListUrlSortField> {
   orders: OrderList_orders_edges_node[];
 }
@@ -34,6 +35,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   currencySymbol,
   currentTab,
   initialSearch,
+  filterOpts,
   tabs,
   onAdd,
   onAll,
@@ -46,7 +48,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 }) => {
   const intl = useIntl();
 
-  const filterStructure = createFilterStructure(intl);
+  const filterStructure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
