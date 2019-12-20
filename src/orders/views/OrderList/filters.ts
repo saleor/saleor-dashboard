@@ -133,26 +133,35 @@ export function getFilterQueryParam(
 ): OrderListUrlFilters {
   const { active, multiple, name, value } = filter;
 
-  if (active) {
-    switch (name) {
-      case OrderFilterKeys.created:
-        if (multiple) {
-          return {
-            createdFrom: value[0],
-            createdTo: value[1]
-          };
-        }
-
+  switch (name) {
+    case OrderFilterKeys.created:
+      if (!active) {
+        return {
+          createdFrom: undefined,
+          createdTo: undefined
+        };
+      }
+      if (multiple) {
         return {
           createdFrom: value[0],
-          createdTo: value[0]
+          createdTo: value[1]
         };
+      }
 
-      case OrderFilterKeys.status:
+      return {
+        createdFrom: value[0],
+        createdTo: value[0]
+      };
+
+    case OrderFilterKeys.status:
+      if (!active) {
         return {
-          status: value.map(val => findInEnum(val, OrderStatus))
+          status: undefined
         };
-    }
+      }
+      return {
+        status: value.map(val => findInEnum(val, OrderStatus))
+      };
   }
 }
 export function createFilterQueryParams(
