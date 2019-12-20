@@ -1,6 +1,7 @@
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Button from "@material-ui/core/Button";
 
 import { FilterProps } from "../../types";
 import { IFilter } from "../Filter/types";
@@ -8,8 +9,6 @@ import FilterTabs, { FilterTab } from "../TableFilter";
 import { SearchBarProps } from "../SearchBar";
 import SearchInput from "../SearchBar/SearchInput";
 import Filter from "../Filter";
-import Link from "../Link";
-import Hr from "../Hr";
 
 export interface FilterBarProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
@@ -20,14 +19,15 @@ export interface FilterBarProps<TKeys extends string = string>
 const useStyles = makeStyles(
   theme => ({
     root: {
+      borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       flexWrap: "wrap",
       padding: theme.spacing(1, 3)
     },
-    tabActions: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
-      padding: theme.spacing(1, 3, 2),
-      textAlign: "right"
+    tabActionButton: {
+      marginLeft: theme.spacing(2),
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3)
     }
   }),
   {
@@ -93,30 +93,33 @@ const FilterBar: React.FC<FilterBarProps> = props => {
           placeholder={searchPlaceholder}
           onSearchChange={onSearchChange}
         />
-      </div>
-      {displayTabAction === null ? (
-        <Hr />
-      ) : (
-        <div className={classes.tabActions}>
-          {displayTabAction === "save" ? (
-            <Link onClick={onTabSave}>
+        {displayTabAction &&
+          (displayTabAction === "save" ? (
+            <Button
+              className={classes.tabActionButton}
+              color="primary"
+              onClick={onTabSave}
+            >
               <FormattedMessage
-                defaultMessage="Save Custom Search"
+                defaultMessage="Save Search"
                 description="button"
               />
-            </Link>
+            </Button>
           ) : (
             displayTabAction === "delete" && (
-              <Link onClick={onTabDelete}>
+              <Button
+                className={classes.tabActionButton}
+                color="primary"
+                onClick={onTabDelete}
+              >
                 <FormattedMessage
                   defaultMessage="Delete Search"
                   description="button"
                 />
-              </Link>
+              </Button>
             )
-          )}
-        </div>
-      )}
+          ))}
+      </div>
     </>
   );
 };
