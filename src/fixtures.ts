@@ -1,5 +1,4 @@
 import { ShopInfo_shop_permissions } from "./components/Shop/types/ShopInfo";
-import { Filter } from "./components/TableFilter";
 import {
   FetchMoreProps,
   FilterPageProps,
@@ -303,79 +302,13 @@ export const searchPageProps: SearchPageProps = {
   onSearchChange: () => undefined
 };
 
-export const filterPageProps: FilterPageProps = {
+export const filterPageProps: FilterPageProps<string, object> = {
   ...searchPageProps,
   ...tabPageProps,
   currencySymbol: "USD",
-  filtersList: [],
-  onFilterAdd: () => undefined
+  filterOpts: {},
+  onFilterChange: () => undefined
 };
-
-export const filters: Filter[] = [
-  {
-    label: "Property X is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property Y is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property Z is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property X is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property Y is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property Z is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property X is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property Y is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property Z is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property X is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property Y is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property Z is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property X is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property Y is ",
-    onClick: () => undefined
-  },
-  {
-    label: "Property Z is ",
-    onClick: () => undefined
-  }
-].map((filter, filterIndex) => ({
-  ...filter,
-  label: filter.label + filterIndex
-}));
 
 export const fetchMoreProps: FetchMoreProps = {
   hasMore: true,
