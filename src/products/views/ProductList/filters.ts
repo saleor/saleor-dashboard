@@ -1,10 +1,11 @@
 import { IntlShape } from "react-intl";
 
-import { findInEnum, maybe } from "@saleor/misc";
+import { maybe, findValueInEnum } from "@saleor/misc";
 import {
   createOptionsField,
   createPriceField
 } from "@saleor/utils/filters/fields";
+import { ProductStatus, ProductListFilterOpts } from "@saleor/products/types";
 import { IFilterElement, IFilter } from "../../../components/Filter";
 import {
   ProductFilterInput,
@@ -29,21 +30,42 @@ export enum ProductFilterKeys {
   stock = "stock"
 }
 
-export enum ProductStatus {
-  PUBLISHED = "published",
-  HIDDEN = "hidden"
+export function getFilterOpts(
+  params: ProductListUrlFilters
+): ProductListFilterOpts {
+  return {
+    price: {
+      active: maybe(
+        () =>
+          [params.priceFrom, params.priceTo].some(field => field !== undefined),
+        false
+      ),
+      value: {
+        max: maybe(() => params.priceTo, "0"),
+        min: maybe(() => params.priceFrom, "0")
+      }
+    },
+    status: {
+      active: maybe(() => params.status !== undefined, false),
+      value: maybe(() => findValueInEnum(params.status, ProductStatus))
+    },
+    stockStatus: {
+      active: maybe(() => params.stockStatus !== undefined, false),
+      value: maybe(() => findValueInEnum(params.stockStatus, StockAvailability))
+    }
+  };
 }
 
 export function createFilterStructure(
   intl: IntlShape,
-  params: ProductListUrlFilters
+  opts: ProductListFilterOpts
 ): IFilter<ProductFilterKeys> {
   return [
     {
       ...createOptionsField(
         ProductFilterKeys.status,
         intl.formatMessage(messages.visibility),
-        [ProductStatus.PUBLISHED],
+        [opts.status.value],
         false,
         [
           {
@@ -56,13 +78,13 @@ export function createFilterStructure(
           }
         ]
       ),
-      active: maybe(() => params.status !== undefined, false)
+      active: opts.status.active
     },
     {
       ...createOptionsField(
         ProductFilterKeys.stock,
         intl.formatMessage(messages.quantity),
-        [StockAvailability.IN_STOCK],
+        [opts.stockStatus.value],
         false,
         [
           {
@@ -75,22 +97,15 @@ export function createFilterStructure(
           }
         ]
       ),
-      active: maybe(() => params.stockStatus !== undefined, false)
+      active: opts.stockStatus.active
     },
     {
       ...createPriceField(
         ProductFilterKeys.price,
         intl.formatMessage(messages.price),
-        {
-          max: maybe(() => params.priceTo, "0"),
-          min: maybe(() => params.priceFrom, "0")
-        }
+        opts.price.value
       ),
-      active: maybe(
-        () =>
-          [params.priceFrom, params.priceTo].some(field => field !== undefined),
-        false
-      )
+      active: opts.price.active
     }
   ];
 }
@@ -108,33 +123,41 @@ export function getFilterVariables(
       lte: parseFloat(params.priceTo)
     },
     search: params.query,
-    stockAvailability: StockAvailability[params.stockStatus]
+    stockAvailability:
+      params.stockStatus !== undefined
+        ? findValueInEnum(params.stockStatus, StockAvailability)
+        : null
   };
 }
 
 export function getFilterQueryParam(
   filter: IFilterElement<ProductFilterKeys>
 ): ProductListUrlFilters {
-  const { active, name, value } = filter;
+  const { active, multiple, name, value } = filter;
 
   if (active) {
     switch (name) {
       case ProductFilterKeys.price:
+        if (multiple) {
+          return {
+            priceFrom: value[0],
+            priceTo: value[1]
+          };
+        }
+
         return {
           priceFrom: value[0],
-          priceTo: value[1]
+          priceTo: value[0]
         };
 
       case ProductFilterKeys.status:
         return {
-          status: (
-            findInEnum(value[0], ProductStatus) === ProductStatus.PUBLISHED
-          ).toString()
+          status: findValueInEnum(value[0], ProductStatus)
         };
 
       case ProductFilterKeys.stock:
         return {
-          status: findInEnum(value[0], StockAvailability)
+          stockStatus: findValueInEnum(value[0], StockAvailability)
         };
     }
   }

@@ -1,6 +1,11 @@
 import { IntlShape } from "react-intl";
 
-import { findInEnum, maybe, orderStatusMessages } from "@saleor/misc";
+import {
+  findInEnum,
+  maybe,
+  orderStatusMessages,
+  findValueInEnum
+} from "@saleor/misc";
 import {
   createDateField,
   createOptionsField
@@ -22,6 +27,7 @@ import {
   OrderListUrlFiltersWithMultipleValuesEnum,
   OrderListUrlQueryParams
 } from "../../urls";
+import { OrderListFilterOpts } from "../../types";
 import messages from "./messages";
 
 export const ORDER_FILTERS_KEY = "orderFilters";
@@ -31,39 +37,56 @@ export enum OrderFilterKeys {
   status = "status"
 }
 
-export function createFilterStructure(
-  intl: IntlShape,
+export function getFilterOpts(
   params: OrderListUrlFilters
-): IFilter<OrderFilterKeys> {
-  return [
-    {
-      ...createDateField(
-        OrderFilterKeys.created,
-        intl.formatMessage(messages.placed),
-        {
-          max: maybe(() => params.createdTo, ""),
-          min: maybe(() => params.createdFrom, "")
-        }
-      ),
+): OrderListFilterOpts {
+  return {
+    created: {
       active: maybe(
         () =>
           [params.createdFrom, params.createdTo].some(
             field => field !== undefined
           ),
         false
+      ),
+      value: {
+        max: maybe(() => params.createdTo, ""),
+        min: maybe(() => params.createdFrom, "")
+      }
+    },
+    status: {
+      active: maybe(() => params.status !== undefined, false),
+      value: maybe(
+        () =>
+          dedupeFilter(
+            params.status.map(status =>
+              findValueInEnum(status, OrderStatusFilter)
+            )
+          ),
+        []
       )
+    }
+  };
+}
+
+export function createFilterStructure(
+  intl: IntlShape,
+  opts: OrderListFilterOpts
+): IFilter<OrderFilterKeys> {
+  return [
+    {
+      ...createDateField(
+        OrderFilterKeys.created,
+        intl.formatMessage(messages.placed),
+        opts.created.value
+      ),
+      active: opts.created.active
     },
     {
       ...createOptionsField(
         OrderFilterKeys.status,
         intl.formatMessage(messages.status),
-        maybe(
-          () =>
-            dedupeFilter(
-              params.status.map(status => findInEnum(status, OrderStatusFilter))
-            ),
-          []
-        ),
+        opts.status.value,
         true,
         [
           {
@@ -84,7 +107,7 @@ export function createFilterStructure(
           }
         ]
       ),
-      active: maybe(() => params.status !== undefined, false)
+      active: opts.status.active
     }
   ];
 }
@@ -108,14 +131,21 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<OrderFilterKeys>
 ): OrderListUrlFilters {
-  const { active, name, value } = filter;
+  const { active, multiple, name, value } = filter;
 
   if (active) {
     switch (name) {
       case OrderFilterKeys.created:
+        if (multiple) {
+          return {
+            createdFrom: value[0],
+            createdTo: value[1]
+          };
+        }
+
         return {
           createdFrom: value[0],
-          createdTo: value[1]
+          createdTo: value[0]
         };
 
       case OrderFilterKeys.status:

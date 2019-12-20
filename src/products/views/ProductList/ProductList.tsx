@@ -54,7 +54,8 @@ import {
   getFilterVariables,
   saveFilterTab,
   ProductFilterKeys,
-  createFilterQueryParams
+  createFilterQueryParams,
+  getFilterOpts
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -234,6 +235,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           defaultSettings={
                             defaultListSettings[ListViews.PRODUCT_LIST]
                           }
+                          filterOpts={getFilterOpts(params)}
                           gridAttributes={maybe(
                             () =>
                               attributes.data.grid.edges.map(edge => edge.node),

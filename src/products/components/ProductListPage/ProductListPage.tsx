@@ -24,17 +24,18 @@ import {
   SortPage
 } from "@saleor/types";
 import FilterBar from "@saleor/components/FilterBar";
+import { ProductListFilterOpts } from "@saleor/products/types";
+import { ProductListUrlSortField } from "../../urls";
 import {
   createFilterStructure,
   ProductFilterKeys
-} from "@saleor/products/views/ProductList/filters";
-import { ProductListUrlSortField } from "../../urls";
+} from "../../views/ProductList/filters";
 import ProductList from "../ProductList";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
-    FilterPageProps<ProductFilterKeys>,
+    FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
     FetchMoreProps,
     SortPage<ProductListUrlSortField> {
   activeAttributeSortId: string;
@@ -61,6 +62,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     defaultSettings,
     gridAttributes,
     availableInGridAttributes,
+    filterOpts,
     hasMore,
     initialSearch,
     loading,
@@ -84,7 +86,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const handleSave = (columns: ProductListColumns[]) =>
     onUpdateListSettings("columns", columns);
 
-  const filterStructure = createFilterStructure(intl);
+  const filterStructure = createFilterStructure(intl, filterOpts);
 
   const columns: ColumnPickerChoice[] = [
     {
