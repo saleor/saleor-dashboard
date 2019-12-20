@@ -161,9 +161,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             description: "tab name"
           })}
           filterStructure={filterStructure}
-          filterLabel={intl.formatMessage({
-            defaultMessage: "Select all products where:"
-          })}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Products..."
           })}

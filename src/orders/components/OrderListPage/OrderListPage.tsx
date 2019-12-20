@@ -14,9 +14,13 @@ import {
   SortPage
 } from "@saleor/types";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
+import {
+  OrderFilterKeys,
+  createFilterStructure
+} from "@saleor/orders/views/OrderList/filters";
+import FilterBar from "@saleor/components/FilterBar";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
 import OrderList from "../OrderList";
-import OrderListFilter, { OrderFilterKeys } from "../OrderListFilter";
 
 export interface OrderListPageProps
   extends PageListProps,
@@ -29,19 +33,20 @@ export interface OrderListPageProps
 const OrderListPage: React.FC<OrderListPageProps> = ({
   currencySymbol,
   currentTab,
-  filtersList,
   initialSearch,
   tabs,
   onAdd,
   onAll,
   onSearchChange,
-  onFilterAdd,
+  onFilterChange,
   onTabChange,
   onTabDelete,
   onTabSave,
   ...listProps
 }) => {
   const intl = useIntl();
+
+  const filterStructure = createFilterStructure(intl);
 
   return (
     <Container>
@@ -54,28 +59,25 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <OrderListFilter
-          allTabLabel={intl.formatMessage({
-            defaultMessage: "All Orders",
-            description: "tab name"
-          })}
+        <FilterBar
           currencySymbol={currencySymbol}
           currentTab={currentTab}
-          filterLabel={intl.formatMessage({
-            defaultMessage: "Select all orders where:"
-          })}
-          tabs={tabs}
-          filtersList={filtersList}
           initialSearch={initialSearch}
-          searchPlaceholder={intl.formatMessage({
-            defaultMessage: "Search Orders..."
-          })}
           onAll={onAll}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
-          onFilterAdd={onFilterAdd}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
+          tabs={tabs}
+          allTabLabel={intl.formatMessage({
+            defaultMessage: "All Products",
+            description: "tab name"
+          })}
+          filterStructure={filterStructure}
+          searchPlaceholder={intl.formatMessage({
+            defaultMessage: "Search Products..."
+          })}
         />
         <OrderList {...listProps} />
       </Card>

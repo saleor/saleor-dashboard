@@ -17,8 +17,8 @@ const orderSectionUrl = "/orders";
 
 export const orderListPath = orderSectionUrl;
 export enum OrderListUrlFiltersEnum {
-  dateFrom = "dateFrom",
-  dateTo = "dateTo",
+  createdFrom = "createdFrom",
+  createdTo = "createdTo",
   email = "email",
   payment = "payment",
   query = "query"
