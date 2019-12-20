@@ -82,20 +82,16 @@ export interface SearchPageProps {
   initialSearch: string;
   onSearchChange: (value: string) => void;
 }
-export interface FilterPageProps<TKeys extends string>
-  extends SearchPageProps,
+export interface FilterPageProps<TKeys extends string, TOpts extends object>
+  extends FilterProps<TKeys>,
+    SearchPageProps,
     TabPageProps {
-  currencySymbol: string;
-  onFilterChange: (filter: IFilter<TKeys>) => void;
+  filterOpts: TOpts;
 }
 
-export interface SearchProps {
-  searchPlaceholder: string;
-}
-export interface FilterProps<TKeys extends string>
-  extends FilterPageProps<TKeys>,
-    SearchProps {
+export interface FilterProps<TKeys extends string> {
   currencySymbol: string;
+  onFilterChange: (filter: IFilter<TKeys>) => void;
 }
 
 export interface TabPageProps {
@@ -169,4 +165,11 @@ export interface UserPermissionProps {
 
 export interface MutationResultAdditionalProps {
   status: ConfirmButtonTransitionState;
+}
+
+export type MinMax = Record<"min" | "max", string>;
+
+export interface FilterOpts<T> {
+  active: boolean;
+  value: T;
 }

@@ -1,7 +1,6 @@
 import { IFilterElement, FieldType } from "@saleor/components/Filter";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-
-type MinMax = Record<"min" | "max", string>;
+import { MinMax } from "@saleor/types";
 
 export function createPriceField<T extends string>(
   name: T,
@@ -26,7 +25,7 @@ export function createDateField<T extends string>(
   return {
     active: false,
     label,
-    multiple: true,
+    multiple: defaultValue.min !== defaultValue.max,
     name,
     type: FieldType.date,
     value: [defaultValue.min, defaultValue.max]
