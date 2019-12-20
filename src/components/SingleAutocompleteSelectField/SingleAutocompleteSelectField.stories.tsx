@@ -27,20 +27,18 @@ const props: SingleAutocompleteSelectFieldProps = {
   value: suggestions[0].value
 };
 
-const Story: React.FC<
-  Partial<
-    SingleAutocompleteSelectFieldProps & {
-      enableLoadMore: boolean;
-    }
-  >
-> = ({ allowCustomValues, emptyOption, enableLoadMore }) => {
+const Story: React.FC<Partial<
+  SingleAutocompleteSelectFieldProps & {
+    enableLoadMore: boolean;
+  }
+>> = ({ allowCustomValues, emptyOption, enableLoadMore }) => {
   const [displayValue, setDisplayValue] = React.useState(suggestions[0].label);
 
   return (
     <Form initial={{ country: suggestions[0].value }}>
       {({ change, data }) => (
         <ChoiceProvider choices={suggestions}>
-          {({ choices, fetchChoices, fetchMore, hasMore, loading }) => {
+          {({ choices, fetchChoices, onFetchMore, hasMore, loading }) => {
             const handleSelect = createSingleAutocompleteSelectHandler(
               change,
               setDisplayValue,
@@ -58,7 +56,7 @@ const Story: React.FC<
                 onChange={handleSelect}
                 value={data.country}
                 hasMore={enableLoadMore ? hasMore : false}
-                onFetchMore={enableLoadMore ? fetchMore : undefined}
+                onFetchMore={enableLoadMore ? onFetchMore : undefined}
                 allowCustomValues={allowCustomValues}
                 emptyOption={emptyOption}
               />

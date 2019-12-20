@@ -26,18 +26,16 @@ const props: MultiAutocompleteSelectFieldProps = {
   value: undefined
 };
 
-const Story: React.FC<
-  Partial<
-    MultiAutocompleteSelectFieldProps & {
-      enableLoadMore: boolean;
-    }
-  >
-> = ({ allowCustomValues, enableLoadMore }) => {
+const Story: React.FC<Partial<
+  MultiAutocompleteSelectFieldProps & {
+    enableLoadMore: boolean;
+  }
+>> = ({ allowCustomValues, enableLoadMore }) => {
   const { change, data: countries } = useMultiAutocomplete([suggestions[0]]);
 
   return (
     <ChoiceProvider choices={suggestions}>
-      {({ choices, fetchChoices, fetchMore, hasMore, loading }) => (
+      {({ choices, fetchChoices, onFetchMore, hasMore, loading }) => (
         <MultiAutocompleteSelectField
           {...props}
           displayValues={countries}
@@ -50,7 +48,7 @@ const Story: React.FC<
           value={countries.map(country => country.value)}
           loading={loading}
           hasMore={enableLoadMore ? hasMore : false}
-          onFetchMore={enableLoadMore ? fetchMore : undefined}
+          onFetchMore={enableLoadMore ? onFetchMore : undefined}
           allowCustomValues={allowCustomValues}
         />
       )}

@@ -136,7 +136,7 @@ export type Filters<TFilters extends string> = Partial<
   Record<TFilters, string>
 >;
 export type FiltersWithMultipleValues<TFilters extends string> = Partial<
-  Record<TFilters, string | string[]>
+  Record<TFilters, string[]>
 >;
 export type SingleAction = Partial<{
   id: string;
