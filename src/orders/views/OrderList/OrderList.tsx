@@ -31,7 +31,6 @@ import { OrderBulkCancel } from "../../types/OrderBulkCancel";
 import { OrderDraftCreate } from "../../types/OrderDraftCreate";
 import {
   orderListUrl,
-  OrderListUrlFilters,
   OrderListUrlQueryParams,
   orderUrl,
   OrderListUrlDialog
@@ -88,23 +87,23 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilters = (filters: OrderListUrlFilters) => {
-    reset();
-    navigate(
-      orderListUrl({
-        ...params,
-        ...filters
-      })
-    );
-  };
-
-  const changeFilterField = (filter: IFilter<OrderFilterKeys>) => {
+  const changeFilters = (filter: IFilter<OrderFilterKeys>) => {
     reset();
     navigate(
       orderListUrl({
         ...params,
         ...createFilterQueryParams(filter),
         activeTab: undefined
+      })
+    );
+  };
+
+  const resetFilters = () => {
+    reset();
+    navigate(
+      orderListUrl({
+        asc: params.asc,
+        sort: params.sort
       })
     );
   };
@@ -231,17 +230,13 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
                 </Button>
               }
               onSearchChange={handleSearchChange}
-              onFilterChange={filter => changeFilterField(filter)}
+              onFilterChange={filter => changeFilters(filter)}
               onTabSave={() => openModal("save-search")}
               onTabDelete={() => openModal("delete-search")}
               onTabChange={handleTabChange}
               initialSearch={params.query || ""}
               tabs={getFilterTabs().map(tab => tab.name)}
-              onAll={() =>
-                changeFilters({
-                  status: undefined
-                })
-              }
+              onAll={resetFilters}
             />
             <OrderBulkCancelDialog
               confirmButtonState={orderBulkCancelOpts.status}
