@@ -40,7 +40,6 @@ import { productBulkPublish } from "../../types/productBulkPublish";
 import {
   productAddUrl,
   productListUrl,
-  ProductListUrlFilters,
   ProductListUrlQueryParams,
   ProductListUrlSortField,
   productUrl,
@@ -103,18 +102,23 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
 
-  const changeFilters = (filters: ProductListUrlFilters) => {
-    reset();
-    navigate(productListUrl(filters));
-  };
-
-  const changeFilterField = (filter: IFilter<ProductFilterKeys>) => {
+  const changeFilters = (filter: IFilter<ProductFilterKeys>) => {
     reset();
     navigate(
       productListUrl({
         ...params,
         ...createFilterQueryParams(filter),
         activeTab: undefined
+      })
+    );
+  };
+
+  const resetFilters = () => {
+    reset();
+    navigate(
+      productListUrl({
+        asc: params.asc,
+        sort: params.sort
       })
     );
   };
@@ -291,11 +295,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           onUpdateListSettings={updateListSettings}
                           pageInfo={pageInfo}
                           onRowClick={id => () => navigate(productUrl(id))}
-                          onAll={() =>
-                            changeFilters({
-                              status: undefined
-                            })
-                          }
+                          onAll={resetFilters}
                           toolbar={
                             <>
                               <Button
@@ -341,7 +341,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           toggle={toggle}
                           toggleAll={toggleAll}
                           onSearchChange={handleSearchChange}
-                          onFilterChange={filter => changeFilterField(filter)}
+                          onFilterChange={changeFilters}
                           onTabSave={() => openModal("save-search")}
                           onTabDelete={() => openModal("delete-search")}
                           onTabChange={handleTabChange}
