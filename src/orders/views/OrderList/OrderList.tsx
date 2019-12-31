@@ -20,6 +20,7 @@ import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { IFilter } from "@saleor/components/Filter";
+import { getFilterQueryParams } from "@saleor/utils/filters";
 import OrderBulkCancelDialog from "../../components/OrderBulkCancelDialog";
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
 import {
@@ -44,7 +45,7 @@ import {
   getFilterVariables,
   saveFilterTab,
   OrderFilterKeys,
-  createFilterQueryParams
+  getFilterQueryParam
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -92,7 +93,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     navigate(
       orderListUrl({
         ...params,
-        ...createFilterQueryParams(filter),
+        ...getFilterQueryParams(filter, getFilterQueryParam),
         activeTab: undefined
       })
     );

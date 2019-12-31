@@ -26,6 +26,7 @@ import { ListViews } from "@saleor/types";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { IFilter } from "@saleor/components/Filter";
+import { getFilterQueryParams } from "@saleor/utils/filters";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -53,8 +54,8 @@ import {
   getFilterVariables,
   saveFilterTab,
   ProductFilterKeys,
-  createFilterQueryParams,
-  getFilterOpts
+  getFilterOpts,
+  getFilterQueryParam
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -107,7 +108,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     navigate(
       productListUrl({
         ...params,
-        ...createFilterQueryParams(filter),
+        ...getFilterQueryParams(filter, getFilterQueryParam),
         activeTab: undefined
       })
     );

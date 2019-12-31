@@ -1,3 +1,5 @@
+import { IFilterElement, IFilter } from "@saleor/components/Filter";
+
 function createFilterUtils<
   TQueryParams extends object,
   TFilters extends object
@@ -23,6 +25,22 @@ function createFilterUtils<
 
 export function dedupeFilter<T>(array: T[]): T[] {
   return Array.from(new Set(array));
+}
+
+export function getFilterQueryParams<
+  TFilterKeys extends string,
+  TUrlFilters extends object
+>(
+  filter: IFilter<TFilterKeys>,
+  getFilterQueryParam: (filter: IFilterElement<TFilterKeys>) => TUrlFilters
+): TUrlFilters {
+  return filter.reduce(
+    (acc, filterField) => ({
+      ...acc,
+      ...getFilterQueryParam(filterField)
+    }),
+    {} as TUrlFilters
+  );
 }
 
 export default createFilterUtils;
