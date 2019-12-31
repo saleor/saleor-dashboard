@@ -176,17 +176,6 @@ export function getFilterQueryParam(
       };
   }
 }
-export function createFilterQueryParams(
-  filter: IFilter<ProductFilterKeys>
-): ProductListUrlFilters {
-  return filter.reduce(
-    (acc, filterField) => ({
-      ...acc,
-      ...getFilterQueryParam(filterField)
-    }),
-    {}
-  );
-}
 
 export const {
   deleteFilterTab,
