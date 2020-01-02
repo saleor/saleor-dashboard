@@ -1,3 +1,11 @@
+import { FilterOpts, MinMax } from "@saleor/types";
+
+export interface CustomerListFilterOpts {
+  joined: FilterOpts<MinMax>;
+  moneySpent: FilterOpts<MinMax>;
+  numberOfOrders: FilterOpts<MinMax>;
+}
+
 export interface AddressTypeInput {
   city: string;
   cityArea?: string;
