@@ -148,6 +148,29 @@ const FilterContent: React.FC<FilterContentProps> = ({
               </div>
               {filterField.active && (
                 <div className={classes.filterSettings}>
+                  {filterField.type === FieldType.text && (
+                    <TextField
+                      fullWidth
+                      name={filterField.name}
+                      InputProps={{
+                        classes: {
+                          input: classes.input
+                        }
+                      }}
+                      value={filterField.value[0]}
+                      onChange={event =>
+                        onFilterPropertyChange({
+                          payload: {
+                            name: filterField.name,
+                            update: {
+                              value: [event.target.value, filterField.value[1]]
+                            }
+                          },
+                          type: "set-property"
+                        })
+                      }
+                    />
+                  )}
                   {[FieldType.date, FieldType.price, FieldType.number].includes(
                     filterField.type
                   ) && (

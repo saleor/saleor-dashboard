@@ -64,3 +64,18 @@ export function createOptionsField<T extends string>(
     value: defaultValue
   };
 }
+
+export function createTextField<T extends string>(
+  name: T,
+  label: string,
+  defaultValue: string
+): IFilterElement<T> {
+  return {
+    active: false,
+    label,
+    multiple: false,
+    name,
+    type: FieldType.text,
+    value: [defaultValue]
+  };
+}
