@@ -22,6 +22,9 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { IFilter } from "@saleor/components/Filter";
+import { getFilterQueryParams } from "@saleor/utils/filters";
+import useShop from "@saleor/hooks/useShop";
 import CustomerListPage from "../../components/CustomerListPage";
 import { TypedBulkRemoveCustomers } from "../../mutations";
 import { useCustomerListQuery } from "../../queries";
@@ -29,7 +32,6 @@ import { BulkRemoveCustomers } from "../../types/BulkRemoveCustomers";
 import {
   customerAddUrl,
   customerListUrl,
-  CustomerListUrlFilters,
   CustomerListUrlQueryParams,
   customerUrl,
   CustomerListUrlDialog
@@ -40,7 +42,10 @@ import {
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
+  CustomerFilterKeys,
+  getFilterQueryParam,
+  getFilterOpts
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
 
@@ -59,6 +64,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     ListViews.CUSTOMER_LIST
   );
   const intl = useIntl();
+  const shop = useShop();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
@@ -83,13 +89,34 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: CustomerListUrlFilters) => {
+  const changeFilters = (filter: IFilter<CustomerFilterKeys>) => {
     reset();
     navigate(
       customerListUrl({
-        ...getActiveFilters(params),
-        ...filter,
+        ...params,
+        ...getFilterQueryParams(filter, getFilterQueryParam),
         activeTab: undefined
+      })
+    );
+  };
+
+  const resetFilters = () => {
+    reset();
+    navigate(
+      customerListUrl({
+        asc: params.asc,
+        sort: params.sort
+      })
+    );
+  };
+
+  const handleSearchChange = (query: string) => {
+    reset();
+    navigate(
+      customerListUrl({
+        ...params,
+        activeTab: undefined,
+        query
       })
     );
   };
@@ -138,16 +165,20 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, customerListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedBulkRemoveCustomers onCompleted={handleBulkCustomerDelete}>
       {(bulkRemoveCustomers, bulkRemoveCustomersOpts) => (
         <>
           <CustomerListPage
+            currencySymbol={currencySymbol}
             currentTab={currentTab}
+            filterOpts={getFilterOpts(params)}
             initialSearch={params.query || ""}
-            onSearchChange={query => changeFilterField({ query })}
-            onAll={() => navigate(customerListUrl())}
+            onSearchChange={handleSearchChange}
+            onFilterChange={changeFilters}
+            onAll={resetFilters}
             onTabChange={handleTabChange}
             onTabDelete={() => openModal("delete-search")}
             onTabSave={() => openModal("save-search")}

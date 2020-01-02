@@ -11,17 +11,42 @@ import {
   pageListProps,
   searchPageProps,
   tabPageProps,
-  sortPageProps
+  sortPageProps,
+  filterPageProps
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
 
 const props: CustomerListPageProps = {
+  ...filterPageProps,
   ...listActionsProps,
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
   ...tabPageProps,
   customers: customerList,
+  filterOpts: {
+    joined: {
+      active: false,
+      value: {
+        max: undefined,
+        min: undefined
+      }
+    },
+    moneySpent: {
+      active: false,
+      value: {
+        max: undefined,
+        min: undefined
+      }
+    },
+    numberOfOrders: {
+      active: false,
+      value: {
+        max: undefined,
+        min: undefined
+      }
+    }
+  },
   sort: {
     ...sortPageProps.sort,
     sort: CustomerListUrlSortField.name
