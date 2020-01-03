@@ -24,13 +24,14 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { IFilter } from "@saleor/components/Filter";
+import { getFilterQueryParams } from "@saleor/utils/filters";
 import SaleListPage from "../../components/SaleListPage";
 import { TypedSaleBulkDelete } from "../../mutations";
 import { useSaleListQuery } from "../../queries";
 import { SaleBulkDelete } from "../../types/SaleBulkDelete";
 import {
   saleAddUrl,
-  SaleListUrlFilters,
   SaleListUrlQueryParams,
   saleUrl,
   saleListUrl,
@@ -42,7 +43,10 @@ import {
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
+  SaleFilterKeys,
+  getFilterQueryParam,
+  getFilterOpts
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
 
@@ -86,13 +90,34 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: SaleListUrlFilters) => {
+  const changeFilters = (filter: IFilter<SaleFilterKeys>) => {
     reset();
     navigate(
       saleListUrl({
-        ...getActiveFilters(params),
-        ...filter,
+        ...params,
+        ...getFilterQueryParams(filter, getFilterQueryParam),
         activeTab: undefined
+      })
+    );
+  };
+
+  const resetFilters = () => {
+    reset();
+    navigate(
+      saleListUrl({
+        asc: params.asc,
+        sort: params.sort
+      })
+    );
+  };
+
+  const handleSearchChange = (query: string) => {
+    reset();
+    navigate(
+      saleListUrl({
+        ...params,
+        activeTab: undefined,
+        query
       })
     );
   };
@@ -143,6 +168,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, saleListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedSaleBulkDelete onCompleted={handleSaleBulkDelete}>
@@ -158,10 +184,13 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
           <>
             <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
             <SaleListPage
+              currencySymbol={currencySymbol}
               currentTab={currentTab}
+              filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}
-              onSearchChange={query => changeFilterField({ query })}
-              onAll={() => navigate(saleListUrl())}
+              onSearchChange={handleSearchChange}
+              onFilterChange={filter => changeFilters(filter)}
+              onAll={resetFilters}
               onTabChange={handleTabChange}
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}
