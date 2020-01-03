@@ -34,7 +34,6 @@ import { OrderDraftBulkCancel } from "../../types/OrderDraftBulkCancel";
 import { OrderDraftCreate } from "../../types/OrderDraftCreate";
 import {
   orderDraftListUrl,
-  OrderDraftListUrlFilters,
   OrderDraftListUrlQueryParams,
   orderUrl,
   OrderDraftListUrlDialog
@@ -204,7 +203,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
               initialSearch={params.query || ""}
               onSearchChange={handleSearchChange}
               onFilterChange={changeFilters}
-              onAll={() => navigate(orderDraftListUrl())}
+              onAll={resetFilters}
               onTabChange={handleTabChange}
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}
