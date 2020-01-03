@@ -3,6 +3,7 @@ import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 
 export enum FieldType {
   date,
+  dateTime,
   number,
   price,
   options,

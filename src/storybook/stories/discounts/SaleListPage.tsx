@@ -2,6 +2,10 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
+import {
+  DiscountValueTypeEnum,
+  DiscountStatusEnum
+} from "@saleor/types/globalTypes";
 import SaleListPage, {
   SaleListPageProps
 } from "../../../discounts/components/SaleListPage";
@@ -9,19 +13,36 @@ import { saleList } from "../../../discounts/fixtures";
 import {
   listActionsProps,
   pageListProps,
-  searchPageProps,
   tabPageProps,
-  sortPageProps
+  sortPageProps,
+  filterPageProps
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
 
 const props: SaleListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
-  ...searchPageProps,
+  ...filterPageProps,
   ...sortPageProps,
   ...tabPageProps,
   defaultCurrency: "USD",
+  filterOpts: {
+    saleType: {
+      active: false,
+      value: DiscountValueTypeEnum.FIXED
+    },
+    started: {
+      active: false,
+      value: {
+        max: undefined,
+        min: undefined
+      }
+    },
+    status: {
+      active: false,
+      value: [DiscountStatusEnum.ACTIVE]
+    }
+  },
   sales: saleList,
   sort: {
     ...sortPageProps.sort,
