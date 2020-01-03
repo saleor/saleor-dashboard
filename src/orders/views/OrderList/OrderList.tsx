@@ -7,7 +7,6 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -20,6 +19,8 @@ import { ListViews } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { IFilter } from "@saleor/components/Filter";
+import { getFilterQueryParams } from "@saleor/utils/filters";
 import OrderBulkCancelDialog from "../../components/OrderBulkCancelDialog";
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
 import {
@@ -31,20 +32,20 @@ import { OrderBulkCancel } from "../../types/OrderBulkCancel";
 import { OrderDraftCreate } from "../../types/OrderDraftCreate";
 import {
   orderListUrl,
-  OrderListUrlFilters,
   OrderListUrlQueryParams,
   orderUrl,
   OrderListUrlDialog
 } from "../../urls";
 import {
   areFiltersApplied,
-  createFilter,
-  createFilterChips,
   deleteFilterTab,
   getActiveFilters,
   getFilterTabs,
+  getFilterOpts,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
+  OrderFilterKeys,
+  getFilterQueryParam
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -53,7 +54,6 @@ interface OrderListProps {
 }
 
 export const OrderList: React.FC<OrderListProps> = ({ params }) => {
-  const formatDate = useDateLocalize();
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
@@ -88,18 +88,34 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilters = (filters: OrderListUrlFilters) => {
-    reset();
-    navigate(orderListUrl(filters));
-  };
-
-  const changeFilterField = (filter: OrderListUrlFilters) => {
+  const changeFilters = (filter: IFilter<OrderFilterKeys>) => {
     reset();
     navigate(
       orderListUrl({
-        ...getActiveFilters(params),
-        ...filter,
+        ...params,
+        ...getFilterQueryParams(filter, getFilterQueryParam),
         activeTab: undefined
+      })
+    );
+  };
+
+  const resetFilters = () => {
+    reset();
+    navigate(
+      orderListUrl({
+        asc: params.asc,
+        sort: params.sort
+      })
+    );
+  };
+
+  const handleSearchChange = (query: string) => {
+    reset();
+    navigate(
+      orderListUrl({
+        ...params,
+        activeTab: undefined,
+        query
       })
     );
   };
@@ -183,16 +199,9 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
             <OrderListPage
               currencySymbol={currencySymbol}
               settings={settings}
-              filtersList={createFilterChips(
-                params,
-                {
-                  formatDate
-                },
-                changeFilterField,
-                intl
-              )}
               currentTab={currentTab}
               disabled={loading}
+              filterOpts={getFilterOpts(params)}
               orders={maybe(() => data.orders.edges.map(edge => edge.node))}
               pageInfo={pageInfo}
               sort={getSortParams(params)}
@@ -221,20 +230,14 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
                   />
                 </Button>
               }
-              onSearchChange={query => changeFilterField({ query })}
-              onFilterAdd={data =>
-                changeFilterField(createFilter(params, data))
-              }
+              onSearchChange={handleSearchChange}
+              onFilterChange={filter => changeFilters(filter)}
               onTabSave={() => openModal("save-search")}
               onTabDelete={() => openModal("delete-search")}
               onTabChange={handleTabChange}
               initialSearch={params.query || ""}
               tabs={getFilterTabs().map(tab => tab.name)}
-              onAll={() =>
-                changeFilters({
-                  status: undefined
-                })
-              }
+              onAll={resetFilters}
             />
             <OrderBulkCancelDialog
               confirmButtonState={orderBulkCancelOpts.status}

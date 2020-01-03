@@ -1,7 +1,12 @@
-import { defineMessages, IntlShape } from "react-intl";
+import { IntlShape } from "react-intl";
 
-import { FilterContentSubmitData } from "../../../components/Filter";
-import { Filter } from "../../../components/TableFilter";
+import { maybe, findValueInEnum } from "@saleor/misc";
+import {
+  createOptionsField,
+  createPriceField
+} from "@saleor/utils/filters/fields";
+import { ProductStatus, ProductListFilterOpts } from "@saleor/products/types";
+import { IFilterElement, IFilter } from "../../../components/Filter";
 import {
   ProductFilterInput,
   StockAvailability
@@ -10,204 +15,166 @@ import {
   createFilterTabUtils,
   createFilterUtils
 } from "../../../utils/filters";
-import { ProductFilterKeys } from "../../components/ProductListFilter";
 import {
   ProductListUrlFilters,
   ProductListUrlFiltersEnum,
   ProductListUrlQueryParams
 } from "../../urls";
+import messages from "./messages";
 
 export const PRODUCT_FILTERS_KEY = "productFilters";
+
+export enum ProductFilterKeys {
+  status = "status",
+  price = "price",
+  stock = "stock"
+}
+
+export function getFilterOpts(
+  params: ProductListUrlFilters
+): ProductListFilterOpts {
+  return {
+    price: {
+      active: maybe(
+        () =>
+          [params.priceFrom, params.priceTo].some(field => field !== undefined),
+        false
+      ),
+      value: {
+        max: maybe(() => params.priceTo, "0"),
+        min: maybe(() => params.priceFrom, "0")
+      }
+    },
+    status: {
+      active: maybe(() => params.status !== undefined, false),
+      value: maybe(() => findValueInEnum(params.status, ProductStatus))
+    },
+    stockStatus: {
+      active: maybe(() => params.stockStatus !== undefined, false),
+      value: maybe(() => findValueInEnum(params.stockStatus, StockAvailability))
+    }
+  };
+}
+
+export function createFilterStructure(
+  intl: IntlShape,
+  opts: ProductListFilterOpts
+): IFilter<ProductFilterKeys> {
+  return [
+    {
+      ...createOptionsField(
+        ProductFilterKeys.status,
+        intl.formatMessage(messages.visibility),
+        [opts.status.value],
+        false,
+        [
+          {
+            label: intl.formatMessage(messages.visible),
+            value: ProductStatus.PUBLISHED
+          },
+          {
+            label: intl.formatMessage(messages.hidden),
+            value: ProductStatus.HIDDEN
+          }
+        ]
+      ),
+      active: opts.status.active
+    },
+    {
+      ...createOptionsField(
+        ProductFilterKeys.stock,
+        intl.formatMessage(messages.quantity),
+        [opts.stockStatus.value],
+        false,
+        [
+          {
+            label: intl.formatMessage(messages.available),
+            value: StockAvailability.IN_STOCK
+          },
+          {
+            label: intl.formatMessage(messages.outOfStock),
+            value: StockAvailability.OUT_OF_STOCK
+          }
+        ]
+      ),
+      active: opts.stockStatus.active
+    },
+    {
+      ...createPriceField(
+        ProductFilterKeys.price,
+        intl.formatMessage(messages.price),
+        opts.price.value
+      ),
+      active: opts.price.active
+    }
+  ];
+}
 
 export function getFilterVariables(
   params: ProductListUrlFilters
 ): ProductFilterInput {
   return {
     isPublished:
-      params.isPublished !== undefined ? params.isPublished === "true" : null,
+      params.status !== undefined
+        ? params.status === ProductStatus.PUBLISHED
+        : null,
     price: {
       gte: parseFloat(params.priceFrom),
       lte: parseFloat(params.priceTo)
     },
     search: params.query,
-    stockAvailability: StockAvailability[params.status]
+    stockAvailability:
+      params.stockStatus !== undefined
+        ? findValueInEnum(params.stockStatus, StockAvailability)
+        : null
   };
 }
 
-export function createFilter(
-  filter: FilterContentSubmitData<ProductFilterKeys>
+export function getFilterQueryParam(
+  filter: IFilterElement<ProductFilterKeys>
 ): ProductListUrlFilters {
-  const filterName = filter.name;
-  if (filterName === ProductFilterKeys.priceEqual) {
-    const value = filter.value as string;
-    return {
-      priceFrom: value,
-      priceTo: value
-    };
-  } else if (filterName === ProductFilterKeys.priceRange) {
-    const { value } = filter;
-    return {
-      priceFrom: value[0],
-      priceTo: value[1]
-    };
-  } else if (filterName === ProductFilterKeys.published) {
-    return {
-      isPublished: filter.value as string
-    };
-  } else if (filterName === ProductFilterKeys.stock) {
-    const value = filter.value as string;
-    return {
-      status: StockAvailability[value]
-    };
-  }
-}
+  const { active, multiple, name, value } = filter;
 
-const filterMessages = defineMessages({
-  available: {
-    defaultMessage: "Available",
-    description: "filter products by stock"
-  },
-  hidden: {
-    defaultMessage: "Hidden",
-    description: "filter products by visibility"
-  },
-  outOfStock: {
-    defaultMessage: "Out of stock",
-    description: "filter products by stock"
-  },
-  priceFrom: {
-    defaultMessage: "Price from {price}",
-    description: "filter by price"
-  },
-  priceIs: {
-    defaultMessage: "Price is {price}",
-    description: "filter by price"
-  },
-  priceTo: {
-    defaultMessage: "Price to {price}",
-    description: "filter by price"
-  },
-  published: {
-    defaultMessage: "Published",
-    description: "filter products by visibility"
-  }
-});
-
-interface ProductListChipFormatData {
-  currencySymbol: string;
-  locale: string;
-}
-export function createFilterChips(
-  filters: ProductListUrlFilters,
-  formatData: ProductListChipFormatData,
-  onFilterDelete: (filters: ProductListUrlFilters) => void,
-  intl: IntlShape
-): Filter[] {
-  let filterChips: Filter[] = [];
-
-  if (!!filters.priceFrom || !!filters.priceTo) {
-    if (filters.priceFrom === filters.priceTo) {
-      filterChips = [
-        ...filterChips,
-        {
-          label: intl.formatMessage(filterMessages.priceIs, {
-            price: parseFloat(filters.priceFrom).toLocaleString(
-              formatData.locale,
-              {
-                currency: formatData.currencySymbol,
-                style: "currency"
-              }
-            )
-          }),
-          onClick: () =>
-            onFilterDelete({
-              ...filters,
-              priceFrom: undefined,
-              priceTo: undefined
-            })
-        }
-      ];
-    } else {
-      if (!!filters.priceFrom) {
-        filterChips = [
-          ...filterChips,
-          {
-            label: intl.formatMessage(filterMessages.priceFrom, {
-              price: parseFloat(filters.priceFrom).toLocaleString(
-                formatData.locale,
-                {
-                  currency: formatData.currencySymbol,
-                  style: "currency"
-                }
-              )
-            }),
-            onClick: () =>
-              onFilterDelete({
-                ...filters,
-                priceFrom: undefined
-              })
-          }
-        ];
+  switch (name) {
+    case ProductFilterKeys.price:
+      if (!active) {
+        return {
+          priceFrom: undefined,
+          priceTo: undefined
+        };
+      }
+      if (multiple) {
+        return {
+          priceFrom: value[0],
+          priceTo: value[1]
+        };
       }
 
-      if (!!filters.priceTo) {
-        filterChips = [
-          ...filterChips,
-          {
-            label: intl.formatMessage(filterMessages.priceTo, {
-              price: parseFloat(filters.priceTo).toLocaleString(
-                formatData.locale,
-                {
-                  currency: formatData.currencySymbol,
-                  style: "currency"
-                }
-              )
-            }),
-            onClick: () =>
-              onFilterDelete({
-                ...filters,
-                priceTo: undefined
-              })
-          }
-        ];
-      }
-    }
-  }
+      return {
+        priceFrom: value[0],
+        priceTo: value[0]
+      };
 
-  if (!!filters.status) {
-    filterChips = [
-      ...filterChips,
-      {
-        label:
-          filters.status === StockAvailability.IN_STOCK.toString()
-            ? intl.formatMessage(filterMessages.available)
-            : intl.formatMessage(filterMessages.outOfStock),
-        onClick: () =>
-          onFilterDelete({
-            ...filters,
-            status: undefined
-          })
+    case ProductFilterKeys.status:
+      if (!active) {
+        return {
+          status: undefined
+        };
       }
-    ];
-  }
+      return {
+        status: findValueInEnum(value[0], ProductStatus)
+      };
 
-  if (!!filters.isPublished) {
-    filterChips = [
-      ...filterChips,
-      {
-        label: !!filters.isPublished
-          ? intl.formatMessage(filterMessages.published)
-          : intl.formatMessage(filterMessages.hidden),
-        onClick: () =>
-          onFilterDelete({
-            ...filters,
-            isPublished: undefined
-          })
+    case ProductFilterKeys.stock:
+      if (!active) {
+        return {
+          stockStatus: undefined
+        };
       }
-    ];
+      return {
+        stockStatus: findValueInEnum(value[0], StockAvailability)
+      };
   }
-
-  return filterChips;
 }
 
 export const {

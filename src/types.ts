@@ -1,9 +1,8 @@
 import { MutationResult } from "react-apollo";
 
 import { User_permissions } from "./auth/types/User";
-import { FilterContentSubmitData } from "./components/Filter";
-import { Filter } from "./components/TableFilter";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
+import { IFilter } from "./components/Filter";
 
 export interface UserError {
   field: string;
@@ -83,22 +82,16 @@ export interface SearchPageProps {
   initialSearch: string;
   onSearchChange: (value: string) => void;
 }
-export interface FilterPageProps<TKeys = string>
-  extends SearchPageProps,
+export interface FilterPageProps<TKeys extends string, TOpts extends object>
+  extends FilterProps<TKeys>,
+    SearchPageProps,
     TabPageProps {
-  currencySymbol: string;
-  filtersList: Filter[];
-  onFilterAdd: (filter: FilterContentSubmitData<TKeys>) => void;
+  filterOpts: TOpts;
 }
 
-export interface SearchProps {
-  searchPlaceholder: string;
-}
-export interface FilterProps<TKeys = string>
-  extends FilterPageProps<TKeys>,
-    SearchProps {
-  allTabLabel: string;
-  filterLabel: string;
+export interface FilterProps<TKeys extends string> {
+  currencySymbol: string;
+  onFilterChange: (filter: IFilter<TKeys>) => void;
 }
 
 export interface TabPageProps {
@@ -139,7 +132,7 @@ export type Filters<TFilters extends string> = Partial<
   Record<TFilters, string>
 >;
 export type FiltersWithMultipleValues<TFilters extends string> = Partial<
-  Record<TFilters, string | string[]>
+  Record<TFilters, string[]>
 >;
 export type SingleAction = Partial<{
   id: string;
@@ -172,4 +165,11 @@ export interface UserPermissionProps {
 
 export interface MutationResultAdditionalProps {
   status: ConfirmButtonTransitionState;
+}
+
+export type MinMax = Record<"min" | "max", string>;
+
+export interface FilterOpts<T> {
+  active: boolean;
+  value: T;
 }

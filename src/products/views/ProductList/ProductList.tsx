@@ -13,7 +13,6 @@ import SaveFilterTabDialog, {
 import { defaultListSettings, ProductListColumns } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
-import useLocale from "@saleor/hooks/useLocale";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -26,6 +25,8 @@ import { ProductListVariables } from "@saleor/products/types/ProductList";
 import { ListViews } from "@saleor/types";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { IFilter } from "@saleor/components/Filter";
+import { getFilterQueryParams } from "@saleor/utils/filters";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -40,7 +41,6 @@ import { productBulkPublish } from "../../types/productBulkPublish";
 import {
   productAddUrl,
   productListUrl,
-  ProductListUrlFilters,
   ProductListUrlQueryParams,
   ProductListUrlSortField,
   productUrl,
@@ -48,13 +48,14 @@ import {
 } from "../../urls";
 import {
   areFiltersApplied,
-  createFilter,
-  createFilterChips,
   deleteFilterTab,
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
+  ProductFilterKeys,
+  getFilterOpts,
+  getFilterQueryParam
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -63,7 +64,6 @@ interface ProductListProps {
 }
 
 export const ProductList: React.FC<ProductListProps> = ({ params }) => {
-  const { locale } = useLocale();
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
@@ -103,18 +103,34 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
 
-  const changeFilters = (filters: ProductListUrlFilters) => {
-    reset();
-    navigate(productListUrl(filters));
-  };
-
-  const changeFilterField = (filter: ProductListUrlFilters) => {
+  const changeFilters = (filter: IFilter<ProductFilterKeys>) => {
     reset();
     navigate(
       productListUrl({
-        ...getActiveFilters(params),
-        ...filter,
+        ...params,
+        ...getFilterQueryParams(filter, getFilterQueryParam),
         activeTab: undefined
+      })
+    );
+  };
+
+  const resetFilters = () => {
+    reset();
+    navigate(
+      productListUrl({
+        asc: params.asc,
+        sort: params.sort
+      })
+    );
+  };
+
+  const handleSearchChange = (query: string) => {
+    reset();
+    navigate(
+      productListUrl({
+        ...params,
+        activeTab: undefined,
+        query
       })
     );
   };
@@ -224,6 +240,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           defaultSettings={
                             defaultListSettings[ListViews.PRODUCT_LIST]
                           }
+                          filterOpts={getFilterOpts(params)}
                           gridAttributes={maybe(
                             () =>
                               attributes.data.grid.edges.map(edge => edge.node),
@@ -240,15 +257,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                               attributes.data.availableInGrid.pageInfo
                                 .hasNextPage,
                             false
-                          )}
-                          filtersList={createFilterChips(
-                            params,
-                            {
-                              currencySymbol,
-                              locale
-                            },
-                            changeFilterField,
-                            intl
                           )}
                           onAdd={() => navigate(productAddUrl)}
                           disabled={loading}
@@ -288,11 +296,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           onUpdateListSettings={updateListSettings}
                           pageInfo={pageInfo}
                           onRowClick={id => () => navigate(productUrl(id))}
-                          onAll={() =>
-                            changeFilters({
-                              status: undefined
-                            })
-                          }
+                          onAll={resetFilters}
                           toolbar={
                             <>
                               <Button
@@ -337,10 +341,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           selected={listElements.length}
                           toggle={toggle}
                           toggleAll={toggleAll}
-                          onSearchChange={query => changeFilterField({ query })}
-                          onFilterAdd={filter =>
-                            changeFilterField(createFilter(filter))
-                          }
+                          onSearchChange={handleSearchChange}
+                          onFilterChange={changeFilters}
                           onTabSave={() => openModal("save-search")}
                           onTabDelete={() => openModal("delete-search")}
                           onTabChange={handleTabChange}

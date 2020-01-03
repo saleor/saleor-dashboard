@@ -1,3 +1,5 @@
+import { IFilterElement, IFilter } from "@saleor/components/Filter";
+
 function createFilterUtils<
   TQueryParams extends object,
   TFilters extends object
@@ -5,13 +7,10 @@ function createFilterUtils<
   function getActiveFilters(params: TQueryParams): TFilters {
     return Object.keys(params)
       .filter(key => Object.keys(filters).includes(key))
-      .reduce(
-        (acc, key) => {
-          acc[key] = params[key];
-          return acc;
-        },
-        {} as any
-      );
+      .reduce((acc, key) => {
+        acc[key] = params[key];
+        return acc;
+      }, {} as any);
   }
 
   function areFiltersApplied(params: TQueryParams): boolean {
@@ -24,32 +23,24 @@ function createFilterUtils<
   };
 }
 
-export function valueOrFirst<T>(value: T | T[]): T {
-  if (Array.isArray(value)) {
-    return value[0];
-  }
-
-  return value;
-}
-
-export function arrayOrValue<T>(value: T | T[]): T[] {
-  if (Array.isArray(value)) {
-    return value;
-  }
-
-  return [value];
-}
-
-export function arrayOrUndefined<T>(array: T[]): T[] | undefined {
-  if (array.length === 0) {
-    return undefined;
-  }
-
-  return array;
-}
-
 export function dedupeFilter<T>(array: T[]): T[] {
   return Array.from(new Set(array));
+}
+
+export function getFilterQueryParams<
+  TFilterKeys extends string,
+  TUrlFilters extends object
+>(
+  filter: IFilter<TFilterKeys>,
+  getFilterQueryParam: (filter: IFilterElement<TFilterKeys>) => TUrlFilters
+): TUrlFilters {
+  return filter.reduce(
+    (acc, filterField) => ({
+      ...acc,
+      ...getFilterQueryParam(filterField)
+    }),
+    {} as TUrlFilters
+  );
 }
 
 export default createFilterUtils;
