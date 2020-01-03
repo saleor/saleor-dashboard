@@ -67,9 +67,18 @@ export const saleAddUrl = saleAddPath;
 export const voucherSection = urlJoin(discountSection, "vouchers");
 export const voucherListPath = voucherSection;
 export enum VoucherListUrlFiltersEnum {
+  startedFrom = "startedFrom",
+  startedTo = "startedTo",
+  timesUsedFrom = "timesUsedFrom",
+  timesUsedTo = "timesUsedTo",
   query = "query"
 }
-export type VoucherListUrlFilters = Filters<VoucherListUrlFiltersEnum>;
+export enum VoucherListUrlFiltersWithMultipleValues {
+  status = "status",
+  type = "type"
+}
+export type VoucherListUrlFilters = Filters<VoucherListUrlFiltersEnum> &
+  FiltersWithMultipleValues<VoucherListUrlFiltersWithMultipleValues>;
 export type VoucherListUrlDialog = "remove" | TabActionDialog;
 export enum VoucherListUrlSortField {
   code = "code",
