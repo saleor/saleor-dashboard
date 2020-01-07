@@ -37,7 +37,6 @@ import { CollectionBulkPublish } from "../../types/CollectionBulkPublish";
 import {
   collectionAddUrl,
   collectionListUrl,
-  CollectionListUrlFilters,
   CollectionListUrlQueryParams,
   collectionUrl,
   CollectionListUrlDialog
