@@ -23,6 +23,9 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { IFilter } from "@saleor/components/Filter";
+import { getFilterQueryParams } from "@saleor/utils/filters";
+import useShop from "@saleor/hooks/useShop";
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
 import {
   TypedCollectionBulkDelete,
@@ -45,7 +48,10 @@ import {
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
+  CollectionFilterKeys,
+  getFilterQueryParam,
+  getFilterOpts
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
 
@@ -57,6 +63,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
+  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -88,13 +95,34 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: CollectionListUrlFilters) => {
+  const changeFilters = (filter: IFilter<CollectionFilterKeys>) => {
     reset();
     navigate(
       collectionListUrl({
-        ...getActiveFilters(params),
-        ...filter,
+        ...params,
+        ...getFilterQueryParams(filter, getFilterQueryParam),
         activeTab: undefined
+      })
+    );
+  };
+
+  const resetFilters = () => {
+    reset();
+    navigate(
+      collectionListUrl({
+        asc: params.asc,
+        sort: params.sort
+      })
+    );
+  };
+
+  const handleSearchChange = (query: string) => {
+    reset();
+    navigate(
+      collectionListUrl({
+        ...params,
+        activeTab: undefined,
+        query
       })
     );
   };
@@ -154,6 +182,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, collectionListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedCollectionBulkDelete onCompleted={handleCollectionBulkDelete}>
@@ -162,11 +191,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
           {(collectionBulkPublish, collectionBulkPublishOpts) => (
             <>
               <CollectionListPage
+                currencySymbol={currencySymbol}
                 currentTab={currentTab}
+                filterOpts={getFilterOpts(params)}
                 initialSearch={params.query || ""}
-                onSearchChange={query => changeFilterField({ query })}
+                onSearchChange={handleSearchChange}
+                onFilterChange={changeFilters}
                 onAdd={() => navigate(collectionAddUrl)}
-                onAll={() => navigate(collectionListUrl())}
+                onAll={resetFilters}
                 onTabChange={handleTabChange}
                 onTabDelete={() => openModal("delete-search")}
                 onTabSave={() => openModal("save-search")}
