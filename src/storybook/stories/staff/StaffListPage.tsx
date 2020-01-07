@@ -2,11 +2,13 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { StaffListUrlSortField } from "@saleor/staff/urls";
+import { StaffMemberStatus } from "@saleor/types/globalTypes";
 import {
   pageListProps,
   searchPageProps,
   tabPageProps,
-  sortPageProps
+  sortPageProps,
+  filterPageProps
 } from "../../../fixtures";
 import StaffListPage, {
   StaffListPageProps
@@ -19,6 +21,13 @@ const props: StaffListPageProps = {
   ...searchPageProps,
   ...sortPageProps,
   ...tabPageProps,
+  ...filterPageProps,
+  filterOpts: {
+    status: {
+      active: false,
+      value: StaffMemberStatus.ACTIVE
+    }
+  },
   onAdd: undefined,
   onBack: () => undefined,
   sort: {

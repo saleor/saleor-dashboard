@@ -23,6 +23,8 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { IFilter } from "@saleor/components/Filter";
+import { getFilterQueryParams } from "@saleor/utils/filters";
 import StaffAddMemberDialog, {
   FormData as AddStaffMemberForm
 } from "../../components/StaffAddMemberDialog";
@@ -33,7 +35,6 @@ import { StaffMemberAdd } from "../../types/StaffMemberAdd";
 import {
   staffListUrl,
   StaffListUrlDialog,
-  StaffListUrlFilters,
   StaffListUrlQueryParams,
   staffMemberDetailsUrl
 } from "../../urls";
@@ -43,7 +44,10 @@ import {
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
+  StaffFilterKeys,
+  getFilterQueryParam,
+  getFilterOpts
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
 
@@ -62,6 +66,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const shop = useShop();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
@@ -84,12 +89,29 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: StaffListUrlFilters) =>
+  const changeFilters = (filter: IFilter<StaffFilterKeys>) =>
     navigate(
       staffListUrl({
-        ...getActiveFilters(params),
-        ...filter,
+        ...params,
+        ...getFilterQueryParams(filter, getFilterQueryParam),
         activeTab: undefined
+      })
+    );
+
+  const resetFilters = () =>
+    navigate(
+      staffListUrl({
+        asc: params.asc,
+        sort: params.sort
+      })
+    );
+
+  const handleSearchChange = (query: string) =>
+    navigate(
+      staffListUrl({
+        ...params,
+        activeTab: undefined,
+        query
       })
     );
 
@@ -159,10 +181,13 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         return (
           <>
             <StaffListPage
+              currencySymbol={currencySymbol}
               currentTab={currentTab}
+              filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}
-              onSearchChange={query => changeFilterField({ query })}
-              onAll={() => navigate(staffListUrl())}
+              onSearchChange={handleSearchChange}
+              onFilterChange={changeFilters}
+              onAll={resetFilters}
               onTabChange={handleTabChange}
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}
