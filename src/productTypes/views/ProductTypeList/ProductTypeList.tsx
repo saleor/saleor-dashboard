@@ -21,6 +21,9 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { IFilter } from "@saleor/components/Filter";
+import { getFilterQueryParams } from "@saleor/utils/filters";
+import useShop from "@saleor/hooks/useShop";
 import { configurationMenuUrl } from "../../../configuration";
 import { maybe } from "../../../misc";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
@@ -31,7 +34,6 @@ import {
   productTypeAddUrl,
   productTypeListUrl,
   ProductTypeListUrlDialog,
-  ProductTypeListUrlFilters,
   ProductTypeListUrlQueryParams,
   productTypeUrl
 } from "../../urls";
@@ -41,7 +43,10 @@ import {
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
+  ProductTypeFilterKeys,
+  getFilterQueryParam,
+  getFilterOpts
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
 
@@ -53,6 +58,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
+  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -82,13 +88,34 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: ProductTypeListUrlFilters) => {
+  const changeFilters = (filter: IFilter<ProductTypeFilterKeys>) => {
     reset();
     navigate(
       productTypeListUrl({
-        ...getActiveFilters(params),
-        ...filter,
+        ...params,
+        ...getFilterQueryParams(filter, getFilterQueryParam),
         activeTab: undefined
+      })
+    );
+  };
+
+  const resetFilters = () => {
+    reset();
+    navigate(
+      productTypeListUrl({
+        asc: params.asc,
+        sort: params.sort
+      })
+    );
+  };
+
+  const handleSearchChange = (query: string) => {
+    reset();
+    navigate(
+      productTypeListUrl({
+        ...params,
+        activeTab: undefined,
+        query
       })
     );
   };
@@ -143,6 +170,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedProductTypeBulkDeleteMutation
@@ -159,10 +187,13 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         return (
           <>
             <ProductTypeListPage
+              currencySymbol={currencySymbol}
               currentTab={currentTab}
+              filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}
-              onSearchChange={query => changeFilterField({ query })}
-              onAll={() => navigate(productTypeListUrl())}
+              onSearchChange={handleSearchChange}
+              onFilterChange={changeFilters}
+              onAll={resetFilters}
               onTabChange={handleTabChange}
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}
