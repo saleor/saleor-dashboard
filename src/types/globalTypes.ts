@@ -480,6 +480,7 @@ export enum PaymentChargeStatusEnum {
 
 export enum PermissionEnum {
   IMPERSONATE_USERS = "IMPERSONATE_USERS",
+  MANAGE_CHECKOUTS = "MANAGE_CHECKOUTS",
   MANAGE_DISCOUNTS = "MANAGE_DISCOUNTS",
   MANAGE_GIFT_CARD = "MANAGE_GIFT_CARD",
   MANAGE_MENUS = "MANAGE_MENUS",
@@ -640,6 +641,7 @@ export enum WebhookErrorCode {
 
 export enum WebhookEventTypeEnum {
   ANY_EVENTS = "ANY_EVENTS",
+  CHECKOUT_QUANTITY_CHANGED = "CHECKOUT_QUANTITY_CHANGED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   ORDER_CANCELLED = "ORDER_CANCELLED",
   ORDER_CREATED = "ORDER_CREATED",
@@ -1168,7 +1170,6 @@ export interface StaffCreateInput {
   isActive?: boolean | null;
   note?: string | null;
   permissions?: (PermissionEnum | null)[] | null;
-  sendPasswordEmail?: boolean | null;
   redirectUrl?: string | null;
 }
 
@@ -1202,7 +1203,6 @@ export interface UserCreateInput {
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
-  sendPasswordEmail?: boolean | null;
   redirectUrl?: string | null;
 }
 

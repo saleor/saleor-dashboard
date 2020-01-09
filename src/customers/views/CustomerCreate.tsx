@@ -65,8 +65,7 @@ export const CustomerCreate: React.FC<{}> = () => {
                         email: formData.email,
                         firstName: formData.customerFirstName,
                         lastName: formData.customerLastName,
-                        note: formData.note,
-                        sendPasswordEmail: false
+                        note: formData.note
                       }
                     }
                   });

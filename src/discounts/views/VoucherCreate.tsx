@@ -65,7 +65,7 @@ export const VoucherDetails: React.FC = () => {
                     minAmountSpent:
                       formData.requirementsPicker !== RequirementsPicker.ORDER
                         ? 0
-                        : parseFloat(formData.minAmountSpent),
+                        : parseFloat(formData.minSpent),
                     minCheckoutItemsQuantity:
                       formData.requirementsPicker !== RequirementsPicker.ITEM
                         ? 0

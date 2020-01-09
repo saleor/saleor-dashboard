@@ -32,8 +32,8 @@ export interface FormData {
   endTime: string;
   hasEndDate: boolean;
   hasUsageLimit: boolean;
-  minAmountSpent: string;
   minCheckoutItemsQuantity: string;
+  minSpent: string;
   requirementsPicker: RequirementsPicker;
   startDate: string;
   startTime: string;
@@ -70,8 +70,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     endTime: "",
     hasEndDate: false,
     hasUsageLimit: false,
-    minAmountSpent: "0",
     minCheckoutItemsQuantity: "0",
+    minSpent: "0",
     requirementsPicker: RequirementsPicker.NONE,
     startDate: "",
     startTime: "",

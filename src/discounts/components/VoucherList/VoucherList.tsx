@@ -233,9 +233,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   {maybe<React.ReactNode>(() => voucher.code, <Skeleton />)}
                 </TableCell>
                 <TableCell className={classes.colMinSpent}>
-                  {voucher && voucher.minAmountSpent ? (
-                    <Money money={voucher.minAmountSpent} />
-                  ) : voucher && voucher.minAmountSpent === null ? (
+                  {voucher && voucher.minSpent ? (
+                    <Money money={voucher.minSpent} />
+                  ) : voucher && voucher.minSpent === null ? (
                     "-"
                   ) : (
                     <Skeleton />

@@ -291,7 +291,7 @@ export const TypedOrderDetailsQuery = TypedQuery<
 
 export const searchOrderVariant = gql`
   query SearchOrderVariant($first: Int!, $query: String!, $after: String) {
-    search: products(query: $query, first: $first, after: $after) {
+    search: products(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
@@ -303,9 +303,13 @@ export const searchOrderVariant = gql`
             id
             name
             sku
-            price {
-              amount
-              currency
+            pricing {
+              priceUndiscounted {
+                net {
+                  amount
+                  currency
+                }
+              }
             }
           }
         }

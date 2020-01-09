@@ -148,7 +148,6 @@ export interface MenuItemCreate_menuItemCreate_menuItem_menu_items_children_chil
   level: number;
   name: string;
   page: MenuItemCreate_menuItemCreate_menuItem_menu_items_children_children_children_children_children_children_page | null;
-  sortOrder: number | null;
   url: string | null;
 }
 
@@ -160,7 +159,6 @@ export interface MenuItemCreate_menuItemCreate_menuItem_menu_items_children_chil
   level: number;
   name: string;
   page: MenuItemCreate_menuItemCreate_menuItem_menu_items_children_children_children_children_children_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuItemCreate_menuItemCreate_menuItem_menu_items_children_children_children_children_children_children | null)[] | null;
 }
@@ -173,7 +171,6 @@ export interface MenuItemCreate_menuItemCreate_menuItem_menu_items_children_chil
   level: number;
   name: string;
   page: MenuItemCreate_menuItemCreate_menuItem_menu_items_children_children_children_children_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuItemCreate_menuItemCreate_menuItem_menu_items_children_children_children_children_children | null)[] | null;
 }
@@ -186,7 +183,6 @@ export interface MenuItemCreate_menuItemCreate_menuItem_menu_items_children_chil
   level: number;
   name: string;
   page: MenuItemCreate_menuItemCreate_menuItem_menu_items_children_children_children_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuItemCreate_menuItemCreate_menuItem_menu_items_children_children_children_children | null)[] | null;
 }
@@ -199,7 +195,6 @@ export interface MenuItemCreate_menuItemCreate_menuItem_menu_items_children_chil
   level: number;
   name: string;
   page: MenuItemCreate_menuItemCreate_menuItem_menu_items_children_children_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuItemCreate_menuItemCreate_menuItem_menu_items_children_children_children | null)[] | null;
 }
@@ -212,7 +207,6 @@ export interface MenuItemCreate_menuItemCreate_menuItem_menu_items_children {
   level: number;
   name: string;
   page: MenuItemCreate_menuItemCreate_menuItem_menu_items_children_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuItemCreate_menuItemCreate_menuItem_menu_items_children_children | null)[] | null;
 }
@@ -225,7 +219,6 @@ export interface MenuItemCreate_menuItemCreate_menuItem_menu_items {
   level: number;
   name: string;
   page: MenuItemCreate_menuItemCreate_menuItem_menu_items_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuItemCreate_menuItemCreate_menuItem_menu_items_children | null)[] | null;
 }

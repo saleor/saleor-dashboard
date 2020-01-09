@@ -28,7 +28,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_attrib
   values: (VariantImageUnassign_variantImageUnassign_productVariant_attributes_attribute_values | null)[] | null;
 }
 
-export interface VariantImageUnassign_variantImageUnassign_productVariant_attributes_value {
+export interface VariantImageUnassign_variantImageUnassign_productVariant_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
@@ -38,7 +38,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_attrib
 export interface VariantImageUnassign_variantImageUnassign_productVariant_attributes {
   __typename: "SelectedAttribute";
   attribute: VariantImageUnassign_variantImageUnassign_productVariant_attributes_attribute;
-  value: VariantImageUnassign_variantImageUnassign_productVariant_attributes_value | null;
+  values: (VariantImageUnassign_variantImageUnassign_productVariant_attributes_values | null)[];
 }
 
 export interface VariantImageUnassign_variantImageUnassign_productVariant_costPrice {

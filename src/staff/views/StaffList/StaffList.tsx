@@ -143,8 +143,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
                   window.location.origin,
                   APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
                   newPasswordUrl().replace(/\?/, "")
-                ),
-                sendPasswordEmail: true
+                )
               }
             }
           });

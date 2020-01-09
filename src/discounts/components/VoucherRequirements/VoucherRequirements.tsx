@@ -15,7 +15,7 @@ interface VoucherRequirementsProps {
   data: FormData;
   defaultCurrency: string;
   disabled: boolean;
-  errors: FormErrors<"minAmountSpent" | "minCheckoutItemsQuantity">;
+  errors: FormErrors<"minSpent" | "minCheckoutItemsQuantity">;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -76,11 +76,11 @@ const VoucherRequirements = ({
         {data.requirementsPicker === RequirementsPicker.ORDER ? (
           <TextField
             disabled={disabled}
-            error={!!errors.minAmountSpent}
-            helperText={errors.minAmountSpent}
+            error={!!errors.minSpent}
+            helperText={errors.minSpent}
             label={minimalOrderValueText}
-            name={"minAmountSpent" as keyof FormData}
-            value={data.minAmountSpent}
+            name={"minSpent" as keyof FormData}
+            value={data.minSpent}
             onChange={onChange}
             fullWidth
           />

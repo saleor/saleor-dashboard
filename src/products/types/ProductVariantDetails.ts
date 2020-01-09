@@ -22,7 +22,7 @@ export interface ProductVariantDetails_productVariant_attributes_attribute {
   values: (ProductVariantDetails_productVariant_attributes_attribute_values | null)[] | null;
 }
 
-export interface ProductVariantDetails_productVariant_attributes_value {
+export interface ProductVariantDetails_productVariant_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
@@ -32,7 +32,7 @@ export interface ProductVariantDetails_productVariant_attributes_value {
 export interface ProductVariantDetails_productVariant_attributes {
   __typename: "SelectedAttribute";
   attribute: ProductVariantDetails_productVariant_attributes_attribute;
-  value: ProductVariantDetails_productVariant_attributes_value | null;
+  values: (ProductVariantDetails_productVariant_attributes_values | null)[];
 }
 
 export interface ProductVariantDetails_productVariant_costPrice {

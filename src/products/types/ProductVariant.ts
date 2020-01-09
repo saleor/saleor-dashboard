@@ -22,7 +22,7 @@ export interface ProductVariant_attributes_attribute {
   values: (ProductVariant_attributes_attribute_values | null)[] | null;
 }
 
-export interface ProductVariant_attributes_value {
+export interface ProductVariant_attributes_values {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
@@ -32,7 +32,7 @@ export interface ProductVariant_attributes_value {
 export interface ProductVariant_attributes {
   __typename: "SelectedAttribute";
   attribute: ProductVariant_attributes_attribute;
-  value: ProductVariant_attributes_value | null;
+  values: (ProductVariant_attributes_values | null)[];
 }
 
 export interface ProductVariant_costPrice {

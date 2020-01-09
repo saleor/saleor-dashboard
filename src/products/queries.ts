@@ -167,7 +167,7 @@ export const fragmentVariant = gql`
           slug
         }
       }
-      value {
+      values {
         id
         name
         slug

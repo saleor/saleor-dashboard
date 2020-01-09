@@ -20,7 +20,7 @@ export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_countri
   country: string;
 }
 
-export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_minAmountSpent {
+export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_minSpent {
   __typename: "Money";
   currency: string;
   amount: number;
@@ -140,7 +140,7 @@ export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher {
   discountValueType: DiscountValueTypeEnum;
   discountValue: number;
   countries: (VoucherCataloguesRemove_voucherCataloguesRemove_voucher_countries | null)[] | null;
-  minAmountSpent: VoucherCataloguesRemove_voucherCataloguesRemove_voucher_minAmountSpent | null;
+  minSpent: VoucherCataloguesRemove_voucherCataloguesRemove_voucher_minSpent | null;
   minCheckoutItemsQuantity: number | null;
   type: VoucherTypeEnum;
   used: number;

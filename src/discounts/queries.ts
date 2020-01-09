@@ -92,7 +92,7 @@ export const voucherFragment = gql`
       code
       country
     }
-    minAmountSpent {
+    minSpent {
       currency
       amount
     }

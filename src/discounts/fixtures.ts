@@ -72,8 +72,8 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
     discountValueType: "PERCENTAGE" as DiscountValueTypeEnum,
     endDate: null,
     id: "Vm91Y2hlcjox",
-    minAmountSpent: null,
     minCheckoutItemsQuantity: null,
+    minSpent: null,
     startDate: "2019-01-03",
     usageLimit: null
   },
@@ -85,12 +85,12 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
     discountValueType: "FIXED" as DiscountValueTypeEnum,
     endDate: null,
     id: "Vm91Y2hlcjoy",
-    minAmountSpent: {
+    minCheckoutItemsQuantity: 0,
+    minSpent: {
       __typename: "Money" as "Money",
       amount: 200,
       currency: "USD"
     },
-    minCheckoutItemsQuantity: 0,
     startDate: "2019-01-03",
     usageLimit: 150
   }
@@ -281,12 +281,12 @@ export const voucherDetails: VoucherDetails_voucher = {
   discountValueType: DiscountValueTypeEnum.FIXED,
   endDate: null,
   id: "Vm91Y2hlcjoy",
-  minAmountSpent: {
+  minCheckoutItemsQuantity: 0,
+  minSpent: {
     __typename: "Money",
     amount: 200,
     currency: "USD"
   },
-  minCheckoutItemsQuantity: 0,
   products: {
     __typename: "ProductCountableConnection",
     edges: [],
