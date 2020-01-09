@@ -53,7 +53,7 @@ storiesOf("Views / Discounts / Voucher details", module)
         "code",
         "discountType",
         "endDate",
-        "minAmountSpent",
+        "minSpent",
         "name",
         "startDate",
         "type",
