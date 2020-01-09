@@ -23,8 +23,7 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { IFilter } from "@saleor/components/Filter";
-import { getFilterQueryParams } from "@saleor/utils/filters";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import StaffAddMemberDialog, {
   FormData as AddStaffMemberForm
 } from "../../components/StaffAddMemberDialog";
@@ -45,7 +44,6 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-  StaffFilterKeys,
   getFilterQueryParam,
   getFilterOpts
 } from "./filter";
@@ -89,31 +87,16 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilters = (filter: IFilter<StaffFilterKeys>) =>
-    navigate(
-      staffListUrl({
-        ...params,
-        ...getFilterQueryParams(filter, getFilterQueryParam),
-        activeTab: undefined
-      })
-    );
-
-  const resetFilters = () =>
-    navigate(
-      staffListUrl({
-        asc: params.asc,
-        sort: params.sort
-      })
-    );
-
-  const handleSearchChange = (query: string) =>
-    navigate(
-      staffListUrl({
-        ...params,
-        activeTab: undefined,
-        query
-      })
-    );
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    createUrl: staffListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     StaffListUrlDialog,

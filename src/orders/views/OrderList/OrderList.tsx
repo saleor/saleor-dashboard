@@ -19,8 +19,7 @@ import { ListViews } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { IFilter } from "@saleor/components/Filter";
-import { getFilterQueryParams } from "@saleor/utils/filters";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import OrderBulkCancelDialog from "../../components/OrderBulkCancelDialog";
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
 import {
@@ -44,7 +43,6 @@ import {
   getFilterOpts,
   getFilterVariables,
   saveFilterTab,
-  OrderFilterKeys,
   getFilterQueryParam
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
@@ -88,37 +86,17 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilters = (filter: IFilter<OrderFilterKeys>) => {
-    reset();
-    navigate(
-      orderListUrl({
-        ...params,
-        ...getFilterQueryParams(filter, getFilterQueryParam),
-        activeTab: undefined
-      })
-    );
-  };
-
-  const resetFilters = () => {
-    reset();
-    navigate(
-      orderListUrl({
-        asc: params.asc,
-        sort: params.sort
-      })
-    );
-  };
-
-  const handleSearchChange = (query: string) => {
-    reset();
-    navigate(
-      orderListUrl({
-        ...params,
-        activeTab: undefined,
-        query
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: orderListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderListUrlDialog,
