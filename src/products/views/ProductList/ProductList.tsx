@@ -25,8 +25,7 @@ import { ProductListVariables } from "@saleor/products/types/ProductList";
 import { ListViews } from "@saleor/types";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { IFilter } from "@saleor/components/Filter";
-import { getFilterQueryParams } from "@saleor/utils/filters";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -53,7 +52,6 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-  ProductFilterKeys,
   getFilterOpts,
   getFilterQueryParam
 } from "./filters";
@@ -103,37 +101,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
 
-  const changeFilters = (filter: IFilter<ProductFilterKeys>) => {
-    reset();
-    navigate(
-      productListUrl({
-        ...params,
-        ...getFilterQueryParams(filter, getFilterQueryParam),
-        activeTab: undefined
-      })
-    );
-  };
-
-  const resetFilters = () => {
-    reset();
-    navigate(
-      productListUrl({
-        asc: params.asc,
-        sort: params.sort
-      })
-    );
-  };
-
-  const handleSearchChange = (query: string) => {
-    reset();
-    navigate(
-      productListUrl({
-        ...params,
-        activeTab: undefined,
-        query
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: productListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const handleTabChange = (tab: number) => {
     reset();

@@ -24,8 +24,7 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { IFilter } from "@saleor/components/Filter";
-import { getFilterQueryParams } from "@saleor/utils/filters";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import SaleListPage from "../../components/SaleListPage";
 import { TypedSaleBulkDelete } from "../../mutations";
 import { useSaleListQuery } from "../../queries";
@@ -44,7 +43,6 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-  SaleFilterKeys,
   getFilterQueryParam,
   getFilterOpts
 } from "./filter";
@@ -90,37 +88,17 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilters = (filter: IFilter<SaleFilterKeys>) => {
-    reset();
-    navigate(
-      saleListUrl({
-        ...params,
-        ...getFilterQueryParams(filter, getFilterQueryParam),
-        activeTab: undefined
-      })
-    );
-  };
-
-  const resetFilters = () => {
-    reset();
-    navigate(
-      saleListUrl({
-        asc: params.asc,
-        sort: params.sort
-      })
-    );
-  };
-
-  const handleSearchChange = (query: string) => {
-    reset();
-    navigate(
-      saleListUrl({
-        ...params,
-        activeTab: undefined,
-        query
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: saleListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     SaleListUrlDialog,

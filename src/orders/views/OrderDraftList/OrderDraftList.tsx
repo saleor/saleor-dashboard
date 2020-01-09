@@ -21,9 +21,8 @@ import { ListViews } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { IFilter } from "@saleor/components/Filter";
 import useShop from "@saleor/hooks/useShop";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import OrderDraftListPage from "../../components/OrderDraftListPage";
 import {
   TypedOrderDraftBulkCancelMutation,
@@ -46,7 +45,6 @@ import {
   getFilterVariables,
   saveFilterTab,
   getFilterQueryParam,
-  OrderDraftFilterKeys,
   getFilterOpts
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
@@ -90,37 +88,17 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilters = (filter: IFilter<OrderDraftFilterKeys>) => {
-    reset();
-    navigate(
-      orderDraftListUrl({
-        ...params,
-        ...getFilterQueryParams(filter, getFilterQueryParam),
-        activeTab: undefined
-      })
-    );
-  };
-
-  const resetFilters = () => {
-    reset();
-    navigate(
-      orderDraftListUrl({
-        asc: params.asc,
-        sort: params.sort
-      })
-    );
-  };
-
-  const handleSearchChange = (query: string) => {
-    reset();
-    navigate(
-      orderDraftListUrl({
-        ...params,
-        activeTab: undefined,
-        query
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: orderDraftListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderDraftListUrlDialog,

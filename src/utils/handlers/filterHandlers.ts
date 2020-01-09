@@ -23,12 +23,15 @@ function createFilterHandlers<
   navigate: UseNavigatorResult;
   createUrl: CreateUrl;
   params: RequiredParams;
-  cleanupFn: () => void;
+  cleanupFn?: () => void;
 }): CreateFilterHandlers<TFilterKeys> {
   const { getFilterQueryParam, navigate, createUrl, params, cleanupFn } = opts;
 
   const changeFilters = (filter: IFilter<TFilterKeys>) => {
-    cleanupFn();
+    if (!!cleanupFn) {
+      cleanupFn();
+    }
+
     navigate(
       createUrl({
         ...params,
@@ -39,7 +42,10 @@ function createFilterHandlers<
   };
 
   const resetFilters = () => {
-    cleanupFn();
+    if (!!cleanupFn) {
+      cleanupFn();
+    }
+
     navigate(
       createUrl({
         asc: params.asc,
@@ -49,7 +55,10 @@ function createFilterHandlers<
   };
 
   const handleSearchChange = (query: string) => {
-    cleanupFn();
+    if (!!cleanupFn) {
+      cleanupFn();
+    }
+
     navigate(
       createUrl({
         ...params,

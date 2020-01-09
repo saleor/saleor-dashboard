@@ -22,9 +22,8 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { IFilter } from "@saleor/components/Filter";
-import { getFilterQueryParams } from "@saleor/utils/filters";
 import useShop from "@saleor/hooks/useShop";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import CustomerListPage from "../../components/CustomerListPage";
 import { TypedBulkRemoveCustomers } from "../../mutations";
 import { useCustomerListQuery } from "../../queries";
@@ -43,7 +42,6 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-  CustomerFilterKeys,
   getFilterQueryParam,
   getFilterOpts
 } from "./filter";
@@ -89,37 +87,17 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilters = (filter: IFilter<CustomerFilterKeys>) => {
-    reset();
-    navigate(
-      customerListUrl({
-        ...params,
-        ...getFilterQueryParams(filter, getFilterQueryParam),
-        activeTab: undefined
-      })
-    );
-  };
-
-  const resetFilters = () => {
-    reset();
-    navigate(
-      customerListUrl({
-        asc: params.asc,
-        sort: params.sort
-      })
-    );
-  };
-
-  const handleSearchChange = (query: string) => {
-    reset();
-    navigate(
-      customerListUrl({
-        ...params,
-        activeTab: undefined,
-        query
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: customerListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     CustomerListUrlDialog,

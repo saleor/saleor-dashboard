@@ -23,9 +23,8 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { IFilter } from "@saleor/components/Filter";
-import { getFilterQueryParams } from "@saleor/utils/filters";
 import useShop from "@saleor/hooks/useShop";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
 import {
   TypedCollectionBulkDelete,
@@ -48,7 +47,6 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-  CollectionFilterKeys,
   getFilterQueryParam,
   getFilterOpts
 } from "./filter";
@@ -94,37 +92,17 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilters = (filter: IFilter<CollectionFilterKeys>) => {
-    reset();
-    navigate(
-      collectionListUrl({
-        ...params,
-        ...getFilterQueryParams(filter, getFilterQueryParam),
-        activeTab: undefined
-      })
-    );
-  };
-
-  const resetFilters = () => {
-    reset();
-    navigate(
-      collectionListUrl({
-        asc: params.asc,
-        sort: params.sort
-      })
-    );
-  };
-
-  const handleSearchChange = (query: string) => {
-    reset();
-    navigate(
-      collectionListUrl({
-        ...params,
-        activeTab: undefined,
-        query
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: collectionListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     CollectionListUrlDialog,
