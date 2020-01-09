@@ -318,7 +318,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                         formData.requirementsPicker !==
                                         RequirementsPicker.ORDER
                                           ? 0
-                                          : parseFloat(formData.minAmountSpent),
+                                          : parseFloat(formData.minSpent),
                                       minCheckoutItemsQuantity:
                                         formData.requirementsPicker !==
                                         RequirementsPicker.ITEM

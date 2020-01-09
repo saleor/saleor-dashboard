@@ -48,7 +48,6 @@ export const menu: MenuDetails_menu = {
           level: 0,
           name: "Jewelry",
           page: null,
-          sortOrder: 0,
           url: null
         },
         {
@@ -64,7 +63,6 @@ export const menu: MenuDetails_menu = {
           level: 0,
           name: "Glasses",
           page: null,
-          sortOrder: 1,
           url: null
         }
       ],
@@ -73,7 +71,6 @@ export const menu: MenuDetails_menu = {
       level: 0,
       name: "Accessories",
       page: null,
-      sortOrder: 0,
       url: null
     },
     {
@@ -89,7 +86,6 @@ export const menu: MenuDetails_menu = {
       level: 0,
       name: "Groceries",
       page: null,
-      sortOrder: 1,
       url: null
     },
     {
@@ -105,7 +101,6 @@ export const menu: MenuDetails_menu = {
       level: 0,
       name: "Apparel",
       page: null,
-      sortOrder: 2,
       url: null
     }
   ],

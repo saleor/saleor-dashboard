@@ -303,7 +303,9 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                             </div>
                           </TableCell>
                           <TableCell className={classes.textRight}>
-                            <Money money={variant.price} />
+                            <Money
+                              money={variant.pricing.priceUndiscounted.net}
+                            />
                           </TableCell>
                         </TableRow>
                       )

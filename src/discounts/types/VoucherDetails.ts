@@ -14,7 +14,7 @@ export interface VoucherDetails_voucher_countries {
   country: string;
 }
 
-export interface VoucherDetails_voucher_minAmountSpent {
+export interface VoucherDetails_voucher_minSpent {
   __typename: "Money";
   currency: string;
   amount: number;
@@ -134,7 +134,7 @@ export interface VoucherDetails_voucher {
   discountValueType: DiscountValueTypeEnum;
   discountValue: number;
   countries: (VoucherDetails_voucher_countries | null)[] | null;
-  minAmountSpent: VoucherDetails_voucher_minAmountSpent | null;
+  minSpent: VoucherDetails_voucher_minSpent | null;
   minCheckoutItemsQuantity: number | null;
   type: VoucherTypeEnum;
   used: number;

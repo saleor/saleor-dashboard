@@ -121,12 +121,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
         </Typography>
         <Typography>
           {maybe<React.ReactNode>(
-            () =>
-              voucher.minAmountSpent ? (
-                <Money money={voucher.minAmountSpent} />
-              ) : (
-                "-"
-              ),
+            () => (voucher.minSpent ? <Money money={voucher.minSpent} /> : "-"),
             <Skeleton />
           )}
         </Typography>

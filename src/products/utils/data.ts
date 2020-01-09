@@ -96,7 +96,7 @@ export function getAttributeInputFromVariant(
         },
         id: attribute.attribute.id,
         label: attribute.attribute.name,
-        value: maybe(() => attribute.value.slug, null)
+        value: maybe(() => attribute.values[0].slug, null)
       })),
     []
   );

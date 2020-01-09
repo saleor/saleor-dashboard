@@ -34,7 +34,7 @@ const home = gql`
             }
           }
           attributes {
-            value {
+            values {
               id
               name
             }

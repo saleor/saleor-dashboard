@@ -51,8 +51,6 @@ export interface AttributeList {
 
 export interface AttributeListVariables {
   filter?: AttributeFilterInput | null;
-  inCategory?: string | null;
-  inCollection?: string | null;
   before?: string | null;
   after?: string | null;
   first?: number | null;

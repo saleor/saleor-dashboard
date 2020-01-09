@@ -31,7 +31,6 @@ export const menuItemFragment = gql`
       id
       title
     }
-    sortOrder
     url
   }
 `;

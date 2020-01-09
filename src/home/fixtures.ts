@@ -289,12 +289,14 @@ export const shop: (placeholderImage: string) => Home = (
           attributes: [
             {
               __typename: "SelectedAttribute",
-              value: {
-                __typename: "AttributeValue",
-                id: "QXR0cmlidXRlVmFsdWU6OTI=",
-                name: "XS",
-                sortOrder: 0
-              }
+              values: [
+                {
+                  __typename: "AttributeValue",
+                  id: "QXR0cmlidXRlVmFsdWU6OTI=",
+                  name: "XS",
+                  sortOrder: 0
+                }
+              ]
             }
           ],
           id: "UHJvZHVjdFZhcmlhbnQ6NDM=",

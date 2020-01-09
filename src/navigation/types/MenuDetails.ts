@@ -140,7 +140,6 @@ export interface MenuDetails_menu_items_children_children_children_children_chil
   level: number;
   name: string;
   page: MenuDetails_menu_items_children_children_children_children_children_children_page | null;
-  sortOrder: number | null;
   url: string | null;
 }
 
@@ -152,7 +151,6 @@ export interface MenuDetails_menu_items_children_children_children_children_chil
   level: number;
   name: string;
   page: MenuDetails_menu_items_children_children_children_children_children_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuDetails_menu_items_children_children_children_children_children_children | null)[] | null;
 }
@@ -165,7 +163,6 @@ export interface MenuDetails_menu_items_children_children_children_children {
   level: number;
   name: string;
   page: MenuDetails_menu_items_children_children_children_children_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuDetails_menu_items_children_children_children_children_children | null)[] | null;
 }
@@ -178,7 +175,6 @@ export interface MenuDetails_menu_items_children_children_children {
   level: number;
   name: string;
   page: MenuDetails_menu_items_children_children_children_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuDetails_menu_items_children_children_children_children | null)[] | null;
 }
@@ -191,7 +187,6 @@ export interface MenuDetails_menu_items_children_children {
   level: number;
   name: string;
   page: MenuDetails_menu_items_children_children_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuDetails_menu_items_children_children_children | null)[] | null;
 }
@@ -204,7 +199,6 @@ export interface MenuDetails_menu_items_children {
   level: number;
   name: string;
   page: MenuDetails_menu_items_children_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuDetails_menu_items_children_children | null)[] | null;
 }
@@ -217,7 +211,6 @@ export interface MenuDetails_menu_items {
   level: number;
   name: string;
   page: MenuDetails_menu_items_page | null;
-  sortOrder: number | null;
   url: string | null;
   children: (MenuDetails_menu_items_children | null)[] | null;
 }

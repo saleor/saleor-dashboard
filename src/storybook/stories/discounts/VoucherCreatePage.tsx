@@ -28,7 +28,7 @@ storiesOf("Views / Discounts / Voucher create", module)
         "code",
         "discountType",
         "endDate",
-        "minAmountSpent",
+        "minSpent",
         "name",
         "startDate",
         "type",

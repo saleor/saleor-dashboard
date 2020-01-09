@@ -93,7 +93,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                       <Typography color={"textSecondary"}>
                         {maybe(() =>
                           variant.attributes
-                            .map(attribute => attribute.value.name)
+                            .map(attribute => attribute.values[0].name)
                             .join(" / ")
                         )}
                       </Typography>

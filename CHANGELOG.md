@@ -23,6 +23,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Move mutation state to mutation - #297 by @dominik-zeglen
 - Add table sorting - #292 by @dominik-zeglen
 - Unify dialog handling - #296 by @dominik-zeglen
+- Stop using deprecated fields - #357 by @dominik-zeglen
 
 ## 2.0.0
 

@@ -54,8 +54,6 @@ const attributeList = gql`
   ${pageInfoFragment}
   query AttributeList(
     $filter: AttributeFilterInput
-    $inCategory: ID
-    $inCollection: ID
     $before: String
     $after: String
     $first: Int
@@ -64,8 +62,6 @@ const attributeList = gql`
   ) {
     attributes(
       filter: $filter
-      inCategory: $inCategory
-      inCollection: $inCollection
       before: $before
       after: $after
       first: $first

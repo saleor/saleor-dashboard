@@ -20,7 +20,7 @@ export interface VoucherCreate_voucherCreate_voucher_countries {
   country: string;
 }
 
-export interface VoucherCreate_voucherCreate_voucher_minAmountSpent {
+export interface VoucherCreate_voucherCreate_voucher_minSpent {
   __typename: "Money";
   currency: string;
   amount: number;
@@ -36,7 +36,7 @@ export interface VoucherCreate_voucherCreate_voucher {
   discountValueType: DiscountValueTypeEnum;
   discountValue: number;
   countries: (VoucherCreate_voucherCreate_voucher_countries | null)[] | null;
-  minAmountSpent: VoucherCreate_voucherCreate_voucher_minAmountSpent | null;
+  minSpent: VoucherCreate_voucherCreate_voucher_minSpent | null;
   minCheckoutItemsQuantity: number | null;
 }
 

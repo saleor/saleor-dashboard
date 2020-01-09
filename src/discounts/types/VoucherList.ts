@@ -14,7 +14,7 @@ export interface VoucherList_vouchers_edges_node_countries {
   country: string;
 }
 
-export interface VoucherList_vouchers_edges_node_minAmountSpent {
+export interface VoucherList_vouchers_edges_node_minSpent {
   __typename: "Money";
   currency: string;
   amount: number;
@@ -30,7 +30,7 @@ export interface VoucherList_vouchers_edges_node {
   discountValueType: DiscountValueTypeEnum;
   discountValue: number;
   countries: (VoucherList_vouchers_edges_node_countries | null)[] | null;
-  minAmountSpent: VoucherList_vouchers_edges_node_minAmountSpent | null;
+  minSpent: VoucherList_vouchers_edges_node_minSpent | null;
   minCheckoutItemsQuantity: number | null;
 }
 
