@@ -24,8 +24,6 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { IFilter } from "@saleor/components/Filter";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import VoucherListPage from "../../components/VoucherListPage";
 import { TypedVoucherBulkDelete } from "../../mutations";
@@ -46,7 +44,6 @@ import {
   getFilterVariables,
   saveFilterTab,
   getFilterQueryParam,
-  VoucherFilterKeys,
   getFilterOpts
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
