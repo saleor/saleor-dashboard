@@ -1,14 +1,11 @@
-import { IntlShape } from "react-intl";
-
 import {
   ProductTypeFilterInput,
   ProductTypeConfigurable,
   ProductTypeEnum
 } from "@saleor/types/globalTypes";
-import { IFilterElement, IFilter } from "@saleor/components/Filter";
+import { IFilterElement } from "@saleor/components/Filter";
 import { maybe, findValueInEnum } from "@saleor/misc";
-import { createOptionsField } from "@saleor/utils/filters/fields";
-import { commonMessages } from "@saleor/intl";
+import { ProductTypeFilterKeys } from "@saleor/productTypes/components/ProductTypeListPage";
 import {
   createFilterTabUtils,
   createFilterUtils
@@ -19,14 +16,8 @@ import {
   ProductTypeListUrlQueryParams
 } from "../../urls";
 import { ProductTypeListFilterOpts } from "../../types";
-import messages from "./messages";
 
 export const PRODUCT_TYPE_FILTERS_KEY = "productTypeFilters";
-
-export enum ProductTypeFilterKeys {
-  configurable = "configurable",
-  type = "type"
-}
 
 export function getFilterOpts(
   params: ProductTypeListUrlFilters
@@ -43,52 +34,6 @@ export function getFilterOpts(
       value: maybe(() => findValueInEnum(params.type, ProductTypeEnum))
     }
   };
-}
-
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: ProductTypeListFilterOpts
-): IFilter<ProductTypeFilterKeys> {
-  return [
-    {
-      ...createOptionsField(
-        ProductTypeFilterKeys.configurable,
-        intl.formatMessage(messages.configurable),
-        [opts.configurable.value],
-        false,
-        [
-          {
-            label: intl.formatMessage(commonMessages.yes),
-            value: ProductTypeConfigurable.CONFIGURABLE
-          },
-          {
-            label: intl.formatMessage(commonMessages.no),
-            value: ProductTypeConfigurable.SIMPLE
-          }
-        ]
-      ),
-      active: opts.configurable.active
-    },
-    {
-      ...createOptionsField(
-        ProductTypeFilterKeys.type,
-        intl.formatMessage(messages.type),
-        [opts.type.value],
-        false,
-        [
-          {
-            label: intl.formatMessage(messages.digital),
-            value: ProductTypeEnum.DIGITAL
-          },
-          {
-            label: intl.formatMessage(messages.shippable),
-            value: ProductTypeEnum.SHIPPABLE
-          }
-        ]
-      ),
-      active: opts.type.active
-    }
-  ];
 }
 
 export function getFilterVariables(
