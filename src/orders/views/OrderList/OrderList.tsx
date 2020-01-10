@@ -209,7 +209,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
                 </Button>
               }
               onSearchChange={handleSearchChange}
-              onFilterChange={filter => changeFilters(filter)}
+              onFilterChange={changeFilters}
               onTabSave={() => openModal("save-search")}
               onTabDelete={() => openModal("delete-search")}
               onTabChange={handleTabChange}
