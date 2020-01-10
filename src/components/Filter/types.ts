@@ -2,6 +2,7 @@ import { FetchMoreProps } from "@saleor/types";
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 
 export enum FieldType {
+  boolean,
   date,
   dateTime,
   number,

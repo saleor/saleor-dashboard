@@ -79,3 +79,29 @@ export function createTextField<T extends string>(
     value: [defaultValue]
   };
 }
+
+export function createBooleanField<T extends string>(
+  name: T,
+  label: string,
+  defaultValue: boolean,
+  labels: Record<"positive" | "negative", string>
+): IFilterElement<T> {
+  return {
+    active: false,
+    label,
+    multiple: false,
+    name,
+    options: [
+      {
+        label: labels.positive,
+        value: true.toString()
+      },
+      {
+        label: labels.negative,
+        value: false.toString()
+      }
+    ],
+    type: FieldType.boolean,
+    value: [defaultValue.toString()]
+  };
+}
