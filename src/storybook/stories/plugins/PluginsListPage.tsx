@@ -2,7 +2,11 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
-import { pageListProps, sortPageProps } from "../../../fixtures";
+import {
+  pageListProps,
+  sortPageProps,
+  filterPageProps
+} from "../../../fixtures";
 import PluginsListPage, {
   PluginsListPageProps
 } from "../../../plugins/components/PluginsListPage";
@@ -12,6 +16,13 @@ import Decorator from "../../Decorator";
 const props: PluginsListPageProps = {
   ...pageListProps.default,
   ...sortPageProps,
+  ...filterPageProps,
+  filterOpts: {
+    isActive: {
+      active: false,
+      value: true
+    }
+  },
   onBack: () => undefined,
   plugins: pluginList,
   sort: {
