@@ -1,10 +1,10 @@
-import { IntlShape } from "react-intl";
-
 import { OrderDraftFilterInput } from "@saleor/types/globalTypes";
 import { maybe } from "@saleor/misc";
-import { OrderDraftListFilterOpts } from "@saleor/orders/types";
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
-import { createTextField, createDateField } from "@saleor/utils/filters/fields";
+import { IFilterElement } from "@saleor/components/Filter";
+import {
+  OrderDraftFilterKeys,
+  OrderDraftListFilterOpts
+} from "@saleor/orders/components/OrderDraftListPage";
 import {
   OrderDraftListUrlFilters,
   OrderDraftListUrlFiltersEnum,
@@ -14,14 +14,8 @@ import {
   createFilterTabUtils,
   createFilterUtils
 } from "../../../utils/filters";
-import messages from "./messages";
 
 export const ORDER_DRAFT_FILTERS_KEY = "orderDraftFilters";
-
-export enum OrderDraftFilterKeys {
-  created = "created",
-  customer = "customer"
-}
 
 export function getFilterOpts(
   params: OrderDraftListUrlFilters
@@ -45,30 +39,6 @@ export function getFilterOpts(
       value: params.customer
     }
   };
-}
-
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: OrderDraftListFilterOpts
-): IFilter<OrderDraftFilterKeys> {
-  return [
-    {
-      ...createDateField(
-        OrderDraftFilterKeys.created,
-        intl.formatMessage(messages.created),
-        opts.created.value
-      ),
-      active: opts.created.active
-    },
-    {
-      ...createTextField(
-        OrderDraftFilterKeys.customer,
-        intl.formatMessage(messages.customer),
-        opts.customer.value
-      ),
-      active: opts.customer.active
-    }
-  ];
 }
 
 export function getFilterVariables(
