@@ -1,19 +1,14 @@
-import { IntlShape } from "react-intl";
-
 import {
   VoucherFilterInput,
   DiscountStatusEnum,
-  DiscountValueTypeEnum,
   VoucherDiscountType
 } from "@saleor/types/globalTypes";
 import { maybe, findValueInEnum, joinDateTime } from "@saleor/misc";
-import { VoucherListFilterOpts } from "@saleor/discounts/types";
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
+import { IFilterElement } from "@saleor/components/Filter";
 import {
-  createDateField,
-  createOptionsField,
-  createNumberField
-} from "@saleor/utils/filters/fields";
+  VoucherListFilterOpts,
+  VoucherFilterKeys
+} from "@saleor/discounts/components/VoucherListPage";
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -24,16 +19,8 @@ import {
   VoucherListUrlFiltersEnum,
   VoucherListUrlQueryParams
 } from "../../urls";
-import messages from "./messages";
 
 export const VOUCHER_FILTERS_KEY = "voucherFilters";
-
-export enum VoucherFilterKeys {
-  saleType = "saleType",
-  started = "started",
-  status = "status",
-  timesUsed = "timesUsed"
-}
 
 export function getFilterOpts(
   params: VoucherListUrlFilters
@@ -88,72 +75,6 @@ export function getFilterOpts(
       }
     }
   };
-}
-
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: VoucherListFilterOpts
-): IFilter<VoucherFilterKeys> {
-  return [
-    {
-      ...createDateField(
-        VoucherFilterKeys.started,
-        intl.formatMessage(messages.started),
-        opts.started.value
-      ),
-      active: opts.started.active
-    },
-    {
-      ...createNumberField(
-        VoucherFilterKeys.timesUsed,
-        intl.formatMessage(messages.timesUsed),
-        opts.timesUsed.value
-      ),
-      active: opts.timesUsed.active
-    },
-    {
-      ...createOptionsField(
-        VoucherFilterKeys.status,
-        intl.formatMessage(messages.status),
-        opts.status.value,
-        true,
-        [
-          {
-            label: intl.formatMessage(messages.active),
-            value: DiscountStatusEnum.ACTIVE
-          },
-          {
-            label: intl.formatMessage(messages.expired),
-            value: DiscountStatusEnum.EXPIRED
-          },
-          {
-            label: intl.formatMessage(messages.scheduled),
-            value: DiscountStatusEnum.SCHEDULED
-          }
-        ]
-      ),
-      active: opts.status.active
-    },
-    {
-      ...createOptionsField(
-        VoucherFilterKeys.saleType,
-        intl.formatMessage(messages.type),
-        opts.saleType.value,
-        false,
-        [
-          {
-            label: intl.formatMessage(messages.fixed),
-            value: DiscountValueTypeEnum.FIXED
-          },
-          {
-            label: intl.formatMessage(messages.percentage),
-            value: DiscountValueTypeEnum.PERCENTAGE
-          }
-        ]
-      ),
-      active: opts.saleType.active
-    }
-  ];
 }
 
 export function getFilterVariables(
