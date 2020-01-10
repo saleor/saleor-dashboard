@@ -15,13 +15,13 @@ import {
   SortPage
 } from "@saleor/types";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
-import {
-  StaffFilterKeys,
-  createFilterStructure
-} from "@saleor/staff/views/StaffList/filter";
-import { StaffListFilterOpts } from "@saleor/staff/types";
 import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 import StaffList from "../StaffList/StaffList";
+import {
+  createFilterStructure,
+  StaffFilterKeys,
+  StaffListFilterOpts
+} from "./filters";
 
 export interface StaffListPageProps
   extends ListProps,

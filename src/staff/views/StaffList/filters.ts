@@ -1,9 +1,10 @@
-import { IntlShape } from "react-intl";
-
 import { StaffUserInput, StaffMemberStatus } from "@saleor/types/globalTypes";
 import { maybe, findValueInEnum } from "@saleor/misc";
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
-import { createOptionsField } from "@saleor/utils/filters/fields";
+import { IFilterElement } from "@saleor/components/Filter";
+import {
+  StaffListFilterOpts,
+  StaffFilterKeys
+} from "@saleor/staff/components/StaffListPage";
 import {
   createFilterTabUtils,
   createFilterUtils
@@ -13,14 +14,8 @@ import {
   StaffListUrlFiltersEnum,
   StaffListUrlQueryParams
 } from "../../urls";
-import { StaffListFilterOpts } from "../../types";
-import messages from "./messages";
 
 export const STAFF_FILTERS_KEY = "staffFilters";
-
-export enum StaffFilterKeys {
-  status = "status"
-}
 
 export function getFilterOpts(
   params: StaffListUrlFilters
@@ -31,33 +26,6 @@ export function getFilterOpts(
       value: maybe(() => findValueInEnum(params.status, StaffMemberStatus))
     }
   };
-}
-
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: StaffListFilterOpts
-): IFilter<StaffFilterKeys> {
-  return [
-    {
-      ...createOptionsField(
-        StaffFilterKeys.status,
-        intl.formatMessage(messages.status),
-        [opts.status.value],
-        false,
-        [
-          {
-            label: intl.formatMessage(messages.active),
-            value: StaffMemberStatus.ACTIVE
-          },
-          {
-            label: intl.formatMessage(messages.deactivated),
-            value: StaffMemberStatus.DEACTIVATED
-          }
-        ]
-      ),
-      active: opts.status.active
-    }
-  ];
 }
 
 export function getFilterVariables(
