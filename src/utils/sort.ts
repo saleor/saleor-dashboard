@@ -63,7 +63,7 @@ export function asSortParams<
 
 interface SortingInput<T extends string> {
   direction: OrderDirection;
-  field?: T | null;
+  field: T;
 }
 type GetSortQueryField<TUrlField extends string, TSortField extends string> = (
   sort: TUrlField
@@ -79,8 +79,16 @@ export function createGetSortQueryVariables<
 >(
   getSortQueryField: GetSortQueryField<TUrlField, TSortField>
 ): GetSortQueryVariables<TSortField, TParams> {
-  return (params: TParams) => ({
-    direction: getOrderDirection(params.asc),
-    field: getSortQueryField(params.sort)
-  });
+  return (params: TParams) => {
+    const field = getSortQueryField(params.sort);
+
+    if (!!field) {
+      return {
+        direction: getOrderDirection(params.asc),
+        field
+      };
+    }
+
+    return undefined;
+  };
 }
