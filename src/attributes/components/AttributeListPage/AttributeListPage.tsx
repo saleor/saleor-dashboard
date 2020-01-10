@@ -7,8 +7,6 @@ import AppHeader from "@saleor/components/AppHeader";
 import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
 import { AttributeListUrlSortField } from "@saleor/attributes/urls";
-import { AttributeFilterKeys } from "@saleor/attributes/views/AttributeList/filters";
-import { AttributeListFilterOpts } from "@saleor/attributes/types";
 import Container from "../../../components/Container";
 import PageHeader from "../../../components/PageHeader";
 import {
@@ -20,7 +18,11 @@ import {
 } from "../../../types";
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 import AttributeList from "../AttributeList/AttributeList";
-import { createFilterStructure } from "../../views/AttributeList/filters";
+import {
+  createFilterStructure,
+  AttributeListFilterOpts,
+  AttributeFilterKeys
+} from "./filters";
 
 export interface AttributeListPageProps
   extends PageListProps,

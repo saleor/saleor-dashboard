@@ -1,10 +1,10 @@
-import { IntlShape } from "react-intl";
-
 import { AttributeFilterInput } from "@saleor/types/globalTypes";
 import { maybe, parseBoolean } from "@saleor/misc";
-import { createBooleanField } from "@saleor/utils/filters/fields";
-import { commonMessages } from "@saleor/intl";
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
+import { IFilterElement } from "@saleor/components/Filter";
+import {
+  AttributeListFilterOpts,
+  AttributeFilterKeys
+} from "@saleor/attributes/components/AttributeListPage";
 import {
   createFilterTabUtils,
   createFilterUtils
@@ -14,19 +14,8 @@ import {
   AttributeListUrlFiltersEnum,
   AttributeListUrlQueryParams
 } from "../../urls";
-import { AttributeListFilterOpts } from "../../types";
-import messages from "./messages";
 
 export const PRODUCT_FILTERS_KEY = "productFilters";
-
-export enum AttributeFilterKeys {
-  availableInGrid = "availableInGrud",
-  filterableInDashboard = "filterableInDashboard",
-  filterableInStorefront = "filterableInStorefront",
-  isVariantOnly = "isVariantOnly",
-  valueRequired = "valueRequired",
-  visibleInStorefront = "visibleInStorefront"
-}
 
 export function getFilterOpts(
   params: AttributeListUrlFilters
@@ -57,86 +46,6 @@ export function getFilterOpts(
       value: maybe(() => parseBoolean(params.visibleInStorefront, true))
     }
   };
-}
-
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: AttributeListFilterOpts
-): IFilter<AttributeFilterKeys> {
-  return [
-    {
-      ...createBooleanField(
-        AttributeFilterKeys.availableInGrid,
-        intl.formatMessage(messages.availableInGrid),
-        opts.availableInGrid.value,
-        {
-          negative: intl.formatMessage(commonMessages.no),
-          positive: intl.formatMessage(commonMessages.yes)
-        }
-      ),
-      active: opts.availableInGrid.active
-    },
-    {
-      ...createBooleanField(
-        AttributeFilterKeys.filterableInDashboard,
-        intl.formatMessage(messages.filterableInDashboard),
-        opts.filterableInDashboard.value,
-        {
-          negative: intl.formatMessage(commonMessages.no),
-          positive: intl.formatMessage(commonMessages.yes)
-        }
-      ),
-      active: opts.filterableInDashboard.active
-    },
-    {
-      ...createBooleanField(
-        AttributeFilterKeys.filterableInStorefront,
-        intl.formatMessage(messages.filterableInStorefront),
-        opts.filterableInStorefront.value,
-        {
-          negative: intl.formatMessage(commonMessages.no),
-          positive: intl.formatMessage(commonMessages.yes)
-        }
-      ),
-      active: opts.filterableInStorefront.active
-    },
-    {
-      ...createBooleanField(
-        AttributeFilterKeys.isVariantOnly,
-        intl.formatMessage(messages.isVariantOnly),
-        opts.isVariantOnly.value,
-        {
-          negative: intl.formatMessage(commonMessages.no),
-          positive: intl.formatMessage(commonMessages.yes)
-        }
-      ),
-      active: opts.isVariantOnly.active
-    },
-    {
-      ...createBooleanField(
-        AttributeFilterKeys.valueRequired,
-        intl.formatMessage(messages.valueRequired),
-        opts.valueRequired.value,
-        {
-          negative: intl.formatMessage(commonMessages.no),
-          positive: intl.formatMessage(commonMessages.yes)
-        }
-      ),
-      active: opts.valueRequired.active
-    },
-    {
-      ...createBooleanField(
-        AttributeFilterKeys.visibleInStorefront,
-        intl.formatMessage(messages.visibleInStorefront),
-        opts.visibleInStorefront.value,
-        {
-          negative: intl.formatMessage(commonMessages.no),
-          positive: intl.formatMessage(commonMessages.yes)
-        }
-      ),
-      active: opts.visibleInStorefront.active
-    }
-  ];
 }
 
 export function getFilterVariables(
