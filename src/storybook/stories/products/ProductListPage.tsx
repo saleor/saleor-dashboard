@@ -7,7 +7,6 @@ import { products as productListFixture } from "@saleor/products/fixtures";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { attributes } from "@saleor/productTypes/fixtures";
 import { ListViews } from "@saleor/types";
-import { ProductStatus } from "@saleor/products/types";
 import { StockAvailability } from "@saleor/types/globalTypes";
 import {
   fetchMoreProps,
@@ -17,7 +16,8 @@ import {
   sortPageProps
 } from "../../../fixtures";
 import ProductListPage, {
-  ProductListPageProps
+  ProductListPageProps,
+  ProductStatus
 } from "../../../products/components/ProductListPage";
 import Decorator from "../../Decorator";
 

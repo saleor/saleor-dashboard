@@ -24,13 +24,13 @@ import {
   SortPage
 } from "@saleor/types";
 import FilterBar from "@saleor/components/FilterBar";
-import { ProductListFilterOpts } from "@saleor/products/types";
 import { ProductListUrlSortField } from "../../urls";
+import ProductList from "../ProductList";
 import {
   createFilterStructure,
-  ProductFilterKeys
-} from "../../views/ProductList/filters";
-import ProductList from "../ProductList";
+  ProductFilterKeys,
+  ProductListFilterOpts
+} from "./filters";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
