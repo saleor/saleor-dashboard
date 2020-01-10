@@ -14,14 +14,14 @@ import {
   SortPage
 } from "@saleor/types";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
-import {
-  OrderFilterKeys,
-  createFilterStructure
-} from "@saleor/orders/views/OrderList/filters";
 import FilterBar from "@saleor/components/FilterBar";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
 import OrderList from "../OrderList";
-import { OrderListFilterOpts } from "../../types";
+import {
+  createFilterStructure,
+  OrderListFilterOpts,
+  OrderFilterKeys
+} from "./filters";
 
 export interface OrderListPageProps
   extends PageListProps,
