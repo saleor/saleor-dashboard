@@ -15,13 +15,13 @@ import {
   FilterPageProps
 } from "@saleor/types";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
-import {
-  SaleFilterKeys,
-  createFilterStructure
-} from "@saleor/discounts/views/SaleList/filter";
-import { SaleListFilterOpts } from "@saleor/discounts/types";
 import { SaleList_sales_edges_node } from "../../types/SaleList";
 import SaleList from "../SaleList";
+import {
+  SaleFilterKeys,
+  SaleListFilterOpts,
+  createFilterStructure
+} from "./filters";
 
 export interface SaleListPageProps
   extends PageListProps,

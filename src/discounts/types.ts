@@ -1,15 +1,8 @@
-import { FilterOpts, MinMax } from "@saleor/types";
 import {
-  DiscountStatusEnum,
-  DiscountValueTypeEnum,
-  VoucherDiscountType
+  VoucherDiscountType,
+  DiscountStatusEnum
 } from "@saleor/types/globalTypes";
-
-export interface SaleListFilterOpts {
-  saleType: FilterOpts<DiscountValueTypeEnum>;
-  started: FilterOpts<MinMax>;
-  status: FilterOpts<DiscountStatusEnum[]>;
-}
+import { MinMax, FilterOpts } from "@saleor/types";
 
 export interface VoucherListFilterOpts {
   saleType: FilterOpts<VoucherDiscountType[]>;
