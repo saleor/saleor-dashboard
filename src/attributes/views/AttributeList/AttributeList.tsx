@@ -26,6 +26,7 @@ import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import useShop from "@saleor/hooks/useShop";
 import { PAGINATE_BY } from "../../../config";
 import useBulkActions from "../../../hooks/useBulkActions";
 import { maybe } from "../../../misc";
@@ -52,6 +53,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
   const notify = useNotifier();
+  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -138,6 +140,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, attributeListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <AttributeBulkDeleteMutation onCompleted={handleBulkDelete}>
@@ -147,6 +150,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
             attributes={maybe(() =>
               data.attributes.edges.map(edge => edge.node)
             )}
+            currencySymbol={currencySymbol}
             currentTab={currentTab}
             disabled={loading || attributeBulkDeleteOpts.loading}
             filterOpts={getFilterOpts(params)}
