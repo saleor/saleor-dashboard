@@ -147,7 +147,27 @@ export function getFilterVariables(
       params.availableInGrid !== undefined
         ? parseBoolean(params.availableInGrid, false)
         : undefined,
-    search: params.query
+    filterableInDashboard:
+      params.filterableInDashboard !== undefined
+        ? parseBoolean(params.filterableInDashboard, false)
+        : undefined,
+    filterableInStorefront:
+      params.filterableInStorefront !== undefined
+        ? parseBoolean(params.filterableInStorefront, false)
+        : undefined,
+    isVariantOnly:
+      params.isVariantOnly !== undefined
+        ? parseBoolean(params.isVariantOnly, false)
+        : undefined,
+    search: params.query,
+    valueRequired:
+      params.valueRequired !== undefined
+        ? parseBoolean(params.valueRequired, false)
+        : undefined,
+    visibleInStorefront:
+      params.visibleInStorefront !== undefined
+        ? parseBoolean(params.visibleInStorefront, false)
+        : undefined
   };
 }
 
