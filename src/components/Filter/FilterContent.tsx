@@ -1,9 +1,11 @@
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+import Radio from "@material-ui/core/Radio";
 import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import React from "react";
 import { FormattedMessage, useIntl, IntlShape } from "react-intl";
+import classNames from "classnames";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
@@ -67,6 +69,9 @@ const useStyles = makeStyles(
     option: {
       left: -theme.spacing(0.5),
       position: "relative"
+    },
+    optionRadio: {
+      left: -theme.spacing(0.25)
     }
   }),
   { name: "FilterContent" }
@@ -371,6 +376,38 @@ const FilterContent: React.FC<FilterContentProps> = ({
                           })
                         }
                       />
+                    ))}
+                  {filterField.type === FieldType.boolean &&
+                    filterField.options.map(option => (
+                      <div
+                        className={classNames(
+                          classes.option,
+                          classes.optionRadio
+                        )}
+                        key={option.value}
+                      >
+                        <FormControlLabel
+                          control={
+                            <Radio
+                              checked={filterField.value[0] === option.value}
+                              color="primary"
+                            />
+                          }
+                          label={option.label}
+                          name={filterField.name}
+                          onChange={() =>
+                            onFilterPropertyChange({
+                              payload: {
+                                name: filterField.name,
+                                update: {
+                                  value: [option.value]
+                                }
+                              },
+                              type: "set-property"
+                            })
+                          }
+                        />
+                      </div>
                     ))}
                 </div>
               )}
