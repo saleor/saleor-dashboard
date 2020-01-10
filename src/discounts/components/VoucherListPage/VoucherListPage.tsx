@@ -15,13 +15,13 @@ import {
   FilterPageProps
 } from "@saleor/types";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
-import {
-  createFilterStructure,
-  VoucherFilterKeys
-} from "@saleor/discounts/views/VoucherList/filter";
-import { VoucherListFilterOpts } from "@saleor/discounts/types";
 import { VoucherList_vouchers_edges_node } from "../../types/VoucherList";
 import VoucherList from "../VoucherList";
+import {
+  VoucherFilterKeys,
+  VoucherListFilterOpts,
+  createFilterStructure
+} from "./filters";
 
 export interface VoucherListPageProps
   extends PageListProps,

@@ -15,14 +15,14 @@ import {
   FilterPageProps
 } from "@saleor/types";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
-import {
-  OrderDraftFilterKeys,
-  createFilterStructure
-} from "@saleor/orders/views/OrderDraftList/filter";
-import { OrderDraftListFilterOpts } from "@saleor/orders/types";
 import FilterBar from "@saleor/components/FilterBar";
 import OrderDraftList from "../OrderDraftList";
 import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
+import {
+  OrderDraftListFilterOpts,
+  OrderDraftFilterKeys,
+  createFilterStructure
+} from "./filters";
 
 export interface OrderDraftListPageProps
   extends PageListProps,

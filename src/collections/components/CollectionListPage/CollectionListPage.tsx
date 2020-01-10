@@ -15,13 +15,13 @@ import {
   SortPage
 } from "@saleor/types";
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
-import {
-  CollectionFilterKeys,
-  createFilterStructure
-} from "@saleor/collections/views/CollectionList/filter";
-import { CollectionListFilterOpts } from "@saleor/collections/types";
 import { CollectionList_collections_edges_node } from "../../types/CollectionList";
 import CollectionList from "../CollectionList/CollectionList";
+import {
+  CollectionFilterKeys,
+  CollectionListFilterOpts,
+  createFilterStructure
+} from "./filters";
 
 export interface CollectionListPageProps
   extends PageListProps,

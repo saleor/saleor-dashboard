@@ -1,12 +1,10 @@
-import { IntlShape } from "react-intl";
-
 import { maybe, findValueInEnum } from "@saleor/misc";
 import {
-  createOptionsField,
-  createPriceField
-} from "@saleor/utils/filters/fields";
-import { ProductStatus, ProductListFilterOpts } from "@saleor/products/types";
-import { IFilterElement, IFilter } from "../../../components/Filter";
+  ProductFilterKeys,
+  ProductListFilterOpts,
+  ProductStatus
+} from "@saleor/products/components/ProductListPage";
+import { IFilterElement } from "../../../components/Filter";
 import {
   ProductFilterInput,
   StockAvailability
@@ -20,15 +18,8 @@ import {
   ProductListUrlFiltersEnum,
   ProductListUrlQueryParams
 } from "../../urls";
-import messages from "./messages";
 
 export const PRODUCT_FILTERS_KEY = "productFilters";
-
-export enum ProductFilterKeys {
-  status = "status",
-  price = "price",
-  stock = "stock"
-}
 
 export function getFilterOpts(
   params: ProductListUrlFilters
@@ -54,60 +45,6 @@ export function getFilterOpts(
       value: maybe(() => findValueInEnum(params.stockStatus, StockAvailability))
     }
   };
-}
-
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: ProductListFilterOpts
-): IFilter<ProductFilterKeys> {
-  return [
-    {
-      ...createOptionsField(
-        ProductFilterKeys.status,
-        intl.formatMessage(messages.visibility),
-        [opts.status.value],
-        false,
-        [
-          {
-            label: intl.formatMessage(messages.visible),
-            value: ProductStatus.PUBLISHED
-          },
-          {
-            label: intl.formatMessage(messages.hidden),
-            value: ProductStatus.HIDDEN
-          }
-        ]
-      ),
-      active: opts.status.active
-    },
-    {
-      ...createOptionsField(
-        ProductFilterKeys.stock,
-        intl.formatMessage(messages.quantity),
-        [opts.stockStatus.value],
-        false,
-        [
-          {
-            label: intl.formatMessage(messages.available),
-            value: StockAvailability.IN_STOCK
-          },
-          {
-            label: intl.formatMessage(messages.outOfStock),
-            value: StockAvailability.OUT_OF_STOCK
-          }
-        ]
-      ),
-      active: opts.stockStatus.active
-    },
-    {
-      ...createPriceField(
-        ProductFilterKeys.price,
-        intl.formatMessage(messages.price),
-        opts.price.value
-      ),
-      active: opts.price.active
-    }
-  ];
 }
 
 export function getFilterVariables(

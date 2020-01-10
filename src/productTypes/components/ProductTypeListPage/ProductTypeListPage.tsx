@@ -10,11 +10,6 @@ import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import {
-  ProductTypeFilterKeys,
-  createFilterStructure
-} from "@saleor/productTypes/views/ProductTypeList/filter";
-import { ProductTypeListFilterOpts } from "@saleor/productTypes/types";
-import {
   ListActions,
   PageListProps,
   FilterPageProps,
@@ -23,6 +18,11 @@ import {
 } from "../../../types";
 import { ProductTypeList_productTypes_edges_node } from "../../types/ProductTypeList";
 import ProductTypeList from "../ProductTypeList";
+import {
+  createFilterStructure,
+  ProductTypeFilterKeys,
+  ProductTypeListFilterOpts
+} from "./filters";
 
 export interface ProductTypeListPageProps
   extends PageListProps,

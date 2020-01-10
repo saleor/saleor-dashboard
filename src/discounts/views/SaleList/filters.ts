@@ -1,17 +1,14 @@
-import { IntlShape } from "react-intl";
-
 import {
-  SaleFilterInput,
   DiscountStatusEnum,
-  DiscountValueTypeEnum
+  DiscountValueTypeEnum,
+  SaleFilterInput
 } from "@saleor/types/globalTypes";
 import { maybe, findValueInEnum, joinDateTime } from "@saleor/misc";
-import { SaleListFilterOpts } from "@saleor/discounts/types";
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
+import { IFilterElement } from "@saleor/components/Filter";
 import {
-  createDateField,
-  createOptionsField
-} from "@saleor/utils/filters/fields";
+  SaleListFilterOpts,
+  SaleFilterKeys
+} from "@saleor/discounts/components/SaleListPage";
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -22,15 +19,8 @@ import {
   SaleListUrlFiltersEnum,
   SaleListUrlQueryParams
 } from "../../urls";
-import messages from "./messages";
 
 export const SALE_FILTERS_KEY = "saleFilters";
-
-export enum SaleFilterKeys {
-  saleType = "saleType",
-  started = "started",
-  status = "status"
-}
 
 export function getFilterOpts(params: SaleListUrlFilters): SaleListFilterOpts {
   return {
@@ -64,64 +54,6 @@ export function getFilterOpts(params: SaleListUrlFilters): SaleListFilterOpts {
       )
     }
   };
-}
-
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: SaleListFilterOpts
-): IFilter<SaleFilterKeys> {
-  return [
-    {
-      ...createDateField(
-        SaleFilterKeys.started,
-        intl.formatMessage(messages.started),
-        opts.started.value
-      ),
-      active: opts.started.active
-    },
-    {
-      ...createOptionsField(
-        SaleFilterKeys.status,
-        intl.formatMessage(messages.status),
-        opts.status.value,
-        true,
-        [
-          {
-            label: intl.formatMessage(messages.active),
-            value: DiscountStatusEnum.ACTIVE
-          },
-          {
-            label: intl.formatMessage(messages.expired),
-            value: DiscountStatusEnum.EXPIRED
-          },
-          {
-            label: intl.formatMessage(messages.scheduled),
-            value: DiscountStatusEnum.SCHEDULED
-          }
-        ]
-      ),
-      active: opts.status.active
-    },
-    {
-      ...createOptionsField(
-        SaleFilterKeys.saleType,
-        intl.formatMessage(messages.type),
-        [opts.saleType.value],
-        false,
-        [
-          {
-            label: intl.formatMessage(messages.fixed),
-            value: DiscountValueTypeEnum.FIXED
-          },
-          {
-            label: intl.formatMessage(messages.percentage),
-            value: DiscountValueTypeEnum.PERCENTAGE
-          }
-        ]
-      ),
-      active: opts.saleType.active
-    }
-  ];
 }
 
 export function getFilterVariables(

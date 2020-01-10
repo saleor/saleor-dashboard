@@ -45,7 +45,7 @@ import {
   saveFilterTab,
   getFilterQueryParam,
   getFilterOpts
-} from "./filter";
+} from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface VoucherListProps {

@@ -14,14 +14,14 @@ import {
   FilterPageProps
 } from "@saleor/types";
 import { CustomerListUrlSortField } from "@saleor/customers/urls";
-import {
-  CustomerFilterKeys,
-  createFilterStructure
-} from "@saleor/customers/views/CustomerList/filter";
-import { CustomerListFilterOpts } from "@saleor/customers/types";
 import FilterBar from "@saleor/components/FilterBar";
 import CustomerList from "../CustomerList/CustomerList";
 import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
+import {
+  CustomerFilterKeys,
+  CustomerListFilterOpts,
+  createFilterStructure
+} from "./filters";
 
 export interface CustomerListPageProps
   extends PageListProps,
