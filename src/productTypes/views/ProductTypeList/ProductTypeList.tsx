@@ -21,9 +21,8 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { IFilter } from "@saleor/components/Filter";
-import { getFilterQueryParams } from "@saleor/utils/filters";
 import useShop from "@saleor/hooks/useShop";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import { configurationMenuUrl } from "../../../configuration";
 import { maybe } from "../../../misc";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
@@ -44,7 +43,6 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-  ProductTypeFilterKeys,
   getFilterQueryParam,
   getFilterOpts
 } from "./filter";
@@ -88,37 +86,17 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilters = (filter: IFilter<ProductTypeFilterKeys>) => {
-    reset();
-    navigate(
-      productTypeListUrl({
-        ...params,
-        ...getFilterQueryParams(filter, getFilterQueryParam),
-        activeTab: undefined
-      })
-    );
-  };
-
-  const resetFilters = () => {
-    reset();
-    navigate(
-      productTypeListUrl({
-        asc: params.asc,
-        sort: params.sort
-      })
-    );
-  };
-
-  const handleSearchChange = (query: string) => {
-    reset();
-    navigate(
-      productTypeListUrl({
-        ...params,
-        activeTab: undefined,
-        query
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: productTypeListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductTypeListUrlDialog,

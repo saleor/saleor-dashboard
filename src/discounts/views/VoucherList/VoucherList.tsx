@@ -24,8 +24,7 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { IFilter } from "@saleor/components/Filter";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import VoucherListPage from "../../components/VoucherListPage";
 import { TypedVoucherBulkDelete } from "../../mutations";
 import { useVoucherListQuery } from "../../queries";
@@ -45,7 +44,6 @@ import {
   getFilterVariables,
   saveFilterTab,
   getFilterQueryParam,
-  VoucherFilterKeys,
   getFilterOpts
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
@@ -90,37 +88,17 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilters = (filter: IFilter<VoucherFilterKeys>) => {
-    reset();
-    navigate(
-      voucherListUrl({
-        ...params,
-        ...getFilterQueryParams(filter, getFilterQueryParam),
-        activeTab: undefined
-      })
-    );
-  };
-
-  const resetFilters = () => {
-    reset();
-    navigate(
-      voucherListUrl({
-        asc: params.asc,
-        sort: params.sort
-      })
-    );
-  };
-
-  const handleSearchChange = (query: string) => {
-    reset();
-    navigate(
-      voucherListUrl({
-        ...params,
-        activeTab: undefined,
-        query
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: voucherListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherListUrlDialog,
