@@ -4,25 +4,28 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
-import SearchBar from "@saleor/components/SearchBar";
+import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
 import { AttributeListUrlSortField } from "@saleor/attributes/urls";
+import { AttributeFilterKeys } from "@saleor/attributes/views/AttributeList/filters";
+import { AttributeListFilterOpts } from "@saleor/attributes/types";
 import Container from "../../../components/Container";
 import PageHeader from "../../../components/PageHeader";
 import {
   ListActions,
   PageListProps,
-  SearchPageProps,
+  FilterPageProps,
   TabPageProps,
   SortPage
 } from "../../../types";
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 import AttributeList from "../AttributeList/AttributeList";
+import { createFilterStructure } from "../../views/AttributeList/filters";
 
 export interface AttributeListPageProps
   extends PageListProps,
     ListActions,
-    SearchPageProps,
+    FilterPageProps<AttributeFilterKeys, AttributeListFilterOpts>,
     SortPage<AttributeListUrlSortField>,
     TabPageProps {
   attributes: AttributeList_attributes_edges_node[];
@@ -30,9 +33,12 @@ export interface AttributeListPageProps
 }
 
 const AttributeListPage: React.FC<AttributeListPageProps> = ({
+  currencySymbol,
+  filterOpts,
+  initialSearch,
   onAdd,
   onBack,
-  initialSearch,
+  onFilterChange,
   onSearchChange,
   currentTab,
   onAll,
@@ -43,6 +49,8 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+
+  const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
@@ -58,18 +66,21 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <SearchBar
+        <FilterBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Attributes",
             description: "tab name"
           })}
+          currencySymbol={currencySymbol}
           currentTab={currentTab}
+          filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Attribute"
           })}
           tabs={tabs}
           onAll={onAll}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}
