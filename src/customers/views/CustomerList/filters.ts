@@ -1,12 +1,10 @@
-import { IntlShape } from "react-intl";
-
 import { CustomerFilterInput } from "@saleor/types/globalTypes";
 import { maybe } from "@saleor/misc";
+import { IFilterElement } from "@saleor/components/Filter";
 import {
-  createDateField,
-  createNumberField
-} from "@saleor/utils/filters/fields";
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
+  CustomerFilterKeys,
+  CustomerListFilterOpts
+} from "@saleor/customers/components/CustomerListPage";
 import {
   createFilterTabUtils,
   createFilterUtils
@@ -16,16 +14,8 @@ import {
   CustomerListUrlFiltersEnum,
   CustomerListUrlQueryParams
 } from "../../urls";
-import { CustomerListFilterOpts } from "../../types";
-import messages from "./messages";
 
 export const CUSTOMER_FILTERS_KEY = "customerFilters";
-
-export enum CustomerFilterKeys {
-  joined = "joined",
-  moneySpent = "spent",
-  numberOfOrders = "orders"
-}
 
 export function getFilterOpts(
   params: CustomerListUrlFilters
@@ -71,38 +61,6 @@ export function getFilterOpts(
       }
     }
   };
-}
-
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: CustomerListFilterOpts
-): IFilter<CustomerFilterKeys> {
-  return [
-    {
-      ...createDateField(
-        CustomerFilterKeys.joined,
-        intl.formatMessage(messages.joinDate),
-        opts.joined.value
-      ),
-      active: opts.joined.active
-    },
-    {
-      ...createNumberField(
-        CustomerFilterKeys.moneySpent,
-        intl.formatMessage(messages.moneySpent),
-        opts.moneySpent.value
-      ),
-      active: opts.moneySpent.active
-    },
-    {
-      ...createNumberField(
-        CustomerFilterKeys.numberOfOrders,
-        intl.formatMessage(messages.numberOfOrders),
-        opts.numberOfOrders.value
-      ),
-      active: opts.numberOfOrders.active
-    }
-  ];
 }
 
 export function getFilterVariables(
