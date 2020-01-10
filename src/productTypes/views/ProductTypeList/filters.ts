@@ -5,7 +5,10 @@ import {
 } from "@saleor/types/globalTypes";
 import { IFilterElement } from "@saleor/components/Filter";
 import { maybe, findValueInEnum } from "@saleor/misc";
-import { ProductTypeFilterKeys } from "@saleor/productTypes/components/ProductTypeListPage";
+import {
+  ProductTypeFilterKeys,
+  ProductTypeListFilterOpts
+} from "@saleor/productTypes/components/ProductTypeListPage";
 import {
   createFilterTabUtils,
   createFilterUtils
@@ -15,7 +18,6 @@ import {
   ProductTypeListUrlFiltersEnum,
   ProductTypeListUrlQueryParams
 } from "../../urls";
-import { ProductTypeListFilterOpts } from "../../types";
 
 export const PRODUCT_TYPE_FILTERS_KEY = "productTypeFilters";
 
