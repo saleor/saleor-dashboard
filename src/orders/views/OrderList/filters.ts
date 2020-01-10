@@ -1,16 +1,9 @@
-import { IntlShape } from "react-intl";
-
+import { findInEnum, maybe, findValueInEnum } from "@saleor/misc";
 import {
-  findInEnum,
-  maybe,
-  orderStatusMessages,
-  findValueInEnum
-} from "@saleor/misc";
-import {
-  createDateField,
-  createOptionsField
-} from "@saleor/utils/filters/fields";
-import { IFilter, IFilterElement } from "../../../components/Filter";
+  OrderListFilterOpts,
+  OrderFilterKeys
+} from "@saleor/orders/components/OrderListPage/filters";
+import { IFilterElement } from "../../../components/Filter";
 import {
   OrderFilterInput,
   OrderStatusFilter,
@@ -27,15 +20,8 @@ import {
   OrderListUrlFiltersWithMultipleValuesEnum,
   OrderListUrlQueryParams
 } from "../../urls";
-import { OrderListFilterOpts } from "../../types";
-import messages from "./messages";
 
 export const ORDER_FILTERS_KEY = "orderFilters";
-
-export enum OrderFilterKeys {
-  created = "created",
-  status = "status"
-}
 
 export function getFilterOpts(
   params: OrderListUrlFilters
@@ -67,49 +53,6 @@ export function getFilterOpts(
       )
     }
   };
-}
-
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: OrderListFilterOpts
-): IFilter<OrderFilterKeys> {
-  return [
-    {
-      ...createDateField(
-        OrderFilterKeys.created,
-        intl.formatMessage(messages.placed),
-        opts.created.value
-      ),
-      active: opts.created.active
-    },
-    {
-      ...createOptionsField(
-        OrderFilterKeys.status,
-        intl.formatMessage(messages.status),
-        opts.status.value,
-        true,
-        [
-          {
-            label: intl.formatMessage(orderStatusMessages.cancelled),
-            value: OrderStatusFilter.CANCELED
-          },
-          {
-            label: intl.formatMessage(orderStatusMessages.fulfilled),
-            value: OrderStatusFilter.FULFILLED
-          },
-          {
-            label: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
-            value: OrderStatusFilter.PARTIALLY_FULFILLED
-          },
-          {
-            label: intl.formatMessage(orderStatusMessages.unfulfilled),
-            value: OrderStatusFilter.UNFULFILLED
-          }
-        ]
-      ),
-      active: opts.status.active
-    }
-  ];
 }
 
 export function getFilterVariables(
