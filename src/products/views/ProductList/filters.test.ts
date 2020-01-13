@@ -7,7 +7,6 @@ import {
   ProductStatus
 } from "@saleor/products/components/ProductListPage";
 import { getFilterQueryParams } from "@saleor/utils/filters";
-import { date } from "@saleor/fixtures";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { StockAvailability } from "@saleor/types/globalTypes";
