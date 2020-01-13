@@ -12,7 +12,8 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  dedupeFilter
+  dedupeFilter,
+  getGteLteVariables
 } from "../../../utils/filters";
 import {
   OrderListUrlFilters,
@@ -59,10 +60,10 @@ export function getFilterVariables(
   params: OrderListUrlFilters
 ): OrderFilterInput {
   return {
-    created: {
+    created: getGteLteVariables({
       gte: params.createdFrom,
       lte: params.createdTo
-    },
+    }),
     customer: params.email,
     search: params.query,
     status: maybe(() =>

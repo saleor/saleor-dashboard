@@ -12,7 +12,8 @@ import {
 } from "../../urls";
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  getGteLteVariables
 } from "../../../utils/filters";
 
 export const ORDER_DRAFT_FILTERS_KEY = "orderDraftFilters";
@@ -45,10 +46,10 @@ export function getFilterVariables(
   params: OrderDraftListUrlFilters
 ): OrderDraftFilterInput {
   return {
-    created: {
+    created: getGteLteVariables({
       gte: params.createdFrom,
       lte: params.createdTo
-    },
+    }),
     customer: params.customer,
     search: params.query
   };

@@ -12,7 +12,8 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  dedupeFilter
+  dedupeFilter,
+  getGteLteVariables
 } from "../../../utils/filters";
 import {
   VoucherListUrlFilters,
@@ -85,17 +86,17 @@ export function getFilterVariables(
       params.type &&
       params.type.map(type => findValueInEnum(type, VoucherDiscountType)),
     search: params.query,
-    started: {
+    started: getGteLteVariables({
       gte: joinDateTime(params.startedFrom),
       lte: joinDateTime(params.startedTo)
-    },
+    }),
     status:
       params.status &&
       params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),
-    timesUsed: {
+    timesUsed: getGteLteVariables({
       gte: parseInt(params.timesUsedFrom, 0),
       lte: parseInt(params.timesUsedTo, 0)
-    }
+    })
   };
 }
 

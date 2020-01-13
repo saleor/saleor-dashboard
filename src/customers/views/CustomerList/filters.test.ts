@@ -1,32 +1,28 @@
 import { createIntl } from "react-intl";
 import { stringify as stringifyQs } from "qs";
 
-import { ProductListUrlFilters } from "@saleor/products/urls";
-import {
-  createFilterStructure,
-  ProductStatus
-} from "@saleor/products/components/ProductListPage";
+import { CustomerListUrlFilters } from "@saleor/customers/urls";
+import { createFilterStructure } from "@saleor/customers/components/CustomerListPage";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { date } from "@saleor/fixtures";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
-import { StockAvailability } from "@saleor/types/globalTypes";
 import { getFilterVariables, getFilterQueryParam } from "./filters";
 
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {
-    const params: ProductListUrlFilters = {};
+    const params: CustomerListUrlFilters = {};
     const filterVariables = getFilterVariables(params);
 
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
 
   it("should not be empty object if params given", () => {
-    const params: ProductListUrlFilters = {
-      priceFrom: "10",
-      priceTo: "20",
-      status: true.toString(),
-      stockStatus: StockAvailability.IN_STOCK
+    const params: CustomerListUrlFilters = {
+      joinedFrom: date.from,
+      moneySpentFrom: "2",
+      moneySpentTo: "39.50",
+      numberOfOrdersTo: "5"
     };
     const filterVariables = getFilterVariables(params);
 
@@ -38,20 +34,26 @@ describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
-    price: {
+    joined: {
       active: false,
       value: {
-        max: "20",
-        min: "10"
+        max: date.to,
+        min: date.from
       }
     },
-    status: {
+    moneySpent: {
       active: false,
-      value: ProductStatus.PUBLISHED
+      value: {
+        max: "39.50",
+        min: "2"
+      }
     },
-    stockStatus: {
+    numberOfOrders: {
       active: false,
-      value: StockAvailability.IN_STOCK
+      value: {
+        max: "5",
+        min: "1"
+      }
     }
   });
 

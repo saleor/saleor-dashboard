@@ -12,7 +12,8 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  dedupeFilter
+  dedupeFilter,
+  getGteLteVariables
 } from "../../../utils/filters";
 import {
   SaleListUrlFilters,
@@ -63,10 +64,10 @@ export function getFilterVariables(
     saleType:
       params.type && findValueInEnum(params.type, DiscountValueTypeEnum),
     search: params.query,
-    started: {
+    started: getGteLteVariables({
       gte: joinDateTime(params.startedFrom),
       lte: joinDateTime(params.startedTo)
-    },
+    }),
     status:
       params.status &&
       params.status.map(status => findValueInEnum(status, DiscountStatusEnum))

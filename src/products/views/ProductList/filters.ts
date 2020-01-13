@@ -11,7 +11,8 @@ import {
 } from "../../../types/globalTypes";
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  getGteLteVariables
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
@@ -55,10 +56,10 @@ export function getFilterVariables(
       params.status !== undefined
         ? params.status === ProductStatus.PUBLISHED
         : null,
-    price: {
+    price: getGteLteVariables({
       gte: parseFloat(params.priceFrom),
       lte: parseFloat(params.priceTo)
-    },
+    }),
     search: params.query,
     stockAvailability:
       params.stockStatus !== undefined
