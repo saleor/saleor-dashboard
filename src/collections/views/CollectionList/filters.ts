@@ -15,7 +15,8 @@ import {
 } from "../../urls";
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  getSingleEnumValueQueryParam
 } from "../../../utils/filters";
 
 export const COLLECTION_FILTERS_KEY = "collectionFilters";
@@ -45,19 +46,15 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<CollectionFilterKeys>
 ): CollectionListUrlFilters {
-  const { active, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case CollectionFilterKeys.status:
-      if (!active) {
-        return {
-          status: undefined
-        };
-      }
-
-      return {
-        status: value[0]
-      };
+      return getSingleEnumValueQueryParam(
+        filter,
+        CollectionListUrlFiltersEnum.status,
+        CollectionPublished
+      );
   }
 }
 

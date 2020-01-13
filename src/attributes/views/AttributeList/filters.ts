@@ -7,7 +7,8 @@ import {
 } from "@saleor/attributes/components/AttributeListPage";
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   AttributeListUrlFilters,
@@ -83,74 +84,44 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<AttributeFilterKeys>
 ): AttributeListUrlFilters {
-  const { active, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case AttributeFilterKeys.availableInGrid:
-      if (!active) {
-        return {
-          availableInGrid: undefined
-        };
-      }
-
-      return {
-        availableInGrid: value[0]
-      };
+      return getSingleValueQueryParam(
+        filter,
+        AttributeListUrlFiltersEnum.availableInGrid
+      );
 
     case AttributeFilterKeys.filterableInDashboard:
-      if (!active) {
-        return {
-          filterableInDashboard: undefined
-        };
-      }
-
-      return {
-        filterableInDashboard: value[0]
-      };
+      return getSingleValueQueryParam(
+        filter,
+        AttributeListUrlFiltersEnum.filterableInDashboard
+      );
 
     case AttributeFilterKeys.filterableInStorefront:
-      if (!active) {
-        return {
-          filterableInStorefront: undefined
-        };
-      }
-
-      return {
-        filterableInStorefront: value[0]
-      };
+      return getSingleValueQueryParam(
+        filter,
+        AttributeListUrlFiltersEnum.filterableInStorefront
+      );
 
     case AttributeFilterKeys.isVariantOnly:
-      if (!active) {
-        return {
-          isVariantOnly: undefined
-        };
-      }
-
-      return {
-        isVariantOnly: value[0]
-      };
+      return getSingleValueQueryParam(
+        filter,
+        AttributeListUrlFiltersEnum.isVariantOnly
+      );
 
     case AttributeFilterKeys.valueRequired:
-      if (!active) {
-        return {
-          valueRequired: undefined
-        };
-      }
-
-      return {
-        valueRequired: value[0]
-      };
+      return getSingleValueQueryParam(
+        filter,
+        AttributeListUrlFiltersEnum.valueRequired
+      );
 
     case AttributeFilterKeys.visibleInStorefront:
-      if (!active) {
-        return {
-          visibleInStorefront: undefined
-        };
-      }
-
-      return {
-        visibleInStorefront: value[0]
-      };
+      return getSingleValueQueryParam(
+        filter,
+        AttributeListUrlFiltersEnum.visibleInStorefront
+      );
   }
 }
 

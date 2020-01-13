@@ -13,12 +13,16 @@ import {
   createFilterTabUtils,
   createFilterUtils,
   dedupeFilter,
-  getGteLteVariables
+  getGteLteVariables,
+  getSingleEnumValueQueryParam,
+  getMinMaxQueryParam,
+  getMultipleEnumValueQueryParam
 } from "../../../utils/filters";
 import {
   SaleListUrlFilters,
   SaleListUrlFiltersEnum,
-  SaleListUrlQueryParams
+  SaleListUrlQueryParams,
+  SaleListUrlFiltersWithMultipleValues
 } from "../../urls";
 
 export const SALE_FILTERS_KEY = "saleFilters";
@@ -77,48 +81,29 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<SaleFilterKeys>
 ): SaleListUrlFilters {
-  const { active, multiple, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case SaleFilterKeys.saleType:
-      if (!active) {
-        return {
-          type: undefined
-        };
-      }
-
-      return {
-        type: findValueInEnum(value[0], DiscountValueTypeEnum)
-      };
+      return getSingleEnumValueQueryParam(
+        filter,
+        SaleListUrlFiltersEnum.type,
+        DiscountValueTypeEnum
+      );
 
     case SaleFilterKeys.started:
-      if (!active) {
-        return {
-          startedFrom: undefined,
-          startedTo: undefined
-        };
-      }
-      if (multiple) {
-        return {
-          startedFrom: value[0],
-          startedTo: value[1]
-        };
-      }
-
-      return {
-        startedFrom: value[0],
-        startedTo: value[0]
-      };
+      return getMinMaxQueryParam(
+        filter,
+        SaleListUrlFiltersEnum.startedFrom,
+        SaleListUrlFiltersEnum.startedTo
+      );
 
     case SaleFilterKeys.status:
-      if (!active) {
-        return {
-          status: undefined
-        };
-      }
-      return {
-        status: value.map(val => findValueInEnum(val, DiscountStatusEnum))
-      };
+      return getMultipleEnumValueQueryParam(
+        filter,
+        SaleListUrlFiltersWithMultipleValues.status,
+        DiscountStatusEnum
+      );
   }
 }
 

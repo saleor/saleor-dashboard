@@ -12,7 +12,9 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  getGteLteVariables
+  getGteLteVariables,
+  getMinMaxQueryParam,
+  getSingleEnumValueQueryParam
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
@@ -71,47 +73,29 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<ProductFilterKeys>
 ): ProductListUrlFilters {
-  const { active, multiple, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case ProductFilterKeys.price:
-      if (!active) {
-        return {
-          priceFrom: undefined,
-          priceTo: undefined
-        };
-      }
-      if (multiple) {
-        return {
-          priceFrom: value[0],
-          priceTo: value[1]
-        };
-      }
-
-      return {
-        priceFrom: value[0],
-        priceTo: value[0]
-      };
+      return getMinMaxQueryParam(
+        filter,
+        ProductListUrlFiltersEnum.priceFrom,
+        ProductListUrlFiltersEnum.priceTo
+      );
 
     case ProductFilterKeys.status:
-      if (!active) {
-        return {
-          status: undefined
-        };
-      }
-      return {
-        status: findValueInEnum(value[0], ProductStatus)
-      };
+      return getSingleEnumValueQueryParam(
+        filter,
+        ProductListUrlFiltersEnum.status,
+        ProductStatus
+      );
 
     case ProductFilterKeys.stock:
-      if (!active) {
-        return {
-          stockStatus: undefined
-        };
-      }
-      return {
-        stockStatus: findValueInEnum(value[0], StockAvailability)
-      };
+      return getSingleEnumValueQueryParam(
+        filter,
+        ProductListUrlFiltersEnum.stockStatus,
+        StockAvailability
+      );
   }
 }
 

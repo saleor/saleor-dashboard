@@ -1,4 +1,5 @@
 import { IFilterElement, IFilter } from "@saleor/components/Filter";
+import { findValueInEnum } from "@saleor/misc";
 
 function createFilterUtils<
   TQueryParams extends object,
@@ -54,6 +55,85 @@ export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
   }
 
   return null;
+}
+
+export function getSingleValueQueryParam<
+  TKey extends string,
+  TUrlKey extends string
+>(param: IFilterElement<TKey>, key: TUrlKey) {
+  const { active, value } = param;
+
+  if (!active) {
+    return {
+      [key]: undefined
+    };
+  }
+
+  return {
+    [key]: value[0]
+  };
+}
+
+export function getSingleEnumValueQueryParam<
+  TKey extends string,
+  TUrlKey extends string,
+  TEnum extends object
+>(param: IFilterElement<TKey>, key: TUrlKey, haystack: TEnum) {
+  const { active, value } = param;
+
+  if (!active) {
+    return {
+      [key]: undefined
+    };
+  }
+
+  return {
+    [key]: findValueInEnum(value[0], haystack)
+  };
+}
+
+export function getMultipleEnumValueQueryParam<
+  TKey extends string,
+  TUrlKey extends string,
+  TEnum extends object
+>(param: IFilterElement<TKey>, key: TUrlKey, haystack: TEnum) {
+  const { active, value } = param;
+
+  if (!active) {
+    return {
+      [key]: undefined
+    };
+  }
+
+  return {
+    [key]: value.map(val => findValueInEnum(val, haystack))
+  };
+}
+
+export function getMinMaxQueryParam<
+  TKey extends string,
+  TUrlKey extends string
+>(param: IFilterElement<TKey>, keyFrom: TUrlKey, keyTo: TUrlKey) {
+  const { active, multiple, value } = param;
+
+  if (!active) {
+    return {
+      [keyFrom]: undefined,
+      [keyTo]: undefined
+    };
+  }
+
+  if (multiple) {
+    return {
+      [keyFrom]: value[0],
+      [keyTo]: value[1]
+    };
+  }
+
+  return {
+    [keyFrom]: value[0],
+    [keyTo]: value[0]
+  };
 }
 
 export default createFilterUtils;
