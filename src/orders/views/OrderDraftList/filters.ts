@@ -13,7 +13,9 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  getGteLteVariables
+  getGteLteVariables,
+  getMinMaxQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 
 export const ORDER_DRAFT_FILTERS_KEY = "orderDraftFilters";
@@ -58,37 +60,21 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<OrderDraftFilterKeys>
 ): OrderDraftListUrlFilters {
-  const { active, multiple, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case OrderDraftFilterKeys.created:
-      if (!active) {
-        return {
-          createdFrom: undefined,
-          createdTo: undefined
-        };
-      }
-      if (multiple) {
-        return {
-          createdFrom: value[0],
-          createdTo: value[1]
-        };
-      }
-
-      return {
-        createdFrom: value[0],
-        createdTo: value[0]
-      };
+      return getMinMaxQueryParam(
+        filter,
+        OrderDraftListUrlFiltersEnum.createdFrom,
+        OrderDraftListUrlFiltersEnum.createdTo
+      );
 
     case OrderDraftFilterKeys.customer:
-      if (!active) {
-        return {
-          customer: undefined
-        };
-      }
-      return {
-        customer: value[0]
-      };
+      return getSingleValueQueryParam(
+        filter,
+        OrderDraftListUrlFiltersEnum.customer
+      );
   }
 }
 

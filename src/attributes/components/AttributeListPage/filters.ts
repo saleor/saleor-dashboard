@@ -6,7 +6,7 @@ import { IFilter } from "@saleor/components/Filter";
 import { createBooleanField } from "@saleor/utils/filters/fields";
 
 export enum AttributeFilterKeys {
-  availableInGrid = "availableInGrud",
+  availableInGrid = "availableInGrid",
   filterableInDashboard = "filterableInDashboard",
   filterableInStorefront = "filterableInStorefront",
   isVariantOnly = "isVariantOnly",

@@ -12,7 +12,8 @@ import {
 } from "../../urls";
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 
 export const STAFF_FILTERS_KEY = "staffFilters";
@@ -44,18 +45,11 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<ServiceFilterKeys>
 ): ServiceListUrlFilters {
-  const { active, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case ServiceFilterKeys.active:
-      if (!active) {
-        return {
-          active: undefined
-        };
-      }
-      return {
-        active: value[0]
-      };
+      return getSingleValueQueryParam(filter, ServiceListUrlFiltersEnum.active);
   }
 }
 

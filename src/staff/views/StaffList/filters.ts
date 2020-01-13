@@ -7,7 +7,8 @@ import {
 } from "@saleor/staff/components/StaffListPage";
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  getSingleEnumValueQueryParam
 } from "../../../utils/filters";
 import {
   StaffListUrlFilters,
@@ -42,19 +43,15 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<StaffFilterKeys>
 ): StaffListUrlFilters {
-  const { active, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case StaffFilterKeys.status:
-      if (!active) {
-        return {
-          status: undefined
-        };
-      }
-
-      return {
-        status: value[0]
-      };
+      return getSingleEnumValueQueryParam(
+        filter,
+        StaffListUrlFiltersEnum.status,
+        StaffMemberStatus
+      );
   }
 }
 
