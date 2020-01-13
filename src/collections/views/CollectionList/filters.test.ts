@@ -1,36 +1,29 @@
 import { createIntl } from "react-intl";
 import { stringify as stringifyQs } from "qs";
 
-import { ProductListUrlFilters } from "@saleor/products/urls";
-import {
-  createFilterStructure,
-  ProductStatus
-} from "@saleor/products/components/ProductListPage";
+import { CollectionListUrlFilters } from "@saleor/collections/urls";
+import { createFilterStructure } from "@saleor/collections/components/CollectionListPage";
 import { getFilterQueryParams } from "@saleor/utils/filters";
-import { date } from "@saleor/fixtures";
-import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
+import { CollectionPublished } from "@saleor/types/globalTypes";
 import { config } from "@test/intl";
-import { StockAvailability } from "@saleor/types/globalTypes";
+import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { getFilterVariables, getFilterQueryParam } from "./filters";
 
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {
-    const params: ProductListUrlFilters = {};
+    const params: CollectionListUrlFilters = {};
     const filterVariables = getFilterVariables(params);
 
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
 
   it("should not be empty object if params given", () => {
-    const params: ProductListUrlFilters = {
-      priceFrom: "10",
-      priceTo: "20",
-      status: true.toString(),
-      stockStatus: StockAvailability.IN_STOCK
+    const params: CollectionListUrlFilters = {
+      status: CollectionPublished.PUBLISHED
     };
     const filterVariables = getFilterVariables(params);
 
-    expect(getExistingKeys(filterVariables)).toHaveLength(3);
+    expect(getExistingKeys(filterVariables)).toHaveLength(1);
   });
 });
 
@@ -38,20 +31,9 @@ describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
-    price: {
-      active: false,
-      value: {
-        max: "20",
-        min: "10"
-      }
-    },
     status: {
       active: false,
-      value: ProductStatus.PUBLISHED
-    },
-    stockStatus: {
-      active: false,
-      value: StockAvailability.IN_STOCK
+      value: CollectionPublished.PUBLISHED
     }
   });
 
@@ -65,6 +47,13 @@ describe("Filtering URL params", () => {
   });
 
   it("should not be empty if active filters are present", () => {
+    const filters = createFilterStructure(intl, {
+      status: {
+        active: true,
+        value: CollectionPublished.PUBLISHED
+      }
+    });
+
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
       getFilterQueryParam

@@ -1,13 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Get filter variables 1`] = `
+exports[`Filtering URL params should not be empty if active filters are present 1`] = `
 Object {
-  "isPublished": false,
-  "price": Object {
-    "gte": 10,
-    "lte": 20,
-  },
-  "search": undefined,
-  "stockAvailability": "IN_STOCK",
+  "priceFrom": "10",
+  "priceTo": "20",
+  "status": "published",
+  "stockStatus": "IN_STOCK",
 }
 `;
+
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"status=published&stockStatus=IN_STOCK&priceFrom=10&priceTo=20"`;

@@ -1,16 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Get filter variables 1`] = `
+exports[`Filtering URL params should not be empty if active filters are present 1`] = `
 Object {
-  "created": Object {
-    "gte": "2019-09-01",
-    "lte": "2019-09-10",
-  },
-  "customer": "email@example.com",
-  "search": "24",
+  "createdFrom": "2019-12-09",
+  "createdTo": "2019-12-38",
   "status": Array [
     "FULFILLED",
     "PARTIALLY_FULFILLED",
   ],
 }
 `;
+
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"createdFrom=2019-12-09&createdTo=2019-12-38&status%5B0%5D=FULFILLED&status%5B1%5D=PARTIALLY_FULFILLED"`;

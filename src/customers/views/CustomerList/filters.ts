@@ -7,7 +7,8 @@ import {
 } from "@saleor/customers/components/CustomerListPage";
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  getGteLteVariables
 } from "../../../utils/filters";
 import {
   CustomerListUrlFilters,
@@ -67,18 +68,18 @@ export function getFilterVariables(
   params: CustomerListUrlFilters
 ): CustomerFilterInput {
   return {
-    dateJoined: {
+    dateJoined: getGteLteVariables({
       gte: params.joinedFrom,
       lte: params.joinedTo
-    },
-    moneySpent: {
+    }),
+    moneySpent: getGteLteVariables({
       gte: parseInt(params.moneySpentFrom, 0),
       lte: parseInt(params.moneySpentTo, 0)
-    },
-    numberOfOrders: {
+    }),
+    numberOfOrders: getGteLteVariables({
       gte: parseInt(params.numberOfOrdersFrom, 0),
       lte: parseInt(params.numberOfOrdersTo, 0)
-    },
+    }),
     search: params.query
   };
 }

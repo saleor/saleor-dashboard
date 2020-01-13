@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filtering URL params should not be empty if active filters are present 1`] = `
+Object {
+  "startedFrom": "2019-12-09",
+  "startedTo": "2019-12-38",
+  "status": Array [
+    "ACTIVE",
+    "EXPIRED",
+  ],
+  "timesUsedFrom": "1",
+  "timesUsedTo": "6",
+  "type": Array [
+    "FIXED",
+    "SHIPPING",
+  ],
+}
+`;
+
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"startedFrom=2019-12-09&startedTo=2019-12-38&timesUsedFrom=1&timesUsedTo=6&status%5B0%5D=ACTIVE&status%5B1%5D=EXPIRED&type%5B0%5D=FIXED&type%5B1%5D=SHIPPING"`;
