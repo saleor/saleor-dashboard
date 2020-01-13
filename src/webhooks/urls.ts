@@ -15,6 +15,7 @@ export const webhookSection = "/webhooks/";
 
 export const webhookListPath = webhookSection;
 export enum WebhookListUrlFiltersEnum {
+  active = "active",
   query = "query"
 }
 export type WebhookListUrlFilters = Filters<WebhookListUrlFiltersEnum>;

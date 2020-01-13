@@ -6,21 +6,26 @@ import { FormattedMessage, useIntl } from "react-intl";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import SearchBar from "@saleor/components/SearchBar";
+import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
 import {
   PageListProps,
-  SearchPageProps,
+  FilterPageProps,
   TabPageProps,
   SortPage
 } from "@saleor/types";
 import { WebhookListUrlSortField } from "@saleor/webhooks/urls";
 import { Webhooks_webhooks_edges_node } from "../../types/Webhooks";
-import WebhooksList from "../WebhooksList/WebhooksList";
+import WebhooksList from "../WebhooksList";
+import {
+  WebhookFilterKeys,
+  WebhookListFilterOpts,
+  createFilterStructure
+} from "./filters";
 
 export interface WebhooksListPageProps
   extends PageListProps,
-    SearchPageProps,
+    FilterPageProps<WebhookFilterKeys, WebhookListFilterOpts>,
     SortPage<WebhookListUrlSortField>,
     TabPageProps {
   webhooks: Webhooks_webhooks_edges_node[];
@@ -29,11 +34,14 @@ export interface WebhooksListPageProps
 }
 
 const WebhooksListPage: React.FC<WebhooksListPageProps> = ({
+  currencySymbol,
   currentTab,
+  filterOpts,
   initialSearch,
   onAdd,
   onAll,
   onBack,
+  onFilterChange,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -43,6 +51,9 @@ const WebhooksListPage: React.FC<WebhooksListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+
+  const structure = createFilterStructure(intl, filterOpts);
+
   return (
     <Container>
       <AppHeader onBack={onBack}>
@@ -57,18 +68,21 @@ const WebhooksListPage: React.FC<WebhooksListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <SearchBar
+        <FilterBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Webhooks",
             description: "tab name"
           })}
+          currencySymbol={currencySymbol}
           currentTab={currentTab}
+          filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Webhooks"
           })}
           tabs={tabs}
           onAll={onAll}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}
