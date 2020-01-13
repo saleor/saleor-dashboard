@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PluginSortingInput } from "./../../types/globalTypes";
+import { PluginFilterInput, PluginSortingInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: Plugins
@@ -44,5 +44,6 @@ export interface PluginsVariables {
   after?: string | null;
   last?: number | null;
   before?: string | null;
+  filter?: PluginFilterInput | null;
   sort?: PluginSortingInput | null;
 }
