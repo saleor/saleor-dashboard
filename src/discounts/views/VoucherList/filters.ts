@@ -12,12 +12,16 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  dedupeFilter
+  dedupeFilter,
+  getGteLteVariables,
+  getMultipleEnumValueQueryParam,
+  getMinMaxQueryParam
 } from "../../../utils/filters";
 import {
   VoucherListUrlFilters,
   VoucherListUrlFiltersEnum,
-  VoucherListUrlQueryParams
+  VoucherListUrlQueryParams,
+  VoucherListUrlFiltersWithMultipleValues
 } from "../../urls";
 
 export const VOUCHER_FILTERS_KEY = "voucherFilters";
@@ -85,84 +89,53 @@ export function getFilterVariables(
       params.type &&
       params.type.map(type => findValueInEnum(type, VoucherDiscountType)),
     search: params.query,
-    started: {
+    started: getGteLteVariables({
       gte: joinDateTime(params.startedFrom),
       lte: joinDateTime(params.startedTo)
-    },
+    }),
     status:
       params.status &&
       params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),
-    timesUsed: {
+    timesUsed: getGteLteVariables({
       gte: parseInt(params.timesUsedFrom, 0),
       lte: parseInt(params.timesUsedTo, 0)
-    }
+    })
   };
 }
 
 export function getFilterQueryParam(
   filter: IFilterElement<VoucherFilterKeys>
 ): VoucherListUrlFilters {
-  const { active, multiple, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case VoucherFilterKeys.saleType:
-      if (!active) {
-        return {
-          type: undefined
-        };
-      }
-
-      return {
-        type: value.map(type => findValueInEnum(type, VoucherDiscountType))
-      };
+      return getMultipleEnumValueQueryParam(
+        filter,
+        VoucherListUrlFiltersWithMultipleValues.type,
+        VoucherDiscountType
+      );
 
     case VoucherFilterKeys.started:
-      if (!active) {
-        return {
-          startedFrom: undefined,
-          startedTo: undefined
-        };
-      }
-      if (multiple) {
-        return {
-          startedFrom: value[0],
-          startedTo: value[1]
-        };
-      }
-
-      return {
-        startedFrom: value[0],
-        startedTo: value[0]
-      };
+      return getMinMaxQueryParam(
+        filter,
+        VoucherListUrlFiltersEnum.startedFrom,
+        VoucherListUrlFiltersEnum.startedTo
+      );
 
     case VoucherFilterKeys.timesUsed:
-      if (!active) {
-        return {
-          timesUsedFrom: undefined,
-          timesUsedTo: undefined
-        };
-      }
-      if (multiple) {
-        return {
-          timesUsedFrom: value[0],
-          timesUsedTo: value[1]
-        };
-      }
-
-      return {
-        timesUsedFrom: value[0],
-        timesUsedTo: value[0]
-      };
+      return getMinMaxQueryParam(
+        filter,
+        VoucherListUrlFiltersEnum.timesUsedFrom,
+        VoucherListUrlFiltersEnum.timesUsedTo
+      );
 
     case VoucherFilterKeys.status:
-      if (!active) {
-        return {
-          status: undefined
-        };
-      }
-      return {
-        status: value.map(val => findValueInEnum(val, DiscountStatusEnum))
-      };
+      return getMultipleEnumValueQueryParam(
+        filter,
+        VoucherListUrlFiltersWithMultipleValues.status,
+        DiscountStatusEnum
+      );
   }
 }
 

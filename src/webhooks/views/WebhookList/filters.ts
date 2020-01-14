@@ -1,5 +1,9 @@
 import { WebhookFilterInput } from "@saleor/types/globalTypes";
-import { createFilterTabUtils, createFilterUtils } from "@saleor/utils/filters";
+import {
+  createFilterTabUtils,
+  createFilterUtils,
+  getSingleValueQueryParam
+} from "@saleor/utils/filters";
 import { IFilterElement } from "@saleor/components/Filter";
 import {
   WebhookListFilterOpts,
@@ -40,18 +44,11 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<WebhookFilterKeys>
 ): WebhookListUrlFilters {
-  const { active, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case WebhookFilterKeys.isActive:
-      if (!active) {
-        return {
-          active: undefined
-        };
-      }
-      return {
-        active: value[0]
-      };
+      return getSingleValueQueryParam(filter, WebhookListUrlFiltersEnum.active);
   }
 }
 

@@ -12,7 +12,8 @@ import {
 } from "../../urls";
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 
 export const PLUGIN_FILTERS_KEY = "pluginFilters";
@@ -44,18 +45,11 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<PluginFilterKeys>
 ): PluginListUrlFilters {
-  const { active, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case PluginFilterKeys.active:
-      if (!active) {
-        return {
-          active: undefined
-        };
-      }
-      return {
-        active: value[0]
-      };
+      return getSingleValueQueryParam(filter, PluginListUrlFiltersEnum.active);
   }
 }
 

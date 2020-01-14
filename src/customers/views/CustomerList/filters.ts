@@ -7,7 +7,9 @@ import {
 } from "@saleor/customers/components/CustomerListPage";
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  getGteLteVariables,
+  getMinMaxQueryParam
 } from "../../../utils/filters";
 import {
   CustomerListUrlFilters,
@@ -67,18 +69,18 @@ export function getFilterVariables(
   params: CustomerListUrlFilters
 ): CustomerFilterInput {
   return {
-    dateJoined: {
+    dateJoined: getGteLteVariables({
       gte: params.joinedFrom,
       lte: params.joinedTo
-    },
-    moneySpent: {
+    }),
+    moneySpent: getGteLteVariables({
       gte: parseInt(params.moneySpentFrom, 0),
       lte: parseInt(params.moneySpentTo, 0)
-    },
-    numberOfOrders: {
+    }),
+    numberOfOrders: getGteLteVariables({
       gte: parseInt(params.numberOfOrdersFrom, 0),
       lte: parseInt(params.numberOfOrdersTo, 0)
-    },
+    }),
     search: params.query
   };
 }
@@ -86,65 +88,29 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<CustomerFilterKeys>
 ): CustomerListUrlFilters {
-  const { active, multiple, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case CustomerFilterKeys.joined:
-      if (!active) {
-        return {
-          joinedFrom: undefined,
-          joinedTo: undefined
-        };
-      }
-      if (multiple) {
-        return {
-          joinedFrom: value[0],
-          joinedTo: value[1]
-        };
-      }
-
-      return {
-        joinedFrom: value[0],
-        joinedTo: value[0]
-      };
+      return getMinMaxQueryParam(
+        filter,
+        CustomerListUrlFiltersEnum.joinedFrom,
+        CustomerListUrlFiltersEnum.joinedTo
+      );
 
     case CustomerFilterKeys.moneySpent:
-      if (!active) {
-        return {
-          moneySpentFrom: undefined,
-          moneySpentTo: undefined
-        };
-      }
-      if (multiple) {
-        return {
-          moneySpentFrom: value[0],
-          moneySpentTo: value[1]
-        };
-      }
-
-      return {
-        moneySpentFrom: value[0],
-        moneySpentTo: value[0]
-      };
+      return getMinMaxQueryParam(
+        filter,
+        CustomerListUrlFiltersEnum.moneySpentFrom,
+        CustomerListUrlFiltersEnum.moneySpentTo
+      );
 
     case CustomerFilterKeys.numberOfOrders:
-      if (!active) {
-        return {
-          numberOfOrdersFrom: undefined,
-          numberOfOrdersTo: undefined
-        };
-      }
-      if (multiple) {
-        return {
-          numberOfOrdersFrom: value[0],
-          numberOfOrdersTo: value[1]
-        };
-      }
-
-      return {
-        numberOfOrdersFrom: value[0],
-        numberOfOrdersTo: value[0]
-      };
+      return getMinMaxQueryParam(
+        filter,
+        CustomerListUrlFiltersEnum.numberOfOrdersFrom,
+        CustomerListUrlFiltersEnum.numberOfOrdersTo
+      );
   }
 }
 

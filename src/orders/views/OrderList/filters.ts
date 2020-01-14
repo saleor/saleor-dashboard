@@ -12,7 +12,10 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  dedupeFilter
+  dedupeFilter,
+  getGteLteVariables,
+  getMinMaxQueryParam,
+  getMultipleEnumValueQueryParam
 } from "../../../utils/filters";
 import {
   OrderListUrlFilters,
@@ -59,10 +62,10 @@ export function getFilterVariables(
   params: OrderListUrlFilters
 ): OrderFilterInput {
   return {
-    created: {
+    created: getGteLteVariables({
       gte: params.createdFrom,
       lte: params.createdTo
-    },
+    }),
     customer: params.email,
     search: params.query,
     status: maybe(() =>
@@ -74,37 +77,22 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<OrderFilterKeys>
 ): OrderListUrlFilters {
-  const { active, multiple, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case OrderFilterKeys.created:
-      if (!active) {
-        return {
-          createdFrom: undefined,
-          createdTo: undefined
-        };
-      }
-      if (multiple) {
-        return {
-          createdFrom: value[0],
-          createdTo: value[1]
-        };
-      }
-
-      return {
-        createdFrom: value[0],
-        createdTo: value[0]
-      };
+      return getMinMaxQueryParam(
+        filter,
+        OrderListUrlFiltersEnum.createdFrom,
+        OrderListUrlFiltersEnum.createdTo
+      );
 
     case OrderFilterKeys.status:
-      if (!active) {
-        return {
-          status: undefined
-        };
-      }
-      return {
-        status: value.map(val => findInEnum(val, OrderStatus))
-      };
+      return getMultipleEnumValueQueryParam(
+        filter,
+        OrderListUrlFiltersWithMultipleValuesEnum.status,
+        OrderStatus
+      );
   }
 }
 

@@ -1,4 +1,5 @@
 declare module "react-intl" {
+  import { OptionalIntlConfig } from "react-intl/dist/components/provider";
   import * as ReactIntl from "node_modules/react-intl";
   export * from "node_modules/react-intl";
 
@@ -51,4 +52,6 @@ declare module "react-intl" {
   > extends React.Component<FormattedMessageProps<TValues>> {}
 
   export function useIntl(): IntlShape;
+
+  export function createIntl(config: OptionalIntlConfig): IntlShape;
 }

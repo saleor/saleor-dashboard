@@ -376,3 +376,8 @@ export const permissions: ShopInfo_shop_permissions[] = [
   __typename: "PermissionDisplay" as "PermissionDisplay",
   ...perm
 }));
+
+export const date = {
+  from: "2019-12-09",
+  to: "2019-12-38"
+};

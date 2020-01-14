@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filtering URL params should not be empty if active filters are present 1`] = `
+Object {
+  "joinedFrom": "2019-12-09",
+  "joinedTo": "2019-12-38",
+  "moneySpentFrom": "2",
+  "moneySpentTo": "39.50",
+  "numberOfOrdersFrom": "1",
+  "numberOfOrdersTo": "5",
+}
+`;
+
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"joinedFrom=2019-12-09&joinedTo=2019-12-38&moneySpentFrom=2&moneySpentTo=39.50&numberOfOrdersFrom=1&numberOfOrdersTo=5"`;

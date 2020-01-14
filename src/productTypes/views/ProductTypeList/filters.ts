@@ -11,7 +11,8 @@ import {
 } from "@saleor/productTypes/components/ProductTypeListPage";
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   ProductTypeListUrlFilters,
@@ -55,30 +56,20 @@ export function getFilterVariables(
 export function getFilterQueryParam(
   filter: IFilterElement<ProductTypeFilterKeys>
 ): ProductTypeListUrlFilters {
-  const { active, name, value } = filter;
+  const { name } = filter;
 
   switch (name) {
     case ProductTypeFilterKeys.configurable:
-      if (!active) {
-        return {
-          configurable: undefined
-        };
-      }
-
-      return {
-        configurable: value[0]
-      };
+      return getSingleValueQueryParam(
+        filter,
+        ProductTypeListUrlFiltersEnum.configurable
+      );
 
     case ProductTypeFilterKeys.type:
-      if (!active) {
-        return {
-          type: undefined
-        };
-      }
-
-      return {
-        type: value[0]
-      };
+      return getSingleValueQueryParam(
+        filter,
+        ProductTypeListUrlFiltersEnum.type
+      );
   }
 }
 
