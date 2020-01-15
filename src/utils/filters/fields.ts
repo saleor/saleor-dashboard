@@ -1,6 +1,6 @@
 import { IFilterElement, FieldType } from "@saleor/components/Filter";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { MinMax } from "@saleor/types";
+import { MinMax, FetchMoreProps, SearchPageProps } from "@saleor/types";
 
 export function createPriceField<T extends string>(
   name: T,
@@ -61,6 +61,28 @@ export function createOptionsField<T extends string>(
     name,
     options,
     type: FieldType.options,
+    value: defaultValue
+  };
+}
+
+export function createAutocompleteField<T extends string>(
+  name: T,
+  label: string,
+  defaultValue: string[],
+  displayValues: MultiAutocompleteChoiceType[],
+  multiple: boolean,
+  options: MultiAutocompleteChoiceType[],
+  opts: FetchMoreProps & SearchPageProps
+): IFilterElement<T> {
+  return {
+    ...opts,
+    active: false,
+    displayValues,
+    label,
+    multiple,
+    name,
+    options,
+    type: FieldType.autocomplete,
     value: defaultValue
   };
 }

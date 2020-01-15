@@ -12,11 +12,16 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import { buttonMessages } from "@saleor/intl";
 import { TextField } from "@material-ui/core";
 import { toggle } from "@saleor/utils/lists";
+import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import Hr from "../Hr";
 import Checkbox from "../Checkbox";
 import SingleSelectField from "../SingleSelectField";
 import { SingleAutocompleteChoiceType } from "../SingleAutocompleteSelectField";
 import FormSpacer from "../FormSpacer";
+import MultiAutocompleteSelectField, {
+  MultiAutocompleteChoiceType
+} from "../MultiAutocompleteSelectField";
 import { IFilter, FieldType, FilterType } from "./types";
 import Arrow from "./Arrow";
 import { FilterReducerAction } from "./reducer";
@@ -107,6 +112,18 @@ const FilterContent: React.FC<FilterContentProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
+  const [
+    autocompleteDisplayValues,
+    setAutocompleteDisplayValues
+  ] = useStateFromProps<Record<string, MultiAutocompleteChoiceType[]>>(
+    filters.reduce((acc, filterField) => {
+      if (filterField.type === FieldType.autocomplete) {
+        acc[filterField.name] = filterField.displayValues;
+      }
+
+      return acc;
+    }, {})
+  );
 
   return (
     <Paper>
@@ -409,6 +426,54 @@ const FilterContent: React.FC<FilterContentProps> = ({
                         />
                       </div>
                     ))}
+                  {filterField.type === FieldType.autocomplete &&
+                    filterField.multiple && (
+                      <MultiAutocompleteSelectField
+                        displayValues={
+                          autocompleteDisplayValues[filterField.name]
+                        }
+                        label={filterField.label}
+                        choices={filterField.options}
+                        name={filterField.name}
+                        value={filterField.value}
+                        // helperText={intl.formatMessage({
+                        //   defaultMessage:
+                        //     "*Optional. Adding product to collection helps users find it.",
+                        //   description: "field is optional"
+                        // })}
+                        onChange={createMultiAutocompleteSelectHandler(
+                          event =>
+                            onFilterPropertyChange({
+                              payload: {
+                                name: filterField.name,
+                                update: {
+                                  value: toggle(
+                                    event.target.value,
+                                    filterField.value,
+                                    (a, b) => a === b
+                                  )
+                                }
+                              },
+                              type: "set-property"
+                            }),
+                          value =>
+                            setAutocompleteDisplayValues({
+                              ...autocompleteDisplayValues,
+                              [filterField.name]: toggle(
+                                value[0],
+                                autocompleteDisplayValues[filterField.name],
+                                (a, b) => a.value === b.value
+                              )
+                            }),
+                          [],
+                          filterField.options
+                        )}
+                        fetchChoices={filterField.onSearchChange}
+                        loading={filterField.loading}
+                        data-tc={filterField.name}
+                        key={filterField.name}
+                      />
+                    )}
                 </div>
               )}
             </React.Fragment>

@@ -755,6 +755,7 @@ export interface CatalogueInput {
 
 export interface CategoryFilterInput {
   search?: string | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface CategoryInput {
@@ -788,6 +789,7 @@ export interface CollectionCreateInput {
 export interface CollectionFilterInput {
   published?: CollectionPublished | null;
   search?: string | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface CollectionInput {

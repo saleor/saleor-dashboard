@@ -2,6 +2,12 @@
 
 exports[`Filtering URL params should not be empty if active filters are present 1`] = `
 Object {
+  "categories": Array [
+    "878752",
+  ],
+  "collections": Array [
+    "Q29sbGVjdGlvbjoc",
+  ],
   "priceFrom": "10",
   "priceTo": "20",
   "status": "published",
@@ -9,4 +15,4 @@ Object {
 }
 `;
 
-exports[`Filtering URL params should not be empty if active filters are present 2`] = `"status=published&stockStatus=IN_STOCK&priceFrom=10&priceTo=20"`;
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"status=published&stockStatus=IN_STOCK&priceFrom=10&priceTo=20&categories%5B0%5D=878752&collections%5B0%5D=Q29sbGVjdGlvbjoc"`;

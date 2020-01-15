@@ -17,12 +17,20 @@ function useFilter<T extends string>(initialFilter: IFilter<T>): UseFilter<T> {
   const reset = () =>
     dispatchFilterAction({
       payload: {
-        reset: initialFilter
+        new: initialFilter
       },
       type: "reset"
     });
 
-  useEffect(reset, [initialFilter]);
+  const refresh = () =>
+    dispatchFilterAction({
+      payload: {
+        new: initialFilter
+      },
+      type: "merge"
+    });
+
+  useEffect(refresh, [initialFilter]);
 
   return [data, dispatchFilterAction, reset];
 }

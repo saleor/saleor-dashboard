@@ -41,17 +41,14 @@ export interface SingleAutocompleteSelectFieldProps
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const DebounceAutocomplete: React.ComponentType<
-  DebounceProps<string>
-> = Debounce;
+const DebounceAutocomplete: React.ComponentType<DebounceProps<
+  string
+>> = Debounce;
 
-const SingleAutocompleteSelectFieldComponent: React.FC<
-  SingleAutocompleteSelectFieldProps
-> = props => {
+const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectFieldProps> = props => {
   const {
-    choices,
-
     allowCustomValues,
+    choices,
     disabled,
     displayValue,
     emptyOption,
@@ -169,9 +166,11 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
   );
 };
 
-const SingleAutocompleteSelectField: React.FC<
-  SingleAutocompleteSelectFieldProps
-> = ({ choices, fetchChoices, ...rest }) => {
+const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps> = ({
+  choices,
+  fetchChoices,
+  ...rest
+}) => {
   const [query, setQuery] = React.useState("");
   if (fetchChoices) {
     return (

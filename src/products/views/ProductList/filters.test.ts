@@ -10,6 +10,9 @@ import { getFilterQueryParams } from "@saleor/utils/filters";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { StockAvailability } from "@saleor/types/globalTypes";
+import { categories } from "@saleor/categories/fixtures";
+import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
+import { collections } from "@saleor/collections/fixtures";
 import { getFilterVariables, getFilterQueryParam } from "./filters";
 
 describe("Filtering query params", () => {
@@ -37,6 +40,38 @@ describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
+    categories: {
+      ...fetchMoreProps,
+      ...searchPageProps,
+      active: false,
+      choices: categories.slice(5).map(category => ({
+        label: category.name,
+        value: category.id
+      })),
+      displayValues: [
+        {
+          label: categories[5].name,
+          value: categories[5].id
+        }
+      ],
+      value: [categories[5].id]
+    },
+    collections: {
+      ...fetchMoreProps,
+      ...searchPageProps,
+      active: false,
+      choices: collections.slice(5).map(category => ({
+        label: category.name,
+        value: category.id
+      })),
+      displayValues: [
+        {
+          label: collections[5].name,
+          value: collections[5].id
+        }
+      ],
+      value: [collections[5].id]
+    },
     price: {
       active: false,
       value: {

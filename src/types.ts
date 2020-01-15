@@ -3,6 +3,7 @@ import { MutationResult } from "react-apollo";
 import { User_permissions } from "./auth/types/User";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
 import { IFilter } from "./components/Filter";
+import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 
 export interface UserError {
   field: string;
@@ -175,4 +176,11 @@ export type MinMax = Record<"min" | "max", string>;
 export interface FilterOpts<T> {
   active: boolean;
   value: T;
+}
+
+export interface AutocompleteFilterOpts
+  extends FetchMoreProps,
+    SearchPageProps {
+  choices: MultiAutocompleteChoiceType[];
+  displayValues: MultiAutocompleteChoiceType[];
 }

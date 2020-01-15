@@ -1,3 +1,5 @@
+import isArray from "lodash-es/isArray";
+
 import { IFilterElement, IFilter } from "@saleor/components/Filter";
 import { findValueInEnum } from "@saleor/misc";
 
@@ -25,6 +27,10 @@ function createFilterUtils<
 }
 
 export function dedupeFilter<T>(array: T[]): T[] {
+  if (!isArray(array)) {
+    return [array];
+  }
+
   return Array.from(new Set(array));
 }
 
@@ -107,6 +113,23 @@ export function getMultipleEnumValueQueryParam<
 
   return {
     [key]: value.map(val => findValueInEnum(val, haystack))
+  };
+}
+
+export function getMultipleValueQueryParam<
+  TKey extends string,
+  TUrlKey extends string
+>(param: IFilterElement<TKey>, key: TUrlKey) {
+  const { active, value } = param;
+
+  if (!active) {
+    return {
+      [key]: undefined
+    };
+  }
+
+  return {
+    [key]: value
   };
 }
 

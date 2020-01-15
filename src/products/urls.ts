@@ -9,7 +9,8 @@ import {
   Filters,
   Pagination,
   Sort,
-  TabActionDialog
+  TabActionDialog,
+  FiltersWithMultipleValues
 } from "../types";
 
 const productSection = "/products/";
@@ -30,7 +31,12 @@ export enum ProductListUrlFiltersEnum {
   stockStatus = "stockStatus",
   query = "query"
 }
-export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum>;
+export enum ProductListUrlFiltersWithMultipleValues {
+  categories = "categories",
+  collections = "collections"
+}
+export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum> &
+  FiltersWithMultipleValues<ProductListUrlFiltersWithMultipleValues>;
 export enum ProductListUrlSortField {
   attribute = "attribute",
   name = "name",
