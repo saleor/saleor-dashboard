@@ -1,7 +1,8 @@
-import { FetchMoreProps } from "@saleor/types";
+import { FetchMoreProps, SearchPageProps } from "@saleor/types";
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 
 export enum FieldType {
+  autocomplete,
   boolean,
   date,
   dateTime,
@@ -18,9 +19,10 @@ export interface IFilterElementMutableData<T extends string = string> {
   value: T[];
 }
 export interface IFilterElement<T extends string = string>
-  extends Partial<FetchMoreProps>,
-    IFilterElementMutableData {
+  extends IFilterElementMutableData,
+    Partial<FetchMoreProps & SearchPageProps> {
   autocomplete?: boolean;
+  displayValues?: MultiAutocompleteChoiceType[];
   label: string;
   name: T;
   type: FieldType;

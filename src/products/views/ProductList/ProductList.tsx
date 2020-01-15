@@ -10,7 +10,11 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { defaultListSettings, ProductListColumns } from "@saleor/config";
+import {
+  defaultListSettings,
+  ProductListColumns,
+  DEFAULT_INITIAL_SEARCH_DATA
+} from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -26,6 +30,8 @@ import { ListViews } from "@saleor/types";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import useCategorySearch from "@saleor/searches/useCategorySearch";
+import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -33,7 +39,8 @@ import {
 } from "../../mutations";
 import {
   AvailableInGridAttributesQuery,
-  TypedProductListQuery
+  TypedProductListQuery,
+  useInitialProductFilterDataQuery
 } from "../../queries";
 import { productBulkDelete } from "../../types/productBulkDelete";
 import { productBulkPublish } from "../../types/productBulkPublish";
@@ -73,6 +80,19 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ListViews.PRODUCT_LIST
   );
   const intl = useIntl();
+  const { data: initialFilterData } = useInitialProductFilterDataQuery({
+    skip: !(!!params.categories || !!params.collections),
+    variables: {
+      categories: params.categories,
+      collections: params.collections
+    }
+  });
+  const searchCategories = useCategorySearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const searchCollections = useCollectionSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
 
   React.useEffect(
     () =>
@@ -156,6 +176,24 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [params, settings.rowNumber]
   );
 
+  const filterOpts = getFilterOpts(
+    params,
+    {
+      initial: maybe(
+        () => initialFilterData.categories.edges.map(edge => edge.node),
+        []
+      ),
+      search: searchCategories
+    },
+    {
+      initial: maybe(
+        () => initialFilterData.collections.edges.map(edge => edge.node),
+        []
+      ),
+      search: searchCollections
+    }
+  );
+
   return (
     <AvailableInGridAttributesQuery
       variables={{ first: 6, ids: settings.columns }}
@@ -218,7 +256,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           defaultSettings={
                             defaultListSettings[ListViews.PRODUCT_LIST]
                           }
-                          filterOpts={getFilterOpts(params)}
+                          filterOpts={filterOpts}
                           gridAttributes={maybe(
                             () =>
                               attributes.data.grid.edges.map(edge => edge.node),

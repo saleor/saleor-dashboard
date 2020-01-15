@@ -7,8 +7,7 @@ import {
 } from "@saleor/utils/filters/fields";
 import {
   VoucherDiscountType,
-  DiscountStatusEnum,
-  DiscountValueTypeEnum
+  DiscountStatusEnum
 } from "@saleor/types/globalTypes";
 import { MinMax, FilterOpts } from "@saleor/types";
 import { IFilter } from "@saleor/components/Filter";
@@ -118,11 +117,15 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.fixed),
-            value: DiscountValueTypeEnum.FIXED
+            value: VoucherDiscountType.FIXED
           },
           {
             label: intl.formatMessage(messages.percentage),
-            value: DiscountValueTypeEnum.PERCENTAGE
+            value: VoucherDiscountType.PERCENTAGE
+          },
+          {
+            label: intl.formatMessage(messages.percentage),
+            value: VoucherDiscountType.SHIPPING
           }
         ]
       ),

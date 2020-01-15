@@ -1,14 +1,37 @@
 import { update } from "@saleor/utils/lists";
 import { IFilter, IFilterElementMutableData } from "./types";
 
-export type FilterReducerActionType = "clear" | "reset" | "set-property";
+export type FilterReducerActionType =
+  | "clear"
+  | "merge"
+  | "reset"
+  | "set-property";
 export interface FilterReducerAction<T extends string> {
   type: FilterReducerActionType;
   payload: Partial<{
     name: T;
     update: Partial<IFilterElementMutableData>;
-    reset: IFilter<T>;
+    new: IFilter<T>;
   }>;
+}
+
+function merge<T extends string>(
+  prevState: IFilter<T>,
+  newState: IFilter<T>
+): IFilter<T> {
+  return newState.map(newFilter => {
+    const prevFilter = prevState.find(
+      prevFilter => prevFilter.name === newFilter.name
+    );
+    if (!!prevFilter) {
+      return {
+        ...newFilter,
+        active: prevFilter.active
+      };
+    }
+
+    return newFilter;
+  });
 }
 
 function setProperty<T extends string>(
@@ -32,8 +55,10 @@ function reduceFilter<T extends string>(
   switch (action.type) {
     case "set-property":
       return setProperty(prevState, action.payload.name, action.payload.update);
+    case "merge":
+      return merge(prevState, action.payload.new);
     case "reset":
-      return action.payload.reset;
+      return action.payload.new;
 
     default:
       return prevState;

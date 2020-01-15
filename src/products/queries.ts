@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import makeQuery from "@saleor/hooks/makeQuery";
 import { pageInfoFragment, TypedQuery } from "../queries";
 import {
   AvailableInGridAttributes,
@@ -22,6 +23,10 @@ import {
   ProductVariantDetails,
   ProductVariantDetailsVariables
 } from "./types/ProductVariantDetails";
+import {
+  InitialProductFilterData,
+  InitialProductFilterDataVariables
+} from "./types/InitialProductFilterData";
 
 export const fragmentMoney = gql`
   fragment Money on Money {
@@ -208,6 +213,31 @@ export const fragmentVariant = gql`
     quantityAllocated
   }
 `;
+
+const initialProductFilterDataQuery = gql`
+  query InitialProductFilterData($categories: [ID!], $collections: [ID!]) {
+    categories(first: 20, filter: { ids: $categories }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+    collections(first: 20, filter: { ids: $collections }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+export const useInitialProductFilterDataQuery = makeQuery<
+  InitialProductFilterData,
+  InitialProductFilterDataVariables
+>(initialProductFilterDataQuery);
 
 const productListQuery = gql`
   ${productFragment}
