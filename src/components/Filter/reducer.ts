@@ -26,7 +26,8 @@ function merge<T extends string>(
     if (!!prevFilter) {
       return {
         ...newFilter,
-        active: prevFilter.active
+        active: prevFilter.active,
+        value: prevFilter.value
       };
     }
 
