@@ -1,5 +1,6 @@
 import React from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { FormattedMessage } from "react-intl";
@@ -30,6 +31,9 @@ const useStyles = makeStyles(
     inputContainer: {
       marginBottom: theme.spacing(1)
     },
+    noResults: {
+      marginTop: theme.spacing(1)
+    },
     option: {
       left: -theme.spacing(0.5),
       position: "relative"
@@ -56,9 +60,12 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       displayValue => displayValue.value !== option.value
     )
   );
+  const displayNoResults =
+    availableOptions.length === 0 && fieldDisplayValues.length === 0;
   const displayHr = !(
     (fieldDisplayValues.length === 0 && availableOptions.length > 0) ||
-    (availableOptions.length === 0 && fieldDisplayValues.length > 0)
+    (availableOptions.length === 0 && fieldDisplayValues.length > 0) ||
+    displayNoResults
   );
 
   const handleChange = (option: MultiAutocompleteChoiceType) => {
@@ -110,6 +117,11 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
         </div>
       ))}
       {displayHr && <Hr className={classes.hr} />}
+      {displayNoResults && (
+        <Typography className={classes.noResults} color="textSecondary">
+          <FormattedMessage defaultMessage="No results" description="search" />
+        </Typography>
+      )}
       {availableOptions.map(option => (
         <div className={classes.option} key={option.value}>
           <FormControlLabel
