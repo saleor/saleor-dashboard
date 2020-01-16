@@ -1,5 +1,6 @@
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
+import { FilterReducerAction } from "./reducer";
 
 export enum FieldType {
   autocomplete,
@@ -26,6 +27,11 @@ export interface IFilterElement<T extends string = string>
   label: string;
   name: T;
   type: FieldType;
+}
+
+export interface FilterBaseFieldProps<T extends string = string> {
+  filterField: IFilterElement<T>;
+  onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
 }
 
 export type IFilter<T extends string = string> = Array<IFilterElement<T>>;

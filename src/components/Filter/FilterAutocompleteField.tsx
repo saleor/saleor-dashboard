@@ -9,16 +9,13 @@ import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import Link from "../Link";
 import Checkbox from "../Checkbox";
 import Hr from "../Hr";
-import { IFilterElement } from "./types";
-import { FilterReducerAction } from "./reducer";
+import { FilterBaseFieldProps } from "./types";
 
-interface FilterAutocompleteFieldProps {
+interface FilterAutocompleteFieldProps extends FilterBaseFieldProps {
   displayValues: Record<string, MultiAutocompleteChoiceType[]>;
-  filterField: IFilterElement<string>;
   setDisplayValues: (
     values: Record<string, MultiAutocompleteChoiceType[]>
   ) => void;
-  onFilterPropertyChange: React.Dispatch<FilterReducerAction<string>>;
 }
 
 const useStyles = makeStyles(
