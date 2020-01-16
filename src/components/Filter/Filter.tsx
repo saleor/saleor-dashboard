@@ -132,6 +132,9 @@ const Filter: React.FC<FilterProps> = props => {
             flip: {
               enabled: false
             },
+            hide: {
+              enabled: false
+            },
             preventOverflow: {
               boundariesElement: "scrollParent",
               enabled: false
