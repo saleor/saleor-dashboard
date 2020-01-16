@@ -13,6 +13,7 @@ import { StockAvailability } from "@saleor/types/globalTypes";
 import { categories } from "@saleor/categories/fixtures";
 import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
 import { collections } from "@saleor/collections/fixtures";
+import { productTypes } from "@saleor/productTypes/fixtures";
 import { getFilterVariables, getFilterQueryParam } from "./filters";
 
 describe("Filtering query params", () => {
@@ -78,6 +79,22 @@ describe("Filtering URL params", () => {
         max: "20",
         min: "10"
       }
+    },
+    productType: {
+      ...fetchMoreProps,
+      ...searchPageProps,
+      active: false,
+      choices: productTypes.slice(3).map(category => ({
+        label: category.name,
+        value: category.id
+      })),
+      displayValues: [
+        {
+          label: productTypes[3].name,
+          value: productTypes[3].id
+        }
+      ],
+      value: [productTypes[4].id]
     },
     status: {
       active: false,

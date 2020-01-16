@@ -34,8 +34,7 @@ import {
   getMinMaxQueryParam,
   getSingleEnumValueQueryParam,
   dedupeFilter,
-  getMultipleValueQueryParam,
-  getSingleValueQueryParam
+  getMultipleValueQueryParam
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
