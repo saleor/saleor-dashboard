@@ -1,4 +1,5 @@
 import ButtonBase from "@material-ui/core/ButtonBase";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
@@ -96,58 +97,61 @@ const Filter: React.FC<FilterProps> = props => {
   const isFilterActive = menu.some(filterElement => filterElement.active);
 
   return (
-    <div ref={anchor}>
-      <ButtonBase
-        className={classNames(classes.filterButton, classes.addFilterButton, {
-          [classes.addFilterButtonActive]: isFilterMenuOpened || isFilterActive
-        })}
-        onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
-      >
-        <Typography className={classes.addFilterText}>
-          <FormattedMessage defaultMessage="Filters" description="button" />
-        </Typography>
-        {isFilterActive && (
-          <>
-            <span className={classes.separator} />
-            <Typography className={classes.addFilterText}>
-              {menu.reduce(
-                (acc, filterElement) => acc + (filterElement.active ? 1 : 0),
-                0
-              )}
-            </Typography>
-          </>
-        )}
-      </ButtonBase>
-      <Popper
-        className={classes.popover}
-        open={isFilterMenuOpened}
-        anchorEl={anchor.current}
-        transition
-        disablePortal
-        placement="bottom-start"
-      >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === "bottom" ? "right top" : "right bottom"
-            }}
-          >
-            <FilterContent
-              currencySymbol={currencySymbol}
-              filters={data}
-              onClear={reset}
-              onFilterPropertyChange={dispatch}
-              onSubmit={() => {
-                onFilterAdd(data);
-                setFilterMenuOpened(false);
+    <ClickAwayListener onClickAway={() => setFilterMenuOpened(false)}>
+      <div ref={anchor}>
+        <ButtonBase
+          className={classNames(classes.filterButton, classes.addFilterButton, {
+            [classes.addFilterButtonActive]:
+              isFilterMenuOpened || isFilterActive
+          })}
+          onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
+        >
+          <Typography className={classes.addFilterText}>
+            <FormattedMessage defaultMessage="Filters" description="button" />
+          </Typography>
+          {isFilterActive && (
+            <>
+              <span className={classes.separator} />
+              <Typography className={classes.addFilterText}>
+                {menu.reduce(
+                  (acc, filterElement) => acc + (filterElement.active ? 1 : 0),
+                  0
+                )}
+              </Typography>
+            </>
+          )}
+        </ButtonBase>
+        <Popper
+          className={classes.popover}
+          open={isFilterMenuOpened}
+          anchorEl={anchor.current}
+          transition
+          disablePortal
+          placement="bottom-start"
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin:
+                  placement === "bottom" ? "right top" : "right bottom"
               }}
-            />
-          </Grow>
-        )}
-      </Popper>
-    </div>
+            >
+              <FilterContent
+                currencySymbol={currencySymbol}
+                filters={data}
+                onClear={reset}
+                onFilterPropertyChange={dispatch}
+                onSubmit={() => {
+                  onFilterAdd(data);
+                  setFilterMenuOpened(false);
+                }}
+              />
+            </Grow>
+          )}
+        </Popper>
+      </div>
+    </ClickAwayListener>
   );
 };
 Filter.displayName = "Filter";
