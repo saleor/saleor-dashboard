@@ -215,8 +215,12 @@ export const fragmentVariant = gql`
 `;
 
 const initialProductFilterDataQuery = gql`
-  query InitialProductFilterData($categories: [ID!], $collections: [ID!]) {
-    categories(first: 20, filter: { ids: $categories }) {
+  query InitialProductFilterData(
+    $categories: [ID!]
+    $collections: [ID!]
+    $productTypes: [ID!]
+  ) {
+    categories(first: 100, filter: { ids: $categories }) {
       edges {
         node {
           id
@@ -224,7 +228,15 @@ const initialProductFilterDataQuery = gql`
         }
       }
     }
-    collections(first: 20, filter: { ids: $collections }) {
+    collections(first: 100, filter: { ids: $collections }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+    productTypes(first: 100, filter: { ids: $productTypes }) {
       edges {
         node {
           id

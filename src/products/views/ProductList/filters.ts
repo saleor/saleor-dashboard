@@ -11,12 +11,17 @@ import {
 } from "@saleor/searches/types/SearchCategories";
 import {
   InitialProductFilterData_categories_edges_node,
-  InitialProductFilterData_collections_edges_node
+  InitialProductFilterData_collections_edges_node,
+  InitialProductFilterData_productTypes_edges_node
 } from "@saleor/products/types/InitialProductFilterData";
 import {
   SearchCollections,
   SearchCollectionsVariables
 } from "@saleor/searches/types/SearchCollections";
+import {
+  SearchProductTypes,
+  SearchProductTypesVariables
+} from "@saleor/searches/types/SearchProductTypes";
 import { IFilterElement } from "../../../components/Filter";
 import {
   ProductFilterInput,
@@ -29,7 +34,8 @@ import {
   getMinMaxQueryParam,
   getSingleEnumValueQueryParam,
   dedupeFilter,
-  getMultipleValueQueryParam
+  getMultipleValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
@@ -49,6 +55,10 @@ export function getFilterOpts(
   collections: {
     initial: InitialProductFilterData_collections_edges_node[];
     search: UseSearchResult<SearchCollections, SearchCollectionsVariables>;
+  },
+  productTypes: {
+    initial: InitialProductFilterData_productTypes_edges_node[];
+    search: UseSearchResult<SearchProductTypes, SearchProductTypesVariables>;
   }
 ): ProductListFilterOpts {
   return {
@@ -62,14 +72,16 @@ export function getFilterOpts(
           })),
         []
       ),
-      displayValues: maybe(
-        () =>
-          categories.initial.map(category => ({
-            label: category.name,
-            value: category.id
-          })),
-        []
-      ),
+      displayValues: !!params.categories
+        ? maybe(
+            () =>
+              categories.initial.map(category => ({
+                label: category.name,
+                value: category.id
+              })),
+            []
+          )
+        : [],
       hasMore: maybe(
         () => categories.search.result.data.search.pageInfo.hasNextPage,
         false
@@ -90,14 +102,16 @@ export function getFilterOpts(
           })),
         []
       ),
-      displayValues: maybe(
-        () =>
-          collections.initial.map(category => ({
-            label: category.name,
-            value: category.id
-          })),
-        []
-      ),
+      displayValues: !!params.collections
+        ? maybe(
+            () =>
+              collections.initial.map(category => ({
+                label: category.name,
+                value: category.id
+              })),
+            []
+          )
+        : undefined,
       hasMore: maybe(
         () => collections.search.result.data.search.pageInfo.hasNextPage,
         false
@@ -118,6 +132,36 @@ export function getFilterOpts(
         max: maybe(() => params.priceTo, "0"),
         min: maybe(() => params.priceFrom, "0")
       }
+    },
+    productType: {
+      active: !!params.productTypes,
+      choices: maybe(
+        () =>
+          productTypes.search.result.data.search.edges.map(edge => ({
+            label: edge.node.name,
+            value: edge.node.id
+          })),
+        []
+      ),
+      displayValues: !!params.productTypes
+        ? maybe(
+            () =>
+              productTypes.initial.map(productType => ({
+                label: productType.name,
+                value: productType.id
+              })),
+            []
+          )
+        : [],
+      hasMore: maybe(
+        () => productTypes.search.result.data.search.pageInfo.hasNextPage,
+        false
+      ),
+      initialSearch: "",
+      loading: productTypes.search.result.loading,
+      onFetchMore: productTypes.search.loadMore,
+      onSearchChange: productTypes.search.search,
+      value: maybe(() => dedupeFilter(params.productTypes), [])
     },
     status: {
       active: maybe(() => params.status !== undefined, false),
@@ -144,6 +188,8 @@ export function getFilterVariables(
       gte: parseFloat(params.priceFrom),
       lte: parseFloat(params.priceTo)
     }),
+    productType:
+      params.productTypes !== undefined ? params.productTypes[0] : null,
     search: params.query,
     stockAvailability:
       params.stockStatus !== undefined
@@ -175,6 +221,12 @@ export function getFilterQueryParam(
         filter,
         ProductListUrlFiltersEnum.priceFrom,
         ProductListUrlFiltersEnum.priceTo
+      );
+
+    case ProductFilterKeys.productType:
+      return getMultipleValueQueryParam(
+        filter,
+        ProductListUrlFiltersWithMultipleValues.productTypes
       );
 
     case ProductFilterKeys.status:

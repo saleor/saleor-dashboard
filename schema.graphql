@@ -3276,6 +3276,7 @@ input ProductTypeFilterInput {
   search: String
   configurable: ProductTypeConfigurable
   productType: ProductTypeEnum
+  ids: [ID]
 }
 
 input ProductTypeInput {

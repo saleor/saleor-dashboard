@@ -33,7 +33,8 @@ export enum ProductListUrlFiltersEnum {
 }
 export enum ProductListUrlFiltersWithMultipleValues {
   categories = "categories",
-  collections = "collections"
+  collections = "collections",
+  productTypes = "productTypes"
 }
 export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum> &
   FiltersWithMultipleValues<ProductListUrlFiltersWithMultipleValues>;

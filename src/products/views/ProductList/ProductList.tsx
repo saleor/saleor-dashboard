@@ -32,6 +32,7 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
+import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -81,17 +82,34 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   );
   const intl = useIntl();
   const { data: initialFilterData } = useInitialProductFilterDataQuery({
-    skip: !(!!params.categories || !!params.collections),
+    skip: !(
+      !!params.categories ||
+      !!params.collections ||
+      !!params.productTypes
+    ),
     variables: {
       categories: params.categories,
-      collections: params.collections
+      collections: params.collections,
+      productTypes: params.productTypes
     }
   });
   const searchCategories = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5
+    }
   });
   const searchCollections = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5
+    }
+  });
+  const searchProductTypes = useProductTypeSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5
+    }
   });
 
   React.useEffect(
@@ -191,6 +209,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         []
       ),
       search: searchCollections
+    },
+    {
+      initial: maybe(
+        () => initialFilterData.productTypes.edges.map(edge => edge.node),
+        []
+      ),
+      search: searchProductTypes
     }
   );
 

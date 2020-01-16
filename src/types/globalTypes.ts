@@ -1028,6 +1028,7 @@ export interface ProductTypeFilterInput {
   search?: string | null;
   configurable?: ProductTypeConfigurable | null;
   productType?: ProductTypeEnum | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface ProductTypeInput {

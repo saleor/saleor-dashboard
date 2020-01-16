@@ -38,12 +38,30 @@ export interface InitialProductFilterData_collections {
   edges: InitialProductFilterData_collections_edges[];
 }
 
+export interface InitialProductFilterData_productTypes_edges_node {
+  __typename: "ProductType";
+  id: string;
+  name: string;
+}
+
+export interface InitialProductFilterData_productTypes_edges {
+  __typename: "ProductTypeCountableEdge";
+  node: InitialProductFilterData_productTypes_edges_node;
+}
+
+export interface InitialProductFilterData_productTypes {
+  __typename: "ProductTypeCountableConnection";
+  edges: InitialProductFilterData_productTypes_edges[];
+}
+
 export interface InitialProductFilterData {
   categories: InitialProductFilterData_categories | null;
   collections: InitialProductFilterData_collections | null;
+  productTypes: InitialProductFilterData_productTypes | null;
 }
 
 export interface InitialProductFilterDataVariables {
   categories?: string[] | null;
   collections?: string[] | null;
+  productTypes?: string[] | null;
 }

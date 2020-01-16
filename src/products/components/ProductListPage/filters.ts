@@ -15,6 +15,7 @@ export enum ProductFilterKeys {
   collections = "collections",
   status = "status",
   price = "price",
+  productType = "productType",
   stock = "stock"
 }
 
@@ -22,6 +23,7 @@ export interface ProductListFilterOpts {
   categories: FilterOpts<string[]> & AutocompleteFilterOpts;
   collections: FilterOpts<string[]> & AutocompleteFilterOpts;
   price: FilterOpts<MinMax>;
+  productType: FilterOpts<string[]> & AutocompleteFilterOpts;
   status: FilterOpts<ProductStatus>;
   stockStatus: FilterOpts<StockAvailability>;
 }
@@ -147,6 +149,24 @@ export function createFilterStructure(
         }
       ),
       active: opts.collections.active
+    },
+    {
+      ...createAutocompleteField(
+        ProductFilterKeys.productType,
+        intl.formatMessage(sectionNames.productTypes),
+        opts.productType.value,
+        opts.productType.displayValues,
+        true,
+        opts.productType.choices,
+        {
+          hasMore: opts.productType.hasMore,
+          initialSearch: "",
+          loading: opts.productType.loading,
+          onFetchMore: opts.productType.onFetchMore,
+          onSearchChange: opts.productType.onSearchChange
+        }
+      ),
+      active: opts.productType.active
     }
   ];
 }
