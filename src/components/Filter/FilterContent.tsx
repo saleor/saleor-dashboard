@@ -22,9 +22,11 @@ import FormSpacer from "../FormSpacer";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "../MultiAutocompleteSelectField";
+import Link from "../Link";
 import { IFilter, FieldType, FilterType } from "./types";
 import Arrow from "./Arrow";
 import { FilterReducerAction } from "./reducer";
+import FilterAutocompleteField from "./FilterAutocompleteField";
 
 export interface FilterContentProps<T extends string = string> {
   currencySymbol: string;
@@ -428,51 +430,57 @@ const FilterContent: React.FC<FilterContentProps> = ({
                     ))}
                   {filterField.type === FieldType.autocomplete &&
                     filterField.multiple && (
-                      <MultiAutocompleteSelectField
-                        displayValues={
-                          autocompleteDisplayValues[filterField.name]
-                        }
-                        label={filterField.label}
-                        choices={filterField.options}
-                        name={filterField.name}
-                        value={filterField.value}
-                        // helperText={intl.formatMessage({
-                        //   defaultMessage:
-                        //     "*Optional. Adding product to collection helps users find it.",
-                        //   description: "field is optional"
-                        // })}
-                        onChange={createMultiAutocompleteSelectHandler(
-                          event =>
-                            onFilterPropertyChange({
-                              payload: {
-                                name: filterField.name,
-                                update: {
-                                  value: toggle(
-                                    event.target.value,
-                                    filterField.value,
-                                    (a, b) => a === b
-                                  )
-                                }
-                              },
-                              type: "set-property"
-                            }),
-                          value =>
-                            setAutocompleteDisplayValues({
-                              ...autocompleteDisplayValues,
-                              [filterField.name]: toggle(
-                                value[0],
-                                autocompleteDisplayValues[filterField.name],
-                                (a, b) => a.value === b.value
-                              )
-                            }),
-                          [],
-                          filterField.options
-                        )}
-                        fetchChoices={filterField.onSearchChange}
-                        loading={filterField.loading}
-                        data-tc={filterField.name}
-                        key={filterField.name}
+                      <FilterAutocompleteField
+                        displayValues={autocompleteDisplayValues}
+                        filterField={filterField}
+                        setDisplayValues={setAutocompleteDisplayValues}
+                        onFilterPropertyChange={onFilterPropertyChange}
                       />
+                      // <MultiAutocompleteSelectField
+                      //   displayValues={
+                      //     autocompleteDisplayValues[filterField.name]
+                      //   }
+                      //   label={filterField.label}
+                      //   choices={filterField.options}
+                      //   name={filterField.name}
+                      //   value={filterField.value}
+                      //   // helperText={intl.formatMessage({
+                      //   //   defaultMessage:
+                      //   //     "*Optional. Adding product to collection helps users find it.",
+                      //   //   description: "field is optional"
+                      //   // })}
+                      // onChange={createMultiAutocompleteSelectHandler(
+                      //   event =>
+                      //     onFilterPropertyChange({
+                      //       payload: {
+                      //         name: filterField.name,
+                      //         update: {
+                      //           value: toggle(
+                      //             event.target.value,
+                      //             filterField.value,
+                      //             (a, b) => a === b
+                      //           )
+                      //         }
+                      //       },
+                      //       type: "set-property"
+                      //     }),
+                      //   value =>
+                      //     setAutocompleteDisplayValues({
+                      //       ...autocompleteDisplayValues,
+                      //       [filterField.name]: toggle(
+                      //         value[0],
+                      //         autocompleteDisplayValues[filterField.name],
+                      //         (a, b) => a.value === b.value
+                      //       )
+                      //     }),
+                      //   [],
+                      //   filterField.options
+                      // )}
+                      //   fetchChoices={filterField.onSearchChange}
+                      //   loading={filterField.loading}
+                      //   data-tc={filterField.name}
+                      //   key={filterField.name}
+                      // />
                     )}
                 </div>
               )}

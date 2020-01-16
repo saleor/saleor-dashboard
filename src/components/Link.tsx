@@ -44,7 +44,7 @@ const Link: React.FC<LinkProps> = props => {
   return (
     <Typography
       component="a"
-      className={classNames({
+      className={classNames(className, {
         [classes.root]: true,
         [classes[color]]: true,
         [classes.underline]: underline
