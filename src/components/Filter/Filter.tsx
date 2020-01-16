@@ -128,6 +128,15 @@ const Filter: React.FC<FilterProps> = props => {
           transition
           disablePortal
           placement="bottom-start"
+          modifiers={{
+            flip: {
+              enabled: false
+            },
+            preventOverflow: {
+              boundariesElement: "scrollParent",
+              enabled: false
+            }
+          }}
         >
           {({ TransitionProps, placement }) => (
             <Grow

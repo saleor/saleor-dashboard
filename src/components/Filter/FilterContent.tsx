@@ -11,22 +11,18 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { buttonMessages } from "@saleor/intl";
 import { TextField } from "@material-ui/core";
-import { toggle } from "@saleor/utils/lists";
-import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import Hr from "../Hr";
 import Checkbox from "../Checkbox";
 import SingleSelectField from "../SingleSelectField";
 import { SingleAutocompleteChoiceType } from "../SingleAutocompleteSelectField";
 import FormSpacer from "../FormSpacer";
-import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType
-} from "../MultiAutocompleteSelectField";
-import Link from "../Link";
+import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { IFilter, FieldType, FilterType } from "./types";
 import Arrow from "./Arrow";
 import { FilterReducerAction } from "./reducer";
 import FilterAutocompleteField from "./FilterAutocompleteField";
+import FilterOptionField from "./FilterOptionField";
 
 export interface FilterContentProps<T extends string = string> {
   currencySymbol: string;
@@ -341,61 +337,12 @@ const FilterContent: React.FC<FilterContentProps> = ({
                       </div>
                     </>
                   )}
-                  {filterField.type === FieldType.options &&
-                    (filterField.multiple ? (
-                      filterField.options.map(option => (
-                        <div className={classes.option} key={option.value}>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={filterField.value.includes(
-                                  option.value
-                                )}
-                              />
-                            }
-                            label={option.label}
-                            name={filterField.name}
-                            onChange={() =>
-                              onFilterPropertyChange({
-                                payload: {
-                                  name: filterField.name,
-                                  update: {
-                                    value: toggle(
-                                      option.value,
-                                      filterField.value,
-                                      (a, b) => a === b
-                                    )
-                                  }
-                                },
-                                type: "set-property"
-                              })
-                            }
-                          />
-                        </div>
-                      ))
-                    ) : (
-                      <SingleSelectField
-                        choices={filterField.options}
-                        name={filterField.name}
-                        value={filterField.value[0]}
-                        InputProps={{
-                          classes: {
-                            input: classes.input
-                          }
-                        }}
-                        onChange={event =>
-                          onFilterPropertyChange({
-                            payload: {
-                              name: filterField.name,
-                              update: {
-                                value: [event.target.value]
-                              }
-                            },
-                            type: "set-property"
-                          })
-                        }
-                      />
-                    ))}
+                  {filterField.type === FieldType.options && (
+                    <FilterOptionField
+                      filterField={filterField}
+                      onFilterPropertyChange={onFilterPropertyChange}
+                    />
+                  )}
                   {filterField.type === FieldType.boolean &&
                     filterField.options.map(option => (
                       <div
