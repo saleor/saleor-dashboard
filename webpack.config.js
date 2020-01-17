@@ -35,6 +35,10 @@ module.exports = (env, argv) => {
   let fileLoaderPath;
   let output;
 
+  if(!process.env.API_URI) {
+    throw new Error("Environment variable API_URI not set")
+  }
+
   if (!devMode) {
     const publicPath = process.env.STATIC_URL || "/";
     output = {
