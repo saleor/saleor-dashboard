@@ -24,6 +24,7 @@ export interface IFilterElement<T extends string = string>
     Partial<FetchMoreProps & SearchPageProps> {
   autocomplete?: boolean;
   displayValues?: MultiAutocompleteChoiceType[];
+  group?: T;
   label: string;
   name: T;
   type: FieldType;

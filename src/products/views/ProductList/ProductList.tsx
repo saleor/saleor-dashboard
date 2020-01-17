@@ -82,11 +82,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   );
   const intl = useIntl();
   const { data: initialFilterData } = useInitialProductFilterDataQuery({
-    skip: !(
-      !!params.categories ||
-      !!params.collections ||
-      !!params.productTypes
-    ),
     variables: {
       categories: params.categories,
       collections: params.collections,
@@ -196,6 +191,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
+    maybe(() => initialFilterData.attributes.edges.map(edge => edge.node), []),
     {
       initial: maybe(
         () => initialFilterData.categories.edges.map(edge => edge.node),

@@ -141,7 +141,7 @@ export interface SimpleProductUpdate_productUpdate_product_variants {
   priceOverride: SimpleProductUpdate_productUpdate_product_variants_priceOverride | null;
   margin: number | null;
   quantity: number;
-  quantityAllocated: number;
+  quantityAllocated: number | null;
   stockQuantity: number;
 }
 
@@ -282,7 +282,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant {
   product: SimpleProductUpdate_productVariantUpdate_productVariant_product;
   sku: string;
   quantity: number;
-  quantityAllocated: number;
+  quantityAllocated: number | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate {

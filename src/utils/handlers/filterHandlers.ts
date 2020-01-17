@@ -1,14 +1,10 @@
-import { IFilter, IFilterElement } from "@saleor/components/Filter";
+import { IFilter } from "@saleor/components/Filter";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { Sort, Pagination, ActiveTab, Search } from "@saleor/types";
-import { getFilterQueryParams } from "../filters";
+import { getFilterQueryParams, GetFilterQueryParam } from "../filters";
 
 type RequiredParams = ActiveTab & Search & Sort & Pagination;
 type CreateUrl = (params: RequiredParams) => string;
-type GetFilterQueryParam<
-  TFilterKeys extends string,
-  TFilters extends object
-> = (filter: IFilterElement<TFilterKeys>) => TFilters;
 type CreateFilterHandlers<TFilterKeys extends string> = [
   (filter: IFilter<TFilterKeys>) => void,
   () => void,

@@ -711,7 +711,8 @@ export interface AttributeFilterInput {
 
 export interface AttributeInput {
   slug: string;
-  value: string;
+  value?: string | null;
+  values?: (string | null)[] | null;
 }
 
 export interface AttributeSortingInput {
@@ -1016,6 +1017,7 @@ export interface ProductFilterInput {
   productType?: string | null;
   search?: string | null;
   minimalPrice?: PriceRangeInput | null;
+  productTypes?: (string | null)[] | null;
 }
 
 export interface ProductOrder {

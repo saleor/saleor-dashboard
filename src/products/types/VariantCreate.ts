@@ -109,7 +109,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
   product: VariantCreate_productVariantCreate_productVariant_product;
   sku: string;
   quantity: number;
-  quantityAllocated: number;
+  quantityAllocated: number | null;
 }
 
 export interface VariantCreate_productVariantCreate {

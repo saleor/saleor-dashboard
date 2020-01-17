@@ -106,7 +106,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant {
   product: VariantImageUnassign_variantImageUnassign_productVariant_product;
   sku: string;
   quantity: number;
-  quantityAllocated: number;
+  quantityAllocated: number | null;
 }
 
 export interface VariantImageUnassign_variantImageUnassign {

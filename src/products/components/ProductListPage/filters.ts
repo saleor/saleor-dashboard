@@ -9,8 +9,10 @@ import {
 } from "@saleor/utils/filters/fields";
 import { IFilter } from "@saleor/components/Filter";
 import { sectionNames } from "@saleor/intl";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 
 export enum ProductFilterKeys {
+  attributes = "attributes",
   categories = "categories",
   collections = "collections",
   status = "status",
@@ -20,6 +22,13 @@ export enum ProductFilterKeys {
 }
 
 export interface ProductListFilterOpts {
+  attributes: Array<
+    FilterOpts<string[]> & {
+      choices: MultiAutocompleteChoiceType[];
+      name: string;
+      slug: string;
+    }
+  >;
   categories: FilterOpts<string[]> & AutocompleteFilterOpts;
   collections: FilterOpts<string[]> & AutocompleteFilterOpts;
   price: FilterOpts<MinMax>;
@@ -167,6 +176,17 @@ export function createFilterStructure(
         }
       ),
       active: opts.productType.active
-    }
+    },
+    ...opts.attributes.map(attr => ({
+      ...createOptionsField(
+        attr.slug as any,
+        attr.name,
+        attr.value,
+        true,
+        attr.choices
+      ),
+      active: attr.active,
+      group: ProductFilterKeys.attributes
+    }))
   ];
 }

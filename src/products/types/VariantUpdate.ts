@@ -109,7 +109,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   product: VariantUpdate_productVariantUpdate_productVariant_product;
   sku: string;
   quantity: number;
-  quantityAllocated: number;
+  quantityAllocated: number | null;
 }
 
 export interface VariantUpdate_productVariantUpdate {

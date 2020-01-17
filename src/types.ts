@@ -135,6 +135,9 @@ export type Filters<TFilters extends string> = Partial<
 export type FiltersWithMultipleValues<TFilters extends string> = Partial<
   Record<TFilters, string[]>
 >;
+export type FiltersAsDictWithMultipleValues<TFilters extends string> = Partial<
+  Record<TFilters, Record<string, string[]>>
+>;
 export type Search = Partial<{
   query: string;
 }>;
