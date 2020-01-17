@@ -4,14 +4,14 @@
 # Radosław Trojanowski <trojanowski.radek@gmail.com>, 2019
 # Michał Sipa <michal.sipa@gmail.com>, 2019
 # Szymon Jasiński <szymon@szymi.com>, 2019
-# Ewa Dacko <ewa.dacko@gmail.com>, 2019
 # Patryk Zawadzki <patrys@room-303.com>, 2019
 # Filip Kucharczyk, 2019
+# Dominik Żegleń <flesz3@o2.pl>, 2020
 # 
 msgid ""
 msgstr ""
 "POT-Creation-Date: 2019-12-04T14:17:34.264Z\n"
-"Last-Translator: Filip Kucharczyk, 2019\n"
+"Last-Translator: Dominik Żegleń <flesz3@o2.pl>, 2020\n"
 "Language-Team: Polish (https://www.transifex.com/mirumee/teams/34782/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +31,7 @@ msgstr ""
 #: build/locale/src/collections/components/CollectionImage/CollectionImage.json
 msgctxt "field is optional"
 msgid "(Optional)"
-msgstr "(opcja)"
+msgstr "(opcjonalne)"
 
 #. [src.products.components.ProductOrganization.2805838453] - field is
 #. optional
@@ -41,6 +41,8 @@ msgstr "(opcja)"
 msgctxt "field is optional"
 msgid "*Optional. Adding product to collection helps users find it."
 msgstr ""
+"*Opcjonalne. Dodanie produktu do kolekcji ułatwi użytkownikom znalezienie "
+"go."
 
 #. [src.attributes.views.AttributeCreate.354316953] - attribute value edit
 #. error
@@ -49,7 +51,7 @@ msgstr ""
 #: build/locale/src/attributes/views/AttributeCreate/AttributeCreate.json
 msgctxt "attribute value edit error"
 msgid "A value named {name} already exists"
-msgstr ""
+msgstr "Wartość {name} już istnieje"
 
 #. [src.services.components.ServiceTokenCreateDialog.2530792168]
 #. defaultMessage is:
@@ -57,7 +59,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceTokenCreateDialog/ServiceTokenCreateDialog.json
 msgctxt "description"
 msgid "Access token is used to authenticate service accounts"
-msgstr ""
+msgstr "Token dostępu jest używany do autentykacji kont usług"
 
 #. [src.taxes.components.CountryTaxesPage.1040021611] - tax rate
 #. defaultMessage is:
@@ -73,7 +75,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceInfo/ServiceInfo.json
 msgctxt "service account"
 msgid "Account Name"
-msgstr ""
+msgstr "Nazwa Konta"
 
 #. [src.components.AppLayout.248888005] - button
 #. defaultMessage is:
@@ -81,7 +83,7 @@ msgstr ""
 #: build/locale/src/components/AppLayout/AppLayout.json
 msgctxt "button"
 msgid "Account Settings"
-msgstr ""
+msgstr "Ustawienia Konta"
 
 #. [src.components.AccountStatus.2183517419] - section header
 #. defaultMessage is:
@@ -89,7 +91,7 @@ msgstr ""
 #: build/locale/src/components/AccountStatus/AccountStatus.json
 msgctxt "section header"
 msgid "Account Status"
-msgstr ""
+msgstr "Status Konta"
 
 #. [src.plugins.components.PluginsList.4120604650] - user action bar
 #. defaultMessage is:
@@ -101,7 +103,7 @@ msgstr ""
 #: build/locale/src/webhooks/components/WebhooksList/WebhooksList.json
 msgctxt "user action bar"
 msgid "Action"
-msgstr ""
+msgstr "Akcja"
 
 #. [src.services.components.ServiceTokens.4190792473] - table actions
 #. defaultMessage is:
@@ -109,7 +111,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceTokens/ServiceTokens.json
 msgctxt "table actions"
 msgid "Actions"
-msgstr ""
+msgstr "Akcje"
 
 #. [src.plugins.components.PluginsList.3247064221] - plugin status
 #. defaultMessage is:
@@ -117,7 +119,7 @@ msgstr ""
 #: build/locale/src/plugins/components/PluginsList/PluginsList.json
 msgctxt "plugin status"
 msgid "Active"
-msgstr "Aktywny"
+msgstr "Aktywna"
 
 #. [src.staff.components.StaffList.3247064221] - staff member status
 #. defaultMessage is:
@@ -134,7 +136,7 @@ msgstr "Aktywny"
 #: build/locale/src/discounts/components/DiscountDates/DiscountDates.json
 msgctxt "time during discount is active, header"
 msgid "Active Dates"
-msgstr ""
+msgstr "Okres Aktywności"
 
 #. [src.discounts.components.VoucherDates.1662220323] - time during voucher is
 #. active, header
@@ -143,7 +145,7 @@ msgstr ""
 #: build/locale/src/discounts/components/VoucherDates/VoucherDates.json
 msgctxt "time during voucher is active, header"
 msgid "Active Dates"
-msgstr ""
+msgstr "Okres Aktywności"
 
 #. [src.customers.components.CustomerDetails.3298169382] - section subheader
 #. defaultMessage is:
@@ -151,7 +153,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerDetails/CustomerDetails.json
 msgctxt "section subheader"
 msgid "Active member since {date}"
-msgstr ""
+msgstr "Aktywny członek od {date}"
 
 #. [homeActivityCardHeader] - header
 #. defaultMessage is:
@@ -175,7 +177,7 @@ msgstr "Dodaj"
 #: build/locale/src/customers/components/CustomerAddressDialog/CustomerAddressDialog.json
 msgctxt "dialog title"
 msgid "Add Address"
-msgstr ""
+msgstr "Dodaj Adres"
 
 #. [src.collections.components.CollectionCreatePage.951411809] - page header
 #. defaultMessage is:
@@ -183,7 +185,7 @@ msgstr ""
 #: build/locale/src/collections/components/CollectionCreatePage/CollectionCreatePage.json
 msgctxt "page header"
 msgid "Add Collection"
-msgstr ""
+msgstr "Dodaj Kolekcję"
 
 #. [src.components.Filter.2852521946] - button
 #. defaultMessage is:
@@ -191,7 +193,7 @@ msgstr ""
 #: build/locale/src/components/Filter/Filter.json
 msgctxt "button"
 msgid "Add Filter"
-msgstr ""
+msgstr "Dodaj Filtr"
 
 #. [src.components.RichTextEditor.1603794322] - dialog header
 #. defaultMessage is:
@@ -199,7 +201,7 @@ msgstr ""
 #: build/locale/src/components/RichTextEditor/ImageSource.json
 msgctxt "dialog header"
 msgid "Add Image Link"
-msgstr ""
+msgstr "Dodaj Link do Obrazu"
 
 #. [menuItemDialogAddItem] - create new menu item, header
 #. defaultMessage is:
@@ -207,7 +209,7 @@ msgstr ""
 #: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
 msgctxt "create new menu item, header"
 msgid "Add Item"
-msgstr ""
+msgstr "Dodaj Obiekt"
 
 #. [src.siteSettings.components.SiteSettingsKeyDialog.1238948746] - dialog
 #. header
@@ -216,7 +218,7 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
 msgctxt "dialog header"
 msgid "Add New Authorization Key"
-msgstr ""
+msgstr "Dodaj Nowy Klucz Autoryzacyjny"
 
 #. [src.shipping.components.ShippingZoneRateDialog.2892088870] - dialog header
 #. defaultMessage is:
@@ -233,7 +235,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog.json
 msgctxt "dialog header"
 msgid "Add Tracking Code"
-msgstr ""
+msgstr "Dodaj Kod Śledzenia"
 
 #. [src.attributes.components.AttributeValueEditDialog.1841790893] - add
 #. attribute value
@@ -242,7 +244,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
 msgctxt "add attribute value"
 msgid "Add Value"
-msgstr ""
+msgstr "Dodaj Wartość"
 
 #. [src.plugins.components.PluginSecretFieldDialog.3032939398] - header
 #. defaultMessage is:
@@ -250,7 +252,7 @@ msgstr ""
 #: build/locale/src/plugins/components/PluginSecretFieldDialog/PluginSecretFieldDialog.json
 msgctxt "header"
 msgid "Add Value to Authorization Field"
-msgstr ""
+msgstr "Dodaj Wartość do Pola Autoryzacyjnego"
 
 #. [src.shipping.components.ShippingZoneRateDialog.1397795758] - add weight
 #. based shipping method, dialog header
@@ -267,7 +269,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
 msgctxt "button"
 msgid "Add address"
-msgstr ""
+msgstr "Dodaj adres"
 
 #. [src.siteSettings.components.SiteSettingsKeyDialog.50561933] - button
 #. defaultMessage is:
@@ -275,7 +277,7 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsKeyDialog/SiteSettingsKeyDialog.json
 msgctxt "button"
 msgid "Add authentication"
-msgstr ""
+msgstr "Dodaj autentykację"
 
 #. [src.components.Filter.2851720415] - button
 #. defaultMessage is:
@@ -283,7 +285,7 @@ msgstr ""
 #: build/locale/src/components/Filter/FilterContent.json
 msgctxt "button"
 msgid "Add filter"
-msgstr ""
+msgstr "Dodaj filtr"
 
 #. [src.siteSettings.components.SiteSettingsKeys.1114030884] - button
 #. defaultMessage is:
@@ -291,7 +293,7 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsKeys/SiteSettingsKeys.json
 msgctxt "button"
 msgid "Add key"
-msgstr ""
+msgstr "Dodaj klucz"
 
 #. [menuItemsPlaceholder]
 #. defaultMessage is:
@@ -299,7 +301,7 @@ msgstr ""
 #: build/locale/src/navigation/components/MenuItems/MenuItems.json
 msgctxt "description"
 msgid "Add new menu item to begin creating menu"
-msgstr ""
+msgstr "Dodaj nowy obiekt, aby zacząć tworzyć menu"
 
 #. [src.components.MultiAutocompleteSelectField.1477537381] - add custom
 #. select input option
@@ -313,7 +315,7 @@ msgstr ""
 #: build/locale/src/components/SingleAutocompleteSelectField/SingleAutocompleteSelectFieldContent.json
 msgctxt "add custom select input option"
 msgid "Add new value: {value}"
-msgstr ""
+msgstr "Dodaj nową wartość: {value}"
 
 #. [src.components.RichTextEditor.2160163587] - button
 #. defaultMessage is:
@@ -321,7 +323,7 @@ msgstr ""
 #: build/locale/src/components/RichTextEditor/LinkSource.json
 msgctxt "button"
 msgid "Add or Edit Link"
-msgstr ""
+msgstr "Dodaj lub Edytuj Link"
 
 #. [src.categories.components.CategoryProducts.3554578821] - button
 #. defaultMessage is:
@@ -337,7 +339,7 @@ msgstr "Dodaj produkt"
 #: build/locale/src/orders/components/OrderDraftDetails/OrderDraftDetails.json
 msgctxt "button"
 msgid "Add products"
-msgstr ""
+msgstr "Dodaj Produkty"
 
 #. [src.categories.components.CategoryCreatePage.2563994280]
 #. defaultMessage is:
@@ -353,6 +355,7 @@ msgctxt "description"
 msgid ""
 "Add search engine title and description to make this category easier to find"
 msgstr ""
+"Dodaj tytuł i opis dla przeglądarek, aby ułatwić znalezienie tej kategorii"
 
 #. [src.collections.components.CollectionCreatePage.946315389]
 #. defaultMessage is:
@@ -369,6 +372,7 @@ msgid ""
 "Add search engine title and description to make this collection easier to "
 "find"
 msgstr ""
+"Dodaj tytuł i opis dla przeglądarek, aby ułatwić znalezienie tej kolekcji"
 
 #. [src.pages.components.PageDetailsPage.1996767833]
 #. defaultMessage is:
@@ -378,6 +382,7 @@ msgctxt "description"
 msgid ""
 "Add search engine title and description to make this page easier to find"
 msgstr ""
+"Dodaj tytuł i opis dla przeglądarek, aby ułatwić znalezienie tej strony"
 
 #. [src.products.components.ProductCreatePage.2706108815]
 #. defaultMessage is:
@@ -391,6 +396,7 @@ msgctxt "description"
 msgid ""
 "Add search engine title and description to make this product easier to find"
 msgstr ""
+"Dodaj tytuł i opis dla przeglądarek, aby ułatwić znalezienie tego produktu"
 
 #. [src.orders.components.OrderDraftDetailsSummary.2429341469] - button
 #. defaultMessage is:
@@ -398,7 +404,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderDraftDetailsSummary/OrderDraftDetailsSummary.json
 msgctxt "button"
 msgid "Add shipping carrier"
-msgstr ""
+msgstr "Dodaj metodę wysyłki"
 
 #. [src.attributes.components.AttributeProperties.673770329] - add attribute
 #. as column in product list table
