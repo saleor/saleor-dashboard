@@ -7,7 +7,7 @@ import { products as productListFixture } from "@saleor/products/fixtures";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { attributes } from "@saleor/productTypes/fixtures";
 import { ListViews } from "@saleor/types";
-import { StockAvailability } from "@saleor/types/globalTypes";
+import { productListFilterOpts } from "@saleor/products/views/ProductList/fixtures";
 import {
   fetchMoreProps,
   filterPageProps,
@@ -16,8 +16,7 @@ import {
   sortPageProps
 } from "../../../fixtures";
 import ProductListPage, {
-  ProductListPageProps,
-  ProductStatus
+  ProductListPageProps
 } from "../../../products/components/ProductListPage";
 import Decorator from "../../Decorator";
 
@@ -38,23 +37,7 @@ const props: ProductListPageProps = {
   activeAttributeSortId: undefined,
   availableInGridAttributes: attributes,
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
-  filterOpts: {
-    price: {
-      active: false,
-      value: {
-        max: "30",
-        min: "10"
-      }
-    },
-    status: {
-      active: false,
-      value: ProductStatus.PUBLISHED
-    },
-    stockStatus: {
-      active: false,
-      value: StockAvailability.IN_STOCK
-    }
-  },
+  filterOpts: productListFilterOpts,
   gridAttributes: attributes,
   products,
   settings: {
