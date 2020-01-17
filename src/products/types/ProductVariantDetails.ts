@@ -100,7 +100,7 @@ export interface ProductVariantDetails_productVariant {
   product: ProductVariantDetails_productVariant_product;
   sku: string;
   quantity: number;
-  quantityAllocated: number;
+  quantityAllocated: number | null;
 }
 
 export interface ProductVariantDetails {

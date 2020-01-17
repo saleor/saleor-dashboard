@@ -100,5 +100,5 @@ export interface ProductVariant {
   product: ProductVariant_product;
   sku: string;
   quantity: number;
-  quantityAllocated: number;
+  quantityAllocated: number | null;
 }

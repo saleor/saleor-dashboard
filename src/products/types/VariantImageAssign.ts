@@ -106,7 +106,7 @@ export interface VariantImageAssign_variantImageAssign_productVariant {
   product: VariantImageAssign_variantImageAssign_productVariant_product;
   sku: string;
   quantity: number;
-  quantityAllocated: number;
+  quantityAllocated: number | null;
 }
 
 export interface VariantImageAssign_variantImageAssign {

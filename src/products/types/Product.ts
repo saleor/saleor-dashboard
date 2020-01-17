@@ -135,7 +135,7 @@ export interface Product_variants {
   priceOverride: Product_variants_priceOverride | null;
   margin: number | null;
   quantity: number;
-  quantityAllocated: number;
+  quantityAllocated: number | null;
   stockQuantity: number;
 }
 
