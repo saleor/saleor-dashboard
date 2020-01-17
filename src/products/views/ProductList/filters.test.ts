@@ -14,6 +14,7 @@ import { categories } from "@saleor/categories/fixtures";
 import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
 import { collections } from "@saleor/collections/fixtures";
 import { productTypes } from "@saleor/productTypes/fixtures";
+import { attributes } from "@saleor/attributes/fixtures";
 import { getFilterVariables, getFilterQueryParam } from "./filters";
 
 describe("Filtering query params", () => {
@@ -41,6 +42,16 @@ describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
+    attributes: attributes.map(attr => ({
+      active: false,
+      choices: attr.values.map(val => ({
+        label: val.name,
+        value: val.slug
+      })),
+      name: attr.name,
+      slug: attr.slug,
+      value: [attr.values[0].slug, attr.values[2].slug]
+    })),
     categories: {
       ...fetchMoreProps,
       ...searchPageProps,

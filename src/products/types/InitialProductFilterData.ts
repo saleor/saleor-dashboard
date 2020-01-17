@@ -6,6 +6,31 @@
 // GraphQL query operation: InitialProductFilterData
 // ====================================================
 
+export interface InitialProductFilterData_attributes_edges_node_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface InitialProductFilterData_attributes_edges_node {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  values: (InitialProductFilterData_attributes_edges_node_values | null)[] | null;
+}
+
+export interface InitialProductFilterData_attributes_edges {
+  __typename: "AttributeCountableEdge";
+  node: InitialProductFilterData_attributes_edges_node;
+}
+
+export interface InitialProductFilterData_attributes {
+  __typename: "AttributeCountableConnection";
+  edges: InitialProductFilterData_attributes_edges[];
+}
+
 export interface InitialProductFilterData_categories_edges_node {
   __typename: "Category";
   id: string;
@@ -55,6 +80,7 @@ export interface InitialProductFilterData_productTypes {
 }
 
 export interface InitialProductFilterData {
+  attributes: InitialProductFilterData_attributes | null;
   categories: InitialProductFilterData_categories | null;
   collections: InitialProductFilterData_collections | null;
   productTypes: InitialProductFilterData_productTypes | null;

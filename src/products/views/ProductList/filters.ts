@@ -1,3 +1,5 @@
+import isArray from "lodash-es/isArray";
+
 import { maybe, findValueInEnum } from "@saleor/misc";
 import {
   ProductFilterKeys,
@@ -12,7 +14,8 @@ import {
 import {
   InitialProductFilterData_categories_edges_node,
   InitialProductFilterData_collections_edges_node,
-  InitialProductFilterData_productTypes_edges_node
+  InitialProductFilterData_productTypes_edges_node,
+  InitialProductFilterData_attributes_edges_node
 } from "@saleor/products/types/InitialProductFilterData";
 import {
   SearchCollections,
@@ -47,6 +50,7 @@ export const PRODUCT_FILTERS_KEY = "productFilters";
 
 export function getFilterOpts(
   params: ProductListUrlFilters,
+  attributes: InitialProductFilterData_attributes_edges_node[],
   categories: {
     initial: InitialProductFilterData_categories_edges_node[];
     search: UseSearchResult<SearchCategories, SearchCategoriesVariables>;
@@ -61,6 +65,21 @@ export function getFilterOpts(
   }
 ): ProductListFilterOpts {
   return {
+    attributes: attributes
+      .sort((a, b) => (a.name > b.name ? 1 : -1))
+      .map(attr => ({
+        active: maybe(() => params.attributes[attr.slug].length > 0, false),
+        choices: attr.values.map(val => ({
+          label: val.name,
+          value: val.slug
+        })),
+        name: attr.name,
+        slug: attr.slug,
+        value:
+          !!params.attributes && params.attributes[attr.slug]
+            ? params.attributes[attr.slug]
+            : []
+      })),
     categories: {
       active: !!params.categories,
       choices: maybe(
@@ -177,6 +196,15 @@ export function getFilterVariables(
   params: ProductListUrlFilters
 ): ProductFilterInput {
   return {
+    attributes: !!params.attributes
+      ? Object.keys(params.attributes).map(key => ({
+          slug: key,
+          // It is possible for qs to parse values not as string[] but string
+          values: isArray(params.attributes[key])
+            ? params.attributes[key]
+            : (([params.attributes[key]] as unknown) as string[])
+        }))
+      : null,
     categories: params.categories !== undefined ? params.categories : null,
     collections: params.collections !== undefined ? params.collections : null,
     isPublished:
@@ -198,9 +226,28 @@ export function getFilterVariables(
 }
 
 export function getFilterQueryParam(
-  filter: IFilterElement<ProductFilterKeys>
+  filter: IFilterElement<ProductFilterKeys>,
+  params: ProductListUrlFilters
 ): ProductListUrlFilters {
-  const { name } = filter;
+  const { active, group, name, value } = filter;
+
+  if (!!group) {
+    if (active) {
+      return {
+        [group]:
+          params && params[group]
+            ? {
+                ...params[group],
+                [name]: [...params[group], value]
+              }
+            : {
+                [name]: [value]
+              }
+      };
+    }
+
+    return {};
+  }
 
   switch (name) {
     case ProductFilterKeys.categories:

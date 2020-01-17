@@ -34,12 +34,16 @@ export function dedupeFilter<T>(array: T[]): T[] {
   return Array.from(new Set(array));
 }
 
+export type GetFilterQueryParam<
+  TFilterKeys extends string,
+  TFilters extends object
+> = (filter: IFilterElement<TFilterKeys>, params?: object) => TFilters;
 export function getFilterQueryParams<
   TFilterKeys extends string,
   TUrlFilters extends object
 >(
   filter: IFilter<TFilterKeys>,
-  getFilterQueryParam: (filter: IFilterElement<TFilterKeys>) => TUrlFilters
+  getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TUrlFilters>
 ): TUrlFilters {
   return filter.reduce(
     (acc, filterField) => ({
