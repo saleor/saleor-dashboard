@@ -66,6 +66,7 @@ input AccountInput {
 
 type AccountRegister {
   errors: [Error!]
+  requiresConfirmation: Boolean!
   accountErrors: [AccountError!]
   user: User
 }
@@ -73,6 +74,7 @@ type AccountRegister {
 input AccountRegisterInput {
   email: String!
   password: String!
+  redirectUrl: String!
 }
 
 type AccountRequestDeletion {
@@ -287,7 +289,8 @@ input AttributeFilterInput {
 
 input AttributeInput {
   slug: String!
-  value: String!
+  value: String
+  values: [String]
 }
 
 enum AttributeInputTypeEnum {
@@ -317,7 +320,7 @@ enum AttributeSortField {
 
 input AttributeSortingInput {
   direction: OrderDirection!
-  field: AttributeSortField
+  field: AttributeSortField!
 }
 
 type AttributeTranslatableContent implements Node {
@@ -556,6 +559,7 @@ type CategoryDelete {
 
 input CategoryFilterInput {
   search: String
+  ids: [ID]
 }
 
 input CategoryInput {
@@ -576,7 +580,7 @@ enum CategorySortField {
 
 input CategorySortingInput {
   direction: OrderDirection!
-  field: CategorySortField
+  field: CategorySortField!
 }
 
 type CategoryTranslatableContent implements Node {
@@ -921,6 +925,7 @@ type CollectionDelete {
 input CollectionFilterInput {
   published: CollectionPublished
   search: String
+  ids: [ID]
 }
 
 input CollectionInput {
@@ -960,7 +965,7 @@ enum CollectionSortField {
 
 input CollectionSortingInput {
   direction: OrderDirection!
-  field: CollectionSortField
+  field: CollectionSortField!
 }
 
 type CollectionTranslatableContent implements Node {
@@ -1025,6 +1030,16 @@ enum ConfigurationTypeFieldEnum {
   BOOLEAN
   SECRET
   PASSWORD
+}
+
+type ConfirmAccount {
+  errors: [Error!]
+}
+
+type ConfirmEmailChange {
+  errors: [Error!]
+  user: User
+  accountErrors: [AccountError!]
 }
 
 enum CountryCode {
@@ -1300,12 +1315,6 @@ type CreditCard {
   expYear: Int!
 }
 
-type CustomerAddressCreate {
-  errors: [Error!]
-  user: User
-  address: Address
-}
-
 type CustomerBulkDelete {
   errors: [Error!]
   count: Int!
@@ -1339,6 +1348,9 @@ enum CustomerEventsEnum {
   ACCOUNT_CREATED
   PASSWORD_RESET_LINK_SENT
   PASSWORD_RESET
+  EMAIL_CHANGED_REQUEST
+  PASSWORD_CHANGED
+  EMAIL_CHANGED
   PLACED_ORDER
   NOTE_ADDED_TO_ORDER
   DIGITAL_LINK_DOWNLOADED
@@ -1366,29 +1378,6 @@ input CustomerInput {
   note: String
 }
 
-type CustomerPasswordReset {
-  errors: [Error!]
-}
-
-input CustomerPasswordResetInput {
-  email: String!
-}
-
-type CustomerRegister {
-  errors: [Error!]
-  user: User
-}
-
-input CustomerRegisterInput {
-  email: String!
-  password: String!
-}
-
-type CustomerSetDefaultAddress {
-  errors: [Error!]
-  user: User
-}
-
 type CustomerUpdate {
   errors: [Error!]
   accountErrors: [AccountError!]
@@ -1410,8 +1399,6 @@ input DateTimeRangeInput {
 }
 
 scalar Decimal
-
-union DefaultTranslationItem = ProductTranslatableContent | CollectionTranslatableContent | CategoryTranslatableContent | AttributeTranslatableContent | AttributeValueTranslatableContent | ProductVariantTranslatableContent | PageTranslatableContent | ShippingMethodTranslatableContent | SaleTranslatableContent | VoucherTranslatableContent | MenuItemTranslatableContent
 
 type DigitalContent implements Node {
   useDefaultSettings: Boolean!
@@ -1851,11 +1838,6 @@ type LanguageDisplay {
   language: String!
 }
 
-type LoggedUserUpdate {
-  errors: [Error!]
-  user: User
-}
-
 type Margin {
   start: Int
   stop: Int
@@ -2006,7 +1988,7 @@ input MenuItemMoveInput {
 
 input MenuItemSortingInput {
   direction: OrderDirection!
-  field: MenuItemsSortField
+  field: MenuItemsSortField!
 }
 
 type MenuItemTranslatableContent implements Node {
@@ -2044,7 +2026,7 @@ enum MenuSortField {
 
 input MenuSortingInput {
   direction: OrderDirection!
-  field: MenuSortField
+  field: MenuSortField!
 }
 
 type MenuUpdate {
@@ -2098,11 +2080,25 @@ input MoveProductInput {
 }
 
 type Mutation {
+  wishlistAddProduct(productId: ID!): WishlistAddProductMutation
+  wishlistRemoveProduct(productId: ID!): WishlistRemoveProductMutation
+  wishlistAddVariant(variantId: ID!): WishlistAddProductVariantMutation
+  wishlistRemoveVariant(variantId: ID!): WishlistRemoveProductVariantMutation
   webhookCreate(input: WebhookCreateInput!): WebhookCreate
   webhookDelete(id: ID!): WebhookDelete
   webhookUpdate(id: ID!, input: WebhookUpdateInput!): WebhookUpdate
+  createWarehouse(input: WarehouseCreateInput!): WarehouseCreate
+  updateWarehouse(id: ID!, input: WarehouseUpdateInput!): WarehouseUpdate
+  deleteWarehouse(id: ID!): WarehouseDelete
+  createStock(input: StockInput!): StockCreate
+  updateStock(id: ID!, input: StockInput!): StockUpdate
+  deleteStock(id: ID!): StockDelete
+  bulkDeleteStock(ids: [ID]!): StockBulkDelete
   authorizationKeyAdd(input: AuthorizationKeyInput!, keyType: AuthorizationKeyType!): AuthorizationKeyAdd
   authorizationKeyDelete(keyType: AuthorizationKeyType!): AuthorizationKeyDelete
+  staffNotificationRecipientCreate(input: StaffNotificationRecipientInput!): StaffNotificationRecipientCreate
+  staffNotificationRecipientUpdate(id: ID!, input: StaffNotificationRecipientInput!): StaffNotificationRecipientUpdate
+  staffNotificationRecipientDelete(id: ID!): StaffNotificationRecipientDelete
   homepageCollectionUpdate(collection: ID): HomepageCollectionUpdate
   shopDomainUpdate(input: SiteDomainInput): ShopDomainUpdate
   shopSettingsUpdate(input: ShopSettingsInput!): ShopSettingsUpdate
@@ -2271,7 +2267,7 @@ type Mutation {
   tokenVerify(token: String!): VerifyToken
   checkoutAddPromoCode(checkoutId: ID!, promoCode: String!): CheckoutAddPromoCode
   checkoutBillingAddressUpdate(billingAddress: AddressInput!, checkoutId: ID!): CheckoutBillingAddressUpdate
-  checkoutComplete(checkoutId: ID!, storeSource: Boolean = false): CheckoutComplete
+  checkoutComplete(checkoutId: ID!, redirectUrl: String, storeSource: Boolean = false): CheckoutComplete
   checkoutCreate(input: CheckoutCreateInput!): CheckoutCreate
   checkoutCustomerAttach(checkoutId: ID!, customerId: ID!): CheckoutCustomerAttach
   checkoutCustomerDetach(checkoutId: ID!): CheckoutCustomerDetach
@@ -2288,8 +2284,11 @@ type Mutation {
   checkoutUpdatePrivateMetadata(id: ID!, input: MetaInput!): CheckoutUpdatePrivateMeta
   checkoutClearPrivateMetadata(id: ID!, input: MetaPath!): CheckoutClearPrivateMeta
   requestPasswordReset(email: String!, redirectUrl: String!): RequestPasswordReset
+  confirmAccount(email: String!, token: String!): ConfirmAccount
   setPassword(token: String!, email: String!, password: String!): SetPassword
   passwordChange(newPassword: String!, oldPassword: String!): PasswordChange
+  requestEmailChange(newEmail: String!, password: String!, redirectUrl: String!): RequestEmailChange
+  confirmEmailChange(token: String!): ConfirmEmailChange
   accountAddressCreate(input: AddressInput!, type: AddressTypeEnum): AccountAddressCreate
   accountAddressUpdate(id: ID!, input: AddressInput!): AccountAddressUpdate
   accountAddressDelete(id: ID!): AccountAddressDelete
@@ -2299,11 +2298,6 @@ type Mutation {
   accountRequestDeletion(redirectUrl: String!): AccountRequestDeletion
   accountDelete(token: String!): AccountDelete
   accountUpdateMeta(input: MetaInput!): AccountUpdateMeta
-  customerPasswordReset(input: CustomerPasswordResetInput!): CustomerPasswordReset
-  customerAddressCreate(input: AddressInput!, type: AddressTypeEnum): CustomerAddressCreate
-  customerSetDefaultAddress(id: ID!, type: AddressTypeEnum!): CustomerSetDefaultAddress
-  customerRegister(input: CustomerRegisterInput!): CustomerRegister
-  loggedUserUpdate(input: UserAddressInput!): LoggedUserUpdate
   addressCreate(input: AddressInput!, userId: ID!): AddressCreate
   addressUpdate(id: ID!, input: AddressInput!): AddressUpdate
   addressDelete(id: ID!): AddressDelete
@@ -2330,7 +2324,6 @@ type Mutation {
   serviceAccountClearPrivateMetadata(id: ID!, input: MetaPath!): ServiceAccountClearPrivateMeta
   serviceAccountTokenCreate(input: ServiceAccountTokenInput!): ServiceAccountTokenCreate
   serviceAccountTokenDelete(id: ID!): ServiceAccountTokenDelete
-  passwordReset(email: String!): PasswordReset
 }
 
 input NameTranslationInput {
@@ -2617,7 +2610,7 @@ enum OrderSortField {
 
 input OrderSortingInput {
   direction: OrderDirection!
-  field: OrderSortField
+  field: OrderSortField!
 }
 
 enum OrderStatus {
@@ -2751,7 +2744,7 @@ enum PageSortField {
 
 input PageSortingInput {
   direction: OrderDirection!
-  field: PageSortField
+  field: PageSortField!
 }
 
 type PageTranslatableContent implements Node {
@@ -2797,10 +2790,6 @@ type PasswordChange {
   errors: [Error!]
   user: User
   accountErrors: [AccountError!]
-}
-
-type PasswordReset {
-  errors: [Error!]
 }
 
 type Payment implements Node {
@@ -2912,10 +2901,9 @@ enum PermissionEnum {
   MANAGE_USERS
   MANAGE_STAFF
   MANAGE_SERVICE_ACCOUNTS
-  IMPERSONATE_USERS
   MANAGE_DISCOUNTS
-  MANAGE_GIFT_CARD
   MANAGE_PLUGINS
+  MANAGE_GIFT_CARD
   MANAGE_MENUS
   MANAGE_ORDERS
   MANAGE_PAGES
@@ -2958,7 +2946,7 @@ enum PluginSortField {
 
 input PluginSortingInput {
   direction: OrderDirection!
-  field: PluginSortField
+  field: PluginSortField!
 }
 
 type PluginUpdate {
@@ -3109,6 +3097,7 @@ input ProductFilterInput {
   productType: ID
   search: String
   minimalPrice: PriceRangeInput
+  productTypes: [ID]
 }
 
 type ProductImage implements Node {
@@ -3303,6 +3292,7 @@ input ProductTypeFilterInput {
   search: String
   configurable: ProductTypeConfigurable
   productType: ProductTypeEnum
+  ids: [ID]
 }
 
 input ProductTypeInput {
@@ -3330,7 +3320,7 @@ enum ProductTypeSortField {
 
 input ProductTypeSortingInput {
   direction: OrderDirection!
-  field: ProductTypeSortField
+  field: ProductTypeSortField!
 }
 
 type ProductTypeUpdate {
@@ -3375,15 +3365,15 @@ type ProductVariant implements Node {
   sku: String!
   product: Product!
   trackInventory: Boolean!
-  quantityAllocated: Int!
   weight: Weight
   privateMeta: [MetaStore]!
   meta: [MetaStore]!
-  quantity: Int!
-  stockQuantity: Int!
+  quantity: Int! @deprecated(reason: "This field will be removed in Saleor 2.11. Use the stock field instead.")
+  quantityAllocated: Int @deprecated(reason: "This field will be removed in Saleor 2.11. Use the stock field instead.")
+  stockQuantity: Int! @deprecated(reason: "This field will be removed in Saleor 2.11. Use the stock field instead.")
   priceOverride: Money
   pricing: VariantPricingInfo
-  isAvailable: Boolean
+  isAvailable: Boolean @deprecated(reason: "This field will be removed in Saleor 2.11. Use the stock field instead.")
   attributes: [SelectedAttribute!]!
   costPrice: Money
   margin: Int
@@ -3392,6 +3382,7 @@ type ProductVariant implements Node {
   images: [ProductImage]
   translation(languageCode: LanguageCodeEnum!): ProductVariantTranslation
   digitalContent: DigitalContent
+  stock(country: String): [Stock]
 }
 
 type ProductVariantBulkCreate {
@@ -3514,8 +3505,12 @@ type Query {
   webhooks(sortBy: WebhookSortingInput, filter: WebhookFilterInput, before: String, after: String, first: Int, last: Int): WebhookCountableConnection
   webhookEvents: [WebhookEvent]
   webhookSamplePayload(eventType: WebhookEventTypeEnum!): JSONString
+  warehouse(id: ID!): Warehouse
+  warehouses(filter: WarehouseFilterInput, before: String, after: String, first: Int, last: Int): WarehouseCountableConnection
   translations(kind: TranslatableKinds!, before: String, after: String, first: Int, last: Int): TranslatableItemConnection
-  translation(id: ID!, kind: TranslatableKinds!): DefaultTranslationItem
+  translation(id: ID!, kind: TranslatableKinds!): TranslatableItem
+  stock(id: ID!): Stock
+  stocks(filter: StockFilterInput, before: String, after: String, first: Int, last: Int): StockCountableConnection
   shop: Shop
   shippingZone(id: ID!): ShippingZone
   shippingZones(before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection
@@ -3569,7 +3564,6 @@ type Query {
   serviceAccounts(filter: ServiceAccountFilterInput, sortBy: ServiceAccountSortingInput, before: String, after: String, first: Int, last: Int): ServiceAccountCountableConnection
   serviceAccount(id: ID!): ServiceAccount
   user(id: ID!): User
-  node(id: ID!): Node
   _entities(representations: [_Any]): [_Entity]
   _service: _Service
 }
@@ -3592,6 +3586,12 @@ input ReorderInput {
 enum ReportingPeriod {
   TODAY
   THIS_MONTH
+}
+
+type RequestEmailChange {
+  errors: [Error!]
+  user: User
+  accountErrors: [AccountError!]
 }
 
 type RequestPasswordReset {
@@ -3676,7 +3676,7 @@ enum SaleSortField {
 
 input SaleSortingInput {
   direction: OrderDirection!
-  field: SaleSortField
+  field: SaleSortField!
 }
 
 type SaleTranslatableContent implements Node {
@@ -3776,7 +3776,7 @@ enum ServiceAccountSortField {
 
 input ServiceAccountSortingInput {
   direction: OrderDirection!
-  field: ServiceAccountSortField
+  field: ServiceAccountSortField!
 }
 
 type ServiceAccountToken implements Node {
@@ -3990,6 +3990,7 @@ type Shop {
   defaultDigitalUrlValidDays: Int
   companyAddress: Address
   customerSetPasswordUrl: String
+  staffNotificationRecipients: [StaffNotificationRecipient]
 }
 
 type ShopAddressUpdate {
@@ -4112,6 +4113,37 @@ enum StaffMemberStatus {
   DEACTIVATED
 }
 
+type StaffNotificationRecipient implements Node {
+  user: User
+  active: Boolean
+  id: ID!
+  email: String
+}
+
+type StaffNotificationRecipientCreate {
+  errors: [Error!]
+  shopErrors: [ShopError!]
+  staffNotificationRecipient: StaffNotificationRecipient
+}
+
+type StaffNotificationRecipientDelete {
+  errors: [Error!]
+  shopErrors: [ShopError!]
+  staffNotificationRecipient: StaffNotificationRecipient
+}
+
+input StaffNotificationRecipientInput {
+  user: ID
+  email: String
+  active: Boolean
+}
+
+type StaffNotificationRecipientUpdate {
+  errors: [Error!]
+  shopErrors: [ShopError!]
+  staffNotificationRecipient: StaffNotificationRecipient
+}
+
 type StaffUpdate {
   errors: [Error!]
   accountErrors: [AccountError!]
@@ -4123,9 +4155,79 @@ input StaffUserInput {
   search: String
 }
 
+type Stock implements Node {
+  warehouse: Warehouse!
+  productVariant: ProductVariant!
+  quantity: Int!
+  quantityAllocated: Int!
+  id: ID!
+  stockQuantity: Int!
+}
+
 enum StockAvailability {
   IN_STOCK
   OUT_OF_STOCK
+}
+
+type StockBulkDelete {
+  errors: [Error!]
+  count: Int!
+  stockError: [StockError!]
+}
+
+type StockCountableConnection {
+  pageInfo: PageInfo!
+  edges: [StockCountableEdge!]!
+  totalCount: Int
+}
+
+type StockCountableEdge {
+  node: Stock!
+  cursor: String!
+}
+
+type StockCreate {
+  errors: [Error!]
+  stockErrors: [StockError!]
+  stock: Stock
+}
+
+type StockDelete {
+  errors: [Error!]
+  stock: Stock
+}
+
+enum StockErorrCode {
+  ALREADY_EXISTS
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+  UNIQUE
+}
+
+type StockError {
+  field: String
+  message: String
+  code: StockErorrCode
+}
+
+input StockFilterInput {
+  quantity: Float
+  quantityAllocated: Float
+  search: String
+}
+
+input StockInput {
+  productVariant: ID!
+  warehouse: ID!
+  quantity: Int
+}
+
+type StockUpdate {
+  errors: [Error!]
+  stockError: [StockError!]
+  stock: Stock
 }
 
 enum TaxRateType {
@@ -4206,7 +4308,7 @@ enum TransactionKind {
   CONFIRM
 }
 
-union TranslatableItem = Product | Category | Collection | Attribute | AttributeValue | ProductVariant | Page | ShippingMethod | Sale | Voucher | MenuItem
+union TranslatableItem = ProductTranslatableContent | CollectionTranslatableContent | CategoryTranslatableContent | AttributeTranslatableContent | AttributeValueTranslatableContent | ProductVariantTranslatableContent | PageTranslatableContent | ShippingMethodTranslatableContent | SaleTranslatableContent | VoucherTranslatableContent | MenuItemTranslatableContent
 
 type TranslatableItemConnection {
   pageInfo: PageInfo!
@@ -4267,11 +4369,7 @@ type User implements Node {
   avatar(size: Int): Image
   events: [CustomerEvent]
   storedPaymentSources: [PaymentSource]
-}
-
-input UserAddressInput {
-  defaultBillingAddress: AddressInput
-  defaultShippingAddress: AddressInput
+  wishlist(before: String, after: String, first: Int, last: Int): WishlistItemCountableConnection
 }
 
 type UserAvatarDelete {
@@ -4335,7 +4433,7 @@ enum UserSortField {
 
 input UserSortingInput {
   direction: OrderDirection!
-  field: UserSortField
+  field: UserSortField!
 }
 
 type UserUpdateMeta {
@@ -4487,7 +4585,7 @@ enum VoucherSortField {
 
 input VoucherSortingInput {
   direction: OrderDirection!
-  field: VoucherSortField
+  field: VoucherSortField!
 }
 
 type VoucherTranslatableContent implements Node {
@@ -4517,6 +4615,90 @@ enum VoucherTypeEnum {
 type VoucherUpdate {
   errors: [Error!]
   voucher: Voucher
+}
+
+type Warehouse implements Node {
+  id: ID!
+  name: String!
+  companyName: String!
+  shippingZones(before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection!
+  address: Address!
+  email: String!
+}
+
+input WarehouseAddressInput {
+  streetAddress1: String!
+  streetAddress2: String
+  city: String!
+  cityArea: String
+  postalCode: String
+  country: CountryCode!
+  countryArea: String
+  phone: String
+}
+
+type WarehouseCountableConnection {
+  pageInfo: PageInfo!
+  edges: [WarehouseCountableEdge!]!
+  totalCount: Int
+}
+
+type WarehouseCountableEdge {
+  node: Warehouse!
+  cursor: String!
+}
+
+type WarehouseCreate {
+  errors: [Error!]
+  warehouseErrors: [WarehouseError!]
+  warehouse: Warehouse
+}
+
+input WarehouseCreateInput {
+  name: String!
+  companyName: String
+  shippingZones: [ID]
+  email: String
+  address: WarehouseAddressInput!
+}
+
+type WarehouseDelete {
+  errors: [Error!]
+  warehouseErrors: [WarehouseError!]
+  warehouse: Warehouse
+}
+
+type WarehouseError {
+  field: String
+  message: String
+  code: WarehouseErrorCode
+}
+
+enum WarehouseErrorCode {
+  ALREADY_EXISTS
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+  UNIQUE
+}
+
+input WarehouseFilterInput {
+  search: String
+}
+
+type WarehouseUpdate {
+  errors: [Error!]
+  warehouseErrors: [WarehouseError!]
+  warehouse: Warehouse
+}
+
+input WarehouseUpdateInput {
+  name: String!
+  companyName: String
+  shippingZones: [ID]
+  email: String
+  address: WarehouseAddressInput
 }
 
 type Webhook implements Node {
@@ -4605,7 +4787,7 @@ enum WebhookSortField {
 
 input WebhookSortingInput {
   direction: OrderDirection!
-  field: WebhookSortField
+  field: WebhookSortField!
 }
 
 type WebhookUpdate {
@@ -4635,6 +4817,68 @@ enum WeightUnitsEnum {
   LB
   OZ
   G
+}
+
+type Wishlist implements Node {
+  id: ID!
+  createdAt: DateTime!
+  items(before: String, after: String, first: Int, last: Int, id: ID): WishlistItemCountableConnection!
+}
+
+type WishlistAddProductMutation {
+  errors: [Error!]
+  wishlist: [WishlistItem]
+  wishlistErrors: [WishlistError!]
+}
+
+type WishlistAddProductVariantMutation {
+  errors: [Error!]
+  wishlist: [WishlistItem]
+  wishlistErrors: [WishlistError!]
+}
+
+type WishlistError {
+  field: String
+  message: String
+  code: WishlistErrorCode
+}
+
+enum WishlistErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+  UNIQUE
+}
+
+type WishlistItem implements Node {
+  id: ID!
+  wishlist: Wishlist!
+  product: Product!
+  variants(before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection!
+}
+
+type WishlistItemCountableConnection {
+  pageInfo: PageInfo!
+  edges: [WishlistItemCountableEdge!]!
+  totalCount: Int
+}
+
+type WishlistItemCountableEdge {
+  node: WishlistItem!
+  cursor: String!
+}
+
+type WishlistRemoveProductMutation {
+  errors: [Error!]
+  wishlist: [WishlistItem]
+  wishlistErrors: [WishlistError!]
+}
+
+type WishlistRemoveProductVariantMutation {
+  errors: [Error!]
+  wishlist: [WishlistItem]
+  wishlistErrors: [WishlistError!]
 }
 
 scalar _Any

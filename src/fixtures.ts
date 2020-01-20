@@ -392,10 +392,6 @@ export const sortPageProps: SortPage<string> = {
 
 export const permissions: ShopInfo_shop_permissions[] = [
   {
-    code: PermissionEnum.IMPERSONATE_USERS,
-    name: "Impersonate customers."
-  },
-  {
     code: PermissionEnum.MANAGE_DISCOUNTS,
     name: "Manage sales and vouchers."
   },

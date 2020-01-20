@@ -63,7 +63,7 @@ export function asSortParams<
 
 interface SortingInput<T extends string> {
   direction: OrderDirection;
-  field?: T | null;
+  field: T;
 }
 type GetSortQueryField<TUrlField extends string, TSortField extends string> = (
   sort: TUrlField
