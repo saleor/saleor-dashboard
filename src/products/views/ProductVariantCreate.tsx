@@ -66,7 +66,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ productId }) => {
                       costPrice: decimal(formData.costPrice),
                       priceOverride: decimal(formData.priceOverride),
                       product: productId,
-                      quantity: formData.quantity || null,
+                      quantity: parseInt(formData.quantity, 0),
                       sku: formData.sku,
                       trackInventory: true
                     }
