@@ -48,7 +48,7 @@ export function getFilterQueryParams<
   return filter.reduce(
     (acc, filterField) => ({
       ...acc,
-      ...getFilterQueryParam(filterField)
+      ...getFilterQueryParam(filterField, acc)
     }),
     {} as TUrlFilters
   );
