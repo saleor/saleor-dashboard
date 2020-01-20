@@ -5,34 +5,42 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { Container } from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import SearchBar from "@saleor/components/SearchBar";
+import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
 import {
   ListActions,
   PageListProps,
-  SearchPageProps,
+  FilterPageProps,
   TabPageProps,
   SortPage
 } from "@saleor/types";
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
 import { CollectionList_collections_edges_node } from "../../types/CollectionList";
 import CollectionList from "../CollectionList/CollectionList";
+import {
+  CollectionFilterKeys,
+  CollectionListFilterOpts,
+  createFilterStructure
+} from "./filters";
 
 export interface CollectionListPageProps
   extends PageListProps,
     ListActions,
-    SearchPageProps,
+    FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>,
     SortPage<CollectionListUrlSortField>,
     TabPageProps {
   collections: CollectionList_collections_edges_node[];
 }
 
 const CollectionListPage: React.FC<CollectionListPageProps> = ({
+  currencySymbol,
   currentTab,
   disabled,
+  filterOpts,
   initialSearch,
   onAdd,
   onAll,
+  onFilterChange,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -41,6 +49,8 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+
+  const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
@@ -58,18 +68,21 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <SearchBar
+        <FilterBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Collections",
             description: "tab name"
           })}
+          currencySymbol={currencySymbol}
           currentTab={currentTab}
+          filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Collection"
           })}
           tabs={tabs}
           onAll={onAll}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}

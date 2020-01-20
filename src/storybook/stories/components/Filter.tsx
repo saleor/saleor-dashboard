@@ -1,124 +1,92 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { FilterContent, FilterContentProps } from "@saleor/components/Filter";
 import {
-  FieldType,
-  FilterContent,
-  FilterContentProps
-} from "@saleor/components/Filter";
-import CardDecorator from "../../CardDecorator";
+  createPriceField,
+  createDateField,
+  createOptionsField
+} from "@saleor/utils/filters/fields";
+import useFilter from "@saleor/components/Filter/useFilter";
 import Decorator from "../../Decorator";
 
 const props: FilterContentProps = {
   currencySymbol: "USD",
   filters: [
+    createPriceField("price", "Price", {
+      max: "100.00",
+      min: "20.00"
+    }),
     {
-      children: [],
-      data: {
-        fieldLabel: "Category Name",
-        type: FieldType.text
-      },
-      label: "Category",
-      value: "category"
+      ...createDateField("createdAt", "Created At", {
+        max: "2019-10-23",
+        min: "2019-09-09"
+      }),
+      active: true
     },
     {
-      children: [],
-      data: {
-        fieldLabel: "Product Type Name",
-        type: FieldType.text
-      },
-      label: "Product Type",
-      value: "product-type"
+      ...createOptionsField("status", "Status", ["val1"], false, [
+        {
+          label: "Value 1",
+          value: "val1"
+        },
+        {
+          label: "Value 2",
+          value: "val2"
+        },
+        {
+          label: "Value 3",
+          value: "val3"
+        }
+      ]),
+      active: true
     },
     {
-      children: [],
-      data: {
-        fieldLabel: "Status",
-        options: [
+      ...createOptionsField(
+        "multiplOptions",
+        "Multiple Options",
+        ["val1", "val2"],
+        true,
+        [
           {
-            label: "Published",
-            value: true
+            label: "Value 1",
+            value: "val1"
           },
           {
-            label: "Hidden",
-            value: false
+            label: "Value 2",
+            value: "val2"
+          },
+          {
+            label: "Value 3",
+            value: "val3"
           }
-        ],
-        type: FieldType.select
-      },
-      label: "Published",
-      value: "published"
-    },
-    {
-      children: [],
-      data: {
-        fieldLabel: "Stock",
-        type: FieldType.range
-      },
-      label: "Stock",
-      value: "stock"
-    },
-    {
-      children: [
-        {
-          children: [],
-          data: {
-            fieldLabel: "Equal to",
-            type: FieldType.date
-          },
-          label: "Equal to",
-          value: "date-equal"
-        },
-        {
-          children: [],
-          data: {
-            fieldLabel: "Range",
-            type: FieldType.rangeDate
-          },
-          label: "Range",
-          value: "date-range"
-        }
-      ],
-      data: {
-        fieldLabel: "Date",
-        type: FieldType.select
-      },
-      label: "Date",
-      value: "date"
-    },
-    {
-      children: [
-        {
-          children: [],
-          data: {
-            fieldLabel: "Exactly",
-            type: FieldType.price
-          },
-          label: "Exactly",
-          value: "price-exactly"
-        },
-        {
-          children: [],
-          data: {
-            fieldLabel: "Range",
-            type: FieldType.rangePrice
-          },
-          label: "Range",
-          value: "price-range"
-        }
-      ],
-      data: {
-        fieldLabel: "Price",
-        type: FieldType.select
-      },
-      label: "Price",
-      value: "price"
+        ]
+      ),
+      active: false
     }
   ],
+  onClear: () => undefined,
+  onFilterPropertyChange: () => undefined,
   onSubmit: () => undefined
 };
 
+const InteractiveStory: React.FC = () => {
+  const [data, dispatchFilterActions, clear] = useFilter(props.filters);
+
+  return (
+    <FilterContent
+      {...props}
+      filters={data}
+      onClear={clear}
+      onFilterPropertyChange={dispatchFilterActions}
+    />
+  );
+};
+
 storiesOf("Generics / Filter", module)
-  .addDecorator(CardDecorator)
+  .addDecorator(storyFn => (
+    <div style={{ margin: "auto", width: 400 }}>{storyFn()}</div>
+  ))
   .addDecorator(Decorator)
-  .add("default", () => <FilterContent {...props} />);
+  .add("default", () => <FilterContent {...props} />)
+  .add("interactive", () => <InteractiveStory />);

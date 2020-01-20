@@ -2,6 +2,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
+import { CollectionPublished } from "@saleor/types/globalTypes";
 import CollectionListPage, {
   CollectionListPageProps
 } from "../../../collections/components/CollectionListPage";
@@ -11,7 +12,8 @@ import {
   pageListProps,
   searchPageProps,
   tabPageProps,
-  sortPageProps
+  sortPageProps,
+  filterPageProps
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
 
@@ -20,6 +22,13 @@ const props: CollectionListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
+  ...filterPageProps,
+  filterOpts: {
+    status: {
+      active: false,
+      value: CollectionPublished.PUBLISHED
+    }
+  },
   sort: {
     ...sortPageProps.sort,
     sort: CollectionListUrlSortField.name

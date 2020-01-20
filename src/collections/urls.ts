@@ -15,6 +15,7 @@ const collectionSectionUrl = "/collections/";
 
 export const collectionListPath = collectionSectionUrl;
 export enum CollectionListUrlFiltersEnum {
+  status = "status",
   query = "query"
 }
 export type CollectionListUrlFilters = Filters<CollectionListUrlFiltersEnum>;

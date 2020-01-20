@@ -6,10 +6,12 @@ import {
   remove,
   removeAtIndex,
   toggle,
+  update,
   updateAtIndex
 } from "./lists";
 
 const initialArray = ["lorem", "ipsum", "dolor"];
+const compare = (a, b) => a === b;
 
 describe("Properly calculates output arrays", () => {
   it("Adds", () => {
@@ -20,12 +22,28 @@ describe("Properly calculates output arrays", () => {
     expect(addAtIndex("sit", initialArray, 2)).toMatchSnapshot();
   });
 
+  it("Updates", () => {
+    expect(
+      update(
+        {
+          name: "amet",
+          value: 32
+        },
+        initialArray.map((el, index) => ({
+          name: el,
+          value: index
+        })),
+        (a, b) => a.name === b.name
+      )
+    ).toMatchSnapshot();
+  });
+
   it("Updates at index", () => {
     expect(updateAtIndex("amet", initialArray, 1)).toMatchSnapshot();
   });
 
   it("Removes", () => {
-    expect(remove("ipsum", initialArray, (a, b) => a === b)).toMatchSnapshot();
+    expect(remove("ipsum", initialArray, compare)).toMatchSnapshot();
   });
 
   it("Removes at index", () => {
@@ -33,16 +51,16 @@ describe("Properly calculates output arrays", () => {
   });
 
   it("Matches", () => {
-    expect(isSelected("lorem", initialArray, (a, b) => a === b)).toBe(true);
-    expect(isSelected("sit", initialArray, (a, b) => a === b)).toBe(false);
+    expect(isSelected("lorem", initialArray, compare)).toBe(true);
+    expect(isSelected("sit", initialArray, compare)).toBe(false);
   });
 
   it("Toggles", () => {
-    expect(toggle("lorem", initialArray, (a, b) => a === b)).toMatchSnapshot();
-    expect(toggle("sit", initialArray, (a, b) => a === b)).toMatchSnapshot();
+    expect(toggle("lorem", initialArray, compare)).toMatchSnapshot();
+    expect(toggle("sit", initialArray, compare)).toMatchSnapshot();
   });
 
   it("Moves", () => {
-    expect(move("lorem", initialArray, (a, b) => a === b, 1)).toMatchSnapshot();
+    expect(move("lorem", initialArray, compare, 1)).toMatchSnapshot();
   });
 });

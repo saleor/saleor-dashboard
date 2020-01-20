@@ -24,6 +24,7 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import VoucherListPage from "../../components/VoucherListPage";
 import { TypedVoucherBulkDelete } from "../../mutations";
 import { useVoucherListQuery } from "../../queries";
@@ -31,7 +32,6 @@ import { VoucherBulkDelete } from "../../types/VoucherBulkDelete";
 import {
   voucherAddUrl,
   voucherListUrl,
-  VoucherListUrlFilters,
   VoucherListUrlQueryParams,
   voucherUrl,
   VoucherListUrlDialog
@@ -42,8 +42,10 @@ import {
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
-} from "./filter";
+  saveFilterTab,
+  getFilterQueryParam,
+  getFilterOpts
+} from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface VoucherListProps {
@@ -86,16 +88,17 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: VoucherListUrlFilters) => {
-    reset();
-    navigate(
-      voucherListUrl({
-        ...getActiveFilters(params),
-        ...filter,
-        activeTab: undefined
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: voucherListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherListUrlDialog,
@@ -143,6 +146,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, voucherListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedVoucherBulkDelete onCompleted={handleVoucherBulkDelete}>
@@ -158,10 +162,13 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
           <>
             <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
             <VoucherListPage
+              currencySymbol={currencySymbol}
               currentTab={currentTab}
+              filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}
-              onSearchChange={query => changeFilterField({ query })}
-              onAll={() => navigate(voucherListUrl())}
+              onSearchChange={handleSearchChange}
+              onFilterChange={filter => changeFilters(filter)}
+              onAll={resetFilters}
               onTabChange={handleTabChange}
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}

@@ -48,7 +48,7 @@ const HomeSection = () => {
           onProductsOutOfStockClick={() =>
             navigate(
               productListUrl({
-                status: StockAvailability.OUT_OF_STOCK
+                stockStatus: StockAvailability.OUT_OF_STOCK
               })
             )
           }

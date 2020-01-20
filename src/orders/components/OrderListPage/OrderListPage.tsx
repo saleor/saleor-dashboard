@@ -14,14 +14,19 @@ import {
   SortPage
 } from "@saleor/types";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
+import FilterBar from "@saleor/components/FilterBar";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
 import OrderList from "../OrderList";
-import OrderListFilter, { OrderFilterKeys } from "../OrderListFilter";
+import {
+  createFilterStructure,
+  OrderListFilterOpts,
+  OrderFilterKeys
+} from "./filters";
 
 export interface OrderListPageProps
   extends PageListProps,
     ListActions,
-    FilterPageProps<OrderFilterKeys>,
+    FilterPageProps<OrderFilterKeys, OrderListFilterOpts>,
     SortPage<OrderListUrlSortField> {
   orders: OrderList_orders_edges_node[];
 }
@@ -29,19 +34,21 @@ export interface OrderListPageProps
 const OrderListPage: React.FC<OrderListPageProps> = ({
   currencySymbol,
   currentTab,
-  filtersList,
   initialSearch,
+  filterOpts,
   tabs,
   onAdd,
   onAll,
   onSearchChange,
-  onFilterAdd,
+  onFilterChange,
   onTabChange,
   onTabDelete,
   onTabSave,
   ...listProps
 }) => {
   const intl = useIntl();
+
+  const filterStructure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
@@ -54,28 +61,25 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <OrderListFilter
+        <FilterBar
+          currencySymbol={currencySymbol}
+          currentTab={currentTab}
+          initialSearch={initialSearch}
+          onAll={onAll}
+          onFilterChange={onFilterChange}
+          onSearchChange={onSearchChange}
+          onTabChange={onTabChange}
+          onTabDelete={onTabDelete}
+          onTabSave={onTabSave}
+          tabs={tabs}
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Orders",
             description: "tab name"
           })}
-          currencySymbol={currencySymbol}
-          currentTab={currentTab}
-          filterLabel={intl.formatMessage({
-            defaultMessage: "Select all orders where:"
-          })}
-          tabs={tabs}
-          filtersList={filtersList}
-          initialSearch={initialSearch}
+          filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Orders..."
           })}
-          onAll={onAll}
-          onSearchChange={onSearchChange}
-          onFilterAdd={onFilterAdd}
-          onTabChange={onTabChange}
-          onTabDelete={onTabDelete}
-          onTabSave={onTabSave}
         />
         <OrderList {...listProps} />
       </Card>

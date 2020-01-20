@@ -35,6 +35,7 @@ const pluginsList = gql`
     $after: String
     $last: Int
     $before: String
+    $filter: PluginFilterInput
     $sort: PluginSortingInput
   ) {
     plugins(
@@ -42,6 +43,7 @@ const pluginsList = gql`
       after: $after
       first: $first
       last: $last
+      filter: $filter
       sortBy: $sort
     ) {
       edges {

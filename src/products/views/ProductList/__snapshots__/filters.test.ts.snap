@@ -1,66 +1,71 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Crate filter chips 1`] = `
-Array [
-  Object {
-    "label": "Price from $10.00",
-    "onClick": [Function],
-  },
-  Object {
-    "label": "Price to $20.00",
-    "onClick": [Function],
-  },
-  Object {
-    "label": "Available",
-    "onClick": [Function],
-  },
-  Object {
-    "label": "Published",
-    "onClick": [Function],
-  },
-]
-`;
-
-exports[`Create filter object with price 1`] = `
+exports[`Filtering URL params should not be empty if active filters are present 1`] = `
 Object {
+  "attributes": Object {
+    "author": Array [
+      "john-doe",
+      false,
+    ],
+    "box-size": Array [
+      "100g",
+      "500g",
+    ],
+    "brand": Array [
+      "saleor",
+      false,
+    ],
+    "candy-box-size": Array [
+      "100g",
+      "500g",
+    ],
+    "coffee-genre": Array [
+      "arabica",
+      false,
+    ],
+    "collar": Array [
+      "round",
+      "polo",
+    ],
+    "color": Array [
+      "blue",
+      false,
+    ],
+    "cover": Array [
+      "soft",
+      "middle-soft",
+    ],
+    "flavor": Array [
+      "sour",
+      false,
+    ],
+    "language": Array [
+      "english",
+      false,
+    ],
+    "publisher": Array [
+      "mirumee-press",
+      false,
+    ],
+    "size": Array [
+      "xs",
+      "m",
+    ],
+  },
+  "categories": Array [
+    "878752",
+  ],
+  "collections": Array [
+    "Q29sbGVjdGlvbjoc",
+  ],
   "priceFrom": "10",
-  "priceTo": "10",
-}
-`;
-
-exports[`Create filter object with price range 1`] = `
-Object {
-  "priceFrom": Array [
-    "10",
-    "20",
+  "priceTo": "20",
+  "productTypes": Array [
+    "UHJvZHVjdFR5cGU6MQ==",
   ],
-  "priceTo": Array [
-    "10",
-    "20",
-  ],
+  "status": "published",
+  "stockStatus": "IN_STOCK",
 }
 `;
 
-exports[`Create filter object with publication status 1`] = `
-Object {
-  "isPublished": "false",
-}
-`;
-
-exports[`Create filter object with stock status 1`] = `
-Object {
-  "status": "OUT_OF_STOCK",
-}
-`;
-
-exports[`Get filter variables 1`] = `
-Object {
-  "isPublished": true,
-  "price": Object {
-    "gte": 10,
-    "lte": 20,
-  },
-  "search": undefined,
-  "stockAvailability": "IN_STOCK",
-}
-`;
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"status=published&stockStatus=IN_STOCK&priceFrom=10&priceTo=20&categories%5B0%5D=878752&collections%5B0%5D=Q29sbGVjdGlvbjoc&productTypes%5B0%5D=UHJvZHVjdFR5cGU6MQ%3D%3D&attributes%5Bauthor%5D%5B0%5D=john-doe&attributes%5Bauthor%5D%5B1%5D=false&attributes%5Bbox-size%5D%5B0%5D=100g&attributes%5Bbox-size%5D%5B1%5D=500g&attributes%5Bbrand%5D%5B0%5D=saleor&attributes%5Bbrand%5D%5B1%5D=false&attributes%5Bcandy-box-size%5D%5B0%5D=100g&attributes%5Bcandy-box-size%5D%5B1%5D=500g&attributes%5Bcoffee-genre%5D%5B0%5D=arabica&attributes%5Bcoffee-genre%5D%5B1%5D=false&attributes%5Bcollar%5D%5B0%5D=round&attributes%5Bcollar%5D%5B1%5D=polo&attributes%5Bcolor%5D%5B0%5D=blue&attributes%5Bcolor%5D%5B1%5D=false&attributes%5Bcover%5D%5B0%5D=soft&attributes%5Bcover%5D%5B1%5D=middle-soft&attributes%5Bflavor%5D%5B0%5D=sour&attributes%5Bflavor%5D%5B1%5D=false&attributes%5Blanguage%5D%5B0%5D=english&attributes%5Blanguage%5D%5B1%5D=false&attributes%5Bpublisher%5D%5B0%5D=mirumee-press&attributes%5Bpublisher%5D%5B1%5D=false&attributes%5Bsize%5D%5B0%5D=xs&attributes%5Bsize%5D%5B1%5D=m"`;

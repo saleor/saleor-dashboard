@@ -26,6 +26,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Stop using deprecated fields - #357 by @dominik-zeglen
 - Throw error when API_URI is not set - #375 by @dominik-zeglen
 - Fix variant stock input - #377 by @dominik-zeglen
+- Add filtering to views - #361 by @dominik-zeglen
 - Do not render password change if authenticating - #378 by @dominik-zeglen
 
 ## 2.0.0

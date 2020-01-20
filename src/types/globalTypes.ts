@@ -986,6 +986,11 @@ export interface PageTranslationInput {
   contentJson?: any | null;
 }
 
+export interface PluginFilterInput {
+  active?: boolean | null;
+  search?: string | null;
+}
+
 export interface PluginSortingInput {
   direction: OrderDirection;
   field: PluginSortField;

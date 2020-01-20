@@ -15,6 +15,7 @@ export const serviceSection = "/services/";
 
 export const serviceListPath = serviceSection;
 export enum ServiceListUrlFiltersEnum {
+  active = "active",
   query = "query"
 }
 export type ServiceListUrlFilters = Filters<ServiceListUrlFiltersEnum>;

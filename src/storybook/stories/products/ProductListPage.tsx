@@ -7,10 +7,10 @@ import { products as productListFixture } from "@saleor/products/fixtures";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { attributes } from "@saleor/productTypes/fixtures";
 import { ListViews } from "@saleor/types";
+import { productListFilterOpts } from "@saleor/products/views/ProductList/fixtures";
 import {
   fetchMoreProps,
   filterPageProps,
-  filters,
   listActionsProps,
   pageListProps,
   sortPageProps
@@ -37,6 +37,7 @@ const props: ProductListPageProps = {
   activeAttributeSortId: undefined,
   availableInGridAttributes: attributes,
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
+  filterOpts: productListFilterOpts,
   gridAttributes: attributes,
   products,
   settings: {
@@ -49,14 +50,10 @@ const props: ProductListPageProps = {
 storiesOf("Views / Products / Product list", module)
   .addDecorator(Decorator)
   .add("default", () => <ProductListPage {...props} />)
-  .add("with custom filters", () => (
-    <ProductListPage {...props} filtersList={filters} />
-  ))
   .add("loading", () => (
     <ProductListPage
       {...props}
       products={undefined}
-      filtersList={undefined}
       currentTab={undefined}
       disabled={true}
     />

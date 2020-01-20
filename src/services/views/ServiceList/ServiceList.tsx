@@ -20,6 +20,8 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import useShop from "@saleor/hooks/useShop";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import ServiceDeleteDialog from "../../components/ServiceDeleteDialog";
 import ServiceListPage from "../../components/ServiceListPage";
 import { useServiceListQuery } from "../../queries";
@@ -27,7 +29,6 @@ import {
   serviceAddUrl,
   serviceListUrl,
   ServiceListUrlDialog,
-  ServiceListUrlFilters,
   ServiceListUrlQueryParams,
   serviceUrl
 } from "../../urls";
@@ -36,9 +37,11 @@ import {
   deleteFilterTab,
   getActiveFilters,
   getFilterTabs,
+  getFilterQueryParam,
   getFilterVariables,
-  saveFilterTab
-} from "./filter";
+  saveFilterTab,
+  getFilterOpts
+} from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface ServiceListProps {
@@ -49,6 +52,7 @@ export const ServiceList: React.FC<ServiceListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
+  const shop = useShop();
   const { updateListSettings, settings } = useListSettings(
     ListViews.STAFF_MEMBERS_LIST
   );
@@ -77,14 +81,16 @@ export const ServiceList: React.FC<ServiceListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: ServiceListUrlFilters) =>
-    navigate(
-      serviceListUrl({
-        ...getActiveFilters(params),
-        ...filter,
-        activeTab: undefined
-      })
-    );
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    createUrl: serviceListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ServiceListUrlDialog,
@@ -129,6 +135,7 @@ export const ServiceList: React.FC<ServiceListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, serviceListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <ServiceDeleteMutation onCompleted={onRemove}>
@@ -143,10 +150,13 @@ export const ServiceList: React.FC<ServiceListProps> = ({ params }) => {
         return (
           <>
             <ServiceListPage
+              currencySymbol={currencySymbol}
               currentTab={currentTab}
+              filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}
-              onSearchChange={query => changeFilterField({ query })}
-              onAll={() => navigate(serviceListUrl())}
+              onSearchChange={handleSearchChange}
+              onFilterChange={changeFilters}
+              onAll={resetFilters}
               onTabChange={handleTabChange}
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}

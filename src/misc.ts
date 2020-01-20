@@ -115,7 +115,7 @@ export const transformPaymentStatus = (status: string, intl: IntlShape) => {
   }
 };
 
-const orderStatusMessages = defineMessages({
+export const orderStatusMessages = defineMessages({
   cancelled: {
     defaultMessage: "Cancelled",
     description: "order status"
@@ -351,14 +351,14 @@ export function findInEnum<TEnum extends object>(
 export function findValueInEnum<TEnum extends object>(
   needle: string,
   haystack: TEnum
-) {
+): TEnum[keyof TEnum] {
   const match = Object.entries(haystack).find(([_, value]) => value === needle);
 
-  if (!!match) {
-    return match[1] as TEnum;
+  if (!match) {
+    throw new Error(`Value ${needle} not found in enum`);
   }
 
-  throw new Error(`Value ${needle} not found in enum`);
+  return (needle as unknown) as TEnum[keyof TEnum];
 }
 
 export function parseBoolean(a: string, defaultValue: boolean): boolean {

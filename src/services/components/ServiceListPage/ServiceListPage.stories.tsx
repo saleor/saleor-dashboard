@@ -6,7 +6,8 @@ import {
   pageListProps,
   searchPageProps,
   tabPageProps,
-  sortPageProps
+  sortPageProps,
+  filterPageProps
 } from "@saleor/fixtures";
 import ServiceListPage, {
   ServiceListPageProps
@@ -21,6 +22,13 @@ const props: ServiceListPageProps = {
   ...searchPageProps,
   ...sortPageProps,
   ...tabPageProps,
+  ...filterPageProps,
+  filterOpts: {
+    isActive: {
+      active: false,
+      value: true
+    }
+  },
   onBack: () => undefined,
   onRemove: () => undefined,
   services: serviceList,

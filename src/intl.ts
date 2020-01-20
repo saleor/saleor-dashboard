@@ -65,6 +65,9 @@ export const commonMessages = defineMessages({
   startHour: {
     defaultMessage: "Start Hour"
   },
+  status: {
+    defaultMessage: "Status"
+  },
   summary: {
     defaultMessage: "Summary"
   },

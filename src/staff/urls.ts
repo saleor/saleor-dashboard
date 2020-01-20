@@ -15,6 +15,7 @@ const staffSection = "/staff/";
 
 export const staffListPath = staffSection;
 export enum StaffListUrlFiltersEnum {
+  status = "status",
   query = "query"
 }
 export type StaffListUrlFilters = Filters<StaffListUrlFiltersEnum>;

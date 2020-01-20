@@ -41,7 +41,7 @@ const useStyles = makeStyles(
       background: theme.palette.background.default,
       borderTop: "1px solid transparent",
       boxShadow: `0 -5px 5px 0 ${theme.palette.divider}`,
-      height: "100%",
+      height: 70,
       transition: `box-shadow ${theme.transitions.duration.shortest}ms`
     },
     spacer: {

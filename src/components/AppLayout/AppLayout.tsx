@@ -47,7 +47,6 @@ const useStyles = makeStyles(
       },
       bottom: 0,
       gridColumn: 2,
-      height: 70,
       position: "sticky",
       zIndex: 10
     },

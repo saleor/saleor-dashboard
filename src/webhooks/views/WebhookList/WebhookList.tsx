@@ -19,12 +19,14 @@ import { useIntl } from "react-intl";
 
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import useShop from "@saleor/hooks/useShop";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import WebhooksListPage from "../../components/WebhooksListPage/WebhooksListPage";
 import { TypedWebhookDelete } from "../../mutations";
 import { useWebhooksListQuery } from "../../queries";
 import {
   WebhookListUrlDialog,
-  WebhookListUrlFilters,
   webhookAddUrl,
   webhookListUrl,
   WebhookListUrlQueryParams,
@@ -37,8 +39,10 @@ import {
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
-} from "./filter";
+  getFilterQueryParam,
+  saveFilterTab,
+  getFilterOpts
+} from "./filters";
 
 interface WebhooksListProps {
   params: WebhookListUrlQueryParams;
@@ -49,6 +53,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
   const paginate = usePaginator();
   const notify = useNotifier();
   const intl = useIntl();
+  const shop = useShop();
   const { updateListSettings, settings } = useListSettings(
     ListViews.WEBHOOK_LIST
   );
@@ -76,32 +81,21 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: WebhookListUrlFilters) =>
-    navigate(
-      webhookListUrl({
-        ...getActiveFilters(params),
-        ...filter,
-        activeTab: undefined
-      })
-    );
-  const closeModal = () =>
-    navigate(
-      webhookListUrl({
-        ...params,
-        action: undefined,
-        id: undefined
-      }),
-      true
-    );
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    createUrl: webhookListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
-  const openModal = (action: WebhookListUrlDialog, id?: string) =>
-    navigate(
-      webhookListUrl({
-        ...params,
-        action,
-        id
-      })
-    );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    WebhookListUrlDialog,
+    WebhookListUrlQueryParams
+  >(navigate, webhookListUrl, params);
 
   const handleTabChange = (tab: number) => {
     navigate(
@@ -133,6 +127,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, webhookListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedWebhookDelete onCompleted={onWebhookDelete}>
@@ -162,10 +157,13 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
         return (
           <>
             <WebhooksListPage
+              currencySymbol={currencySymbol}
               currentTab={currentTab}
+              filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}
-              onSearchChange={query => changeFilterField({ query })}
-              onAll={() => navigate(webhookListUrl())}
+              onFilterChange={changeFilters}
+              onSearchChange={handleSearchChange}
+              onAll={resetFilters}
               onTabChange={handleTabChange}
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}

@@ -21,6 +21,8 @@ import { ListViews } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import useShop from "@saleor/hooks/useShop";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import OrderDraftListPage from "../../components/OrderDraftListPage";
 import {
   TypedOrderDraftBulkCancelMutation,
@@ -31,7 +33,6 @@ import { OrderDraftBulkCancel } from "../../types/OrderDraftBulkCancel";
 import { OrderDraftCreate } from "../../types/OrderDraftCreate";
 import {
   orderDraftListUrl,
-  OrderDraftListUrlFilters,
   OrderDraftListUrlQueryParams,
   orderUrl,
   OrderDraftListUrlDialog
@@ -42,8 +43,10 @@ import {
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
-} from "./filter";
+  saveFilterTab,
+  getFilterQueryParam,
+  getFilterOpts
+} from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface OrderDraftListProps {
@@ -61,6 +64,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     ListViews.DRAFT_LIST
   );
   const intl = useIntl();
+  const shop = useShop();
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
     notify({
@@ -84,16 +88,17 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: OrderDraftListUrlFilters) => {
-    reset();
-    navigate(
-      orderDraftListUrl({
-        ...getActiveFilters(params),
-        ...filter,
-        activeTab: undefined
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: orderDraftListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderDraftListUrlDialog,
@@ -155,6 +160,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, orderDraftListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedOrderDraftBulkCancelMutation onCompleted={handleOrderDraftBulkCancel}>
@@ -169,10 +175,13 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         return (
           <>
             <OrderDraftListPage
+              currencySymbol={currencySymbol}
               currentTab={currentTab}
+              filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}
-              onSearchChange={query => changeFilterField({ query })}
-              onAll={() => navigate(orderDraftListUrl())}
+              onSearchChange={handleSearchChange}
+              onFilterChange={changeFilters}
+              onAll={resetFilters}
               onTabChange={handleTabChange}
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}
