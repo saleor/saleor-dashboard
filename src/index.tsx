@@ -275,7 +275,7 @@ const Routes: React.FC = () => {
           ) : hasToken && tokenVerifyLoading ? (
             <LoginLoading />
           ) : (
-            <Auth />
+            <Auth hasToken={hasToken} />
           )
         }
       </AuthProvider>
