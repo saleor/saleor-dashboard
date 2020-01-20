@@ -215,8 +215,8 @@ export function getFilterVariables(
       gte: parseFloat(params.priceFrom),
       lte: parseFloat(params.priceTo)
     }),
-    productType:
-      params.productTypes !== undefined ? params.productTypes[0] : null,
+    productTypes:
+      params.productTypes !== undefined ? params.productTypes : null,
     search: params.query,
     stockAvailability:
       params.stockStatus !== undefined
@@ -232,21 +232,16 @@ export function getFilterQueryParam(
   const { active, group, name, value } = filter;
 
   if (!!group) {
-    if (active) {
-      return {
-        [group]:
-          params && params[group]
-            ? {
-                ...params[group],
-                [name]: [...params[group], value]
-              }
-            : {
-                [name]: [value]
-              }
-      };
-    }
+    const rest = params && params[group] ? params[group] : undefined;
 
-    return {};
+    return {
+      [group]: active
+        ? {
+            ...(rest === undefined ? {} : rest),
+            [name]: value
+          }
+        : rest
+    };
   }
 
   switch (name) {

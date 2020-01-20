@@ -5,6 +5,7 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
+import { getArrayQueryParam } from "@saleor/utils/urls";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   productAddPath,
@@ -29,7 +30,12 @@ import ProductVariantCreateComponent from "./views/ProductVariantCreate";
 const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductListUrlQueryParams = asSortParams(
-    qs,
+    {
+      ...qs,
+      categories: getArrayQueryParam(qs.categories),
+      collections: getArrayQueryParam(qs.collections),
+      productTypes: getArrayQueryParam(qs.productTypes)
+    },
     ProductListUrlSortField
   );
 
