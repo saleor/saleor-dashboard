@@ -127,7 +127,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                           costPrice: decimal(data.costPrice),
                           id: variantId,
                           priceOverride: decimal(data.priceOverride),
-                          quantity: data.quantity || null,
+                          quantity: parseInt(data.quantity, 0),
                           sku: data.sku,
                           trackInventory: true // FIXME: missing in UI
                         });

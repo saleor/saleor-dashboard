@@ -28,7 +28,7 @@ interface ProductVariantCreatePageFormData {
   costPrice: string;
   images: string[];
   priceOverride: string;
-  quantity: number;
+  quantity: string;
   sku: string;
 }
 
@@ -82,7 +82,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     costPrice: "",
     images: maybe(() => product.images.map(image => image.id)),
     priceOverride: "",
-    quantity: 0,
+    quantity: "0",
     sku: ""
   };
 

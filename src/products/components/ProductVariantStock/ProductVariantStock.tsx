@@ -24,7 +24,7 @@ interface ProductVariantStockProps {
     sku?: string;
   };
   sku: string;
-  quantity: number;
+  quantity: string;
   stockAllocated?: number;
   loading?: boolean;
   onChange(event: any);
