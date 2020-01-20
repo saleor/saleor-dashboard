@@ -129,7 +129,7 @@ export function getFilterOpts(
               })),
             []
           )
-        : undefined,
+        : [],
       hasMore: maybe(
         () => collections.search.result.data.search.pageInfo.hasNextPage,
         false
