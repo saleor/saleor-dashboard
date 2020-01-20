@@ -6,34 +6,42 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
 import {
   ListActions,
   PageListProps,
-  SearchPageProps,
   TabPageProps,
-  SortPage
+  SortPage,
+  FilterPageProps
 } from "@saleor/types";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
-import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
+import FilterBar from "@saleor/components/FilterBar";
 import OrderDraftList from "../OrderDraftList";
+import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
+import {
+  OrderDraftListFilterOpts,
+  OrderDraftFilterKeys,
+  createFilterStructure
+} from "./filters";
 
 export interface OrderDraftListPageProps
   extends PageListProps,
     ListActions,
-    SearchPageProps,
+    FilterPageProps<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
     SortPage<OrderDraftListUrlSortField>,
     TabPageProps {
   orders: OrderDraftList_draftOrders_edges_node[];
 }
 
 const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
+  currencySymbol,
   currentTab,
   disabled,
+  filterOpts,
   initialSearch,
   onAdd,
   onAll,
+  onFilterChange,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -42,6 +50,8 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+
+  const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
@@ -59,18 +69,21 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <SearchBar
+        <FilterBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Drafts",
             description: "tab name"
           })}
+          currencySymbol={currencySymbol}
           currentTab={currentTab}
+          filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Draft"
           })}
           tabs={tabs}
           onAll={onAll}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}

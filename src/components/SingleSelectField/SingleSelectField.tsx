@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { InputProps } from "@material-ui/core/Input";
 
 const useStyles = makeStyles(
   theme => ({
@@ -38,13 +39,13 @@ interface SingleSelectFieldProps {
   selectProps?: SelectProps;
   placeholder?: string;
   value?: string;
+  InputProps?: InputProps;
   onChange(event: any);
 }
 
 export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
   const {
     className,
-
     disabled,
     error,
     label,
@@ -54,7 +55,8 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
     name,
     hint,
     selectProps,
-    placeholder
+    placeholder,
+    InputProps
   } = props;
   const classes = useStyles(props);
 
@@ -90,6 +92,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
             }}
             name={name}
             labelWidth={180}
+            {...InputProps}
           />
         }
         {...selectProps}

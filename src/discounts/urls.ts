@@ -8,7 +8,8 @@ import {
   Filters,
   Pagination,
   TabActionDialog,
-  Sort
+  Sort,
+  FiltersWithMultipleValues
 } from "../types";
 import { SaleDetailsPageTab } from "./components/SaleDetailsPage";
 import { VoucherDetailsPageTab } from "./components/VoucherDetailsPage";
@@ -18,9 +19,16 @@ export const discountSection = "/discounts/";
 export const saleSection = urlJoin(discountSection, "sales");
 export const saleListPath = saleSection;
 export enum SaleListUrlFiltersEnum {
+  type = "type",
+  startedFrom = "startedFrom",
+  startedTo = "startedTo",
   query = "query"
 }
-export type SaleListUrlFilters = Filters<SaleListUrlFiltersEnum>;
+export enum SaleListUrlFiltersWithMultipleValues {
+  status = "status"
+}
+export type SaleListUrlFilters = Filters<SaleListUrlFiltersEnum> &
+  FiltersWithMultipleValues<SaleListUrlFiltersWithMultipleValues>;
 export type SaleListUrlDialog = "remove" | TabActionDialog;
 export enum SaleListUrlSortField {
   name = "name",
@@ -59,9 +67,18 @@ export const saleAddUrl = saleAddPath;
 export const voucherSection = urlJoin(discountSection, "vouchers");
 export const voucherListPath = voucherSection;
 export enum VoucherListUrlFiltersEnum {
+  startedFrom = "startedFrom",
+  startedTo = "startedTo",
+  timesUsedFrom = "timesUsedFrom",
+  timesUsedTo = "timesUsedTo",
   query = "query"
 }
-export type VoucherListUrlFilters = Filters<VoucherListUrlFiltersEnum>;
+export enum VoucherListUrlFiltersWithMultipleValues {
+  status = "status",
+  type = "type"
+}
+export type VoucherListUrlFilters = Filters<VoucherListUrlFiltersEnum> &
+  FiltersWithMultipleValues<VoucherListUrlFiltersWithMultipleValues>;
 export type VoucherListUrlDialog = "remove" | TabActionDialog;
 export enum VoucherListUrlSortField {
   code = "code",

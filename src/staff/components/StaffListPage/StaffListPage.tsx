@@ -6,21 +6,26 @@ import { FormattedMessage, useIntl } from "react-intl";
 import AppHeader from "@saleor/components/AppHeader";
 import { Container } from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import SearchBar from "@saleor/components/SearchBar";
+import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
 import {
   ListProps,
-  SearchPageProps,
+  FilterPageProps,
   TabPageProps,
   SortPage
 } from "@saleor/types";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
 import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 import StaffList from "../StaffList/StaffList";
+import {
+  createFilterStructure,
+  StaffFilterKeys,
+  StaffListFilterOpts
+} from "./filters";
 
 export interface StaffListPageProps
   extends ListProps,
-    SearchPageProps,
+    FilterPageProps<StaffFilterKeys, StaffListFilterOpts>,
     SortPage<StaffListUrlSortField>,
     TabPageProps {
   staffMembers: StaffList_staffUsers_edges_node[];
@@ -29,11 +34,14 @@ export interface StaffListPageProps
 }
 
 const StaffListPage: React.FC<StaffListPageProps> = ({
+  currencySymbol,
   currentTab,
+  filterOpts,
   initialSearch,
   onAdd,
   onAll,
   onBack,
+  onFilterChange,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -42,6 +50,8 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+
+  const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
@@ -57,18 +67,21 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <SearchBar
+        <FilterBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Staff Members",
             description: "tab name"
           })}
+          currencySymbol={currencySymbol}
           currentTab={currentTab}
+          filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Staff Member"
           })}
           tabs={tabs}
           onAll={onAll}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}

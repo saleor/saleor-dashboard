@@ -24,13 +24,13 @@ import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import SaleListPage from "../../components/SaleListPage";
 import { TypedSaleBulkDelete } from "../../mutations";
 import { useSaleListQuery } from "../../queries";
 import { SaleBulkDelete } from "../../types/SaleBulkDelete";
 import {
   saleAddUrl,
-  SaleListUrlFilters,
   SaleListUrlQueryParams,
   saleUrl,
   saleListUrl,
@@ -42,8 +42,10 @@ import {
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
-} from "./filter";
+  saveFilterTab,
+  getFilterQueryParam,
+  getFilterOpts
+} from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface SaleListProps {
@@ -86,16 +88,17 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: SaleListUrlFilters) => {
-    reset();
-    navigate(
-      saleListUrl({
-        ...getActiveFilters(params),
-        ...filter,
-        activeTab: undefined
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: saleListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     SaleListUrlDialog,
@@ -143,6 +146,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, saleListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <TypedSaleBulkDelete onCompleted={handleSaleBulkDelete}>
@@ -158,10 +162,13 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
           <>
             <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
             <SaleListPage
+              currencySymbol={currencySymbol}
               currentTab={currentTab}
+              filterOpts={getFilterOpts(params)}
               initialSearch={params.query || ""}
-              onSearchChange={query => changeFilterField({ query })}
-              onAll={() => navigate(saleListUrl())}
+              onSearchChange={handleSearchChange}
+              onFilterChange={filter => changeFilters(filter)}
+              onAll={resetFilters}
               onTabChange={handleTabChange}
               onTabDelete={() => openModal("delete-search")}
               onTabSave={() => openModal("save-search")}

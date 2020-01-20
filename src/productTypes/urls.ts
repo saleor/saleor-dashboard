@@ -16,6 +16,8 @@ const productTypeSection = "/product-types/";
 
 export const productTypeListPath = productTypeSection;
 export enum ProductTypeListUrlFiltersEnum {
+  configurable = "configurable",
+  type = "type",
   query = "query"
 }
 export type ProductTypeListUrlFilters = Filters<ProductTypeListUrlFiltersEnum>;

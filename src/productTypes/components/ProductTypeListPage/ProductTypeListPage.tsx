@@ -6,23 +6,28 @@ import { FormattedMessage, useIntl } from "react-intl";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import SearchBar from "@saleor/components/SearchBar";
+import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import {
   ListActions,
   PageListProps,
-  SearchPageProps,
+  FilterPageProps,
   TabPageProps,
   SortPage
 } from "../../../types";
 import { ProductTypeList_productTypes_edges_node } from "../../types/ProductTypeList";
 import ProductTypeList from "../ProductTypeList";
+import {
+  createFilterStructure,
+  ProductTypeFilterKeys,
+  ProductTypeListFilterOpts
+} from "./filters";
 
 export interface ProductTypeListPageProps
   extends PageListProps,
     ListActions,
-    SearchPageProps,
+    FilterPageProps<ProductTypeFilterKeys, ProductTypeListFilterOpts>,
     SortPage<ProductTypeListUrlSortField>,
     TabPageProps {
   productTypes: ProductTypeList_productTypes_edges_node[];
@@ -30,11 +35,14 @@ export interface ProductTypeListPageProps
 }
 
 const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
+  currencySymbol,
   currentTab,
+  filterOpts,
   initialSearch,
   onAdd,
   onAll,
   onBack,
+  onFilterChange,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -43,6 +51,8 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+
+  const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
@@ -58,18 +68,21 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <SearchBar
+        <FilterBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Product Types",
             description: "tab name"
           })}
+          currencySymbol={currencySymbol}
           currentTab={currentTab}
+          filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Product Type"
           })}
           tabs={tabs}
           onAll={onAll}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}

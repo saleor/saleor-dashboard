@@ -10,7 +10,8 @@ import {
   pageListProps,
   searchPageProps,
   tabPageProps,
-  sortPageProps
+  sortPageProps,
+  filterPageProps
 } from "@saleor/fixtures";
 import { AttributeListUrlSortField } from "@saleor/attributes/urls";
 import Decorator from "../../Decorator";
@@ -20,7 +21,34 @@ const props: AttributeListPageProps = {
   ...listActionsProps,
   ...tabPageProps,
   ...searchPageProps,
+  ...filterPageProps,
   attributes,
+  filterOpts: {
+    availableInGrid: {
+      active: false,
+      value: false
+    },
+    filterableInDashboard: {
+      active: false,
+      value: false
+    },
+    filterableInStorefront: {
+      active: false,
+      value: false
+    },
+    isVariantOnly: {
+      active: false,
+      value: false
+    },
+    valueRequired: {
+      active: false,
+      value: false
+    },
+    visibleInStorefront: {
+      active: false,
+      value: false
+    }
+  },
   onBack: () => undefined,
   onSort: () => undefined,
   sort: {

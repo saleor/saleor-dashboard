@@ -1,24 +1,22 @@
 import ButtonBase from "@material-ui/core/ButtonBase";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { FilterContentSubmitData } from "./FilterContent";
-import { IFilter } from "./types";
+import { IFilter, IFilterElement } from "./types";
+import useFilter from "./useFilter";
 import { FilterContent } from ".";
 
-export interface FilterProps<TFilterKeys = string> {
+export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol: string;
   menu: IFilter<TFilterKeys>;
-  filterLabel: string;
-  onFilterAdd: (filter: FilterContentSubmitData) => void;
+  onFilterAdd: (filter: Array<IFilterElement<string>>) => void;
 }
 
 const useStyles = makeStyles(
@@ -49,7 +47,6 @@ const useStyles = makeStyles(
       color: theme.palette.primary.main,
       fontSize: 14,
       fontWeight: 600 as 600,
-      marginRight: 4,
       textTransform: "uppercase"
     },
     filterButton: {
@@ -73,70 +70,106 @@ const useStyles = makeStyles(
       width: 240
     },
     popover: {
-      zIndex: 1
+      width: 376,
+      zIndex: 3
     },
     rotate: {
       transform: "rotate(180deg)"
+    },
+    separator: {
+      backgroundColor: theme.palette.primary.main,
+      display: "inline-block",
+      height: 28,
+      margin: theme.spacing(0, 1.5, 0, 1),
+      width: 1
     }
   }),
   { name: "Filter" }
 );
 const Filter: React.FC<FilterProps> = props => {
-  const { currencySymbol, filterLabel, menu, onFilterAdd } = props;
+  const { currencySymbol, menu, onFilterAdd } = props;
   const classes = useStyles(props);
 
   const anchor = React.useRef<HTMLDivElement>();
   const [isFilterMenuOpened, setFilterMenuOpened] = React.useState(false);
+  const [data, dispatch, reset] = useFilter(menu);
+
+  const isFilterActive = menu.some(filterElement => filterElement.active);
 
   return (
-    <div ref={anchor}>
-      <ButtonBase
-        className={classNames(classes.filterButton, classes.addFilterButton, {
-          [classes.addFilterButtonActive]: isFilterMenuOpened
-        })}
-        onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
-      >
-        <Typography className={classes.addFilterText}>
-          <FormattedMessage defaultMessage="Add Filter" description="button" />
-        </Typography>
-        <ArrowDropDownIcon
-          color="primary"
-          className={classNames(classes.addFilterIcon, {
-            [classes.rotate]: isFilterMenuOpened
+    <ClickAwayListener
+      onClickAway={event => {
+        if ((event.target as HTMLElement).getAttribute("role") !== "option") {
+          setFilterMenuOpened(false);
+        }
+      }}
+    >
+      <div ref={anchor}>
+        <ButtonBase
+          className={classNames(classes.filterButton, classes.addFilterButton, {
+            [classes.addFilterButtonActive]:
+              isFilterMenuOpened || isFilterActive
           })}
-        />
-      </ButtonBase>
-      <Popper
-        className={classes.popover}
-        open={isFilterMenuOpened}
-        anchorEl={anchor.current}
-        transition
-        disablePortal
-        placement="bottom-start"
-      >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === "bottom" ? "right top" : "right bottom"
-            }}
-          >
-            <Paper className={classes.paper}>
-              <Typography>{filterLabel}</Typography>
+          onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
+        >
+          <Typography className={classes.addFilterText}>
+            <FormattedMessage defaultMessage="Filters" description="button" />
+          </Typography>
+          {isFilterActive && (
+            <>
+              <span className={classes.separator} />
+              <Typography className={classes.addFilterText}>
+                {menu.reduce(
+                  (acc, filterElement) => acc + (filterElement.active ? 1 : 0),
+                  0
+                )}
+              </Typography>
+            </>
+          )}
+        </ButtonBase>
+        <Popper
+          className={classes.popover}
+          open={isFilterMenuOpened}
+          anchorEl={anchor.current}
+          transition
+          disablePortal
+          placement="bottom-start"
+          modifiers={{
+            flip: {
+              enabled: false
+            },
+            hide: {
+              enabled: false
+            },
+            preventOverflow: {
+              boundariesElement: "scrollParent",
+              enabled: false
+            }
+          }}
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin:
+                  placement === "bottom" ? "right top" : "right bottom"
+              }}
+            >
               <FilterContent
                 currencySymbol={currencySymbol}
-                filters={menu}
-                onSubmit={data => {
+                filters={data}
+                onClear={reset}
+                onFilterPropertyChange={dispatch}
+                onSubmit={() => {
                   onFilterAdd(data);
                   setFilterMenuOpened(false);
                 }}
               />
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-    </div>
+            </Grow>
+          )}
+        </Popper>
+      </div>
+    </ClickAwayListener>
   );
 };
 Filter.displayName = "Filter";

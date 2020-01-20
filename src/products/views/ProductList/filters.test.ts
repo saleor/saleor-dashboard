@@ -1,77 +1,57 @@
 import { createIntl } from "react-intl";
+import { stringify as stringifyQs } from "qs";
 
-import { ProductFilterKeys } from "@saleor/products/components/ProductListFilter";
+import { ProductListUrlFilters } from "@saleor/products/urls";
+import { createFilterStructure } from "@saleor/products/components/ProductListPage";
+import { getFilterQueryParams } from "@saleor/utils/filters";
+import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
+import { config } from "@test/intl";
 import { StockAvailability } from "@saleor/types/globalTypes";
-import { createFilter, createFilterChips, getFilterVariables } from "./filters";
+import { getFilterVariables, getFilterQueryParam } from "./filters";
+import { productListFilterOpts } from "./fixtures";
 
-const mockIntl = createIntl({
-  locale: "en"
-});
+describe("Filtering query params", () => {
+  it("should be empty object if no params given", () => {
+    const params: ProductListUrlFilters = {};
+    const filterVariables = getFilterVariables(params);
 
-describe("Create filter object", () => {
-  it("with price", () => {
-    const filter = createFilter({
-      name: ProductFilterKeys.priceEqual,
-      value: "10"
-    });
-
-    expect(filter).toMatchSnapshot();
+    expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
 
-  it("with price range", () => {
-    const filter = createFilter({
-      name: ProductFilterKeys.priceEqual,
-      value: ["10", "20"]
-    });
-
-    expect(filter).toMatchSnapshot();
-  });
-
-  it("with publication status", () => {
-    const filter = createFilter({
-      name: ProductFilterKeys.published,
-      value: "false"
-    });
-
-    expect(filter).toMatchSnapshot();
-  });
-
-  it("with stock status", () => {
-    const filter = createFilter({
-      name: ProductFilterKeys.stock,
-      value: StockAvailability.OUT_OF_STOCK
-    });
-
-    expect(filter).toMatchSnapshot();
-  });
-});
-
-test("Crate filter chips", () => {
-  const chips = createFilterChips(
-    {
-      isPublished: "true",
+  it("should not be empty object if params given", () => {
+    const params: ProductListUrlFilters = {
       priceFrom: "10",
       priceTo: "20",
-      status: StockAvailability.IN_STOCK
-    },
-    {
-      currencySymbol: "USD",
-      locale: "en"
-    },
-    jest.fn(),
-    mockIntl as any
-  );
+      status: true.toString(),
+      stockStatus: StockAvailability.IN_STOCK
+    };
+    const filterVariables = getFilterVariables(params);
 
-  expect(chips).toMatchSnapshot();
+    expect(getExistingKeys(filterVariables)).toHaveLength(3);
+  });
 });
 
-test("Get filter variables", () => {
-  const filter = getFilterVariables({
-    isPublished: "true",
-    priceFrom: "10",
-    priceTo: "20",
-    status: StockAvailability.IN_STOCK
+describe("Filtering URL params", () => {
+  const intl = createIntl(config);
+
+  const filters = createFilterStructure(intl, productListFilterOpts);
+
+  it("should be empty if no active filters", () => {
+    const filterQueryParams = getFilterQueryParams(
+      filters,
+      getFilterQueryParam
+    );
+
+    expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
   });
 
-  expect(filter).toMatchSnapshot();
+  it("should not be empty if active filters are present", () => {
+    const filterQueryParams = getFilterQueryParams(
+      setFilterOptsStatus(filters, true),
+      getFilterQueryParam
+    );
+
+    expect(filterQueryParams).toMatchSnapshot();
+    expect(stringifyQs(filterQueryParams)).toMatchSnapshot();
+  });
 });

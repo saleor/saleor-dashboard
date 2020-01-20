@@ -9,7 +9,8 @@ import {
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
+  getFilterOpts
 } from "@saleor/attributes/views/AttributeList/filters";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -24,6 +25,8 @@ import usePaginator, {
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import useShop from "@saleor/hooks/useShop";
 import { PAGINATE_BY } from "../../../config";
 import useBulkActions from "../../../hooks/useBulkActions";
 import { maybe } from "../../../misc";
@@ -35,12 +38,12 @@ import { AttributeBulkDelete } from "../../types/AttributeBulkDelete";
 import {
   attributeAddUrl,
   attributeListUrl,
-  AttributeListUrlFilters,
   AttributeListUrlQueryParams,
   attributeUrl,
   AttributeListUrlDialog
 } from "../../urls";
 import { getSortQueryVariables } from "./sort";
+import { getFilterQueryParam } from "./filters";
 
 interface AttributeListProps {
   params: AttributeListUrlQueryParams;
@@ -50,6 +53,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
   const notify = useNotifier();
+  const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -82,16 +86,17 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     AttributeListUrlQueryParams
   >(navigate, attributeListUrl, params);
 
-  const changeFilterField = (filter: AttributeListUrlFilters) => {
-    reset();
-    navigate(
-      attributeListUrl({
-        ...getActiveFilters(params),
-        ...filter,
-        activeTab: undefined
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: attributeListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -135,6 +140,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, attributeListUrl, params);
+  const currencySymbol = maybe(() => shop.defaultCurrency, "USD");
 
   return (
     <AttributeBulkDeleteMutation onCompleted={handleBulkDelete}>
@@ -144,17 +150,20 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
             attributes={maybe(() =>
               data.attributes.edges.map(edge => edge.node)
             )}
+            currencySymbol={currencySymbol}
             currentTab={currentTab}
             disabled={loading || attributeBulkDeleteOpts.loading}
+            filterOpts={getFilterOpts(params)}
             initialSearch={params.query || ""}
             isChecked={isSelected}
             onAdd={() => navigate(attributeAddUrl())}
-            onAll={() => navigate(attributeListUrl())}
+            onAll={resetFilters}
             onBack={() => navigate(configurationMenuUrl)}
+            onFilterChange={changeFilters}
             onNextPage={loadNextPage}
             onPreviousPage={loadPreviousPage}
             onRowClick={id => () => navigate(attributeUrl(id))}
-            onSearchChange={query => changeFilterField({ query })}
+            onSearchChange={handleSearchChange}
             onSort={handleSort}
             onTabChange={handleTabChange}
             onTabDelete={() => openModal("delete-search")}

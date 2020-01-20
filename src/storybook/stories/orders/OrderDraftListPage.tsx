@@ -7,7 +7,8 @@ import {
   pageListProps,
   searchPageProps,
   tabPageProps,
-  sortPageProps
+  sortPageProps,
+  filterPageProps
 } from "../../../fixtures";
 import OrderDraftListPage, {
   OrderDraftListPageProps
@@ -21,6 +22,20 @@ const props: OrderDraftListPageProps = {
   ...searchPageProps,
   ...sortPageProps,
   ...tabPageProps,
+  ...filterPageProps,
+  filterOpts: {
+    created: {
+      active: false,
+      value: {
+        max: undefined,
+        min: undefined
+      }
+    },
+    customer: {
+      active: false,
+      value: undefined
+    }
+  },
   onAdd: () => undefined,
   orders,
   sort: {

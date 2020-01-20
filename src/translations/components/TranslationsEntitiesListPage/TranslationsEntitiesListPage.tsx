@@ -1,12 +1,12 @@
 import Card from "@material-ui/core/Card";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
-import FilterSearch from "@saleor/components/Filter/FilterSearch";
+import SearchInput from "@saleor/components/SearchBar/SearchInput";
 import PageHeader from "@saleor/components/PageHeader";
-// tslint:disable no-submodule-imports
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import FilterTabs, { FilterTab } from "@saleor/components/TableFilter";
 import { maybe } from "@saleor/misc";
@@ -30,6 +30,24 @@ export interface TranslationsEntitiesFilters {
   onPagesTabClick: () => void;
   onProductTypesTabClick: () => void;
 }
+
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      display: "flex",
+      flexWrap: "wrap",
+      padding: theme.spacing(1, 3)
+    },
+    tabActions: {
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      padding: theme.spacing(1, 3, 2),
+      textAlign: "right"
+    }
+  }),
+  {
+    name: "FilterActions"
+  }
+);
 
 export type TranslationsEntitiesListFilterTab = keyof typeof TranslatableEntities;
 
@@ -88,9 +106,10 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
   "productTypes"
 ];
 
-const TranslationsEntitiesListPage: React.FC<
-  TranslationsEntitiesListPageProps
-> = ({ filters, language, onBack, children, ...searchProps }) => {
+const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> = props => {
+  const { filters, language, onBack, children, ...searchProps } = props;
+
+  const classes = useStyles(props);
   const intl = useIntl();
   const currentTab = tabs.indexOf(filters.current);
 
@@ -157,11 +176,12 @@ const TranslationsEntitiesListPage: React.FC<
             onClick={filters.onProductTypesTabClick}
           />
         </FilterTabs>
-        <FilterSearch
-          displaySearchAction={null}
-          searchPlaceholder={getSearchPlaceholder(filters.current, intl)}
-          {...searchProps}
-        />
+        <div className={classes.root}>
+          <SearchInput
+            placeholder={getSearchPlaceholder(filters.current, intl)}
+            {...searchProps}
+          />
+        </div>
         {children}
       </Card>
     </Container>

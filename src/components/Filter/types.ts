@@ -1,30 +1,43 @@
-import { IMenu, IMenuItem } from "../../utils/menu";
+import { FetchMoreProps, SearchPageProps } from "@saleor/types";
+import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
+import { FilterReducerAction } from "./reducer";
 
 export enum FieldType {
+  autocomplete,
+  boolean,
   date,
-  hidden,
+  dateTime,
   number,
   price,
-  range,
-  rangeDate,
-  rangePrice,
-  select,
+  options,
   text
 }
 
-export interface FilterChoice {
+export interface IFilterElementMutableData<T extends string = string> {
+  active: boolean;
+  multiple: boolean;
+  options?: MultiAutocompleteChoiceType[];
+  value: T[];
+}
+export interface IFilterElement<T extends string = string>
+  extends IFilterElementMutableData,
+    Partial<FetchMoreProps & SearchPageProps> {
+  autocomplete?: boolean;
+  displayValues?: MultiAutocompleteChoiceType[];
+  group?: T;
   label: string;
-  value: string | boolean;
-}
-
-export interface FilterData {
-  additionalText?: string;
-  fieldLabel: string;
-  options?: FilterChoice[];
+  name: T;
   type: FieldType;
-  value?: string;
 }
 
-export type IFilterItem<TKeys> = IMenuItem<FilterData, TKeys>;
+export interface FilterBaseFieldProps<T extends string = string> {
+  filterField: IFilterElement<T>;
+  onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
+}
 
-export type IFilter<TKeys> = IMenu<FilterData, TKeys>;
+export type IFilter<T extends string = string> = Array<IFilterElement<T>>;
+
+export enum FilterType {
+  MULTIPLE = "MULTIPLE",
+  SINGULAR = "SINGULAR"
+}

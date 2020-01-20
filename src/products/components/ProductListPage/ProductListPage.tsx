@@ -23,14 +23,19 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
+import FilterBar from "@saleor/components/FilterBar";
 import { ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
-import ProductListFilter, { ProductFilterKeys } from "../ProductListFilter";
+import {
+  createFilterStructure,
+  ProductFilterKeys,
+  ProductListFilterOpts
+} from "./filters";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
-    FilterPageProps<ProductFilterKeys>,
+    FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
     FetchMoreProps,
     SortPage<ProductListUrlSortField> {
   activeAttributeSortId: string;
@@ -55,9 +60,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     currencySymbol,
     currentTab,
     defaultSettings,
-    filtersList,
     gridAttributes,
     availableInGridAttributes,
+    filterOpts,
     hasMore,
     initialSearch,
     loading,
@@ -67,8 +72,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onAdd,
     onAll,
     onFetchMore,
+    onFilterChange,
     onSearchChange,
-    onFilterAdd,
     onTabChange,
     onTabDelete,
     onTabSave,
@@ -80,6 +85,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   const handleSave = (columns: ProductListColumns[]) =>
     onUpdateListSettings("columns", columns);
+
+  const filterStructure = createFilterStructure(intl, filterOpts);
 
   const columns: ColumnPickerChoice[] = [
     {
@@ -140,18 +147,25 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         </Button>
       </PageHeader>
       <Card>
-        <ProductListFilter
+        <FilterBar
           currencySymbol={currencySymbol}
           currentTab={currentTab}
-          filtersList={filtersList}
           initialSearch={initialSearch}
           onAll={onAll}
-          onFilterAdd={onFilterAdd}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
           tabs={tabs}
+          allTabLabel={intl.formatMessage({
+            defaultMessage: "All Products",
+            description: "tab name"
+          })}
+          filterStructure={filterStructure}
+          searchPlaceholder={intl.formatMessage({
+            defaultMessage: "Search Products..."
+          })}
         />
         <ProductList
           {...listProps}

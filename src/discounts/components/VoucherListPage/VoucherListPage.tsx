@@ -5,23 +5,28 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import SearchBar from "@saleor/components/SearchBar";
+import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
 import {
   ListActions,
   PageListProps,
-  SearchPageProps,
   TabPageProps,
-  SortPage
+  SortPage,
+  FilterPageProps
 } from "@saleor/types";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { VoucherList_vouchers_edges_node } from "../../types/VoucherList";
 import VoucherList from "../VoucherList";
+import {
+  VoucherFilterKeys,
+  VoucherListFilterOpts,
+  createFilterStructure
+} from "./filters";
 
 export interface VoucherListPageProps
   extends PageListProps,
     ListActions,
-    SearchPageProps,
+    FilterPageProps<VoucherFilterKeys, VoucherListFilterOpts>,
     SortPage<VoucherListUrlSortField>,
     TabPageProps {
   defaultCurrency: string;
@@ -29,10 +34,13 @@ export interface VoucherListPageProps
 }
 
 const VoucherListPage: React.FC<VoucherListPageProps> = ({
+  currencySymbol,
   currentTab,
+  filterOpts,
   initialSearch,
   onAdd,
   onAll,
+  onFilterChange,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -41,6 +49,8 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+
+  const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
@@ -53,18 +63,21 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <SearchBar
+        <FilterBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Vouchers",
             description: "tab name"
           })}
+          currencySymbol={currencySymbol}
           currentTab={currentTab}
+          filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Voucher"
           })}
           tabs={tabs}
           onAll={onAll}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}

@@ -10,10 +10,13 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { defaultListSettings, ProductListColumns } from "@saleor/config";
+import {
+  defaultListSettings,
+  ProductListColumns,
+  DEFAULT_INITIAL_SEARCH_DATA
+} from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
-import useLocale from "@saleor/hooks/useLocale";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -26,6 +29,10 @@ import { ProductListVariables } from "@saleor/products/types/ProductList";
 import { ListViews } from "@saleor/types";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import useCategorySearch from "@saleor/searches/useCategorySearch";
+import useCollectionSearch from "@saleor/searches/useCollectionSearch";
+import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -33,14 +40,14 @@ import {
 } from "../../mutations";
 import {
   AvailableInGridAttributesQuery,
-  TypedProductListQuery
+  TypedProductListQuery,
+  useInitialProductFilterDataQuery
 } from "../../queries";
 import { productBulkDelete } from "../../types/productBulkDelete";
 import { productBulkPublish } from "../../types/productBulkPublish";
 import {
   productAddUrl,
   productListUrl,
-  ProductListUrlFilters,
   ProductListUrlQueryParams,
   ProductListUrlSortField,
   productUrl,
@@ -48,13 +55,13 @@ import {
 } from "../../urls";
 import {
   areFiltersApplied,
-  createFilter,
-  createFilterChips,
   deleteFilterTab,
   getActiveFilters,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
+  getFilterOpts,
+  getFilterQueryParam
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -63,7 +70,6 @@ interface ProductListProps {
 }
 
 export const ProductList: React.FC<ProductListProps> = ({ params }) => {
-  const { locale } = useLocale();
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
@@ -75,6 +81,31 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ListViews.PRODUCT_LIST
   );
   const intl = useIntl();
+  const { data: initialFilterData } = useInitialProductFilterDataQuery({
+    variables: {
+      categories: params.categories,
+      collections: params.collections,
+      productTypes: params.productTypes
+    }
+  });
+  const searchCategories = useCategorySearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5
+    }
+  });
+  const searchCollections = useCollectionSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5
+    }
+  });
+  const searchProductTypes = useProductTypeSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5
+    }
+  });
 
   React.useEffect(
     () =>
@@ -103,21 +134,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
 
-  const changeFilters = (filters: ProductListUrlFilters) => {
-    reset();
-    navigate(productListUrl(filters));
-  };
-
-  const changeFilterField = (filter: ProductListUrlFilters) => {
-    reset();
-    navigate(
-      productListUrl({
-        ...getActiveFilters(params),
-        ...filter,
-        activeTab: undefined
-      })
-    );
-  };
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: productListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -160,6 +187,32 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       sort
     }),
     [params, settings.rowNumber]
+  );
+
+  const filterOpts = getFilterOpts(
+    params,
+    maybe(() => initialFilterData.attributes.edges.map(edge => edge.node), []),
+    {
+      initial: maybe(
+        () => initialFilterData.categories.edges.map(edge => edge.node),
+        []
+      ),
+      search: searchCategories
+    },
+    {
+      initial: maybe(
+        () => initialFilterData.collections.edges.map(edge => edge.node),
+        []
+      ),
+      search: searchCollections
+    },
+    {
+      initial: maybe(
+        () => initialFilterData.productTypes.edges.map(edge => edge.node),
+        []
+      ),
+      search: searchProductTypes
+    }
   );
 
   return (
@@ -224,6 +277,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           defaultSettings={
                             defaultListSettings[ListViews.PRODUCT_LIST]
                           }
+                          filterOpts={filterOpts}
                           gridAttributes={maybe(
                             () =>
                               attributes.data.grid.edges.map(edge => edge.node),
@@ -240,15 +294,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                               attributes.data.availableInGrid.pageInfo
                                 .hasNextPage,
                             false
-                          )}
-                          filtersList={createFilterChips(
-                            params,
-                            {
-                              currencySymbol,
-                              locale
-                            },
-                            changeFilterField,
-                            intl
                           )}
                           onAdd={() => navigate(productAddUrl)}
                           disabled={loading}
@@ -288,11 +333,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           onUpdateListSettings={updateListSettings}
                           pageInfo={pageInfo}
                           onRowClick={id => () => navigate(productUrl(id))}
-                          onAll={() =>
-                            changeFilters({
-                              status: undefined
-                            })
-                          }
+                          onAll={resetFilters}
                           toolbar={
                             <>
                               <Button
@@ -337,10 +378,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           selected={listElements.length}
                           toggle={toggle}
                           toggleAll={toggleAll}
-                          onSearchChange={query => changeFilterField({ query })}
-                          onFilterAdd={filter =>
-                            changeFilterField(createFilter(filter))
-                          }
+                          onSearchChange={handleSearchChange}
+                          onFilterChange={changeFilters}
                           onTabSave={() => openModal("save-search")}
                           onTabDelete={() => openModal("delete-search")}
                           onTabChange={handleTabChange}
