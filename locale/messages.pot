@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-12-30T13:44:02.183Z\n"
+"POT-Creation-Date: 2020-01-20T16:06:58.433Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -95,6 +95,22 @@ msgctxt "table actions"
 msgid "Actions"
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+#. [src.discounts.components.SaleListPage.active] - sale status
+#. defaultMessage is:
+#. Active
+msgctxt "sale status"
+msgid "Active"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+#. [src.discounts.components.VoucherListPage.active] - voucher status
+#. defaultMessage is:
+#. Active
+msgctxt "voucher status"
+msgid "Active"
+msgstr ""
+
 #: build/locale/src/plugins/components/PluginsList/PluginsList.json
 #. [src.plugins.components.PluginsList.3247064221] - plugin status
 #. defaultMessage is:
@@ -103,11 +119,43 @@ msgctxt "plugin status"
 msgid "Active"
 msgstr ""
 
+#: build/locale/src/plugins/components/PluginsListPage/filters.json
+#. [src.plugins.components.PluginsListPage.active] - plugin
+#. defaultMessage is:
+#. Active
+msgctxt "plugin"
+msgid "Active"
+msgstr ""
+
+#: build/locale/src/services/components/ServiceListPage/filters.json
+#. [src.services.components.ServiceListPage.active] - service account
+#. defaultMessage is:
+#. Active
+msgctxt "service account"
+msgid "Active"
+msgstr ""
+
 #: build/locale/src/staff/components/StaffList/StaffList.json
 #. [src.staff.components.StaffList.3247064221] - staff member status
 #. defaultMessage is:
 #. Active
 msgctxt "staff member status"
+msgid "Active"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffListPage/filters.json
+#. [src.staff.components.StaffListPage.active] - staff member's account
+#. defaultMessage is:
+#. Active
+msgctxt "staff member's account"
+msgid "Active"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhooksListPage/filters.json
+#. [src.webhooks.components.WebhooksListPage.active] - webhook
+#. defaultMessage is:
+#. Active
+msgctxt "webhook"
 msgid "Active"
 msgstr ""
 
@@ -533,6 +581,14 @@ msgstr ""
 #. All Photos
 msgctxt "section header"
 msgid "All Photos"
+msgstr ""
+
+#: build/locale/src/plugins/components/PluginsListPage/PluginsListPage.json
+#. [src.plugins.components.PluginsListPage.3523826683] - tab name
+#. defaultMessage is:
+#. All Plugins
+msgctxt "tab name"
+msgid "All Plugins"
 msgstr ""
 
 #: build/locale/src/productTypes/components/ProductTypeListPage/ProductTypeListPage.json
@@ -1511,19 +1567,19 @@ msgctxt "description"
 msgid "Availability"
 msgstr ""
 
+#: build/locale/src/products/components/ProductListPage/filters.json
+#. [src.products.components.ProductListPage.available] - product status
+#. defaultMessage is:
+#. Available
+msgctxt "product status"
+msgid "Available"
+msgstr ""
+
 #: build/locale/src/products/components/ProductVariants/ProductVariants.json
 #. [src.products.components.ProductVariants.2157131639] - product variant status
 #. defaultMessage is:
 #. Available
 msgctxt "product variant status"
-msgid "Available"
-msgstr ""
-
-#: build/locale/src/products/views/ProductList/messages.json
-#. [src.products.views.ProductList.available] - product status
-#. defaultMessage is:
-#. Available
-msgctxt "product status"
 msgid "Available"
 msgstr ""
 
@@ -1601,6 +1657,14 @@ msgstr ""
 #. Books
 msgctxt "tax rate"
 msgid "Books"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+#. [src.attributes.components.AttributeListPage.availableInGrid] - attribute can be column in product list table
+#. defaultMessage is:
+#. Can be used as column
+msgctxt "attribute can be column in product list table"
+msgid "Can be used as column"
 msgstr ""
 
 #: build/locale/src/intl.json
@@ -1851,6 +1915,14 @@ msgctxt "button"
 msgid "Change your password"
 msgstr ""
 
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+#. [src.webhooks.components.WebhookEvents.40035964] - event
+#. defaultMessage is:
+#. Changed quantity in checkout
+msgctxt "event"
+msgid "Changed quantity in checkout"
+msgstr ""
+
 #: build/locale/src/products/components/ProductPricing/ProductPricing.json
 #. [src.products.components.ProductPricing.3015886868]
 #. defaultMessage is:
@@ -2049,6 +2121,10 @@ msgstr ""
 
 #: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
 #. [src.productTypes.components.ProductTypeList.2754779425] - product type
+#. defaultMessage is:
+#. Configurable
+#: build/locale/src/productTypes/components/ProductTypeListPage/filters.json
+#. [src.productTypes.components.ProductTypeListPage.configurable] - product type
 #. defaultMessage is:
 #. Configurable
 msgctxt "product type"
@@ -2719,6 +2795,14 @@ msgctxt "button"
 msgid "Create webhook"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderDraftListPage/filters.json
+#. [src.orders.components.OrderDraftListPage.created] - draft order
+#. defaultMessage is:
+#. Created
+msgctxt "draft order"
+msgid "Created"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionCreate.json
 #. [src.collections.views.1597339737]
 #. defaultMessage is:
@@ -2780,6 +2864,14 @@ msgstr ""
 #. defaultMessage is:
 #. Customer
 msgctxt "description"
+msgid "Customer"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderDraftListPage/filters.json
+#. [src.orders.components.OrderDraftListPage.customer] - draft order
+#. defaultMessage is:
+#. Customer
+msgctxt "draft order"
 msgid "Customer"
 msgstr ""
 
@@ -2901,6 +2993,14 @@ msgstr ""
 #. Date
 msgctxt "date when order was placed"
 msgid "Date"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffListPage/filters.json
+#. [src.staff.components.StaffListPage.deactivated] - staff member's account
+#. defaultMessage is:
+#. Deactivated
+msgctxt "staff member's account"
+msgid "Deactivated"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerAddress/CustomerAddress.json
@@ -3399,6 +3499,14 @@ msgctxt "product type"
 msgid "Digital"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeListPage/filters.json
+#. [src.productTypes.components.ProductTypeListPage.digital] - product
+#. defaultMessage is:
+#. Digital
+msgctxt "product"
+msgid "Digital"
+msgstr ""
+
 #: build/locale/src/translations/components/TranslationFields/TranslationFieldsSave.json
 #. [src.translations.components.TranslationFields.363646127] - button
 #. defaultMessage is:
@@ -3421,6 +3529,18 @@ msgstr ""
 #. Discount Code
 msgctxt "description"
 msgid "Discount Code"
+msgstr ""
+
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+#. [src.discounts.components.SaleListPage.type]
+#. defaultMessage is:
+#. Discount Type
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+#. [src.discounts.components.VoucherListPage.type]
+#. defaultMessage is:
+#. Discount Type
+msgctxt "description"
+msgid "Discount Type"
 msgstr ""
 
 #: build/locale/src/discounts/components/SaleType/SaleType.json
@@ -3815,6 +3935,22 @@ msgctxt "webhook events"
 msgid "Expand or restrict webhooks permissions to register certain events in Saleor system."
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+#. [src.discounts.components.SaleListPage.expired] - sale status
+#. defaultMessage is:
+#. Expired
+msgctxt "sale status"
+msgid "Expired"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+#. [src.discounts.components.VoucherListPage.expired] - voucher status
+#. defaultMessage is:
+#. Expired
+msgctxt "voucher status"
+msgid "Expired"
+msgstr ""
+
 #: build/locale/src/collections/components/CollectionDetailsPage/CollectionDetailsPage.json
 #. [src.collections.components.CollectionDetailsPage.2906897537] - switch button
 #. defaultMessage is:
@@ -3837,6 +3973,22 @@ msgstr ""
 #. Filter Countries
 msgctxt "search box label"
 msgid "Filter Countries"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+#. [src.attributes.components.AttributeListPage.filterableInDashboard] - use attribute in filtering
+#. defaultMessage is:
+#. Filterable in Dashboard
+msgctxt "use attribute in filtering"
+msgid "Filterable in Dashboard"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+#. [src.attributes.components.AttributeListPage.filterableInStorefront] - use attribute in filtering
+#. defaultMessage is:
+#. Filterable in Storefront
+msgctxt "use attribute in filtering"
+msgid "Filterable in Storefront"
 msgstr ""
 
 #: build/locale/src/components/Filter/Filter.json
@@ -3911,6 +4063,18 @@ msgctxt "voucher discount type"
 msgid "Fixed Amount"
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+#. [src.discounts.components.SaleListPage.fixed] - discount type
+#. defaultMessage is:
+#. Fixed amount
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+#. [src.discounts.components.VoucherListPage.fixed] - discount type
+#. defaultMessage is:
+#. Fixed amount
+msgctxt "discount type"
+msgid "Fixed amount"
+msgstr ""
+
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
 #. [src.taxes.components.CountryTaxesPage.2332795012] - tax rate
 #. defaultMessage is:
@@ -3953,10 +4117,6 @@ msgstr ""
 
 #: build/locale/src/misc.json
 #. [src.fulfilled] - order status
-#. defaultMessage is:
-#. Fulfilled
-#: build/locale/src/orders/views/OrderList/messages.json
-#. [src.orders.views.OrderList.fulfilled] - order status
 #. defaultMessage is:
 #. Fulfilled
 msgctxt "order status"
@@ -4099,6 +4259,14 @@ msgctxt "subheader"
 msgid "Here is some information we gathered about your store"
 msgstr ""
 
+#: build/locale/src/collections/components/CollectionListPage/filters.json
+#. [src.collections.components.CollectionListPage.hidden] - collection
+#. defaultMessage is:
+#. Hidden
+msgctxt "collection"
+msgid "Hidden"
+msgstr ""
+
 #: build/locale/src/components/VisibilityCard/VisibilityCard.json
 #. [src.components.VisibilityCard.77815154]
 #. defaultMessage is:
@@ -4107,8 +4275,8 @@ msgctxt "description"
 msgid "Hidden"
 msgstr ""
 
-#: build/locale/src/products/views/ProductList/messages.json
-#. [src.products.views.ProductList.hidden] - product is hidden
+#: build/locale/src/products/components/ProductListPage/filters.json
+#. [src.products.components.ProductListPage.hidden] - product is hidden
 #. defaultMessage is:
 #. Hidden
 msgctxt "product is hidden"
@@ -4223,11 +4391,35 @@ msgctxt "section header"
 msgid "Images"
 msgstr ""
 
+#: build/locale/src/plugins/components/PluginsListPage/filters.json
+#. [src.plugins.components.PluginsListPage.deactivated] - plugin
+#. defaultMessage is:
+#. Inactive
+msgctxt "plugin"
+msgid "Inactive"
+msgstr ""
+
+#: build/locale/src/services/components/ServiceListPage/filters.json
+#. [src.services.components.ServiceListPage.deactivated] - service account
+#. defaultMessage is:
+#. Inactive
+msgctxt "service account"
+msgid "Inactive"
+msgstr ""
+
 #: build/locale/src/staff/components/StaffList/StaffList.json
 #. [src.staff.components.StaffList.1004218338] - staff member status
 #. defaultMessage is:
 #. Inactive
 msgctxt "staff member status"
+msgid "Inactive"
+msgstr ""
+
+#: build/locale/src/webhooks/components/WebhooksListPage/filters.json
+#. [src.webhooks.components.WebhooksListPage.inactive] - webhook
+#. defaultMessage is:
+#. Inactive
+msgctxt "webhook"
 msgid "Inactive"
 msgstr ""
 
@@ -4301,6 +4493,14 @@ msgstr ""
 #. Items successfully fulfilled
 msgctxt "description"
 msgid "Items successfully fulfilled"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerListPage/filters.json
+#. [src.customers.components.CustomerListPage.joinDate] - customer
+#. defaultMessage is:
+#. Join Date
+msgctxt "customer"
+msgid "Join Date"
 msgstr ""
 
 #: build/locale/src/services/components/ServiceTokens/ServiceTokens.json
@@ -4657,6 +4857,14 @@ msgstr ""
 #. Miscellaneous
 msgctxt "description"
 msgid "Miscellaneous"
+msgstr ""
+
+#: build/locale/src/customers/components/CustomerListPage/filters.json
+#. [src.customers.components.CustomerListPage.moneySpent] - customer
+#. defaultMessage is:
+#. Money Spent
+msgctxt "customer"
+msgid "Money Spent"
 msgstr ""
 
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
@@ -5147,6 +5355,14 @@ msgctxt "description"
 msgid "No results"
 msgstr ""
 
+#: build/locale/src/components/Filter/FilterAutocompleteField.json
+#. [src.components.Filter.2332404293] - search
+#. defaultMessage is:
+#. No results
+msgctxt "search"
+msgid "No results"
+msgstr ""
+
 #: build/locale/src/components/MultiAutocompleteSelectField/MultiAutocompleteSelectFieldContent.json
 #. [src.components.MultiAutocompleteSelectField.4205644805]
 #. defaultMessage is:
@@ -5475,6 +5691,14 @@ msgctxt "notes about customer, header"
 msgid "Notes"
 msgstr ""
 
+#: build/locale/src/customers/components/CustomerListPage/filters.json
+#. [src.customers.components.CustomerListPage.numberOfOrders]
+#. defaultMessage is:
+#. Number of Orders
+msgctxt "description"
+msgid "Number of Orders"
+msgstr ""
+
 #: build/locale/src/discounts/components/VoucherValue/VoucherValue.json
 #. [src.discounts.components.VoucherValue.1492866942] - voucher application, switch button
 #. defaultMessage is:
@@ -5565,14 +5789,6 @@ msgstr ""
 #. Order Number
 msgctxt "navigator placeholder"
 msgid "Order Number"
-msgstr ""
-
-#: build/locale/src/orders/views/OrderList/messages.json
-#. [src.orders.views.OrderList.status]
-#. defaultMessage is:
-#. Order Status
-msgctxt "description"
-msgid "Order Status"
 msgstr ""
 
 #: build/locale/src/orders/components/OrderHistory/OrderHistory.json
@@ -5779,8 +5995,8 @@ msgctxt "navigator notification"
 msgid "Our new feature to help you with your daily tasks. Run Navigator using {keyboardShortcut} shortcut."
 msgstr ""
 
-#: build/locale/src/products/views/ProductList/messages.json
-#. [src.products.views.ProductList.outOfStock] - product status
+#: build/locale/src/products/components/ProductListPage/filters.json
+#. [src.products.components.ProductListPage.outOfStock] - product status
 #. defaultMessage is:
 #. Out Of Stock
 msgctxt "product status"
@@ -5825,14 +6041,6 @@ msgstr ""
 #. Pages
 msgctxt "description"
 msgid "Pages"
-msgstr ""
-
-#: build/locale/src/orders/views/OrderList/messages.json
-#. [src.orders.views.OrderList.partiallyFulfilled] - order status
-#. defaultMessage is:
-#. Partially Fulfilled
-msgctxt "order status"
-msgid "Partially Fulfilled"
 msgstr ""
 
 #: build/locale/src/misc.json
@@ -5975,8 +6183,16 @@ msgctxt "order history message"
 msgid "Payment was voided"
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+#. [src.discounts.components.SaleListPage.percentage] - discount type
+#. defaultMessage is:
+#. Percentage
 #: build/locale/src/discounts/components/SaleType/SaleType.json
 #. [src.discounts.components.SaleType.3688224049] - discount type
+#. defaultMessage is:
+#. Percentage
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+#. [src.discounts.components.VoucherListPage.percentage] - discount type
 #. defaultMessage is:
 #. Percentage
 msgctxt "discount type"
@@ -6059,8 +6275,8 @@ msgctxt "product type"
 msgid "Physical"
 msgstr ""
 
-#: build/locale/src/orders/views/OrderList/messages.json
-#. [src.orders.views.OrderList.placed] - order
+#: build/locale/src/orders/components/OrderListPage/filters.json
+#. [src.orders.components.OrderListPage.placed] - order
 #. defaultMessage is:
 #. Placed
 msgctxt "order"
@@ -6211,23 +6427,23 @@ msgctxt "product unit price"
 msgid "Price"
 msgstr ""
 
+#: build/locale/src/products/components/ProductListPage/filters.json
+#. [src.products.components.ProductListPage.price]
+#. defaultMessage is:
+#. Price
+#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
+#. [productVariantCreatePricesPriceInputLabel]
+#. defaultMessage is:
+#. Price
+msgctxt "description"
+msgid "Price"
+msgstr ""
+
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
 #. [src.products.components.ProductVariantCreateDialog.1134347598] - variant price, header
 #. defaultMessage is:
 #. Price
 msgctxt "variant price, header"
-msgid "Price"
-msgstr ""
-
-#: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
-#. [productVariantCreatePricesPriceInputLabel]
-#. defaultMessage is:
-#. Price
-#: build/locale/src/products/views/ProductList/messages.json
-#. [src.products.views.ProductList.price]
-#. defaultMessage is:
-#. Price
-msgctxt "description"
 msgid "Price"
 msgstr ""
 
@@ -6639,6 +6855,18 @@ msgctxt "collection is published"
 msgid "Published"
 msgstr ""
 
+#: build/locale/src/collections/components/CollectionListPage/filters.json
+#. [src.collections.components.CollectionListPage.published] - collection
+#. defaultMessage is:
+#. Published
+#: build/locale/src/components/Navigator/modes/messages.json
+#. [src.components.Navigator.modes.collectionPublished] - collection
+#. defaultMessage is:
+#. Published
+msgctxt "collection"
+msgid "Published"
+msgstr ""
+
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 #. [src.collections.components.CollectionProducts.3640454975] - product is published
 #. defaultMessage is:
@@ -6648,14 +6876,6 @@ msgstr ""
 #. defaultMessage is:
 #. Published
 msgctxt "product is published"
-msgid "Published"
-msgstr ""
-
-#: build/locale/src/components/Navigator/modes/messages.json
-#. [src.components.Navigator.modes.collectionPublished] - collection
-#. defaultMessage is:
-#. Published
-msgctxt "collection"
 msgid "Published"
 msgstr ""
 
@@ -6745,14 +6965,6 @@ msgstr ""
 #. Rate Price
 msgctxt "shipping method price"
 msgid "Rate Price"
-msgstr ""
-
-#: build/locale/src/orders/views/OrderList/messages.json
-#. [src.orders.views.OrderList.readyToCapture] - order status
-#. defaultMessage is:
-#. Ready to Capture
-msgctxt "order status"
-msgid "Ready to Capture"
 msgstr ""
 
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
@@ -7035,6 +7247,22 @@ msgctxt "description"
 msgid "Saved changes"
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+#. [src.discounts.components.SaleListPage.scheduled] - sale status
+#. defaultMessage is:
+#. Scheduled
+msgctxt "sale status"
+msgid "Scheduled"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+#. [src.discounts.components.VoucherListPage.scheduled] - voucher status
+#. defaultMessage is:
+#. Scheduled
+msgctxt "voucher status"
+msgid "Scheduled"
+msgstr ""
+
 #: build/locale/src/attributes/components/AttributeListPage/AttributeListPage.json
 #. [src.attributes.components.AttributeListPage.3916653510]
 #. defaultMessage is:
@@ -7237,6 +7465,14 @@ msgstr ""
 #. Search Page
 msgctxt "description"
 msgid "Search Page"
+msgstr ""
+
+#: build/locale/src/plugins/components/PluginsListPage/PluginsListPage.json
+#. [src.plugins.components.PluginsListPage.3233248823]
+#. defaultMessage is:
+#. Search Plugins...
+msgctxt "description"
+msgid "Search Plugins..."
 msgstr ""
 
 #: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
@@ -7615,6 +7851,14 @@ msgctxt "voucher discount"
 msgid "Shipment"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeListPage/filters.json
+#. [src.productTypes.components.ProductTypeListPage.shippable] - product
+#. defaultMessage is:
+#. Shippable
+msgctxt "product"
+msgid "Shippable"
+msgstr ""
+
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json
 #. [src.orders.components.OrderPayment.1325966144] - order shipping method name
 #. defaultMessage is:
@@ -7741,6 +7985,14 @@ msgstr ""
 #. Show gross prices to customers in the storefront
 msgctxt "description"
 msgid "Show gross prices to customers in the storefront"
+msgstr ""
+
+#: build/locale/src/components/Filter/FilterAutocompleteField.json
+#. [src.components.Filter.4190318230] - search results
+#. defaultMessage is:
+#. Show more
+msgctxt "search results"
+msgid "Show more"
 msgstr ""
 
 #: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
@@ -7891,6 +8143,22 @@ msgctxt "description"
 msgid "Start typing to begin search..."
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+#. [src.discounts.components.SaleListPage.started] - sale start date
+#. defaultMessage is:
+#. Started
+msgctxt "sale start date"
+msgid "Started"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+#. [src.discounts.components.VoucherListPage.started] - voucher start date
+#. defaultMessage is:
+#. Started
+msgctxt "voucher start date"
+msgid "Started"
+msgstr ""
+
 #: build/locale/src/discounts/components/SaleList/SaleList.json
 #. [src.discounts.components.SaleList.47059407] - sale start date
 #. defaultMessage is:
@@ -7915,6 +8183,30 @@ msgctxt "order status"
 msgid "Status"
 msgstr ""
 
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+#. [src.discounts.components.SaleListPage.status] - sale status
+#. defaultMessage is:
+#. Status
+msgctxt "sale status"
+msgid "Status"
+msgstr ""
+
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+#. [src.discounts.components.VoucherListPage.status] - voucher status
+#. defaultMessage is:
+#. Status
+msgctxt "voucher status"
+msgid "Status"
+msgstr ""
+
+#: build/locale/src/intl.json
+#. [src.status]
+#. defaultMessage is:
+#. Status
+msgctxt "description"
+msgid "Status"
+msgstr ""
+
 #: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
 #. [src.plugins.components.PluginInfo.1756106276] - plugin status
 #. defaultMessage is:
@@ -7928,6 +8220,14 @@ msgstr ""
 #. defaultMessage is:
 #. Status
 msgctxt "product variant status"
+msgid "Status"
+msgstr ""
+
+#: build/locale/src/staff/components/StaffListPage/filters.json
+#. [src.staff.components.StaffListPage.status] - staff member's account
+#. defaultMessage is:
+#. Status
+msgctxt "staff member's account"
 msgid "Status"
 msgstr ""
 
@@ -7963,8 +8263,8 @@ msgctxt "product variant stock, section header"
 msgid "Stock"
 msgstr ""
 
-#: build/locale/src/products/views/ProductList/messages.json
-#. [src.products.views.ProductList.quantity] - product
+#: build/locale/src/products/components/ProductListPage/filters.json
+#. [src.products.components.ProductListPage.quantity] - product
 #. defaultMessage is:
 #. Stock quantity
 msgctxt "product"
@@ -8399,6 +8699,14 @@ msgctxt "email sender"
 msgid "This will be visible as \"from\" name"
 msgstr ""
 
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+#. [src.discounts.components.VoucherListPage.timesUsed] - voucher
+#. defaultMessage is:
+#. Times used
+msgctxt "voucher"
+msgid "Times used"
+msgstr ""
+
 #: build/locale/src/pages/components/PageInfo/PageInfo.json
 #. [src.pages.components.PageInfo.1124600214] - page title
 #. defaultMessage is:
@@ -8651,6 +8959,14 @@ msgctxt "product type is either simple or configurable"
 msgid "Type"
 msgstr ""
 
+#: build/locale/src/productTypes/components/ProductTypeListPage/filters.json
+#. [src.productTypes.components.ProductTypeListPage.type] - product type is digital or physical
+#. defaultMessage is:
+#. Type
+msgctxt "product type is digital or physical"
+msgid "Type"
+msgstr ""
+
 #: build/locale/src/components/Navigator/NavigatorInput.json
 #. [src.components.Navigator.1167695965] - navigator placeholder
 #. defaultMessage is:
@@ -8861,10 +9177,6 @@ msgstr ""
 
 #: build/locale/src/misc.json
 #. [src.unfulfilled] - order status
-#. defaultMessage is:
-#. Unfulfilled
-#: build/locale/src/orders/views/OrderList/messages.json
-#. [src.orders.views.OrderList.unfulfilled] - order status
 #. defaultMessage is:
 #. Unfulfilled
 msgctxt "order status"
@@ -9135,6 +9447,14 @@ msgctxt "check to require attribute to have value"
 msgid "Value Required"
 msgstr ""
 
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+#. [src.attributes.components.AttributeListPage.valueRequired] - attribute value is required
+#. defaultMessage is:
+#. Value Required
+msgctxt "attribute value is required"
+msgid "Value Required"
+msgstr ""
+
 #: build/locale/src/attributes/views/AttributeDetails/AttributeDetails.json
 #. [src.attributes.views.AttributeDetails.423042761] - attribute value deleted
 #. defaultMessage is:
@@ -9189,6 +9509,14 @@ msgstr ""
 #. Variant Attributes
 msgctxt "section header"
 msgid "Variant Attributes"
+msgstr ""
+
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+#. [src.attributes.components.AttributeListPage.isVariantOnly] - attribute can be used only in variants
+#. defaultMessage is:
+#. Variant Only
+msgctxt "attribute can be used only in variants"
+msgid "Variant Only"
 msgstr ""
 
 #: build/locale/src/products/views/ProductVariant.json
@@ -9267,8 +9595,8 @@ msgctxt "page status"
 msgid "Visibility"
 msgstr ""
 
-#: build/locale/src/products/views/ProductList/messages.json
-#. [src.products.views.ProductList.visibility] - product visibility
+#: build/locale/src/products/components/ProductListPage/filters.json
+#. [src.products.components.ProductListPage.visibility] - product visibility
 #. defaultMessage is:
 #. Visibility
 msgctxt "product visibility"
@@ -9291,14 +9619,18 @@ msgctxt "description"
 msgid "Visible"
 msgstr ""
 
-#: build/locale/src/products/views/ProductList/messages.json
-#. [src.products.views.ProductList.visible] - product is visible
+#: build/locale/src/products/components/ProductListPage/filters.json
+#. [src.products.components.ProductListPage.visible] - product is visible
 #. defaultMessage is:
 #. Visible
 msgctxt "product is visible"
 msgid "Visible"
 msgstr ""
 
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+#. [src.attributes.components.AttributeListPage.visibleInStorefront] - attribute
+#. defaultMessage is:
+#. Visible on Product Page in Storefront
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 #. [src.attributes.components.AttributeProperties.3876764312] - attribute
 #. defaultMessage is:
