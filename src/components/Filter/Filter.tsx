@@ -97,7 +97,13 @@ const Filter: React.FC<FilterProps> = props => {
   const isFilterActive = menu.some(filterElement => filterElement.active);
 
   return (
-    <ClickAwayListener onClickAway={() => setFilterMenuOpened(false)}>
+    <ClickAwayListener
+      onClickAway={event => {
+        if ((event.target as HTMLElement).getAttribute("role") !== "option") {
+          setFilterMenuOpened(false);
+        }
+      }}
+    >
       <div ref={anchor}>
         <ButtonBase
           className={classNames(classes.filterButton, classes.addFilterButton, {
