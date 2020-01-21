@@ -12,6 +12,7 @@ import LoginView from "./views/Login";
 import NewPassword from "./views/NewPassword";
 import ResetPassword from "./views/ResetPassword";
 import ResetPasswordSuccess from "./views/ResetPasswordSuccess";
+import LoginLoading from "./components/LoginLoading";
 
 interface UserContext {
   login: (username: string, password: string) => void;
@@ -30,12 +31,20 @@ export const UserContext = React.createContext<UserContext>({
   tokenVerifyLoading: false
 });
 
-const AuthRouter: React.FC = () => (
+interface AuthRouterProps {
+  hasToken: boolean;
+}
+
+const AuthRouter: React.FC<AuthRouterProps> = ({ hasToken }) => (
   <Layout>
     <Switch>
       <Route path={passwordResetSuccessPath} component={ResetPasswordSuccess} />
       <Route path={passwordResetPath} component={ResetPassword} />
-      <Route path={newPasswordPath} component={NewPassword} />
+      {!hasToken ? (
+        <Route path={newPasswordPath} component={NewPassword} />
+      ) : (
+        <LoginLoading />
+      )}
       <Route component={LoginView} />
     </Switch>
   </Layout>
