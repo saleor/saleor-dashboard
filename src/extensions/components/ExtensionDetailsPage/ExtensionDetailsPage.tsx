@@ -3,8 +3,10 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 import Container from "@saleor/components/Container";
 import AppHeader from "@saleor/components/AppHeader";
+import { extensionListUrl } from "@saleor/extensions/urls";
+import useNavigator from "@saleor/hooks/useNavigator";
 
-interface AppDetailsPageProps {
+interface ExtensionDetailsPageProps {
   app: Record<"id" | "name" | "url", string>;
 }
 
@@ -25,16 +27,19 @@ const useStyles = makeStyles(
     }
   },
   {
-    name: "AppDetailsPage"
+    name: "ExtensionDetailsPage"
   }
 );
 
-const AppDetailsPage: React.FC<AppDetailsPageProps> = ({ app }) => {
+const ExtensionDetailsPage: React.FC<ExtensionDetailsPageProps> = ({ app }) => {
   const classes = useStyles({});
+  const navigate = useNavigator();
 
   return (
     <Container>
-      <AppHeader onBack={() => navigate(appList)}>Extensions</AppHeader>
+      <AppHeader onBack={() => navigate(extensionListUrl)}>
+        Extensions
+      </AppHeader>
       <div className={classes.frameContainer}>
         <iframe className={classes.frame} id="extension-app" src={app.url} />
       </div>
@@ -42,4 +47,4 @@ const AppDetailsPage: React.FC<AppDetailsPageProps> = ({ app }) => {
   );
 };
 
-export default AppDetailsPage;
+export default ExtensionDetailsPage;

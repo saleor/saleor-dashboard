@@ -4,21 +4,21 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import AppDetailsComponent from "./views/AppDetails";
-import { appPath } from "./urls";
+import ExtensionDetailsComponent from "./views/ExtensionDetails";
+import { extensionPath } from "./urls";
 
-const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
+const ExtensionDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
-}) => <AppDetailsComponent id={match.params.id} />;
+}) => <ExtensionDetailsComponent id={match.params.id} />;
 
 const Component = () => {
   const intl = useIntl();
 
   return (
     <>
-      <WindowTitle title={intl.formatMessage(sectionNames.apps)} />
+      <WindowTitle title={intl.formatMessage(sectionNames.extensions)} />
       <Switch>
-        <Route path={appPath(":id")} component={AppDetails} />
+        <Route path={extensionPath(":id")} component={ExtensionDetails} />
       </Switch>
     </>
   );

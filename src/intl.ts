@@ -136,10 +136,6 @@ export const buttonMessages = defineMessages({
 });
 
 export const sectionNames = defineMessages({
-  apps: {
-    defaultMessage: "Extensions",
-    description: "application market section name"
-  },
   attributes: {
     defaultMessage: "Attributes",
     description: "attributes section name"
@@ -163,6 +159,10 @@ export const sectionNames = defineMessages({
   draftOrders: {
     defaultMessage: "Draft Orders",
     description: "draft orders section name"
+  },
+  extensions: {
+    defaultMessage: "Extensions",
+    description: "application market section name"
   },
   home: {
     defaultMessage: "Home",
