@@ -43,10 +43,12 @@ import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
 import PluginsSection from "./plugins";
+import AppSection from "./apps";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
 import ServiceSection from "./services";
 import { serviceSection } from "./services/urls";
+import { appSection } from "./apps/urls";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
@@ -257,6 +259,7 @@ const Routes: React.FC = () => {
                     path={serviceSection}
                     component={ServiceSection}
                   />
+                  <Route path={appSection} component={AppSection} />
                   {createConfigurationMenu(intl).filter(menu =>
                     menu.menuItems.map(item =>
                       hasPermission(item.permission, user)

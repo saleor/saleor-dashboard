@@ -26,6 +26,21 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   const toggleTheme = () => {
     setDark(!isDark);
     localStorage.setItem("theme", (!isDark).toString());
+
+    // If iframe is embedded, tell it to switch themne
+    const appFrame: HTMLIFrameElement = document.querySelector(
+      "#extension-app"
+    );
+
+    if (!!appFrame) {
+      appFrame.contentWindow.postMessage(
+        {
+          type: "toggle-dark-theme",
+          value: !isDark
+        },
+        "*" // It's just a theme, no need to worry about data leaks
+      );
+    }
   };
 
   const theme = createTheme(isDark ? dark : light);
