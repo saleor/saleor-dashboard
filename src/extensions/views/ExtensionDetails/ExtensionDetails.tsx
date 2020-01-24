@@ -1,6 +1,7 @@
 import React from "react";
 
 import ExtensionDetailsPage from "@saleor/extensions/components/ExtensionDetailsPage";
+import exampleExtensionIcon from "@assets/images/example-extension.svg";
 
 interface ExtensionDetailsProps {
   id: string;
@@ -8,6 +9,8 @@ interface ExtensionDetailsProps {
 
 const fixture = [
   {
+    author: "Saleor",
+    icon: exampleExtensionIcon,
     id: "klaviyo",
     name: "Klaviyo",
     url: "http://localhost:9102"

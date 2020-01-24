@@ -27,7 +27,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     setDark(!isDark);
     localStorage.setItem("theme", (!isDark).toString());
 
-    // If iframe is embedded, tell it to switch themne
+    // If iframe is embedded, tell it to switch theme
     const appFrame: HTMLIFrameElement = document.querySelector(
       "#extension-app"
     );
