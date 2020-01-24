@@ -2,6 +2,11 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import React from "react";
 import Helmet from "react-helmet";
 
+import {
+  sendMessageToExtension,
+  ThemeChangeMessage,
+  ExtensionMessageType
+} from "@saleor/macaw-ui/extensions";
 import Baseline from "../../Baseline";
 import createTheme from "../../theme";
 import { dark, light } from "./themes";
@@ -27,20 +32,13 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     setDark(!isDark);
     localStorage.setItem("theme", (!isDark).toString());
 
-    // If iframe is embedded, tell it to switch theme
-    const appFrame: HTMLIFrameElement = document.querySelector(
-      "#extension-app"
+    sendMessageToExtension<ThemeChangeMessage>(
+      {
+        theme: !isDark ? "dark" : "light",
+        type: ExtensionMessageType.THEME
+      },
+      "*"
     );
-
-    if (!!appFrame) {
-      appFrame.contentWindow.postMessage(
-        {
-          type: "toggle-dark-theme",
-          value: !isDark
-        },
-        "*" // It's just a theme, no need to worry about data leaks
-      );
-    }
   };
 
   const theme = createTheme(isDark ? dark : light);
