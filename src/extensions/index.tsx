@@ -5,7 +5,8 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import ExtensionDetailsComponent from "./views/ExtensionDetails";
-import { extensionPath } from "./urls";
+import ExtensionList from "./views/ExtensionList";
+import { extensionPath, extensionListPath } from "./urls";
 
 const ExtensionDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
@@ -18,6 +19,7 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.extensions)} />
       <Switch>
+        <Route exact path={extensionListPath} component={ExtensionList} />
         <Route path={extensionPath(":id")} component={ExtensionDetails} />
       </Switch>
     </>

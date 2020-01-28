@@ -14,6 +14,7 @@ import useExtensionBreadcrumbs from "./useExtensionBreadcrumbs";
 
 interface ExtensionDetailsPageProps {
   app: Record<"id" | "author" | "icon" | "name" | "url", string>;
+  onBack: () => void;
 }
 
 const useStyles = makeStyles(
@@ -78,14 +79,16 @@ const useStyles = makeStyles(
   }
 );
 
-const ExtensionDetailsPage: React.FC<ExtensionDetailsPageProps> = ({ app }) => {
+const ExtensionDetailsPage: React.FC<ExtensionDetailsPageProps> = ({
+  app,
+  onBack
+}) => {
   const classes = useStyles({});
-  const navigate = useNavigator();
   const [breadcrumbs, onBreadcrumbClick] = useExtensionBreadcrumbs();
 
   return (
     <Container>
-      <AppHeader onBack={() => navigate(extensionListUrl)}>
+      <AppHeader onBack={onBack}>
         <FormattedMessage {...sectionNames.extensions} />
       </AppHeader>
       <div className={classes.breadcrumbContainer}>
