@@ -14,7 +14,10 @@ const ExtensionDetails: React.FC<ExtensionDetailsProps> = ({ id }) => {
   const app = extensions.find(a => a.id === id);
 
   return (
-    <ExtensionDetailsPage app={app} onBack={() => navigate(extensionListUrl)} />
+    <ExtensionDetailsPage
+      app={app}
+      onBack={() => navigate(extensionListUrl())}
+    />
   );
 };
 

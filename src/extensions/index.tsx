@@ -1,12 +1,22 @@
 import React from "react";
+import { parse as parseQs } from "qs";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import ExtensionDetailsComponent from "./views/ExtensionDetails";
-import ExtensionList from "./views/ExtensionList";
-import { extensionPath, extensionListPath } from "./urls";
+import ExtensionListComponent from "./views/ExtensionList";
+import {
+  extensionPath,
+  extensionListPath,
+  ExtensionListUrlQueryParams
+} from "./urls";
+
+const ExtensionList: React.FC<RouteComponentProps> = ({ location }) => {
+  const qs: ExtensionListUrlQueryParams = parseQs(location.search.substr(1));
+  return <ExtensionListComponent params={qs} />;
+};
 
 const ExtensionDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   match

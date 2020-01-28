@@ -6,8 +6,6 @@ import classNames from "classnames";
 
 import Container from "@saleor/components/Container";
 import AppHeader from "@saleor/components/AppHeader";
-import { extensionListUrl } from "@saleor/extensions/urls";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import Hr from "@saleor/components/Hr";
 import useExtensionBreadcrumbs from "./useExtensionBreadcrumbs";
