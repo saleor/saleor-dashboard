@@ -4,9 +4,11 @@ import { IntlShape } from "react-intl";
 import catalogIcon from "@assets/images/menu-catalog-icon.svg";
 import customerIcon from "@assets/images/menu-customers-icon.svg";
 import discountsIcon from "@assets/images/menu-discounts-icon.svg";
+import extensionsIcon from "@assets/images/menu-extensions-icon.svg";
 import homeIcon from "@assets/images/menu-home-icon.svg";
 import ordersIcon from "@assets/images/menu-orders-icon.svg";
 import translationIcon from "@assets/images/menu-translation-icon.svg";
+import { extensionSection } from "@saleor/extensions/urls";
 import { categoryListUrl } from "../../categories/urls";
 import { collectionListUrl } from "../../collections/urls";
 import { customerListUrl } from "../../customers/urls";
@@ -83,7 +85,6 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
       permission: PermissionEnum.MANAGE_USERS,
       url: customerListUrl()
     },
-
     {
       ariaLabel: "discounts",
       children: [
@@ -108,6 +109,12 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
       label: intl.formatMessage(sectionNames.translations),
       permission: PermissionEnum.MANAGE_TRANSLATIONS,
       url: languageListUrl
+    },
+    {
+      ariaLabel: "extensions",
+      icon: extensionsIcon,
+      label: intl.formatMessage(sectionNames.extensions),
+      url: extensionSection
     }
   ];
 }
