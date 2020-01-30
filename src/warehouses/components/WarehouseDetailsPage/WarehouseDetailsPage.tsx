@@ -15,7 +15,7 @@ import { mapCountriesToChoices } from "@saleor/utils/maps";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { maybe, findValueInEnum } from "@saleor/misc";
-import { ShopInfo_shop } from "@saleor/components/Shop/types/ShopInfo";
+import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import AppHeader from "@saleor/components/AppHeader";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
@@ -28,10 +28,10 @@ export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;
 }
 export interface WarehouseDetailsPageProps {
+  countries: ShopInfo_shop_countries[];
   disabled: boolean;
   errors: UserError[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  shop: ShopInfo_shop;
   warehouse: WarehouseDetails_warehouse;
   onBack: () => void;
   onDelete: () => void;
@@ -40,10 +40,10 @@ export interface WarehouseDetailsPageProps {
 }
 
 const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
+  countries,
   disabled,
   errors: apiErrors,
   saveButtonBarState,
-  shop,
   warehouse,
   onBack,
   onDelete,
@@ -79,9 +79,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
       onSubmit={handleSubmit}
     >
       {({ change, data, errors, submit }) => {
-        const countryChoices = mapCountriesToChoices(
-          maybe(() => shop.countries, [])
-        );
+        const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
           setDisplayCountry,
