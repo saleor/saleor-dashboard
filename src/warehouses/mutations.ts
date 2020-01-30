@@ -6,6 +6,10 @@ import {
   WarehouseCreateVariables
 } from "./types/WarehouseCreate";
 import {
+  WarehouseUpdate,
+  WarehouseUpdateVariables
+} from "./types/WarehouseUpdate";
+import {
   WarehouseDelete,
   WarehouseDeleteVariables
 } from "./types/WarehouseDelete";
@@ -44,3 +48,22 @@ export const useWarehouseCreate = makeMutation<
   WarehouseCreate,
   WarehouseCreateVariables
 >(createWarehouse);
+
+const updateWarehouse = gql`
+  ${warehouseDetailsFragment}
+  mutation WarehouseUpdate($id: ID!, $input: WarehouseUpdateInput!) {
+    updateWarehouse(id: $id, input: $input) {
+      errors {
+        field
+        message
+      }
+      warehouse {
+        ...WarehouseDetailsFragment
+      }
+    }
+  }
+`;
+export const useWarehouseUpdate = makeMutation<
+  WarehouseUpdate,
+  WarehouseUpdateVariables
+>(updateWarehouse);

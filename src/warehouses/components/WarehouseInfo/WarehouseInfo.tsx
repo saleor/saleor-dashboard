@@ -3,6 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import { useIntl } from "react-intl";
+
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
 import { FormChange } from "@saleor/hooks/useForm";
