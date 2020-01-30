@@ -34,6 +34,7 @@ export interface WarehouseDetailsPageProps {
   shop: ShopInfo_shop;
   warehouse: WarehouseDetails_warehouse;
   onBack: () => void;
+  onDelete: () => void;
   onShippingZoneClick: (id: string) => void;
   onSubmit: (data: WarehouseDetailsPageFormData) => void;
 }
@@ -45,6 +46,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   shop,
   warehouse,
   onBack,
+  onDelete,
   onShippingZoneClick,
   onSubmit
 }) => {
@@ -127,6 +129,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
             <SaveButtonBar
               disabled={disabled}
               onCancel={onBack}
+              onDelete={onDelete}
               onSave={submit}
               state={saveButtonBarState}
             />

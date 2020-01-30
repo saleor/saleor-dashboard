@@ -5,7 +5,8 @@ import WarehouseDetailsPage from "@saleor/warehouses/components/WarehouseDetails
 import useNavigator from "@saleor/hooks/useNavigator";
 import {
   warehouseListUrl,
-  WarehouseUrlQueryParams
+  WarehouseUrlQueryParams,
+  warehouseUrl
 } from "@saleor/warehouses/urls";
 import { useWarehouseDetails } from "@saleor/warehouses/queries";
 import { commonMessages } from "@saleor/intl";
@@ -14,8 +15,13 @@ import { maybe, findValueInEnum, getMutationStatus } from "@saleor/misc";
 import { CountryCode } from "@saleor/types/globalTypes";
 import useShop from "@saleor/hooks/useShop";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useWarehouseUpdate } from "@saleor/warehouses/mutations";
+import {
+  useWarehouseUpdate,
+  useWarehouseDelete
+} from "@saleor/warehouses/mutations";
 import { shippingZoneUrl } from "@saleor/shipping/urls";
+import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 
 export interface WarehouseDetailsProps {
   id: string;
@@ -41,6 +47,24 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
   });
   const updateWarehouseTransitionState = getMutationStatus(updateWarehouseOpts);
 
+  const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDelete({
+    onCompleted: data => {
+      if (data.deleteWarehouse.errors.length === 0) {
+        notify({
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        navigate(warehouseListUrl());
+      }
+    }
+  });
+  const deleteWarehouseTransitionState = getMutationStatus(deleteWarehouseOpts);
+
+  const [openModal, closeModal] = createDialogActionHandlers(
+    navigate,
+    params => warehouseUrl(id, params),
+    params
+  );
+
   return (
     <>
       <WindowTitle title={maybe(() => data.warehouse.name)} />
@@ -54,6 +78,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
         saveButtonBarState={updateWarehouseTransitionState}
         shop={shop}
         warehouse={maybe(() => data.warehouse)}
+        onDelete={() => openModal("delete")}
         onShippingZoneClick={id => navigate(shippingZoneUrl(id))}
         onSubmit={data =>
           updateWarehouse({
@@ -75,6 +100,17 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
             }
           })
         }
+      />
+      <WarehouseDeleteDialog
+        confirmButtonState={deleteWarehouseTransitionState}
+        name={maybe(() => data.warehouse.name)}
+        onClose={closeModal}
+        onConfirm={() =>
+          deleteWarehouse({
+            variables: { id }
+          })
+        }
+        open={params.action === "delete"}
       />
     </>
   );
