@@ -1419,6 +1419,25 @@ export interface VoucherSortingInput {
   field: VoucherSortField;
 }
 
+export interface WarehouseAddressInput {
+  streetAddress1: string;
+  streetAddress2?: string | null;
+  city: string;
+  cityArea?: string | null;
+  postalCode?: string | null;
+  country: CountryCode;
+  countryArea?: string | null;
+  phone?: string | null;
+}
+
+export interface WarehouseCreateInput {
+  name: string;
+  companyName?: string | null;
+  shippingZones?: (string | null)[] | null;
+  email?: string | null;
+  address: WarehouseAddressInput;
+}
+
 export interface WarehouseFilterInput {
   search?: string | null;
 }
