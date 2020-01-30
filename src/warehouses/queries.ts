@@ -4,6 +4,10 @@ import makeQuery from "@saleor/hooks/makeQuery";
 import { pageInfoFragment } from "@saleor/queries";
 import { fragmentAddress } from "@saleor/orders/queries";
 import { WarehouseList, WarehouseListVariables } from "./types/WarehouseList";
+import {
+  WarehouseDetails,
+  WarehouseDetailsVariables
+} from "./types/WarehouseDetails";
 
 export const warehouseFragment = gql`
   fragment WarehouseFragment on Warehouse {
@@ -65,3 +69,16 @@ export const useWarehouseList = makeQuery<
   WarehouseList,
   WarehouseListVariables
 >(warehouseList);
+
+const warehouseDetails = gql`
+  ${warehouseDetailsFragment}
+  query WarehouseDetails($id: ID!) {
+    warehouse(id: $id) {
+      ...WarehouseDetailsFragment
+    }
+  }
+`;
+export const useWarehouseDetails = makeQuery<
+  WarehouseDetails,
+  WarehouseDetailsVariables
+>(warehouseDetails);

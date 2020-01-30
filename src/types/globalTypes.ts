@@ -1447,6 +1447,14 @@ export interface WarehouseSortingInput {
   field: WarehouseSortField;
 }
 
+export interface WarehouseUpdateInput {
+  name: string;
+  companyName?: string | null;
+  shippingZones?: (string | null)[] | null;
+  email?: string | null;
+  address?: WarehouseAddressInput | null;
+}
+
 export interface WebhookCreateInput {
   name?: string | null;
   targetUrl?: string | null;
