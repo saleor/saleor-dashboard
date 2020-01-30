@@ -13,11 +13,13 @@ import {
   WarehouseListUrlQueryParams,
   //   warehousePath,
   //   WarehouseUrlQueryParams,
-  WarehouseListUrlSortField
+  WarehouseListUrlSortField,
+  warehouseAddPath
 } from "./urls";
 // import WarehouseCreateComponent from "./views/WarehouseCreate";
 // import WarehouseDetailsComponent from "./views/WarehouseDetails";
 import WarehouseListComponent from "./views/WarehouseList";
+import WarehouseCreate from "./views/WarehouseCreate";
 
 const WarehouseList: React.FC<RouteComponentProps> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
@@ -28,12 +30,6 @@ const WarehouseList: React.FC<RouteComponentProps> = ({ location }) => {
 
   return <WarehouseListComponent params={params} />;
 };
-
-// const WarehouseCreate: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-//   const qs = parseQs(location.search.substr(1));
-//   const params: WarehouseAddUrlQueryParams = qs;
-//   return <WarehouseCreateComponent params={params} />;
-// };
 
 // const WarehouseDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
 //   location,
@@ -57,8 +53,8 @@ export const WarehouseSection: React.FC = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.warehouses)} />
       <Switch>
         <Route exact path={warehouseListPath} component={WarehouseList} />
-        {/* <Route exact path={warehouseAddPath} component={WarehouseCreate} />
-        <Route path={warehousePath(":id")} component={WarehouseDetails} /> */}
+        <Route exact path={warehouseAddPath} component={WarehouseCreate} />
+        {/* <Route path={warehousePath(":id")} component={WarehouseDetails} /> */}
       </Switch>
     </>
   );
