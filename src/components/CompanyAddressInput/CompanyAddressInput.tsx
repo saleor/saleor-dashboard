@@ -161,7 +161,9 @@ const CompanyAddressInput: React.FC<CompanyAddressInputProps> = props => {
             value={data.country}
             choices={countries}
             InputProps={{
-              autoComplete: "off"
+              inputProps: {
+                autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+              }
             }}
           />
           <TextField

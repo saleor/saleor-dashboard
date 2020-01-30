@@ -3,19 +3,23 @@ import React from "react";
 
 import Decorator from "@saleor/storybook/Decorator";
 import { formError } from "@saleor/storybook/misc";
-import { shop } from "@saleor/siteSettings/fixtures";
+import { countries } from "@saleor/fixtures";
 import WarehouseCreatePage, {
   WarehouseCreatePageProps,
   WarehouseCreatePageFormData
 } from "./WarehouseCreatePage";
 
 const props: WarehouseCreatePageProps = {
+  countries: countries.map(c => ({
+    __typename: "CountryDisplay",
+    code: c.code,
+    country: c.name
+  })),
   disabled: false,
   errors: [],
   onBack: () => undefined,
   onSubmit: () => undefined,
-  saveButtonBarState: "default",
-  shop
+  saveButtonBarState: "default"
 };
 storiesOf("Views / Warehouses / Create warehouse", module)
   .addDecorator(Decorator)

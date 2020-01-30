@@ -69,15 +69,15 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
     <>
       <WindowTitle title={maybe(() => data.warehouse.name)} />
       <WarehouseDetailsPage
-        onBack={() => navigate(warehouseListUrl())}
+        countries={maybe(() => shop.countries, [])}
         disabled={loading || updateWarehouseOpts.loading}
         errors={maybe(
           () => updateWarehouseOpts.data.updateWarehouse.errors,
           []
         )}
         saveButtonBarState={updateWarehouseTransitionState}
-        shop={shop}
         warehouse={maybe(() => data.warehouse)}
+        onBack={() => navigate(warehouseListUrl())}
         onDelete={() => openModal("delete")}
         onShippingZoneClick={id => navigate(shippingZoneUrl(id))}
         onSubmit={data =>
