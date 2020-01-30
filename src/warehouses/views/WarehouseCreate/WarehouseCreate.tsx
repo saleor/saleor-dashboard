@@ -10,6 +10,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { maybe, findValueInEnum, getMutationStatus } from "@saleor/misc";
 import { CountryCode } from "@saleor/types/globalTypes";
 import useShop from "@saleor/hooks/useShop";
+import { WindowTitle } from "@saleor/components/WindowTitle";
 
 const WarehouseCreate: React.FC = () => {
   const intl = useIntl();
@@ -27,32 +28,43 @@ const WarehouseCreate: React.FC = () => {
   const createWarehouseTransitionState = getMutationStatus(createWarehouseOpts);
 
   return (
-    <WarehouseCreatePage
-      onBack={() => navigate(warehouseListUrl())}
-      disabled={createWarehouseOpts.loading}
-      errors={maybe(() => createWarehouseOpts.data.createWarehouse.errors, [])}
-      shop={shop}
-      onSubmit={data =>
-        createWarehouse({
-          variables: {
-            input: {
-              address: {
-                city: data.city,
-                cityArea: data.cityArea,
-                country: findValueInEnum(data.country, CountryCode),
-                countryArea: data.countryArea,
-                phone: data.phone,
-                postalCode: data.postalCode,
-                streetAddress1: data.streetAddress1,
-                streetAddress2: data.streetAddress2
-              },
-              name: data.name
+    <>
+      <WindowTitle
+        title={intl.formatMessage({
+          defaultMessage: "Create Warehouse",
+          description: "header"
+        })}
+      />
+      <WarehouseCreatePage
+        onBack={() => navigate(warehouseListUrl())}
+        disabled={createWarehouseOpts.loading}
+        errors={maybe(
+          () => createWarehouseOpts.data.createWarehouse.errors,
+          []
+        )}
+        shop={shop}
+        onSubmit={data =>
+          createWarehouse({
+            variables: {
+              input: {
+                address: {
+                  city: data.city,
+                  cityArea: data.cityArea,
+                  country: findValueInEnum(data.country, CountryCode),
+                  countryArea: data.countryArea,
+                  phone: data.phone,
+                  postalCode: data.postalCode,
+                  streetAddress1: data.streetAddress1,
+                  streetAddress2: data.streetAddress2
+                },
+                name: data.name
+              }
             }
-          }
-        })
-      }
-      saveButtonBarState={createWarehouseTransitionState}
-    />
+          })
+        }
+        saveButtonBarState={createWarehouseTransitionState}
+      />
+    </>
   );
 };
 
