@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { address } from "@saleor/fixtures";
+import { address, countries } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { formError } from "@saleor/storybook/misc";
 import { warehouseList } from "../../fixtures";
@@ -11,9 +11,16 @@ import WarehouseDetailsPage, {
 } from "./WarehouseDetailsPage";
 
 const props: WarehouseDetailsPageProps = {
+  countries: countries.map(c => ({
+    __typename: "CountryDisplay",
+    code: c.code,
+    country: c.name
+  })),
   disabled: false,
   errors: [],
   onBack: () => undefined,
+  onDelete: () => undefined,
+  onShippingZoneClick: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default",
   warehouse: {

@@ -36,13 +36,14 @@ const WarehouseCreate: React.FC = () => {
         })}
       />
       <WarehouseCreatePage
-        onBack={() => navigate(warehouseListUrl())}
+        countries={maybe(() => shop.countries, [])}
         disabled={createWarehouseOpts.loading}
         errors={maybe(
           () => createWarehouseOpts.data.createWarehouse.errors,
           []
         )}
-        shop={shop}
+        saveButtonBarState={createWarehouseTransitionState}
+        onBack={() => navigate(warehouseListUrl())}
         onSubmit={data =>
           createWarehouse({
             variables: {
@@ -62,7 +63,6 @@ const WarehouseCreate: React.FC = () => {
             }
           })
         }
-        saveButtonBarState={createWarehouseTransitionState}
       />
     </>
   );
