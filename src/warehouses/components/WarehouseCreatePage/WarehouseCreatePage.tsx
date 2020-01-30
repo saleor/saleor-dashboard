@@ -1,5 +1,5 @@
 import React from "react";
-import { useIntl } from "react-intl";
+import { useIntl, FormattedMessage } from "react-intl";
 
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -16,6 +16,9 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { maybe } from "@saleor/misc";
 import { ShopInfo_shop } from "@saleor/components/Shop/types/ShopInfo";
+import AppHeader from "@saleor/components/AppHeader";
+import PageHeader from "@saleor/components/PageHeader";
+import { sectionNames } from "@saleor/intl";
 import WarehouseInfo from "../WarehouseInfo";
 
 export interface WarehouseCreatePageFormData extends AddressTypeInput {
@@ -51,9 +54,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
-  const [displayCountry, setDisplayCountry] = useStateFromProps(
-    maybe(() => shop.companyAddress.country.code, "")
-  );
+  const [displayCountry, setDisplayCountry] = useStateFromProps("");
 
   const {
     errors: validationErrors,
@@ -78,6 +79,15 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
 
         return (
           <Container>
+            <AppHeader onBack={onBack}>
+              <FormattedMessage {...sectionNames.warehouses} />
+            </AppHeader>
+            <PageHeader
+              title={intl.formatMessage({
+                defaultMessage: "Create Warehouse",
+                description: "header"
+              })}
+            />
             <Grid>
               <div>
                 <WarehouseInfo
