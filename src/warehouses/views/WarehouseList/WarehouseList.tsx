@@ -17,18 +17,20 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useListSettings from "@saleor/hooks/useListSettings";
 import { ListViews } from "@saleor/types";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { sectionNames } from "@saleor/intl";
+import { sectionNames, commonMessages } from "@saleor/intl";
 import WarehouseListPage from "@saleor/warehouses/components/WarehouseListPage";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
-import { maybe } from "@saleor/misc";
+import { maybe, getMutationStatus } from "@saleor/misc";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { configurationMenuUrl } from "@saleor/configuration";
+import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
+import { useWarehouseDelete } from "@saleor/warehouses/mutations";
 import { getSortQueryVariables } from "./sort";
 import {
   getFilterVariables,
@@ -64,6 +66,17 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   const { data, loading, refetch } = useWarehouseList({
     displayLoader: true,
     variables: queryVariables
+  });
+  const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDelete({
+    onCompleted: data => {
+      if (data.deleteWarehouse.errors.length === 0) {
+        notify({
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        refetch();
+        closeModal();
+      }
+    }
   });
 
   const tabs = getFilterTabs();
@@ -113,6 +126,8 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, warehouseListUrl, params);
 
+  const deleteTransitionState = getMutationStatus(deleteWarehouseOpts);
+
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.warehouses)} />
@@ -133,11 +148,28 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         onAdd={() => navigate(warehouseAddUrl)}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
-        onRemove={() => undefined}
+        onRemove={id => openModal("delete", { id })}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         onRowClick={id => () => navigate(warehouseUrl(id))}
         sort={getSortParams(params)}
+      />
+      <WarehouseDeleteDialog
+        confirmButtonState={deleteTransitionState}
+        name={maybe(
+          () =>
+            data.warehouses.edges.find(edge => edge.node.id === params.id).node
+              .name
+        )}
+        open={params.action === "delete"}
+        onClose={closeModal}
+        onConfirm={() =>
+          deleteWarehouse({
+            variables: {
+              id: params.id
+            }
+          })
+        }
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}
