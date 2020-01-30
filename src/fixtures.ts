@@ -381,3 +381,23 @@ export const date = {
   from: "2019-12-09",
   to: "2019-12-38"
 };
+
+export const address = {
+  __typename: "Address",
+  city: "Port Danielshire",
+  cityArea: "",
+  companyName: "",
+  country: {
+    __typename: "CountryDisplay",
+    code: "SE",
+    country: "Szwecja"
+  },
+  countryArea: "",
+  firstName: "Elizabeth",
+  id: "QWRkcmVzczoy",
+  lastName: "Vaughn",
+  phone: "",
+  postalCode: "52203",
+  streetAddress1: "419 Ruiz Orchard Apt. 199",
+  streetAddress2: "0238 Cremin Freeway"
+};

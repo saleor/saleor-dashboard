@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 
 import makeQuery from "@saleor/hooks/makeQuery";
 import { pageInfoFragment } from "@saleor/queries";
+import { fragmentAddress } from "@saleor/orders/queries";
 import { WarehouseList, WarehouseListVariables } from "./types/WarehouseList";
 
 export const warehouseFragment = gql`
@@ -15,6 +16,17 @@ export const warehouseFragment = gql`
           name
         }
       }
+    }
+  }
+`;
+
+export const warehouseDetailsFragment = gql`
+  ${fragmentAddress}
+  ${warehouseFragment}
+  fragment WarehouseDetailsFragment on Warehouse {
+    ...WarehouseFragment
+    address {
+      ...AddressFragment
     }
   }
 `;
