@@ -55,6 +55,8 @@ import TaxesSection from "./taxes";
 import TranslationsSection from "./translations";
 import { PermissionEnum } from "./types/globalTypes";
 import WebhooksSection from "./webhooks";
+import { warehouseSection } from "./warehouses/urls";
+import WarehouseSection from "./warehouses";
 
 interface ResponseError extends ErrorResponse {
   networkError?: Error & {
@@ -262,6 +264,11 @@ const Routes: React.FC = () => {
                     permissions={[PermissionEnum.MANAGE_APPS]}
                     path={serviceSection}
                     component={ServiceSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                    path={warehouseSection}
+                    component={WarehouseSection}
                   />
                   {createConfigurationMenu(intl).filter(menu =>
                     menu.menuItems.map(item =>

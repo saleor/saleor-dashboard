@@ -746,6 +746,10 @@ export enum VoucherTypeEnum {
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }
 
+export enum WarehouseSortField {
+  NAME = "NAME",
+}
+
 export enum WebhookErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
@@ -1413,6 +1417,15 @@ export interface VoucherInput {
 export interface VoucherSortingInput {
   direction: OrderDirection;
   field: VoucherSortField;
+}
+
+export interface WarehouseFilterInput {
+  search?: string | null;
+}
+
+export interface WarehouseSortingInput {
+  direction: OrderDirection;
+  field: WarehouseSortField;
 }
 
 export interface WebhookCreateInput {
