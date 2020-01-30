@@ -14,7 +14,7 @@ import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
-import { maybe, renderCollection } from "@saleor/misc";
+import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, SortPage } from "@saleor/types";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
 import TableCellHeader from "@saleor/components/TableCellHeader";
@@ -153,7 +153,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                   </IconButton>
                   <IconButton
                     color="primary"
-                    onClick={() => onRemove(warehouse.id)}
+                    onClick={stopPropagation(() => onRemove(warehouse.id))}
                   >
                     <DeleteIcon />
                   </IconButton>
