@@ -21,6 +21,7 @@ import { staffListUrl } from "@saleor/staff/urls";
 import { countryListUrl } from "@saleor/taxes/urls";
 import { languageListUrl } from "@saleor/translations/urls";
 import { webhookListUrl } from "@saleor/webhooks/urls";
+import { warehouseListUrl } from "@saleor/warehouses/urls";
 import { QuickSearchActionInput } from "../../types";
 
 interface View {
@@ -116,6 +117,10 @@ function searchInViews(
     {
       label: intl.formatMessage(sectionNames.webhooks),
       url: webhookListUrl()
+    },
+    {
+      label: intl.formatMessage(sectionNames.warehouses),
+      url: warehouseListUrl()
     }
   ];
 
