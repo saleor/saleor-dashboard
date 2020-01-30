@@ -20,6 +20,7 @@ const props: WarehouseListPageProps = {
   ...sortPageProps,
   ...tabPageProps,
   onBack: () => undefined,
+  onRemove: () => undefined,
   sort: {
     ...sortPageProps.sort,
     sort: WarehouseListUrlSortField.name
