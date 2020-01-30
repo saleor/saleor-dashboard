@@ -17,14 +17,15 @@ import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment"
 import getShopErrorMessage from "@saleor/utils/errors/shop";
 import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
-import { SiteSettingsPageFormData } from "../SiteSettingsPage";
+import { AddressTypeInput } from "@saleor/customers/types";
 
-interface SiteSettingsAddressProps {
+interface CompanyAddressInputProps {
   countries: SingleAutocompleteChoiceType[];
-  data: SiteSettingsPageFormData;
+  data: AddressTypeInput;
   displayCountry: string;
   errors: Array<AccountErrorFragment | ShopErrorFragment>;
   disabled: boolean;
+  header: string;
   onChange: (event: ChangeEvent) => void;
   onCountryChange: (event: ChangeEvent) => void;
 }
@@ -35,7 +36,7 @@ const useStyles = makeStyles(
       overflow: "visible"
     }
   },
-  { name: "SiteSettingsAddress" }
+  { name: "CompanyAddressInput" }
 );
 
 function getErrorMessage(
@@ -49,13 +50,14 @@ function getErrorMessage(
   return getShopErrorMessage(err, intl);
 }
 
-const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
+const CompanyAddressInput: React.FC<CompanyAddressInputProps> = props => {
   const {
     countries,
     data,
     disabled,
     displayCountry,
     errors,
+    header,
     onChange,
     onCountryChange
   } = props;
@@ -77,12 +79,7 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
 
   return (
     <Card className={classes.root}>
-      <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Store Information",
-          description: "section header"
-        })}
-      />
+      <CardTitle title={header} />
       <CardContent>
         <TextField
           disabled={disabled}
@@ -91,7 +88,7 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
           label={intl.formatMessage({
             defaultMessage: "Company"
           })}
-          name={"companyName" as keyof SiteSettingsPageFormData}
+          name={"companyName" as keyof AddressTypeInput}
           onChange={onChange}
           value={data.companyName}
           fullWidth
@@ -104,7 +101,7 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
           label={intl.formatMessage({
             defaultMessage: "Address line 1"
           })}
-          name={"streetAddress1" as keyof SiteSettingsPageFormData}
+          name={"streetAddress1" as keyof AddressTypeInput}
           onChange={onChange}
           value={data.streetAddress1}
           fullWidth
@@ -117,7 +114,7 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
           label={intl.formatMessage({
             defaultMessage: "Address line 2"
           })}
-          name={"streetAddress2" as keyof SiteSettingsPageFormData}
+          name={"streetAddress2" as keyof AddressTypeInput}
           onChange={onChange}
           value={data.streetAddress2}
           fullWidth
@@ -131,7 +128,7 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
             label={intl.formatMessage({
               defaultMessage: "City"
             })}
-            name={"city" as keyof SiteSettingsPageFormData}
+            name={"city" as keyof AddressTypeInput}
             onChange={onChange}
             value={data.city}
             fullWidth
@@ -143,7 +140,7 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
             label={intl.formatMessage({
               defaultMessage: "ZIP / Postal code"
             })}
-            name={"postalCode" as keyof SiteSettingsPageFormData}
+            name={"postalCode" as keyof AddressTypeInput}
             onChange={onChange}
             value={data.postalCode}
             fullWidth
@@ -159,7 +156,7 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
             label={intl.formatMessage({
               defaultMessage: "Country"
             })}
-            name={"country" as keyof SiteSettingsPageFormData}
+            name={"country" as keyof AddressTypeInput}
             onChange={onCountryChange}
             value={data.country}
             choices={countries}
@@ -174,7 +171,7 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
             label={intl.formatMessage({
               defaultMessage: "Country area"
             })}
-            name={"countryArea" as keyof SiteSettingsPageFormData}
+            name={"countryArea" as keyof AddressTypeInput}
             onChange={onChange}
             value={data.countryArea}
             fullWidth
@@ -189,7 +186,7 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
           label={intl.formatMessage({
             defaultMessage: "Phone"
           })}
-          name={"phone" as keyof SiteSettingsPageFormData}
+          name={"phone" as keyof AddressTypeInput}
           value={data.phone}
           onChange={onChange}
         />
@@ -197,5 +194,5 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
     </Card>
   );
 };
-SiteSettingsAddress.displayName = "SiteSettingsAddress";
-export default SiteSettingsAddress;
+CompanyAddressInput.displayName = "CompanyAddressInput";
+export default CompanyAddressInput;
