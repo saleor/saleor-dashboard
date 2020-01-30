@@ -383,12 +383,12 @@ export const date = {
 };
 
 export const address = {
-  __typename: "Address",
+  __typename: "Address" as "Address",
   city: "Port Danielshire",
   cityArea: "",
   companyName: "",
   country: {
-    __typename: "CountryDisplay",
+    __typename: "CountryDisplay" as "CountryDisplay",
     code: "SE",
     country: "Szwecja"
   },
