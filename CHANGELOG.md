@@ -28,6 +28,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix variant stock input - #377 by @dominik-zeglen
 - Add filtering to views - #361 by @dominik-zeglen
 - Do not render password change if authenticating - #378 by @dominik-zeglen
+- Improve product update form error handling - #392 by @dominik-zeglen
 
 ## 2.0.0
 
