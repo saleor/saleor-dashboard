@@ -116,20 +116,4 @@ storiesOf("Generics / Rich text editor", module)
       name="content"
       onChange={() => undefined}
     />
-  ))
-  .add("invalid content", () => (
-    <RichTextEditor
-      disabled={false}
-      error={false}
-      helperText={""}
-      initial={
-        {
-          content: "dummy",
-          key2: "this is not valid draftjs content"
-        } as any
-      }
-      label="Content"
-      name="content"
-      onChange={() => undefined}
-    />
   ));
