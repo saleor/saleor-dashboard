@@ -29,7 +29,7 @@ const messages = defineMessages({
     description: "order"
   },
   placed: {
-    defaultMessage: "Placed",
+    defaultMessage: "Created",
     description: "order"
   }
 });
