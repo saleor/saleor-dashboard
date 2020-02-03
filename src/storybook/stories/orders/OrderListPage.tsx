@@ -28,6 +28,10 @@ const props: OrderListPageProps = {
         min: "50"
       }
     },
+    customer: {
+      active: false,
+      value: "Jesse"
+    },
     status: {
       active: false,
       value: [OrderStatusFilter.CANCELED, OrderStatusFilter.FULFILLED]

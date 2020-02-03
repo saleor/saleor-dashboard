@@ -4,7 +4,8 @@ import { FilterOpts, MinMax } from "@saleor/types";
 import { OrderStatusFilter } from "@saleor/types/globalTypes";
 import {
   createDateField,
-  createOptionsField
+  createOptionsField,
+  createTextField
 } from "@saleor/utils/filters/fields";
 import { IFilter } from "@saleor/components/Filter";
 import { orderStatusMessages } from "@saleor/misc";
@@ -12,15 +13,21 @@ import { commonMessages } from "@saleor/intl";
 
 export enum OrderFilterKeys {
   created = "created",
+  customer = "customer",
   status = "status"
 }
 
 export interface OrderListFilterOpts {
   created: FilterOpts<MinMax>;
+  customer: FilterOpts<string>;
   status: FilterOpts<OrderStatusFilter[]>;
 }
 
 const messages = defineMessages({
+  customer: {
+    defaultMessage: "Customer",
+    description: "order"
+  },
   placed: {
     defaultMessage: "Placed",
     description: "order"
@@ -32,6 +39,14 @@ export function createFilterStructure(
   opts: OrderListFilterOpts
 ): IFilter<OrderFilterKeys> {
   return [
+    {
+      ...createTextField(
+        OrderFilterKeys.customer,
+        intl.formatMessage(messages.customer),
+        opts.customer.value
+      ),
+      active: opts.customer.active
+    },
     {
       ...createDateField(
         OrderFilterKeys.created,
