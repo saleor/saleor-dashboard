@@ -50,6 +50,10 @@ export const shippingZoneDetailsFragment = gql`
     shippingMethods {
       ...ShippingMethodFragment
     }
+    warehouses {
+      id
+      name
+    }
   }
 `;
 
