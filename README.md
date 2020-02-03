@@ -29,6 +29,12 @@ Clone the repository:
 $ git clone https://github.com/mirumee/saleor-dashboard.git
 ```
 
+Enter the project directory:
+
+```
+$ cd saleor-dashboard
+```
+
 #### Using stable release
 
 To use the official stable release, checkout to a release tag:
@@ -45,13 +51,6 @@ If you want to use the latest development version, checkout to the `master` bran
 
 ```
 $ git checkout master
-```
-
-
-Enter the project directory:
-
-```
-$ cd saleor-dashboard
 ```
 
 Install NPM dependencies:
