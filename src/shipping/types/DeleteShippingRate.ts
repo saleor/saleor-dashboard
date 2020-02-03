@@ -62,6 +62,12 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
   type: ShippingMethodTypeEnum | null;
 }
 
+export interface DeleteShippingRate_shippingPriceDelete_shippingZone_warehouses {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone {
   __typename: "ShippingZone";
   id: string;
@@ -69,6 +75,7 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone {
   name: string;
   default: boolean;
   shippingMethods: (DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods | null)[] | null;
+  warehouses: (DeleteShippingRate_shippingPriceDelete_shippingZone_warehouses | null)[] | null;
 }
 
 export interface DeleteShippingRate_shippingPriceDelete {

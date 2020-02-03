@@ -62,6 +62,12 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone_shippingMet
   type: ShippingMethodTypeEnum | null;
 }
 
+export interface CreateShippingRate_shippingPriceCreate_shippingZone_warehouses {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
 export interface CreateShippingRate_shippingPriceCreate_shippingZone {
   __typename: "ShippingZone";
   id: string;
@@ -69,6 +75,7 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone {
   name: string;
   default: boolean;
   shippingMethods: (CreateShippingRate_shippingPriceCreate_shippingZone_shippingMethods | null)[] | null;
+  warehouses: (CreateShippingRate_shippingPriceCreate_shippingZone_warehouses | null)[] | null;
 }
 
 export interface CreateShippingRate_shippingPriceCreate {

@@ -56,6 +56,12 @@ export interface ShippingZoneDetailsFragment_shippingMethods {
   type: ShippingMethodTypeEnum | null;
 }
 
+export interface ShippingZoneDetailsFragment_warehouses {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
 export interface ShippingZoneDetailsFragment {
   __typename: "ShippingZone";
   id: string;
@@ -63,4 +69,5 @@ export interface ShippingZoneDetailsFragment {
   name: string;
   default: boolean;
   shippingMethods: (ShippingZoneDetailsFragment_shippingMethods | null)[] | null;
+  warehouses: (ShippingZoneDetailsFragment_warehouses | null)[] | null;
 }

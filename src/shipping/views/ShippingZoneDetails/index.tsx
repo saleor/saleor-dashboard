@@ -4,6 +4,9 @@ import { useIntl } from "react-intl";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { useWarehouseUpdate } from "@saleor/warehouses/mutations";
 import { maybe } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
@@ -33,6 +36,14 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdate({});
+
+  const {
+    search: searchWarehouses,
+    result: searchWarehousesOpts
+  } = useWarehouseSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
 
   const closeModal = () => navigate(shippingZoneUrl(id), true);
 
@@ -146,14 +157,19 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
                     })
                   )
                 }
-                onSubmit={formData =>
+                onSubmit={formData => {
                   ops.shippingZoneUpdate.mutate({
                     id,
                     input: {
                       name: formData.name
                     }
-                  })
-                }
+                  });
+                  updateWarehouse({
+                    variables: {
+                      id: formData.warehouse
+                    }
+                  });
+                }}
                 onWeightRateAdd={() =>
                   navigate(
                     shippingZoneUrl(id, {
@@ -172,6 +188,13 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
                 }
                 saveButtonBarState={ops.shippingZoneUpdate.opts.status}
                 shippingZone={maybe(() => data.shippingZone)}
+                warehouses={maybe(
+                  () =>
+                    searchWarehousesOpts.data.search.edges.map(
+                      edge => edge.node
+                    ),
+                  []
+                )}
               />
               <ShippingZoneDetailsDialogs
                 assignCountryTransitionState={
