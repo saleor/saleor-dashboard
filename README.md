@@ -34,7 +34,7 @@ $ git clone https://github.com/mirumee/saleor-dashboard.git
 To use the official stable release, checkout to a release tag:
 
 ```
-$ git checkout v.2.0.0
+$ git checkout v2.0.0
 ```
 
 See the list of all releases here: https://github.com/mirumee/saleor-dashboard/releases/
