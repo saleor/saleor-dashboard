@@ -29,6 +29,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add filtering to views - #361 by @dominik-zeglen
 - Do not render password change if authenticating - #378 by @dominik-zeglen
 - Fix crash when one product is selected - #391 by @dominik-zeglen
+- Improve order filters - #396 by @dominik-zeglen
 
 ## 2.0.0
 
