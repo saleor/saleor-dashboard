@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2020-01-20T16:06:58.433Z\n"
+"POT-Creation-Date: 2020-02-03T11:54:24.949Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -2803,6 +2803,14 @@ msgctxt "draft order"
 msgid "Created"
 msgstr ""
 
+#: build/locale/src/orders/components/OrderListPage/filters.json
+#. [src.orders.components.OrderListPage.placed] - order
+#. defaultMessage is:
+#. Created
+msgctxt "order"
+msgid "Created"
+msgstr ""
+
 #: build/locale/src/collections/views/CollectionCreate.json
 #. [src.collections.views.1597339737]
 #. defaultMessage is:
@@ -2880,6 +2888,14 @@ msgstr ""
 #. defaultMessage is:
 #. Customer
 msgctxt "e-mail or full name"
+msgid "Customer"
+msgstr ""
+
+#: build/locale/src/orders/components/OrderListPage/filters.json
+#. [src.orders.components.OrderListPage.customer] - order
+#. defaultMessage is:
+#. Customer
+msgctxt "order"
 msgid "Customer"
 msgstr ""
 
@@ -6273,14 +6289,6 @@ msgstr ""
 #. Physical
 msgctxt "product type"
 msgid "Physical"
-msgstr ""
-
-#: build/locale/src/orders/components/OrderListPage/filters.json
-#. [src.orders.components.OrderListPage.placed] - order
-#. defaultMessage is:
-#. Placed
-msgctxt "order"
-msgid "Placed"
 msgstr ""
 
 #: build/locale/src/staff/components/StaffPreferences/StaffPreferences.json
