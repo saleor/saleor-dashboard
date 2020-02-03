@@ -15,6 +15,7 @@ import React from "react";
 
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import ErrorBoundary from "react-error-boundary";
+import { CreateCSSProperties } from "@material-ui/styles/withStyles";
 import BoldIcon from "../../icons/BoldIcon";
 import HeaderTwo from "../../icons/HeaderTwo";
 import HeaderThree from "../../icons/HeaderThree";
@@ -41,7 +42,7 @@ export interface RichTextEditorProps {
 
 const useStyles = makeStyles(
   theme => {
-    const editorContainer: React.CSSProperties = {
+    const editorContainer: CreateCSSProperties = {
       border: `1px ${theme.palette.divider} solid`,
       borderRadius: 4,
       padding: "27px 12px 10px",
