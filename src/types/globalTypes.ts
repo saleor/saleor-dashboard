@@ -496,6 +496,10 @@ export enum PermissionEnum {
   MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
 }
 
+export enum PermissionGroupSortField {
+  NAME = "NAME",
+}
+
 export enum PluginSortField {
   IS_ACTIVE = "IS_ACTIVE",
   NAME = "NAME",
@@ -985,6 +989,15 @@ export interface PageTranslationInput {
   title?: string | null;
   content?: string | null;
   contentJson?: any | null;
+}
+
+export interface PermissionGroupFilterInput {
+  search?: string | null;
+}
+
+export interface PermissionGroupSortingInput {
+  direction: OrderDirection;
+  field: PermissionGroupSortField;
 }
 
 export interface PluginFilterInput {

@@ -208,6 +208,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Staff Members",
     description: "staff section name"
   },
+  permissionGroups: {
+    defaultMessage: "Permission Groups",
+    description: "permission groups section name"
+  },
   taxes: {
     defaultMessage: "Taxes",
     description: "taxes section name"

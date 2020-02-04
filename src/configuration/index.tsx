@@ -26,6 +26,7 @@ import { serviceListUrl } from "@saleor/services/urls";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
+import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { taxSection } from "@saleor/taxes/urls";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { webhookListUrl } from "@saleor/webhooks/urls";
@@ -101,6 +102,17 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permission: PermissionEnum.MANAGE_STAFF,
           title: intl.formatMessage(sectionNames.staff),
           url: staffListUrl()
+        },
+        {
+          description: intl.formatMessage({
+            defaultMessage:
+              "Manage your permission groups and their permissions",
+            id: "configurationMenuPermissionGroups"
+          }),
+          icon: <StaffMembers fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_STAFF,
+          title: intl.formatMessage(sectionNames.permissionGroups),
+          url: permissionGroupListUrl()
         }
       ]
     },
