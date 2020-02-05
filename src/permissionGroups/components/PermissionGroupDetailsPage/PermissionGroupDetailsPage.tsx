@@ -12,7 +12,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
-import useLocale from "@saleor/hooks/useLocale";
+// import useLocale from "@saleor/hooks/useLocale";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import { PermissionEnum } from "../../../types/globalTypes";
@@ -20,7 +20,7 @@ import { PermissionGroupDetails_permissionGroup } from "../../types/PermissionGr
 // import { ListActions, ListProps, SortPage } from "../../../types";
 
 // import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
-// import StaffPreferences from "../StaffPreferences";
+import MembersList from "../MembersList";
 // import StaffProperties from "../StaffProperties/StaffProperties";
 // import StaffPassword from "../StaffPassword/StaffPassword";
 
@@ -56,7 +56,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   disabled
 }: PermissionGroupDetailsPageProps) => {
   const intl = useIntl();
-  const { locale, setLocale } = useLocale();
+  // const { locale, setLocale } = useLocale();
 
   const initialForm: FormData = {
     name: maybe(() => permissionGroup.name, ""),
@@ -76,35 +76,36 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   };
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
-      {({ data, change, hasChanged, submit }) => (
-        <Container>
-          <AppHeader onBack={onBack}>
-            {intl.formatMessage(sectionNames.permissionGroups)}
-          </AppHeader>
-          <PageHeader title={permissionGroup.name} />
-          <Grid>
-            <div>
-              {/* <StaffProperties
+    <>
+      <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+        {({ data, change, hasChanged, submit }) => (
+          <Container>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.permissionGroups)}
+            </AppHeader>
+            <PageHeader title={maybe(() => permissionGroup.name)} />
+            <Grid>
+              <div>
+                {/* <StaffProperties
                 data={data}
                 disabled={disabled}
                 onChange={change}
               /> */}
-            </div>
-            <div>
-              {/* {canEditPreferences && (
+              </div>
+              <div>
+                {/* {canEditPreferences && (
                 // <StaffPreferences locale={locale} onLocaleChange={setLocale} />
               )} */}
-              {canEditStatus && (
-                <>
-                  {/* <AccountPermissions
+                {canEditStatus && (
+                  <>
+                    {/* <AccountPermissions
                     data={data}
                     disabled={disabled}
                     permissions={permissions}
                     onChange={change}
                   /> */}
-                  <CardSpacer />
-                  {/* <AccountStatus
+                    <CardSpacer />
+                    {/* <AccountStatus
                     data={data}
                     disabled={disabled}
                     label={intl.formatMessage({
@@ -113,20 +114,28 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
                     })}
                     onChange={change}
                   /> */}
-                </>
-              )}
-            </div>
-          </Grid>
-          <SaveButtonBar
-            disabled={disabled || !hasChanged}
-            state={saveButtonBarState}
-            onCancel={onBack}
-            onSave={submit}
-            onDelete={canRemove ? onDelete : undefined}
-          />
-        </Container>
-      )}
-    </Form>
+                  </>
+                )}
+              </div>
+            </Grid>
+            <SaveButtonBar
+              disabled={disabled || !hasChanged}
+              state={saveButtonBarState}
+              onCancel={onBack}
+              onSave={submit}
+              onDelete={canRemove ? onDelete : undefined}
+            />
+          </Container>
+        )}
+      </Form>
+      <MembersList
+        members={maybe(() => permissionGroup.users)}
+        disabled={false}
+        onRowClick={() => undefined}
+        onNextPage={() => undefined}
+        onPreviousPage={() => undefined}
+      />
+    </>
   );
 };
 PermissionGroupDetailsPage.displayName = "PermissionGroupDetailsPage";

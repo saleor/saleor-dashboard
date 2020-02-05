@@ -7,11 +7,9 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 
-// import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import IconButtonTableCell from "@saleor/components/IconButtonTableCell";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -82,8 +80,6 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
     toolbar
   } = props;
   const classes = useStyles(props);
-
-  const intl = useIntl();
 
   return (
     <ResponsiveTable>
@@ -174,17 +170,23 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                   )}
                 </TableCell>
                 <TableCell className={classes.colAction}>
-                  <IconButton
-                    color="primary"
-                    onClick={stopPropagation(() =>
-                      onDelete(permissionGroup.id)
-                    )}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                  <IconButton color="primary">
-                    <EditIcon />
-                  </IconButton>
+                  {permissionGroup ? (
+                    <>
+                      <IconButton
+                        color="primary"
+                        onClick={stopPropagation(() =>
+                          onDelete(permissionGroup.id)
+                        )}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                      <IconButton color="primary">
+                        <EditIcon />
+                      </IconButton>
+                    </>
+                  ) : (
+                    <Skeleton />
+                  )}
                 </TableCell>
               </TableRow>
             );
