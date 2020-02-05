@@ -13,7 +13,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { maybe, getStringOrPlaceholder } from "../../../misc";
+import { maybe } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import {
   ShippingZoneDetailsFragment,

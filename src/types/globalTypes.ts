@@ -746,6 +746,15 @@ export enum VoucherTypeEnum {
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }
 
+export enum WarehouseErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum WarehouseSortField {
   NAME = "NAME",
 }
@@ -1431,11 +1440,12 @@ export interface WarehouseAddressInput {
 }
 
 export interface WarehouseCreateInput {
-  name: string;
+  slug?: string | null;
   companyName?: string | null;
-  shippingZones?: (string | null)[] | null;
   email?: string | null;
+  name: string;
   address: WarehouseAddressInput;
+  shippingZones?: (string | null)[] | null;
 }
 
 export interface WarehouseFilterInput {
@@ -1448,10 +1458,10 @@ export interface WarehouseSortingInput {
 }
 
 export interface WarehouseUpdateInput {
-  name: string;
+  slug?: string | null;
   companyName?: string | null;
-  shippingZones?: (string | null)[] | null;
   email?: string | null;
+  name?: string | null;
   address?: WarehouseAddressInput | null;
 }
 
