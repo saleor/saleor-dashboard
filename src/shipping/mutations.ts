@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { TypedMutation } from "../mutations";
+import makeMutation from "@saleor/hooks/makeMutation";
 import { countryFragment } from "../taxes/queries";
 import { shippingMethodFragment, shippingZoneDetailsFragment } from "./queries";
 import {
@@ -39,6 +39,14 @@ import {
   UpdateShippingZone,
   UpdateShippingZoneVariables
 } from "./types/UpdateShippingZone";
+import {
+  AssignShippingZoneToWarehouse,
+  AssignShippingZoneToWarehouseVariables
+} from "./types/AssignShippingZoneToWarehouse";
+import {
+  UnassignShippingZoneToWarehouse,
+  UnassignShippingZoneToWarehouseVariables
+} from "./types/UnassignShippingZoneToWarehouse";
 
 export const shippingErrorFragment = gql`
   fragment ShippingErrorFragment on ShippingError {
@@ -57,7 +65,7 @@ const deleteShippingZone = gql`
     }
   }
 `;
-export const TypedDeleteShippingZone = TypedMutation<
+export const useShippingZoneDelete = makeMutation<
   DeleteShippingZone,
   DeleteShippingZoneVariables
 >(deleteShippingZone);
@@ -72,7 +80,7 @@ const bulkDeleteShippingZone = gql`
     }
   }
 `;
-export const TypedBulkDeleteShippingZone = TypedMutation<
+export const useShippingZoneBulkDelete = makeMutation<
   BulkDeleteShippingZone,
   BulkDeleteShippingZoneVariables
 >(bulkDeleteShippingZone);
@@ -90,7 +98,7 @@ const updateDefaultWeightUnit = gql`
     }
   }
 `;
-export const TypedUpdateDefaultWeightUnit = TypedMutation<
+export const useDefaultWeightUnitUpdate = makeMutation<
   UpdateDefaultWeightUnit,
   UpdateDefaultWeightUnitVariables
 >(updateDefaultWeightUnit);
@@ -114,7 +122,7 @@ const createShippingZone = gql`
     }
   }
 `;
-export const TypedCreateShippingZone = TypedMutation<
+export const useShippingZoneCreate = makeMutation<
   CreateShippingZone,
   CreateShippingZoneVariables
 >(createShippingZone);
@@ -138,7 +146,7 @@ const updateShippingZone = gql`
     }
   }
 `;
-export const TypedUpdateShippingZone = TypedMutation<
+export const useShippingZoneUpdate = makeMutation<
   UpdateShippingZone,
   UpdateShippingZoneVariables
 >(updateShippingZone);
@@ -157,7 +165,7 @@ const updateShippingRate = gql`
     }
   }
 `;
-export const TypedUpdateShippingRate = TypedMutation<
+export const useShippingRateUpdate = makeMutation<
   UpdateShippingRate,
   UpdateShippingRateVariables
 >(updateShippingRate);
@@ -176,7 +184,7 @@ const createShippingRate = gql`
     }
   }
 `;
-export const TypedCreateShippingRate = TypedMutation<
+export const useShippingRateCreate = makeMutation<
   CreateShippingRate,
   CreateShippingRateVariables
 >(createShippingRate);
@@ -195,7 +203,7 @@ const deleteShippingRate = gql`
     }
   }
 `;
-export const TypedDeleteShippingRate = TypedMutation<
+export const useShippingRateDelete = makeMutation<
   DeleteShippingRate,
   DeleteShippingRateVariables
 >(deleteShippingRate);
@@ -210,7 +218,49 @@ const bulkDeleteShippingRate = gql`
     }
   }
 `;
-export const TypedBulkDeleteShippingRate = TypedMutation<
+export const useShippingRateBulkDelete = makeMutation<
   BulkDeleteShippingRate,
   BulkDeleteShippingRateVariables
 >(bulkDeleteShippingRate);
+
+const assignShippingZoneToWarehouse = gql`
+  mutation AssignShippingZoneToWarehouse(
+    $warehouseId: ID!
+    $shippingZoneId: ID!
+  ) {
+    assignWarehouseShippingZone(
+      id: $warehouseId
+      shippingZoneIds: [$shippingZoneId]
+    ) {
+      warehouseErrors {
+        code
+        field
+      }
+    }
+  }
+`;
+export const useAassignShippingZoneToWarehouse = makeMutation<
+  AssignShippingZoneToWarehouse,
+  AssignShippingZoneToWarehouseVariables
+>(assignShippingZoneToWarehouse);
+
+const unassignShippingZoneToWarehouse = gql`
+  mutation UnassignShippingZoneToWarehouse(
+    $warehouseId: ID!
+    $shippingZoneId: ID!
+  ) {
+    unassignWarehouseShippingZone(
+      id: $warehouseId
+      shippingZoneIds: [$shippingZoneId]
+    ) {
+      warehouseErrors {
+        code
+        field
+      }
+    }
+  }
+`;
+export const useUnassignShippingZoneToWarehouse = makeMutation<
+  UnassignShippingZoneToWarehouse,
+  UnassignShippingZoneToWarehouseVariables
+>(unassignShippingZoneToWarehouse);
