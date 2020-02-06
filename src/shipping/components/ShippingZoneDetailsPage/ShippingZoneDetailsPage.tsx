@@ -13,6 +13,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { maybe } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import {
@@ -78,7 +79,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
     name: shippingZone?.name || "",
     warehouses: shippingZone?.warehouses.map(warehouse => warehouse.id) || []
   };
-  const [warehouseDisplayValues, setWarehouseDisplayValues] = React.useState(
+  const [warehouseDisplayValues, setWarehouseDisplayValues] = useStateFromProps(
     shippingZone?.warehouses.map(warehouseToChoice)
   );
 
