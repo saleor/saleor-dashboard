@@ -118,6 +118,15 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
                 disabled={disabled}
                 permissions={permissions}
                 onChange={change}
+                fullAccessLabel={intl.formatMessage({
+                  defaultMessage: "User has full access to the store",
+                  description: "checkbox label"
+                })}
+                description={intl.formatMessage({
+                  defaultMessage:
+                    "Expand or restrict user's permissions to access certain part of saleor system.",
+                  description: "card description"
+                })}
               />
               <CardSpacer />
               <AccountStatus

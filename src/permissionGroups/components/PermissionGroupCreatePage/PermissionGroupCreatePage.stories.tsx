@@ -1,5 +1,6 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
+import { permissions } from "@saleor/fixtures";
 
 import PermissionGroupCreatePage, {
   PermissionGroupCreatePageProps
@@ -8,7 +9,8 @@ import Decorator from "@saleor/storybook/Decorator";
 
 const props: PermissionGroupCreatePageProps = {
   disabled: false,
-  onBack: () => undefined
+  onBack: () => undefined,
+  permissions
 };
 
 storiesOf("Views / Permission Groups / Permission Group Create", module)

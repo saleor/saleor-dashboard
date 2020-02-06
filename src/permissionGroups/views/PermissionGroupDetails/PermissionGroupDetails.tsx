@@ -10,10 +10,8 @@ import { usePermissionGroupDetailsQuery } from "../../queries";
 
 import {
   // permissionGroupUrl,
-  permissionGroupDetailsUrl,
   PermissionGroupDetailsUrlQueryParams
 } from "../../urls";
-import { getSortQueryVariables } from "./sort";
 
 interface PermissionGroupDetailsProps {
   id: string;
@@ -25,7 +23,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
 }) => {
   const navigate = useNavigator();
 
-  const { data, loading, refetch } = usePermissionGroupDetailsQuery({
+  const { data, loading } = usePermissionGroupDetailsQuery({
     displayLoader: true,
     variables: { id }
   });
@@ -41,7 +39,6 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
       //   onSort={handleSort}
       onDelete={() => undefined}
       onSubmit={() => undefined}
-      canEditPreferences={true}
       canEditStatus={true}
       canRemove={true}
       permissions={[]}

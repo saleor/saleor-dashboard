@@ -3,7 +3,7 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
@@ -33,11 +33,20 @@ interface AccountPermissionsProps {
     permissions: string[];
   };
   disabled: boolean;
+  description: string;
+  fullAccessLabel: string;
   onChange: (event: React.ChangeEvent<any>, cb?: () => void) => void;
 }
 
 const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
-  const { data, disabled, permissions, onChange } = props;
+  const {
+    data,
+    disabled,
+    permissions,
+    onChange,
+    description,
+    fullAccessLabel
+  } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -70,17 +79,12 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
         })}
       />
       <CardContent>
-        <Typography>
-          <FormattedMessage defaultMessage="Expand or restrict user's permissions to access certain part of saleor system." />
-        </Typography>
+        <Typography>{description}</Typography>
         <div className={classes.checkboxContainer}>
           <ControlledCheckbox
             checked={data.hasFullAccess}
             disabled={disabled}
-            label={intl.formatMessage({
-              defaultMessage: "User has full access to the store",
-              description: "checkbox label"
-            })}
+            label={fullAccessLabel}
             name="hasFullAccess"
             onChange={handleFullAccessChange}
           />

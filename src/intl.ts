@@ -176,6 +176,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Pages",
     description: "pages section name"
   },
+  permissionGroups: {
+    defaultMessage: "Permission Groups",
+    description: "permission groups section name"
+  },
   plugins: {
     defaultMessage: "Plugins",
     description: "plugins section name"
@@ -207,10 +211,6 @@ export const sectionNames = defineMessages({
   staff: {
     defaultMessage: "Staff Members",
     description: "staff section name"
-  },
-  permissionGroups: {
-    defaultMessage: "Permission Groups",
-    description: "permission groups section name"
   },
   taxes: {
     defaultMessage: "Taxes",
