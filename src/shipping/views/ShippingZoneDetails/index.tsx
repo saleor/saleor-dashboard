@@ -13,7 +13,8 @@ import {
   useShippingRateUpdate,
   useShippingRateDelete,
   useShippingZoneDelete,
-  useShippingZoneUpdate
+  useShippingZoneUpdate,
+  useAassignShippingZoneToWarehouse
 } from "@saleor/shipping/mutations";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import ShippingZoneRateDialog from "@saleor/shipping/components/ShippingZoneRateDialog";
@@ -54,6 +55,8 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const { result: searchWarehousesOpts } = useWarehouseSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+
+  const [assignToWarehouse] = useAassignShippingZoneToWarehouse({});
 
   const { data, loading } = useShippingZone({
     displayLoader: true,
@@ -130,6 +133,12 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         input: {
           name: data.name
         }
+      }
+    });
+    assignToWarehouse({
+      variables: {
+        shippingZoneId: id,
+        warehouseId: data.warehouse
       }
     });
   };

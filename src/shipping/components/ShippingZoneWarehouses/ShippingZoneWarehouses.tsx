@@ -36,7 +36,7 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Visibility",
+          defaultMessage: "Warehouse",
           description: "section header"
         })}
       />
@@ -46,10 +46,17 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
           displayValues={displayValue}
           fetchChoices={() => undefined}
           hasMore={hasMore}
+          label={intl.formatMessage({
+            defaultMessage: "Warehouse"
+          })}
           loading={loading}
           name="warehouse"
           onChange={onChange}
           onFetchMore={onFetchMore}
+          placeholder={intl.formatMessage({
+            defaultMessage: "Select Warehouse",
+            description: "input placeholder"
+          })}
           value={data.warehouses}
         />
       </CardContent>
