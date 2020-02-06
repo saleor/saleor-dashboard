@@ -127,6 +127,12 @@ export interface Product_variants_priceOverride {
   currency: string;
 }
 
+export interface Product_variants_stock {
+  __typename: "Stock";
+  id: string;
+  quantity: number;
+}
+
 export interface Product_variants {
   __typename: "ProductVariant";
   id: string;
@@ -137,6 +143,7 @@ export interface Product_variants {
   quantity: number;
   quantityAllocated: number | null;
   stockQuantity: number;
+  stock: (Product_variants_stock | null)[] | null;
 }
 
 export interface Product_productType {

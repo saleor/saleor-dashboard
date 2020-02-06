@@ -97,6 +97,12 @@ export interface VariantCreate_productVariantCreate_productVariant_product {
   variants: (VariantCreate_productVariantCreate_productVariant_product_variants | null)[] | null;
 }
 
+export interface VariantCreate_productVariantCreate_productVariant_stock {
+  __typename: "Stock";
+  id: string;
+  quantity: number;
+}
+
 export interface VariantCreate_productVariantCreate_productVariant {
   __typename: "ProductVariant";
   id: string;
@@ -109,6 +115,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
   sku: string;
   quantity: number;
   quantityAllocated: number | null;
+  stock: (VariantCreate_productVariantCreate_productVariant_stock | null)[] | null;
 }
 
 export interface VariantCreate_productVariantCreate {
