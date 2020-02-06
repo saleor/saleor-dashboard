@@ -15,7 +15,6 @@ import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
 import TableHead from "@saleor/components/TableHead";
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions } from "../../../types";
@@ -25,16 +24,19 @@ import { ProductVariant_costPrice } from "../../types/ProductVariant";
 const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
+      colInventory: {
+        width: 300
+      },
       colName: {},
       colPrice: {
-        width: 200
+        width: 150
       },
       colSku: {
-        width: 250
-      },
-      colStatus: {
         width: 200
       }
+    },
+    colInventory: {
+      textAlign: "right"
     },
     colName: {},
     colPrice: {
@@ -148,12 +150,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                 description="product variant name"
               />
             </TableCell>
-            <TableCell className={classes.colStatus}>
-              <FormattedMessage
-                defaultMessage="Status"
-                description="product variant status"
-              />
-            </TableCell>
             <TableCell className={classes.colSku}>
               <FormattedMessage defaultMessage="SKU" />
             </TableCell>
@@ -165,10 +161,20 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                 />
               </TableCell>
             </Hidden>
+            <TableCell className={classes.colInventory}>
+              <FormattedMessage
+                defaultMessage="Inventory"
+                description="product variant inventory status"
+              />
+            </TableCell>
           </TableHead>
           <TableBody>
             {renderCollection(variants, variant => {
               const isSelected = variant ? isChecked(variant.id) : false;
+              const numAvailable =
+                variant && variant.stock
+                  ? variant.stock.reduce((acc, s) => acc + s.quantity, 0)
+                  : null;
 
               return (
                 <TableRow
@@ -189,32 +195,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   <TableCell className={classes.colName} data-tc="name">
                     {variant ? variant.name || variant.sku : <Skeleton />}
                   </TableCell>
-                  <TableCell
-                    className={classes.colStatus}
-                    data-tc="isAvailable"
-                    data-tc-is-available={maybe(
-                      () => variant.stockQuantity > 0
-                    )}
-                  >
-                    {variant ? (
-                      <StatusLabel
-                        status={variant.stockQuantity > 0 ? "success" : "error"}
-                        label={
-                          variant.stockQuantity > 0
-                            ? intl.formatMessage({
-                                defaultMessage: "Available",
-                                description: "product variant status"
-                              })
-                            : intl.formatMessage({
-                                defaultMessage: "Unavailable",
-                                description: "product variant status"
-                              })
-                        }
-                      />
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
                   <TableCell className={classes.colSku} data-tc="sku">
                     {variant ? variant.sku : <Skeleton />}
                   </TableCell>
@@ -233,6 +213,28 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       )}
                     </TableCell>
                   </Hidden>
+                  <TableCell
+                    className={classes.colInventory}
+                    data-tc="inventory"
+                  >
+                    {numAvailable === null ? (
+                      <Skeleton />
+                    ) : numAvailable === 0 ? (
+                      <FormattedMessage
+                        defaultMessage="Unavailable in all locations"
+                        description="product variant inventory"
+                      />
+                    ) : (
+                      <FormattedMessage
+                        defaultMessage="{numAvailable} available at {numLocations} {numLocations,plural,one{location} other{locations}}"
+                        description="product variant inventory"
+                        values={{
+                          numAvailable,
+                          numLocations: variant.stock.length
+                        }}
+                      />
+                    )}
+                  </TableCell>
                 </TableRow>
               );
             })}

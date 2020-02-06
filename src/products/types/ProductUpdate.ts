@@ -133,6 +133,12 @@ export interface ProductUpdate_productUpdate_product_variants_priceOverride {
   currency: string;
 }
 
+export interface ProductUpdate_productUpdate_product_variants_stock {
+  __typename: "Stock";
+  id: string;
+  quantity: number;
+}
+
 export interface ProductUpdate_productUpdate_product_variants {
   __typename: "ProductVariant";
   id: string;
@@ -143,6 +149,7 @@ export interface ProductUpdate_productUpdate_product_variants {
   quantity: number;
   quantityAllocated: number | null;
   stockQuantity: number;
+  stock: (ProductUpdate_productUpdate_product_variants_stock | null)[] | null;
 }
 
 export interface ProductUpdate_productUpdate_product_productType {

@@ -145,6 +145,10 @@ export const productFragmentDetails = gql`
       quantity
       quantityAllocated
       stockQuantity
+      stock {
+        id
+        quantity
+      }
     }
     productType {
       id
@@ -211,6 +215,10 @@ export const fragmentVariant = gql`
     sku
     quantity
     quantityAllocated
+    stock {
+      id
+      quantity
+    }
   }
 `;
 

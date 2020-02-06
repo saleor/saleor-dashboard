@@ -89,6 +89,12 @@ export interface ProductVariantDetails_productVariant_product {
   variants: (ProductVariantDetails_productVariant_product_variants | null)[] | null;
 }
 
+export interface ProductVariantDetails_productVariant_stock {
+  __typename: "Stock";
+  id: string;
+  quantity: number;
+}
+
 export interface ProductVariantDetails_productVariant {
   __typename: "ProductVariant";
   id: string;
@@ -101,6 +107,7 @@ export interface ProductVariantDetails_productVariant {
   sku: string;
   quantity: number;
   quantityAllocated: number | null;
+  stock: (ProductVariantDetails_productVariant_stock | null)[] | null;
 }
 
 export interface ProductVariantDetails {
