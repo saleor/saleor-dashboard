@@ -92,6 +92,9 @@ const useStyles = makeStyles(
     link: {
       cursor: "pointer"
     },
+    select: {
+      display: "inline-block"
+    },
     textLeft: {
       textAlign: "left" as "left"
     },
@@ -185,6 +188,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
             />
           </Typography>
           <LinkChoice
+            className={classes.select}
             choices={getWarehouseChoices(variants, intl)}
             name="warehouse"
             value={warehouse}
