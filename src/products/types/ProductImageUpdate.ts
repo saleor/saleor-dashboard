@@ -133,10 +133,17 @@ export interface ProductImageUpdate_productImageUpdate_product_variants_priceOve
   currency: string;
 }
 
+export interface ProductImageUpdate_productImageUpdate_product_variants_stock_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
 export interface ProductImageUpdate_productImageUpdate_product_variants_stock {
   __typename: "Stock";
   id: string;
   quantity: number;
+  warehouse: ProductImageUpdate_productImageUpdate_product_variants_stock_warehouse;
 }
 
 export interface ProductImageUpdate_productImageUpdate_product_variants {
