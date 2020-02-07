@@ -8,7 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, useIntl, IntlShape } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -16,10 +16,50 @@ import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import LinkChoice from "@saleor/components/LinkChoice";
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions } from "../../../types";
-import { ProductDetails_product_variants } from "../../types/ProductDetails";
+import {
+  ProductDetails_product_variants,
+  ProductDetails_product_variants_stock_warehouse
+} from "../../types/ProductDetails";
 import { ProductVariant_costPrice } from "../../types/ProductVariant";
+
+function getWarehouseChoices(
+  variants: ProductDetails_product_variants[],
+  intl: IntlShape
+): SingleAutocompleteChoiceType[] {
+  return [
+    {
+      label: intl.formatMessage({
+        defaultMessage: "All Warehouses",
+        description: "filtering option"
+      }),
+      value: null
+    },
+    ...variants
+      .reduce<ProductDetails_product_variants_stock_warehouse[]>(
+        (warehouses, variant) => [
+          ...warehouses,
+          ...variant.stock.reduce<
+            ProductDetails_product_variants_stock_warehouse[]
+          >((variantStocks, stock) => {
+            if (!!warehouses.find(w => w.id === stock.warehouse.id)) {
+              return variantStocks;
+            }
+
+            return [...variantStocks, stock.warehouse];
+          }, [])
+        ],
+        []
+      )
+      .map(w => ({
+        label: w.name,
+        value: w.id
+      }))
+  ];
+}
 
 const useStyles = makeStyles(
   theme => ({
@@ -57,6 +97,13 @@ const useStyles = makeStyles(
     },
     textRight: {
       textAlign: "right" as "right"
+    },
+    warehouseLabel: {
+      display: "inline-block",
+      marginRight: theme.spacing()
+    },
+    warehouseSelectContainer: {
+      paddingTop: theme.spacing(2)
     }
   }),
   { name: "ProductVariants" }
@@ -90,6 +137,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const classes = useStyles(props);
 
   const intl = useIntl();
+  const [warehouse, setWarehouse] = React.useState(null);
   const hasVariants = maybe(() => variants.length > 0, true);
 
   return (
@@ -127,7 +175,23 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
           )
         }
       />
-      {!variants.length && (
+
+      {variants.length > 0 ? (
+        <CardContent className={classes.warehouseSelectContainer}>
+          <Typography className={classes.warehouseLabel}>
+            <FormattedMessage
+              defaultMessage="Available inventoty at:"
+              description="variant stock status"
+            />
+          </Typography>
+          <LinkChoice
+            choices={getWarehouseChoices(variants, intl)}
+            name="warehouse"
+            value={warehouse}
+            onChange={event => setWarehouse(event.target.value)}
+          />
+        </CardContent>
+      ) : (
         <CardContent>
           <Typography color={hasVariants ? "textPrimary" : "textSecondary"}>
             <FormattedMessage defaultMessage="Use variants for products that come in a variety of versions for example different sizes or colors" />
@@ -146,7 +210,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
           >
             <TableCell className={classes.colName}>
               <FormattedMessage
-                defaultMessage="Name"
+                defaultMessage="Variant"
                 description="product variant name"
               />
             </TableCell>
@@ -175,6 +239,9 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                 variant && variant.stock
                   ? variant.stock.reduce((acc, s) => acc + s.quantity, 0)
                   : null;
+              const variantStock = variant.stock.find(
+                s => s.warehouse.id === warehouse
+              );
 
               return (
                 <TableRow
@@ -219,19 +286,41 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   >
                     {numAvailable === null ? (
                       <Skeleton />
-                    ) : numAvailable === 0 ? (
-                      <FormattedMessage
-                        defaultMessage="Unavailable in all locations"
-                        description="product variant inventory"
-                      />
+                    ) : warehouse === null ? (
+                      numAvailable === 0 ? (
+                        <FormattedMessage
+                          defaultMessage="Unavailable in all locations"
+                          description="product variant inventory"
+                        />
+                      ) : (
+                        <FormattedMessage
+                          defaultMessage="{numAvailable} available at {numLocations} {numLocations,plural,one{location} other{locations}}"
+                          description="product variant inventory"
+                          values={{
+                            numAvailable,
+                            numLocations: variant.stock.length
+                          }}
+                        />
+                      )
+                    ) : !!variantStock ? (
+                      variantStock.quantity > 0 ? (
+                        <FormattedMessage
+                          defaultMessage="{stockQuantity} available"
+                          description="product variant inventory"
+                          values={{
+                            stockQuantity: variantStock.quantity
+                          }}
+                        />
+                      ) : (
+                        <FormattedMessage
+                          defaultMessage="Unavailable"
+                          description="product variant inventory"
+                        />
+                      )
                     ) : (
                       <FormattedMessage
-                        defaultMessage="{numAvailable} available at {numLocations} {numLocations,plural,one{location} other{locations}}"
+                        defaultMessage="Not stocked"
                         description="product variant inventory"
-                        values={{
-                          numAvailable,
-                          numLocations: variant.stock.length
-                        }}
                       />
                     )}
                   </TableCell>
