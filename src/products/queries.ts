@@ -148,6 +148,10 @@ export const productFragmentDetails = gql`
       stock {
         id
         quantity
+        warehouse {
+          id
+          name
+        }
       }
     }
     productType {

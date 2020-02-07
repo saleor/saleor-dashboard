@@ -133,10 +133,17 @@ export interface ProductImageCreate_productImageCreate_product_variants_priceOve
   currency: string;
 }
 
+export interface ProductImageCreate_productImageCreate_product_variants_stock_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
 export interface ProductImageCreate_productImageCreate_product_variants_stock {
   __typename: "Stock";
   id: string;
   quantity: number;
+  warehouse: ProductImageCreate_productImageCreate_product_variants_stock_warehouse;
 }
 
 export interface ProductImageCreate_productImageCreate_product_variants {

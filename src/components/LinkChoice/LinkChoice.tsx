@@ -53,13 +53,15 @@ const useStyles = makeStyles(
 );
 
 export interface LinkChoiceProps {
+  className?: string;
   choices: SingleAutocompleteChoiceType[];
-  name: "country";
+  name?: string;
   value: string;
   onChange: FormChange;
 }
 
 const LinkChoice: React.FC<LinkChoiceProps> = ({
+  className,
   choices,
   name,
   value,
@@ -107,7 +109,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
 
   return (
     <span
-      className={classes.root}
+      className={classNames(classes.root, className)}
       ref={anchor}
       onKeyDown={handleKeyPress}
       tabIndex={0}
