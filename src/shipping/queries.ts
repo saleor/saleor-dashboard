@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 import makeQuery from "@saleor/hooks/makeQuery";
-import { pageInfoFragment, TypedQuery } from "../queries";
+import { pageInfoFragment } from "../queries";
 import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";
 import { ShippingZones, ShippingZonesVariables } from "./types/ShippingZones";
 
@@ -79,7 +79,7 @@ const shippingZones = gql`
     }
   }
 `;
-export const TypedShippingZones = TypedQuery<
+export const useShippingZoneList = makeQuery<
   ShippingZones,
   ShippingZonesVariables
 >(shippingZones);
