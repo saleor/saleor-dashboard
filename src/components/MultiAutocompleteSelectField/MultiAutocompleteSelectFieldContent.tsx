@@ -1,5 +1,6 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MenuItem from "@material-ui/core/MenuItem";
+import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -21,12 +22,17 @@ const menuItemHeight = 46;
 const maxMenuItems = 5;
 const offset = 24;
 
+export interface MultiAutocompleteActionType {
+  label: string;
+  onClick: () => void;
+}
 export interface MultiAutocompleteChoiceType {
   label: string;
   value: any;
 }
 export interface MultiAutocompleteSelectFieldContentProps
   extends Partial<FetchMoreProps> {
+  add: MultiAutocompleteActionType;
   choices: MultiAutocompleteChoiceType[];
   displayCustomValue: boolean;
   displayValues: MultiAutocompleteChoiceType[];
@@ -141,10 +147,9 @@ function getChoiceIndex(
   return choiceIndex;
 }
 
-const MultiAutocompleteSelectFieldContent: React.FC<
-  MultiAutocompleteSelectFieldContentProps
-> = props => {
+const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectFieldContentProps> = props => {
   const {
+    add,
     choices,
     displayCustomValue,
     displayValues,
@@ -155,6 +160,10 @@ const MultiAutocompleteSelectFieldContent: React.FC<
     inputValue,
     onFetchMore
   } = props;
+
+  if (!!add && !!displayCustomValue) {
+    throw new Error("Add and custom value cannot be displayed simultaneously");
+  }
 
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();
@@ -183,6 +192,20 @@ const MultiAutocompleteSelectFieldContent: React.FC<
         displayValues.length > 0 ||
         displayCustomValue ? (
           <>
+            {add && (
+              <MenuItem
+                className={classes.menuItem}
+                component="div"
+                {...getItemProps({
+                  item: inputValue
+                })}
+                data-tc="multiautocomplete-select-option-add"
+                onClick={add.onClick}
+              >
+                <AddIcon color="primary" className={classes.add} />
+                <Typography color="primary">{add.label}</Typography>
+              </MenuItem>
+            )}
             {displayCustomValue && (
               <MenuItem
                 className={classes.menuItem}
