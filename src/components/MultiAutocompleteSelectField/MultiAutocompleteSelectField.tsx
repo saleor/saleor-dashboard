@@ -12,7 +12,8 @@ import Debounce, { DebounceProps } from "@saleor/components/Debounce";
 import ArrowDropdownIcon from "@saleor/icons/ArrowDropdown";
 import { FetchMoreProps } from "@saleor/types";
 import MultiAutocompleteSelectFieldContent, {
-  MultiAutocompleteChoiceType
+  MultiAutocompleteChoiceType,
+  MultiAutocompleteActionType
 } from "./MultiAutocompleteSelectFieldContent";
 
 const useStyles = makeStyles(
@@ -71,6 +72,7 @@ const useStyles = makeStyles(
 
 export interface MultiAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
+  add: MultiAutocompleteActionType;
   allowCustomValues?: boolean;
   displayValues: MultiAutocompleteChoiceType[];
   error?: boolean;
@@ -166,6 +168,13 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               />
               {isOpen && (!!inputValue || !!choices.length) && (
                 <MultiAutocompleteSelectFieldContent
+                  add={{
+                    ...add,
+                    onClick: () => {
+                      add.onClick();
+                      closeMenu();
+                    }
+                  }}
                   choices={choices.filter(
                     choice => !value.includes(choice.value)
                   )}

@@ -18,6 +18,7 @@ interface ShippingZonewWarehousesProps extends FetchMoreProps {
   displayValue: MultiAutocompleteChoiceType[];
   warehouses: MultiAutocompleteChoiceType[];
   onChange: FormChange;
+  onWarehouseAdd: () => void;
 }
 
 export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = props => {
@@ -26,9 +27,10 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
     displayValue,
     hasMore,
     loading,
+    warehouses,
     onChange,
     onFetchMore,
-    warehouses
+    onWarehouseAdd
   } = props;
   const intl = useIntl();
 
@@ -42,6 +44,13 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
       />
       <CardContent>
         <MultiAutocompleteSelectField
+          add={{
+            label: intl.formatMessage({
+              defaultMessage: "Add New Warehouse",
+              description: "button"
+            }),
+            onClick: onWarehouseAdd
+          }}
           choices={warehouses}
           displayValues={displayValue}
           fetchChoices={() => undefined}
