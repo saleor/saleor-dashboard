@@ -43,6 +43,7 @@ export interface ShippingZoneDetailsPageProps {
   onPriceRateEdit: (id: string) => void;
   onRateRemove: (rateId: string) => void;
   onSubmit: (data: FormData) => void;
+  onWarehouseAdd: () => void;
   onWeightRateAdd: () => void;
   onWeightRateEdit: (id: string) => void;
 }
@@ -67,6 +68,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   onPriceRateEdit,
   onRateRemove,
   onSubmit,
+  onWarehouseAdd,
   onWeightRateAdd,
   onWeightRateEdit,
   saveButtonBarState,
@@ -165,9 +167,10 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   displayValue={warehouseDisplayValues}
                   hasMore={false}
                   loading={false}
+                  warehouses={warehouseChoices}
                   onChange={handleWarehouseChange}
                   onFetchMore={() => undefined}
-                  warehouses={warehouseChoices}
+                  onWarehouseAdd={onWarehouseAdd}
                 />
               </div>
             </Grid>
