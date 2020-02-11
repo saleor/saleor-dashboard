@@ -71,6 +71,11 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
             defaultMessage: "Select Warehouse",
             description: "input placeholder"
           })}
+          label={intl.formatMessage({
+            defaultMessage: "Warehouse",
+            description:"autocomplete select label"
+            id: "shippingZoneWarehouses.autocomplete.label"
+          })}
           value={data.warehouses}
         />
       </CardContent>
