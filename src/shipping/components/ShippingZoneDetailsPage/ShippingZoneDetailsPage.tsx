@@ -15,6 +15,7 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { maybe } from "../../../misc";
+import { FetchMoreProps, SearchProps } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import {
   ShippingZoneDetailsFragment,
@@ -29,7 +30,9 @@ export interface FormData {
   warehouses: string[];
 }
 
-export interface ShippingZoneDetailsPageProps {
+export interface ShippingZoneDetailsPageProps
+  extends FetchMoreProps,
+    SearchProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -60,13 +63,17 @@ function warehouseToChoice(
 const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   disabled,
   errors,
+  hasMore,
+  loading,
   onBack,
   onCountryAdd,
   onCountryRemove,
   onDelete,
+  onFetchMore,
   onPriceRateAdd,
   onPriceRateEdit,
   onRateRemove,
+  onSearchChange,
   onSubmit,
   onWarehouseAdd,
   onWeightRateAdd,
@@ -140,10 +147,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   onRateAdd={onPriceRateAdd}
                   onRateEdit={onPriceRateEdit}
                   onRateRemove={onRateRemove}
-                  rates={maybe(() =>
-                    shippingZone.shippingMethods.filter(
-                      method => method.type === ShippingMethodTypeEnum.PRICE
-                    )
+                  rates={shippingZone?.shippingMethods?.filter(
+                    method => method.type === ShippingMethodTypeEnum.PRICE
                   )}
                   variant="price"
                 />
@@ -153,10 +158,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   onRateAdd={onWeightRateAdd}
                   onRateEdit={onWeightRateEdit}
                   onRateRemove={onRateRemove}
-                  rates={maybe(() =>
-                    shippingZone.shippingMethods.filter(
-                      method => method.type === ShippingMethodTypeEnum.WEIGHT
-                    )
+                  rates={shippingZone?.shippingMethods?.filter(
+                    method => method.type === ShippingMethodTypeEnum.WEIGHT
                   )}
                   variant="weight"
                 />
@@ -165,12 +168,13 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                 <ShippingZoneWarehouses
                   data={data}
                   displayValue={warehouseDisplayValues}
-                  hasMore={false}
-                  loading={false}
-                  warehouses={warehouseChoices}
+                  hasMore={hasMore}
+                  loading={loading}
                   onChange={handleWarehouseChange}
-                  onFetchMore={() => undefined}
+                  onFetchMore={onFetchMore}
+                  onSearchChange={onSearchChange}
                   onWarehouseAdd={onWarehouseAdd}
+                  warehouses={warehouseChoices}
                 />
               </div>
             </Grid>
