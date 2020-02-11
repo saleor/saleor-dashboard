@@ -4,7 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import { FetchMoreProps } from "@saleor/types";
+import { FetchMoreProps, SearchProps } from "@saleor/types";
 import { FormChange } from "@saleor/hooks/useForm";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
@@ -13,7 +13,7 @@ import MultiAutocompleteSelectField, {
 interface ShippingZoneWarehousesFormData {
   warehouses: string[];
 }
-interface ShippingZonewWarehousesProps extends FetchMoreProps {
+interface ShippingZonewWarehousesProps extends FetchMoreProps, SearchProps {
   data: ShippingZoneWarehousesFormData;
   displayValue: MultiAutocompleteChoiceType[];
   warehouses: MultiAutocompleteChoiceType[];
@@ -30,6 +30,7 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
     warehouses,
     onChange,
     onFetchMore,
+    onSearchChange,
     onWarehouseAdd
   } = props;
   const intl = useIntl();
@@ -53,8 +54,12 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
           }}
           choices={warehouses}
           displayValues={displayValue}
-          fetchChoices={() => undefined}
+          fetchChoices={onSearchChange}
           hasMore={hasMore}
+          helperText={intl.formatMessage({
+            defaultMessage:
+              "Select warehouse from which you will ship products for this shipping zone. This warehouse address will also be used to calculate taxes."
+          })}
           label={intl.formatMessage({
             defaultMessage: "Warehouse"
           })}

@@ -80,9 +80,11 @@ export interface PageListProps<TColumns extends string = string>
   onAdd: () => void;
 }
 
-export interface SearchPageProps {
-  initialSearch: string;
+export interface SearchProps {
   onSearchChange: (value: string) => void;
+}
+export interface SearchPageProps extends SearchProps {
+  initialSearch: string;
 }
 export interface FilterPageProps<TKeys extends string, TOpts extends object>
   extends FilterProps<TKeys>,
