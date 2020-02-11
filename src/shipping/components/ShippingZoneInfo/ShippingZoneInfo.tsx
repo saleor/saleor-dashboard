@@ -9,10 +9,9 @@ import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
-import { FormData } from "../ShippingZoneDetailsPage";
 
 export interface ShippingZoneInfoProps {
-  data: FormData;
+  data: Record<"name", string>;
   disabled: boolean;
   errors: ShippingErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -42,7 +41,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           label={intl.formatMessage({
             defaultMessage: "Shipping Zone Name"
           })}
-          name={"name" as keyof FormData}
+          name="name"
           value={data.name}
           onChange={onChange}
         />
