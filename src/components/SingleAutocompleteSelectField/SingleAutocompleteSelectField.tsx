@@ -26,7 +26,7 @@ const useStyles = makeStyles(
 
 export interface SingleAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
-  add: SingleAutocompleteActionType;
+  add?: SingleAutocompleteActionType;
   error?: boolean;
   name: string;
   displayValue: string;
@@ -147,13 +147,15 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                 />
                 {isOpen && (!!inputValue || !!choices.length) && (
                   <SingleAutocompleteSelectFieldContent
-                    add={{
-                      ...add,
-                      onClick: () => {
-                        add.onClick();
-                        closeMenu();
+                    add={
+                      !!add && {
+                        ...add,
+                        onClick: () => {
+                          add.onClick();
+                          closeMenu();
+                        }
                       }
-                    }}
+                    }
                     choices={choices}
                     displayCustomValue={displayCustomValue}
                     emptyOption={emptyOption}
