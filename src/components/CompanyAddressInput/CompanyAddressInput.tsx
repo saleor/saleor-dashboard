@@ -10,7 +10,7 @@ import CompanyAddressForm, {
 } from "./CompanyAddressForm";
 
 interface CompanyAddressInputProps extends CompanyAddressFormProps {
-  className: string;
+  className?: string;
   header: string;
 }
 
