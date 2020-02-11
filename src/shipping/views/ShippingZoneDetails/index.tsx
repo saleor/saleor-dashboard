@@ -57,9 +57,11 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const intl = useIntl();
   const shop = useShop();
 
-  const { result: searchWarehousesOpts } = useWarehouseSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
-  });
+  const { result: searchWarehousesOpts, loadMore, search } = useWarehouseSearch(
+    {
+      variables: DEFAULT_INITIAL_SEARCH_DATA
+    }
+  );
 
   const [assignToWarehouse] = useAassignShippingZoneToWarehouse({});
 
@@ -208,6 +210,10 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         warehouses={
           searchWarehousesOpts.data?.search.edges.map(edge => edge.node) || []
         }
+        hasMore={searchWarehousesOpts.data?.search.pageInfo.hasNextPage}
+        loading={searchWarehousesOpts.loading}
+        onFetchMore={loadMore}
+        onSearchChange={search}
       />
       <ShippingZoneRateDialog
         action="edit"
