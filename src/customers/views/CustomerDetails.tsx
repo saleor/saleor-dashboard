@@ -112,7 +112,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                     onViewAllOrdersClick={() =>
                       navigate(
                         orderListUrl({
-                          email: maybe(() => customerDetails.data.user.email)
+                          customer: maybe(() => customerDetails.data.user.email)
                         })
                       )
                     }

@@ -15,7 +15,8 @@ import {
   dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
-  getMultipleEnumValueQueryParam
+  getMultipleEnumValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   OrderListUrlFilters,
@@ -43,6 +44,10 @@ export function getFilterOpts(
         min: maybe(() => params.createdFrom, "")
       }
     },
+    customer: {
+      active: !!maybe(() => params.customer),
+      value: params.customer
+    },
     status: {
       active: maybe(() => params.status !== undefined, false),
       value: maybe(
@@ -66,7 +71,7 @@ export function getFilterVariables(
       gte: params.createdFrom,
       lte: params.createdTo
     }),
-    customer: params.email,
+    customer: params.customer,
     search: params.query,
     status: maybe(() =>
       params.status.map(status => findInEnum(status, OrderStatusFilter))
@@ -93,6 +98,9 @@ export function getFilterQueryParam(
         OrderListUrlFiltersWithMultipleValuesEnum.status,
         OrderStatus
       );
+
+    case OrderFilterKeys.customer:
+      return getSingleValueQueryParam(filter, OrderListUrlFiltersEnum.customer);
   }
 }
 

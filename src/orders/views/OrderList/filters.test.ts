@@ -22,7 +22,7 @@ describe("Filtering query params", () => {
     const params: OrderListUrlFilters = {
       createdFrom: date.from,
       createdTo: date.to,
-      email: "email@example.com",
+      customer: "email@example.com",
       status: [
         OrderStatusFilter.FULFILLED,
         OrderStatusFilter.PARTIALLY_FULFILLED
@@ -44,6 +44,10 @@ describe("Filtering URL params", () => {
         max: date.to,
         min: date.from
       }
+    },
+    customer: {
+      active: false,
+      value: "email@example.com"
     },
     status: {
       active: false,

@@ -19,7 +19,7 @@ export const orderListPath = orderSectionUrl;
 export enum OrderListUrlFiltersEnum {
   createdFrom = "createdFrom",
   createdTo = "createdTo",
-  email = "email",
+  customer = "customer",
   payment = "payment",
   query = "query"
 }
