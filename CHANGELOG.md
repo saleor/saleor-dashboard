@@ -30,6 +30,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Do not render password change if authenticating - #378 by @dominik-zeglen
 - Fix crash when one product is selected - #391 by @dominik-zeglen
 - Improve product update form error handling - #392 by @dominik-zeglen
+- Fix column picker errors - #393 by @dominik-zeglen
 
 ## 2.0.0
 

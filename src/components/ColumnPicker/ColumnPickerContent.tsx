@@ -137,6 +137,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
                   name={column.value}
                   label={column.label}
                   onChange={() => onColumnToggle(column.value)}
+                  key={column.value}
                 />
               ))}
               {loading && (
@@ -160,6 +161,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
                 name={column.value}
                 label={column.label}
                 onChange={() => onColumnToggle(column.value)}
+                key={column.value}
               />
             ))}
           </div>
