@@ -77,30 +77,27 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
   };
 
   return (
-    <div ref={anchor} className={className}>
-      <ColumnPickerButton
-        active={isExpanded}
-        onClick={() => setExpansionState(prevState => !prevState)}
-      />
-      <Popper
-        className={classes.popper}
-        open={isExpanded}
-        anchorEl={anchor.current}
-        transition
-        disablePortal
-        placement="bottom-end"
-      >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === "bottom" ? "right bottom" : "right top"
-            }}
-          >
-            <ClickAwayListener
-              onClickAway={() => setExpansionState(false)}
-              mouseEvent="onClick"
+    <ClickAwayListener onClickAway={() => setExpansionState(false)}>
+      <div ref={anchor} className={className}>
+        <ColumnPickerButton
+          active={isExpanded}
+          onClick={() => setExpansionState(prevState => !prevState)}
+        />
+        <Popper
+          className={classes.popper}
+          open={isExpanded}
+          anchorEl={anchor.current}
+          transition
+          disablePortal
+          placement="bottom-end"
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin:
+                  placement === "bottom" ? "right bottom" : "right top"
+              }}
             >
               <ColumnPickerContent
                 columns={columns}
@@ -114,11 +111,11 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
                 onReset={handleReset}
                 onSave={handleSave}
               />
-            </ClickAwayListener>
-          </Grow>
-        )}
-      </Popper>
-    </div>
+            </Grow>
+          )}
+        </Popper>
+      </div>
+    </ClickAwayListener>
   );
 };
 
