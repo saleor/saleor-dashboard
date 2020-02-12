@@ -35,6 +35,24 @@ Enter the project directory:
 $ cd saleor-dashboard
 ```
 
+#### Using stable release
+
+To use the official stable release, checkout to a release tag:
+
+```
+$ git checkout v2.0.0
+```
+
+See the list of all releases here: https://github.com/mirumee/saleor-dashboard/releases/
+
+#### Using development version
+
+If you want to use the latest development version, checkout to the `master` branch:
+
+```
+$ git checkout master
+```
+
 Install NPM dependencies:
 
 ```

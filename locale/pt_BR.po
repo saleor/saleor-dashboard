@@ -1,24 +1,27 @@
 # Translators:
 # Kelvin Prado <kelvinpfw@gmail.com>, 2019
+# Geovani Lopes <dedhio@gmail.com>, 2019
 # Wellington Dores <wellingtonjdores@gmail.com>, 2019
 # Murilo Gonçalves Pereira <murilogp12@gmail.com>, 2019
-# Geovani Lopes <dedhio@gmail.com>, 2019
-# wcreis <wesley.c.reis@gmail.com>, 2019
 # Paulo Coghi <paulo@coghi.com.br>, 2019
 # Dalton Sena <dalton@moluzco.com>, 2019
 # Eduardo Menezes Rocha <eduardomenezesr@gmail.com>, 2019
 # Andre PS <andreuece@gmail.com>, 2019
 # Robson Cardoso dos Santos <cardoso.rcs@gmail.com>, 2019
-# Wellington Oliveira <oliveira@live.it>, 2019
 # Thiago reis <thiagoth.reis@gmail.com>, 2019
-# Roberto Junior <roberto.junior.hbl@gmail.com>, 2019
 # Rafael Lima <rafael.liverpool@gmail.com>, 2019
-# Kaiê Guex <kaie.guex@gmail.com>, 2019
+# Diogo Baeder <diogobaeder@yahoo.com.br>, 2019
+# João Pedro dos Santos Rezende <j.srezende@outlook.com>, 2019
+# Gabriel Lins <gabriel.lins97+transifex@gmail.com>, 2020
+# wcreis <wesley.c.reis@gmail.com>, 2020
+# Wellington Oliveira <oliveira@live.it>, 2020
+# Kaiê Guex <kaie.guex@gmail.com>, 2020
+# Roberto Junior <roberto.junior.hbl@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-12-04T14:17:34.264Z\n"
-"Last-Translator: Kaiê Guex <kaie.guex@gmail.com>, 2019\n"
+"POT-Creation-Date: 2020-01-20T16:06:58.433Z\n"
+"Last-Translator: Roberto Junior <roberto.junior.hbl@gmail.com>, 2020\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/mirumee/teams/34782/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -119,6 +122,22 @@ msgctxt "table actions"
 msgid "Actions"
 msgstr "Ações"
 
+#. [src.discounts.components.SaleListPage.active] - sale status
+#. defaultMessage is:
+#. Active
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+msgctxt "sale status"
+msgid "Active"
+msgstr "Ativo"
+
+#. [src.discounts.components.VoucherListPage.active] - voucher status
+#. defaultMessage is:
+#. Active
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+msgctxt "voucher status"
+msgid "Active"
+msgstr "Ativo"
+
 #. [src.plugins.components.PluginsList.3247064221] - plugin status
 #. defaultMessage is:
 #. Active
@@ -127,11 +146,43 @@ msgctxt "plugin status"
 msgid "Active"
 msgstr "Ativo"
 
+#. [src.plugins.components.PluginsListPage.active] - plugin
+#. defaultMessage is:
+#. Active
+#: build/locale/src/plugins/components/PluginsListPage/filters.json
+msgctxt "plugin"
+msgid "Active"
+msgstr "Ativo"
+
+#. [src.services.components.ServiceListPage.active] - service account
+#. defaultMessage is:
+#. Active
+#: build/locale/src/services/components/ServiceListPage/filters.json
+msgctxt "service account"
+msgid "Active"
+msgstr "Ativo"
+
 #. [src.staff.components.StaffList.3247064221] - staff member status
 #. defaultMessage is:
 #. Active
 #: build/locale/src/staff/components/StaffList/StaffList.json
 msgctxt "staff member status"
+msgid "Active"
+msgstr "Ativo"
+
+#. [src.staff.components.StaffListPage.active] - staff member's account
+#. defaultMessage is:
+#. Active
+#: build/locale/src/staff/components/StaffListPage/filters.json
+msgctxt "staff member's account"
+msgid "Active"
+msgstr "Ativo"
+
+#. [src.webhooks.components.WebhooksListPage.active] - webhook
+#. defaultMessage is:
+#. Active
+#: build/locale/src/webhooks/components/WebhooksListPage/filters.json
+msgctxt "webhook"
 msgid "Active"
 msgstr "Ativo"
 
@@ -193,14 +244,6 @@ msgctxt "page header"
 msgid "Add Collection"
 msgstr "Adicionar Coleção"
 
-#. [src.components.Filter.2852521946] - button
-#. defaultMessage is:
-#. Add Filter
-#: build/locale/src/components/Filter/Filter.json
-msgctxt "button"
-msgid "Add Filter"
-msgstr "Adicionar filtro"
-
 #. [src.components.RichTextEditor.1603794322] - dialog header
 #. defaultMessage is:
 #. Add Image Link
@@ -258,7 +301,7 @@ msgstr "Adicionar Valor"
 #: build/locale/src/plugins/components/PluginSecretFieldDialog/PluginSecretFieldDialog.json
 msgctxt "header"
 msgid "Add Value to Authorization Field"
-msgstr ""
+msgstr "Adicionar Valor ao Campo de Autorização"
 
 #. [src.shipping.components.ShippingZoneRateDialog.1397795758] - add weight
 #. based shipping method, dialog header
@@ -267,7 +310,7 @@ msgstr ""
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
 msgctxt "add weight based shipping method, dialog header"
 msgid "Add Weight Rate"
-msgstr ""
+msgstr "Adicionar Taxa de Peso"
 
 #. [src.customers.components.CustomerAddressListPage.3623935073] - button
 #. defaultMessage is:
@@ -285,14 +328,6 @@ msgctxt "button"
 msgid "Add authentication"
 msgstr "Adicionar autenticação"
 
-#. [src.components.Filter.2851720415] - button
-#. defaultMessage is:
-#. Add filter
-#: build/locale/src/components/Filter/FilterContent.json
-msgctxt "button"
-msgid "Add filter"
-msgstr "Adicionar filtro"
-
 #. [src.siteSettings.components.SiteSettingsKeys.1114030884] - button
 #. defaultMessage is:
 #. Add key
@@ -307,7 +342,7 @@ msgstr "Adicionar chave"
 #: build/locale/src/navigation/components/MenuItems/MenuItems.json
 msgctxt "description"
 msgid "Add new menu item to begin creating menu"
-msgstr ""
+msgstr "Adicione novo item de menu para começar a criar o menu"
 
 #. [src.components.MultiAutocompleteSelectField.1477537381] - add custom
 #. select input option
@@ -321,7 +356,7 @@ msgstr ""
 #: build/locale/src/components/SingleAutocompleteSelectField/SingleAutocompleteSelectFieldContent.json
 msgctxt "add custom select input option"
 msgid "Add new value: {value}"
-msgstr "Adicionar novo valor: {valor}"
+msgstr "Adicionar novo valor: {value}"
 
 #. [src.components.RichTextEditor.2160163587] - button
 #. defaultMessage is:
@@ -329,7 +364,7 @@ msgstr "Adicionar novo valor: {valor}"
 #: build/locale/src/components/RichTextEditor/LinkSource.json
 msgctxt "button"
 msgid "Add or Edit Link"
-msgstr ""
+msgstr "Adicionar ou Editar Link"
 
 #. [src.categories.components.CategoryProducts.3554578821] - button
 #. defaultMessage is:
@@ -361,6 +396,8 @@ msgctxt "description"
 msgid ""
 "Add search engine title and description to make this category easier to find"
 msgstr ""
+"Adicione título e descrição ao mecanismo de busca para facilitar a "
+"localização desta categoria"
 
 #. [src.collections.components.CollectionCreatePage.946315389]
 #. defaultMessage is:
@@ -377,6 +414,8 @@ msgid ""
 "Add search engine title and description to make this collection easier to "
 "find"
 msgstr ""
+"Adicione título e descrição ao mecanismo de busca para facilitar a "
+"localização desta coleção"
 
 #. [src.pages.components.PageDetailsPage.1996767833]
 #. defaultMessage is:
@@ -386,6 +425,8 @@ msgctxt "description"
 msgid ""
 "Add search engine title and description to make this page easier to find"
 msgstr ""
+"Adicione título e descrição ao mecanismo de busca para facilitar a "
+"localização desta página"
 
 #. [src.products.components.ProductCreatePage.2706108815]
 #. defaultMessage is:
@@ -399,6 +440,8 @@ msgctxt "description"
 msgid ""
 "Add search engine title and description to make this product easier to find"
 msgstr ""
+"Adicione título e descrição ao mecanismo de busca para facilitar a "
+"localização deste produto"
 
 #. [src.orders.components.OrderDraftDetailsSummary.2429341469] - button
 #. defaultMessage is:
@@ -406,7 +449,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderDraftDetailsSummary/OrderDraftDetailsSummary.json
 msgctxt "button"
 msgid "Add shipping carrier"
-msgstr ""
+msgstr "Adicionar transportadora"
 
 #. [src.attributes.components.AttributeProperties.673770329] - add attribute
 #. as column in product list table
@@ -415,7 +458,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 msgctxt "add attribute as column in product list table"
 msgid "Add to Column Options"
-msgstr ""
+msgstr "Adicionar às opções de Colunas"
 
 #. [src.orders.components.OrderFulfillment.1119771899] - fulfillment group
 #. tracking number
@@ -465,7 +508,7 @@ msgstr "Endereço"
 #: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
 msgctxt "header"
 msgid "Address Information"
-msgstr ""
+msgstr "Informação do Endereço"
 
 #. [src.components.AddressEdit.1363074570]
 #. defaultMessage is:
@@ -498,7 +541,7 @@ msgstr "Endereço linha 2"
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
 msgctxt "attribute values list: slug column header"
 msgid "Admin"
-msgstr ""
+msgstr "Administrador"
 
 #. [src.taxes.components.CountryTaxesPage.2185495435] - tax rate
 #. defaultMessage is:
@@ -506,7 +549,7 @@ msgstr ""
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
 msgctxt "tax rate"
 msgid "Admission to cultural events"
-msgstr ""
+msgstr "Admissão a eventos culturais"
 
 #. [src.taxes.components.CountryTaxesPage.2557534380] - tax rate
 #. defaultMessage is:
@@ -514,7 +557,7 @@ msgstr ""
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
 msgctxt "tax rate"
 msgid "Admission to entertainment events"
-msgstr ""
+msgstr "Admissão a eventos de entretenimento"
 
 #. [src.taxes.components.CountryTaxesPage.2616794607] - tax rate
 #. defaultMessage is:
@@ -522,7 +565,7 @@ msgstr ""
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
 msgctxt "tax rate"
 msgid "Admission to sporting events"
-msgstr ""
+msgstr "Admissão a eventos esportivos"
 
 #. [src.taxes.components.CountryTaxesPage.3911019760] - tax rate
 #. defaultMessage is:
@@ -530,7 +573,7 @@ msgstr ""
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
 msgctxt "tax rate"
 msgid "Advertising"
-msgstr ""
+msgstr "Publicidade"
 
 #. [src.taxes.components.CountryTaxesPage.2465450918] - tax rate
 #. defaultMessage is:
@@ -538,7 +581,7 @@ msgstr ""
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
 msgctxt "tax rate"
 msgid "Agricultural supplies"
-msgstr ""
+msgstr "Suprimentos agrícolas"
 
 #. [src.attributes.components.AttributeListPage.2417065806] - tab name
 #. defaultMessage is:
@@ -546,7 +589,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeListPage/AttributeListPage.json
 msgctxt "tab name"
 msgid "All Attributes"
-msgstr ""
+msgstr "Todos os Atributos"
 
 #. [src.categories.components.CategoryListPage.4294878092] - tab name
 #. defaultMessage is:
@@ -554,7 +597,7 @@ msgstr ""
 #: build/locale/src/categories/components/CategoryListPage/CategoryListPage.json
 msgctxt "tab name"
 msgid "All Categories"
-msgstr "Todas Categorias"
+msgstr "Todas as Categorias"
 
 #. [src.collections.components.CollectionListPage.1631917001] - tab name
 #. defaultMessage is:
@@ -562,7 +605,7 @@ msgstr "Todas Categorias"
 #: build/locale/src/collections/components/CollectionListPage/CollectionListPage.json
 msgctxt "tab name"
 msgid "All Collections"
-msgstr "Todas Coleções"
+msgstr "Todas as Coleções"
 
 #. [src.customers.components.CustomerListPage.477293306] - tab name
 #. defaultMessage is:
@@ -570,7 +613,7 @@ msgstr "Todas Coleções"
 #: build/locale/src/customers/components/CustomerListPage/CustomerListPage.json
 msgctxt "tab name"
 msgid "All Customers"
-msgstr "Todos Clientes"
+msgstr "Todos os Clientes"
 
 #. [src.orders.components.OrderDraftListPage.551325728] - tab name
 #. defaultMessage is:
@@ -578,7 +621,7 @@ msgstr "Todos Clientes"
 #: build/locale/src/orders/components/OrderDraftListPage/OrderDraftListPage.json
 msgctxt "tab name"
 msgid "All Drafts"
-msgstr ""
+msgstr "Todos os Rascunhos"
 
 #. [src.orders.components.OrderListPage.875489544] - tab name
 #. defaultMessage is:
@@ -586,7 +629,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderListPage/OrderListPage.json
 msgctxt "tab name"
 msgid "All Orders"
-msgstr ""
+msgstr "Todos os Pedidos"
 
 #. [src.products.components.ProductImageNavigation.3060635772] - section
 #. header
@@ -595,6 +638,14 @@ msgstr ""
 #: build/locale/src/products/components/ProductImageNavigation/ProductImageNavigation.json
 msgctxt "section header"
 msgid "All Photos"
+msgstr "Todas as Fotos"
+
+#. [src.plugins.components.PluginsListPage.3523826683] - tab name
+#. defaultMessage is:
+#. All Plugins
+#: build/locale/src/plugins/components/PluginsListPage/PluginsListPage.json
+msgctxt "tab name"
+msgid "All Plugins"
 msgstr ""
 
 #. [src.productTypes.components.ProductTypeListPage.1776073799] - tab name
@@ -603,12 +654,12 @@ msgstr ""
 #: build/locale/src/productTypes/components/ProductTypeListPage/ProductTypeListPage.json
 msgctxt "tab name"
 msgid "All Product Types"
-msgstr ""
+msgstr "Todos os Tipos de Produtos"
 
-#. [src.products.components.ProductListFilter.821159718] - tab name
+#. [src.products.components.ProductListPage.821159718] - tab name
 #. defaultMessage is:
 #. All Products
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
 msgctxt "tab name"
 msgid "All Products"
 msgstr "Todos os Produtos"
@@ -627,7 +678,7 @@ msgstr "Todas as Vendas"
 #: build/locale/src/services/components/ServiceListPage/ServiceListPage.json
 msgctxt "tab name"
 msgid "All Service Accounts"
-msgstr ""
+msgstr "Todas as Contas de Serviço"
 
 #. [src.staff.components.StaffListPage.2852350932] - tab name
 #. defaultMessage is:
@@ -635,7 +686,7 @@ msgstr ""
 #: build/locale/src/staff/components/StaffListPage/StaffListPage.json
 msgctxt "tab name"
 msgid "All Staff Members"
-msgstr ""
+msgstr "Todos os Funcionários"
 
 #. [src.categories.components.CategoryUpdatePage.3229914152] - section header
 #. defaultMessage is:
@@ -643,7 +694,7 @@ msgstr ""
 #: build/locale/src/categories/components/CategoryUpdatePage/CategoryUpdatePage.json
 msgctxt "section header"
 msgid "All Subcategories"
-msgstr ""
+msgstr "Todas as Subcategorias"
 
 #. [src.discounts.components.VoucherListPage.1112241061] - tab name
 #. defaultMessage is:
@@ -651,7 +702,7 @@ msgstr ""
 #: build/locale/src/discounts/components/VoucherListPage/VoucherListPage.json
 msgctxt "tab name"
 msgid "All Vouchers"
-msgstr ""
+msgstr "Todos os Cupons"
 
 #. [src.webhooks.components.WebhooksListPage.3300314452] - tab name
 #. defaultMessage is:
@@ -659,7 +710,7 @@ msgstr ""
 #: build/locale/src/webhooks/components/WebhooksListPage/WebhooksListPage.json
 msgctxt "tab name"
 msgid "All Webhooks"
-msgstr ""
+msgstr "Todos os Webhooks"
 
 #. [src.products.components.ProductVariantAttributes.1536841622] - product
 #. attribute error
@@ -668,7 +719,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantAttributes/ProductVariantAttributes.json
 msgctxt "product attribute error"
 msgid "All attributes should have value"
-msgstr ""
+msgstr "Todos os atributos devem ter valor"
 
 #. [src.webhooks.components.WebhookEvents.2454751033] - event
 #. defaultMessage is:
@@ -676,7 +727,7 @@ msgstr ""
 #: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
 msgctxt "event"
 msgid "All events"
-msgstr ""
+msgstr "Todos os eventos"
 
 #. [src.taxes.components.TaxConfiguration.142803418]
 #. defaultMessage is:
@@ -692,7 +743,7 @@ msgstr "Todos os preços dos produtos são inclusos com os impostos"
 #: build/locale/src/products/components/ProductStock/ProductStock.json
 msgctxt "allocated product stock"
 msgid "Allocated: {quantity}"
-msgstr ""
+msgstr "Alocado: {quantity}"
 
 #. [src.products.components.ProductVariantStock.1680952454] - variant
 #. allocated stock
@@ -701,7 +752,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantStock/ProductVariantStock.json
 msgctxt "variant allocated stock"
 msgid "Allocated: {quantity}"
-msgstr ""
+msgstr "Alocado: {quantity}"
 
 #. [src.orders.components.OrderPaymentDialog.75546233] - amount of refunded
 #. money
@@ -718,7 +769,7 @@ msgstr "Montante"
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 msgctxt "description"
 msgid "Anonymous user"
-msgstr ""
+msgstr "Usuário anônimo"
 
 #. [src.discounts.components.VoucherSummary.2735425668] - voucher
 #. defaultMessage is:
@@ -726,7 +777,7 @@ msgstr ""
 #: build/locale/src/discounts/components/VoucherSummary/VoucherSummary.json
 msgctxt "voucher"
 msgid "Applies to"
-msgstr ""
+msgstr "Aplica-se a"
 
 #. [src.products.components.ProductVariantCreateDialog.2783195765]
 #. defaultMessage is:
@@ -734,7 +785,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
 msgctxt "description"
 msgid "Apply single price to all SKUs"
-msgstr ""
+msgstr "Aplicar preço único a todos os SKUs"
 
 #. [src.products.components.ProductVariantCreateDialog.3601538615]
 #. defaultMessage is:
@@ -742,7 +793,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
 msgctxt "description"
 msgid "Apply single stock to all SKUs"
-msgstr ""
+msgstr "Aplicar estoque único a todos os SKUs"
 
 #. [src.products.components.ProductVariantCreateDialog.3570949907]
 #. defaultMessage is:
@@ -750,7 +801,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
 msgctxt "description"
 msgid "Apply unique prices by attribute to each SKU"
-msgstr ""
+msgstr "Aplicar preços únicos por atributo a cada SKU"
 
 #. [src.products.components.ProductVariantCreateDialog.3387090508]
 #. defaultMessage is:
@@ -758,7 +809,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
 msgctxt "description"
 msgid "Apply unique stock by attribute to each SKU"
-msgstr ""
+msgstr "Aplicar estoque único por atributo a cada SKU"
 
 #. [src.orders.components.OrderCancelDialog.3981375672]
 #. defaultMessage is:
@@ -766,7 +817,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderCancelDialog/OrderCancelDialog.json
 msgctxt "description"
 msgid "Are you sure you want to cancel order #{orderNumber}?"
-msgstr ""
+msgstr "Tem certeza de que deseja cancelar o pedido #{orderNumber}?"
 
 #. [src.orders.components.OrderFulfillmentCancelDialog.2569854889]
 #. defaultMessage is:
@@ -774,7 +825,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderFulfillmentCancelDialog/OrderFulfillmentCancelDialog.json
 msgctxt "description"
 msgid "Are you sure you want to cancel this fulfillment?"
-msgstr ""
+msgstr "Tem certeza de que deseja cancelar este processo?"
 
 #. [src.orders.components.OrderBulkCancelDialog.3011571869]
 #. defaultMessage is:
@@ -786,6 +837,8 @@ msgid ""
 "Are you sure you want to cancel {counter,plural,one{this order} "
 "other{{displayQuantity} orders}}?"
 msgstr ""
+"Tem certeza de que deseja cancelar {counter,plural,one{this order} "
+"other{{displayQuantity} orders}}?"
 
 #. [src.attributes.components.AttributeValueDeleteDialog.1326420604] - delete
 #. attribute value
@@ -794,7 +847,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog.json
 msgctxt "delete attribute value"
 msgid "Are you sure you want to delete \"{name}\" value?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir o valor \"{name}\"  ?"
 
 #. [src.attributes.components.AttributeValueDeleteDialog.4031078167]
 #. defaultMessage is:
@@ -808,6 +861,8 @@ msgid ""
 " be able to assign it to any of the products with \"{attributeName}\" "
 "attribute."
 msgstr ""
+"Tem certeza de que deseja excluir o valor \"{name}\"? Se você excluí-lo, não"
+" poderá atribuí-lo a nenhum dos produtos com o atributo \"{attributeName}\"."
 
 #. [src.collections.views.2402899582]
 #. defaultMessage is:
@@ -815,7 +870,7 @@ msgstr ""
 #: build/locale/src/collections/views/CollectionDetails.json
 msgctxt "description"
 msgid "Are you sure you want to delete collection's image?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir a imagem da coleção?"
 
 #. [src.orders.components.OrderDraftCancelDialog.66064347]
 #. defaultMessage is:
@@ -823,7 +878,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderDraftCancelDialog/OrderDraftCancelDialog.json
 msgctxt "description"
 msgid "Are you sure you want to delete draft #{orderNumber}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir o rascunho #{orderNumber}?"
 
 #. [menuDetailsDeleteMenuContent]
 #. defaultMessage is:
@@ -831,7 +886,7 @@ msgstr ""
 #: build/locale/src/navigation/views/MenuDetails/index.json
 msgctxt "description"
 msgid "Are you sure you want to delete menu {menuName}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir o menu {menuName}?"
 
 #. [src.customers.views.3689332763]
 #. defaultMessage is:
@@ -840,6 +895,8 @@ msgstr ""
 msgctxt "description"
 msgid "Are you sure you want to delete this address from users address book?"
 msgstr ""
+"Tem certeza de que deseja excluir este endereço do catálogo de endereços do "
+"usuário?"
 
 #. [src.products.views.2880386427]
 #. defaultMessage is:
@@ -847,7 +904,7 @@ msgstr ""
 #: build/locale/src/products/views/ProductImage.json
 msgctxt "description"
 msgid "Are you sure you want to delete this image?"
-msgstr ""
+msgstr "Tem certeza de que deseja apagar esta imagem?"
 
 #. [src.services.components.ServiceTokenDeleteDialog.981802752] - delete token
 #. defaultMessage is:
@@ -855,7 +912,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceTokenDeleteDialog/ServiceTokenDeleteDialog.json
 msgctxt "delete token"
 msgid "Are you sure you want to delete token {token}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir o token {token}?"
 
 #. [src.attributes.components.AttributeDeleteDialog.3738429348] - dialog
 #. content
@@ -864,7 +921,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeDeleteDialog/AttributeDeleteDialog.json
 msgctxt "dialog content"
 msgid "Are you sure you want to delete {attributeName}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {attributeName}?"
 
 #. [src.categories.components.CategoryDeleteDialog.847492725] - delete
 #. category
@@ -873,7 +930,7 @@ msgstr ""
 #: build/locale/src/categories/components/CategoryDeleteDialog/CategoryDeleteDialog.json
 msgctxt "delete category"
 msgid "Are you sure you want to delete {categoryName}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {categoryName}?"
 
 #. [src.categories.views.847492725]
 #. defaultMessage is:
@@ -881,7 +938,7 @@ msgstr ""
 #: build/locale/src/categories/views/CategoryDetails.json
 msgctxt "description"
 msgid "Are you sure you want to delete {categoryName}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {categoryName}?"
 
 #. [src.collections.views.523939418]
 #. defaultMessage is:
@@ -889,7 +946,7 @@ msgstr ""
 #: build/locale/src/collections/views/CollectionDetails.json
 msgctxt "description"
 msgid "Are you sure you want to delete {collectionName}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {collectionName}?"
 
 #. [src.attributes.components.AttributeBulkDeleteDialog.1860138828] - dialog
 #. content
@@ -902,6 +959,8 @@ msgid ""
 "Are you sure you want to delete {counter,plural,one{this attribute} "
 "other{{displayQuantity} attributes}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this attribute} "
+"other{{displayQuantity} attributes}}?"
 
 #. [src.categories.views.1592907702]
 #. defaultMessage is:
@@ -918,6 +977,8 @@ msgid ""
 "Are you sure you want to delete {counter,plural,one{this category} "
 "other{{displayQuantity} categories}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this category} "
+"other{{displayQuantity} categories}}?"
 
 #. [src.collections.views.CollectionList.1421224348]
 #. defaultMessage is:
@@ -929,6 +990,8 @@ msgid ""
 "Are you sure you want to delete {counter,plural,one{this collection} "
 "other{{displayQuantity} collections}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this collection} "
+"other{{displayQuantity} collections}}?"
 
 #. [src.customers.views.CustomerList.3616300497]
 #. defaultMessage is:
@@ -940,17 +1003,21 @@ msgid ""
 "Are you sure you want to delete {counter,plural,one{this customer} "
 "other{{displayQuantity} customers}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this customer} "
+"other{{displayQuantity} customers}}?"
 
 #. [menuListDeleteMenusContent]
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this menu}
 #. other{{displayQuantity} menus}}?
-#: build/locale/src/navigation/views/MenuList.json
+#: build/locale/src/navigation/views/MenuList/MenuList.json
 msgctxt "description"
 msgid ""
 "Are you sure you want to delete {counter,plural,one{this menu} "
 "other{{displayQuantity} menus}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this menu} "
+"other{{displayQuantity} menus}}?"
 
 #. [src.orders.views.OrderDraftList.1398914741] - dialog content
 #. defaultMessage is:
@@ -962,17 +1029,21 @@ msgid ""
 "Are you sure you want to delete {counter,plural,one{this order draft} "
 "other{{displayQuantity} orderDrafts}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this order draft} "
+"other{{displayQuantity} orderDrafts}}?"
 
-#. [src.pages.views.808633099] - dialog content
+#. [src.pages.views.PageList.808633099] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to delete {counter,plural,one{this page}
 #. other{{displayQuantity} pages}}?
-#: build/locale/src/pages/views/PageList.json
+#: build/locale/src/pages/views/PageList/PageList.json
 msgctxt "dialog content"
 msgid ""
 "Are you sure you want to delete {counter,plural,one{this page} "
 "other{{displayQuantity} pages}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this page} "
+"other{{displayQuantity} pages}}?"
 
 #. [src.productTypes.views.ProductTypeList.2787668922] - dialog content
 #. defaultMessage is:
@@ -984,6 +1055,8 @@ msgid ""
 "Are you sure you want to delete {counter,plural,one{this product type} "
 "other{{displayQuantity} product types}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this product type} "
+"other{{displayQuantity} product types}}?"
 
 #. [src.categories.views.785143617]
 #. defaultMessage is:
@@ -995,6 +1068,8 @@ msgid ""
 "Are you sure you want to delete {counter,plural,one{this product} "
 "other{{displayQuantity} products}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this product} "
+"other{{displayQuantity} products}}?"
 
 #. [src.products.views.ProductList.785143617] - dialog content
 #. defaultMessage is:
@@ -1006,6 +1081,8 @@ msgid ""
 "Are you sure you want to delete {counter,plural,one{this product} "
 "other{{displayQuantity} products}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this product} "
+"other{{displayQuantity} products}}?"
 
 #. [src.discounts.views.SaleList.315033130] - dialog content
 #. defaultMessage is:
@@ -1017,6 +1094,8 @@ msgid ""
 "Are you sure you want to delete {counter,plural,one{this sale} "
 "other{{displayQuantity} sales}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this sale} "
+"other{{displayQuantity} sales}}?"
 
 #. [src.shipping.views.226833304] - dialog content
 #. defaultMessage is:
@@ -1028,6 +1107,8 @@ msgid ""
 "Are you sure you want to delete {counter,plural,one{this shipping zone} "
 "other{{displayQuantity} shipping zones}}?"
 msgstr ""
+"Tem certeza de que deseja excluir {counter,plural,one{this shipping zone} "
+"other{{displayQuantity} shipping zones}}?"
 
 #. [src.products.views.ProductUpdate.408018316] - dialog content
 #. defaultMessage is:
@@ -1058,6 +1139,7 @@ msgstr ""
 msgctxt "unassign country"
 msgid "Are you sure you want to delete {countryName} from this shipping zone?"
 msgstr ""
+"Tem certeza que você deseja deletar {countryName} dessa zona de entregas?"
 
 #. [src.staff.views.8878988]
 #. defaultMessage is:
@@ -1065,7 +1147,7 @@ msgstr ""
 #: build/locale/src/staff/views/StaffDetails.json
 msgctxt "description"
 msgid "Are you sure you want to delete {email} from staff members?"
-msgstr ""
+msgstr "Tem certeza de que gostaria de excluir {email} de membros da equipe?"
 
 #. [src.customers.views.1927691511] - delete customer, dialog content
 #. defaultMessage is:
@@ -1073,15 +1155,15 @@ msgstr ""
 #: build/locale/src/customers/views/CustomerDetails.json
 msgctxt "delete customer, dialog content"
 msgid "Are you sure you want to delete {email}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {email}?"
 
 #. [menuListDeleteMenuContent]
 #. defaultMessage is:
 #. Are you sure you want to delete {menuName}?
-#: build/locale/src/navigation/views/MenuList.json
+#: build/locale/src/navigation/views/MenuList/MenuList.json
 msgctxt "description"
 msgid "Are you sure you want to delete {menuName}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {menuName}?"
 
 #. [src.components.DeleteFilterTabDialog.71479100]
 #. defaultMessage is:
@@ -1089,7 +1171,7 @@ msgstr ""
 #: build/locale/src/components/DeleteFilterTabDialog/DeleteFilterTabDialog.json
 msgctxt "description"
 msgid "Are you sure you want to delete {name} search tab?"
-msgstr ""
+msgstr "Tem certeza que você deseja {name} das tabs de pesquisa?"
 
 #. [src.products.components.ProductVariantDeleteDialog.2297471173] - delete
 #. product variant
@@ -1098,7 +1180,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantDeleteDialog/ProductVariantDeleteDialog.json
 msgctxt "delete product variant"
 msgid "Are you sure you want to delete {name}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {name}?"
 
 #. [src.products.views.ProductUpdate.2297471173] - delete product
 #. defaultMessage is:
@@ -1106,7 +1188,7 @@ msgstr ""
 #: build/locale/src/products/views/ProductUpdate/ProductUpdate.json
 msgctxt "delete product"
 msgid "Are you sure you want to delete {name}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {name}?"
 
 #. [src.productTypes.components.ProductTypeDeleteDialog.2297471173] - delete
 #. product type
@@ -1115,7 +1197,7 @@ msgstr ""
 #: build/locale/src/productTypes/components/ProductTypeDeleteDialog/ProductTypeDeleteDialog.json
 msgctxt "delete product type"
 msgid "Are you sure you want to delete {name}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {name}?"
 
 #. [src.services.components.ServiceDeleteDialog.2297471173] - delete service
 #. account
@@ -1124,7 +1206,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceDeleteDialog/ServiceDeleteDialog.json
 msgctxt "delete service account"
 msgid "Are you sure you want to delete {name}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {name}?"
 
 #. [shippingZoneDetailsDialogsDeleteShippingMethod] - delete shipping method
 #. defaultMessage is:
@@ -1132,7 +1214,7 @@ msgstr ""
 #: build/locale/src/shipping/views/ShippingZoneDetails/ShippingZoneDetailsDialogs.json
 msgctxt "delete shipping method"
 msgid "Are you sure you want to delete {name}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {name}?"
 
 #. [shippingZoneDetailsDialogsDeleteShippingZone] - delete shipping zone
 #. defaultMessage is:
@@ -1140,7 +1222,7 @@ msgstr ""
 #: build/locale/src/shipping/views/ShippingZoneDetails/ShippingZoneDetailsDialogs.json
 msgctxt "delete shipping zone"
 msgid "Are you sure you want to delete {name}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {name}?"
 
 #. [src.webhooks.components.WebhookDeleteDialog.2297471173] - delete webhook
 #. defaultMessage is:
@@ -1148,7 +1230,7 @@ msgstr ""
 #: build/locale/src/webhooks/components/WebhookDeleteDialog/WebhookDeleteDialog.json
 msgctxt "delete webhook"
 msgid "Are you sure you want to delete {name}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {name}?"
 
 #. [src.discounts.views.1457489953] - dialog content
 #. defaultMessage is:
@@ -1156,7 +1238,7 @@ msgstr ""
 #: build/locale/src/discounts/views/SaleDetails.json
 msgctxt "dialog content"
 msgid "Are you sure you want to delete {saleName}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {saleName}?"
 
 #. [src.shipping.views.1005071028]
 #. defaultMessage is:
@@ -1164,7 +1246,7 @@ msgstr ""
 #: build/locale/src/shipping/views/ShippingZonesList.json
 msgctxt "description"
 msgid "Are you sure you want to delete {shippingZoneName} shipping zone?"
-msgstr ""
+msgstr "Tem certeza que você deseja deletar a zona {shippingZoneName}?"
 
 #. [src.pages.views.754348000] - delete page
 #. defaultMessage is:
@@ -1172,7 +1254,7 @@ msgstr ""
 #: build/locale/src/pages/views/PageDetails.json
 msgctxt "delete page"
 msgid "Are you sure you want to delete {title}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {title}?"
 
 #. [src.discounts.views.3261917848] - dialog content
 #. defaultMessage is:
@@ -1180,7 +1262,7 @@ msgstr ""
 #: build/locale/src/discounts/views/VoucherDetails.json
 msgctxt "dialog content"
 msgid "Are you sure you want to delete {voucherCode}?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir {voucherCode}?"
 
 #. [src.orders.components.OrderDraftFinalizeDialog.3358029330]
 #. defaultMessage is:
@@ -1188,7 +1270,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderDraftFinalizeDialog/OrderDraftFinalizeDialog.json
 msgctxt "description"
 msgid "Are you sure you want to finalize draft #{orderNumber}?"
-msgstr ""
+msgstr "Tem certeza que você deseja finalizar o rascunho #{orderNumber}?"
 
 #. [src.orders.components.OrderMarkAsPaidDialog.2823153104]
 #. defaultMessage is:
@@ -1196,7 +1278,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog.json
 msgctxt "description"
 msgid "Are you sure you want to mark this order as paid?"
-msgstr ""
+msgstr "Tem certeza de que deseja marcar este pedido como pago?"
 
 #. [src.collections.views.CollectionList.3216529047]
 #. defaultMessage is:
@@ -1209,11 +1291,11 @@ msgid ""
 "other{{displayQuantity} collections}}?"
 msgstr ""
 
-#. [src.pages.views.64432778] - dialog content
+#. [src.pages.views.PageList.64432778] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to publish {counter,plural,one{this page}
 #. other{{displayQuantity} pages}}?
-#: build/locale/src/pages/views/PageList.json
+#: build/locale/src/pages/views/PageList/PageList.json
 msgctxt "dialog content"
 msgid ""
 "Are you sure you want to publish {counter,plural,one{this page} "
@@ -1237,7 +1319,7 @@ msgstr ""
 #: build/locale/src/staff/views/StaffDetails.json
 msgctxt "description"
 msgid "Are you sure you want to remove {email} avatar?"
-msgstr ""
+msgstr "Tem certeza que você deseja deletar o avatar de {email}?"
 
 #. [src.productTypes.components.ProductTypeAttributeUnassignDialog.722498450]
 #. defaultMessage is:
@@ -1330,11 +1412,11 @@ msgid ""
 "other{{displayQuantity} collections}}?"
 msgstr ""
 
-#. [src.pages.views.1265636351] - dialog content
+#. [src.pages.views.PageList.1265636351] - dialog content
 #. defaultMessage is:
 #. Are you sure you want to unpublish {counter,plural,one{this page}
 #. other{{displayQuantity} pages}}?
-#: build/locale/src/pages/views/PageList.json
+#: build/locale/src/pages/views/PageList/PageList.json
 msgctxt "dialog content"
 msgid ""
 "Are you sure you want to unpublish {counter,plural,one{this page} "
@@ -1372,7 +1454,7 @@ msgstr ""
 #: build/locale/src/productTypes/components/AssignAttributeDialog/AssignAttributeDialog.json
 msgctxt "dialog header"
 msgid "Assign Attribute"
-msgstr ""
+msgstr "Atribuir Atributo"
 
 #. [src.components.AssignCategoryDialog.190977792] - dialog header
 #. defaultMessage is:
@@ -1380,7 +1462,7 @@ msgstr ""
 #: build/locale/src/components/AssignCategoryDialog/AssignCategoryDialog.json
 msgctxt "dialog header"
 msgid "Assign Categories"
-msgstr ""
+msgstr "Atribuir Categorias"
 
 #. [src.components.AssignCollectionDialog.3992923611] - dialog header
 #. defaultMessage is:
@@ -1388,7 +1470,7 @@ msgstr ""
 #: build/locale/src/components/AssignCollectionDialog/AssignCollectionDialog.json
 msgctxt "dialog header"
 msgid "Assign Collection"
-msgstr ""
+msgstr "Atribuir coleção"
 
 #. [src.discounts.components.DiscountCountrySelectDialog.1585396479] - dialog
 #. header
@@ -1402,7 +1484,7 @@ msgstr ""
 #: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
 msgctxt "dialog header"
 msgid "Assign Countries"
-msgstr ""
+msgstr "Atribuir Países"
 
 #. [src.components.AssignProductDialog.649693468] - dialog header
 #. defaultMessage is:
@@ -1410,7 +1492,7 @@ msgstr ""
 #: build/locale/src/components/AssignProductDialog/AssignProductDialog.json
 msgctxt "dialog header"
 msgid "Assign Product"
-msgstr ""
+msgstr "Atribuir Produto"
 
 #. [src.productTypes.components.ProductTypeAttributes.1656462109] - button
 #. defaultMessage is:
@@ -1418,7 +1500,7 @@ msgstr ""
 #: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
 msgctxt "button"
 msgid "Assign attribute"
-msgstr ""
+msgstr "Atribuir atributo"
 
 #. [src.productTypes.components.AssignAttributeDialog.2173976534] - button
 #. defaultMessage is:
@@ -1426,7 +1508,7 @@ msgstr ""
 #: build/locale/src/productTypes/components/AssignAttributeDialog/AssignAttributeDialog.json
 msgctxt "button"
 msgid "Assign attributes"
-msgstr ""
+msgstr "Atribuir atributos"
 
 #. [src.components.AssignCategoryDialog.3973677075] - button
 #. defaultMessage is:
@@ -1438,7 +1520,7 @@ msgstr ""
 #: build/locale/src/discounts/components/DiscountCategories/DiscountCategories.json
 msgctxt "button"
 msgid "Assign categories"
-msgstr ""
+msgstr "Atribuir categorias"
 
 #. [src.components.AssignCollectionDialog.1035511604] - button
 #. defaultMessage is:
@@ -1450,7 +1532,7 @@ msgstr ""
 #: build/locale/src/discounts/components/DiscountCollections/DiscountCollections.json
 msgctxt "button"
 msgid "Assign collections"
-msgstr ""
+msgstr "Atribuir coleções"
 
 #. [src.components.CountryList.2747492886] - button
 #. defaultMessage is:
@@ -1467,7 +1549,7 @@ msgstr ""
 #: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
 msgctxt "button"
 msgid "Assign countries"
-msgstr ""
+msgstr "Atribuir países"
 
 #. [src.collections.components.CollectionProducts.460524544] - button
 #. defaultMessage is:
@@ -1475,7 +1557,7 @@ msgstr ""
 #: build/locale/src/collections/components/CollectionProducts/CollectionProducts.json
 msgctxt "button"
 msgid "Assign product"
-msgstr ""
+msgstr "Atribuir produto"
 
 #. [src.components.AssignProductDialog.2100305525] - button
 #. defaultMessage is:
@@ -1487,7 +1569,7 @@ msgstr ""
 #: build/locale/src/discounts/components/DiscountProducts/DiscountProducts.json
 msgctxt "button"
 msgid "Assign products"
-msgstr ""
+msgstr "Atribuir produtos"
 
 #. [src.webhooks.components.WebhookInfo.819389696]
 #. defaultMessage is:
@@ -1495,7 +1577,7 @@ msgstr ""
 #: build/locale/src/webhooks/components/WebhookInfo/WebhookInfo.json
 msgctxt "description"
 msgid "Assign to Service Account"
-msgstr ""
+msgstr "Atribuir à Conta de Serviço"
 
 #. [src.attributes.components.AttributeValues.351422234] - assign attribute
 #. value button
@@ -1504,7 +1586,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
 msgctxt "assign attribute value button"
 msgid "Assign value"
-msgstr ""
+msgstr "Atribuir valor"
 
 #. [src.products.components.ProductVariantCreateDialog.168343345] - variant
 #. attribute
@@ -1513,7 +1595,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
 msgctxt "variant attribute"
 msgid "Attribute"
-msgstr ""
+msgstr "Atributo"
 
 #. [src.attributes.components.AttributeDetails.3605174225] - attribute's slug
 #. short code label
@@ -1522,7 +1604,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeDetails/AttributeDetails.json
 msgctxt "attribute's slug short code label"
 msgid "Attribute Code"
-msgstr ""
+msgstr "Código do Atributo"
 
 #. [src.attributes.components.AttributeList.3605174225]
 #. defaultMessage is:
@@ -1530,7 +1612,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeList/AttributeList.json
 msgctxt "description"
 msgid "Attribute Code"
-msgstr ""
+msgstr "Código do Atributo"
 
 #. [src.translations.components.TranslationsProductTypesPage.2642976392]
 #. defaultMessage is:
@@ -1538,7 +1620,7 @@ msgstr ""
 #: build/locale/src/translations/components/TranslationsProductTypesPage/TranslationsProductTypesPage.json
 msgctxt "description"
 msgid "Attribute Name"
-msgstr ""
+msgstr "Nome do Atributo"
 
 #. [src.attributes.components.AttributeValues.224159874] - section header
 #. defaultMessage is:
@@ -1546,7 +1628,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeValues/AttributeValues.json
 msgctxt "section header"
 msgid "Attribute Values"
-msgstr ""
+msgstr "Valores do Atributo"
 
 #. [src.attributes.views.AttributeDetails.499456739]
 #. defaultMessage is:
@@ -1554,7 +1636,7 @@ msgstr ""
 #: build/locale/src/attributes/views/AttributeDetails/AttributeDetails.json
 msgctxt "description"
 msgid "Attribute deleted"
-msgstr ""
+msgstr "Atributo deletado"
 
 #. [src.productTypes.components.ProductTypeAttributeEditDialog.1228425832]
 #. defaultMessage is:
@@ -1566,7 +1648,7 @@ msgstr ""
 #: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
 msgctxt "description"
 msgid "Attribute name"
-msgstr ""
+msgstr "Nome do atributo"
 
 #. [src.productTypes.components.ProductTypeAttributeEditDialog.335542212]
 #. defaultMessage is:
@@ -1574,7 +1656,7 @@ msgstr ""
 #: build/locale/src/productTypes/components/ProductTypeAttributeEditDialog/ProductTypeAttributeEditDialog.json
 msgctxt "description"
 msgid "Attribute values"
-msgstr "Valores de atributo"
+msgstr "Valores do atributo"
 
 #. [src.attributes] - attributes section name
 #. defaultMessage is:
@@ -1599,7 +1681,7 @@ msgstr "Atributos"
 #: build/locale/src/configuration/index.json
 msgctxt "description"
 msgid "Attributes and Product Typess"
-msgstr ""
+msgstr "Atributos e Tipos de Produto"
 
 #. [src.attributes.views.AttributeList.3218248395] - deleted multiple
 #. attributes
@@ -1608,7 +1690,7 @@ msgstr ""
 #: build/locale/src/attributes/views/AttributeList/AttributeList.json
 msgctxt "deleted multiple attributes"
 msgid "Attributes successfully delete"
-msgstr ""
+msgstr "Atributos excluídos com sucesso"
 
 #. [src.siteSettings.components.SiteSettingsKeys.226491688] - section header
 #. defaultMessage is:
@@ -1616,7 +1698,7 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsKeys/SiteSettingsKeys.json
 msgctxt "section header"
 msgid "Authentication Keys"
-msgstr ""
+msgstr "Chave de Autentificação "
 
 #. [src.siteSettings.components.SiteSettingsPage.4088830385] - section header
 #. defaultMessage is:
@@ -1624,7 +1706,7 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsPage/SiteSettingsPage.json
 msgctxt "section header"
 msgid "Authentication Methods"
-msgstr ""
+msgstr "Métodos de Autentificação "
 
 #. [src.siteSettings.components.SiteSettingsKeys.1270286507] - authentication
 #. provider name
@@ -1633,7 +1715,7 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsKeys/SiteSettingsKeys.json
 msgctxt "authentication provider name"
 msgid "Authentication Type"
-msgstr ""
+msgstr "Tipo de Autentificação "
 
 #. [src.siteSettings.components.SiteSettingsPage.1214877701]
 #. defaultMessage is:
@@ -1688,13 +1770,13 @@ msgctxt "description"
 msgid "Availability"
 msgstr "Disponibilidade"
 
-#. [src.products.components.ProductListFilter.2157131639] - product status
+#. [src.products.components.ProductListPage.available] - product status
 #. defaultMessage is:
 #. Available
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#: build/locale/src/products/components/ProductListPage/filters.json
 msgctxt "product status"
 msgid "Available"
-msgstr ""
+msgstr "Disponível"
 
 #. [src.products.components.ProductVariants.2157131639] - product variant
 #. status
@@ -1703,15 +1785,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariants/ProductVariants.json
 msgctxt "product variant status"
 msgid "Available"
-msgstr ""
-
-#. [src.products.views.ProductList.available] - filter products by stock
-#. defaultMessage is:
-#. Available
-#: build/locale/src/products/views/ProductList/filters.json
-msgctxt "filter products by stock"
-msgid "Available"
-msgstr ""
+msgstr "Disponível"
 
 #. [src.taxes.components.CountryTaxesPage.2201910191] - tax rate
 #. defaultMessage is:
@@ -1727,7 +1801,7 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "button"
 msgid "Back"
-msgstr ""
+msgstr "Voltar"
 
 #. [src.components.ErrorPage.1723676032] - button
 #. defaultMessage is:
@@ -1735,7 +1809,7 @@ msgstr ""
 #: build/locale/src/components/ErrorPage/ErrorPage.json
 msgctxt "button"
 msgid "Back to home"
-msgstr ""
+msgstr "Voltar para a página inicial"
 
 #. [src.auth.components.ResetPasswordSuccessPage.2245157344] - button
 #. defaultMessage is:
@@ -1743,7 +1817,7 @@ msgstr ""
 #: build/locale/src/auth/components/ResetPasswordSuccessPage/ResetPasswordSuccessPage.json
 msgctxt "button"
 msgid "Back to login"
-msgstr ""
+msgstr "Voltar para o login"
 
 #. [src.categories.components.CategoryBackground.2224943474] - section header
 #. defaultMessage is:
@@ -1755,7 +1829,7 @@ msgstr ""
 #: build/locale/src/collections/components/CollectionImage/CollectionImage.json
 msgctxt "section header"
 msgid "Background Image (optional)"
-msgstr ""
+msgstr "Imagem de Fundo (opcional)"
 
 #. [src.taxes.components.CountryTaxesPage.1323923780] - tax rate
 #. defaultMessage is:
@@ -1763,7 +1837,7 @@ msgstr ""
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
 msgctxt "tax rate"
 msgid "Bikes"
-msgstr ""
+msgstr "Bicicletas"
 
 #. [src.customers.components.CustomerAddresses.4282475982] - subsection header
 #. defaultMessage is:
@@ -1771,7 +1845,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
 msgctxt "subsection header"
 msgid "Billing Address"
-msgstr ""
+msgstr "Endereço de Cobrança"
 
 #. [src.orders.components.OrderCustomer.4282475982]
 #. defaultMessage is:
@@ -1779,7 +1853,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 msgctxt "description"
 msgid "Billing Address"
-msgstr ""
+msgstr "Endereço de Cobrança"
 
 #. [src.taxes.components.CountryTaxesPage.2394675125] - tax rate
 #. defaultMessage is:
@@ -1787,6 +1861,15 @@ msgstr ""
 #: build/locale/src/taxes/components/CountryTaxesPage/CountryTaxesPage.json
 msgctxt "tax rate"
 msgid "Books"
+msgstr "Livros"
+
+#. [src.attributes.components.AttributeListPage.availableInGrid] - attribute
+#. can be column in product list table
+#. defaultMessage is:
+#. Can be used as column
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+msgctxt "attribute can be column in product list table"
+msgid "Can be used as column"
 msgstr ""
 
 #. [src.cancel] - button
@@ -1840,7 +1923,7 @@ msgstr "Cancelar Pedido"
 #: build/locale/src/orders/components/OrderBulkCancelDialog/OrderBulkCancelDialog.json
 msgctxt "dialog header"
 msgid "Cancel Orders"
-msgstr ""
+msgstr "Cancelar Pedidos"
 
 #. [src.orders.components.OrderFulfillmentCancelDialog.675709443] - button
 #. defaultMessage is:
@@ -1868,7 +1951,7 @@ msgstr "Cancelar pedido"
 #: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
 msgctxt "button"
 msgid "Cancel shipment"
-msgstr ""
+msgstr "Cancelar envio"
 
 #. [src.cancelled] - order status
 #. defaultMessage is:
@@ -1892,7 +1975,7 @@ msgstr "Receber"
 #: build/locale/src/orders/components/OrderPaymentDialog/OrderPaymentDialog.json
 msgctxt "dialog header"
 msgid "Capture Payment"
-msgstr ""
+msgstr "Capturar Pagamento"
 
 #. [src.orders.components.OrderPayment.2320183694] - order payment
 #. defaultMessage is:
@@ -1908,7 +1991,7 @@ msgstr "Quantidade capturada"
 #: build/locale/src/intl.json
 msgctxt "description"
 msgid "Catalog"
-msgstr ""
+msgstr "Catálogo"
 
 #. [src.attributes.components.AttributeDetails.1005562666] - attribute's
 #. editor component
@@ -1946,7 +2029,7 @@ msgstr "Categorias"
 #: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
 msgctxt "number of categories"
 msgid "Categories ({quantity})"
-msgstr ""
+msgstr "Categorias ({quantity})"
 
 #. [src.components.Navigator.modes.category]
 #. defaultMessage is:
@@ -1974,7 +2057,7 @@ msgstr "Categoria"
 #: build/locale/src/categories/components/CategoryDetailsForm/CategoryDetailsForm.json
 msgctxt "description"
 msgid "Category Description"
-msgstr ""
+msgstr "Descrição da Categoria"
 
 #. [src.categories.components.CategoryDetailsForm.1214235329]
 #. defaultMessage is:
@@ -1982,19 +2065,15 @@ msgstr ""
 #. [src.categories.components.CategoryList.1214235329]
 #. defaultMessage is:
 #. Category Name
-#. [src.collections.components.CollectionList.1214235329]
-#. defaultMessage is:
-#. Category Name
 #. [src.translations.components.TranslationsCategoriesPage.1214235329]
 #. defaultMessage is:
 #. Category Name
 #: build/locale/src/categories/components/CategoryDetailsForm/CategoryDetailsForm.json
 #: build/locale/src/categories/components/CategoryList/CategoryList.json
-#: build/locale/src/collections/components/CollectionList/CollectionList.json
 #: build/locale/src/translations/components/TranslationsCategoriesPage/TranslationsCategoriesPage.json
 msgctxt "description"
 msgid "Category Name"
-msgstr ""
+msgstr "Nome da Categoria"
 
 #. [src.categories.views.1754466114]
 #. defaultMessage is:
@@ -2002,7 +2081,7 @@ msgstr ""
 #: build/locale/src/categories/views/CategoryCreate.json
 msgctxt "description"
 msgid "Category created"
-msgstr ""
+msgstr "Categoria criada"
 
 #. [src.categories.views.2189424032]
 #. defaultMessage is:
@@ -2010,7 +2089,7 @@ msgstr ""
 #: build/locale/src/categories/views/CategoryDetails.json
 msgctxt "description"
 msgid "Category deleted"
-msgstr ""
+msgstr "Categoria deletada"
 
 #. [src.discounts.components.DiscountCategories.1567318211]
 #. defaultMessage is:
@@ -2018,7 +2097,7 @@ msgstr ""
 #: build/locale/src/discounts/components/DiscountCategories/DiscountCategories.json
 msgctxt "description"
 msgid "Category name"
-msgstr ""
+msgstr "Nome da categoria"
 
 #. [src.staff.components.StaffPasswordResetDialog.2521568990] - dialog header
 #. defaultMessage is:
@@ -2034,7 +2113,7 @@ msgstr "Mudar senha"
 #: build/locale/src/staff/components/StaffProperties/StaffProperties.json
 msgctxt "button"
 msgid "Change photo"
-msgstr ""
+msgstr "Alterar Foto"
 
 #. [src.staff.components.StaffPassword.1434811103] - button
 #. defaultMessage is:
@@ -2042,6 +2121,14 @@ msgstr ""
 #: build/locale/src/staff/components/StaffPassword/StaffPassword.json
 msgctxt "button"
 msgid "Change your password"
+msgstr "Mude sua senha"
+
+#. [src.webhooks.components.WebhookEvents.40035964] - event
+#. defaultMessage is:
+#. Changed quantity in checkout
+#: build/locale/src/webhooks/components/WebhookEvents/WebhookEvents.json
+msgctxt "event"
+msgid "Changed quantity in checkout"
 msgstr ""
 
 #. [src.products.components.ProductPricing.3015886868]
@@ -2050,7 +2137,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductPricing/ProductPricing.json
 msgctxt "description"
 msgid "Charge taxes for this item"
-msgstr ""
+msgstr "Cobrar impostos neste item"
 
 #. [src.taxes.components.TaxConfiguration.2654711891]
 #. defaultMessage is:
@@ -2075,7 +2162,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
 msgctxt "variant attribute"
 msgid "Choose attribute"
-msgstr ""
+msgstr "Escolha o atributo"
 
 #. [src.shipping.components.ShippingZoneCountriesAssignDialog.2404264158]
 #. defaultMessage is:
@@ -2100,7 +2187,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariantImages/ProductVariantImages.json
 msgctxt "button"
 msgid "Choose photos"
-msgstr ""
+msgstr "Escolha as fotos"
 
 #. [src.components.AddressEdit.253031977]
 #. defaultMessage is:
@@ -2142,13 +2229,17 @@ msgctxt "description"
 msgid "Collection"
 msgstr "Coleção"
 
+#. [src.collections.components.CollectionList.2759199473]
+#. defaultMessage is:
+#. Collection Name
 #. [src.translations.components.TranslationsCollectionsPage.2759199473]
 #. defaultMessage is:
 #. Collection Name
+#: build/locale/src/collections/components/CollectionList/CollectionList.json
 #: build/locale/src/translations/components/TranslationsCollectionsPage/TranslationsCollectionsPage.json
 msgctxt "description"
 msgid "Collection Name"
-msgstr ""
+msgstr "Nome da Coleção"
 
 #. [src.discounts.components.DiscountCollections.3011396316]
 #. defaultMessage is:
@@ -2156,7 +2247,7 @@ msgstr ""
 #: build/locale/src/discounts/components/DiscountCollections/DiscountCollections.json
 msgctxt "description"
 msgid "Collection name"
-msgstr ""
+msgstr "Nome da coleção"
 
 #. [src.collections] - collections section name
 #. defaultMessage is:
@@ -2193,7 +2284,7 @@ msgstr "Coleções"
 #: build/locale/src/discounts/components/VoucherDetailsPage/VoucherDetailsPage.json
 msgctxt "number of collections"
 msgid "Collections ({quantity})"
-msgstr ""
+msgstr "Coleções ({quantity})"
 
 #. [src.components.ColumnPicker.2539195044] - select visible columns button
 #. defaultMessage is:
@@ -2201,7 +2292,7 @@ msgstr ""
 #: build/locale/src/components/ColumnPicker/ColumnPickerButton.json
 msgctxt "select visible columns button"
 msgid "Columns"
-msgstr ""
+msgstr "Colunas"
 
 #. [src.components.AddressEdit.3570415321]
 #. defaultMessage is:
@@ -2229,7 +2320,7 @@ msgstr ""
 #: build/locale/src/translations/components/TranslationsEntitiesList/TranslationsEntitiesList.json
 msgctxt "description"
 msgid "Completed Translations"
-msgstr ""
+msgstr "Traduções concluídas"
 
 #. [src.products.components.ProductOrganization.2754779425] - product is
 #. configurable
@@ -2238,15 +2329,20 @@ msgstr ""
 #: build/locale/src/products/components/ProductOrganization/ProductOrganization.json
 msgctxt "product is configurable"
 msgid "Configurable"
-msgstr ""
+msgstr "Configurável"
 
 #. [src.productTypes.components.ProductTypeList.2754779425] - product type
 #. defaultMessage is:
 #. Configurable
+#. [src.productTypes.components.ProductTypeListPage.configurable] - product
+#. type
+#. defaultMessage is:
+#. Configurable
 #: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
+#: build/locale/src/productTypes/components/ProductTypeListPage/filters.json
 msgctxt "product type"
 msgid "Configurable"
-msgstr ""
+msgstr "Configurável"
 
 #. [src.siteSettings.components.SiteSettingsMailing.297689661]
 #. defaultMessage is:
@@ -2258,6 +2354,8 @@ msgid ""
 "Configurate your email address from which all automatic emails will be sent "
 "to your customers."
 msgstr ""
+"Configure seu endereço de email a partir do qual todos os emails automáticos"
+" serão enviados aos seus clientes."
 
 #. [src.configuration] - configuration section name
 #. defaultMessage is:
@@ -2273,7 +2371,7 @@ msgstr "Configuração"
 #: build/locale/src/intl.json
 msgctxt "button"
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #. [src.auth.components.NewPasswordPage.2799926859]
 #. defaultMessage is:
@@ -2281,7 +2379,7 @@ msgstr ""
 #: build/locale/src/auth/components/NewPasswordPage/NewPasswordPage.json
 msgctxt "description"
 msgid "Confirm Password"
-msgstr ""
+msgstr "Confirmar Senha"
 
 #. [src.orders.components.OrderCustomer.2312694610] - subheader
 #. defaultMessage is:
@@ -2289,7 +2387,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 msgctxt "subheader"
 msgid "Contact Information"
-msgstr ""
+msgstr "Informação de Contato"
 
 #. [src.customers.components.CustomerInfo.778526801] - customer contact
 #. section, header
@@ -2298,7 +2396,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerInfo/CustomerInfo.json
 msgctxt "customer contact section, header"
 msgid "Contact Informations"
-msgstr ""
+msgstr "Informações de Contato"
 
 #. [src.pages.components.PageInfo.1116746286] - page content
 #. defaultMessage is:
@@ -2319,7 +2417,7 @@ msgstr "Conteúdo"
 #: build/locale/src/services/components/ServiceDefaultToken/ServiceDefaultToken.json
 msgctxt "button"
 msgid "Copied"
-msgstr ""
+msgstr "Copiado"
 
 #. [src.services.components.ServiceDefaultToken.3406541221] - button
 #. defaultMessage is:
@@ -2331,7 +2429,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceTokenCreateDialog/ServiceTokenCreateDialog.json
 msgctxt "button"
 msgid "Copy token"
-msgstr ""
+msgstr "Copiar token"
 
 #. [src.products.components.ProductVariantPrice.1416480328]
 #. defaultMessage is:
@@ -2466,7 +2564,7 @@ msgstr "Países"
 #: build/locale/src/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog.json
 msgctxt "country selection"
 msgid "Countries A to Z"
-msgstr ""
+msgstr "Países de A a Z"
 
 #. [src.components.AddressEdit.1139500589]
 #. defaultMessage is:
@@ -2486,7 +2584,7 @@ msgstr "País"
 #: build/locale/src/taxes/components/CountryList/CountryList.json
 msgctxt "description"
 msgid "Country Code"
-msgstr ""
+msgstr "Código do País"
 
 #. [src.taxes.components.CountryList.577035076]
 #. defaultMessage is:
@@ -2494,7 +2592,7 @@ msgstr ""
 #: build/locale/src/taxes/components/CountryList/CountryList.json
 msgctxt "description"
 msgid "Country Name"
-msgstr ""
+msgstr "Nome do País"
 
 #. [src.components.AddressEdit.944851093]
 #. defaultMessage is:
@@ -2506,7 +2604,7 @@ msgstr ""
 #: build/locale/src/siteSettings/components/SiteSettingsAddress/SiteSettingsAddress.json
 msgctxt "description"
 msgid "Country area"
-msgstr ""
+msgstr "Área do país"
 
 #. [src.create] - button
 #. defaultMessage is:
@@ -2540,7 +2638,7 @@ msgstr "Criar"
 #: build/locale/src/components/Navigator/modes/messages.json
 msgctxt "button"
 msgid "Create Category"
-msgstr ""
+msgstr "Criar Categoria"
 
 #. [src.components.Navigator.modes.createCollection] - button
 #. defaultMessage is:
@@ -2548,7 +2646,7 @@ msgstr ""
 #: build/locale/src/components/Navigator/modes/messages.json
 msgctxt "button"
 msgid "Create Collection"
-msgstr ""
+msgstr "Criar Coleção"
 
 #. [src.components.Navigator.modes.createCustomer] - button
 #. defaultMessage is:
@@ -2556,7 +2654,7 @@ msgstr ""
 #: build/locale/src/components/Navigator/modes/messages.json
 msgctxt "button"
 msgid "Create Customer"
-msgstr ""
+msgstr "Criar Cliente"
 
 #. [src.customers.components.CustomerCreatePage.4025686004] - page header
 #. defaultMessage is:
@@ -2564,7 +2662,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerCreatePage/CustomerCreatePage.json
 msgctxt "page header"
 msgid "Create Customer"
-msgstr ""
+msgstr "Criar Cliente"
 
 #. [menuCreateDialogHeader] - dialog header
 #. defaultMessage is:
@@ -2572,7 +2670,7 @@ msgstr ""
 #: build/locale/src/navigation/components/MenuCreateDialog/MenuCreateDialog.json
 msgctxt "dialog header"
 msgid "Create Menu"
-msgstr ""
+msgstr "Criar Menu"
 
 #. [menuListPageAddMenu] - button
 #. defaultMessage is:
@@ -2580,7 +2678,7 @@ msgstr ""
 #: build/locale/src/navigation/components/MenuListPage/MenuListPage.json
 msgctxt "button"
 msgid "Create Menu"
-msgstr ""
+msgstr "Criar Menu"
 
 #. [src.services.components.ServiceCreatePage.248507553] - header
 #. defaultMessage is:
@@ -2588,7 +2686,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceCreatePage/ServiceCreatePage.json
 msgctxt "header"
 msgid "Create New Account"
-msgstr ""
+msgstr "Criar Nova Conta"
 
 #. [src.attributes.components.AttributePage.2855501559] - page title
 #. defaultMessage is:
@@ -2596,7 +2694,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributePage/AttributePage.json
 msgctxt "page title"
 msgid "Create New Attribute"
-msgstr ""
+msgstr "Criar Novo Atributo"
 
 #. [src.categories.components.CategoryCreatePage.236319840] - page header
 #. defaultMessage is:
@@ -2604,7 +2702,7 @@ msgstr ""
 #: build/locale/src/categories/components/CategoryCreatePage/CategoryCreatePage.json
 msgctxt "page header"
 msgid "Create New Category"
-msgstr ""
+msgstr "Criar Nova Categoria"
 
 #. [src.shipping.components.ShippingZoneCreatePage.4049462680] - header
 #. defaultMessage is:
@@ -2620,7 +2718,7 @@ msgstr ""
 #: build/locale/src/components/Navigator/modes/messages.json
 msgctxt "button"
 msgid "Create Order"
-msgstr ""
+msgstr "Criar Pedido"
 
 #. [src.pages.components.PageDetailsPage.1068617485] - page header
 #. defaultMessage is:
@@ -2628,7 +2726,7 @@ msgstr ""
 #: build/locale/src/pages/components/PageDetailsPage/PageDetailsPage.json
 msgctxt "page header"
 msgid "Create Page"
-msgstr ""
+msgstr "Criar Página"
 
 #. [src.pages.views.1068617485] - header
 #. defaultMessage is:
@@ -2636,7 +2734,7 @@ msgstr ""
 #: build/locale/src/pages/views/PageCreate.json
 msgctxt "header"
 msgid "Create Page"
-msgstr ""
+msgstr "Criar Página"
 
 #. [src.components.Navigator.modes.createProduct] - button
 #. defaultMessage is:
@@ -2648,7 +2746,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductListPage/ProductListPage.json
 msgctxt "button"
 msgid "Create Product"
-msgstr ""
+msgstr "Criar Produto"
 
 #. [src.orders.components.OrderProductAddDialog.1542417144] - dialog header
 #. defaultMessage is:
@@ -2656,7 +2754,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderProductAddDialog/OrderProductAddDialog.json
 msgctxt "dialog header"
 msgid "Create Product"
-msgstr ""
+msgstr "Criar Produto"
 
 #. [src.products.views.1542417144] - window title
 #. defaultMessage is:
@@ -2664,7 +2762,7 @@ msgstr ""
 #: build/locale/src/products/views/ProductCreate.json
 msgctxt "window title"
 msgid "Create Product"
-msgstr ""
+msgstr "Criar Produto"
 
 #. [productTypeCreateHeader] - window title
 #. defaultMessage is:
@@ -2672,7 +2770,7 @@ msgstr ""
 #: build/locale/src/productTypes/views/ProductTypeCreate.json
 msgctxt "window title"
 msgid "Create Product Type"
-msgstr ""
+msgstr "Criar Tipo de Produto"
 
 #. [productTypeCreatePageHeader] - header
 #. defaultMessage is:
@@ -2680,7 +2778,7 @@ msgstr ""
 #: build/locale/src/productTypes/views/ProductTypeCreate.json
 msgctxt "header"
 msgid "Create Product Type"
-msgstr ""
+msgstr "Criar Tipo de Produto"
 
 #. [src.discounts.components.SaleCreatePage.3866518732] - page header
 #. defaultMessage is:
@@ -2688,7 +2786,7 @@ msgstr ""
 #: build/locale/src/discounts/components/SaleCreatePage/SaleCreatePage.json
 msgctxt "page header"
 msgid "Create Sale"
-msgstr ""
+msgstr "Criar Venda"
 
 #. [src.discounts.components.SaleListPage.3866518732] - button
 #. defaultMessage is:
@@ -2696,7 +2794,7 @@ msgstr ""
 #: build/locale/src/discounts/components/SaleListPage/SaleListPage.json
 msgctxt "button"
 msgid "Create Sale"
-msgstr ""
+msgstr "Criar Venda"
 
 #. [src.services.views.ServiceCreate.3167211165] - window title
 #. defaultMessage is:
@@ -2712,7 +2810,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceTokenCreateDialog/ServiceTokenCreateDialog.json
 msgctxt "header"
 msgid "Create Token"
-msgstr ""
+msgstr "Criar Token"
 
 #. [src.services.components.ServiceTokens.3875340101] - button
 #. defaultMessage is:
@@ -2720,7 +2818,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceTokens/ServiceTokens.json
 msgctxt "button"
 msgid "Create Token"
-msgstr ""
+msgstr "Criar Token"
 
 #. [src.products.views.2362587265] - header
 #. defaultMessage is:
@@ -2922,6 +3020,14 @@ msgctxt "button"
 msgid "Create webhook"
 msgstr ""
 
+#. [src.orders.components.OrderDraftListPage.created] - draft order
+#. defaultMessage is:
+#. Created
+#: build/locale/src/orders/components/OrderDraftListPage/filters.json
+msgctxt "draft order"
+msgid "Created"
+msgstr ""
+
 #. [src.collections.views.1597339737]
 #. defaultMessage is:
 #. Created collection
@@ -2933,7 +3039,7 @@ msgstr ""
 #. [menuListCreatedMenu]
 #. defaultMessage is:
 #. Created menu
-#: build/locale/src/navigation/views/MenuList.json
+#: build/locale/src/navigation/views/MenuList/MenuList.json
 msgctxt "description"
 msgid "Created menu"
 msgstr ""
@@ -2990,6 +3096,14 @@ msgstr "Cliente"
 #. Customer
 #: build/locale/src/orders/components/OrderDraftList/OrderDraftList.json
 msgctxt "description"
+msgid "Customer"
+msgstr "Cliente"
+
+#. [src.orders.components.OrderDraftListPage.customer] - draft order
+#. defaultMessage is:
+#. Customer
+#: build/locale/src/orders/components/OrderDraftListPage/filters.json
+msgctxt "draft order"
 msgid "Customer"
 msgstr "Cliente"
 
@@ -3088,7 +3202,7 @@ msgstr "Painel de controle"
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 msgctxt "attribute properties regarding dashboard"
 msgid "Dashboard Properties"
-msgstr ""
+msgstr "Propriedades do Painel de Controle"
 
 #. [src.customers.components.CustomerOrders.4205493358] - order placement date
 #. defaultMessage is:
@@ -3115,36 +3229,12 @@ msgctxt "date when order was placed"
 msgid "Date"
 msgstr "Data"
 
-#. [src.orders.components.OrderListFilter.4205493358]
+#. [src.staff.components.StaffListPage.deactivated] - staff member's account
 #. defaultMessage is:
-#. Date
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "description"
-msgid "Date"
-msgstr "Data"
-
-#. [src.orders.views.OrderList.dateFrom] - filter by date
-#. defaultMessage is:
-#. Date from {date}
-#: build/locale/src/orders/views/OrderList/filters.json
-msgctxt "filter by date"
-msgid "Date from {date}"
-msgstr ""
-
-#. [src.orders.views.OrderList.dateIs] - filter by date
-#. defaultMessage is:
-#. Date is {date}
-#: build/locale/src/orders/views/OrderList/filters.json
-msgctxt "filter by date"
-msgid "Date is {date}"
-msgstr ""
-
-#. [src.orders.views.OrderList.dateTo] - filter by date
-#. defaultMessage is:
-#. Date to {date}
-#: build/locale/src/orders/views/OrderList/filters.json
-msgctxt "filter by date"
-msgid "Date to {date}"
+#. Deactivated
+#: build/locale/src/staff/components/StaffListPage/filters.json
+msgctxt "staff member's account"
+msgid "Deactivated"
 msgstr ""
 
 #. [src.customers.components.CustomerAddress.1224809208]
@@ -3202,7 +3292,7 @@ msgstr ""
 #: build/locale/src/configuration/index.json
 msgctxt "description"
 msgid "Define how users can navigate through your store"
-msgstr ""
+msgstr "Defina como os usuários poderão navegar pela sua loja"
 
 #. [configurationMenuProductTypes]
 #. defaultMessage is:
@@ -3210,7 +3300,7 @@ msgstr ""
 #: build/locale/src/configuration/index.json
 msgctxt "description"
 msgid "Define types of products you sell"
-msgstr ""
+msgstr "Defina os tipos de produtos que você vende"
 
 #. [src.delete] - button
 #. defaultMessage is:
@@ -3275,7 +3365,7 @@ msgstr ""
 #. defaultMessage is:
 #. Delete Menu
 #: build/locale/src/navigation/views/MenuDetails/index.json
-#: build/locale/src/navigation/views/MenuList.json
+#: build/locale/src/navigation/views/MenuList/MenuList.json
 msgctxt "dialog header"
 msgid "Delete Menu"
 msgstr ""
@@ -3283,7 +3373,7 @@ msgstr ""
 #. [menuListDeleteMenusHeader] - dialog header
 #. defaultMessage is:
 #. Delete Menus
-#: build/locale/src/navigation/views/MenuList.json
+#: build/locale/src/navigation/views/MenuList/MenuList.json
 msgctxt "dialog header"
 msgid "Delete Menus"
 msgstr ""
@@ -3304,10 +3394,10 @@ msgctxt "dialog header"
 msgid "Delete Page"
 msgstr ""
 
-#. [src.pages.views.2782958373] - dialog header
+#. [src.pages.views.PageList.2782958373] - dialog header
 #. defaultMessage is:
 #. Delete Pages
-#: build/locale/src/pages/views/PageList.json
+#: build/locale/src/pages/views/PageList/PageList.json
 msgctxt "dialog header"
 msgid "Delete Pages"
 msgstr ""
@@ -3378,14 +3468,14 @@ msgctxt "custom search delete, dialog header"
 msgid "Delete Search"
 msgstr ""
 
-#. [src.components.Filter.2173195312] - button
+#. [src.components.FilterBar.2173195312] - button
 #. defaultMessage is:
 #. Delete Search
-#. [src.components.TableFilter.2173195312] - button
+#. [src.components.SearchBar.2173195312] - button
 #. defaultMessage is:
 #. Delete Search
-#: build/locale/src/components/Filter/FilterSearch.json
-#: build/locale/src/components/TableFilter/FilterChips.json
+#: build/locale/src/components/FilterBar/FilterBar.json
+#: build/locale/src/components/SearchBar/SearchBar.json
 msgctxt "button"
 msgid "Delete Search"
 msgstr ""
@@ -3602,7 +3692,7 @@ msgstr ""
 #. [menuListDeletedMenu]
 #. defaultMessage is:
 #. Deleted menu
-#: build/locale/src/navigation/views/MenuList.json
+#: build/locale/src/navigation/views/MenuList/MenuList.json
 msgctxt "description"
 msgid "Deleted menu"
 msgstr ""
@@ -3641,13 +3731,21 @@ msgstr "Descrição"
 #: build/locale/src/configuration/index.json
 msgctxt "description"
 msgid "Determine attributes used to create product types"
-msgstr ""
+msgstr "Determine atributos usados para criar tipos de produtos"
 
 #. [src.productTypes.components.ProductTypeList.881286562] - product type
 #. defaultMessage is:
 #. Digital
 #: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
 msgctxt "product type"
+msgid "Digital"
+msgstr ""
+
+#. [src.productTypes.components.ProductTypeListPage.digital] - product
+#. defaultMessage is:
+#. Digital
+#: build/locale/src/productTypes/components/ProductTypeListPage/filters.json
+msgctxt "product"
 msgid "Digital"
 msgstr ""
 
@@ -3673,6 +3771,18 @@ msgstr ""
 #: build/locale/src/discounts/components/VoucherInfo/VoucherInfo.json
 msgctxt "description"
 msgid "Discount Code"
+msgstr ""
+
+#. [src.discounts.components.SaleListPage.type]
+#. defaultMessage is:
+#. Discount Type
+#. [src.discounts.components.VoucherListPage.type]
+#. defaultMessage is:
+#. Discount Type
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+msgctxt "description"
+msgid "Discount Type"
 msgstr ""
 
 #. [src.discounts.components.SaleType.3216816841] - percentage or fixed,
@@ -3827,7 +3937,7 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "description"
 msgid "E-mail Address"
-msgstr ""
+msgstr "Endereço de E-mail"
 
 #. [src.edit] - button
 #. defaultMessage is:
@@ -3843,7 +3953,7 @@ msgstr "Editar"
 #: build/locale/src/customers/components/CustomerAddressDialog/CustomerAddressDialog.json
 msgctxt "dialog title"
 msgid "Edit Address"
-msgstr ""
+msgstr "Editar Endereço "
 
 #. [src.plugins.components.PluginSecretFieldDialog.4269236107] - header
 #. defaultMessage is:
@@ -3867,7 +3977,7 @@ msgstr ""
 #: build/locale/src/navigation/components/MenuItemDialog/MenuItemDialog.json
 msgctxt "edit menu item, header"
 msgid "Edit Item"
-msgstr ""
+msgstr "Editar Item"
 
 #. [src.products.components.ProductImagePage.2546267317] - header
 #. defaultMessage is:
@@ -3875,7 +3985,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductImagePage/ProductImagePage.json
 msgctxt "header"
 msgid "Edit Photo"
-msgstr ""
+msgstr "Editar Foto"
 
 #. [src.shipping.components.ShippingZoneRateDialog.3934114933] - dialog header
 #. defaultMessage is:
@@ -3909,7 +4019,7 @@ msgstr ""
 #: build/locale/src/attributes/components/AttributeValueEditDialog/AttributeValueEditDialog.json
 msgctxt "edit attribute value"
 msgid "Edit Value"
-msgstr ""
+msgstr "Editar Valor"
 
 #. [src.shipping.components.ShippingZoneRateDialog.4152709923] - edit weight
 #. based shipping method, dialog header
@@ -4085,6 +4195,22 @@ msgid ""
 " system."
 msgstr ""
 
+#. [src.discounts.components.SaleListPage.expired] - sale status
+#. defaultMessage is:
+#. Expired
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+msgctxt "sale status"
+msgid "Expired"
+msgstr ""
+
+#. [src.discounts.components.VoucherListPage.expired] - voucher status
+#. defaultMessage is:
+#. Expired
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+msgctxt "voucher status"
+msgid "Expired"
+msgstr ""
+
 #. [src.collections.components.CollectionDetailsPage.2906897537] - switch
 #. button
 #. defaultMessage is:
@@ -4111,9 +4237,39 @@ msgctxt "search box label"
 msgid "Filter Countries"
 msgstr ""
 
+#. [src.attributes.components.AttributeListPage.filterableInDashboard] - use
+#. attribute in filtering
+#. defaultMessage is:
+#. Filterable in Dashboard
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+msgctxt "use attribute in filtering"
+msgid "Filterable in Dashboard"
+msgstr ""
+
+#. [src.attributes.components.AttributeListPage.filterableInStorefront] - use
+#. attribute in filtering
+#. defaultMessage is:
+#. Filterable in Storefront
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+msgctxt "use attribute in filtering"
+msgid "Filterable in Storefront"
+msgstr ""
+
+#. [src.components.Filter.996289613] - button
+#. defaultMessage is:
+#. Filters
+#: build/locale/src/components/Filter/Filter.json
+msgctxt "button"
+msgid "Filters"
+msgstr "Filtros"
+
+#. [src.components.Filter.996289613]
+#. defaultMessage is:
+#. Filters
 #. [src.components.FilterCard.996289613]
 #. defaultMessage is:
 #. Filters
+#: build/locale/src/components/Filter/FilterContent.json
 #: build/locale/src/components/FilterCard/FilterCard.json
 msgctxt "description"
 msgid "Filters"
@@ -4153,7 +4309,7 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "description"
 msgid "First Name"
-msgstr ""
+msgstr "Nome"
 
 #. [src.discounts.components.SaleType.46415128] - discount type
 #. defaultMessage is:
@@ -4169,6 +4325,18 @@ msgstr ""
 #: build/locale/src/discounts/components/VoucherTypes/VoucherTypes.json
 msgctxt "voucher discount type"
 msgid "Fixed Amount"
+msgstr ""
+
+#. [src.discounts.components.SaleListPage.fixed] - discount type
+#. defaultMessage is:
+#. Fixed amount
+#. [src.discounts.components.VoucherListPage.fixed] - discount type
+#. defaultMessage is:
+#. Fixed amount
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+msgctxt "discount type"
+msgid "Fixed amount"
 msgstr ""
 
 #. [src.taxes.components.CountryTaxesPage.2332795012] - tax rate
@@ -4214,21 +4382,8 @@ msgstr ""
 #. [src.fulfilled] - order status
 #. defaultMessage is:
 #. Fulfilled
-#. [src.orders.views.OrderList.fulfilled] - order status
-#. defaultMessage is:
-#. Fulfilled
 #: build/locale/src/misc.json
-#: build/locale/src/orders/views/OrderList/filters.json
 msgctxt "order status"
-msgid "Fulfilled"
-msgstr "Completo"
-
-#. [src.orders.components.OrderListFilter.1712863026] - order fulfillment
-#. status
-#. defaultMessage is:
-#. Fulfilled
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "order fulfillment status"
 msgid "Fulfilled"
 msgstr "Completo"
 
@@ -4358,7 +4513,7 @@ msgstr ""
 #: build/locale/src/home/components/HomeScreen.json
 msgctxt "header"
 msgid "Hello there, {userName}"
-msgstr ""
+msgstr "Olá, {userName}"
 
 #. [homeHeaderTextCaption] - subheader
 #. defaultMessage is:
@@ -4366,7 +4521,15 @@ msgstr ""
 #: build/locale/src/home/components/HomeHeader/HomeHeader.json
 msgctxt "subheader"
 msgid "Here is some information we gathered about your store"
-msgstr ""
+msgstr "Aqui estão algumas informações que coletamos sobre sua loja"
+
+#. [src.collections.components.CollectionListPage.hidden] - collection
+#. defaultMessage is:
+#. Hidden
+#: build/locale/src/collections/components/CollectionListPage/filters.json
+msgctxt "collection"
+msgid "Hidden"
+msgstr "Oculto"
 
 #. [src.components.VisibilityCard.77815154]
 #. defaultMessage is:
@@ -4376,19 +4539,11 @@ msgctxt "description"
 msgid "Hidden"
 msgstr "Oculto"
 
-#. [src.products.components.ProductListFilter.77815154] - product is hidden
+#. [src.products.components.ProductListPage.hidden] - product is hidden
 #. defaultMessage is:
 #. Hidden
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#: build/locale/src/products/components/ProductListPage/filters.json
 msgctxt "product is hidden"
-msgid "Hidden"
-msgstr "Oculto"
-
-#. [src.products.views.ProductList.hidden] - filter products by visibility
-#. defaultMessage is:
-#. Hidden
-#: build/locale/src/products/views/ProductList/filters.json
-msgctxt "filter products by visibility"
 msgid "Hidden"
 msgstr "Oculto"
 
@@ -4510,11 +4665,35 @@ msgctxt "section header"
 msgid "Images"
 msgstr "imagens"
 
+#. [src.plugins.components.PluginsListPage.deactivated] - plugin
+#. defaultMessage is:
+#. Inactive
+#: build/locale/src/plugins/components/PluginsListPage/filters.json
+msgctxt "plugin"
+msgid "Inactive"
+msgstr ""
+
+#. [src.services.components.ServiceListPage.deactivated] - service account
+#. defaultMessage is:
+#. Inactive
+#: build/locale/src/services/components/ServiceListPage/filters.json
+msgctxt "service account"
+msgid "Inactive"
+msgstr ""
+
 #. [src.staff.components.StaffList.1004218338] - staff member status
 #. defaultMessage is:
 #. Inactive
 #: build/locale/src/staff/components/StaffList/StaffList.json
 msgctxt "staff member status"
+msgid "Inactive"
+msgstr ""
+
+#. [src.webhooks.components.WebhooksListPage.inactive] - webhook
+#. defaultMessage is:
+#. Inactive
+#: build/locale/src/webhooks/components/WebhooksListPage/filters.json
+msgctxt "webhook"
 msgid "Inactive"
 msgstr ""
 
@@ -4593,6 +4772,14 @@ msgctxt "description"
 msgid "Items successfully fulfilled"
 msgstr ""
 
+#. [src.customers.components.CustomerListPage.joinDate] - customer
+#. defaultMessage is:
+#. Join Date
+#: build/locale/src/customers/components/CustomerListPage/filters.json
+msgctxt "customer"
+msgid "Join Date"
+msgstr ""
+
 #. [src.services.components.ServiceTokens.2446088470] - service account key
 #. defaultMessage is:
 #. Key
@@ -4635,37 +4822,13 @@ msgctxt "description"
 msgid "Languages"
 msgstr ""
 
-#. [src.orders.components.OrderListFilter.714411029]
-#. defaultMessage is:
-#. Last 30 Days
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "description"
-msgid "Last 30 Days"
-msgstr ""
-
-#. [src.orders.components.OrderListFilter.3053702458]
-#. defaultMessage is:
-#. Last 7 Days
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "description"
-msgid "Last 7 Days"
-msgstr ""
-
 #. [src.lastName]
 #. defaultMessage is:
 #. Last Name
 #: build/locale/src/intl.json
 msgctxt "description"
 msgid "Last Name"
-msgstr ""
-
-#. [src.orders.components.OrderListFilter.2292505663]
-#. defaultMessage is:
-#. Last Year
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "description"
-msgid "Last Year"
-msgstr ""
+msgstr "Sobrenome"
 
 #. [src.customers.components.CustomerStats.1135318032]
 #. defaultMessage is:
@@ -4822,7 +4985,7 @@ msgstr ""
 #: build/locale/src/configuration/index.json
 msgctxt "description"
 msgid "Manage how you ship out orders"
-msgstr ""
+msgstr "Gerencie como você enviará os pedidos"
 
 #. [configurationMenuTaxes]
 #. defaultMessage is:
@@ -4830,7 +4993,7 @@ msgstr ""
 #: build/locale/src/configuration/index.json
 msgctxt "description"
 msgid "Manage how your store charges tax"
-msgstr ""
+msgstr "Gerencie como sua loja cobrará impostos"
 
 #. [configurationMenuStaff]
 #. defaultMessage is:
@@ -4838,7 +5001,7 @@ msgstr ""
 #: build/locale/src/configuration/index.json
 msgctxt "description"
 msgid "Manage your employees and their permissions"
-msgstr ""
+msgstr "Gerencie seus funcionários e suas permissões"
 
 #. [src.orders.components.OrderMarkAsPaidDialog.4196844912] - dialog header
 #. defaultMessage is:
@@ -4979,6 +5142,14 @@ msgstr ""
 #: build/locale/src/configuration/index.json
 msgctxt "description"
 msgid "Miscellaneous"
+msgstr ""
+
+#. [src.customers.components.CustomerListPage.moneySpent] - customer
+#. defaultMessage is:
+#. Money Spent
+#: build/locale/src/customers/components/CustomerListPage/filters.json
+msgctxt "customer"
+msgid "Money Spent"
 msgstr ""
 
 #. [src.attributes.components.AttributeDetails.3334509011] - product attribute
@@ -5475,6 +5646,14 @@ msgctxt "description"
 msgid "No results"
 msgstr ""
 
+#. [src.components.Filter.2332404293] - search
+#. defaultMessage is:
+#. No results
+#: build/locale/src/components/Filter/FilterAutocompleteField.json
+msgctxt "search"
+msgid "No results"
+msgstr ""
+
 #. [src.components.MultiAutocompleteSelectField.4205644805]
 #. defaultMessage is:
 #. No results found
@@ -5509,7 +5688,7 @@ msgstr ""
 #: build/locale/src/discounts/components/SaleList/SaleList.json
 msgctxt "description"
 msgid "No sales found"
-msgstr "Nenhuma liquidação encontrada"
+msgstr "Nenhuma venda encontrada"
 
 #. [src.services.components.ServiceList.1342308051]
 #. defaultMessage is:
@@ -5812,6 +5991,14 @@ msgctxt "notes about customer, header"
 msgid "Notes"
 msgstr "Notas"
 
+#. [src.customers.components.CustomerListPage.numberOfOrders]
+#. defaultMessage is:
+#. Number of Orders
+#: build/locale/src/customers/components/CustomerListPage/filters.json
+msgctxt "description"
+msgid "Number of Orders"
+msgstr ""
+
 #. [src.discounts.components.VoucherValue.1492866942] - voucher application,
 #. switch button
 #. defaultMessage is:
@@ -5903,14 +6090,6 @@ msgstr ""
 #: build/locale/src/components/Navigator/NavigatorInput.json
 msgctxt "navigator placeholder"
 msgid "Order Number"
-msgstr ""
-
-#. [src.orders.components.OrderListFilter.2222765704]
-#. defaultMessage is:
-#. Order Status
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "description"
-msgid "Order Status"
 msgstr ""
 
 #. [src.orders.components.OrderHistory.1230178536] - order history message
@@ -6121,20 +6300,12 @@ msgid ""
 "{keyboardShortcut} shortcut."
 msgstr ""
 
-#. [src.products.components.ProductListFilter.1640493122] - product status
+#. [src.products.components.ProductListPage.outOfStock] - product status
 #. defaultMessage is:
 #. Out Of Stock
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#: build/locale/src/products/components/ProductListPage/filters.json
 msgctxt "product status"
 msgid "Out Of Stock"
-msgstr ""
-
-#. [src.products.views.ProductList.outOfStock] - filter products by stock
-#. defaultMessage is:
-#. Out of stock
-#: build/locale/src/products/views/ProductList/filters.json
-msgctxt "filter products by stock"
-msgid "Out of stock"
 msgstr ""
 
 #. [src.orders.components.OrderPayment.353147224] - order payment
@@ -6176,23 +6347,6 @@ msgstr "Páginas"
 msgctxt "description"
 msgid "Pages"
 msgstr "Páginas"
-
-#. [src.orders.components.OrderListFilter.210276526] - order fulfillment
-#. status
-#. defaultMessage is:
-#. Partially Fulfilled
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "order fulfillment status"
-msgid "Partially Fulfilled"
-msgstr ""
-
-#. [src.orders.views.OrderList.partiallyFulfilled] - order status
-#. defaultMessage is:
-#. Partially Fulfilled
-#: build/locale/src/orders/views/OrderList/filters.json
-msgctxt "order status"
-msgid "Partially Fulfilled"
-msgstr ""
 
 #. [src.partiallyFulfilled] - order status
 #. defaultMessage is:
@@ -6334,10 +6488,18 @@ msgctxt "order history message"
 msgid "Payment was voided"
 msgstr ""
 
+#. [src.discounts.components.SaleListPage.percentage] - discount type
+#. defaultMessage is:
+#. Percentage
 #. [src.discounts.components.SaleType.3688224049] - discount type
 #. defaultMessage is:
 #. Percentage
+#. [src.discounts.components.VoucherListPage.percentage] - discount type
+#. defaultMessage is:
+#. Percentage
+#: build/locale/src/discounts/components/SaleListPage/filters.json
 #: build/locale/src/discounts/components/SaleType/SaleType.json
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
 msgctxt "discount type"
 msgid "Percentage"
 msgstr ""
@@ -6417,6 +6579,14 @@ msgstr ""
 #: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
 msgctxt "product type"
 msgid "Physical"
+msgstr ""
+
+#. [src.orders.components.OrderListPage.placed] - order
+#. defaultMessage is:
+#. Placed
+#: build/locale/src/orders/components/OrderListPage/filters.json
+msgctxt "order"
+msgid "Placed"
 msgstr ""
 
 #. [src.staff.components.StaffPreferences.2162129531]
@@ -6570,13 +6740,13 @@ msgctxt "product unit price"
 msgid "Price"
 msgstr "Preço"
 
-#. [src.products.components.ProductListFilter.1134347598]
+#. [src.products.components.ProductListPage.price]
 #. defaultMessage is:
 #. Price
 #. [productVariantCreatePricesPriceInputLabel]
 #. defaultMessage is:
 #. Price
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#: build/locale/src/products/components/ProductListPage/filters.json
 #: build/locale/src/products/components/ProductVariantCreateDialog/ProductVariantCreatePrices.json
 msgctxt "description"
 msgid "Price"
@@ -6629,30 +6799,6 @@ msgstr "Preço"
 #: build/locale/src/shipping/components/ShippingZoneRates/ShippingZoneRates.json
 msgctxt "price based shipping methods, section header"
 msgid "Price Based Rates"
-msgstr ""
-
-#. [src.products.views.ProductList.priceFrom] - filter by price
-#. defaultMessage is:
-#. Price from {price}
-#: build/locale/src/products/views/ProductList/filters.json
-msgctxt "filter by price"
-msgid "Price from {price}"
-msgstr ""
-
-#. [src.products.views.ProductList.priceIs] - filter by price
-#. defaultMessage is:
-#. Price is {price}
-#: build/locale/src/products/views/ProductList/filters.json
-msgctxt "filter by price"
-msgid "Price is {price}"
-msgstr ""
-
-#. [src.products.views.ProductList.priceTo] - filter by price
-#. defaultMessage is:
-#. Price to {price}
-#: build/locale/src/products/views/ProductList/filters.json
-msgctxt "filter by price"
-msgid "Price to {price}"
 msgstr ""
 
 #. [src.products.components.ProductVariantCreateDialog.705096461] - variant
@@ -6749,7 +6895,7 @@ msgstr ""
 #: build/locale/src/configuration/index.json
 msgctxt "description"
 msgid "Product Settings"
-msgstr ""
+msgstr "Configurações do Produto"
 
 #. [src.discounts.components.DiscountProducts.4257289053]
 #. defaultMessage is:
@@ -6777,7 +6923,7 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "product types section name"
 msgid "Product Types"
-msgstr ""
+msgstr "Tipos de Produto"
 
 #. [src.translations.components.TranslationsEntitiesListPage.765385638]
 #. defaultMessage is:
@@ -6785,7 +6931,7 @@ msgstr ""
 #: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
 msgctxt "description"
 msgid "Product Types"
-msgstr ""
+msgstr "Tipos de Produto"
 
 #. [src.products.views.2899821092]
 #. defaultMessage is:
@@ -6957,10 +7103,10 @@ msgctxt "publish collections"
 msgid "Publish"
 msgstr "Publicado"
 
-#. [src.pages.views.1547167026] - publish page, button
+#. [src.pages.views.PageList.1547167026] - publish page, button
 #. defaultMessage is:
 #. Publish
-#: build/locale/src/pages/views/PageList.json
+#: build/locale/src/pages/views/PageList/PageList.json
 msgctxt "publish page, button"
 msgid "Publish"
 msgstr "Publicado"
@@ -6973,10 +7119,10 @@ msgctxt "publish product, button"
 msgid "Publish"
 msgstr "Publicado"
 
-#. [src.pages.views.2321087286] - dialog header
+#. [src.pages.views.PageList.2321087286] - dialog header
 #. defaultMessage is:
 #. Publish Pages
-#: build/locale/src/pages/views/PageList.json
+#: build/locale/src/pages/views/PageList/PageList.json
 msgctxt "dialog header"
 msgid "Publish Pages"
 msgstr ""
@@ -7038,6 +7184,18 @@ msgctxt "collection is published"
 msgid "Published"
 msgstr "Publicado "
 
+#. [src.collections.components.CollectionListPage.published] - collection
+#. defaultMessage is:
+#. Published
+#. [src.components.Navigator.modes.collectionPublished] - collection
+#. defaultMessage is:
+#. Published
+#: build/locale/src/collections/components/CollectionListPage/filters.json
+#: build/locale/src/components/Navigator/modes/messages.json
+msgctxt "collection"
+msgid "Published"
+msgstr "Publicado "
+
 #. [src.collections.components.CollectionProducts.3640454975] - product is
 #. published
 #. defaultMessage is:
@@ -7052,14 +7210,6 @@ msgctxt "product is published"
 msgid "Published"
 msgstr "Publicado "
 
-#. [src.components.Navigator.modes.collectionPublished] - collection
-#. defaultMessage is:
-#. Published
-#: build/locale/src/components/Navigator/modes/messages.json
-msgctxt "collection"
-msgid "Published"
-msgstr "Publicado "
-
 #. [src.pages.components.PageList.3640454975] - page status
 #. defaultMessage is:
 #. Published
@@ -7068,18 +7218,10 @@ msgctxt "page status"
 msgid "Published"
 msgstr "Publicado "
 
-#. [src.products.views.ProductList.published] - filter products by visibility
-#. defaultMessage is:
-#. Published
-#: build/locale/src/products/views/ProductList/filters.json
-msgctxt "filter products by visibility"
-msgid "Published"
-msgstr "Publicado "
-
-#. [src.pages.views.2543350562] - notification
+#. [src.pages.views.PageList.2543350562] - notification
 #. defaultMessage is:
 #. Published pages
-#: build/locale/src/pages/views/PageList.json
+#: build/locale/src/pages/views/PageList/PageList.json
 msgctxt "notification"
 msgid "Published pages"
 msgstr ""
@@ -7135,18 +7277,6 @@ msgctxt "description"
 msgid "Quick Pick"
 msgstr ""
 
-#. [src.orders.components.OrderListFilter.2545228781]
-#. defaultMessage is:
-#. Range
-#. [src.products.components.ProductListFilter.2545228781]
-#. defaultMessage is:
-#. Range
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-msgctxt "description"
-msgid "Range"
-msgstr "Extensão"
-
 #. [src.shipping.components.ShippingZoneRateDialog.3213611593] - shipping
 #. method
 #. defaultMessage is:
@@ -7172,18 +7302,6 @@ msgstr ""
 #: build/locale/src/shipping/components/ShippingZoneRateDialog/ShippingZoneRateDialog.json
 msgctxt "shipping method price"
 msgid "Rate Price"
-msgstr ""
-
-#. [src.orders.components.OrderListFilter.2415661583] - order status
-#. defaultMessage is:
-#. Ready to Capture
-#. [src.orders.views.OrderList.readyToCapture] - order status
-#. defaultMessage is:
-#. Ready to Capture
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-#: build/locale/src/orders/views/OrderList/filters.json
-msgctxt "order status"
-msgid "Ready to Capture"
 msgstr ""
 
 #. [src.customers.components.CustomerOrders.1899831623] - section header
@@ -7262,10 +7380,10 @@ msgctxt "description"
 msgid "Removed page"
 msgstr ""
 
-#. [src.pages.views.1080715663] - notification
+#. [src.pages.views.PageList.1080715663] - notification
 #. defaultMessage is:
 #. Removed pages
-#: build/locale/src/pages/views/PageList.json
+#: build/locale/src/pages/views/PageList/PageList.json
 msgctxt "notification"
 msgid "Removed pages"
 msgstr ""
@@ -7405,7 +7523,7 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "sales section name"
 msgid "Sales"
-msgstr "Liquidações"
+msgstr "Vendas"
 
 #. [src.translations.components.TranslationsEntitiesListPage.487083593]
 #. defaultMessage is:
@@ -7413,7 +7531,7 @@ msgstr "Liquidações"
 #: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
 msgctxt "description"
 msgid "Sales"
-msgstr "Liquidações"
+msgstr "Vendas"
 
 #. [src.orders.components.OrderCustomer.3912924864] - billing address
 #. defaultMessage is:
@@ -7431,24 +7549,24 @@ msgctxt "button"
 msgid "Save"
 msgstr "Salvar"
 
-#. [src.components.Filter.1514415736] - button
-#. defaultMessage is:
-#. Save Custom Search
-#. [src.components.TableFilter.1514415736] - button
-#. defaultMessage is:
-#. Save Custom Search
-#: build/locale/src/components/Filter/FilterSearch.json
-#: build/locale/src/components/TableFilter/FilterChips.json
-msgctxt "button"
-msgid "Save Custom Search"
-msgstr ""
-
 #. [src.components.SaveFilterTabDialog.1514415736] - save filter tab, header
 #. defaultMessage is:
 #. Save Custom Search
 #: build/locale/src/components/SaveFilterTabDialog/SaveFilterTabDialog.json
 msgctxt "save filter tab, header"
 msgid "Save Custom Search"
+msgstr ""
+
+#. [src.components.FilterBar.3268463180] - button
+#. defaultMessage is:
+#. Save Search
+#. [src.components.SearchBar.3268463180] - button
+#. defaultMessage is:
+#. Save Search
+#: build/locale/src/components/FilterBar/FilterBar.json
+#: build/locale/src/components/SearchBar/SearchBar.json
+msgctxt "button"
+msgid "Save Search"
 msgstr ""
 
 #. [src.products.components.ProductVariantCreatePage.2853608829] - button
@@ -7465,6 +7583,22 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "description"
 msgid "Saved changes"
+msgstr ""
+
+#. [src.discounts.components.SaleListPage.scheduled] - sale status
+#. defaultMessage is:
+#. Scheduled
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+msgctxt "sale status"
+msgid "Scheduled"
+msgstr ""
+
+#. [src.discounts.components.VoucherListPage.scheduled] - voucher status
+#. defaultMessage is:
+#. Scheduled
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+msgctxt "voucher status"
+msgid "Scheduled"
 msgstr ""
 
 #. [src.attributes.components.AttributeListPage.3916653510]
@@ -7674,6 +7808,14 @@ msgctxt "description"
 msgid "Search Page"
 msgstr ""
 
+#. [src.plugins.components.PluginsListPage.3233248823]
+#. defaultMessage is:
+#. Search Plugins...
+#: build/locale/src/plugins/components/PluginsListPage/PluginsListPage.json
+msgctxt "description"
+msgid "Search Plugins..."
+msgstr ""
+
 #. [src.translations.components.TranslationsEntitiesListPage.2105464697]
 #. defaultMessage is:
 #. Search Product
@@ -7706,10 +7848,10 @@ msgctxt "description"
 msgid "Search Products"
 msgstr ""
 
-#. [src.products.components.ProductListFilter.3550330425]
+#. [src.products.components.ProductListPage.3550330425]
 #. defaultMessage is:
 #. Search Products...
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#: build/locale/src/products/components/ProductListPage/ProductListPage.json
 msgctxt "description"
 msgid "Search Products..."
 msgstr ""
@@ -7847,7 +7989,7 @@ msgstr ""
 #: build/locale/src/components/Navigator/modes/messages.json
 msgctxt "navigator catalog mode description"
 msgid "Search in Catalog"
-msgstr ""
+msgstr "Pesquisar no Catálogo"
 
 #. [src.components.Navigator.2935523260] - navigator section header
 #. defaultMessage is:
@@ -7855,7 +7997,7 @@ msgstr ""
 #: build/locale/src/components/Navigator/Navigator.json
 msgctxt "navigator section header"
 msgid "Search in Catalog"
-msgstr ""
+msgstr "Pesquisar no Catálogo"
 
 #. [src.components.Navigator.2935523260] - navigator placeholder
 #. defaultMessage is:
@@ -7863,7 +8005,7 @@ msgstr ""
 #: build/locale/src/components/Navigator/NavigatorInput.json
 msgctxt "navigator placeholder"
 msgid "Search in Catalog"
-msgstr ""
+msgstr "Pesquisar no Catálogo"
 
 #. [src.components.Navigator.1809988825] - navigator section header
 #. defaultMessage is:
@@ -7890,18 +8032,6 @@ msgctxt "webhook"
 msgid "Secrect Key"
 msgstr ""
 
-#. [src.components.Filter.2230339185]
-#. defaultMessage is:
-#. Select Filter...
-#. [src.components.Filter.2230339185]
-#. defaultMessage is:
-#. Select Filter...
-#: build/locale/src/components/Filter/FilterContent.json
-#: build/locale/src/components/Filter/FilterElement.json
-msgctxt "description"
-msgid "Select Filter..."
-msgstr ""
-
 #. [src.products.components.ProductVariantCreateDialog.2478977538] - attribute
 #. values, variant creation step
 #. defaultMessage is:
@@ -7919,29 +8049,13 @@ msgctxt "description"
 msgid "Select a specific variant image from product images"
 msgstr ""
 
-#. [src.orders.components.OrderListPage.3524904717]
-#. defaultMessage is:
-#. Select all orders where:
-#: build/locale/src/orders/components/OrderListPage/OrderListPage.json
-msgctxt "description"
-msgid "Select all orders where:"
-msgstr ""
-
-#. [src.products.components.ProductListFilter.1421689426]
-#. defaultMessage is:
-#. Select all products where:
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-msgctxt "description"
-msgid "Select all products where:"
-msgstr ""
-
 #. [src.components.TableHead.868570480]
 #. defaultMessage is:
 #. Selected {number} items
 #: build/locale/src/components/TableHead/TableHead.json
 msgctxt "description"
 msgid "Selected {number} items"
-msgstr ""
+msgstr "Selecionado {number} itens"
 
 #. [src.staff.components.StaffPreferences.1332294025]
 #. defaultMessage is:
@@ -7965,7 +8079,7 @@ msgstr "Substituir preço de venda"
 #: build/locale/src/components/Timeline/Timeline.json
 msgctxt "add order note, button"
 msgid "Send"
-msgstr ""
+msgstr "Enviar"
 
 #. [src.auth.components.ResetPasswordPage.3663311080] - password reset, button
 #. defaultMessage is:
@@ -7973,7 +8087,7 @@ msgstr ""
 #: build/locale/src/auth/components/ResetPasswordPage/ResetPasswordPage.json
 msgctxt "password reset, button"
 msgid "Send Instructions"
-msgstr ""
+msgstr "Enviar Instruções"
 
 #. [src.staff.components.StaffAddMemberDialog.449055697] - button
 #. defaultMessage is:
@@ -7981,7 +8095,7 @@ msgstr ""
 #: build/locale/src/staff/components/StaffAddMemberDialog/StaffAddMemberDialog.json
 msgctxt "button"
 msgid "Send invite"
-msgstr ""
+msgstr "Enviar convite"
 
 #. [src.webhooks.components.WebhooksList.2487865635] - webhook service account
 #. defaultMessage is:
@@ -8085,6 +8199,14 @@ msgctxt "voucher discount"
 msgid "Shipment"
 msgstr "Envio"
 
+#. [src.productTypes.components.ProductTypeListPage.shippable] - product
+#. defaultMessage is:
+#. Shippable
+#: build/locale/src/productTypes/components/ProductTypeListPage/filters.json
+msgctxt "product"
+msgid "Shippable"
+msgstr ""
+
 #. [src.orders.components.OrderPayment.1325966144] - order shipping method
 #. name
 #. defaultMessage is:
@@ -8125,7 +8247,7 @@ msgstr "Envio"
 #: build/locale/src/customers/components/CustomerAddresses/CustomerAddresses.json
 msgctxt "subsection header"
 msgid "Shipping Address"
-msgstr ""
+msgstr "Endereço de Entrega"
 
 #. [src.orders.components.OrderCustomer.2758581442]
 #. defaultMessage is:
@@ -8133,7 +8255,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 msgctxt "description"
 msgid "Shipping Address"
-msgstr ""
+msgstr "Endereço de Entrega"
 
 #. [src.shipping.components.ShippingZonesList.120574110] - sort shipping
 #. methods by zone, section header
@@ -8150,7 +8272,7 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "shipping section name"
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Métodos de Envio"
 
 #. [src.shipping.components.ShippingWeightUnitForm.549146363]
 #. defaultMessage is:
@@ -8216,6 +8338,14 @@ msgctxt "description"
 msgid "Show gross prices to customers in the storefront"
 msgstr "Mostrar preço bruto a clientes na loja"
 
+#. [src.components.Filter.4190318230] - search results
+#. defaultMessage is:
+#. Show more
+#: build/locale/src/components/Filter/FilterAutocompleteField.json
+msgctxt "search results"
+msgid "Show more"
+msgstr ""
+
 #. [src.products.components.ProductOrganization.150865454] - product is not
 #. configurable
 #. defaultMessage is:
@@ -8251,7 +8381,7 @@ msgstr ""
 #: build/locale/src/pages/components/PageSlug/PageSlug.json
 msgctxt "page internal name"
 msgid "Slug"
-msgstr "slug"
+msgstr "Slug"
 
 #. [src.productTypes.components.ProductTypeAttributes.3478065224] - attribute
 #. internal name
@@ -8260,7 +8390,7 @@ msgstr "slug"
 #: build/locale/src/productTypes/components/ProductTypeAttributes/ProductTypeAttributes.json
 msgctxt "attribute internal name"
 msgid "Slug"
-msgstr "slug"
+msgstr "Slug"
 
 #. [src.taxes.components.CountryTaxesPage.1260218997] - tax rate
 #. defaultMessage is:
@@ -8302,22 +8432,6 @@ msgctxt "description"
 msgid "Sorry, your username and/or password are incorrect. Please try again."
 msgstr ""
 
-#. [src.orders.components.OrderListFilter.789263812]
-#. defaultMessage is:
-#. Specific Date
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "description"
-msgid "Specific Date"
-msgstr ""
-
-#. [src.products.components.ProductListFilter.2844426531]
-#. defaultMessage is:
-#. Specific Price
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-msgctxt "description"
-msgid "Specific Price"
-msgstr ""
-
 #. [src.discounts.products] - voucher discount
 #. defaultMessage is:
 #. Specific products
@@ -8340,7 +8454,7 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "staff section name"
 msgid "Staff Members"
-msgstr ""
+msgstr "Membros da Equipe"
 
 #. [src.configuration.3140151600]
 #. defaultMessage is:
@@ -8348,7 +8462,7 @@ msgstr ""
 #: build/locale/src/configuration/index.json
 msgctxt "description"
 msgid "Staff Settings"
-msgstr ""
+msgstr "Configurações da Equipe"
 
 #. [src.taxes.components.CountryTaxesPage.2482229874] - tax rate
 #. defaultMessage is:
@@ -8382,6 +8496,22 @@ msgctxt "description"
 msgid "Start typing to begin search..."
 msgstr ""
 
+#. [src.discounts.components.SaleListPage.started] - sale start date
+#. defaultMessage is:
+#. Started
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+msgctxt "sale start date"
+msgid "Started"
+msgstr ""
+
+#. [src.discounts.components.VoucherListPage.started] - voucher start date
+#. defaultMessage is:
+#. Started
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+msgctxt "voucher start date"
+msgid "Started"
+msgstr ""
+
 #. [src.discounts.components.SaleList.47059407] - sale start date
 #. defaultMessage is:
 #. Starts
@@ -8407,12 +8537,27 @@ msgctxt "order status"
 msgid "Status"
 msgstr "Status"
 
-#. [src.orders.components.OrderListFilter.1756106276] - order fulfillment
-#. status
+#. [src.discounts.components.SaleListPage.status] - sale status
 #. defaultMessage is:
 #. Status
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "order fulfillment status"
+#: build/locale/src/discounts/components/SaleListPage/filters.json
+msgctxt "sale status"
+msgid "Status"
+msgstr "Status"
+
+#. [src.discounts.components.VoucherListPage.status] - voucher status
+#. defaultMessage is:
+#. Status
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+msgctxt "voucher status"
+msgid "Status"
+msgstr "Status"
+
+#. [src.status]
+#. defaultMessage is:
+#. Status
+#: build/locale/src/intl.json
+msgctxt "description"
 msgid "Status"
 msgstr "Status"
 
@@ -8421,14 +8566,6 @@ msgstr "Status"
 #. Status
 #: build/locale/src/plugins/components/PluginInfo/PluginInfo.json
 msgctxt "plugin status"
-msgid "Status"
-msgstr "Status"
-
-#. [src.products.components.ProductListFilter.1756106276] - product status
-#. defaultMessage is:
-#. Status
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-msgctxt "product status"
 msgid "Status"
 msgstr "Status"
 
@@ -8441,13 +8578,13 @@ msgctxt "product variant status"
 msgid "Status"
 msgstr "Status"
 
-#. [src.products.components.ProductListFilter.3841616483] - product stock
+#. [src.staff.components.StaffListPage.status] - staff member's account
 #. defaultMessage is:
-#. Stock
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-msgctxt "product stock"
-msgid "Stock"
-msgstr "estoque"
+#. Status
+#: build/locale/src/staff/components/StaffListPage/filters.json
+msgctxt "staff member's account"
+msgid "Status"
+msgstr "Status"
 
 #. [src.products.components.ProductVariantCreateDialog.3841616483] - variant
 #. stock, header
@@ -8483,11 +8620,11 @@ msgctxt "product variant stock, section header"
 msgid "Stock"
 msgstr "estoque"
 
-#. [src.products.components.ProductListFilter.3645081351]
+#. [src.products.components.ProductListPage.quantity] - product
 #. defaultMessage is:
 #. Stock quantity
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-msgctxt "description"
+#: build/locale/src/products/components/ProductListPage/filters.json
+msgctxt "product"
 msgid "Stock quantity"
 msgstr ""
 
@@ -8968,6 +9105,14 @@ msgctxt "email sender"
 msgid "This will be visible as \"from\" name"
 msgstr ""
 
+#. [src.discounts.components.VoucherListPage.timesUsed] - voucher
+#. defaultMessage is:
+#. Times used
+#: build/locale/src/discounts/components/VoucherListPage/filters.json
+msgctxt "voucher"
+msgid "Times used"
+msgstr ""
+
 #. [src.pages.components.PageInfo.1124600214] - page title
 #. defaultMessage is:
 #. Title
@@ -9081,7 +9226,7 @@ msgstr "Total"
 #: build/locale/src/orders/components/OrderFulfillment/OrderFulfillment.json
 msgctxt "description"
 msgid "Tracking Number: {trackingNumber}"
-msgstr ""
+msgstr "Código de Rastreamento: {trackingNumber}"
 
 #. [src.orders.components.OrderFulfillmentDialog.3252172269] - fulfillment
 #. group
@@ -9189,7 +9334,7 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "translations section name"
 msgid "Translations"
-msgstr ""
+msgstr "Traduções"
 
 #. [src.translations.components.TranslationsEntitiesListPage.2460580333] -
 #. header
@@ -9198,7 +9343,7 @@ msgstr ""
 #: build/locale/src/translations/components/TranslationsEntitiesListPage/TranslationsEntitiesListPage.json
 msgctxt "header"
 msgid "Translations to {language}"
-msgstr ""
+msgstr "Traduções para {language}"
 
 #. [src.categories.components.CategoryProductList.1952810469] - product type
 #. defaultMessage is:
@@ -9226,6 +9371,15 @@ msgstr ""
 #. Type
 #: build/locale/src/productTypes/components/ProductTypeList/ProductTypeList.json
 msgctxt "product type is either simple or configurable"
+msgid "Type"
+msgstr ""
+
+#. [src.productTypes.components.ProductTypeListPage.type] - product type is
+#. digital or physical
+#. defaultMessage is:
+#. Type
+#: build/locale/src/productTypes/components/ProductTypeListPage/filters.json
+msgctxt "product type is digital or physical"
 msgid "Type"
 msgstr ""
 
@@ -9434,7 +9588,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductVariants/ProductVariants.json
 msgctxt "product variant status"
 msgid "Unavailable"
-msgstr ""
+msgstr "Indisponível"
 
 #. [src.undo] - button
 #. defaultMessage is:
@@ -9442,26 +9596,13 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "button"
 msgid "Undo"
-msgstr ""
+msgstr "Desfazer"
 
 #. [src.unfulfilled] - order status
 #. defaultMessage is:
 #. Unfulfilled
-#. [src.orders.views.OrderList.unfulfilled] - order status
-#. defaultMessage is:
-#. Unfulfilled
 #: build/locale/src/misc.json
-#: build/locale/src/orders/views/OrderList/filters.json
 msgctxt "order status"
-msgid "Unfulfilled"
-msgstr "Incompleto"
-
-#. [src.orders.components.OrderListFilter.1751787272] - order fulfillment
-#. status
-#. defaultMessage is:
-#. Unfulfilled
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "order fulfillment status"
 msgid "Unfulfilled"
 msgstr "Incompleto"
 
@@ -9489,10 +9630,10 @@ msgctxt "unpublish collections"
 msgid "Unpublish"
 msgstr "Remover"
 
-#. [src.pages.views.2237014112] - unpublish page, button
+#. [src.pages.views.PageList.2237014112] - unpublish page, button
 #. defaultMessage is:
 #. Unpublish
-#: build/locale/src/pages/views/PageList.json
+#: build/locale/src/pages/views/PageList/PageList.json
 msgctxt "unpublish page, button"
 msgid "Unpublish"
 msgstr "Remover"
@@ -9505,10 +9646,10 @@ msgctxt "unpublish product, button"
 msgid "Unpublish"
 msgstr "Remover"
 
-#. [src.pages.views.158565417] - dialog header
+#. [src.pages.views.PageList.158565417] - dialog header
 #. defaultMessage is:
 #. Unpublish Pages
-#: build/locale/src/pages/views/PageList.json
+#: build/locale/src/pages/views/PageList/PageList.json
 msgctxt "dialog header"
 msgid "Unpublish Pages"
 msgstr ""
@@ -9744,6 +9885,15 @@ msgctxt "check to require attribute to have value"
 msgid "Value Required"
 msgstr ""
 
+#. [src.attributes.components.AttributeListPage.valueRequired] - attribute
+#. value is required
+#. defaultMessage is:
+#. Value Required
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+msgctxt "attribute value is required"
+msgid "Value Required"
+msgstr ""
+
 #. [src.attributes.views.AttributeDetails.423042761] - attribute value deleted
 #. defaultMessage is:
 #. Value deleted
@@ -9768,7 +9918,7 @@ msgstr ""
 #: build/locale/src/translations/components/TranslationsProductTypesPage/TranslationsProductTypesPage.json
 msgctxt "attribute values"
 msgid "Value {number}"
-msgstr ""
+msgstr "Valor {number}"
 
 #. [src.products.components.ProductAttributes.1207761269] - attribute values
 #. defaultMessage is:
@@ -9805,6 +9955,15 @@ msgctxt "section header"
 msgid "Variant Attributes"
 msgstr ""
 
+#. [src.attributes.components.AttributeListPage.isVariantOnly] - attribute can
+#. be used only in variants
+#. defaultMessage is:
+#. Variant Only
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
+msgctxt "attribute can be used only in variants"
+msgid "Variant Only"
+msgstr ""
+
 #. [src.products.views.2279302139]
 #. defaultMessage is:
 #. Variant removed
@@ -9832,7 +9991,7 @@ msgstr "Variações"
 #: build/locale/src/orders/components/OrderCustomer/OrderCustomer.json
 msgctxt "link"
 msgid "View Profile"
-msgstr ""
+msgstr "Ver Perfil"
 
 #. [src.customers.components.CustomerOrders.3029139173] - button
 #. defaultMessage is:
@@ -9840,7 +9999,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerOrders/CustomerOrders.json
 msgctxt "button"
 msgid "View all orders"
-msgstr ""
+msgstr "Ver todos os pedidos"
 
 #. [configurationPluginsPages]
 #. defaultMessage is:
@@ -9882,10 +10041,10 @@ msgctxt "page status"
 msgid "Visibility"
 msgstr "Visibilidade"
 
-#. [src.products.components.ProductListFilter.1459686496] - product visibility
+#. [src.products.components.ProductListPage.visibility] - product visibility
 #. defaultMessage is:
 #. Visibility
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#: build/locale/src/products/components/ProductListPage/filters.json
 msgctxt "product visibility"
 msgid "Visibility"
 msgstr "Visibilidade"
@@ -9906,17 +10065,22 @@ msgctxt "description"
 msgid "Visible"
 msgstr ""
 
-#. [src.products.components.ProductListFilter.643174786] - product is visible
+#. [src.products.components.ProductListPage.visible] - product is visible
 #. defaultMessage is:
 #. Visible
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
+#: build/locale/src/products/components/ProductListPage/filters.json
 msgctxt "product is visible"
 msgid "Visible"
 msgstr ""
 
+#. [src.attributes.components.AttributeListPage.visibleInStorefront] -
+#. attribute
+#. defaultMessage is:
+#. Visible on Product Page in Storefront
 #. [src.attributes.components.AttributeProperties.3876764312] - attribute
 #. defaultMessage is:
 #. Visible on Product Page in Storefront
+#: build/locale/src/attributes/components/AttributeListPage/filters.json
 #: build/locale/src/attributes/components/AttributeProperties/AttributeProperties.json
 msgctxt "attribute"
 msgid "Visible on Product Page in Storefront"
@@ -10122,7 +10286,7 @@ msgstr ""
 #: build/locale/src/intl.json
 msgctxt "description"
 msgid "Yes"
-msgstr "sim"
+msgstr "Sim"
 
 #. [src.staff.components.StaffPassword.1274006906]
 #. defaultMessage is:
@@ -10160,6 +10324,22 @@ msgctxt "account status"
 msgid "active"
 msgstr "ativo"
 
+#. [src.components.Filter.2779594451] - filter range separator
+#. defaultMessage is:
+#. and
+#: build/locale/src/components/Filter/FilterContent.json
+msgctxt "filter range separator"
+msgid "and"
+msgstr ""
+
+#. [src.components.Filter.773313536] - is filter range or value
+#. defaultMessage is:
+#. between
+#: build/locale/src/components/Filter/FilterContent.json
+msgctxt "is filter range or value"
+msgid "between"
+msgstr ""
+
 #. [src.productTypes.components.ProductTypeListPage.3479705616] - button
 #. defaultMessage is:
 #. create product type
@@ -10192,29 +10372,13 @@ msgctxt "order does not require shipping"
 msgid "does not apply"
 msgstr ""
 
-#. [src.orders.components.OrderListFilter.3477667254]
+#. [src.components.Filter.2683154806] - is filter range or value
 #. defaultMessage is:
-#. equals
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "description"
-msgid "equals"
+#. equal to
+#: build/locale/src/components/Filter/FilterContent.json
+msgctxt "is filter range or value"
+msgid "equal to"
 msgstr ""
-
-#. [src.products.components.ProductListFilter.3477667254] - product price
-#. defaultMessage is:
-#. equals
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-msgctxt "product price"
-msgid "equals"
-msgstr ""
-
-#. [src.components.Filter.2755325844]
-#. defaultMessage is:
-#. from
-#: build/locale/src/components/Filter/FilterElement.json
-msgctxt "description"
-msgid "from"
-msgstr "a partir de"
 
 #. [src.components.MoneyRange.3729849657] - money
 #. defaultMessage is:
@@ -10238,24 +10402,7 @@ msgstr ""
 #: build/locale/src/services/components/ServiceList/ServiceList.json
 msgctxt "account status"
 msgid "inactive"
-msgstr ""
-
-#. [src.orders.components.OrderListFilter.1438173764] - date is set as
-#. defaultMessage is:
-#. is set as
-#: build/locale/src/orders/components/OrderListFilter/OrderListFilter.json
-msgctxt "date is set as"
-msgid "is set as"
-msgstr ""
-
-#. [src.products.components.ProductListFilter.1438173764] - product status is
-#. set as
-#. defaultMessage is:
-#. is set as
-#: build/locale/src/products/components/ProductListFilter/ProductListFilter.json
-msgctxt "product status is set as"
-msgid "is set as"
-msgstr ""
+msgstr "inativo"
 
 #. [src.webhooks.components.WebhookInfo.3809115222] - webhook secret key help
 #. text
@@ -10300,14 +10447,6 @@ msgstr ""
 msgctxt "product"
 msgid "since {date}"
 msgstr ""
-
-#. [src.components.Filter.152217691]
-#. defaultMessage is:
-#. to
-#: build/locale/src/components/Filter/FilterElement.json
-msgctxt "description"
-msgid "to"
-msgstr "até"
 
 #. [src.components.MoneyRange.12301532] - money
 #. defaultMessage is:
@@ -10424,7 +10563,7 @@ msgstr ""
 #: build/locale/src/translations/components/TranslationsEntitiesList/TranslationsEntitiesList.json
 msgctxt "translation progress"
 msgid "{current} of {max}"
-msgstr ""
+msgstr "{current} de {max}"
 
 #. [src.components.Navigator.modes.customerWithName]
 #. defaultMessage is:
@@ -10457,7 +10596,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
 msgctxt "customer details, header"
 msgid "{fullName} Details"
-msgstr ""
+msgstr "Detalhes de {fullName}"
 
 #. [src.customers.components.CustomerAddressListPage.1090326769] - customer's
 #. address book, header
@@ -10466,7 +10605,7 @@ msgstr ""
 #: build/locale/src/customers/components/CustomerAddressListPage/CustomerAddressListPage.json
 msgctxt "customer's address book, header"
 msgid "{fullName}'s Address Book"
-msgstr ""
+msgstr "Catálogo de Endereços de {fullName}"
 
 #. [src.components.LanguageSwitch.4150219184] - button
 #. defaultMessage is:
@@ -10482,7 +10621,7 @@ msgstr ""
 #: build/locale/src/components/SeoForm/SeoForm.json
 msgctxt "character limit"
 msgid "{numberOfCharacters} of {maxCharacters} characters"
-msgstr ""
+msgstr "{numberOfCharacters} de{maxCharacters} caracteres"
 
 #. [src.translations.components.TranslationFields.1308081812]
 #. defaultMessage is:
@@ -10507,7 +10646,7 @@ msgstr ""
 #: build/locale/src/products/components/ProductAttributes/ProductAttributes.json
 msgctxt "number of product attributes"
 msgid "{number} Attributes"
-msgstr ""
+msgstr "{number} Atributos"
 
 #. [src.components.CountryList.2460766407] - number of countries
 #. defaultMessage is:
@@ -10523,7 +10662,7 @@ msgstr ""
 #: build/locale/src/plugins/components/PluginsDetailsPage/PluginsDetailsPage.json
 msgctxt "header"
 msgid "{pluginName} Details"
-msgstr ""
+msgstr "{pluginName} Detalhes"
 
 #. [src.orders.components.OrderPayment.2183023165] - ordered products
 #. defaultMessage is:
@@ -10531,7 +10670,7 @@ msgstr ""
 #: build/locale/src/orders/components/OrderPayment/OrderPayment.json
 msgctxt "ordered products"
 msgid "{quantity} items"
-msgstr ""
+msgstr "{quantity} itens"
 
 #. [src.components.Weight.2781622322] - weight
 #. defaultMessage is:
@@ -10547,4 +10686,4 @@ msgstr ""
 #: build/locale/src/webhooks/components/WebhooksDetailsPage/WebhooksDetailsPage.json
 msgctxt "header"
 msgid "{webhookName} Details"
-msgstr ""
+msgstr "{webhookName} Detalhes"

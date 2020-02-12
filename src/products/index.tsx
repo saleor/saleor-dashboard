@@ -34,6 +34,7 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
       ...qs,
       categories: getArrayQueryParam(qs.categories),
       collections: getArrayQueryParam(qs.collections),
+      ids: getArrayQueryParam(qs.ids),
       productTypes: getArrayQueryParam(qs.productTypes)
     },
     ProductListUrlSortField
