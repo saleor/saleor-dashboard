@@ -8,6 +8,8 @@ import ProductUpdatePage, {
   ProductUpdatePageProps
 } from "@saleor/products/components/ProductUpdatePage";
 import { product as productFixture } from "@saleor/products/fixtures";
+import { ProductUpdatePageFormData } from "@saleor/products/utils/data";
+import { formError } from "@saleor/storybook/misc";
 import Decorator from "../../Decorator";
 
 const product = productFixture(placeholderImage);
@@ -82,5 +84,24 @@ storiesOf("Views / Products / Product edit", module)
         ...props.product,
         attributes: []
       }}
+    />
+  ))
+  .add("form errors", () => (
+    <ProductUpdatePage
+      {...props}
+      errors={([
+        "basePrice",
+        "category",
+        "chargeTaxes",
+        "collections",
+        "description",
+        "isPublished",
+        "name",
+        "publicationDate",
+        "seoDescription",
+        "seoTitle",
+        "sku",
+        "stockQuantity"
+      ] as Array<keyof ProductUpdatePageFormData>).map(formError)}
     />
   ));

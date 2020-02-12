@@ -206,10 +206,16 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                 () => searchCollectionsOpts.data.search.edges,
                 []
               ).map(edge => edge.node);
-              const errors = maybe(
-                () => updateProduct.opts.data.productUpdate.errors,
-                []
-              );
+              const errors = [
+                ...maybe(
+                  () => updateProduct.opts.data.productUpdate.errors,
+                  []
+                ),
+                ...maybe(
+                  () => updateSimpleProduct.opts.data.productUpdate.errors,
+                  []
+                )
+              ];
 
               return (
                 <>
