@@ -91,11 +91,11 @@ class AuthProvider extends React.Component<
         );
       }
     } else {
-      if (maybe(() => tokenVerifyOpts.data.tokenVerify === null, false)) {
+      if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
         this.logout();
       } else {
-        if (maybe(() => !!tokenVerifyOpts.data.tokenVerify.user, false)) {
-          const user = tokenVerifyOpts.data.tokenVerify.user;
+        const user = maybe(() => tokenVerifyOpts.data.tokenVerify.user);
+        if (!!user) {
           this.setState({ user });
         }
       }
