@@ -72,7 +72,7 @@
   },
   "homeProductListCardOrders": {
     "context": "number of ordered products",
-    "string": "{amount, plural,\n                              one {One ordered}\n                              other {{amount} Ordered}\n                            }"
+    "string": "{amount, plural,one {One ordered}other {{amount} Ordered}}"
   },
   "homeProductsListCardHeader": {
     "context": "header",
@@ -157,7 +157,7 @@
     "string": "Delete Menu"
   },
   "menuListDeleteMenusContent": {
-    "string": "Are you sure you want to delete {counter,plural,one{this menu} other{{displayQuantity} menus}}?"
+    "string": "{counter,plural,one{Are you sure you want to delete this menu?} other{Are you sure you want to delete {displayQuantity} menus?}}"
   },
   "menuListDeleteMenusHeader": {
     "context": "dialog header",
@@ -2197,8 +2197,8 @@
     "context": "switch button",
     "string": "Release all stock allocated to these orders"
   },
-  "src_dot_orders_dot_components_dot_OrderBulkCancelDialog_dot_3011571869": {
-    "string": "Are you sure you want to cancel {counter,plural,one{this order} other{{displayQuantity} orders}}?"
+  "src_dot_orders_dot_components_dot_OrderBulkCancelDialog_dot_4224885638": {
+    "string": "{counter,plural,one{Are you sure you want to cancel this order?} other{Are you sure you want to cancel {displayQuantity} orders?}}"
   },
   "src_dot_orders_dot_components_dot_OrderCancelDialog_dot_3981375672": {
     "string": "Are you sure you want to cancel order #{orderNumber}?"
@@ -2797,15 +2797,15 @@
     "context": "dialog header",
     "string": "Delete Order Drafts"
   },
-  "src_dot_orders_dot_views_dot_OrderDraftList_dot_1398914741": {
-    "context": "dialog content",
-    "string": "Are you sure you want to delete {counter,plural,one{this order draft} other{{displayQuantity} orderDrafts}}?"
-  },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1648805446": {
     "string": "Deleted draft orders"
   },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1872939752": {
     "string": "Order draft succesfully created"
+  },
+  "src_dot_orders_dot_views_dot_OrderDraftList_dot_2074422036": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
   },
   "src_dot_orders_dot_views_dot_OrderList_dot_1136302661": {
     "string": "Orders cancelled"
@@ -2903,10 +2903,6 @@
     "context": "notification",
     "string": "Removed pages"
   },
-  "src_dot_pages_dot_views_dot_PageList_dot_1265636351": {
-    "context": "dialog content",
-    "string": "Are you sure you want to unpublish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
-  },
   "src_dot_pages_dot_views_dot_PageList_dot_1547167026": {
     "context": "publish page, button",
     "string": "Publish"
@@ -2914,6 +2910,10 @@
   "src_dot_pages_dot_views_dot_PageList_dot_158565417": {
     "context": "dialog header",
     "string": "Unpublish Pages"
+  },
+  "src_dot_pages_dot_views_dot_PageList_dot_1640740095": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to unpublish this page?} other{Are you sure you want to unpublish {displayQuantity} pages?}}"
   },
   "src_dot_pages_dot_views_dot_PageList_dot_2237014112": {
     "context": "unpublish page, button",
@@ -2923,6 +2923,14 @@
     "context": "dialog header",
     "string": "Publish Pages"
   },
+  "src_dot_pages_dot_views_dot_PageList_dot_2454977063": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
+  },
+  "src_dot_pages_dot_views_dot_PageList_dot_2494122225": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to delete this page?} other{Are you sure you want to delete {displayQuantity} pages?}}"
+  },
   "src_dot_pages_dot_views_dot_PageList_dot_2543350562": {
     "context": "notification",
     "string": "Published pages"
@@ -2930,14 +2938,6 @@
   "src_dot_pages_dot_views_dot_PageList_dot_2782958373": {
     "context": "dialog header",
     "string": "Delete Pages"
-  },
-  "src_dot_pages_dot_views_dot_PageList_dot_64432778": {
-    "context": "dialog content",
-    "string": "Are you sure you want to publish {counter,plural,one{this page} other{{displayQuantity} pages}}?"
-  },
-  "src_dot_pages_dot_views_dot_PageList_dot_808633099": {
-    "context": "dialog content",
-    "string": "Are you sure you want to delete {counter,plural,one{this page} other{{displayQuantity} pages}}?"
   },
   "src_dot_paid": {
     "context": "payment status",
@@ -3101,9 +3101,9 @@
     "context": "section header",
     "string": "Variant Attributes"
   },
-  "src_dot_productTypes_dot_components_dot_ProductTypeBulkAttributeUnassignDialog_dot_1465383223": {
+  "src_dot_productTypes_dot_components_dot_ProductTypeBulkAttributeUnassignDialog_dot_2646729060": {
     "context": "unassign multiple attributes from product type",
-    "string": "Are you sure you want to unassign {counter,plural,one{this attribute} other{{attributeQuantity} attributes}} from {productTypeName}?"
+    "string": "{counter,plural,one{Are you sure you want to unassign this attribute from {productTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {productTypeName}?}}"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeBulkAttributeUnassignDialog_dot_766918870": {
     "context": "dialog header",
@@ -3199,13 +3199,13 @@
   "src_dot_productTypes_dot_views_dot_3822478981": {
     "string": "Successfully created product type"
   },
-  "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_2787668922": {
-    "context": "dialog content",
-    "string": "Are you sure you want to delete {counter,plural,one{this product type} other{{displayQuantity} product types}}?"
-  },
   "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_4080551769": {
     "context": "dialog header",
     "string": "Delete Product Types"
+  },
+  "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_4269954457": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to delete this product type?} other{Are you sure you want to delete {displayQuantity} product types?}}"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_3512959355": {
     "string": "Product type deleted"
@@ -3632,13 +3632,17 @@
     "context": "window title",
     "string": "Create variant"
   },
+  "src_dot_products_dot_views_dot_ProductList_dot_1204353135": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
+  },
   "src_dot_products_dot_views_dot_ProductList_dot_1547167026": {
     "context": "publish product, button",
     "string": "Publish"
   },
-  "src_dot_products_dot_views_dot_ProductList_dot_1752069132": {
+  "src_dot_products_dot_views_dot_ProductList_dot_2036051956": {
     "context": "dialog content",
-    "string": "Are you sure you want to unpublish {counter,plural,one{this product} other{{displayQuantity} products}}?"
+    "string": "{counter,plural,one{Are you sure you want to unpublish this product?} other{Are you sure you want to unpublish {displayQuantity} products?}}"
   },
   "src_dot_products_dot_views_dot_ProductList_dot_2237014112": {
     "context": "unpublish product, button",
@@ -3652,17 +3656,17 @@
     "context": "dialog header",
     "string": "Unpublish Products"
   },
+  "src_dot_products_dot_views_dot_ProductList_dot_3518737068": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to publish this product?} other{Are you sure you want to publish {displayQuantity} products?}}"
+  },
   "src_dot_products_dot_views_dot_ProductList_dot_400629795": {
     "context": "dialog header",
     "string": "Delete Products"
   },
-  "src_dot_products_dot_views_dot_ProductList_dot_4099592898": {
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_1177237881": {
     "context": "dialog content",
-    "string": "Are you sure you want to publish {counter,plural,one{this product} other{{displayQuantity} products}}?"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_785143617": {
-    "context": "dialog content",
-    "string": "Are you sure you want to delete {counter,plural,one{this product} other{{displayQuantity} products}}?"
+    "string": "{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_1454532689": {
     "context": "dialog header",
@@ -3671,10 +3675,6 @@
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",
     "string": "Are you sure you want to delete {name}?"
-  },
-  "src_dot_products_dot_views_dot_ProductUpdate_dot_408018316": {
-    "context": "dialog content",
-    "string": "Are you sure you want to delete {counter,plural,one{this variant} other{{displayQuantity} variants}}?"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_4108890645": {
     "string": "Product removed"
@@ -4057,9 +4057,9 @@
     "context": "dialog header",
     "string": "Delete Shipping Zones"
   },
-  "src_dot_shipping_dot_views_dot_226833304": {
+  "src_dot_shipping_dot_views_dot_725201918": {
     "context": "dialog content",
-    "string": "Are you sure you want to delete {counter,plural,one{this shipping zone} other{{displayQuantity} shipping zones}}?"
+    "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
   },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_1010705153": {
     "context": "dialog header",
