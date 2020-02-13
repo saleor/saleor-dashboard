@@ -4,8 +4,7 @@ const {
   default: manageTranslations
 } = require("react-intl-translations-manager");
 
-const { dotSeparator } = require("../src/components/Locale/Locale.tsx");
-
+const dotSeparator = "_dot_";
 const sortKeys = true;
 const translationsDirectory = "locale";
 

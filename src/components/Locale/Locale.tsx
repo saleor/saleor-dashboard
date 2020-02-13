@@ -185,7 +185,7 @@ export const localeNames: Record<Locale, string> = {
   [Locale.ZH_HANT]: "繁體中文"
 };
 
-export const dotSeparator = "_dot_";
+const dotSeparator = "_dot_";
 const sepRegExp = new RegExp(dotSeparator, "g");
 
 function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
