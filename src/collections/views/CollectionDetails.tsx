@@ -309,7 +309,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                   >
                     <DialogContentText>
                       <FormattedMessage
-                        defaultMessage="Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?"
+                        defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
                         values={{
                           counter: maybe(() => params.ids.length),
                           displayQuantity: (

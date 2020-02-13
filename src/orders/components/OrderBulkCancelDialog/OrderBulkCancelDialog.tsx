@@ -38,7 +38,7 @@ const OrderBulkCancelDialog: React.FC<OrderBulkCancelDialogProps> = ({
     >
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="Are you sure you want to cancel {counter,plural,one{this order} other{{displayQuantity} orders}}?"
+          defaultMessage="{counter,plural,one{Are you sure you want to cancel this order?} other{Are you sure you want to cancel {displayQuantity} orders?}}"
           values={{
             counter: numberOfOrders,
             displayQuantity: <strong>{numberOfOrders}</strong>

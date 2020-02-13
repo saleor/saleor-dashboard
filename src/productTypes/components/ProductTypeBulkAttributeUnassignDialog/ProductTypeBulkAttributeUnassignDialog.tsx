@@ -14,9 +14,7 @@ export interface ProductTypeBulkAttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const ProductTypeBulkAttributeUnassignDialog: React.FC<
-  ProductTypeBulkAttributeUnassignDialogProps
-> = ({
+const ProductTypeBulkAttributeUnassignDialog: React.FC<ProductTypeBulkAttributeUnassignDialogProps> = ({
   attributeQuantity,
   confirmButtonState,
   open,
@@ -39,7 +37,7 @@ const ProductTypeBulkAttributeUnassignDialog: React.FC<
     >
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="Are you sure you want to unassign {counter,plural,one{this attribute} other{{attributeQuantity} attributes}} from {productTypeName}?"
+          defaultMessage="{counter,plural,one{Are you sure you want to unassign this attribute from {productTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {productTypeName}?}}"
           description="unassign multiple attributes from product type"
           values={{
             attributeQuantity: <strong>{attributeQuantity}</strong>,

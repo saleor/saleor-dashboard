@@ -422,7 +422,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               {canOpenBulkActionDialog && (
                                 <DialogContentText>
                                   <FormattedMessage
-                                    defaultMessage="Are you sure you want to unassign {counter,plural,one{this category} other{{displayQuantity} categories}}?"
+                                    defaultMessage="{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
                                     description="dialog content"
                                     values={{
                                       counter: params.ids.length,
@@ -455,7 +455,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               {canOpenBulkActionDialog && (
                                 <DialogContentText>
                                   <FormattedMessage
-                                    defaultMessage="Are you sure you want to unassign {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
+                                    defaultMessage="{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
                                     description="dialog content"
                                     values={{
                                       counter: params.ids.length,
@@ -487,7 +487,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               {canOpenBulkActionDialog && (
                                 <DialogContentText>
                                   <FormattedMessage
-                                    defaultMessage="Are you sure you want to unassign {counter,plural,one{this product} other{{displayQuantity} products}}?"
+                                    defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
                                     description="dialog content"
                                     values={{
                                       counter: params.ids.length,

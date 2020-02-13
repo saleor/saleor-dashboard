@@ -70,10 +70,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                 ) : (
                   <Typography>
                     <FormattedMessage
-                      defaultMessage="{amount, plural,
-                  one {One order}
-                  other {{amount} Orders}
-                } are ready to fulfill"
+                      defaultMessage="{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}"
                       id="homeNotificationTableOrders"
                       values={{
                         amount: <strong>{ordersToFulfill}</strong>
@@ -100,10 +97,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                 ) : (
                   <Typography>
                     <FormattedMessage
-                      defaultMessage="{amount, plural,
-                  one {One payment}
-                  other {{amount} Payments}
-                } to capture"
+                      defaultMessage="{amount, plural,one {One payment to capture}other {{amount} Payments to capture}}"
                       id="homeNotificationTablePayments"
                       values={{
                         amount: <strong>{ordersToCapture}</strong>
@@ -135,10 +129,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                 ) : (
                   <Typography>
                     <FormattedMessage
-                      defaultMessage="{amount, plural,
-                  one {One product}
-                  other {{amount} Products}
-                } out of stock"
+                      defaultMessage="{amount, plural,one {One product out of stock}other {{amount} Products out of stock}}"
                       id="homeNotificationTableProducts"
                       values={{
                         amount: <strong>{productsOutOfStock}</strong>
