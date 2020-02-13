@@ -47,8 +47,8 @@ module.exports = api => {
   plugins.push("macros");
 
   return {
-    presets,
+    ignore,
     plugins,
-    ignore
+    presets,
   };
 };
