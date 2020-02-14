@@ -112,6 +112,61 @@ const useStyles = makeStyles(
   { name: "ProductVariants" }
 );
 
+function getAvailabilityLabel(
+  intl: IntlShape,
+  warehouse: string,
+  variant: ProductDetails_product_variants,
+  numAvailable: number
+): string {
+  const variantStock = variant.stock.find(s => s.warehouse.id === warehouse);
+
+  if (!!warehouse) {
+    if (!!variantStock) {
+      if (variantStock.quantity > 0) {
+        return intl.formatMessage(
+          {
+            defaultMessage:
+              "{stockQuantity,plural,other{{stockQuantity} available}}",
+            description: "product variant inventory"
+          },
+          {
+            stockQuantity: variantStock.quantity
+          }
+        );
+      } else {
+        return intl.formatMessage({
+          defaultMessage: "Unavailable",
+          description: "product variant inventory"
+        });
+      }
+    } else {
+      return intl.formatMessage({
+        defaultMessage: "Not stocked",
+        description: "product variant inventory"
+      });
+    }
+  } else {
+    if (numAvailable > 0) {
+      return intl.formatMessage(
+        {
+          defaultMessage:
+            "{numLocations,plural,one{{numAvailable} available at {numLocations} location} other{{numAvailable} available at {numLocations} locations}}",
+          description: "product variant inventory"
+        },
+        {
+          numAvailable,
+          numLocations: variant.stock.length
+        }
+      );
+    } else {
+      return intl.formatMessage({
+        defaultMessage: "Unavailable in all locations",
+        description: "product variant inventory"
+      });
+    }
+  }
+}
+
 interface ProductVariantsProps extends ListActions {
   disabled: boolean;
   variants: ProductDetails_product_variants[];
@@ -140,7 +195,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
   const classes = useStyles(props);
 
   const intl = useIntl();
-  const [warehouse, setWarehouse] = React.useState(null);
+  const [warehouse, setWarehouse] = React.useState<string>(null);
   const hasVariants = maybe(() => variants.length > 0, true);
 
   return (
@@ -243,9 +298,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                 variant && variant.stock
                   ? variant.stock.reduce((acc, s) => acc + s.quantity, 0)
                   : null;
-              const variantStock = variant.stock.find(
-                s => s.warehouse.id === warehouse
-              );
 
               return (
                 <TableRow
@@ -290,42 +342,13 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   >
                     {numAvailable === null ? (
                       <Skeleton />
-                    ) : warehouse === null ? (
-                      numAvailable === 0 ? (
-                        <FormattedMessage
-                          defaultMessage="Unavailable in all locations"
-                          description="product variant inventory"
-                        />
-                      ) : (
-                        <FormattedMessage
-                          defaultMessage="{numAvailable} available at {numLocations} {numLocations,plural,one{location} other{locations}}"
-                          description="product variant inventory"
-                          values={{
-                            numAvailable,
-                            numLocations: variant.stock.length
-                          }}
-                        />
-                      )
-                    ) : !!variantStock ? (
-                      variantStock.quantity > 0 ? (
-                        <FormattedMessage
-                          defaultMessage="{stockQuantity} available"
-                          description="product variant inventory"
-                          values={{
-                            stockQuantity: variantStock.quantity
-                          }}
-                        />
-                      ) : (
-                        <FormattedMessage
-                          defaultMessage="Unavailable"
-                          description="product variant inventory"
-                        />
-                      )
                     ) : (
-                      <FormattedMessage
-                        defaultMessage="Not stocked"
-                        description="product variant inventory"
-                      />
+                      getAvailabilityLabel(
+                        intl,
+                        warehouse,
+                        variant,
+                        numAvailable
+                      )
                     )}
                   </TableCell>
                 </TableRow>
