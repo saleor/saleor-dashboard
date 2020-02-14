@@ -233,7 +233,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
                           >
                             <DialogContentText>
                               <FormattedMessage
-                                defaultMessage="Are you sure you want to delete {counter,plural,one{this shipping zone} other{{displayQuantity} shipping zones}}?"
+                                defaultMessage="{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
                                 description="dialog content"
                                 values={{
                                   counter: maybe(() => params.ids.length),

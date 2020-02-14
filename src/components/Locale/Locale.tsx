@@ -89,7 +89,11 @@ export enum Locale {
   ZH_HANT = "zh-hant"
 }
 
-type LocaleMessages = Record<string, string>;
+interface StructuredMessage {
+  context?: string;
+  string: string;
+}
+type LocaleMessages = Record<string, StructuredMessage>;
 const localeData: Record<Locale, LocaleMessages> = {
   [Locale.AR]: locale_AR,
   [Locale.AZ]: locale_AZ,
@@ -181,6 +185,19 @@ export const localeNames: Record<Locale, string> = {
   [Locale.ZH_HANT]: "繁體中文"
 };
 
+const dotSeparator = "_dot_";
+const sepRegExp = new RegExp(dotSeparator, "g");
+
+function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
+  if (messages) {
+    const keyValueMessages: Record<string, string> = {};
+    return Object.entries(messages).reduce((acc, [id, msg]) => {
+      acc[id.replace(sepRegExp, ".")] = msg.string;
+      return acc;
+    }, keyValueMessages);
+  }
+}
+
 export function getMatchingLocale(languages: readonly string[]): Locale {
   const localeEntries = Object.entries(Locale);
 
@@ -218,7 +235,7 @@ const LocaleProvider: React.FC = ({ children }) => {
     <IntlProvider
       defaultLocale={defaultLocale}
       locale={locale}
-      messages={localeData[locale]}
+      messages={getKeyValueJson(localeData[locale])}
       onError={err => {
         if (!err.includes("[React Intl] Missing message: ")) {
           console.error(err);

@@ -298,7 +298,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             >
               <DialogContentText>
                 <FormattedMessage
-                  defaultMessage="Are you sure you want to delete {counter,plural,one{this category} other{{displayQuantity} categories}}?"
+                  defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
                   values={{
                     counter: maybe(() => params.ids.length),
                     displayQuantity: (
@@ -328,7 +328,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             >
               <DialogContentText>
                 <FormattedMessage
-                  defaultMessage="Are you sure you want to delete {counter,plural,one{this product} other{{displayQuantity} products}}?"
+                  defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
                   values={{
                     counter: maybe(() => params.ids.length),
                     displayQuantity: (

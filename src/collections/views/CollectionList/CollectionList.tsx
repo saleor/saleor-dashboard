@@ -260,7 +260,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
               >
                 <DialogContentText>
                   <FormattedMessage
-                    defaultMessage="Are you sure you want to publish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
+                    defaultMessage="{counter,plural,one{Are you sure you want to publish this collection?} other{Are you sure you want to publish {displayQuantity} collections?}}"
                     values={{
                       counter: maybe(() => params.ids.length),
                       displayQuantity: (
@@ -293,7 +293,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
               >
                 <DialogContentText>
                   <FormattedMessage
-                    defaultMessage="Are you sure you want to unpublish {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
+                    defaultMessage="{counter,plural,one{Are you sure you want to unpublish this collection?} other{Are you sure you want to unpublish {displayQuantity} collections?}}"
                     values={{
                       counter: maybe(() => params.ids.length),
                       displayQuantity: (
@@ -325,7 +325,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
               >
                 <DialogContentText>
                   <FormattedMessage
-                    defaultMessage="Are you sure you want to delete {counter,plural,one{this collection} other{{displayQuantity} collections}}?"
+                    defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
                     values={{
                       counter: maybe(() => params.ids.length),
                       displayQuantity: (

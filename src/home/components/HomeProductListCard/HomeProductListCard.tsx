@@ -99,10 +99,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                       </Typography>
                       <Typography color={"textSecondary"}>
                         <FormattedMessage
-                          defaultMessage="{amount, plural,
-                              one {One ordered}
-                              other {{amount} Ordered}
-                            }"
+                          defaultMessage="{amount, plural,one {One ordered}other {{amount} Ordered}}"
                           description="number of ordered products"
                           id="homeProductListCardOrders"
                           values={{
