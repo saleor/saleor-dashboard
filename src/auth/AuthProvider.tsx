@@ -6,6 +6,7 @@ import {
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
 import { MutationFunction, MutationResult } from "react-apollo";
+import { maybe } from "@saleor/misc";
 import { TypedTokenAuthMutation, TypedVerifyTokenMutation } from "./mutations";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { User } from "./types/User";
@@ -90,9 +91,13 @@ class AuthProvider extends React.Component<
         );
       }
     } else {
-      if (tokenVerifyOpts.data && tokenVerifyOpts.data.tokenVerify.user) {
-        const user = tokenVerifyOpts.data.tokenVerify.user;
-        this.setState({ user });
+      if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
+        this.logout();
+      } else {
+        const user = maybe(() => tokenVerifyOpts.data.tokenVerify.user);
+        if (!!user) {
+          this.setState({ user });
+        }
       }
     }
   }
