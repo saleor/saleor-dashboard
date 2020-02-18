@@ -51,6 +51,7 @@ const useStyles = makeStyles(
   }),
   { name: "PermissionGroupList" }
 );
+const numberOfColumns = 4;
 
 interface PermissionGroupListProps
   extends ListProps,
@@ -59,8 +60,6 @@ interface PermissionGroupListProps
   permissionGroups: PermissionGroupList_permissionGroups_edges_node[];
   onDelete: (id: string) => void;
 }
-
-const numberOfColumns = 4;
 
 const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
   const {
@@ -107,10 +106,10 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
           />
         </TableCellHeader>
         <TableCellHeader className={classes.colMembers} textAlign="right">
-          <FormattedMessage defaultMessage="Members" description="TODO" />
+          <FormattedMessage defaultMessage="Members" />
         </TableCellHeader>
         <TableCell className={classes.colActions}>
-          <FormattedMessage defaultMessage="Actions" description="TODO" />
+          <FormattedMessage defaultMessage="Actions" />
         </TableCell>
       </TableHead>
       <TableFooter>

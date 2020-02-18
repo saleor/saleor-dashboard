@@ -19,9 +19,7 @@ import {
   renderCollection
 } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
-// import { MembersListUrlSortField } from "@saleor/staff/urls";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-// import { getArrowDirection } from "@saleor/utils/sort";
 import { PermissionGroupDetails_permissionGroup_users } from "../../types/PermissionGroupDetails";
 const useStyles = makeStyles(
   theme => ({
@@ -86,29 +84,13 @@ const MembersList: React.FC<MembersListProps> = props => {
     <ResponsiveTable>
       <TableHead>
         <TableRow>
-          <TableCellHeader
-            // direction={
-            //   sort.sort === MembersListUrlSortField.name
-            //     ? getArrowDirection(sort.asc)
-            //     : undefined
-            // }
-            // arrowPosition="right"
-            // onClick={() => onSort(MembersListUrlSortField.name)}
-            className={classes.wideColumn}
-          >
+          <TableCellHeader className={classes.wideColumn}>
             <FormattedMessage
               defaultMessage="Name"
               description="staff member full name"
             />
           </TableCellHeader>
-          <TableCellHeader
-          // direction={
-          //   sort.sort === MembersListUrlSortField.email
-          //     ? getArrowDirection(sort.asc)
-          //     : undefined
-          // }
-          // onClick={() => onSort(MembersListUrlSortField.email)}
-          >
+          <TableCellHeader>
             <FormattedMessage defaultMessage="Email Address" />
           </TableCellHeader>
         </TableRow>

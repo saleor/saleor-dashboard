@@ -991,6 +991,11 @@ export interface PageTranslationInput {
   contentJson?: any | null;
 }
 
+export interface PermissionGroupCreateInput {
+  name: string;
+  permissions?: PermissionEnum[] | null;
+}
+
 export interface PermissionGroupFilterInput {
   search?: string | null;
 }
@@ -1233,6 +1238,10 @@ export interface UserCreateInput {
 export interface UserSortingInput {
   direction: OrderDirection;
   field: UserSortField;
+}
+
+export interface UsersInput {
+  users: string[];
 }
 
 export interface VoucherFilterInput {

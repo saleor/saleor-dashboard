@@ -9,12 +9,14 @@ import { WindowTitle } from "../components/WindowTitle";
 import {
   permissionGroupListPath,
   permissionGroupDetailsPath,
+  permissionGroupAddPath,
   PermissionGroupListUrlQueryParams,
   PermissionGroupListUrlSortField,
   PermissionGroupDetailsUrlQueryParams
 } from "./urls";
 import PermissionGroupListComponent from "./views/PermissionGroupList";
 import PermissionGroupDetailsComponent from "./views/PermissionGroupDetails";
+import PermissionGroupCreate from "./views/PermissionGroupCreate";
 
 const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({
   location
@@ -56,6 +58,10 @@ const Component = () => {
           exact
           path={permissionGroupListPath}
           component={permissionGroupList}
+        />
+        <Route
+          path={permissionGroupAddPath}
+          component={PermissionGroupCreate}
         />
         <Route
           path={permissionGroupDetailsPath(":id")}

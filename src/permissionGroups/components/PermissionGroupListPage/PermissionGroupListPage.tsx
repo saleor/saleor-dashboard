@@ -34,7 +34,7 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = ({
       <AppHeader onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </AppHeader>
-      <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>
+      <PageHeader title={intl.formatMessage(sectionNames.permissionGroups)}>
         <Button color="primary" variant="contained" onClick={onAdd}>
           <FormattedMessage
             defaultMessage="create permission group"

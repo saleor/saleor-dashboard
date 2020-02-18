@@ -14,6 +14,7 @@ import ProductTypes from "@saleor/icons/ProductTypes";
 import ShippingMethods from "@saleor/icons/ShippingMethods";
 import SiteSettings from "@saleor/icons/SiteSettings";
 import StaffMembers from "@saleor/icons/StaffMembers";
+import PermissionGroups from "@saleor/icons/PermissionGroups";
 import Taxes from "@saleor/icons/Taxes";
 import Webhooks from "@saleor/icons/Webhooks";
 import { sectionNames } from "@saleor/intl";
@@ -109,7 +110,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
               "Manage your permission groups and their permissions",
             id: "configurationMenuPermissionGroups"
           }),
-          icon: <StaffMembers fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <PermissionGroups fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_STAFF,
           title: intl.formatMessage(sectionNames.permissionGroups),
           url: permissionGroupListUrl()

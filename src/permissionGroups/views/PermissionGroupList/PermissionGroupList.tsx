@@ -1,11 +1,9 @@
 import React from "react";
-// import urlJoin from "url-join";
 
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 
-// import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -17,6 +15,8 @@ import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import PermissionGroupBulkDeleteDialog from "@saleor/permissionGroups/components/permissionGroupBulkDeleteDialog";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { buttonMessages } from "@saleor/intl";
+
 import PermissionGroupListPage from "../../components/PermissionGroupListPage";
 
 import { usePermissionGroupListQuery } from "../../queries";
@@ -28,7 +28,6 @@ import {
   PermissionGroupListUrlDialog
 } from "../../urls";
 import { getSortQueryVariables } from "./sort";
-
 interface PermissionGroupListProps {
   params: PermissionGroupListUrlQueryParams;
 }
@@ -102,13 +101,13 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
             color="primary"
             onClick={() => openModal("remove", { ids: listElements })}
           >
-            Remove
+            {buttonMessages.delete}
           </Button>
         }
       />
       <PermissionGroupBulkDeleteDialog
-        onConfirm={() => undefined}
-        confirmButtonState="default"
+        onConfirm={() => undefined} // TODO: Bulk mutation is not available
+        confirmButtonState={"default"}
         quantity={listElements.length}
         open={params.action === "remove"}
         onClose={closeModal}

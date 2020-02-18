@@ -1,20 +1,19 @@
 import React from "react";
 import { useIntl } from "react-intl";
 
-import Container from "@saleor/components/Container";
-import AccountPermissions from "@saleor/components/AccountPermissions";
-import Grid from "@saleor/components/Grid";
-import Form from "@saleor/components/Form";
-import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
+import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { PermissionEnum } from "@saleor/types/globalTypes";
+import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
+import { UserError } from "@saleor/types";
+import AccountPermissions from "@saleor/components/AccountPermissions";
+import Container from "@saleor/components/Container";
+import Form from "@saleor/components/Form";
+import Grid from "@saleor/components/Grid";
+import SaveButtonBar from "@saleor/components/SaveButtonBar";
 
+import AppHeader from "@saleor/components/AppHeader";
+import { sectionNames } from "@saleor/intl";
 import PermissionGroupInfo from "../PermissionGroupInfo";
-
-export interface PermissionGroupCreatePageProps {
-  disabled: boolean;
-  permissions: ShopInfo_shop_permissions[];
-  onBack: () => void;
-}
 
 export interface PermissionGroupCreatePageFormData {
   name: string;
@@ -30,16 +29,37 @@ const initialForm: PermissionGroupCreatePageFormData = {
   permissions: []
 };
 
+export interface PermissionGroupCreatePageProps {
+  disabled: boolean;
+  errors: UserError[];
+  permissions: ShopInfo_shop_permissions[];
+  saveButtonBarState: ConfirmButtonTransitionState;
+  onBack: () => void;
+  onSubmit(data: PermissionGroupCreatePageFormData);
+}
+
 const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
   disabled,
-  permissions
+  permissions,
+  onBack,
+  onSubmit,
+  saveButtonBarState,
+  errors: userErrors
 }) => {
   const intl = useIntl();
 
   return (
-    <Form initial={initialForm}>
-      {({ data, change }) => (
+    <Form
+      initial={initialForm}
+      onSubmit={onSubmit}
+      errors={userErrors}
+      confirmLeave
+    >
+      {({ data, change, submit, hasChanged }) => (
         <Container>
+          <AppHeader onBack={onBack}>
+            {intl.formatMessage(sectionNames.permissionGroups)}
+          </AppHeader>
           <Grid>
             <div>
               <PermissionGroupInfo
@@ -66,6 +86,14 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
               />
             </div>
           </Grid>
+          <div>
+            <SaveButtonBar
+              onCancel={onBack}
+              onSave={submit}
+              state={saveButtonBarState}
+              disabled={disabled || !hasChanged}
+            />
+          </div>
         </Container>
       )}
     </Form>

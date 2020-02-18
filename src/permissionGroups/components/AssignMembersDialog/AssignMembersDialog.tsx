@@ -1,0 +1,200 @@
+import { FormattedMessage, useIntl } from "react-intl";
+
+import ConfirmButton, {
+  ConfirmButtonTransitionState
+} from "@saleor/components/ConfirmButton";
+import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@material-ui/core/styles";
+import { maybe, getUserName } from "@saleor/misc";
+import { UserError } from "@saleor/types";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import FormSpacer from "@saleor/components/FormSpacer";
+import React from "react";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
+import TextField from "@material-ui/core/TextField";
+import useSearchQuery from "@saleor/hooks/useSearchQuery";
+import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
+import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { Checkbox, Typography } from "@material-ui/core";
+import Skeleton from "@saleor/components/Skeleton";
+
+const useStyles = makeStyles(
+  {
+    avatar: {
+      "&:first-child": {
+        paddingLeft: 0
+      }
+    },
+    checkboxCell: {
+      paddingLeft: 0
+    },
+    overflow: {
+      overflowY: "visible"
+    },
+    scrollArea: {
+      overflowY: "scroll"
+    },
+    wideCell: {
+      paddingLeft: 0,
+      width: "100%"
+    }
+  },
+  { name: "AssignStaffMembersDialog" }
+);
+
+export interface AssignMembersDialogProps {
+  confirmButtonState: ConfirmButtonTransitionState;
+  errors: UserError[];
+  open: boolean;
+  loading: boolean;
+  staffMembers: SearchStaffMembers_search_edges_node[];
+  onFetch: (value: string) => void;
+  onClose: () => void;
+  onSubmit: (data: SearchStaffMembers_search_edges_node[]) => void;
+}
+
+function handleStaffMemberAssign(
+  member: SearchStaffMembers_search_edges_node,
+  isSelected: boolean,
+  selectedMembers: SearchStaffMembers_search_edges_node[],
+  setSelectedMembers: (data: SearchStaffMembers_search_edges_node[]) => void
+) {
+  if (isSelected) {
+    setSelectedMembers(
+      selectedMembers.filter(selectedMember => selectedMember.id !== member.id)
+    );
+  } else {
+    setSelectedMembers([...selectedMembers, member]);
+  }
+}
+
+const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
+  confirmButtonState,
+  loading,
+  onClose,
+  onFetch,
+  onSubmit,
+  open,
+  staffMembers,
+  errors: apiErrors
+}) => {
+  const intl = useIntl();
+  const classes = useStyles({});
+  const errors = useModalDialogErrors(apiErrors, open);
+  const [query, onQueryChange] = useSearchQuery(onFetch);
+
+  const [selectedMembers, setSelectedMembers] = React.useState<
+    SearchStaffMembers_search_edges_node[]
+  >([]);
+  const mutationErrors = errors.map(err => err.message);
+
+  return (
+    <Dialog onClose={onClose} open={open}>
+      <DialogTitle>
+        <FormattedMessage
+          defaultMessage="Assign Staff Members"
+          description="dialog header"
+        />
+      </DialogTitle>
+      <DialogContent>
+        <TextField
+          name="query"
+          value={query}
+          onChange={onQueryChange}
+          label={intl.formatMessage({
+            defaultMessage: "Search Staff Members"
+          })}
+          placeholder={intl.formatMessage({
+            defaultMessage: "Search by name, email, etc..."
+          })}
+          fullWidth
+          InputProps={{
+            autoComplete: "off",
+            endAdornment: loading && <CircularProgress size={16} />
+          }}
+        />
+        <FormSpacer />
+
+        <div className={classes.scrollArea}>
+          <ResponsiveTable>
+            <TableBody>
+              {staffMembers &&
+                staffMembers.map(member => {
+                  const isSelected = selectedMembers.some(
+                    selectedMember => selectedMember.id === member.id
+                  );
+
+                  return (
+                    <TableRow key={member.id}>
+                      <TableCell
+                        padding="checkbox"
+                        className={classes.checkboxCell}
+                      >
+                        <Checkbox
+                          checked={isSelected}
+                          onChange={() =>
+                            handleStaffMemberAssign(
+                              member,
+                              isSelected,
+                              selectedMembers,
+                              setSelectedMembers
+                            )
+                          }
+                        />
+                      </TableCell>
+                      <TableCellAvatar
+                        className={classes.avatar}
+                        thumbnail={maybe(() => member.avatar.url)}
+                      />
+                      <TableCell className={classes.wideCell}>
+                        <Typography>
+                          {getUserName(member) || <Skeleton />}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </ResponsiveTable>
+          {mutationErrors.length > 0 && (
+            <>
+              <FormSpacer />
+              {mutationErrors.map(err => (
+                <Typography key={err} color="error">
+                  {err}
+                </Typography>
+              ))}
+            </>
+          )}
+        </div>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>
+          <FormattedMessage {...buttonMessages.back} />
+        </Button>
+        <ConfirmButton
+          color="primary"
+          variant="contained"
+          type="submit"
+          transitionState={confirmButtonState}
+          onClick={() => {
+            onSubmit(selectedMembers);
+          }}
+        >
+          <FormattedMessage defaultMessage="Assign" description="button" />
+        </ConfirmButton>
+      </DialogActions>
+    </Dialog>
+  );
+};
+AssignMembersDialog.displayName = "AssignMembersDialog";
+export default AssignMembersDialog;

@@ -31,7 +31,7 @@ export const permissionGroupAddUrl = permissionGroupAddPath;
 
 export const permissionGroupDetailsPath = (id: string) =>
   urlJoin(permissionGroupSection, id);
-export type PermissionGroupDetailsUrlDialog = "remove";
+export type PermissionGroupDetailsUrlDialog = "remove" | "assign" | "unassign";
 export type PermissionGroupDetailsUrlQueryParams = BulkAction &
   Pagination &
   Dialog<PermissionGroupDetailsUrlDialog>;
