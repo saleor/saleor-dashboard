@@ -1,5 +1,6 @@
 /* eslint-disable sort-keys */
 import { PermissionEnum } from "@saleor/types/globalTypes";
+import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
 import { PermissionGroupList_permissionGroups_edges_node } from "./types/PermissionGroupList";
 import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
 
@@ -110,3 +111,51 @@ export const permissionGroup: PermissionGroupDetails_permissionGroup = {
     }
   ]
 };
+
+export const users: SearchStaffMembers_search_edges_node[] = [
+  {
+    node: {
+      id: "VXNlcjoyMQ==",
+      email: "admin@example.com",
+      firstName: "",
+      lastName: "",
+      avatar: {
+        alt: null,
+        url: "http://placekitten.com/200/200",
+        __typename: "Image" as "Image"
+      },
+      __typename: "User" as "User"
+    },
+    __typename: "UserCountableEdge" as "UserCountableEdge"
+  },
+  {
+    node: {
+      id: "VXNlcjoyMw==",
+      email: "bryan.rodgers@example.com",
+      firstName: "Bryan",
+      lastName: "Rodgers",
+      avatar: {
+        alt: null,
+        url: "http://placekitten.com/250/250",
+        __typename: "Image" as "Image"
+      },
+      __typename: "User" as "User"
+    },
+    __typename: "UserCountableEdge" as "UserCountableEdge"
+  },
+  {
+    node: {
+      id: "VXNlcjoyMg==",
+      email: "joshua.mitchell@example.com",
+      firstName: "Joshua",
+      lastName: "Mitchell",
+      avatar: {
+        alt: null,
+        url: "http://placekitten.com/150/150",
+        __typename: "Image" as "Image"
+      },
+      __typename: "User" as "User"
+    },
+    __typename: "UserCountableEdge" as "UserCountableEdge"
+  }
+].map(edge => edge.node);

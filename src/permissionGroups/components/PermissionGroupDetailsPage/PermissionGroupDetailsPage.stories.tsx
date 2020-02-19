@@ -1,7 +1,6 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 import { permissions } from "@saleor/fixtures";
-import { Button } from "@material-ui/core";
 
 import PermissionGroupDetailsPage, {
   PermissionGroupDetailsPageProps
@@ -12,7 +11,7 @@ import { permissionGroup } from "../../fixtures";
 const props: PermissionGroupDetailsPageProps = {
   disabled: false,
   errors: [],
-  isChecked: id => false,
+  isChecked: () => false,
   onAssign: () => undefined,
   onBack: () => undefined,
   onSubmit: () => undefined,
@@ -21,9 +20,9 @@ const props: PermissionGroupDetailsPageProps = {
   permissions,
   saveButtonBarState: undefined,
   selected: undefined,
-  toolbar: <Button />,
-  toggle: id => undefined,
-  toggleAll: () => undefined
+  toggle: () => undefined,
+  toggleAll: () => undefined,
+  toolbar: null
 };
 
 storiesOf("Views / Permission Groups / Permission Group Details", module)
