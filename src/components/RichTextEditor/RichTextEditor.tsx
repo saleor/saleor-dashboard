@@ -291,13 +291,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = props => {
                 source: LinkSource,
                 type: ENTITY_TYPE.LINK
               }
-              // {
-              //   attributes: ["href"],
-              //   decorator: ImageEntity,
-              //   icon: <ImageIcon />,
-              //   source: ImageSource,
-              //   type: ENTITY_TYPE.IMAGE
-              // }
             ]}
           />
         </ErrorBoundary>
