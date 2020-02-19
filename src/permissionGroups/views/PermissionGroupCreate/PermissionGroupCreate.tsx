@@ -41,15 +41,20 @@ const PermissionGroupCreateView: React.FC = () => {
     []
   );
 
-  const onSubmit = formData =>
-    createPermissionGroup({
+  const onSubmit = formData => {
+    let permissions = formData.permissions;
+    if (formData.hasFullAccess) {
+      permissions = shop.permissions.map(perm => perm.code);
+    }
+    return createPermissionGroup({
       variables: {
         input: {
-          name: formData.name,
-          permissions: formData.permissions
+          name: formData.hasFullAccess,
+          permissions
         }
       }
     });
+  };
 
   return (
     <>
