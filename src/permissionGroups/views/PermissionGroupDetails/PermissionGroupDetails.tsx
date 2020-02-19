@@ -6,7 +6,6 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import { maybe } from "@saleor/misc";
 import { useIntl } from "react-intl";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { configurationMenuUrl } from "@saleor/configuration";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { Button } from "@material-ui/core";
 import PermissionGroupDetailsPage from "../../components/PermissionGroupDetailsPage";
@@ -15,6 +14,7 @@ import UnassignMembersDialog from "../../components/UnassignMembersDialog";
 import { usePermissionGroupDetailsQuery } from "../../queries";
 import {
   usePermissionGroupAssignUsers,
+  usePermissionGroupUpdate,
   usePermissionGroupUnassignUsers
 } from "../../mutations";
 import useStaffMemberSearch from "../../../searches/useStaffMemberSearch";
@@ -22,10 +22,12 @@ import useStaffMemberSearch from "../../../searches/useStaffMemberSearch";
 import {
   permissionGroupDetailsUrl,
   PermissionGroupDetailsUrlQueryParams,
-  PermissionGroupDetailsUrlDialog
+  PermissionGroupDetailsUrlDialog,
+  permissionGroupListUrl
 } from "../../urls";
 import { PermissionGroupAssignUsers } from "../../types/PermissionGroupAssignUsers";
 import { PermissionGroupUnassignUsers } from "../../types/PermissionGroupUnassignUsers";
+import { PermissionGroupUpdate } from "../../types/PermissionGroupUpdate";
 
 interface PermissionGroupDetailsProps {
   id: string;
@@ -74,6 +76,18 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     }
   };
 
+  const handleUpdateSuccess = (data: PermissionGroupUpdate) => {
+    if (data.permissionGroupUpdate.errors.length === 0) {
+      notify({
+        text: intl.formatMessage({
+          defaultMessage: "Permission group modified"
+        })
+      });
+      refetch();
+      closeModal();
+    }
+  };
+
   const { isSelected, listElements, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -92,6 +106,13 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     onCompleted: handleUnassignUsersSuccess
   });
 
+  const [
+    permissionGroupUpdate,
+    permissionGroupUpdateResult
+  ] = usePermissionGroupUpdate({
+    onCompleted: handleUpdateSuccess
+  });
+
   const assignDialogErrors = maybe(
     () =>
       permissionGroupAssignUsersResult.data.permissionGroupAssignUsers.errors,
@@ -107,14 +128,21 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
       <PermissionGroupDetailsPage
         permissionGroup={maybe(() => data.permissionGroup)}
         users={maybe(() => data.permissionGroup.users)}
-        onBack={() => navigate(configurationMenuUrl)}
+        onBack={() => navigate(permissionGroupListUrl())}
         onAssign={() => openModal("assign")}
         onUnassign={ids => openModal("unassign", { ids })}
         errors={[]}
-        onSubmit={() => undefined}
+        onSubmit={data =>
+          permissionGroupUpdate({
+            variables: {
+              id,
+              input: { name: data.name, permissions: data.permissions }
+            }
+          })
+        }
         canEditStatus={true}
         permissions={maybe(() => shop.permissions)}
-        saveButtonBarState={"default"}
+        saveButtonBarState={permissionGroupUpdateResult.status}
         disabled={loading}
         toggle={toggle}
         toggleAll={toggleAll}

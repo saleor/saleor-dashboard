@@ -18,6 +18,10 @@ import {
   PermissionGroupUnassignUsersVariables
 } from "./types/PermissionGroupUnassignUsers";
 import { permissionGroupDetailsFragment } from "./queries";
+import {
+  PermissionGroupUpdate,
+  PermissionGroupUpdateVariables
+} from "./types/PermissionGroupUpdate";
 
 export const permissionGroupDelete = gql`
   mutation PermissionGroupDelete($id: ID!) {
@@ -93,3 +97,23 @@ export const usePermissionGroupUnassignUsers = makeMutation<
   PermissionGroupUnassignUsers,
   PermissionGroupUnassignUsersVariables
 >(permissionGroupUnassignUsers);
+
+export const permissionGroupUpdate = gql`
+  ${permissionGroupDetailsFragment}
+  mutation PermissionGroupUpdate($id: ID!, $input: PermissionGroupInput!) {
+    permissionGroupUpdate(id: $id, input: $input) {
+      errors {
+        field
+        message
+      }
+      group {
+        ...PermissionGroupDetailsFragment
+      }
+    }
+  }
+`;
+
+export const usePermissionGroupUpdate = makeMutation<
+  PermissionGroupUpdate,
+  PermissionGroupUpdateVariables
+>(permissionGroupUpdate);
