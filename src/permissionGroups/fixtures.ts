@@ -1,5 +1,7 @@
 /* eslint-disable sort-keys */
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import { PermissionGroupList_permissionGroups_edges_node } from "./types/PermissionGroupList";
+import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
 
 export const permissionGroups: PermissionGroupList_permissionGroups_edges_node[] = [
   {
@@ -75,3 +77,36 @@ export const permissionGroups: PermissionGroupList_permissionGroups_edges_node[]
     __typename: "GroupCountableEdge" as "GroupCountableEdge"
   }
 ].map(edge => edge.node);
+
+export const permissionGroup: PermissionGroupDetails_permissionGroup = {
+  id: "R3JvdXA6Mw==",
+  name: "Editors",
+  users: [
+    {
+      id: "VXNlcjoyMg==",
+      firstName: "Joshua",
+      lastName: "Mitchell",
+      __typename: "User",
+      email: "joshua.mitchell@example.com",
+      isActive: true,
+      avatar: null
+    },
+    {
+      id: "VXNlcjoyMw==",
+      firstName: "Bryan",
+      lastName: "Rodgers",
+      __typename: "User",
+      email: "bryan.rodgers@example.com",
+      isActive: true,
+      avatar: null
+    }
+  ],
+  __typename: "Group",
+  permissions: [
+    {
+      code: PermissionEnum.MANAGE_PAGES,
+      name: "Manage pages.",
+      __typename: "PermissionDisplay"
+    }
+  ]
+};

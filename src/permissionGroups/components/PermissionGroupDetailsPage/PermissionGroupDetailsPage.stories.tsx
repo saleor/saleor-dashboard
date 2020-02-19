@@ -1,24 +1,39 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 import { permissions } from "@saleor/fixtures";
+import { Button } from "@material-ui/core";
 
-import PermissionGroupCreatePage, {
-  PermissionGroupCreatePageProps
-} from "@saleor/permissionGroups/components/PermissionGroupCreatePage";
+import PermissionGroupDetailsPage, {
+  PermissionGroupDetailsPageProps
+} from "@saleor/permissionGroups/components/PermissionGroupDetailsPage";
 import Decorator from "@saleor/storybook/Decorator";
+import { permissionGroup } from "../../fixtures";
 
-const props: PermissionGroupCreatePageProps = {
+const props: PermissionGroupDetailsPageProps = {
   disabled: false,
   errors: [],
+  isChecked: id => false,
+  onAssign: () => undefined,
   onBack: () => undefined,
   onSubmit: () => undefined,
+  onUnassign: () => undefined,
+  permissionGroup,
   permissions,
-  saveButtonBarState: undefined
+  saveButtonBarState: undefined,
+  selected: undefined,
+  toolbar: <Button />,
+  toggle: id => undefined,
+  toggleAll: () => undefined
 };
 
-storiesOf("Views / Permission Groups / Permission Group Create", module)
+storiesOf("Views / Permission Groups / Permission Group Details", module)
   .addDecorator(Decorator)
-  .add("default", () => <PermissionGroupCreatePage {...props} />)
+  .add("default", () => <PermissionGroupDetailsPage {...props} />)
   .add("loading", () => (
-    <PermissionGroupCreatePage {...props} disabled={true} />
+    <PermissionGroupDetailsPage
+      {...props}
+      disabled={true}
+      permissionGroup={undefined}
+      permissions={undefined}
+    />
   ));

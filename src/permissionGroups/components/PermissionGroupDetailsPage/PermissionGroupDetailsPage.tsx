@@ -16,10 +16,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import PermissionGroupInfo from "../PermissionGroupInfo";
-import {
-  PermissionGroupDetails_permissionGroup,
-  PermissionGroupDetails_permissionGroup_users
-} from "../../types/PermissionGroupDetails";
+import { PermissionGroupDetails_permissionGroup } from "../../types/PermissionGroupDetails";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
 
 export interface PermissionGroupDetailsPageFormData {
@@ -30,12 +27,10 @@ export interface PermissionGroupDetailsPageFormData {
 }
 
 export interface PermissionGroupDetailsPageProps extends ListActions {
-  canEditStatus: boolean;
   errors: UserError[];
   permissionGroup: PermissionGroupDetails_permissionGroup;
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  users: PermissionGroupDetails_permissionGroup_users[];
   disabled: boolean;
 
   onAssign: () => void;
@@ -89,7 +84,11 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
                 disabled={disabled}
               />
               <FormSpacer />
-              <PermissionGroupMemberList disabled={disabled} {...listProps} />
+              <PermissionGroupMemberList
+                disabled={disabled}
+                {...listProps}
+                users={maybe(() => permissionGroup.users)}
+              />
             </div>
             <div>
               <AccountPermissions

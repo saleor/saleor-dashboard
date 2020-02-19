@@ -127,7 +127,6 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     <>
       <PermissionGroupDetailsPage
         permissionGroup={maybe(() => data.permissionGroup)}
-        users={maybe(() => data.permissionGroup.users)}
         onBack={() => navigate(permissionGroupListUrl())}
         onAssign={() => openModal("assign")}
         onUnassign={ids => openModal("unassign", { ids })}
@@ -140,7 +139,6 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
             }
           })
         }
-        canEditStatus={true}
         permissions={maybe(() => shop.permissions)}
         saveButtonBarState={permissionGroupUpdateResult.status}
         disabled={loading}
