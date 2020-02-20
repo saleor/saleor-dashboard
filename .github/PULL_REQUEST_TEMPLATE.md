@@ -13,7 +13,7 @@ greatly reduce the amount of work needed to review your work. -->
 
 1. [ ] All visible strings are translated with proper context.
 1. [ ] All data-formatting is locale-aware (dates, numbers, and so on).
-1. [ ] Translated strings are extracted to `.pot` file.
+1. [ ] Translated strings are extracted.
 1. [ ] Number of API calls is optimized.
 1. [ ] The changes are tested.
 1. [ ] Type definitions are up to date.
