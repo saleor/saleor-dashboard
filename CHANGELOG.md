@@ -33,6 +33,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix column picker errors - #393 by @dominik-zeglen
 - Improve order filters - #396 by @dominik-zeglen
 - Use structurized JSON files instead of PO - #403 by @dominik-zeglen
+- Add optional chaining and explicitely return "Not found" page - #408 by @dominik-zeglen
 
 ## 2.0.0
 
