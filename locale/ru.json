@@ -103,7 +103,7 @@
     "string": "Menu Title"
   },
   "menuDetailsDeleteMenuContent": {
-    "string": "Are you sure you want to delete menu {menuName}?"
+    "string": "Вы уверены, что хотите удалить menu {menuName}?"
   },
   "menuDetailsDeleteMenuHeader": {
     "context": "dialog header",
@@ -433,14 +433,14 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_1326420604": {
     "context": "delete attribute value",
-    "string": "Are you sure you want to delete \"{name}\" value?"
+    "string": "Вы уверены, что хотите удалить значение \"{name}\"?"
   },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_203246037": {
     "context": "dialog title",
     "string": "Delete attribute value"
   },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_4031078167": {
-    "string": "Are you sure you want to delete \"{name}\" value? If you delete it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
+    "string": "Вы уверены, что хотите удалить значение \"{name}\"? Если вы удалите его, вы не сможете назначить его ни одному из продуктов с атрибутом \"{attributeName}\"."
   },
   "src_dot_attributes_dot_components_dot_AttributeValueEditDialog_dot_1395607402": {
     "context": "edit attribute value",
@@ -843,7 +843,7 @@
     "string": "Товар добавлен в коллекцию"
   },
   "src_dot_collections_dot_views_dot_2402899582": {
-    "string": "Are you sure you want to delete collection's image?"
+    "string": "Вы уверены, что хотите удалить изображение коллекции?"
   },
   "src_dot_collections_dot_views_dot_3215481647": {
     "string": "{counter,plural,one {Are you sure you want to unassign this product?} other {Are you sure you want to unassign {displayQuantity} products?}}"
@@ -1601,7 +1601,7 @@
     "string": "Create customer"
   },
   "src_dot_customers_dot_views_dot_3689332763": {
-    "string": "Are you sure you want to delete this address from users address book?"
+    "string": "Вы уверены, что хотите удалить этот адрес из адресной книги пользователя?"
   },
   "src_dot_customers_dot_views_dot_3901579344": {
     "string": "Customer Removed"
@@ -2251,7 +2251,7 @@
     "string": "Delete Daft Order"
   },
   "src_dot_orders_dot_components_dot_OrderDraftCancelDialog_dot_66064347": {
-    "string": "Are you sure you want to delete draft #{orderNumber}?"
+    "string": "Вы уверены, что хотите удалить черновик # {orderNumber}?"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_1134347598": {
     "context": "price or ordered products",
@@ -2560,9 +2560,13 @@
     "context": "tab name",
     "string": "Все заказы"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
+    "context": "order",
+    "string": "Покупатель"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
-    "string": "Placed"
+    "string": "Created"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
     "string": "Fulfillment status"

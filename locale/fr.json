@@ -951,7 +951,7 @@
   },
   "src_dot_components_dot_AppLayout_dot_248888005": {
     "context": "button",
-    "string": "Account Settings"
+    "string": "Paramètres du compte"
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_1305061437": {
     "string": "Rechercher dans les catégories"
@@ -1499,7 +1499,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerDetails_dot_3298169382": {
     "context": "section subheader",
-    "string": "Active member since {date}"
+    "string": "Membre actif depuis le {date}"
   },
   "src_dot_customers_dot_components_dot_CustomerDetails_dot_577013340": {
     "context": "note about customer",
@@ -2251,7 +2251,7 @@
     "string": "Supprimer le brouillon de commande "
   },
   "src_dot_orders_dot_components_dot_OrderDraftCancelDialog_dot_66064347": {
-    "string": "Are you sure you want to delete draft #{orderNumber}?"
+    "string": "Êtes vous certains de vouloir supprimer le brouillon #{orderNumber} "
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_1134347598": {
     "context": "price or ordered products",
@@ -2324,7 +2324,7 @@
     "string": "Certains produits nécessitent une livraison mais aucune méthode a été fournie"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_3358029330": {
-    "string": "Are you sure you want to finalize draft #{orderNumber}?"
+    "string": "Êtes vous certain de vouloir finaliser le brouillon #{orderNumber}"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_678764806": {
     "context": "button",
@@ -2560,9 +2560,13 @@
     "context": "tab name",
     "string": "Toutes les commandes"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
+    "context": "order",
+    "string": "Client"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
-    "string": "Placed"
+    "string": "Created"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
     "string": "Status du traitement"
@@ -2980,7 +2984,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_3032939398": {
     "context": "header",
-    "string": "Add Value to Authorization Field"
+    "string": "Ajouter une entrée au champ d'autorisations"
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_4269236107": {
     "context": "header",
@@ -3013,7 +3017,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3523826683": {
     "context": "tab name",
-    "string": "All Plugins"
+    "string": "Tous les plugins"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_active": {
     "context": "plugin",
@@ -3412,7 +3416,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_1536841622": {
     "context": "product attribute error",
-    "string": "All attributes should have value"
+    "string": "Tous les attributs doivent avoir une valeur"
   },
   "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_258966189": {
     "context": "product attribute error",

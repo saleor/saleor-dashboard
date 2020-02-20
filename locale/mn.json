@@ -144,7 +144,7 @@
     "string": "Menu Items"
   },
   "menuItemsPlaceholder": {
-    "string": "Add new menu item to begin creating menu"
+    "string": "Шинэ цэсний хэсэг нэмж шинэ цэс үүсгэх"
   },
   "menuListCreatedMenu": {
     "string": "Created menu"
@@ -647,7 +647,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryProducts_dot_3554578821": {
     "context": "button",
-    "string": "Add product"
+    "string": "Бүтээгдэхүүн нэмэх"
   },
   "src_dot_categories_dot_components_dot_CategoryProducts_dot_4164156574": {
     "context": "header",
@@ -1116,7 +1116,7 @@
   },
   "src_dot_components_dot_MultiAutocompleteSelectField_dot_1477537381": {
     "context": "add custom select input option",
-    "string": "Add new value: {value}"
+    "string": "Шинэ утгах нэмэх: {value}"
   },
   "src_dot_components_dot_MultiAutocompleteSelectField_dot_4205644805": {
     "string": "No results found"
@@ -1265,7 +1265,7 @@
   },
   "src_dot_components_dot_RichTextEditor_dot_2160163587": {
     "context": "button",
-    "string": "Add or Edit Link"
+    "string": "Холбоос нэмэх эсвэл засах"
   },
   "src_dot_components_dot_RichTextEditor_dot_2925475978": {
     "string": "URL Linked"
@@ -1317,7 +1317,7 @@
   },
   "src_dot_components_dot_SingleAutocompleteSelectField_dot_1477537381": {
     "context": "add custom select input option",
-    "string": "Add new value: {value}"
+    "string": "Шинэ утгах нэмэх: {value}"
   },
   "src_dot_components_dot_SingleAutocompleteSelectField_dot_3069107721": {
     "string": "None"
@@ -1694,7 +1694,7 @@
   },
   "src_dot_discounts_dot_components_dot_DiscountDates_dot_1662220323": {
     "context": "time during discount is active, header",
-    "string": "Active Dates"
+    "string": "Идэвхитэй огноо"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_1657559629": {
     "string": "No products found"
@@ -1828,7 +1828,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherDates_dot_1662220323": {
     "context": "time during voucher is active, header",
-    "string": "Active Dates"
+    "string": "Идэвхитэй огноо"
   },
   "src_dot_discounts_dot_components_dot_VoucherDetailsPage_dot_2071139683": {
     "string": "Voucher applies to all countries"
@@ -2295,7 +2295,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetails_dot_2528459381": {
     "context": "button",
-    "string": "Add products"
+    "string": "Бүтээгдэхүүнүүдийг нэмэх"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_115822814": {
     "string": "No billing address"
@@ -2560,9 +2560,13 @@
     "context": "tab name",
     "string": "All Orders"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
+    "context": "order",
+    "string": "Customer"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
-    "string": "Placed"
+    "string": "Created"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
     "string": "Fulfillment status"
@@ -2980,7 +2984,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_3032939398": {
     "context": "header",
-    "string": "Add Value to Authorization Field"
+    "string": "Authorization талбарт утга нэмэх"
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_4269236107": {
     "context": "header",
@@ -3928,7 +3932,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1397795758": {
     "context": "add weight based shipping method, dialog header",
-    "string": "Add Weight Rate"
+    "string": "Жингийн харьцаа нэмэх"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1403365734": {
     "context": "shipping method price",
@@ -4149,7 +4153,7 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1114030884": {
     "context": "button",
-    "string": "Add key"
+    "string": "Түлхүүр нэмэх"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1270286507": {
     "context": "authentication provider name",
