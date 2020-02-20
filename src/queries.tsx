@@ -28,7 +28,6 @@ export interface TypedQueryInnerProps<TData, TVariables> {
   displayLoader?: boolean;
   skip?: boolean;
   variables?: TVariables;
-  require?: Array<keyof TData>;
 }
 
 interface QueryProgressProps {
@@ -65,7 +64,7 @@ class QueryProgress extends React.Component<QueryProgressProps, {}> {
 export function TypedQuery<TData, TVariables>(
   query: DocumentNode
 ): React.FC<TypedQueryInnerProps<TData, TVariables>> {
-  return ({ children, displayLoader, skip, variables, require }) => {
+  return ({ children, displayLoader, skip, variables }) => {
     const pushMessage = useNotifier();
     const [, dispatchAppState] = useAppState();
     const intl = useIntl();
@@ -111,23 +110,6 @@ export function TypedQuery<TData, TVariables>(
               },
               variables: { ...variables, ...extraVariables }
             });
-
-          if (
-            !queryData.loading &&
-            require &&
-            queryData.data &&
-            !require.reduce(
-              (acc, key) => acc && queryData.data[key] !== null,
-              true
-            )
-          ) {
-            dispatchAppState({
-              payload: {
-                error: "not-found"
-              },
-              type: "displayError"
-            });
-          }
 
           if (displayLoader) {
             return (

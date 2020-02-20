@@ -12,7 +12,8 @@ import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog
 import { WebhookDelete } from "@saleor/webhooks/types/WebhookDelete";
 import { WebhookUpdate } from "@saleor/webhooks/types/WebhookUpdate";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { maybe } from "../../misc";
+import NotFoundPage from "@saleor/components/NotFoundPage";
+import { maybe, getStringOrPlaceholder } from "../../misc";
 import WebhooksDetailsPage from "../components/WebhooksDetailsPage";
 import { TypedWebhookDelete, TypedWebhookUpdate } from "../mutations";
 import { TypedWebhooksDetailsQuery } from "../queries";
@@ -48,7 +49,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
   >(navigate, params => webhookUrl(id, params), params);
 
   const onWebhookDelete = (data: WebhookDelete) => {
-    if (data.webhookDelete.errors.length === 0) {
+    if (data.webhookDelete?.errors.length === 0) {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
       });
@@ -57,13 +58,18 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
   };
 
   const onWebhookUpdate = (data: WebhookUpdate) => {
-    if (data.webhookUpdate.webhookErrors.length === 0) {
+    const errors = data.webhookUpdate?.webhookErrors;
+    const webhook = data.webhookUpdate?.webhook;
+
+    if (errors.length === 0 && webhook) {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate(webhookUrl(data.webhookUpdate.webhook.id));
+      navigate(webhookUrl(webhook.id));
     }
   };
+
+  const handleOnBack = () => navigate(webhookListUrl());
 
   return (
     <TypedWebhookUpdate onCompleted={onWebhookUpdate}>
@@ -79,28 +85,33 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                     }
                   });
 
-                const formErrors = maybe(
-                  () => webhookUpdateOpts.data.webhookUpdate.webhookErrors,
-                  []
-                );
+                const webhook = webhookDetails?.data?.webhook;
+                const formErrors =
+                  webhookUpdateOpts.data?.webhookUpdate.webhookErrors || [];
+
+                if (webhook === null) {
+                  return <NotFoundPage onBack={handleOnBack} />;
+                }
 
                 return (
                   <>
                     <WindowTitle
-                      title={maybe(() => webhookDetails.data.webhook.name)}
+                      title={getStringOrPlaceholder(
+                        webhookDetails?.data?.webhook?.name
+                      )}
                     />
                     <WebhooksDetailsPage
                       disabled={webhookDetails.loading}
                       errors={formErrors}
                       saveButtonBarState={webhookUpdateOpts.status}
-                      webhook={maybe(() => webhookDetails.data.webhook)}
+                      webhook={webhook}
                       fetchServiceAccounts={searchServiceAccount}
                       services={maybe(() =>
                         searchServiceAccountOpt.data.search.edges.map(
                           edge => edge.node
                         )
                       )}
-                      onBack={() => navigate(webhookListUrl())}
+                      onBack={handleOnBack}
                       onDelete={() => openModal("remove")}
                       onSubmit={data => {
                         webhookUpdate({
@@ -122,10 +133,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                     />
                     <WebhookDeleteDialog
                       confirmButtonState={webhookDeleteOpts.status}
-                      name={maybe(
-                        () => webhookDetails.data.webhook.name,
-                        "..."
-                      )}
+                      name={getStringOrPlaceholder(webhook?.name)}
                       onClose={closeModal}
                       onConfirm={handleRemoveConfirm}
                       open={params.action === "remove"}

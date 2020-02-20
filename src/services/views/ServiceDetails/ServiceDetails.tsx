@@ -22,6 +22,7 @@ import { ServiceTokenCreate } from "@saleor/services/types/ServiceTokenCreate";
 import { ServiceTokenDelete } from "@saleor/services/types/ServiceTokenDelete";
 import { ServiceUpdate } from "@saleor/services/types/ServiceUpdate";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import ServiceDetailsPage, {
   ServiceDetailsPageFormData
 } from "../../components/ServiceDetailsPage";
@@ -77,12 +78,14 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
   const handleBack = () => navigate(serviceListUrl());
 
   return (
-    <ServiceDetailsQuery
-      displayLoader
-      variables={{ id }}
-      require={["serviceAccount"]}
-    >
+    <ServiceDetailsQuery displayLoader variables={{ id }}>
       {({ data, loading, refetch }) => {
+        const service = data?.serviceAccount;
+
+        if (service === null) {
+          return <NotFoundPage onBack={handleBack} />;
+        }
+
         const onTokenCreate = (data: ServiceTokenCreate) => {
           if (maybe(() => data.serviceAccountTokenCreate.errors.length === 0)) {
             refetch();
@@ -151,9 +154,7 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
 
                           return (
                             <>
-                              <WindowTitle
-                                title={maybe(() => data.serviceAccount.name)}
-                              />
+                              <WindowTitle title={service?.name || "..."} />
                               <ServiceDetailsPage
                                 apiUri={API_URI}
                                 disabled={loading}

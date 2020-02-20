@@ -18,6 +18,7 @@ import { ProductVariantBulkCreate } from "@saleor/products/types/ProductVariantB
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { getMutationState, maybe } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import ProductUpdateOperations from "../../containers/ProductUpdateOperations";
@@ -76,13 +77,17 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
 
+  const handleBack = () => navigate(productListUrl());
+
   return (
-    <TypedProductDetailsQuery
-      displayLoader
-      require={["product"]}
-      variables={{ id }}
-    >
+    <TypedProductDetailsQuery displayLoader variables={{ id }}>
       {({ data, loading, refetch }) => {
+        const product = data?.product;
+
+        if (product === null) {
+          return <NotFoundPage onBack={handleBack} />;
+        }
+
         const handleDelete = () => {
           notify({
             text: intl.formatMessage({
@@ -142,7 +147,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           }
         };
 
-        const product = data ? data.product : undefined;
         return (
           <ProductUpdateOperations
             product={product}
@@ -233,9 +237,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                     placeholderImage={placeholderImg}
                     product={product}
                     variants={maybe(() => product.variants)}
-                    onBack={() => {
-                      navigate(productListUrl());
-                    }}
+                    onBack={handleBack}
                     onDelete={() => openModal("remove")}
                     onProductShow={() => {
                       if (product) {

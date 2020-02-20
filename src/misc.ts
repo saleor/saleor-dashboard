@@ -380,3 +380,7 @@ export function transformFormToAddress<T>(
     country: findInEnum(address.country, CountryCode)
   };
 }
+
+export function getStringOrPlaceholder(s: string | undefined): string {
+  return s || "...";
+}

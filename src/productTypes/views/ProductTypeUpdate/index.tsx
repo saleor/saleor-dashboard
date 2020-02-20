@@ -13,6 +13,7 @@ import { maybe } from "@saleor/misc";
 import AssignAttributeDialog from "@saleor/productTypes/components/AssignAttributeDialog";
 import { ReorderEvent } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import ProductTypeAttributeUnassignDialog from "../../components/ProductTypeAttributeUnassignDialog";
 import ProductTypeBulkAttributeUnassignDialog from "../../components/ProductTypeBulkAttributeUnassignDialog";
 import ProductTypeDeleteDialog from "../../components/ProductTypeDeleteDialog";
@@ -54,15 +55,19 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     }
   });
 
+  const handleBack = () => navigate(productTypeListUrl());
+
   return (
     <ProductTypeUpdateErrors>
       {({ errors, set: setErrors }) => (
-        <TypedProductTypeDetailsQuery
-          displayLoader
-          variables={{ id }}
-          require={["productType"]}
-        >
+        <TypedProductTypeDetailsQuery displayLoader variables={{ id }}>
           {({ data, loading: dataLoading }) => {
+            const productType = data?.productType;
+
+            if (productType === null) {
+              return <NotFoundPage onBack={handleBack} />;
+            }
+
             const closeModal = () => navigate(productTypeUrl(id), true);
 
             const handleAttributeAssignSuccess = (data: AssignAttribute) => {
@@ -242,7 +247,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                             })
                           )
                         }
-                        onBack={() => navigate(productTypeListUrl())}
+                        onBack={handleBack}
                         onDelete={() =>
                           navigate(
                             productTypeUrl(id, {

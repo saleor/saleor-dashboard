@@ -14,6 +14,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
 import { TypedProductBulkDeleteMutation } from "../../products/mutations";
@@ -67,9 +68,14 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const { data, loading, refetch } = useCategoryDetailsQuery({
     displayLoader: true,
-    require: ["category"],
     variables: { ...paginationState, id }
   });
+
+  const category = data?.category;
+
+  if (category === null) {
+    return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
+  }
 
   const handleCategoryDelete = (data: CategoryDelete) => {
     if (data.categoryDelete.errors.length === 0) {

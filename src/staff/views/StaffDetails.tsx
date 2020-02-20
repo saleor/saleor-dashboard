@@ -9,6 +9,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { maybe } from "../../misc";
 import StaffDetailsPage from "../components/StaffDetailsPage/StaffDetailsPage";
 import {
@@ -63,13 +64,17 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     onCompleted: handleChangePassword
   });
 
+  const handleBack = () => navigate(staffListUrl());
+
   return (
-    <TypedStaffMemberDetailsQuery
-      displayLoader
-      variables={{ id }}
-      require={["user"]}
-    >
+    <TypedStaffMemberDetailsQuery displayLoader variables={{ id }}>
       {({ data, loading }) => {
+        const staffMember = data?.user;
+
+        if (staffMember === null) {
+          return <NotFoundPage onBack={handleBack} />;
+        }
+
         const handleStaffMemberUpdate = (data: StaffMemberUpdate) => {
           if (!maybe(() => data.staffUpdate.errors.length !== 0)) {
             notify({
@@ -100,6 +105,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             navigate(staffMemberDetailsUrl(id));
           }
         };
+
         return (
           <TypedStaffMemberUpdateMutation onCompleted={handleStaffMemberUpdate}>
             {(updateStaffMember, updateResult) => (
@@ -124,7 +130,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                           return (
                             <>
                               <WindowTitle
-                                title={maybe(() => data.user.email)}
+                                title={staffMember?.email || "..."}
                               />
                               <StaffDetailsPage
                                 canEditAvatar={isUserSameAsViewer}
@@ -132,7 +138,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 canEditStatus={!isUserSameAsViewer}
                                 canRemove={!isUserSameAsViewer}
                                 disabled={loading}
-                                onBack={() => navigate(staffListUrl())}
+                                onBack={handleBack}
                                 onChangePassword={() =>
                                   navigate(
                                     staffMemberDetailsUrl(id, {
@@ -176,7 +182,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                   )
                                 }
                                 permissions={maybe(() => shop.permissions)}
-                                staffMember={maybe(() => data.user)}
+                                staffMember={staffMember}
                                 saveButtonBarState={updateResult.status}
                               />
                               <ActionDialog
