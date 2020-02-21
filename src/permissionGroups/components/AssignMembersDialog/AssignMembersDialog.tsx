@@ -5,8 +5,13 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@material-ui/core/styles";
-import { maybe, getUserName } from "@saleor/misc";
-import { UserError } from "@saleor/types";
+import { maybe, getUserName, getUserInitials } from "@saleor/misc";
+import {
+  DialogProps,
+  FetchMoreProps,
+  SearchPageProps,
+  UserError
+} from "@saleor/types";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
@@ -23,19 +28,54 @@ import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { Checkbox, Typography } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 
 const useStyles = makeStyles(
-  {
+  theme => ({
     avatar: {
-      "&:first-child": {
-        paddingLeft: 0
-      }
+      alignItems: "center",
+      borderRadius: "100%",
+      display: "grid",
+      float: "left",
+      height: 32,
+      justifyContent: "center",
+      overflow: "hidden",
+      width: 32
+    },
+    avatarCell: {
+      padding: 0,
+      width: 32
+    },
+    avatarDefault: {
+      "& p": {
+        color: "#fff",
+        lineHeight: "47px"
+      },
+      background: theme.palette.primary.main,
+      height: 32,
+      textAlign: "center",
+      width: 32
+    },
+    avatarImage: {
+      pointerEvents: "none",
+      width: "100%"
+    },
+    colActions: {
+      textAlign: "right"
+    },
+    colName: {
+      paddingLeft: theme.spacing()
+    },
+    statusText: {
+      color: "#9E9D9D"
     },
     checkboxCell: {
-      paddingLeft: 0
+      "&&:not(first-child)": {
+        paddingLeft: 0,
+        paddingRight: 0,
+        width: 48
+      }
     },
     overflow: {
       overflowY: "visible"
@@ -44,21 +84,21 @@ const useStyles = makeStyles(
       overflowY: "scroll"
     },
     wideCell: {
-      paddingLeft: 0,
-      width: "100%"
+      // paddingLeft: 0,
+      width: "80%"
     }
-  },
+  }),
   { name: "AssignStaffMembersDialog" }
 );
 
-export interface AssignMembersDialogProps {
+export interface AssignMembersDialogProps
+  extends DialogProps,
+    FetchMoreProps,
+    SearchPageProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  disabled: boolean;
   errors: UserError[];
-  open: boolean;
-  loading: boolean;
   staffMembers: SearchStaffMembers_search_edges_node[];
-  onFetch: (value: string) => void;
-  onClose: () => void;
   onSubmit: (data: SearchStaffMembers_search_edges_node[]) => void;
 }
 
@@ -79,9 +119,10 @@ function handleStaffMemberAssign(
 
 const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   confirmButtonState,
+  disabled,
   loading,
   onClose,
-  onFetch,
+  onSearchChange,
   onSubmit,
   open,
   staffMembers,
@@ -90,7 +131,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
   const errors = useModalDialogErrors(apiErrors, open);
-  const [query, onQueryChange] = useSearchQuery(onFetch);
+  const [query, onQueryChange] = useSearchQuery(onSearchChange);
 
   const [selectedMembers, setSelectedMembers] = React.useState<
     SearchStaffMembers_search_edges_node[]
@@ -98,7 +139,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   const mutationErrors = errors.map(err => err.message);
 
   return (
-    <Dialog onClose={onClose} open={open}>
+    <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
       <DialogTitle>
         <FormattedMessage
           defaultMessage="Assign Staff Members"
@@ -121,6 +162,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
             autoComplete: "off",
             endAdornment: loading && <CircularProgress size={16} />
           }}
+          disabled={disabled}
         />
         <FormSpacer />
 
@@ -140,6 +182,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                         className={classes.checkboxCell}
                       >
                         <Checkbox
+                          color="primary"
                           checked={isSelected}
                           onChange={() =>
                             handleStaffMemberAssign(
@@ -151,13 +194,41 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                           }
                         />
                       </TableCell>
-                      <TableCellAvatar
-                        className={classes.avatar}
-                        thumbnail={maybe(() => member.avatar.url)}
-                      />
-                      <TableCell className={classes.wideCell}>
+                      <TableCell className={classes.avatarCell}>
+                        <div className={classes.avatar}>
+                          {maybe(() => member.avatar.url) ? (
+                            <img
+                              className={classes.avatarImage}
+                              src={maybe(() => member.avatar.url)}
+                            />
+                          ) : (
+                            <div className={classes.avatarDefault}>
+                              <Typography>{getUserInitials(member)}</Typography>
+                            </div>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className={classes.colName}>
                         <Typography>
                           {getUserName(member) || <Skeleton />}
+                        </Typography>
+                        <Typography
+                          variant={"caption"}
+                          className={classes.statusText}
+                        >
+                          {maybe<React.ReactNode>(
+                            () =>
+                              member.isActive
+                                ? intl.formatMessage({
+                                    defaultMessage: "Active",
+                                    description: "staff member status"
+                                  })
+                                : intl.formatMessage({
+                                    defaultMessage: "Inactive",
+                                    description: "staff member status"
+                                  }),
+                            <Skeleton />
+                          )}
                         </Typography>
                       </TableCell>
                     </TableRow>

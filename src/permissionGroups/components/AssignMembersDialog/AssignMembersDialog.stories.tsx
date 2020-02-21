@@ -9,10 +9,14 @@ import { users } from "../../fixtures";
 
 const props: AssignMembersDialogProps = {
   confirmButtonState: "default",
+  disabled: false,
   errors: [],
+  hasMore: true,
+  initialSearch: "",
   loading: false,
   onClose: () => undefined,
-  onFetch: () => undefined,
+  onFetchMore: () => undefined,
+  onSearchChange: () => undefined,
   onSubmit: () => undefined,
   open: true,
   staffMembers: users
@@ -23,12 +27,16 @@ storiesOf(
   module
 )
   .addDecorator(Decorator)
-  .add("loading", () => (
+  .add("submitting loading", () => (
     <AssignMembersDialog
       {...props}
       confirmButtonState={"loading"}
-      loading={true}
+      loading={false}
+      disabled={true}
       staffMembers={[]}
     />
+  ))
+  .add("search loading", () => (
+    <AssignMembersDialog {...props} loading={true} staffMembers={[]} />
   ))
   .add("default", () => <AssignMembersDialog {...props} />);

@@ -59,9 +59,6 @@ const useStyles = makeStyles(
     statusText: {
       color: "#9E9D9D"
     },
-    tableRow: {
-      cursor: "pointer"
-    },
     wideColumn: {
       width: "80%"
     }
@@ -109,113 +106,131 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
           </Button>
         }
       />
-      <ResponsiveTable>
-        <TableHead
-          colSpan={numberOfColumns}
-          selected={selected}
-          disabled={disabled}
-          items={users}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-        >
-          <TableCellHeader className={classes.wideColumn}>
-            <FormattedMessage
-              defaultMessage="Name"
-              description="staff member full name"
-            />
-          </TableCellHeader>
-          <TableCellHeader>
-            <FormattedMessage defaultMessage="Email Address" />
-          </TableCellHeader>
-          <TableCellHeader>
-            <FormattedMessage defaultMessage="Actions" />
-          </TableCellHeader>
-        </TableHead>
-        <TableBody>
-          {renderCollection(
-            users,
-            user => {
-              const isSelected = user ? isChecked(user.id) : false;
+      {maybe(() => users.length) === 0 ? (
+        <Typography variant="subtitle2">
+          <FormattedMessage
+            defaultMessage="You haven’t assigned any member to this permission group yet."
+            description="empty list message"
+          />
+          <FormattedMessage
+            defaultMessage="Please use Assign Members button to do so."
+            description="empty list message"
+          />
+        </Typography>
+      ) : (
+        <ResponsiveTable>
+          <TableHead
+            colSpan={numberOfColumns}
+            selected={selected}
+            disabled={disabled}
+            items={users}
+            toggleAll={toggleAll}
+            toolbar={toolbar}
+          >
+            <TableCellHeader className={classes.wideColumn}>
+              <FormattedMessage
+                defaultMessage="Name"
+                description="staff member full name"
+              />
+            </TableCellHeader>
+            <TableCellHeader>
+              <FormattedMessage defaultMessage="Email Address" />
+            </TableCellHeader>
+            <TableCellHeader>
+              <FormattedMessage defaultMessage="Actions" />
+            </TableCellHeader>
+          </TableHead>
+          <TableBody>
+            {renderCollection(
+              users,
+              user => {
+                const isSelected = user ? isChecked(user.id) : false;
 
-              return (
-                <TableRow
-                  className={classNames({
-                    [classes.tableRow]: !!user
-                  })}
-                  hover={!!user}
-                  key={user ? user.id : "skeleton"}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(user.id)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <div className={classes.avatar}>
-                      {maybe(() => user.avatar.url) ? (
-                        <img
-                          className={classes.avatarImage}
-                          src={maybe(() => user.avatar.url)}
-                        />
+                return (
+                  <TableRow
+                    className={classNames({
+                      [classes.tableRow]: !!user
+                    })}
+                    hover={!!user}
+                    key={user ? user.id : "skeleton"}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        color="primary"
+                        checked={isSelected}
+                        disabled={disabled}
+                        disableClickPropagation
+                        onChange={() => toggle(user.id)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <div className={classes.avatar}>
+                        {maybe(() => user.avatar.url) ? (
+                          <img
+                            className={classes.avatarImage}
+                            src={maybe(() => user.avatar.url)}
+                          />
+                        ) : (
+                          <div className={classes.avatarDefault}>
+                            <Typography>{getUserInitials(user)}</Typography>
+                          </div>
+                        )}
+                      </div>
+                      <Typography>
+                        {getUserName(user) || <Skeleton />}
+                      </Typography>
+                      <Typography
+                        variant={"caption"}
+                        className={classes.statusText}
+                      >
+                        {maybe<React.ReactNode>(
+                          () =>
+                            user.isActive
+                              ? intl.formatMessage({
+                                  defaultMessage: "Active",
+                                  description: "staff member status"
+                                })
+                              : intl.formatMessage({
+                                  defaultMessage: "Inactive",
+                                  description: "staff member status"
+                                }),
+                          <Skeleton />
+                        )}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      {maybe<React.ReactNode>(() => user.email, <Skeleton />)}
+                    </TableCell>
+                    <TableCell className={classes.colActions}>
+                      {user ? (
+                        <>
+                          <IconButton
+                            color="primary"
+                            onClick={stopPropagation(() =>
+                              onUnassign([user.id])
+                            )}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </>
                       ) : (
-                        <div className={classes.avatarDefault}>
-                          <Typography>{getUserInitials(user)}</Typography>
-                        </div>
-                      )}
-                    </div>
-                    <Typography>{getUserName(user) || <Skeleton />}</Typography>
-                    <Typography
-                      variant={"caption"}
-                      className={classes.statusText}
-                    >
-                      {maybe<React.ReactNode>(
-                        () =>
-                          user.isActive
-                            ? intl.formatMessage({
-                                defaultMessage: "Active",
-                                description: "staff member status"
-                              })
-                            : intl.formatMessage({
-                                defaultMessage: "Inactive",
-                                description: "staff member status"
-                              }),
                         <Skeleton />
                       )}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    {maybe<React.ReactNode>(() => user.email, <Skeleton />)}
-                  </TableCell>
-                  <TableCell className={classes.colActions}>
-                    {user ? (
-                      <>
-                        <IconButton
-                          color="primary"
-                          onClick={stopPropagation(() => onUnassign([user.id]))}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </>
-                    ) : (
-                      <Skeleton />
-                    )}
+                    </TableCell>
+                  </TableRow>
+                );
+              },
+              () => (
+                <TableRow>
+                  <TableCell colSpan={numberOfColumns}>
+                    <FormattedMessage defaultMessage="No members found" />
                   </TableCell>
                 </TableRow>
-              );
-            },
-            () => (
-              <TableRow>
-                <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No members found" />
-                </TableCell>
-              </TableRow>
-            )
-          )}
-        </TableBody>
-      </ResponsiveTable>
+              )
+            )}
+          </TableBody>
+        </ResponsiveTable>
+      )}
     </Card>
   );
 };
