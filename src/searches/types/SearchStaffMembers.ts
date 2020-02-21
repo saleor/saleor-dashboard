@@ -18,6 +18,7 @@ export interface SearchStaffMembers_search_edges_node {
   email: string;
   firstName: string;
   lastName: string;
+  isActive: boolean;
   avatar: SearchStaffMembers_search_edges_node_avatar | null;
 }
 

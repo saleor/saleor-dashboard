@@ -21,6 +21,7 @@ export const searchStaffMembers = gql`
           email
           firstName
           lastName
+          isActive
           avatar {
             alt
             url
