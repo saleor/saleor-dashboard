@@ -2560,9 +2560,13 @@
     "context": "tab name",
     "string": "تمام سفارش‌ها"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
+    "context": "order",
+    "string": "مشتری"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
-    "string": "Placed"
+    "string": "Created"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
     "string": "Fulfillment status"
@@ -3304,7 +3308,7 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_821159718": {
     "context": "tab name",
-    "string": "All Products"
+    "string": "تمام محصولات"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_available": {
     "context": "product status",

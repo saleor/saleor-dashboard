@@ -349,7 +349,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_availableInGrid": {
     "context": "attribute can be column in product list table",
-    "string": "Can be used as column"
+    "string": "Kan brukes som kolonne"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_filterableInDashboard": {
     "context": "use attribute in filtering",
@@ -1062,7 +1062,7 @@
   },
   "src_dot_components_dot_FilterBar_dot_3268463180": {
     "context": "button",
-    "string": "Save Search"
+    "string": "Lagre søk"
   },
   "src_dot_components_dot_FilterCard_dot_996289613": {
     "string": "Filtre"
@@ -1073,19 +1073,19 @@
   },
   "src_dot_components_dot_Filter_dot_2683154806": {
     "context": "is filter range or value",
-    "string": "equal to"
+    "string": "er lik"
   },
   "src_dot_components_dot_Filter_dot_2779594451": {
     "context": "filter range separator",
-    "string": "and"
+    "string": "og"
   },
   "src_dot_components_dot_Filter_dot_4190318230": {
     "context": "search results",
-    "string": "Show more"
+    "string": "Vis mer"
   },
   "src_dot_components_dot_Filter_dot_773313536": {
     "context": "is filter range or value",
-    "string": "between"
+    "string": "mellom"
   },
   "src_dot_components_dot_Filter_dot_996289613": {
     "string": "Filtre"
@@ -1293,7 +1293,7 @@
   },
   "src_dot_components_dot_SearchBar_dot_3268463180": {
     "context": "button",
-    "string": "Save Search"
+    "string": "Lagre søk"
   },
   "src_dot_components_dot_SeoForm_dot_1324250412": {
     "string": "Tittel for søkemotor"
@@ -1533,7 +1533,7 @@
     "string": "Money Spent"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_numberOfOrders": {
-    "string": "Number of Orders"
+    "string": "Antall ordre"
   },
   "src_dot_customers_dot_components_dot_CustomerList_dot_1432565772": {
     "string": "Antall Ordre"
@@ -1746,7 +1746,7 @@
   },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_expired": {
     "context": "sale status",
-    "string": "Expired"
+    "string": "Utløpt"
   },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_fixed": {
     "context": "discount type",
@@ -1891,7 +1891,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_expired": {
     "context": "voucher status",
-    "string": "Expired"
+    "string": "Utløpt"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_fixed": {
     "context": "discount type",
@@ -2343,7 +2343,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_created": {
     "context": "draft order",
-    "string": "Created"
+    "string": "Opprettet"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_customer": {
     "context": "draft order",
@@ -2560,9 +2560,13 @@
     "context": "tab name",
     "string": "Alle ordre"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
+    "context": "order",
+    "string": "Kunde"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
-    "string": "Placed"
+    "string": "Opprettet"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
     "string": "Status på forsendelse"
@@ -3013,7 +3017,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3523826683": {
     "context": "tab name",
-    "string": "All Plugins"
+    "string": "Alle Plugins"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_active": {
     "context": "plugin",
@@ -4268,7 +4272,7 @@
   },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_deactivated": {
     "context": "staff member's account",
-    "string": "Deactivated"
+    "string": "Deaktivert"
   },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_status": {
     "context": "staff member's account",
@@ -4297,7 +4301,7 @@
     "string": "Nytt Passord"
   },
   "src_dot_staff_dot_components_dot_StaffPasswordResetDialog_dot_1651415182": {
-    "string": "New password must be at least 8 characters long"
+    "string": "Det nye passordet må minst inneholde 8 tegn"
   },
   "src_dot_staff_dot_components_dot_StaffPasswordResetDialog_dot_2521568990": {
     "context": "dialog header",
@@ -4305,14 +4309,14 @@
   },
   "src_dot_staff_dot_components_dot_StaffPasswordResetDialog_dot_53359254": {
     "context": "input label",
-    "string": "Previous Password"
+    "string": "Forrige passord"
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_1274006906": {
     "string": "You should change your password every month to avoid security issues."
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_1434811103": {
     "context": "button",
-    "string": "Change your password"
+    "string": "Endre ditt passord"
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_2237029987": {
     "context": "header",
