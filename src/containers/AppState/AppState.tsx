@@ -21,7 +21,7 @@ const AppStateProvider: React.FC = ({ children }) => {
     if (!!state.error) {
       dispatch({
         payload: {
-          error: null
+          error: undefined
         },
         type: "displayError"
       });

@@ -18,14 +18,13 @@ export interface LoadMore<TData, TVariables> {
 
 export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> &
   LoadMore<TData, TVariables>;
-type UseQueryOpts<TData, TVariables> = Partial<{
+type UseQueryOpts<TVariables> = Partial<{
   displayLoader: boolean;
-  require: Array<keyof TData>;
   skip: boolean;
   variables: TVariables;
 }>;
 type UseQueryHook<TData, TVariables> = (
-  opts: UseQueryOpts<TData, TVariables>
+  opts: UseQueryOpts<TVariables>
 ) => UseQueryResult<TData, TVariables>;
 
 function makeQuery<TData, TVariables>(
@@ -33,10 +32,9 @@ function makeQuery<TData, TVariables>(
 ): UseQueryHook<TData, TVariables> {
   function useQuery({
     displayLoader,
-    require,
     skip,
     variables
-  }: UseQueryOpts<TData, TVariables>): UseQueryResult<TData, TVariables> {
+  }: UseQueryOpts<TVariables>): UseQueryResult<TData, TVariables> {
     const notify = useNotifier();
     const intl = useIntl();
     const [, dispatchAppState] = useAppState();
@@ -88,20 +86,6 @@ function makeQuery<TData, TVariables>(
         },
         variables: { ...variables, ...extraVariables }
       });
-
-    if (
-      !queryData.loading &&
-      require &&
-      queryData.data &&
-      !require.reduce((acc, key) => acc && queryData.data[key] !== null, true)
-    ) {
-      dispatchAppState({
-        payload: {
-          error: "not-found"
-        },
-        type: "displayError"
-      });
-    }
 
     return {
       ...queryData,

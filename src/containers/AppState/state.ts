@@ -1,4 +1,4 @@
-export type AppError = "unhandled" | "not-found";
+export type AppError = "unhandled";
 
 interface IAppState {
   error: AppError | null;

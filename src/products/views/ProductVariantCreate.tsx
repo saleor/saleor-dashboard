@@ -5,6 +5,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { decimal, maybe } from "../../misc";
 import ProductVariantCreatePage, {
   ProductVariantCreatePageSubmitData
@@ -12,7 +13,7 @@ import ProductVariantCreatePage, {
 import { TypedVariantCreateMutation } from "../mutations";
 import { TypedProductVariantCreateQuery } from "../queries";
 import { VariantCreate } from "../types/VariantCreate";
-import { productUrl, productVariantEditUrl } from "../urls";
+import { productUrl, productVariantEditUrl, productListUrl } from "../urls";
 
 interface ProductUpdateProps {
   productId: string;
@@ -25,12 +26,14 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ productId }) => {
   const intl = useIntl();
 
   return (
-    <TypedProductVariantCreateQuery
-      displayLoader
-      variables={{ id: productId }}
-      require={["product"]}
-    >
+    <TypedProductVariantCreateQuery displayLoader variables={{ id: productId }}>
       {({ data, loading: productLoading }) => {
+        const product = data?.product;
+
+        if (product === null) {
+          return <NotFoundPage onBack={() => navigate(productListUrl())} />;
+        }
+
         const handleCreateSuccess = (data: VariantCreate) => {
           if (data.productVariantCreate.productErrors.length === 0) {
             notify({

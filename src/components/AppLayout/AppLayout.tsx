@@ -29,7 +29,6 @@ import { maybe } from "@saleor/misc";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import Container from "../Container";
 import ErrorPage from "../ErrorPage";
-import NotFoundPage from "../NotFoundPage";
 import AppActionContext from "./AppActionContext";
 import AppHeaderContext from "./AppHeaderContext";
 import { appLoaderHeight, drawerWidth, drawerWidthExpanded } from "./consts";
@@ -507,15 +506,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 </Container>
               </div>
               <main className={classes.view}>
-                {appState.error ? (
-                  appState.error === "not-found" ? (
-                    <NotFoundPage onBack={handleErrorBack} />
-                  ) : (
-                    <ErrorPage onBack={handleErrorBack} />
-                  )
-                ) : (
-                  children
-                )}
+                {appState.error
+                  ? appState.error === "unhandled" && (
+                      <ErrorPage onBack={handleErrorBack} />
+                    )
+                  : children}
               </main>
             </div>
             <div className={classes.appAction} ref={appActionAnchor} />

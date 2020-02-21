@@ -68,7 +68,6 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   );
   const { data, loading, refetch } = useRootCategoriesQuery({
     displayLoader: true,
-    require: ["categories"],
     variables: queryVariables
   });
 

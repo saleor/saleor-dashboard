@@ -6,6 +6,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { decimal, maybe } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage, {
@@ -13,7 +14,10 @@ import ProductVariantPage, {
 } from "../components/ProductVariantPage";
 import ProductVariantOperations from "../containers/ProductVariantOperations";
 import { TypedProductVariantQuery } from "../queries";
-import { VariantUpdate } from "../types/VariantUpdate";
+import {
+  VariantUpdate,
+  VariantUpdate_productVariantUpdate_productErrors
+} from "../types/VariantUpdate";
 import {
   productUrl,
   productVariantAddUrl,
@@ -35,20 +39,24 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<
+    VariantUpdate_productVariantUpdate_productErrors[]
+  >([]);
   useEffect(() => {
     setErrors([]);
   }, [variantId]);
 
+  const handleBack = () => navigate(productUrl(productId));
+
   return (
-    <TypedProductVariantQuery
-      displayLoader
-      variables={{ id: variantId }}
-      require={["productVariant"]}
-    >
+    <TypedProductVariantQuery displayLoader variables={{ id: variantId }}>
       {({ data, loading }) => {
-        const variant = data ? data.productVariant : undefined;
-        const handleBack = () => navigate(productUrl(productId));
+        const variant = data?.productVariant;
+
+        if (variant === null) {
+          return <NotFoundPage onBack={handleBack} />;
+        }
+
         const handleDelete = () => {
           notify({
             text: intl.formatMessage({

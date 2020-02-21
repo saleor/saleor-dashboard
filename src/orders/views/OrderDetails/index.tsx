@@ -6,6 +6,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { customerUrl } from "../../../customers/urls";
 import { getMutationState, maybe, transformAddressToForm } from "../../../misc";
 import { productUrl } from "../../../products/urls";
@@ -90,14 +91,17 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
+  const handleBack = () => navigate(orderListUrl());
+
   return (
-    <TypedOrderDetailsQuery
-      displayLoader
-      variables={{ id }}
-      require={["order"]}
-    >
+    <TypedOrderDetailsQuery displayLoader variables={{ id }}>
       {({ data, loading }) => {
-        const order = maybe(() => data.order);
+        const order = data?.order;
+
+        if (order === null) {
+          return <NotFoundPage onBack={handleBack} />;
+        }
+
         const [openModal, closeModal] = createDialogActionHandlers<
           OrderUrlDialog,
           OrderUrlQueryParams
@@ -166,7 +170,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                               order: id
                             })
                           }
-                          onBack={() => navigate(orderListUrl())}
+                          onBack={handleBack}
                           order={order}
                           shippingMethods={maybe(
                             () => data.order.availableShippingMethods,
