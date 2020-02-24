@@ -81,8 +81,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   };
 
   return (
-    <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+    <Form initial={initialForm} onSubmit={onSubmit}>
+      {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.vouchers)}
@@ -97,7 +97,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             <div>
               <VoucherInfo
                 data={data}
-                errors={formErrors}
+                errors={errors}
                 disabled={disabled}
                 onChange={change}
                 variant="create"
@@ -106,7 +106,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               <VoucherTypes
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               {data.discountType.toString() !== "SHIPPING" ? (
@@ -114,7 +114,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   data={data}
                   disabled={disabled}
                   defaultCurrency={defaultCurrency}
-                  errors={formErrors}
+                  errors={errors}
                   onChange={change}
                   variant="create"
                 />
@@ -124,7 +124,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 data={data}
                 disabled={disabled}
                 defaultCurrency={defaultCurrency}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />
@@ -132,7 +132,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 data={data}
                 disabled={disabled}
                 defaultCurrency={defaultCurrency}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />
@@ -140,7 +140,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 data={data}
                 disabled={disabled}
                 defaultCurrency={defaultCurrency}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
             </div>

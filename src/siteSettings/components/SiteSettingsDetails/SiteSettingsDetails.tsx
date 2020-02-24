@@ -7,15 +7,13 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { commonMessages } from "@saleor/intl";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import { SiteSettingsPageFormData } from "../SiteSettingsPage";
 
 interface SiteSettingsDetailsProps {
   data: SiteSettingsPageFormData;
-  errors: Partial<{
-    description: string;
-    domain: string;
-    name: string;
-  }>;
+  errors: UserError[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -36,14 +34,14 @@ const SiteSettingsDetails: React.FC<SiteSettingsDetailsProps> = ({
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!errors.name}
+          error={!!getFieldError(errors, "name")}
           fullWidth
           name="name"
           label={intl.formatMessage({
             defaultMessage: "Name of your store"
           })}
           helperText={
-            errors.name ||
+            getFieldError(errors, "name")?.message ||
             intl.formatMessage({
               defaultMessage:
                 "Name of your store is shown on tab in web browser"
@@ -55,27 +53,27 @@ const SiteSettingsDetails: React.FC<SiteSettingsDetailsProps> = ({
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!errors.domain}
+          error={!!getFieldError(errors, "domain")}
           fullWidth
           name="domain"
           label={intl.formatMessage({
             defaultMessage: "URL of your online store"
           })}
-          helperText={errors.domain}
+          helperText={getFieldError(errors, "domain")?.message}
           value={data.domain}
           onChange={onChange}
         />
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!errors.domain}
+          error={!!getFieldError(errors, "description")}
           fullWidth
           name="description"
           label={intl.formatMessage({
             defaultMessage: "Store Description"
           })}
           helperText={
-            errors.description ||
+            getFieldError(errors, "description")?.message ||
             intl.formatMessage({
               defaultMessage:
                 "Store description is shown on taskbar after your store name"

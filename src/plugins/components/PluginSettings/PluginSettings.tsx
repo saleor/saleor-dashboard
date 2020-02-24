@@ -4,17 +4,18 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { FormErrors } from "@saleor/types";
+import { UserError } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
+import { getFieldError } from "@saleor/utils/errors";
 import { FormData } from "../PluginsDetailsPage";
 
 interface PluginSettingsProps {
   data: FormData;
-  errors: FormErrors<"name" | "configuration">;
+  errors: UserError[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
   fields: Plugin_plugin_configuration[];
@@ -84,7 +85,7 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
               ) : (
                 <TextField
                   disabled={disabled}
-                  error={!!errors.name}
+                  error={!!getFieldError(errors, "name")}
                   helperText={fieldData.helpText}
                   label={fieldData.label}
                   name={field.name}

@@ -6,6 +6,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 
 const useStyles = makeStyles(
   theme => ({
@@ -19,10 +21,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductVariantStockProps {
-  errors: {
-    quantity?: string;
-    sku?: string;
-  };
+  errors: UserError[];
   sku: string;
   quantity: string;
   stockAllocated?: number;
@@ -48,7 +47,7 @@ const ProductVariantStock: React.FC<ProductVariantStockProps> = props => {
         <div className={classes.grid}>
           <div>
             <TextField
-              error={!!errors.quantity}
+              error={!!getFieldError(errors, "quantity")}
               name="quantity"
               value={quantity}
               label={intl.formatMessage({
@@ -56,8 +55,8 @@ const ProductVariantStock: React.FC<ProductVariantStockProps> = props => {
                 description: "product variant stock"
               })}
               helperText={
-                errors.quantity
-                  ? errors.quantity
+                getFieldError(errors, "quantity")
+                  ? getFieldError(errors, "quantity")
                   : !!stockAllocated
                   ? intl.formatMessage(
                       {
@@ -77,8 +76,8 @@ const ProductVariantStock: React.FC<ProductVariantStockProps> = props => {
           </div>
           <div>
             <TextField
-              error={!!errors.sku}
-              helperText={errors.sku}
+              error={!!getFieldError(errors, "sku")}
+              helperText={getFieldError(errors, "sku")?.message}
               name="sku"
               value={sku}
               label={intl.formatMessage({

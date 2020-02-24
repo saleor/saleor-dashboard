@@ -9,7 +9,7 @@ import AddressEdit from "@saleor/components/AddressEdit";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { FormErrors } from "../../../types";
+import { UserError } from "../../../types";
 import { AddressTypeInput } from "../../types";
 
 const useStyles = makeStyles(
@@ -26,7 +26,7 @@ export interface CustomerCreateAddressProps {
   countryDisplayName: string;
   data: AddressTypeInput;
   disabled: boolean;
-  errors: FormErrors<keyof AddressTypeInput>;
+  errors: UserError[];
   onChange(event: React.ChangeEvent<any>);
   onCountryChange(event: React.ChangeEvent<any>);
 }

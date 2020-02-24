@@ -12,6 +12,8 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import { buttonMessages } from "@saleor/intl";
+import { getFieldError } from "@saleor/utils/errors";
+import { UserError } from "@saleor/types";
 
 export interface MenuCreateDialogFormData {
   name: string;
@@ -20,6 +22,7 @@ export interface MenuCreateDialogFormData {
 export interface MenuCreateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
+  errors: UserError[];
   open: boolean;
   onClose: () => void;
   onConfirm: (data: MenuCreateDialogFormData) => void;
@@ -32,6 +35,7 @@ const initialForm: MenuCreateDialogFormData = {
 const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
   confirmButtonState,
   disabled,
+  errors,
   onClose,
   onConfirm,
   open
@@ -48,14 +52,14 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
         />
       </DialogTitle>
       <Form initial={initialForm} onSubmit={onConfirm}>
-        {({ change, data, errors: formErrors, submit }) => (
+        {({ change, data, submit }) => (
           <>
             <DialogContent>
               <TextField
                 disabled={disabled}
-                error={!!formErrors.name}
+                error={!!getFieldError(errors, "name")}
                 fullWidth
-                helperText={formErrors.name}
+                helperText={getFieldError(errors, "name")?.message}
                 label={intl.formatMessage({
                   defaultMessage: "Menu Title",
                   id: "menuCreateDialogMenuTitleLabel"

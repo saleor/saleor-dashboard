@@ -7,7 +7,8 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
-import { FormErrors } from "@saleor/types";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 
 const useStyles = makeStyles(
   {
@@ -23,7 +24,7 @@ interface ProductTypeDetailsProps {
     name: string;
   };
   disabled: boolean;
-  errors: FormErrors<"name">;
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -41,9 +42,9 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!errors.name}
+          error={!!getFieldError(errors, "name")}
           fullWidth
-          helperText={errors.name}
+          helperText={getFieldError(errors, "name")?.message}
           label={intl.formatMessage({
             defaultMessage: "Product Type Name"
           })}

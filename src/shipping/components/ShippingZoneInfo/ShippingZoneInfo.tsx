@@ -6,12 +6,13 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
-import { FormErrors } from "../../../types";
+import { getFieldError } from "@saleor/utils/errors";
+import { UserError } from "../../../types";
 import { FormData } from "../ShippingZoneDetailsPage";
 
 export interface ShippingZoneInfoProps {
   data: FormData;
-  errors: FormErrors<"name">;
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -29,9 +30,9 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
       />
       <CardContent>
         <TextField
-          error={!!errors.name}
+          error={!!getFieldError(errors, "name")}
           fullWidth
-          helperText={errors.name}
+          helperText={getFieldError(errors, "name")?.message}
           label={intl.formatMessage({
             defaultMessage: "Shipping Zone Name"
           })}

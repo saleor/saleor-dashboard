@@ -18,7 +18,7 @@ import VisibilityCard from "@saleor/components/VisibilityCard";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "../../../misc";
-import { ListActions, PageListProps } from "../../../types";
+import { ListActions, PageListProps, UserError } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
 import { CollectionImage } from "../CollectionImage/CollectionImage";
@@ -37,6 +37,7 @@ export interface CollectionDetailsPageFormData {
 
 export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   collection: CollectionDetails_collection;
+  errors: UserError[];
   isFeatured: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -50,6 +51,7 @@ export interface CollectionDetailsPageProps extends PageListProps, ListActions {
 const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   collection,
   disabled,
+  errors,
   isFeatured,
   saveButtonBarState,
   onBack,
@@ -77,7 +79,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
       onSubmit={onSubmit}
       confirmLeave
     >
-      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+      {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.collections)}
@@ -89,7 +91,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 collection={collection}
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />
@@ -124,7 +126,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               <div>
                 <VisibilityCard
                   data={data}
-                  errors={formErrors}
+                  errors={errors}
                   disabled={disabled}
                   hiddenMessage={intl.formatMessage(
                     {

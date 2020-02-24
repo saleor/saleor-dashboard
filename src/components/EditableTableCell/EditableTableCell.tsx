@@ -68,7 +68,7 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
   };
 
   const [opened, setOpenStatus] = React.useState(focused);
-  const { change, data } = useForm({ value }, [], handleConfirm);
+  const { change, data } = useForm({ value }, handleConfirm);
   const enable = () => setOpenStatus(true);
   const disable = () => setOpenStatus(false);
 

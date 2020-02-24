@@ -7,7 +7,8 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
-import { FormErrors } from "../../../types";
+import { getFieldError } from "@saleor/utils/errors";
+import { UserError } from "../../../types";
 import { CustomerCreatePageFormData } from "../CustomerCreatePage";
 
 const useStyles = makeStyles(
@@ -25,7 +26,7 @@ const useStyles = makeStyles(
 export interface CustomerCreateDetailsProps {
   data: CustomerCreatePageFormData;
   disabled: boolean;
-  errors: FormErrors<"customerFirstName" | "customerLastName" | "email">;
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -47,33 +48,33 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
         <div className={classes.root}>
           <TextField
             disabled={disabled}
-            error={!!errors.customerFirstName}
+            error={!!getFieldError(errors, "customerFirstName")}
             fullWidth
             name="customerFirstName"
             label={intl.formatMessage(commonMessages.firstName)}
-            helperText={errors.customerFirstName}
+            helperText={getFieldError(errors, "customerFirstName")?.message}
             type="text"
             value={data.customerFirstName}
             onChange={onChange}
           />
           <TextField
             disabled={disabled}
-            error={!!errors.customerLastName}
+            error={!!getFieldError(errors, "customerLastName")}
             fullWidth
             name="customerLastName"
             label={intl.formatMessage(commonMessages.lastName)}
-            helperText={errors.customerLastName}
+            helperText={getFieldError(errors, "customerLastName")?.message}
             type="text"
             value={data.customerLastName}
             onChange={onChange}
           />
           <TextField
             disabled={disabled}
-            error={!!errors.email}
+            error={!!getFieldError(errors, "email")}
             fullWidth
             name="email"
             label={intl.formatMessage(commonMessages.email)}
-            helperText={errors.email}
+            helperText={getFieldError(errors, "email")?.message}
             type="email"
             value={data.email}
             onChange={onChange}

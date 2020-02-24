@@ -11,13 +11,14 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { commonMessages } from "@saleor/intl";
-import { FormErrors } from "@saleor/types";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import { AttributePageFormData } from "../AttributePage";
 
 export interface AttributePropertiesProps {
   data: AttributePageFormData;
   disabled: boolean;
-  errors: FormErrors<"storefrontSearchPosition">;
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -85,9 +86,11 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
         {data.filterableInStorefront && (
           <TextField
             disabled={disabled}
-            error={!!errors.storefrontSearchPosition}
+            error={!!getFieldError(errors, "storefrontSearchPosition")}
             fullWidth
-            helperText={errors.storefrontSearchPosition}
+            helperText={
+              getFieldError(errors, "storefrontSearchPosition")?.message
+            }
             name={"storefrontSearchPosition" as keyof AttributePageFormData}
             label={intl.formatMessage({
               defaultMessage: "Position in faceted navigation",

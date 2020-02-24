@@ -11,7 +11,8 @@ import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Skeleton from "@saleor/components/Skeleton";
 import { maybe } from "@saleor/misc";
-import { FormErrors } from "@saleor/types";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(
@@ -39,7 +40,7 @@ export interface CustomerDetailsProps {
     note: string;
   };
   disabled: boolean;
-  errors: FormErrors<"isActive" | "note">;
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -90,10 +91,10 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
         />
         <TextField
           disabled={disabled}
-          error={!!errors.note}
+          error={!!getFieldError(errors, "note")}
           fullWidth
           multiline
-          helperText={errors.note}
+          helperText={getFieldError(errors, "note")?.message}
           name="note"
           label={intl.formatMessage({
             defaultMessage: "Note",

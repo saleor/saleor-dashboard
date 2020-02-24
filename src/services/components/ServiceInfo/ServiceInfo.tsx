@@ -6,14 +6,15 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { FormChange } from "@saleor/hooks/useForm";
-import { FormErrors } from "@saleor/types";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 
 export interface ServiceInfoProps {
   data: {
     name: string;
   };
   disabled: boolean;
-  errors: FormErrors<"name">;
+  errors: UserError[];
   onChange: FormChange;
 }
 
@@ -32,12 +33,12 @@ const ServiceInfo: React.FC<ServiceInfoProps> = props => {
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!errors.name}
+          error={!!getFieldError(errors, "name")}
           label={intl.formatMessage({
             defaultMessage: "Account Name",
             description: "service account"
           })}
-          helperText={errors.name}
+          helperText={getFieldError(errors, "name")?.message}
           fullWidth
           name="name"
           value={data.name}

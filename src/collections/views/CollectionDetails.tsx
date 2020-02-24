@@ -205,6 +205,9 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                     onBack={handleBack}
                     disabled={loading}
                     collection={maybe(() => data.collection)}
+                    errors={
+                      updateCollection.opts?.data?.collectionUpdate.errors || []
+                    }
                     isFeatured={maybe(
                       () =>
                         data.shop.homepageCollection.id === data.collection.id,

@@ -6,6 +6,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import { maybe } from "../../../misc";
 import { ProductDetails_product } from "../../types/ProductDetails";
 
@@ -26,7 +28,7 @@ interface ProductStockProps {
     stockQuantity: number;
   };
   disabled: boolean;
-  errors: { [key: string]: string };
+  errors: UserError[];
   product: ProductDetails_product;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -56,8 +58,8 @@ const ProductStock: React.FC<ProductStockProps> = props => {
             })}
             value={data.sku}
             onChange={onChange}
-            error={!!errors.sku}
-            helperText={errors.sku}
+            error={!!getFieldError(errors, "sku")}
+            helperText={getFieldError(errors, "sku")?.message}
           />
           <TextField
             disabled={disabled}

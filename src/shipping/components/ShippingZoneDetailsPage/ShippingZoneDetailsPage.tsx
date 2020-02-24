@@ -57,11 +57,11 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   const intl = useIntl();
 
   const initialForm: FormData = {
-    name: maybe(() => shippingZone.name, "")
+    name: shippingZone?.name || ""
   };
   return (
-    <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+    <Form initial={initialForm} onSubmit={onSubmit}>
+      {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             <FormattedMessage defaultMessage="Shipping" />
@@ -69,11 +69,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
           <PageHeader title={maybe(() => shippingZone.name)} />
           <Grid>
             <div>
-              <ShippingZoneInfo
-                data={data}
-                errors={formErrors}
-                onChange={change}
-              />
+              <ShippingZoneInfo data={data} errors={errors} onChange={change} />
               <CardSpacer />
               <CountryList
                 countries={maybe(() => shippingZone.countries)}

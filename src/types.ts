@@ -6,7 +6,7 @@ import { IFilter } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 
 export interface UserError {
-  field: string;
+  field: string | null;
   message: string;
 }
 
@@ -115,8 +115,6 @@ export interface PartialMutationProviderOutput<
 export interface Node {
   id: string;
 }
-
-export type FormErrors<TKeys extends string> = Partial<Record<TKeys, string>>;
 
 export type Pagination = Partial<{
   after: string;

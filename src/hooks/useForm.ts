@@ -1,7 +1,6 @@
 import isEqual from "lodash-es/isEqual";
 import { useState } from "react";
 
-import { UserError } from "@saleor/types";
 import { toggle } from "@saleor/utils/lists";
 import useStateFromProps from "./useStateFromProps";
 
@@ -17,28 +16,12 @@ export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
 export interface UseFormResult<T> {
   change: FormChange;
   data: T;
-  errors: Record<string, string>;
   hasChanged: boolean;
   reset: () => void;
   set: (data: T) => void;
   submit: () => void;
   triggerChange: () => void;
   toggleValue: FormChange;
-}
-
-function parseErrors(errors: UserError[]): Record<string, string> {
-  return errors
-    ? errors.reduce(
-        (acc, curr) =>
-          curr.field
-            ? {
-                ...acc,
-                [curr.field.split(":")[0]]: curr.message
-              }
-            : acc,
-        {}
-      )
-    : {};
 }
 
 type FormData = Record<string, any | any[]>;
@@ -68,7 +51,6 @@ function handleRefresh<T extends FormData>(
 
 function useForm<T extends FormData>(
   initial: T,
-  errors: UserError[],
   onSubmit: (data: T) => void
 ): UseFormResult<T> {
   const [hasChanged, setChanged] = useState(false);
@@ -135,7 +117,6 @@ function useForm<T extends FormData>(
   return {
     change,
     data,
-    errors: parseErrors(errors),
     hasChanged,
     reset,
     set,

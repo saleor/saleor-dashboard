@@ -253,7 +253,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           }
           name="name"
           error={!!getFieldError(errors, "name")}
-          helperText={getFieldError(errors, "name")}
+          helperText={getFieldError(errors, "name")?.message}
         />
         <FormSpacer />
         <AutocompleteSelectMenu
@@ -269,7 +269,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           loading={loading}
           options={options}
           error={!!idError}
-          helperText={idError}
+          helperText={idError?.message}
           placeholder={intl.formatMessage({
             defaultMessage: "Start typing to begin search...",
             id: "menuItemDialogLinkPlaceholder"

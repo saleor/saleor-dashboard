@@ -43,7 +43,10 @@ const styles = createStyles({
   }
 });
 
-const CustomerAddressDialog = withStyles(styles, {})(
+const CustomerAddressDialog = withStyles(
+  styles,
+  {}
+)(
   ({
     address,
     classes,
@@ -98,12 +101,8 @@ const CustomerAddressDialog = withStyles(styles, {})(
         fullWidth
         maxWidth="sm"
       >
-        <Form
-          initial={initialForm}
-          errors={dialogErrors}
-          onSubmit={handleSubmit}
-        >
-          {({ change, data, errors: formErrors }) => {
+        <Form initial={initialForm} onSubmit={handleSubmit}>
+          {({ change, data }) => {
             const handleCountrySelect = createSingleAutocompleteSelectHandler(
               change,
               setCountryDisplayName,
@@ -130,7 +129,7 @@ const CustomerAddressDialog = withStyles(styles, {})(
                     countries={countryChoices}
                     data={data}
                     countryDisplayValue={countryDisplayName}
-                    errors={formErrors}
+                    errors={dialogErrors}
                     onChange={change}
                     onCountryChange={handleCountrySelect}
                   />

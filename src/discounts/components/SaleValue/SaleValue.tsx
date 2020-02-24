@@ -6,15 +6,16 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { FormChange } from "@saleor/hooks/useForm";
-import { FormErrors } from "@saleor/types";
+import { UserError } from "@saleor/types";
 import { SaleType } from "@saleor/types/globalTypes";
+import { getFieldError } from "@saleor/utils/errors";
 import { FormData } from "../SaleDetailsPage";
 
 export interface SaleValueProps {
   currencySymbol: string;
   data: FormData;
   disabled: boolean;
-  errors: FormErrors<"value">;
+  errors: UserError[];
   onChange: FormChange;
 }
 
@@ -43,12 +44,12 @@ const SaleValue: React.FC<SaleValueProps> = ({
             defaultMessage: "Discount Value",
             description: "sale discount"
           })}
-          error={!!errors.value}
+          error={!!getFieldError(errors, "value")}
           name="value"
           InputProps={{
             endAdornment: data.type === SaleType.FIXED ? currencySymbol : "%"
           }}
-          helperText={errors.value}
+          helperText={getFieldError(errors, "value")?.message}
           value={data.value}
           onChange={onChange}
         />

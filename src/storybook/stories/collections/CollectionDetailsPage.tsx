@@ -4,6 +4,7 @@ import React from "react";
 
 import placeholderCollectionImage from "@assets/images/block1.jpg";
 import placeholderProductImage from "@assets/images/placeholder60x60.png";
+import { formError } from "@saleor/storybook/misc";
 import CollectionDetailsPage, {
   CollectionDetailsPageProps
 } from "../../../collections/components/CollectionDetailsPage";
@@ -21,6 +22,7 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
   ...pageListProps.default,
   collection,
   disabled: false,
+  errors: [],
   isFeatured: true,
   onBack: () => undefined,
   onCollectionRemove: () => undefined,
@@ -36,6 +38,14 @@ storiesOf("Views / Collections / Collection details", module)
   .add("default", () => <CollectionDetailsPage {...props} />)
   .add("loading", () => (
     <CollectionDetailsPage {...props} collection={undefined} disabled={true} />
+  ))
+  .add("form errors", () => (
+    <CollectionDetailsPage
+      {...props}
+      errors={["name", "descriptionJson", "publicationDate", "isPublished"].map(
+        formError
+      )}
+    />
   ))
   .add("no products", () => (
     <CollectionDetailsPage

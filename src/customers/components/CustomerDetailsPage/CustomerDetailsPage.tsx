@@ -56,7 +56,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
 
   return (
     <Form
-      errors={errors}
       initial={{
         email: maybe(() => customer.email, ""),
         firstName: maybe(() => customer.firstName, ""),
@@ -67,7 +66,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
       onSubmit={onSubmit}
       confirmLeave
     >
-      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+      {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.customers)}
@@ -79,14 +78,14 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 customer={customer}
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />
               <CustomerInfo
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />

@@ -57,8 +57,8 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
     value: ""
   };
   return (
-    <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+    <Form initial={initialForm} onSubmit={onSubmit}>
+      {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.sales)}
@@ -74,7 +74,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
               <SaleInfo
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />
@@ -84,7 +84,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 data={data}
                 disabled={disabled}
                 defaultCurrency={defaultCurrency}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
             </div>

@@ -77,8 +77,8 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
   };
 
   return (
-    <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({ data, errors, hasChanged, submit, set, triggerChange }) => {
+    <Form initial={initialForm} onSubmit={onSubmit}>
+      {({ data, hasChanged, submit, set, triggerChange }) => {
         const onChange = (event: ChangeEvent) => {
           const { name, value } = event.target;
           const newData = {

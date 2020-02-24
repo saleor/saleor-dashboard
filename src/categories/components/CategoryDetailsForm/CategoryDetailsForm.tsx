@@ -9,6 +9,8 @@ import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import { commonMessages } from "@saleor/intl";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import { maybe } from "../../../misc";
 import { CategoryDetails_category } from "../../types/CategoryDetails";
 
@@ -19,7 +21,7 @@ interface CategoryDetailsFormProps {
     description: RawDraftContentState;
   };
   disabled: boolean;
-  errors: { [key: string]: string };
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -47,16 +49,16 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
             disabled={disabled}
             value={data && data.name}
             onChange={onChange}
-            error={!!errors.name}
-            helperText={errors.name}
+            error={!!getFieldError(errors, "name")}
+            helperText={getFieldError(errors, "name")?.message}
             fullWidth
           />
         </div>
         <FormSpacer />
         <RichTextEditor
           disabled={disabled}
-          error={!!errors.descriptionJson}
-          helperText={errors.descriptionJson}
+          error={!!getFieldError(errors, "descriptionJson")}
+          helperText={getFieldError(errors, "descriptionJson")?.message}
           label={intl.formatMessage({
             defaultMessage: "Category Description"
           })}

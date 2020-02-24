@@ -8,14 +8,15 @@ import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { RequirementsPicker } from "@saleor/discounts/types";
-import { FormErrors } from "@saleor/types";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import { FormData } from "../VoucherDetailsPage";
 
 interface VoucherRequirementsProps {
   data: FormData;
   defaultCurrency: string;
   disabled: boolean;
-  errors: FormErrors<"minSpent" | "minCheckoutItemsQuantity">;
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -76,8 +77,8 @@ const VoucherRequirements = ({
         {data.requirementsPicker === RequirementsPicker.ORDER ? (
           <TextField
             disabled={disabled}
-            error={!!errors.minSpent}
-            helperText={errors.minSpent}
+            error={!!getFieldError(errors, "minSpent")}
+            helperText={getFieldError(errors, "minSpent")?.message}
             label={minimalOrderValueText}
             name={"minSpent" as keyof FormData}
             value={data.minSpent}
@@ -87,8 +88,10 @@ const VoucherRequirements = ({
         ) : data.requirementsPicker === RequirementsPicker.ITEM ? (
           <TextField
             disabled={disabled}
-            error={!!errors.minCheckoutItemsQuantity}
-            helperText={errors.minCheckoutItemsQuantity}
+            error={!!getFieldError(errors, "minCheckoutItemsQuantity")}
+            helperText={
+              getFieldError(errors, "minCheckoutItemsQuantity")?.message
+            }
             label={minimalQuantityText}
             name={"minCheckoutItemsQuantity" as keyof FormData}
             value={data.minCheckoutItemsQuantity}
