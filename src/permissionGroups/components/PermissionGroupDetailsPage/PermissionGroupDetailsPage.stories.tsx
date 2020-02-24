@@ -6,10 +6,10 @@ import PermissionGroupDetailsPage, {
   PermissionGroupDetailsPageProps
 } from "@saleor/permissionGroups/components/PermissionGroupDetailsPage";
 import Decorator from "@saleor/storybook/Decorator";
-import { permissionGroup } from "../../fixtures";
+import { permissionGroup, emptyPermissionGroup } from "../../fixtures";
 
 const props: PermissionGroupDetailsPageProps = {
-  disabled: false,
+  disabled: true,
   errors: [],
   isChecked: () => false,
   onAssign: () => undefined,
@@ -28,6 +28,12 @@ const props: PermissionGroupDetailsPageProps = {
 storiesOf("Views / Permission Groups / Permission Group Details", module)
   .addDecorator(Decorator)
   .add("default", () => <PermissionGroupDetailsPage {...props} />)
+  .add("no members", () => (
+    <PermissionGroupDetailsPage
+      {...props}
+      permissionGroup={emptyPermissionGroup}
+    />
+  ))
   .add("loading", () => (
     <PermissionGroupDetailsPage
       {...props}

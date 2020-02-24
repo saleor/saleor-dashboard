@@ -48,7 +48,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     variables: { id }
   });
 
-  const { search, result } = useStaffMemberSearch({
+  const { search, result: searchResult, loadMore } = useStaffMemberSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
@@ -151,16 +151,23 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
             color="primary"
             onClick={() => openModal("unassign", { ids: listElements })}
           >
-            Unassign
+            {intl.formatMessage({
+              defaultMessage: "Unassign",
+              description: "button title"
+            })}
           </Button>
         }
       />
       <AssignMembersDialog
-        loading={result.loading}
+        loading={searchResult.loading}
         staffMembers={maybe(() =>
-          result.data.search.edges.map(edge => edge.node)
+          searchResult.data.search.edges.map(edge => edge.node)
         )}
-        onFetch={search}
+        onSearchChange={search}
+        onFetchMore={loadMore}
+        disabled={permissionGroupAssignUsersResult.loading}
+        hasMore={maybe(() => searchResult.data.search.pageInfo.hasNextPage)}
+        initialSearch=""
         confirmButtonState={permissionGroupAssignUsersResult.status}
         errors={assignDialogErrors}
         open={params.action === "assign"}

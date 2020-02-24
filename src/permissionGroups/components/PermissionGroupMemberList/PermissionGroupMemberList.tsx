@@ -59,6 +59,7 @@ const useStyles = makeStyles(
     statusText: {
       color: "#9E9D9D"
     },
+    tableRow: {},
     wideColumn: {
       width: "80%"
     }
@@ -156,7 +157,6 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        color="primary"
                         checked={isSelected}
                         disabled={disabled}
                         disableClickPropagation

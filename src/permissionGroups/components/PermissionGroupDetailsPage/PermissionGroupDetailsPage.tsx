@@ -55,9 +55,9 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
     hasFullAccess: false,
     isActive: false,
     name: maybe(() => permissionGroup.name) ? permissionGroup.name : "",
-    permissions: maybe(() => permissionGroup.permissions, []).map(
-      perm => perm.code
-    )
+    permissions: maybe(() => permissionGroup.permissions)
+      ? permissionGroup.permissions.map(perm => perm.code)
+      : []
   };
 
   return (
