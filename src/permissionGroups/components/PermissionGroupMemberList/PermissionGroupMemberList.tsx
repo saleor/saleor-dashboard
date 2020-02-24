@@ -56,6 +56,9 @@ const useStyles = makeStyles(
     colActions: {
       textAlign: "right"
     },
+    helperText: {
+      margin: theme.spacing(3)
+    },
     statusText: {
       color: "#9E9D9D"
     },
@@ -108,16 +111,20 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
         }
       />
       {maybe(() => users.length) === 0 ? (
-        <Typography variant="subtitle2">
-          <FormattedMessage
-            defaultMessage="You haven’t assigned any member to this permission group yet."
-            description="empty list message"
-          />
-          <FormattedMessage
-            defaultMessage="Please use Assign Members button to do so."
-            description="empty list message"
-          />
-        </Typography>
+        <>
+          <Typography className={classNames(classes.helperText)}>
+            <FormattedMessage
+              defaultMessage="You haven’t assigned any member to this permission group yet."
+              description="empty list message"
+            />
+          </Typography>
+          <Typography className={classNames(classes.helperText)}>
+            <FormattedMessage
+              defaultMessage="Please use Assign Members button to do so."
+              description="empty list message"
+            />
+          </Typography>
+        </>
       ) : (
         <ResponsiveTable>
           <TableHead
