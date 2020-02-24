@@ -9,7 +9,7 @@ import Decorator from "@saleor/storybook/Decorator";
 import { permissionGroup, emptyPermissionGroup } from "../../fixtures";
 
 const props: PermissionGroupDetailsPageProps = {
-  disabled: true,
+  disabled: false,
   errors: [],
   isChecked: () => false,
   onAssign: () => undefined,
@@ -19,7 +19,7 @@ const props: PermissionGroupDetailsPageProps = {
   permissionGroup,
   permissions,
   saveButtonBarState: undefined,
-  selected: undefined,
+  selected: 0,
   toggle: () => undefined,
   toggleAll: () => undefined,
   toolbar: null
