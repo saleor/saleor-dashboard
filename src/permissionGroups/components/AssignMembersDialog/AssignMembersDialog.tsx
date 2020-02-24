@@ -1,4 +1,6 @@
 import { FormattedMessage, useIntl } from "react-intl";
+import InfiniteScroll from "react-infinite-scroller";
+import classNames from "classnames";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -12,6 +14,7 @@ import {
   SearchPageProps,
   UserError
 } from "@saleor/types";
+import useElementScroll from "@saleor/hooks/useElementScroll";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
@@ -30,6 +33,7 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
 import { Checkbox, Typography } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
+import CardSpacer from "@saleor/components/CardSpacer";
 
 const useStyles = makeStyles(
   theme => ({
@@ -61,15 +65,6 @@ const useStyles = makeStyles(
       pointerEvents: "none",
       width: "100%"
     },
-    colActions: {
-      textAlign: "right"
-    },
-    colName: {
-      paddingLeft: theme.spacing()
-    },
-    statusText: {
-      color: "#9E9D9D"
-    },
     checkboxCell: {
       "&&:not(first-child)": {
         paddingLeft: 0,
@@ -77,14 +72,38 @@ const useStyles = makeStyles(
         width: 48
       }
     },
+    colActions: {
+      textAlign: "right"
+    },
+    colName: {
+      paddingLeft: theme.spacing()
+    },
+
+    dropShadow: {
+      boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
+    },
+    inputContainer: {
+      overflowY: "visible"
+    },
+    loadMoreLoaderContainer: {
+      alignItems: "center",
+      display: "flex",
+      gridColumnEnd: "span 3",
+      height: theme.spacing(4),
+      justifyContent: "center"
+    },
     overflow: {
       overflowY: "visible"
     },
     scrollArea: {
-      overflowY: "scroll"
+      maxHeight: 400,
+      overflowY: "scroll",
+      paddingTop: 0
+    },
+    statusText: {
+      color: "#9E9D9D"
     },
     wideCell: {
-      // paddingLeft: 0,
       width: "80%"
     }
   }),
@@ -99,6 +118,8 @@ export interface AssignMembersDialogProps
   disabled: boolean;
   errors: UserError[];
   staffMembers: SearchStaffMembers_search_edges_node[];
+  hasMore: boolean;
+  onFetchMore: () => void;
   onSubmit: (data: SearchStaffMembers_search_edges_node[]) => void;
 }
 
@@ -122,6 +143,8 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   disabled,
   loading,
   onClose,
+  onFetchMore,
+  hasMore,
   onSearchChange,
   onSubmit,
   open,
@@ -137,6 +160,13 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
     SearchStaffMembers_search_edges_node[]
   >([]);
   const mutationErrors = errors.map(err => err.message);
+  const anchor = React.useRef<HTMLDivElement>();
+  const scrollPosition = useElementScroll(anchor);
+  const dropShadow =
+    anchor.current && scrollPosition
+      ? scrollPosition.y + anchor.current.clientHeight <
+        anchor.current.scrollHeight
+      : false;
 
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
@@ -146,7 +176,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent>
+      <DialogContent className={classes.inputContainer}>
         <TextField
           name="query"
           value={query}
@@ -164,10 +194,18 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           }}
           disabled={disabled}
         />
-        <FormSpacer />
-
-        <div className={classes.scrollArea}>
+      </DialogContent>
+      <DialogContent className={classes.scrollArea}>
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={onFetchMore}
+          hasMore={hasMore}
+          useWindow={false}
+          threshold={100}
+          key="infinite-scroll"
+        >
           <ResponsiveTable>
+            {/* <ResponsiveTable innerRef={anchor}> */}
             <TableBody>
               {staffMembers &&
                 staffMembers.map(member => {
@@ -236,19 +274,32 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                 })}
             </TableBody>
           </ResponsiveTable>
-          {mutationErrors.length > 0 && (
+          {loading && (
             <>
-              <FormSpacer />
-              {mutationErrors.map(err => (
-                <Typography key={err} color="error">
-                  {err}
-                </Typography>
-              ))}
+              {maybe(() => staffMembers.length > 0) && <CardSpacer />}
+
+              <div className={classes.loadMoreLoaderContainer}>
+                <CircularProgress size={24} />
+              </div>
             </>
           )}
-        </div>
+        </InfiniteScroll>
       </DialogContent>
-      <DialogActions>
+      {mutationErrors.length > 0 && (
+        <DialogContent>
+          <FormSpacer />
+          {mutationErrors.map(err => (
+            <Typography key={err} color="error">
+              {err}
+            </Typography>
+          ))}
+        </DialogContent>
+      )}
+      <DialogActions
+        className={classNames({
+          [classes.dropShadow]: dropShadow
+        })}
+      >
         <Button onClick={onClose}>
           <FormattedMessage {...buttonMessages.back} />
         </Button>

@@ -1,6 +1,7 @@
 /* eslint-disable sort-keys */
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
+import * as avatarImg from "@assets/images/avatars/avatar1.png";
 import { PermissionGroupList_permissionGroups_edges_node } from "./types/PermissionGroupList";
 import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
 
@@ -79,6 +80,20 @@ export const permissionGroups: PermissionGroupList_permissionGroups_edges_node[]
   }
 ].map(edge => edge.node);
 
+export const emptyPermissionGroup: PermissionGroupDetails_permissionGroup = {
+  id: "R3JvdXA6Mw==",
+  name: "Editors",
+  users: [],
+  __typename: "Group",
+  permissions: [
+    {
+      code: PermissionEnum.MANAGE_PAGES,
+      name: "Manage pages.",
+      __typename: "PermissionDisplay"
+    }
+  ]
+};
+
 export const permissionGroup: PermissionGroupDetails_permissionGroup = {
   id: "R3JvdXA6Mw==",
   name: "Editors",
@@ -119,9 +134,10 @@ export const users: SearchStaffMembers_search_edges_node[] = [
       email: "admin@example.com",
       firstName: "",
       lastName: "",
+      isActive: true,
       avatar: {
         alt: null,
-        url: "http://placekitten.com/200/200",
+        url: avatarImg,
         __typename: "Image" as "Image"
       },
       __typename: "User" as "User"
@@ -134,9 +150,10 @@ export const users: SearchStaffMembers_search_edges_node[] = [
       email: "bryan.rodgers@example.com",
       firstName: "Bryan",
       lastName: "Rodgers",
+      isActive: true,
       avatar: {
         alt: null,
-        url: "http://placekitten.com/250/250",
+        url: avatarImg,
         __typename: "Image" as "Image"
       },
       __typename: "User" as "User"
@@ -149,9 +166,26 @@ export const users: SearchStaffMembers_search_edges_node[] = [
       email: "joshua.mitchell@example.com",
       firstName: "Joshua",
       lastName: "Mitchell",
+      isActive: true,
       avatar: {
         alt: null,
-        url: "http://placekitten.com/150/150",
+        url: avatarImg,
+        __typename: "Image" as "Image"
+      },
+      __typename: "User" as "User"
+    },
+    __typename: "UserCountableEdge" as "UserCountableEdge"
+  },
+  {
+    node: {
+      id: "VXNlcjoyMg==",
+      email: "joshua.mitchell@example.com",
+      firstName: "Joshua",
+      lastName: "Mitchell",
+      isActive: true,
+      avatar: {
+        alt: null,
+        url: avatarImg,
         __typename: "Image" as "Image"
       },
       __typename: "User" as "User"
