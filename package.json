@@ -189,6 +189,7 @@
     "extract-messages": "npm run extract-json-messages && npm run transpile-messages",
     "build-types": "apollo client:codegen --target=typescript types --globalTypesFile=src/types/globalTypes.ts",
     "check-types": "tsc --noEmit",
+    "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
     "generate-component": "plop --plopfile .plop/plopfile.js",
     "start": "webpack-dev-server --open -d",
     "storybook": "start-storybook -p 3000 -c src/storybook/",
