@@ -174,6 +174,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                     open={params.action === "add"}
                     confirmButtonState={menuCreateOpts.status}
                     disabled={menuCreateOpts.loading}
+                    errors={menuCreateOpts?.data?.menuCreate.errors || []}
                     onClose={closeModal}
                     onConfirm={formData =>
                       menuCreate({

@@ -18,8 +18,9 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import { buttonMessages } from "@saleor/intl";
+import { getFieldError } from "@saleor/utils/errors";
 import { maybe } from "../../../misc";
-import { FormErrors, UserError } from "../../../types";
+import { UserError } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import { ShippingZoneDetailsFragment_shippingMethods } from "../../types/ShippingZoneDetailsFragment";
 
@@ -109,243 +110,233 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-        {({ change, data, errors: formErrors, hasChanged }) => {
-          const typedFormErrors: FormErrors<
-            | "minimumOrderPrice"
-            | "minimumOrderWeight"
-            | "maximumOrderPrice"
-            | "maximumOrderWeight"
-            | "price"
-            | "name"
-          > = formErrors;
-          return (
-            <>
-              <DialogTitle>
-                {variant === ShippingMethodTypeEnum.PRICE
-                  ? action === "create"
-                    ? intl.formatMessage({
-                        defaultMessage: "Add Price Rate",
-                        description: "dialog header"
-                      })
-                    : intl.formatMessage({
-                        defaultMessage: "Edit Price Rate",
-                        description: "dialog header"
-                      })
-                  : action === "create"
+      <Form initial={initialForm} onSubmit={onSubmit}>
+        {({ change, data, hasChanged }) => (
+          <>
+            <DialogTitle>
+              {variant === ShippingMethodTypeEnum.PRICE
+                ? action === "create"
                   ? intl.formatMessage({
-                      defaultMessage: "Add Weight Rate",
-                      description:
-                        "add weight based shipping method, dialog header"
+                      defaultMessage: "Add Price Rate",
+                      description: "dialog header"
                     })
                   : intl.formatMessage({
-                      defaultMessage: "Edit Weight Rate",
-                      description:
-                        "edit weight based shipping method, dialog header"
-                    })}
-              </DialogTitle>
-              <DialogContent>
-                <TextField
-                  disabled={disabled}
-                  error={!!typedFormErrors.name}
-                  fullWidth
-                  helperText={
-                    typedFormErrors.name ||
-                    intl.formatMessage({
-                      defaultMessage:
-                        "This will be shown to customers at checkout"
+                      defaultMessage: "Edit Price Rate",
+                      description: "dialog header"
                     })
-                  }
-                  label={intl.formatMessage({
-                    defaultMessage: "Rate Name",
-                    description: "shipping method name"
+                : action === "create"
+                ? intl.formatMessage({
+                    defaultMessage: "Add Weight Rate",
+                    description:
+                      "add weight based shipping method, dialog header"
+                  })
+                : intl.formatMessage({
+                    defaultMessage: "Edit Weight Rate",
+                    description:
+                      "edit weight based shipping method, dialog header"
                   })}
-                  name={"name" as keyof FormData}
-                  value={data.name}
-                  onChange={change}
-                />
-              </DialogContent>
-              <Hr />
-              <DialogContent>
-                {!!variant ? (
-                  <>
-                    <Typography
-                      className={classes.subheading}
-                      variant="subtitle1"
-                    >
-                      {variant === ShippingMethodTypeEnum.PRICE
-                        ? intl.formatMessage({
-                            defaultMessage: "Value range",
-                            description: "order price range"
-                          })
-                        : intl.formatMessage({
-                            defaultMessage: "Weight range",
-                            description: "order weight range"
-                          })}
-                    </Typography>
-                    <ControlledCheckbox
-                      name={"noLimits" as keyof FormData}
-                      label={
-                        <>
-                          <FormattedMessage
-                            defaultMessage="There are no value limits"
-                            description="shipping method has no value limits"
-                          />
-                          <Typography variant="caption">
-                            {variant === ShippingMethodTypeEnum.PRICE
-                              ? intl.formatMessage({
-                                  defaultMessage:
-                                    "This rate will apply to all orders of all prices"
-                                })
-                              : intl.formatMessage({
-                                  defaultMessage:
-                                    "This rate will apply to all orders of all weights"
-                                })}
-                          </Typography>
-                        </>
-                      }
-                      checked={data.noLimits}
-                      onChange={change}
-                      disabled={disabled}
-                    />
-                    {!data.noLimits && (
-                      <>
-                        <FormSpacer />
-                        <div className={classes.grid}>
-                          <TextField
-                            disabled={disabled}
-                            error={
-                              variant === ShippingMethodTypeEnum.PRICE
-                                ? !!typedFormErrors.minimumOrderPrice
-                                : !!typedFormErrors.minimumOrderWeight
-                            }
-                            fullWidth
-                            helperText={
-                              variant === ShippingMethodTypeEnum.PRICE
-                                ? typedFormErrors.minimumOrderPrice
-                                : typedFormErrors.minimumOrderWeight
-                            }
-                            label={
-                              variant === ShippingMethodTypeEnum.PRICE
-                                ? typedFormErrors.minimumOrderPrice ||
-                                  intl.formatMessage({
-                                    defaultMessage: "Minimal Order Value"
-                                  })
-                                : typedFormErrors.minimumOrderWeight ||
-                                  intl.formatMessage({
-                                    defaultMessage: "Minimal Order Weight"
-                                  })
-                            }
-                            name={"minValue" as keyof FormData}
-                            type="number"
-                            value={data.minValue}
-                            onChange={change}
-                          />
-                          <TextField
-                            disabled={disabled}
-                            error={
-                              variant === ShippingMethodTypeEnum.PRICE
-                                ? !!typedFormErrors.maximumOrderPrice
-                                : !!typedFormErrors.maximumOrderWeight
-                            }
-                            fullWidth
-                            helperText={
-                              variant === ShippingMethodTypeEnum.PRICE
-                                ? typedFormErrors.maximumOrderPrice
-                                : typedFormErrors.maximumOrderWeight
-                            }
-                            label={
-                              variant === ShippingMethodTypeEnum.PRICE
-                                ? typedFormErrors.maximumOrderPrice ||
-                                  intl.formatMessage({
-                                    defaultMessage: "Maximal Order Value"
-                                  })
-                                : typedFormErrors.maximumOrderWeight ||
-                                  intl.formatMessage({
-                                    defaultMessage: "Maximal Order Weight"
-                                  })
-                            }
-                            name={"maxValue" as keyof FormData}
-                            type="number"
-                            value={data.maxValue}
-                            onChange={change}
-                          />
-                        </div>
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <Skeleton />
-                )}
-              </DialogContent>
-              <Hr />
-              <DialogContent>
-                <Typography className={classes.subheading} variant="subtitle1">
-                  <FormattedMessage
-                    defaultMessage="Rate"
-                    description="shipping method"
-                  />
-                </Typography>
-                <ControlledCheckbox
-                  name={"isFree" as keyof FormData}
-                  label={intl.formatMessage({
-                    defaultMessage: "This is free shipping",
-                    description: "shipping method, switch button"
-                  })}
-                  checked={data.isFree}
-                  onChange={change}
-                  disabled={disabled}
-                />
-                {!data.isFree && (
-                  <>
-                    <FormSpacer />
-                    <div className={classes.grid}>
-                      <TextField
-                        disabled={disabled}
-                        error={!!typedFormErrors.price}
-                        fullWidth
-                        helperText={typedFormErrors.price}
-                        label={intl.formatMessage({
-                          defaultMessage: "Rate Price",
-                          description: "shipping method price"
+            </DialogTitle>
+            <DialogContent>
+              <TextField
+                disabled={disabled}
+                error={!!getFieldError(errors, "name")}
+                fullWidth
+                helperText={
+                  getFieldError(errors, "name") ||
+                  intl.formatMessage({
+                    defaultMessage:
+                      "This will be shown to customers at checkout"
+                  })
+                }
+                label={intl.formatMessage({
+                  defaultMessage: "Rate Name",
+                  description: "shipping method name"
+                })}
+                name={"name" as keyof FormData}
+                value={data.name}
+                onChange={change}
+              />
+            </DialogContent>
+            <Hr />
+            <DialogContent>
+              {!!variant ? (
+                <>
+                  <Typography
+                    className={classes.subheading}
+                    variant="subtitle1"
+                  >
+                    {variant === ShippingMethodTypeEnum.PRICE
+                      ? intl.formatMessage({
+                          defaultMessage: "Value range",
+                          description: "order price range"
+                        })
+                      : intl.formatMessage({
+                          defaultMessage: "Weight range",
+                          description: "order weight range"
                         })}
-                        name={"price" as keyof FormData}
-                        type="number"
-                        value={data.price}
-                        onChange={change}
-                        InputProps={{
-                          endAdornment: defaultCurrency
-                        }}
-                      />
-                    </div>
-                  </>
-                )}
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={onClose}>
-                  <FormattedMessage {...buttonMessages.back} />
-                </Button>
-                <ConfirmButton
-                  disabled={disabled || !hasChanged}
-                  transitionState={confirmButtonState}
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                >
-                  {action === "create"
-                    ? intl.formatMessage({
-                        defaultMessage: "Create rate",
-                        description: "button"
-                      })
-                    : intl.formatMessage({
-                        defaultMessage: "Update rate",
-                        description: "button"
+                  </Typography>
+                  <ControlledCheckbox
+                    name={"noLimits" as keyof FormData}
+                    label={
+                      <>
+                        <FormattedMessage
+                          defaultMessage="There are no value limits"
+                          description="shipping method has no value limits"
+                        />
+                        <Typography variant="caption">
+                          {variant === ShippingMethodTypeEnum.PRICE
+                            ? intl.formatMessage({
+                                defaultMessage:
+                                  "This rate will apply to all orders of all prices"
+                              })
+                            : intl.formatMessage({
+                                defaultMessage:
+                                  "This rate will apply to all orders of all weights"
+                              })}
+                        </Typography>
+                      </>
+                    }
+                    checked={data.noLimits}
+                    onChange={change}
+                    disabled={disabled}
+                  />
+                  {!data.noLimits && (
+                    <>
+                      <FormSpacer />
+                      <div className={classes.grid}>
+                        <TextField
+                          disabled={disabled}
+                          error={
+                            variant === ShippingMethodTypeEnum.PRICE
+                              ? !!getFieldError(errors, "minimumOrderPrice")
+                              : !!getFieldError(errors, "minimumOrderWeight")
+                          }
+                          fullWidth
+                          helperText={
+                            variant === ShippingMethodTypeEnum.PRICE
+                              ? getFieldError(errors, "minimumOrderPrice")
+                              : getFieldError(errors, "minimumOrderWeight")
+                          }
+                          label={
+                            variant === ShippingMethodTypeEnum.PRICE
+                              ? getFieldError(errors, "minimumOrderPrice") ||
+                                intl.formatMessage({
+                                  defaultMessage: "Minimal Order Value"
+                                })
+                              : getFieldError(errors, "minimumOrderWeight") ||
+                                intl.formatMessage({
+                                  defaultMessage: "Minimal Order Weight"
+                                })
+                          }
+                          name={"minValue" as keyof FormData}
+                          type="number"
+                          value={data.minValue}
+                          onChange={change}
+                        />
+                        <TextField
+                          disabled={disabled}
+                          error={
+                            variant === ShippingMethodTypeEnum.PRICE
+                              ? !!getFieldError(errors, "maximumOrderPrice")
+                              : !!getFieldError(errors, "maximumOrderWeight")
+                          }
+                          fullWidth
+                          helperText={
+                            variant === ShippingMethodTypeEnum.PRICE
+                              ? getFieldError(errors, "maximumOrderPrice")
+                              : getFieldError(errors, "maximumOrderWeight")
+                          }
+                          label={
+                            variant === ShippingMethodTypeEnum.PRICE
+                              ? getFieldError(errors, "maximumOrderPrice") ||
+                                intl.formatMessage({
+                                  defaultMessage: "Maximal Order Value"
+                                })
+                              : getFieldError(errors, "maximumOrderWeight") ||
+                                intl.formatMessage({
+                                  defaultMessage: "Maximal Order Weight"
+                                })
+                          }
+                          name={"maxValue" as keyof FormData}
+                          type="number"
+                          value={data.maxValue}
+                          onChange={change}
+                        />
+                      </div>
+                    </>
+                  )}
+                </>
+              ) : (
+                <Skeleton />
+              )}
+            </DialogContent>
+            <Hr />
+            <DialogContent>
+              <Typography className={classes.subheading} variant="subtitle1">
+                <FormattedMessage
+                  defaultMessage="Rate"
+                  description="shipping method"
+                />
+              </Typography>
+              <ControlledCheckbox
+                name={"isFree" as keyof FormData}
+                label={intl.formatMessage({
+                  defaultMessage: "This is free shipping",
+                  description: "shipping method, switch button"
+                })}
+                checked={data.isFree}
+                onChange={change}
+                disabled={disabled}
+              />
+              {!data.isFree && (
+                <>
+                  <FormSpacer />
+                  <div className={classes.grid}>
+                    <TextField
+                      disabled={disabled}
+                      error={!!getFieldError(errors, "price")}
+                      fullWidth
+                      helperText={getFieldError(errors, "price")?.message}
+                      label={intl.formatMessage({
+                        defaultMessage: "Rate Price",
+                        description: "shipping method price"
                       })}
-                </ConfirmButton>
-              </DialogActions>
-            </>
-          );
-        }}
+                      name={"price" as keyof FormData}
+                      type="number"
+                      value={data.price}
+                      onChange={change}
+                      InputProps={{
+                        endAdornment: defaultCurrency
+                      }}
+                    />
+                  </div>
+                </>
+              )}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={onClose}>
+                <FormattedMessage {...buttonMessages.back} />
+              </Button>
+              <ConfirmButton
+                disabled={disabled || !hasChanged}
+                transitionState={confirmButtonState}
+                color="primary"
+                variant="contained"
+                type="submit"
+              >
+                {action === "create"
+                  ? intl.formatMessage({
+                      defaultMessage: "Create rate",
+                      description: "button"
+                    })
+                  : intl.formatMessage({
+                      defaultMessage: "Update rate",
+                      description: "button"
+                    })}
+              </ConfirmButton>
+            </DialogActions>
+          </>
+        )}
       </Form>
     </Dialog>
   );

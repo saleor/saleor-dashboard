@@ -6,13 +6,14 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import RadioGroupField from "@saleor/components/RadioGroupField";
-import { FormErrors } from "../../../types";
+import { getFieldError } from "@saleor/utils/errors";
+import { UserError } from "../../../types";
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { FormData } from "../VoucherDetailsPage";
 
 interface VoucherTypesProps {
   data: FormData;
-  errors: FormErrors<"discountType">;
+  errors: UserError[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -62,8 +63,8 @@ const VoucherTypes = ({
           <RadioGroupField
             choices={voucherTypeChoices}
             disabled={disabled}
-            error={!!errors.discountType}
-            hint={errors.discountType}
+            error={!!getFieldError(errors, "discountType")}
+            hint={getFieldError(errors, "discountType")?.message}
             name={"discountType" as keyof FormData}
             value={data.discountType}
             onChange={onChange}

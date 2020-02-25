@@ -40,7 +40,7 @@ export interface WebhookCreatePageProps {
 
 const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
   disabled,
-  errors: apiErrors,
+  errors,
   saveButtonBarState,
   services,
   fetchServiceAccounts,
@@ -70,8 +70,8 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
   );
 
   return (
-    <Form errors={apiErrors} initial={initialForm} onSubmit={onSubmit}>
-      {({ data, errors, hasChanged, submit, change }) => {
+    <Form initial={initialForm} onSubmit={onSubmit}>
+      {({ data, hasChanged, submit, change }) => {
         const handleServiceSelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedServiceAcccount,
@@ -93,11 +93,10 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
                 <WebhookInfo
                   data={data}
                   disabled={disabled}
+                  errors={errors}
+                  fetchServiceAccounts={fetchServiceAccounts}
                   serviceDisplayValue={selectedServiceAcccount}
                   services={servicesChoiceList}
-                  fetchServiceAccounts={fetchServiceAccounts}
-                  apiErrors={apiErrors}
-                  errors={errors}
                   serviceOnChange={handleServiceSelect}
                   onChange={change}
                 />

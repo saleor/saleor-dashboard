@@ -5,7 +5,8 @@ import { useIntl } from "react-intl";
 
 import { AddressTypeInput } from "@saleor/customers/types";
 import { commonMessages } from "@saleor/intl";
-import { FormErrors } from "@saleor/types";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import FormSpacer from "../FormSpacer";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
@@ -27,7 +28,7 @@ interface AddressEditProps {
   countryDisplayValue: string;
   data: AddressTypeInput;
   disabled?: boolean;
-  errors: FormErrors<keyof AddressTypeInput>;
+  errors: UserError[];
   onChange(event: React.ChangeEvent<any>);
   onCountryChange(event: React.ChangeEvent<any>);
 }
@@ -52,8 +53,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <TextField
             disabled={disabled}
-            error={!!errors.firstName}
-            helperText={errors.firstName}
+            error={!!getFieldError(errors, "firstName")}
+            helperText={getFieldError(errors, "firstName")?.message}
             label={intl.formatMessage(commonMessages.firstName)}
             name="firstName"
             onChange={onChange}
@@ -64,8 +65,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <TextField
             disabled={disabled}
-            error={!!errors.lastName}
-            helperText={errors.lastName}
+            error={!!getFieldError(errors, "lastName")}
+            helperText={getFieldError(errors, "lastName")?.message}
             label={intl.formatMessage(commonMessages.lastName)}
             name="lastName"
             onChange={onChange}
@@ -79,8 +80,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <TextField
             disabled={disabled}
-            error={!!errors.companyName}
-            helperText={errors.companyName}
+            error={!!getFieldError(errors, "companyName")}
+            helperText={getFieldError(errors, "companyName")?.message}
             label={intl.formatMessage({
               defaultMessage: "Company"
             })}
@@ -93,9 +94,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <TextField
             disabled={disabled}
-            error={!!errors.phone}
+            error={!!getFieldError(errors, "phone")}
             fullWidth
-            helperText={errors.phone}
+            helperText={getFieldError(errors, "phone")?.message}
             label={intl.formatMessage({
               defaultMessage: "Phone"
             })}
@@ -108,8 +109,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
       <FormSpacer />
       <TextField
         disabled={disabled}
-        error={!!errors.streetAddress1}
-        helperText={errors.streetAddress1}
+        error={!!getFieldError(errors, "streetAddress1")}
+        helperText={getFieldError(errors, "streetAddress1")?.message}
         label={intl.formatMessage({
           defaultMessage: "Address line 1"
         })}
@@ -121,8 +122,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
       <FormSpacer />
       <TextField
         disabled={disabled}
-        error={!!errors.streetAddress2}
-        helperText={errors.streetAddress2}
+        error={!!getFieldError(errors, "streetAddress2")}
+        helperText={getFieldError(errors, "streetAddress2")?.message}
         label={intl.formatMessage({
           defaultMessage: "Address line 2"
         })}
@@ -136,8 +137,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <TextField
             disabled={disabled}
-            error={!!errors.city}
-            helperText={errors.city}
+            error={!!getFieldError(errors, "city")}
+            helperText={getFieldError(errors, "city")?.message}
             label={intl.formatMessage({
               defaultMessage: "City"
             })}
@@ -150,8 +151,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <TextField
             disabled={disabled}
-            error={!!errors.postalCode}
-            helperText={errors.postalCode}
+            error={!!getFieldError(errors, "postalCode")}
+            helperText={getFieldError(errors, "postalCode")?.message}
             label={intl.formatMessage({
               defaultMessage: "ZIP / Postal code"
             })}
@@ -169,8 +170,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
           <SingleAutocompleteSelectField
             disabled={disabled}
             displayValue={countryDisplayValue}
-            error={!!errors.country}
-            helperText={errors.country}
+            error={!!getFieldError(errors, "country")}
+            helperText={getFieldError(errors, "country")?.message}
             label={intl.formatMessage({
               defaultMessage: "Country"
             })}
@@ -186,8 +187,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <TextField
             disabled={disabled}
-            error={!!errors.countryArea}
-            helperText={errors.countryArea}
+            error={!!getFieldError(errors, "countryArea")}
+            helperText={getFieldError(errors, "countryArea")?.message}
             label={intl.formatMessage({
               defaultMessage: "Country area"
             })}

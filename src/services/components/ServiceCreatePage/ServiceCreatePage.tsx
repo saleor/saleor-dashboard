@@ -35,7 +35,7 @@ export interface ServiceCreatePageProps {
 const ServiceCreatePage: React.FC<ServiceCreatePageProps> = props => {
   const {
     disabled,
-    errors: formErrors,
+    errors,
     permissions,
     saveButtonBarState,
     onBack,
@@ -50,13 +50,8 @@ const ServiceCreatePage: React.FC<ServiceCreatePageProps> = props => {
     permissions: []
   };
   return (
-    <Form
-      errors={formErrors}
-      initial={initialForm}
-      onSubmit={onSubmit}
-      confirmLeave
-    >
-      {({ data, change, errors, hasChanged, submit }) => (
+    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+      {({ data, change, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.serviceAccounts)}

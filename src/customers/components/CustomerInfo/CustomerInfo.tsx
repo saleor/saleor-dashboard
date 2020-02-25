@@ -10,6 +10,8 @@ import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import { commonMessages } from "@saleor/intl";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 
 const useStyles = makeStyles(
   theme => ({
@@ -33,11 +35,7 @@ export interface CustomerInfoProps {
     email: string;
   };
   disabled: boolean;
-  errors: {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-  };
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -64,9 +62,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
         <Grid variant="uniform">
           <TextField
             disabled={disabled}
-            error={!!errors.firstName}
+            error={!!getFieldError(errors, "firstName")}
             fullWidth
-            helperText={errors.firstName}
+            helperText={getFieldError(errors, "firstName")?.message}
             name="firstName"
             type="text"
             label={intl.formatMessage(commonMessages.firstName)}
@@ -75,9 +73,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
           />
           <TextField
             disabled={disabled}
-            error={!!errors.lastName}
+            error={!!getFieldError(errors, "lastName")}
             fullWidth
-            helperText={errors.lastName}
+            helperText={getFieldError(errors, "lastName")?.message}
             name="lastName"
             type="text"
             label={intl.formatMessage(commonMessages.lastName)}
@@ -94,9 +92,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
         </Typography>
         <TextField
           disabled={disabled}
-          error={!!errors.email}
+          error={!!getFieldError(errors, "email")}
           fullWidth
-          helperText={errors.email}
+          helperText={getFieldError(errors, "email")?.message}
           name="email"
           type="email"
           label={intl.formatMessage(commonMessages.email)}

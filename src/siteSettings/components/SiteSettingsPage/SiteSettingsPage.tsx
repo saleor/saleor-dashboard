@@ -127,9 +127,10 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     name: maybe(() => shop.name, "")
   };
 
+  const formErrors = [...errors, ...validationErrors];
+
   return (
     <Form
-      errors={[...errors, ...validationErrors]}
       initial={initialForm}
       onSubmit={data => {
         const submitFunc = areAddressInputFieldsModified(data)
@@ -139,8 +140,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
       }}
       confirmLeave
     >
-      {({ change, data, errors: formErrors, hasChanged, submit }) => {
-        const siteFormErrors = { ...formErrors };
+      {({ change, data, hasChanged, submit }) => {
         const countryChoices = mapCountriesToChoices(
           maybe(() => shop.countries, [])
         );
@@ -169,7 +169,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               </div>
               <SiteSettingsDetails
                 data={data}
-                errors={siteFormErrors}
+                errors={formErrors}
                 disabled={disabled}
                 onChange={change}
               />
@@ -187,7 +187,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               </div>
               <SiteSettingsMailing
                 data={data}
-                errors={siteFormErrors}
+                errors={formErrors}
                 disabled={disabled}
                 onChange={change}
               />
@@ -208,7 +208,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 data={data}
                 displayCountry={displayCountry}
                 countries={countryChoices}
-                errors={siteFormErrors}
+                errors={formErrors}
                 disabled={disabled}
                 onChange={change}
                 onCountryChange={handleCountryChange}

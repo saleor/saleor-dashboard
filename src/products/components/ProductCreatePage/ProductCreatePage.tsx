@@ -90,7 +90,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   disabled,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
-  errors: userErrors,
+  errors,
   fetchCategories,
   fetchCollections,
   fetchMoreCategories,
@@ -162,21 +162,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     });
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      errors={userErrors}
-      initial={initialData}
-      confirmLeave
-    >
-      {({
-        change,
-        data,
-        errors,
-        hasChanged,
-        submit,
-        triggerChange,
-        toggleValue
-      }) => {
+    <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
+      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,

@@ -8,7 +8,8 @@ import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Grid from "@saleor/components/Grid";
 import { commonMessages } from "@saleor/intl";
-import { FormErrors } from "../../../types";
+import { getFieldError } from "@saleor/utils/errors";
+import { UserError } from "../../../types";
 
 interface DiscountDatesProps {
   data: {
@@ -20,7 +21,7 @@ interface DiscountDatesProps {
   };
   defaultCurrency: string;
   disabled: boolean;
-  errors: FormErrors<"endDate" | "startDate">;
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -44,8 +45,8 @@ const DiscountDates = ({
         <Grid variant="uniform">
           <TextField
             disabled={disabled}
-            error={!!errors.startDate}
-            helperText={errors.startDate}
+            error={!!getFieldError(errors, "startDate")}
+            helperText={getFieldError(errors, "startDate")?.message}
             name={"startDate" as keyof FormData}
             onChange={onChange}
             label={intl.formatMessage(commonMessages.startDate)}
@@ -58,8 +59,8 @@ const DiscountDates = ({
           />
           <TextField
             disabled={disabled}
-            error={!!errors.startDate}
-            helperText={errors.startDate}
+            error={!!getFieldError(errors, "startDate")}
+            helperText={getFieldError(errors, "startDate")?.message}
             name={"startTime" as keyof FormData}
             onChange={onChange}
             label={intl.formatMessage(commonMessages.startHour)}
@@ -84,8 +85,8 @@ const DiscountDates = ({
           <Grid variant="uniform">
             <TextField
               disabled={disabled}
-              error={!!errors.endDate}
-              helperText={errors.endDate}
+              error={!!getFieldError(errors, "endDate")}
+              helperText={getFieldError(errors, "endDate")?.message}
               name={"endDate" as keyof FormData}
               onChange={onChange}
               label={intl.formatMessage(commonMessages.endDate)}
@@ -98,8 +99,8 @@ const DiscountDates = ({
             />
             <TextField
               disabled={disabled}
-              error={!!errors.endDate}
-              helperText={errors.endDate}
+              error={!!getFieldError(errors, "endDate")}
+              helperText={getFieldError(errors, "endDate")?.message}
               name={"endTime" as keyof FormData}
               onChange={onChange}
               label={intl.formatMessage(commonMessages.endHour)}

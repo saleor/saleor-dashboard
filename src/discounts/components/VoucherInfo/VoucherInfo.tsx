@@ -7,13 +7,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import Button from "@material-ui/core/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
+import { getFieldError } from "@saleor/utils/errors";
 import { generateCode } from "../../../misc";
-import { FormErrors } from "../../../types";
+import { UserError } from "../../../types";
 import { FormData } from "../VoucherDetailsPage";
 
 interface VoucherInfoProps {
   data: FormData;
-  errors: FormErrors<"code">;
+  errors: UserError[];
   disabled: boolean;
   variant: "create" | "update";
   onChange: (event: any) => void;
@@ -54,9 +55,9 @@ const VoucherInfo = ({
       <CardContent>
         <TextField
           disabled={variant === "update" || disabled}
-          error={!!errors.code}
+          error={!!getFieldError(errors, "code")}
           fullWidth
-          helperText={errors.code}
+          helperText={getFieldError(errors, "code")?.message}
           name={"code" as keyof FormData}
           label={intl.formatMessage({
             defaultMessage: "Discount Code"

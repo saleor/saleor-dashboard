@@ -20,7 +20,7 @@ storiesOf("Generics / AddressEdit", module)
     >
       <CardContent>
         <AddressEdit
-          errors={{}}
+          errors={[]}
           data={transformAddressToForm(customer.defaultBillingAddress)}
           countries={countries.map(c => ({
             label: c.label,

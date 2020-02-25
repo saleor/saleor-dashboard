@@ -16,6 +16,8 @@ import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { buttonMessages, commonMessages } from "@saleor/intl";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import { getFieldError } from "@saleor/utils/errors";
 import { UserError } from "../../../types";
 
 export interface FormData {
@@ -65,13 +67,14 @@ interface StaffAddMemberDialogProps {
 const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
   const { confirmButtonState, errors, open, onClose, onConfirm } = props;
   const classes = useStyles(props);
+  const dialogErrors = useModalDialogErrors(errors, open);
 
   const intl = useIntl();
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <Form errors={errors} initial={initialForm} onSubmit={onConfirm}>
-        {({ change, data, errors: formErrors, hasChanged }) => (
+      <Form initial={initialForm} onSubmit={onConfirm}>
+        {({ change, data, hasChanged }) => (
           <>
             <DialogTitle>
               <FormattedMessage
@@ -82,8 +85,8 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
             <DialogContent>
               <div className={classes.textFieldGrid}>
                 <TextField
-                  error={!!formErrors.firstName}
-                  helperText={formErrors.firstName}
+                  error={!!getFieldError(dialogErrors, "firstName")}
+                  helperText={getFieldError(dialogErrors, "firstName")?.message}
                   label={intl.formatMessage(commonMessages.firstName)}
                   name="firstName"
                   type="text"
@@ -91,8 +94,8 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
                   onChange={change}
                 />
                 <TextField
-                  error={!!formErrors.lastName}
-                  helperText={formErrors.lastName}
+                  error={!!getFieldError(dialogErrors, "lastName")}
+                  helperText={getFieldError(dialogErrors, "lastName")?.message}
                   label={intl.formatMessage(commonMessages.lastName)}
                   name="lastName"
                   type="text"
@@ -102,9 +105,9 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
               </div>
               <FormSpacer />
               <TextField
-                error={!!formErrors.email}
+                error={!!getFieldError(dialogErrors, "email")}
                 fullWidth
-                helperText={formErrors.email}
+                helperText={getFieldError(dialogErrors, "email")?.message}
                 label={intl.formatMessage(commonMessages.email)}
                 name="email"
                 type="email"

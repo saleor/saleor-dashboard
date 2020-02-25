@@ -75,7 +75,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   currentTab,
   category,
   disabled,
-  errors: userErrors,
+  errors,
   pageInfo,
   products,
   saveButtonBarState,
@@ -115,13 +115,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
         seoTitle: ""
       };
   return (
-    <Form
-      onSubmit={onSubmit}
-      initial={initialData}
-      errors={userErrors}
-      confirmLeave
-    >
-      {({ data, change, errors, submit, hasChanged }) => (
+    <Form onSubmit={onSubmit} initial={initialData} confirmLeave>
+      {({ data, change, submit, hasChanged }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.categories)}

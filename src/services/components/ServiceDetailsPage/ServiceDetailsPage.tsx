@@ -48,7 +48,7 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
   const {
     apiUri,
     disabled,
-    errors: formErrors,
+    errors,
     permissions,
     saveButtonBarState,
     service,
@@ -79,13 +79,8 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
     permissions: maybe(() => service.permissions, []).map(perm => perm.code)
   };
   return (
-    <Form
-      errors={formErrors}
-      initial={initialForm}
-      onSubmit={onSubmit}
-      confirmLeave
-    >
-      {({ data, change, errors, hasChanged, submit }) => (
+    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+      {({ data, change, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.serviceAccounts)}

@@ -11,7 +11,8 @@ import { FormSpacer } from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import TextFieldWithChoice from "@saleor/components/TextFieldWithChoice";
-import { FormErrors } from "../../../types";
+import { getFieldError } from "@saleor/utils/errors";
+import { UserError } from "../../../types";
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { translateVoucherTypes } from "../../translations";
 import { FormData } from "../VoucherDetailsPage";
@@ -19,7 +20,7 @@ import { FormData } from "../VoucherDetailsPage";
 interface VoucherValueProps {
   data: FormData;
   defaultCurrency: string;
-  errors: FormErrors<"discountValue" | "type">;
+  errors: UserError[];
   disabled: boolean;
   variant: string;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -64,7 +65,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
       <CardContent>
         <TextFieldWithChoice
           disabled={disabled}
-          error={!!errors.discountValue}
+          error={!!getFieldError(errors, "discountValue")}
           ChoiceProps={{
             label:
               data.discountType === DiscountValueTypeEnum.FIXED
@@ -73,7 +74,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
             name: "discountType" as keyof FormData,
             values: null
           }}
-          helperText={errors.discountValue}
+          helperText={getFieldError(errors, "discountValue")?.message}
           name={"value" as keyof FormData}
           onChange={onChange}
           label={intl.formatMessage({
@@ -93,8 +94,8 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
             <RadioGroupField
               choices={voucherTypeChoices}
               disabled={disabled}
-              error={!!errors.type}
-              hint={errors.type}
+              error={!!getFieldError(errors, "type")}
+              hint={getFieldError(errors, "type")?.message}
               label={intl.formatMessage({
                 defaultMessage: "Voucher Specific Information"
               })}

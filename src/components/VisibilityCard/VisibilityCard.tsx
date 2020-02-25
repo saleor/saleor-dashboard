@@ -8,7 +8,8 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
-import { FormErrors } from "@saleor/types";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import { DateContext } from "../Date/DateContext";
 import FormSpacer from "../FormSpacer";
 
@@ -52,7 +53,7 @@ interface VisibilityCardProps {
     isPublished: boolean;
     publicationDate: string;
   };
-  errors: FormErrors<"isPublished" | "publicationDate">;
+  errors: UserError[];
   disabled?: boolean;
   hiddenMessage: string;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -62,7 +63,6 @@ interface VisibilityCardProps {
 export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   const {
     children,
-
     data: { isPublished, publicationDate },
     errors,
     disabled,
@@ -101,7 +101,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
       <CardContent>
         <RadioSwitchField
           disabled={disabled}
-          error={!!errors.isPublished}
+          error={!!getFieldError(errors, "isPublished")}
           firstOptionLabel={
             <>
               <p className={classes.label}>
@@ -140,7 +140,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
             )}
             {isPublicationDate && (
               <TextField
-                error={!!errors.publicationDate}
+                error={!!getFieldError(errors, "publicationDate")}
                 disabled={disabled}
                 label={intl.formatMessage({
                   defaultMessage: "Publish on",
@@ -149,7 +149,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                 name="publicationDate"
                 type="date"
                 fullWidth={true}
-                helperText={errors.publicationDate}
+                helperText={getFieldError(errors, "publicationDate")?.message}
                 value={publicationDate ? publicationDate : ""}
                 onChange={onChange}
                 className={classes.date}
@@ -160,10 +160,12 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
             )}
           </>
         )}
-        {errors.isPublished && (
+        {getFieldError(errors, "isPublished") && (
           <>
             <FormSpacer />
-            <Typography color="error">{errors.isPublished}</Typography>
+            <Typography color="error">
+              {getFieldError(errors, "isPublished")?.message}
+            </Typography>
           </>
         )}
         <div className={classes.children}>{children}</div>
