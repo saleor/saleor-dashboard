@@ -10,10 +10,14 @@ branches:
     - master
     - /next\/.*/
 
-script:
-  - npm run build
-  - npm test -- --ci --coverage
-  - sh .travis/check-strict-null-errors.sh
+jobs:
+  include:
+    - name: Build
+      script: npm run build
+    - name: Test
+      script:
+        - npm test -- --ci --coverage
+        - sh .travis/check-strict-null-errors.sh
 
 env:
   global:
