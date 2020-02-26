@@ -13,6 +13,7 @@ branches:
 script:
   - npm run build
   - npm test -- --ci --coverage
+  - sh .travis/check-strict-null-errors.sh
 
 env:
   global:
