@@ -1,12 +1,15 @@
 #!/bin/sh
 
-snapshotPath=".travis/check-strict-null-errors.snapshot"
+mkdir tmp
+snapshot=".travis/check-strict-null-errors.snapshot"
+calculated="tmp/calculated.snapshot"
+master="tmp/master.snapshot"
 
-snapshot=`cat $snapshotPath` 
-calculated=`tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js` 
-master=`curl -s -f https://raw.githubusercontent.com/mirumee/saleor-dashboard/master/$snapshotPath`
+tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js > $calculated 
+curl -s -f https://raw.githubusercontent.com/mirumee/saleor-dashboard/master/$snapshot > $master
 
-diffCalculatedAndSnapshot=`echo "$calculated" | diff --strip-trailing-cr $snapshotPath - | wc -w`
+diff -B $snapshot $calculated
+diffCalculatedAndSnapshot=`diff -B $snapshot $calculated | wc -l`
 
 if [ $diffCalculatedAndSnapshot -gt 0 ]
 then
@@ -14,10 +17,10 @@ then
     exit 1
 fi
 
-errorsBefore=`echo "$master" | wc -l`
-errorsAfter=`echo "$snapshot" | wc -l`
+errorsBefore=`cat $master | wc -l`
+errorsAfter=`cat $snapshot | wc -l`
 
-diff=`echo "$master" | diff $snapshotPath -`
+diff=`diff $snapshot $master`
 resolved=`echo "$diff" | grep -e ^\>`
 resolvedNum=`echo -n "$resolved" | wc -l`
 added=`echo "$diff" | grep -e ^\<`

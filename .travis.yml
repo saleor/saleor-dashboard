@@ -12,12 +12,12 @@ branches:
 
 jobs:
   include:
-    - name: Build
-      script: npm run build
+    # - name: Build
+    #   script: npm run build
     - name: Test
       script:
-        - npm test -- --ci --coverage
         - sh .travis/check-strict-null-errors.sh
+        # - npm test -- --ci --coverage
 
 env:
   global:
