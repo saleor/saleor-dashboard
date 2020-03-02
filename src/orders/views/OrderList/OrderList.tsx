@@ -67,7 +67,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
     notify({
       text: intl.formatMessage({
-        defaultMessage: "Order draft succesfully created"
+        defaultMessage: "Order draft successfully created"
       })
     });
     navigate(orderUrl(data.draftOrderCreate.order.id));
