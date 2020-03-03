@@ -37,6 +37,10 @@ const useStyles = makeStyles(
       }
     },
     colActions: {
+      paddingRight: theme.spacing(),
+      textAlign: "right"
+    },
+    colActionsHeader: {
       textAlign: "right"
     },
     colMembers: {
@@ -108,7 +112,7 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
         <TableCellHeader className={classes.colMembers} textAlign="right">
           <FormattedMessage defaultMessage="Members" />
         </TableCellHeader>
-        <TableCell className={classes.colActions}>
+        <TableCell className={classes.colActionsHeader}>
           <FormattedMessage defaultMessage="Actions" />
         </TableCell>
       </TableHead>
@@ -168,7 +172,7 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-                <TableCell className={classes.colAction}>
+                <TableCell className={classes.colActions}>
                   {permissionGroup ? (
                     <>
                       <IconButton
