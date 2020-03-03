@@ -1267,6 +1267,10 @@
     "context": "button",
     "string": "Add or Edit Link"
   },
+  "src_dot_components_dot_RichTextEditor_dot_286109898": {
+    "context": "rich text error",
+    "string": "Invalid content"
+  },
   "src_dot_components_dot_RichTextEditor_dot_2925475978": {
     "string": "URL Linked"
   },

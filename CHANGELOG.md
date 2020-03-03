@@ -36,6 +36,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Remove PO files from repo and update translations #409 by @dominik-zeglen
 - Add optional chaining and explicitely return "Not found" page - #408 by @dominik-zeglen
 - Do not store errors in form component - #410 by @dominik-zeglen
+- Handle rich text editor content error - #395 by @dominik-zeglen
 
 ## 2.0.0
 
