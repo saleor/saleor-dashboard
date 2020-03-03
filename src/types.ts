@@ -66,7 +66,8 @@ export interface SortPage<TSortKey extends string> {
  * @param toggle Will be use to change status of item
  * @param isChecked Returns true for ids of chosen items
  * @param selected  Number of chosen items.
- */ export interface ListActionsWithoutToolbar {
+ */ 
+ export interface ListActionsWithoutToolbar {
   toggle: (id: string) => void;
   toggleAll: (items: React.ReactNodeArray, selected: number) => void;
   isChecked: (id: string) => boolean;
