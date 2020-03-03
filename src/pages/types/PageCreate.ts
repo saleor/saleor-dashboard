@@ -28,7 +28,7 @@ export interface PageCreate_pageCreate_page {
 
 export interface PageCreate_pageCreate {
   __typename: "PageCreate";
-  errors: PageCreate_pageCreate_errors[] | null;
+  errors: PageCreate_pageCreate_errors[];
   page: PageCreate_pageCreate_page | null;
 }
 

@@ -14,7 +14,7 @@ export interface RequestPasswordReset_requestPasswordReset_errors {
 
 export interface RequestPasswordReset_requestPasswordReset {
   __typename: "RequestPasswordReset";
-  errors: RequestPasswordReset_requestPasswordReset_errors[] | null;
+  errors: RequestPasswordReset_requestPasswordReset_errors[];
 }
 
 export interface RequestPasswordReset {

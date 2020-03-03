@@ -178,7 +178,7 @@ export interface ProductImageCreate_productImageCreate_product {
 
 export interface ProductImageCreate_productImageCreate {
   __typename: "ProductImageCreate";
-  errors: ProductImageCreate_productImageCreate_errors[] | null;
+  errors: ProductImageCreate_productImageCreate_errors[];
   product: ProductImageCreate_productImageCreate_product | null;
 }
 

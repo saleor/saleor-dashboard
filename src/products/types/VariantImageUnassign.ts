@@ -111,7 +111,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant {
 
 export interface VariantImageUnassign_variantImageUnassign {
   __typename: "VariantImageUnassign";
-  errors: VariantImageUnassign_variantImageUnassign_errors[] | null;
+  errors: VariantImageUnassign_variantImageUnassign_errors[];
   productVariant: VariantImageUnassign_variantImageUnassign_productVariant | null;
 }
 

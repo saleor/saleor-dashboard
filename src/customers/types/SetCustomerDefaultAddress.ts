@@ -59,7 +59,7 @@ export interface SetCustomerDefaultAddress_addressSetDefault_user {
 
 export interface SetCustomerDefaultAddress_addressSetDefault {
   __typename: "AddressSetDefault";
-  errors: SetCustomerDefaultAddress_addressSetDefault_errors[] | null;
+  errors: SetCustomerDefaultAddress_addressSetDefault_errors[];
   user: SetCustomerDefaultAddress_addressSetDefault_user | null;
 }
 

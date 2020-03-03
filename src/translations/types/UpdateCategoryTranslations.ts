@@ -41,7 +41,7 @@ export interface UpdateCategoryTranslations_categoryTranslate_category {
 
 export interface UpdateCategoryTranslations_categoryTranslate {
   __typename: "CategoryTranslate";
-  errors: UpdateCategoryTranslations_categoryTranslate_errors[] | null;
+  errors: UpdateCategoryTranslations_categoryTranslate_errors[];
   category: UpdateCategoryTranslations_categoryTranslate_category | null;
 }
 

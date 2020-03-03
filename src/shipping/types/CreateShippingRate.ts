@@ -73,7 +73,7 @@ export interface CreateShippingRate_shippingPriceCreate_shippingZone {
 
 export interface CreateShippingRate_shippingPriceCreate {
   __typename: "ShippingPriceCreate";
-  errors: CreateShippingRate_shippingPriceCreate_errors[] | null;
+  errors: CreateShippingRate_shippingPriceCreate_errors[];
   shippingZone: CreateShippingRate_shippingPriceCreate_shippingZone | null;
 }
 

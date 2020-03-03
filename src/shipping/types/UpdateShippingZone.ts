@@ -30,7 +30,7 @@ export interface UpdateShippingZone_shippingZoneUpdate_shippingZone {
 
 export interface UpdateShippingZone_shippingZoneUpdate {
   __typename: "ShippingZoneUpdate";
-  errors: UpdateShippingZone_shippingZoneUpdate_errors[] | null;
+  errors: UpdateShippingZone_shippingZoneUpdate_errors[];
   shippingZone: UpdateShippingZone_shippingZoneUpdate_shippingZone | null;
 }
 

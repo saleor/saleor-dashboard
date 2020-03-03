@@ -73,7 +73,7 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone {
 
 export interface DeleteShippingRate_shippingPriceDelete {
   __typename: "ShippingPriceDelete";
-  errors: DeleteShippingRate_shippingPriceDelete_errors[] | null;
+  errors: DeleteShippingRate_shippingPriceDelete_errors[];
   shippingZone: DeleteShippingRate_shippingPriceDelete_shippingZone | null;
 }
 

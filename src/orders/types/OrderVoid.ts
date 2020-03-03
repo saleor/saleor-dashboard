@@ -268,7 +268,7 @@ export interface OrderVoid_orderVoid_order {
 
 export interface OrderVoid_orderVoid {
   __typename: "OrderVoid";
-  errors: OrderVoid_orderVoid_errors[] | null;
+  errors: OrderVoid_orderVoid_errors[];
   order: OrderVoid_orderVoid_order | null;
 }
 

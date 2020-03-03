@@ -16,7 +16,7 @@ export interface MenuUpdate_menuUpdate_errors {
 
 export interface MenuUpdate_menuUpdate {
   __typename: "MenuUpdate";
-  errors: MenuUpdate_menuUpdate_errors[] | null;
+  errors: MenuUpdate_menuUpdate_errors[];
 }
 
 export interface MenuUpdate_menuItemMove_errors {
@@ -27,7 +27,7 @@ export interface MenuUpdate_menuItemMove_errors {
 
 export interface MenuUpdate_menuItemMove {
   __typename: "MenuItemMove";
-  errors: MenuUpdate_menuItemMove_errors[] | null;
+  errors: MenuUpdate_menuItemMove_errors[];
 }
 
 export interface MenuUpdate_menuItemBulkDelete_errors {
@@ -38,7 +38,7 @@ export interface MenuUpdate_menuItemBulkDelete_errors {
 
 export interface MenuUpdate_menuItemBulkDelete {
   __typename: "MenuItemBulkDelete";
-  errors: MenuUpdate_menuItemBulkDelete_errors[] | null;
+  errors: MenuUpdate_menuItemBulkDelete_errors[];
 }
 
 export interface MenuUpdate {

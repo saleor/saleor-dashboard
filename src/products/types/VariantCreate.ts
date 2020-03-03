@@ -10,7 +10,7 @@ import { ProductVariantCreateInput, ProductErrorCode } from "./../../types/globa
 
 export interface VariantCreate_productVariantCreate_productErrors {
   __typename: "ProductError";
-  code: ProductErrorCode | null;
+  code: ProductErrorCode;
   field: string | null;
   message: string | null;
 }
@@ -114,7 +114,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
 
 export interface VariantCreate_productVariantCreate {
   __typename: "ProductVariantCreate";
-  productErrors: VariantCreate_productVariantCreate_productErrors[] | null;
+  productErrors: VariantCreate_productVariantCreate_productErrors[];
   productVariant: VariantCreate_productVariantCreate_productVariant | null;
 }
 

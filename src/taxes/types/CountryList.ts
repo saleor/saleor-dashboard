@@ -36,5 +36,5 @@ export interface CountryList_shop {
 }
 
 export interface CountryList {
-  shop: CountryList_shop | null;
+  shop: CountryList_shop;
 }

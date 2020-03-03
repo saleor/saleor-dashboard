@@ -14,7 +14,7 @@ export interface VoucherDelete_voucherDelete_errors {
 
 export interface VoucherDelete_voucherDelete {
   __typename: "VoucherDelete";
-  errors: VoucherDelete_voucherDelete_errors[] | null;
+  errors: VoucherDelete_voucherDelete_errors[];
 }
 
 export interface VoucherDelete {

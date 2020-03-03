@@ -58,7 +58,7 @@ export interface UnassignAttribute_attributeUnassign_productType {
 
 export interface UnassignAttribute_attributeUnassign {
   __typename: "AttributeUnassign";
-  errors: UnassignAttribute_attributeUnassign_errors[] | null;
+  errors: UnassignAttribute_attributeUnassign_errors[];
   productType: UnassignAttribute_attributeUnassign_productType | null;
 }
 

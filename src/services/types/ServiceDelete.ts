@@ -14,7 +14,7 @@ export interface ServiceDelete_serviceAccountDelete_errors {
 
 export interface ServiceDelete_serviceAccountDelete {
   __typename: "ServiceAccountDelete";
-  errors: ServiceDelete_serviceAccountDelete_errors[] | null;
+  errors: ServiceDelete_serviceAccountDelete_errors[];
 }
 
 export interface ServiceDelete {

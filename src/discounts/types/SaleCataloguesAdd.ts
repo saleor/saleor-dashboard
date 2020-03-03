@@ -133,7 +133,7 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_sale {
 
 export interface SaleCataloguesAdd_saleCataloguesAdd {
   __typename: "SaleAddCatalogues";
-  errors: SaleCataloguesAdd_saleCataloguesAdd_errors[] | null;
+  errors: SaleCataloguesAdd_saleCataloguesAdd_errors[];
   sale: SaleCataloguesAdd_saleCataloguesAdd_sale | null;
 }
 

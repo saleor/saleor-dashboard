@@ -153,7 +153,7 @@ export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher {
 
 export interface VoucherCataloguesRemove_voucherCataloguesRemove {
   __typename: "VoucherRemoveCatalogues";
-  errors: VoucherCataloguesRemove_voucherCataloguesRemove_errors[] | null;
+  errors: VoucherCataloguesRemove_voucherCataloguesRemove_errors[];
   voucher: VoucherCataloguesRemove_voucherCataloguesRemove_voucher | null;
 }
 

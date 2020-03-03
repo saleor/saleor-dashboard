@@ -14,7 +14,7 @@ export interface RemoveCollection_collectionDelete_errors {
 
 export interface RemoveCollection_collectionDelete {
   __typename: "CollectionDelete";
-  errors: RemoveCollection_collectionDelete_errors[] | null;
+  errors: RemoveCollection_collectionDelete_errors[];
 }
 
 export interface RemoveCollection {

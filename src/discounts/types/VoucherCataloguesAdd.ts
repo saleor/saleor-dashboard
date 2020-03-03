@@ -153,7 +153,7 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher {
 
 export interface VoucherCataloguesAdd_voucherCataloguesAdd {
   __typename: "VoucherAddCatalogues";
-  errors: VoucherCataloguesAdd_voucherCataloguesAdd_errors[] | null;
+  errors: VoucherCataloguesAdd_voucherCataloguesAdd_errors[];
   voucher: VoucherCataloguesAdd_voucherCataloguesAdd_voucher | null;
 }
 

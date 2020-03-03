@@ -74,7 +74,7 @@ export interface UpdateCustomer_customerUpdate_user {
 
 export interface UpdateCustomer_customerUpdate {
   __typename: "CustomerUpdate";
-  errors: UpdateCustomer_customerUpdate_errors[] | null;
+  errors: UpdateCustomer_customerUpdate_errors[];
   user: UpdateCustomer_customerUpdate_user | null;
 }
 

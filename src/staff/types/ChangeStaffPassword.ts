@@ -14,7 +14,7 @@ export interface ChangeStaffPassword_passwordChange_errors {
 
 export interface ChangeStaffPassword_passwordChange {
   __typename: "PasswordChange";
-  errors: ChangeStaffPassword_passwordChange_errors[] | null;
+  errors: ChangeStaffPassword_passwordChange_errors[];
 }
 
 export interface ChangeStaffPassword {

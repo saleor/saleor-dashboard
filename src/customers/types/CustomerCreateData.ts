@@ -18,5 +18,5 @@ export interface CustomerCreateData_shop {
 }
 
 export interface CustomerCreateData {
-  shop: CustomerCreateData_shop | null;
+  shop: CustomerCreateData_shop;
 }

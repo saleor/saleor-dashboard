@@ -34,7 +34,7 @@ export interface CreateCollection_collectionCreate_collection {
 
 export interface CreateCollection_collectionCreate {
   __typename: "CollectionCreate";
-  errors: CreateCollection_collectionCreate_errors[] | null;
+  errors: CreateCollection_collectionCreate_errors[];
   collection: CreateCollection_collectionCreate_collection | null;
 }
 

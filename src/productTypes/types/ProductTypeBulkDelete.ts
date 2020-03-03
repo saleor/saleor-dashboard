@@ -14,7 +14,7 @@ export interface ProductTypeBulkDelete_productTypeBulkDelete_errors {
 
 export interface ProductTypeBulkDelete_productTypeBulkDelete {
   __typename: "ProductTypeBulkDelete";
-  errors: ProductTypeBulkDelete_productTypeBulkDelete_errors[] | null;
+  errors: ProductTypeBulkDelete_productTypeBulkDelete_errors[];
 }
 
 export interface ProductTypeBulkDelete {

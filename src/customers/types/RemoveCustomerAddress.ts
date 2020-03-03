@@ -57,7 +57,7 @@ export interface RemoveCustomerAddress_addressDelete_user {
 
 export interface RemoveCustomerAddress_addressDelete {
   __typename: "AddressDelete";
-  errors: RemoveCustomerAddress_addressDelete_errors[] | null;
+  errors: RemoveCustomerAddress_addressDelete_errors[];
   user: RemoveCustomerAddress_addressDelete_user | null;
 }
 

@@ -61,5 +61,5 @@ export interface SiteSettings_shop {
 }
 
 export interface SiteSettings {
-  shop: SiteSettings_shop | null;
+  shop: SiteSettings_shop;
 }

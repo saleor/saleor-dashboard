@@ -60,7 +60,7 @@ export interface ProductTypeUpdate_productTypeUpdate_productType {
 
 export interface ProductTypeUpdate_productTypeUpdate {
   __typename: "ProductTypeUpdate";
-  errors: ProductTypeUpdate_productTypeUpdate_errors[] | null;
+  errors: ProductTypeUpdate_productTypeUpdate_errors[];
   productType: ProductTypeUpdate_productTypeUpdate_productType | null;
 }
 

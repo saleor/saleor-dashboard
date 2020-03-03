@@ -268,7 +268,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
 
 export interface OrderMarkAsPaid_orderMarkAsPaid {
   __typename: "OrderMarkAsPaid";
-  errors: OrderMarkAsPaid_orderMarkAsPaid_errors[] | null;
+  errors: OrderMarkAsPaid_orderMarkAsPaid_errors[];
   order: OrderMarkAsPaid_orderMarkAsPaid_order | null;
 }
 

@@ -60,7 +60,7 @@ export interface AssignAttribute_attributeAssign_productType {
 
 export interface AssignAttribute_attributeAssign {
   __typename: "AttributeAssign";
-  errors: AssignAttribute_attributeAssign_errors[] | null;
+  errors: AssignAttribute_attributeAssign_errors[];
   productType: AssignAttribute_attributeAssign_productType | null;
 }
 

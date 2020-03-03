@@ -19,7 +19,7 @@ export interface ProductDelete_productDelete_product {
 
 export interface ProductDelete_productDelete {
   __typename: "ProductDelete";
-  errors: ProductDelete_productDelete_errors[] | null;
+  errors: ProductDelete_productDelete_errors[];
   product: ProductDelete_productDelete_product | null;
 }
 

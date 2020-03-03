@@ -44,7 +44,7 @@ export const SaleDetails: React.FC = () => {
           <SaleCreatePage
             defaultCurrency={maybe(() => shop.defaultCurrency)}
             disabled={saleCreateOpts.loading}
-            errors={maybe(() => saleCreateOpts.data.saleCreate.errors)}
+            errors={saleCreateOpts.data?.saleCreate.errors || []}
             onBack={() => navigate(saleListUrl())}
             onSubmit={formData =>
               saleCreate({

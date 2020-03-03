@@ -17,7 +17,7 @@ export interface Webhooks_webhooks_edges_node_serviceAccount {
 export interface Webhooks_webhooks_edges_node {
   __typename: "Webhook";
   id: string;
-  name: string | null;
+  name: string;
   isActive: boolean;
   serviceAccount: Webhooks_webhooks_edges_node_serviceAccount;
 }

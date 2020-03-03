@@ -36,7 +36,7 @@ export interface UpdateVoucherTranslations_voucherTranslate_voucher {
 
 export interface UpdateVoucherTranslations_voucherTranslate {
   __typename: "VoucherTranslate";
-  errors: UpdateVoucherTranslations_voucherTranslate_errors[] | null;
+  errors: UpdateVoucherTranslations_voucherTranslate_errors[];
   voucher: UpdateVoucherTranslations_voucherTranslate_voucher | null;
 }
 

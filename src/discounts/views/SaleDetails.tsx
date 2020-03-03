@@ -209,9 +209,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               disabled={
                                 loading || saleCataloguesRemoveOpts.loading
                               }
-                              errors={maybe(
-                                () => saleUpdateOpts.data.saleUpdate.errors
-                              )}
+                              errors={
+                                saleUpdateOpts.data?.saleUpdate.errors || []
+                              }
                               pageInfo={pageInfo}
                               onNextPage={loadNextPage}
                               onPreviousPage={loadPreviousPage}

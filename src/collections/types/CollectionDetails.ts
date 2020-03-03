@@ -76,7 +76,7 @@ export interface CollectionDetails_shop {
 
 export interface CollectionDetails {
   collection: CollectionDetails_collection | null;
-  shop: CollectionDetails_shop | null;
+  shop: CollectionDetails_shop;
 }
 
 export interface CollectionDetailsVariables {

@@ -23,7 +23,7 @@ export interface UpdateTaxSettings_shopSettingsUpdate_shop {
 
 export interface UpdateTaxSettings_shopSettingsUpdate {
   __typename: "ShopSettingsUpdate";
-  errors: UpdateTaxSettings_shopSettingsUpdate_errors[] | null;
+  errors: UpdateTaxSettings_shopSettingsUpdate_errors[];
   shop: UpdateTaxSettings_shopSettingsUpdate_shop | null;
 }
 

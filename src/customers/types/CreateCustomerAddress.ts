@@ -81,7 +81,7 @@ export interface CreateCustomerAddress_addressCreate_user {
 
 export interface CreateCustomerAddress_addressCreate {
   __typename: "AddressCreate";
-  errors: CreateCustomerAddress_addressCreate_errors[] | null;
+  errors: CreateCustomerAddress_addressCreate_errors[];
   address: CreateCustomerAddress_addressCreate_address | null;
   user: CreateCustomerAddress_addressCreate_user | null;
 }

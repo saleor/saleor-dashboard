@@ -21,7 +21,7 @@ export interface MenuCreate_menuCreate_menu {
 
 export interface MenuCreate_menuCreate {
   __typename: "MenuCreate";
-  errors: MenuCreate_menuCreate_errors[] | null;
+  errors: MenuCreate_menuCreate_errors[];
   menu: MenuCreate_menuCreate_menu | null;
 }
 

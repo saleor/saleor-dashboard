@@ -45,7 +45,7 @@ export interface MenuItemUpdate_menuItemUpdate_menuItem {
 
 export interface MenuItemUpdate_menuItemUpdate {
   __typename: "MenuItemUpdate";
-  errors: MenuItemUpdate_menuItemUpdate_errors[] | null;
+  errors: MenuItemUpdate_menuItemUpdate_errors[];
   menuItem: MenuItemUpdate_menuItemUpdate_menuItem | null;
 }
 

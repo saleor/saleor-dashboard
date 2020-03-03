@@ -38,7 +38,7 @@ export interface UpdateCustomerAddress_addressUpdate_address {
 
 export interface UpdateCustomerAddress_addressUpdate {
   __typename: "AddressUpdate";
-  errors: UpdateCustomerAddress_addressUpdate_errors[] | null;
+  errors: UpdateCustomerAddress_addressUpdate_errors[];
   address: UpdateCustomerAddress_addressUpdate_address | null;
 }
 

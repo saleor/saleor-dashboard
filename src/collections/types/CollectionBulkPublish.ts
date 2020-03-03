@@ -14,7 +14,7 @@ export interface CollectionBulkPublish_collectionBulkPublish_errors {
 
 export interface CollectionBulkPublish_collectionBulkPublish {
   __typename: "CollectionBulkPublish";
-  errors: CollectionBulkPublish_collectionBulkPublish_errors[] | null;
+  errors: CollectionBulkPublish_collectionBulkPublish_errors[];
 }
 
 export interface CollectionBulkPublish {
