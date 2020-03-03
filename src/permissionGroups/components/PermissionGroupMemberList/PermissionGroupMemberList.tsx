@@ -28,6 +28,17 @@ import { stopPropagation } from "../../../misc";
 
 const useStyles = makeStyles(
   theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colActions: {
+        width: 120
+      },
+      colEmail: {
+        width: 300
+      },
+      colName: {
+        width: "auto"
+      }
+    },
     avatar: {
       alignItems: "center",
       borderRadius: "100%",
@@ -54,6 +65,7 @@ const useStyles = makeStyles(
       width: "100%"
     },
     colActions: {
+      paddingRight: theme.spacing(),
       textAlign: "right"
     },
     helperText: {
@@ -62,10 +74,7 @@ const useStyles = makeStyles(
     statusText: {
       color: "#9E9D9D"
     },
-    tableRow: {},
-    wideColumn: {
-      width: "80%"
-    }
+    tableRow: {}
   }),
   { name: "PermissionGroup" }
 );
@@ -135,16 +144,16 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
             toggleAll={toggleAll}
             toolbar={toolbar}
           >
-            <TableCellHeader className={classes.wideColumn}>
+            <TableCellHeader className={classes.colName}>
               <FormattedMessage
                 defaultMessage="Name"
                 description="staff member full name"
               />
             </TableCellHeader>
-            <TableCellHeader>
+            <TableCellHeader className={classes.colEmail}>
               <FormattedMessage defaultMessage="Email Address" />
             </TableCellHeader>
-            <TableCellHeader>
+            <TableCellHeader textAlign="right">
               <FormattedMessage defaultMessage="Actions" />
             </TableCellHeader>
           </TableHead>
@@ -170,7 +179,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                         onChange={() => toggle(user.id)}
                       />
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.colName}>
                       <div className={classes.avatar}>
                         {maybe(() => user.avatar.url) ? (
                           <img
@@ -205,7 +214,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                         )}
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.colEmail}>
                       {maybe<React.ReactNode>(() => user.email, <Skeleton />)}
                     </TableCell>
                     <TableCell className={classes.colActions}>
