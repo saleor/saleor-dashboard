@@ -34,7 +34,7 @@ export interface PluginUpdate_pluginUpdate_plugin {
 
 export interface PluginUpdate_pluginUpdate {
   __typename: "PluginUpdate";
-  errors: PluginUpdate_pluginUpdate_errors[] | null;
+  errors: PluginUpdate_pluginUpdate_errors[];
   plugin: PluginUpdate_pluginUpdate_plugin | null;
 }
 

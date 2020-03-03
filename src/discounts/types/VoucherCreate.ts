@@ -42,7 +42,7 @@ export interface VoucherCreate_voucherCreate_voucher {
 
 export interface VoucherCreate_voucherCreate {
   __typename: "VoucherCreate";
-  errors: VoucherCreate_voucherCreate_errors[] | null;
+  errors: VoucherCreate_voucherCreate_errors[];
   voucher: VoucherCreate_voucherCreate_voucher | null;
 }
 

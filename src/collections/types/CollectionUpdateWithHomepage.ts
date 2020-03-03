@@ -26,7 +26,7 @@ export interface CollectionUpdateWithHomepage_homepageCollectionUpdate_shop {
 
 export interface CollectionUpdateWithHomepage_homepageCollectionUpdate {
   __typename: "HomepageCollectionUpdate";
-  errors: CollectionUpdateWithHomepage_homepageCollectionUpdate_errors[] | null;
+  errors: CollectionUpdateWithHomepage_homepageCollectionUpdate_errors[];
   shop: CollectionUpdateWithHomepage_homepageCollectionUpdate_shop | null;
 }
 
@@ -56,7 +56,7 @@ export interface CollectionUpdateWithHomepage_collectionUpdate_collection {
 
 export interface CollectionUpdateWithHomepage_collectionUpdate {
   __typename: "CollectionUpdate";
-  errors: CollectionUpdateWithHomepage_collectionUpdate_errors[] | null;
+  errors: CollectionUpdateWithHomepage_collectionUpdate_errors[];
   collection: CollectionUpdateWithHomepage_collectionUpdate_collection | null;
 }
 

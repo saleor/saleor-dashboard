@@ -14,7 +14,7 @@ export interface CollectionBulkDelete_collectionBulkDelete_errors {
 
 export interface CollectionBulkDelete_collectionBulkDelete {
   __typename: "CollectionBulkDelete";
-  errors: CollectionBulkDelete_collectionBulkDelete_errors[] | null;
+  errors: CollectionBulkDelete_collectionBulkDelete_errors[];
 }
 
 export interface CollectionBulkDelete {

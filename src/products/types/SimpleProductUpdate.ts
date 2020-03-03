@@ -178,7 +178,7 @@ export interface SimpleProductUpdate_productUpdate_product {
 
 export interface SimpleProductUpdate_productUpdate {
   __typename: "ProductUpdate";
-  errors: SimpleProductUpdate_productUpdate_errors[] | null;
+  errors: SimpleProductUpdate_productUpdate_errors[];
   product: SimpleProductUpdate_productUpdate_product | null;
 }
 
@@ -287,7 +287,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant {
 
 export interface SimpleProductUpdate_productVariantUpdate {
   __typename: "ProductVariantUpdate";
-  errors: SimpleProductUpdate_productVariantUpdate_errors[] | null;
+  errors: SimpleProductUpdate_productVariantUpdate_errors[];
   productVariant: SimpleProductUpdate_productVariantUpdate_productVariant | null;
 }
 

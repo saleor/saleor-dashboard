@@ -65,7 +65,7 @@ export interface ProductTypeDetails_taxTypes {
 
 export interface ProductTypeDetails {
   productType: ProductTypeDetails_productType | null;
-  shop: ProductTypeDetails_shop | null;
+  shop: ProductTypeDetails_shop;
   taxTypes: (ProductTypeDetails_taxTypes | null)[] | null;
 }
 

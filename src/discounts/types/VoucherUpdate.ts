@@ -42,7 +42,7 @@ export interface VoucherUpdate_voucherUpdate_voucher {
 
 export interface VoucherUpdate_voucherUpdate {
   __typename: "VoucherUpdate";
-  errors: VoucherUpdate_voucherUpdate_errors[] | null;
+  errors: VoucherUpdate_voucherUpdate_errors[];
   voucher: VoucherUpdate_voucherUpdate_voucher | null;
 }
 

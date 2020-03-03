@@ -12,7 +12,7 @@ export interface ProductVariantBulkCreate_productVariantBulkCreate_bulkProductEr
   __typename: "BulkProductError";
   field: string | null;
   message: string | null;
-  code: ProductErrorCode | null;
+  code: ProductErrorCode;
   index: number | null;
 }
 
@@ -24,8 +24,8 @@ export interface ProductVariantBulkCreate_productVariantBulkCreate_errors {
 
 export interface ProductVariantBulkCreate_productVariantBulkCreate {
   __typename: "ProductVariantBulkCreate";
-  bulkProductErrors: ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors[] | null;
-  errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[] | null;
+  bulkProductErrors: ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors[];
+  errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
 }
 
 export interface ProductVariantBulkCreate {

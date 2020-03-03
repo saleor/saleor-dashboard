@@ -59,7 +59,7 @@ export interface UnassignCollectionProduct_collectionRemoveProducts_collection {
 
 export interface UnassignCollectionProduct_collectionRemoveProducts {
   __typename: "CollectionRemoveProducts";
-  errors: UnassignCollectionProduct_collectionRemoveProducts_errors[] | null;
+  errors: UnassignCollectionProduct_collectionRemoveProducts_errors[];
   collection: UnassignCollectionProduct_collectionRemoveProducts_collection | null;
 }
 

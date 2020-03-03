@@ -26,7 +26,7 @@ export interface SaleCreate_saleCreate_sale {
 
 export interface SaleCreate_saleCreate {
   __typename: "SaleCreate";
-  errors: SaleCreate_saleCreate_errors[] | null;
+  errors: SaleCreate_saleCreate_errors[];
   sale: SaleCreate_saleCreate_sale | null;
 }
 

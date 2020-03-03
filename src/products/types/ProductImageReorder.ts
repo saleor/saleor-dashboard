@@ -28,7 +28,7 @@ export interface ProductImageReorder_productImageReorder_product {
 
 export interface ProductImageReorder_productImageReorder {
   __typename: "ProductImageReorder";
-  errors: ProductImageReorder_productImageReorder_errors[] | null;
+  errors: ProductImageReorder_productImageReorder_errors[];
   product: ProductImageReorder_productImageReorder_product | null;
 }
 

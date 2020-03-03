@@ -25,7 +25,7 @@ export interface FetchTaxes_shopFetchTaxRates_shop {
 
 export interface FetchTaxes_shopFetchTaxRates {
   __typename: "ShopFetchTaxRates";
-  errors: FetchTaxes_shopFetchTaxRates_errors[] | null;
+  errors: FetchTaxes_shopFetchTaxRates_errors[];
   shop: FetchTaxes_shopFetchTaxRates_shop | null;
 }
 

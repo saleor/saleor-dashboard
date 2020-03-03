@@ -19,7 +19,7 @@ export interface OrderDraftCreate_draftOrderCreate_order {
 
 export interface OrderDraftCreate_draftOrderCreate {
   __typename: "DraftOrderCreate";
-  errors: OrderDraftCreate_draftOrderCreate_errors[] | null;
+  errors: OrderDraftCreate_draftOrderCreate_errors[];
   order: OrderDraftCreate_draftOrderCreate_order | null;
 }
 

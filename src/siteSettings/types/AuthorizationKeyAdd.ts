@@ -68,7 +68,7 @@ export interface AuthorizationKeyAdd_authorizationKeyAdd_shop {
 
 export interface AuthorizationKeyAdd_authorizationKeyAdd {
   __typename: "AuthorizationKeyAdd";
-  errors: AuthorizationKeyAdd_authorizationKeyAdd_errors[] | null;
+  errors: AuthorizationKeyAdd_authorizationKeyAdd_errors[];
   shop: AuthorizationKeyAdd_authorizationKeyAdd_shop | null;
 }
 

@@ -59,7 +59,7 @@ export interface CollectionAssignProduct_collectionAddProducts_collection {
 
 export interface CollectionAssignProduct_collectionAddProducts {
   __typename: "CollectionAddProducts";
-  errors: CollectionAssignProduct_collectionAddProducts_errors[] | null;
+  errors: CollectionAssignProduct_collectionAddProducts_errors[];
   collection: CollectionAssignProduct_collectionAddProducts_collection | null;
 }
 

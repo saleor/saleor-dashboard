@@ -642,6 +642,7 @@ export enum WebhookEventTypeEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CHECKOUT_QUANTITY_CHANGED = "CHECKOUT_QUANTITY_CHANGED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
+  FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
   ORDER_CANCELLED = "ORDER_CANCELLED",
   ORDER_CREATED = "ORDER_CREATED",
   ORDER_FULFILLED = "ORDER_FULFILLED",
@@ -1035,6 +1036,7 @@ export interface ProductTypeFilterInput {
 
 export interface ProductTypeInput {
   name?: string | null;
+  slug?: string | null;
   hasVariants?: boolean | null;
   productAttributes?: (string | null)[] | null;
   variantAttributes?: (string | null)[] | null;

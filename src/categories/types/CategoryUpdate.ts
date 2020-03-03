@@ -38,7 +38,7 @@ export interface CategoryUpdate_categoryUpdate_category {
 
 export interface CategoryUpdate_categoryUpdate {
   __typename: "CategoryUpdate";
-  errors: CategoryUpdate_categoryUpdate_errors[] | null;
+  errors: CategoryUpdate_categoryUpdate_errors[];
   category: CategoryUpdate_categoryUpdate_category | null;
 }
 

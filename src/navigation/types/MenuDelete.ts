@@ -14,7 +14,7 @@ export interface MenuDelete_menuDelete_errors {
 
 export interface MenuDelete_menuDelete {
   __typename: "MenuDelete";
-  errors: MenuDelete_menuDelete_errors[] | null;
+  errors: MenuDelete_menuDelete_errors[];
 }
 
 export interface MenuDelete {

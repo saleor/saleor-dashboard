@@ -42,7 +42,7 @@ export const VoucherDetails: React.FC = () => {
           <VoucherCreatePage
             defaultCurrency={maybe(() => shop.defaultCurrency)}
             disabled={voucherCreateOpts.loading}
-            errors={maybe(() => voucherCreateOpts.data.voucherCreate.errors)}
+            errors={voucherCreateOpts.data?.voucherCreate.errors || []}
             onBack={() => navigate(voucherListUrl())}
             onSubmit={formData =>
               voucherCreate({

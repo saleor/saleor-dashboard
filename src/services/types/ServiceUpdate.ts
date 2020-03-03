@@ -38,7 +38,7 @@ export interface ServiceUpdate_serviceAccountUpdate_serviceAccount {
 
 export interface ServiceUpdate_serviceAccountUpdate {
   __typename: "ServiceAccountUpdate";
-  errors: ServiceUpdate_serviceAccountUpdate_errors[] | null;
+  errors: ServiceUpdate_serviceAccountUpdate_errors[];
   serviceAccount: ServiceUpdate_serviceAccountUpdate_serviceAccount | null;
 }
 

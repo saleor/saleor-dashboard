@@ -268,7 +268,7 @@ export interface OrderCreateFulfillment_orderFulfillmentCreate_order {
 
 export interface OrderCreateFulfillment_orderFulfillmentCreate {
   __typename: "FulfillmentCreate";
-  errors: OrderCreateFulfillment_orderFulfillmentCreate_errors[] | null;
+  errors: OrderCreateFulfillment_orderFulfillmentCreate_errors[];
   order: OrderCreateFulfillment_orderFulfillmentCreate_order | null;
 }
 

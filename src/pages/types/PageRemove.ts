@@ -14,7 +14,7 @@ export interface PageRemove_pageDelete_errors {
 
 export interface PageRemove_pageDelete {
   __typename: "PageDelete";
-  errors: PageRemove_pageDelete_errors[] | null;
+  errors: PageRemove_pageDelete_errors[];
 }
 
 export interface PageRemove {

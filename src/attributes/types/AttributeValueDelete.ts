@@ -39,7 +39,7 @@ export interface AttributeValueDelete_attributeValueDelete_attribute {
 
 export interface AttributeValueDelete_attributeValueDelete {
   __typename: "AttributeValueDelete";
-  errors: AttributeValueDelete_attributeValueDelete_errors[] | null;
+  errors: AttributeValueDelete_attributeValueDelete_errors[];
   attribute: AttributeValueDelete_attributeValueDelete_attribute | null;
 }
 

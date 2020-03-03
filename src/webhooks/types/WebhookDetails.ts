@@ -16,16 +16,16 @@ export interface WebhookDetails_webhook_serviceAccount {
 
 export interface WebhookDetails_webhook_events {
   __typename: "WebhookEvent";
-  eventType: WebhookEventTypeEnum | null;
+  eventType: WebhookEventTypeEnum;
 }
 
 export interface WebhookDetails_webhook {
   __typename: "Webhook";
   id: string;
-  name: string | null;
+  name: string;
   isActive: boolean;
   serviceAccount: WebhookDetails_webhook_serviceAccount;
-  events: (WebhookDetails_webhook_events | null)[] | null;
+  events: WebhookDetails_webhook_events[];
   secretKey: string | null;
   targetUrl: string;
 }

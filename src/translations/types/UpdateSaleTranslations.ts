@@ -36,7 +36,7 @@ export interface UpdateSaleTranslations_saleTranslate_sale {
 
 export interface UpdateSaleTranslations_saleTranslate {
   __typename: "SaleTranslate";
-  errors: UpdateSaleTranslations_saleTranslate_errors[] | null;
+  errors: UpdateSaleTranslations_saleTranslate_errors[];
   sale: UpdateSaleTranslations_saleTranslate_sale | null;
 }
 

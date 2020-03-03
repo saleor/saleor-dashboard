@@ -14,7 +14,7 @@ export interface BulkDeleteShippingZone_shippingZoneBulkDelete_errors {
 
 export interface BulkDeleteShippingZone_shippingZoneBulkDelete {
   __typename: "ShippingZoneBulkDelete";
-  errors: BulkDeleteShippingZone_shippingZoneBulkDelete_errors[] | null;
+  errors: BulkDeleteShippingZone_shippingZoneBulkDelete_errors[];
 }
 
 export interface BulkDeleteShippingZone {

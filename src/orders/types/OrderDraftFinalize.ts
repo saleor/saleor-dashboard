@@ -268,7 +268,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
 
 export interface OrderDraftFinalize_draftOrderComplete {
   __typename: "DraftOrderComplete";
-  errors: OrderDraftFinalize_draftOrderComplete_errors[] | null;
+  errors: OrderDraftFinalize_draftOrderComplete_errors[];
   order: OrderDraftFinalize_draftOrderComplete_order | null;
 }
 

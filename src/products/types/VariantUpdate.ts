@@ -10,7 +10,7 @@ import { AttributeValueInput, ProductErrorCode } from "./../../types/globalTypes
 
 export interface VariantUpdate_productVariantUpdate_productErrors {
   __typename: "ProductError";
-  code: ProductErrorCode | null;
+  code: ProductErrorCode;
   field: string | null;
   message: string | null;
 }
@@ -114,7 +114,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
 
 export interface VariantUpdate_productVariantUpdate {
   __typename: "ProductVariantUpdate";
-  productErrors: VariantUpdate_productVariantUpdate_productErrors[] | null;
+  productErrors: VariantUpdate_productVariantUpdate_productErrors[];
   productVariant: VariantUpdate_productVariantUpdate_productVariant | null;
 }
 

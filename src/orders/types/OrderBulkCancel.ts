@@ -14,7 +14,7 @@ export interface OrderBulkCancel_orderBulkCancel_errors {
 
 export interface OrderBulkCancel_orderBulkCancel {
   __typename: "OrderBulkCancel";
-  errors: OrderBulkCancel_orderBulkCancel_errors[] | null;
+  errors: OrderBulkCancel_orderBulkCancel_errors[];
 }
 
 export interface OrderBulkCancel {

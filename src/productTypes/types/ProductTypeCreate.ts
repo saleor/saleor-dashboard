@@ -60,7 +60,7 @@ export interface ProductTypeCreate_productTypeCreate_productType {
 
 export interface ProductTypeCreate_productTypeCreate {
   __typename: "ProductTypeCreate";
-  errors: ProductTypeCreate_productTypeCreate_errors[] | null;
+  errors: ProductTypeCreate_productTypeCreate_errors[];
   productType: ProductTypeCreate_productTypeCreate_productType | null;
 }
 

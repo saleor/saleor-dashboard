@@ -14,7 +14,7 @@ export interface RemoveCustomer_customerDelete_errors {
 
 export interface RemoveCustomer_customerDelete {
   __typename: "CustomerDelete";
-  errors: RemoveCustomer_customerDelete_errors[] | null;
+  errors: RemoveCustomer_customerDelete_errors[];
 }
 
 export interface RemoveCustomer {

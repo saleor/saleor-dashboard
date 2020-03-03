@@ -21,7 +21,7 @@ export interface UpdateDefaultWeightUnit_shopSettingsUpdate_shop {
 
 export interface UpdateDefaultWeightUnit_shopSettingsUpdate {
   __typename: "ShopSettingsUpdate";
-  errors: UpdateDefaultWeightUnit_shopSettingsUpdate_errors[] | null;
+  errors: UpdateDefaultWeightUnit_shopSettingsUpdate_errors[];
   shop: UpdateDefaultWeightUnit_shopSettingsUpdate_shop | null;
 }
 

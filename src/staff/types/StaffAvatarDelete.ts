@@ -25,7 +25,7 @@ export interface StaffAvatarDelete_userAvatarDelete_user {
 
 export interface StaffAvatarDelete_userAvatarDelete {
   __typename: "UserAvatarDelete";
-  errors: StaffAvatarDelete_userAvatarDelete_errors[] | null;
+  errors: StaffAvatarDelete_userAvatarDelete_errors[];
   user: StaffAvatarDelete_userAvatarDelete_user | null;
 }
 

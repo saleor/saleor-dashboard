@@ -68,7 +68,7 @@ export interface ShopSettingsUpdate_shopSettingsUpdate_shop {
 
 export interface ShopSettingsUpdate_shopSettingsUpdate {
   __typename: "ShopSettingsUpdate";
-  errors: ShopSettingsUpdate_shopSettingsUpdate_errors[] | null;
+  errors: ShopSettingsUpdate_shopSettingsUpdate_errors[];
   shop: ShopSettingsUpdate_shopSettingsUpdate_shop | null;
 }
 
@@ -91,7 +91,7 @@ export interface ShopSettingsUpdate_shopDomainUpdate_shop {
 
 export interface ShopSettingsUpdate_shopDomainUpdate {
   __typename: "ShopDomainUpdate";
-  errors: ShopSettingsUpdate_shopDomainUpdate_errors[] | null;
+  errors: ShopSettingsUpdate_shopDomainUpdate_errors[];
   shop: ShopSettingsUpdate_shopDomainUpdate_shop | null;
 }
 
@@ -130,7 +130,7 @@ export interface ShopSettingsUpdate_shopAddressUpdate_shop {
 
 export interface ShopSettingsUpdate_shopAddressUpdate {
   __typename: "ShopAddressUpdate";
-  errors: ShopSettingsUpdate_shopAddressUpdate_errors[] | null;
+  errors: ShopSettingsUpdate_shopAddressUpdate_errors[];
   shop: ShopSettingsUpdate_shopAddressUpdate_shop | null;
 }
 
