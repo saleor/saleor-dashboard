@@ -169,6 +169,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                       [classes.tableRow]: !!user
                     })}
                     hover={!!user}
+                    selected={isSelected}
                     key={user ? user.id : "skeleton"}
                   >
                     <TableCell padding="checkbox">
