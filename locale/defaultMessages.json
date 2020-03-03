@@ -4801,6 +4801,10 @@
     "context": "event",
     "string": "Changed quantity in checkout"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
+    "context": "event",
+    "string": "Fulfillment created"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
     "context": "webhook",
     "string": "Target URL"

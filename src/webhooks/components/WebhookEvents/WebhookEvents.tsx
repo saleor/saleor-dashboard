@@ -65,7 +65,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       description: "event"
     }),
     [WebhookEventTypeEnum.FULFILLMENT_CREATED]: intl.formatMessage({
-      defaultMessage: "Fulfillment",
+      defaultMessage: "Fulfillment created",
       description: "event"
     })
   };
