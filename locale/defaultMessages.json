@@ -3697,6 +3697,14 @@
   "src_dot_readOnly": {
     "string": "Saleor runs in read-only mode. Changes not saved."
   },
+  "src_dot_readyToCapture": {
+    "context": "order status",
+    "string": "Ready to capture"
+  },
+  "src_dot_readyToFulfill": {
+    "context": "order status",
+    "string": "Ready to fulfill"
+  },
   "src_dot_refunded": {
     "context": "payment status",
     "string": "Fully refunded"
