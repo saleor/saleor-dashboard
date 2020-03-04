@@ -14,8 +14,9 @@ import Form from "@saleor/components/Form";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { getAttributeValueErrorMessage } from "@saleor/attributes/errors";
 import { AttributeDetails_attribute_values } from "../../types/AttributeDetails";
 
 export interface AttributeValueEditDialogFormData {
@@ -25,7 +26,7 @@ export interface AttributeValueEditDialogProps {
   attributeValue: AttributeDetails_attribute_values | null;
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   open: boolean;
   onSubmit: (data: AttributeValueEditDialogFormData) => void;
   onClose: () => void;
@@ -70,7 +71,10 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
                 disabled={disabled}
                 error={!!getFieldError(errors, "name")}
                 fullWidth
-                helperText={getFieldError(errors, "name")?.message}
+                helperText={getAttributeValueErrorMessage(
+                  getFieldError(errors, "name"),
+                  intl
+                )}
                 name={"name" as keyof AttributeValueEditDialogFormData}
                 label={intl.formatMessage({
                   defaultMessage: "Name",

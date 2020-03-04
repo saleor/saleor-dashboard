@@ -10,16 +10,17 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { commonMessages } from "@saleor/intl";
-import { UserError } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFieldError, getProductErrorMessage } from "@saleor/utils/errors";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { AttributePageFormData } from "../AttributePage";
+import { getAttributeSlugErrorMessage } from "../../errors";
 
 export interface AttributeDetailsProps {
   canChangeType: boolean;
   data: AttributePageFormData;
   disabled: boolean;
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -63,7 +64,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
           })}
           name={"name" as keyof AttributePageFormData}
           fullWidth
-          helperText={getFieldError(errors, "name")?.message}
+          helperText={getProductErrorMessage(
+            getFieldError(errors, "name"),
+            intl
+          )}
           value={data.name}
           onChange={onChange}
         />
@@ -79,7 +83,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
           placeholder={slugify(data.name).toLowerCase()}
           fullWidth
           helperText={
-            getFieldError(errors, "slug")?.message ||
+            getAttributeSlugErrorMessage(getFieldError(errors, "slug"), intl) ||
             intl.formatMessage({
               defaultMessage:
                 "This is used internally. Make sure you don’t use spaces",
@@ -94,7 +98,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
           choices={inputTypeChoices}
           disabled={disabled || !canChangeType}
           error={!!getFieldError(errors, "inputType")}
-          hint={getFieldError(errors, "inputType")?.message}
+          hint={getProductErrorMessage(
+            getFieldError(errors, "inputType"),
+            intl
+          )}
           label={intl.formatMessage({
             defaultMessage: "Catalog Input type for Store Owner",
             description: "attribute's editor component"

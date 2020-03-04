@@ -5,8 +5,10 @@ import AttributePage, {
   AttributePageProps
 } from "@saleor/attributes/components/AttributePage";
 import { attribute } from "@saleor/attributes/fixtures";
-import { formError } from "@saleor/storybook/misc";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import {
+  AttributeInputTypeEnum,
+  ProductErrorCode
+} from "@saleor/types/globalTypes";
 import Decorator from "../../Decorator";
 
 const props: AttributePageProps = {
@@ -39,7 +41,23 @@ storiesOf("Views / Attributes / Attribute details", module)
   .add("form errors", () => (
     <AttributePage
       {...props}
-      errors={["name", "slug", "storefrontSearchPosition"].map(formError)}
+      errors={[
+        {
+          code: ProductErrorCode.REQUIRED,
+          field: "name"
+        },
+        {
+          code: ProductErrorCode.REQUIRED,
+          field: "slug"
+        },
+        {
+          code: ProductErrorCode.GRAPHQL_ERROR,
+          field: "storefrontSearchPosition"
+        }
+      ].map(err => ({
+        __typename: "ProductError",
+        ...err
+      }))}
     />
   ))
   .add("multiple select input", () => (

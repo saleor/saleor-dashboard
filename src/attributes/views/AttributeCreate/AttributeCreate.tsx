@@ -5,7 +5,7 @@ import slugify from "slugify";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { maybe } from "@saleor/misc";
-import { ReorderEvent, UserError } from "@saleor/types";
+import { ReorderEvent } from "@saleor/types";
 import {
   add,
   isSelected,
@@ -14,6 +14,8 @@ import {
   updateAtIndex
 } from "@saleor/utils/lists";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import AttributePage from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog, {
@@ -33,6 +35,12 @@ interface AttributeDetailsProps {
   params: AttributeAddUrlQueryParams;
 }
 
+const attributeValueAlreadyExistsError: ProductErrorFragment = {
+  __typename: "ProductError",
+  code: ProductErrorCode.ALREADY_EXISTS,
+  field: "name"
+};
+
 function areValuesEqual(
   a: AttributeValueEditDialogFormData,
   b: AttributeValueEditDialogFormData
@@ -48,7 +56,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const [values, setValues] = React.useState<
     AttributeValueEditDialogFormData[]
   >([]);
-  const [valueErrors, setValueErrors] = React.useState<UserError[]>([]);
+  const [valueErrors, setValueErrors] = React.useState<ProductErrorFragment[]>(
+    []
+  );
 
   const id = params.id ? parseInt(params.id, 0) : undefined;
 
@@ -56,6 +66,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     AttributeAddUrlDialog,
     AttributeAddUrlQueryParams
   >(navigate, attributeAddUrl, params);
+
+  React.useEffect(() => setValueErrors([]), [params.action]);
 
   const handleValueDelete = () => {
     setValues(remove(values[params.id], values, areValuesEqual));
@@ -73,20 +85,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   };
   const handleValueUpdate = (input: AttributeValueEditDialogFormData) => {
     if (isSelected(input, values, areValuesEqual)) {
-      setValueErrors([
-        {
-          field: "name",
-          message: intl.formatMessage(
-            {
-              defaultMessage: "A value named {name} already exists",
-              description: "attribute value edit error"
-            },
-            {
-              name: input.name
-            }
-          )
-        }
-      ]);
+      setValueErrors([attributeValueAlreadyExistsError]);
     } else {
       setValues(updateAtIndex(input, values, id));
       closeModal();
@@ -94,20 +93,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   };
   const handleValueCreate = (input: AttributeValueEditDialogFormData) => {
     if (isSelected(input, values, areValuesEqual)) {
-      setValueErrors([
-        {
-          field: "name",
-          message: intl.formatMessage(
-            {
-              defaultMessage: "A value named {name} already exists",
-              description: "attribute value edit error"
-            },
-            {
-              name: input.name
-            }
-          )
-        }
-      ]);
+      setValueErrors([attributeValueAlreadyExistsError]);
     } else {
       setValues(add(input, values));
       closeModal();
@@ -123,10 +109,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           <AttributePage
             attribute={null}
             disabled={false}
-            errors={maybe(
-              () => attributeCreateOpts.data.attributeCreate.errors,
-              []
-            )}
+            errors={attributeCreateOpts.data?.attributeCreate.errors || []}
             onBack={() => navigate(attributeListUrl())}
             onDelete={undefined}
             onSubmit={input =>
