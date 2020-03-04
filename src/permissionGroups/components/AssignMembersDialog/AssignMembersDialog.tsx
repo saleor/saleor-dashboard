@@ -7,7 +7,7 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@material-ui/core/styles";
-import { maybe, getUserName, getUserInitials } from "@saleor/misc";
+import { getUserName, getUserInitials } from "@saleor/misc";
 import {
   DialogProps,
   FetchMoreProps,
@@ -234,10 +234,10 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                       </TableCell>
                       <TableCell className={classes.avatarCell}>
                         <div className={classes.avatar}>
-                          {maybe(() => member.avatar.url) ? (
+                          {!!member?.avatar?.url ? (
                             <img
                               className={classes.avatarImage}
-                              src={maybe(() => member.avatar.url)}
+                              src={member.avatar.url}
                             />
                           ) : (
                             <div className={classes.avatarDefault}>
@@ -254,17 +254,19 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                           variant={"caption"}
                           className={classes.statusText}
                         >
-                          {maybe<React.ReactNode>(
-                            () =>
-                              member.isActive
-                                ? intl.formatMessage({
-                                    defaultMessage: "Active",
-                                    description: "staff member status"
-                                  })
-                                : intl.formatMessage({
-                                    defaultMessage: "Inactive",
-                                    description: "staff member status"
-                                  }),
+                          {!!member ? (
+                            member.isActive ? (
+                              intl.formatMessage({
+                                defaultMessage: "Active",
+                                description: "staff member status"
+                              })
+                            ) : (
+                              intl.formatMessage({
+                                defaultMessage: "Inactive",
+                                description: "staff member status"
+                              })
+                            )
+                          ) : (
                             <Skeleton />
                           )}
                         </Typography>
@@ -276,8 +278,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           </ResponsiveTable>
           {loading && (
             <>
-              {maybe(() => staffMembers.length > 0) && <CardSpacer />}
-
+              {staffMembers?.length > 0 && <CardSpacer />}
               <div className={classes.loadMoreLoaderContainer}>
                 <CircularProgress size={24} />
               </div>
