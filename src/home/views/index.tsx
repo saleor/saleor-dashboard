@@ -38,10 +38,7 @@ const HomeSection = () => {
           onOrdersToFulfillClick={() =>
             navigate(
               orderListUrl({
-                status: [
-                  OrderStatusFilter.UNFULFILLED,
-                  OrderStatusFilter.PARTIALLY_FULFILLED
-                ]
+                status: [OrderStatusFilter.READY_TO_FULFILL]
               })
             )
           }

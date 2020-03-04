@@ -77,6 +77,14 @@ export function createFilterStructure(
           {
             label: intl.formatMessage(orderStatusMessages.unfulfilled),
             value: OrderStatusFilter.UNFULFILLED
+          },
+          {
+            label: intl.formatMessage(orderStatusMessages.readyToCapture),
+            value: OrderStatusFilter.READY_TO_CAPTURE
+          },
+          {
+            label: intl.formatMessage(orderStatusMessages.readyToFulfill),
+            value: OrderStatusFilter.READY_TO_FULFILL
           }
         ]
       ),

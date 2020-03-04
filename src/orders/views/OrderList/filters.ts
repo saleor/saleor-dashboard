@@ -6,8 +6,7 @@ import {
 import { IFilterElement } from "../../../components/Filter";
 import {
   OrderFilterInput,
-  OrderStatusFilter,
-  OrderStatus
+  OrderStatusFilter
 } from "../../../types/globalTypes";
 import {
   createFilterTabUtils,
@@ -96,7 +95,7 @@ export function getFilterQueryParam(
       return getMultipleEnumValueQueryParam(
         filter,
         OrderListUrlFiltersWithMultipleValuesEnum.status,
-        OrderStatus
+        OrderStatusFilter
       );
 
     case OrderFilterKeys.customer:

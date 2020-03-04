@@ -132,6 +132,14 @@ export const orderStatusMessages = defineMessages({
     defaultMessage: "Partially fulfilled",
     description: "order status"
   },
+  readyToCapture: {
+    defaultMessage: "Ready to capture",
+    description: "order status"
+  },
+  readyToFulfill: {
+    defaultMessage: "Ready to fulfill",
+    description: "order status"
+  },
   unfulfilled: {
     defaultMessage: "Unfulfilled",
     description: "order status"
