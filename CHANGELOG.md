@@ -88,3 +88,4 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix permission handling - #231 by @dominik-zeglen
 - Use React.FC instead of deprecated React.StatelessComponent type - #245 by @dominik-zeglen
 - Update @material-ui to v4 - #234 by @dominik-zeglen
+- Add Permission Groups section - #406 by @krzysztofwolski
