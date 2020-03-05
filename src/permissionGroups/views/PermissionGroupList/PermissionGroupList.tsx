@@ -1,4 +1,5 @@
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -101,7 +102,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
             color="primary"
             onClick={() => openModal("remove", { ids: listElements })}
           >
-            {buttonMessages.delete}
+            <FormattedMessage {...buttonMessages.delete} />
           </Button>
         }
       />
