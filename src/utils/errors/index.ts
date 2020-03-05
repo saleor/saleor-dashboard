@@ -13,4 +13,14 @@ export function getErrors(errors: UserError[]): string[] {
     .map(err => err.message);
 }
 
+export function getFormErrors<TField extends string, TError extends UserError>(
+  fields: TField[],
+  errors: TError[]
+): Record<TField, TError> {
+  return fields.reduce((errs, field) => {
+    errs[field] = getFieldError(errors, field);
+    return errs;
+  }, ({} as unknown) as Record<TField, TError>);
+}
+
 export { default as getProductErrorMessage } from "./product";
