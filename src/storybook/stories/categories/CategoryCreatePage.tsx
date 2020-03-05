@@ -1,6 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import CategoryCreatePage, {
   CategoryCreatePageProps
 } from "../../../categories/components/CategoryCreatePage";
@@ -19,4 +20,22 @@ storiesOf("Views / Categories / Create category", module)
   .add("default", () => <CategoryCreatePage {...createProps} />)
   .add("When loading", () => (
     <CategoryCreatePage {...createProps} disabled={true} />
+  ))
+  .add("form errors", () => (
+    <CategoryCreatePage
+      {...createProps}
+      errors={[
+        {
+          code: ProductErrorCode.REQUIRED,
+          field: "name"
+        },
+        {
+          code: ProductErrorCode.REQUIRED,
+          field: "descriptionJson"
+        }
+      ].map(err => ({
+        __typename: "ProductError",
+        ...err
+      }))}
+    />
   ));
