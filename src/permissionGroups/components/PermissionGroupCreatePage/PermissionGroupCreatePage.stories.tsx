@@ -6,6 +6,7 @@ import PermissionGroupCreatePage, {
   PermissionGroupCreatePageProps
 } from "@saleor/permissionGroups/components/PermissionGroupCreatePage";
 import Decorator from "@saleor/storybook/Decorator";
+import { errorsOfPermissionGroupCreate } from "@saleor/permissionGroups/fixtures";
 
 const props: PermissionGroupCreatePageProps = {
   disabled: false,
@@ -21,4 +22,10 @@ storiesOf("Views / Permission Groups / Permission Group Create", module)
   .add("default", () => <PermissionGroupCreatePage {...props} />)
   .add("loading", () => (
     <PermissionGroupCreatePage {...props} disabled={true} />
+  ))
+  .add("errors", () => (
+    <PermissionGroupCreatePage
+      {...props}
+      errors={errorsOfPermissionGroupCreate}
+    />
   ));

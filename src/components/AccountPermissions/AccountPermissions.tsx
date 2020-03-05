@@ -9,6 +9,8 @@ import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import Skeleton from "@saleor/components/Skeleton";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 
 const useStyles = makeStyles(
   theme => ({
@@ -34,6 +36,7 @@ interface AccountPermissionsProps {
   };
   disabled: boolean;
   description: string;
+  errors: UserError[];
   fullAccessLabel: string;
   onChange: (event: React.ChangeEvent<any>, cb?: () => void) => void;
 }
@@ -45,7 +48,8 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     permissions,
     onChange,
     description,
-    fullAccessLabel
+    fullAccessLabel,
+    errors
   } = props;
 
   const classes = useStyles(props);
@@ -113,6 +117,16 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                 </div>
               ))
             )}
+          </CardContent>
+        </>
+      )}
+      {!!getFieldError(errors, "permissions") && (
+        <>
+          <hr className={classes.hr} />
+          <CardContent>
+            <Typography color="error">
+              {getFieldError(errors, "permissions")?.message}
+            </Typography>
           </CardContent>
         </>
       )}

@@ -73,6 +73,7 @@ const ServiceCreatePage: React.FC<ServiceCreatePageProps> = props => {
             </div>
             <AccountPermissions
               data={data}
+              errors={errors}
               disabled={disabled}
               permissions={permissions}
               onChange={change}

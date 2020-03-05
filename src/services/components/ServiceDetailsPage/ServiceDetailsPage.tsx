@@ -115,6 +115,7 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
             <div>
               <AccountPermissions
                 data={data}
+                errors={errors}
                 disabled={disabled}
                 permissions={permissions}
                 onChange={change}

@@ -7,9 +7,12 @@ import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 
 export interface PermissionGroupInfoProps {
   disabled: boolean;
+  errors: UserError[];
   onChange: FormChange;
   data: {
     name: string;
@@ -19,7 +22,8 @@ export interface PermissionGroupInfoProps {
 const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
   disabled,
   onChange,
-  data
+  data,
+  errors
 }) => {
   const intl = useIntl();
 
@@ -38,6 +42,8 @@ const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
           value={data.name}
           onChange={onChange}
           disabled={disabled}
+          error={!!getFieldError(errors, "name")}
+          helperText={getFieldError(errors, "name")?.message}
           fullWidth
         />
       </CardContent>

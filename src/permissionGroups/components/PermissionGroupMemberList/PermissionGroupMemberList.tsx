@@ -69,8 +69,8 @@ const useStyles = makeStyles(
       textAlign: "right"
     },
     helperText: {
-      marginTop: theme.spacing(3),
       marginBottom: theme.spacing(3),
+      marginTop: theme.spacing(3),
       textAlign: "center"
     },
     statusText: {

@@ -2,6 +2,7 @@
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
 import * as avatarImg from "@assets/images/avatars/avatar1.png";
+import { UserError } from "@saleor/types";
 import { PermissionGroupList_permissionGroups_edges_node } from "./types/PermissionGroupList";
 import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
 
@@ -93,6 +94,17 @@ export const emptyPermissionGroup: PermissionGroupDetails_permissionGroup = {
     }
   ]
 };
+
+export const errorsOfPermissionGroupCreate: UserError[] = [
+  {
+    field: "name",
+    message: "Group with this Name already exists."
+  },
+  {
+    field: "permissions",
+    message: "Can't assign those permissions."
+  }
+];
 
 export const permissionGroup: PermissionGroupDetails_permissionGroup = {
   id: "R3JvdXA6Mw==",

@@ -44,17 +44,12 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
   onBack,
   onSubmit,
   saveButtonBarState,
-  errors: userErrors
+  errors
 }) => {
   const intl = useIntl();
 
   return (
-    <Form
-      initial={initialForm}
-      onSubmit={onSubmit}
-      errors={userErrors}
-      confirmLeave
-    >
+    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
       {({ data, change, submit, hasChanged }) => (
         <Container>
           <AppHeader onBack={onBack}>
@@ -64,6 +59,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
             <div>
               <PermissionGroupInfo
                 data={data}
+                errors={errors}
                 onChange={change}
                 disabled={disabled}
               />
@@ -71,6 +67,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
             <div>
               <AccountPermissions
                 data={data}
+                errors={errors}
                 disabled={disabled}
                 permissions={permissions}
                 onChange={change}

@@ -133,6 +133,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 title={staffMember?.email || "..."}
                               />
                               <StaffDetailsPage
+                                errors={updateResult?.data?.staffUpdate?.errors}
                                 canEditAvatar={isUserSameAsViewer}
                                 canEditPreferences={isUserSameAsViewer}
                                 canEditStatus={!isUserSameAsViewer}
@@ -181,7 +182,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                     })
                                   )
                                 }
-                                permissions={maybe(() => shop.permissions)}
+                                permissions={shop?.permissions}
                                 staffMember={staffMember}
                                 saveButtonBarState={updateResult.status}
                               />
@@ -200,7 +201,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                   <FormattedMessage
                                     defaultMessage="Are you sure you want to delete {email} from staff members?"
                                     values={{
-                                      email: maybe(() => data.user.email, "...")
+                                      email: data?.user?.email || "..."
                                     }}
                                   />
                                 </DialogContentText>
@@ -222,7 +223,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                     values={{
                                       email: (
                                         <strong>
-                                          {maybe(() => data.user.email, "...")}
+                                          {data?.user?.email || "..."}
                                         </strong>
                                       )
                                     }}
@@ -231,12 +232,10 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                               </ActionDialog>
                               <StaffPasswordResetDialog
                                 confirmButtonState={changePasswordOpts.status}
-                                errors={maybe(
-                                  () =>
-                                    changePasswordOpts.data.passwordChange
-                                      .errors,
-                                  []
-                                )}
+                                errors={
+                                  changePasswordOpts?.data?.passwordChange
+                                    ?.errors || []
+                                }
                                 open={params.action === "change-password"}
                                 onClose={closeModal}
                                 onSubmit={data =>

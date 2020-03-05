@@ -2,7 +2,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import FormSpacer from "@saleor/components/FormSpacer";
-import { maybe } from "@saleor/misc";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
@@ -45,7 +44,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   disabled,
   onBack,
   saveButtonBarState,
-  errors: userErrors,
+  errors,
   onSubmit,
   ...listProps
 }) => {
@@ -54,19 +53,14 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   const initialForm: PermissionGroupDetailsPageFormData = {
     hasFullAccess: false,
     isActive: false,
-    name: maybe(() => permissionGroup.name) ? permissionGroup.name : "",
-    permissions: maybe(() => permissionGroup.permissions)
+    name: permissionGroup?.name ? permissionGroup.name : "",
+    permissions: permissionGroup?.permissions
       ? permissionGroup.permissions.map(perm => perm.code)
       : []
   };
 
   return (
-    <Form
-      initial={initialForm}
-      onSubmit={onSubmit}
-      errors={userErrors}
-      confirmLeave
-    >
+    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
       {({ data, change, submit, hasChanged }) => (
         <Container>
           <AppHeader onBack={onBack}>
@@ -80,14 +74,15 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
             <div>
               <PermissionGroupInfo
                 data={data}
-                onChange={change}
                 disabled={disabled}
+                errors={errors}
+                onChange={change}
               />
               <FormSpacer />
               <PermissionGroupMemberList
                 disabled={disabled}
                 {...listProps}
-                users={maybe(() => permissionGroup.users)}
+                users={permissionGroup?.users}
               />
             </div>
             <div>
@@ -96,6 +91,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
                 disabled={disabled}
                 permissions={permissions}
                 onChange={change}
+                errors={errors}
                 fullAccessLabel={intl.formatMessage({
                   defaultMessage: "Group has full access to the store",
                   description: "checkbox label"

@@ -14,6 +14,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import useLocale from "@saleor/hooks/useLocale";
 import { sectionNames } from "@saleor/intl";
+import { UserError } from "@saleor/types";
 import { getUserName, maybe } from "../../../misc";
 import { PermissionEnum } from "../../../types/globalTypes";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
@@ -39,6 +40,7 @@ export interface StaffDetailsPageProps {
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
   staffMember: StaffMemberDetails_user;
+  errors: UserError[];
   onBack: () => void;
   onChangePassword: () => void;
   onDelete: () => void;
@@ -53,6 +55,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   canEditStatus,
   canRemove,
   disabled,
+  errors,
   permissions,
   saveButtonBarState,
   staffMember,
@@ -67,8 +70,8 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   const { locale, setLocale } = useLocale();
 
   const initialForm: FormData = {
-    email: maybe(() => staffMember.email, ""),
-    firstName: maybe(() => staffMember.firstName, ""),
+    email: staffMember?.email || "",
+    firstName: staffMember?.firstName || "",
     hasFullAccess: maybe(
       () =>
         permissions.filter(
@@ -79,8 +82,8 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
         ).length === 0,
       false
     ),
-    isActive: maybe(() => staffMember.isActive, false),
-    lastName: maybe(() => staffMember.lastName, ""),
+    isActive: !!staffMember?.isActive,
+    lastName: staffMember?.lastName || "",
     permissions: maybe(() => staffMember.permissions, []).map(perm => perm.code)
   };
 
@@ -118,6 +121,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 <>
                   <AccountPermissions
                     data={data}
+                    errors={errors}
                     fullAccessLabel={intl.formatMessage({
                       defaultMessage: "User has full access to the store",
                       description: "checkbox label"

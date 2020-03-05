@@ -2,7 +2,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { maybe } from "@saleor/misc";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -19,7 +18,7 @@ const PermissionGroupCreateView: React.FC = () => {
   const shop = useShop();
 
   const handleSuccess = (data: PermissionGroupCreate) => {
-    if (data.permissionGroupCreate.errors.length === 0) {
+    if (data?.permissionGroupCreate?.errors.length === 0) {
       notify({
         text: intl.formatMessage({
           defaultMessage: "Permission group created"
@@ -36,16 +35,17 @@ const PermissionGroupCreateView: React.FC = () => {
     onCompleted: handleSuccess
   });
 
-  const errors = maybe(
-    () => createPermissionGroupResult.data.permissionGroupCreate.errors,
-    []
-  );
+  const errors =
+    createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
 
-  const onSubmit = formData => createPermissionGroup({
+  const onSubmit = formData =>
+    createPermissionGroup({
       variables: {
         input: {
           name: formData.hasFullAccess,
-          permissions: formData.hasFullAccess ? shop.permissions.map(perm => perm.code) : formData.permissions
+          permissions: formData.hasFullAccess
+            ? shop.permissions.map(perm => perm.code)
+            : formData.permissions
         }
       }
     });
@@ -61,7 +61,7 @@ const PermissionGroupCreateView: React.FC = () => {
       <PermissionGroupCreatePage
         errors={errors}
         disabled={createPermissionGroupResult.loading}
-        permissions={maybe(() => shop.permissions)}
+        permissions={shop?.permissions}
         saveButtonBarState={createPermissionGroupResult.status}
         onSubmit={onSubmit}
         onBack={() => navigate(permissionGroupListUrl())}
