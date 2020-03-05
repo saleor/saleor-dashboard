@@ -35,6 +35,7 @@ import {
   CollectionUrlQueryParams,
   CollectionUrlDialog
 } from "../urls";
+import { CollectionUpdateWithHomepage } from "../types/CollectionUpdateWithHomepage";
 
 interface CollectionDetailsProps {
   id: string;
@@ -93,6 +94,13 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             }
           }
         };
+        const handleCollectioUpdateWithHomepage = (
+          data: CollectionUpdateWithHomepage
+        ) => {
+          if (data.homepageCollectionUpdate.errors.length === 0) {
+            handleCollectionUpdate(data);
+          }
+        };
 
         const handleProductAssign = (data: CollectionAssignProduct) => {
           if (data.collectionAddProducts.errors.length === 0) {
@@ -130,6 +138,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         return (
           <CollectionOperations
             onUpdate={handleCollectionUpdate}
+            onUpdateWithCollection={handleCollectioUpdateWithHomepage}
             onProductAssign={handleProductAssign}
             onProductUnassign={handleProductUnassign}
             onRemove={handleCollectionRemove}
