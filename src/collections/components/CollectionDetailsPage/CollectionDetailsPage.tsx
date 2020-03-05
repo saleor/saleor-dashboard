@@ -17,8 +17,9 @@ import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { sectionNames } from "@saleor/intl";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { maybe } from "../../../misc";
-import { ListActions, PageListProps, UserError } from "../../../types";
+import { ListActions, PageListProps } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
 import { CollectionImage } from "../CollectionImage/CollectionImage";
@@ -37,7 +38,7 @@ export interface CollectionDetailsPageFormData {
 
 export interface CollectionDetailsPageProps extends PageListProps, ListActions {
   collection: CollectionDetails_collection;
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   isFeatured: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;

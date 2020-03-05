@@ -88,7 +88,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             );
             if (backgroundImageError) {
               notify({
-                text: backgroundImageError.message
+                text: intl.formatMessage(commonMessages.somethingWentWrong)
               });
             }
           }
@@ -204,7 +204,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                     onAdd={() => openModal("assign")}
                     onBack={handleBack}
                     disabled={loading}
-                    collection={maybe(() => data.collection)}
+                    collection={data?.collection}
                     errors={
                       updateCollection.opts?.data?.collectionUpdate.errors || []
                     }

@@ -563,6 +563,16 @@ export enum ShippingMethodTypeEnum {
   WEIGHT = "WEIGHT",
 }
 
+export enum ShopErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  CANNOT_FETCH_TAX_RATES = "CANNOT_FETCH_TAX_RATES",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum StaffMemberStatus {
   ACTIVE = "ACTIVE",
   DEACTIVATED = "DEACTIVATED",

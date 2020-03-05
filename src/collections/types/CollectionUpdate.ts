@@ -2,17 +2,11 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CollectionInput } from "./../../types/globalTypes";
+import { CollectionInput, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CollectionUpdate
 // ====================================================
-
-export interface CollectionUpdate_collectionUpdate_errors {
-  __typename: "Error";
-  field: string | null;
-  message: string | null;
-}
 
 export interface CollectionUpdate_collectionUpdate_collection_backgroundImage {
   __typename: "Image";
@@ -32,10 +26,16 @@ export interface CollectionUpdate_collectionUpdate_collection {
   seoTitle: string | null;
 }
 
+export interface CollectionUpdate_collectionUpdate_errors {
+  __typename: "ProductError";
+  code: ProductErrorCode;
+  field: string | null;
+}
+
 export interface CollectionUpdate_collectionUpdate {
   __typename: "CollectionUpdate";
-  errors: CollectionUpdate_collectionUpdate_errors[];
   collection: CollectionUpdate_collectionUpdate_collection | null;
+  errors: CollectionUpdate_collectionUpdate_errors[];
 }
 
 export interface CollectionUpdate {

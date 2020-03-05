@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import { productErrorFragment } from "@saleor/attributes/mutations";
 import { TypedMutation } from "../mutations";
 import {
   collectionDetailsFragment,
@@ -38,16 +39,23 @@ import {
   UnassignCollectionProductVariables
 } from "./types/UnassignCollectionProduct";
 
+export const ShopErrorFragment = gql`
+  fragment ShopErrorFragment on ShopError {
+    code
+    field
+  }
+`;
+
 const collectionUpdate = gql`
   ${collectionDetailsFragment}
+  ${productErrorFragment}
   mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
     collectionUpdate(id: $id, input: $input) {
-      errors {
-        field
-        message
-      }
       collection {
         ...CollectionDetailsFragment
+      }
+      errors: productErrors {
+        ...ProductErrorFragment
       }
     }
   }
@@ -59,15 +67,16 @@ export const TypedCollectionUpdateMutation = TypedMutation<
 
 const collectionUpdateWithHomepage = gql`
   ${collectionDetailsFragment}
+  ${productErrorFragment}
+  ${ShopErrorFragment}
   mutation CollectionUpdateWithHomepage(
     $id: ID!
     $input: CollectionInput!
     $homepageId: ID
   ) {
     homepageCollectionUpdate(collection: $homepageId) {
-      errors {
-        field
-        message
+      errors: shopErrors {
+        ...ShopErrorFragment
       }
       shop {
         homepageCollection {
@@ -76,12 +85,11 @@ const collectionUpdateWithHomepage = gql`
       }
     }
     collectionUpdate(id: $id, input: $input) {
-      errors {
-        field
-        message
-      }
       collection {
         ...CollectionDetailsFragment
+      }
+      errors: productErrors {
+        ...ProductErrorFragment
       }
     }
   }
@@ -93,6 +101,7 @@ export const TypedCollectionUpdateWithHomepageMutation = TypedMutation<
 
 const assignCollectionProduct = gql`
   ${collectionProductFragment}
+  ${productErrorFragment}
   mutation CollectionAssignProduct(
     $collectionId: ID!
     $productIds: [ID!]!
@@ -102,10 +111,6 @@ const assignCollectionProduct = gql`
     $before: String
   ) {
     collectionAddProducts(collectionId: $collectionId, products: $productIds) {
-      errors {
-        field
-        message
-      }
       collection {
         id
         products(first: $first, after: $after, before: $before, last: $last) {
@@ -122,6 +127,9 @@ const assignCollectionProduct = gql`
           }
         }
       }
+      errors: productErrors {
+        ...ProductErrorFragment
+      }
     }
   }
 `;
@@ -132,14 +140,14 @@ export const TypedCollectionAssignProductMutation = TypedMutation<
 
 const createCollection = gql`
   ${collectionDetailsFragment}
+  ${productErrorFragment}
   mutation CreateCollection($input: CollectionCreateInput!) {
     collectionCreate(input: $input) {
-      errors {
-        field
-        message
-      }
       collection {
         ...CollectionDetailsFragment
+      }
+      errors: productErrors {
+        ...ProductErrorFragment
       }
     }
   }
@@ -150,11 +158,11 @@ export const TypedCollectionCreateMutation = TypedMutation<
 >(createCollection);
 
 const removeCollection = gql`
+  ${productErrorFragment}
   mutation RemoveCollection($id: ID!) {
     collectionDelete(id: $id) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
     }
   }
@@ -165,6 +173,7 @@ export const TypedCollectionRemoveMutation = TypedMutation<
 >(removeCollection);
 
 const unassignCollectionProduct = gql`
+  ${productErrorFragment}
   mutation UnassignCollectionProduct(
     $collectionId: ID!
     $productIds: [ID]!
@@ -177,10 +186,6 @@ const unassignCollectionProduct = gql`
       collectionId: $collectionId
       products: $productIds
     ) {
-      errors {
-        field
-        message
-      }
       collection {
         id
         products(first: $first, after: $after, before: $before, last: $last) {
@@ -206,6 +211,9 @@ const unassignCollectionProduct = gql`
           }
         }
       }
+      errors: productErrors {
+        ...ProductErrorFragment
+      }
     }
   }
 `;
@@ -215,11 +223,11 @@ export const TypedUnassignCollectionProductMutation = TypedMutation<
 >(unassignCollectionProduct);
 
 const collectionBulkDelete = gql`
+  ${productErrorFragment}
   mutation CollectionBulkDelete($ids: [ID]!) {
     collectionBulkDelete(ids: $ids) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
     }
   }
@@ -230,11 +238,11 @@ export const TypedCollectionBulkDelete = TypedMutation<
 >(collectionBulkDelete);
 
 const collectionBulkPublish = gql`
+  ${productErrorFragment}
   mutation CollectionBulkPublish($ids: [ID]!, $isPublished: Boolean!) {
     collectionBulkPublish(ids: $ids, isPublished: $isPublished) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
     }
   }
