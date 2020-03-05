@@ -2,17 +2,11 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CategoryInput } from "./../../types/globalTypes";
+import { CategoryInput, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CategoryCreate
 // ====================================================
-
-export interface CategoryCreate_categoryCreate_errors {
-  __typename: "Error";
-  field: string | null;
-  message: string | null;
-}
 
 export interface CategoryCreate_categoryCreate_category_backgroundImage {
   __typename: "Image";
@@ -36,10 +30,16 @@ export interface CategoryCreate_categoryCreate_category {
   parent: CategoryCreate_categoryCreate_category_parent | null;
 }
 
+export interface CategoryCreate_categoryCreate_errors {
+  __typename: "ProductError";
+  code: ProductErrorCode;
+  field: string | null;
+}
+
 export interface CategoryCreate_categoryCreate {
   __typename: "CategoryCreate";
-  errors: CategoryCreate_categoryCreate_errors[];
   category: CategoryCreate_categoryCreate_category | null;
+  errors: CategoryCreate_categoryCreate_errors[];
 }
 
 export interface CategoryCreate {
