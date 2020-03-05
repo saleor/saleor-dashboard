@@ -2,15 +2,11 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { ProductErrorCode } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: CollectionAssignProduct
 // ====================================================
-
-export interface CollectionAssignProduct_collectionAddProducts_errors {
-  __typename: "Error";
-  field: string | null;
-  message: string | null;
-}
 
 export interface CollectionAssignProduct_collectionAddProducts_collection_products_edges_node_productType {
   __typename: "ProductType";
@@ -57,10 +53,16 @@ export interface CollectionAssignProduct_collectionAddProducts_collection {
   products: CollectionAssignProduct_collectionAddProducts_collection_products | null;
 }
 
+export interface CollectionAssignProduct_collectionAddProducts_errors {
+  __typename: "ProductError";
+  code: ProductErrorCode;
+  field: string | null;
+}
+
 export interface CollectionAssignProduct_collectionAddProducts {
   __typename: "CollectionAddProducts";
-  errors: CollectionAssignProduct_collectionAddProducts_errors[];
   collection: CollectionAssignProduct_collectionAddProducts_collection | null;
+  errors: CollectionAssignProduct_collectionAddProducts_errors[];
 }
 
 export interface CollectionAssignProduct {

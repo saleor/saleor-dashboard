@@ -2,17 +2,11 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CollectionCreateInput } from "./../../types/globalTypes";
+import { CollectionCreateInput, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CreateCollection
 // ====================================================
-
-export interface CreateCollection_collectionCreate_errors {
-  __typename: "Error";
-  field: string | null;
-  message: string | null;
-}
 
 export interface CreateCollection_collectionCreate_collection_backgroundImage {
   __typename: "Image";
@@ -32,10 +26,16 @@ export interface CreateCollection_collectionCreate_collection {
   seoTitle: string | null;
 }
 
+export interface CreateCollection_collectionCreate_errors {
+  __typename: "ProductError";
+  code: ProductErrorCode;
+  field: string | null;
+}
+
 export interface CreateCollection_collectionCreate {
   __typename: "CollectionCreate";
-  errors: CreateCollection_collectionCreate_errors[];
   collection: CreateCollection_collectionCreate_collection | null;
+  errors: CreateCollection_collectionCreate_errors[];
 }
 
 export interface CreateCollection {
