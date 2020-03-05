@@ -4,7 +4,7 @@ import React from "react";
 
 import placeholderCollectionImage from "@assets/images/block1.jpg";
 import placeholderProductImage from "@assets/images/placeholder60x60.png";
-import { formError } from "@saleor/storybook/misc";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import CollectionDetailsPage, {
   CollectionDetailsPageProps
 } from "../../../collections/components/CollectionDetailsPage";
@@ -42,9 +42,27 @@ storiesOf("Views / Collections / Collection details", module)
   .add("form errors", () => (
     <CollectionDetailsPage
       {...props}
-      errors={["name", "descriptionJson", "publicationDate", "isPublished"].map(
-        formError
-      )}
+      errors={[
+        {
+          code: ProductErrorCode.REQUIRED,
+          field: "name"
+        },
+        {
+          code: ProductErrorCode.REQUIRED,
+          field: "descriptionJson"
+        },
+        {
+          code: ProductErrorCode.INVALID,
+          field: "publicationDate"
+        },
+        {
+          code: ProductErrorCode.INVALID,
+          field: "isPublished"
+        }
+      ].map(err => ({
+        __typename: "ProductError",
+        ...err
+      }))}
     />
   ))
   .add("no products", () => (
