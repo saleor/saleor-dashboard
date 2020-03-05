@@ -5,7 +5,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 
-export interface PermissionGroupBulkDeleteDialogProps {
+export interface PermissionDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   quantity: number;
   open: boolean;
@@ -13,7 +13,7 @@ export interface PermissionGroupBulkDeleteDialogProps {
   onClose: () => void;
 }
 
-const PermissionGroupBulkDeleteDialog: React.FC<PermissionGroupBulkDeleteDialogProps> = ({
+const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
   confirmButtonState,
   quantity,
   onClose,
@@ -47,5 +47,5 @@ const PermissionGroupBulkDeleteDialog: React.FC<PermissionGroupBulkDeleteDialogP
     </ActionDialog>
   );
 };
-PermissionGroupBulkDeleteDialog.displayName = "PermissionGroupBulkDeleteDialog";
-export default PermissionGroupBulkDeleteDialog;
+PermissionGroupDeleteDialog.displayName = "PermissionGroupDeleteDialog";
+export default PermissionGroupDeleteDialog;

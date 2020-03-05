@@ -14,7 +14,7 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import PermissionGroupBulkDeleteDialog from "@saleor/permissionGroups/components/permissionGroupBulkDeleteDialog";
+import PermissionGroupDeleteDialog from "@saleor/permissionGroups/components/PermissionGroupDeleteDialog";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { buttonMessages } from "@saleor/intl";
 
@@ -106,7 +106,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
           </Button>
         }
       />
-      <PermissionGroupBulkDeleteDialog
+      <PermissionGroupDeleteDialog
         onConfirm={() => undefined} // TODO: Bulk mutation is not available
         confirmButtonState={"default"}
         quantity={listElements.length}
