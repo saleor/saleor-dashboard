@@ -59,6 +59,7 @@ export interface MultiAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
   allowCustomValues?: boolean;
   displayValues: MultiAutocompleteChoiceType[];
+  error?: boolean;
   name: string;
   choices: MultiAutocompleteChoiceType[];
   value: string[];
@@ -70,19 +71,16 @@ export interface MultiAutocompleteSelectFieldProps
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const DebounceAutocomplete: React.ComponentType<
-  DebounceProps<string>
-> = Debounce;
+const DebounceAutocomplete: React.ComponentType<DebounceProps<
+  string
+>> = Debounce;
 
-const MultiAutocompleteSelectFieldComponent: React.FC<
-  MultiAutocompleteSelectFieldProps
-> = props => {
+const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFieldProps> = props => {
   const {
     allowCustomValues,
     choices,
-
     displayValues,
-
+    error,
     hasMore,
     helperText,
     label,
@@ -147,6 +145,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
                   id: undefined,
                   onClick: toggleMenu
                 }}
+                error={error}
                 helperText={helperText}
                 label={label}
                 fullWidth={true}
@@ -191,9 +190,11 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
   );
 };
 
-const MultiAutocompleteSelectField: React.FC<
-  MultiAutocompleteSelectFieldProps
-> = ({ choices, fetchChoices, ...props }) => {
+const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> = ({
+  choices,
+  fetchChoices,
+  ...props
+}) => {
   const [query, setQuery] = React.useState("");
 
   if (fetchChoices) {
