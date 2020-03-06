@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import { productErrorFragment } from "@saleor/attributes/mutations";
 import { TypedMutation } from "../mutations";
 import { ProductCreate, ProductCreateVariables } from "./types/ProductCreate";
 import { ProductDelete, ProductDeleteVariables } from "./types/ProductDelete";
@@ -54,13 +55,21 @@ import {
   ProductVariantBulkDeleteVariables
 } from "./types/ProductVariantBulkDelete";
 
+export const bulkProductErrorFragment = gql`
+  fragment BulkProductErrorFragment on BulkProductError {
+    field
+    code
+    index
+  }
+`;
+
 export const productImageCreateMutation = gql`
+  ${productErrorFragment}
   ${productFragmentDetails}
   mutation ProductImageCreate($product: ID!, $image: Upload!, $alt: String) {
     productImageCreate(input: { alt: $alt, image: $image, product: $product }) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       product {
         ...Product
@@ -74,11 +83,11 @@ export const TypedProductImageCreateMutation = TypedMutation<
 >(productImageCreateMutation);
 
 export const productDeleteMutation = gql`
+  ${productErrorFragment}
   mutation ProductDelete($id: ID!) {
     productDelete(id: $id) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       product {
         id
@@ -92,11 +101,11 @@ export const TypedProductDeleteMutation = TypedMutation<
 >(productDeleteMutation);
 
 export const productImagesReorder = gql`
+  ${productErrorFragment}
   mutation ProductImageReorder($productId: ID!, $imagesIds: [ID]!) {
     productImageReorder(productId: $productId, imagesIds: $imagesIds) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       product {
         id
@@ -116,6 +125,7 @@ export const TypedProductImagesReorder = TypedMutation<
 >(productImagesReorder);
 
 export const productUpdateMutation = gql`
+  ${productErrorFragment}
   ${productFragmentDetails}
   mutation ProductUpdate(
     $id: ID!
@@ -145,9 +155,8 @@ export const productUpdateMutation = gql`
         seo: $seo
       }
     ) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       product {
         ...Product
@@ -161,6 +170,7 @@ export const TypedProductUpdateMutation = TypedMutation<
 >(productUpdateMutation);
 
 export const simpleProductUpdateMutation = gql`
+  ${productErrorFragment}
   ${productFragmentDetails}
   ${fragmentVariant}
   mutation SimpleProductUpdate(
@@ -193,18 +203,16 @@ export const simpleProductUpdateMutation = gql`
         seo: $seo
       }
     ) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       product {
         ...Product
       }
     }
     productVariantUpdate(id: $productVariantId, input: $productVariantInput) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       productVariant {
         ...ProductVariant
@@ -218,6 +226,7 @@ export const TypedSimpleProductUpdateMutation = TypedMutation<
 >(simpleProductUpdateMutation);
 
 export const productCreateMutation = gql`
+  ${productErrorFragment}
   ${productFragmentDetails}
   mutation ProductCreate(
     $attributes: [AttributeValueInput]
@@ -251,9 +260,8 @@ export const productCreateMutation = gql`
         seo: $seo
       }
     ) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       product {
         ...Product
@@ -267,11 +275,11 @@ export const TypedProductCreateMutation = TypedMutation<
 >(productCreateMutation);
 
 export const variantDeleteMutation = gql`
+  ${productErrorFragment}
   mutation VariantDelete($id: ID!) {
     productVariantDelete(id: $id) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       productVariant {
         id
@@ -286,6 +294,7 @@ export const TypedVariantDeleteMutation = TypedMutation<
 
 export const variantUpdateMutation = gql`
   ${fragmentVariant}
+  ${productErrorFragment}
   mutation VariantUpdate(
     $id: ID!
     $attributes: [AttributeValueInput]
@@ -306,10 +315,8 @@ export const variantUpdateMutation = gql`
         trackInventory: $trackInventory
       }
     ) {
-      productErrors {
-        code
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       productVariant {
         ...ProductVariant
@@ -324,12 +331,11 @@ export const TypedVariantUpdateMutation = TypedMutation<
 
 export const variantCreateMutation = gql`
   ${fragmentVariant}
+  ${productErrorFragment}
   mutation VariantCreate($input: ProductVariantCreateInput!) {
     productVariantCreate(input: $input) {
-      productErrors {
-        code
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       productVariant {
         ...ProductVariant
@@ -343,8 +349,12 @@ export const TypedVariantCreateMutation = TypedMutation<
 >(variantCreateMutation);
 
 export const productImageDeleteMutation = gql`
+  ${productErrorFragment}
   mutation ProductImageDelete($id: ID!) {
     productImageDelete(id: $id) {
+      errors: productErrors {
+        ...ProductErrorFragment
+      }
       product {
         id
         images {
@@ -360,12 +370,12 @@ export const TypedProductImageDeleteMutation = TypedMutation<
 >(productImageDeleteMutation);
 
 export const productImageUpdateMutation = gql`
+  ${productErrorFragment}
   ${productFragmentDetails}
   mutation ProductImageUpdate($id: ID!, $alt: String!) {
     productImageUpdate(id: $id, input: { alt: $alt }) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       product {
         ...Product
@@ -380,11 +390,11 @@ export const TypedProductImageUpdateMutation = TypedMutation<
 
 export const variantImageAssignMutation = gql`
   ${fragmentVariant}
+  ${productErrorFragment}
   mutation VariantImageAssign($variantId: ID!, $imageId: ID!) {
     variantImageAssign(variantId: $variantId, imageId: $imageId) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       productVariant {
         ...ProductVariant
@@ -399,11 +409,11 @@ export const TypedVariantImageAssignMutation = TypedMutation<
 
 export const variantImageUnassignMutation = gql`
   ${fragmentVariant}
+  ${productErrorFragment}
   mutation VariantImageUnassign($variantId: ID!, $imageId: ID!) {
     variantImageUnassign(variantId: $variantId, imageId: $imageId) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
       productVariant {
         ...ProductVariant
@@ -417,11 +427,11 @@ export const TypedVariantImageUnassignMutation = TypedMutation<
 >(variantImageUnassignMutation);
 
 export const productBulkDeleteMutation = gql`
+  ${productErrorFragment}
   mutation productBulkDelete($ids: [ID!]!) {
     productBulkDelete(ids: $ids) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
     }
   }
@@ -432,11 +442,11 @@ export const TypedProductBulkDeleteMutation = TypedMutation<
 >(productBulkDeleteMutation);
 
 export const productBulkPublishMutation = gql`
+  ${productErrorFragment}
   mutation productBulkPublish($ids: [ID!]!, $isPublished: Boolean!) {
     productBulkPublish(ids: $ids, isPublished: $isPublished) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
     }
   }
@@ -447,20 +457,14 @@ export const TypedProductBulkPublishMutation = TypedMutation<
 >(productBulkPublishMutation);
 
 export const ProductVariantBulkCreateMutation = gql`
+  ${bulkProductErrorFragment}
   mutation ProductVariantBulkCreate(
     $id: ID!
     $inputs: [ProductVariantBulkCreateInput]!
   ) {
     productVariantBulkCreate(product: $id, variants: $inputs) {
-      bulkProductErrors {
-        field
-        message
-        code
-        index
-      }
-      errors {
-        field
-        message
+      errors: bulkProductErrors {
+        ...BulkProductErrorFragment
       }
     }
   }
@@ -471,11 +475,11 @@ export const TypedProductVariantBulkCreateMutation = TypedMutation<
 >(ProductVariantBulkCreateMutation);
 
 export const ProductVariantBulkDeleteMutation = gql`
+  ${productErrorFragment}
   mutation ProductVariantBulkDelete($ids: [ID!]!) {
     productVariantBulkDelete(ids: $ids) {
-      errors {
-        field
-        message
+      errors: productErrors {
+        ...ProductErrorFragment
       }
     }
   }

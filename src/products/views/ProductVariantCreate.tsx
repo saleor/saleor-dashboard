@@ -6,6 +6,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import { commonMessages } from "@saleor/intl";
 import { decimal, maybe } from "../../misc";
 import ProductVariantCreatePage, {
   ProductVariantCreatePageSubmitData
@@ -35,11 +36,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ productId }) => {
         }
 
         const handleCreateSuccess = (data: VariantCreate) => {
-          if (data.productVariantCreate.productErrors.length === 0) {
+          if (data.productVariantCreate.errors.length === 0) {
             notify({
-              text: intl.formatMessage({
-                defaultMessage: "Product created"
-              })
+              text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(
               productVariantEditUrl(
@@ -90,18 +89,16 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ productId }) => {
                   />
                   <ProductVariantCreatePage
                     currencySymbol={maybe(() => shop.defaultCurrency)}
-                    errors={maybe(
-                      () =>
-                        variantCreateResult.data.productVariantCreate
-                          .productErrors,
+                    errors={
+                      variantCreateResult.data?.productVariantCreate.errors ||
                       []
-                    )}
+                    }
                     header={intl.formatMessage({
                       defaultMessage: "Create Variant",
                       description: "header"
                     })}
                     loading={disableForm}
-                    product={maybe(() => data.product)}
+                    product={data?.product}
                     onBack={handleBack}
                     onSubmit={handleSubmit}
                     onVariantClick={handleVariantClick}

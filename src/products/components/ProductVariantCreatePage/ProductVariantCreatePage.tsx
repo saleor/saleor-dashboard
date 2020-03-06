@@ -13,8 +13,8 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { VariantCreate_productVariantCreate_productErrors } from "@saleor/products/types/VariantCreate";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { maybe } from "../../../misc";
 import { ProductVariantCreateData_product } from "../../types/ProductVariantCreateData";
 import ProductVariantAttributes, {
@@ -39,7 +39,7 @@ export interface ProductVariantCreatePageSubmitData
 
 interface ProductVariantCreatePageProps {
   currencySymbol: string;
-  errors: VariantCreate_productVariantCreate_productErrors[];
+  errors: ProductErrorFragment[];
   header: string;
   loading: boolean;
   product: ProductVariantCreateData_product;

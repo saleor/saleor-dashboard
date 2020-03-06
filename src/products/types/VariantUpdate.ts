@@ -8,11 +8,10 @@ import { AttributeValueInput, ProductErrorCode } from "./../../types/globalTypes
 // GraphQL mutation operation: VariantUpdate
 // ====================================================
 
-export interface VariantUpdate_productVariantUpdate_productErrors {
+export interface VariantUpdate_productVariantUpdate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_attributes_attribute_values {
@@ -114,7 +113,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
 
 export interface VariantUpdate_productVariantUpdate {
   __typename: "ProductVariantUpdate";
-  productErrors: VariantUpdate_productVariantUpdate_productErrors[];
+  errors: VariantUpdate_productVariantUpdate_errors[];
   productVariant: VariantUpdate_productVariantUpdate_productVariant | null;
 }
 

@@ -6,8 +6,8 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 
 const useStyles = makeStyles(
   theme => ({
@@ -24,7 +24,7 @@ interface ProductVariantPriceProps {
   currencySymbol?: string;
   priceOverride?: string;
   costPrice?: string;
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   loading?: boolean;
   onChange(event: any);
 }
@@ -38,9 +38,11 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
     loading,
     onChange
   } = props;
-  const classes = useStyles(props);
 
+  const classes = useStyles(props);
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["price_override", "cost_price"], errors);
 
   return (
     <Card>
@@ -54,13 +56,13 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
         <div className={classes.grid}>
           <div>
             <PriceField
-              error={!!getFieldError(errors, "price_override")}
+              error={!!formErrors.price_override}
               name="priceOverride"
               label={intl.formatMessage({
                 defaultMessage: "Selling price override"
               })}
               hint={
-                getFieldError(errors, "price_override")?.message ||
+                getProductErrorMessage(formErrors.price_override, intl) ||
                 intl.formatMessage({
                   defaultMessage: "Optional",
                   description: "optional field",
@@ -75,13 +77,13 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
           </div>
           <div>
             <PriceField
-              error={!!getFieldError(errors, "cost_price")}
+              error={!!formErrors.cost_price}
               name="costPrice"
               label={intl.formatMessage({
                 defaultMessage: "Cost price override"
               })}
               hint={
-                getFieldError(errors, "cost_price")?.message ||
+                getProductErrorMessage(formErrors.cost_price, intl) ||
                 intl.formatMessage({
                   defaultMessage: "Optional",
                   description: "optional field",

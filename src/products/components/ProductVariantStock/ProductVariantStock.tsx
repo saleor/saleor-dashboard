@@ -6,8 +6,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 
 const useStyles = makeStyles(
   theme => ({
@@ -21,7 +21,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductVariantStockProps {
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   sku: string;
   quantity: string;
   stockAllocated?: number;
@@ -31,9 +31,11 @@ interface ProductVariantStockProps {
 
 const ProductVariantStock: React.FC<ProductVariantStockProps> = props => {
   const { errors, sku, quantity, stockAllocated, loading, onChange } = props;
-  const classes = useStyles(props);
 
+  const classes = useStyles(props);
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["quantity", "sku"], errors);
 
   return (
     <Card>
@@ -47,7 +49,7 @@ const ProductVariantStock: React.FC<ProductVariantStockProps> = props => {
         <div className={classes.grid}>
           <div>
             <TextField
-              error={!!getFieldError(errors, "quantity")}
+              error={!!formErrors.quantity}
               name="quantity"
               value={quantity}
               label={intl.formatMessage({
@@ -55,19 +57,17 @@ const ProductVariantStock: React.FC<ProductVariantStockProps> = props => {
                 description: "product variant stock"
               })}
               helperText={
-                getFieldError(errors, "quantity")
-                  ? getFieldError(errors, "quantity")
-                  : !!stockAllocated
-                  ? intl.formatMessage(
-                      {
-                        defaultMessage: "Allocated: {quantity}",
-                        description: "variant allocated stock"
-                      },
-                      {
-                        quantity: stockAllocated
-                      }
-                    )
-                  : undefined
+                getProductErrorMessage(formErrors.quantity, intl) ||
+                (!!stockAllocated &&
+                  intl.formatMessage(
+                    {
+                      defaultMessage: "Allocated: {quantity}",
+                      description: "variant allocated stock"
+                    },
+                    {
+                      quantity: stockAllocated
+                    }
+                  ))
               }
               onChange={onChange}
               disabled={loading}
@@ -76,8 +76,8 @@ const ProductVariantStock: React.FC<ProductVariantStockProps> = props => {
           </div>
           <div>
             <TextField
-              error={!!getFieldError(errors, "sku")}
-              helperText={getFieldError(errors, "sku")?.message}
+              error={!!formErrors.sku}
+              helperText={getProductErrorMessage(formErrors.sku, intl)}
               name="sku"
               value={sku}
               label={intl.formatMessage({

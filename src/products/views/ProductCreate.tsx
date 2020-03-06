@@ -58,13 +58,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
         })
       });
       navigate(productUrl(data.productCreate.product.id));
-    } else {
-      const attributeError = data.productCreate.errors.find(
-        err => err.field === "attributes"
-      );
-      if (!!attributeError) {
-        notify({ text: attributeError.message });
-      }
     }
   };
 
@@ -120,10 +113,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
                 []
               ).map(edge => edge.node)}
               disabled={productCreateOpts.loading}
-              errors={maybe(
-                () => productCreateOpts.data.productCreate.errors,
-                []
-              )}
+              errors={productCreateOpts.data?.productCreate.errors || []}
               fetchCategories={searchCategory}
               fetchCollections={searchCollection}
               fetchProductTypes={searchProductTypes}

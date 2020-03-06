@@ -19,6 +19,7 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { getMutationState, maybe } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import ProductUpdateOperations from "../../containers/ProductUpdateOperations";
@@ -101,13 +102,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             notify({
               text: intl.formatMessage(commonMessages.savedChanges)
             });
-          } else {
-            const attributeError = data.productUpdate.errors.find(
-              err => err.field === "attributes"
-            );
-            if (!!attributeError) {
-              notify({ text: attributeError.message });
-            }
           }
         };
 
@@ -118,7 +112,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           );
           if (imageError) {
             notify({
-              text: imageError.message
+              text: intl.formatMessage(commonMessages.somethingWentWrong)
             });
           }
         };
@@ -339,12 +333,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                     defaultPrice={maybe(() =>
                       data.product.basePrice.amount.toFixed(2)
                     )}
-                    errors={maybe(
-                      () =>
-                        bulkProductVariantCreate.opts.data
-                          .productVariantBulkCreate.bulkProductErrors,
-                      []
-                    )}
+                    errors={
+                      bulkProductVariantCreate.opts.data
+                        ?.productVariantBulkCreate.errors || []
+                    }
                     open={params.action === "create-variants"}
                     attributes={maybe(
                       () => data.product.productType.variantAttributes,
