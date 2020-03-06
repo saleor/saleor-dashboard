@@ -338,7 +338,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_2417065806": {
     "context": "tab name",
-    "string": "All Attributes"
+    "string": "همه ویژگی ها"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_3824684885": {
     "context": "button",
@@ -603,7 +603,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryListPage_dot_4294878092": {
     "context": "tab name",
-    "string": "All Categories"
+    "string": "همه ویژگی ها"
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_1214235329": {
     "string": "نام دسته‌بندی"
@@ -768,7 +768,7 @@
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_1631917001": {
     "context": "tab name",
-    "string": "All Collections"
+    "string": "همه کالکشن ها"
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_4057224233": {
     "string": "جستجو مجموعه"
@@ -840,7 +840,7 @@
     "string": "مجموعه ایجاد شده"
   },
   "src_dot_collections_dot_views_dot_2001540731": {
-    "string": "Added product to collection"
+    "string": "اضافه کردن محصول به کالکشن"
   },
   "src_dot_collections_dot_views_dot_2402899582": {
     "string": "Are you sure you want to delete collection's image?"
@@ -1266,6 +1266,10 @@
   "src_dot_components_dot_RichTextEditor_dot_2160163587": {
     "context": "button",
     "string": "افزودن یا ویرایش لینک"
+  },
+  "src_dot_components_dot_RichTextEditor_dot_286109898": {
+    "context": "rich text error",
+    "string": "Invalid content"
   },
   "src_dot_components_dot_RichTextEditor_dot_2925475978": {
     "string": "URL لینک شد"
@@ -2413,7 +2417,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentTrackingDialog_dot_606831229": {
     "context": "dialog header",
-    "string": "Add Tracking Code"
+    "string": "اضافه کردن کد رهگیری"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1119771899": {
     "context": "fulfillment group tracking number",
@@ -2804,8 +2808,8 @@
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1648805446": {
     "string": "Deleted draft orders"
   },
-  "src_dot_orders_dot_views_dot_OrderDraftList_dot_1872939752": {
-    "string": "Order draft succesfully created"
+  "src_dot_orders_dot_views_dot_OrderDraftList_dot_1738939038": {
+    "string": "Order draft successfully created"
   },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_2074422036": {
     "context": "dialog content",
@@ -2814,8 +2818,8 @@
   "src_dot_orders_dot_views_dot_OrderList_dot_1136302661": {
     "string": "سفارش‌ها لغو شد"
   },
-  "src_dot_orders_dot_views_dot_OrderList_dot_1872939752": {
-    "string": "Order draft succesfully created"
+  "src_dot_orders_dot_views_dot_OrderList_dot_1738939038": {
+    "string": "Order draft successfully created"
   },
   "src_dot_orders_dot_views_dot_OrderList_dot_3528672691": {
     "context": "cancel orders, button",
@@ -4796,6 +4800,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_40035964": {
     "context": "event",
     "string": "Changed quantity in checkout"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
+    "context": "event",
+    "string": "Fulfillment created"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
     "context": "webhook",

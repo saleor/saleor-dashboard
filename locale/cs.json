@@ -32,7 +32,7 @@
     "string": "Manage how your store charges tax"
   },
   "configurationPluginsPages": {
-    "string": "View and update your plugins and their settings."
+    "string": "Zobrazit a aktualizovat vaše pluginy a jejich nastavení."
   },
   "homeActivityCardHeader": {
     "context": "header",
@@ -68,7 +68,7 @@
     "string": "No payments waiting for capture"
   },
   "homeNotificationsTableNoProducts": {
-    "string": "No products out of stock"
+    "string": "Žádné zboží není skladem."
   },
   "homeProductListCardOrders": {
     "context": "number of ordered products",
@@ -97,7 +97,7 @@
   },
   "menuCreateDialogHeader": {
     "context": "dialog header",
-    "string": "Create Menu"
+    "string": "Vytvořit menu"
   },
   "menuCreateDialogMenuTitleLabel": {
     "string": "Menu Title"
@@ -107,7 +107,7 @@
   },
   "menuDetailsDeleteMenuHeader": {
     "context": "dialog header",
-    "string": "Delete Menu"
+    "string": "Smazat menu"
   },
   "menuDetailsPageHelperText": {
     "string": "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
@@ -154,7 +154,7 @@
   },
   "menuListDeleteMenuHeader": {
     "context": "dialog header",
-    "string": "Delete Menu"
+    "string": "Smazat menu"
   },
   "menuListDeleteMenusContent": {
     "string": "{counter,plural,one {Are you sure you want to delete this menu?} other {Are you sure you want to delete {displayQuantity} menus?}}"
@@ -178,22 +178,22 @@
   },
   "menuListPageAddMenu": {
     "context": "button",
-    "string": "Create Menu"
+    "string": "Vytvořit menu"
   },
   "menuPropertiesMenuTitle": {
     "string": "Menu Title"
   },
   "orderCustomerBillingAddressNotSet": {
     "context": "no address is set in draft order",
-    "string": "Not set"
+    "string": "Není nastaveno"
   },
   "orderCustomerCustomerNotSet": {
     "context": "customer is not set in draft order",
-    "string": "Not set"
+    "string": "Není nastaveno"
   },
   "orderCustomerShippingAddressNotSet": {
     "context": "shipping address is not set in draft order",
-    "string": "Not set"
+    "string": "Není nastaveno"
   },
   "orderPaymentShippingDoesNotApply": {
     "context": "order does not require shipping",
@@ -217,11 +217,11 @@
   },
   "productTypeCreateHeader": {
     "context": "window title",
-    "string": "Create Product Type"
+    "string": "Vytvořit typ produktu"
   },
   "productTypeCreatePageHeader": {
     "context": "header",
-    "string": "Create Product Type"
+    "string": "Vytvořit typ produktu"
   },
   "productTypeTaxesHeader": {
     "context": "section header",
@@ -314,7 +314,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1336738461": {
     "context": "product attribute type",
-    "string": "Dropdown"
+    "string": "Rozbalovací nabídka"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2592224946": {
     "context": "check to require attribute to have value",
@@ -448,7 +448,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeValueEditDialog_dot_1841790893": {
     "context": "add attribute value",
-    "string": "Add Value"
+    "string": "Přidat hodnotu"
   },
   "src_dot_attributes_dot_components_dot_AttributeValueEditDialog_dot_636461959": {
     "context": "attribute name",
@@ -603,7 +603,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryListPage_dot_4294878092": {
     "context": "tab name",
-    "string": "All Categories"
+    "string": "Všechny kategorie"
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_1214235329": {
     "string": "Category Name"
@@ -620,7 +620,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_2527742754": {
     "context": "number of products",
-    "string": "No. of Products"
+    "string": "Číslo produktů"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_1134347598": {
     "context": "product price",
@@ -737,7 +737,7 @@
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_951411809": {
     "context": "page header",
-    "string": "Add Collection"
+    "string": "Přidat kolekci"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_1815688500": {
     "context": "collection",
@@ -768,7 +768,7 @@
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_1631917001": {
     "context": "tab name",
-    "string": "All Collections"
+    "string": "Všechny kolekce"
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_4057224233": {
     "string": "Search Collection"
@@ -793,7 +793,7 @@
     "string": "Nezveřejněno"
   },
   "src_dot_collections_dot_components_dot_CollectionList_dot_2527742754": {
-    "string": "No. of Products"
+    "string": "Číslo produktů"
   },
   "src_dot_collections_dot_components_dot_CollectionList_dot_2759199473": {
     "string": "Collection Name"
@@ -951,7 +951,7 @@
   },
   "src_dot_components_dot_AppLayout_dot_248888005": {
     "context": "button",
-    "string": "Account Settings"
+    "string": "Nastavení účtu"
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_1305061437": {
     "string": "Search Categories"
@@ -1188,7 +1188,7 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createCustomer": {
     "context": "button",
-    "string": "Create Customer"
+    "string": "Vytvořit zákazníka"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createOrder": {
     "context": "button",
@@ -1265,7 +1265,11 @@
   },
   "src_dot_components_dot_RichTextEditor_dot_2160163587": {
     "context": "button",
-    "string": "Add or Edit Link"
+    "string": "Přidat nebo upravit odkaz"
+  },
+  "src_dot_components_dot_RichTextEditor_dot_286109898": {
+    "context": "rich text error",
+    "string": "Invalid content"
   },
   "src_dot_components_dot_RichTextEditor_dot_2925475978": {
     "string": "URL Linked"
@@ -1411,7 +1415,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerAddressDialog_dot_3769321414": {
     "context": "dialog title",
-    "string": "Add Address"
+    "string": "Přidat adresu"
   },
   "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_1090326769": {
     "context": "customer's address book, header",
@@ -1425,7 +1429,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_3623935073": {
     "context": "button",
-    "string": "Add address"
+    "string": "Přidat adresu"
   },
   "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_489918044": {
     "context": "customer details, header",
@@ -1450,7 +1454,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_1967111456": {
     "context": "header",
-    "string": "Address Information"
+    "string": "Informace o adrese"
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_2758581442": {
     "context": "subsection header",
@@ -1491,7 +1495,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerCreatePage_dot_4025686004": {
     "context": "page header",
-    "string": "Create Customer"
+    "string": "Vytvořit zákazníka"
   },
   "src_dot_customers_dot_components_dot_CustomerDetails_dot_2968565128": {
     "context": "check to mark this account as active",
@@ -1518,11 +1522,11 @@
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_2859116187": {
     "context": "button",
-    "string": "Create customer"
+    "string": "Vytvořit zákazníka"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_477293306": {
     "context": "tab name",
-    "string": "All Customers"
+    "string": "Všichni zákazníci"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_joinDate": {
     "context": "customer",
@@ -1536,16 +1540,16 @@
     "string": "Number of Orders"
   },
   "src_dot_customers_dot_components_dot_CustomerList_dot_1432565772": {
-    "string": "No. of Orders"
+    "string": "Číslo objednávek"
   },
   "src_dot_customers_dot_components_dot_CustomerList_dot_2239722559": {
     "string": "No customers found"
   },
   "src_dot_customers_dot_components_dot_CustomerList_dot_2339105195": {
-    "string": "Customer Email"
+    "string": "E-mail zákazníka"
   },
   "src_dot_customers_dot_components_dot_CustomerList_dot_4154265139": {
-    "string": "Customer Name"
+    "string": "Jméno zákazníka"
   },
   "src_dot_customers_dot_components_dot_CustomerOrders_dot_1756106276": {
     "context": "order status",
@@ -1557,7 +1561,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerOrders_dot_2889196282": {
     "context": "number of order",
-    "string": "No. of Order"
+    "string": "Číslo objednávky"
   },
   "src_dot_customers_dot_components_dot_CustomerOrders_dot_3029139173": {
     "context": "button",
@@ -1575,14 +1579,14 @@
     "string": "No orders found"
   },
   "src_dot_customers_dot_components_dot_CustomerStats_dot_1135318032": {
-    "string": "Last login"
+    "string": "Poslední přihlášení"
   },
   "src_dot_customers_dot_components_dot_CustomerStats_dot_1787449306": {
-    "string": "Last order"
+    "string": "Poslední objednávka"
   },
   "src_dot_customers_dot_components_dot_CustomerStats_dot_2543847016": {
     "context": "section header",
-    "string": "Customer History"
+    "string": "Historie zákazníka"
   },
   "src_dot_customers_dot_views_dot_1927691511": {
     "context": "delete customer, dialog content",
@@ -1590,7 +1594,7 @@
   },
   "src_dot_customers_dot_views_dot_1998583641": {
     "context": "dialog header",
-    "string": "Delete Customer"
+    "string": "Smazat zákazníka"
   },
   "src_dot_customers_dot_views_dot_2657976015": {
     "context": "dialog header",
@@ -1598,23 +1602,23 @@
   },
   "src_dot_customers_dot_views_dot_2859116187": {
     "context": "window title",
-    "string": "Create customer"
+    "string": "Vytvořit zákazníka"
   },
   "src_dot_customers_dot_views_dot_3689332763": {
     "string": "Are you sure you want to delete this address from users address book?"
   },
   "src_dot_customers_dot_views_dot_3901579344": {
-    "string": "Customer Removed"
+    "string": "Zákazník odstraněn"
   },
   "src_dot_customers_dot_views_dot_3970234993": {
-    "string": "Customer created"
+    "string": "Zákazník vytvořen"
   },
   "src_dot_customers_dot_views_dot_CustomerList_dot_1932444813": {
     "string": "{counter,plural,one {Are you sure you want to delete this customer?} other {Are you sure you want to delete {displayQuantity} customers?}}"
   },
   "src_dot_customers_dot_views_dot_CustomerList_dot_2136923553": {
     "context": "dialog header",
-    "string": "Delete Customers"
+    "string": "Smazat zákazníky"
   },
   "src_dot_dashboard": {
     "string": "Kontrolní panel"
@@ -2110,7 +2114,7 @@
   },
   "src_dot_done": {
     "context": "button",
-    "string": "Done"
+    "string": "Hotovo"
   },
   "src_dot_draft": {
     "context": "order status",
@@ -2121,7 +2125,7 @@
     "string": "Draft Orders"
   },
   "src_dot_drafts": {
-    "string": "Drafts"
+    "string": "Koncepty"
   },
   "src_dot_edit": {
     "context": "button",
@@ -2144,7 +2148,7 @@
     "string": "Zpracováno"
   },
   "src_dot_generalInformations": {
-    "string": "General Informations"
+    "string": "Obecné informace"
   },
   "src_dot_home": {
     "context": "home section name",
@@ -2164,7 +2168,7 @@
   },
   "src_dot_manage": {
     "context": "button",
-    "string": "Manage"
+    "string": "Spravovat"
   },
   "src_dot_navigation": {
     "context": "navigation section name",
@@ -2276,7 +2280,7 @@
     "string": "Add shipping carrier"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_3202709354": {
-    "string": "Taxes (VAT included)"
+    "string": "Daň (včetně DPH)"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_3594442178": {
     "string": "No applicable shipping carriers"
@@ -2295,7 +2299,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetails_dot_2528459381": {
     "context": "button",
-    "string": "Add products"
+    "string": "Přidat produkty"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_115822814": {
     "string": "Žádná fakturační adresa"
@@ -2336,7 +2340,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_551325728": {
     "context": "tab name",
-    "string": "All Drafts"
+    "string": "Všechny koncepty"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_77765281": {
     "string": "Search Draft"
@@ -2353,7 +2357,7 @@
     "string": "No draft orders found"
   },
   "src_dot_orders_dot_components_dot_OrderDraftList_dot_2889196282": {
-    "string": "No. of Order"
+    "string": "Číslo objednávky"
   },
   "src_dot_orders_dot_components_dot_OrderDraftList_dot_3426593715": {
     "string": "Zákazník"
@@ -2413,7 +2417,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentTrackingDialog_dot_606831229": {
     "context": "dialog header",
-    "string": "Add Tracking Code"
+    "string": "Přidat sledovací kód"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_1119771899": {
     "context": "fulfillment group tracking number",
@@ -2558,7 +2562,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_875489544": {
     "context": "tab name",
-    "string": "All Orders"
+    "string": "Všechny objednávky"
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
     "context": "order",
@@ -2576,7 +2580,7 @@
     "string": "Platba"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_2889196282": {
-    "string": "No. of Order"
+    "string": "Číslo objednávky"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_3426593715": {
     "context": "e-mail or full name",
@@ -2625,7 +2629,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_1817306106": {
     "context": "vat included in order price",
-    "string": "VAT included"
+    "string": "včetně DPH"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_2183023165": {
     "context": "ordered products",
@@ -2804,8 +2808,8 @@
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1648805446": {
     "string": "Deleted draft orders"
   },
-  "src_dot_orders_dot_views_dot_OrderDraftList_dot_1872939752": {
-    "string": "Order draft succesfully created"
+  "src_dot_orders_dot_views_dot_OrderDraftList_dot_1738939038": {
+    "string": "Order draft successfully created"
   },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_2074422036": {
     "context": "dialog content",
@@ -2814,8 +2818,8 @@
   "src_dot_orders_dot_views_dot_OrderList_dot_1136302661": {
     "string": "Orders cancelled"
   },
-  "src_dot_orders_dot_views_dot_OrderList_dot_1872939752": {
-    "string": "Order draft succesfully created"
+  "src_dot_orders_dot_views_dot_OrderList_dot_1738939038": {
+    "string": "Order draft successfully created"
   },
   "src_dot_orders_dot_views_dot_OrderList_dot_3528672691": {
     "context": "cancel orders, button",
@@ -2961,7 +2965,7 @@
   },
   "src_dot_plugins": {
     "context": "plugins section name",
-    "string": "Plugins"
+    "string": "Pluginy"
   },
   "src_dot_plugins_dot_components_dot_PluginAuthorization_dot_768575093": {
     "context": "section header",
@@ -2969,7 +2973,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginInfo_dot_1049131348": {
     "context": "plugin name",
-    "string": "Plugin Name"
+    "string": "Název pluginu"
   },
   "src_dot_plugins_dot_components_dot_PluginInfo_dot_1756106276": {
     "context": "plugin status",
@@ -2977,10 +2981,10 @@
   },
   "src_dot_plugins_dot_components_dot_PluginInfo_dot_3425535100": {
     "context": "section header",
-    "string": "Plugin Information and Status"
+    "string": "Informace a stav pluginu"
   },
   "src_dot_plugins_dot_components_dot_PluginInfo_dot_4013064767": {
-    "string": "Set plugin as Active"
+    "string": "Aktivovat plugin"
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_3032939398": {
     "context": "header",
@@ -2992,11 +2996,11 @@
   },
   "src_dot_plugins_dot_components_dot_PluginSettings_dot_1970881031": {
     "context": "section header",
-    "string": "Plugin Settings"
+    "string": "Nastavení pluginu"
   },
   "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_1970881031": {
     "context": "section header",
-    "string": "Plugin Settings"
+    "string": "Nastavení pluginu"
   },
   "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3352026836": {
     "context": "header",
@@ -3004,7 +3008,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3425535100": {
     "context": "section header",
-    "string": "Plugin Information and Status"
+    "string": "Informace a stav pluginu"
   },
   "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3799756739": {
     "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
@@ -3013,11 +3017,11 @@
     "string": "This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers."
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3233248823": {
-    "string": "Search Plugins..."
+    "string": "Vyhledat pluginy..."
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3523826683": {
     "context": "tab name",
-    "string": "All Plugins"
+    "string": "Všechny pluginy"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_active": {
     "context": "plugin",
@@ -3040,14 +3044,14 @@
     "string": "Jméno"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_666641390": {
-    "string": "No plugins found"
+    "string": "Nebyly nalezeny žádné pluginy"
   },
   "src_dot_plugins_dot_views_dot_1096544448": {
     "context": "header",
     "string": "Authorization Field Delete"
   },
   "src_dot_plugins_dot_views_dot_955370043": {
-    "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
+    "string": "Plugin může přestat fungovat po vymazání tohoto pole. Chcete pokračovat?"
   },
   "src_dot_productTypes": {
     "context": "product types section name",
@@ -3265,7 +3269,7 @@
   },
   "src_dot_products_dot_components_dot_ProductImageNavigation_dot_3060635772": {
     "context": "section header",
-    "string": "All Photos"
+    "string": "Všechny obrázky"
   },
   "src_dot_products_dot_components_dot_ProductImagePage_dot_1905082483": {
     "context": "field is optional",
@@ -3320,7 +3324,7 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_outOfStock": {
     "context": "product status",
-    "string": "Out Of Stock"
+    "string": "Není skladem"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_price": {
     "string": "Cena"
@@ -3530,7 +3534,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantImages_dot_989683980": {
     "context": "button",
-    "string": "Choose photos"
+    "string": "Vybrat obrázek"
   },
   "src_dot_products_dot_components_dot_ProductVariantNavigation_dot_2153006789": {
     "context": "section header",
@@ -3758,7 +3762,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceInfo_dot_3789449123": {
     "context": "service account",
-    "string": "Account Name"
+    "string": "Název účtu"
   },
   "src_dot_services_dot_components_dot_ServiceInfo_dot_426959482": {
     "context": "header",
@@ -4488,7 +4492,7 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_3911019760": {
     "context": "tax rate",
-    "string": "Advertising"
+    "string": "Reklama"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_4199760668": {
     "context": "tax rate",
@@ -4791,11 +4795,15 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3970234993": {
     "context": "event",
-    "string": "Customer created"
+    "string": "Zákazník vytvořen"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_40035964": {
     "context": "event",
     "string": "Changed quantity in checkout"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
+    "context": "event",
+    "string": "Fulfillment created"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
     "context": "webhook",
