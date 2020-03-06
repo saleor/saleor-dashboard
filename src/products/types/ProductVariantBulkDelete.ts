@@ -2,14 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { ProductErrorCode } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: ProductVariantBulkDelete
 // ====================================================
 
 export interface ProductVariantBulkDelete_productVariantBulkDelete_errors {
-  __typename: "Error";
+  __typename: "ProductError";
+  code: ProductErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface ProductVariantBulkDelete_productVariantBulkDelete {

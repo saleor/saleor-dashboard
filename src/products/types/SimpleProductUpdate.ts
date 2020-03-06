@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueInput, ProductVariantInput, SeoInput, AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeValueInput, ProductVariantInput, SeoInput, ProductErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: SimpleProductUpdate
 // ====================================================
 
 export interface SimpleProductUpdate_productUpdate_errors {
-  __typename: "Error";
+  __typename: "ProductError";
+  code: ProductErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_category {
@@ -183,9 +183,9 @@ export interface SimpleProductUpdate_productUpdate {
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_errors {
-  __typename: "Error";
+  __typename: "ProductError";
+  code: ProductErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_attributes_attribute_values {

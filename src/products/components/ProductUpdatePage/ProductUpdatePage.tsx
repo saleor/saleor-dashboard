@@ -19,9 +19,10 @@ import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
-import { FetchMoreProps, ListActions, UserError } from "@saleor/types";
+import { FetchMoreProps, ListActions } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import {
   ProductDetails_product,
   ProductDetails_product_images,
@@ -48,7 +49,7 @@ import ProductStock from "../ProductStock";
 import ProductVariants from "../ProductVariants";
 
 export interface ProductUpdatePageProps extends ListActions {
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
@@ -219,6 +220,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     currency={currency}
                     data={data}
                     disabled={disabled}
+                    errors={errors}
                     onChange={change}
                   />
                   <CardSpacer />

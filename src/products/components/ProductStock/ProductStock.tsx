@@ -6,8 +6,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import { maybe } from "../../../misc";
 import { ProductDetails_product } from "../../types/ProductDetails";
 
@@ -28,16 +28,18 @@ interface ProductStockProps {
     stockQuantity: number;
   };
   disabled: boolean;
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   product: ProductDetails_product;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 const ProductStock: React.FC<ProductStockProps> = props => {
   const { data, disabled, product, onChange, errors } = props;
-  const classes = useStyles(props);
 
+  const classes = useStyles(props);
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["sku", "stockQuantity"], errors);
 
   return (
     <Card>
@@ -58,8 +60,8 @@ const ProductStock: React.FC<ProductStockProps> = props => {
             })}
             value={data.sku}
             onChange={onChange}
-            error={!!getFieldError(errors, "sku")}
-            helperText={getFieldError(errors, "sku")?.message}
+            error={!!formErrors.sku}
+            helperText={getProductErrorMessage(formErrors.sku, intl)}
           />
           <TextField
             disabled={disabled}
@@ -73,19 +75,17 @@ const ProductStock: React.FC<ProductStockProps> = props => {
             type="number"
             onChange={onChange}
             helperText={
-              product
-                ? intl.formatMessage(
-                    {
-                      defaultMessage: "Allocated: {quantity}",
-                      description: "allocated product stock"
-                    },
-                    {
-                      quantity: maybe(
-                        () => product.variants[0].quantityAllocated
-                      )
-                    }
-                  )
-                : undefined
+              getProductErrorMessage(formErrors.stockQuantity, intl) ||
+              (product &&
+                intl.formatMessage(
+                  {
+                    defaultMessage: "Allocated: {quantity}",
+                    description: "allocated product stock"
+                  },
+                  {
+                    quantity: product?.variants[0].quantityAllocated
+                  }
+                ))
             }
           />
         </div>
