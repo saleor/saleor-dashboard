@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { UsersInput, PermissionEnum } from "./../../types/globalTypes";
+import { PermissionEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: PermissionGroupAssignUsers
@@ -55,5 +55,5 @@ export interface PermissionGroupAssignUsers {
 
 export interface PermissionGroupAssignUsersVariables {
   id: string;
-  input: UsersInput;
+  users: string[];
 }
