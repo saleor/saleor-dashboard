@@ -176,7 +176,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
           permissionGroupAssignUsers({
             variables: {
               id,
-              input: { users: data.map(node => node.id) }
+              users: data.map(node => node.id)
             }
           })
         }
@@ -186,7 +186,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
           permissionGroupUnassignUsers({
             variables: {
               id,
-              input: { users: listElements }
+              users: listElements
             }
           })
         }
