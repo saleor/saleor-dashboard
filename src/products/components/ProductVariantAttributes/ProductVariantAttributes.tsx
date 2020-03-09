@@ -13,7 +13,7 @@ import SingleAutocompleteSelectField, {
 import Skeleton from "@saleor/components/Skeleton";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
-import { VariantCreate_productVariantCreate_productErrors } from "@saleor/products/types/VariantCreate";
+import { VariantCreate_productVariantCreate_errors } from "@saleor/products/types/VariantCreate";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { ProductVariant_attributes_attribute_values } from "../../types/ProductVariant";
 
@@ -28,7 +28,7 @@ export type VariantAttributeInput = FormsetAtomicData<
 interface ProductVariantAttributesProps {
   attributes: VariantAttributeInput[];
   disabled: boolean;
-  errors: VariantCreate_productVariantCreate_productErrors[];
+  errors: VariantCreate_productVariantCreate_errors[];
   onChange: FormsetChange<VariantAttributeInputData>;
 }
 

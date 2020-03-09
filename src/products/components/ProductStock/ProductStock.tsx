@@ -8,7 +8,6 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
-import { maybe } from "../../../misc";
 import { ProductDetails_product } from "../../types/ProductDetails";
 
 const useStyles = makeStyles(

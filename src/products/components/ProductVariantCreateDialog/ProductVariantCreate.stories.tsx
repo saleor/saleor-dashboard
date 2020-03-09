@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { attributes } from "@saleor/attributes/fixtures";
-import { ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors } from "@saleor/products/types/ProductVariantBulkCreate";
+import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import Decorator from "../../../storybook/Decorator";
 import { createVariants } from "./createVariants";
@@ -43,13 +43,12 @@ const dataAttributes = selectedAttributes.map(attribute => ({
     .filter((_, valueIndex) => valueIndex % 2 !== 1)
 }));
 
-const errors: ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors[] = [
+const errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[] = [
   {
     __typename: "BulkProductError",
     code: ProductErrorCode.UNIQUE,
     field: "sku",
-    index: 3,
-    message: "Duplicated SKU."
+    index: 3
   }
 ];
 
