@@ -3007,14 +3007,6 @@
     "context": "staff member full name",
     "string": "Name"
   },
-  "src_dot_permissionGroups_dot_components_dot_PermissionGroupBulkDeleteDialog_dot_3135465011": {
-    "context": "dialog content",
-    "string": "Are you sure you want to delete {counter,plural,one{this permission group} other{{displayQuantity} permission groups}}?"
-  },
-  "src_dot_permissionGroups_dot_components_dot_PermissionGroupBulkDeleteDialog_dot_3940417523": {
-    "context": "dialog title",
-    "string": "Delete permission groups"
-  },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupCreatePage_dot_3765873075": {
     "context": "checkbox label",
     "string": "Group has full access to the store"
@@ -3022,6 +3014,14 @@
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupCreatePage_dot_3920591233": {
     "context": "card description",
     "string": "Expand or restrict group's permissions to access certain part of saleor system."
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_2297471173": {
+    "context": "dialog content",
+    "string": "Are you sure you want to delete {name}?"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_3528974446": {
+    "context": "dialog title",
+    "string": "Delete permission group"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupDetailsPage_dot_3765873075": {
     "context": "checkbox label",
@@ -3116,6 +3116,9 @@
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupDetails_dot_870815507": {
     "context": "button title",
     "string": "Unassign"
+  },
+  "src_dot_permissionGroups_dot_views_dot_PermissionGroupList_dot_92979760": {
+    "string": "Permission Group Deleted"
   },
   "src_dot_plugins": {
     "context": "plugins section name",
