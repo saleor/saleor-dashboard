@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
-import { ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors } from "@saleor/products/types/ProductVariantBulkCreate";
+import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { isSelected } from "@saleor/utils/lists";
 import { ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatePrices from "./ProductVariantCreatePrices";
@@ -33,14 +33,12 @@ export interface ProductVariantCreateContentProps {
   currencySymbol: string;
   data: ProductVariantCreateFormData;
   dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
-  errors: ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors[];
+  errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
   step: ProductVariantCreateStep;
   onStepClick: (step: ProductVariantCreateStep) => void;
 }
 
-const ProductVariantCreateContent: React.FC<
-  ProductVariantCreateContentProps
-> = props => {
+const ProductVariantCreateContent: React.FC<ProductVariantCreateContentProps> = props => {
   const {
     attributes,
     currencySymbol,
