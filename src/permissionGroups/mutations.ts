@@ -60,8 +60,8 @@ export const usePermissionGroupCreate = makeMutation<
 
 export const permissionGroupAssignUsers = gql`
   ${permissionGroupDetailsFragment}
-  mutation PermissionGroupAssignUsers($id: ID!, $input: UsersInput!) {
-    permissionGroupAssignUsers(id: $id, input: $input) {
+  mutation PermissionGroupAssignUsers($id: ID!, $users: [ID!]!) {
+    permissionGroupAssignUsers(id: $id, users: $users) {
       errors {
         field
         message
@@ -80,8 +80,8 @@ export const usePermissionGroupAssignUsers = makeMutation<
 
 export const permissionGroupUnassignUsers = gql`
   ${permissionGroupDetailsFragment}
-  mutation PermissionGroupUnassignUsers($id: ID!, $input: UsersInput!) {
-    permissionGroupUnassignUsers(id: $id, input: $input) {
+  mutation PermissionGroupUnassignUsers($id: ID!, $users: [ID!]!) {
+    permissionGroupUnassignUsers(id: $id, users: $users) {
       errors {
         field
         message

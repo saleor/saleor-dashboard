@@ -14,6 +14,10 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import {
+  isGroupFullAccess,
+  extractPermissionCodes
+} from "@saleor/permissionGroups/utils";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 import { PermissionGroupDetails_permissionGroup } from "../../types/PermissionGroupDetails";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
@@ -51,12 +55,10 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   const intl = useIntl();
 
   const initialForm: PermissionGroupDetailsPageFormData = {
-    hasFullAccess: false,
+    hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     isActive: false,
     name: permissionGroup?.name ? permissionGroup.name : "",
-    permissions: permissionGroup?.permissions
-      ? permissionGroup.permissions.map(perm => perm.code)
-      : []
+    permissions: extractPermissionCodes(permissionGroup)
   };
 
   return (
