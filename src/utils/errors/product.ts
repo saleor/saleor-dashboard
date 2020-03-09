@@ -44,6 +44,8 @@ function getProductErrorMessage(
         return intl.formatMessage(commonMessages.requiredField);
       case ProductErrorCode.VARIANT_NO_DIGITAL_CONTENT:
         return intl.formatMessage(messages.variantNoDigitalContent);
+      case ProductErrorCode.INVALID:
+        return intl.formatMessage(commonErrorMessages.invalid);
       default:
         return intl.formatMessage(commonErrorMessages.unknownError);
     }
