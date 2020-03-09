@@ -45,7 +45,7 @@ export interface PermissionGroupCreate_permissionGroupCreate_group {
 
 export interface PermissionGroupCreate_permissionGroupCreate {
   __typename: "PermissionGroupCreate";
-  errors: PermissionGroupCreate_permissionGroupCreate_errors[] | null;
+  errors: PermissionGroupCreate_permissionGroupCreate_errors[];
   group: PermissionGroupCreate_permissionGroupCreate_group | null;
 }
 

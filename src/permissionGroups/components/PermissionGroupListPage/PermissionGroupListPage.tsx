@@ -8,13 +8,12 @@ import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
 import { PermissionGroupListUrlSortField } from "../../urls";
-import { ListActions, PageListProps, SortPage } from "../../../types";
+import { PageListProps, SortPage } from "../../../types";
 import { PermissionGroupList_permissionGroups_edges_node } from "../../types/PermissionGroupList";
 import PermissionGroupList from "../PermissionGroupList";
 
 export interface PermissionGroupListPageProps
   extends PageListProps,
-    ListActions,
     SortPage<PermissionGroupListUrlSortField> {
   permissionGroups: PermissionGroupList_permissionGroups_edges_node[];
   onBack: () => void;

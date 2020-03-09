@@ -7,15 +7,15 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 
 export interface PermissionDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  quantity: number;
   open: boolean;
+  name: string;
   onConfirm: () => void;
   onClose: () => void;
 }
 
 const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
   confirmButtonState,
-  quantity,
+  name,
   onClose,
   onConfirm,
   open
@@ -29,18 +29,17 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        defaultMessage: "Delete permission groups",
+        defaultMessage: "Delete permission group",
         description: "dialog title"
       })}
       variant="delete"
     >
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="Are you sure you want to delete {counter,plural,one{this permission group} other{{displayQuantity} permission groups}}?"
+          defaultMessage="Are you sure you want to delete {name}?"
           description="dialog content"
           values={{
-            counter: quantity,
-            displayQuantity: <strong>{quantity}</strong>
+            name: <strong>{name}</strong>
           }}
         />
       </DialogContentText>

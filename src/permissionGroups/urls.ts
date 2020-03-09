@@ -6,7 +6,8 @@ import {
   Dialog,
   Pagination,
   TabActionDialog,
-  Sort
+  Sort,
+  SingleAction
 } from "../types";
 
 const permissionGroupSection = "/permission-groups/";
@@ -18,10 +19,12 @@ export enum PermissionGroupListUrlSortField {
   name = "name"
 }
 export type PermissionGroupListUrlSort = Sort<PermissionGroupListUrlSortField>;
-export type PermissionGroupListUrlQueryParams = BulkAction &
-  Dialog<PermissionGroupListUrlDialog> &
+export type PermissionGroupListUrlQueryParams = Dialog<
+  PermissionGroupListUrlDialog
+> &
   Pagination &
-  PermissionGroupListUrlSort;
+  PermissionGroupListUrlSort &
+  SingleAction;
 export const permissionGroupListUrl = (
   params?: PermissionGroupListUrlQueryParams
 ) => permissionGroupListPath + "?" + stringifyQs(params);

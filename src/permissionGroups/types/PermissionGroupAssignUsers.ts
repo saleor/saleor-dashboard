@@ -45,7 +45,7 @@ export interface PermissionGroupAssignUsers_permissionGroupAssignUsers_group {
 
 export interface PermissionGroupAssignUsers_permissionGroupAssignUsers {
   __typename: "PermissionGroupAssignUsers";
-  errors: PermissionGroupAssignUsers_permissionGroupAssignUsers_errors[] | null;
+  errors: PermissionGroupAssignUsers_permissionGroupAssignUsers_errors[];
   group: PermissionGroupAssignUsers_permissionGroupAssignUsers_group | null;
 }
 

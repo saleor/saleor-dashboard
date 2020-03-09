@@ -45,7 +45,7 @@ export interface PermissionGroupUpdate_permissionGroupUpdate_group {
 
 export interface PermissionGroupUpdate_permissionGroupUpdate {
   __typename: "PermissionGroupUpdate";
-  errors: PermissionGroupUpdate_permissionGroupUpdate_errors[] | null;
+  errors: PermissionGroupUpdate_permissionGroupUpdate_errors[];
   group: PermissionGroupUpdate_permissionGroupUpdate_group | null;
 }
 

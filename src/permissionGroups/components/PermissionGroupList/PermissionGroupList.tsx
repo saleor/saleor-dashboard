@@ -6,22 +6,21 @@ import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
+import { TableHead } from "@material-ui/core";
 
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { getArrowDirection } from "@saleor/utils/sort";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-import { maybe, renderCollection, stopPropagation } from "../../../misc";
-import { ListActions, ListProps, SortPage } from "../../../types";
-import { PermissionGroupList_permissionGroups_edges_node } from "../../types/PermissionGroupList";
+import { ListProps, SortPage } from "@saleor/types";
+import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 
-import { PermissionGroupListUrlSortField } from "../../urls";
+import { PermissionGroupList_permissionGroups_edges_node } from "@saleor/permissionGroups/types/PermissionGroupList";
+import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
 
 const useStyles = makeStyles(
   theme => ({
@@ -55,11 +54,10 @@ const useStyles = makeStyles(
   }),
   { name: "PermissionGroupList" }
 );
-const numberOfColumns = 4;
+const numberOfColumns = 3;
 
 interface PermissionGroupListProps
   extends ListProps,
-    ListActions,
     SortPage<PermissionGroupListUrlSortField> {
   permissionGroups: PermissionGroupList_permissionGroups_edges_node[];
   onDelete: (id: string) => void;
@@ -75,46 +73,36 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
     onPreviousPage,
     onRowClick,
     onSort,
-    isChecked,
-    selected,
-    sort,
-    toggle,
-    toggleAll,
-    toolbar
+    sort
   } = props;
   const classes = useStyles(props);
 
   return (
     <ResponsiveTable>
-      <TableHead
-        colSpan={numberOfColumns}
-        selected={selected}
-        disabled={disabled}
-        items={permissionGroups}
-        toggleAll={toggleAll}
-        toolbar={toolbar}
-      >
-        <TableCellHeader
-          direction={
-            sort.sort === PermissionGroupListUrlSortField.name
-              ? getArrowDirection(sort.asc)
-              : undefined
-          }
-          arrowPosition="right"
-          onClick={() => onSort(PermissionGroupListUrlSortField.name)}
-          className={classes.colName}
-        >
-          <FormattedMessage
-            defaultMessage="Permission Group Name"
-            description="permission group name"
-          />
-        </TableCellHeader>
-        <TableCellHeader className={classes.colMembers} textAlign="right">
-          <FormattedMessage defaultMessage="Members" />
-        </TableCellHeader>
-        <TableCell className={classes.colActionsHeader}>
-          <FormattedMessage defaultMessage="Actions" />
-        </TableCell>
+      <TableHead>
+        <TableRow>
+          <TableCellHeader
+            direction={
+              sort.sort === PermissionGroupListUrlSortField.name
+                ? getArrowDirection(sort.asc)
+                : undefined
+            }
+            arrowPosition="right"
+            onClick={() => onSort(PermissionGroupListUrlSortField.name)}
+            className={classes.colName}
+          >
+            <FormattedMessage
+              defaultMessage="Permission Group Name"
+              description="permission group name"
+            />
+          </TableCellHeader>
+          <TableCellHeader className={classes.colMembers} textAlign="right">
+            <FormattedMessage defaultMessage="Members" />
+          </TableCellHeader>
+          <TableCell className={classes.colActionsHeader}>
+            <FormattedMessage defaultMessage="Actions" />
+          </TableCell>
+        </TableRow>
       </TableHead>
       <TableFooter>
         <TableRow>
@@ -132,68 +120,52 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
       <TableBody>
         {renderCollection(
           permissionGroups,
-          permissionGroup => {
-            const isSelected = permissionGroup
-              ? isChecked(permissionGroup.id)
-              : false;
-            return (
-              <TableRow
-                className={!!permissionGroup ? classes.link : undefined}
-                hover={!!permissionGroup}
-                key={permissionGroup ? permissionGroup.id : "skeleton"}
-                onClick={
-                  permissionGroup ? onRowClick(permissionGroup.id) : undefined
-                }
-                selected={isSelected}
-                data-tc="id"
-                data-tc-id={maybe(() => permissionGroup.id)}
-              >
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={isSelected}
-                    disabled={disabled}
-                    disableClickPropagation
-                    onChange={() => toggle(permissionGroup.id)}
-                  />
-                </TableCell>
-                <TableCell className={classes.colName}>
-                  {permissionGroup ? (
-                    <span data-tc="name">{permissionGroup.name}</span>
-                  ) : (
-                    <Skeleton />
-                  )}
-                </TableCell>
-                <TableCell className={classes.colMembers}>
-                  {permissionGroup ? (
-                    <span data-tc="members">
-                      {permissionGroup.users.length}
-                    </span>
-                  ) : (
-                    <Skeleton />
-                  )}
-                </TableCell>
-                <TableCell className={classes.colActions}>
-                  {permissionGroup ? (
-                    <>
-                      <IconButton
-                        color="primary"
-                        onClick={stopPropagation(() =>
-                          onDelete(permissionGroup.id)
-                        )}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                      <IconButton color="primary">
-                        <EditIcon />
-                      </IconButton>
-                    </>
-                  ) : (
-                    <Skeleton />
-                  )}
-                </TableCell>
-              </TableRow>
-            );
-          },
+          permissionGroup => (
+            <TableRow
+              className={!!permissionGroup ? classes.link : undefined}
+              hover={!!permissionGroup}
+              key={permissionGroup ? permissionGroup.id : "skeleton"}
+              onClick={
+                permissionGroup ? onRowClick(permissionGroup.id) : undefined
+              }
+              data-tc="id"
+              data-tc-id={maybe(() => permissionGroup.id)}
+            >
+              <TableCell className={classes.colName}>
+                {permissionGroup ? (
+                  <span data-tc="name">{permissionGroup.name}</span>
+                ) : (
+                  <Skeleton />
+                )}
+              </TableCell>
+              <TableCell className={classes.colMembers}>
+                {permissionGroup ? (
+                  <span data-tc="members">{permissionGroup.users.length}</span>
+                ) : (
+                  <Skeleton />
+                )}
+              </TableCell>
+              <TableCell className={classes.colActions}>
+                {permissionGroup ? (
+                  <>
+                    <IconButton
+                      color="primary"
+                      onClick={stopPropagation(() =>
+                        onDelete(permissionGroup.id)
+                      )}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                    <IconButton color="primary">
+                      <EditIcon />
+                    </IconButton>
+                  </>
+                ) : (
+                  <Skeleton />
+                )}
+              </TableCell>
+            </TableRow>
+          ),
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>

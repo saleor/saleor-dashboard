@@ -45,7 +45,7 @@ export interface PermissionGroupUnassignUsers_permissionGroupUnassignUsers_group
 
 export interface PermissionGroupUnassignUsers_permissionGroupUnassignUsers {
   __typename: "PermissionGroupUnassignUsers";
-  errors: PermissionGroupUnassignUsers_permissionGroupUnassignUsers_errors[] | null;
+  errors: PermissionGroupUnassignUsers_permissionGroupUnassignUsers_errors[];
   group: PermissionGroupUnassignUsers_permissionGroupUnassignUsers_group | null;
 }
 

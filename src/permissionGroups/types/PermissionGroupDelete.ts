@@ -14,7 +14,7 @@ export interface PermissionGroupDelete_permissionGroupDelete_errors {
 
 export interface PermissionGroupDelete_permissionGroupDelete {
   __typename: "PermissionGroupDelete";
-  errors: PermissionGroupDelete_permissionGroupDelete_errors[] | null;
+  errors: PermissionGroupDelete_permissionGroupDelete_errors[];
 }
 
 export interface PermissionGroupDelete {

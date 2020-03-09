@@ -8,13 +8,13 @@ import Decorator from "@saleor/storybook/Decorator";
 
 const props: PermissionDeleteDialogProps = {
   confirmButtonState: "default",
+  name: "Full Access",
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true,
-  quantity: 20
+  open: true
 };
 
 storiesOf("Views / Permission Groups / Permission Group Delete", module)
   .addDecorator(Decorator)
-  .add("single", () => <PermissionGroupDeleteDialog {...props} quantity={1} />)
+  .add("single", () => <PermissionGroupDeleteDialog {...props} />)
   .add("multiple", () => <PermissionGroupDeleteDialog {...props} />);
