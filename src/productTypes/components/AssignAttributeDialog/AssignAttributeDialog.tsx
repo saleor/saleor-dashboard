@@ -30,6 +30,8 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { getProductErrorMessage } from "@saleor/utils/errors";
 import { SearchAttributes_productType_availableAttributes_edges_node } from "../../hooks/useAvailableAttributeSearch/types/SearchAttributes";
 
 const useStyles = makeStyles(
@@ -61,7 +63,7 @@ const useStyles = makeStyles(
 
 export interface AssignAttributeDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: string[];
+  errors: ProductErrorFragment[];
   open: boolean;
   attributes: SearchAttributes_productType_availableAttributes_edges_node[];
   selected: string[];
@@ -188,7 +190,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
         <DialogContent>
           {errors.map((error, errorIndex) => (
             <DialogContentText color="error" key={errorIndex}>
-              {error}
+              {getProductErrorMessage(error, intl)}
             </DialogContentText>
           ))}
         </DialogContent>

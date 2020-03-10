@@ -2,12 +2,11 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { formError } from "@saleor/storybook/misc";
 import ProductTypeCreatePage, {
   ProductTypeCreatePageProps,
   ProductTypeForm
 } from "../../../productTypes/components/ProductTypeCreatePage";
-import { WeightUnitsEnum } from "../../../types/globalTypes";
+import { WeightUnitsEnum, ProductErrorCode } from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
 
 const props: Omit<ProductTypeCreatePageProps, "classes"> = {
@@ -30,6 +29,10 @@ storiesOf("Views / Product types / Create product type", module)
   .add("form errors", () => (
     <ProductTypeCreatePage
       {...props}
-      errors={(["name"] as Array<keyof ProductTypeForm>).map(formError)}
+      errors={(["name"] as Array<keyof ProductTypeForm>).map(field => ({
+        __typename: "ProductError",
+        code: ProductErrorCode.INVALID,
+        field
+      }))}
     />
   ));

@@ -57,10 +57,9 @@ export const ProductTypeCreate: React.FC = () => {
                 <ProductTypeCreatePage
                   defaultWeightUnit={maybe(() => data.shop.defaultWeightUnit)}
                   disabled={loading}
-                  errors={maybe(
-                    () => createProductTypeOpts.data.productTypeCreate.errors,
-                    []
-                  )}
+                  errors={
+                    createProductTypeOpts.data?.productTypeCreate.errors || []
+                  }
                   pageTitle={intl.formatMessage({
                     defaultMessage: "Create Product Type",
                     description: "header",
