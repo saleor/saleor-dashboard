@@ -7,6 +7,8 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import PriceField from "@saleor/components/PriceField";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 
 const useStyles = makeStyles(
   theme => ({
@@ -26,14 +28,17 @@ interface ProductPricingProps {
     basePrice: number;
   };
   disabled: boolean;
+  errors: ProductErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 const ProductPricing: React.FC<ProductPricingProps> = props => {
-  const { currency, data, disabled, onChange } = props;
-  const classes = useStyles(props);
+  const { currency, data, disabled, errors, onChange } = props;
 
+  const classes = useStyles(props);
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["basePrice"], errors);
 
   return (
     <Card>
@@ -61,10 +66,17 @@ const ProductPricing: React.FC<ProductPricingProps> = props => {
               defaultMessage: "Price",
               description: "product price"
             })}
+            error={!!formErrors.basePrice}
+            hint={getProductErrorMessage(formErrors.basePrice, intl)}
             name="basePrice"
             value={data.basePrice}
             currencySymbol={currency}
             onChange={onChange}
+            InputProps={{
+              inputProps: {
+                min: 0
+              }
+            }}
           />
         </div>
       </CardContent>

@@ -929,7 +929,7 @@ export interface NameTranslationInput {
 }
 
 export interface OrderAddNoteInput {
-  message?: string | null;
+  message: string;
 }
 
 export interface OrderDraftFilterInput {
@@ -1026,6 +1026,7 @@ export interface ProductFilterInput {
   attributes?: (AttributeInput | null)[] | null;
   stockAvailability?: StockAvailability | null;
   productType?: string | null;
+  stocks?: ProductStockFilterInput | null;
   search?: string | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
@@ -1035,6 +1036,11 @@ export interface ProductOrder {
   direction: OrderDirection;
   attributeId?: string | null;
   field?: ProductOrderField | null;
+}
+
+export interface ProductStockFilterInput {
+  warehouseIds?: string[] | null;
+  quantity?: IntRangeInput | null;
 }
 
 export interface ProductTypeFilterInput {
@@ -1080,6 +1086,7 @@ export interface ProductVariantCreateInput {
   trackInventory?: boolean | null;
   weight?: any | null;
   product: string;
+  stocks?: StockInput[] | null;
 }
 
 export interface ProductVariantInput {
@@ -1206,6 +1213,11 @@ export interface StaffInput {
 export interface StaffUserInput {
   status?: StaffMemberStatus | null;
   search?: string | null;
+}
+
+export interface StockInput {
+  warehouse: string;
+  quantity?: number | null;
 }
 
 export interface TranslationInput {

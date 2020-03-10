@@ -42,7 +42,6 @@ storiesOf("Views / Products / Create product variant", module)
         }
       ].map(error => ({
         __typename: "ProductError",
-        message: "Generic form error",
         ...error
       }))}
       header="Add variant"

@@ -41,22 +41,10 @@ storiesOf("Views / Attributes / Attribute details", module)
   .add("form errors", () => (
     <AttributePage
       {...props}
-      errors={[
-        {
-          code: ProductErrorCode.REQUIRED,
-          field: "name"
-        },
-        {
-          code: ProductErrorCode.REQUIRED,
-          field: "slug"
-        },
-        {
-          code: ProductErrorCode.GRAPHQL_ERROR,
-          field: "storefrontSearchPosition"
-        }
-      ].map(err => ({
+      errors={["name", "slug", "storefrontSearchPosition"].map(field => ({
         __typename: "ProductError",
-        ...err
+        code: ProductErrorCode.INVALID,
+        field
       }))}
     />
   ))

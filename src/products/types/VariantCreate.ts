@@ -8,11 +8,10 @@ import { ProductVariantCreateInput, ProductErrorCode } from "./../../types/globa
 // GraphQL mutation operation: VariantCreate
 // ====================================================
 
-export interface VariantCreate_productVariantCreate_productErrors {
+export interface VariantCreate_productVariantCreate_errors {
   __typename: "ProductError";
   code: ProductErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_attributes_attribute_values {
@@ -114,7 +113,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
 
 export interface VariantCreate_productVariantCreate {
   __typename: "ProductVariantCreate";
-  productErrors: VariantCreate_productVariantCreate_productErrors[];
+  errors: VariantCreate_productVariantCreate_errors[];
   productVariant: VariantCreate_productVariantCreate_productVariant | null;
 }
 

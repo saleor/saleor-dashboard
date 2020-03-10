@@ -8,23 +8,15 @@ import { ProductVariantBulkCreateInput, ProductErrorCode } from "./../../types/g
 // GraphQL mutation operation: ProductVariantBulkCreate
 // ====================================================
 
-export interface ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors {
+export interface ProductVariantBulkCreate_productVariantBulkCreate_errors {
   __typename: "BulkProductError";
   field: string | null;
-  message: string | null;
   code: ProductErrorCode;
   index: number | null;
 }
 
-export interface ProductVariantBulkCreate_productVariantBulkCreate_errors {
-  __typename: "Error";
-  field: string | null;
-  message: string | null;
-}
-
 export interface ProductVariantBulkCreate_productVariantBulkCreate {
   __typename: "ProductVariantBulkCreate";
-  bulkProductErrors: ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors[];
   errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
 }
 
