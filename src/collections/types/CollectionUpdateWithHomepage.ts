@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CollectionInput } from "./../../types/globalTypes";
+import { CollectionInput, ShopErrorCode, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CollectionUpdateWithHomepage
 // ====================================================
 
 export interface CollectionUpdateWithHomepage_homepageCollectionUpdate_errors {
-  __typename: "Error";
+  __typename: "ShopError";
+  code: ShopErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface CollectionUpdateWithHomepage_homepageCollectionUpdate_shop_homepageCollection {
@@ -28,12 +28,6 @@ export interface CollectionUpdateWithHomepage_homepageCollectionUpdate {
   __typename: "HomepageCollectionUpdate";
   errors: CollectionUpdateWithHomepage_homepageCollectionUpdate_errors[];
   shop: CollectionUpdateWithHomepage_homepageCollectionUpdate_shop | null;
-}
-
-export interface CollectionUpdateWithHomepage_collectionUpdate_errors {
-  __typename: "Error";
-  field: string | null;
-  message: string | null;
 }
 
 export interface CollectionUpdateWithHomepage_collectionUpdate_collection_backgroundImage {
@@ -54,10 +48,16 @@ export interface CollectionUpdateWithHomepage_collectionUpdate_collection {
   seoTitle: string | null;
 }
 
+export interface CollectionUpdateWithHomepage_collectionUpdate_errors {
+  __typename: "ProductError";
+  code: ProductErrorCode;
+  field: string | null;
+}
+
 export interface CollectionUpdateWithHomepage_collectionUpdate {
   __typename: "CollectionUpdate";
-  errors: CollectionUpdateWithHomepage_collectionUpdate_errors[];
   collection: CollectionUpdateWithHomepage_collectionUpdate_collection | null;
+  errors: CollectionUpdateWithHomepage_collectionUpdate_errors[];
 }
 
 export interface CollectionUpdateWithHomepage {

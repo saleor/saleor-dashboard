@@ -54,6 +54,7 @@ interface CollectionUpdateOperationsProps {
     >;
   }) => React.ReactNode;
   onUpdate: (data: CollectionUpdate) => void;
+  onUpdateWithCollection: (data: CollectionUpdateWithHomepage) => void;
   onProductAssign: (data: CollectionAssignProduct) => void;
   onProductUnassign: (data: UnassignCollectionProduct) => void;
   onRemove: (data: RemoveCollection) => void;
@@ -62,6 +63,7 @@ interface CollectionUpdateOperationsProps {
 const CollectionOperations: React.FC<CollectionUpdateOperationsProps> = ({
   children,
   onUpdate,
+  onUpdateWithCollection,
   onProductAssign,
   onProductUnassign,
   onRemove
@@ -72,7 +74,9 @@ const CollectionOperations: React.FC<CollectionUpdateOperationsProps> = ({
         {(...removeCollection) => (
           <TypedCollectionAssignProductMutation onCompleted={onProductAssign}>
             {(...assignProduct) => (
-              <TypedCollectionUpdateWithHomepageMutation onCompleted={onUpdate}>
+              <TypedCollectionUpdateWithHomepageMutation
+                onCompleted={onUpdateWithCollection}
+              >
                 {(...updateWithHomepage) => (
                   <TypedUnassignCollectionProductMutation
                     onCompleted={onProductUnassign}

@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { maybe } from "../../misc";
+import { commonMessages } from "@saleor/intl";
 import { CollectionCreateInput } from "../../types/globalTypes";
 import CollectionCreatePage from "../components/CollectionCreatePage/CollectionCreatePage";
 import { TypedCollectionCreateMutation } from "../mutations";
@@ -19,9 +19,7 @@ export const CollectionCreate: React.FC = () => {
   const handleCollectionCreateSuccess = (data: CreateCollection) => {
     if (data.collectionCreate.errors.length === 0) {
       notify({
-        text: intl.formatMessage({
-          defaultMessage: "Created collection"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(collectionUrl(data.collectionCreate.collection.id));
     } else {
@@ -31,7 +29,7 @@ export const CollectionCreate: React.FC = () => {
       );
       if (backgroundImageError) {
         notify({
-          text: backgroundImageError.message
+          text: intl.formatMessage(commonMessages.somethingWentWrong)
         });
       }
     }
@@ -47,10 +45,7 @@ export const CollectionCreate: React.FC = () => {
             })}
           />
           <CollectionCreatePage
-            errors={maybe(
-              () => createCollectionOpts.data.collectionCreate.errors,
-              []
-            )}
+            errors={createCollectionOpts.data?.collectionCreate.errors || []}
             onBack={() => navigate(collectionListUrl())}
             disabled={createCollectionOpts.loading}
             onSubmit={formData =>

@@ -35,6 +35,7 @@ import {
   CollectionUrlQueryParams,
   CollectionUrlDialog
 } from "../urls";
+import { CollectionUpdateWithHomepage } from "../types/CollectionUpdateWithHomepage";
 
 interface CollectionDetailsProps {
   id: string;
@@ -88,9 +89,16 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             );
             if (backgroundImageError) {
               notify({
-                text: backgroundImageError.message
+                text: intl.formatMessage(commonMessages.somethingWentWrong)
               });
             }
+          }
+        };
+        const handleCollectioUpdateWithHomepage = (
+          data: CollectionUpdateWithHomepage
+        ) => {
+          if (data.homepageCollectionUpdate.errors.length === 0) {
+            handleCollectionUpdate(data);
           }
         };
 
@@ -130,6 +138,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         return (
           <CollectionOperations
             onUpdate={handleCollectionUpdate}
+            onUpdateWithCollection={handleCollectioUpdateWithHomepage}
             onProductAssign={handleProductAssign}
             onProductUnassign={handleProductUnassign}
             onRemove={handleCollectionRemove}
@@ -204,7 +213,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                     onAdd={() => openModal("assign")}
                     onBack={handleBack}
                     disabled={loading}
-                    collection={maybe(() => data.collection)}
+                    collection={data?.collection}
                     errors={
                       updateCollection.opts?.data?.collectionUpdate.errors || []
                     }

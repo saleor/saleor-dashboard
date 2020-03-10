@@ -12,8 +12,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { ReorderAction, UserError } from "@saleor/types";
+import { ReorderAction } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import {
   AttributeDetailsFragment,
   AttributeDetailsFragment_values
@@ -25,7 +26,7 @@ import AttributeValues from "../AttributeValues";
 export interface AttributePageProps {
   attribute: AttributeDetailsFragment | null;
   disabled: boolean;
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   values: AttributeDetailsFragment_values[];
   onBack: () => void;

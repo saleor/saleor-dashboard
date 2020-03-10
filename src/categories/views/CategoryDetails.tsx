@@ -99,7 +99,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       );
       if (backgroundImageError) {
         notify({
-          text: backgroundImageError.message
+          text: intl.formatMessage(commonMessages.somethingWentWrong)
         });
       }
     }

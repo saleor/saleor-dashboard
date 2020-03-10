@@ -2,15 +2,11 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { ProductErrorCode } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: UnassignCollectionProduct
 // ====================================================
-
-export interface UnassignCollectionProduct_collectionRemoveProducts_errors {
-  __typename: "Error";
-  field: string | null;
-  message: string | null;
-}
 
 export interface UnassignCollectionProduct_collectionRemoveProducts_collection_products_edges_node_productType {
   __typename: "ProductType";
@@ -57,10 +53,16 @@ export interface UnassignCollectionProduct_collectionRemoveProducts_collection {
   products: UnassignCollectionProduct_collectionRemoveProducts_collection_products | null;
 }
 
+export interface UnassignCollectionProduct_collectionRemoveProducts_errors {
+  __typename: "ProductError";
+  code: ProductErrorCode;
+  field: string | null;
+}
+
 export interface UnassignCollectionProduct_collectionRemoveProducts {
   __typename: "CollectionRemoveProducts";
-  errors: UnassignCollectionProduct_collectionRemoveProducts_errors[];
   collection: UnassignCollectionProduct_collectionRemoveProducts_collection | null;
+  errors: UnassignCollectionProduct_collectionRemoveProducts_errors[];
 }
 
 export interface UnassignCollectionProduct {
