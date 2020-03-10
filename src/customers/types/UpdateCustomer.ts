@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CustomerInput } from "./../../types/globalTypes";
+import { CustomerInput, AccountErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateCustomer
 // ====================================================
 
 export interface UpdateCustomer_customerUpdate_errors {
-  __typename: "Error";
+  __typename: "AccountError";
+  code: AccountErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface UpdateCustomer_customerUpdate_user_defaultShippingAddress_country {
