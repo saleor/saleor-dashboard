@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { UserCreateInput } from "./../../types/globalTypes";
+import { UserCreateInput, AccountErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CreateCustomer
 // ====================================================
 
 export interface CreateCustomer_customerCreate_errors {
-  __typename: "Error";
+  __typename: "AccountError";
+  code: AccountErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface CreateCustomer_customerCreate_user {

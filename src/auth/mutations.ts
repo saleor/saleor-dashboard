@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import { accountFragmentError } from "@saleor/customers/mutations";
 import { TypedMutation } from "../mutations";
 import {
   RequestPasswordReset,
@@ -64,11 +65,11 @@ export const TypedVerifyTokenMutation = TypedMutation<
 >(tokenVerifyMutation);
 
 export const requestPasswordReset = gql`
+  ${accountFragmentError}
   mutation RequestPasswordReset($email: String!, $redirectUrl: String!) {
     requestPasswordReset(email: $email, redirectUrl: $redirectUrl) {
-      errors {
-        field
-        message
+      errors: accountErrors {
+        ...AccountErrorFragment
       }
     }
   }
@@ -79,14 +80,14 @@ export const RequestPasswordResetMutation = TypedMutation<
 >(requestPasswordReset);
 
 export const setPassword = gql`
+  ${accountFragmentError}
   ${fragmentUser}
   mutation SetPassword($email: String!, $password: String!, $token: String!) {
     setPassword(email: $email, password: $password, token: $token) {
-      token
-      errors {
-        field
-        message
+      errors: accountErrors {
+        ...AccountErrorFragment
       }
+      token
       user {
         ...User
       }

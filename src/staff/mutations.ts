@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
 import makeMutation from "@saleor/hooks/makeMutation";
+import { accountFragmentError } from "@saleor/customers/mutations";
 import { TypedMutation } from "../mutations";
 import { staffMemberDetailsFragment } from "./queries";
 import { StaffAvatarDelete } from "./types/StaffAvatarDelete";
@@ -26,12 +27,12 @@ import {
 } from "./types/ChangeStaffPassword";
 
 const staffMemberAddMutation = gql`
+  ${accountFragmentError}
   ${staffMemberDetailsFragment}
   mutation StaffMemberAdd($input: StaffCreateInput!) {
     staffCreate(input: $input) {
-      errors {
-        field
-        message
+      errors: accountErrors {
+        ...AccountErrorFragment
       }
       user {
         ...StaffMemberDetailsFragment
@@ -45,12 +46,12 @@ export const TypedStaffMemberAddMutation = TypedMutation<
 >(staffMemberAddMutation);
 
 const staffMemberUpdateMutation = gql`
+  ${accountFragmentError}
   ${staffMemberDetailsFragment}
   mutation StaffMemberUpdate($id: ID!, $input: StaffInput!) {
     staffUpdate(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: accountErrors {
+        ...AccountErrorFragment
       }
       user {
         ...StaffMemberDetailsFragment
@@ -64,11 +65,11 @@ export const TypedStaffMemberUpdateMutation = TypedMutation<
 >(staffMemberUpdateMutation);
 
 const staffMemberDeleteMutation = gql`
+  ${accountFragmentError}
   mutation StaffMemberDelete($id: ID!) {
     staffDelete(id: $id) {
-      errors {
-        field
-        message
+      errors: accountErrors {
+        ...AccountErrorFragment
       }
     }
   }
@@ -79,11 +80,11 @@ export const TypedStaffMemberDeleteMutation = TypedMutation<
 >(staffMemberDeleteMutation);
 
 const staffAvatarUpdateMutation = gql`
+  ${accountFragmentError}
   mutation StaffAvatarUpdate($image: Upload!) {
     userAvatarUpdate(image: $image) {
-      errors {
-        field
-        message
+      errors: accountErrors {
+        ...AccountErrorFragment
       }
       user {
         id
@@ -100,11 +101,11 @@ export const TypedStaffAvatarUpdateMutation = TypedMutation<
 >(staffAvatarUpdateMutation);
 
 const staffAvatarDeleteMutation = gql`
+  ${accountFragmentError}
   mutation StaffAvatarDelete {
     userAvatarDelete {
-      errors {
-        field
-        message
+      errors: accountErrors {
+        ...AccountErrorFragment
       }
       user {
         id
@@ -121,11 +122,11 @@ export const TypedStaffAvatarDeleteMutation = TypedMutation<
 >(staffAvatarDeleteMutation);
 
 const changeStaffPassword = gql`
+  ${accountFragmentError}
   mutation ChangeStaffPassword($newPassword: String!, $oldPassword: String!) {
     passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
-      errors {
-        field
-        message
+      errors: accountErrors {
+        ...AccountErrorFragment
       }
     }
   }
