@@ -1,19 +1,19 @@
 import React from "react";
 
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { UserError } from "../../../types";
 
 interface ProductTypeUpdateErrorsState {
-  addAttributeErrors: ProductErrorFragment[];
-  editAttributeErrors: ProductErrorFragment[];
-  formErrors: ProductErrorFragment[];
+  addAttributeErrors: UserError[];
+  editAttributeErrors: UserError[];
+  formErrors: UserError[];
 }
 interface ProductTypeUpdateErrorsProps {
   children: (props: {
     errors: ProductTypeUpdateErrorsState;
     set: {
-      addAttributeErrors: (errors: ProductErrorFragment[]) => void;
-      editAttributeErrors: (errors: ProductErrorFragment[]) => void;
-      formErrors: (errors: ProductErrorFragment[]) => void;
+      addAttributeErrors: (errors: UserError[]) => void;
+      editAttributeErrors: (errors: UserError[]) => void;
+      formErrors: (errors: UserError[]) => void;
     };
   }) => React.ReactNode;
 }
@@ -32,12 +32,11 @@ export class ProductTypeUpdateErrors extends React.Component<
     return this.props.children({
       errors: this.state,
       set: {
-        addAttributeErrors: (addAttributeErrors: ProductErrorFragment[]) =>
+        addAttributeErrors: (addAttributeErrors: UserError[]) =>
           this.setState({ addAttributeErrors }),
-        editAttributeErrors: (editAttributeErrors: ProductErrorFragment[]) =>
+        editAttributeErrors: (editAttributeErrors: UserError[]) =>
           this.setState({ editAttributeErrors }),
-        formErrors: (formErrors: ProductErrorFragment[]) =>
-          this.setState({ formErrors })
+        formErrors: (formErrors: UserError[]) => this.setState({ formErrors })
       }
     });
   }

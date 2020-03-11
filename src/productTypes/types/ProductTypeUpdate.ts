@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductTypeInput, ProductErrorCode } from "./../../types/globalTypes";
+import { ProductTypeInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductTypeUpdate
 // ====================================================
 
 export interface ProductTypeUpdate_productTypeUpdate_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
+  __typename: "Error";
   field: string | null;
+  message: string | null;
 }
 
 export interface ProductTypeUpdate_productTypeUpdate_productType_taxType {

@@ -319,10 +319,13 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                               )
                             )}
                             confirmButtonState={assignAttribute.opts.status}
-                            errors={
-                              assignAttribute.opts.data?.attributeAssign
-                                .errors || []
-                            }
+                            errors={maybe(
+                              () =>
+                                assignAttribute.opts.data.attributeAssign.errors.map(
+                                  err => err.message
+                                ),
+                              []
+                            )}
                             loading={result.loading}
                             onClose={closeModal}
                             onSubmit={handleAssignAttribute}

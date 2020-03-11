@@ -6,7 +6,7 @@ import { fetchMoreProps } from "@saleor/fixtures";
 import AssignAttributeDialog, {
   AssignAttributeDialogProps
 } from "@saleor/productTypes/components/AssignAttributeDialog";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { formError } from "@saleor/storybook/misc";
 import Decorator from "../../Decorator";
 
 const props: AssignAttributeDialogProps = {
@@ -30,14 +30,5 @@ storiesOf("Generics / Assign attributes dialog", module)
     <AssignAttributeDialog {...props} attributes={undefined} loading={true} />
   ))
   .add("errors", () => (
-    <AssignAttributeDialog
-      {...props}
-      errors={[
-        {
-          __typename: "ProductError" as "ProductError",
-          code: ProductErrorCode.INVALID,
-          field: null
-        }
-      ]}
-    />
+    <AssignAttributeDialog {...props} errors={[formError("").message]} />
   ));

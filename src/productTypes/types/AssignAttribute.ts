@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeAssignInput, ProductErrorCode } from "./../../types/globalTypes";
+import { AttributeAssignInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AssignAttribute
 // ====================================================
 
 export interface AssignAttribute_attributeAssign_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
+  __typename: "Error";
   field: string | null;
+  message: string | null;
 }
 
 export interface AssignAttribute_attributeAssign_productType_taxType {

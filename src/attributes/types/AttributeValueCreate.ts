@@ -2,11 +2,17 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueCreateInput, AttributeInputTypeEnum, AttributeValueType, ProductErrorCode } from "./../../types/globalTypes";
+import { AttributeValueCreateInput, AttributeInputTypeEnum, AttributeValueType } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeValueCreate
 // ====================================================
+
+export interface AttributeValueCreate_attributeValueCreate_errors {
+  __typename: "Error";
+  field: string | null;
+  message: string | null;
+}
 
 export interface AttributeValueCreate_attributeValueCreate_attribute_values {
   __typename: "AttributeValue";
@@ -31,16 +37,10 @@ export interface AttributeValueCreate_attributeValueCreate_attribute {
   values: (AttributeValueCreate_attributeValueCreate_attribute_values | null)[] | null;
 }
 
-export interface AttributeValueCreate_attributeValueCreate_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
-  field: string | null;
-}
-
 export interface AttributeValueCreate_attributeValueCreate {
   __typename: "AttributeValueCreate";
-  attribute: AttributeValueCreate_attributeValueCreate_attribute | null;
   errors: AttributeValueCreate_attributeValueCreate_errors[];
+  attribute: AttributeValueCreate_attributeValueCreate_attribute | null;
 }
 
 export interface AttributeValueCreate {

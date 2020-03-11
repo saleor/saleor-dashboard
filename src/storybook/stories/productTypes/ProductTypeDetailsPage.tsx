@@ -3,12 +3,13 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { listActionsProps } from "@saleor/fixtures";
+import { formError } from "@saleor/storybook/misc";
 import ProductTypeDetailsPage, {
   ProductTypeDetailsPageProps,
   ProductTypeForm
 } from "../../../productTypes/components/ProductTypeDetailsPage";
 import { productType } from "../../../productTypes/fixtures";
-import { WeightUnitsEnum, ProductErrorCode } from "../../../types/globalTypes";
+import { WeightUnitsEnum } from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
 
 const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
@@ -54,12 +55,6 @@ storiesOf("Views / Product types / Product type details", module)
   .add("form errors", () => (
     <ProductTypeDetailsPage
       {...props}
-      errors={(["name", "weight"] as Array<keyof ProductTypeForm>).map(
-        field => ({
-          __typename: "ProductError",
-          code: ProductErrorCode.INVALID,
-          field
-        })
-      )}
+      errors={(["name"] as Array<keyof ProductTypeForm>).map(formError)}
     />
   ));

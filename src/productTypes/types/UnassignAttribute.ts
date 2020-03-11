@@ -2,16 +2,14 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode } from "./../../types/globalTypes";
-
 // ====================================================
 // GraphQL mutation operation: UnassignAttribute
 // ====================================================
 
 export interface UnassignAttribute_attributeUnassign_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
+  __typename: "Error";
   field: string | null;
+  message: string | null;
 }
 
 export interface UnassignAttribute_attributeUnassign_productType_taxType {

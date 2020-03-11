@@ -14,9 +14,8 @@ import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { ListActions, ReorderEvent } from "@saleor/types";
+import { ListActions, ReorderEvent, UserError } from "@saleor/types";
 import { AttributeTypeEnum, WeightUnitsEnum } from "@saleor/types/globalTypes";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import {
   ProductTypeDetails_productType,
   ProductTypeDetails_taxTypes
@@ -42,7 +41,7 @@ export interface ProductTypeForm {
 }
 
 export interface ProductTypeDetailsPageProps {
-  errors: ProductErrorFragment[];
+  errors: UserError[];
   productType: ProductTypeDetails_productType;
   defaultWeightUnit: WeightUnitsEnum;
   disabled: boolean;
@@ -201,7 +200,6 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 disabled={disabled}
                 data={data}
                 defaultWeightUnit={defaultWeightUnit}
-                errors={errors}
                 onChange={change}
               />
             </div>
