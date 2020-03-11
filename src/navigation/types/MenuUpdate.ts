@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { MenuItemMoveInput } from "./../../types/globalTypes";
+import { MenuItemMoveInput, MenuErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: MenuUpdate
 // ====================================================
 
 export interface MenuUpdate_menuUpdate_errors {
-  __typename: "Error";
+  __typename: "MenuError";
+  code: MenuErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface MenuUpdate_menuUpdate {
@@ -20,9 +20,9 @@ export interface MenuUpdate_menuUpdate {
 }
 
 export interface MenuUpdate_menuItemMove_errors {
-  __typename: "Error";
+  __typename: "MenuError";
+  code: MenuErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface MenuUpdate_menuItemMove {
@@ -31,9 +31,9 @@ export interface MenuUpdate_menuItemMove {
 }
 
 export interface MenuUpdate_menuItemBulkDelete_errors {
-  __typename: "Error";
+  __typename: "MenuError";
+  code: MenuErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface MenuUpdate_menuItemBulkDelete {

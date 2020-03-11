@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { MenuItemCreateInput } from "./../../types/globalTypes";
+import { MenuItemCreateInput, MenuErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: MenuItemCreate
 // ====================================================
 
 export interface MenuItemCreate_menuItemCreate_errors {
-  __typename: "Error";
+  __typename: "MenuError";
+  code: MenuErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface MenuItemCreate_menuItemCreate_menuItem_menu_items_category {
