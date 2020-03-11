@@ -21,9 +21,10 @@ import { buttonMessages, sectionNames } from "@saleor/intl";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { UserError } from "@saleor/types";
-import { getErrors, getFieldError } from "@saleor/utils/errors";
 import { getMenuItemByValue, IMenu } from "@saleor/utils/menu";
+import { MenuErrorFragment } from "@saleor/navigation/types/MenuErrorFragment";
+import { getFieldError, getFormErrors } from "@saleor/utils/errors";
+import getMenuErrorMessage from "@saleor/utils/errors/menu";
 
 export type MenuItemType = "category" | "collection" | "link" | "page";
 export interface MenuItemData {
@@ -38,7 +39,7 @@ export interface MenuItemDialogFormData extends MenuItemData {
 export interface MenuItemDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
-  errors: UserError[];
+  errors: MenuErrorFragment[];
   initial?: MenuItemDialogFormData;
   initialDisplayValue?: string;
   loading: boolean;
@@ -112,7 +113,11 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     initialDisplayValue
   ]);
 
-  const mutationErrors = getErrors(errors);
+  const mutationErrors = errors.filter(err => err.field === null);
+  const formErrors = getFormErrors(["name"], errors);
+  const idError = ["category", "collection", "page", "url"]
+    .map(field => getFieldError(errors, field))
+    .reduce((acc, err) => acc || err);
 
   let options: IMenu = [];
 
@@ -208,10 +213,6 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
 
   const handleSubmit = () => onSubmit(data);
 
-  const idError = ["category", "collection", "page", "url"]
-    .map(field => getFieldError(errors, field))
-    .reduce((acc, err) => acc || err);
-
   return (
     <Dialog
       onClose={onClose}
@@ -252,8 +253,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
             }))
           }
           name="name"
-          error={!!getFieldError(errors, "name")}
-          helperText={getFieldError(errors, "name")?.message}
+          error={!!formErrors.name}
+          helperText={getMenuErrorMessage(formErrors.name, intl)}
         />
         <FormSpacer />
         <AutocompleteSelectMenu
@@ -269,7 +270,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           loading={loading}
           options={options}
           error={!!idError}
-          helperText={idError?.message}
+          helperText={getMenuErrorMessage(idError, intl)}
           placeholder={intl.formatMessage({
             defaultMessage: "Start typing to begin search...",
             id: "menuItemDialogLinkPlaceholder"
@@ -280,8 +281,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           <>
             <FormSpacer />
             {mutationErrors.map(err => (
-              <Typography key={err} color="error">
-                {err}
+              <Typography key={err.code} color="error">
+                {getMenuErrorMessage(err, intl)}
               </Typography>
             ))}
           </>
