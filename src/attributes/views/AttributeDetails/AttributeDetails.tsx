@@ -8,7 +8,6 @@ import { maybe } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { getProductErrorMessage } from "@saleor/utils/errors";
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
 import AttributePage from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
@@ -96,10 +95,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const handleValueReorderMutation = (data: AttributeValueReorder) => {
     if (data.attributeReorderValues.errors.length !== 0) {
       notify({
-        text: getProductErrorMessage(
-          data.attributeReorderValues.errors[0],
-          intl
-        )
+        text: data.attributeReorderValues.errors[0].message
       });
     }
   };
@@ -159,10 +155,12 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                     <AttributePage
                                       attribute={maybe(() => data.attribute)}
                                       disabled={loading}
-                                      errors={
-                                        attributeUpdateOpts.data
-                                          ?.attributeUpdate.errors || []
-                                      }
+                                      errors={maybe(
+                                        () =>
+                                          attributeUpdateOpts.data
+                                            .attributeUpdate.errors,
+                                        []
+                                      )}
                                       onBack={() =>
                                         navigate(attributeListUrl())
                                       }
@@ -255,10 +253,12 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                         attributeValueCreateOpts.status
                                       }
                                       disabled={loading}
-                                      errors={
-                                        attributeValueCreateOpts.data
-                                          ?.attributeValueCreate.errors || []
-                                      }
+                                      errors={maybe(
+                                        () =>
+                                          attributeValueCreateOpts.data
+                                            .attributeValueCreate.errors,
+                                        []
+                                      )}
                                       open={params.action === "add-value"}
                                       onClose={closeModal}
                                       onSubmit={input =>
@@ -280,10 +280,12 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                                         attributeValueUpdateOpts.status
                                       }
                                       disabled={loading}
-                                      errors={
-                                        attributeValueUpdateOpts.data
-                                          ?.attributeValueUpdate.errors || []
-                                      }
+                                      errors={maybe(
+                                        () =>
+                                          attributeValueUpdateOpts.data
+                                            .attributeValueUpdate.errors,
+                                        []
+                                      )}
                                       open={params.action === "edit-value"}
                                       onClose={closeModal}
                                       onSubmit={input =>

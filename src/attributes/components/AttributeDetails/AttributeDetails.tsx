@@ -10,17 +10,16 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { commonMessages } from "@saleor/intl";
+import { UserError } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
-import { getProductErrorMessage, getFormErrors } from "@saleor/utils/errors";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { getFieldError } from "@saleor/utils/errors";
 import { AttributePageFormData } from "../AttributePage";
-import { getAttributeSlugErrorMessage } from "../../errors";
 
 export interface AttributeDetailsProps {
   canChangeType: boolean;
   data: AttributePageFormData;
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -49,8 +48,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
     }
   ];
 
-  const formErrors = getFormErrors(["name", "slug", "inputType"], errors);
-
   return (
     <Card>
       <CardTitle
@@ -59,21 +56,21 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!formErrors.name}
+          error={!!getFieldError(errors, "name")}
           label={intl.formatMessage({
             defaultMessage: "Default Label",
             description: "attribute's label"
           })}
           name={"name" as keyof AttributePageFormData}
           fullWidth
-          helperText={getProductErrorMessage(formErrors.name, intl)}
+          helperText={getFieldError(errors, "name")?.message}
           value={data.name}
           onChange={onChange}
         />
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!formErrors.slug}
+          error={!!getFieldError(errors, "slug")}
           label={intl.formatMessage({
             defaultMessage: "Attribute Code",
             description: "attribute's slug short code label"
@@ -82,7 +79,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
           placeholder={slugify(data.name).toLowerCase()}
           fullWidth
           helperText={
-            getAttributeSlugErrorMessage(formErrors.slug, intl) ||
+            getFieldError(errors, "slug")?.message ||
             intl.formatMessage({
               defaultMessage:
                 "This is used internally. Make sure you don’t use spaces",
@@ -96,8 +93,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({
         <SingleSelectField
           choices={inputTypeChoices}
           disabled={disabled || !canChangeType}
-          error={!!formErrors.inputType}
-          hint={getProductErrorMessage(formErrors.inputType, intl)}
+          error={!!getFieldError(errors, "inputType")}
+          hint={getFieldError(errors, "inputType")?.message}
           label={intl.formatMessage({
             defaultMessage: "Catalog Input type for Store Owner",
             description: "attribute's editor component"

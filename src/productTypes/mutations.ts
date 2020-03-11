@@ -1,6 +1,5 @@
 import gql from "graphql-tag";
 
-import { productErrorFragment } from "@saleor/attributes/mutations";
 import { TypedMutation } from "../mutations";
 import { productTypeDetailsFragment } from "./queries";
 import {
@@ -33,11 +32,11 @@ import {
 } from "./types/UnassignAttribute";
 
 export const productTypeDeleteMutation = gql`
-  ${productErrorFragment}
   mutation ProductTypeDelete($id: ID!) {
     productTypeDelete(id: $id) {
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors {
+        field
+        message
       }
       productType {
         id
@@ -51,11 +50,11 @@ export const TypedProductTypeDeleteMutation = TypedMutation<
 >(productTypeDeleteMutation);
 
 export const productTypeBulkDeleteMutation = gql`
-  ${productErrorFragment}
   mutation ProductTypeBulkDelete($ids: [ID]!) {
     productTypeBulkDelete(ids: $ids) {
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors {
+        field
+        message
       }
     }
   }
@@ -66,12 +65,12 @@ export const TypedProductTypeBulkDeleteMutation = TypedMutation<
 >(productTypeBulkDeleteMutation);
 
 export const productTypeUpdateMutation = gql`
-  ${productErrorFragment}
   ${productTypeDetailsFragment}
   mutation ProductTypeUpdate($id: ID!, $input: ProductTypeInput!) {
     productTypeUpdate(id: $id, input: $input) {
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors {
+        field
+        message
       }
       productType {
         ...ProductTypeDetailsFragment
@@ -85,12 +84,12 @@ export const TypedProductTypeUpdateMutation = TypedMutation<
 >(productTypeUpdateMutation);
 
 export const assignAttributeMutation = gql`
-  ${productErrorFragment}
   ${productTypeDetailsFragment}
   mutation AssignAttribute($id: ID!, $operations: [AttributeAssignInput!]!) {
     attributeAssign(productTypeId: $id, operations: $operations) {
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors {
+        field
+        message
       }
       productType {
         ...ProductTypeDetailsFragment
@@ -104,12 +103,12 @@ export const TypedAssignAttributeMutation = TypedMutation<
 >(assignAttributeMutation);
 
 export const unassignAttributeMutation = gql`
-  ${productErrorFragment}
   ${productTypeDetailsFragment}
   mutation UnassignAttribute($id: ID!, $ids: [ID]!) {
     attributeUnassign(productTypeId: $id, attributeIds: $ids) {
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors {
+        field
+        message
       }
       productType {
         ...ProductTypeDetailsFragment
@@ -123,12 +122,12 @@ export const TypedUnassignAttributeMutation = TypedMutation<
 >(unassignAttributeMutation);
 
 export const productTypeCreateMutation = gql`
-  ${productErrorFragment}
   ${productTypeDetailsFragment}
   mutation ProductTypeCreate($input: ProductTypeInput!) {
     productTypeCreate(input: $input) {
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors {
+        field
+        message
       }
       productType {
         ...ProductTypeDetailsFragment
@@ -142,7 +141,6 @@ export const TypedProductTypeCreateMutation = TypedMutation<
 >(productTypeCreateMutation);
 
 const productTypeAttributeReorder = gql`
-  ${productErrorFragment}
   ${productTypeDetailsFragment}
   mutation ProductTypeAttributeReorder(
     $move: ReorderInput!
@@ -154,8 +152,9 @@ const productTypeAttributeReorder = gql`
       productTypeId: $productTypeId
       type: $type
     ) {
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors {
+        field
+        message
       }
       productType {
         ...ProductTypeDetailsFragment

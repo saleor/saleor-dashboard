@@ -7,7 +7,7 @@ import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelec
 
 export interface UserError {
   field: string | null;
-  message?: string;
+  message: string;
 }
 
 export interface DialogProps {
