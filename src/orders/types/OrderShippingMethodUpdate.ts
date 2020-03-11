@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderUpdateShippingInput } from "./../../types/globalTypes";
+import { OrderUpdateShippingInput, OrderErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderShippingMethodUpdate
 // ====================================================
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_errors {
-  __typename: "Error";
+  __typename: "OrderError";
+  code: OrderErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods {
