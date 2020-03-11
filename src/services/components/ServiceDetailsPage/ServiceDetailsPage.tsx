@@ -15,8 +15,8 @@ import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInf
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ServiceDetails_serviceAccount } from "@saleor/services/types/ServiceDetails";
-import { UserError } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import ServiceDefaultToken from "../ServiceDefaultToken";
 import ServiceInfo from "../ServiceInfo";
 import ServiceTokens from "../ServiceTokens";
@@ -30,7 +30,7 @@ export interface ServiceDetailsPageFormData {
 export interface ServiceDetailsPageProps {
   apiUri: string;
   disabled: boolean;
-  errors: UserError[];
+  errors: AccountErrorFragment[];
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
   service: ServiceDetails_serviceAccount;
@@ -107,7 +107,7 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
               />
               <CardSpacer />
               <ServiceTokens
-                tokens={maybe(() => service.tokens)}
+                tokens={service?.tokens}
                 onCreate={onTokenCreate}
                 onDelete={onTokenDelete}
               />

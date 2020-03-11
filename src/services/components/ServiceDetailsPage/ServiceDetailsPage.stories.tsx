@@ -3,7 +3,7 @@ import React from "react";
 
 import { permissions } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
-import { formError } from "@saleor/storybook/misc";
+import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { service } from "../../fixtures";
 import ServiceDetailsPage, {
   ServiceDetailsPageProps
@@ -34,7 +34,11 @@ storiesOf("Views / Services / Service details", module)
   .add("form errors", () => (
     <ServiceDetailsPage
       {...props}
-      errors={["name"].map(field => formError(field))}
+      errors={["name"].map(field => ({
+        __typename: "AccountError",
+        code: AccountErrorCode.INVALID,
+        field
+      }))}
     />
   ))
   .add("default token", () => (

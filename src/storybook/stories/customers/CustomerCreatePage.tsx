@@ -2,12 +2,12 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { AccountErrorCode } from "@saleor/types/globalTypes";
 import CustomerCreatePage, {
   CustomerCreatePageFormData,
   CustomerCreatePageProps
 } from "../../../customers/components/CustomerCreatePage";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: Omit<CustomerCreatePageProps, "classes"> = {
   countries: [
@@ -42,8 +42,10 @@ storiesOf("Views / Customers / Create customer", module)
         "postalCode",
         "streetAddress1",
         "streetAddress2"
-      ] as Array<keyof CustomerCreatePageFormData>).map(field =>
-        formError(field)
-      )}
+      ] as Array<keyof CustomerCreatePageFormData>).map(field => ({
+        __typename: "AccountError",
+        code: AccountErrorCode.INVALID,
+        field
+      }))}
     />
   ));

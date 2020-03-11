@@ -11,8 +11,9 @@ import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Skeleton from "@saleor/components/Skeleton";
 import { maybe } from "@saleor/misc";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
+import getAccountErrorMessage from "@saleor/utils/errors/account";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(
@@ -40,15 +41,17 @@ export interface CustomerDetailsProps {
     note: string;
   };
   disabled: boolean;
-  errors: UserError[];
+  errors: AccountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
   const { customer, data, disabled, errors, onChange } = props;
-  const classes = useStyles(props);
 
+  const classes = useStyles(props);
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["note"], errors);
 
   return (
     <Card>
@@ -91,10 +94,10 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
         />
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "note")}
+          error={!!formErrors.note}
           fullWidth
           multiline
-          helperText={getFieldError(errors, "note")?.message}
+          helperText={getAccountErrorMessage(formErrors.note, intl)}
           name="note"
           label={intl.formatMessage({
             defaultMessage: "Note",

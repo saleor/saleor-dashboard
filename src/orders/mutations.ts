@@ -64,6 +64,13 @@ import {
 import { OrderUpdate, OrderUpdateVariables } from "./types/OrderUpdate";
 import { OrderVoid, OrderVoidVariables } from "./types/OrderVoid";
 
+export const orderErrorFragment = gql`
+  fragment OrderErrorFragment on OrderError {
+    code
+    field
+  }
+`;
+
 const orderCancelMutation = gql`
   ${fragmentOrderDetails}
   mutation OrderCancel($id: ID!, $restock: Boolean!) {
@@ -314,11 +321,11 @@ export const TypedOrderAddNoteMutation = TypedMutation<
 
 const orderUpdateMutation = gql`
   ${fragmentAddress}
+  ${orderErrorFragment}
   mutation OrderUpdate($id: ID!, $input: OrderUpdateInput!) {
     orderUpdate(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: orderErrors {
+        ...OrderErrorFragment
       }
       order {
         id
@@ -342,7 +349,8 @@ const orderDraftUpdateMutation = gql`
   ${fragmentOrderDetails}
   mutation OrderDraftUpdate($id: ID!, $input: DraftOrderInput!) {
     draftOrderUpdate(id: $id, input: $input) {
-      errors {
+      errors: orderErrors {
+        code
         field
         message
       }

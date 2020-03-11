@@ -7,15 +7,16 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
+import getAccountErrorMessage from "@saleor/utils/errors/account";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 
 export interface CustomerCreateNoteProps {
   data: {
     note: string;
   };
   disabled: boolean;
-  errors: UserError[];
+  errors: AccountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -26,6 +27,8 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
   onChange
 }) => {
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["note"], errors);
 
   return (
     <Card>
@@ -42,11 +45,11 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "note")}
+          error={!!formErrors.note}
           fullWidth
           multiline
           name="note"
-          helperText={getFieldError(errors, "note")?.message}
+          helperText={getAccountErrorMessage(formErrors.note, intl)}
           label={intl.formatMessage({
             defaultMessage: "Note",
             description: "note about customer"

@@ -6,21 +6,28 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { FormChange } from "@saleor/hooks/useForm";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { getFormErrors } from "@saleor/utils/errors";
+import getAccountErrorMessage from "@saleor/utils/errors/account";
 
 export interface ServiceInfoProps {
   data: {
     name: string;
   };
   disabled: boolean;
-  errors: UserError[];
+  errors: AccountErrorFragment[];
   onChange: FormChange;
 }
 
-const ServiceInfo: React.FC<ServiceInfoProps> = props => {
-  const { data, disabled, errors, onChange } = props;
+const ServiceInfo: React.FC<ServiceInfoProps> = ({
+  data,
+  disabled,
+  errors,
+  onChange
+}) => {
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card>
@@ -33,12 +40,12 @@ const ServiceInfo: React.FC<ServiceInfoProps> = props => {
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "name")}
+          error={!!formErrors.name}
           label={intl.formatMessage({
             defaultMessage: "Account Name",
             description: "service account"
           })}
-          helperText={getFieldError(errors, "name")?.message}
+          helperText={getAccountErrorMessage(formErrors.name, intl)}
           fullWidth
           name="name"
           value={data.name}
