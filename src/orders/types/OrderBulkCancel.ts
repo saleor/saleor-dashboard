@@ -2,14 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { OrderErrorCode } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: OrderBulkCancel
 // ====================================================
 
 export interface OrderBulkCancel_orderBulkCancel_errors {
-  __typename: "Error";
+  __typename: "OrderError";
+  code: OrderErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface OrderBulkCancel_orderBulkCancel {

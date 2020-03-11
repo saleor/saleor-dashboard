@@ -12,7 +12,6 @@ export interface OrderDraftUpdate_draftOrderUpdate_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface OrderDraftUpdate_draftOrderUpdate_order_billingAddress_country {

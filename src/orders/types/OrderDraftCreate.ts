@@ -2,14 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { OrderErrorCode } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: OrderDraftCreate
 // ====================================================
 
 export interface OrderDraftCreate_draftOrderCreate_errors {
-  __typename: "Error";
+  __typename: "OrderError";
+  code: OrderErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface OrderDraftCreate_draftOrderCreate_order {
