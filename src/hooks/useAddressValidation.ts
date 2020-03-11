@@ -1,27 +1,27 @@
 import { useState } from "react";
-import { useIntl } from "react-intl";
 
 import { AddressTypeInput } from "@saleor/customers/types";
-import { commonMessages } from "@saleor/intl";
 import { transformFormToAddress } from "@saleor/misc";
-import { UserError } from "@saleor/types";
-import { AddressInput } from "@saleor/types/globalTypes";
+import { AddressInput, AccountErrorCode } from "@saleor/types/globalTypes";
 import { add, remove } from "@saleor/utils/lists";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 
 interface UseAddressValidation<T> {
-  errors: UserError[];
+  errors: AccountErrorFragment[];
   submit: (data: T & AddressTypeInput) => void;
 }
 
 function useAddressValidation<T>(
   onSubmit: (address: T & AddressInput) => void
 ): UseAddressValidation<T> {
-  const intl = useIntl();
-  const [validationErrors, setValidationErrors] = useState<UserError[]>([]);
+  const [validationErrors, setValidationErrors] = useState<
+    AccountErrorFragment[]
+  >([]);
 
-  const countryRequiredError = {
-    field: "country",
-    message: intl.formatMessage(commonMessages.requiredField)
+  const countryRequiredError: AccountErrorFragment = {
+    __typename: "AccountError",
+    code: AccountErrorCode.REQUIRED,
+    field: "country"
   };
 
   return {

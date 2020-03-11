@@ -13,8 +13,8 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import { sectionNames } from "@saleor/intl";
-import { UserError } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import ServiceInfo from "../ServiceInfo";
 
 export interface ServiceCreatePageFormData {
@@ -25,7 +25,7 @@ export interface ServiceCreatePageFormData {
 }
 export interface ServiceCreatePageProps {
   disabled: boolean;
-  errors: UserError[];
+  errors: AccountErrorFragment[];
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;

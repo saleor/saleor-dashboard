@@ -7,8 +7,9 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
-import { getFieldError } from "@saleor/utils/errors";
-import { UserError } from "../../../types";
+import { getFormErrors } from "@saleor/utils/errors";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import getAccountErrorMessage from "@saleor/utils/errors/account";
 import { CustomerCreatePageFormData } from "../CustomerCreatePage";
 
 const useStyles = makeStyles(
@@ -26,15 +27,20 @@ const useStyles = makeStyles(
 export interface CustomerCreateDetailsProps {
   data: CustomerCreatePageFormData;
   disabled: boolean;
-  errors: UserError[];
+  errors: AccountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
   const { data, disabled, errors, onChange } = props;
-  const classes = useStyles(props);
 
+  const classes = useStyles(props);
   const intl = useIntl();
+
+  const formErrors = getFormErrors(
+    ["customerFirstName", "customerLastName", "email"],
+    errors
+  );
 
   return (
     <Card>
@@ -48,33 +54,39 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
         <div className={classes.root}>
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "customerFirstName")}
+            error={!!formErrors.customerFirstName}
             fullWidth
             name="customerFirstName"
             label={intl.formatMessage(commonMessages.firstName)}
-            helperText={getFieldError(errors, "customerFirstName")?.message}
+            helperText={getAccountErrorMessage(
+              formErrors.customerFirstName,
+              intl
+            )}
             type="text"
             value={data.customerFirstName}
             onChange={onChange}
           />
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "customerLastName")}
+            error={!!formErrors.customerLastName}
             fullWidth
             name="customerLastName"
             label={intl.formatMessage(commonMessages.lastName)}
-            helperText={getFieldError(errors, "customerLastName")?.message}
+            helperText={getAccountErrorMessage(
+              formErrors.customerLastName,
+              intl
+            )}
             type="text"
             value={data.customerLastName}
             onChange={onChange}
           />
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "email")}
+            error={!!formErrors.email}
             fullWidth
             name="email"
             label={intl.formatMessage(commonMessages.email)}
-            helperText={getFieldError(errors, "email")?.message}
+            helperText={getAccountErrorMessage(formErrors.email, intl)}
             type="email"
             value={data.email}
             onChange={onChange}
@@ -84,5 +96,6 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
     </Card>
   );
 };
+
 CustomerCreateDetails.displayName = "CustomerCreateDetails";
 export default CustomerCreateDetails;

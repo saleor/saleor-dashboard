@@ -10,8 +10,8 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import { getUserName, maybe } from "../../../misc";
-import { UserError } from "../../../types";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 import CustomerAddresses from "../CustomerAddresses";
 import CustomerDetails from "../CustomerDetails";
@@ -30,7 +30,7 @@ export interface CustomerDetailsPageFormData {
 export interface CustomerDetailsPageProps {
   customer: CustomerDetails_user;
   disabled: boolean;
-  errors: UserError[];
+  errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: CustomerDetailsPageFormData) => void;
