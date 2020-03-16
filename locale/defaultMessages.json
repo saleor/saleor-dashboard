@@ -2721,9 +2721,6 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1056718390": {
     "string": "Payment successfully captured"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_1096896329": {
-    "string": "Could not fulfill items"
-  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1435191432": {
     "string": "Draft order successfully finalized"
   },
@@ -2733,29 +2730,14 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1475565380": {
     "string": "Fulfillment successfully updated"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_149745214": {
-    "string": "Could not finalize draft"
-  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1632861387": {
     "string": "Order line updated"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1636370257": {
     "string": "Order marked as paid"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_1708579411": {
-    "string": "Could not update shipping method"
-  },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_1852833563": {
-    "string": "Could not mark order as paid"
-  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1999598492": {
     "string": "Order line added"
-  },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_2205960666": {
-    "string": "Could not delete order line"
-  },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_2714957902": {
-    "string": "Could not add note"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_2808777264": {
     "string": "Order successfully cancelled"
@@ -2769,33 +2751,22 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3367579693": {
     "string": "Order successfully updated"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_3991286734": {
-    "context": "notification",
-    "string": "Payment not refunded: {errorMessage}"
-  },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_4199953867": {
-    "string": "Could not cancel fulfillment"
-  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_4245651107": {
     "string": "Items successfully fulfilled"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_487150696": {
-    "string": "Could not update order line"
-  },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_553600482": {
-    "string": "Could not update fulfillment"
-  },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_557535634": {
-    "string": "Payment not captured: {errorMessage}"
-  },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_562214451": {
-    "string": "Could not create order line"
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_580490159": {
+    "context": "window title",
+    "string": "Order #{orderNumber}"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_617145655": {
     "string": "Shipping method successfully updated"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_667274681": {
     "string": "Payment successfully refunded"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_694622335": {
+    "context": "window title",
+    "string": "Draft Order #{orderNumber}"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
     "string": "Fulfillment successfully cancelled"
@@ -4235,9 +4206,6 @@
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_866304242": {
     "string": "This where you will find all of the settings determining your stores e-mails. You can determine main email address and some of the contents of your emails."
   },
-  "src_dot_siteSettings_dot_views_dot_2276194921": {
-    "string": "Could not delete authorization key: {errorMessage}"
-  },
   "src_dot_somethingWentWrong": {
     "string": "Saleor ran into an unexpected problem"
   },
@@ -4757,6 +4725,34 @@
   "src_dot_utils_dot_errors_dot_attributeVariantsDisabled": {
     "string": "Variants are disabled in this product type"
   },
+  "src_dot_utils_dot_errors_dot_billingNotSet": {
+    "context": "error message",
+    "string": "Billing address is not set"
+  },
+  "src_dot_utils_dot_errors_dot_cannotCancelFulfillment": {
+    "context": "error message",
+    "string": "This fulfillment cannot be cancelled"
+  },
+  "src_dot_utils_dot_errors_dot_cannotCancelOrder": {
+    "context": "error message",
+    "string": "This order cannot be cancelled"
+  },
+  "src_dot_utils_dot_errors_dot_cannotFulfillLine": {
+    "context": "error message",
+    "string": "Not enough items to fulfill"
+  },
+  "src_dot_utils_dot_errors_dot_cannotRefund": {
+    "context": "error message",
+    "string": "Manual payments can not be refunded"
+  },
+  "src_dot_utils_dot_errors_dot_cannotVoid": {
+    "context": "error message",
+    "string": "Only pre-authorized payments can be voided"
+  },
+  "src_dot_utils_dot_errors_dot_captureInactive": {
+    "context": "error message",
+    "string": "Only pre-authorized payments can be captured"
+  },
   "src_dot_utils_dot_errors_dot_graphqlError": {
     "string": "API error"
   },
@@ -4766,8 +4762,28 @@
   "src_dot_utils_dot_errors_dot_invalidPassword": {
     "string": "Invalid password"
   },
+  "src_dot_utils_dot_errors_dot_noShippingAddress": {
+    "context": "error message",
+    "string": "Cannot choose a shipping method for an order without the shipping address"
+  },
+  "src_dot_utils_dot_errors_dot_notEditable": {
+    "context": "error message",
+    "string": "Only draft orders can be edited"
+  },
   "src_dot_utils_dot_errors_dot_passwordNumeric": {
     "string": "Password cannot be entirely numeric"
+  },
+  "src_dot_utils_dot_errors_dot_paymentMissing": {
+    "context": "error message",
+    "string": "There's no payment associated with the order"
+  },
+  "src_dot_utils_dot_errors_dot_shippingNotApplicable": {
+    "context": "error message",
+    "string": "Shipping method is not valid for chosen shipping address"
+  },
+  "src_dot_utils_dot_errors_dot_shippingRequired": {
+    "context": "error message",
+    "string": "Shipping method is required for this order"
   },
   "src_dot_utils_dot_errors_dot_skuUnique": {
     "context": "bulk variant create error",
