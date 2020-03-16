@@ -2,6 +2,7 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
@@ -22,8 +23,11 @@ import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
 import { buttonMessages } from "@saleor/intl";
-import { maybe } from "../../../misc";
+import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
+import { getFormErrors } from "@saleor/utils/errors";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
+import { maybe } from "../../../misc";
 
 export interface FormData {
   lines: number[];
@@ -65,6 +69,7 @@ const useStyles = makeStyles(
 
 export interface OrderFulfillmentDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  errors: OrderErrorFragment[];
   open: boolean;
   lines: OrderDetails_order_lines[];
   onClose();
@@ -72,10 +77,13 @@ export interface OrderFulfillmentDialogProps {
 }
 
 const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
-  const { confirmButtonState, open, lines, onClose, onSubmit } = props;
+  const { confirmButtonState, errors, open, lines, onClose, onSubmit } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
+
+  const formFields = ["trackingNumber"];
+  const formErrors = getFormErrors(formFields, errors);
 
   return (
     <Dialog onClose={onClose} open={open}>
@@ -165,8 +173,13 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
                                 handleQuantityChange(productIndex, event)
                               }
                               error={
+                                !!formErrors.trackingNumber ||
                                 remainingQuantity < data.lines[productIndex]
                               }
+                              helperText={getOrderErrorMessage(
+                                formErrors.trackingNumber,
+                                intl
+                              )}
                             />
                             <div className={classes.remainingQuantity}>
                               / {remainingQuantity}
@@ -181,7 +194,12 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
               <DialogContent>
                 <FormSpacer />
                 <TextField
+                  error={!!formErrors.trackingNumber}
                   fullWidth
+                  helperText={getOrderErrorMessage(
+                    formErrors.trackingNumber,
+                    intl
+                  )}
                   label={intl.formatMessage({
                     defaultMessage: "Tracking number",
                     description: "fulfillment group"
@@ -190,6 +208,18 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
                   value={data.trackingNumber}
                   onChange={change}
                 />
+                {errors.length > 0 && (
+                  <>
+                    <FormSpacer />
+                    {errors
+                      .filter(err => !formFields.includes(err.field))
+                      .map(err => (
+                        <DialogContentText color="error">
+                          {getOrderErrorMessage(err, intl)}
+                        </DialogContentText>
+                      ))}
+                  </>
+                )}
               </DialogContent>
               <DialogActions>
                 <Button onClick={onClose}>

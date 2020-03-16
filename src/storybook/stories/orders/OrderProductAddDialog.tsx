@@ -2,22 +2,37 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import OrderProductAddDialog from "../../../orders/components/OrderProductAddDialog";
+import { fetchMoreProps } from "@saleor/fixtures";
+import { OrderErrorCode } from "@saleor/types/globalTypes";
+import OrderProductAddDialog, {
+  OrderProductAddDialogProps
+} from "../../../orders/components/OrderProductAddDialog";
 import { orderLineSearch } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
 
+const props: OrderProductAddDialogProps = {
+  ...fetchMoreProps,
+  confirmButtonState: "default",
+  errors: [],
+  onClose: () => undefined,
+  onFetch: () => undefined,
+  onSubmit: () => undefined,
+  open: true,
+  products: orderLineSearch(placeholderImage)
+};
+
 storiesOf("Orders / OrderProductAddDialog", module)
   .addDecorator(Decorator)
-  .add("default", () => (
+  .add("default", () => <OrderProductAddDialog {...props} />)
+  .add("errors", () => (
     <OrderProductAddDialog
-      confirmButtonState="default"
-      loading={false}
-      open={true}
-      onClose={undefined}
-      onSubmit={undefined}
-      hasMore={false}
-      onFetch={() => undefined}
-      onFetchMore={() => undefined}
-      products={orderLineSearch(placeholderImage)}
+      {...props}
+      errors={[
+        {
+          __typename: "OrderError",
+          code: OrderErrorCode.GRAPHQL_ERROR,
+          field: null
+        }
+      ]}
     />
   ));

@@ -14,6 +14,10 @@ import ConfirmButton, {
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import { buttonMessages } from "@saleor/intl";
+import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
+import FormSpacer from "@saleor/components/FormSpacer";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 
 export interface FormData {
   restock: boolean;
@@ -32,8 +36,9 @@ const useStyles = makeStyles(
   { name: "OrderCancelDialog" }
 );
 
-interface OrderCancelDialogProps {
+export interface OrderCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  errors: OrderErrorFragment[];
   number: string;
   open: boolean;
   onClose?();
@@ -43,14 +48,16 @@ interface OrderCancelDialogProps {
 const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
   const {
     confirmButtonState,
+    errors: apiErrors,
     number: orderNumber,
     open,
     onSubmit,
     onClose
   } = props;
-  const classes = useStyles(props);
 
+  const classes = useStyles(props);
   const intl = useIntl();
+  const errors = useModalDialogErrors(apiErrors, open);
 
   return (
     <Dialog onClose={onClose} open={open}>
@@ -87,6 +94,16 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
                   onChange={change}
                 />
               </DialogContentText>
+              {errors.length > 0 && (
+                <>
+                  <FormSpacer />
+                  {errors.map(err => (
+                    <DialogContentText color="error">
+                      {getOrderErrorMessage(err, intl)}
+                    </DialogContentText>
+                  ))}
+                </>
+              )}
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>

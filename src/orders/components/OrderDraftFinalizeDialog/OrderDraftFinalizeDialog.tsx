@@ -4,6 +4,10 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import FormSpacer from "@saleor/components/FormSpacer";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 
 export enum OrderDraftFinalizeWarning {
   NO_SHIPPING,
@@ -15,6 +19,7 @@ export enum OrderDraftFinalizeWarning {
 
 export interface OrderDraftFinalizeDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  errors: OrderErrorFragment[];
   open: boolean;
   orderNumber: string;
   warnings: OrderDraftFinalizeWarning[];
@@ -48,6 +53,7 @@ function translateWarnings(
 
 const OrderDraftFinalizeDialog: React.FC<OrderDraftFinalizeDialogProps> = ({
   confirmButtonState,
+  errors: apiErrors,
   open,
   warnings,
   onClose,
@@ -55,6 +61,8 @@ const OrderDraftFinalizeDialog: React.FC<OrderDraftFinalizeDialogProps> = ({
   orderNumber
 }) => {
   const intl = useIntl();
+  const errors = useModalDialogErrors(apiErrors, open);
+
   const translatedWarnings = translateWarnings(intl);
 
   return (
@@ -99,6 +107,16 @@ const OrderDraftFinalizeDialog: React.FC<OrderDraftFinalizeDialogProps> = ({
             orderNumber
           }}
         />
+        {errors.length > 0 && (
+          <>
+            <FormSpacer />
+            {errors.map(err => (
+              <DialogContentText color="error">
+                {getOrderErrorMessage(err, intl)}
+              </DialogContentText>
+            ))}
+          </>
+        )}
       </DialogContentText>
     </ActionDialog>
   );

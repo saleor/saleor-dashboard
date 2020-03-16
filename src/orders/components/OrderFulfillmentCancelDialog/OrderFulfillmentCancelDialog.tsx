@@ -14,6 +14,9 @@ import ConfirmButton, {
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import { buttonMessages } from "@saleor/intl";
+import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
+import FormSpacer from "@saleor/components/FormSpacer";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 
 export interface FormData {
   restock: boolean;
@@ -32,29 +35,22 @@ const useStyles = makeStyles(
   { name: "OrderFulfillmentCancelDialog" }
 );
 
-interface OrderFulfillmentCancelDialogProps {
+export interface OrderFulfillmentCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  errors: OrderErrorFragment[];
   open: boolean;
   onClose();
   onConfirm(data: FormData);
 }
 
-const OrderFulfillmentCancelDialog: React.FC<
-  OrderFulfillmentCancelDialogProps
-> = props => {
-  const {
-    confirmButtonState,
+const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> = props => {
+  const { confirmButtonState, errors, open, onConfirm, onClose } = props;
 
-    open,
-    onConfirm,
-    onClose
-  } = props;
   const classes = useStyles(props);
-
   const intl = useIntl();
 
   return (
-    <Dialog onClose={onClose} open={open}>
+    <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
       <Form initial={{ restock: true }} onSubmit={onConfirm}>
         {({ change, data, submit }) => (
           <>
@@ -77,6 +73,16 @@ const OrderFulfillmentCancelDialog: React.FC<
                 name="restock"
                 onChange={change}
               />
+              {errors.length > 0 && (
+                <>
+                  <FormSpacer />
+                  {errors.map(err => (
+                    <DialogContentText color="error">
+                      {getOrderErrorMessage(err, intl)}
+                    </DialogContentText>
+                  ))}
+                </>
+              )}
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>
