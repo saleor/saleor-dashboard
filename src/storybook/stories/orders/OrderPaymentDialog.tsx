@@ -1,28 +1,43 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import OrderPaymentDialog from "../../../orders/components/OrderPaymentDialog";
+import { OrderErrorCode } from "@saleor/types/globalTypes";
+import OrderPaymentDialog, {
+  OrderPaymentDialogProps
+} from "../../../orders/components/OrderPaymentDialog";
 import Decorator from "../../Decorator";
+
+const props: OrderPaymentDialogProps = {
+  confirmButtonState: "default",
+  errors: [],
+  initial: 0,
+  onClose: () => undefined,
+  onSubmit: () => undefined,
+  open: true,
+  variant: "capture"
+};
 
 storiesOf("Orders / OrderPaymentDialog", module)
   .addDecorator(Decorator)
-  .add("capture payment", () => (
-    <OrderPaymentDialog
-      confirmButtonState="default"
-      initial={0}
-      variant="capture"
-      open={true}
-      onClose={undefined}
-      onSubmit={undefined}
-    />
-  ))
+  .add("capture payment", () => <OrderPaymentDialog {...props} />)
   .add("refund payment", () => (
+    <OrderPaymentDialog {...props} variant="refund" />
+  ))
+  .add("errors", () => (
     <OrderPaymentDialog
-      confirmButtonState="default"
-      initial={0}
+      {...props}
+      errors={[
+        {
+          __typename: "OrderError",
+          code: OrderErrorCode.CANNOT_REFUND,
+          field: null
+        },
+        {
+          __typename: "OrderError",
+          code: OrderErrorCode.INVALID,
+          field: "payment"
+        }
+      ]}
       variant="refund"
-      open={true}
-      onClose={undefined}
-      onSubmit={undefined}
     />
   ));

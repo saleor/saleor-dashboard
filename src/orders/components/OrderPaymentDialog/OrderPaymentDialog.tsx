@@ -2,6 +2,7 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
@@ -12,22 +13,28 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import { buttonMessages } from "@saleor/intl";
+import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
+import { getFormErrors } from "@saleor/utils/errors";
+import FormSpacer from "@saleor/components/FormSpacer";
 
 export interface FormData {
   amount: number;
 }
 
-interface OrderPaymentDialogProps {
+export interface OrderPaymentDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  errors: OrderErrorFragment[];
   open: boolean;
   initial: number;
-  variant: string;
+  variant: "capture" | "refund";
   onClose: () => void;
   onSubmit: (data: FormData) => void;
 }
 
 const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
   confirmButtonState,
+  errors,
   open,
   initial,
   variant,
@@ -36,16 +43,16 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
 }) => {
   const intl = useIntl();
 
+  const formFields = ["payment"];
+  const formErrors = getFormErrors(formFields, errors);
+
   return (
-    <Dialog onClose={onClose} open={open}>
+    <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
       <Form
         initial={{
           amount: initial
         }}
-        onSubmit={data => {
-          onSubmit(data);
-          onClose();
-        }}
+        onSubmit={onSubmit}
       >
         {({ data, change, submit }) => (
           <>
@@ -60,10 +67,11 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
                     description: "dialog header"
                   })}
             </DialogTitle>
-
             <DialogContent>
               <TextField
+                error={!!formErrors.payment}
                 fullWidth
+                helperText={getOrderErrorMessage(formErrors.payment, intl)}
                 label={intl.formatMessage({
                   defaultMessage: "Amount",
                   description: "amount of refunded money"
@@ -76,6 +84,18 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
                 type="number"
                 value={data.amount}
               />
+              {errors.length > 0 && (
+                <>
+                  <FormSpacer />
+                  {errors
+                    .filter(err => !formFields.includes(err.field))
+                    .map(err => (
+                      <DialogContentText color="error">
+                        {getOrderErrorMessage(err, intl)}
+                      </DialogContentText>
+                    ))}
+                </>
+              )}
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>
@@ -85,10 +105,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
                 transitionState={confirmButtonState}
                 color="primary"
                 variant="contained"
-                onClick={() => {
-                  onClose();
-                  submit();
-                }}
+                onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.confirm} />
               </ConfirmButton>
