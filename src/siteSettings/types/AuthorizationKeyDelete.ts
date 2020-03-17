@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AuthorizationKeyType } from "./../../types/globalTypes";
+import { AuthorizationKeyType, ShopErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AuthorizationKeyDelete
 // ====================================================
 
 export interface AuthorizationKeyDelete_authorizationKeyDelete_errors {
-  __typename: "Error";
+  __typename: "ShopError";
+  code: ShopErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface AuthorizationKeyDelete_authorizationKeyDelete_shop_authorizationKeys {
