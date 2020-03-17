@@ -4,7 +4,6 @@ import { useIntl } from "react-intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { maybe } from "../../misc";
 import PageDetailsPage from "../components/PageDetailsPage";
 import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
@@ -42,7 +41,7 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
           />
           <PageDetailsPage
             disabled={pageCreateOpts.loading}
-            errors={maybe(() => pageCreateOpts.data.pageCreate.errors, [])}
+            errors={pageCreateOpts.data?.pageCreate.errors || []}
             saveButtonBarState={pageCreateOpts.status}
             page={null}
             onBack={() => navigate(pageListUrl())}
