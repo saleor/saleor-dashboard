@@ -11,8 +11,8 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
+import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
 import { CountryFragment } from "../../../taxes/types/CountryFragment";
-import { UserError } from "../../../types";
 import ShippingZoneCountriesAssignDialog from "../ShippingZoneCountriesAssignDialog";
 import ShippingZoneInfo from "../ShippingZoneInfo";
 
@@ -25,7 +25,7 @@ export interface FormData {
 export interface ShippingZoneCreatePageProps {
   countries: CountryFragment[];
   disabled: boolean;
-  errors: UserError[];
+  errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: FormData) => void;

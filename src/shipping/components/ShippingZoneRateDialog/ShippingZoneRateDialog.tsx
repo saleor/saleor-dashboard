@@ -18,11 +18,17 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import { buttonMessages } from "@saleor/intl";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import getShippingErrorMessage from "@saleor/utils/errors/shipping";
+import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
 import { maybe } from "../../../misc";
-import { UserError } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import { ShippingZoneDetailsFragment_shippingMethods } from "../../types/ShippingZoneDetailsFragment";
+import {
+  getShippingPriceRateErrorMessage,
+  getShippingWeightRateErrorMessage
+} from "./errors";
 
 export interface FormData {
   name: string;
@@ -38,7 +44,7 @@ export interface ShippingZoneRateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   defaultCurrency: string;
   disabled: boolean;
-  errors: UserError[];
+  errors: ShippingErrorFragment[];
   open: boolean;
   rate: ShippingZoneDetailsFragment_shippingMethods;
   variant: ShippingMethodTypeEnum;
@@ -65,11 +71,10 @@ const useStyles = makeStyles(
 const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
   const {
     action,
-
     confirmButtonState,
     defaultCurrency,
     disabled,
-    errors,
+    errors: apiErrors,
     onClose,
     onSubmit,
     open,
@@ -79,6 +84,17 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
+  const errors = useModalDialogErrors(apiErrors, open);
+
+  const formFields = [
+    "name",
+    "minimumOrderPrice",
+    "minimumOrderWeight",
+    "maximumOrderPrice",
+    "maximumOrderWeight",
+    "price"
+  ];
+  const formErrors = getFormErrors(formFields, errors);
 
   const initialForm: FormData =
     action === "create"
@@ -107,6 +123,11 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
   if (action === "edit") {
     initialForm.noLimits = !initialForm.maxValue && !initialForm.minValue;
   }
+
+  const getErrorMessage =
+    variant === ShippingMethodTypeEnum.PRICE
+      ? getShippingPriceRateErrorMessage
+      : getShippingWeightRateErrorMessage;
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
@@ -139,10 +160,10 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
             <DialogContent>
               <TextField
                 disabled={disabled}
-                error={!!getFieldError(errors, "name")}
+                error={!!formErrors.name}
                 fullWidth
                 helperText={
-                  getFieldError(errors, "name") ||
+                  getShippingErrorMessage(formErrors.name, intl) ||
                   intl.formatMessage({
                     defaultMessage:
                       "This will be shown to customers at checkout"
@@ -207,24 +228,27 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
                         <TextField
                           disabled={disabled}
                           error={
-                            variant === ShippingMethodTypeEnum.PRICE
-                              ? !!getFieldError(errors, "minimumOrderPrice")
-                              : !!getFieldError(errors, "minimumOrderWeight")
+                            !!formErrors.minimumOrderPrice ||
+                            !!formErrors.minimumOrderWeight
                           }
                           fullWidth
                           helperText={
                             variant === ShippingMethodTypeEnum.PRICE
-                              ? getFieldError(errors, "minimumOrderPrice")
-                              : getFieldError(errors, "minimumOrderWeight")
+                              ? getErrorMessage(
+                                  formErrors.minimumOrderPrice,
+                                  intl
+                                )
+                              : getErrorMessage(
+                                  formErrors.minimumOrderWeight,
+                                  intl
+                                )
                           }
                           label={
                             variant === ShippingMethodTypeEnum.PRICE
-                              ? getFieldError(errors, "minimumOrderPrice") ||
-                                intl.formatMessage({
+                              ? intl.formatMessage({
                                   defaultMessage: "Minimal Order Value"
                                 })
-                              : getFieldError(errors, "minimumOrderWeight") ||
-                                intl.formatMessage({
+                              : intl.formatMessage({
                                   defaultMessage: "Minimal Order Weight"
                                 })
                           }
@@ -236,24 +260,27 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
                         <TextField
                           disabled={disabled}
                           error={
-                            variant === ShippingMethodTypeEnum.PRICE
-                              ? !!getFieldError(errors, "maximumOrderPrice")
-                              : !!getFieldError(errors, "maximumOrderWeight")
+                            !!formErrors.maximumOrderPrice ||
+                            !!formErrors.maximumOrderWeight
                           }
                           fullWidth
                           helperText={
                             variant === ShippingMethodTypeEnum.PRICE
-                              ? getFieldError(errors, "maximumOrderPrice")
-                              : getFieldError(errors, "maximumOrderWeight")
+                              ? getErrorMessage(
+                                  formErrors.maximumOrderPrice,
+                                  intl
+                                )
+                              : getErrorMessage(
+                                  formErrors.maximumOrderWeight,
+                                  intl
+                                )
                           }
                           label={
                             variant === ShippingMethodTypeEnum.PRICE
-                              ? getFieldError(errors, "maximumOrderPrice") ||
-                                intl.formatMessage({
+                              ? intl.formatMessage({
                                   defaultMessage: "Maximal Order Value"
                                 })
-                              : getFieldError(errors, "maximumOrderWeight") ||
-                                intl.formatMessage({
+                              : intl.formatMessage({
                                   defaultMessage: "Maximal Order Weight"
                                 })
                           }
@@ -294,9 +321,9 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
                   <div className={classes.grid}>
                     <TextField
                       disabled={disabled}
-                      error={!!getFieldError(errors, "price")}
+                      error={!!formErrors.price}
                       fullWidth
-                      helperText={getFieldError(errors, "price")?.message}
+                      helperText={getErrorMessage(formErrors.price, intl)}
                       label={intl.formatMessage({
                         defaultMessage: "Rate Price",
                         description: "shipping method price"

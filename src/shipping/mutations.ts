@@ -40,12 +40,19 @@ import {
   UpdateShippingZoneVariables
 } from "./types/UpdateShippingZone";
 
+export const shippingErrorFragment = gql`
+  fragment ShippingErrorFragment on ShippingError {
+    code
+    field
+  }
+`;
+
 const deleteShippingZone = gql`
+  ${shippingErrorFragment}
   mutation DeleteShippingZone($id: ID!) {
     shippingZoneDelete(id: $id) {
-      errors {
-        field
-        message
+      errors: shippingErrors {
+        ...ShippingErrorFragment
       }
     }
   }
@@ -56,11 +63,11 @@ export const TypedDeleteShippingZone = TypedMutation<
 >(deleteShippingZone);
 
 const bulkDeleteShippingZone = gql`
+  ${shippingErrorFragment}
   mutation BulkDeleteShippingZone($ids: [ID]!) {
     shippingZoneBulkDelete(ids: $ids) {
-      errors {
-        field
-        message
+      errors: shippingErrors {
+        ...ShippingErrorFragment
       }
     }
   }
@@ -90,11 +97,11 @@ export const TypedUpdateDefaultWeightUnit = TypedMutation<
 
 const createShippingZone = gql`
   ${countryFragment}
+  ${shippingErrorFragment}
   mutation CreateShippingZone($input: ShippingZoneInput!) {
     shippingZoneCreate(input: $input) {
-      errors {
-        field
-        message
+      errors: shippingErrors {
+        ...ShippingErrorFragment
       }
       shippingZone {
         countries {
@@ -114,11 +121,11 @@ export const TypedCreateShippingZone = TypedMutation<
 
 const updateShippingZone = gql`
   ${countryFragment}
+  ${shippingErrorFragment}
   mutation UpdateShippingZone($id: ID!, $input: ShippingZoneInput!) {
     shippingZoneUpdate(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: shippingErrors {
+        ...ShippingErrorFragment
       }
       shippingZone {
         countries {
@@ -137,12 +144,12 @@ export const TypedUpdateShippingZone = TypedMutation<
 >(updateShippingZone);
 
 const updateShippingRate = gql`
+  ${shippingErrorFragment}
   ${shippingMethodFragment}
   mutation UpdateShippingRate($id: ID!, $input: ShippingPriceInput!) {
     shippingPriceUpdate(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: shippingErrors {
+        ...ShippingErrorFragment
       }
       shippingMethod {
         ...ShippingMethodFragment
@@ -156,12 +163,12 @@ export const TypedUpdateShippingRate = TypedMutation<
 >(updateShippingRate);
 
 const createShippingRate = gql`
+  ${shippingErrorFragment}
   ${shippingZoneDetailsFragment}
   mutation CreateShippingRate($input: ShippingPriceInput!) {
     shippingPriceCreate(input: $input) {
-      errors {
-        field
-        message
+      errors: shippingErrors {
+        ...ShippingErrorFragment
       }
       shippingZone {
         ...ShippingZoneDetailsFragment
@@ -175,12 +182,12 @@ export const TypedCreateShippingRate = TypedMutation<
 >(createShippingRate);
 
 const deleteShippingRate = gql`
+  ${shippingErrorFragment}
   ${shippingZoneDetailsFragment}
   mutation DeleteShippingRate($id: ID!) {
     shippingPriceDelete(id: $id) {
-      errors {
-        field
-        message
+      errors: shippingErrors {
+        ...ShippingErrorFragment
       }
       shippingZone {
         ...ShippingZoneDetailsFragment
@@ -194,11 +201,11 @@ export const TypedDeleteShippingRate = TypedMutation<
 >(deleteShippingRate);
 
 const bulkDeleteShippingRate = gql`
+  ${shippingErrorFragment}
   mutation BulkDeleteShippingRate($ids: [ID]!) {
     shippingPriceBulkDelete(ids: $ids) {
-      errors {
-        field
-        message
+      errors: shippingErrors {
+        ...ShippingErrorFragment
       }
     }
   }
