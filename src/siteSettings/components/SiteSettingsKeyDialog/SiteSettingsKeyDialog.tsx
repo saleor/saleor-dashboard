@@ -12,7 +12,7 @@ import { FormSpacer } from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { buttonMessages } from "@saleor/intl";
 import { DialogProps } from "@saleor/types";
-import { getFieldError, getFormErrors } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
 import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
 import getShopErrorMessage from "@saleor/utils/errors/shop";
 import { authorizationKeyTypes } from "../../../misc";

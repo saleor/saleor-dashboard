@@ -51,14 +51,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
       });
     } else {
       notify({
-        text: intl.formatMessage(
-          {
-            defaultMessage: "Could not delete authorization key: {errorMessage}"
-          },
-          {
-            errorMessage: data.authorizationKeyDelete.errors[0].message
-          }
-        )
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
       });
     }
   };
