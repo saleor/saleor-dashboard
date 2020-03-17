@@ -623,6 +623,16 @@ export enum ServiceAccountSortField {
   NAME = "NAME",
 }
 
+export enum ShippingErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  MAX_LESS_THAN_MIN = "MAX_LESS_THAN_MIN",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum ShippingMethodTypeEnum {
   PRICE = "PRICE",
   WEIGHT = "WEIGHT",

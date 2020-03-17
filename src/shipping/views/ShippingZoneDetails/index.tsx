@@ -183,7 +183,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
                 id={id}
                 ops={ops}
                 params={params}
-                shippingZone={maybe(() => data.shippingZone)}
+                shippingZone={data?.shippingZone}
                 unassignCountryTransitionState={
                   ops.shippingZoneUpdate.opts.status
                 }

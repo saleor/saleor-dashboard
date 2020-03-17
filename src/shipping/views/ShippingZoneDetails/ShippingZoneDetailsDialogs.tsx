@@ -6,7 +6,7 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
-import { maybe } from "../../../misc";
+import { getStringOrPlaceholder } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import ShippingZoneCountriesAssignDialog from "../../components/ShippingZoneCountriesAssignDialog";
 import ShippingZoneRateDialog from "../../components/ShippingZoneRateDialog";
@@ -45,8 +45,8 @@ const ShippingZoneDetailsDialogs: React.FC<ShippingZoneDetailsDialogsProps> = ({
 
   const closeModal = () => navigate(shippingZoneUrl(id), true);
 
-  const rate = maybe(() =>
-    shippingZone.shippingMethods.find(rate => rate.id === params.id)
+  const rate = shippingZone?.shippingMethods?.find(
+    rate => rate.id === params.id
   );
 
   return (
@@ -54,12 +54,11 @@ const ShippingZoneDetailsDialogs: React.FC<ShippingZoneDetailsDialogsProps> = ({
       <ShippingZoneRateDialog
         action="edit"
         confirmButtonState={updateRateTransitionState}
-        defaultCurrency={maybe(() => shop.defaultCurrency)}
+        defaultCurrency={shop?.defaultCurrency}
         disabled={ops.shippingRateUpdate.opts.loading}
-        errors={maybe(
-          () => ops.shippingRateUpdate.opts.data.shippingPriceUpdate.errors,
-          []
-        )}
+        errors={
+          ops.shippingRateUpdate.opts.data?.shippingPriceUpdate.errors || []
+        }
         onClose={closeModal}
         onSubmit={formData =>
           ops.shippingRateUpdate.mutate({
@@ -74,13 +73,13 @@ const ShippingZoneDetailsDialogs: React.FC<ShippingZoneDetailsDialogsProps> = ({
               name: formData.name,
               price: formData.isFree ? 0 : parseFloat(formData.price),
               shippingZone: id,
-              type: maybe(() => rate.type)
+              type: rate?.type
             }
           })
         }
         open={params.action === "edit-rate"}
         rate={rate}
-        variant={maybe(() => rate.type)}
+        variant={rate?.type}
       />
       <ActionDialog
         confirmButtonState={deleteRateTransitionState}
@@ -103,7 +102,7 @@ const ShippingZoneDetailsDialogs: React.FC<ShippingZoneDetailsDialogsProps> = ({
             description="delete shipping method"
             id="shippingZoneDetailsDialogsDeleteShippingMethod"
             values={{
-              name: maybe(() => rate.name, "...")
+              name: getStringOrPlaceholder(rate?.name)
             }}
           />
         </DialogContentText>
@@ -111,12 +110,11 @@ const ShippingZoneDetailsDialogs: React.FC<ShippingZoneDetailsDialogsProps> = ({
       <ShippingZoneRateDialog
         action="create"
         confirmButtonState={createRateTransitionState}
-        defaultCurrency={maybe(() => shop.defaultCurrency)}
+        defaultCurrency={shop?.defaultCurrency}
         disabled={ops.shippingRateCreate.opts.loading}
-        errors={maybe(
-          () => ops.shippingRateCreate.opts.data.shippingPriceCreate.errors,
-          []
-        )}
+        errors={
+          ops.shippingRateCreate.opts.data?.shippingPriceCreate.errors || []
+        }
         onClose={closeModal}
         onSubmit={formData =>
           ops.shippingRateCreate.mutate({
@@ -178,19 +176,18 @@ const ShippingZoneDetailsDialogs: React.FC<ShippingZoneDetailsDialogsProps> = ({
             description="delete shipping zone"
             id="shippingZoneDetailsDialogsDeleteShippingZone"
             values={{
-              name: <strong>{maybe(() => shippingZone.name, "...")}</strong>
+              name: (
+                <strong>{getStringOrPlaceholder(shippingZone?.name)}</strong>
+              )
             }}
           />
         </DialogContentText>
       </ActionDialog>
       <ShippingZoneCountriesAssignDialog
         confirmButtonState={assignCountryTransitionState}
-        countries={maybe(() => shop.countries, [])}
-        initial={maybe(
-          () => shippingZone.countries.map(country => country.code),
-          []
-        )}
-        isDefault={maybe(() => shippingZone.default, false)}
+        countries={shop?.countries}
+        initial={shippingZone?.countries.map(country => country.code) || []}
+        isDefault={!!shippingZone?.default}
         onClose={closeModal}
         onConfirm={formData =>
           ops.shippingZoneUpdate.mutate({
@@ -230,12 +227,10 @@ const ShippingZoneDetailsDialogs: React.FC<ShippingZoneDetailsDialogsProps> = ({
             values={{
               countryName: (
                 <strong>
-                  {maybe(
-                    () =>
-                      shippingZone.countries.find(
-                        country => country.code === params.id
-                      ).country,
-                    "..."
+                  {getStringOrPlaceholder(
+                    shippingZone?.countries.find(
+                      country => country.code === params.id
+                    )?.country
                   )}
                 </strong>
               )
