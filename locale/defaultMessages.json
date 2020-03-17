@@ -3976,6 +3976,14 @@
     "context": "shipping method has no value limits",
     "string": "There are no value limits"
   },
+  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_price": {
+    "context": "error message",
+    "string": "Maximum price cannot be lower than minimum"
+  },
+  "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_weight": {
+    "context": "error message",
+    "string": "Maximum weight cannot be lower than minimum"
+  },
   "src_dot_shipping_dot_components_dot_ShippingZoneRates_dot_1134347598": {
     "context": "shipping method price",
     "string": "Price"
