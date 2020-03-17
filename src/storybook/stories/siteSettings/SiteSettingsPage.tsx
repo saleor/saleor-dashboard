@@ -2,12 +2,12 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { ShopErrorCode } from "@saleor/types/globalTypes";
 import SiteSettingsPage, {
   SiteSettingsPageProps
 } from "../../../siteSettings/components/SiteSettingsPage";
 import { shop } from "../../../siteSettings/fixtures";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: Omit<SiteSettingsPageProps, "classes"> = {
   disabled: false,
@@ -36,6 +36,10 @@ storiesOf("Views / Site settings / Page", module)
         "defaultMailSenderAddress",
         "defaultMailSenderName",
         "customerSetPasswordUrl"
-      ].map(field => formError(field))}
+      ].map(field => ({
+        __typename: "ShopError",
+        code: ShopErrorCode.INVALID,
+        field
+      }))}
     />
   ));
