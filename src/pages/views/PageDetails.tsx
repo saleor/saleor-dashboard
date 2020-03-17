@@ -6,7 +6,8 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { maybe } from "../../misc";
+import { commonMessages } from "@saleor/intl";
+import { maybe, getStringOrPlaceholder } from "../../misc";
 import { PageInput } from "../../types/globalTypes";
 import PageDetailsPage, { FormData } from "../components/PageDetailsPage";
 import { TypedPageRemove, TypedPageUpdate } from "../mutations";
@@ -43,9 +44,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const handlePageRemove = (data: PageRemove) => {
     if (data.pageDelete.errors.length === 0) {
       notify({
-        text: intl.formatMessage({
-          defaultMessage: "Removed page"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(pageListUrl());
     }
@@ -63,12 +62,9 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
                   />
                   <PageDetailsPage
                     disabled={pageDetails.loading}
-                    errors={maybe(
-                      () => pageUpdateOpts.data.pageUpdate.errors,
-                      []
-                    )}
+                    errors={pageUpdateOpts.data?.pageUpdate.errors || []}
                     saveButtonBarState={pageUpdateOpts.status}
-                    page={maybe(() => pageDetails.data.page)}
+                    page={pageDetails.data?.page}
                     onBack={() => navigate(pageListUrl())}
                     onRemove={() =>
                       navigate(
@@ -104,7 +100,9 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
                         values={{
                           title: (
                             <strong>
-                              {maybe(() => pageDetails.data.page.title, "...")}
+                              {getStringOrPlaceholder(
+                                pageDetails.data?.page?.title
+                              )}
                             </strong>
                           )
                         }}

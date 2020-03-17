@@ -519,6 +519,14 @@ export enum OrderStatusFilter {
   UNFULFILLED = "UNFULFILLED",
 }
 
+export enum PageErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum PageSortField {
   CREATION_DATE = "CREATION_DATE",
   PUBLICATION_DATE = "PUBLICATION_DATE",

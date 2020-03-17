@@ -9,16 +9,17 @@ import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import { commonMessages } from "@saleor/intl";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
+import { PageErrorFragment } from "@saleor/pages/types/PageErrorFragment";
+import getPageErrorMessage from "@saleor/utils/errors/page";
 import { maybe } from "../../../misc";
-import { UserError } from "../../../types";
 import { PageDetails_page } from "../../types/PageDetails";
 import { FormData } from "../PageDetailsPage";
 
 export interface PageInfoProps {
   data: FormData;
   disabled: boolean;
-  errors: UserError[];
+  errors: PageErrorFragment[];
   page: PageDetails_page;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -34,9 +35,11 @@ const useStyles = makeStyles(
 
 const PageInfo: React.FC<PageInfoProps> = props => {
   const { data, disabled, errors, page, onChange } = props;
-  const classes = useStyles(props);
 
+  const classes = useStyles(props);
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["title", "contentJson"], errors);
 
   return (
     <Card className={classes.root}>
@@ -46,9 +49,9 @@ const PageInfo: React.FC<PageInfoProps> = props => {
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "title")}
+          error={!!formErrors.title}
           fullWidth
-          helperText={getFieldError(errors, "title")?.message}
+          helperText={getPageErrorMessage(formErrors.title, intl)}
           label={intl.formatMessage({
             defaultMessage: "Title",
             description: "page title"
@@ -60,8 +63,8 @@ const PageInfo: React.FC<PageInfoProps> = props => {
         <FormSpacer />
         <RichTextEditor
           disabled={disabled}
-          error={!!getFieldError(errors, "contentJson")}
-          helperText={getFieldError(errors, "contentJson")?.message}
+          error={!!formErrors.contentJson}
+          helperText={getPageErrorMessage(formErrors.contentJson, intl)}
           initial={maybe(() => JSON.parse(page.contentJson))}
           label={intl.formatMessage({
             defaultMessage: "Content",

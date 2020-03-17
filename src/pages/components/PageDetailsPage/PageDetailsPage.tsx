@@ -19,8 +19,8 @@ import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { sectionNames } from "@saleor/intl";
+import { PageErrorFragment } from "@saleor/pages/types/PageErrorFragment";
 import { maybe } from "../../../misc";
-import { UserError } from "../../../types";
 import { PageDetails_page } from "../../types/PageDetails";
 import PageInfo from "../PageInfo";
 import PageSlug from "../PageSlug";
@@ -37,7 +37,7 @@ export interface FormData {
 
 export interface PageDetailsPageProps {
   disabled: boolean;
-  errors: UserError[];
+  errors: PageErrorFragment[];
   page: PageDetails_page;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
