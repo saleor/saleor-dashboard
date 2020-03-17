@@ -1,13 +1,13 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PageErrorCode } from "@saleor/types/globalTypes";
 import PageDetailsPage, {
   FormData,
   PageDetailsPageProps
 } from "../../../pages/components/PageDetailsPage";
 import { page } from "../../../pages/fixtures";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: PageDetailsPageProps = {
   disabled: false,
@@ -36,6 +36,10 @@ storiesOf("Views / Pages / Page details", module)
         "isPublished",
         "seoDescription",
         "seoTitle"
-      ] as Array<keyof FormData>).map(formError)}
+      ] as Array<keyof FormData>).map(field => ({
+        __typename: "PageError",
+        code: PageErrorCode.INVALID,
+        field
+      }))}
     />
   ));
