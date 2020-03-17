@@ -14,9 +14,9 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { UserError } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
+import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
 import { maybe } from "../../../misc";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 import { SiteSettings_shop } from "../../types/SiteSettings";
@@ -48,7 +48,7 @@ export interface SiteSettingsPageFormData
 
 export interface SiteSettingsPageProps {
   disabled: boolean;
-  errors: UserError[];
+  errors: ShopErrorFragment[];
   shop: SiteSettings_shop;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -127,8 +127,6 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     name: maybe(() => shop.name, "")
   };
 
-  const formErrors = [...errors, ...validationErrors];
-
   return (
     <Form
       initial={initialForm}
@@ -141,9 +139,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
       confirmLeave
     >
       {({ change, data, hasChanged, submit }) => {
-        const countryChoices = mapCountriesToChoices(
-          maybe(() => shop.countries, [])
-        );
+        const countryChoices = mapCountriesToChoices(shop?.countries || []);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
           setDisplayCountry,
@@ -169,7 +165,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               </div>
               <SiteSettingsDetails
                 data={data}
-                errors={formErrors}
+                errors={errors}
                 disabled={disabled}
                 onChange={change}
               />
@@ -187,7 +183,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               </div>
               <SiteSettingsMailing
                 data={data}
-                errors={formErrors}
+                errors={errors}
                 disabled={disabled}
                 onChange={change}
               />
@@ -208,7 +204,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 data={data}
                 displayCountry={displayCountry}
                 countries={countryChoices}
-                errors={formErrors}
+                errors={[...errors, ...validationErrors]}
                 disabled={disabled}
                 onChange={change}
                 onCountryChange={handleCountryChange}
