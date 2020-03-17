@@ -15,7 +15,7 @@ import { FormattedMessage } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import { maybe, renderCollection } from "../../misc";
+import { maybe, renderCollection, getStringOrPlaceholder } from "../../misc";
 import { CountryFragment } from "../../taxes/types/CountryFragment";
 
 export interface CountryListProps {
@@ -98,7 +98,7 @@ const CountryList: React.FC<CountryListProps> = props => {
       <CardTitle
         title={title}
         toolbar={
-          <Button color="primary" onClick={onCountryAssign}>
+          <Button color="primary" disabled={disabled} onClick={onCountryAssign}>
             <FormattedMessage
               defaultMessage="Assign countries"
               description="button"
@@ -117,7 +117,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                   defaultMessage="{number} Countries"
                   description="number of countries"
                   values={{
-                    number: maybe(() => countries.length.toString(), "...")
+                    number: getStringOrPlaceholder(countries?.length.toString())
                   }}
                 />
               </TableCell>

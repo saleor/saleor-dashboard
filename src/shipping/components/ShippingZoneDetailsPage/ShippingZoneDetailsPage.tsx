@@ -59,6 +59,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   const initialForm: FormData = {
     name: shippingZone?.name || ""
   };
+
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit }) => (
@@ -69,7 +70,12 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
           <PageHeader title={getStringOrPlaceholder(shippingZone?.name)} />
           <Grid>
             <div>
-              <ShippingZoneInfo data={data} errors={errors} onChange={change} />
+              <ShippingZoneInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
               <CardSpacer />
               <CountryList
                 countries={shippingZone?.countries}

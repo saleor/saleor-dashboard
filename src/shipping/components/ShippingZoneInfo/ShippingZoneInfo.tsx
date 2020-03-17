@@ -13,12 +13,14 @@ import { FormData } from "../ShippingZoneDetailsPage";
 
 export interface ShippingZoneInfoProps {
   data: FormData;
+  disabled: boolean;
   errors: ShippingErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
   data,
+  disabled,
   errors,
   onChange
 }) => {
@@ -33,6 +35,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
       />
       <CardContent>
         <TextField
+          disabled={disabled}
           error={!!formErrors.name}
           fullWidth
           helperText={getShippingErrorMessage(formErrors.name, intl)}

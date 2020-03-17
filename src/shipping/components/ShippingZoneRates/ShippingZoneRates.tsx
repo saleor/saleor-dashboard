@@ -77,7 +77,7 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
               })
         }
         toolbar={
-          <Button color="primary" onClick={onRateAdd}>
+          <Button color="primary" disabled={disabled} onClick={onRateAdd}>
             <FormattedMessage
               defaultMessage="Create rate"
               description="button"

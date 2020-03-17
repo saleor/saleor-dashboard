@@ -67,6 +67,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
               <div>
                 <ShippingZoneInfo
                   data={data}
+                  disabled={disabled}
                   errors={errors}
                   onChange={change}
                 />
