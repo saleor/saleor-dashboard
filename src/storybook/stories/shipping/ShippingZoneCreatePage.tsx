@@ -1,11 +1,11 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { ShippingErrorCode } from "@saleor/types/globalTypes";
 import ShippingZoneCreatePage, {
   ShippingZoneCreatePageProps
 } from "../../../shipping/components/ShippingZoneCreatePage";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: ShippingZoneCreatePageProps = {
   countries: [
@@ -45,6 +45,14 @@ const props: ShippingZoneCreatePageProps = {
 storiesOf("Views / Shipping / Create shipping zone", module)
   .addDecorator(Decorator)
   .add("default", () => <ShippingZoneCreatePage {...props} />)
+  .add("loading", () => <ShippingZoneCreatePage {...props} disabled={true} />)
   .add("form errors", () => (
-    <ShippingZoneCreatePage {...props} errors={["name"].map(formError)} />
+    <ShippingZoneCreatePage
+      {...props}
+      errors={["name"].map(field => ({
+        __typename: "ShippingError",
+        code: ShippingErrorCode.INVALID,
+        field
+      }))}
+    />
   ));
