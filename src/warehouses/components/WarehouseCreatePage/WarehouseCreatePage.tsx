@@ -47,7 +47,7 @@ const initialForm: WarehouseCreatePageFormData = {
 const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
   countries,
   disabled,
-  errors: apiErrors,
+  errors,
   saveButtonBarState,
   onBack,
   onSubmit
@@ -61,12 +61,8 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
   } = useAddressValidation<WarehouseCreatePageFormData>(onSubmit);
 
   return (
-    <Form
-      initial={initialForm}
-      errors={[...apiErrors, ...validationErrors]}
-      onSubmit={handleSubmit}
-    >
-      {({ change, data, errors, submit }) => {
+    <Form initial={initialForm} onSubmit={handleSubmit}>
+      {({ change, data, submit }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
@@ -99,7 +95,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                   data={data}
                   disabled={disabled}
                   displayCountry={displayCountry}
-                  errors={errors}
+                  errors={[...errors, ...validationErrors]}
                   header={intl.formatMessage({
                     defaultMessage: "Address Information",
                     description: "warehouse"

@@ -89,7 +89,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
     warehouses: shippingZone?.warehouses.map(warehouse => warehouse.id) || []
   };
   const [warehouseDisplayValues, setWarehouseDisplayValues] = useStateFromProps(
-    shippingZone?.warehouses.map(warehouseToChoice)
+    shippingZone?.warehouses.map(warehouseToChoice) || []
   );
 
   const warehouseChoices = warehouses.map(warehouseToChoice);
