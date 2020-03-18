@@ -13,7 +13,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { sectionNames } from "@saleor/intl";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { UserError } from "../../../types";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import { AddressTypeInput } from "../../types";
 import { CustomerCreateData_shop_countries } from "../../types/CustomerCreateData";
 import CustomerCreateAddress from "../CustomerCreateAddress/CustomerCreateAddress";
@@ -52,7 +52,7 @@ const initialForm: CustomerCreatePageFormData & AddressTypeInput = {
 export interface CustomerCreatePageProps {
   countries: CustomerCreateData_shop_countries[];
   disabled: boolean;
-  errors: UserError[];
+  errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: CustomerCreatePageSubmitData) => void;

@@ -10,8 +10,9 @@ import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import { commonMessages } from "@saleor/intl";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { getFormErrors } from "@saleor/utils/errors";
+import getAccountErrorMessage from "@saleor/utils/errors/account";
 
 const useStyles = makeStyles(
   theme => ({
@@ -35,15 +36,17 @@ export interface CustomerInfoProps {
     email: string;
   };
   disabled: boolean;
-  errors: UserError[];
+  errors: AccountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = props => {
   const { data, disabled, errors, onChange } = props;
-  const classes = useStyles(props);
 
+  const classes = useStyles(props);
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["firstName", "lastName", "email"], errors);
 
   return (
     <Card>
@@ -62,9 +65,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
         <Grid variant="uniform">
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "firstName")}
+            error={!!formErrors.firstName}
             fullWidth
-            helperText={getFieldError(errors, "firstName")?.message}
+            helperText={getAccountErrorMessage(formErrors.firstName, intl)}
             name="firstName"
             type="text"
             label={intl.formatMessage(commonMessages.firstName)}
@@ -73,9 +76,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
           />
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "lastName")}
+            error={!!formErrors.lastName}
             fullWidth
-            helperText={getFieldError(errors, "lastName")?.message}
+            helperText={getAccountErrorMessage(formErrors.lastName, intl)}
             name="lastName"
             type="text"
             label={intl.formatMessage(commonMessages.lastName)}
@@ -92,9 +95,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
         </Typography>
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "email")}
+          error={!!formErrors.email}
           fullWidth
-          helperText={getFieldError(errors, "email")?.message}
+          helperText={getAccountErrorMessage(formErrors.email, intl)}
           name="email"
           type="email"
           label={intl.formatMessage(commonMessages.email)}

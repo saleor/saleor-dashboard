@@ -2,12 +2,12 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { AccountErrorCode } from "@saleor/types/globalTypes";
 import CustomerDetailsPage, {
   CustomerDetailsPageProps
 } from "../../../customers/components/CustomerDetailsPage";
 import { customer } from "../../../customers/fixtures";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: Omit<CustomerDetailsPageProps, "classes"> = {
   customer,
@@ -40,7 +40,11 @@ storiesOf("Views / Customers / Customer details", module)
       {...props}
       errors={(["email", "firstName", "lastName"] as Array<
         keyof CustomerDetailsPageErrors
-      >).map(field => formError(field))}
+      >).map(field => ({
+        __typename: "AccountError",
+        code: AccountErrorCode.INVALID,
+        field
+      }))}
     />
   ))
   .add("different addresses", () => (

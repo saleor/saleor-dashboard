@@ -2,22 +2,22 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ServiceAccountTokenInput } from "./../../types/globalTypes";
+import { ServiceAccountTokenInput, AccountErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ServiceTokenCreate
 // ====================================================
 
 export interface ServiceTokenCreate_serviceAccountTokenCreate_errors {
-  __typename: "Error";
+  __typename: "AccountError";
+  code: AccountErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface ServiceTokenCreate_serviceAccountTokenCreate {
   __typename: "ServiceAccountTokenCreate";
-  errors: ServiceTokenCreate_serviceAccountTokenCreate_errors[];
   authToken: string | null;
+  errors: ServiceTokenCreate_serviceAccountTokenCreate_errors[];
 }
 
 export interface ServiceTokenCreate {
