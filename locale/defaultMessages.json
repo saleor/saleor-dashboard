@@ -4821,6 +4821,10 @@
     "context": "header",
     "string": "Create Webhook"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_216945727": {
+    "context": "delete webhook",
+    "string": "Are you sure you want to delete this webhook?"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_2297471173": {
     "context": "delete webhook",
     "string": "Are you sure you want to delete {name}?"
@@ -4920,6 +4924,10 @@
     "context": "section header",
     "string": "Webhook Status"
   },
+  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_1595053355": {
+    "context": "header",
+    "string": "Unnamed Webhook Details"
+  },
   "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_408706360": {
     "context": "header",
     "string": "{webhookName} Details"
@@ -4953,6 +4961,9 @@
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_4120604650": {
     "context": "user action bar",
     "string": "Action"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhooksList_dot_618422799": {
+    "string": "Unnamed webhook"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_636461959": {
     "context": "webhook name",
