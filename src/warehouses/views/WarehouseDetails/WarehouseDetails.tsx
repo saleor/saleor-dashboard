@@ -11,7 +11,11 @@ import {
 import { useWarehouseDetails } from "@saleor/warehouses/queries";
 import { commonMessages } from "@saleor/intl";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { maybe, findValueInEnum, getMutationStatus } from "@saleor/misc";
+import {
+  findValueInEnum,
+  getMutationStatus,
+  getStringOrPlaceholder
+} from "@saleor/misc";
 import { CountryCode } from "@saleor/types/globalTypes";
 import useShop from "@saleor/hooks/useShop";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -22,6 +26,7 @@ import {
 import { shippingZoneUrl } from "@saleor/shipping/urls";
 import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 
 export interface WarehouseDetailsProps {
   id: string;
@@ -35,7 +40,6 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
   const shop = useShop();
   const { data, loading } = useWarehouseDetails({
     displayLoader: true,
-    require: ["warehouse"],
     variables: { id }
   });
   const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdate({
@@ -65,18 +69,19 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
     params
   );
 
+  if (data?.warehouse === null) {
+    return <NotFoundPage onBack={() => navigate(warehouseListUrl())} />;
+  }
+
   return (
     <>
-      <WindowTitle title={maybe(() => data.warehouse.name)} />
+      <WindowTitle title={data?.warehouse?.name} />
       <WarehouseDetailsPage
-        countries={maybe(() => shop.countries, [])}
+        countries={shop?.countries || []}
         disabled={loading || updateWarehouseOpts.loading}
-        errors={maybe(
-          () => updateWarehouseOpts.data.updateWarehouse.errors,
-          []
-        )}
+        errors={updateWarehouseOpts.data?.updateWarehouse.errors || []}
         saveButtonBarState={updateWarehouseTransitionState}
-        warehouse={maybe(() => data.warehouse)}
+        warehouse={data?.warehouse}
         onBack={() => navigate(warehouseListUrl())}
         onDelete={() => openModal("delete")}
         onShippingZoneClick={id => navigate(shippingZoneUrl(id))}
@@ -103,7 +108,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
       />
       <WarehouseDeleteDialog
         confirmButtonState={deleteWarehouseTransitionState}
-        name={maybe(() => data.warehouse.name)}
+        name={getStringOrPlaceholder(data?.warehouse?.name)}
         onClose={closeModal}
         onConfirm={() =>
           deleteWarehouse({

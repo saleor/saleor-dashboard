@@ -42,7 +42,7 @@ export interface WarehouseDetailsPageProps {
 const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   countries,
   disabled,
-  errors: apiErrors,
+  errors,
   saveButtonBarState,
   warehouse,
   onBack,
@@ -73,12 +73,8 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   };
 
   return (
-    <Form
-      initial={initialForm}
-      errors={[...apiErrors, ...validationErrors]}
-      onSubmit={handleSubmit}
-    >
-      {({ change, data, errors, submit }) => {
+    <Form initial={initialForm} onSubmit={handleSubmit}>
+      {({ change, data, submit }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
@@ -106,7 +102,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                   data={data}
                   disabled={disabled}
                   displayCountry={displayCountry}
-                  errors={errors}
+                  errors={[...errors, ...validationErrors]}
                   header={intl.formatMessage({
                     defaultMessage: "Address Information",
                     description: "warehouse"
@@ -117,9 +113,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               </div>
               <div>
                 <WarehouseZones
-                  zones={maybe(() =>
-                    warehouse.shippingZones.edges.map(edge => edge.node)
-                  )}
+                  zones={warehouse?.shippingZones?.edges.map(edge => edge.node)}
                   onShippingZoneClick={onShippingZoneClick}
                 />
               </div>
