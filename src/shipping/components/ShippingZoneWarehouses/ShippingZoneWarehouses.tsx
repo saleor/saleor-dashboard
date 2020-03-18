@@ -61,7 +61,9 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
               "Select warehouse from which you will ship products for this shipping zone. This warehouse address will also be used to calculate taxes."
           })}
           label={intl.formatMessage({
-            defaultMessage: "Warehouse"
+            defaultMessage: "Warehouse",
+            description: "autocomplete select label",
+            id: "shippingZoneWarehouses.autocomplete.label"
           })}
           loading={loading}
           name="warehouse"
@@ -70,11 +72,6 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
           placeholder={intl.formatMessage({
             defaultMessage: "Select Warehouse",
             description: "input placeholder"
-          })}
-          label={intl.formatMessage({
-            defaultMessage: "Warehouse",
-            description:"autocomplete select label"
-            id: "shippingZoneWarehouses.autocomplete.label"
           })}
           value={data.warehouses}
         />
