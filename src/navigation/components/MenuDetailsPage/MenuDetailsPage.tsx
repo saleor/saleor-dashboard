@@ -10,6 +10,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
+import { MenuErrorFragment } from "@saleor/navigation/types/MenuErrorFragment";
 import { maybe } from "../../../misc";
 import { MenuDetails_menu } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
@@ -28,6 +29,7 @@ export interface MenuDetailsSubmitData extends MenuDetailsFormData {
 export interface MenuDetailsPageProps {
   saveButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
+  errors: MenuErrorFragment[];
   menu: MenuDetails_menu;
   onBack: () => void;
   onDelete: () => void;
@@ -39,6 +41,7 @@ export interface MenuDetailsPageProps {
 
 const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   disabled,
+  errors,
   menu,
   saveButtonState,
   onBack,
@@ -98,6 +101,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
               <MenuProperties
                 data={data}
                 disabled={disabled}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />

@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { MenuItemInput } from "./../../types/globalTypes";
+import { MenuItemInput, MenuErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: MenuItemUpdate
 // ====================================================
 
 export interface MenuItemUpdate_menuItemUpdate_errors {
-  __typename: "Error";
+  __typename: "MenuError";
+  code: MenuErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface MenuItemUpdate_menuItemUpdate_menuItem_category {

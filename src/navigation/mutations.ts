@@ -17,12 +17,19 @@ import {
 } from "./types/MenuItemUpdate";
 import { MenuUpdate, MenuUpdateVariables } from "./types/MenuUpdate";
 
+const menuErrorFragment = gql`
+  fragment MenuErrorFragment on MenuError {
+    code
+    field
+  }
+`;
+
 const menuCreate = gql`
+  ${menuErrorFragment}
   mutation MenuCreate($input: MenuCreateInput!) {
     menuCreate(input: $input) {
-      errors {
-        field
-        message
+      errors: menuErrors {
+        ...MenuErrorFragment
       }
       menu {
         id
@@ -36,11 +43,11 @@ export const MenuCreateMutation = TypedMutation<
 >(menuCreate);
 
 const menuBulkDelete = gql`
+  ${menuErrorFragment}
   mutation MenuBulkDelete($ids: [ID]!) {
     menuBulkDelete(ids: $ids) {
-      errors {
-        field
-        message
+      errors: menuErrors {
+        ...MenuErrorFragment
       }
     }
   }
@@ -51,11 +58,11 @@ export const MenuBulkDeleteMutation = TypedMutation<
 >(menuBulkDelete);
 
 const menuDelete = gql`
+  ${menuErrorFragment}
   mutation MenuDelete($id: ID!) {
     menuDelete(id: $id) {
-      errors {
-        field
-        message
+      errors: menuErrors {
+        ...MenuErrorFragment
       }
     }
   }
@@ -66,12 +73,12 @@ export const MenuDeleteMutation = TypedMutation<
 >(menuDelete);
 
 const menuItemCreate = gql`
+  ${menuErrorFragment}
   ${menuItemNestedFragment}
   mutation MenuItemCreate($input: MenuItemCreateInput!) {
     menuItemCreate(input: $input) {
-      errors {
-        field
-        message
+      errors: menuErrors {
+        ...MenuErrorFragment
       }
       menuItem {
         menu {
@@ -90,6 +97,7 @@ export const MenuItemCreateMutation = TypedMutation<
 >(menuItemCreate);
 
 const menuUpdate = gql`
+  ${menuErrorFragment}
   mutation MenuUpdate(
     $id: ID!
     $name: String!
@@ -97,23 +105,20 @@ const menuUpdate = gql`
     $removeIds: [ID]!
   ) {
     menuUpdate(id: $id, input: { name: $name }) {
-      errors {
-        field
-        message
+      errors: menuErrors {
+        ...MenuErrorFragment
       }
     }
 
     menuItemMove(menu: $id, moves: $moves) {
-      errors {
-        field
-        message
+      errors: menuErrors {
+        ...MenuErrorFragment
       }
     }
 
     menuItemBulkDelete(ids: $removeIds) {
-      errors {
-        field
-        message
+      errors: menuErrors {
+        ...MenuErrorFragment
       }
     }
   }
@@ -124,12 +129,12 @@ export const MenuUpdateMutation = TypedMutation<
 >(menuUpdate);
 
 const menuItemUpdate = gql`
+  ${menuErrorFragment}
   ${menuItemFragment}
   mutation MenuItemUpdate($id: ID!, $input: MenuItemInput!) {
     menuItemUpdate(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: menuErrors {
+        ...MenuErrorFragment
       }
       menuItem {
         ...MenuItemFragment
