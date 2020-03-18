@@ -22,6 +22,9 @@ const props: WebhooksDetailsPageProps = {
 storiesOf("Views / Webhooks / Webhook details", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhooksDetailsPage {...props} />)
+  .add("unnamed", () => (
+    <WebhooksDetailsPage {...props} webhook={{ ...webhook, name: null }} />
+  ))
   .add("loading", () => (
     <WebhooksDetailsPage
       {...props}
@@ -33,15 +36,10 @@ storiesOf("Views / Webhooks / Webhook details", module)
   .add("form errors", () => (
     <WebhooksDetailsPage
       {...props}
-      errors={[
-        {
-          code: WebhookErrorCode.INVALID,
-          field: null
-        }
-      ].map(error => ({
+      errors={["name", "targetUrl", "secretKey", null].map(field => ({
         __typename: "WebhookError",
-        message: "Generic form error",
-        ...error
+        code: WebhookErrorCode.INVALID,
+        field
       }))}
     />
   ));

@@ -8,7 +8,6 @@ import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import { WebhookCreate as WebhookCreateData } from "@saleor/webhooks/types/WebhookCreate";
 import React from "react";
 import { useIntl } from "react-intl";
-import { maybe } from "../../misc";
 import WebhookCreatePage, { FormData } from "../components/WebhookCreatePage";
 import { TypedWebhookCreate } from "../mutations";
 import { webhookListUrl, WebhookListUrlQueryParams, webhookUrl } from "../urls";
@@ -30,7 +29,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = () => {
   });
 
   const onSubmit = (data: WebhookCreateData) => {
-    if (data.webhookCreate.webhookErrors.length === 0) {
+    if (data.webhookCreate.errors.length === 0) {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
       });
@@ -69,13 +68,10 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = () => {
             />
             <WebhookCreatePage
               disabled={false}
-              errors={maybe(
-                () => webhookCreateOpts.data.webhookCreate.webhookErrors,
-                []
-              )}
+              errors={webhookCreateOpts.data?.webhookCreate.errors || []}
               fetchServiceAccounts={searchServiceAccount}
-              services={maybe(() =>
-                searchServiceAccountOpt.data.search.edges.map(edge => edge.node)
+              services={searchServiceAccountOpt.data?.search.edges.map(
+                edge => edge.node
               )}
               onBack={handleBack}
               onSubmit={handleSubmit}

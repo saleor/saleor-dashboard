@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import { getStringOrPlaceholder } from "@saleor/misc";
 
 export interface WebhookDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -35,13 +36,20 @@ const WebhookDeleteDialog: React.FC<WebhookDeleteDialogProps> = ({
       variant="delete"
     >
       <DialogContentText>
-        <FormattedMessage
-          defaultMessage="Are you sure you want to delete {name}?"
-          description="delete webhook"
-          values={{
-            name: <strong>{name}</strong>
-          }}
-        />
+        {["", null].includes(name) ? (
+          <FormattedMessage
+            defaultMessage="Are you sure you want to delete this webhook?"
+            description="delete webhook"
+          />
+        ) : (
+          <FormattedMessage
+            defaultMessage="Are you sure you want to delete {name}?"
+            description="delete webhook"
+            values={{
+              name: <strong>{getStringOrPlaceholder(name)}</strong>
+            }}
+          />
+        )}
       </DialogContentText>
     </ActionDialog>
   );
