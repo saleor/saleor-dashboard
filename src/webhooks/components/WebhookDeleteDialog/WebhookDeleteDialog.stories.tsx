@@ -16,4 +16,5 @@ const props: WebhookDeleteDialogProps = {
 
 storiesOf("Views / Webhooks / Delete webhook", module)
   .addDecorator(Decorator)
-  .add("default", () => <WebhookDeleteDialog {...props} />);
+  .add("default", () => <WebhookDeleteDialog {...props} />)
+  .add("unnamed webhook", () => <WebhookDeleteDialog {...props} name={null} />);

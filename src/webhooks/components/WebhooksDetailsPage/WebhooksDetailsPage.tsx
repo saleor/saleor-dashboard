@@ -11,15 +11,16 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
+import { maybe, getStringOrPlaceholder } from "@saleor/misc";
 import { SearchServiceAccount_search_edges_node } from "@saleor/searches/types/SearchServiceAccount";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
-import { WebhookCreate_webhookCreate_webhookErrors } from "@saleor/webhooks/types/WebhookCreate";
 import { WebhookDetails_webhook } from "@saleor/webhooks/types/WebhookDetails";
+import { WebhookErrorFragment } from "@saleor/webhooks/types/WebhookErrorFragment";
+import { isUnnamed } from "@saleor/webhooks/utils";
 
 export interface FormData {
   events: WebhookEventTypeEnum[];
@@ -33,7 +34,7 @@ export interface FormData {
 
 export interface WebhooksDetailsPageProps {
   disabled: boolean;
-  errors: WebhookCreate_webhookCreate_webhookErrors[];
+  errors: WebhookErrorFragment[];
   webhook: WebhookDetails_webhook;
   services?: SearchServiceAccount_search_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -94,15 +95,22 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
               {intl.formatMessage(sectionNames.webhooks)}
             </AppHeader>
             <PageHeader
-              title={intl.formatMessage(
-                {
-                  defaultMessage: "{webhookName} Details",
-                  description: "header"
-                },
-                {
-                  webhookName: maybe(() => webhook.name, "...")
-                }
-              )}
+              title={
+                isUnnamed(webhook)
+                  ? intl.formatMessage({
+                      defaultMessage: "Unnamed Webhook Details",
+                      description: "header"
+                    })
+                  : intl.formatMessage(
+                      {
+                        defaultMessage: "{webhookName} Details",
+                        description: "header"
+                      },
+                      {
+                        webhookName: getStringOrPlaceholder(webhook?.name)
+                      }
+                    )
+              }
             />
             <Grid>
               <div>

@@ -7,16 +7,15 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
 import { SearchServiceAccount_search_edges_node } from "@saleor/searches/types/SearchServiceAccount";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
-import { WebhookCreate_webhookCreate_webhookErrors } from "@saleor/webhooks/types/WebhookCreate";
 import React from "react";
 import { useIntl } from "react-intl";
+import { WebhookErrorFragment } from "@saleor/webhooks/types/WebhookErrorFragment";
 
 export interface FormData {
   events: WebhookEventTypeEnum[];
@@ -30,7 +29,7 @@ export interface FormData {
 
 export interface WebhookCreatePageProps {
   disabled: boolean;
-  errors: WebhookCreate_webhookCreate_webhookErrors[];
+  errors: WebhookErrorFragment[];
   services?: SearchServiceAccount_search_edges_node[];
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchServiceAccounts: (data: string) => void;
@@ -60,14 +59,11 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
   const [selectedServiceAcccount, setSelectedServiceAcccount] = React.useState(
     ""
   );
-  const servicesChoiceList = maybe(
-    () =>
-      services.map(node => ({
-        label: node.name,
-        value: node.id
-      })),
-    []
-  );
+  const servicesChoiceList =
+    services?.map(node => ({
+      label: node.name,
+      value: node.id
+    })) || [];
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
