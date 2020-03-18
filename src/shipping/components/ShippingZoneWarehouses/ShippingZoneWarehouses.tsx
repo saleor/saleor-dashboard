@@ -66,7 +66,7 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
             id: "shippingZoneWarehouses.autocomplete.label"
           })}
           loading={loading}
-          name="warehouse"
+          name="warehouses"
           onChange={onChange}
           onFetchMore={onFetchMore}
           placeholder={intl.formatMessage({

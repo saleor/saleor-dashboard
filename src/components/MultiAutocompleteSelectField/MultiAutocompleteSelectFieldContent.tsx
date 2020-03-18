@@ -48,7 +48,7 @@ const useStyles = makeStyles(
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: "100%",
       height: 24,
-      marginRight: theme.spacing(),
+      margin: theme.spacing(),
       width: 24
     },
     addIcon: {
