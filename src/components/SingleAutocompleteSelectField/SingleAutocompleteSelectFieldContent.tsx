@@ -31,7 +31,7 @@ export interface SingleAutocompleteActionType {
 }
 export interface SingleAutocompleteSelectFieldContentProps
   extends Partial<FetchMoreProps> {
-  add: SingleAutocompleteActionType;
+  add?: SingleAutocompleteActionType;
   choices: SingleAutocompleteChoiceType[];
   displayCustomValue: boolean;
   emptyOption: boolean;

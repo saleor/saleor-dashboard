@@ -72,7 +72,7 @@ const useStyles = makeStyles(
 
 export interface MultiAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
-  add: MultiAutocompleteActionType;
+  add?: MultiAutocompleteActionType;
   allowCustomValues?: boolean;
   displayValues: MultiAutocompleteChoiceType[];
   error?: boolean;
@@ -93,6 +93,7 @@ const DebounceAutocomplete: React.ComponentType<DebounceProps<
 
 const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFieldProps> = props => {
   const {
+    add,
     allowCustomValues,
     choices,
     displayValues,
@@ -131,6 +132,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
         itemToString={() => ""}
       >
         {({
+          closeMenu,
           getInputProps,
           getItemProps,
           isOpen,

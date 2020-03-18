@@ -34,7 +34,7 @@ export interface MultiAutocompleteChoiceType {
 }
 export interface MultiAutocompleteSelectFieldContentProps
   extends Partial<FetchMoreProps> {
-  add: MultiAutocompleteActionType;
+  add?: MultiAutocompleteActionType;
   choices: MultiAutocompleteChoiceType[];
   displayCustomValue: boolean;
   displayValues: MultiAutocompleteChoiceType[];
@@ -45,6 +45,14 @@ export interface MultiAutocompleteSelectFieldContentProps
 
 const useStyles = makeStyles(
   theme => ({
+    add: {
+      background: theme.palette.background.default,
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: "100%",
+      height: 24,
+      marginRight: theme.spacing(),
+      width: 24
+    },
     addIcon: {
       height: 24,
       margin: 9,
@@ -106,6 +114,7 @@ const useStyles = makeStyles(
       gridColumnGap: theme.spacing(1),
       gridTemplateColumns: "30px 1fr",
       height: "auto",
+      marginBottom: theme.spacing(0.5),
       padding: 0,
       whiteSpace: "normal"
     },
@@ -136,10 +145,11 @@ const useStyles = makeStyles(
 function getChoiceIndex(
   index: number,
   displayValues: MultiAutocompleteChoiceType[],
-  displayCustomValue: boolean
+  displayCustomValue: boolean,
+  add: boolean
 ) {
   let choiceIndex = index;
-  if (displayCustomValue) {
+  if (add || displayCustomValue) {
     choiceIndex += 2;
   }
   if (displayValues.length > 0) {
@@ -258,7 +268,8 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
               const choiceIndex = getChoiceIndex(
                 index,
                 displayValues,
-                displayCustomValue
+                displayCustomValue,
+                !!add
               );
 
               return (
