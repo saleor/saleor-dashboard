@@ -9,8 +9,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
+import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
+import getShopErrorMessage from "@saleor/utils/errors/shop";
 
 export interface SiteSettingsMailingFormData {
   defaultMailSenderName: string;
@@ -19,7 +20,7 @@ export interface SiteSettingsMailingFormData {
 }
 interface SiteSettingsMailingProps {
   data: SiteSettingsMailingFormData;
-  errors: UserError[];
+  errors: ShopErrorFragment[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -41,8 +42,18 @@ const useStyles = makeStyles(
 
 const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
   const { data, disabled, errors, onChange } = props;
+
   const classes = useStyles(props);
   const intl = useIntl();
+
+  const formErrors = getFormErrors(
+    [
+      "defaultMailSenderAddress",
+      "defaultMailSenderName",
+      "customerSetPasswordUrl"
+    ],
+    errors
+  );
 
   return (
     <Card>
@@ -65,29 +76,30 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
         </Typography>
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "defaultMailSenderAddress")}
+          error={!!formErrors.defaultMailSenderAddress}
           fullWidth
           name="defaultMailSenderAddress"
           label={intl.formatMessage({
             defaultMessage: "Mailing email address"
           })}
-          helperText={
-            getFieldError(errors, "defaultMailSenderAddress")?.message
-          }
+          helperText={getShopErrorMessage(
+            formErrors.defaultMailSenderAddress,
+            intl
+          )}
           value={data.defaultMailSenderAddress}
           onChange={onChange}
         />
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "defaultMailSenderName")}
+          error={!!formErrors.defaultMailSenderName}
           fullWidth
           name="defaultMailSenderName"
           label={intl.formatMessage({
             defaultMessage: "Mailing email sender"
           })}
           helperText={
-            getFieldError(errors, "defaultMailSenderName")?.message ||
+            getShopErrorMessage(formErrors.defaultMailSenderName, intl) ||
             intl.formatMessage({
               defaultMessage: 'This will be visible as "from" name',
               description: "email sender"
@@ -101,7 +113,7 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "customerSetPasswordUrl")}
+          error={!!formErrors.customerSetPasswordUrl}
           fullWidth
           name="customerSetPasswordUrl"
           label={intl.formatMessage({
@@ -111,7 +123,7 @@ const SiteSettingsMailing: React.FC<SiteSettingsMailingProps> = props => {
             defaultMessage: "URL address"
           })}
           helperText={
-            getFieldError(errors, "customerSetPasswordUrl")?.message ||
+            getShopErrorMessage(formErrors.customerSetPasswordUrl, intl) ||
             intl.formatMessage({
               defaultMessage:
                 "This URL will be used as a main URL for password resets. It will be sent via email."

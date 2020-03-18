@@ -4,9 +4,11 @@ import React from "react";
 import SiteSettingsKeyDialog, {
   SiteSettingsKeyDialogProps
 } from "../../../siteSettings/components/SiteSettingsKeyDialog";
-import { AuthorizationKeyType } from "../../../types/globalTypes";
+import {
+  AuthorizationKeyType,
+  ShopErrorCode
+} from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: SiteSettingsKeyDialogProps = {
   errors: [],
@@ -26,6 +28,10 @@ storiesOf("SiteSettings / Add key dialog", module)
   .add("form errors", () => (
     <SiteSettingsKeyDialog
       {...props}
-      errors={["key", "password", "keyType"].map(field => formError(field))}
+      errors={["key", "password", "keyType"].map(field => ({
+        __typename: "ShopError",
+        code: ShopErrorCode.INVALID,
+        field
+      }))}
     />
   ));

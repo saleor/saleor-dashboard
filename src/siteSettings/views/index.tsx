@@ -7,7 +7,7 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import { useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../configuration";
-import { findInEnum, maybe } from "../../misc";
+import { findInEnum } from "../../misc";
 import { AuthorizationKeyType, CountryCode } from "../../types/globalTypes";
 import SiteSettingsKeyDialog, {
   SiteSettingsKeyDialogForm
@@ -37,7 +37,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
   const intl = useIntl();
 
   const handleAddKeySuccess = (data: AuthorizationKeyAdd) => {
-    if (!maybe(() => data.authorizationKeyAdd.errors.length)) {
+    if (data.authorizationKeyAdd.errors.length === 0) {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
       });
@@ -45,31 +45,21 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
     }
   };
   const handleDeleteKeySuccess = (data: AuthorizationKeyDelete) => {
-    if (!maybe(() => data.authorizationKeyDelete.errors.length)) {
+    if (data.authorizationKeyDelete.errors.length === 0) {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     } else {
       notify({
-        text: intl.formatMessage(
-          {
-            defaultMessage: "Could not delete authorization key: {errorMessage}"
-          },
-          {
-            errorMessage: data.authorizationKeyDelete.errors[0].message
-          }
-        )
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
       });
     }
   };
   const handleSiteSettingsSuccess = (data: ShopSettingsUpdate) => {
     if (
-      (!data.shopDomainUpdate.errors ||
-        data.shopDomainUpdate.errors.length === 0) &&
-      (!data.shopSettingsUpdate.errors ||
-        data.shopSettingsUpdate.errors.length === 0) &&
-      (!data.shopAddressUpdate.errors ||
-        data.shopAddressUpdate.errors.length === 0)
+      data.shopDomainUpdate.errors.length === 0 &&
+      data.shopSettingsUpdate.errors.length === 0 &&
+      data.shopAddressUpdate.errors.length === 0
     ) {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
@@ -89,21 +79,12 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                 >
                   {(updateShopSettings, updateShopSettingsOpts) => {
                     const errors = [
-                      ...maybe(
-                        () =>
-                          updateShopSettingsOpts.data.shopDomainUpdate.errors,
-                        []
-                      ),
-                      ...maybe(
-                        () =>
-                          updateShopSettingsOpts.data.shopSettingsUpdate.errors,
-                        []
-                      ),
-                      ...maybe(
-                        () =>
-                          updateShopSettingsOpts.data.shopAddressUpdate.errors,
-                        []
-                      )
+                      ...(updateShopSettingsOpts.data?.shopDomainUpdate
+                        .errors || []),
+                      ...(updateShopSettingsOpts.data?.shopSettingsUpdate
+                        .errors || []),
+                      ...(updateShopSettingsOpts.data?.shopAddressUpdate
+                        .errors || [])
                     ];
                     const loading =
                       siteSettings.loading ||
@@ -165,7 +146,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                         <SiteSettingsPage
                           disabled={loading}
                           errors={errors}
-                          shop={maybe(() => siteSettings.data.shop)}
+                          shop={siteSettings.data?.shop}
                           onBack={() => navigate(configurationMenuUrl)}
                           onKeyAdd={() =>
                             navigate(
@@ -183,12 +164,10 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
                           saveButtonBarState={updateShopSettingsOpts.status}
                         />
                         <SiteSettingsKeyDialog
-                          errors={maybe(
-                            () =>
-                              addAuthorizationKeyOpts.data.authorizationKeyAdd
-                                .errors,
-                            []
-                          )}
+                          errors={
+                            addAuthorizationKeyOpts.data?.authorizationKeyAdd
+                              .errors || []
+                          }
                           initial={{
                             key: "",
                             password: "",

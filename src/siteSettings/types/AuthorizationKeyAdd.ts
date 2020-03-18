@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AuthorizationKeyInput, AuthorizationKeyType } from "./../../types/globalTypes";
+import { AuthorizationKeyInput, AuthorizationKeyType, ShopErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AuthorizationKeyAdd
 // ====================================================
 
 export interface AuthorizationKeyAdd_authorizationKeyAdd_errors {
-  __typename: "Error";
+  __typename: "ShopError";
+  code: ShopErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface AuthorizationKeyAdd_authorizationKeyAdd_shop_authorizationKeys {

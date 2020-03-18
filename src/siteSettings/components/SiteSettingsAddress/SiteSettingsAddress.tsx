@@ -3,7 +3,7 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import { useIntl } from "react-intl";
+import { useIntl, IntlShape } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -12,15 +12,18 @@ import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
+import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
+import getShopErrorMessage from "@saleor/utils/errors/shop";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import getAccountErrorMessage from "@saleor/utils/errors/account";
 import { SiteSettingsPageFormData } from "../SiteSettingsPage";
 
 interface SiteSettingsAddressProps {
   countries: SingleAutocompleteChoiceType[];
   data: SiteSettingsPageFormData;
   displayCountry: string;
-  errors: UserError[];
+  errors: Array<AccountErrorFragment | ShopErrorFragment>;
   disabled: boolean;
   onChange: (event: ChangeEvent) => void;
   onCountryChange: (event: ChangeEvent) => void;
@@ -35,6 +38,17 @@ const useStyles = makeStyles(
   { name: "SiteSettingsAddress" }
 );
 
+function getErrorMessage(
+  err: AccountErrorFragment | ShopErrorFragment,
+  intl: IntlShape
+): string {
+  if (err?.__typename === "AccountError") {
+    return getAccountErrorMessage(err, intl);
+  }
+
+  return getShopErrorMessage(err, intl);
+}
+
 const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
   const {
     countries,
@@ -45,9 +59,21 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
     onChange,
     onCountryChange
   } = props;
-  const classes = useStyles(props);
 
+  const classes = useStyles(props);
   const intl = useIntl();
+
+  const formFields = [
+    "companyName",
+    "streetAddress1",
+    "streetAddress2",
+    "city",
+    "postalCode",
+    "country",
+    "companyArea",
+    "phone"
+  ];
+  const formErrors = getFormErrors(formFields, errors);
 
   return (
     <Card className={classes.root}>
@@ -60,8 +86,8 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "companyName")}
-          helperText={getFieldError(errors, "companyName")?.message}
+          error={!!formErrors.companyName}
+          helperText={getErrorMessage(formErrors.companyName, intl)}
           label={intl.formatMessage({
             defaultMessage: "Company"
           })}
@@ -73,8 +99,8 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "streetAddress1")}
-          helperText={getFieldError(errors, "streetAddress1")?.message}
+          error={!!formErrors.streetAddress1}
+          helperText={getErrorMessage(formErrors.streetAddress1, intl)}
           label={intl.formatMessage({
             defaultMessage: "Address line 1"
           })}
@@ -86,8 +112,8 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "streetAddress2")}
-          helperText={getFieldError(errors, "streetAddress2")?.message}
+          error={!!formErrors.streetAddress2}
+          helperText={getErrorMessage(formErrors.streetAddress2, intl)}
           label={intl.formatMessage({
             defaultMessage: "Address line 2"
           })}
@@ -100,8 +126,8 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
         <Grid>
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "city")}
-            helperText={getFieldError(errors, "city")?.message}
+            error={!!formErrors.city}
+            helperText={getErrorMessage(formErrors.city, intl)}
             label={intl.formatMessage({
               defaultMessage: "City"
             })}
@@ -112,8 +138,8 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
           />
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "postalCode")}
-            helperText={getFieldError(errors, "postalCode")?.message}
+            error={!!formErrors.postalCode}
+            helperText={getErrorMessage(formErrors.postalCode, intl)}
             label={intl.formatMessage({
               defaultMessage: "ZIP / Postal code"
             })}
@@ -128,8 +154,8 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
           <SingleAutocompleteSelectField
             disabled={disabled}
             displayValue={displayCountry}
-            error={!!getFieldError(errors, "country")}
-            helperText={getFieldError(errors, "country")?.message}
+            error={!!formErrors.country}
+            helperText={getErrorMessage(formErrors.country, intl)}
             label={intl.formatMessage({
               defaultMessage: "Country"
             })}
@@ -143,8 +169,8 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
           />
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "companyArea")}
-            helperText={getFieldError(errors, "companyArea")?.message}
+            error={!!formErrors.countryArea}
+            helperText={getErrorMessage(formErrors.countryArea, intl)}
             label={intl.formatMessage({
               defaultMessage: "Country area"
             })}
@@ -157,9 +183,9 @@ const SiteSettingsAddress: React.FC<SiteSettingsAddressProps> = props => {
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "phone")}
+          error={!!formErrors.phone}
           fullWidth
-          helperText={getFieldError(errors, "phone")?.message}
+          helperText={getErrorMessage(formErrors.phone, intl)}
           label={intl.formatMessage({
             defaultMessage: "Phone"
           })}
