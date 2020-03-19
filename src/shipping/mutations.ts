@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
 import makeMutation from "@saleor/hooks/makeMutation";
+import { warehouseErrorFragment } from "@saleor/warehouses/mutations";
 import { countryFragment } from "../taxes/queries";
 import { shippingMethodFragment, shippingZoneDetailsFragment } from "./queries";
 import {
@@ -43,10 +44,6 @@ import {
   AssignShippingZoneToWarehouse,
   AssignShippingZoneToWarehouseVariables
 } from "./types/AssignShippingZoneToWarehouse";
-import {
-  UnassignShippingZoneToWarehouse,
-  UnassignShippingZoneToWarehouseVariables
-} from "./types/UnassignShippingZoneToWarehouse";
 
 export const shippingErrorFragment = gql`
   fragment ShippingErrorFragment on ShippingError {
@@ -224,6 +221,7 @@ export const useShippingRateBulkDelete = makeMutation<
 >(bulkDeleteShippingRate);
 
 const assignShippingZoneToWarehouse = gql`
+  ${warehouseErrorFragment}
   mutation AssignShippingZoneToWarehouse(
     $warehouseId: ID!
     $shippingZoneId: ID!
@@ -232,9 +230,8 @@ const assignShippingZoneToWarehouse = gql`
       id: $warehouseId
       shippingZoneIds: [$shippingZoneId]
     ) {
-      warehouseErrors {
-        code
-        field
+      errors: warehouseErrors {
+        ...WarehouseErrorFragment
       }
     }
   }
@@ -243,24 +240,3 @@ export const useAssignShippingZoneToWarehouse = makeMutation<
   AssignShippingZoneToWarehouse,
   AssignShippingZoneToWarehouseVariables
 >(assignShippingZoneToWarehouse);
-
-const unassignShippingZoneToWarehouse = gql`
-  mutation UnassignShippingZoneToWarehouse(
-    $warehouseId: ID!
-    $shippingZoneId: ID!
-  ) {
-    unassignWarehouseShippingZone(
-      id: $warehouseId
-      shippingZoneIds: [$shippingZoneId]
-    ) {
-      warehouseErrors {
-        code
-        field
-      }
-    }
-  }
-`;
-export const useUnassignShippingZoneToWarehouse = makeMutation<
-  UnassignShippingZoneToWarehouse,
-  UnassignShippingZoneToWarehouseVariables
->(unassignShippingZoneToWarehouse);

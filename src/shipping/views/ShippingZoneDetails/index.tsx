@@ -144,21 +144,45 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     }
   });
 
-  const handleSubmit = (data: FormData) => {
-    updateShippingZone({
-      variables: {
-        id,
-        input: {
-          name: data.name
+  const handleSubmit = async (data: FormData) => {
+    try {
+      const updateResult = await updateShippingZone({
+        variables: {
+          id,
+          input: {
+            name: data.name
+          }
         }
+      });
+      const updateErrors = updateResult.data.shippingZoneUpdate.errors;
+
+      if (updateErrors.length === 0) {
+        const assignResult = await assignToWarehouse({
+          variables: {
+            shippingZoneId: id,
+            warehouseId: data.warehouse
+          }
+        });
+        const assignErrors =
+          assignResult.data.assignWarehouseShippingZone.errors;
+
+        if (assignErrors.length === 0) {
+          notify({
+            text: intl.formatMessage(commonMessages.savedChanges)
+          });
+        } else {
+          throw new Error(
+            `Assigning to warehouse failed: ${assignErrors[0].code}`
+          );
+        }
+      } else {
+        throw new Error(`Updating failed: ${updateErrors[0].message}`);
       }
-    });
-    assignToWarehouse({
-      variables: {
-        shippingZoneId: id,
-        warehouseId: data.warehouses[0]
-      }
-    });
+    } catch (err) {
+      notify({
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
+      });
+    }
   };
 
   if (data?.shippingZone === null) {
