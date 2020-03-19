@@ -7,7 +7,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
+import { maybe, getStringOrPlaceholder } from "@saleor/misc";
 import ServiceDeleteDialog from "@saleor/services/components/ServiceDeleteDialog";
 import ServiceTokenCreateDialog from "@saleor/services/components/ServiceTokenCreateDialog";
 import ServiceTokenDeleteDialog from "@saleor/services/components/ServiceTokenDeleteDialog";
@@ -154,15 +154,16 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
 
                           return (
                             <>
-                              <WindowTitle title={service?.name || "..."} />
+                              <WindowTitle
+                                title={getStringOrPlaceholder(service?.name)}
+                              />
                               <ServiceDetailsPage
                                 apiUri={API_URI}
                                 disabled={loading}
-                                errors={maybe(
-                                  () =>
-                                    updateServiceOpts.data.serviceAccountUpdate
-                                      .errors
-                                )}
+                                errors={
+                                  updateServiceOpts.data?.serviceAccountUpdate
+                                    .errors || []
+                                }
                                 token={token}
                                 onApiUriClick={() => open(API_URI, "blank")}
                                 onBack={handleBack}
@@ -175,15 +176,14 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
                                     id
                                   })
                                 }
-                                permissions={maybe(() => shop.permissions)}
-                                service={maybe(() => data.serviceAccount)}
+                                permissions={shop?.permissions}
+                                service={data?.serviceAccount}
                                 saveButtonBarState={updateServiceOpts.status}
                               />
                               <ServiceDeleteDialog
                                 confirmButtonState={deleteServiceOpts.status}
-                                name={maybe(
-                                  () => data.serviceAccount.name,
-                                  "..."
+                                name={getStringOrPlaceholder(
+                                  data?.serviceAccount?.name
                                 )}
                                 onClose={closeModal}
                                 onConfirm={handleRemoveConfirm}
@@ -194,11 +194,10 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
                                 onClose={closeModal}
                                 onCreate={handleTokenCreate}
                                 open={params.action === "create-token"}
-                                token={maybe(
-                                  () =>
-                                    createTokenOpts.data
-                                      .serviceAccountTokenCreate.authToken
-                                )}
+                                token={
+                                  createTokenOpts.data
+                                    ?.serviceAccountTokenCreate.authToken
+                                }
                               />
                               <ServiceTokenDeleteDialog
                                 confirmButtonState={deleteTokenOpts.status}
