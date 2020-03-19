@@ -3104,15 +3104,6 @@
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupCreate_dot_3930588328": {
     "string": "Permission group created"
   },
-  "src_dot_permissionGroups_dot_views_dot_PermissionGroupDetails_dot_269945976": {
-    "string": "Users assigned"
-  },
-  "src_dot_permissionGroups_dot_views_dot_PermissionGroupDetails_dot_2874093303": {
-    "string": "Permission group modified"
-  },
-  "src_dot_permissionGroups_dot_views_dot_PermissionGroupDetails_dot_354220572": {
-    "string": "Users unassigned"
-  },
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupDetails_dot_870815507": {
     "context": "button title",
     "string": "Unassign"

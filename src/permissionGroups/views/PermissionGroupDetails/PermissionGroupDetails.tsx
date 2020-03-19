@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { Button } from "@material-ui/core";
+import { commonMessages } from "@saleor/intl";
 import PermissionGroupDetailsPage from "../../components/PermissionGroupDetailsPage";
 import AssignMembersDialog from "../../components/AssignMembersDialog";
 import UnassignMembersDialog from "../../components/UnassignMembersDialog";
@@ -55,9 +56,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   const handleAssignUsersSuccess = (data: PermissionGroupAssignUsers) => {
     if (data.permissionGroupAssignUsers.errors.length === 0) {
       notify({
-        text: intl.formatMessage({
-          defaultMessage: "Users assigned"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       refetch();
       closeModal();
@@ -67,9 +66,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   const handleUnassignUsersSuccess = (data: PermissionGroupUnassignUsers) => {
     if (data.permissionGroupUnassignUsers.errors.length === 0) {
       notify({
-        text: intl.formatMessage({
-          defaultMessage: "Users unassigned"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       refetch();
       closeModal();
@@ -79,9 +76,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   const handleUpdateSuccess = (data: PermissionGroupUpdate) => {
     if (data.permissionGroupUpdate.errors.length === 0) {
       notify({
-        text: intl.formatMessage({
-          defaultMessage: "Permission group modified"
-        })
+        text: intl.formatMessage(commonMessages.savedChanges)
       });
       refetch();
       closeModal();
