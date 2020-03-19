@@ -110,13 +110,14 @@ const useStyles = makeStyles(
 function getChoiceIndex(
   index: number,
   emptyValue: boolean,
-  customValue: boolean
+  customValue: boolean,
+  add: boolean
 ) {
   let choiceIndex = index;
   if (emptyValue) {
     choiceIndex += 1;
   }
-  if (customValue) {
+  if (customValue || add) {
     choiceIndex += 2;
   }
 
@@ -222,7 +223,8 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
               const choiceIndex = getChoiceIndex(
                 index,
                 emptyOption,
-                !!add || displayCustomValue
+                displayCustomValue,
+                !!add
               );
 
               return (
