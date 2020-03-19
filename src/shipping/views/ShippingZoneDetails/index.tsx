@@ -14,7 +14,7 @@ import {
   useShippingRateDelete,
   useShippingZoneDelete,
   useShippingZoneUpdate,
-  useAassignShippingZoneToWarehouse
+  useAssignShippingZoneToWarehouse
 } from "@saleor/shipping/mutations";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import ShippingZoneRateDialog from "@saleor/shipping/components/ShippingZoneRateDialog";
@@ -63,7 +63,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     }
   );
 
-  const [assignToWarehouse] = useAassignShippingZoneToWarehouse({});
+  const [assignToWarehouse] = useAssignShippingZoneToWarehouse({});
 
   const { data, loading } = useShippingZone({
     displayLoader: true,
