@@ -148,6 +148,7 @@ export interface Product_variants {
   priceOverride: Product_variants_priceOverride | null;
   margin: number | null;
   stocks: (Product_variants_stocks | null)[] | null;
+  trackInventory: boolean;
 }
 
 export interface Product_productType {

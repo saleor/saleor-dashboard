@@ -157,6 +157,7 @@ export const productFragmentDetails = gql`
       stocks {
         ...StockFragment
       }
+      trackInventory
     }
     productType {
       id
@@ -224,6 +225,7 @@ export const fragmentVariant = gql`
     stocks {
       ...StockFragment
     }
+    trackInventory
   }
 `;
 

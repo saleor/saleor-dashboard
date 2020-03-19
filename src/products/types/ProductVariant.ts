@@ -113,4 +113,5 @@ export interface ProductVariant {
   product: ProductVariant_product;
   sku: string;
   stocks: (ProductVariant_stocks | null)[] | null;
+  trackInventory: boolean;
 }

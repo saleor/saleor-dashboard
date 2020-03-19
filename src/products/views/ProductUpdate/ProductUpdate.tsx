@@ -232,11 +232,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                     variants={maybe(() => product.variants)}
                     onBack={handleBack}
                     onDelete={() => openModal("remove")}
-                    onProductShow={() => {
-                      if (product) {
-                        window.open(product.url);
-                      }
-                    }}
                     onImageReorder={handleImageReorder}
                     onSubmit={handleSubmit}
                     onVariantAdd={handleVariantAdd}

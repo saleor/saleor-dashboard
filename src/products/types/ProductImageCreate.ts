@@ -154,6 +154,7 @@ export interface ProductImageCreate_productImageCreate_product_variants {
   priceOverride: ProductImageCreate_productImageCreate_product_variants_priceOverride | null;
   margin: number | null;
   stocks: (ProductImageCreate_productImageCreate_product_variants_stocks | null)[] | null;
+  trackInventory: boolean;
 }
 
 export interface ProductImageCreate_productImageCreate_product_productType {
