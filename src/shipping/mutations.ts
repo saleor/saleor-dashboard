@@ -239,7 +239,7 @@ const assignShippingZoneToWarehouse = gql`
     }
   }
 `;
-export const useAassignShippingZoneToWarehouse = makeMutation<
+export const useAssignShippingZoneToWarehouse = makeMutation<
   AssignShippingZoneToWarehouse,
   AssignShippingZoneToWarehouseVariables
 >(assignShippingZoneToWarehouse);
