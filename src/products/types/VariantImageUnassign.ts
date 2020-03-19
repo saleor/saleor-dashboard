@@ -121,6 +121,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant {
   product: VariantImageUnassign_variantImageUnassign_productVariant_product;
   sku: string;
   stocks: (VariantImageUnassign_variantImageUnassign_productVariant_stocks | null)[] | null;
+  trackInventory: boolean;
 }
 
 export interface VariantImageUnassign_variantImageUnassign {

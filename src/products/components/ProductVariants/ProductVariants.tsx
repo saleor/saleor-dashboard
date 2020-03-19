@@ -22,7 +22,7 @@ import { maybe, renderCollection } from "../../../misc";
 import { ListActions } from "../../../types";
 import {
   ProductDetails_product_variants,
-  ProductDetails_product_variants_stock_warehouse
+  ProductDetails_product_variants_stocks_warehouse
 } from "../../types/ProductDetails";
 import { ProductVariant_costPrice } from "../../types/ProductVariant";
 
@@ -39,11 +39,11 @@ function getWarehouseChoices(
       value: null
     },
     ...variants
-      .reduce<ProductDetails_product_variants_stock_warehouse[]>(
+      .reduce<ProductDetails_product_variants_stocks_warehouse[]>(
         (warehouses, variant) => [
           ...warehouses,
-          ...variant.stock.reduce<
-            ProductDetails_product_variants_stock_warehouse[]
+          ...variant.stocks.reduce<
+            ProductDetails_product_variants_stocks_warehouse[]
           >((variantStocks, stock) => {
             if (!!warehouses.find(w => w.id === stock.warehouse.id)) {
               return variantStocks;
@@ -118,7 +118,7 @@ function getAvailabilityLabel(
   variant: ProductDetails_product_variants,
   numAvailable: number
 ): string {
-  const variantStock = variant.stock.find(s => s.warehouse.id === warehouse);
+  const variantStock = variant.stocks.find(s => s.warehouse.id === warehouse);
 
   if (!!warehouse) {
     if (!!variantStock) {
@@ -155,7 +155,7 @@ function getAvailabilityLabel(
         },
         {
           numAvailable,
-          numLocations: variant.stock.length
+          numLocations: variant.stocks.length
         }
       );
     } else {
@@ -295,8 +295,8 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
             {renderCollection(variants, variant => {
               const isSelected = variant ? isChecked(variant.id) : false;
               const numAvailable =
-                variant && variant.stock
-                  ? variant.stock.reduce((acc, s) => acc + s.quantity, 0)
+                variant && variant.stocks
+                  ? variant.stocks.reduce((acc, s) => acc + s.quantity, 0)
                   : null;
 
               return (
