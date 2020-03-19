@@ -15,6 +15,13 @@ import {
 } from "./types/WarehouseDelete";
 import { warehouseDetailsFragment } from "./queries";
 
+export const warehouseErrorFragment = gql`
+  fragment WarehouseErrorFragment on WarehouseError {
+    code
+    field
+  }
+`;
+
 const deleteWarehouse = gql`
   mutation WarehouseDelete($id: ID!) {
     deleteWarehouse(id: $id) {

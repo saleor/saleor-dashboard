@@ -11,10 +11,10 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
-import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { maybe } from "../../../misc";
+import { getStringOrPlaceholder } from "../../../misc";
 import { FetchMoreProps, SearchProps } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import {
@@ -27,7 +27,7 @@ import ShippingZoneWarehouses from "../ShippingZoneWarehouses";
 
 export interface FormData {
   name: string;
-  warehouses: string[];
+  warehouse: string;
 }
 
 export interface ShippingZoneDetailsPageProps
@@ -53,7 +53,7 @@ export interface ShippingZoneDetailsPageProps
 
 function warehouseToChoice(
   warehouse: Record<"id" | "name", string>
-): MultiAutocompleteChoiceType {
+): SingleAutocompleteChoiceType {
   return {
     label: warehouse.name,
     value: warehouse.id
@@ -86,10 +86,10 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 
   const initialForm: FormData = {
     name: shippingZone?.name || "",
-    warehouses: shippingZone?.warehouses.map(warehouse => warehouse.id) || []
+    warehouse: shippingZone?.warehouses[0]?.id || null
   };
-  const [warehouseDisplayValues, setWarehouseDisplayValues] = useStateFromProps(
-    shippingZone?.warehouses.map(warehouseToChoice) || []
+  const [warehouseDisplayValue, setWarehouseDisplayValue] = useStateFromProps(
+    shippingZone?.warehouses[0]?.name || ""
   );
 
   const warehouseChoices = warehouses.map(warehouseToChoice);
@@ -97,10 +97,9 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit }) => {
-        const handleWarehouseChange = createMultiAutocompleteSelectHandler(
+        const handleWarehouseChange = createSingleAutocompleteSelectHandler(
           change,
-          setWarehouseDisplayValues,
-          warehouseDisplayValues,
+          setWarehouseDisplayValue,
           warehouseChoices
         );
 
@@ -122,18 +121,18 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                 <CountryList
                   countries={shippingZone?.countries}
                   disabled={disabled}
-                  emptyText={maybe(
-                    () =>
-                      shippingZone.default
-                        ? intl.formatMessage({
-                            defaultMessage:
-                              "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-                          })
-                        : intl.formatMessage({
-                            defaultMessage:
-                              "Currently, there are no countries assigned to this shipping zone"
-                          }),
-                    "..."
+                  emptyText={getStringOrPlaceholder(
+                    shippingZone?.default === undefined
+                      ? undefined
+                      : shippingZone.default
+                      ? intl.formatMessage({
+                          defaultMessage:
+                            "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
+                        })
+                      : intl.formatMessage({
+                          defaultMessage:
+                            "Currently, there are no countries assigned to this shipping zone"
+                        })
                   )}
                   onCountryAssign={onCountryAdd}
                   onCountryUnassign={onCountryRemove}
@@ -167,7 +166,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
               <div>
                 <ShippingZoneWarehouses
                   data={data}
-                  displayValue={warehouseDisplayValues}
+                  displayValue={warehouseDisplayValue}
                   hasMore={hasMore}
                   loading={loading}
                   onChange={handleWarehouseChange}

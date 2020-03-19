@@ -6,17 +6,17 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import { FetchMoreProps, SearchProps } from "@saleor/types";
 import { FormChange } from "@saleor/hooks/useForm";
-import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType
-} from "@saleor/components/MultiAutocompleteSelectField";
+import SingleAutocompleteSelectField, {
+  SingleAutocompleteChoiceType
+} from "@saleor/components/SingleAutocompleteSelectField";
 
 interface ShippingZoneWarehousesFormData {
-  warehouses: string[];
+  warehouse: string;
 }
 interface ShippingZonewWarehousesProps extends FetchMoreProps, SearchProps {
   data: ShippingZoneWarehousesFormData;
-  displayValue: MultiAutocompleteChoiceType[];
-  warehouses: MultiAutocompleteChoiceType[];
+  displayValue: string;
+  warehouses: SingleAutocompleteChoiceType[];
   onChange: FormChange;
   onWarehouseAdd: () => void;
 }
@@ -44,7 +44,7 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
         })}
       />
       <CardContent>
-        <MultiAutocompleteSelectField
+        <SingleAutocompleteSelectField
           add={{
             label: intl.formatMessage({
               defaultMessage: "Add New Warehouse",
@@ -53,7 +53,7 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
             onClick: onWarehouseAdd
           }}
           choices={warehouses}
-          displayValues={displayValue}
+          displayValue={displayValue}
           fetchChoices={onSearchChange}
           hasMore={hasMore}
           helperText={intl.formatMessage({
@@ -66,14 +66,14 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
             id: "shippingZoneWarehouses.autocomplete.label"
           })}
           loading={loading}
-          name="warehouses"
+          name="warehouse"
           onChange={onChange}
           onFetchMore={onFetchMore}
           placeholder={intl.formatMessage({
             defaultMessage: "Select Warehouse",
             description: "input placeholder"
           })}
-          value={data.warehouses}
+          value={data.warehouse}
         />
       </CardContent>
     </Card>
