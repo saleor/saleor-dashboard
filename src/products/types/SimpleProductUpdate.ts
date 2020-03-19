@@ -133,17 +133,17 @@ export interface SimpleProductUpdate_productUpdate_product_variants_priceOverrid
   currency: string;
 }
 
-export interface SimpleProductUpdate_productUpdate_product_variants_stock_warehouse {
+export interface SimpleProductUpdate_productUpdate_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
   name: string;
 }
 
-export interface SimpleProductUpdate_productUpdate_product_variants_stock {
+export interface SimpleProductUpdate_productUpdate_product_variants_stocks {
   __typename: "Stock";
   id: string;
   quantity: number;
-  warehouse: SimpleProductUpdate_productUpdate_product_variants_stock_warehouse;
+  warehouse: SimpleProductUpdate_productUpdate_product_variants_stocks_warehouse;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_variants {
@@ -153,10 +153,7 @@ export interface SimpleProductUpdate_productUpdate_product_variants {
   name: string;
   priceOverride: SimpleProductUpdate_productUpdate_product_variants_priceOverride | null;
   margin: number | null;
-  quantity: number;
-  quantityAllocated: number | null;
-  stockQuantity: number;
-  stock: (SimpleProductUpdate_productUpdate_product_variants_stock | null)[] | null;
+  stocks: (SimpleProductUpdate_productUpdate_product_variants_stocks | null)[] | null;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_productType {
@@ -187,7 +184,6 @@ export interface SimpleProductUpdate_productUpdate_product {
   images: (SimpleProductUpdate_productUpdate_product_images | null)[] | null;
   variants: (SimpleProductUpdate_productUpdate_product_variants | null)[] | null;
   productType: SimpleProductUpdate_productUpdate_product_productType;
-  url: string;
 }
 
 export interface SimpleProductUpdate_productUpdate {
@@ -285,10 +281,17 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_product
   variants: (SimpleProductUpdate_productVariantUpdate_productVariant_product_variants | null)[] | null;
 }
 
-export interface SimpleProductUpdate_productVariantUpdate_productVariant_stock {
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_stocks {
   __typename: "Stock";
   id: string;
   quantity: number;
+  warehouse: SimpleProductUpdate_productVariantUpdate_productVariant_stocks_warehouse;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant {
@@ -301,9 +304,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant {
   priceOverride: SimpleProductUpdate_productVariantUpdate_productVariant_priceOverride | null;
   product: SimpleProductUpdate_productVariantUpdate_productVariant_product;
   sku: string;
-  quantity: number;
-  quantityAllocated: number | null;
-  stock: (SimpleProductUpdate_productVariantUpdate_productVariant_stock | null)[] | null;
+  stocks: (SimpleProductUpdate_productVariantUpdate_productVariant_stocks | null)[] | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate {

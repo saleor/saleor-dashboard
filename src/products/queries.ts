@@ -28,6 +28,17 @@ import {
   InitialProductFilterDataVariables
 } from "./types/InitialProductFilterData";
 
+export const stockFragment = gql`
+  fragment StockFragment on Stock {
+    id
+    quantity
+    warehouse {
+      id
+      name
+    }
+  }
+`;
+
 export const fragmentMoney = gql`
   fragment Money on Money {
     amount
@@ -65,6 +76,7 @@ export const productFragment = gql`
 export const productFragmentDetails = gql`
   ${fragmentProductImage}
   ${fragmentMoney}
+  ${stockFragment}
   fragment Product on Product {
     id
     name
@@ -142,16 +154,8 @@ export const productFragmentDetails = gql`
         ...Money
       }
       margin
-      quantity
-      quantityAllocated
-      stockQuantity
-      stock {
-        id
-        quantity
-        warehouse {
-          id
-          name
-        }
+      stocks {
+        ...StockFragment
       }
     }
     productType {
@@ -159,13 +163,13 @@ export const productFragmentDetails = gql`
       name
       hasVariants
     }
-    url
   }
 `;
 
 export const fragmentVariant = gql`
   ${fragmentMoney}
   ${fragmentProductImage}
+  ${stockFragment}
   fragment ProductVariant on ProductVariant {
     id
     attributes {
@@ -217,11 +221,8 @@ export const fragmentVariant = gql`
       }
     }
     sku
-    quantity
-    quantityAllocated
-    stock {
-      id
-      quantity
+    stocks {
+      ...StockFragment
     }
   }
 `;

@@ -16,7 +16,5 @@ export interface StockFragment {
   __typename: "Stock";
   id: string;
   quantity: number;
-  quantityAllocated: number;
-  stockQuantity: number;
   warehouse: StockFragment_warehouse;
 }
