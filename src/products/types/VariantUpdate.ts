@@ -121,6 +121,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   product: VariantUpdate_productVariantUpdate_productVariant_product;
   sku: string;
   stocks: (VariantUpdate_productVariantUpdate_productVariant_stocks | null)[] | null;
+  trackInventory: boolean;
 }
 
 export interface VariantUpdate_productVariantUpdate {

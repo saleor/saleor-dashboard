@@ -154,6 +154,7 @@ export interface SimpleProductUpdate_productUpdate_product_variants {
   priceOverride: SimpleProductUpdate_productUpdate_product_variants_priceOverride | null;
   margin: number | null;
   stocks: (SimpleProductUpdate_productUpdate_product_variants_stocks | null)[] | null;
+  trackInventory: boolean;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_productType {
@@ -305,6 +306,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant {
   product: SimpleProductUpdate_productVariantUpdate_productVariant_product;
   sku: string;
   stocks: (SimpleProductUpdate_productVariantUpdate_productVariant_stocks | null)[] | null;
+  trackInventory: boolean;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate {

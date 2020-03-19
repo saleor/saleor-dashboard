@@ -121,6 +121,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
   product: VariantCreate_productVariantCreate_productVariant_product;
   sku: string;
   stocks: (VariantCreate_productVariantCreate_productVariant_stocks | null)[] | null;
+  trackInventory: boolean;
 }
 
 export interface VariantCreate_productVariantCreate {

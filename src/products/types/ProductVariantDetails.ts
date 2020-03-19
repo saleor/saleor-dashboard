@@ -113,6 +113,7 @@ export interface ProductVariantDetails_productVariant {
   product: ProductVariantDetails_productVariant_product;
   sku: string;
   stocks: (ProductVariantDetails_productVariant_stocks | null)[] | null;
+  trackInventory: boolean;
 }
 
 export interface ProductVariantDetails {

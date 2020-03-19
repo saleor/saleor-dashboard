@@ -260,10 +260,8 @@ export const product: (
         amount: 678.78,
         currency: "USD"
       },
-      quantity: 12,
-      quantityAllocated: 1,
       sku: "87192-94370",
-      stock: [
+      stocks: [
         {
           __typename: "Stock",
           id: "1",
@@ -277,7 +275,7 @@ export const product: (
           warehouse: warehouseList[1]
         }
       ],
-      stockQuantity: 48
+      trackInventory: true
     },
     {
       __typename: "ProductVariant",
@@ -297,10 +295,8 @@ export const product: (
       margin: 7,
       name: "silver",
       priceOverride: null,
-      quantity: 12,
-      quantityAllocated: 1,
       sku: "69055-15190",
-      stock: [
+      stocks: [
         {
           __typename: "Stock",
           id: "1",
@@ -308,7 +304,7 @@ export const product: (
           warehouse: warehouseList[0]
         }
       ],
-      stockQuantity: 14
+      trackInventory: false
     }
   ]
 });
