@@ -10,13 +10,13 @@ import { WarehouseErrorCode } from "./../../types/globalTypes";
 
 export interface UnassignShippingZoneToWarehouse_unassignWarehouseShippingZone_warehouseErrors {
   __typename: "WarehouseError";
-  code: WarehouseErrorCode | null;
+  code: WarehouseErrorCode;
   field: string | null;
 }
 
 export interface UnassignShippingZoneToWarehouse_unassignWarehouseShippingZone {
   __typename: "WarehouseShippingZoneUnassign";
-  warehouseErrors: UnassignShippingZoneToWarehouse_unassignWarehouseShippingZone_warehouseErrors[] | null;
+  warehouseErrors: UnassignShippingZoneToWarehouse_unassignWarehouseShippingZone_warehouseErrors[];
 }
 
 export interface UnassignShippingZoneToWarehouse {

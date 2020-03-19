@@ -14,7 +14,7 @@ export interface WarehouseDelete_deleteWarehouse_errors {
 
 export interface WarehouseDelete_deleteWarehouse {
   __typename: "WarehouseDelete";
-  errors: WarehouseDelete_deleteWarehouse_errors[] | null;
+  errors: WarehouseDelete_deleteWarehouse_errors[];
 }
 
 export interface WarehouseDelete {

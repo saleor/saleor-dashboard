@@ -62,7 +62,7 @@ export interface WarehouseCreate_createWarehouse_warehouse {
 
 export interface WarehouseCreate_createWarehouse {
   __typename: "WarehouseCreate";
-  errors: WarehouseCreate_createWarehouse_errors[] | null;
+  errors: WarehouseCreate_createWarehouse_errors[];
   warehouse: WarehouseCreate_createWarehouse_warehouse | null;
 }
 

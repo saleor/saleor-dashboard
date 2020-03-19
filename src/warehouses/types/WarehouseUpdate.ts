@@ -62,7 +62,7 @@ export interface WarehouseUpdate_updateWarehouse_warehouse {
 
 export interface WarehouseUpdate_updateWarehouse {
   __typename: "WarehouseUpdate";
-  errors: WarehouseUpdate_updateWarehouse_errors[] | null;
+  errors: WarehouseUpdate_updateWarehouse_errors[];
   warehouse: WarehouseUpdate_updateWarehouse_warehouse | null;
 }
 
