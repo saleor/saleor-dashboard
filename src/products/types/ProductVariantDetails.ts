@@ -89,10 +89,17 @@ export interface ProductVariantDetails_productVariant_product {
   variants: (ProductVariantDetails_productVariant_product_variants | null)[] | null;
 }
 
-export interface ProductVariantDetails_productVariant_stock {
+export interface ProductVariantDetails_productVariant_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
+export interface ProductVariantDetails_productVariant_stocks {
   __typename: "Stock";
   id: string;
   quantity: number;
+  warehouse: ProductVariantDetails_productVariant_stocks_warehouse;
 }
 
 export interface ProductVariantDetails_productVariant {
@@ -105,9 +112,7 @@ export interface ProductVariantDetails_productVariant {
   priceOverride: ProductVariantDetails_productVariant_priceOverride | null;
   product: ProductVariantDetails_productVariant_product;
   sku: string;
-  quantity: number;
-  quantityAllocated: number | null;
-  stock: (ProductVariantDetails_productVariant_stock | null)[] | null;
+  stocks: (ProductVariantDetails_productVariant_stocks | null)[] | null;
 }
 
 export interface ProductVariantDetails {
