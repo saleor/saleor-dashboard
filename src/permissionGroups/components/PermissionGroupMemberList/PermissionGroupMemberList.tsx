@@ -15,16 +15,18 @@ import {
   getUserInitials,
   getUserName,
   maybe,
+  stopPropagation,
   renderCollection
 } from "@saleor/misc";
-import { ListActions } from "@saleor/types";
+import { ListActions, SortPage } from "@saleor/types";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import Checkbox from "@saleor/components/Checkbox";
 
 import { Button, IconButton } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import { PermissionGroupDetails_permissionGroup_users } from "../../types/PermissionGroupDetails";
-import { stopPropagation } from "../../../misc";
+import { PermissionGroupDetails_permissionGroup_users } from "@saleor/permissionGroups/types/PermissionGroupDetails";
+import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
+import { getArrowDirection } from "@saleor/utils/sort";
 
 const useStyles = makeStyles(
   theme => ({
@@ -82,7 +84,9 @@ const useStyles = makeStyles(
 );
 const numberOfColumns = 4;
 
-interface PermissionGroupProps extends ListActions {
+interface PermissionGroupProps
+  extends ListActions,
+    SortPage<MembersListUrlSortField> {
   users: PermissionGroupDetails_permissionGroup_users[];
   disabled: boolean;
   onUnassign: (ida: string[]) => void;
@@ -95,15 +99,44 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
     users,
     onUnassign,
     onAssign,
+    onSort,
     toggle,
     toolbar,
     isChecked,
     selected,
-    toggleAll
+    toggleAll,
+    sort
   } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
+
+  const members = !sort?.sort
+    ? users
+    : users?.sort((a, b) => {
+        let valueA;
+        let valueB;
+        switch (sort.sort) {
+          case MembersListUrlSortField.name:
+            valueA = getUserName(a);
+            valueB = getUserName(b);
+            break;
+          case MembersListUrlSortField.email:
+            valueA = a.email;
+            valueB = b.email;
+            break;
+        }
+
+        if (valueA === valueB) {
+          return 0;
+        }
+
+        if (("" + valueA.attr).localeCompare(valueB.attr)) {
+          return sort?.asc ? -1 : 1;
+        } else {
+          return sort?.asc ? 1 : -1;
+        }
+      });
 
   return (
     <Card>
@@ -121,7 +154,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
           </Button>
         }
       />
-      {maybe(() => users.length) === 0 ? (
+      {maybe(() => members.length) === 0 ? (
         <div className={classNames(classes.helperText)}>
           <Typography color="textSecondary">
             <FormattedMessage
@@ -142,17 +175,35 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
             colSpan={numberOfColumns}
             selected={selected}
             disabled={disabled}
-            items={users}
+            items={members}
             toggleAll={toggleAll}
             toolbar={toolbar}
           >
-            <TableCellHeader className={classes.colName}>
+            <TableCellHeader
+              className={classes.colName}
+              arrowPosition="right"
+              onClick={() => onSort(MembersListUrlSortField.name)}
+              direction={
+                sort.sort === MembersListUrlSortField.name
+                  ? getArrowDirection(sort.asc)
+                  : undefined
+              }
+            >
               <FormattedMessage
                 defaultMessage="Name"
                 description="staff member full name"
               />
             </TableCellHeader>
-            <TableCellHeader className={classes.colEmail}>
+            <TableCellHeader
+              className={classes.colEmail}
+              arrowPosition="right"
+              onClick={() => onSort(MembersListUrlSortField.email)}
+              direction={
+                sort.sort === MembersListUrlSortField.email
+                  ? getArrowDirection(sort.asc)
+                  : undefined
+              }
+            >
               <FormattedMessage defaultMessage="Email Address" />
             </TableCellHeader>
             <TableCellHeader textAlign="right">
@@ -161,7 +212,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
           </TableHead>
           <TableBody>
             {renderCollection(
-              users,
+              members,
               user => {
                 const isSelected = user ? isChecked(user.id) : false;
 

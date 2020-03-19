@@ -9,6 +9,8 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { Button } from "@material-ui/core";
 import { commonMessages } from "@saleor/intl";
+import { getSortParams } from "@saleor/utils/sort";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import PermissionGroupDetailsPage from "../../components/PermissionGroupDetailsPage";
 import AssignMembersDialog from "../../components/AssignMembersDialog";
 import UnassignMembersDialog from "../../components/UnassignMembersDialog";
@@ -118,6 +120,12 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     PermissionGroupDetailsUrlQueryParams
   >(navigate, params => permissionGroupDetailsUrl(id, params), params);
 
+  const handleSort = createSortHandler(
+    navigate,
+    params => permissionGroupDetailsUrl(id, params),
+    params
+  );
+
   return (
     <>
       <PermissionGroupDetailsPage
@@ -141,6 +149,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         toggleAll={toggleAll}
         isChecked={isSelected}
         selected={listElements.length}
+        sort={getSortParams(params)}
         toolbar={
           <Button
             color="primary"
@@ -152,6 +161,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
             })}
           </Button>
         }
+        onSort={handleSort}
       />
       <AssignMembersDialog
         loading={searchResult.loading}

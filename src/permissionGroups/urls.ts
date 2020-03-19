@@ -8,7 +8,7 @@ import {
   TabActionDialog,
   Sort,
   SingleAction
-} from "../types";
+} from "@saleor/types";
 
 const permissionGroupSection = "/permission-groups/";
 
@@ -32,11 +32,18 @@ export const permissionGroupListUrl = (
 export const permissionGroupAddPath = urlJoin(permissionGroupSection, "add");
 export const permissionGroupAddUrl = permissionGroupAddPath;
 
+export enum MembersListUrlSortField {
+  name = "name",
+  email = "email"
+}
+export type MembersListUrlSort = Sort<MembersListUrlSortField>;
+
 export const permissionGroupDetailsPath = (id: string) =>
   urlJoin(permissionGroupSection, id);
 export type PermissionGroupDetailsUrlDialog = "remove" | "assign" | "unassign";
 export type PermissionGroupDetailsUrlQueryParams = BulkAction &
   Pagination &
+  MembersListUrlSort &
   Dialog<PermissionGroupDetailsUrlDialog>;
 
 export const permissionGroupDetailsUrl = (

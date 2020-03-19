@@ -5,7 +5,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
-import { UserError, ListActions } from "@saleor/types";
+import { UserError, ListActions, SortPage } from "@saleor/types";
 import AccountPermissions from "@saleor/components/AccountPermissions";
 import AppHeader from "@saleor/components/AppHeader";
 import PageHeader from "@saleor/components/PageHeader";
@@ -18,6 +18,7 @@ import {
   isGroupFullAccess,
   extractPermissionCodes
 } from "@saleor/permissionGroups/utils";
+import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 import { PermissionGroupDetails_permissionGroup } from "../../types/PermissionGroupDetails";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
@@ -29,7 +30,9 @@ export interface PermissionGroupDetailsPageFormData {
   permissions: PermissionEnum[];
 }
 
-export interface PermissionGroupDetailsPageProps extends ListActions {
+export interface PermissionGroupDetailsPageProps
+  extends ListActions,
+    SortPage<MembersListUrlSortField> {
   errors: UserError[];
   permissionGroup: PermissionGroupDetails_permissionGroup;
   permissions: ShopInfo_shop_permissions[];

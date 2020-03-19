@@ -1,13 +1,15 @@
-import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
-import { PermissionGroupSortField } from "@saleor/types/globalTypes";
+import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
+import { MembersSortField } from "@saleor/types/globalTypes";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(
-  sort: PermissionGroupListUrlSortField
-): PermissionGroupSortField {
+  sort: MembersListUrlSortField
+): MembersSortField {
   switch (sort) {
-    case PermissionGroupListUrlSortField.name:
-      return PermissionGroupSortField.NAME;
+    case MembersListUrlSortField.name:
+      return MembersSortField.NAME;
+    case MembersListUrlSortField.email:
+      return MembersSortField.EMAIL;
     default:
       return undefined;
   }
