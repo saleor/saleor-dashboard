@@ -42,8 +42,8 @@ export function createUpdateHandler(
         ...productVariables,
         productVariantId: product.variants[0].id,
         productVariantInput: {
-          quantity: data.stockQuantity,
-          sku: data.sku
+          sku: data.sku,
+          trackInventory: data.trackInventory
         }
       });
     }
