@@ -27,6 +27,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import { PermissionGroupDetails_permissionGroup_users } from "@saleor/permissionGroups/types/PermissionGroupDetails";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
+import { sortMembers } from "@saleor/permissionGroups/sort";
 
 const useStyles = makeStyles(
   theme => ({
@@ -111,32 +112,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const members = !sort?.sort
-    ? users
-    : users?.sort((a, b) => {
-        let valueA;
-        let valueB;
-        switch (sort.sort) {
-          case MembersListUrlSortField.name:
-            valueA = getUserName(a);
-            valueB = getUserName(b);
-            break;
-          case MembersListUrlSortField.email:
-            valueA = a.email;
-            valueB = b.email;
-            break;
-        }
-
-        if (valueA === valueB) {
-          return 0;
-        }
-
-        if (("" + valueA.attr).localeCompare(valueB.attr)) {
-          return sort?.asc ? -1 : 1;
-        } else {
-          return sort?.asc ? 1 : -1;
-        }
-      });
+  const members = users?.sort(sortMembers(sort?.sort, sort?.asc));
 
   return (
     <Card>

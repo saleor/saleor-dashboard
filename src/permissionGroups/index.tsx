@@ -12,7 +12,8 @@ import {
   permissionGroupAddPath,
   PermissionGroupListUrlQueryParams,
   PermissionGroupListUrlSortField,
-  PermissionGroupDetailsUrlQueryParams
+  PermissionGroupDetailsUrlQueryParams,
+  MembersListUrlSortField
 } from "./urls";
 import PermissionGroupListComponent from "./views/PermissionGroupList";
 import PermissionGroupDetailsComponent from "./views/PermissionGroupDetails";
@@ -37,7 +38,10 @@ const PermissionGroupDetails: React.FC<RouteComponentProps<
   PermissionGroupDetailsRouteProps
 >> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: PermissionGroupDetailsUrlQueryParams = qs;
+  const params: PermissionGroupDetailsUrlQueryParams = asSortParams(
+    qs,
+    MembersListUrlSortField
+  );
 
   return (
     <PermissionGroupDetailsComponent
