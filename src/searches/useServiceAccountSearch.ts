@@ -13,7 +13,7 @@ export const searchServiceAccount = gql`
     search: serviceAccounts(
       after: $after
       first: $first
-      filter: { search: $query }
+      filter: { search: $query, isActive: true }
     ) {
       edges {
         node {

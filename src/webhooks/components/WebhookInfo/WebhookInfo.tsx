@@ -14,14 +14,15 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
-import { WebhookCreate_webhookCreate_webhookErrors } from "@saleor/webhooks/types/WebhookCreate";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
+import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
+import { WebhookErrorFragment } from "@saleor/webhooks/types/WebhookErrorFragment";
 import { FormData } from "../WebhooksDetailsPage";
 
 interface WebhookInfoProps {
   data: FormData;
   disabled: boolean;
-  errors: WebhookCreate_webhookCreate_webhookErrors[];
+  errors: WebhookErrorFragment[];
   serviceDisplayValue: string;
   services: SingleAutocompleteChoiceType[];
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -55,8 +56,9 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const serviceAccountsError =
-    errors.filter(error => error.field === null).length > 0;
+
+  const serviceAccountError = errors.find(error => error.field === null);
+  const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
 
   return (
     <Card>
@@ -72,8 +74,8 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
         </Typography>
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "name")}
-          helperText={getFieldError(errors, "name")?.message}
+          error={!!formErrors.name}
+          helperText={getWebhookErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage({
             defaultMessage: "Webhook Name",
             description: "webhook"
@@ -98,11 +100,8 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
           label={intl.formatMessage({
             defaultMessage: "Assign to Service Account"
           })}
-          error={serviceAccountsError}
-          helperText={
-            serviceAccountsError &&
-            intl.formatMessage(commonMessages.requiredField)
-          }
+          error={!!serviceAccountError}
+          helperText={getWebhookErrorMessage(serviceAccountError, intl)}
           name="serviceAccount"
           onChange={serviceOnChange}
           value={data.serviceAccount}
@@ -115,9 +114,9 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "targetUrl")}
+          error={!!formErrors.targetUrl}
           helperText={
-            getFieldError(errors, "targetUrl")?.message ||
+            getWebhookErrorMessage(formErrors.targetUrl, intl) ||
             intl.formatMessage({
               defaultMessage: "This URL will receive webhook POST requests",
               description: "webhook target url help text"
@@ -135,9 +134,9 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "secretKey")}
+          error={!!formErrors.secretKey}
           helperText={
-            getFieldError(errors, "secretKey")?.message ||
+            getWebhookErrorMessage(formErrors.secretKey, intl) ||
             intl.formatMessage({
               defaultMessage:
                 "secret key is used to create a hash signature with each payload. *optional field",

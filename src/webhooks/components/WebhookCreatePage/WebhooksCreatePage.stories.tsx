@@ -21,15 +21,10 @@ storiesOf("Views / Webhooks / Create webhook", module)
   .add("form errors", () => (
     <WebhookCreatePage
       {...props}
-      errors={[
-        {
-          code: WebhookErrorCode.INVALID,
-          field: null
-        }
-      ].map(error => ({
+      errors={["name", "targetUrl", "secretKey", null].map(field => ({
         __typename: "WebhookError",
-        message: "Generic form error",
-        ...error
+        code: WebhookErrorCode.INVALID,
+        field
       }))}
     />
   ));
