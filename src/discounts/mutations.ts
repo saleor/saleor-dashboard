@@ -38,13 +38,20 @@ import { VoucherCreate, VoucherCreateVariables } from "./types/VoucherCreate";
 import { VoucherDelete, VoucherDeleteVariables } from "./types/VoucherDelete";
 import { VoucherUpdate, VoucherUpdateVariables } from "./types/VoucherUpdate";
 
+const discountErrorFragment = gql`
+  fragment DiscountErrorFragment on DiscountError {
+    code
+    field
+  }
+`;
+
 const saleUpdate = gql`
+  ${discountErrorFragment}
   ${saleFragment}
   mutation SaleUpdate($input: SaleInput!, $id: ID!) {
     saleUpdate(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: discountErrors {
+        ...DiscountErrorFragment
       }
       sale {
         ...SaleFragment
@@ -57,6 +64,7 @@ export const TypedSaleUpdate = TypedMutation<SaleUpdate, SaleUpdateVariables>(
 );
 
 const saleCataloguesAdd = gql`
+  ${discountErrorFragment}
   ${saleDetailsFragment}
   mutation SaleCataloguesAdd(
     $input: CatalogueInput!
@@ -67,9 +75,8 @@ const saleCataloguesAdd = gql`
     $last: Int
   ) {
     saleCataloguesAdd(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: discountErrors {
+        ...DiscountErrorFragment
       }
       sale {
         ...SaleDetailsFragment
@@ -83,6 +90,7 @@ export const TypedSaleCataloguesAdd = TypedMutation<
 >(saleCataloguesAdd);
 
 const saleCataloguesRemove = gql`
+  ${discountErrorFragment}
   ${saleDetailsFragment}
   mutation SaleCataloguesRemove(
     $input: CatalogueInput!
@@ -93,9 +101,8 @@ const saleCataloguesRemove = gql`
     $last: Int
   ) {
     saleCataloguesRemove(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: discountErrors {
+        ...DiscountErrorFragment
       }
       sale {
         ...SaleDetailsFragment
@@ -109,12 +116,12 @@ export const TypedSaleCataloguesRemove = TypedMutation<
 >(saleCataloguesRemove);
 
 const saleCreate = gql`
+  ${discountErrorFragment}
   ${saleFragment}
   mutation SaleCreate($input: SaleInput!) {
     saleCreate(input: $input) {
-      errors {
-        field
-        message
+      errors: discountErrors {
+        ...DiscountErrorFragment
       }
       sale {
         ...SaleFragment
@@ -127,11 +134,11 @@ export const TypedSaleCreate = TypedMutation<SaleCreate, SaleCreateVariables>(
 );
 
 const saleDelete = gql`
+  ${discountErrorFragment}
   mutation SaleDelete($id: ID!) {
     saleDelete(id: $id) {
-      errors {
-        field
-        message
+      errors: discountErrors {
+        ...DiscountErrorFragment
       }
     }
   }
@@ -156,12 +163,12 @@ export const TypedSaleBulkDelete = TypedMutation<
 >(saleBulkDelete);
 
 const voucherUpdate = gql`
+  ${discountErrorFragment}
   ${voucherFragment}
   mutation VoucherUpdate($input: VoucherInput!, $id: ID!) {
     voucherUpdate(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: discountErrors {
+        ...DiscountErrorFragment
       }
       voucher {
         ...VoucherFragment
@@ -175,6 +182,7 @@ export const TypedVoucherUpdate = TypedMutation<
 >(voucherUpdate);
 
 const voucherCataloguesAdd = gql`
+  ${discountErrorFragment}
   ${voucherDetailsFragment}
   mutation VoucherCataloguesAdd(
     $input: CatalogueInput!
@@ -185,9 +193,8 @@ const voucherCataloguesAdd = gql`
     $last: Int
   ) {
     voucherCataloguesAdd(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: discountErrors {
+        ...DiscountErrorFragment
       }
       voucher {
         ...VoucherDetailsFragment
@@ -201,6 +208,7 @@ export const TypedVoucherCataloguesAdd = TypedMutation<
 >(voucherCataloguesAdd);
 
 const voucherCataloguesRemove = gql`
+  ${discountErrorFragment}
   ${voucherDetailsFragment}
   mutation VoucherCataloguesRemove(
     $input: CatalogueInput!
@@ -211,9 +219,8 @@ const voucherCataloguesRemove = gql`
     $last: Int
   ) {
     voucherCataloguesRemove(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: discountErrors {
+        ...DiscountErrorFragment
       }
       voucher {
         ...VoucherDetailsFragment
@@ -227,12 +234,12 @@ export const TypedVoucherCataloguesRemove = TypedMutation<
 >(voucherCataloguesRemove);
 
 const voucherCreate = gql`
+  ${discountErrorFragment}
   ${voucherFragment}
   mutation VoucherCreate($input: VoucherInput!) {
     voucherCreate(input: $input) {
-      errors {
-        field
-        message
+      errors: discountErrors {
+        ...DiscountErrorFragment
       }
       voucher {
         ...VoucherFragment
@@ -246,11 +253,11 @@ export const TypedVoucherCreate = TypedMutation<
 >(voucherCreate);
 
 const voucherDelete = gql`
+  ${discountErrorFragment}
   mutation VoucherDelete($id: ID!) {
     voucherDelete(id: $id) {
-      errors {
-        field
-        message
+      errors: discountErrors {
+        ...DiscountErrorFragment
       }
     }
   }

@@ -346,6 +346,14 @@ export enum CountryCode {
   ZW = "ZW",
 }
 
+export enum DiscountErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum DiscountStatusEnum {
   ACTIVE = "ACTIVE",
   EXPIRED = "EXPIRED",

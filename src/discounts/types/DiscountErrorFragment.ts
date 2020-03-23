@@ -5,24 +5,11 @@
 import { DiscountErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
-// GraphQL mutation operation: SaleDelete
+// GraphQL fragment: DiscountErrorFragment
 // ====================================================
 
-export interface SaleDelete_saleDelete_errors {
+export interface DiscountErrorFragment {
   __typename: "DiscountError";
   code: DiscountErrorCode;
   field: string | null;
-}
-
-export interface SaleDelete_saleDelete {
-  __typename: "SaleDelete";
-  errors: SaleDelete_saleDelete_errors[];
-}
-
-export interface SaleDelete {
-  saleDelete: SaleDelete_saleDelete | null;
-}
-
-export interface SaleDeleteVariables {
-  id: string;
 }
