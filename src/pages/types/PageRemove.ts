@@ -2,14 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { PageErrorCode } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: PageRemove
 // ====================================================
 
 export interface PageRemove_pageDelete_errors {
-  __typename: "Error";
+  __typename: "PageError";
+  code: PageErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface PageRemove_pageDelete {
