@@ -19,6 +19,9 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import ProductWarehousesDialog from "@saleor/products/components/ProductWarehousesDialog";
+import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
+import { useAddOrRemoveStocks } from "@saleor/products/mutations";
 import { getMutationState, maybe } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import ProductUpdateOperations from "../../containers/ProductUpdateOperations";
@@ -70,6 +73,30 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     result: searchCollectionsOpts
   } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    loadMore: loadMoreWarehouses,
+    search: searchWarehouses,
+    result: searchWarehousesOpts
+  } = useWarehouseSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 20
+    }
+  });
+
+  const [addOrRemoveStocks, addOrRemoveStocksOpts] = useAddOrRemoveStocks({
+    onCompleted: data => {
+      if (
+        data.productVariantStocksCreate.bulkStockErrors.length === 0 &&
+        data.productVariantStocksDelete.stockErrors.length === 0
+      ) {
+        notify({
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        closeModal();
+      }
+    }
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -273,6 +300,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                       loading: searchCollectionsOpts.loading,
                       onFetchMore: loadMoreCollections
                     }}
+                    onWarehousesEdit={() => openModal("edit-stocks")}
                   />
                   <ActionDialog
                     open={params.action === "remove"}
@@ -345,6 +373,35 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                       })
                     }
                   />
+                  {!product?.productType?.hasVariants && (
+                    <ProductWarehousesDialog
+                      confirmButtonState={addOrRemoveStocksOpts.status}
+                      errors={[
+                        ...(addOrRemoveStocksOpts.data
+                          ?.productVariantStocksCreate.bulkStockErrors || []),
+                        addOrRemoveStocksOpts.data?.productVariantStocksDelete
+                          .stockErrors || []
+                      ]}
+                      onClose={closeModal}
+                      stocks={product?.variants[0].stocks || []}
+                      open={params.action === "edit-stocks"}
+                      warehouses={searchWarehousesOpts.data?.search.edges.map(
+                        edge => edge.node
+                      )}
+                      onConfirm={data =>
+                        addOrRemoveStocks({
+                          variables: {
+                            add: data.added.map(id => ({
+                              quantity: 0,
+                              warehouse: id
+                            })),
+                            remove: data.removed,
+                            variantId: product.variants[0].id
+                          }
+                        })
+                      }
+                    />
+                  )}
                 </>
               );
             }}

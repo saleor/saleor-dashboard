@@ -64,6 +64,7 @@ export interface ProductUpdatePageProps extends ListActions {
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
+  onWarehousesEdit: () => void;
   onVariantsAdd: () => void;
   onVariantShow: (id: string) => () => void;
   onImageDelete: (id: string) => () => void;
@@ -109,6 +110,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onVariantAdd,
   onVariantsAdd,
   onVariantShow,
+  onWarehousesEdit,
   isChecked,
   selected,
   toggle,
@@ -252,6 +254,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       stocks={stocks}
                       onChange={changeStockData}
                       onFormDataChange={change}
+                      onWarehousesEdit={onWarehousesEdit}
                     />
                   )}
                   <CardSpacer />
