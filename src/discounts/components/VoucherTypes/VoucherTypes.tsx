@@ -6,14 +6,15 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import RadioGroupField from "@saleor/components/RadioGroupField";
-import { getFieldError } from "@saleor/utils/errors";
-import { UserError } from "../../../types";
-import { DiscountValueTypeEnum } from "../../../types/globalTypes";
+import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import { getFormErrors } from "@saleor/utils/errors";
+import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import { FormData } from "../VoucherDetailsPage";
+import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 
 interface VoucherTypesProps {
   data: FormData;
-  errors: UserError[];
+  errors: DiscountErrorFragment[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -25,6 +26,8 @@ const VoucherTypes = ({
   onChange
 }: VoucherTypesProps) => {
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["discountType"], errors);
 
   const voucherTypeChoices = [
     {
@@ -63,8 +66,8 @@ const VoucherTypes = ({
           <RadioGroupField
             choices={voucherTypeChoices}
             disabled={disabled}
-            error={!!getFieldError(errors, "discountType")}
-            hint={getFieldError(errors, "discountType")?.message}
+            error={!!formErrors.discountType}
+            hint={getDiscountErrorMessage(formErrors.discountType, intl)}
             name={"discountType" as keyof FormData}
             value={data.discountType}
             onChange={onChange}

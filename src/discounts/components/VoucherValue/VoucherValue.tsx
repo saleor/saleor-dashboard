@@ -11,8 +11,9 @@ import { FormSpacer } from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import TextFieldWithChoice from "@saleor/components/TextFieldWithChoice";
-import { getFieldError } from "@saleor/utils/errors";
-import { UserError } from "../../../types";
+import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import { getFormErrors } from "@saleor/utils/errors";
+import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { translateVoucherTypes } from "../../translations";
 import { FormData } from "../VoucherDetailsPage";
@@ -20,7 +21,7 @@ import { FormData } from "../VoucherDetailsPage";
 interface VoucherValueProps {
   data: FormData;
   defaultCurrency: string;
-  errors: UserError[];
+  errors: DiscountErrorFragment[];
   disabled: boolean;
   variant: string;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -48,6 +49,8 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
+  const formErrors = getFormErrors(["discountValue", "type"], errors);
+
   const translatedVoucherTypes = translateVoucherTypes(intl);
   const voucherTypeChoices = Object.values(VoucherType).map(type => ({
     label: translatedVoucherTypes[type],
@@ -65,7 +68,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
       <CardContent>
         <TextFieldWithChoice
           disabled={disabled}
-          error={!!getFieldError(errors, "discountValue")}
+          error={!!formErrors.discountValue}
           ChoiceProps={{
             label:
               data.discountType === DiscountValueTypeEnum.FIXED
@@ -74,7 +77,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
             name: "discountType" as keyof FormData,
             values: null
           }}
-          helperText={getFieldError(errors, "discountValue")?.message}
+          helperText={getDiscountErrorMessage(formErrors.discountValue, intl)}
           name={"value" as keyof FormData}
           onChange={onChange}
           label={intl.formatMessage({
@@ -94,8 +97,8 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
             <RadioGroupField
               choices={voucherTypeChoices}
               disabled={disabled}
-              error={!!getFieldError(errors, "type")}
-              hint={getFieldError(errors, "type")?.message}
+              error={!!formErrors.type}
+              hint={getDiscountErrorMessage(formErrors.type, intl)}
               label={intl.formatMessage({
                 defaultMessage: "Voucher Specific Information"
               })}

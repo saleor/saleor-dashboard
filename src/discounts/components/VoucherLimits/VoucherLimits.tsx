@@ -6,15 +6,16 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
-import { getFieldError } from "@saleor/utils/errors";
-import { UserError } from "../../../types";
+import { getFormErrors } from "@saleor/utils/errors";
+import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import { FormData } from "../VoucherDetailsPage";
 
 interface VoucherLimitsProps {
   data: FormData;
   defaultCurrency: string;
   disabled: boolean;
-  errors: UserError[];
+  errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -25,6 +26,8 @@ const VoucherLimits = ({
   onChange
 }: VoucherLimitsProps) => {
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["usageLimit"], errors);
 
   return (
     <Card>
@@ -47,8 +50,8 @@ const VoucherLimits = ({
         {data.hasUsageLimit && (
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "usageLimit")}
-            helperText={getFieldError(errors, "usageLimit")?.message}
+            error={!!formErrors.usageLimit}
+            helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
             label={intl.formatMessage({
               defaultMessage: "Limit of Uses",
               description: "voucher"
