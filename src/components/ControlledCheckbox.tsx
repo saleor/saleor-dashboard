@@ -25,6 +25,7 @@ export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
     control={
       <Checkbox
         checked={checked}
+        disabled={disabled}
         name={name}
         disableClickPropagation
         onChange={() => onChange({ target: { name, value: !checked } })}
