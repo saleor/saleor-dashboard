@@ -5,9 +5,11 @@ import ShippingZoneRateDialog, {
   ShippingZoneRateDialogProps
 } from "../../../shipping/components/ShippingZoneRateDialog";
 import { shippingZone } from "../../../shipping/fixtures";
-import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
+import {
+  ShippingMethodTypeEnum,
+  ShippingErrorCode
+} from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: ShippingZoneRateDialogProps = {
   action: "edit",
@@ -47,6 +49,10 @@ storiesOf("Shipping / Rate details", module)
         "maximumOrderWeight",
         "price",
         "name"
-      ].map(formError)}
+      ].map(field => ({
+        __typename: "ShippingError",
+        code: ShippingErrorCode.INVALID,
+        field
+      }))}
     />
   ));
