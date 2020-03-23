@@ -5,15 +5,19 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
+import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
+import FormSpacer from "@saleor/components/FormSpacer";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 
-interface OrderPaymentVoidDialogProps {
+export interface OrderPaymentVoidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  errors: OrderErrorFragment[];
   open: boolean;
   onClose?();
   onConfirm?();
@@ -21,36 +25,51 @@ interface OrderPaymentVoidDialogProps {
 
 const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
   confirmButtonState,
+  errors,
   open,
   onConfirm,
   onClose
-}) => (
-  <Dialog onClose={onClose} open={open}>
-    <DialogTitle>
-      <FormattedMessage
-        defaultMessage="Void Payment"
-        description="dialog header"
-      />
-    </DialogTitle>
-    <DialogContent>
-      <DialogContentText>
-        <FormattedMessage defaultMessage="Are you sure you want to void this payment?" />
-      </DialogContentText>
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={onClose}>
-        <FormattedMessage {...buttonMessages.back} />
-      </Button>
-      <ConfirmButton
-        transitionState={confirmButtonState}
-        color="primary"
-        variant="contained"
-        onClick={onConfirm}
-      >
-        <FormattedMessage {...buttonMessages.confirm} />
-      </ConfirmButton>
-    </DialogActions>
-  </Dialog>
-);
+}) => {
+  const intl = useIntl();
+
+  return (
+    <Dialog onClose={onClose} open={open}>
+      <DialogTitle>
+        <FormattedMessage
+          defaultMessage="Void Payment"
+          description="dialog header"
+        />
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          <FormattedMessage defaultMessage="Are you sure you want to void this payment?" />
+        </DialogContentText>
+        {errors.length > 0 && (
+          <>
+            <FormSpacer />
+            {errors.map(err => (
+              <DialogContentText color="error">
+                {getOrderErrorMessage(err, intl)}
+              </DialogContentText>
+            ))}
+          </>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>
+          <FormattedMessage {...buttonMessages.back} />
+        </Button>
+        <ConfirmButton
+          transitionState={confirmButtonState}
+          color="primary"
+          variant="contained"
+          onClick={onConfirm}
+        >
+          <FormattedMessage {...buttonMessages.confirm} />
+        </ConfirmButton>
+      </DialogActions>
+    </Dialog>
+  );
+};
 OrderPaymentVoidDialog.displayName = "OrderPaymentVoidDialog";
 export default OrderPaymentVoidDialog;

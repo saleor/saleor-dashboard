@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { maybe } from "../../../misc";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { OrderAddNote } from "../../types/OrderAddNote";
 import { OrderCancel } from "../../types/OrderCancel";
 import { OrderCapture } from "../../types/OrderCapture";
@@ -21,7 +21,7 @@ import { OrderRefund } from "../../types/OrderRefund";
 import { OrderShippingMethodUpdate } from "../../types/OrderShippingMethodUpdate";
 import { OrderUpdate } from "../../types/OrderUpdate";
 import { OrderVoid } from "../../types/OrderVoid";
-import { orderListUrl, orderUrl } from "../../urls";
+import { orderUrl, OrderUrlQueryParams } from "../../urls";
 
 interface OrderDetailsMessages {
   children: (props: {
@@ -45,260 +45,207 @@ interface OrderDetailsMessages {
     handleShippingMethodUpdate: (data: OrderShippingMethodUpdate) => void;
     handleUpdate: (data: OrderUpdate) => void;
   }) => React.ReactElement;
+  id: string;
+  params: OrderUrlQueryParams;
 }
 
 export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
-  children
+  children,
+  id,
+  params
 }) => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
   const intl = useIntl();
 
+  const [, closeModal] = createDialogActionHandlers(
+    navigate,
+    params => orderUrl(id, params),
+    params
+  );
+
   const handlePaymentCapture = (data: OrderCapture) => {
-    if (!maybe(() => data.orderCapture.errors.length)) {
+    const errs = data.orderCapture?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Payment successfully captured"
         })
       });
-    } else {
-      pushMessage({
-        text: intl.formatMessage(
-          {
-            defaultMessage: "Payment not captured: {errorMessage}"
-          },
-          {
-            errorMessage: data.orderCapture.errors.find(
-              error => error.field === "payment"
-            ).message
-          }
-        )
-      });
+      closeModal();
     }
   };
   const handlePaymentRefund = (data: OrderRefund) => {
-    if (!maybe(() => data.orderRefund.errors.length)) {
+    const errs = data.orderRefund?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Payment successfully refunded"
         })
       });
-    } else {
-      pushMessage({
-        text: intl.formatMessage(
-          {
-            defaultMessage: "Payment not refunded: {errorMessage}",
-            description: "notification"
-          },
-          {
-            errorMessage: data.orderRefund.errors.find(
-              error => error.field === "payment"
-            ).message
-          }
-        )
-      });
+      closeModal();
     }
   };
   const handleOrderFulfillmentCreate = (data: OrderCreateFulfillment) => {
-    if (!maybe(() => data.orderFulfillmentCreate.errors.length)) {
+    const errs = data.orderFulfillmentCreate?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Items successfully fulfilled"
         })
       });
-      navigate(orderUrl(data.orderFulfillmentCreate.order.id), true);
-    } else {
-      pushMessage({
-        text: intl.formatMessage({
-          defaultMessage: "Could not fulfill items"
-        })
-      });
+      closeModal();
     }
   };
   const handleOrderMarkAsPaid = (data: OrderMarkAsPaid) => {
-    if (!maybe(() => data.orderMarkAsPaid.errors.length)) {
+    const errs = data.orderMarkAsPaid?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Order marked as paid"
         })
       });
-      navigate(orderUrl(data.orderMarkAsPaid.order.id), true);
-    } else {
-      pushMessage({
-        text: intl.formatMessage({
-          defaultMessage: "Could not mark order as paid"
-        })
-      });
+      closeModal();
     }
   };
   const handleOrderCancel = (data: OrderCancel) => {
-    pushMessage({
-      text: intl.formatMessage({
-        defaultMessage: "Order successfully cancelled"
-      })
-    });
-    navigate(orderUrl(data.orderCancel.order.id), true);
+    const errs = data.orderCancel?.errors;
+    if (errs.length === 0) {
+      pushMessage({
+        text: intl.formatMessage({
+          defaultMessage: "Order successfully cancelled"
+        })
+      });
+      closeModal();
+    }
   };
-  const handleDraftCancel = () => {
-    pushMessage({
-      text: intl.formatMessage({
-        defaultMessage: "Order successfully cancelled"
-      })
-    });
-    navigate(orderListUrl(), true);
+  const handleDraftCancel = (data: OrderDraftCancel) => {
+    const errs = data.draftOrderDelete?.errors;
+    if (errs.length === 0) {
+      pushMessage({
+        text: intl.formatMessage({
+          defaultMessage: "Order successfully cancelled"
+        })
+      });
+      closeModal();
+    }
   };
-  const handleOrderVoid = () => {
-    pushMessage({
-      text: intl.formatMessage({
-        defaultMessage: "Order payment successfully voided"
-      })
-    });
+  const handleOrderVoid = (data: OrderVoid) => {
+    const errs = data.orderVoid?.errors;
+    if (errs.length === 0) {
+      pushMessage({
+        text: intl.formatMessage({
+          defaultMessage: "Order payment successfully voided"
+        })
+      });
+      closeModal();
+    }
   };
   const handleNoteAdd = (data: OrderAddNote) => {
-    if (!maybe(() => data.orderAddNote.errors.length)) {
+    const errs = data.orderAddNote?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Note successfully added"
         })
       });
-    } else {
-      pushMessage({
-        text: intl.formatMessage({
-          defaultMessage: "Could not add note"
-        })
-      });
     }
   };
   const handleUpdate = (data: OrderUpdate) => {
-    if (!maybe(() => data.orderUpdate.errors.length)) {
+    const errs = data.orderUpdate?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Order successfully updated"
         })
       });
-      navigate(orderUrl(data.orderUpdate.order.id), true);
     }
   };
   const handleDraftUpdate = (data: OrderDraftUpdate) => {
-    if (!maybe(() => data.draftOrderUpdate.errors.length)) {
+    const errs = data.draftOrderUpdate?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Order successfully updated"
         })
       });
-      navigate(orderUrl(data.draftOrderUpdate.order.id), true);
     }
   };
   const handleShippingMethodUpdate = (data: OrderShippingMethodUpdate) => {
-    if (!maybe(() => data.orderUpdateShipping.errors.length)) {
+    const errs = data.orderUpdateShipping?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Shipping method successfully updated"
         })
       });
-    } else {
-      pushMessage({
-        text: intl.formatMessage({
-          defaultMessage: "Could not update shipping method"
-        })
-      });
+      closeModal();
     }
-    navigate(orderUrl(data.orderUpdateShipping.order.id), true);
   };
   const handleOrderLineDelete = (data: OrderLineDelete) => {
-    if (!maybe(() => data.draftOrderLineDelete.errors.length)) {
+    const errs = data.draftOrderLineDelete?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Order line deleted"
         })
       });
-    } else {
-      pushMessage({
-        text: intl.formatMessage({
-          defaultMessage: "Could not delete order line"
-        })
-      });
     }
   };
   const handleOrderLinesAdd = (data: OrderLinesAdd) => {
-    if (!maybe(() => data.draftOrderLinesCreate.errors.length)) {
+    const errs = data.draftOrderLinesCreate?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Order line added"
         })
       });
-      navigate(orderUrl(data.draftOrderLinesCreate.order.id), true);
-    } else {
-      pushMessage({
-        text: intl.formatMessage({
-          defaultMessage: "Could not create order line"
-        })
-      });
+      closeModal();
     }
   };
   const handleOrderLineUpdate = (data: OrderLineUpdate) => {
-    if (!maybe(() => data.draftOrderLineUpdate.errors.length)) {
+    const errs = data.draftOrderLineUpdate?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Order line updated"
         })
       });
-    } else {
-      pushMessage({
-        text: intl.formatMessage({
-          defaultMessage: "Could not update order line"
-        })
-      });
     }
   };
   const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancel) => {
-    if (!maybe(() => data.orderFulfillmentCancel.errors.length)) {
+    const errs = data.orderFulfillmentCancel?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Fulfillment successfully cancelled"
         })
       });
-      navigate(orderUrl(data.orderFulfillmentCancel.order.id), true);
-    } else {
-      pushMessage({
-        text: intl.formatMessage({
-          defaultMessage: "Could not cancel fulfillment"
-        })
-      });
+      closeModal();
     }
   };
   const handleOrderFulfillmentUpdate = (
     data: OrderFulfillmentUpdateTracking
   ) => {
-    if (!maybe(() => data.orderFulfillmentUpdateTracking.errors.length)) {
+    const errs = data.orderFulfillmentUpdateTracking?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Fulfillment successfully updated"
         })
       });
-      navigate(orderUrl(data.orderFulfillmentUpdateTracking.order.id), true);
-    } else {
-      pushMessage({
-        text: intl.formatMessage({
-          defaultMessage: "Could not update fulfillment"
-        })
-      });
+      closeModal();
     }
   };
   const handleDraftFinalize = (data: OrderDraftFinalize) => {
-    if (!maybe(() => data.draftOrderComplete.errors.length)) {
+    const errs = data.draftOrderComplete?.errors;
+    if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
           defaultMessage: "Draft order successfully finalized"
         })
       });
-      navigate(orderUrl(data.draftOrderComplete.order.id), true);
-    } else {
-      pushMessage({
-        text: intl.formatMessage({
-          defaultMessage: "Could not finalize draft"
-        })
-      });
+      closeModal();
     }
   };
 

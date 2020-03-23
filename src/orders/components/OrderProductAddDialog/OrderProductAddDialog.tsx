@@ -3,6 +3,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
@@ -24,6 +25,10 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
+import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import FormSpacer from "@saleor/components/FormSpacer";
 import {
   SearchOrderVariant_search_edges_node,
   SearchOrderVariant_search_edges_node_variants
@@ -50,7 +55,8 @@ const useStyles = makeStyles(
       alignItems: "center",
       display: "flex",
       height: theme.spacing(3),
-      justifyContent: "center"
+      justifyContent: "center",
+      marginTop: theme.spacing(3)
     },
     overflow: {
       overflowY: "visible"
@@ -79,8 +85,9 @@ type SetVariantsAction = (
   data: SearchOrderVariant_search_edges_node_variants[]
 ) => void;
 
-interface OrderProductAddDialogProps extends FetchMoreProps {
+export interface OrderProductAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  errors: OrderErrorFragment[];
   open: boolean;
   products: SearchOrderVariant_search_edges_node[];
   onClose: () => void;
@@ -154,6 +161,7 @@ const onVariantAdd = (
 const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   const {
     confirmButtonState,
+    errors: apiErrors,
     open,
     loading,
     hasMore,
@@ -163,13 +171,14 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     onClose,
     onSubmit
   } = props;
-  const classes = useStyles(props);
 
+  const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
   const [variants, setVariants] = React.useState<
     SearchOrderVariant_search_edges_node_variants[]
   >([]);
+  const errors = useModalDialogErrors(apiErrors, open);
 
   const selectedVariantsToProductsMap = products
     ? products.map(product =>
@@ -323,6 +332,16 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
             </TableBody>
           </ResponsiveTable>
         </InfiniteScroll>
+        {errors.length > 0 && (
+          <>
+            <FormSpacer />
+            {errors.map(err => (
+              <DialogContentText color="error">
+                {getOrderErrorMessage(err, intl)}
+              </DialogContentText>
+            ))}
+          </>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>
