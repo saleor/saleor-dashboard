@@ -8,15 +8,16 @@ import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { RequirementsPicker } from "@saleor/discounts/types";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import { getFormErrors } from "@saleor/utils/errors";
+import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import { FormData } from "../VoucherDetailsPage";
 
 interface VoucherRequirementsProps {
   data: FormData;
   defaultCurrency: string;
   disabled: boolean;
-  errors: UserError[];
+  errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -27,6 +28,11 @@ const VoucherRequirements = ({
   onChange
 }: VoucherRequirementsProps) => {
   const intl = useIntl();
+
+  const formErrors = getFormErrors(
+    ["minSpent", "minCheckoutItemsQuantity"],
+    errors
+  );
 
   const minimalOrderValueText = intl.formatMessage({
     defaultMessage: "Minimal order value",
@@ -77,8 +83,8 @@ const VoucherRequirements = ({
         {data.requirementsPicker === RequirementsPicker.ORDER ? (
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "minSpent")}
-            helperText={getFieldError(errors, "minSpent")?.message}
+            error={!!formErrors.minSpent}
+            helperText={getDiscountErrorMessage(formErrors.minSpent, intl)}
             label={minimalOrderValueText}
             name={"minSpent" as keyof FormData}
             value={data.minSpent}
@@ -88,10 +94,11 @@ const VoucherRequirements = ({
         ) : data.requirementsPicker === RequirementsPicker.ITEM ? (
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "minCheckoutItemsQuantity")}
-            helperText={
-              getFieldError(errors, "minCheckoutItemsQuantity")?.message
-            }
+            error={!!formErrors.minCheckoutItemsQuantity}
+            helperText={getDiscountErrorMessage(
+              formErrors.minCheckoutItemsQuantity,
+              intl
+            )}
             label={minimalQuantityText}
             name={"minCheckoutItemsQuantity" as keyof FormData}
             value={data.minCheckoutItemsQuantity}

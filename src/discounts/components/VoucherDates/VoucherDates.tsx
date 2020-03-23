@@ -8,15 +8,16 @@ import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Grid from "@saleor/components/Grid";
 import { commonMessages } from "@saleor/intl";
-import { getFieldError } from "@saleor/utils/errors";
-import { UserError } from "../../../types";
+import { getFormErrors } from "@saleor/utils/errors";
+import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
+import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
 import { FormData } from "../VoucherDetailsPage";
 
 interface VoucherDatesProps {
   data: FormData;
   defaultCurrency: string;
   disabled: boolean;
-  errors: UserError[];
+  errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -27,6 +28,8 @@ const VoucherDates = ({
   onChange
 }: VoucherDatesProps) => {
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["startDate", "endDate"], errors);
 
   return (
     <Card>
@@ -40,8 +43,8 @@ const VoucherDates = ({
         <Grid variant="uniform">
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "startDate")}
-            helperText={getFieldError(errors, "startDate")?.message}
+            error={!!formErrors.startDate}
+            helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
             name={"startDate" as keyof FormData}
             onChange={onChange}
             label={intl.formatMessage(commonMessages.startDate)}
@@ -54,8 +57,8 @@ const VoucherDates = ({
           />
           <TextField
             disabled={disabled}
-            error={!!getFieldError(errors, "startDate")}
-            helperText={getFieldError(errors, "startDate")?.message}
+            error={!!formErrors.startDate}
+            helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
             name={"startTime" as keyof FormData}
             onChange={onChange}
             label={intl.formatMessage(commonMessages.startHour)}
@@ -80,8 +83,8 @@ const VoucherDates = ({
           <Grid variant="uniform">
             <TextField
               disabled={disabled}
-              error={!!getFieldError(errors, "endDate")}
-              helperText={getFieldError(errors, "endDate")?.message}
+              error={!!formErrors.endDate}
+              helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
               name={"endDate" as keyof FormData}
               onChange={onChange}
               label={intl.formatMessage(commonMessages.endDate)}
@@ -94,8 +97,8 @@ const VoucherDates = ({
             />
             <TextField
               disabled={disabled}
-              error={!!getFieldError(errors, "endDate")}
-              helperText={getFieldError(errors, "endDate")?.message}
+              error={!!formErrors.endDate}
+              helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
               name={"endTime" as keyof FormData}
               onChange={onChange}
               label={intl.formatMessage(commonMessages.endHour)}
