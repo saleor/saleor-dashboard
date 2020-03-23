@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { diff, DiffData } from "fast-array-diff";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -45,7 +46,7 @@ export interface ProductWarehousesDialogProps {
   stocks: Product_variants_stocks[];
   warehouses: SearchWarehouses_search_edges_node[];
   onClose: () => void;
-  onConfirm: (data: string[]) => void;
+  onConfirm: (data: DiffData<string>) => void;
 }
 
 const ProductWarehousesDialog: React.FC<ProductWarehousesDialogProps> = ({
@@ -61,11 +62,12 @@ const ProductWarehousesDialog: React.FC<ProductWarehousesDialogProps> = ({
   const classes = useStyles({});
   const intl = useIntl();
 
+  const initial = stocks?.map(stock => stock.warehouse.id) || [];
   const [selectedWarehouses, setSelectedWarehouses] = useStateFromProps(
-    stocks?.map(stock => stock.warehouse.id) || []
+    initial
   );
 
-  const handleConfirm = () => onConfirm(selectedWarehouses);
+  const handleConfirm = () => onConfirm(diff(initial, selectedWarehouses));
 
   return (
     <Dialog onClose={onClose} maxWidth="sm" fullWidth open={open}>

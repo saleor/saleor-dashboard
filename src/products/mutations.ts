@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
 import { productErrorFragment } from "@saleor/attributes/mutations";
+import makeMutation from "@saleor/hooks/makeMutation";
 import { TypedMutation } from "../mutations";
 import { ProductCreate, ProductCreateVariables } from "./types/ProductCreate";
 import { ProductDelete, ProductDeleteVariables } from "./types/ProductDelete";
@@ -37,7 +38,11 @@ import {
 } from "./types/VariantImageUnassign";
 import { VariantUpdate, VariantUpdateVariables } from "./types/VariantUpdate";
 
-import { fragmentVariant, productFragmentDetails } from "./queries";
+import {
+  fragmentVariant,
+  productFragmentDetails,
+  stockFragment
+} from "./queries";
 import {
   productBulkDelete,
   productBulkDeleteVariables
@@ -54,6 +59,10 @@ import {
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 } from "./types/ProductVariantBulkDelete";
+import {
+  AddOrRemoveStocks,
+  AddOrRemoveStocksVariables
+} from "./types/AddOrRemoveStocks";
 
 export const bulkProductErrorFragment = gql`
   fragment BulkProductErrorFragment on BulkProductError {
@@ -488,3 +497,42 @@ export const TypedProductVariantBulkDeleteMutation = TypedMutation<
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 >(ProductVariantBulkDeleteMutation);
+
+const addOrRemoveStocks = gql`
+  ${stockFragment}
+  mutation AddOrRemoveStocks(
+    $variantId: ID!
+    $add: [StockInput!]!
+    $remove: [ID!]!
+  ) {
+    productVariantStocksCreate(stocks: $add, variantId: $variantId) {
+      bulkStockErrors {
+        code
+        field
+        index
+      }
+      productVariant {
+        id
+        stocks {
+          ...StockFragment
+        }
+      }
+    }
+    productVariantStocksDelete(warehouseIds: $remove, variantId: $variantId) {
+      stockErrors {
+        code
+        field
+      }
+      productVariant {
+        id
+        stocks {
+          ...StockFragment
+        }
+      }
+    }
+  }
+`;
+export const useAddOrRemoveStocks = makeMutation<
+  AddOrRemoveStocks,
+  AddOrRemoveStocksVariables
+>(addOrRemoveStocks);
