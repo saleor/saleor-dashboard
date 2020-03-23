@@ -1,11 +1,11 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { DiscountErrorCode } from "@saleor/types/globalTypes";
 import SaleCreatePage, {
   SaleCreatePageProps
 } from "../../../discounts/components/SaleCreatePage";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: SaleCreatePageProps = {
   defaultCurrency: "USD",
@@ -23,6 +23,10 @@ storiesOf("Views / Discounts / Sale create", module)
   .add("form errors", () => (
     <SaleCreatePage
       {...props}
-      errors={["name", "startDate", "endDate", "value"].map(formError)}
+      errors={["name", "startDate", "endDate", "value"].map(field => ({
+        __typename: "DiscountError",
+        code: DiscountErrorCode.INVALID,
+        field
+      }))}
     />
   ));
