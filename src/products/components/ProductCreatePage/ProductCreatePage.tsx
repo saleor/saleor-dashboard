@@ -41,7 +41,7 @@ import ProductAttributes, {
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
-import ProductStock from "../ProductStock";
+import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
 interface FormData {
   basePrice: number;
@@ -57,9 +57,11 @@ interface FormData {
   seoTitle: string;
   sku: string;
   stockQuantity: number;
+  trackInventory: boolean;
 }
 export interface ProductCreatePageSubmitData extends FormData {
   attributes: ProductAttributeInput[];
+  stocks: ProductStockInput[];
 }
 
 interface ProductCreatePageProps {
@@ -112,6 +114,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     data: attributes,
     set: setAttributeData
   } = useFormset<ProductAttributeInputData>([]);
+  const { change: changeStockData, data: stocks } = useFormset<null>([]);
 
   // Ensures that it will not change after component rerenders, because it
   // generates different block keys and it causes editor to lose its content.
@@ -131,7 +134,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     seoDescription: "",
     seoTitle: "",
     sku: null,
-    stockQuantity: null
+    stockQuantity: null,
+    trackInventory: false
   };
 
   // Display values
@@ -159,6 +163,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const handleSubmit = (data: FormData) =>
     onSubmit({
       attributes,
+      stocks,
       ...data
     });
 
@@ -234,12 +239,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 <CardSpacer />
                 {!productType.hasVariants && (
                   <>
-                    <ProductStock
+                    <ProductStocks
                       data={data}
                       disabled={disabled}
-                      product={undefined}
-                      onChange={change}
+                      onChange={changeStockData}
+                      onFormDataChange={change}
                       errors={errors}
+                      stocks={stocks}
+                      onWarehouseEdit={onWarehouseEdit}
                     />
                     <CardSpacer />
                   </>
