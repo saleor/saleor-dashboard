@@ -29,6 +29,7 @@ import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import FormSpacer from "@saleor/components/FormSpacer";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import {
   SearchOrderVariant_search_edges_node,
   SearchOrderVariant_search_edges_node_variants
@@ -179,6 +180,10 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     SearchOrderVariant_search_edges_node_variants[]
   >([]);
   const errors = useModalDialogErrors(apiErrors, open);
+
+  useModalDialogOpen(open, {
+    onClose: () => setVariants([])
+  });
 
   const selectedVariantsToProductsMap = products
     ? products.map(product =>
