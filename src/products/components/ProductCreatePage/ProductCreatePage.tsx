@@ -84,6 +84,7 @@ interface ProductCreatePageProps {
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
+  onWarehouseEdit: () => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
 }
@@ -104,7 +105,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   saveButtonBarState,
   onBack,
   fetchProductTypes,
-  onSubmit
+  onSubmit,
+  onWarehouseEdit
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
