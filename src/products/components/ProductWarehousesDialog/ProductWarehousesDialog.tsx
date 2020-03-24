@@ -13,13 +13,14 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
-import { UserError } from "@saleor/types";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import Skeleton from "@saleor/components/Skeleton";
 import { Product_variants_stocks } from "@saleor/products/types/Product";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { isSelected, toggle } from "@saleor/utils/lists";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { BulkStockErrorFragment } from "@saleor/products/types/BulkStockErrorFragment";
+import { StockErrorFragment } from "@saleor/products/types/StockErrorFragment";
 
 const useStyles = makeStyles(
   theme => ({
@@ -41,7 +42,7 @@ const useStyles = makeStyles(
 export interface ProductWarehousesDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
-  errors: UserError[];
+  errors: Array<BulkStockErrorFragment | StockErrorFragment>;
   open: boolean;
   stocks: Product_variants_stocks[];
   warehouses: SearchWarehouses_search_edges_node[];

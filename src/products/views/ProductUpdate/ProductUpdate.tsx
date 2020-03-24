@@ -88,8 +88,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [addOrRemoveStocks, addOrRemoveStocksOpts] = useAddOrRemoveStocks({
     onCompleted: data => {
       if (
-        data.productVariantStocksCreate.bulkStockErrors.length === 0 &&
-        data.productVariantStocksDelete.stockErrors.length === 0
+        data.productVariantStocksCreate.errors.length === 0 &&
+        data.productVariantStocksDelete.errors.length === 0
       ) {
         notify({
           text: intl.formatMessage(commonMessages.savedChanges)
@@ -376,11 +376,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                   {!product?.productType?.hasVariants && (
                     <ProductWarehousesDialog
                       confirmButtonState={addOrRemoveStocksOpts.status}
+                      disabled={addOrRemoveStocksOpts.loading}
                       errors={[
                         ...(addOrRemoveStocksOpts.data
-                          ?.productVariantStocksCreate.bulkStockErrors || []),
-                        addOrRemoveStocksOpts.data?.productVariantStocksDelete
-                          .stockErrors || []
+                          ?.productVariantStocksCreate.errors || []),
+                        ...(addOrRemoveStocksOpts.data
+                          ?.productVariantStocksDelete.errors || [])
                       ]}
                       onClose={closeModal}
                       stocks={product?.variants[0].stocks || []}
