@@ -8,7 +8,7 @@ import { StockInput, ProductErrorCode, StockErrorCode } from "./../../types/glob
 // GraphQL mutation operation: AddOrRemoveStocks
 // ====================================================
 
-export interface AddOrRemoveStocks_productVariantStocksCreate_bulkStockErrors {
+export interface AddOrRemoveStocks_productVariantStocksCreate_errors {
   __typename: "BulkStockError";
   code: ProductErrorCode;
   field: string | null;
@@ -36,11 +36,11 @@ export interface AddOrRemoveStocks_productVariantStocksCreate_productVariant {
 
 export interface AddOrRemoveStocks_productVariantStocksCreate {
   __typename: "ProductVariantStocksCreate";
-  bulkStockErrors: AddOrRemoveStocks_productVariantStocksCreate_bulkStockErrors[];
+  errors: AddOrRemoveStocks_productVariantStocksCreate_errors[];
   productVariant: AddOrRemoveStocks_productVariantStocksCreate_productVariant | null;
 }
 
-export interface AddOrRemoveStocks_productVariantStocksDelete_stockErrors {
+export interface AddOrRemoveStocks_productVariantStocksDelete_errors {
   __typename: "StockError";
   code: StockErrorCode;
   field: string | null;
@@ -67,7 +67,7 @@ export interface AddOrRemoveStocks_productVariantStocksDelete_productVariant {
 
 export interface AddOrRemoveStocks_productVariantStocksDelete {
   __typename: "ProductVariantStocksDelete";
-  stockErrors: AddOrRemoveStocks_productVariantStocksDelete_stockErrors[];
+  errors: AddOrRemoveStocks_productVariantStocksDelete_errors[];
   productVariant: AddOrRemoveStocks_productVariantStocksDelete_productVariant | null;
 }
 

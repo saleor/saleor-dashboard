@@ -252,7 +252,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       disabled={disabled}
                       errors={errors}
                       stocks={stocks}
-                      onChange={changeStockData}
+                      onChange={(id, value) => {
+                        triggerChange();
+                        changeStockData(id, value);
+                      }}
                       onFormDataChange={change}
                       onWarehousesEdit={onWarehousesEdit}
                     />
