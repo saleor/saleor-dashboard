@@ -15,7 +15,6 @@ import ConfirmButton, {
 import { buttonMessages } from "@saleor/intl";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import Skeleton from "@saleor/components/Skeleton";
-import { Product_variants_stocks } from "@saleor/products/types/Product";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { isSelected, toggle } from "@saleor/utils/lists";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -44,8 +43,8 @@ export interface ProductWarehousesDialogProps {
   disabled: boolean;
   errors: Array<BulkStockErrorFragment | StockErrorFragment>;
   open: boolean;
-  stocks: Product_variants_stocks[];
   warehouses: SearchWarehouses_search_edges_node[];
+  warehousesWithStocks: string[];
   onClose: () => void;
   onConfirm: (data: DiffData<string>) => void;
 }
@@ -57,18 +56,18 @@ const ProductWarehousesDialog: React.FC<ProductWarehousesDialogProps> = ({
   onClose,
   onConfirm,
   open,
-  stocks,
+  warehousesWithStocks,
   warehouses
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
-  const initial = stocks?.map(stock => stock.warehouse.id) || [];
   const [selectedWarehouses, setSelectedWarehouses] = useStateFromProps(
-    initial
+    warehousesWithStocks || []
   );
 
-  const handleConfirm = () => onConfirm(diff(initial, selectedWarehouses));
+  const handleConfirm = () =>
+    onConfirm(diff(warehousesWithStocks, selectedWarehouses));
 
   return (
     <Dialog onClose={onClose} maxWidth="sm" fullWidth open={open}>

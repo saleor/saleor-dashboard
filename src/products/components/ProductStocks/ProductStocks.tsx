@@ -21,6 +21,7 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { renderCollection } from "@saleor/misc";
+import Link from "@saleor/components/Link";
 
 export type ProductStockInput = FormsetAtomicData<null, string>;
 export interface ProductStockFormData {
@@ -35,7 +36,7 @@ export interface ProductStocksProps {
   stocks: ProductStockInput[];
   onChange: FormsetChange;
   onFormDataChange: FormChange;
-  onWarehousesEdit: () => undefined;
+  onWarehousesEdit: () => void;
 }
 
 const useStyles = makeStyles(
@@ -171,24 +172,41 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {renderCollection(stocks, stock => (
-            <TableRow>
-              <TableCell className={classes.colName}>{stock.label}</TableCell>
-              <TableCell className={classes.colQuantity}>
-                <TextField
-                  className={classes.inputComponent}
-                  fullWidth
-                  inputProps={{
-                    className: classes.input,
-                    min: 0,
-                    type: "number"
-                  }}
-                  onChange={event => onChange(stock.id, event.target.value)}
-                  value={stock.value}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
+          {renderCollection(
+            stocks,
+            stock => (
+              <TableRow>
+                <TableCell className={classes.colName}>{stock.label}</TableCell>
+                <TableCell className={classes.colQuantity}>
+                  <TextField
+                    className={classes.inputComponent}
+                    fullWidth
+                    inputProps={{
+                      className: classes.input,
+                      min: 0,
+                      type: "number"
+                    }}
+                    onChange={event => onChange(stock.id, event.target.value)}
+                    value={stock.value}
+                  />
+                </TableCell>
+              </TableRow>
+            ),
+            () => (
+              <TableRow>
+                <TableCell colSpan={2}>
+                  <FormattedMessage
+                    defaultMessage={
+                      "This product doesn't have any stock. You can add it <l>here</l>."
+                    }
+                    values={{
+                      l: str => <Link onClick={onWarehousesEdit}>{str}</Link>
+                    }}
+                  />
+                </TableCell>
+              </TableRow>
+            )
+          )}
         </TableBody>
       </Table>
     </Card>

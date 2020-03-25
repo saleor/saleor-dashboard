@@ -384,11 +384,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                           ?.productVariantStocksDelete.errors || [])
                       ]}
                       onClose={closeModal}
-                      stocks={product?.variants[0].stocks || []}
                       open={params.action === "edit-stocks"}
                       warehouses={searchWarehousesOpts.data?.search.edges.map(
                         edge => edge.node
                       )}
+                      warehousesWithStocks={
+                        product?.variants[0].stocks.map(
+                          stock => stock.warehouse.id
+                        ) || []
+                      }
                       onConfirm={data =>
                         addOrRemoveStocks({
                           variables: {
