@@ -39,7 +39,6 @@ type AccountError {
 enum AccountErrorCode {
   ACTIVATE_OWN_ACCOUNT
   ACTIVATE_SUPERUSER_ACCOUNT
-  ASSIGN_NON_STAFF_MEMBER
   DEACTIVATE_OWN_ACCOUNT
   DEACTIVATE_SUPERUSER_ACCOUNT
   DELETE_NON_STAFF_USER
@@ -503,6 +502,13 @@ enum AuthorizationKeyType {
 }
 
 type BulkProductError {
+  field: String
+  message: String
+  code: ProductErrorCode!
+  index: Int
+}
+
+type BulkStockError {
   field: String
   message: String
   code: ProductErrorCode!
@@ -1866,6 +1872,7 @@ type Group implements Node {
   name: String!
   permissions: [PermissionDisplay]
   users: [User]
+  userCanManage: Boolean!
 }
 
 type GroupCountableConnection {
@@ -2233,10 +2240,6 @@ type Mutation {
     id: ID!
     shippingZoneIds: [ID!]!
   ): WarehouseShippingZoneUnassign
-  createStock(input: StockInput!): StockCreate
-  updateStock(id: ID!, input: StockInput!): StockUpdate
-  deleteStock(id: ID!): StockDelete
-  bulkDeleteStock(ids: [ID]!): StockBulkDelete
   authorizationKeyAdd(
     input: AuthorizationKeyInput!
     keyType: AuthorizationKeyType!
@@ -2495,6 +2498,18 @@ type Mutation {
     variants: [ProductVariantBulkCreateInput]!
   ): ProductVariantBulkCreate
   productVariantBulkDelete(ids: [ID]!): ProductVariantBulkDelete
+  productVariantStocksCreate(
+    stocks: [StockInput!]!
+    variantId: ID!
+  ): ProductVariantStocksCreate
+  productVariantStocksDelete(
+    variantId: ID!
+    warehouseIds: [ID!]
+  ): ProductVariantStocksDelete
+  productVariantStocksUpdate(
+    stocks: [StockInput!]!
+    variantId: ID!
+  ): ProductVariantStocksUpdate
   productVariantUpdate(
     id: ID!
     input: ProductVariantInput!
@@ -2836,14 +2851,9 @@ type Mutation {
   ): PermissionGroupCreate
   permissionGroupUpdate(
     id: ID!
-    input: PermissionGroupInput!
+    input: PermissionGroupUpdateInput!
   ): PermissionGroupUpdate
   permissionGroupDelete(id: ID!): PermissionGroupDelete
-  permissionGroupAssignUsers(id: ID!, users: [ID!]!): PermissionGroupAssignUsers
-  permissionGroupUnassignUsers(
-    id: ID!
-    users: [ID!]!
-  ): PermissionGroupUnassignUsers
 }
 
 input NameTranslationInput {
@@ -2893,8 +2903,8 @@ type Order implements Node & ObjectWithMetadata {
   voucher: Voucher
   giftCards: [GiftCard]
   discount: Money
-  discountName: String!
-  translatedDiscountName: String!
+  discountName: String
+  translatedDiscountName: String
   displayGrossPrices: Boolean!
   customerNote: String!
   weight: Weight
@@ -2944,7 +2954,7 @@ type OrderAddNote {
 }
 
 input OrderAddNoteInput {
-  message: String
+  message: String!
 }
 
 type OrderBulkCancel {
@@ -3474,36 +3484,43 @@ enum PermissionEnum {
   MANAGE_CHECKOUTS
 }
 
-type PermissionGroupAssignUsers {
-  errors: [Error!]!
-  group: Group
-  accountErrors: [AccountError!]!
-}
-
 type PermissionGroupCreate {
   errors: [Error!]!
   group: Group
-  accountErrors: [AccountError!]!
+  permissionGroupErrors: [PermissionGroupError!]!
 }
 
 input PermissionGroupCreateInput {
   name: String!
   permissions: [PermissionEnum!]
+  users: [ID!]
 }
 
 type PermissionGroupDelete {
   errors: [Error!]!
-  accountErrors: [AccountError!]!
+  permissionGroupErrors: [PermissionGroupError!]!
   group: Group
+}
+
+type PermissionGroupError {
+  field: String
+  message: String
+  code: PermissionGroupErrorCode!
+  permissions: [PermissionEnum!]
+  users: [ID!]
+}
+
+enum PermissionGroupErrorCode {
+  ASSIGN_NON_STAFF_MEMBER
+  CANNOT_ADD_AND_REMOVE
+  OUT_OF_SCOPE_PERMISSION
+  CANNOT_REMOVE_FROM_LAST_GROUP
+  REQUIRED
+  UNIQUE
 }
 
 input PermissionGroupFilterInput {
   search: String
-}
-
-input PermissionGroupInput {
-  name: String
-  permissions: [PermissionEnum!]
 }
 
 enum PermissionGroupSortField {
@@ -3515,16 +3532,18 @@ input PermissionGroupSortingInput {
   field: PermissionGroupSortField!
 }
 
-type PermissionGroupUnassignUsers {
-  errors: [Error!]!
-  group: Group
-  accountErrors: [AccountError!]!
-}
-
 type PermissionGroupUpdate {
   errors: [Error!]!
   group: Group
-  accountErrors: [AccountError!]!
+  permissionGroupErrors: [PermissionGroupError!]!
+}
+
+input PermissionGroupUpdateInput {
+  name: String
+  addPermissions: [PermissionEnum!]
+  removePermissions: [PermissionEnum!]
+  addUsers: [ID!]
+  removeUsers: [ID!]
 }
 
 type Plugin implements Node {
@@ -3680,6 +3699,7 @@ input ProductCreateInput {
   quantity: Int
   trackInventory: Boolean
   productType: ID!
+  stocks: [StockInput!]
 }
 
 type ProductDelete {
@@ -3717,6 +3737,7 @@ input ProductFilterInput {
   attributes: [AttributeInput]
   stockAvailability: StockAvailability
   productType: ID
+  stocks: ProductStockFilterInput
   search: String
   minimalPrice: PriceRangeInput
   productTypes: [ID]
@@ -3815,6 +3836,11 @@ type ProductPricingInfo {
   priceRange: TaxedMoneyRange
   priceRangeUndiscounted: TaxedMoneyRange
   priceRangeLocalCurrency: TaxedMoneyRange
+}
+
+input ProductStockFilterInput {
+  warehouseIds: [ID!]
+  quantity: IntRangeInput
 }
 
 type ProductTranslatableContent implements Node {
@@ -4046,7 +4072,7 @@ type ProductVariant implements Node & ObjectWithMetadata {
   images: [ProductImage]
   translation(languageCode: LanguageCodeEnum!): ProductVariantTranslation
   digitalContent: DigitalContent
-  stock(country: String): [Stock]
+  stocks(countryCode: CountryCode): [Stock]
 }
 
 type ProductVariantBulkCreate {
@@ -4110,6 +4136,7 @@ input ProductVariantCreateInput {
   trackInventory: Boolean
   weight: WeightScalar
   product: ID!
+  stocks: [StockInput!]
 }
 
 type ProductVariantDelete {
@@ -4126,6 +4153,24 @@ input ProductVariantInput {
   quantity: Int
   trackInventory: Boolean
   weight: WeightScalar
+}
+
+type ProductVariantStocksCreate {
+  errors: [Error!]!
+  productVariant: ProductVariant
+  bulkStockErrors: [BulkStockError!]!
+}
+
+type ProductVariantStocksDelete {
+  errors: [Error!]!
+  productVariant: ProductVariant
+  stockErrors: [StockError!]!
+}
+
+type ProductVariantStocksUpdate {
+  errors: [Error!]!
+  productVariant: ProductVariant
+  bulkStockErrors: [BulkStockError!]!
 }
 
 type ProductVariantTranslatableContent implements Node {
@@ -4604,8 +4649,10 @@ input SeoInput {
 
 type ServiceAccount implements Node & ObjectWithMetadata {
   id: ID!
+  name: String
   created: DateTime
   isActive: Boolean
+  permissions: [PermissionDisplay]
   tokens: [ServiceAccountToken]
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
@@ -4617,8 +4664,6 @@ type ServiceAccount implements Node & ObjectWithMetadata {
     @deprecated(
       reason: "DEPRECATED: Will be removed in Saleor 2.11. use the `metadata` field instead. "
     )
-  permissions: [PermissionDisplay]
-  name: String
 }
 
 type ServiceAccountClearPrivateMeta {
@@ -5063,12 +5108,6 @@ enum StockAvailability {
   OUT_OF_STOCK
 }
 
-type StockBulkDelete {
-  errors: [Error!]!
-  count: Int!
-  stockError: [StockError!]!
-}
-
 type StockCountableConnection {
   pageInfo: PageInfo!
   edges: [StockCountableEdge!]!
@@ -5080,30 +5119,19 @@ type StockCountableEdge {
   cursor: String!
 }
 
-type StockCreate {
-  errors: [Error!]!
-  stockErrors: [StockError!]!
-  stock: Stock
+type StockError {
+  field: String
+  message: String
+  code: StockErrorCode!
 }
 
-type StockDelete {
-  errors: [Error!]!
-  stock: Stock
-}
-
-enum StockErorrCode {
+enum StockErrorCode {
   ALREADY_EXISTS
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
   REQUIRED
   UNIQUE
-}
-
-type StockError {
-  field: String
-  message: String
-  code: StockErorrCode!
 }
 
 input StockFilterInput {
@@ -5113,15 +5141,8 @@ input StockFilterInput {
 }
 
 input StockInput {
-  productVariant: ID!
   warehouse: ID!
   quantity: Int
-}
-
-type StockUpdate {
-  errors: [Error!]!
-  stockError: [StockError!]!
-  stock: Stock
 }
 
 enum TaxRateType {
@@ -5301,6 +5322,7 @@ type User implements Node & ObjectWithMetadata {
     last: Int
   ): OrderCountableConnection
   permissions: [PermissionDisplay]
+  permissionGroups: [Group]
   avatar(size: Int): Image
   events: [CustomerEvent]
   storedPaymentSources: [PaymentSource]
@@ -5386,10 +5408,6 @@ type UserUpdatePrivateMeta {
   errors: [Error!]!
   accountErrors: [AccountError!]!
   user: User
-}
-
-input UsersInput {
-  users: [ID!]!
 }
 
 type VAT {

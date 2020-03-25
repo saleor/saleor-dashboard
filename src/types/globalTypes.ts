@@ -923,7 +923,7 @@ export interface NameTranslationInput {
 }
 
 export interface OrderAddNoteInput {
-  message?: string | null;
+  message: string;
 }
 
 export interface OrderDraftFilterInput {
@@ -994,20 +994,24 @@ export interface PageTranslationInput {
 export interface PermissionGroupCreateInput {
   name: string;
   permissions?: PermissionEnum[] | null;
+  users?: string[] | null;
 }
 
 export interface PermissionGroupFilterInput {
   search?: string | null;
 }
 
-export interface PermissionGroupInput {
-  name?: string | null;
-  permissions?: PermissionEnum[] | null;
-}
-
 export interface PermissionGroupSortingInput {
   direction: OrderDirection;
   field: PermissionGroupSortField;
+}
+
+export interface PermissionGroupUpdateInput {
+  name?: string | null;
+  addPermissions?: PermissionEnum[] | null;
+  removePermissions?: PermissionEnum[] | null;
+  addUsers?: string[] | null;
+  removeUsers?: string[] | null;
 }
 
 export interface PluginFilterInput {
@@ -1039,6 +1043,7 @@ export interface ProductFilterInput {
   attributes?: (AttributeInput | null)[] | null;
   stockAvailability?: StockAvailability | null;
   productType?: string | null;
+  stocks?: ProductStockFilterInput | null;
   search?: string | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
@@ -1048,6 +1053,11 @@ export interface ProductOrder {
   direction: OrderDirection;
   attributeId?: string | null;
   field?: ProductOrderField | null;
+}
+
+export interface ProductStockFilterInput {
+  warehouseIds?: string[] | null;
+  quantity?: IntRangeInput | null;
 }
 
 export interface ProductTypeFilterInput {
@@ -1093,6 +1103,7 @@ export interface ProductVariantCreateInput {
   trackInventory?: boolean | null;
   weight?: any | null;
   product: string;
+  stocks?: StockInput[] | null;
 }
 
 export interface ProductVariantInput {
@@ -1219,6 +1230,11 @@ export interface StaffInput {
 export interface StaffUserInput {
   status?: StaffMemberStatus | null;
   search?: string | null;
+}
+
+export interface StockInput {
+  warehouse: string;
+  quantity?: number | null;
 }
 
 export interface TranslationInput {

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PermissionGroupInput, PermissionEnum } from "./../../types/globalTypes";
+import { PermissionGroupUpdateInput, PermissionEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: PermissionGroupUpdate
@@ -55,5 +55,5 @@ export interface PermissionGroupUpdate {
 
 export interface PermissionGroupUpdateVariables {
   id: string;
-  input: PermissionGroupInput;
+  input: PermissionGroupUpdateInput;
 }
