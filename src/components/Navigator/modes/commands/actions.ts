@@ -45,7 +45,7 @@ export function searchInCommands(
     {
       label: intl.formatMessage(messages.createProduct),
       onClick: () => {
-        navigate(productAddUrl);
+        navigate(productAddUrl());
         return false;
       }
     },

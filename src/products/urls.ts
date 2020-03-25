@@ -17,7 +17,10 @@ import {
 const productSection = "/products/";
 
 export const productAddPath = urlJoin(productSection, "add");
-export const productAddUrl = productAddPath;
+export type ProductAddUrlDialog = "edit-stocks";
+export type ProductAddUrlQueryParams = Dialog<ProductAddUrlDialog>;
+export const productAddUrl = (params?: ProductAddUrlQueryParams): string =>
+  productAddPath + "?" + stringifyQs(params);
 
 export const productListPath = productSection;
 export type ProductListUrlDialog =
