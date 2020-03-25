@@ -57,8 +57,6 @@ const messages = defineMessages({
   }
 });
 
-// cannot_delete
-
 function getOrderErrorMessage(
   err: OrderErrorFragment,
   intl: IntlShape
