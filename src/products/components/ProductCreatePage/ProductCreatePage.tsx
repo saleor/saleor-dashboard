@@ -28,6 +28,7 @@ import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps } from "../../../types";
 import {
   createAttributeChangeHandler,
@@ -81,6 +82,7 @@ interface ProductCreatePageProps {
   }>;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
+  warehouses: SearchWarehouses_search_edges_node[];
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
@@ -103,6 +105,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   header,
   productTypes: productTypeChoiceList,
   saveButtonBarState,
+  warehouses,
   onBack,
   fetchProductTypes,
   onSubmit,
@@ -116,7 +119,18 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     data: attributes,
     set: setAttributeData
   } = useFormset<ProductAttributeInputData>([]);
-  const { change: changeStockData, data: stocks } = useFormset<null>([]);
+  const { change: changeStockData, data: stocks, set: setStocks } = useFormset<
+    null
+  >([]);
+  React.useEffect(() => {
+    const newStocks = warehouses.map(warehouse => ({
+      data: null,
+      id: warehouse.id,
+      label: warehouse.name,
+      value: stocks.find(stock => stock.id === warehouse.id)?.value || 0
+    }));
+    setStocks(newStocks);
+  }, [JSON.stringify(warehouses)]);
 
   // Ensures that it will not change after component rerenders, because it
   // generates different block keys and it causes editor to lose its content.
@@ -248,7 +262,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       onFormDataChange={change}
                       errors={errors}
                       stocks={stocks}
-                      onWarehouseEdit={onWarehouseEdit}
+                      onWarehousesEdit={onWarehouseEdit}
                     />
                     <CardSpacer />
                   </>

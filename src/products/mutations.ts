@@ -302,6 +302,7 @@ export const productCreateMutation = gql`
     $sku: String
     $stockQuantity: Int
     $seo: SeoInput
+    $stocks: [StockInput!]!
   ) {
     productCreate(
       input: {
@@ -318,6 +319,7 @@ export const productCreateMutation = gql`
         sku: $sku
         quantity: $stockQuantity
         seo: $seo
+        stocks: $stocks
       }
     ) {
       errors: productErrors {
