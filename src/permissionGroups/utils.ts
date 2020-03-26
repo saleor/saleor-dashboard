@@ -1,5 +1,8 @@
+import difference from "lodash-es/difference";
+
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
+import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
 
 /**
  * Will return true if group has all permissions available in shop assigned.
@@ -8,9 +11,7 @@ export const isGroupFullAccess = (
   permissionGroup: PermissionGroupDetails_permissionGroup,
   shopPermissions: ShopInfo_shop_permissions[]
 ) => {
-  const assignedCodes = permissionGroup?.permissions
-    ? permissionGroup.permissions.map(perm => perm.code)
-    : [];
+  const assignedCodes = extractPermissionCodes(permissionGroup);
 
   if (assignedCodes.length !== shopPermissions?.length) {
     return false;
@@ -33,3 +34,35 @@ export const extractPermissionCodes = (
   permissionGroup?.permissions
     ? permissionGroup.permissions.map(perm => perm.code)
     : [];
+
+/**
+ * Return lists of permissions which have to be added and removed from group.
+ */
+export const permissionsDiff = (
+  permissionGroup: PermissionGroupDetails_permissionGroup,
+  formData: PermissionGroupDetailsPageFormData
+) => {
+  const newPermissions = formData.permissions;
+  const oldPermissions = extractPermissionCodes(permissionGroup);
+
+  return {
+    addPermissions: difference(newPermissions, oldPermissions),
+    removePermissions: difference(oldPermissions, newPermissions)
+  };
+};
+
+/**
+ * Return lists of users which have to be added and removed from group.
+ */
+export const usersDiff = (
+  permissionGroup: PermissionGroupDetails_permissionGroup,
+  formData: PermissionGroupDetailsPageFormData
+) => {
+  const newUsers = formData.users;
+  const oldUsers = permissionGroup?.users;
+
+  return {
+    addUsers: difference(newUsers, oldUsers),
+    removeUsers: difference(oldUsers, newUsers)
+  };
+};

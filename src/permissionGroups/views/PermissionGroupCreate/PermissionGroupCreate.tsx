@@ -45,7 +45,8 @@ const PermissionGroupCreateView: React.FC = () => {
           name: formData.name,
           permissions: formData.hasFullAccess
             ? shop.permissions.map(perm => perm.code)
-            : formData.permissions
+            : formData.permissions,
+          users: []
         }
       }
     });

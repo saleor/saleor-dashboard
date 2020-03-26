@@ -20,7 +20,10 @@ import {
 } from "@saleor/permissionGroups/utils";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
 import PermissionGroupInfo from "../PermissionGroupInfo";
-import { PermissionGroupDetails_permissionGroup } from "../../types/PermissionGroupDetails";
+import {
+  PermissionGroupDetails_permissionGroup,
+  PermissionGroupDetails_permissionGroup_users
+} from "../../types/PermissionGroupDetails";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
 
 export interface PermissionGroupDetailsPageFormData {
@@ -28,6 +31,7 @@ export interface PermissionGroupDetailsPageFormData {
   hasFullAccess: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
+  users: PermissionGroupDetails_permissionGroup_users[];
 }
 
 export interface PermissionGroupDetailsPageProps
@@ -35,6 +39,7 @@ export interface PermissionGroupDetailsPageProps
     SortPage<MembersListUrlSortField> {
   errors: UserError[];
   permissionGroup: PermissionGroupDetails_permissionGroup;
+  members: PermissionGroupDetails_permissionGroup_users[];
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
   disabled: boolean;
@@ -53,6 +58,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   saveButtonBarState,
   errors,
   onSubmit,
+  members,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -61,7 +67,8 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     isActive: false,
     name: permissionGroup?.name ? permissionGroup.name : "",
-    permissions: extractPermissionCodes(permissionGroup)
+    permissions: extractPermissionCodes(permissionGroup),
+    users: members || permissionGroup?.users
   };
 
   return (
@@ -87,7 +94,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
               <PermissionGroupMemberList
                 disabled={disabled}
                 {...listProps}
-                users={permissionGroup?.users}
+                users={data?.users}
               />
             </div>
             <div>
