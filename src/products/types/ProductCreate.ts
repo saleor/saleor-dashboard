@@ -212,4 +212,5 @@ export interface ProductCreateVariables {
   stockQuantity?: number | null;
   seo?: SeoInput | null;
   stocks: StockInput[];
+  trackInventory: boolean;
 }

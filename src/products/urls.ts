@@ -98,8 +98,17 @@ export const productVariantEditUrl = (
 
 export const productVariantAddPath = (productId: string) =>
   urlJoin(productSection, productId, "variant/add");
-export const productVariantAddUrl = (productId: string) =>
-  productVariantAddPath(encodeURIComponent(productId));
+export type ProductVariantAddUrlDialog = "edit-stocks";
+export type ProductVariantAddUrlQueryParams = Dialog<
+  ProductVariantAddUrlDialog
+>;
+export const productVariantAddUrl = (
+  productId: string,
+  params?: ProductVariantAddUrlQueryParams
+): string =>
+  productVariantAddPath(encodeURIComponent(productId)) +
+  "?" +
+  stringifyQs(params);
 
 export const productImagePath = (productId: string, imageId: string) =>
   urlJoin(productSection, productId, "image", imageId);
