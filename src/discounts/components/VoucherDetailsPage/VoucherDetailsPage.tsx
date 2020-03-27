@@ -14,8 +14,9 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { RequirementsPicker } from "@saleor/discounts/types";
 import { sectionNames } from "@saleor/intl";
+import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
 import { maybe, splitDateTime } from "../../../misc";
-import { ListProps, TabListActions, UserError } from "../../../types";
+import { ListProps, TabListActions } from "../../../types";
 import {
   DiscountValueTypeEnum,
   VoucherTypeEnum
@@ -72,7 +73,7 @@ export interface VoucherDetailsPageProps
     > {
   activeTab: VoucherDetailsPageTab;
   defaultCurrency: string;
-  errors: UserError[];
+  errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   voucher: VoucherDetails_voucher;
   onBack: () => void;

@@ -10,7 +10,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
-import { UserError } from "../../../types";
+import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
 import { SaleType as SaleTypeEnum } from "../../../types/globalTypes";
 import DiscountDates from "../DiscountDates";
 import SaleInfo from "../SaleInfo";
@@ -30,7 +30,7 @@ export interface FormData {
 export interface SaleCreatePageProps {
   defaultCurrency: string;
   disabled: boolean;
-  errors: UserError[];
+  errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: FormData) => void;

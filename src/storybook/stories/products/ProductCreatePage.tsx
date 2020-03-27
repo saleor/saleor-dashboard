@@ -2,13 +2,13 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { fetchMoreProps } from "@saleor/fixtures";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../../../products/components/ProductCreatePage";
 import { product as productFixture } from "../../../products/fixtures";
 import { productTypes } from "../../../productTypes/fixtures";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const product = productFixture("");
 
@@ -60,7 +60,11 @@ storiesOf("Views / Products / Create product", module)
       disabled={false}
       errors={(["name", "productType", "category", "sku"] as Array<
         keyof ProductCreatePageSubmitData
-      >).map(formError)}
+      >).map(field => ({
+        __typename: "ProductError",
+        code: ProductErrorCode.INVALID,
+        field
+      }))}
       header="Add product"
       collections={product.collections}
       fetchCategories={() => undefined}

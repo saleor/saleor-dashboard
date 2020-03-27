@@ -1,6 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { DiscountErrorCode } from "@saleor/types/globalTypes";
 import SaleDetailsPage, {
   SaleDetailsPageProps,
   SaleDetailsPageTab
@@ -8,7 +9,6 @@ import SaleDetailsPage, {
 import { sale } from "../../../discounts/fixtures";
 import { listActionsProps } from "../../../fixtures";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: SaleDetailsPageProps = {
   activeTab: SaleDetailsPageTab.categories,
@@ -51,7 +51,11 @@ storiesOf("Views / Discounts / Sale details", module)
   .add("form errors", () => (
     <SaleDetailsPage
       {...props}
-      errors={["name", "startDate", "endDate", "value"].map(formError)}
+      errors={["name", "startDate", "endDate", "value"].map(field => ({
+        __typename: "DiscountError",
+        code: DiscountErrorCode.INVALID,
+        field
+      }))}
     />
   ))
   .add("collections", () => (

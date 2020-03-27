@@ -6,6 +6,28 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum AccountErrorCode {
+  ACTIVATE_OWN_ACCOUNT = "ACTIVATE_OWN_ACCOUNT",
+  ACTIVATE_SUPERUSER_ACCOUNT = "ACTIVATE_SUPERUSER_ACCOUNT",
+  ASSIGN_NON_STAFF_MEMBER = "ASSIGN_NON_STAFF_MEMBER",
+  DEACTIVATE_OWN_ACCOUNT = "DEACTIVATE_OWN_ACCOUNT",
+  DEACTIVATE_SUPERUSER_ACCOUNT = "DEACTIVATE_SUPERUSER_ACCOUNT",
+  DELETE_NON_STAFF_USER = "DELETE_NON_STAFF_USER",
+  DELETE_OWN_ACCOUNT = "DELETE_OWN_ACCOUNT",
+  DELETE_STAFF_ACCOUNT = "DELETE_STAFF_ACCOUNT",
+  DELETE_SUPERUSER_ACCOUNT = "DELETE_SUPERUSER_ACCOUNT",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  INVALID_PASSWORD = "INVALID_PASSWORD",
+  NOT_FOUND = "NOT_FOUND",
+  PASSWORD_ENTIRELY_NUMERIC = "PASSWORD_ENTIRELY_NUMERIC",
+  PASSWORD_TOO_COMMON = "PASSWORD_TOO_COMMON",
+  PASSWORD_TOO_SHORT = "PASSWORD_TOO_SHORT",
+  PASSWORD_TOO_SIMILAR = "PASSWORD_TOO_SIMILAR",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum AddressTypeEnum {
   BILLING = "BILLING",
   SHIPPING = "SHIPPING",
@@ -324,6 +346,14 @@ export enum CountryCode {
   ZW = "ZW",
 }
 
+export enum DiscountErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum DiscountStatusEnum {
   ACTIVE = "ACTIVE",
   EXPIRED = "EXPIRED",
@@ -386,6 +416,18 @@ export enum LanguageCodeEnum {
   ZH_HANT = "ZH_HANT",
 }
 
+export enum MenuErrorCode {
+  CANNOT_ASSIGN_NODE = "CANNOT_ASSIGN_NODE",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  INVALID_MENU_ITEM = "INVALID_MENU_ITEM",
+  NOT_FOUND = "NOT_FOUND",
+  NO_MENU_ITEM_PROVIDED = "NO_MENU_ITEM_PROVIDED",
+  REQUIRED = "REQUIRED",
+  TOO_MANY_MENU_ITEMS = "TOO_MANY_MENU_ITEMS",
+  UNIQUE = "UNIQUE",
+}
+
 export enum MenuSortField {
   ITEMS_COUNT = "ITEMS_COUNT",
   NAME = "NAME",
@@ -401,6 +443,29 @@ export enum OrderAction {
 export enum OrderDirection {
   ASC = "ASC",
   DESC = "DESC",
+}
+
+export enum OrderErrorCode {
+  BILLING_ADDRESS_NOT_SET = "BILLING_ADDRESS_NOT_SET",
+  CANNOT_CANCEL_FULFILLMENT = "CANNOT_CANCEL_FULFILLMENT",
+  CANNOT_CANCEL_ORDER = "CANNOT_CANCEL_ORDER",
+  CANNOT_DELETE = "CANNOT_DELETE",
+  CANNOT_REFUND = "CANNOT_REFUND",
+  CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
+  FULFILL_ORDER_LINE = "FULFILL_ORDER_LINE",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_EDITABLE = "NOT_EDITABLE",
+  NOT_FOUND = "NOT_FOUND",
+  ORDER_NO_SHIPPING_ADDRESS = "ORDER_NO_SHIPPING_ADDRESS",
+  PAYMENT_ERROR = "PAYMENT_ERROR",
+  PAYMENT_MISSING = "PAYMENT_MISSING",
+  REQUIRED = "REQUIRED",
+  SHIPPING_METHOD_NOT_APPLICABLE = "SHIPPING_METHOD_NOT_APPLICABLE",
+  SHIPPING_METHOD_REQUIRED = "SHIPPING_METHOD_REQUIRED",
+  UNIQUE = "UNIQUE",
+  VOID_INACTIVE_PAYMENT = "VOID_INACTIVE_PAYMENT",
+  ZERO_QUANTITY = "ZERO_QUANTITY",
 }
 
 export enum OrderEventsEmailsEnum {
@@ -460,6 +525,14 @@ export enum OrderStatusFilter {
   READY_TO_CAPTURE = "READY_TO_CAPTURE",
   READY_TO_FULFILL = "READY_TO_FULFILL",
   UNFULFILLED = "UNFULFILLED",
+}
+
+export enum PageErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
 }
 
 export enum PageSortField {
@@ -558,9 +631,29 @@ export enum ServiceAccountSortField {
   NAME = "NAME",
 }
 
+export enum ShippingErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  MAX_LESS_THAN_MIN = "MAX_LESS_THAN_MIN",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum ShippingMethodTypeEnum {
   PRICE = "PRICE",
   WEIGHT = "WEIGHT",
+}
+
+export enum ShopErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  CANNOT_FETCH_TAX_RATES = "CANNOT_FETCH_TAX_RATES",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
 }
 
 export enum StaffMemberStatus {
@@ -919,7 +1012,7 @@ export interface NameTranslationInput {
 }
 
 export interface OrderAddNoteInput {
-  message?: string | null;
+  message: string;
 }
 
 export interface OrderDraftFilterInput {
@@ -1016,6 +1109,7 @@ export interface ProductFilterInput {
   attributes?: (AttributeInput | null)[] | null;
   stockAvailability?: StockAvailability | null;
   productType?: string | null;
+  stocks?: ProductStockFilterInput | null;
   search?: string | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
@@ -1025,6 +1119,11 @@ export interface ProductOrder {
   direction: OrderDirection;
   attributeId?: string | null;
   field?: ProductOrderField | null;
+}
+
+export interface ProductStockFilterInput {
+  warehouseIds?: string[] | null;
+  quantity?: IntRangeInput | null;
 }
 
 export interface ProductTypeFilterInput {
@@ -1070,6 +1169,7 @@ export interface ProductVariantCreateInput {
   trackInventory?: boolean | null;
   weight?: any | null;
   product: string;
+  stocks?: StockInput[] | null;
 }
 
 export interface ProductVariantInput {
@@ -1196,6 +1296,11 @@ export interface StaffInput {
 export interface StaffUserInput {
   status?: StaffMemberStatus | null;
   search?: string | null;
+}
+
+export interface StockInput {
+  warehouse: string;
+  quantity?: number | null;
 }
 
 export interface TranslationInput {

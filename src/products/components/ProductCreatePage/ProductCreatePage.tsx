@@ -27,7 +27,8 @@ import { SearchCollections_search_edges_node } from "@saleor/searches/types/Sear
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { FetchMoreProps, UserError } from "../../../types";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { FetchMoreProps } from "../../../types";
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
@@ -62,7 +63,7 @@ export interface ProductCreatePageSubmitData extends FormData {
 }
 
 interface ProductCreatePageProps {
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
   currency: string;
@@ -227,6 +228,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   currency={currency}
                   data={data}
                   disabled={disabled}
+                  errors={errors}
                   onChange={change}
                 />
                 <CardSpacer />

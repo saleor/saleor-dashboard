@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { ProductErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductImageCreate
 // ====================================================
 
 export interface ProductImageCreate_productImageCreate_errors {
-  __typename: "Error";
+  __typename: "ProductError";
+  code: ProductErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface ProductImageCreate_productImageCreate_product_category {

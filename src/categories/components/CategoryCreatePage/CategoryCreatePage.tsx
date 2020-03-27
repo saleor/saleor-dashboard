@@ -11,7 +11,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { sectionNames } from "@saleor/intl";
-import { UserError } from "../../../types";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 
 interface FormData {
@@ -29,7 +29,7 @@ const initialData: FormData = {
 };
 
 export interface CategoryCreatePageProps {
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit(data: FormData);

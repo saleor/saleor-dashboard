@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { formError } from "@saleor/storybook/misc";
+import { MenuErrorCode } from "@saleor/types/globalTypes";
 import MenuCreateDialog, {
   MenuCreateDialogProps
 } from "../../../navigation/components/MenuCreateDialog";
@@ -23,5 +23,12 @@ storiesOf("Navigation / Menu create", module)
     <MenuCreateDialog {...props} disabled={true} confirmButtonState="loading" />
   ))
   .add("form errors", () => (
-    <MenuCreateDialog {...props} errors={["name"].map(formError)} />
+    <MenuCreateDialog
+      {...props}
+      errors={["name"].map(field => ({
+        __typename: "MenuError",
+        code: MenuErrorCode.INVALID,
+        field
+      }))}
+    />
   ));

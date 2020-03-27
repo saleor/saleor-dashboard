@@ -1,12 +1,12 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { ShippingErrorCode } from "@saleor/types/globalTypes";
 import ShippingZoneDetailsPage, {
   ShippingZoneDetailsPageProps
 } from "../../../shipping/components/ShippingZoneDetailsPage";
 import { shippingZone } from "../../../shipping/fixtures";
 import Decorator from "../../Decorator";
-import { formError } from "../../misc";
 
 const props: ShippingZoneDetailsPageProps = {
   disabled: false,
@@ -36,5 +36,12 @@ storiesOf("Views / Shipping / Shipping zone details", module)
     />
   ))
   .add("form errors", () => (
-    <ShippingZoneDetailsPage {...props} errors={["name"].map(formError)} />
+    <ShippingZoneDetailsPage
+      {...props}
+      errors={["name"].map(field => ({
+        __typename: "ShippingError",
+        code: ShippingErrorCode.INVALID,
+        field
+      }))}
+    />
   ));

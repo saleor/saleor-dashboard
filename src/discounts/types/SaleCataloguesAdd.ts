@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CatalogueInput, SaleType } from "./../../types/globalTypes";
+import { CatalogueInput, DiscountErrorCode, SaleType } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: SaleCataloguesAdd
 // ====================================================
 
 export interface SaleCataloguesAdd_saleCataloguesAdd_errors {
-  __typename: "Error";
+  __typename: "DiscountError";
+  code: DiscountErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface SaleCataloguesAdd_saleCataloguesAdd_sale_products_edges_node_productType {

@@ -10,8 +10,8 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { maybe } from "../../../misc";
-import { UserError } from "../../../types";
+import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
+import { maybe, getStringOrPlaceholder } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import { ShippingZoneDetailsFragment } from "../../types/ShippingZoneDetailsFragment";
 import ShippingZoneInfo from "../ShippingZoneInfo";
@@ -23,7 +23,7 @@ export interface FormData {
 
 export interface ShippingZoneDetailsPageProps {
   disabled: boolean;
-  errors: UserError[];
+  errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   shippingZone: ShippingZoneDetailsFragment;
   onBack: () => void;
@@ -59,6 +59,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   const initialForm: FormData = {
     name: shippingZone?.name || ""
   };
+
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit }) => (
@@ -66,13 +67,18 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
           <AppHeader onBack={onBack}>
             <FormattedMessage defaultMessage="Shipping" />
           </AppHeader>
-          <PageHeader title={maybe(() => shippingZone.name)} />
+          <PageHeader title={getStringOrPlaceholder(shippingZone?.name)} />
           <Grid>
             <div>
-              <ShippingZoneInfo data={data} errors={errors} onChange={change} />
+              <ShippingZoneInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
               <CardSpacer />
               <CountryList
-                countries={maybe(() => shippingZone.countries)}
+                countries={shippingZone?.countries}
                 disabled={disabled}
                 emptyText={maybe(
                   () =>

@@ -41,20 +41,8 @@ export const CustomerCreate: React.FC<{}> = () => {
               <CustomerCreatePage
                 countries={maybe(() => data.shop.countries, [])}
                 disabled={loading || createCustomerOpts.loading}
-                errors={maybe(() => {
-                  const errs = createCustomerOpts.data.customerCreate.errors;
-                  return errs.map(err =>
-                    err.field.split(":").length > 1
-                      ? {
-                          ...err,
-                          field: err.field.split(":")[1]
-                        }
-                      : err
-                  );
-                }, [])}
-                saveButtonBar={
-                  createCustomerOpts.loading ? "loading" : "default"
-                }
+                errors={createCustomerOpts.data?.customerCreate.errors || []}
+                saveButtonBar={createCustomerOpts.status}
                 onBack={() => navigate(customerListUrl())}
                 onSubmit={formData => {
                   createCustomer({

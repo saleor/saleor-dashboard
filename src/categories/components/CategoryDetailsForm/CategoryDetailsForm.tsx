@@ -9,8 +9,8 @@ import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import { commonMessages } from "@saleor/intl";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { maybe } from "../../../misc";
 import { CategoryDetails_category } from "../../types/CategoryDetails";
 
@@ -21,7 +21,7 @@ interface CategoryDetailsFormProps {
     description: RawDraftContentState;
   };
   disabled: boolean;
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -33,6 +33,8 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
   errors
 }) => {
   const intl = useIntl();
+
+  const formErrors = getFormErrors(["name", "descriptionJson"], errors);
 
   return (
     <Card>
@@ -49,16 +51,16 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
             disabled={disabled}
             value={data && data.name}
             onChange={onChange}
-            error={!!getFieldError(errors, "name")}
-            helperText={getFieldError(errors, "name")?.message}
+            error={!!formErrors.name}
+            helperText={getProductErrorMessage(formErrors.name, intl)}
             fullWidth
           />
         </div>
         <FormSpacer />
         <RichTextEditor
           disabled={disabled}
-          error={!!getFieldError(errors, "descriptionJson")}
-          helperText={getFieldError(errors, "descriptionJson")?.message}
+          error={!!formErrors.descriptionJson}
+          helperText={getProductErrorMessage(formErrors.descriptionJson, intl)}
           label={intl.formatMessage({
             defaultMessage: "Category Description"
           })}

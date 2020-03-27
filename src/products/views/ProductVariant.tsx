@@ -16,7 +16,7 @@ import ProductVariantOperations from "../containers/ProductVariantOperations";
 import { TypedProductVariantQuery } from "../queries";
 import {
   VariantUpdate,
-  VariantUpdate_productVariantUpdate_productErrors
+  VariantUpdate_productVariantUpdate_errors
 } from "../types/VariantUpdate";
 import {
   productUrl,
@@ -40,7 +40,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
   const [errors, setErrors] = useState<
-    VariantUpdate_productVariantUpdate_productErrors[]
+    VariantUpdate_productVariantUpdate_errors[]
   >([]);
   useEffect(() => {
     setErrors([]);
@@ -66,10 +66,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           navigate(productUrl(productId));
         };
         const handleUpdate = (data: VariantUpdate) => {
-          if (!data.productVariantUpdate.productErrors.length) {
+          if (data.productVariantUpdate.errors.length === 0) {
             notify({ text: intl.formatMessage(commonMessages.savedChanges) });
           } else {
-            setErrors(data.productVariantUpdate.productErrors);
+            setErrors(data.productVariantUpdate.errors);
           }
         };
 

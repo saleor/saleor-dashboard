@@ -11,8 +11,10 @@ import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { buttonMessages } from "@saleor/intl";
-import { UserError, DialogProps } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { DialogProps } from "@saleor/types";
+import { getFormErrors } from "@saleor/utils/errors";
+import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
+import getShopErrorMessage from "@saleor/utils/errors/shop";
 import { authorizationKeyTypes } from "../../../misc";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 
@@ -23,7 +25,7 @@ export interface SiteSettingsKeyDialogForm {
 }
 
 export interface SiteSettingsKeyDialogProps extends DialogProps {
-  errors: UserError[];
+  errors: ShopErrorFragment[];
   initial: SiteSettingsKeyDialogForm;
   onSubmit: (data: SiteSettingsKeyDialogForm) => void;
 }
@@ -37,8 +39,10 @@ const SiteSettingsKeyDialog: React.FC<SiteSettingsKeyDialogProps> = ({
 }) => {
   const intl = useIntl();
 
+  const formErrors = getFormErrors(["keyType", "key", "password"], errors);
+
   return (
-    <Dialog onClose={onClose} maxWidth="xs" open={open}>
+    <Dialog onClose={onClose} maxWidth="xs" fullWidth open={open}>
       <Form initial={initial} onSubmit={onSubmit}>
         {({ change, data }) => (
           <>
@@ -54,37 +58,37 @@ const SiteSettingsKeyDialog: React.FC<SiteSettingsKeyDialogProps> = ({
                   label: authorizationKeyTypes[key],
                   value: key
                 }))}
-                error={!!getFieldError(errors, "keyType")}
+                error={!!formErrors.keyType}
                 label={intl.formatMessage({
                   defaultMessage: "Authentication type",
                   description: "authentication provider name"
                 })}
-                hint={getFieldError(errors, "keyType")?.message}
+                hint={getShopErrorMessage(formErrors.keyType, intl)}
                 name="type"
                 onChange={change}
                 value={data.type}
               />
               <FormSpacer />
               <TextField
-                error={!!getFieldError(errors, "key")}
+                error={!!formErrors.key}
                 fullWidth
                 label={intl.formatMessage({
                   defaultMessage: "Key",
                   description: "authentication provider API key"
                 })}
-                helperText={getFieldError(errors, "key")?.message}
+                helperText={getShopErrorMessage(formErrors.key, intl)}
                 name="key"
                 onChange={change}
                 value={data.key}
               />
               <FormSpacer />
               <TextField
-                error={!!getFieldError(errors, "password")}
+                error={!!formErrors.password}
                 fullWidth
                 label={intl.formatMessage({
                   defaultMessage: "Password"
                 })}
-                helperText={getFieldError(errors, "password")?.message}
+                helperText={getShopErrorMessage(formErrors.password, intl)}
                 name="password"
                 onChange={change}
                 value={data.password}

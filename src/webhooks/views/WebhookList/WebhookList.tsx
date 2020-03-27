@@ -10,7 +10,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
+import { maybe, getStringOrPlaceholder } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
 import { WebhookDelete } from "@saleor/webhooks/types/WebhookDelete";
@@ -171,7 +171,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
               disabled={loading}
               settings={settings}
               sort={getSortParams(params)}
-              webhooks={maybe(() => data.webhooks.edges.map(edge => edge.node))}
+              webhooks={data?.webhooks.edges.map(edge => edge.node)}
               pageInfo={pageInfo}
               onAdd={() => navigate(webhookAddUrl)}
               onBack={() => navigate(configurationMenuUrl)}
@@ -184,12 +184,10 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
             />
             <WebhookDeleteDialog
               confirmButtonState={webhookDeleteOpts.status}
-              name={maybe(
-                () =>
-                  data.webhooks.edges.find(edge => edge.node.id === params.id)
-                    .node.name,
-                "..."
-              )}
+              name={
+                data?.webhooks.edges.find(edge => edge.node.id === params.id)
+                  ?.node?.name
+              }
               onClose={closeModal}
               onConfirm={handleRemoveConfirm}
               open={params.action === "remove"}
@@ -205,7 +203,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
               confirmButtonState="default"
               onClose={closeModal}
               onSubmit={handleTabDelete}
-              tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+              tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
             />
           </>
         );

@@ -15,8 +15,9 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { sectionNames } from "@saleor/intl";
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { maybe } from "../../../misc";
-import { TabListActions, UserError } from "../../../types";
+import { TabListActions } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import CategoryList from "../../components/CategoryList";
 import {
@@ -44,7 +45,7 @@ export interface CategoryUpdatePageProps
   extends TabListActions<"productListToolbar" | "subcategoryListToolbar"> {
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;
-  errors: UserError[];
+  errors: ProductErrorFragment[];
   disabled: boolean;
   category: CategoryDetails_category;
   products: CategoryDetails_category_products_edges_node[];

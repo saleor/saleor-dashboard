@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ShippingPriceInput, ShippingMethodTypeEnum } from "./../../types/globalTypes";
+import { ShippingPriceInput, ShippingErrorCode, ShippingMethodTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CreateShippingRate
 // ====================================================
 
 export interface CreateShippingRate_shippingPriceCreate_errors {
-  __typename: "Error";
+  __typename: "ShippingError";
+  code: ShippingErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface CreateShippingRate_shippingPriceCreate_shippingZone_countries {

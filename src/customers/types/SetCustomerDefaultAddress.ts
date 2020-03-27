@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AddressTypeEnum } from "./../../types/globalTypes";
+import { AddressTypeEnum, AccountErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: SetCustomerDefaultAddress
 // ====================================================
 
 export interface SetCustomerDefaultAddress_addressSetDefault_errors {
-  __typename: "Error";
+  __typename: "AccountError";
+  code: AccountErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface SetCustomerDefaultAddress_addressSetDefault_user_addresses_country {

@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { VoucherInput, DiscountValueTypeEnum } from "./../../types/globalTypes";
+import { VoucherInput, DiscountErrorCode, DiscountValueTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VoucherCreate
 // ====================================================
 
 export interface VoucherCreate_voucherCreate_errors {
-  __typename: "Error";
+  __typename: "DiscountError";
+  code: DiscountErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface VoucherCreate_voucherCreate_voucher_countries {

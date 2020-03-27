@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ShippingMethodTypeEnum } from "./../../types/globalTypes";
+import { ShippingErrorCode, ShippingMethodTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: DeleteShippingRate
 // ====================================================
 
 export interface DeleteShippingRate_shippingPriceDelete_errors {
-  __typename: "Error";
+  __typename: "ShippingError";
+  code: ShippingErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface DeleteShippingRate_shippingPriceDelete_shippingZone_countries {

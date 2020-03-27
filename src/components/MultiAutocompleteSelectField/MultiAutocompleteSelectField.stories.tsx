@@ -30,7 +30,7 @@ const Story: React.FC<Partial<
   MultiAutocompleteSelectFieldProps & {
     enableLoadMore: boolean;
   }
->> = ({ allowCustomValues, enableLoadMore }) => {
+>> = ({ enableLoadMore, ...rest }) => {
   const { change, data: countries } = useMultiAutocomplete([suggestions[0]]);
 
   return (
@@ -49,7 +49,7 @@ const Story: React.FC<Partial<
           loading={loading}
           hasMore={enableLoadMore ? hasMore : false}
           onFetchMore={enableLoadMore ? onFetchMore : undefined}
-          allowCustomValues={allowCustomValues}
+          {...rest}
         />
       )}
     </ChoiceProvider>
@@ -84,4 +84,5 @@ storiesOf("Generics / Multiple select with autocomplete", module)
   .add("interactive with custom option", () => (
     <Story allowCustomValues={true} />
   ))
-  .add("interactive with load more", () => <Story enableLoadMore={true} />);
+  .add("interactive with load more", () => <Story enableLoadMore={true} />)
+  .add("interactive with error", () => <Story error={true} />);

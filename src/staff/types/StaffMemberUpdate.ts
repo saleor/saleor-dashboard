@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { StaffInput, PermissionEnum } from "./../../types/globalTypes";
+import { StaffInput, AccountErrorCode, PermissionEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: StaffMemberUpdate
 // ====================================================
 
 export interface StaffMemberUpdate_staffUpdate_errors {
-  __typename: "Error";
+  __typename: "AccountError";
+  code: AccountErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface StaffMemberUpdate_staffUpdate_user_avatar {

@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
+import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderVoid
 // ====================================================
 
 export interface OrderVoid_orderVoid_errors {
-  __typename: "Error";
+  __typename: "OrderError";
+  code: OrderErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface OrderVoid_orderVoid_order_billingAddress_country {

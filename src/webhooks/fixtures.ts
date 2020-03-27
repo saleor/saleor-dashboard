@@ -23,6 +23,17 @@ export const webhookList: Webhooks_webhooks_edges_node[] = [
       id: "Jzx1ss23sEt==",
       name: "Test Account 2"
     }
+  },
+  {
+    __typename: "Webhook",
+    id: "Jzx12123sEt==",
+    isActive: false,
+    name: null,
+    serviceAccount: {
+      __typename: "ServiceAccount",
+      id: "Jzx1ss23sEt==",
+      name: "Test Account 2"
+    }
   }
 ];
 export const webhook: WebhookDetails_webhook = {

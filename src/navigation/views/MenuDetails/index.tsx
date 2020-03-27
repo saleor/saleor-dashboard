@@ -169,6 +169,11 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                     <>
                       <MenuDetailsPage
                         disabled={loading}
+                        errors={[
+                          ...(menuUpdateOpts.data?.menuUpdate.errors || []),
+                          ...(menuUpdateOpts.data?.menuItemMove.errors || []),
+                          ...(menuUpdateOpts.data?.menuUpdate.errors || [])
+                        ]}
                         menu={maybe(() => data.menu)}
                         onBack={() => navigate(menuListUrl())}
                         onDelete={() =>

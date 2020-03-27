@@ -11,8 +11,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { sectionNames } from "@saleor/intl";
+import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
 import { maybe, splitDateTime } from "../../../misc";
-import { ListProps, TabListActions, UserError } from "../../../types";
+import { ListProps, TabListActions } from "../../../types";
 import { SaleType as SaleTypeEnum } from "../../../types/globalTypes";
 import { SaleDetails_sale } from "../../types/SaleDetails";
 import DiscountCategories from "../DiscountCategories";
@@ -55,7 +56,7 @@ export interface SaleDetailsPageProps
     > {
   activeTab: SaleDetailsPageTab;
   defaultCurrency: string;
-  errors: UserError[];
+  errors: DiscountErrorFragment[];
   sale: SaleDetails_sale;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;

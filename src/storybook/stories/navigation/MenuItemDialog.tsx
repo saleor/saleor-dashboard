@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { formError } from "@saleor/storybook/misc";
+import { MenuErrorCode } from "@saleor/types/globalTypes";
 import MenuItemDialog, {
   MenuItemDialogProps
 } from "../../../navigation/components/MenuItemDialog";
@@ -48,6 +48,10 @@ storiesOf("Navigation / Menu item", module)
   .add("errors", () => (
     <MenuItemDialog
       {...props}
-      errors={["", "", "name", "category"].map(formError)}
+      errors={[null, null, "name", "category"].map(field => ({
+        __typename: "MenuError",
+        code: MenuErrorCode.INVALID,
+        field
+      }))}
     />
   ));

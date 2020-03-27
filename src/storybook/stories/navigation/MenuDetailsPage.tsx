@@ -1,6 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { MenuErrorCode } from "@saleor/types/globalTypes";
 import MenuDetailsPage, {
   MenuDetailsPageProps
 } from "../../../navigation/components/MenuDetailsPage";
@@ -9,6 +10,7 @@ import Decorator from "../../Decorator";
 
 const props: MenuDetailsPageProps = {
   disabled: false,
+  errors: [],
   menu,
   onBack: () => undefined,
   onDelete: () => undefined,
@@ -32,5 +34,15 @@ storiesOf("Views / Navigation / Menu details", module)
         ...props.menu,
         items: []
       }}
+    />
+  ))
+  .add("form errors", () => (
+    <MenuDetailsPage
+      {...props}
+      errors={["name"].map(field => ({
+        __typename: "MenuError",
+        code: MenuErrorCode.INVALID,
+        field
+      }))}
     />
   ));

@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ServiceAccountInput } from "./../../types/globalTypes";
+import { ServiceAccountInput, AccountErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ServiceCreate
 // ====================================================
 
 export interface ServiceCreate_serviceAccountCreate_errors {
-  __typename: "Error";
+  __typename: "AccountError";
+  code: AccountErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface ServiceCreate_serviceAccountCreate_serviceAccount {
@@ -23,8 +23,8 @@ export interface ServiceCreate_serviceAccountCreate_serviceAccount {
 
 export interface ServiceCreate_serviceAccountCreate {
   __typename: "ServiceAccountCreate";
-  errors: ServiceCreate_serviceAccountCreate_errors[];
   authToken: string | null;
+  errors: ServiceCreate_serviceAccountCreate_errors[];
   serviceAccount: ServiceCreate_serviceAccountCreate_serviceAccount | null;
 }
 

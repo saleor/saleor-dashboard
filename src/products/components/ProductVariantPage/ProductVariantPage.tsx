@@ -12,7 +12,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { VariantUpdate_productVariantUpdate_productErrors } from "@saleor/products/types/VariantUpdate";
+import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import { getAttributeInputFromVariant } from "@saleor/products/utils/data";
 import { maybe } from "../../../misc";
 import { ProductVariant } from "../../types/ProductVariant";
@@ -39,7 +39,7 @@ export interface ProductVariantPageSubmitData
 
 interface ProductVariantPageProps {
   variant?: ProductVariant;
-  errors: VariantUpdate_productVariantUpdate_productErrors[];
+  errors: VariantUpdate_productVariantUpdate_errors[];
   saveButtonBarState: ConfirmButtonTransitionState;
   loading?: boolean;
   placeholderImage?: string;

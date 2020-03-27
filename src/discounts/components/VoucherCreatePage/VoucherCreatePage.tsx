@@ -10,7 +10,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { sectionNames } from "@saleor/intl";
-import { UserError } from "../../../types";
+import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
 import {
   DiscountValueTypeEnum,
   VoucherTypeEnum
@@ -21,8 +21,8 @@ import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
 import VoucherTypes from "../VoucherTypes";
-
 import VoucherValue from "../VoucherValue";
+
 export interface FormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
@@ -45,7 +45,7 @@ export interface FormData {
 export interface VoucherCreatePageProps {
   defaultCurrency: string;
   disabled: boolean;
-  errors: UserError[];
+  errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onSubmit: (data: FormData) => void;

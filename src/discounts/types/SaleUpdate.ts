@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { SaleInput, SaleType } from "./../../types/globalTypes";
+import { SaleInput, DiscountErrorCode, SaleType } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: SaleUpdate
 // ====================================================
 
 export interface SaleUpdate_saleUpdate_errors {
-  __typename: "Error";
+  __typename: "DiscountError";
+  code: DiscountErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface SaleUpdate_saleUpdate_sale {

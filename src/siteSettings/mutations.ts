@@ -16,16 +16,22 @@ import {
   ShopSettingsUpdateVariables
 } from "./types/ShopSettingsUpdate";
 
+const shopErrorFragment = gql`
+  fragment ShopErrorFragment on ShopError {
+    code
+    field
+  }
+`;
 const authorizationKeyAdd = gql`
+  ${shopErrorFragment}
   ${shopFragment}
   mutation AuthorizationKeyAdd(
     $input: AuthorizationKeyInput!
     $keyType: AuthorizationKeyType!
   ) {
     authorizationKeyAdd(input: $input, keyType: $keyType) {
-      errors {
-        field
-        message
+      errors: shopErrors {
+        ...ShopErrorFragment
       }
       shop {
         ...ShopFragment
@@ -39,12 +45,12 @@ export const TypedAuthorizationKeyAdd = TypedMutation<
 >(authorizationKeyAdd);
 
 const authorizationKeyDelete = gql`
+  ${shopErrorFragment}
   ${shopFragment}
   mutation AuthorizationKeyDelete($keyType: AuthorizationKeyType!) {
     authorizationKeyDelete(keyType: $keyType) {
-      errors {
-        field
-        message
+      errors: shopErrors {
+        ...ShopErrorFragment
       }
       shop {
         ...ShopFragment
@@ -58,6 +64,7 @@ export const TypedAuthorizationKeyDelete = TypedMutation<
 >(authorizationKeyDelete);
 
 const shopSettingsUpdate = gql`
+  ${shopErrorFragment}
   ${shopFragment}
   ${fragmentAddress}
   mutation ShopSettingsUpdate(
@@ -66,18 +73,16 @@ const shopSettingsUpdate = gql`
     $addressInput: AddressInput
   ) {
     shopSettingsUpdate(input: $shopSettingsInput) {
-      errors {
-        field
-        message
+      errors: shopErrors {
+        ...ShopErrorFragment
       }
       shop {
         ...ShopFragment
       }
     }
     shopDomainUpdate(input: $shopDomainInput) {
-      errors {
-        field
-        message
+      errors: shopErrors {
+        ...ShopErrorFragment
       }
       shop {
         domain {
@@ -87,9 +92,8 @@ const shopSettingsUpdate = gql`
       }
     }
     shopAddressUpdate(input: $addressInput) {
-      errors {
-        field
-        message
+      errors: shopErrors {
+        ...ShopErrorFragment
       }
       shop {
         companyAddress {

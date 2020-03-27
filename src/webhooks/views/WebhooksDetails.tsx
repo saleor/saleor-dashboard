@@ -13,7 +13,7 @@ import { WebhookDelete } from "@saleor/webhooks/types/WebhookDelete";
 import { WebhookUpdate } from "@saleor/webhooks/types/WebhookUpdate";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
-import { maybe, getStringOrPlaceholder } from "../../misc";
+import { getStringOrPlaceholder } from "../../misc";
 import WebhooksDetailsPage from "../components/WebhooksDetailsPage";
 import { TypedWebhookDelete, TypedWebhookUpdate } from "../mutations";
 import { TypedWebhooksDetailsQuery } from "../queries";
@@ -58,14 +58,14 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
   };
 
   const onWebhookUpdate = (data: WebhookUpdate) => {
-    const errors = data.webhookUpdate?.webhookErrors;
+    const errors = data.webhookUpdate?.errors;
     const webhook = data.webhookUpdate?.webhook;
 
     if (errors.length === 0 && webhook) {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate(webhookUrl(webhook.id));
+      closeModal();
     }
   };
 
@@ -87,7 +87,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
 
                 const webhook = webhookDetails?.data?.webhook;
                 const formErrors =
-                  webhookUpdateOpts.data?.webhookUpdate.webhookErrors || [];
+                  webhookUpdateOpts.data?.webhookUpdate.errors || [];
 
                 if (webhook === null) {
                   return <NotFoundPage onBack={handleOnBack} />;
@@ -106,10 +106,8 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                       saveButtonBarState={webhookUpdateOpts.status}
                       webhook={webhook}
                       fetchServiceAccounts={searchServiceAccount}
-                      services={maybe(() =>
-                        searchServiceAccountOpt.data.search.edges.map(
-                          edge => edge.node
-                        )
+                      services={searchServiceAccountOpt.data?.search.edges.map(
+                        edge => edge.node
                       )}
                       onBack={handleOnBack}
                       onDelete={() => openModal("remove")}
@@ -133,7 +131,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
                     />
                     <WebhookDeleteDialog
                       confirmButtonState={webhookDeleteOpts.status}
-                      name={getStringOrPlaceholder(webhook?.name)}
+                      name={webhook?.name}
                       onClose={closeModal}
                       onConfirm={handleRemoveConfirm}
                       open={params.action === "remove"}

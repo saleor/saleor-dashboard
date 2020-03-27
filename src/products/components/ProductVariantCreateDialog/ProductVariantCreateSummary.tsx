@@ -10,12 +10,13 @@ import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Hr from "@saleor/components/Hr";
-import { maybe } from "@saleor/misc";
-import { ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors } from "@saleor/products/types/ProductVariantBulkCreate";
+import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
+import { getFormErrors } from "@saleor/utils/errors";
+import { getBulkProductErrorMessage } from "@saleor/utils/errors/product";
 import { ProductDetails_product_productType_variantAttributes } from "../../types/ProductDetails";
 import { ProductVariantCreateFormData } from "./form";
 import { VariantField } from "./reducer";
@@ -24,7 +25,7 @@ export interface ProductVariantCreateSummaryProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
-  errors: ProductVariantBulkCreate_productVariantBulkCreate_bulkProductErrors[];
+  errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
   onVariantDataChange: (
     variantIndex: number,
     field: VariantField,
@@ -107,9 +108,7 @@ function getVariantName(
   );
 }
 
-const ProductVariantCreateSummary: React.FC<
-  ProductVariantCreateSummaryProps
-> = props => {
+const ProductVariantCreateSummary: React.FC<ProductVariantCreateSummaryProps> = props => {
   const {
     attributes,
     currencySymbol,
@@ -119,6 +118,7 @@ const ProductVariantCreateSummary: React.FC<
     onVariantDelete
   } = props;
   const classes = useStyles(props);
+  const intl = useIntl();
 
   return (
     <>
@@ -181,6 +181,10 @@ const ProductVariantCreateSummary: React.FC<
           const variantErrors = errors.filter(
             error => error.index === variantIndex
           );
+          const variantFormErrors = getFormErrors(
+            ["priceOverride", "quantity", "sku"],
+            variantErrors
+          );
 
           return (
             <div
@@ -212,16 +216,10 @@ const ProductVariantCreateSummary: React.FC<
                     endAdornment: currencySymbol
                   }}
                   className={classes.input}
-                  error={
-                    !!variantErrors.find(
-                      error => error.field === "priceOverride"
-                    )
-                  }
-                  helperText={maybe(
-                    () =>
-                      variantErrors.find(
-                        error => error.field === "priceOverride"
-                      ).message
+                  error={!!variantFormErrors.priceOverride}
+                  helperText={getBulkProductErrorMessage(
+                    variantFormErrors.priceOverride,
+                    intl
                   )}
                   inputProps={{
                     min: 0,
@@ -241,13 +239,10 @@ const ProductVariantCreateSummary: React.FC<
               <div className={classNames(classes.col, classes.colStock)}>
                 <TextField
                   className={classes.input}
-                  error={
-                    !!variantErrors.find(error => error.field === "quantity")
-                  }
-                  helperText={maybe(
-                    () =>
-                      variantErrors.find(error => error.field === "quantity")
-                        .message
+                  error={!!variantFormErrors.quantity}
+                  helperText={getBulkProductErrorMessage(
+                    variantFormErrors.quantity,
+                    intl
                   )}
                   inputProps={{
                     min: 0,
@@ -267,10 +262,10 @@ const ProductVariantCreateSummary: React.FC<
               <div className={classNames(classes.col, classes.colSku)}>
                 <TextField
                   className={classes.input}
-                  error={!!variantErrors.find(error => error.field === "sku")}
-                  helperText={maybe(
-                    () =>
-                      variantErrors.find(error => error.field === "sku").message
+                  error={!!variantFormErrors.sku}
+                  helperText={getBulkProductErrorMessage(
+                    variantFormErrors.sku,
+                    intl
                   )}
                   fullWidth
                   value={variant.sku}

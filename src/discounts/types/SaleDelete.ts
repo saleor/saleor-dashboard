@@ -2,14 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { DiscountErrorCode } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: SaleDelete
 // ====================================================
 
 export interface SaleDelete_saleDelete_errors {
-  __typename: "Error";
+  __typename: "DiscountError";
+  code: DiscountErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface SaleDelete_saleDelete {
