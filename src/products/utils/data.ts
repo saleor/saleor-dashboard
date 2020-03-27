@@ -103,6 +103,19 @@ export function getAttributeInputFromVariant(
   );
 }
 
+export function getStockInputFromVariant(
+  variant: ProductVariant
+): ProductStockInput[] {
+  return (
+    variant?.stocks.map(stock => ({
+      data: null,
+      id: stock.warehouse.id,
+      label: stock.warehouse.name,
+      value: stock.quantity.toString()
+    })) || []
+  );
+}
+
 export function getVariantAttributeInputFromProduct(
   product: ProductVariantCreateData_product
 ): VariantAttributeInput[] {

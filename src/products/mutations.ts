@@ -355,6 +355,7 @@ export const TypedVariantDeleteMutation = TypedMutation<
 >(variantDeleteMutation);
 
 export const variantUpdateMutation = gql`
+  ${bulkStockErrorFragment}
   ${fragmentVariant}
   ${productErrorFragment}
   mutation VariantUpdate(
@@ -365,6 +366,7 @@ export const variantUpdateMutation = gql`
     $sku: String
     $quantity: Int
     $trackInventory: Boolean!
+    $stocks: [StockInput!]!
   ) {
     productVariantUpdate(
       id: $id
@@ -379,6 +381,14 @@ export const variantUpdateMutation = gql`
     ) {
       errors: productErrors {
         ...ProductErrorFragment
+      }
+      productVariant {
+        ...ProductVariant
+      }
+    }
+    productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
+      errors: bulkStockErrors {
+        ...BulkStockErrorFragment
       }
       productVariant {
         ...ProductVariant

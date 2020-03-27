@@ -80,8 +80,10 @@ export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
 
 export const productVariantEditPath = (productId: string, variantId: string) =>
   urlJoin(productSection, productId, "variant", variantId);
-export type ProductVariantEditUrlDialog = "remove";
-export type ProductVariantEditUrlQueryParams = Dialog<"remove">;
+export type ProductVariantEditUrlDialog = "edit-stocks" | "remove";
+export type ProductVariantEditUrlQueryParams = Dialog<
+  ProductVariantEditUrlDialog
+>;
 export const productVariantEditUrl = (
   productId: string,
   variantId: string,
