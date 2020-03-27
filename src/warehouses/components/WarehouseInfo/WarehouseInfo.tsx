@@ -7,13 +7,14 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
 import { FormChange } from "@saleor/hooks/useForm";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
+import { getFormErrors } from "@saleor/utils/errors";
+import { WarehouseErrorFragment } from "@saleor/warehouses/types/WarehouseErrorFragment";
+import getWarehouseErrorMessage from "@saleor/utils/errors/warehouse";
 
 export interface WarehouseInfoProps {
   data: Record<"name", string>;
   disabled: boolean;
-  errors: UserError[];
+  errors: WarehouseErrorFragment[];
   onChange: FormChange;
 }
 
@@ -25,6 +26,8 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
 }) => {
   const intl = useIntl();
 
+  const formErrors = getFormErrors(["name"], errors);
+
   return (
     <Card>
       <CardTitle
@@ -33,9 +36,9 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "name")}
+          error={!!formErrors.name}
           fullWidth
-          helperText={getFieldError(errors, "name")?.message}
+          helperText={getWarehouseErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage({
             defaultMessage: "Warehouse Name"
           })}

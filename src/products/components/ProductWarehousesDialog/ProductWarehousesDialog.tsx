@@ -5,7 +5,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, useIntl, IntlShape } from "react-intl";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { diff, DiffData } from "fast-array-diff";
 
@@ -20,6 +20,9 @@ import { isSelected, toggle } from "@saleor/utils/lists";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { BulkStockErrorFragment } from "@saleor/products/types/BulkStockErrorFragment";
 import { StockErrorFragment } from "@saleor/products/types/StockErrorFragment";
+import getStockErrorMessage, {
+  getBulkStockErrorMessage
+} from "@saleor/utils/errors/stock";
 
 const useStyles = makeStyles(
   theme => ({
@@ -47,6 +50,18 @@ export interface ProductWarehousesDialogProps {
   warehousesWithStocks: string[];
   onClose: () => void;
   onConfirm: (data: DiffData<string>) => void;
+}
+
+function getErrorMessage(
+  err: BulkStockErrorFragment | StockErrorFragment,
+  intl: IntlShape
+): string {
+  switch (err?.__typename) {
+    case "BulkStockError":
+      return getBulkStockErrorMessage(err, intl);
+    default:
+      getStockErrorMessage(err, intl);
+  }
 }
 
 const ProductWarehousesDialog: React.FC<ProductWarehousesDialogProps> = ({
@@ -112,7 +127,9 @@ const ProductWarehousesDialog: React.FC<ProductWarehousesDialogProps> = ({
         </DialogContent>
         {errors.length > 0 && (
           <DialogContent className={classes.errorParagraph}>
-            <Typography color="error">{errors[0]?.message}</Typography>
+            <Typography color="error">
+              {getErrorMessage(errors[0], intl)}
+            </Typography>
           </DialogContent>
         )}
         <DialogActions>

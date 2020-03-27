@@ -15,12 +15,16 @@ import { getFormErrors } from "@saleor/utils/errors";
 import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
 import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
+import getWarehouseErrorMessage from "@saleor/utils/errors/warehouse";
+import { WarehouseErrorFragment } from "@saleor/warehouses/types/WarehouseErrorFragment";
 
 export interface CompanyAddressFormProps {
   countries: SingleAutocompleteChoiceType[];
   data: AddressTypeInput;
   displayCountry: string;
-  errors: Array<AccountErrorFragment | ShopErrorFragment>;
+  errors: Array<
+    AccountErrorFragment | ShopErrorFragment | WarehouseErrorFragment
+  >;
   disabled: boolean;
   onChange: (event: ChangeEvent) => void;
   onCountryChange: (event: ChangeEvent) => void;
@@ -34,14 +38,17 @@ const useStyles = makeStyles(
 );
 
 function getErrorMessage(
-  err: AccountErrorFragment | ShopErrorFragment,
+  err: AccountErrorFragment | ShopErrorFragment | WarehouseErrorFragment,
   intl: IntlShape
 ): string {
-  if (err?.__typename === "AccountError") {
-    return getAccountErrorMessage(err, intl);
+  switch (err?.__typename) {
+    case "AccountError":
+      return getAccountErrorMessage(err, intl);
+    case "WarehouseError":
+      return getWarehouseErrorMessage(err, intl);
+    default:
+      return getShopErrorMessage(err, intl);
   }
-
-  return getShopErrorMessage(err, intl);
 }
 
 const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
