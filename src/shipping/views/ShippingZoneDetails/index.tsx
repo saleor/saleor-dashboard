@@ -176,7 +176,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           );
         }
       } else {
-        throw new Error(`Updating failed: ${updateErrors[0].message}`);
+        throw new Error(`Updating failed: ${updateErrors[0].code}`);
       }
     } catch (err) {
       notify({

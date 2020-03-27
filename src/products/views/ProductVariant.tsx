@@ -52,11 +52,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     setErrors([]);
   }, [variantId]);
 
-  const {
-    loadMore: loadMoreWarehouses,
-    search: searchWarehouses,
-    result: searchWarehousesOpts
-  } = useWarehouseSearch({
+  const { result: searchWarehousesOpts } = useWarehouseSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 20

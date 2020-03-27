@@ -2,8 +2,8 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "@saleor/storybook/Decorator";
-import { formError } from "@saleor/storybook/misc";
 import { countries } from "@saleor/fixtures";
+import { WarehouseErrorCode } from "@saleor/types/globalTypes";
 import WarehouseCreatePage, {
   WarehouseCreatePageProps,
   WarehouseCreatePageFormData
@@ -39,8 +39,10 @@ storiesOf("Views / Warehouses / Create warehouse", module)
         "postalCode",
         "streetAddress1",
         "streetAddress2"
-      ] as Array<keyof WarehouseCreatePageFormData>).map(field =>
-        formError(field)
-      )}
+      ] as Array<keyof WarehouseCreatePageFormData>).map(field => ({
+        __typename: "WarehouseError",
+        code: WarehouseErrorCode.INVALID,
+        field
+      }))}
     />
   ));

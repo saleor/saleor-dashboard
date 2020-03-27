@@ -175,7 +175,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           {renderCollection(
             stocks,
             stock => (
-              <TableRow>
+              <TableRow key={stock.id}>
                 <TableCell className={classes.colName}>{stock.label}</TableCell>
                 <TableCell className={classes.colQuantity}>
                   <TextField

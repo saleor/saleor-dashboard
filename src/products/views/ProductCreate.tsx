@@ -59,11 +59,7 @@ export const ProductCreateView: React.FC<ProductCreateViewProps> = ({
   } = useProductTypeSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-  const {
-    loadMore: loadMoreWarehouses,
-    search: searchWarehouses,
-    result: searchWarehousesOpts
-  } = useWarehouseSearch({
+  const { result: searchWarehousesOpts } = useWarehouseSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 20

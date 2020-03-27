@@ -1247,21 +1247,30 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       }
     ]
   },
-  quantity: 19,
-  quantityAllocated: 12,
   sku: "1230959124123",
-  stock: [
+  stocks: [
     {
       __typename: "Stock",
       id: "1",
-      quantity: 1
+      quantity: 1,
+      warehouse: {
+        __typename: "Warehouse",
+        id: "123",
+        name: "Warehouse 1"
+      }
     },
     {
       __typename: "Stock",
       id: "2",
-      quantity: 4
+      quantity: 4,
+      warehouse: {
+        __typename: "Warehouse",
+        id: "1234",
+        name: "Warehouse 2"
+      }
     }
-  ]
+  ],
+  trackInventory: true
 });
 export const variantImages = (placeholderImage: string) =>
   variant(placeholderImage).images;
