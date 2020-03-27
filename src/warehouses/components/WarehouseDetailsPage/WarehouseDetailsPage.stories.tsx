@@ -3,7 +3,7 @@ import React from "react";
 
 import { address, countries } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
-import { formError } from "@saleor/storybook/misc";
+import { WarehouseErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "../../fixtures";
 import WarehouseDetailsPage, {
   WarehouseDetailsPageProps,
@@ -48,8 +48,10 @@ storiesOf("Views / Warehouses / Warehouse details", module)
         "postalCode",
         "streetAddress1",
         "streetAddress2"
-      ] as Array<keyof WarehouseDetailsPageFormData>).map(field =>
-        formError(field)
-      )}
+      ] as Array<keyof WarehouseDetailsPageFormData>).map(field => ({
+        __typename: "WarehouseError",
+        code: WarehouseErrorCode.INVALID,
+        field
+      }))}
     />
   ));

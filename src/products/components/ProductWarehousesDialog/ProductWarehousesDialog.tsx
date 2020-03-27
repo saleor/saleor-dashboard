@@ -60,7 +60,7 @@ function getErrorMessage(
     case "BulkStockError":
       return getBulkStockErrorMessage(err, intl);
     default:
-      getStockErrorMessage(err, intl);
+      return getStockErrorMessage(err, intl);
   }
 }
 

@@ -165,12 +165,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     MultiAutocompleteChoiceType[]
   >([]);
 
-  const [productType, setProductType] = React.useState<ProductType>({
-    hasVariants: false,
-    id: "",
-    name: "",
-    productAttributes: []
-  });
+  const [productType, setProductType] = React.useState<ProductType>(null);
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
@@ -253,7 +248,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                {!productType.hasVariants && (
+                {!!productType && !productType.hasVariants && (
                   <>
                     <ProductStocks
                       data={data}
@@ -296,7 +291,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   fetchMoreProductTypes={fetchMoreProductTypes}
                   fetchProductTypes={fetchProductTypes}
                   productType={productType}
-                  productTypeInputDisplayValue={productType.name}
+                  productTypeInputDisplayValue={productType?.name || ""}
                   productTypes={productTypes}
                   onCategoryChange={handleCategorySelect}
                   onCollectionChange={handleCollectionSelect}
