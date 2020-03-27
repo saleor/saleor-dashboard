@@ -5,7 +5,6 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import { UserError } from "@saleor/types";
 import Grid from "@saleor/components/Grid";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
@@ -20,6 +19,7 @@ import AppHeader from "@saleor/components/AppHeader";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
 import { CountryCode } from "@saleor/types/globalTypes";
+import { WarehouseErrorFragment } from "@saleor/warehouses/types/WarehouseErrorFragment";
 import WarehouseInfo from "../WarehouseInfo";
 import WarehouseZones from "../WarehouseZones";
 import { WarehouseDetails_warehouse } from "../../types/WarehouseDetails";
@@ -30,7 +30,7 @@ export interface WarehouseDetailsPageFormData extends AddressTypeInput {
 export interface WarehouseDetailsPageProps {
   countries: ShopInfo_shop_countries[];
   disabled: boolean;
-  errors: UserError[];
+  errors: WarehouseErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouse: WarehouseDetails_warehouse;
   onBack: () => void;

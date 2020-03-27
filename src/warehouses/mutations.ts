@@ -23,11 +23,11 @@ export const warehouseErrorFragment = gql`
 `;
 
 const deleteWarehouse = gql`
+  ${warehouseErrorFragment}
   mutation WarehouseDelete($id: ID!) {
     deleteWarehouse(id: $id) {
-      errors {
-        field
-        message
+      errors: warehouseErrors {
+        ...WarehouseErrorFragment
       }
     }
   }
@@ -39,11 +39,11 @@ export const useWarehouseDelete = makeMutation<
 
 const createWarehouse = gql`
   ${warehouseDetailsFragment}
+  ${warehouseErrorFragment}
   mutation WarehouseCreate($input: WarehouseCreateInput!) {
     createWarehouse(input: $input) {
-      errors {
-        field
-        message
+      errors: warehouseErrors {
+        ...WarehouseErrorFragment
       }
       warehouse {
         ...WarehouseDetailsFragment
@@ -58,11 +58,11 @@ export const useWarehouseCreate = makeMutation<
 
 const updateWarehouse = gql`
   ${warehouseDetailsFragment}
+  ${warehouseErrorFragment}
   mutation WarehouseUpdate($id: ID!, $input: WarehouseUpdateInput!) {
     updateWarehouse(id: $id, input: $input) {
-      errors {
-        field
-        message
+      errors: warehouseErrors {
+        ...WarehouseErrorFragment
       }
       warehouse {
         ...WarehouseDetailsFragment

@@ -2,14 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { WarehouseErrorCode } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: WarehouseDelete
 // ====================================================
 
 export interface WarehouseDelete_deleteWarehouse_errors {
-  __typename: "Error";
+  __typename: "WarehouseError";
+  code: WarehouseErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface WarehouseDelete_deleteWarehouse {

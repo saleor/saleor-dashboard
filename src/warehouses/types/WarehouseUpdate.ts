@@ -2,16 +2,16 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { WarehouseUpdateInput } from "./../../types/globalTypes";
+import { WarehouseUpdateInput, WarehouseErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: WarehouseUpdate
 // ====================================================
 
 export interface WarehouseUpdate_updateWarehouse_errors {
-  __typename: "Error";
+  __typename: "WarehouseError";
+  code: WarehouseErrorCode;
   field: string | null;
-  message: string | null;
 }
 
 export interface WarehouseUpdate_updateWarehouse_warehouse_shippingZones_edges_node {
