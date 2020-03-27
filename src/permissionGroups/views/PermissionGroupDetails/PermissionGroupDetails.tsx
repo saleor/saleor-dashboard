@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -11,8 +11,8 @@ import { Button } from "@material-ui/core";
 import { commonMessages } from "@saleor/intl";
 import { getSortParams } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { PermissionGroupDetails_permissionGroup_users } from "@saleor/permissionGroups/types/PermissionGroupDetails";
-import { permissionsDiff } from "@saleor/permissionGroups/utils";
+import { permissionsDiff, usersDiff } from "@saleor/permissionGroups/utils";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import PermissionGroupDetailsPage from "../../components/PermissionGroupDetailsPage";
 import AssignMembersDialog from "../../components/AssignMembersDialog";
 import UnassignMembersDialog from "../../components/UnassignMembersDialog";
@@ -31,7 +31,6 @@ import { PermissionGroupUpdate } from "../../types/PermissionGroupUpdate";
 interface PermissionGroupDetailsProps {
   id: string;
   params: PermissionGroupDetailsUrlQueryParams;
-  members: PermissionGroupDetails_permissionGroup_users[];
 }
 
 export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
@@ -47,6 +46,12 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     displayLoader: true,
     variables: { id }
   });
+
+  const [membersList, setMembersList] = useStateFromProps(
+    data?.permissionGroup.users
+  );
+
+  const [membersModified, setMembersModified] = useState<boolean>(false);
 
   const { search, result: searchResult, loadMore } = useStaffMemberSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
@@ -84,10 +89,18 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     params
   );
 
+  const unassignMembers = () => {
+    setMembersList(membersList?.filter(m => !listElements.includes(m.id)));
+    setMembersModified(true);
+    closeModal();
+  };
+
   return (
     <>
       <PermissionGroupDetailsPage
         permissionGroup={data?.permissionGroup}
+        members={membersList}
+        membersModified={membersModified}
         onBack={() => navigate(permissionGroupListUrl())}
         onAssign={() => openModal("assign")}
         onUnassign={ids => openModal("unassign", { ids })}
@@ -98,7 +111,8 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
               id,
               input: {
                 name: formData.name,
-                ...permissionsDiff(data?.permissionGroup, formData)
+                ...permissionsDiff(data?.permissionGroup, formData),
+                ...usersDiff(data?.permissionGroup, formData)
               }
             }
           })
@@ -138,24 +152,14 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         errors={[]}
         open={params.action === "assign"}
         onClose={closeModal}
-        onSubmit={data =>
-          permissionGroupAssignUsers({
-            variables: {
-              id,
-              users: data.map(node => node.id)
-            }
-          })
-        }
+        onSubmit={formData => {
+          setMembersList([...membersList, ...formData]);
+          setMembersModified(true);
+          closeModal();
+        }}
       />
       <UnassignMembersDialog
-        onConfirm={() =>
-          permissionGroupUnassignUsers({
-            variables: {
-              id,
-              users: listElements
-            }
-          })
-        }
+        onConfirm={unassignMembers}
         confirmButtonState={permissionGroupUpdateResult.status}
         quantity={listElements.length}
         open={params.action === "unassign"}

@@ -40,6 +40,7 @@ export interface PermissionGroupDetailsPageProps
   errors: UserError[];
   permissionGroup: PermissionGroupDetails_permissionGroup;
   members: PermissionGroupDetails_permissionGroup_users[];
+  membersModified: boolean;
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
   disabled: boolean;
@@ -59,6 +60,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   errors,
   onSubmit,
   members,
+  membersModified,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -68,7 +70,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
     isActive: false,
     name: permissionGroup?.name ? permissionGroup.name : "",
     permissions: extractPermissionCodes(permissionGroup),
-    users: members || permissionGroup?.users
+    users: members
   };
 
   return (
@@ -121,7 +123,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={disabled || !hasChanged}
+              disabled={disabled || !(hasChanged || membersModified)}
             />
           </div>
         </Container>

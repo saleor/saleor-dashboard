@@ -58,8 +58,8 @@ export const usersDiff = (
   permissionGroup: PermissionGroupDetails_permissionGroup,
   formData: PermissionGroupDetailsPageFormData
 ) => {
-  const newUsers = formData.users;
-  const oldUsers = permissionGroup?.users;
+  const newUsers = formData.users.map(u => u.id);
+  const oldUsers = permissionGroup?.users.map(u => u.id);
 
   return {
     addUsers: difference(newUsers, oldUsers),
