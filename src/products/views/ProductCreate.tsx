@@ -121,7 +121,8 @@ export const ProductCreateView: React.FC<ProductCreateViewProps> = ({
               stocks: formData.stocks.map(stock => ({
                 quantity: parseInt(stock.value, 0),
                 warehouse: stock.id
-              }))
+              })),
+              trackInventory: formData.trackInventory
             }
           });
         };

@@ -303,6 +303,7 @@ export const productCreateMutation = gql`
     $stockQuantity: Int
     $seo: SeoInput
     $stocks: [StockInput!]!
+    $trackInventory: Boolean!
   ) {
     productCreate(
       input: {
@@ -320,6 +321,7 @@ export const productCreateMutation = gql`
         quantity: $stockQuantity
         seo: $seo
         stocks: $stocks
+        trackInventory: $trackInventory
       }
     ) {
       errors: productErrors {
