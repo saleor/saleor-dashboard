@@ -180,6 +180,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 <TableCell className={classes.colQuantity}>
                   <TextField
                     className={classes.inputComponent}
+                    disabled={disabled}
                     fullWidth
                     inputProps={{
                       className: classes.input,
