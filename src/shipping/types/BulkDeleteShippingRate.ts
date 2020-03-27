@@ -14,7 +14,7 @@ export interface BulkDeleteShippingRate_shippingPriceBulkDelete_errors {
 
 export interface BulkDeleteShippingRate_shippingPriceBulkDelete {
   __typename: "ShippingPriceBulkDelete";
-  errors: BulkDeleteShippingRate_shippingPriceBulkDelete_errors[] | null;
+  errors: BulkDeleteShippingRate_shippingPriceBulkDelete_errors[];
 }
 
 export interface BulkDeleteShippingRate {

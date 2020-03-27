@@ -20,6 +20,6 @@ export interface ProductTypeCreateData_taxTypes {
 }
 
 export interface ProductTypeCreateData {
-  shop: ProductTypeCreateData_shop | null;
+  shop: ProductTypeCreateData_shop;
   taxTypes: (ProductTypeCreateData_taxTypes | null)[] | null;
 }

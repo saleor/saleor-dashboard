@@ -39,7 +39,7 @@ export interface AttributeValueUpdate_attributeValueUpdate_attribute {
 
 export interface AttributeValueUpdate_attributeValueUpdate {
   __typename: "AttributeValueUpdate";
-  errors: AttributeValueUpdate_attributeValueUpdate_errors[] | null;
+  errors: AttributeValueUpdate_attributeValueUpdate_errors[];
   attribute: AttributeValueUpdate_attributeValueUpdate_attribute | null;
 }
 

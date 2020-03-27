@@ -27,7 +27,7 @@ export interface AttributeValueReorder_attributeReorderValues_attribute {
 
 export interface AttributeValueReorder_attributeReorderValues {
   __typename: "AttributeReorderValues";
-  errors: AttributeValueReorder_attributeReorderValues_errors[] | null;
+  errors: AttributeValueReorder_attributeReorderValues_errors[];
   attribute: AttributeValueReorder_attributeReorderValues_attribute | null;
 }
 

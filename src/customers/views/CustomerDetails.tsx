@@ -86,9 +86,9 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                         updateCustomerOpts.loading ||
                         removeCustomerOpts.loading
                       }
-                      errors={maybe(
-                        () => updateCustomerOpts.data.customerUpdate.errors
-                      )}
+                      errors={
+                        updateCustomerOpts.data?.customerUpdate.errors || []
+                      }
                       saveButtonBar={updateCustomerOpts.status}
                       onAddressManageClick={() =>
                         navigate(customerAddressesUrl(id))

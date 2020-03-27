@@ -25,7 +25,7 @@ export interface StaffAvatarUpdate_userAvatarUpdate_user {
 
 export interface StaffAvatarUpdate_userAvatarUpdate {
   __typename: "UserAvatarUpdate";
-  errors: StaffAvatarUpdate_userAvatarUpdate_errors[] | null;
+  errors: StaffAvatarUpdate_userAvatarUpdate_errors[];
   user: StaffAvatarUpdate_userAvatarUpdate_user | null;
 }
 

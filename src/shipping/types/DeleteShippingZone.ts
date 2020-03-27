@@ -14,7 +14,7 @@ export interface DeleteShippingZone_shippingZoneDelete_errors {
 
 export interface DeleteShippingZone_shippingZoneDelete {
   __typename: "ShippingZoneDelete";
-  errors: DeleteShippingZone_shippingZoneDelete_errors[] | null;
+  errors: DeleteShippingZone_shippingZoneDelete_errors[];
 }
 
 export interface DeleteShippingZone {

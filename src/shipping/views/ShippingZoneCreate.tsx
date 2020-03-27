@@ -31,9 +31,7 @@ const ShippingZoneCreate: React.FC<{}> = () => {
         <ShippingZoneCreatePage
           countries={maybe(() => shop.countries, [])}
           disabled={createShippingZoneOpts.loading}
-          errors={maybe(
-            () => createShippingZoneOpts.data.shippingZoneCreate.errors
-          )}
+          errors={createShippingZoneOpts.data?.shippingZoneCreate.errors || []}
           onBack={() => navigate(shippingZonesListUrl())}
           onSubmit={formData =>
             createShippingZone({

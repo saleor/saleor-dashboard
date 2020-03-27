@@ -123,13 +123,8 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
     weight: maybe(() => productType.weight.value)
   };
   return (
-    <Form
-      errors={errors}
-      initial={formInitialData}
-      onSubmit={onSubmit}
-      confirmLeave
-    >
-      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+    <Form initial={formInitialData} onSubmit={onSubmit} confirmLeave>
+      {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.productTypes)}
@@ -140,7 +135,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
               <ProductTypeDetails
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />

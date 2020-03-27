@@ -26,7 +26,7 @@ export interface SaleUpdate_saleUpdate_sale {
 
 export interface SaleUpdate_saleUpdate {
   __typename: "SaleUpdate";
-  errors: SaleUpdate_saleUpdate_errors[] | null;
+  errors: SaleUpdate_saleUpdate_errors[];
   sale: SaleUpdate_saleUpdate_sale | null;
 }
 

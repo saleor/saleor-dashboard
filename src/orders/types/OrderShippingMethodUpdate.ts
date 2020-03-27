@@ -55,7 +55,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping {
   __typename: "OrderUpdateShipping";
-  errors: OrderShippingMethodUpdate_orderUpdateShipping_errors[] | null;
+  errors: OrderShippingMethodUpdate_orderUpdateShipping_errors[];
   order: OrderShippingMethodUpdate_orderUpdateShipping_order | null;
 }
 

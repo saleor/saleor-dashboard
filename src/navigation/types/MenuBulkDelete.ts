@@ -14,7 +14,7 @@ export interface MenuBulkDelete_menuBulkDelete_errors {
 
 export interface MenuBulkDelete_menuBulkDelete {
   __typename: "MenuBulkDelete";
-  errors: MenuBulkDelete_menuBulkDelete_errors[] | null;
+  errors: MenuBulkDelete_menuBulkDelete_errors[];
 }
 
 export interface MenuBulkDelete {

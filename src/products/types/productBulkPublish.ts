@@ -14,7 +14,7 @@ export interface productBulkPublish_productBulkPublish_errors {
 
 export interface productBulkPublish_productBulkPublish {
   __typename: "ProductBulkPublish";
-  errors: productBulkPublish_productBulkPublish_errors[] | null;
+  errors: productBulkPublish_productBulkPublish_errors[];
 }
 
 export interface productBulkPublish {

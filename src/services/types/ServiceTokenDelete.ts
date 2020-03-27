@@ -14,7 +14,7 @@ export interface ServiceTokenDelete_serviceAccountTokenDelete_errors {
 
 export interface ServiceTokenDelete_serviceAccountTokenDelete {
   __typename: "ServiceAccountTokenDelete";
-  errors: ServiceTokenDelete_serviceAccountTokenDelete_errors[] | null;
+  errors: ServiceTokenDelete_serviceAccountTokenDelete_errors[];
 }
 
 export interface ServiceTokenDelete {

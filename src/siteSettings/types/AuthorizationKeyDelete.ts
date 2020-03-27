@@ -68,7 +68,7 @@ export interface AuthorizationKeyDelete_authorizationKeyDelete_shop {
 
 export interface AuthorizationKeyDelete_authorizationKeyDelete {
   __typename: "AuthorizationKeyDelete";
-  errors: AuthorizationKeyDelete_authorizationKeyDelete_errors[] | null;
+  errors: AuthorizationKeyDelete_authorizationKeyDelete_errors[];
   shop: AuthorizationKeyDelete_authorizationKeyDelete_shop | null;
 }
 

@@ -58,7 +58,7 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
 
 export interface UpdateShippingRate_shippingPriceUpdate {
   __typename: "ShippingPriceUpdate";
-  errors: UpdateShippingRate_shippingPriceUpdate_errors[] | null;
+  errors: UpdateShippingRate_shippingPriceUpdate_errors[];
   shippingMethod: UpdateShippingRate_shippingPriceUpdate_shippingMethod | null;
 }
 

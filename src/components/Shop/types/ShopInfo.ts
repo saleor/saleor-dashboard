@@ -54,5 +54,5 @@ export interface ShopInfo_shop {
 }
 
 export interface ShopInfo {
-  shop: ShopInfo_shop | null;
+  shop: ShopInfo_shop;
 }

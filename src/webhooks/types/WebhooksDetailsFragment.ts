@@ -15,7 +15,7 @@ export interface WebhooksDetailsFragment_serviceAccount {
 export interface WebhooksDetailsFragment {
   __typename: "Webhook";
   id: string;
-  name: string | null;
+  name: string;
   isActive: boolean;
   serviceAccount: WebhooksDetailsFragment_serviceAccount;
 }

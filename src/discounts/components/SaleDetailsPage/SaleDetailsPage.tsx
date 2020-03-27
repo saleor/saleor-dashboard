@@ -121,8 +121,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     value: maybe(() => sale.value.toString(), "")
   };
   return (
-    <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+    <Form initial={initialForm} onSubmit={onSubmit}>
+      {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.sales)}
@@ -133,7 +133,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
               <SaleInfo
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />
@@ -143,7 +143,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 currencySymbol={defaultCurrency}
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />
@@ -258,7 +258,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 data={data}
                 disabled={disabled}
                 defaultCurrency={defaultCurrency}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
             </div>

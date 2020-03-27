@@ -16,6 +16,7 @@ const props: SiteSettingsKeyDialogProps = {
     type: AuthorizationKeyType.FACEBOOK
   },
   onClose: () => undefined,
+  onSubmit: () => undefined,
   open: true
 };
 

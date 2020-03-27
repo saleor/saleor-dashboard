@@ -70,8 +70,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     title: maybe(() => page.title, "")
   };
   return (
-    <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+    <Form initial={initialForm} onSubmit={onSubmit}>
+      {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.pages)}
@@ -91,7 +91,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               <PageInfo
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 page={page}
                 onChange={change}
               />
@@ -119,13 +119,13 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               <PageSlug
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />
               <VisibilityCard
                 data={data}
-                errors={formErrors}
+                errors={errors}
                 disabled={disabled}
                 hiddenMessage={intl.formatMessage(
                   {

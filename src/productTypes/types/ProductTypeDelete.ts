@@ -19,7 +19,7 @@ export interface ProductTypeDelete_productTypeDelete_productType {
 
 export interface ProductTypeDelete_productTypeDelete {
   __typename: "ProductTypeDelete";
-  errors: ProductTypeDelete_productTypeDelete_errors[] | null;
+  errors: ProductTypeDelete_productTypeDelete_errors[];
   productType: ProductTypeDelete_productTypeDelete_productType | null;
 }
 

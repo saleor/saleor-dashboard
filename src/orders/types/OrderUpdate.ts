@@ -68,7 +68,7 @@ export interface OrderUpdate_orderUpdate_order {
 
 export interface OrderUpdate_orderUpdate {
   __typename: "OrderUpdate";
-  errors: OrderUpdate_orderUpdate_errors[] | null;
+  errors: OrderUpdate_orderUpdate_errors[];
   order: OrderUpdate_orderUpdate_order | null;
 }
 

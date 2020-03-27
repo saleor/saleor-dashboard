@@ -46,7 +46,7 @@
   },
   "homeHeaderText": {
     "context": "header",
-    "string": "Hello there, {userName}"
+    "string": "Привіт, {userName}"
   },
   "homeHeaderTextCaption": {
     "context": "subheader",
@@ -93,7 +93,7 @@
   },
   "homeScreenHeader": {
     "context": "header",
-    "string": "Hello there, {userName}"
+    "string": "Привіт, {userName}"
   },
   "menuCreateDialogHeader": {
     "context": "dialog header",
@@ -559,7 +559,7 @@
     "string": "Відмінено"
   },
   "src_dot_catalog": {
-    "string": "Catalog"
+    "string": "Каталог"
   },
   "src_dot_categories": {
     "context": "categories section name",
@@ -1266,6 +1266,10 @@
   "src_dot_components_dot_RichTextEditor_dot_2160163587": {
     "context": "button",
     "string": "Додати / Редагувати посилання"
+  },
+  "src_dot_components_dot_RichTextEditor_dot_286109898": {
+    "context": "rich text error",
+    "string": "Invalid content"
   },
   "src_dot_components_dot_RichTextEditor_dot_2925475978": {
     "string": "URL Linked"
@@ -2804,8 +2808,8 @@
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1648805446": {
     "string": "Deleted draft orders"
   },
-  "src_dot_orders_dot_views_dot_OrderDraftList_dot_1872939752": {
-    "string": "Order draft succesfully created"
+  "src_dot_orders_dot_views_dot_OrderDraftList_dot_1738939038": {
+    "string": "Order draft successfully created"
   },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_2074422036": {
     "context": "dialog content",
@@ -2814,8 +2818,8 @@
   "src_dot_orders_dot_views_dot_OrderList_dot_1136302661": {
     "string": "Orders cancelled"
   },
-  "src_dot_orders_dot_views_dot_OrderList_dot_1872939752": {
-    "string": "Order draft succesfully created"
+  "src_dot_orders_dot_views_dot_OrderList_dot_1738939038": {
+    "string": "Order draft successfully created"
   },
   "src_dot_orders_dot_views_dot_OrderList_dot_3528672691": {
     "context": "cancel orders, button",
@@ -4574,7 +4578,7 @@
     "string": "Search Engine Preview"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_1163855804": {
-    "string": "Languages"
+    "string": "Мови"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_1866913828": {
     "string": "Search Sale"
@@ -4637,7 +4641,7 @@
     "string": "Назва"
   },
   "src_dot_translations_dot_components_dot_TranslationsLanguageListPage_dot_1163855804": {
-    "string": "Languages"
+    "string": "Мови"
   },
   "src_dot_translations_dot_components_dot_TranslationsLanguageList_dot_2966651157": {
     "string": "No languages found"
@@ -4796,6 +4800,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_40035964": {
     "context": "event",
     "string": "Changed quantity in checkout"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
+    "context": "event",
+    "string": "Fulfillment created"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
     "context": "webhook",

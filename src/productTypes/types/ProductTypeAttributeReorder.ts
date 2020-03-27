@@ -60,7 +60,7 @@ export interface ProductTypeAttributeReorder_productTypeReorderAttributes_produc
 
 export interface ProductTypeAttributeReorder_productTypeReorderAttributes {
   __typename: "ProductTypeReorderAttributes";
-  errors: ProductTypeAttributeReorder_productTypeReorderAttributes_errors[] | null;
+  errors: ProductTypeAttributeReorder_productTypeReorderAttributes_errors[];
   productType: ProductTypeAttributeReorder_productTypeReorderAttributes_productType | null;
 }
 

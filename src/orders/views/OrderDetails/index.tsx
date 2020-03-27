@@ -214,9 +214,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           confirmButtonState={getMutationState(
                             orderCancel.opts.called,
                             orderCancel.opts.loading,
-                            maybe(
-                              () => orderCancel.opts.data.orderCancel.errors
-                            )
+                            orderCancel.opts.data?.orderCancel.errors || []
                           )}
                           number={maybe(() => order.number)}
                           open={params.action === "cancel"}
@@ -281,10 +279,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           confirmButtonState={getMutationState(
                             orderPaymentRefund.opts.called,
                             orderPaymentRefund.opts.loading,
-                            maybe(
-                              () =>
-                                orderPaymentRefund.opts.data.orderRefund.errors
-                            )
+                            orderPaymentRefund.opts.data?.orderRefund.errors ||
+                              []
                           )}
                           initial={maybe(() => order.total.gross.amount)}
                           open={params.action === "refund"}

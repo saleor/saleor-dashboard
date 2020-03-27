@@ -178,7 +178,7 @@ export interface ProductCreate_productCreate_product {
 
 export interface ProductCreate_productCreate {
   __typename: "ProductCreate";
-  errors: ProductCreate_productCreate_errors[] | null;
+  errors: ProductCreate_productCreate_errors[];
   product: ProductCreate_productCreate_product | null;
 }
 

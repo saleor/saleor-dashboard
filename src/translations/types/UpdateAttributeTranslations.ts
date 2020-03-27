@@ -29,7 +29,7 @@ export interface UpdateAttributeTranslations_attributeTranslate_attribute {
 
 export interface UpdateAttributeTranslations_attributeTranslate {
   __typename: "AttributeTranslate";
-  errors: UpdateAttributeTranslations_attributeTranslate_errors[] | null;
+  errors: UpdateAttributeTranslations_attributeTranslate_errors[];
   attribute: UpdateAttributeTranslations_attributeTranslate_attribute | null;
 }
 

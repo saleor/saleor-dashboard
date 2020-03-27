@@ -51,7 +51,7 @@ interface ProductVariantCreatePageProps {
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   currencySymbol,
-  errors: apiErrors,
+  errors,
   loading,
   header,
   product,
@@ -93,8 +93,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     });
 
   return (
-    <Form initial={initialForm} errors={apiErrors} onSubmit={handleSubmit}>
-      {({ change, data, errors, hasChanged, submit, triggerChange }) => {
+    <Form initial={initialForm} onSubmit={handleSubmit}>
+      {({ change, data, hasChanged, submit, triggerChange }) => {
         const handleAttributeChange: FormsetChange = (id, value) => {
           changeAttributeData(id, value);
           triggerChange();
@@ -120,7 +120,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 <ProductVariantAttributes
                   attributes={attributes}
                   disabled={loading}
-                  errors={apiErrors}
+                  errors={errors}
                   onChange={handleAttributeChange}
                 />
                 <CardSpacer />

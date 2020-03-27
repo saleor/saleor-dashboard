@@ -6,7 +6,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
 import { ServiceCreateMutation } from "@saleor/services/mutations";
 import { ServiceCreate as ServiceCreateData } from "@saleor/services/types/ServiceCreate";
 import ServiceCreatePage, {
@@ -61,13 +60,10 @@ export const ServiceCreate: React.FC<ServiceCreateProps> = ({ setToken }) => {
             />
             <ServiceCreatePage
               disabled={false}
-              errors={maybe(
-                () => serviceCreateOpts.data.serviceAccountCreate.errors,
-                []
-              )}
+              errors={serviceCreateOpts.data?.serviceAccountCreate.errors || []}
               onBack={handleBack}
               onSubmit={handleSubmit}
-              permissions={maybe(() => shop.permissions)}
+              permissions={shop?.permissions}
               saveButtonBarState={serviceCreateOpts.status}
             />
           </>

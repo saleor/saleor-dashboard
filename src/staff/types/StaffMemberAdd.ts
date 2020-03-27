@@ -38,7 +38,7 @@ export interface StaffMemberAdd_staffCreate_user {
 
 export interface StaffMemberAdd_staffCreate {
   __typename: "StaffCreate";
-  errors: StaffMemberAdd_staffCreate_errors[] | null;
+  errors: StaffMemberAdd_staffCreate_errors[];
   user: StaffMemberAdd_staffCreate_user | null;
 }
 

@@ -28,7 +28,7 @@ export interface PageUpdate_pageUpdate_page {
 
 export interface PageUpdate_pageUpdate {
   __typename: "PageUpdate";
-  errors: PageUpdate_pageUpdate_errors[] | null;
+  errors: PageUpdate_pageUpdate_errors[];
   page: PageUpdate_pageUpdate_page | null;
 }
 

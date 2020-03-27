@@ -41,7 +41,7 @@ export interface UpdateCollectionTranslations_collectionTranslate_collection {
 
 export interface UpdateCollectionTranslations_collectionTranslate {
   __typename: "CollectionTranslate";
-  errors: UpdateCollectionTranslations_collectionTranslate_errors[] | null;
+  errors: UpdateCollectionTranslations_collectionTranslate_errors[];
   collection: UpdateCollectionTranslations_collectionTranslate_collection | null;
 }
 

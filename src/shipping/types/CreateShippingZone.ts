@@ -30,7 +30,7 @@ export interface CreateShippingZone_shippingZoneCreate_shippingZone {
 
 export interface CreateShippingZone_shippingZoneCreate {
   __typename: "ShippingZoneCreate";
-  errors: CreateShippingZone_shippingZoneCreate_errors[] | null;
+  errors: CreateShippingZone_shippingZoneCreate_errors[];
   shippingZone: CreateShippingZone_shippingZoneCreate_shippingZone | null;
 }
 

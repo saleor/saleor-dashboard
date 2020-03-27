@@ -274,7 +274,7 @@ export interface OrderDetails_shop {
 
 export interface OrderDetails {
   order: OrderDetails_order | null;
-  shop: OrderDetails_shop | null;
+  shop: OrderDetails_shop;
 }
 
 export interface OrderDetailsVariables {

@@ -42,7 +42,7 @@ export interface UpdatePageTranslations_pageTranslate_page {
 
 export interface UpdatePageTranslations_pageTranslate {
   __typename: "PageTranslate";
-  errors: UpdatePageTranslations_pageTranslate_errors[] | null;
+  errors: UpdatePageTranslations_pageTranslate_errors[];
   page: UpdatePageTranslations_pageTranslate_page | null;
 }
 

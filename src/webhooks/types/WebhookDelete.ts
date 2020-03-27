@@ -14,7 +14,7 @@ export interface WebhookDelete_webhookDelete_errors {
 
 export interface WebhookDelete_webhookDelete {
   __typename: "WebhookDelete";
-  errors: WebhookDelete_webhookDelete_errors[] | null;
+  errors: WebhookDelete_webhookDelete_errors[];
 }
 
 export interface WebhookDelete {

@@ -38,7 +38,7 @@ export interface StaffMemberUpdate_staffUpdate_user {
 
 export interface StaffMemberUpdate_staffUpdate {
   __typename: "StaffUpdate";
-  errors: StaffMemberUpdate_staffUpdate_errors[] | null;
+  errors: StaffMemberUpdate_staffUpdate_errors[];
   user: StaffMemberUpdate_staffUpdate_user | null;
 }
 

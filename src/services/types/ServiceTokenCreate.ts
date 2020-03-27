@@ -16,7 +16,7 @@ export interface ServiceTokenCreate_serviceAccountTokenCreate_errors {
 
 export interface ServiceTokenCreate_serviceAccountTokenCreate {
   __typename: "ServiceAccountTokenCreate";
-  errors: ServiceTokenCreate_serviceAccountTokenCreate_errors[] | null;
+  errors: ServiceTokenCreate_serviceAccountTokenCreate_errors[];
   authToken: string | null;
 }
 

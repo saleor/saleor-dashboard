@@ -15,6 +15,7 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import { AttributeDetails_attribute_values } from "../../types/AttributeDetails";
 
 export interface AttributeValueEditDialogFormData {
@@ -60,16 +61,16 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
           />
         )}
       </DialogTitle>
-      <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-        {({ change, data, errors: formErrors, submit }) => (
+      <Form initial={initialForm} onSubmit={onSubmit}>
+        {({ change, data, submit }) => (
           <>
             <DialogContent>
               <TextField
                 autoFocus
                 disabled={disabled}
-                error={!!formErrors.name}
+                error={!!getFieldError(errors, "name")}
                 fullWidth
-                helperText={formErrors.name}
+                helperText={getFieldError(errors, "name")?.message}
                 name={"name" as keyof AttributeValueEditDialogFormData}
                 label={intl.formatMessage({
                   defaultMessage: "Name",

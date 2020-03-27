@@ -9,15 +9,16 @@ import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import { commonMessages } from "@saleor/intl";
+import { getFieldError } from "@saleor/utils/errors";
 import { maybe } from "../../../misc";
-import { FormErrors } from "../../../types";
+import { UserError } from "../../../types";
 import { PageDetails_page } from "../../types/PageDetails";
 import { FormData } from "../PageDetailsPage";
 
 export interface PageInfoProps {
   data: FormData;
   disabled: boolean;
-  errors: FormErrors<"contentJson" | "title">;
+  errors: UserError[];
   page: PageDetails_page;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -45,9 +46,9 @@ const PageInfo: React.FC<PageInfoProps> = props => {
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!errors.title}
+          error={!!getFieldError(errors, "title")}
           fullWidth
-          helperText={errors.title}
+          helperText={getFieldError(errors, "title")?.message}
           label={intl.formatMessage({
             defaultMessage: "Title",
             description: "page title"
@@ -59,8 +60,8 @@ const PageInfo: React.FC<PageInfoProps> = props => {
         <FormSpacer />
         <RichTextEditor
           disabled={disabled}
-          error={!!errors.contentJson}
-          helperText={errors.contentJson}
+          error={!!getFieldError(errors, "contentJson")}
+          helperText={getFieldError(errors, "contentJson")?.message}
           initial={maybe(() => JSON.parse(page.contentJson))}
           label={intl.formatMessage({
             defaultMessage: "Content",

@@ -14,7 +14,7 @@ export interface PageBulkRemove_pageBulkDelete_errors {
 
 export interface PageBulkRemove_pageBulkDelete {
   __typename: "PageBulkDelete";
-  errors: PageBulkRemove_pageBulkDelete_errors[] | null;
+  errors: PageBulkRemove_pageBulkDelete_errors[];
 }
 
 export interface PageBulkRemove {

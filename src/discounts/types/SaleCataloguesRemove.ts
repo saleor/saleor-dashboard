@@ -133,7 +133,7 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_sale {
 
 export interface SaleCataloguesRemove_saleCataloguesRemove {
   __typename: "SaleRemoveCatalogues";
-  errors: SaleCataloguesRemove_saleCataloguesRemove_errors[] | null;
+  errors: SaleCataloguesRemove_saleCataloguesRemove_errors[];
   sale: SaleCataloguesRemove_saleCataloguesRemove_sale | null;
 }
 

@@ -39,7 +39,7 @@ export interface AttributeValueCreate_attributeValueCreate_attribute {
 
 export interface AttributeValueCreate_attributeValueCreate {
   __typename: "AttributeValueCreate";
-  errors: AttributeValueCreate_attributeValueCreate_errors[] | null;
+  errors: AttributeValueCreate_attributeValueCreate_errors[];
   attribute: AttributeValueCreate_attributeValueCreate_attribute | null;
 }
 

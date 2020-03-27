@@ -14,7 +14,7 @@ export interface CategoryBulkDelete_categoryBulkDelete_errors {
 
 export interface CategoryBulkDelete_categoryBulkDelete {
   __typename: "CategoryBulkDelete";
-  errors: CategoryBulkDelete_categoryBulkDelete_errors[] | null;
+  errors: CategoryBulkDelete_categoryBulkDelete_errors[];
 }
 
 export interface CategoryBulkDelete {

@@ -111,7 +111,7 @@ export interface VariantImageAssign_variantImageAssign_productVariant {
 
 export interface VariantImageAssign_variantImageAssign {
   __typename: "VariantImageAssign";
-  errors: VariantImageAssign_variantImageAssign_errors[] | null;
+  errors: VariantImageAssign_variantImageAssign_errors[];
   productVariant: VariantImageAssign_variantImageAssign_productVariant | null;
 }
 

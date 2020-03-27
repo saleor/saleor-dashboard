@@ -14,7 +14,7 @@ export interface AttributeBulkDelete_attributeBulkDelete_errors {
 
 export interface AttributeBulkDelete_attributeBulkDelete {
   __typename: "AttributeBulkDelete";
-  errors: AttributeBulkDelete_attributeBulkDelete_errors[] | null;
+  errors: AttributeBulkDelete_attributeBulkDelete_errors[];
 }
 
 export interface AttributeBulkDelete {

@@ -14,7 +14,7 @@ export interface OrderDraftBulkCancel_draftOrderBulkDelete_errors {
 
 export interface OrderDraftBulkCancel_draftOrderBulkDelete {
   __typename: "DraftOrderBulkDelete";
-  errors: OrderDraftBulkCancel_draftOrderBulkDelete_errors[] | null;
+  errors: OrderDraftBulkCancel_draftOrderBulkDelete_errors[];
 }
 
 export interface OrderDraftBulkCancel {

@@ -14,7 +14,7 @@ export interface PageBulkPublish_pageBulkPublish_errors {
 
 export interface PageBulkPublish_pageBulkPublish {
   __typename: "PageBulkPublish";
-  errors: PageBulkPublish_pageBulkPublish_errors[] | null;
+  errors: PageBulkPublish_pageBulkPublish_errors[];
 }
 
 export interface PageBulkPublish {

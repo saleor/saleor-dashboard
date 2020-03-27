@@ -236,7 +236,7 @@ export interface MenuItemCreate_menuItemCreate_menuItem {
 
 export interface MenuItemCreate_menuItemCreate {
   __typename: "MenuItemCreate";
-  errors: MenuItemCreate_menuItemCreate_errors[] | null;
+  errors: MenuItemCreate_menuItemCreate_errors[];
   menuItem: MenuItemCreate_menuItemCreate_menuItem | null;
 }
 

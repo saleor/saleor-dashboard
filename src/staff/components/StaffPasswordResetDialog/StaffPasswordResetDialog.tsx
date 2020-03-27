@@ -15,6 +15,7 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import { getFieldError } from "@saleor/utils/errors";
 
 interface StaffPasswordResetDialogFormData {
   newPassword: string;
@@ -33,13 +34,13 @@ const initialForm: StaffPasswordResetDialogFormData = {
 
 const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
   confirmButtonState,
-  errors: apiErrors,
+  errors,
   open,
   onClose,
   onSubmit
 }) => {
   const intl = useIntl();
-  const dialogErrors = useModalDialogErrors(apiErrors, open);
+  const dialogErrors = useModalDialogErrors(errors, open);
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
@@ -49,14 +50,14 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
           description="dialog header"
         />
       </DialogTitle>
-      <Form errors={dialogErrors} initial={initialForm} onSubmit={onSubmit}>
-        {({ change, data, errors, submit }) => (
+      <Form initial={initialForm} onSubmit={onSubmit}>
+        {({ change, data, submit }) => (
           <>
             <DialogContent>
               <TextField
-                error={!!errors.oldPassword}
+                error={!!getFieldError(dialogErrors, "oldPassword")}
                 fullWidth
-                helperText={errors.oldPassword}
+                helperText={getFieldError(dialogErrors, "oldPassword")?.message}
                 label={intl.formatMessage({
                   defaultMessage: "Previous Password",
                   description: "input label"
@@ -67,10 +68,10 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
               />
               <FormSpacer />
               <TextField
-                error={!!errors.newPassword}
+                error={!!getFieldError(dialogErrors, "newPassword")}
                 fullWidth
                 helperText={
-                  errors.newPassword ||
+                  getFieldError(dialogErrors, "newPassword") ||
                   intl.formatMessage({
                     defaultMessage:
                       "New password must be at least 8 characters long"

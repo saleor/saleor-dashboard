@@ -38,7 +38,7 @@ export interface CategoryCreate_categoryCreate_category {
 
 export interface CategoryCreate_categoryCreate {
   __typename: "CategoryCreate";
-  errors: CategoryCreate_categoryCreate_errors[] | null;
+  errors: CategoryCreate_categoryCreate_errors[];
   category: CategoryCreate_categoryCreate_category | null;
 }
 

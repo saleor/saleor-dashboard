@@ -6,14 +6,14 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import { FormData } from "../SaleDetailsPage";
 
 export interface SaleInfoProps {
   data: FormData;
   disabled: boolean;
-  errors: {
-    name?: string;
-  };
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -33,8 +33,8 @@ const SaleInfo: React.FC<SaleInfoProps> = ({
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!errors.name}
-          helperText={errors.name}
+          error={!!getFieldError(errors, "name")}
+          helperText={getFieldError(errors, "name")?.message}
           name={"name" as keyof FormData}
           onChange={onChange}
           label={intl.formatMessage({

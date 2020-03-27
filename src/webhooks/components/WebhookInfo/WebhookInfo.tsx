@@ -14,17 +14,16 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
-import { FormErrors } from "@saleor/types";
 import { WebhookCreate_webhookCreate_webhookErrors } from "@saleor/webhooks/types/WebhookCreate";
+import { getFieldError } from "@saleor/utils/errors";
 import { FormData } from "../WebhooksDetailsPage";
 
 interface WebhookInfoProps {
-  apiErrors: WebhookCreate_webhookCreate_webhookErrors[];
   data: FormData;
   disabled: boolean;
+  errors: WebhookCreate_webhookCreate_webhookErrors[];
   serviceDisplayValue: string;
   services: SingleAutocompleteChoiceType[];
-  errors: FormErrors<"name" | "targetUrl" | "secretKey">;
   onChange: (event: React.ChangeEvent<any>) => void;
   serviceOnChange: (event: ChangeEvent) => void;
   fetchServiceAccounts: (data: string) => void;
@@ -45,7 +44,6 @@ const useStyles = makeStyles(
 );
 
 const WebhookInfo: React.FC<WebhookInfoProps> = ({
-  apiErrors,
   data,
   disabled,
   services,
@@ -58,7 +56,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
   const classes = useStyles({});
   const intl = useIntl();
   const serviceAccountsError =
-    apiErrors.filter(error => error.field === null).length > 0;
+    errors.filter(error => error.field === null).length > 0;
 
   return (
     <Card>
@@ -74,8 +72,8 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
         </Typography>
         <TextField
           disabled={disabled}
-          error={!!errors.name}
-          helperText={errors.name}
+          error={!!getFieldError(errors, "name")}
+          helperText={getFieldError(errors, "name")?.message}
           label={intl.formatMessage({
             defaultMessage: "Webhook Name",
             description: "webhook"
@@ -117,11 +115,14 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!errors.targetUrl}
-          helperText={intl.formatMessage({
-            defaultMessage: "This URL will receive webhook POST requests",
-            description: "webhook target url help text"
-          })}
+          error={!!getFieldError(errors, "targetUrl")}
+          helperText={
+            getFieldError(errors, "targetUrl")?.message ||
+            intl.formatMessage({
+              defaultMessage: "This URL will receive webhook POST requests",
+              description: "webhook target url help text"
+            })
+          }
           label={intl.formatMessage({
             defaultMessage: "Target URL",
             description: "webhook"
@@ -134,12 +135,15 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!errors.secretKey}
-          helperText={intl.formatMessage({
-            defaultMessage:
-              "secret key is used to create a hash signature with each payload. *optional field",
-            description: "webhook secret key help text"
-          })}
+          error={!!getFieldError(errors, "secretKey")}
+          helperText={
+            getFieldError(errors, "secretKey")?.message ||
+            intl.formatMessage({
+              defaultMessage:
+                "secret key is used to create a hash signature with each payload. *optional field",
+              description: "webhook secret key help text"
+            })
+          }
           label={intl.formatMessage({
             defaultMessage: "Secrect Key",
             description: "webhook"

@@ -70,13 +70,8 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps("");
 
   return (
-    <Form
-      errors={errors}
-      initial={formInitialData}
-      onSubmit={onSubmit}
-      confirmLeave
-    >
-      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+    <Form initial={formInitialData} onSubmit={onSubmit} confirmLeave>
+      {({ change, data, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.productTypes)}
@@ -87,7 +82,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
               <ProductTypeDetails
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />

@@ -42,7 +42,7 @@ export interface UpdateProductTranslations_productTranslate_product {
 
 export interface UpdateProductTranslations_productTranslate {
   __typename: "ProductTranslate";
-  errors: UpdateProductTranslations_productTranslate_errors[] | null;
+  errors: UpdateProductTranslations_productTranslate_errors[];
   product: UpdateProductTranslations_productTranslate_product | null;
 }
 

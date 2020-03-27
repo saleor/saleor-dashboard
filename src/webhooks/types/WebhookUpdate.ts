@@ -16,7 +16,7 @@ export interface WebhookUpdate_webhookUpdate_errors {
 
 export interface WebhookUpdate_webhookUpdate_webhookErrors {
   __typename: "WebhookError";
-  code: WebhookErrorCode | null;
+  code: WebhookErrorCode;
   message: string | null;
   field: string | null;
 }
@@ -30,15 +30,15 @@ export interface WebhookUpdate_webhookUpdate_webhook_serviceAccount {
 export interface WebhookUpdate_webhookUpdate_webhook {
   __typename: "Webhook";
   id: string;
-  name: string | null;
+  name: string;
   isActive: boolean;
   serviceAccount: WebhookUpdate_webhookUpdate_webhook_serviceAccount;
 }
 
 export interface WebhookUpdate_webhookUpdate {
   __typename: "WebhookUpdate";
-  errors: WebhookUpdate_webhookUpdate_errors[] | null;
-  webhookErrors: WebhookUpdate_webhookUpdate_webhookErrors[] | null;
+  errors: WebhookUpdate_webhookUpdate_errors[];
+  webhookErrors: WebhookUpdate_webhookUpdate_webhookErrors[];
   webhook: WebhookUpdate_webhookUpdate_webhook | null;
 }
 

@@ -34,7 +34,7 @@ export interface CollectionUpdate_collectionUpdate_collection {
 
 export interface CollectionUpdate_collectionUpdate {
   __typename: "CollectionUpdate";
-  errors: CollectionUpdate_collectionUpdate_errors[] | null;
+  errors: CollectionUpdate_collectionUpdate_errors[];
   collection: CollectionUpdate_collectionUpdate_collection | null;
 }
 

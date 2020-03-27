@@ -268,7 +268,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order {
 
 export interface OrderDraftUpdate_draftOrderUpdate {
   __typename: "DraftOrderUpdate";
-  errors: OrderDraftUpdate_draftOrderUpdate_errors[] | null;
+  errors: OrderDraftUpdate_draftOrderUpdate_errors[];
   order: OrderDraftUpdate_draftOrderUpdate_order | null;
 }
 

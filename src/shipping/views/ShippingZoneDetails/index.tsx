@@ -95,10 +95,10 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
             <>
               <ShippingZoneDetailsPage
                 disabled={loading}
-                errors={maybe(
-                  () =>
-                    ops.shippingZoneUpdate.opts.data.shippingZoneUpdate.errors
-                )}
+                errors={
+                  ops.shippingZoneUpdate.opts.data?.shippingZoneUpdate.errors ||
+                  []
+                }
                 onBack={() => navigate(shippingZonesListUrl())}
                 onCountryAdd={() =>
                   navigate(

@@ -212,10 +212,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               disabled={
                                 loading || voucherCataloguesRemoveOpts.loading
                               }
-                              errors={maybe(
-                                () =>
-                                  voucherUpdateOpts.data.voucherUpdate.errors
-                              )}
+                              errors={
+                                voucherUpdateOpts.data?.voucherUpdate.errors ||
+                                []
+                              }
                               pageInfo={pageInfo}
                               onNextPage={loadNextPage}
                               onPreviousPage={loadPreviousPage}

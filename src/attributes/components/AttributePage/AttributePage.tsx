@@ -108,8 +108,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
     });
 
   return (
-    <Form errors={errors} initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, errors: formErrors, data, submit }) => (
+    <Form initial={initialForm} onSubmit={handleSubmit}>
+      {({ change, data, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.attributes)}
@@ -130,7 +130,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 canChangeType={attribute === null}
                 data={data}
                 disabled={disabled}
-                errors={formErrors}
+                errors={errors}
                 onChange={change}
               />
               <CardSpacer />
@@ -146,7 +146,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
             <div>
               <AttributeProperties
                 data={data}
-                errors={formErrors}
+                errors={errors}
                 disabled={disabled}
                 onChange={change}
               />

@@ -10,7 +10,8 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { FormErrors } from "@saleor/types";
+import { UserError } from "@saleor/types";
+import { getFieldError } from "@saleor/utils/errors";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 
 export interface CollectionDetailsProps {
@@ -20,7 +21,7 @@ export interface CollectionDetailsProps {
     name: string;
   };
   disabled: boolean;
-  errors: FormErrors<"descriptionJson" | "name">;
+  errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -48,14 +49,14 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           disabled={disabled}
           value={data.name}
           onChange={onChange}
-          error={!!errors.name}
-          helperText={errors.name}
+          error={!!getFieldError(errors, "name")}
+          helperText={getFieldError(errors, "name")?.message}
           fullWidth
         />
         <FormSpacer />
         <RichTextEditor
-          error={!!errors.descriptionJson}
-          helperText={errors.descriptionJson}
+          error={!!getFieldError(errors, "descriptionJson")}
+          helperText={getFieldError(errors, "descriptionJson")?.message}
           initial={maybe(() => JSON.parse(collection.descriptionJson))}
           label={intl.formatMessage(commonMessages.description)}
           name="description"

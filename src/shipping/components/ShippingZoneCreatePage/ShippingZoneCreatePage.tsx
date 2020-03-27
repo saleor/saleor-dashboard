@@ -50,8 +50,8 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
   };
 
   return (
-    <Form errors={errors} initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, errors: formErrors, hasChanged, submit }) => (
+    <Form initial={initialForm} onSubmit={onSubmit}>
+      {({ change, data, hasChanged, submit }) => (
         <>
           <Container>
             <AppHeader onBack={onBack}>
@@ -67,7 +67,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
               <div>
                 <ShippingZoneInfo
                   data={data}
-                  errors={formErrors}
+                  errors={errors}
                   onChange={change}
                 />
                 <CardSpacer />

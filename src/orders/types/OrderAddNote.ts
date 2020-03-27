@@ -41,7 +41,7 @@ export interface OrderAddNote_orderAddNote_order {
 
 export interface OrderAddNote_orderAddNote {
   __typename: "OrderAddNote";
-  errors: OrderAddNote_orderAddNote_errors[] | null;
+  errors: OrderAddNote_orderAddNote_errors[];
   order: OrderAddNote_orderAddNote_order | null;
 }
 

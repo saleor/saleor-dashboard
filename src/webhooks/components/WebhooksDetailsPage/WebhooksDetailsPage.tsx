@@ -45,7 +45,7 @@ export interface WebhooksDetailsPageProps {
 
 const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
   disabled,
-  errors: apiErrors,
+  errors,
   webhook,
   saveButtonBarState,
   services,
@@ -81,8 +81,8 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
     []
   );
   return (
-    <Form errors={apiErrors} initial={initialForm} onSubmit={onSubmit}>
-      {({ data, errors, hasChanged, submit, change }) => {
+    <Form initial={initialForm} onSubmit={onSubmit}>
+      {({ data, hasChanged, submit, change }) => {
         const handleServiceSelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedServiceAcccounts,
@@ -107,7 +107,6 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
             <Grid>
               <div>
                 <WebhookInfo
-                  apiErrors={apiErrors}
                   data={data}
                   disabled={disabled}
                   serviceDisplayValue={selectedServiceAcccounts}

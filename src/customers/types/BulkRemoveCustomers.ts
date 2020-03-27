@@ -14,7 +14,7 @@ export interface BulkRemoveCustomers_customerBulkDelete_errors {
 
 export interface BulkRemoveCustomers_customerBulkDelete {
   __typename: "CustomerBulkDelete";
-  errors: BulkRemoveCustomers_customerBulkDelete_errors[] | null;
+  errors: BulkRemoveCustomers_customerBulkDelete_errors[];
 }
 
 export interface BulkRemoveCustomers {
