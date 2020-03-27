@@ -41,11 +41,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
-  const {
-    loadMore: loadMoreWarehouses,
-    search: searchWarehouses,
-    result: searchWarehousesOpts
-  } = useWarehouseSearch({
+  const { result: searchWarehousesOpts } = useWarehouseSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 20
@@ -127,7 +123,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
                   />
                   <ProductVariantCreatePage
                     currencySymbol={shop?.defaultCurrency}
-                    disabled={productLoading}
+                    disabled={disableForm}
                     errors={
                       variantCreateResult.data?.productVariantCreate.errors ||
                       []
@@ -136,7 +132,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
                       defaultMessage: "Create Variant",
                       description: "header"
                     })}
-                    loading={disableForm}
                     product={data?.product}
                     onBack={handleBack}
                     onSubmit={handleSubmit}

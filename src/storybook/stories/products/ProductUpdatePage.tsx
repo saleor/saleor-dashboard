@@ -30,11 +30,11 @@ const props: ProductUpdatePageProps = {
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
-  onProductShow: () => undefined,
   onSubmit: () => undefined,
   onVariantAdd: () => undefined,
   onVariantShow: () => undefined,
   onVariantsAdd: () => undefined,
+  onWarehousesEdit: () => undefined,
   placeholderImage,
   product,
   saveButtonBarState: "default",
@@ -73,7 +73,28 @@ storiesOf("Views / Products / Product edit", module)
       {...props}
       product={{
         ...props.product,
-        variants: []
+        productType: {
+          ...product.productType,
+          hasVariants: false
+        }
+      }}
+    />
+  ))
+  .add("no stock and no variants", () => (
+    <ProductUpdatePage
+      {...props}
+      product={{
+        ...product,
+        productType: {
+          ...product.productType,
+          hasVariants: false
+        },
+        variants: [
+          {
+            ...product.variants[0],
+            stocks: []
+          }
+        ]
       }}
     />
   ))

@@ -45,7 +45,6 @@ interface ProductVariantCreatePageProps {
   disabled: boolean;
   errors: ProductErrorFragment[];
   header: string;
-  loading: boolean;
   product: ProductVariantCreateData_product;
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: SearchWarehouses_search_edges_node[];
@@ -59,7 +58,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   currencySymbol,
   disabled,
   errors,
-  loading,
   header,
   product,
   saveButtonBarState,
@@ -133,7 +131,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               <div>
                 <ProductVariantAttributes
                   attributes={attributes}
-                  disabled={loading}
+                  disabled={disabled}
                   errors={errors}
                   onChange={handleAttributeChange}
                 />
@@ -143,7 +141,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   priceOverride={data.priceOverride}
                   currencySymbol={currencySymbol}
                   costPrice={data.costPrice}
-                  loading={loading}
+                  loading={disabled}
                   onChange={change}
                 />
                 <CardSpacer />
@@ -159,7 +157,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               </div>
             </Grid>
             <SaveButtonBar
-              disabled={loading || !onSubmit || !hasChanged}
+              disabled={disabled || !onSubmit || !hasChanged}
               labels={{
                 delete: intl.formatMessage({
                   defaultMessage: "Delete Variant",

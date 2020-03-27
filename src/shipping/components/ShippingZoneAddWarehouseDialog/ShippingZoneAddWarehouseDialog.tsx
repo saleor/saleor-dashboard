@@ -11,7 +11,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import { DialogProps, UserError } from "@saleor/types";
+import { DialogProps } from "@saleor/types";
 import { AddressTypeInput } from "@saleor/customers/types";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
@@ -24,6 +24,7 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { WarehouseErrorFragment } from "@saleor/warehouses/types/WarehouseErrorFragment";
 
 export interface ShippingZoneAddWarehouseDialogSubmitData
   extends AddressTypeInput {
@@ -33,7 +34,7 @@ export interface ShippingZoneAddWarehouseDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   countries: ShopInfo_shop_countries[];
   disabled: boolean;
-  errors: UserError[];
+  errors: WarehouseErrorFragment[];
   onSubmit: (data: ShippingZoneAddWarehouseDialogSubmitData) => void;
 }
 

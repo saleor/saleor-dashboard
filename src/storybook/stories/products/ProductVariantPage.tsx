@@ -23,6 +23,7 @@ storiesOf("Views / Products / Product variant details", module)
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
       saveButtonBarState="default"
+      onWarehousesEdit={() => undefined}
     />
   ))
   .add("when loading data", () => (
@@ -38,6 +39,7 @@ storiesOf("Views / Products / Product variant details", module)
       onSubmit={() => undefined}
       onVariantClick={() => undefined}
       saveButtonBarState="default"
+      onWarehousesEdit={() => undefined}
     />
   ))
   .add("attribute errors", () => (
@@ -69,5 +71,6 @@ storiesOf("Views / Products / Product variant details", module)
         message: "Generic form error",
         ...error
       }))}
+      onWarehousesEdit={() => undefined}
     />
   ));

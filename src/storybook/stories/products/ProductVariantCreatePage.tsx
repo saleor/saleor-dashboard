@@ -3,6 +3,7 @@ import React from "react";
 
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { warehouseList } from "@saleor/warehouses/fixtures";
 import ProductVariantCreatePage from "../../../products/components/ProductVariantCreatePage";
 import { product as productFixture } from "../../../products/fixtures";
 import Decorator from "../../Decorator";
@@ -14,19 +15,22 @@ storiesOf("Views / Products / Create product variant", module)
   .add("default", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      disabled={false}
       errors={[]}
       header="Add variant"
-      loading={false}
       product={product}
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
       saveButtonBarState="default"
+      warehouses={warehouseList}
+      onWarehouseEdit={() => undefined}
     />
   ))
   .add("with errors", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      disabled={false}
       errors={[
         {
           code: ProductErrorCode.REQUIRED,
@@ -45,33 +49,36 @@ storiesOf("Views / Products / Create product variant", module)
         ...error
       }))}
       header="Add variant"
-      loading={false}
       product={product}
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
       saveButtonBarState="default"
+      warehouses={warehouseList}
+      onWarehouseEdit={() => undefined}
     />
   ))
   .add("when loading data", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      disabled={true}
       errors={[]}
       header="Add variant"
-      loading={true}
       product={undefined}
       onBack={() => undefined}
       onSubmit={() => undefined}
       onVariantClick={undefined}
       saveButtonBarState="default"
+      warehouses={warehouseList}
+      onWarehouseEdit={() => undefined}
     />
   ))
   .add("add first variant", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      disabled={false}
       errors={[]}
       header="Add variant"
-      loading={false}
       product={{
         ...product,
         variants: []
@@ -80,5 +87,7 @@ storiesOf("Views / Products / Create product variant", module)
       onSubmit={() => undefined}
       onVariantClick={undefined}
       saveButtonBarState="default"
+      warehouses={warehouseList}
+      onWarehouseEdit={() => undefined}
     />
   ));

@@ -3,7 +3,7 @@ import React from "react";
 
 import Decorator from "@saleor/storybook//Decorator";
 import { warehouseList } from "@saleor/warehouses/fixtures";
-import { formError } from "@saleor/storybook/misc";
+import { StockErrorCode } from "@saleor/types/globalTypes";
 import ProductWarehousesDialog, {
   ProductWarehousesDialogProps
 } from "./ProductWarehousesDialog";
@@ -15,21 +15,8 @@ const props: ProductWarehousesDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  stocks: [
-    {
-      __typename: "Stock",
-      id: "5123",
-      quantity: 2,
-      warehouse: warehouseList[0]
-    },
-    {
-      __typename: "Stock",
-      id: "5223",
-      quantity: 4,
-      warehouse: warehouseList[2]
-    }
-  ],
-  warehouses: warehouseList
+  warehouses: warehouseList,
+  warehousesWithStocks: [warehouseList[0].id, warehouseList[2].id]
 };
 
 storiesOf("Views / Products / Edit warehouses", module)
@@ -46,5 +33,14 @@ storiesOf("Views / Products / Edit warehouses", module)
     />
   ))
   .add("with error", () => (
-    <ProductWarehousesDialog {...props} errors={[formError(null)]} />
+    <ProductWarehousesDialog
+      {...props}
+      errors={[
+        {
+          __typename: "StockError",
+          code: StockErrorCode.INVALID,
+          field: null
+        }
+      ]}
+    />
   ));
