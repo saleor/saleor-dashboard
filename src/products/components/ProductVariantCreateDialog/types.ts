@@ -1,1 +1,5 @@
-export type ProductVariantCreateStep = "values" | "prices" | "summary";
+export enum ProductVariantCreateStep {
+  values,
+  prices,
+  summary
+}
