@@ -134,7 +134,7 @@ export function getVariantAttributeInputFromProduct(
 export function getStockInputFromProduct(
   product: ProductDetails_product
 ): ProductStockInput[] {
-  return product?.variants[0].stocks.map(stock => ({
+  return product?.variants[0]?.stocks.map(stock => ({
     data: null,
     id: stock.warehouse.id,
     label: stock.warehouse.name,
