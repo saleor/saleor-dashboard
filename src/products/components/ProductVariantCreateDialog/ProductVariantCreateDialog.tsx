@@ -9,6 +9,7 @@ import { FormattedMessage } from "react-intl";
 
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
+import useWizard from "@saleor/hooks/useWizard";
 import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 import { createInitialForm, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreateContent, {
@@ -39,9 +40,9 @@ function canHitNext(
   data: ProductVariantCreateFormData
 ): boolean {
   switch (step) {
-    case "values":
+    case ProductVariantCreateStep.values:
       return data.attributes.every(attribute => attribute.values.length > 0);
-    case "prices":
+    case ProductVariantCreateStep.prices:
       if (data.price.all) {
         if (data.price.value === "") {
           return false;
@@ -69,7 +70,7 @@ function canHitNext(
       }
 
       return true;
-    case "summary":
+    case ProductVariantCreateStep.summary:
       return data.variants.every(variant => variant.sku !== "");
 
     default:
@@ -88,9 +89,7 @@ export interface ProductVariantCreateDialogProps
   onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
 
-const ProductVariantCreateDialog: React.FC<
-  ProductVariantCreateDialogProps
-> = props => {
+const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = props => {
   const {
     attributes,
     defaultPrice,
@@ -101,29 +100,13 @@ const ProductVariantCreateDialog: React.FC<
     ...contentProps
   } = props;
   const classes = useStyles(props);
-  const [step, setStep] = React.useState<ProductVariantCreateStep>("values");
-
-  function handleNextStep() {
-    switch (step) {
-      case "values":
-        setStep("prices");
-        break;
-      case "prices":
-        setStep("summary");
-        break;
-    }
-  }
-
-  function handlePrevStep() {
-    switch (step) {
-      case "prices":
-        setStep("values");
-        break;
-      case "summary":
-        setStep("prices");
-        break;
-    }
-  }
+  const [step, { next, prev, set: setStep }] = useWizard<
+    ProductVariantCreateStep
+  >(ProductVariantCreateStep.values, [
+    ProductVariantCreateStep.values,
+    ProductVariantCreateStep.prices,
+    ProductVariantCreateStep.summary
+  ]);
 
   const [data, dispatchFormDataAction] = React.useReducer(
     reduceProductVariantCreateFormData,
@@ -141,7 +124,7 @@ const ProductVariantCreateDialog: React.FC<
   useModalDialogOpen(open, {
     onClose: () => {
       reloadForm();
-      setStep("values");
+      setStep(ProductVariantCreateStep.values);
     }
   });
 
@@ -171,25 +154,21 @@ const ProductVariantCreateDialog: React.FC<
           <FormattedMessage defaultMessage="Cancel" description="button" />
         </Button>
         <div className={classes.spacer} />
-        {step !== "values" && (
-          <Button
-            className={classes.button}
-            color="primary"
-            onClick={handlePrevStep}
-          >
+        {step !== ProductVariantCreateStep.values && (
+          <Button className={classes.button} color="primary" onClick={prev}>
             <FormattedMessage
               defaultMessage="Previous"
               description="previous step, button"
             />
           </Button>
         )}
-        {step !== "summary" ? (
+        {step !== ProductVariantCreateStep.summary ? (
           <Button
             className={classes.button}
             color="primary"
             disabled={!canHitNext(step, data)}
             variant="contained"
-            onClick={handleNextStep}
+            onClick={next}
           >
             <FormattedMessage defaultMessage="Next" description="button" />
           </Button>

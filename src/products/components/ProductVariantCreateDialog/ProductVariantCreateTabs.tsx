@@ -17,21 +17,21 @@ function getSteps(intl: IntlShape): Step[] {
         defaultMessage: "Select Values",
         description: "attribute values, variant creation step"
       }),
-      value: "values"
+      value: ProductVariantCreateStep.values
     },
     {
       label: intl.formatMessage({
         defaultMessage: "Prices and SKU",
         description: "variant creation step"
       }),
-      value: "prices"
+      value: ProductVariantCreateStep.prices
     },
     {
       label: intl.formatMessage({
         defaultMessage: "Summary",
         description: "variant creation step"
       }),
-      value: "summary"
+      value: ProductVariantCreateStep.summary
     }
   ];
 }
@@ -71,9 +71,7 @@ export interface ProductVariantCreateTabsProps {
   onStepClick: (step: ProductVariantCreateStep) => void;
 }
 
-const ProductVariantCreateTabs: React.FC<
-  ProductVariantCreateTabsProps
-> = props => {
+const ProductVariantCreateTabs: React.FC<ProductVariantCreateTabsProps> = props => {
   const { step: currentStep, onStepClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();
