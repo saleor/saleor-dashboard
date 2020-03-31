@@ -62,7 +62,7 @@ const ProductVariantCreateContent: React.FC<ProductVariantCreateContentProps> = 
     <div>
       <ProductVariantCreateTabs step={step} onStepClick={onStepClick} />
       <div className={classes.root}>
-        {step === "values" && (
+        {step === ProductVariantCreateStep.values && (
           <ProductVariantCreateValues
             attributes={selectedAttributes}
             data={data}
@@ -75,7 +75,7 @@ const ProductVariantCreateContent: React.FC<ProductVariantCreateContentProps> = 
             }
           />
         )}
-        {step === "prices" && (
+        {step === ProductVariantCreateStep.prices && (
           <ProductVariantCreatePrices
             attributes={selectedAttributes}
             currencySymbol={currencySymbol}
@@ -116,7 +116,7 @@ const ProductVariantCreateContent: React.FC<ProductVariantCreateContentProps> = 
             }
           />
         )}
-        {step === "summary" && (
+        {step === ProductVariantCreateStep.summary && (
           <ProductVariantCreateSummary
             attributes={selectedAttributes}
             currencySymbol={currencySymbol}
