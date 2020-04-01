@@ -13,6 +13,12 @@ export interface StaffMemberDetailsFragment_avatar {
   url: string;
 }
 
+export interface StaffMemberDetailsFragment_permissionGroups {
+  __typename: "Group";
+  id: string;
+  name: string;
+}
+
 export interface StaffMemberDetailsFragment_permissions {
   __typename: "PermissionDisplay";
   code: PermissionEnum;
@@ -27,5 +33,6 @@ export interface StaffMemberDetailsFragment {
   isActive: boolean;
   lastName: string;
   avatar: StaffMemberDetailsFragment_avatar | null;
+  permissionGroups: (StaffMemberDetailsFragment_permissionGroups | null)[] | null;
   permissions: (StaffMemberDetailsFragment_permissions | null)[] | null;
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
 
-import AccountPermissions from "@saleor/components/AccountPermissions";
 import AccountStatus from "@saleor/components/AccountStatus";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -11,33 +10,38 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import useLocale from "@saleor/hooks/useLocale";
 import { sectionNames } from "@saleor/intl";
-import { UserError } from "@saleor/types";
-import { getUserName, maybe } from "../../../misc";
-import { PermissionEnum } from "../../../types/globalTypes";
+import { UserError, FetchMoreProps, SearchPageProps } from "@saleor/types";
+import { getUserName } from "@saleor/misc";
+import AccountPermissionGroups from "@saleor/components/AccountPermissionGroups";
+import { CardContent, Card, Typography } from "@material-ui/core";
+import CardTitle from "@saleor/components/CardTitle";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
+import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 import StaffPreferences from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
 import StaffPassword from "../StaffPassword/StaffPassword";
 
 interface FormData {
-  hasFullAccess: boolean;
-  isActive: boolean;
-  permissions: PermissionEnum[];
-  firstName: string;
-  lastName: string;
   email: string;
+  firstName: string;
+  isActive: boolean;
+  lastName: string;
+  permissionGroups: string[];
 }
 
-export interface StaffDetailsPageProps {
+export interface StaffDetailsPageProps extends SearchPageProps {
+  availablePermissionGroups: SearchPermissionGroups_search_edges_node[];
   canEditAvatar: boolean;
   canEditPreferences: boolean;
   canEditStatus: boolean;
   canRemove: boolean;
   disabled: boolean;
-  permissions: ShopInfo_shop_permissions[];
+  fetchMorePermissionGroups: FetchMoreProps;
   saveButtonBarState: ConfirmButtonTransitionState;
   staffMember: StaffMemberDetails_user;
   errors: UserError[];
@@ -50,13 +54,14 @@ export interface StaffDetailsPageProps {
 }
 
 const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
+  availablePermissionGroups,
   canEditAvatar,
   canEditPreferences,
   canEditStatus,
   canRemove,
   disabled,
   errors,
-  permissions,
+  fetchMorePermissionGroups,
   saveButtonBarState,
   staffMember,
   onBack,
@@ -64,100 +69,127 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   onDelete,
   onImageDelete,
   onImageUpload,
-  onSubmit
+  onSearchChange,
+  onSubmit,
+  initialSearch
 }: StaffDetailsPageProps) => {
   const intl = useIntl();
   const { locale, setLocale } = useLocale();
+  const [
+    permissionGroupsDisplayValues,
+    setPermissionGroupsDisplayValues
+  ] = useStateFromProps<MultiAutocompleteChoiceType[]>(
+    staffMember?.permissionGroups.map(group => ({
+      label: group.name,
+      value: group.id
+    })) || []
+  );
 
   const initialForm: FormData = {
     email: staffMember?.email || "",
     firstName: staffMember?.firstName || "",
-    hasFullAccess: maybe(
-      () =>
-        permissions.filter(
-          perm =>
-            maybe(() => staffMember.permissions, []).filter(
-              userPerm => userPerm.code === perm.code
-            ).length === 0
-        ).length === 0,
-      false
-    ),
     isActive: !!staffMember?.isActive,
     lastName: staffMember?.lastName || "",
-    permissions: maybe(() => staffMember.permissions, []).map(perm => perm.code)
+    permissionGroups: staffMember?.permissionGroups.map(pg => pg.id) || []
   };
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
-      {({ data, change, hasChanged, submit }) => (
-        <Container>
-          <AppHeader onBack={onBack}>
-            {intl.formatMessage(sectionNames.staff)}
-          </AppHeader>
-          <PageHeader title={getUserName(staffMember)} />
-          <Grid>
-            <div>
-              <StaffProperties
-                data={data}
-                disabled={disabled}
-                canEditAvatar={canEditAvatar}
-                staffMember={staffMember}
-                onChange={change}
-                onImageUpload={onImageUpload}
-                onImageDelete={onImageDelete}
-              />
-              {canEditPreferences && (
-                <>
-                  <CardSpacer />
-                  <StaffPassword onChangePassword={onChangePassword} />
-                </>
-              )}
-            </div>
-            <div>
-              {canEditPreferences && (
-                <StaffPreferences locale={locale} onLocaleChange={setLocale} />
-              )}
-              {canEditStatus && (
-                <>
-                  <AccountPermissions
-                    data={data}
-                    errors={errors}
-                    fullAccessLabel={intl.formatMessage({
-                      defaultMessage: "User has full access to the store",
-                      description: "checkbox label"
-                    })}
-                    disabled={disabled}
-                    permissions={permissions}
-                    onChange={change}
-                    description={intl.formatMessage({
-                      defaultMessage:
-                        "Expand or restrict user's permissions to access certain part of saleor system.",
-                      description: "card description"
-                    })}
+      {({ data, change, hasChanged, submit }) => {
+        const permissionGroupsChange = createMultiAutocompleteSelectHandler(
+          change,
+          setPermissionGroupsDisplayValues,
+          permissionGroupsDisplayValues,
+          availablePermissionGroups?.map(group => ({
+            label: group.name,
+            value: group.id
+          })) || []
+        );
+
+        return (
+          <Container>
+            <AppHeader onBack={onBack}>
+              {intl.formatMessage(sectionNames.staff)}
+            </AppHeader>
+            <PageHeader title={getUserName(staffMember)} />
+            <Grid>
+              <div>
+                <StaffProperties
+                  data={data}
+                  disabled={disabled}
+                  canEditAvatar={canEditAvatar}
+                  staffMember={staffMember}
+                  onChange={change}
+                  onImageUpload={onImageUpload}
+                  onImageDelete={onImageDelete}
+                />
+                {canEditPreferences && (
+                  <>
+                    <CardSpacer />
+                    <StaffPassword onChangePassword={onChangePassword} />
+                  </>
+                )}
+              </div>
+              <div>
+                {canEditPreferences && (
+                  <StaffPreferences
+                    locale={locale}
+                    onLocaleChange={setLocale}
                   />
-                  <CardSpacer />
-                  <AccountStatus
-                    data={data}
-                    disabled={disabled}
-                    label={intl.formatMessage({
-                      defaultMessage: "User is active",
-                      description: "checkbox label"
-                    })}
-                    onChange={change}
-                  />
-                </>
-              )}
-            </div>
-          </Grid>
-          <SaveButtonBar
-            disabled={disabled || !hasChanged}
-            state={saveButtonBarState}
-            onCancel={onBack}
-            onSave={submit}
-            onDelete={canRemove ? onDelete : undefined}
-          />
-        </Container>
-      )}
+                )}
+                {canEditStatus && (
+                  <>
+                    <Card>
+                      <CardTitle
+                        title={intl.formatMessage({
+                          defaultMessage: "Permissions",
+                          description: "dialog header"
+                        })}
+                      />
+                      <CardContent>
+                        <Typography>
+                          {intl.formatMessage({
+                            defaultMessage: "User is assigned to:",
+                            description: "card description"
+                          })}
+                        </Typography>
+                        <AccountPermissionGroups
+                          data={data}
+                          disabled={disabled}
+                          errors={[]}
+                          initialSearch={initialSearch}
+                          permissionGroups={availablePermissionGroups}
+                          onChange={permissionGroupsChange}
+                          onSearchChange={onSearchChange}
+                          displayValues={permissionGroupsDisplayValues}
+                          {...fetchMorePermissionGroups}
+                        />
+                      </CardContent>
+                    </Card>
+                    <CardSpacer />
+                    <AccountStatus
+                      data={data}
+                      disabled={disabled}
+                      label={intl.formatMessage({
+                        defaultMessage: "User is active",
+                        description: "checkbox label"
+                      })}
+                      onChange={change}
+                    />
+                  </>
+                )}
+              </div>
+            </Grid>
+            <SaveButtonBar
+              disabled={disabled || !hasChanged}
+              state={saveButtonBarState}
+              onCancel={onBack}
+              onSave={submit}
+              onDelete={canRemove ? onDelete : undefined}
+            />
+          </Container>
+        );
+      }}
     </Form>
   );
 };

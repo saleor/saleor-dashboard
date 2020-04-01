@@ -13,6 +13,12 @@ export interface StaffMemberDetails_user_avatar {
   url: string;
 }
 
+export interface StaffMemberDetails_user_permissionGroups {
+  __typename: "Group";
+  id: string;
+  name: string;
+}
+
 export interface StaffMemberDetails_user_permissions {
   __typename: "PermissionDisplay";
   code: PermissionEnum;
@@ -27,6 +33,7 @@ export interface StaffMemberDetails_user {
   isActive: boolean;
   lastName: string;
   avatar: StaffMemberDetails_user_avatar | null;
+  permissionGroups: (StaffMemberDetails_user_permissionGroups | null)[] | null;
   permissions: (StaffMemberDetails_user_permissions | null)[] | null;
 }
 

@@ -23,6 +23,10 @@ export const staffMemberDetailsFragment = gql`
   ${staffMemberFragment}
   fragment StaffMemberDetailsFragment on User {
     ...StaffMemberFragment
+    permissionGroups {
+      id
+      name
+    }
     permissions {
       code
       name

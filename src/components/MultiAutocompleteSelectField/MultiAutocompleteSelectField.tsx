@@ -70,13 +70,11 @@ export interface MultiAutocompleteSelectFieldProps
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const DebounceAutocomplete: React.ComponentType<
-  DebounceProps<string>
-> = Debounce;
+const DebounceAutocomplete: React.ComponentType<DebounceProps<
+  string
+>> = Debounce;
 
-const MultiAutocompleteSelectFieldComponent: React.FC<
-  MultiAutocompleteSelectFieldProps
-> = props => {
+const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFieldProps> = props => {
   const {
     allowCustomValues,
     choices,
@@ -191,9 +189,17 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
   );
 };
 
-const MultiAutocompleteSelectField: React.FC<
-  MultiAutocompleteSelectFieldProps
-> = ({ choices, fetchChoices, ...props }) => {
+/**
+ *
+ * To create needed handlers use: `createMultiAutocompleteSelectHandler`
+ * For loadMore, search, result props create search query and use `makeTopLevelSearch` hook
+ *
+ */
+const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> = ({
+  choices,
+  fetchChoices,
+  ...props
+}) => {
   const [query, setQuery] = React.useState("");
 
   if (fetchChoices) {

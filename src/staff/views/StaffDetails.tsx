@@ -10,6 +10,8 @@ import useShop from "@saleor/hooks/useShop";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { maybe } from "../../misc";
 import StaffDetailsPage from "../components/StaffDetailsPage/StaffDetailsPage";
 import {
@@ -65,6 +67,14 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   });
 
   const handleBack = () => navigate(staffListUrl());
+
+  const {
+    loadMore: loadMorePermissionGroups,
+    search: searchPermissionGroups,
+    result: searchPermissionGroupsOpts
+  } = usePermissionGroupSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
 
   return (
     <TypedStaffMemberDetailsQuery displayLoader variables={{ id }}>
@@ -140,6 +150,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 canRemove={!isUserSameAsViewer}
                                 disabled={loading}
                                 onBack={handleBack}
+                                initialSearch=""
                                 onChangePassword={() =>
                                   navigate(
                                     staffMemberDetailsUrl(id, {
@@ -154,7 +165,9 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                     })
                                   )
                                 }
-                                onSubmit={variables =>
+                                onSubmit={variables => {
+                                  // FIXME: Update when mutation will be available
+
                                   updateStaffMember({
                                     variables: {
                                       id,
@@ -162,12 +175,11 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                         email: variables.email,
                                         firstName: variables.firstName,
                                         isActive: variables.isActive,
-                                        lastName: variables.lastName,
-                                        permissions: variables.permissions
+                                        lastName: variables.lastName
                                       }
                                     }
-                                  })
-                                }
+                                  });
+                                }}
                                 onImageUpload={file =>
                                   updateStaffAvatar({
                                     variables: {
@@ -182,9 +194,19 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                     })
                                   )
                                 }
-                                permissions={shop?.permissions}
+                                availablePermissionGroups={searchPermissionGroupsOpts.data?.search.edges.map(
+                                  edge => edge.node
+                                )}
                                 staffMember={staffMember}
                                 saveButtonBarState={updateResult.status}
+                                fetchMorePermissionGroups={{
+                                  hasMore:
+                                    searchPermissionGroupsOpts.data?.search
+                                      .pageInfo.hasNextPage,
+                                  loading: searchPermissionGroupsOpts.loading,
+                                  onFetchMore: loadMorePermissionGroups
+                                }}
+                                onSearchChange={searchPermissionGroups}
                               />
                               <ActionDialog
                                 open={params.action === "remove"}

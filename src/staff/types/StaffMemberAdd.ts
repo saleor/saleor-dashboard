@@ -19,6 +19,12 @@ export interface StaffMemberAdd_staffCreate_user_avatar {
   url: string;
 }
 
+export interface StaffMemberAdd_staffCreate_user_permissionGroups {
+  __typename: "Group";
+  id: string;
+  name: string;
+}
+
 export interface StaffMemberAdd_staffCreate_user_permissions {
   __typename: "PermissionDisplay";
   code: PermissionEnum;
@@ -33,6 +39,7 @@ export interface StaffMemberAdd_staffCreate_user {
   isActive: boolean;
   lastName: string;
   avatar: StaffMemberAdd_staffCreate_user_avatar | null;
+  permissionGroups: (StaffMemberAdd_staffCreate_user_permissionGroups | null)[] | null;
   permissions: (StaffMemberAdd_staffCreate_user_permissions | null)[] | null;
 }
 
