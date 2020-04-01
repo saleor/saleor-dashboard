@@ -14,6 +14,58 @@ export interface SimpleProductUpdate_productUpdate_errors {
   field: string | null;
 }
 
+export interface SimpleProductUpdate_productUpdate_product_attributes_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_attributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  slug: string | null;
+  name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (SimpleProductUpdate_productUpdate_product_attributes_attribute_values | null)[] | null;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_attributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_attributes {
+  __typename: "SelectedAttribute";
+  attribute: SimpleProductUpdate_productUpdate_product_attributes_attribute;
+  values: (SimpleProductUpdate_productUpdate_product_attributes_values | null)[];
+}
+
+export interface SimpleProductUpdate_productUpdate_product_productType_variantAttributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_productType_variantAttributes {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  values: (SimpleProductUpdate_productUpdate_product_productType_variantAttributes_values | null)[] | null;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_productType {
+  __typename: "ProductType";
+  variantAttributes: (SimpleProductUpdate_productUpdate_product_productType_variantAttributes | null)[] | null;
+  id: string;
+  name: string;
+  hasVariants: boolean;
+}
+
 export interface SimpleProductUpdate_productUpdate_product_category {
   __typename: "Category";
   id: string;
@@ -54,36 +106,6 @@ export interface SimpleProductUpdate_productUpdate_product_purchaseCost {
   __typename: "MoneyRange";
   start: SimpleProductUpdate_productUpdate_product_purchaseCost_start | null;
   stop: SimpleProductUpdate_productUpdate_product_purchaseCost_stop | null;
-}
-
-export interface SimpleProductUpdate_productUpdate_product_attributes_attribute_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-}
-
-export interface SimpleProductUpdate_productUpdate_product_attributes_attribute {
-  __typename: "Attribute";
-  id: string;
-  slug: string | null;
-  name: string | null;
-  inputType: AttributeInputTypeEnum | null;
-  valueRequired: boolean;
-  values: (SimpleProductUpdate_productUpdate_product_attributes_attribute_values | null)[] | null;
-}
-
-export interface SimpleProductUpdate_productUpdate_product_attributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-}
-
-export interface SimpleProductUpdate_productUpdate_product_attributes {
-  __typename: "SelectedAttribute";
-  attribute: SimpleProductUpdate_productUpdate_product_attributes_attribute;
-  values: (SimpleProductUpdate_productUpdate_product_attributes_values | null)[];
 }
 
 export interface SimpleProductUpdate_productUpdate_product_pricing_priceRange_start_net {
@@ -157,16 +179,11 @@ export interface SimpleProductUpdate_productUpdate_product_variants {
   trackInventory: boolean;
 }
 
-export interface SimpleProductUpdate_productUpdate_product_productType {
-  __typename: "ProductType";
-  id: string;
-  name: string;
-  hasVariants: boolean;
-}
-
 export interface SimpleProductUpdate_productUpdate_product {
   __typename: "Product";
   id: string;
+  attributes: SimpleProductUpdate_productUpdate_product_attributes[];
+  productType: SimpleProductUpdate_productUpdate_product_productType;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -180,11 +197,9 @@ export interface SimpleProductUpdate_productUpdate_product {
   isPublished: boolean;
   chargeTaxes: boolean;
   publicationDate: any | null;
-  attributes: SimpleProductUpdate_productUpdate_product_attributes[];
   pricing: SimpleProductUpdate_productUpdate_product_pricing | null;
   images: (SimpleProductUpdate_productUpdate_product_images | null)[] | null;
   variants: (SimpleProductUpdate_productUpdate_product_variants | null)[] | null;
-  productType: SimpleProductUpdate_productUpdate_product_productType;
 }
 
 export interface SimpleProductUpdate_productUpdate {

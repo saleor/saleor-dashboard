@@ -1,18 +1,18 @@
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { attributes } from "@saleor/attributes/fixtures";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
+import Container from "@saleor/components/Container";
 import Decorator from "../../../storybook/Decorator";
 import { createVariants } from "./createVariants";
 import { AllOrAttribute } from "./form";
-import ProductVariantCreateContent, {
-  ProductVariantCreateContentProps
-} from "./ProductVariantCreateContent";
-import ProductVariantCreateDialog from "./ProductVariantCreateDialog";
+import ProductVariantCreatorContent, {
+  ProductVariantCreatorContentProps
+} from "./ProductVariantCreatorContent";
+import ProductVariantCreatorPage from "./ProductVariantCreatorPage";
+import { ProductVariantCreatorStep } from "./types";
 
 const selectedAttributes = [1, 4, 5].map(index => attributes[index]);
 
@@ -52,7 +52,7 @@ const errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[] = [
   }
 ];
 
-const props: ProductVariantCreateContentProps = {
+const props: ProductVariantCreatorContentProps = {
   attributes,
   currencySymbol: "USD",
   data: {
@@ -68,56 +68,43 @@ const props: ProductVariantCreateContentProps = {
   },
   dispatchFormDataAction: () => undefined,
   errors: [],
-  onStepClick: () => undefined,
-  step: "values"
+  step: ProductVariantCreatorStep.values
 };
 
 storiesOf("Views / Products / Create multiple variants", module)
-  .addDecorator(storyFn => (
-    <Card
-      style={{
-        margin: "auto",
-        overflow: "visible",
-        width: 800
-      }}
-    >
-      <CardContent>{storyFn()}</CardContent>
-    </Card>
-  ))
+  .addDecorator(storyFn => <Container>{storyFn()}</Container>)
   .addDecorator(Decorator)
-  .add("choose values", () => <ProductVariantCreateContent {...props} />)
+  .add("choose values", () => <ProductVariantCreatorContent {...props} />)
   .add("prices and SKU", () => (
-    <ProductVariantCreateContent {...props} step="prices" />
+    <ProductVariantCreatorContent
+      {...props}
+      step={ProductVariantCreatorStep.prices}
+    />
   ));
 
 storiesOf("Views / Products / Create multiple variants / summary", module)
-  .addDecorator(storyFn => (
-    <Card
-      style={{
-        margin: "auto",
-        overflow: "visible",
-        width: 800
-      }}
-    >
-      <CardContent>{storyFn()}</CardContent>
-    </Card>
-  ))
+  .addDecorator(storyFn => <Container>{storyFn()}</Container>)
   .addDecorator(Decorator)
   .add("default", () => (
-    <ProductVariantCreateContent {...props} step="summary" />
+    <ProductVariantCreatorContent
+      {...props}
+      step={ProductVariantCreatorStep.summary}
+    />
   ))
   .add("errors", () => (
-    <ProductVariantCreateContent {...props} step="summary" errors={errors} />
+    <ProductVariantCreatorContent
+      {...props}
+      step={ProductVariantCreatorStep.summary}
+      errors={errors}
+    />
   ));
 
 storiesOf("Views / Products / Create multiple variants", module)
   .addDecorator(Decorator)
   .add("interactive", () => (
-    <ProductVariantCreateDialog
+    <ProductVariantCreatorPage
       {...props}
       defaultPrice="10.99"
-      open={true}
-      onClose={() => undefined}
       onSubmit={() => undefined}
     />
   ));
