@@ -1,4 +1,3 @@
-import { warehouseList } from "@saleor/warehouses/fixtures";
 import { ShippingMethodTypeEnum } from "../types/globalTypes";
 import { ShippingZoneDetailsFragment } from "./types/ShippingZoneDetailsFragment";
 import { ShippingZoneFragment } from "./types/ShippingZoneFragment";
@@ -1646,5 +1645,16 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       type: ShippingMethodTypeEnum.PRICE
     }
   ],
-  warehouses: warehouseList
+  warehouses: [
+    {
+      __typename: "Warehouse",
+      id: "V2FyZWhvdXNlOmEzMThmMGZlLTcwMmYtNDNjYy1hYmFjLWZmZmMzN2Y3ZTliYw==",
+      name: "C our wares"
+    },
+    {
+      __typename: "Warehouse",
+      id: "V2FyZWhvdXNlOjJmN2UyOTlmLWEwMzMtNDhjZS1iYmM5LTFkZDM4NjU2ZjMwYw==",
+      name: "Be stocked"
+    }
+  ]
 };
