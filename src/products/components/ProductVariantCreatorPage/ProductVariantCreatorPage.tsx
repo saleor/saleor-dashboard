@@ -1,22 +1,19 @@
 import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl, IntlShape } from "react-intl";
 
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useWizard from "@saleor/hooks/useWizard";
+import PageHeader from "@saleor/components/PageHeader";
+import Container from "@saleor/components/Container";
 import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 import { createInitialForm, ProductVariantCreateFormData } from "./form";
-import ProductVariantCreateContent, {
-  ProductVariantCreateContentProps
-} from "./ProductVariantCreateContent";
+import ProductVariantCreatorContent, {
+  ProductVariantCreatorContentProps
+} from "./ProductVariantCreatorContent";
 import reduceProductVariantCreateFormData from "./reducer";
-import { ProductVariantCreateStep } from "./types";
+import { ProductVariantCreatorStep } from "./types";
+import ProductVariantCreateTabs from "./ProductVariantCreatorTabs";
 
 const useStyles = makeStyles(
   theme => ({
@@ -27,22 +24,19 @@ const useStyles = makeStyles(
       overflowX: "visible",
       overflowY: "hidden",
       width: 800
-    },
-    spacer: {
-      flex: 1
     }
   }),
-  { name: "ProductVariantCreateDialog" }
+  { name: "ProductVariantCreatePage" }
 );
 
 function canHitNext(
-  step: ProductVariantCreateStep,
+  step: ProductVariantCreatorStep,
   data: ProductVariantCreateFormData
 ): boolean {
   switch (step) {
-    case ProductVariantCreateStep.values:
+    case ProductVariantCreatorStep.values:
       return data.attributes.every(attribute => attribute.values.length > 0);
-    case ProductVariantCreateStep.prices:
+    case ProductVariantCreatorStep.prices:
       if (data.price.all) {
         if (data.price.value === "") {
           return false;
@@ -70,7 +64,7 @@ function canHitNext(
       }
 
       return true;
-    case ProductVariantCreateStep.summary:
+    case ProductVariantCreatorStep.summary:
       return data.variants.every(variant => variant.sku !== "");
 
     default:
@@ -78,34 +72,45 @@ function canHitNext(
   }
 }
 
-export interface ProductVariantCreateDialogProps
+export interface ProductVariantCreatePageProps
   extends Omit<
-    ProductVariantCreateContentProps,
+    ProductVariantCreatorContentProps,
     "data" | "dispatchFormDataAction" | "step" | "onStepClick"
   > {
   defaultPrice: string;
-  open: boolean;
-  onClose: () => void;
   onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
 
-const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = props => {
-  const {
-    attributes,
-    defaultPrice,
-    errors: apiErrors,
-    open,
-    onClose,
-    onSubmit,
-    ...contentProps
-  } = props;
+function getTitle(step: ProductVariantCreatorStep, intl: IntlShape): string {
+  switch (step) {
+    case ProductVariantCreatorStep.values:
+      return intl.formatMessage({
+        defaultMessage: "Choose Values",
+        description: "product attribute values, page title"
+      });
+    case ProductVariantCreatorStep.prices:
+      return intl.formatMessage({
+        defaultMessage: "Price and SKUs",
+        description: "page title"
+      });
+    case ProductVariantCreatorStep.summary:
+      return intl.formatMessage({
+        defaultMessage: "Summary",
+        description: "page title"
+      });
+  }
+}
+
+const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props => {
+  const { attributes, defaultPrice, errors, onSubmit, ...contentProps } = props;
   const classes = useStyles(props);
+  const intl = useIntl();
   const [step, { next, prev, set: setStep }] = useWizard<
-    ProductVariantCreateStep
-  >(ProductVariantCreateStep.values, [
-    ProductVariantCreateStep.values,
-    ProductVariantCreateStep.prices,
-    ProductVariantCreateStep.summary
+    ProductVariantCreatorStep
+  >(ProductVariantCreatorStep.values, [
+    ProductVariantCreatorStep.values,
+    ProductVariantCreatorStep.prices,
+    ProductVariantCreatorStep.summary
   ]);
 
   const [data, dispatchFormDataAction] = React.useReducer(
@@ -121,40 +126,11 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
 
   React.useEffect(reloadForm, [attributes.length]);
 
-  useModalDialogOpen(open, {
-    onClose: () => {
-      reloadForm();
-      setStep(ProductVariantCreateStep.values);
-    }
-  });
-
-  const errors = useModalDialogErrors(apiErrors, open);
-
   return (
-    <Dialog open={open} maxWidth="md">
-      <DialogTitle>
-        <FormattedMessage
-          defaultMessage="Assign Attribute"
-          description="dialog header"
-        />
-      </DialogTitle>
-      <DialogContent className={classes.content}>
-        <ProductVariantCreateContent
-          {...contentProps}
-          attributes={attributes}
-          data={data}
-          dispatchFormDataAction={dispatchFormDataAction}
-          errors={errors}
-          step={step}
-          onStepClick={step => setStep(step)}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button className={classes.button} onClick={onClose}>
-          <FormattedMessage defaultMessage="Cancel" description="button" />
-        </Button>
-        <div className={classes.spacer} />
-        {step !== ProductVariantCreateStep.values && (
+    <Container>
+      <ProductVariantCreateTabs step={step} onStepClick={setStep} />
+      <PageHeader title={getTitle(step, intl)}>
+        {step !== ProductVariantCreatorStep.values && (
           <Button className={classes.button} color="primary" onClick={prev}>
             <FormattedMessage
               defaultMessage="Previous"
@@ -162,7 +138,7 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
             />
           </Button>
         )}
-        {step !== ProductVariantCreateStep.summary ? (
+        {step !== ProductVariantCreatorStep.summary ? (
           <Button
             className={classes.button}
             color="primary"
@@ -186,10 +162,18 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
             />
           </Button>
         )}
-      </DialogActions>
-    </Dialog>
+      </PageHeader>
+      <ProductVariantCreatorContent
+        {...contentProps}
+        attributes={attributes}
+        data={data}
+        dispatchFormDataAction={dispatchFormDataAction}
+        errors={errors}
+        step={step}
+      />
+    </Container>
   );
 };
 
-ProductVariantCreateDialog.displayName = "ProductVariantCreateDialog";
-export default ProductVariantCreateDialog;
+ProductVariantCreatePage.displayName = "ProductVariantCreatePage";
+export default ProductVariantCreatePage;

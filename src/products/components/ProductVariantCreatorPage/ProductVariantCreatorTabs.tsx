@@ -4,11 +4,11 @@ import classNames from "classnames";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
-import { ProductVariantCreateStep } from "./types";
+import { ProductVariantCreatorStep } from "./types";
 
 interface Step {
   label: string;
-  value: ProductVariantCreateStep;
+  value: ProductVariantCreatorStep;
 }
 function getSteps(intl: IntlShape): Step[] {
   return [
@@ -17,21 +17,21 @@ function getSteps(intl: IntlShape): Step[] {
         defaultMessage: "Select Values",
         description: "attribute values, variant creation step"
       }),
-      value: ProductVariantCreateStep.values
+      value: ProductVariantCreatorStep.values
     },
     {
       label: intl.formatMessage({
         defaultMessage: "Prices and SKU",
         description: "variant creation step"
       }),
-      value: ProductVariantCreateStep.prices
+      value: ProductVariantCreatorStep.prices
     },
     {
       label: intl.formatMessage({
         defaultMessage: "Summary",
         description: "variant creation step"
       }),
-      value: ProductVariantCreateStep.summary
+      value: ProductVariantCreatorStep.summary
     }
   ];
 }
@@ -62,16 +62,16 @@ const useStyles = makeStyles(
     }
   }),
   {
-    name: "ProductVariantCreateTabs"
+    name: "ProductVariantCreatorTabs"
   }
 );
 
-export interface ProductVariantCreateTabsProps {
-  step: ProductVariantCreateStep;
-  onStepClick: (step: ProductVariantCreateStep) => void;
+export interface ProductVariantCreatorTabsProps {
+  step: ProductVariantCreatorStep;
+  onStepClick: (step: ProductVariantCreatorStep) => void;
 }
 
-const ProductVariantCreateTabs: React.FC<ProductVariantCreateTabsProps> = props => {
+const ProductVariantCreatorTabs: React.FC<ProductVariantCreatorTabsProps> = props => {
   const { step: currentStep, onStepClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -102,5 +102,5 @@ const ProductVariantCreateTabs: React.FC<ProductVariantCreateTabsProps> = props 
   );
 };
 
-ProductVariantCreateTabs.displayName = "ProductVariantCreateTabs";
-export default ProductVariantCreateTabs;
+ProductVariantCreatorTabs.displayName = "ProductVariantCreatorTabs";
+export default ProductVariantCreatorTabs;

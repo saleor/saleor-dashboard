@@ -69,11 +69,7 @@ export const productListUrl = (params?: ProductListUrlQueryParams): string =>
   productListPath + "?" + stringifyQs(params);
 
 export const productPath = (id: string) => urlJoin(productSection + id);
-export type ProductUrlDialog =
-  | "create-variants"
-  | "edit-stocks"
-  | "remove"
-  | "remove-variants";
+export type ProductUrlDialog = "edit-stocks" | "remove" | "remove-variants";
 export type ProductUrlQueryParams = BulkAction & Dialog<ProductUrlDialog>;
 export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
   productPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
@@ -95,6 +91,11 @@ export const productVariantEditUrl = (
   ) +
   "?" +
   stringifyQs(params);
+
+export const productVariantCreatorPath = (productId: string) =>
+  urlJoin(productSection, productId, "variant-creator");
+export const productVariantCreatorUrl = (productId: string) =>
+  productVariantCreatorPath(encodeURIComponent(productId));
 
 export const productVariantAddPath = (productId: string) =>
   urlJoin(productSection, productId, "variant/add");

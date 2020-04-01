@@ -27,6 +27,10 @@ import {
   InitialProductFilterData,
   InitialProductFilterDataVariables
 } from "./types/InitialProductFilterData";
+import {
+  CreateMultipleVariantsData,
+  CreateMultipleVariantsDataVariables
+} from "./types/CreateMultipleVariantsData";
 
 export const stockFragment = gql`
   fragment StockFragment on Stock {
@@ -74,12 +78,50 @@ export const productFragment = gql`
     }
   }
 `;
+
+const productVariantAttributesFragment = gql`
+  fragment ProductVariantAttributesFragment on Product {
+    id
+    attributes {
+      attribute {
+        id
+        slug
+        name
+        inputType
+        valueRequired
+        values {
+          id
+          name
+          slug
+        }
+      }
+      values {
+        id
+        name
+        slug
+      }
+    }
+    productType {
+      variantAttributes {
+        id
+        name
+        values {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+`;
+
 export const productFragmentDetails = gql`
   ${fragmentProductImage}
   ${fragmentMoney}
+  ${productVariantAttributesFragment}
   ${stockFragment}
   fragment Product on Product {
-    id
+    ...ProductVariantAttributesFragment
     name
     descriptionJson
     seoTitle
@@ -111,25 +153,6 @@ export const productFragmentDetails = gql`
     isPublished
     chargeTaxes
     publicationDate
-    attributes {
-      attribute {
-        id
-        slug
-        name
-        inputType
-        valueRequired
-        values {
-          id
-          name
-          slug
-        }
-      }
-      values {
-        id
-        name
-        slug
-      }
-    }
     pricing {
       priceRange {
         start {
@@ -332,17 +355,6 @@ const productDetailsQuery = gql`
   query ProductDetails($id: ID!) {
     product(id: $id) {
       ...Product
-      productType {
-        variantAttributes {
-          id
-          name
-          values {
-            id
-            name
-            slug
-          }
-        }
-      }
     }
   }
 `;
@@ -464,3 +476,20 @@ export const AvailableInGridAttributesQuery = TypedQuery<
   AvailableInGridAttributes,
   AvailableInGridAttributesVariables
 >(availableInGridAttributes);
+
+const createMultipleVariantsData = gql`
+  ${fragmentMoney}
+  ${productVariantAttributesFragment}
+  query CreateMultipleVariantsData($id: ID!) {
+    product(id: $id) {
+      ...ProductVariantAttributesFragment
+      basePrice {
+        ...Money
+      }
+    }
+  }
+`;
+export const useCreateMultipleVariantsData = makeQuery<
+  CreateMultipleVariantsData,
+  CreateMultipleVariantsDataVariables
+>(createMultipleVariantsData);
