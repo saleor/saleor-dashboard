@@ -543,7 +543,7 @@ export const ProductVariantBulkCreateMutation = gql`
     }
   }
 `;
-export const TypedProductVariantBulkCreateMutation = TypedMutation<
+export const useProductVariantBulkCreateMutation = makeMutation<
   ProductVariantBulkCreate,
   ProductVariantBulkCreateVariables
 >(ProductVariantBulkCreateMutation);

@@ -97,9 +97,10 @@ export function createVariants(
   ) {
     return [];
   }
-  const variants = createVariantFlatMatrixDimension([[]], data.attributes).map(
-    variant => createVariant(data, variant)
-  );
+  const variants = createVariantFlatMatrixDimension(
+    [[]],
+    data.attributes
+  ).map(variant => createVariant(data, variant));
 
   return variants;
 }

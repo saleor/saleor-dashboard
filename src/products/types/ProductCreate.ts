@@ -14,6 +14,58 @@ export interface ProductCreate_productCreate_errors {
   field: string | null;
 }
 
+export interface ProductCreate_productCreate_product_attributes_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface ProductCreate_productCreate_product_attributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  slug: string | null;
+  name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (ProductCreate_productCreate_product_attributes_attribute_values | null)[] | null;
+}
+
+export interface ProductCreate_productCreate_product_attributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface ProductCreate_productCreate_product_attributes {
+  __typename: "SelectedAttribute";
+  attribute: ProductCreate_productCreate_product_attributes_attribute;
+  values: (ProductCreate_productCreate_product_attributes_values | null)[];
+}
+
+export interface ProductCreate_productCreate_product_productType_variantAttributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface ProductCreate_productCreate_product_productType_variantAttributes {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  values: (ProductCreate_productCreate_product_productType_variantAttributes_values | null)[] | null;
+}
+
+export interface ProductCreate_productCreate_product_productType {
+  __typename: "ProductType";
+  variantAttributes: (ProductCreate_productCreate_product_productType_variantAttributes | null)[] | null;
+  id: string;
+  name: string;
+  hasVariants: boolean;
+}
+
 export interface ProductCreate_productCreate_product_category {
   __typename: "Category";
   id: string;
@@ -54,36 +106,6 @@ export interface ProductCreate_productCreate_product_purchaseCost {
   __typename: "MoneyRange";
   start: ProductCreate_productCreate_product_purchaseCost_start | null;
   stop: ProductCreate_productCreate_product_purchaseCost_stop | null;
-}
-
-export interface ProductCreate_productCreate_product_attributes_attribute_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-}
-
-export interface ProductCreate_productCreate_product_attributes_attribute {
-  __typename: "Attribute";
-  id: string;
-  slug: string | null;
-  name: string | null;
-  inputType: AttributeInputTypeEnum | null;
-  valueRequired: boolean;
-  values: (ProductCreate_productCreate_product_attributes_attribute_values | null)[] | null;
-}
-
-export interface ProductCreate_productCreate_product_attributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-}
-
-export interface ProductCreate_productCreate_product_attributes {
-  __typename: "SelectedAttribute";
-  attribute: ProductCreate_productCreate_product_attributes_attribute;
-  values: (ProductCreate_productCreate_product_attributes_values | null)[];
 }
 
 export interface ProductCreate_productCreate_product_pricing_priceRange_start_net {
@@ -157,16 +179,11 @@ export interface ProductCreate_productCreate_product_variants {
   trackInventory: boolean;
 }
 
-export interface ProductCreate_productCreate_product_productType {
-  __typename: "ProductType";
-  id: string;
-  name: string;
-  hasVariants: boolean;
-}
-
 export interface ProductCreate_productCreate_product {
   __typename: "Product";
   id: string;
+  attributes: ProductCreate_productCreate_product_attributes[];
+  productType: ProductCreate_productCreate_product_productType;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -180,11 +197,9 @@ export interface ProductCreate_productCreate_product {
   isPublished: boolean;
   chargeTaxes: boolean;
   publicationDate: any | null;
-  attributes: ProductCreate_productCreate_product_attributes[];
   pricing: ProductCreate_productCreate_product_pricing | null;
   images: (ProductCreate_productCreate_product_images | null)[] | null;
   variants: (ProductCreate_productCreate_product_variants | null)[] | null;
-  productType: ProductCreate_productCreate_product_productType;
 }
 
 export interface ProductCreate_productCreate {

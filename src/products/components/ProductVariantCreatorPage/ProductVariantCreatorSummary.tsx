@@ -3,25 +3,26 @@ import cyan from "@material-ui/core/colors/cyan";
 import green from "@material-ui/core/colors/green";
 import purple from "@material-ui/core/colors/purple";
 import yellow from "@material-ui/core/colors/yellow";
+import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import Hr from "@saleor/components/Hr";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { getBulkProductErrorMessage } from "@saleor/utils/errors/product";
+import CardTitle from "@saleor/components/CardTitle";
+import { commonMessages } from "@saleor/intl";
 import { ProductDetails_product_productType_variantAttributes } from "../../types/ProductDetails";
 import { ProductVariantCreateFormData } from "./form";
 import { VariantField } from "./reducer";
 
-export interface ProductVariantCreateSummaryProps {
+export interface ProductVariantCreatorSummaryProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
@@ -81,11 +82,11 @@ const useStyles = makeStyles(
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "grid",
       gridTemplateColumns: "1fr 180px 120px 180px 64px",
-      padding: theme.spacing(1, 0)
+      padding: theme.spacing(1, 1, 1, 3)
     }
   }),
   {
-    name: "ProductVariantCreateSummary"
+    name: "ProductVariantCreatorSummary"
   }
 );
 
@@ -108,7 +109,7 @@ function getVariantName(
   );
 }
 
-const ProductVariantCreateSummary: React.FC<ProductVariantCreateSummaryProps> = props => {
+const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> = props => {
   const {
     attributes,
     currencySymbol,
@@ -121,14 +122,8 @@ const ProductVariantCreateSummary: React.FC<ProductVariantCreateSummaryProps> = 
   const intl = useIntl();
 
   return (
-    <>
-      <Typography color="textSecondary" variant="h5">
-        <FormattedMessage
-          defaultMessage="You will create variants below"
-          description="header"
-        />
-      </Typography>
-      <Hr className={classes.hr} />
+    <Card>
+      <CardTitle title={intl.formatMessage(commonMessages.summary)} />
       <div>
         <div className={classes.row}>
           <div
@@ -287,9 +282,9 @@ const ProductVariantCreateSummary: React.FC<ProductVariantCreateSummaryProps> = 
           );
         })}
       </div>
-    </>
+    </Card>
   );
 };
 
-ProductVariantCreateSummary.displayName = "ProductVariantCreateSummary";
-export default ProductVariantCreateSummary;
+ProductVariantCreatorSummary.displayName = "ProductVariantCreatorSummary";
+export default ProductVariantCreatorSummary;
