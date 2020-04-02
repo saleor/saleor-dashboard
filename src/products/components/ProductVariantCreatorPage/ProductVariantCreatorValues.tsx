@@ -36,8 +36,8 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
   return (
     <>
       {attributes.map(attribute => (
-        <>
-          <Card key={attribute.id}>
+        <React.Fragment key={attribute.id}>
+          <Card>
             <CardTitle title={attribute?.name || <Skeleton />} />
             <CardContent className={classes.valueContainer}>
               {attribute.values.map(value => (
@@ -65,7 +65,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
             </CardContent>
           </Card>
           <CardSpacer />
-        </>
+        </React.Fragment>
       ))}
     </>
   );
