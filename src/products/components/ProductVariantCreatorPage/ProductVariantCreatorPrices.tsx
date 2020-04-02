@@ -17,6 +17,7 @@ import { ProductDetails_product_productType_variantAttributes } from "@saleor/pr
 import CardTitle from "@saleor/components/CardTitle";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ProductVariantCreateFormData } from "./form";
+import { getPriceAttributeValues, getStockAttributeValues } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -69,28 +70,8 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
     label: attribute.name,
     value: attribute.id
   }));
-  const priceAttributeValues = data.price.all
-    ? null
-    : data.price.attribute
-    ? attributes
-        .find(attribute => attribute.id === data.price.attribute)
-        .values.filter(value =>
-          data.attributes
-            .find(attribute => attribute.id === data.price.attribute)
-            .values.includes(value.slug)
-        )
-    : [];
-  const stockAttributeValues = data.stock.all
-    ? null
-    : data.stock.attribute
-    ? attributes
-        .find(attribute => attribute.id === data.stock.attribute)
-        .values.filter(value =>
-          data.attributes
-            .find(attribute => attribute.id === data.stock.attribute)
-            .values.includes(value.slug)
-        )
-    : [];
+  const priceAttributeValues = getPriceAttributeValues(data, attributes);
+  const stockAttributeValues = getStockAttributeValues(data, attributes);
 
   return (
     <>
