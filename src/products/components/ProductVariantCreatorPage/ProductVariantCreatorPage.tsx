@@ -105,7 +105,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   const { attributes, defaultPrice, errors, onSubmit, ...contentProps } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [step, { next, prev, set: setStep }] = useWizard<
+  const [step, { next: nextStep, prev: prevStep, set: setStep }] = useWizard<
     ProductVariantCreatorStep
   >(ProductVariantCreatorStep.values, [
     ProductVariantCreatorStep.values,
@@ -113,7 +113,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
     ProductVariantCreatorStep.summary
   ]);
 
-  const [data, dispatchFormDataAction] = React.useReducer(
+  const [wizardData, dispatchFormDataAction] = React.useReducer(
     reduceProductVariantCreateFormData,
     createInitialForm(attributes, defaultPrice)
   );
@@ -131,7 +131,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
       <ProductVariantCreateTabs step={step} onStepClick={setStep} />
       <PageHeader title={getTitle(step, intl)}>
         {step !== ProductVariantCreatorStep.values && (
-          <Button className={classes.button} color="primary" onClick={prev}>
+          <Button className={classes.button} color="primary" onClick={prevStep}>
             <FormattedMessage
               defaultMessage="Previous"
               description="previous step, button"
@@ -142,9 +142,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
           <Button
             className={classes.button}
             color="primary"
-            disabled={!canHitNext(step, data)}
+            disabled={!canHitNext(step, wizardData)}
             variant="contained"
-            onClick={next}
+            onClick={nextStep}
           >
             <FormattedMessage defaultMessage="Next" description="button" />
           </Button>
@@ -152,9 +152,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
           <Button
             className={classes.button}
             color="primary"
-            disabled={!canHitNext(step, data)}
+            disabled={!canHitNext(step, wizardData)}
             variant="contained"
-            onClick={() => onSubmit(data.variants)}
+            onClick={() => onSubmit(wizardData.variants)}
           >
             <FormattedMessage
               defaultMessage="Create"
@@ -166,7 +166,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
       <ProductVariantCreatorContent
         {...contentProps}
         attributes={attributes}
-        data={data}
+        data={wizardData}
         dispatchFormDataAction={dispatchFormDataAction}
         errors={errors}
         step={step}
