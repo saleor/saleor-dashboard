@@ -3622,7 +3622,7 @@ input ProductVariantBulkCreateInput {
   costPrice: Decimal
   priceOverride: Decimal
   sku: String!
-  quantity: Int
+  stocks: [StockInput!]!
   trackInventory: Boolean
   weight: WeightScalar
 }

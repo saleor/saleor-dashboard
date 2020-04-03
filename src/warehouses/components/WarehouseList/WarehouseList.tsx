@@ -10,7 +10,6 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
@@ -19,6 +18,7 @@ import { ListProps, SortPage } from "@saleor/types";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { getArrowDirection } from "@saleor/utils/sort";
+import { WarehouseWithShippingFragment } from "@saleor/warehouses/types/WarehouseWithShippingFragment";
 
 const useStyles = makeStyles(
   theme => ({
@@ -59,7 +59,7 @@ const useStyles = makeStyles(
 interface WarehouseListProps
   extends ListProps,
     SortPage<WarehouseListUrlSortField> {
-  warehouses: WarehouseFragment[];
+  warehouses: WarehouseWithShippingFragment[];
   onAdd: () => void;
   onRemove: (id: string) => void;
 }
