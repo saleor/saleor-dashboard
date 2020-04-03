@@ -67,12 +67,20 @@ Array [
     "value": 1,
   },
   Object {
-    "name": "dolor",
-    "value": 2,
+    "name": "lorem",
+    "value": 0,
+  },
+  Object {
+    "name": "ipsum",
+    "value": 1,
   },
   Object {
     "name": "amet",
     "value": 32,
+  },
+  Object {
+    "name": "dolor",
+    "value": 2,
   },
 ]
 `;
