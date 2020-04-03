@@ -1,4 +1,10 @@
-import { attributes, fourthStep, secondStep, thirdStep } from "./fixtures";
+import {
+  attributes,
+  fourthStep,
+  secondStep,
+  thirdStep,
+  warehouses
+} from "./fixtures";
 import reducer, { VariantField } from "./reducer";
 
 function execActions<TState, TAction>(
@@ -60,6 +66,9 @@ describe("Reducer is able to", () => {
       {
         type: "changeApplyPriceToAllValue",
         value
+      },
+      {
+        type: "reload"
       }
     ]);
 
@@ -69,20 +78,24 @@ describe("Reducer is able to", () => {
   });
 
   it("select stock for all variants", () => {
-    const value = 45.99;
+    const quantity = 45.99;
     const state = execActions(thirdStep, reducer, [
       {
         all: true,
         type: "applyStockToAll"
       },
       {
+        quantity,
         type: "changeApplyStockToAllValue",
-        value: value.toString()
+        warehouseIndex: 1
+      },
+      {
+        type: "reload"
       }
     ]);
 
     expect(state.stock.all).toBeTruthy();
-    expect(state.stock.value).toBe(value.toString());
+    expect(state.stock.value[1]).toBe(quantity);
     expect(state).toMatchSnapshot();
   });
 
@@ -107,6 +120,9 @@ describe("Reducer is able to", () => {
         type: "changeAttributeValuePrice",
         value: (value + 6).toString(),
         valueId: attribute.values[1]
+      },
+      {
+        type: "reload"
       }
     ]);
 
@@ -139,6 +155,9 @@ describe("Reducer is able to", () => {
         type: "changeAttributeValueStock",
         value: (value + 6).toString(),
         valueId: attribute.values[1]
+      },
+      {
+        type: "reload"
       }
     ]);
 
@@ -168,6 +187,29 @@ describe("Reducer is able to", () => {
     expect(state.variants[variantIndex - 1].priceOverride).toBe(
       fourthStep.variants[variantIndex - 1].priceOverride
     );
+    expect(state).toMatchSnapshot();
+  });
+
+  it("modify individual variant stock", () => {
+    const quantity = 5;
+    const variantIndex = 3;
+
+    const state = execActions(fourthStep, reducer, [
+      {
+        stock: {
+          quantity,
+          warehouse: warehouses[0].id
+        },
+        type: "changeVariantStockData",
+        variantIndex
+      }
+    ]);
+
+    expect(state.variants[variantIndex].stocks[0].quantity).toBe(quantity);
+    expect(state.variants[variantIndex - 1].stocks[0].quantity).toBe(
+      fourthStep.variants[variantIndex - 1].stocks[0].quantity
+    );
+    expect(state).toMatchSnapshot();
   });
 
   it("delete variant", () => {

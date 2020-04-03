@@ -28,20 +28,17 @@ const price: AllOrAttribute<string> = {
   }))
 };
 
-const stock: AllOrAttribute<string[]> = {
+const stock: AllOrAttribute<number[]> = {
   all: false,
   attribute: selectedAttributes[0].id,
-  value: selectedWarehouses.map((_, warehouseIndex) =>
-    ((warehouseIndex + 2) * 3).toString()
+  value: selectedWarehouses.map(
+    (_, warehouseIndex) => (warehouseIndex + 2) * 3
   ),
   values: selectedAttributes[0].values.map((attribute, attributeIndex) => ({
     slug: attribute.slug,
-    value: selectedWarehouses.map((_, warehouseIndex) =>
-      (
-        selectedAttributes.length * 10 -
-        attributeIndex -
-        warehouseIndex * 3
-      ).toString()
+    value: selectedWarehouses.map(
+      (_, warehouseIndex) =>
+        selectedAttributes.length * 10 - attributeIndex - warehouseIndex * 3
     )
   }))
 };
