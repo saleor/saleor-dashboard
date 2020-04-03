@@ -5,7 +5,7 @@ import purple from "@material-ui/core/colors/purple";
 import yellow from "@material-ui/core/colors/yellow";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import DeleteIcon from "@material-ui/icons/Delete";
 import classNames from "classnames";
@@ -17,7 +17,8 @@ import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { getBulkProductErrorMessage } from "@saleor/utils/errors/product";
 import CardTitle from "@saleor/components/CardTitle";
-import { commonMessages } from "@saleor/intl";
+import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+import Hr from "@saleor/components/Hr";
 import { ProductDetails_product_productType_variantAttributes } from "../../types/ProductDetails";
 import { ProductVariantCreateFormData } from "./form";
 import { VariantField } from "./reducer";
@@ -27,39 +28,62 @@ export interface ProductVariantCreatorSummaryProps {
   currencySymbol: string;
   data: ProductVariantCreateFormData;
   errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
+  warehouses: WarehouseFragment[];
   onVariantDataChange: (
     variantIndex: number,
     field: VariantField,
     value: string
   ) => void;
+  onVariantStockDataChange: (
+    variantIndex: number,
+    warehouseId: string,
+    value: string
+  ) => void;
   onVariantDelete: (variantIndex: number) => void;
 }
+type ClassKey =
+  | "attributeValue"
+  | "card"
+  | "col"
+  | "colHeader"
+  | "colName"
+  | "colPrice"
+  | "colSku"
+  | "colStock"
+  | "delete"
+  | "hr"
+  | "input"
+  | "summary";
 
 const colors = [blue, cyan, green, purple, yellow].map(color => color[800]);
 
-const useStyles = makeStyles(
+const useStyles = makeStyles<
+  Theme,
+  ProductVariantCreatorSummaryProps,
+  ClassKey
+>(
   theme => ({
     attributeValue: {
       display: "inline-block",
       marginRight: theme.spacing(1)
     },
-    col: {
-      ...theme.typography.body1,
-      fontSize: 14,
-      paddingLeft: theme.spacing(),
-      paddingRight: theme.spacing(1)
+    card: {
+      paddingBottom: theme.spacing()
     },
-    colHeader: {
+    col: {
       ...theme.typography.body1,
       fontSize: 14
     },
+    colHeader: {
+      ...theme.typography.body1,
+      fontSize: 14,
+      paddingTop: theme.spacing(3)
+    },
     colName: {
-      "&&": {
-        paddingLeft: "0 !important"
-      },
       "&:not($colHeader)": {
         paddingTop: theme.spacing(2)
-      }
+      },
+      paddingLeft: theme.spacing(3)
     },
     colPrice: {},
     colSku: {},
@@ -67,22 +91,21 @@ const useStyles = makeStyles(
     delete: {
       marginTop: theme.spacing(0.5)
     },
-    errorRow: {},
     hr: {
-      marginBottom: theme.spacing(),
-      marginTop: theme.spacing(0.5)
+      gridColumn: props => `span ${4 + props.data.stock.value.length}`
     },
     input: {
       "& input": {
         padding: "16px 12px 17px"
-      },
-      marginTop: theme.spacing(0.5)
+      }
     },
-    row: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
+    summary: {
+      columnGap: theme.spacing(3),
       display: "grid",
-      gridTemplateColumns: "1fr 180px 120px 180px 64px",
-      padding: theme.spacing(1, 1, 1, 3)
+      gridTemplateColumns: props =>
+        `minmax(240px, auto) 170px repeat(${props.data.stock.value.length}, 140px) 140px 64px`,
+      overflowX: "scroll",
+      rowGap: theme.spacing() + "px"
     }
   }),
   {
@@ -115,63 +138,66 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
     currencySymbol,
     data,
     errors,
+    warehouses,
     onVariantDataChange,
-    onVariantDelete
+    onVariantDelete,
+    onVariantStockDataChange
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.summary)} />
-      <div>
-        <div className={classes.row}>
-          <div
-            className={classNames(
-              classes.col,
-              classes.colHeader,
-              classes.colName
-            )}
-          >
-            <FormattedMessage
-              defaultMessage="Variant"
-              description="variant name"
-            />
-          </div>
-          <div
-            className={classNames(
-              classes.col,
-              classes.colHeader,
-              classes.colPrice
-            )}
-          >
-            <FormattedMessage
-              defaultMessage="Price"
-              description="variant price"
-            />
-          </div>
+    <Card className={classes.card}>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Created Variants",
+          description: "variant creator summary card header"
+        })}
+      />
+      <div className={classes.summary}>
+        <div
+          className={classNames(
+            classes.col,
+            classes.colHeader,
+            classes.colName
+          )}
+        >
+          <FormattedMessage
+            defaultMessage="Variant"
+            description="variant name"
+          />
+        </div>
+        <div
+          className={classNames(
+            classes.col,
+            classes.colHeader,
+            classes.colPrice
+          )}
+        >
+          <FormattedMessage
+            defaultMessage="Price"
+            description="variant price"
+          />
+        </div>
+        {data.warehouses.map(warehouseId => (
           <div
             className={classNames(
               classes.col,
               classes.colHeader,
               classes.colStock
             )}
+            key={warehouseId}
           >
-            <FormattedMessage
-              defaultMessage="Inventory"
-              description="variant stock amount"
-            />
+            {warehouses.find(warehouse => warehouse.id === warehouseId).name}
           </div>
-          <div
-            className={classNames(
-              classes.col,
-              classes.colHeader,
-              classes.colSku
-            )}
-          >
-            <FormattedMessage defaultMessage="SKU" />
-          </div>
+        ))}
+        <div
+          className={classNames(classes.col, classes.colHeader, classes.colSku)}
+        >
+          <FormattedMessage defaultMessage="SKU" />
         </div>
+        <div className={classNames(classes.col, classes.colHeader)} />
+        <Hr className={classes.hr} />
         {data.variants.map((variant, variantIndex) => {
           const variantErrors = errors.filter(
             error => error.index === variantIndex
@@ -182,10 +208,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
           );
 
           return (
-            <div
-              className={classNames(classes.row, {
-                [classes.errorRow]: variantErrors.length > 0
-              })}
+            <React.Fragment
               key={variant.attributes
                 .map(attribute => attribute.values[0])
                 .join(":")}
@@ -198,7 +221,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                       style={{
                         color: colors[valueIndex % colors.length]
                       }}
-                      key={value}
+                      key={`${value}:${valueIndex}`}
                     >
                       {value}
                     </span>
@@ -231,29 +254,34 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                   }
                 />
               </div>
-              <div className={classNames(classes.col, classes.colStock)}>
-                <TextField
-                  className={classes.input}
-                  error={!!variantFormErrors.quantity}
-                  helperText={getBulkProductErrorMessage(
-                    variantFormErrors.quantity,
-                    intl
-                  )}
-                  inputProps={{
-                    min: 0,
-                    type: "number"
-                  }}
-                  fullWidth
-                  value={variant.quantity}
-                  onChange={event =>
-                    onVariantDataChange(
-                      variantIndex,
-                      "stock",
-                      event.target.value
-                    )
-                  }
-                />
-              </div>
+              {variant.stocks.map(stock => (
+                <div
+                  className={classNames(classes.col, classes.colStock)}
+                  key={stock.warehouse}
+                >
+                  <TextField
+                    className={classes.input}
+                    error={!!variantFormErrors.quantity}
+                    helperText={getBulkProductErrorMessage(
+                      variantFormErrors.quantity,
+                      intl
+                    )}
+                    inputProps={{
+                      min: 0,
+                      type: "number"
+                    }}
+                    fullWidth
+                    value={stock.quantity}
+                    onChange={event =>
+                      onVariantStockDataChange(
+                        variantIndex,
+                        stock.warehouse,
+                        event.target.value
+                      )
+                    }
+                  />
+                </div>
+              ))}
               <div className={classNames(classes.col, classes.colSku)}>
                 <TextField
                   className={classes.input}
@@ -278,7 +306,10 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                   <DeleteIcon />
                 </IconButton>
               </div>
-            </div>
+              {variantIndex !== data.variants.length - 1 && (
+                <Hr className={classes.hr} />
+              )}
+            </React.Fragment>
           );
         })}
       </div>

@@ -50,17 +50,8 @@ function canHitNext(
         }
       }
 
-      if (data.stock.all) {
-        if (data.stock.value === "") {
-          return false;
-        }
-      } else {
-        if (
-          data.stock.attribute === "" ||
-          data.stock.values.some(attributeValue => attributeValue.value === "")
-        ) {
-          return false;
-        }
+      if (!data.stock.all || data.stock.attribute) {
+        return false;
       }
 
       return true;
@@ -102,25 +93,42 @@ function getTitle(step: ProductVariantCreatorStep, intl: IntlShape): string {
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props => {
-  const { attributes, defaultPrice, errors, onSubmit, ...contentProps } = props;
+  const {
+    attributes,
+    defaultPrice,
+    errors,
+    onSubmit,
+    warehouses,
+    ...contentProps
+  } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [step, { next: nextStep, prev: prevStep, set: setStep }] = useWizard<
-    ProductVariantCreatorStep
-  >(ProductVariantCreatorStep.values, [
-    ProductVariantCreatorStep.values,
-    ProductVariantCreatorStep.prices,
-    ProductVariantCreatorStep.summary
-  ]);
-
   const [wizardData, dispatchFormDataAction] = React.useReducer(
     reduceProductVariantCreateFormData,
-    createInitialForm(attributes, defaultPrice)
+    createInitialForm(attributes, defaultPrice, warehouses)
   );
-
+  const [step, { next: nextStep, prev: prevStep, set: setStep }] = useWizard<
+    ProductVariantCreatorStep
+  >(
+    ProductVariantCreatorStep.values,
+    [
+      ProductVariantCreatorStep.values,
+      ProductVariantCreatorStep.prices,
+      ProductVariantCreatorStep.summary
+    ],
+    {
+      onTransition: (_, nextStep) => {
+        if (nextStep === ProductVariantCreatorStep.summary) {
+          dispatchFormDataAction({
+            type: "reload"
+          });
+        }
+      }
+    }
+  );
   const reloadForm = () =>
     dispatchFormDataAction({
-      data: createInitialForm(attributes, defaultPrice),
+      data: createInitialForm(attributes, defaultPrice, warehouses),
       type: "reload"
     });
 
@@ -170,6 +178,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
         dispatchFormDataAction={dispatchFormDataAction}
         errors={errors}
         step={step}
+        warehouses={warehouses}
       />
     </Container>
   );

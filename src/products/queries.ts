@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
 import makeQuery from "@saleor/hooks/makeQuery";
+import { warehouseFragment } from "@saleor/warehouses/queries";
 import { pageInfoFragment, TypedQuery } from "../queries";
 import {
   AvailableInGridAttributes,
@@ -480,11 +481,19 @@ export const AvailableInGridAttributesQuery = TypedQuery<
 const createMultipleVariantsData = gql`
   ${fragmentMoney}
   ${productVariantAttributesFragment}
+  ${warehouseFragment}
   query CreateMultipleVariantsData($id: ID!) {
     product(id: $id) {
       ...ProductVariantAttributesFragment
       basePrice {
         ...Money
+      }
+    }
+    warehouses(first: 20) {
+      edges {
+        node {
+          ...WarehouseFragment
+        }
       }
     }
   }
