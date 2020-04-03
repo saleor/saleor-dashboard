@@ -1,0 +1,1028 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reducer is able to select attribute values 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "id": "attr-1",
+      "values": Array [
+        "val-1-1",
+        "val-1-7",
+      ],
+    },
+    Object {
+      "id": "attr-2",
+      "values": Array [
+        "val-2-2",
+        "val-2-4",
+      ],
+    },
+    Object {
+      "id": "attr-4",
+      "values": Array [
+        "val-4-1",
+        "val-4-5",
+      ],
+    },
+  ],
+  "price": Object {
+    "all": true,
+    "attribute": undefined,
+    "value": "10.99",
+    "values": Array [],
+  },
+  "stock": Object {
+    "all": true,
+    "attribute": undefined,
+    "value": "",
+    "values": Array [],
+  },
+  "variants": Array [],
+}
+`;
+
+exports[`Reducer is able to select price for all variants 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "id": "attr-1",
+      "values": Array [
+        "val-1-1",
+        "val-1-7",
+      ],
+    },
+    Object {
+      "id": "attr-2",
+      "values": Array [
+        "val-2-2",
+        "val-2-4",
+      ],
+    },
+    Object {
+      "id": "attr-4",
+      "values": Array [
+        "val-4-1",
+        "val-4-5",
+      ],
+    },
+  ],
+  "price": Object {
+    "all": true,
+    "attribute": undefined,
+    "value": "45.99",
+    "values": Array [],
+  },
+  "stock": Object {
+    "all": true,
+    "attribute": undefined,
+    "value": "",
+    "values": Array [],
+  },
+  "variants": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+  ],
+}
+`;
+
+exports[`Reducer is able to select price to each attribute value 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "id": "attr-1",
+      "values": Array [
+        "val-1-1",
+        "val-1-7",
+      ],
+    },
+    Object {
+      "id": "attr-2",
+      "values": Array [
+        "val-2-2",
+        "val-2-4",
+      ],
+    },
+    Object {
+      "id": "attr-4",
+      "values": Array [
+        "val-4-1",
+        "val-4-5",
+      ],
+    },
+  ],
+  "price": Object {
+    "all": false,
+    "attribute": "attr-1",
+    "value": "10.99",
+    "values": Array [
+      Object {
+        "slug": "val-1-1",
+        "value": "45.99",
+      },
+      Object {
+        "slug": "val-1-7",
+        "value": "51.99",
+      },
+    ],
+  },
+  "stock": Object {
+    "all": true,
+    "attribute": undefined,
+    "value": "",
+    "values": Array [],
+  },
+  "variants": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "45.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "51.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "51.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "51.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "51.99",
+      "quantity": NaN,
+      "sku": "",
+    },
+  ],
+}
+`;
+
+exports[`Reducer is able to select stock for all variants 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "id": "attr-1",
+      "values": Array [
+        "val-1-1",
+        "val-1-7",
+      ],
+    },
+    Object {
+      "id": "attr-2",
+      "values": Array [
+        "val-2-2",
+        "val-2-4",
+      ],
+    },
+    Object {
+      "id": "attr-4",
+      "values": Array [
+        "val-4-1",
+        "val-4-5",
+      ],
+    },
+  ],
+  "price": Object {
+    "all": true,
+    "attribute": undefined,
+    "value": "10.99",
+    "values": Array [],
+  },
+  "stock": Object {
+    "all": true,
+    "attribute": undefined,
+    "value": "45.99",
+    "values": Array [],
+  },
+  "variants": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 45,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 45,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 45,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 45,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 45,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 45,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 45,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 45,
+      "sku": "",
+    },
+  ],
+}
+`;
+
+exports[`Reducer is able to select stock to each attribute value 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "id": "attr-1",
+      "values": Array [
+        "val-1-1",
+        "val-1-7",
+      ],
+    },
+    Object {
+      "id": "attr-2",
+      "values": Array [
+        "val-2-2",
+        "val-2-4",
+      ],
+    },
+    Object {
+      "id": "attr-4",
+      "values": Array [
+        "val-4-1",
+        "val-4-5",
+      ],
+    },
+  ],
+  "price": Object {
+    "all": true,
+    "attribute": undefined,
+    "value": "10.99",
+    "values": Array [],
+  },
+  "stock": Object {
+    "all": false,
+    "attribute": "attr-1",
+    "value": "",
+    "values": Array [
+      Object {
+        "slug": "val-1-1",
+        "value": "13",
+      },
+      Object {
+        "slug": "val-1-7",
+        "value": "19",
+      },
+    ],
+  },
+  "variants": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 13,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 13,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 13,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-1",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 13,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 19,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-2",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 19,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-1",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 19,
+      "sku": "",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "id": "attr-1",
+          "values": Array [
+            "val-1-7",
+          ],
+        },
+        Object {
+          "id": "attr-2",
+          "values": Array [
+            "val-2-4",
+          ],
+        },
+        Object {
+          "id": "attr-4",
+          "values": Array [
+            "val-4-5",
+          ],
+        },
+      ],
+      "priceOverride": "10.99",
+      "quantity": 19,
+      "sku": "",
+    },
+  ],
+}
+`;

@@ -8,6 +8,58 @@ import { AttributeInputTypeEnum } from "./../../types/globalTypes";
 // GraphQL fragment: Product
 // ====================================================
 
+export interface Product_attributes_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface Product_attributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  slug: string | null;
+  name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
+  values: (Product_attributes_attribute_values | null)[] | null;
+}
+
+export interface Product_attributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface Product_attributes {
+  __typename: "SelectedAttribute";
+  attribute: Product_attributes_attribute;
+  values: (Product_attributes_values | null)[];
+}
+
+export interface Product_productType_variantAttributes_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+}
+
+export interface Product_productType_variantAttributes {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  values: (Product_productType_variantAttributes_values | null)[] | null;
+}
+
+export interface Product_productType {
+  __typename: "ProductType";
+  variantAttributes: (Product_productType_variantAttributes | null)[] | null;
+  id: string;
+  name: string;
+  hasVariants: boolean;
+}
+
 export interface Product_category {
   __typename: "Category";
   id: string;
@@ -48,36 +100,6 @@ export interface Product_purchaseCost {
   __typename: "MoneyRange";
   start: Product_purchaseCost_start | null;
   stop: Product_purchaseCost_stop | null;
-}
-
-export interface Product_attributes_attribute_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-}
-
-export interface Product_attributes_attribute {
-  __typename: "Attribute";
-  id: string;
-  slug: string | null;
-  name: string | null;
-  inputType: AttributeInputTypeEnum | null;
-  valueRequired: boolean;
-  values: (Product_attributes_attribute_values | null)[] | null;
-}
-
-export interface Product_attributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-}
-
-export interface Product_attributes {
-  __typename: "SelectedAttribute";
-  attribute: Product_attributes_attribute;
-  values: (Product_attributes_values | null)[];
 }
 
 export interface Product_pricing_priceRange_start_net {
@@ -151,16 +173,11 @@ export interface Product_variants {
   trackInventory: boolean;
 }
 
-export interface Product_productType {
-  __typename: "ProductType";
-  id: string;
-  name: string;
-  hasVariants: boolean;
-}
-
 export interface Product {
   __typename: "Product";
   id: string;
+  attributes: Product_attributes[];
+  productType: Product_productType;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -174,9 +191,7 @@ export interface Product {
   isPublished: boolean;
   chargeTaxes: boolean;
   publicationDate: any | null;
-  attributes: Product_attributes[];
   pricing: Product_pricing | null;
   images: (Product_images | null)[] | null;
   variants: (Product_variants | null)[] | null;
-  productType: Product_productType;
 }

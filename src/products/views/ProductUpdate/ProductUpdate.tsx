@@ -11,10 +11,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog/ProductVariantCreateDialog";
-import { ProductVariantBulkCreate } from "@saleor/products/types/ProductVariantBulkCreate";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -39,7 +36,8 @@ import {
   ProductUrlQueryParams,
   productVariantAddUrl,
   productVariantEditUrl,
-  ProductUrlDialog
+  ProductUrlDialog,
+  productVariantCreatorUrl
 } from "../../urls";
 import {
   createImageReorderHandler,
@@ -59,7 +57,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     params.ids
   );
   const intl = useIntl();
-  const shop = useShop();
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
@@ -144,15 +141,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           });
         const handleVariantAdd = () => navigate(productVariantAddUrl(id));
 
-        const handleBulkProductVariantCreate = (
-          data: ProductVariantBulkCreate
-        ) => {
-          if (data.productVariantBulkCreate.errors.length === 0) {
-            closeModal();
-            refetch();
-          }
-        };
-
         const handleBulkProductVariantDelete = (
           data: ProductVariantBulkDelete
         ) => {
@@ -166,7 +154,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         return (
           <ProductUpdateOperations
             product={product}
-            onBulkProductVariantCreate={handleBulkProductVariantCreate}
             onBulkProductVariantDelete={handleBulkProductVariantDelete}
             onDelete={handleDelete}
             onImageCreate={handleImageCreate}
@@ -174,7 +161,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             onUpdate={handleUpdate}
           >
             {({
-              bulkProductVariantCreate,
               bulkProductVariantDelete,
               createProductImage,
               deleteProduct,
@@ -258,7 +244,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                     onImageReorder={handleImageReorder}
                     onSubmit={handleSubmit}
                     onVariantAdd={handleVariantAdd}
-                    onVariantsAdd={() => openModal("create-variants")}
+                    onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}
                     onVariantShow={variantId => () =>
                       navigate(productVariantEditUrl(product.id, variantId))}
                     onImageUpload={handleImageUpload}
@@ -347,28 +333,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                       />
                     </DialogContentText>
                   </ActionDialog>
-                  <ProductVariantCreateDialog
-                    defaultPrice={maybe(() =>
-                      data.product.basePrice.amount.toFixed(2)
-                    )}
-                    errors={
-                      bulkProductVariantCreate.opts.data
-                        ?.productVariantBulkCreate.errors || []
-                    }
-                    open={params.action === "create-variants"}
-                    attributes={maybe(
-                      () => data.product.productType.variantAttributes,
-                      []
-                    )}
-                    currencySymbol={maybe(() => shop.defaultCurrency)}
-                    onClose={closeModal}
-                    onSubmit={inputs =>
-                      bulkProductVariantCreate.mutate({
-                        id,
-                        inputs
-                      })
-                    }
-                  />
                   {!product?.productType?.hasVariants && (
                     <ProductWarehousesDialog
                       confirmButtonState={addOrRemoveStocksOpts.status}
