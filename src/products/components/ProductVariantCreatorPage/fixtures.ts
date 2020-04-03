@@ -1,3 +1,4 @@
+import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import { createVariants } from "./createVariants";
 import {
   AllOrAttribute,
@@ -32,8 +33,31 @@ export const attributes = [
   }
 ];
 
+export const warehouses: WarehouseFragment[] = [
+  {
+    __typename: "Warehouse",
+    id: "wh-1",
+    name: "Warehouse 1"
+  },
+  {
+    __typename: "Warehouse",
+    id: "wh-2",
+    name: "Warehouse 2"
+  },
+  {
+    __typename: "Warehouse",
+    id: "wh-3",
+    name: "Warehouse 3"
+  },
+  {
+    __typename: "Warehouse",
+    id: "wh-4",
+    name: "Warehouse 4"
+  }
+];
+
 export const secondStep: ProductVariantCreateFormData = {
-  ...createInitialForm([], "10.99"),
+  ...createInitialForm([], "10.99", warehouses),
   attributes: [
     {
       id: attributes[0].id,
@@ -65,10 +89,11 @@ export const thirdStep: ProductVariantCreateFormData = {
       id: attributes[3].id,
       values: [0, 4].map(index => attributes[3].values[index])
     }
-  ]
+  ],
+  warehouses: warehouses.map(warehouse => warehouse.id)
 };
 
-const price: AllOrAttribute = {
+const price: AllOrAttribute<string> = {
   all: false,
   attribute: thirdStep.attributes[1].id,
   value: "",
@@ -83,18 +108,18 @@ const price: AllOrAttribute = {
     }
   ]
 };
-const stock: AllOrAttribute = {
+const stock: AllOrAttribute<number[]> = {
   all: false,
   attribute: thirdStep.attributes[2].id,
-  value: "",
+  value: [],
   values: [
     {
       slug: thirdStep.attributes[2].values[0],
-      value: "50"
+      value: [50, 20, 45, 75]
     },
     {
       slug: thirdStep.attributes[2].values[1],
-      value: "35"
+      value: [80, 50, 85, 105]
     }
   ]
 };

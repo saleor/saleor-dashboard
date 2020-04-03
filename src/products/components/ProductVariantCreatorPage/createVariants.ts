@@ -36,7 +36,6 @@ function createVariant(
   const stocks = data.stock.all
     ? data.stock.value
     : getAttributeValuePriceOrStock(attributes, data.stock);
-
   return {
     attributes: attributes.map(attribute => ({
       id: attribute.attributeId,
@@ -45,7 +44,7 @@ function createVariant(
     priceOverride,
     sku: "",
     stocks: stocks.map((quantity, stockIndex) => ({
-      quantity: parseInt(quantity, 10),
+      quantity,
       warehouse: data.warehouses[stockIndex]
     }))
   };

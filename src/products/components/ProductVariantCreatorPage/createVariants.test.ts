@@ -18,7 +18,7 @@ describe("Creates variant matrix", () => {
 
   it("with constant price and stock", () => {
     const price = "49.99";
-    const stock = 80;
+    const stock = [80, 40, 30];
 
     const data: ProductVariantCreateFormData = {
       ...thirdStep,
@@ -30,7 +30,7 @@ describe("Creates variant matrix", () => {
       stock: {
         ...thirdStep.stock,
         all: true,
-        value: stock.toString()
+        value: stock
       }
     };
 
@@ -44,13 +44,15 @@ describe("Creates variant matrix", () => {
 
     variants.forEach(variant => {
       expect(variant.priceOverride).toBe(price);
-      expect(variant.quantity).toBe(stock);
+      variant.stocks.forEach((_, stockIndex) => {
+        expect(variant.stocks[stockIndex].quantity).toBe(stock[stockIndex]);
+      });
     });
   });
 
   it("with constant stock and attribute dependent price", () => {
     const price = 49.99;
-    const stock = 80;
+    const stock = [80, 40, 30];
     const attribute = attributes.find(
       attribute => attribute.id === thirdStep.attributes[0].id
     );
@@ -69,7 +71,7 @@ describe("Creates variant matrix", () => {
       stock: {
         ...thirdStep.stock,
         all: true,
-        value: stock.toString()
+        value: stock
       }
     };
 
@@ -82,7 +84,9 @@ describe("Creates variant matrix", () => {
     );
 
     variants.forEach(variant => {
-      expect(variant.quantity).toBe(stock);
+      variant.stocks.forEach((_, stockIndex) => {
+        expect(variant.stocks[stockIndex].quantity).toBe(stock[stockIndex]);
+      });
     });
 
     attribute.values.forEach((attributeValue, attributeValueIndex) => {
@@ -103,7 +107,7 @@ describe("Creates variant matrix", () => {
 
   it("with constant price and attribute dependent stock", () => {
     const price = "49.99";
-    const stock = 80;
+    const stock = [80, 40, 30];
     const attribute = attributes.find(
       attribute => attribute.id === thirdStep.attributes[0].id
     );
@@ -121,7 +125,9 @@ describe("Creates variant matrix", () => {
         attribute: attribute.id,
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
           slug: attributeValue,
-          value: (stock * (attributeValueIndex + 1)).toString()
+          value: stock.map(
+            (_, stockIndex) => stock[stockIndex] * (attributeValueIndex + 1)
+          )
         }))
       }
     };
@@ -147,14 +153,18 @@ describe("Creates variant matrix", () => {
             ).values[0] === attributeValue
         )
         .forEach(variant => {
-          expect(variant.quantity).toBe(stock * (attributeValueIndex + 1));
+          variant.stocks.forEach((_, stockIndex) => {
+            expect(variant.stocks[stockIndex].quantity).toBe(
+              stock[stockIndex] * (attributeValueIndex + 1)
+            );
+          });
         });
     });
   });
 
   it("with attribute dependent price and stock", () => {
     const price = 49.99;
-    const stock = 80;
+    const stock = [80, 40, 30];
     const attribute = attributes.find(
       attribute => attribute.id === thirdStep.attributes[0].id
     );
@@ -176,7 +186,9 @@ describe("Creates variant matrix", () => {
         attribute: attribute.id,
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
           slug: attributeValue,
-          value: (stock * (attributeValueIndex + 1)).toString()
+          value: stock.map(
+            (_, stockIndex) => stock[stockIndex] * (attributeValueIndex + 1)
+          )
         }))
       }
     };
@@ -213,7 +225,11 @@ describe("Creates variant matrix", () => {
             ).values[0] === attributeValue
         )
         .forEach(variant => {
-          expect(variant.quantity).toBe(stock * (attributeValueIndex + 1));
+          variant.stocks.forEach((_, stockIndex) => {
+            expect(variant.stocks[stockIndex].quantity).toBe(
+              stock[stockIndex] * (attributeValueIndex + 1)
+            );
+          });
         });
     });
   });
