@@ -11,10 +11,10 @@ interface CreateVariantAttributeValueInput {
 }
 type CreateVariantInput = CreateVariantAttributeValueInput[];
 
-function getAttributeValuePriceOrStock(
+function getAttributeValuePriceOrStock<T>(
   attributes: CreateVariantInput,
-  priceOrStock: AllOrAttribute
-): string {
+  priceOrStock: AllOrAttribute<T>
+): T {
   const attribute = attributes.find(
     attribute => attribute.attributeId === priceOrStock.attribute
   );
@@ -33,12 +33,9 @@ function createVariant(
   const priceOverride = data.price.all
     ? data.price.value
     : getAttributeValuePriceOrStock(attributes, data.price);
-  const quantity = parseInt(
-    data.stock.all
-      ? data.stock.value
-      : getAttributeValuePriceOrStock(attributes, data.stock),
-    10
-  );
+  const stocks = data.stock.all
+    ? data.stock.value
+    : getAttributeValuePriceOrStock(attributes, data.stock);
 
   return {
     attributes: attributes.map(attribute => ({
@@ -46,8 +43,11 @@ function createVariant(
       values: [attribute.attributeValueSlug]
     })),
     priceOverride,
-    quantity,
-    sku: ""
+    sku: "",
+    stocks: stocks.map((quantity, stockIndex) => ({
+      quantity: parseInt(quantity, 10),
+      warehouse: data.warehouses[stockIndex]
+    }))
   };
 }
 

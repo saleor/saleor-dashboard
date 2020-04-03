@@ -3,7 +3,6 @@ import Card from "@material-ui/core/Card";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
@@ -16,6 +15,7 @@ import {
 } from "@saleor/types";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
 import AppHeader from "@saleor/components/AppHeader";
+import { WarehouseWithShippingFragment } from "@saleor/warehouses/types/WarehouseWithShippingFragment";
 import WarehouseList from "../WarehouseList";
 
 export interface WarehouseListPageProps
@@ -23,7 +23,7 @@ export interface WarehouseListPageProps
     SearchPageProps,
     SortPage<WarehouseListUrlSortField>,
     TabPageProps {
-  warehouses: WarehouseFragment[];
+  warehouses: WarehouseWithShippingFragment[];
   onBack: () => void;
   onRemove: (id: string) => void;
 }

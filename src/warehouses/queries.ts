@@ -13,6 +13,12 @@ export const warehouseFragment = gql`
   fragment WarehouseFragment on Warehouse {
     id
     name
+  }
+`;
+export const warehouseWithShippingFragment = gql`
+  ${warehouseFragment}
+  fragment WarehouseWithShippingFragment on Warehouse {
+    ...WarehouseFragment
     shippingZones(first: 100) {
       edges {
         node {
@@ -26,9 +32,9 @@ export const warehouseFragment = gql`
 
 export const warehouseDetailsFragment = gql`
   ${fragmentAddress}
-  ${warehouseFragment}
+  ${warehouseWithShippingFragment}
   fragment WarehouseDetailsFragment on Warehouse {
-    ...WarehouseFragment
+    ...WarehouseWithShippingFragment
     address {
       ...AddressFragment
     }
@@ -36,7 +42,7 @@ export const warehouseDetailsFragment = gql`
 `;
 
 const warehouseList = gql`
-  ${warehouseFragment}
+  ${warehouseWithShippingFragment}
   ${pageInfoFragment}
   query WarehouseList(
     $first: Int
@@ -56,7 +62,7 @@ const warehouseList = gql`
     ) {
       edges {
         node {
-          ...WarehouseFragment
+          ...WarehouseWithShippingFragment
         }
       }
       pageInfo {

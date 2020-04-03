@@ -5,9 +5,10 @@ import { attributes } from "@saleor/attributes/fixtures";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import Container from "@saleor/components/Container";
+import { warehouseList } from "@saleor/warehouses/fixtures";
 import Decorator from "../../../storybook/Decorator";
 import { createVariants } from "./createVariants";
-import { AllOrAttribute } from "./form";
+import { AllOrAttribute, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatorContent, {
   ProductVariantCreatorContentProps
 } from "./ProductVariantCreatorContent";
@@ -15,24 +16,33 @@ import ProductVariantCreatorPage from "./ProductVariantCreatorPage";
 import { ProductVariantCreatorStep } from "./types";
 
 const selectedAttributes = [1, 4, 5].map(index => attributes[index]);
+const selectedWarehouses = [0, 1, 3].map(index => warehouseList[index]);
 
-const price: AllOrAttribute = {
+const price: AllOrAttribute<string> = {
   all: false,
-  attribute: selectedAttributes[1].id,
+  attribute: selectedAttributes[0].id,
   value: "2.79",
-  values: selectedAttributes[1].values.map((attribute, attributeIndex) => ({
+  values: selectedAttributes[0].values.map((attribute, attributeIndex) => ({
     slug: attribute.slug,
     value: (attributeIndex + 4).toFixed(2)
   }))
 };
 
-const stock: AllOrAttribute = {
+const stock: AllOrAttribute<string[]> = {
   all: false,
-  attribute: selectedAttributes[1].id,
-  value: "8",
-  values: selectedAttributes[1].values.map((attribute, attributeIndex) => ({
+  attribute: selectedAttributes[0].id,
+  value: selectedWarehouses.map((_, warehouseIndex) =>
+    ((warehouseIndex + 2) * 3).toString()
+  ),
+  values: selectedAttributes[0].values.map((attribute, attributeIndex) => ({
     slug: attribute.slug,
-    value: (selectedAttributes.length * 10 - attributeIndex).toString()
+    value: selectedWarehouses.map((_, warehouseIndex) =>
+      (
+        selectedAttributes.length * 10 -
+        attributeIndex -
+        warehouseIndex * 3
+      ).toString()
+    )
   }))
 };
 
@@ -52,23 +62,30 @@ const errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[] = [
   }
 ];
 
+const data: ProductVariantCreateFormData = {
+  attributes: dataAttributes,
+  price,
+  stock,
+  variants: createVariants({
+    attributes: dataAttributes,
+    price,
+    stock,
+    variants: [],
+    warehouses: selectedWarehouses.map(warehouse => warehouse.id)
+  }),
+  warehouses: selectedWarehouses.map(warehouse => warehouse.id)
+};
 const props: ProductVariantCreatorContentProps = {
   attributes,
   currencySymbol: "USD",
   data: {
-    attributes: dataAttributes,
-    price,
-    stock,
-    variants: createVariants({
-      attributes: dataAttributes,
-      price,
-      stock,
-      variants: []
-    })
+    ...data,
+    variants: createVariants(data)
   },
   dispatchFormDataAction: () => undefined,
   errors: [],
-  step: ProductVariantCreatorStep.values
+  step: ProductVariantCreatorStep.values,
+  warehouses: warehouseList
 };
 
 storiesOf("Views / Products / Create multiple variants", module)

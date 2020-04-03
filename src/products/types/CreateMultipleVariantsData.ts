@@ -71,8 +71,25 @@ export interface CreateMultipleVariantsData_product {
   basePrice: CreateMultipleVariantsData_product_basePrice | null;
 }
 
+export interface CreateMultipleVariantsData_warehouses_edges_node {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
+export interface CreateMultipleVariantsData_warehouses_edges {
+  __typename: "WarehouseCountableEdge";
+  node: CreateMultipleVariantsData_warehouses_edges_node;
+}
+
+export interface CreateMultipleVariantsData_warehouses {
+  __typename: "WarehouseCountableConnection";
+  edges: CreateMultipleVariantsData_warehouses_edges[];
+}
+
 export interface CreateMultipleVariantsData {
   product: CreateMultipleVariantsData_product | null;
+  warehouses: CreateMultipleVariantsData_warehouses | null;
 }
 
 export interface CreateMultipleVariantsDataVariables {

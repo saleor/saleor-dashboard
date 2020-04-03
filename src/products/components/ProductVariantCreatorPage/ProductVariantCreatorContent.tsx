@@ -3,6 +3,7 @@ import React from "react";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { isSelected } from "@saleor/utils/lists";
+import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import { ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatePrices from "./ProductVariantCreatorPrices";
 import ProductVariantCreateSummary from "./ProductVariantCreatorSummary";
@@ -17,6 +18,7 @@ export interface ProductVariantCreatorContentProps {
   dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
   errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
   step: ProductVariantCreatorStep;
+  warehouses: WarehouseFragment[];
 }
 
 const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> = props => {
@@ -26,7 +28,8 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
     data,
     dispatchFormDataAction,
     errors,
-    step
+    step,
+    warehouses
   } = props;
   const selectedAttributes = attributes.filter(attribute =>
     isSelected(
@@ -106,12 +109,23 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
               variantIndex
             })
           }
+          onVariantStockDataChange={(variantIndex, warehouse, value) =>
+            dispatchFormDataAction({
+              stock: {
+                quantity: parseInt(value, 10),
+                warehouse
+              },
+              type: "changeVariantStockData",
+              variantIndex
+            })
+          }
           onVariantDelete={variantIndex =>
             dispatchFormDataAction({
               type: "deleteVariant",
               variantIndex
             })
           }
+          warehouses={warehouses}
         />
       )}
     </>
