@@ -1177,7 +1177,7 @@ export interface ProductVariantBulkCreateInput {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku: string;
-  quantity?: number | null;
+  stocks: StockInput[];
   trackInventory?: boolean | null;
   weight?: any | null;
 }

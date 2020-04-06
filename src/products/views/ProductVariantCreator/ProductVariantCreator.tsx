@@ -63,6 +63,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
             variables: { id, inputs }
           })
         }
+        warehouses={data?.warehouses.edges.map(edge => edge.node)}
       />
     </>
   );
