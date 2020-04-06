@@ -39,6 +39,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Handle rich text editor content error - #395 by @dominik-zeglen
 - Fix crashing views - #422 by @dominik-zeglen
 - Add "Ready to capture" to the "Status" order filter - #430 by @dominik-zeglen
+- Reset state after closing - #456 by @dominik-zeglen
 
 ## 2.0.0
 
