@@ -16,7 +16,7 @@ import SingleSelectField from "@saleor/components/SingleSelectField";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import CardTitle from "@saleor/components/CardTitle";
 import { ProductVariantCreateFormData } from "./form";
-import { getPriceAttributeValues } from "./utils";
+import { getStockAttributeValues } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -34,26 +34,24 @@ const useStyles = makeStyles(
       width: "33%"
     }
   }),
-  { name: "ProductVariantCreatorPrices" }
+  { name: "ProductVariantCreatorStock" }
 );
 
-export interface ProductVariantCreatorPricesProps {
+export interface ProductVariantCreatorStockProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
-  currencySymbol: string;
   data: ProductVariantCreateFormData;
   onApplyToAllChange: (applyToAll: boolean) => void;
-  onApplyToAllPriceChange: (value: string) => void;
+  onApplyToAllStockChange: (value: string) => void;
   onAttributeSelect: (id: string) => void;
   onAttributeValueChange: (id: string, value: string) => void;
 }
 
-const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = props => {
+const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = props => {
   const {
     attributes,
-    currencySymbol,
     data,
     onApplyToAllChange,
-    onApplyToAllPriceChange,
+    onApplyToAllStockChange,
     onAttributeSelect,
     onAttributeValueChange
   } = props;
@@ -64,23 +62,23 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
     label: attribute.name,
     value: attribute.id
   }));
-  const priceAttributeValues = getPriceAttributeValues(data, attributes);
+  const stockAttributeValues = getStockAttributeValues(data, attributes);
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Price",
-          description: "variant price, header"
+          defaultMessage: "Stock and Warehousing",
+          description: "variant stock, header"
         })}
       />
       <CardContent>
-        <RadioGroup value={data.price.all ? "applyToAll" : "applyToAttribute"}>
+        <RadioGroup value={data.stock.all ? "applyToAll" : "applyToAttribute"}>
           <FormControlLabel
             value="applyToAll"
             control={<Radio color="primary" />}
             label={intl.formatMessage({
-              defaultMessage: "Apply single price to all SKUs"
+              defaultMessage: "Apply single stock to all SKUs"
             })}
             onChange={() => onApplyToAllChange(true)}
           />
@@ -91,27 +89,24 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
               min: 0,
               type: "number"
             }}
-            InputProps={{
-              endAdornment: currencySymbol
-            }}
             label={intl.formatMessage({
-              defaultMessage: "Price",
-              id: "productVariantCreatePricesPriceInputLabel"
+              defaultMessage: "Stock",
+              id: "productVariantCreatePricesStockInputLabel"
             })}
-            value={data.price.value}
-            onChange={event => onApplyToAllPriceChange(event.target.value)}
+            value={data.stock.value}
+            onChange={event => onApplyToAllStockChange(event.target.value)}
           />
           <FormSpacer />
           <FormControlLabel
             value="applyToAttribute"
             control={<Radio color="primary" />}
             label={intl.formatMessage({
-              defaultMessage: "Apply unique prices by attribute to each SKU"
+              defaultMessage: "Apply unique stock by attribute to each SKU"
             })}
             onChange={() => onApplyToAllChange(false)}
           />
         </RadioGroup>
-        {!data.price.all && (
+        {!data.stock.all && (
           <>
             <FormSpacer />
             <Grid variant="uniform">
@@ -130,13 +125,13 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                     defaultMessage: "Attribute",
                     description: "variant attribute"
                   })}
-                  value={data.price.attribute}
-                  onChange={event => onAttributeSelect(event.target.value)}
+                  value={data.stock.attribute}
+                  onChange={onAttributeSelect}
                 />
               </div>
             </Grid>
-            {priceAttributeValues &&
-              priceAttributeValues.map(attributeValue => (
+            {stockAttributeValues &&
+              stockAttributeValues.map(attributeValue => (
                 <React.Fragment key={attributeValue.id}>
                   <Hr className={classes.hrAttribute} />
                   <FormSpacer />
@@ -147,20 +142,13 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                     <div>
                       <TextField
                         label={intl.formatMessage({
-                          defaultMessage: "Price",
-                          description: "variant price",
-                          id: "productVariantCreatePricesSetPricePlaceholder"
+                          defaultMessage: "Stock",
+                          description: "variant stock",
+                          id: "productVariantCreatePricesSetStockPlaceholder"
                         })}
-                        inputProps={{
-                          min: 0,
-                          type: "number"
-                        }}
-                        InputProps={{
-                          endAdornment: currencySymbol
-                        }}
                         fullWidth
                         value={
-                          data.price.values.find(
+                          data.stock.values.find(
                             value => value.slug === attributeValue.slug
                           ).value
                         }
@@ -182,5 +170,5 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
   );
 };
 
-ProductVariantCreatorPrices.displayName = "ProductVariantCreatorPrices";
-export default ProductVariantCreatorPrices;
+ProductVariantCreatorStock.displayName = "ProductVariantCreatorStock";
+export default ProductVariantCreatorStock;

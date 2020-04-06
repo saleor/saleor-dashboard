@@ -5,7 +5,7 @@ import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleo
 import { isSelected } from "@saleor/utils/lists";
 import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import { ProductVariantCreateFormData } from "./form";
-import ProductVariantCreatePrices from "./ProductVariantCreatorPrices";
+import ProductVariantCreatePriceAndSku from "./ProductVariantCreatorPriceAndSku";
 import ProductVariantCreateSummary from "./ProductVariantCreatorSummary";
 import ProductVariantCreateValues from "./ProductVariantCreatorValues";
 import {
@@ -60,11 +60,11 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
         />
       )}
       {step === ProductVariantCreatorStep.prices && (
-        <ProductVariantCreatePrices
+        <ProductVariantCreatePriceAndSku
           attributes={selectedAttributes}
           currencySymbol={currencySymbol}
           data={data}
-          onApplyPriceOrStockChange={(all, type) =>
+          onApplyToAllChange={(all, type) =>
             dispatchFormDataAction({
               applyPriceOrStockToAll: {
                 all
@@ -75,17 +75,16 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                   : ProductVariantCreateReducerActionType.applyStockToAll
             })
           }
-          // TODO: Stock change is not fixed in this PR so we won't include it here
-          onApplyToAllChange={(price, type) =>
-            dispatchFormDataAction(
-              type === "price" && {
-                changeApplyPriceToAllValue: {
-                  price
-                },
-                type:
-                  ProductVariantCreateReducerActionType.changeApplyPriceToAllValue
-              }
-            )
+          onApplyToAllPriceOrStockChange={(value, type) =>
+            dispatchFormDataAction({
+              changeApplyPriceToAllValue: {
+                price: value
+              },
+              type:
+                type === "price"
+                  ? ProductVariantCreateReducerActionType.applyPriceToAll
+                  : ProductVariantCreateReducerActionType.applyStockToAll
+            })
           }
           onAttributeSelect={(attributeId, type) =>
             dispatchFormDataAction({
@@ -98,7 +97,6 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                   : ProductVariantCreateReducerActionType.changeApplyStockToAttributeId
             })
           }
-          // TODO: Stock change is not fixed in this PR so we won't include it here
           onAttributeValueChange={(valueId, price, type) =>
             dispatchFormDataAction(
               type === "price" && {
