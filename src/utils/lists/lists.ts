@@ -45,6 +45,9 @@ export function updateAtIndex<TData>(
   list: List<TData>,
   index: number
 ) {
+  if (!index.toFixed) {
+    throw new Error("Index is not a number");
+  }
   return addAtIndex(data, removeAtIndex(list, index), index);
 }
 

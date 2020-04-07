@@ -19,8 +19,8 @@ const selectedAttributes = [1, 4, 5].map(index => attributes[index]);
 const selectedWarehouses = [0, 1, 3].map(index => warehouseList[index]);
 
 const price: AllOrAttribute<string> = {
-  all: false,
   attribute: selectedAttributes[0].id,
+  mode: "attribute",
   value: "2.79",
   values: selectedAttributes[0].values.map((attribute, attributeIndex) => ({
     slug: attribute.slug,
@@ -29,8 +29,8 @@ const price: AllOrAttribute<string> = {
 };
 
 const stock: AllOrAttribute<number[]> = {
-  all: false,
   attribute: selectedAttributes[0].id,
+  mode: "attribute",
   value: selectedWarehouses.map(
     (_, warehouseIndex) => (warehouseIndex + 2) * 3
   ),
@@ -88,8 +88,28 @@ const props: ProductVariantCreatorContentProps = {
 storiesOf("Views / Products / Create multiple variants", module)
   .addDecorator(storyFn => <Container>{storyFn()}</Container>)
   .addDecorator(Decorator)
-  .add("choose values", () => <ProductVariantCreatorContent {...props} />)
-  .add("prices and SKU", () => (
+  .add("choose values", () => <ProductVariantCreatorContent {...props} />);
+
+storiesOf(
+  "Views / Products / Create multiple variants / prices and SKUs",
+  module
+)
+  .addDecorator(storyFn => <Container>{storyFn()}</Container>)
+  .addDecorator(Decorator)
+  .add("apply to all", () => (
+    <ProductVariantCreatorContent
+      {...props}
+      data={{
+        ...data,
+        stock: {
+          ...data.stock,
+          mode: "all"
+        }
+      }}
+      step={ProductVariantCreatorStep.prices}
+    />
+  ))
+  .add("apply to attribute", () => (
     <ProductVariantCreatorContent
       {...props}
       step={ProductVariantCreatorStep.prices}

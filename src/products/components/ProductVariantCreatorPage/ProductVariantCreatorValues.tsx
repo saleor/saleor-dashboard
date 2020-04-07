@@ -52,7 +52,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
                         value.slug,
                         data.attributes.find(
                           dataAttribute => attribute.id === dataAttribute.id
-                        ).values,
+                        )?.values || [],
                         (a, b) => a === b
                       )}
                       name={`value:${value.slug}`}

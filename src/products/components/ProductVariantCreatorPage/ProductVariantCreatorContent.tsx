@@ -2,8 +2,8 @@ import React from "react";
 
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
-import { isSelected } from "@saleor/utils/lists";
 import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+import { isSelected } from "@saleor/utils/lists";
 import { ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatePriceAndSku from "./ProductVariantCreatorPriceAndSku";
 import ProductVariantCreateSummary from "./ProductVariantCreatorSummary";
@@ -64,10 +64,11 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
           attributes={selectedAttributes}
           currencySymbol={currencySymbol}
           data={data}
-          onApplyToAllChange={(all, type) =>
+          warehouses={warehouses}
+          onApplyToAllChange={(mode, type) =>
             dispatchFormDataAction({
               applyPriceOrStockToAll: {
-                all
+                mode
               },
               type:
                 type === "price"
@@ -108,6 +109,14 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                   ProductVariantCreateReducerActionType.changeAttributeValuePrice
               }
             )
+          }
+          onWarehouseToggle={warehouseId =>
+            dispatchFormDataAction({
+              changeWarehouses: {
+                warehouseId
+              },
+              type: ProductVariantCreateReducerActionType.changeWarehouses
+            })
           }
         />
       )}

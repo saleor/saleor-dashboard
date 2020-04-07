@@ -102,6 +102,7 @@ const productVariantAttributesFragment = gql`
       }
     }
     productType {
+      id
       variantAttributes {
         id
         name

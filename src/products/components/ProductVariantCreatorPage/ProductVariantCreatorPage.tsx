@@ -39,20 +39,22 @@ function canHitNext(
     case ProductVariantCreatorStep.values:
       return data.attributes.every(attribute => attribute.values.length > 0);
     case ProductVariantCreatorStep.prices:
-      if (data.price.all) {
+      if (data.price.mode === "all") {
         if (data.price.value === "") {
           return false;
         }
-      } else {
+      } else if (data.price.mode === "attribute") {
         if (
           data.price.attribute === "" ||
           data.price.values.some(attributeValue => attributeValue.value === "")
         ) {
           return false;
         }
+      } else {
+        return true;
       }
 
-      if (!data.stock.all || data.stock.attribute) {
+      if (data.stock.mode === "attribute" || data.stock.attribute) {
         return false;
       }
 

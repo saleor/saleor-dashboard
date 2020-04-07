@@ -6,8 +6,9 @@ export interface AttributeValue<T> {
   slug: string;
   value: T;
 }
+export type VariantCreatorPricesAndSkuMode = "all" | "attribute" | "skip";
 export interface AllOrAttribute<T> {
-  all: boolean;
+  mode: VariantCreatorPricesAndSkuMode;
   attribute: string;
   value: T;
   values: Array<AttributeValue<T>>;
@@ -34,14 +35,14 @@ export const createInitialForm = (
     values: []
   })),
   price: {
-    all: true,
     attribute: undefined,
+    mode: "all",
     value: price || "",
     values: []
   },
   stock: {
-    all: true,
     attribute: undefined,
+    mode: "all",
     value: warehouses.length === 1 ? [0] : [],
     values: []
   },
