@@ -5,7 +5,10 @@ import {
   thirdStep,
   warehouses
 } from "./fixtures";
-import reducer, { VariantField } from "./reducer";
+import reducer, {
+  VariantField,
+  ProductVariantCreateReducerActionType
+} from "./reducer";
 
 function execActions<TState, TAction>(
   initialState: TState,
@@ -20,32 +23,32 @@ describe("Reducer is able to", () => {
     const state = execActions(secondStep, reducer, [
       {
         attributeId: attributes[0].id,
-        type: "selectValue",
+        type: ProductVariantCreateReducerActionType.selectValue,
         valueId: attributes[0].values[0]
       },
       {
         attributeId: attributes[0].id,
-        type: "selectValue",
+        type: ProductVariantCreateReducerActionType.selectValue,
         valueId: attributes[0].values[6]
       },
       {
         attributeId: attributes[1].id,
-        type: "selectValue",
+        type: ProductVariantCreateReducerActionType.selectValue,
         valueId: attributes[1].values[1]
       },
       {
         attributeId: attributes[1].id,
-        type: "selectValue",
+        type: ProductVariantCreateReducerActionType.selectValue,
         valueId: attributes[1].values[3]
       },
       {
         attributeId: attributes[3].id,
-        type: "selectValue",
+        type: ProductVariantCreateReducerActionType.selectValue,
         valueId: attributes[3].values[0]
       },
       {
         attributeId: attributes[3].id,
-        type: "selectValue",
+        type: ProductVariantCreateReducerActionType.selectValue,
         valueId: attributes[3].values[4]
       }
     ]);
@@ -61,14 +64,14 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         all: true,
-        type: "applyPriceToAll"
+        type: ProductVariantCreateReducerActionType.applyPriceToAll
       },
       {
-        type: "changeApplyPriceToAllValue",
+        type: ProductVariantCreateReducerActionType.changeApplyPriceToAllValue,
         value
       },
       {
-        type: "reload"
+        type: ProductVariantCreateReducerActionType.reload
       }
     ]);
 
@@ -82,15 +85,15 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         all: true,
-        type: "applyStockToAll"
+        type: ProductVariantCreateReducerActionType.applyStockToAll
       },
       {
         quantity,
-        type: "changeApplyStockToAllValue",
+        type: ProductVariantCreateReducerActionType.changeApplyStockToAllValue,
         warehouseIndex: 1
       },
       {
-        type: "reload"
+        type: ProductVariantCreateReducerActionType.reload
       }
     ]);
 
@@ -105,24 +108,25 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         all: false,
-        type: "applyPriceToAll"
+        type: ProductVariantCreateReducerActionType.applyPriceToAll
       },
       {
         attributeId: attribute.id,
-        type: "changeApplyPriceToAttributeId"
+        type:
+          ProductVariantCreateReducerActionType.changeApplyPriceToAttributeId
       },
       {
-        type: "changeAttributeValuePrice",
+        type: ProductVariantCreateReducerActionType.changeAttributeValuePrice,
         value: value.toString(),
         valueId: attribute.values[0]
       },
       {
-        type: "changeAttributeValuePrice",
+        type: ProductVariantCreateReducerActionType.changeAttributeValuePrice,
         value: (value + 6).toString(),
         valueId: attribute.values[1]
       },
       {
-        type: "reload"
+        type: ProductVariantCreateReducerActionType.reload
       }
     ]);
 
@@ -140,24 +144,25 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         all: false,
-        type: "applyStockToAll"
+        type: ProductVariantCreateReducerActionType.applyStockToAll
       },
       {
         attributeId: attribute.id,
-        type: "changeApplyStockToAttributeId"
+        type:
+          ProductVariantCreateReducerActionType.changeApplyStockToAttributeId
       },
       {
-        type: "changeAttributeValueStock",
+        type: ProductVariantCreateReducerActionType.changeAttributeValueStock,
         value: value.toString(),
         valueId: attribute.values[0]
       },
       {
-        type: "changeAttributeValueStock",
+        type: ProductVariantCreateReducerActionType.changeAttributeValueStock,
         value: (value + 6).toString(),
         valueId: attribute.values[1]
       },
       {
-        type: "reload"
+        type: ProductVariantCreateReducerActionType.reload
       }
     ]);
 
@@ -177,7 +182,7 @@ describe("Reducer is able to", () => {
     const state = execActions(fourthStep, reducer, [
       {
         field,
-        type: "changeVariantData",
+        type: ProductVariantCreateReducerActionType.changeVariantData,
         value,
         variantIndex
       }
@@ -200,7 +205,7 @@ describe("Reducer is able to", () => {
           quantity,
           warehouse: warehouses[0].id
         },
-        type: "changeVariantStockData",
+        type: ProductVariantCreateReducerActionType.changeVariantStockData,
         variantIndex
       }
     ]);
@@ -217,7 +222,7 @@ describe("Reducer is able to", () => {
 
     const state = execActions(fourthStep, reducer, [
       {
-        type: "deleteVariant",
+        type: ProductVariantCreateReducerActionType.deleteVariant,
         variantIndex
       }
     ]);

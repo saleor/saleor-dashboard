@@ -11,7 +11,9 @@ import { createInitialForm, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatorContent, {
   ProductVariantCreatorContentProps
 } from "./ProductVariantCreatorContent";
-import reduceProductVariantCreateFormData from "./reducer";
+import reduceProductVariantCreateFormData, {
+  ProductVariantCreateReducerActionType
+} from "./reducer";
 import { ProductVariantCreatorStep } from "./types";
 import ProductVariantCreateTabs from "./ProductVariantCreatorTabs";
 
@@ -120,7 +122,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
       onTransition: (_, nextStep) => {
         if (nextStep === ProductVariantCreatorStep.summary) {
           dispatchFormDataAction({
-            type: "reload"
+            type: ProductVariantCreateReducerActionType.reload
           });
         }
       }
@@ -129,7 +131,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   const reloadForm = () =>
     dispatchFormDataAction({
       data: createInitialForm(attributes, defaultPrice, warehouses),
-      type: "reload"
+      type: ProductVariantCreateReducerActionType.reload
     });
 
   React.useEffect(reloadForm, [attributes.length]);

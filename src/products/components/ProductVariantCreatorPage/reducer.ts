@@ -10,23 +10,23 @@ import { StockInput } from "@saleor/types/globalTypes";
 import { createVariants } from "./createVariants";
 import { ProductVariantCreateFormData } from "./form";
 
-export type ProductVariantCreateReducerActionType =
-  | "applyPriceToAll"
-  | "applyPriceToAttribute"
-  | "applyStockToAll"
-  | "applyStockToAttribute"
-  | "changeApplyPriceToAllValue"
-  | "changeApplyPriceToAttributeId"
-  | "changeApplyStockToAllValue"
-  | "changeApplyStockToAttributeId"
-  | "changeAttributeValuePrice"
-  | "changeAttributeValueStock"
-  | "changeVariantData"
-  | "changeVariantStockData"
-  | "deleteVariant"
-  | "reload"
-  | "selectValue";
-
+export enum ProductVariantCreateReducerActionType {
+  applyPriceToAll,
+  applyPriceToAttribute,
+  applyStockToAll,
+  applyStockToAttribute,
+  changeApplyPriceToAllValue,
+  changeApplyPriceToAttributeId,
+  changeApplyStockToAllValue,
+  changeApplyStockToAttributeId,
+  changeAttributeValuePrice,
+  changeAttributeValueStock,
+  changeVariantData,
+  changeVariantStockData,
+  deleteVariant,
+  reload,
+  selectValue
+}
 export type VariantField = "price" | "sku";
 export interface ProductVariantCreateReducerAction {
   all?: boolean;
@@ -318,49 +318,49 @@ function reduceProductVariantCreateFormData(
   action: ProductVariantCreateReducerAction
 ) {
   switch (action.type) {
-    case "selectValue":
+    case ProductVariantCreateReducerActionType.selectValue:
       return selectValue(prevState, action.attributeId, action.valueId);
-    case "applyPriceToAll":
+    case ProductVariantCreateReducerActionType.applyPriceToAll:
       return applyPriceToAll(prevState, action.all);
-    case "applyStockToAll":
+    case ProductVariantCreateReducerActionType.applyStockToAll:
       return applyStockToAll(prevState, action.all);
-    case "changeAttributeValuePrice":
+    case ProductVariantCreateReducerActionType.changeAttributeValuePrice:
       return changeAttributeValuePrice(prevState, action.valueId, action.value);
-    case "changeAttributeValueStock":
+    case ProductVariantCreateReducerActionType.changeAttributeValueStock:
       return changeAttributeValueStock(
         prevState,
         action.valueId,
         action.quantity,
         action.warehouseIndex
       );
-    case "changeApplyPriceToAttributeId":
+    case ProductVariantCreateReducerActionType.changeApplyPriceToAttributeId:
       return changeApplyPriceToAttributeId(prevState, action.attributeId);
-    case "changeApplyStockToAttributeId":
+    case ProductVariantCreateReducerActionType.changeApplyStockToAttributeId:
       return changeApplyStockToAttributeId(prevState, action.attributeId);
-    case "changeApplyPriceToAllValue":
+    case ProductVariantCreateReducerActionType.changeApplyPriceToAllValue:
       return changeApplyPriceToAllValue(prevState, action.value);
-    case "changeApplyStockToAllValue":
+    case ProductVariantCreateReducerActionType.changeApplyStockToAllValue:
       return changeApplyStockToAllValue(
         prevState,
         action.quantity,
         action.warehouseIndex
       );
-    case "changeVariantData":
+    case ProductVariantCreateReducerActionType.changeVariantData:
       return changeVariantData(
         prevState,
         action.field,
         action.value,
         action.variantIndex
       );
-    case "changeVariantStockData":
+    case ProductVariantCreateReducerActionType.changeVariantStockData:
       return changeVariantStockData(
         prevState,
         action.stock,
         action.variantIndex
       );
-    case "deleteVariant":
+    case ProductVariantCreateReducerActionType.deleteVariant:
       return deleteVariant(prevState, action.variantIndex);
-    case "reload":
+    case ProductVariantCreateReducerActionType.reload:
       return action.data ? action.data : createVariantMatrix(prevState);
     default:
       return prevState;
