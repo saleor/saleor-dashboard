@@ -8,7 +8,10 @@ import { ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatePrices from "./ProductVariantCreatorPrices";
 import ProductVariantCreateSummary from "./ProductVariantCreatorSummary";
 import ProductVariantCreateValues from "./ProductVariantCreatorValues";
-import { ProductVariantCreateReducerAction } from "./reducer";
+import {
+  ProductVariantCreateReducerAction,
+  ProductVariantCreateReducerActionType
+} from "./reducer";
 import { ProductVariantCreatorStep } from "./types";
 
 export interface ProductVariantCreatorContentProps {
@@ -48,7 +51,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
           onValueClick={(attributeId, valueId) =>
             dispatchFormDataAction({
               attributeId,
-              type: "selectValue",
+              type: ProductVariantCreateReducerActionType.selectValue,
               valueId
             })
           }
@@ -62,15 +65,18 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
           onApplyPriceOrStockChange={(all, type) =>
             dispatchFormDataAction({
               all,
-              type: type === "price" ? "applyPriceToAll" : "applyStockToAll"
+              type:
+                type === "price"
+                  ? ProductVariantCreateReducerActionType.applyPriceToAll
+                  : ProductVariantCreateReducerActionType.applyStockToAll
             })
           }
           onApplyToAllChange={(value, type) =>
             dispatchFormDataAction({
               type:
                 type === "price"
-                  ? "changeApplyPriceToAllValue"
-                  : "changeApplyStockToAllValue",
+                  ? ProductVariantCreateReducerActionType.changeApplyPriceToAllValue
+                  : ProductVariantCreateReducerActionType.changeApplyStockToAllValue,
               value
             })
           }
@@ -79,16 +85,16 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
               attributeId,
               type:
                 type === "price"
-                  ? "changeApplyPriceToAttributeId"
-                  : "changeApplyStockToAttributeId"
+                  ? ProductVariantCreateReducerActionType.changeApplyPriceToAttributeId
+                  : ProductVariantCreateReducerActionType.changeApplyStockToAttributeId
             })
           }
           onAttributeValueChange={(valueId, value, type) =>
             dispatchFormDataAction({
               type:
                 type === "price"
-                  ? "changeAttributeValuePrice"
-                  : "changeAttributeValueStock",
+                  ? ProductVariantCreateReducerActionType.changeAttributeValuePrice
+                  : ProductVariantCreateReducerActionType.changeAttributeValueStock,
               value,
               valueId
             })
@@ -104,7 +110,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
           onVariantDataChange={(variantIndex, field, value) =>
             dispatchFormDataAction({
               field,
-              type: "changeVariantData",
+              type: ProductVariantCreateReducerActionType.changeVariantData,
               value,
               variantIndex
             })
@@ -115,13 +121,14 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                 quantity: parseInt(value, 10),
                 warehouse
               },
-              type: "changeVariantStockData",
+              type:
+                ProductVariantCreateReducerActionType.changeVariantStockData,
               variantIndex
             })
           }
           onVariantDelete={variantIndex =>
             dispatchFormDataAction({
-              type: "deleteVariant",
+              type: ProductVariantCreateReducerActionType.deleteVariant,
               variantIndex
             })
           }
