@@ -4,21 +4,22 @@ import { RouteComponentProps } from "react-router";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
-import { useIntl } from "react-intl";
-import { commonMessages } from "@saleor/intl";
-import getAccountErrorMessage from "@saleor/utils/errors/account";
 import NewPasswordPage, {
   NewPasswordPageFormData
 } from "../components/NewPasswordPage";
 import { SetPasswordMutation } from "../mutations";
-import { SetPassword } from "../types/SetPassword";
+import {
+  SetPassword,
+  SetPassword_setPassword_errors
+} from "../types/SetPassword";
 import { NewPasswordUrlQueryParams } from "../urls";
 
 const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const navigate = useNavigator();
   const { loginByToken } = useUser();
-  const [error, setError] = React.useState<string>();
-  const intl = useIntl();
+  const [errors, setErrors] = React.useState<
+    SetPassword_setPassword_errors[]
+  >();
 
   const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1));
 
@@ -27,14 +28,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
       loginByToken(data.setPassword.token, data.setPassword.user);
       navigate("/", true);
     } else {
-      const error = data.setPassword.errors.find(
-        err => err.field === "password"
-      );
-      if (error) {
-        setError(getAccountErrorMessage(error, intl));
-      } else {
-        setError(intl.formatMessage(commonMessages.somethingWentWrong));
-      }
+      setErrors(data.setPassword.errors);
     }
   };
 
@@ -52,7 +46,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
 
         return (
           <NewPasswordPage
-            error={error}
+            errors={errors}
             disabled={setPasswordOpts.loading}
             onSubmit={handleSubmit}
           />

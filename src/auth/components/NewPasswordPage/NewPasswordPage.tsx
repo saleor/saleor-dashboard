@@ -7,6 +7,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { SetPassword_setPassword_errors } from "@saleor/auth/types/SetPassword";
+import getAccountErrorMessage from "@saleor/utils/errors/account";
 
 const useStyles = makeStyles(
   theme => ({
@@ -34,7 +36,7 @@ export interface NewPasswordPageFormData {
 }
 export interface NewPasswordPageProps {
   disabled: boolean;
-  error: string;
+  errors: SetPassword_setPassword_errors[];
   onSubmit: (data: NewPasswordPageFormData) => void;
 }
 
@@ -44,10 +46,14 @@ const initialForm: NewPasswordPageFormData = {
 };
 
 const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
-  const { disabled, error, onSubmit } = props;
+  const { disabled, errors, onSubmit } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
+  const error = getAccountErrorMessage(
+    errors.find(err => err.field === "password"),
+    intl
+  );
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
