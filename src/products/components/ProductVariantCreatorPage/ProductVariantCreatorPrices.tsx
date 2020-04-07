@@ -15,7 +15,10 @@ import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import CardTitle from "@saleor/components/CardTitle";
-import { ProductVariantCreateFormData } from "./form";
+import {
+  ProductVariantCreateFormData,
+  VariantCreatorPricesAndSkuMode
+} from "./form";
 import { getPriceAttributeValues } from "./utils";
 
 const useStyles = makeStyles(
@@ -41,7 +44,7 @@ export interface ProductVariantCreatorPricesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
-  onApplyToAllChange: (applyToAll: boolean) => void;
+  onApplyToAllChange: (applyToAll: VariantCreatorPricesAndSkuMode) => void;
   onApplyToAllPriceChange: (value: string) => void;
   onAttributeSelect: (id: string) => void;
   onAttributeValueChange: (id: string, value: string) => void;
@@ -75,14 +78,14 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
         })}
       />
       <CardContent>
-        <RadioGroup value={data.price.all ? "applyToAll" : "applyToAttribute"}>
+        <RadioGroup value={data.price.mode}>
           <FormControlLabel
-            value="applyToAll"
+            value="all"
             control={<Radio color="primary" />}
             label={intl.formatMessage({
               defaultMessage: "Apply single price to all SKUs"
             })}
-            onChange={() => onApplyToAllChange(true)}
+            onChange={() => onApplyToAllChange("all")}
           />
           <FormSpacer />
           <TextField
@@ -103,15 +106,15 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
           />
           <FormSpacer />
           <FormControlLabel
-            value="applyToAttribute"
+            value="attribute"
             control={<Radio color="primary" />}
             label={intl.formatMessage({
               defaultMessage: "Apply unique prices by attribute to each SKU"
             })}
-            onChange={() => onApplyToAllChange(false)}
+            onChange={() => onApplyToAllChange("attribute")}
           />
         </RadioGroup>
-        {!data.price.all && (
+        {data.price.mode === "attribute" && (
           <>
             <FormSpacer />
             <Grid variant="uniform">

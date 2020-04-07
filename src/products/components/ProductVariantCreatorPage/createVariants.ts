@@ -26,16 +26,32 @@ function getAttributeValuePriceOrStock<T>(
   return attributeValue.value;
 }
 
+function getValueFromMode<T>(
+  attributes: CreateVariantInput,
+  priceOrStock: AllOrAttribute<T>,
+  skipValue: T
+): T {
+  switch (priceOrStock.mode) {
+    case "all":
+      return priceOrStock.value;
+    case "attribute":
+      return getAttributeValuePriceOrStock(attributes, priceOrStock);
+    case "skip":
+      return skipValue;
+  }
+}
+
 function createVariant(
   data: ProductVariantCreateFormData,
   attributes: CreateVariantInput
 ): ProductVariantBulkCreateInput {
-  const priceOverride = data.price.all
-    ? data.price.value
-    : getAttributeValuePriceOrStock(attributes, data.price);
-  const stocks = data.stock.all
-    ? data.stock.value
-    : getAttributeValuePriceOrStock(attributes, data.stock);
+  const priceOverride = getValueFromMode(attributes, data.price, "0");
+  const stocks = getValueFromMode(
+    attributes,
+    data.stock,
+    data.warehouses.map(() => 0)
+  );
+
   return {
     attributes: attributes.map(attribute => ({
       id: attribute.attributeId,
@@ -91,8 +107,8 @@ export function createVariants(
   data: ProductVariantCreateFormData
 ): ProductVariantBulkCreateInput[] {
   if (
-    (!data.price.all && !data.price.attribute) ||
-    (!data.stock.all && !data.stock.attribute)
+    (data.price.mode === "attribute" && !data.price.attribute) ||
+    (data.stock.mode === "attribute" && !data.stock.attribute)
   ) {
     return [];
   }
