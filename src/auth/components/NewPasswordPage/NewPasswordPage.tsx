@@ -9,11 +9,20 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 
 const useStyles = makeStyles(
-  {
+  theme => ({
+    errorText: {
+      color: theme.palette.error.contrastText
+    },
+    panel: {
+      background: theme.palette.error.main,
+      borderRadius: theme.spacing(),
+      marginBottom: theme.spacing(3),
+      padding: theme.spacing(1.5)
+    },
     submit: {
       width: "100%"
     }
-  },
+  }),
   {
     name: "NewPasswordPage"
   }
@@ -25,6 +34,7 @@ export interface NewPasswordPageFormData {
 }
 export interface NewPasswordPageProps {
   disabled: boolean;
+  error: string;
   onSubmit: (data: NewPasswordPageFormData) => void;
 }
 
@@ -34,7 +44,7 @@ const initialForm: NewPasswordPageFormData = {
 };
 
 const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
-  const { disabled, onSubmit } = props;
+  const { disabled, error, onSubmit } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -47,6 +57,13 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
 
         return (
           <>
+            {!!error && (
+              <div className={classes.panel}>
+                <Typography variant="caption" className={classes.errorText}>
+                  {error}
+                </Typography>
+              </div>
+            )}
             <Typography>
               <FormattedMessage defaultMessage="Please set up a new password." />
             </Typography>

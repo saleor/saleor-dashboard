@@ -4,6 +4,9 @@ import { RouteComponentProps } from "react-router";
 
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
+import { useIntl } from "react-intl";
+import { commonMessages } from "@saleor/intl";
+import getAccountErrorMessage from "@saleor/utils/errors/account";
 import NewPasswordPage, {
   NewPasswordPageFormData
 } from "../components/NewPasswordPage";
@@ -14,6 +17,8 @@ import { NewPasswordUrlQueryParams } from "../urls";
 const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const navigate = useNavigator();
   const { loginByToken } = useUser();
+  const [error, setError] = React.useState<string>();
+  const intl = useIntl();
 
   const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1));
 
@@ -21,6 +26,15 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
     if (data.setPassword.errors.length === 0) {
       loginByToken(data.setPassword.token, data.setPassword.user);
       navigate("/", true);
+    } else {
+      const error = data.setPassword.errors.find(
+        err => err.field === "password"
+      );
+      if (error) {
+        setError(getAccountErrorMessage(error, intl));
+      } else {
+        setError(intl.formatMessage(commonMessages.somethingWentWrong));
+      }
     }
   };
 
@@ -38,6 +52,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
 
         return (
           <NewPasswordPage
+            error={error}
             disabled={setPasswordOpts.loading}
             onSubmit={handleSubmit}
           />
