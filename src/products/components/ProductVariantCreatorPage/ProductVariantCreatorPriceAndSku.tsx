@@ -2,7 +2,11 @@ import React from "react";
 
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import CardSpacer from "@saleor/components/CardSpacer";
-import { ProductVariantCreateFormData } from "./form";
+import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+import {
+  ProductVariantCreateFormData,
+  VariantCreatorPricesAndSkuMode
+} from "./form";
 import ProductVariantCreatorPrices from "./ProductVariantCreatorPrices";
 import ProductVariantCreatorStock from "./ProductVariantCreatorStock";
 
@@ -11,7 +15,11 @@ export interface ProductVariantCreatorPriceAndSkuProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   currencySymbol: string;
   data: ProductVariantCreateFormData;
-  onApplyToAllChange: (applyToAll: boolean, type: PriceOrStock) => void;
+  warehouses: WarehouseFragment[];
+  onApplyToAllChange: (
+    value: VariantCreatorPricesAndSkuMode,
+    type: PriceOrStock
+  ) => void;
   onApplyToAllPriceOrStockChange: (value: string, type: PriceOrStock) => void;
   onAttributeSelect: (id: string, type: PriceOrStock) => void;
   onAttributeValueChange: (
@@ -19,16 +27,19 @@ export interface ProductVariantCreatorPriceAndSkuProps {
     value: string,
     type: PriceOrStock
   ) => void;
+  onWarehouseToggle: (id: string) => void;
 }
 
 const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSkuProps> = ({
   attributes,
   currencySymbol,
   data,
+  warehouses,
   onApplyToAllPriceOrStockChange,
   onApplyToAllChange,
   onAttributeSelect,
-  onAttributeValueChange
+  onAttributeValueChange,
+  onWarehouseToggle
 }) => (
   <>
     <ProductVariantCreatorPrices
@@ -48,6 +59,7 @@ const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSk
     <ProductVariantCreatorStock
       attributes={attributes}
       data={data}
+      warehouses={warehouses}
       onApplyToAllChange={value => onApplyToAllChange(value, "stock")}
       onApplyToAllStockChange={value =>
         onApplyToAllPriceOrStockChange(value, "stock")
@@ -56,6 +68,7 @@ const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSk
       onAttributeValueChange={(id, value) =>
         onAttributeValueChange(id, value, "stock")
       }
+      onWarehouseToggle={onWarehouseToggle}
     />
   </>
 );
