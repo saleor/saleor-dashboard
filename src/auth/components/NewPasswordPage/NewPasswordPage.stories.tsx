@@ -3,14 +3,26 @@ import React from "react";
 
 import CardDecorator from "@saleor/storybook//CardDecorator";
 import Decorator from "@saleor/storybook//Decorator";
+import { AccountErrorCode } from "@saleor/types/globalTypes";
 import NewPasswordPage from "./NewPasswordPage";
 
 storiesOf("Views / Authentication / Set up a new password", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => (
-    <NewPasswordPage disabled={false} onSubmit={() => undefined} />
+    <NewPasswordPage errors={[]} disabled={false} onSubmit={() => undefined} />
   ))
   .add("loading", () => (
-    <NewPasswordPage disabled={true} onSubmit={() => undefined} />
+    <NewPasswordPage errors={[]} disabled={true} onSubmit={() => undefined} />
+  ))
+  .add("too short error", () => (
+    <NewPasswordPage
+      errors={["password"].map(field => ({
+        __typename: "AccountError",
+        code: AccountErrorCode.PASSWORD_TOO_SHORT,
+        field
+      }))}
+      disabled={false}
+      onSubmit={() => undefined}
+    />
   ));

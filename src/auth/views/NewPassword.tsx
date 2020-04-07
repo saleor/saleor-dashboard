@@ -38,6 +38,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
 
         return (
           <NewPasswordPage
+            errors={setPasswordOpts.data?.setPassword.errors || []}
             disabled={setPasswordOpts.loading}
             onSubmit={handleSubmit}
           />
