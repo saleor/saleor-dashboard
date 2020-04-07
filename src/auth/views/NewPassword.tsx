@@ -8,18 +8,12 @@ import NewPasswordPage, {
   NewPasswordPageFormData
 } from "../components/NewPasswordPage";
 import { SetPasswordMutation } from "../mutations";
-import {
-  SetPassword,
-  SetPassword_setPassword_errors
-} from "../types/SetPassword";
+import { SetPassword } from "../types/SetPassword";
 import { NewPasswordUrlQueryParams } from "../urls";
 
 const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const navigate = useNavigator();
   const { loginByToken } = useUser();
-  const [errors, setErrors] = React.useState<
-    SetPassword_setPassword_errors[]
-  >();
 
   const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1));
 
@@ -27,8 +21,6 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
     if (data.setPassword.errors.length === 0) {
       loginByToken(data.setPassword.token, data.setPassword.user);
       navigate("/", true);
-    } else {
-      setErrors(data.setPassword.errors);
     }
   };
 
@@ -46,7 +38,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
 
         return (
           <NewPasswordPage
-            errors={errors}
+            errors={setPasswordOpts.data?.setPassword.errors || []}
             disabled={setPasswordOpts.loading}
             onSubmit={handleSubmit}
           />
