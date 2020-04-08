@@ -73,7 +73,7 @@ const data: ProductVariantCreateFormData = {
   warehouses: selectedWarehouses.map(warehouse => warehouse.id)
 };
 const props: ProductVariantCreatorContentProps = {
-  attributes,
+  attributes: [0, 1, 4, 6].map(index => attributes[index]),
   currencySymbol: "USD",
   data: {
     ...data,

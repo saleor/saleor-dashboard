@@ -18,7 +18,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { isSelected, toggle } from "@saleor/utils/lists";
+import { isSelected } from "@saleor/utils/lists";
 import {
   ProductVariantCreateFormData,
   VariantCreatorPricesAndSkuMode
@@ -73,7 +73,7 @@ export interface ProductVariantCreatorStockProps {
   data: ProductVariantCreateFormData;
   warehouses: WarehouseFragment[];
   onApplyToAllChange: (mode: VariantCreatorPricesAndSkuMode) => void;
-  onApplyToAllStockChange: (value: string) => void;
+  onApplyToAllStockChange: (warehouseIndex: number, value: string) => void;
   onAttributeSelect: (id: string) => void;
   onAttributeValueChange: (id: string, value: string) => void;
   onWarehouseToggle: (id: string) => void;
@@ -190,7 +190,10 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                     })}
                     value={data.stock.value[warehouseIndex]}
                     onChange={event =>
-                      onApplyToAllStockChange(event.target.value)
+                      onApplyToAllStockChange(
+                        warehouseIndex,
+                        event.target.value
+                      )
                     }
                   />
                 </div>
