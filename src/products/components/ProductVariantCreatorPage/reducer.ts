@@ -12,9 +12,7 @@ import { ProductVariantCreateFormData } from "./form";
 
 export enum ProductVariantCreateReducerActionType {
   applyPriceToAll,
-  applyPriceToAttribute,
   applyStockToAll,
-  applyStockToAttribute,
   changeApplyPriceToAllValue,
   changeApplyPriceToAttributeId,
   changeApplyStockToAllValue,
@@ -29,17 +27,39 @@ export enum ProductVariantCreateReducerActionType {
 }
 export type VariantField = "price" | "sku";
 export interface ProductVariantCreateReducerAction {
-  all?: boolean;
-  attributeId?: string;
-  data?: ProductVariantCreateFormData;
-  field?: VariantField;
-  quantity?: number;
-  stock?: StockInput;
+  applyPriceOrStockToAll?: {
+    all: boolean;
+  };
+  changeApplyPriceToAllValue?: {
+    value: string;
+  };
+  changeApplyPriceOrStockToAttributeId?: {
+    attributeId: string;
+  };
+  changeApplyStockToAllValue?: Record<"quantity" | "warehouseIndex", number>;
+  changeAttributeValuePrice?: Record<"valueId" | "price", string>;
+  changeAttributeValueStock?: {
+    valueId: string;
+    quantity: number;
+    warehouseIndex: number;
+  };
+  changeVariantData?: {
+    field: VariantField;
+    value: string;
+    variantIndex: number;
+  };
+  changeVariantStockData?: {
+    stock: StockInput;
+    variantIndex: number;
+  };
+  deleteVariant?: {
+    variantIndex: number;
+  };
+  reload?: {
+    data?: ProductVariantCreateFormData;
+  };
+  selectValue?: Record<"attributeId" | "valueId", string>;
   type: ProductVariantCreateReducerActionType;
-  value?: string;
-  valueId?: string;
-  variantIndex?: number;
-  warehouseIndex?: number;
 }
 
 function selectValue(
@@ -319,49 +339,66 @@ function reduceProductVariantCreateFormData(
 ) {
   switch (action.type) {
     case ProductVariantCreateReducerActionType.selectValue:
-      return selectValue(prevState, action.attributeId, action.valueId);
+      return selectValue(
+        prevState,
+        action.selectValue.attributeId,
+        action.selectValue.attributeId
+      );
     case ProductVariantCreateReducerActionType.applyPriceToAll:
-      return applyPriceToAll(prevState, action.all);
+      return applyPriceToAll(prevState, action.applyPriceOrStockToAll.all);
     case ProductVariantCreateReducerActionType.applyStockToAll:
-      return applyStockToAll(prevState, action.all);
+      return applyStockToAll(prevState, action.applyPriceOrStockToAll.all);
     case ProductVariantCreateReducerActionType.changeAttributeValuePrice:
-      return changeAttributeValuePrice(prevState, action.valueId, action.value);
+      return changeAttributeValuePrice(
+        prevState,
+        action.changeAttributeValuePrice.valueId,
+        action.changeAttributeValuePrice.price
+      );
     case ProductVariantCreateReducerActionType.changeAttributeValueStock:
       return changeAttributeValueStock(
         prevState,
-        action.valueId,
-        action.quantity,
-        action.warehouseIndex
+        action.changeAttributeValueStock.valueId,
+        action.changeAttributeValueStock.warehouseIndex,
+        action.changeAttributeValueStock.quantity
       );
     case ProductVariantCreateReducerActionType.changeApplyPriceToAttributeId:
-      return changeApplyPriceToAttributeId(prevState, action.attributeId);
+      return changeApplyPriceToAttributeId(
+        prevState,
+        action.changeApplyPriceOrStockToAttributeId.attributeId
+      );
     case ProductVariantCreateReducerActionType.changeApplyStockToAttributeId:
-      return changeApplyStockToAttributeId(prevState, action.attributeId);
+      return changeApplyStockToAttributeId(
+        prevState,
+        action.changeApplyPriceOrStockToAttributeId.attributeId
+      );
     case ProductVariantCreateReducerActionType.changeApplyPriceToAllValue:
-      return changeApplyPriceToAllValue(prevState, action.value);
+      return changeApplyPriceToAllValue(
+        prevState,
+        action.changeApplyPriceToAllValue.value
+      );
     case ProductVariantCreateReducerActionType.changeApplyStockToAllValue:
       return changeApplyStockToAllValue(
         prevState,
-        action.quantity,
-        action.warehouseIndex
+        action.changeApplyStockToAllValue.quantity,
+        action.changeApplyStockToAllValue.warehouseIndex
       );
     case ProductVariantCreateReducerActionType.changeVariantData:
       return changeVariantData(
         prevState,
-        action.field,
-        action.value,
-        action.variantIndex
+        action.changeVariantData.field,
+        action.changeVariantData.value,
+        action.changeVariantData.variantIndex
       );
     case ProductVariantCreateReducerActionType.changeVariantStockData:
       return changeVariantStockData(
         prevState,
-        action.stock,
-        action.variantIndex
+        action.changeVariantStockData.stock,
+        action.changeVariantStockData.variantIndex
       );
     case ProductVariantCreateReducerActionType.deleteVariant:
-      return deleteVariant(prevState, action.variantIndex);
+      return deleteVariant(prevState, action.deleteVariant.variantIndex);
     case ProductVariantCreateReducerActionType.reload:
-      return action.data ? action.data : createVariantMatrix(prevState);
+      return action.reload.data || createVariantMatrix(prevState);
     default:
       return prevState;
   }
