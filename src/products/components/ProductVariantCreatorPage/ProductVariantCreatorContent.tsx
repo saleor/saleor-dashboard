@@ -76,15 +76,21 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                   : ProductVariantCreateReducerActionType.applyStockToAll
             })
           }
-          onApplyToAllPriceOrStockChange={(value, type) =>
+          onApplyToAllPriceChange={price =>
             dispatchFormDataAction({
               changeApplyPriceToAllValue: {
-                price: value
+                price
               },
-              type:
-                type === "price"
-                  ? ProductVariantCreateReducerActionType.applyPriceToAll
-                  : ProductVariantCreateReducerActionType.applyStockToAll
+              type: ProductVariantCreateReducerActionType.applyPriceToAll
+            })
+          }
+          onApplyToAllStockChange={(warehouseIndex, quantity) =>
+            dispatchFormDataAction({
+              changeApplyStockToAllValue: {
+                quantity: parseInt(quantity, 10),
+                warehouseIndex
+              },
+              type: ProductVariantCreateReducerActionType.applyStockToAll
             })
           }
           onAttributeSelect={(attributeId, type) =>

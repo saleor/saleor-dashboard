@@ -20,7 +20,8 @@ export interface ProductVariantCreatorPriceAndSkuProps {
     value: VariantCreatorPricesAndSkuMode,
     type: PriceOrStock
   ) => void;
-  onApplyToAllPriceOrStockChange: (value: string, type: PriceOrStock) => void;
+  onApplyToAllPriceChange: (value: string) => void;
+  onApplyToAllStockChange: (warehouseIndex: number, value: string) => void;
   onAttributeSelect: (id: string, type: PriceOrStock) => void;
   onAttributeValueChange: (
     id: string,
@@ -35,8 +36,9 @@ const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSk
   currencySymbol,
   data,
   warehouses,
-  onApplyToAllPriceOrStockChange,
   onApplyToAllChange,
+  onApplyToAllPriceChange,
+  onApplyToAllStockChange,
   onAttributeSelect,
   onAttributeValueChange,
   onWarehouseToggle
@@ -47,9 +49,7 @@ const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSk
       currencySymbol={currencySymbol}
       data={data}
       onApplyToAllChange={value => onApplyToAllChange(value, "price")}
-      onApplyToAllPriceChange={value =>
-        onApplyToAllPriceOrStockChange(value, "price")
-      }
+      onApplyToAllPriceChange={onApplyToAllPriceChange}
       onAttributeSelect={id => onAttributeSelect(id, "price")}
       onAttributeValueChange={(id, value) =>
         onAttributeValueChange(id, value, "price")
@@ -61,9 +61,7 @@ const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSk
       data={data}
       warehouses={warehouses}
       onApplyToAllChange={value => onApplyToAllChange(value, "stock")}
-      onApplyToAllStockChange={value =>
-        onApplyToAllPriceOrStockChange(value, "stock")
-      }
+      onApplyToAllStockChange={onApplyToAllStockChange}
       onAttributeSelect={id => onAttributeSelect(id, "stock")}
       onAttributeValueChange={(id, value) =>
         onAttributeValueChange(id, value, "stock")
