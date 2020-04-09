@@ -24,16 +24,15 @@ export interface ProductVariantCreatorContentProps {
   warehouses: WarehouseFragment[];
 }
 
-const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> = props => {
-  const {
-    attributes,
-    currencySymbol,
-    data,
-    dispatchFormDataAction,
-    errors,
-    step,
-    warehouses
-  } = props;
+const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> = ({
+  attributes,
+  currencySymbol,
+  data,
+  dispatchFormDataAction,
+  errors,
+  step,
+  warehouses
+}) => {
   const selectedAttributes = attributes.filter(attribute =>
     isSelected(
       attribute.id,
@@ -104,17 +103,26 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                   : ProductVariantCreateReducerActionType.changeApplyStockToAttributeId
             })
           }
-          onAttributeValueChange={(valueId, price, type) =>
-            dispatchFormDataAction(
-              type === "price" && {
-                changeAttributeValuePrice: {
-                  price,
-                  valueId
-                },
-                type:
-                  ProductVariantCreateReducerActionType.changeAttributeValuePrice
-              }
-            )
+          onAttributePriceChange={(valueId, price) =>
+            dispatchFormDataAction({
+              changeAttributeValuePrice: {
+                price,
+                valueId
+              },
+              type:
+                ProductVariantCreateReducerActionType.changeAttributeValuePrice
+            })
+          }
+          onAttributeStockChange={(valueId, quantity, warehouseIndex) =>
+            dispatchFormDataAction({
+              changeAttributeValueStock: {
+                quantity,
+                valueId,
+                warehouseIndex
+              },
+              type:
+                ProductVariantCreateReducerActionType.changeAttributeValueStock
+            })
           }
           onWarehouseToggle={warehouseId =>
             dispatchFormDataAction({

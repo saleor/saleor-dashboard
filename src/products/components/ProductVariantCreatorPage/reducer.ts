@@ -186,8 +186,8 @@ function changeAttributeValuePrice(
 function changeAttributeValueStock(
   state: ProductVariantCreateFormData,
   attributeValueSlug: string,
-  warehouseIndex: number,
-  quantity: number
+  quantity: number,
+  warehouseIndex: number
 ): ProductVariantCreateFormData {
   const index = state.stock.values.findIndex(
     value => value.slug === attributeValueSlug
@@ -199,8 +199,12 @@ function changeAttributeValueStock(
 
   const values = updateAtIndex(
     {
-      slug: attributeValueSlug,
-      value: updateAtIndex(quantity, state.stock.value, warehouseIndex)
+      ...state.stock.values[index],
+      value: updateAtIndex(
+        quantity,
+        state.stock.values[index].value,
+        warehouseIndex
+      )
     },
     state.stock.values,
     index

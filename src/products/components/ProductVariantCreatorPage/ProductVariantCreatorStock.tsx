@@ -27,6 +27,17 @@ import { getStockAttributeValues } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
+    attributeStockContainer: {
+      columnGap: theme.spacing(3) + "px",
+      display: "grid",
+      gridTemplateColumns: ({ data }: ProductVariantCreatorStockProps) =>
+        `150px repeat(${data.warehouses.length}, 288px)`,
+      rowGap: theme.spacing(2) + "px"
+    },
+    attributeStockScroll: {
+      overflowX: "scroll",
+      width: "100%"
+    },
     hr: {
       marginBottom: theme.spacing(),
       marginTop: theme.spacing(0.5)
@@ -75,7 +86,11 @@ export interface ProductVariantCreatorStockProps {
   onApplyToAllChange: (mode: VariantCreatorPricesAndSkuMode) => void;
   onApplyToAllStockChange: (warehouseIndex: number, value: string) => void;
   onAttributeSelect: (id: string) => void;
-  onAttributeValueChange: (id: string, value: string) => void;
+  onAttributeValueChange: (
+    id: string,
+    quantity: number,
+    warehouseIndex: number
+  ) => void;
   onWarehouseToggle: (id: string) => void;
 }
 
@@ -168,11 +183,8 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
           {data.stock.mode === "all" && (
             <div className={classes.stockContainer}>
               {data.warehouses.map((warehouseId, warehouseIndex) => (
-                <div>
-                  <Typography
-                    className={classes.warehouseName}
-                    key={warehouseId}
-                  >
+                <div key={warehouseId}>
+                  <Typography className={classes.warehouseName}>
                     {
                       warehouses.find(warehouse => warehouse.id === warehouseId)
                         .name
@@ -212,60 +224,74 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
           {data.stock.mode === "attribute" && (
             <>
               <FormSpacer />
-              <Grid variant="uniform">
-                <div className={classes.label}>
-                  <Typography>
-                    <FormattedMessage
-                      defaultMessage="Choose attribute"
-                      description="variant attribute"
-                    />
-                  </Typography>
-                </div>
-                <div>
-                  <SingleSelectField
-                    choices={attributeChoices}
-                    label={intl.formatMessage({
-                      defaultMessage: "Attribute",
-                      description: "variant attribute"
-                    })}
-                    value={data.stock.attribute}
-                    onChange={onAttributeSelect}
-                  />
-                </div>
-              </Grid>
-              {stockAttributeValues &&
-                stockAttributeValues.map(attributeValue => (
-                  <React.Fragment key={attributeValue.id}>
-                    <Hr className={classes.hrAttribute} />
-                    <FormSpacer />
-                    <Grid variant="uniform">
-                      <div className={classes.label}>
-                        <Typography>{attributeValue.name}</Typography>
-                      </div>
-                      <div>
-                        <TextField
-                          label={intl.formatMessage({
-                            defaultMessage: "Stock",
-                            description: "variant stock",
-                            id: "productVariantCreatePricesSetStockPlaceholder"
-                          })}
-                          fullWidth
-                          value={
-                            data.stock.values.find(
-                              value => value.slug === attributeValue.slug
-                            ).value
-                          }
-                          onChange={event =>
-                            onAttributeValueChange(
-                              attributeValue.slug,
-                              event.target.value
+              <SingleSelectField
+                className={classes.shortInput}
+                choices={attributeChoices}
+                label={intl.formatMessage({
+                  defaultMessage: "Select Attribute",
+                  description: "variant attribute"
+                })}
+                value={data.stock.attribute}
+                onChange={event => onAttributeSelect(event.target.value)}
+              />
+              {stockAttributeValues && (
+                <>
+                  <Hr className={classes.hrAttribute} />
+                  <FormSpacer />
+                  <div className={classes.attributeStockScroll}>
+                    <div className={classes.attributeStockContainer}>
+                      <div />
+                      {data.stock.attribute &&
+                        data.warehouses.map(warehouseId => (
+                          <Typography
+                            className={classes.warehouseName}
+                            key={warehouseId}
+                          >
+                            {
+                              warehouses.find(
+                                warehouse => warehouse.id === warehouseId
+                              ).name
+                            }
+                          </Typography>
+                        ))}
+                      {stockAttributeValues.map(attributeValue => (
+                        <React.Fragment key={attributeValue.id}>
+                          <Typography>{attributeValue.name}</Typography>
+                          {data.warehouses.map(
+                            (warehouseId, warehouseIndex) => (
+                              <TextField
+                                fullWidth
+                                inputProps={{
+                                  min: 0,
+                                  type: "number"
+                                }}
+                                label={intl.formatMessage({
+                                  defaultMessage: "Stock",
+                                  id:
+                                    "productVariantCreatePricesStockInputLabel"
+                                })}
+                                value={
+                                  data.stock.values.find(
+                                    value => value.slug === attributeValue.slug
+                                  ).value[warehouseIndex]
+                                }
+                                onChange={event =>
+                                  onAttributeValueChange(
+                                    attributeValue.slug,
+                                    parseInt(event.target.value, 10),
+                                    warehouseIndex
+                                  )
+                                }
+                                key={warehouseId}
+                              />
                             )
-                          }
-                        />
-                      </div>
-                    </Grid>
-                  </React.Fragment>
-                ))}
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
             </>
           )}
           <FormSpacer />
