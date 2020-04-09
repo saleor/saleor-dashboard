@@ -50,11 +50,9 @@ function canHitNext(
         ) {
           return false;
         }
-      } else {
-        return true;
       }
 
-      if (data.stock.mode === "attribute" || data.stock.attribute) {
+      if (data.stock.mode === "attribute" && data.stock.attribute === "") {
         return false;
       }
 

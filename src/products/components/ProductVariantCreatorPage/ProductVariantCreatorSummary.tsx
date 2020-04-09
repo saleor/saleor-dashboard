@@ -92,7 +92,7 @@ const useStyles = makeStyles<
       marginTop: theme.spacing(0.5)
     },
     hr: {
-      gridColumn: props => `span ${4 + props.data.stock.value.length}`
+      gridColumn: props => `span ${4 + props.data.variants[0].stocks.length}`
     },
     input: {
       "& input": {
@@ -103,7 +103,7 @@ const useStyles = makeStyles<
       columnGap: theme.spacing(3),
       display: "grid",
       gridTemplateColumns: props =>
-        `minmax(240px, auto) 170px repeat(${props.data.stock.value.length}, 140px) 140px 64px`,
+        `minmax(240px, auto) 170px repeat(${props.data.variants[0].stocks.length}, 140px) 140px 64px`,
       overflowX: "scroll",
       rowGap: theme.spacing() + "px"
     }
