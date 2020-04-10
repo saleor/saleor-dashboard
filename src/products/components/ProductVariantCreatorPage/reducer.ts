@@ -31,7 +31,7 @@ export interface ProductVariantCreateReducerAction {
     all: boolean;
   };
   changeApplyPriceToAllValue?: {
-    value: string;
+    price: string;
   };
   changeApplyPriceOrStockToAttributeId?: {
     attributeId: string;
@@ -378,7 +378,7 @@ function reduceProductVariantCreateFormData(
     case ProductVariantCreateReducerActionType.changeApplyPriceToAllValue:
       return changeApplyPriceToAllValue(
         prevState,
-        action.changeApplyPriceToAllValue.value
+        action.changeApplyPriceToAllValue.price
       );
     case ProductVariantCreateReducerActionType.changeApplyStockToAllValue:
       return changeApplyStockToAllValue(

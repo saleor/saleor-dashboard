@@ -130,7 +130,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
   );
   const reloadForm = () =>
     dispatchFormDataAction({
-      data: createInitialForm(attributes, defaultPrice, warehouses),
+      reload: {
+        data: createInitialForm(attributes, defaultPrice, warehouses)
+      },
       type: ProductVariantCreateReducerActionType.reload
     });
 
