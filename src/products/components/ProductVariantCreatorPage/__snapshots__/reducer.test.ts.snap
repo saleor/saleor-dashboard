@@ -625,7 +625,7 @@ Object {
           ],
         },
       ],
-      "priceOverride": "49.99",
+      "priceOverride": "26.99",
       "sku": "",
       "stocks": Array [
         Object {
@@ -1652,13 +1652,13 @@ Object {
       Object {
         "slug": "val-1-1",
         "value": Array [
-          undefined,
+          13,
         ],
       },
       Object {
         "slug": "val-1-7",
         "value": Array [
-          undefined,
+          19,
         ],
       },
     ],
@@ -1689,7 +1689,7 @@ Object {
       "sku": "",
       "stocks": Array [
         Object {
-          "quantity": undefined,
+          "quantity": 13,
           "warehouse": "wh-1",
         },
       ],
@@ -1719,7 +1719,7 @@ Object {
       "sku": "",
       "stocks": Array [
         Object {
-          "quantity": undefined,
+          "quantity": 13,
           "warehouse": "wh-1",
         },
       ],
@@ -1749,7 +1749,7 @@ Object {
       "sku": "",
       "stocks": Array [
         Object {
-          "quantity": undefined,
+          "quantity": 13,
           "warehouse": "wh-1",
         },
       ],
@@ -1779,7 +1779,7 @@ Object {
       "sku": "",
       "stocks": Array [
         Object {
-          "quantity": undefined,
+          "quantity": 13,
           "warehouse": "wh-1",
         },
       ],
@@ -1809,7 +1809,7 @@ Object {
       "sku": "",
       "stocks": Array [
         Object {
-          "quantity": undefined,
+          "quantity": 19,
           "warehouse": "wh-1",
         },
       ],
@@ -1839,7 +1839,7 @@ Object {
       "sku": "",
       "stocks": Array [
         Object {
-          "quantity": undefined,
+          "quantity": 19,
           "warehouse": "wh-1",
         },
       ],
@@ -1869,7 +1869,7 @@ Object {
       "sku": "",
       "stocks": Array [
         Object {
-          "quantity": undefined,
+          "quantity": 19,
           "warehouse": "wh-1",
         },
       ],
@@ -1899,7 +1899,7 @@ Object {
       "sku": "",
       "stocks": Array [
         Object {
-          "quantity": undefined,
+          "quantity": 19,
           "warehouse": "wh-1",
         },
       ],
