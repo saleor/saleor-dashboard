@@ -13,7 +13,8 @@ import SaveFilterTabDialog, {
 import {
   defaultListSettings,
   ProductListColumns,
-  DEFAULT_INITIAL_SEARCH_DATA
+  DEFAULT_INITIAL_SEARCH_DATA,
+  DEFAULT_INITIAL_PAGINATION_DATA
 } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -112,8 +113,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       navigate(
         productListUrl({
           ...params,
-          after: undefined,
-          before: undefined
+          ...DEFAULT_INITIAL_PAGINATION_DATA
         }),
         true
       ),
@@ -172,7 +172,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       productListUrl({
         ...params,
         ...getSortUrlVariables(field, params),
-        attributeId
+        attributeId,
+        ...DEFAULT_INITIAL_PAGINATION_DATA
       })
     );
 
