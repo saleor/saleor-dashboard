@@ -75,7 +75,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                   : ProductVariantCreateReducerActionType.applyStockToAll
             })
           }
-          // Stock change is not fixed in this PR so we wo't include it here
+          // TODO: Stock change is not fixed in this PR so we won't include it here
           onApplyToAllChange={(price, type) =>
             dispatchFormDataAction(
               type === "price" && {
@@ -98,7 +98,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
                   : ProductVariantCreateReducerActionType.changeApplyStockToAttributeId
             })
           }
-          // Stock change is not fixed in this PR so we wo't include it here
+          // TODO: Stock change is not fixed in this PR so we won't include it here
           onAttributeValueChange={(valueId, price, type) =>
             dispatchFormDataAction(
               type === "price" && {
