@@ -73,7 +73,7 @@ describe("Reducer is able to", () => {
   });
 
   it("select price for all variants", () => {
-    const value = "45.99";
+    const price = "45.99";
     const state = execActions(thirdStep, reducer, [
       {
         applyPriceOrStockToAll: {
@@ -83,7 +83,7 @@ describe("Reducer is able to", () => {
       },
       {
         changeApplyPriceToAllValue: {
-          value
+          price
         },
         type: ProductVariantCreateReducerActionType.changeApplyPriceToAllValue
       },
@@ -93,7 +93,7 @@ describe("Reducer is able to", () => {
     ]);
 
     expect(state.price.all).toBeTruthy();
-    expect(state.price.value).toBe(value);
+    expect(state.price.value).toBe(price);
     expect(state).toMatchSnapshot();
   });
 
