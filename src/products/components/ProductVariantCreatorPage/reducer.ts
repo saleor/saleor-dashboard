@@ -283,7 +283,9 @@ function changeVariantData(
   value: string,
   variantIndex: number
 ): ProductVariantCreateFormData {
-  const variant = state.variants[variantIndex];
+  const variant = {
+    ...state.variants[variantIndex]
+  };
   if (field === "price") {
     variant.priceOverride = value;
   } else if (field === "sku") {
@@ -301,7 +303,9 @@ function changeVariantStockData(
   stock: StockInput,
   variantIndex: number
 ): ProductVariantCreateFormData {
-  const variant = state.variants[variantIndex];
+  const variant = {
+    ...state.variants[variantIndex]
+  };
   variant.stocks = update(
     stock,
     variant.stocks,
@@ -342,7 +346,7 @@ function reduceProductVariantCreateFormData(
       return selectValue(
         prevState,
         action.selectValue.attributeId,
-        action.selectValue.attributeId
+        action.selectValue.valueId
       );
     case ProductVariantCreateReducerActionType.applyPriceToAll:
       return applyPriceToAll(prevState, action.applyPriceOrStockToAll.all);
@@ -398,7 +402,7 @@ function reduceProductVariantCreateFormData(
     case ProductVariantCreateReducerActionType.deleteVariant:
       return deleteVariant(prevState, action.deleteVariant.variantIndex);
     case ProductVariantCreateReducerActionType.reload:
-      return action.reload.data || createVariantMatrix(prevState);
+      return action.reload?.data || createVariantMatrix(prevState);
     default:
       return prevState;
   }
