@@ -53,6 +53,7 @@ export const productFragment = gql`
       url
     }
     isAvailable
+    isPublished
     basePrice {
       ...Money
     }

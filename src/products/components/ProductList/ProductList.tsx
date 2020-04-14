@@ -105,7 +105,6 @@ interface ProductListProps
 export const ProductList: React.FC<ProductListProps> = props => {
   const {
     activeAttributeSortId,
-
     settings,
     disabled,
     isChecked,
@@ -322,13 +321,13 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     <TableCell
                       className={classes.colPublished}
                       data-tc="isPublished"
-                      data-tc-is-published={maybe(() => product.isAvailable)}
+                      data-tc-is-published={maybe(() => product.isPublished)}
                     >
                       {product &&
-                      maybe(() => product.isAvailable !== undefined) ? (
+                      maybe(() => product.isPublished !== undefined) ? (
                         <StatusLabel
                           label={
-                            product.isAvailable
+                            product.isPublished
                               ? intl.formatMessage({
                                   defaultMessage: "Published",
                                   description: "product status"
@@ -338,7 +337,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                                   description: "product status"
                                 })
                           }
-                          status={product.isAvailable ? "success" : "error"}
+                          status={product.isPublished ? "success" : "error"}
                         />
                       ) : (
                         <Skeleton />
