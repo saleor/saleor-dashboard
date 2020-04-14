@@ -90,12 +90,16 @@ export const thirdStep: ProductVariantCreateFormData = {
       values: [0, 4].map(index => attributes[3].values[index])
     }
   ],
+  stock: {
+    ...secondStep.stock,
+    value: warehouses.map(() => 0)
+  },
   warehouses: warehouses.map(warehouse => warehouse.id)
 };
 
 const price: AllOrAttribute<string> = {
-  all: false,
   attribute: thirdStep.attributes[1].id,
+  mode: "attribute",
   value: "",
   values: [
     {
@@ -109,8 +113,8 @@ const price: AllOrAttribute<string> = {
   ]
 };
 const stock: AllOrAttribute<number[]> = {
-  all: false,
   attribute: thirdStep.attributes[2].id,
+  mode: "attribute",
   value: [],
   values: [
     {

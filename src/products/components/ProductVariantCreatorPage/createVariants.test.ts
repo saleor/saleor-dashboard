@@ -24,12 +24,12 @@ describe("Creates variant matrix", () => {
       ...thirdStep,
       price: {
         ...thirdStep.price,
-        all: true,
+        mode: "all",
         value: price
       },
       stock: {
         ...thirdStep.stock,
-        all: true,
+        mode: "all",
         value: stock
       }
     };
@@ -61,8 +61,8 @@ describe("Creates variant matrix", () => {
       ...thirdStep,
       price: {
         ...thirdStep.price,
-        all: false,
         attribute: attribute.id,
+        mode: "attribute",
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
           slug: attributeValue,
           value: (price * (attributeValueIndex + 1)).toString()
@@ -70,7 +70,7 @@ describe("Creates variant matrix", () => {
       },
       stock: {
         ...thirdStep.stock,
-        all: true,
+        mode: "all",
         value: stock
       }
     };
@@ -116,13 +116,13 @@ describe("Creates variant matrix", () => {
       ...thirdStep,
       price: {
         ...thirdStep.price,
-        all: true,
+        mode: "all",
         value: price
       },
       stock: {
         ...thirdStep.stock,
-        all: false,
         attribute: attribute.id,
+        mode: "attribute",
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
           slug: attributeValue,
           value: stock.map(
@@ -173,8 +173,8 @@ describe("Creates variant matrix", () => {
       ...thirdStep,
       price: {
         ...thirdStep.price,
-        all: false,
         attribute: attribute.id,
+        mode: "attribute",
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
           slug: attributeValue,
           value: (price * (attributeValueIndex + 1)).toString()
@@ -182,8 +182,8 @@ describe("Creates variant matrix", () => {
       },
       stock: {
         ...thirdStep.stock,
-        all: false,
         attribute: attribute.id,
+        mode: "attribute",
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
           slug: attributeValue,
           value: stock.map(
