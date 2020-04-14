@@ -385,8 +385,8 @@ function reduceProductVariantCreateFormData(
       return changeAttributeValueStock(
         prevState,
         action.changeAttributeValueStock.valueId,
-        action.changeAttributeValueStock.warehouseIndex,
-        action.changeAttributeValueStock.quantity
+        action.changeAttributeValueStock.quantity,
+        action.changeAttributeValueStock.warehouseIndex
       );
     case ProductVariantCreateReducerActionType.changeApplyPriceToAttributeId:
       return changeApplyPriceToAttributeId(
