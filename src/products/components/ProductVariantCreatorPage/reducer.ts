@@ -335,9 +335,37 @@ function changeWarehouses(
   state: ProductVariantCreateFormData,
   warehouseId: string
 ): ProductVariantCreateFormData {
+  const warehouses = toggle(warehouseId, state.warehouses, (a, b) => a === b);
+  const added = warehouses.length > state.warehouses.length;
+
+  if (added) {
+    return {
+      ...state,
+      stock: {
+        ...state.stock,
+        value: [...state.stock.value, 0],
+        values: state.stock.values.map(stockValue => ({
+          ...stockValue,
+          value: [...stockValue.value, 0]
+        }))
+      },
+      warehouses
+    };
+  }
+
+  const warehouseIndex = state.warehouses.indexOf(warehouseId);
+
   return {
     ...state,
-    warehouses: toggle(warehouseId, state.warehouses, (a, b) => a === b)
+    stock: {
+      ...state.stock,
+      value: removeAtIndex(state.stock.value, warehouseIndex),
+      values: state.stock.values.map(stockValue => ({
+        ...stockValue,
+        value: removeAtIndex(stockValue.value, warehouseIndex)
+      }))
+    },
+    warehouses
   };
 }
 

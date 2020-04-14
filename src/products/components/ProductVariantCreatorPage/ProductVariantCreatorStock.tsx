@@ -84,7 +84,7 @@ export interface ProductVariantCreatorStockProps {
   data: ProductVariantCreateFormData;
   warehouses: WarehouseFragment[];
   onApplyToAllChange: (mode: VariantCreatorPricesAndSkuMode) => void;
-  onApplyToAllStockChange: (warehouseIndex: number, value: string) => void;
+  onApplyToAllStockChange: (quantity: number, warehouseIndex: number) => void;
   onAttributeSelect: (id: string) => void;
   onAttributeValueChange: (
     id: string,
@@ -203,8 +203,8 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                     value={data.stock.value[warehouseIndex]}
                     onChange={event =>
                       onApplyToAllStockChange(
-                        warehouseIndex,
-                        event.target.value
+                        parseInt(event.target.value, 10),
+                        warehouseIndex
                       )
                     }
                   />
