@@ -64,4 +64,10 @@ storiesOf("Views / Products / Product list", module)
       products={products.filter(product => product.isPublished)}
     />
   ))
+  .add("not published", () => (
+    <ProductListPage
+      {...props}
+      products={products.filter(product => !product.isPublished)}
+    />
+  ))
   .add("no data", () => <ProductListPage {...props} products={[]} />);

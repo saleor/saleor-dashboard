@@ -324,7 +324,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo2NA==",
     isAvailable: true,
-    isPublished: true,
+    isPublished: false,
     name: "Light Speed Yellow Paint",
     productType: {
       __typename: "ProductType",
@@ -346,7 +346,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo2NQ==",
     isAvailable: true,
-    isPublished: true,
+    isPublished: false,
     name: "Hyperspace Turquoise Paint",
     productType: {
       __typename: "ProductType",
@@ -568,7 +568,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo3OQ==",
     isAvailable: true,
-    isPublished: true,
+    isPublished: false,
     name: "Bean Juice",
     productType: {
       __typename: "ProductType",
@@ -864,7 +864,7 @@ export const products = (
     },
     id: "UHJvZHVjdDoxMTU=",
     isAvailable: true,
-    isPublished: true,
+    isPublished: false,
     name: "Black Hoodie",
     productType: {
       __typename: "ProductType",
@@ -975,7 +975,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo4NQ==",
     isAvailable: true,
-    isPublished: true,
+    isPublished: false,
     name: "Colored Parrot Cushion",
     productType: {
       __typename: "ProductType",
