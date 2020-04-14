@@ -8,7 +8,7 @@ export function getPriceAttributeValues(
   data: ProductVariantCreateFormData,
   attributes: ProductDetails_product_productType_variantAttributes[]
 ): ProductDetails_product_productType_variantAttributes_values[] {
-  return data.price.all
+  return data.price.mode === "all"
     ? null
     : data.price.attribute
     ? attributes
@@ -25,7 +25,7 @@ export function getStockAttributeValues(
   data: ProductVariantCreateFormData,
   attributes: ProductDetails_product_productType_variantAttributes[]
 ): ProductDetails_product_productType_variantAttributes_values[] {
-  return data.stock.all
+  return data.stock.mode === "all"
     ? null
     : data.stock.attribute
     ? attributes
