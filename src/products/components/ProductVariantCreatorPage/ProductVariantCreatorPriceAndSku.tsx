@@ -21,7 +21,7 @@ export interface ProductVariantCreatorPriceAndSkuProps {
     type: PriceOrStock
   ) => void;
   onApplyToAllPriceChange: (value: string) => void;
-  onApplyToAllStockChange: (warehouseIndex: number, value: string) => void;
+  onApplyToAllStockChange: (quantity: number, warehouseIndex: number) => void;
   onAttributeSelect: (id: string, type: PriceOrStock) => void;
   onAttributePriceChange: (id: string, value: string) => void;
   onAttributeStockChange: (

@@ -26,8 +26,8 @@ Object {
     },
   ],
   "price": Object {
-    "all": false,
     "attribute": "attr-2",
+    "mode": "attribute",
     "value": "",
     "values": Array [
       Object {
@@ -41,8 +41,8 @@ Object {
     ],
   },
   "stock": Object {
-    "all": false,
     "attribute": "attr-4",
+    "mode": "attribute",
     "value": Array [],
     "values": Array [
       Object {
@@ -438,8 +438,8 @@ Object {
     },
   ],
   "price": Object {
-    "all": false,
     "attribute": "attr-2",
+    "mode": "attribute",
     "value": "",
     "values": Array [
       Object {
@@ -453,8 +453,8 @@ Object {
     ],
   },
   "stock": Object {
-    "all": false,
     "attribute": "attr-4",
+    "mode": "attribute",
     "value": Array [],
     "values": Array [
       Object {
@@ -850,14 +850,14 @@ Object {
     },
   ],
   "price": Object {
-    "all": true,
     "attribute": undefined,
+    "mode": "all",
     "value": "10.99",
     "values": Array [],
   },
   "stock": Object {
-    "all": true,
     "attribute": undefined,
+    "mode": "all",
     "value": Array [],
     "values": Array [],
   },
@@ -892,15 +892,20 @@ Object {
     },
   ],
   "price": Object {
-    "all": true,
     "attribute": undefined,
+    "mode": "all",
     "value": "45.99",
     "values": Array [],
   },
   "stock": Object {
-    "all": true,
     "attribute": undefined,
-    "value": Array [],
+    "mode": "all",
+    "value": Array [
+      0,
+      0,
+      0,
+      0,
+    ],
     "values": Array [],
   },
   "variants": Array [
@@ -927,7 +932,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -952,7 +974,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -977,7 +1016,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1002,7 +1058,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1027,7 +1100,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1052,7 +1142,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1077,7 +1184,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1102,7 +1226,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
   ],
   "warehouses": Array [
@@ -1140,8 +1281,8 @@ Object {
     },
   ],
   "price": Object {
-    "all": false,
     "attribute": "attr-1",
+    "mode": "attribute",
     "value": "10.99",
     "values": Array [
       Object {
@@ -1155,9 +1296,14 @@ Object {
     ],
   },
   "stock": Object {
-    "all": true,
     "attribute": undefined,
-    "value": Array [],
+    "mode": "all",
+    "value": Array [
+      0,
+      0,
+      0,
+      0,
+    ],
     "values": Array [],
   },
   "variants": Array [
@@ -1184,7 +1330,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1209,7 +1372,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1234,7 +1414,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1259,7 +1456,24 @@ Object {
       ],
       "priceOverride": "45.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1284,7 +1498,24 @@ Object {
       ],
       "priceOverride": "51.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1309,7 +1540,24 @@ Object {
       ],
       "priceOverride": "51.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1334,7 +1582,24 @@ Object {
       ],
       "priceOverride": "51.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1359,7 +1624,24 @@ Object {
       ],
       "priceOverride": "51.99",
       "sku": "",
-      "stocks": Array [],
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
   ],
   "warehouses": Array [
@@ -1397,15 +1679,20 @@ Object {
     },
   ],
   "price": Object {
-    "all": true,
     "attribute": undefined,
+    "mode": "all",
     "value": "10.99",
     "values": Array [],
   },
   "stock": Object {
-    "all": true,
     "attribute": undefined,
-    "value": "45.99",
+    "mode": "all",
+    "value": Array [
+      0,
+      45,
+      0,
+      0,
+    ],
     "values": Array [],
   },
   "variants": Array [
@@ -1431,8 +1718,25 @@ Object {
         },
       ],
       "priceOverride": "10.99",
-      "quantity": 45,
       "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1456,8 +1760,25 @@ Object {
         },
       ],
       "priceOverride": "10.99",
-      "quantity": 45,
       "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1481,8 +1802,25 @@ Object {
         },
       ],
       "priceOverride": "10.99",
-      "quantity": 45,
       "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1506,8 +1844,25 @@ Object {
         },
       ],
       "priceOverride": "10.99",
-      "quantity": 45,
       "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1531,8 +1886,25 @@ Object {
         },
       ],
       "priceOverride": "10.99",
-      "quantity": 45,
       "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1556,8 +1928,25 @@ Object {
         },
       ],
       "priceOverride": "10.99",
-      "quantity": 45,
       "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1581,8 +1970,25 @@ Object {
         },
       ],
       "priceOverride": "10.99",
-      "quantity": 45,
       "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
     Object {
       "attributes": Array [
@@ -1606,9 +2012,32 @@ Object {
         },
       ],
       "priceOverride": "10.99",
-      "quantity": 45,
       "sku": "",
+      "stocks": Array [
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-1",
+        },
+        Object {
+          "quantity": 45,
+          "warehouse": "wh-2",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-3",
+        },
+        Object {
+          "quantity": 0,
+          "warehouse": "wh-4",
+        },
+      ],
     },
+  ],
+  "warehouses": Array [
+    "wh-1",
+    "wh-2",
+    "wh-3",
+    "wh-4",
   ],
 }
 `;
@@ -1639,15 +2068,20 @@ Object {
     },
   ],
   "price": Object {
-    "all": true,
     "attribute": undefined,
+    "mode": "all",
     "value": "10.99",
     "values": Array [],
   },
   "stock": Object {
-    "all": false,
     "attribute": "attr-1",
-    "value": Array [],
+    "mode": "attribute",
+    "value": Array [
+      0,
+      0,
+      0,
+      0,
+    ],
     "values": Array [
       Object {
         "slug": "val-1-1",
@@ -1909,6 +2343,54 @@ Object {
     "wh-1",
     "wh-2",
     "wh-3",
+    "wh-4",
+  ],
+}
+`;
+
+exports[`Reducer is able to select warehouses in which stock will be created 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "id": "attr-1",
+      "values": Array [
+        "val-1-1",
+        "val-1-7",
+      ],
+    },
+    Object {
+      "id": "attr-2",
+      "values": Array [
+        "val-2-2",
+        "val-2-4",
+      ],
+    },
+    Object {
+      "id": "attr-4",
+      "values": Array [
+        "val-4-1",
+        "val-4-5",
+      ],
+    },
+  ],
+  "price": Object {
+    "attribute": undefined,
+    "mode": "all",
+    "value": "10.99",
+    "values": Array [],
+  },
+  "stock": Object {
+    "attribute": undefined,
+    "mode": "all",
+    "value": Array [
+      0,
+      0,
+    ],
+    "values": Array [],
+  },
+  "variants": Array [],
+  "warehouses": Array [
+    "wh-2",
     "wh-4",
   ],
 }

@@ -77,7 +77,7 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         applyPriceOrStockToAll: {
-          all: true
+          mode: "all"
         },
         type: ProductVariantCreateReducerActionType.applyPriceToAll
       },
@@ -92,8 +92,28 @@ describe("Reducer is able to", () => {
       }
     ]);
 
-    expect(state.price.all).toBeTruthy();
+    expect(state.price.mode).toBe("all");
     expect(state.price.value).toBe(price);
+    expect(state).toMatchSnapshot();
+  });
+
+  it("select warehouses in which stock will be created", () => {
+    const state = execActions(thirdStep, reducer, [
+      {
+        changeWarehouses: {
+          warehouseId: warehouses[0].id
+        },
+        type: ProductVariantCreateReducerActionType.changeWarehouses
+      },
+      {
+        changeWarehouses: {
+          warehouseId: warehouses[2].id
+        },
+        type: ProductVariantCreateReducerActionType.changeWarehouses
+      }
+    ]);
+
+    expect(state.warehouses).toHaveLength(2);
     expect(state).toMatchSnapshot();
   });
 
@@ -103,7 +123,7 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         applyPriceOrStockToAll: {
-          all: true
+          mode: "all"
         },
         type: ProductVariantCreateReducerActionType.applyStockToAll
       },
@@ -119,7 +139,7 @@ describe("Reducer is able to", () => {
       }
     ]);
 
-    expect(state.stock.all).toBeTruthy();
+    expect(state.stock.mode).toBe("all");
     expect(state.stock.value[warehouseIndex]).toBe(quantity);
     expect(state).toMatchSnapshot();
   });
@@ -130,7 +150,7 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         applyPriceOrStockToAll: {
-          all: false
+          mode: "attribute"
         },
         type: ProductVariantCreateReducerActionType.applyPriceToAll
       },
@@ -160,7 +180,7 @@ describe("Reducer is able to", () => {
       }
     ]);
 
-    expect(state.price.all).toBeFalsy();
+    expect(state.price.mode).toBe("attribute");
     expect(state.price.values).toHaveLength(
       state.attributes.find(attribute => state.price.attribute === attribute.id)
         .values.length
@@ -174,7 +194,7 @@ describe("Reducer is able to", () => {
     const state = execActions(thirdStep, reducer, [
       {
         applyPriceOrStockToAll: {
-          all: false
+          mode: "attribute"
         },
         type: ProductVariantCreateReducerActionType.applyStockToAll
       },
@@ -206,7 +226,7 @@ describe("Reducer is able to", () => {
       }
     ]);
 
-    expect(state.stock.all).toBeFalsy();
+    expect(state.stock.mode).toBe("attribute");
     expect(state.stock.values).toHaveLength(
       state.attributes.find(attribute => state.stock.attribute === attribute.id)
         .values.length
