@@ -302,6 +302,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo2MQ==",
     isAvailable: true,
+    isPublished: true,
     name: "Nebula Night Sky Paint",
     productType: {
       __typename: "ProductType",
@@ -323,6 +324,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo2NA==",
     isAvailable: true,
+    isPublished: false,
     name: "Light Speed Yellow Paint",
     productType: {
       __typename: "ProductType",
@@ -344,6 +346,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo2NQ==",
     isAvailable: true,
+    isPublished: false,
     name: "Hyperspace Turquoise Paint",
     productType: {
       __typename: "ProductType",
@@ -380,6 +383,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo3NQ==",
     isAvailable: true,
+    isPublished: true,
     name: "Pineapple Juice",
     productType: {
       __typename: "ProductType",
@@ -416,6 +420,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo3Ng==",
     isAvailable: true,
+    isPublished: true,
     name: "Coconut Juice",
     productType: {
       __typename: "ProductType",
@@ -452,6 +457,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo3Mg==",
     isAvailable: true,
+    isPublished: true,
     name: "Apple Juice",
     productType: {
       __typename: "ProductType",
@@ -488,6 +494,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo3MQ==",
     isAvailable: true,
+    isPublished: true,
     name: "Orange Juice",
     productType: {
       __typename: "ProductType",
@@ -524,6 +531,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo3NA==",
     isAvailable: true,
+    isPublished: true,
     name: "Banana Juice",
     productType: {
       __typename: "ProductType",
@@ -560,6 +568,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo3OQ==",
     isAvailable: true,
+    isPublished: false,
     name: "Bean Juice",
     productType: {
       __typename: "ProductType",
@@ -596,6 +605,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo3Mw==",
     isAvailable: true,
+    isPublished: true,
     name: "Carrot Juice",
     productType: {
       __typename: "ProductType",
@@ -632,6 +642,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo3OA==",
     isAvailable: true,
+    isPublished: true,
     name: "Green Juice",
     productType: {
       __typename: "ProductType",
@@ -668,6 +679,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo4OQ==",
     isAvailable: true,
+    isPublished: true,
     name: "Code Division T-shirt",
     productType: {
       __typename: "ProductType",
@@ -704,6 +716,7 @@ export const products = (
     },
     id: "UHJvZHVjdDoxMDc=",
     isAvailable: true,
+    isPublished: true,
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
@@ -740,6 +753,7 @@ export const products = (
     },
     id: "UHJvZHVjdDoxMDg=",
     isAvailable: true,
+    isPublished: true,
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
@@ -776,6 +790,7 @@ export const products = (
     },
     id: "UHJvZHVjdDoxMDk=",
     isAvailable: true,
+    isPublished: true,
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
@@ -812,6 +827,7 @@ export const products = (
     },
     id: "UHJvZHVjdDoxMTA=",
     isAvailable: true,
+    isPublished: true,
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
@@ -848,6 +864,7 @@ export const products = (
     },
     id: "UHJvZHVjdDoxMTU=",
     isAvailable: true,
+    isPublished: false,
     name: "Black Hoodie",
     productType: {
       __typename: "ProductType",
@@ -884,6 +901,7 @@ export const products = (
     },
     id: "UHJvZHVjdDoxMTY=",
     isAvailable: true,
+    isPublished: true,
     name: "Blue Hoodie",
     productType: {
       __typename: "ProductType",
@@ -920,6 +938,7 @@ export const products = (
     },
     id: "UHJvZHVjdDoxMTc=",
     isAvailable: true,
+    isPublished: true,
     name: "Mustard Hoodie",
     productType: {
       __typename: "ProductType",
@@ -956,6 +975,7 @@ export const products = (
     },
     id: "UHJvZHVjdDo4NQ==",
     isAvailable: true,
+    isPublished: false,
     name: "Colored Parrot Cushion",
     productType: {
       __typename: "ProductType",
