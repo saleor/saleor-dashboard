@@ -10,7 +10,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import FormSpacer from "@saleor/components/FormSpacer";
-import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
