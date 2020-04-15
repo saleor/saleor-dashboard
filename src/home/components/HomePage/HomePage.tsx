@@ -34,7 +34,12 @@ const useStyles = makeStyles(
       [theme.breakpoints.down("xs")]: {
         gridTemplateColumns: "1fr"
       }
-    }
+    },
+    icon: {
+      "& path":{
+        fill:theme.palette.primary.main,
+      }
+    },
   }),
   { name: "HomePage" }
 );
@@ -86,7 +91,7 @@ const HomePage: React.FC<HomePageProps> = props => {
             <div className={classes.cardContainer}>
               <HomeAnalyticsCard
                 title={"Sales"}
-                icon={<Sales fontSize={"inherit"} viewBox="0 0 64 64" />}
+                icon={<Sales className={classes.icon} fontSize={"inherit"} viewBox="0 0 64 64" />}
               >
                 {sales ? (
                   <Money money={sales} />
@@ -96,7 +101,7 @@ const HomePage: React.FC<HomePageProps> = props => {
               </HomeAnalyticsCard>
               <HomeAnalyticsCard
                 title={"Orders"}
-                icon={<Orders fontSize={"inherit"} viewBox="0 0 64 64" />}
+                icon={<Orders className={classes.icon} fontSize={"inherit"} viewBox="0 0 64 64" />}
               >
                 {orders === undefined ? (
                   <Skeleton style={{ width: "5em" }} />
