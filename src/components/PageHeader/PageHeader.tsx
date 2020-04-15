@@ -28,7 +28,7 @@ interface PageHeaderProps {
   children?: React.ReactNode;
   className?: string;
   inline?: boolean;
-  title?: string;
+  title?: React.ReactNode;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = props => {
