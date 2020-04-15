@@ -109,10 +109,36 @@ storiesOf(
       step={ProductVariantCreatorStep.prices}
     />
   ))
+  .add("apply to all when one warehouse", () => (
+    <ProductVariantCreatorContent
+      {...props}
+      data={{
+        ...data,
+        stock: {
+          ...data.stock,
+          mode: "all"
+        },
+        warehouses: [data.warehouses[0]]
+      }}
+      step={ProductVariantCreatorStep.prices}
+      warehouses={[props.warehouses[0]]}
+    />
+  ))
   .add("apply to attribute", () => (
     <ProductVariantCreatorContent
       {...props}
       step={ProductVariantCreatorStep.prices}
+    />
+  ))
+  .add("apply to attribute when one warehouse", () => (
+    <ProductVariantCreatorContent
+      {...props}
+      data={{
+        ...data,
+        warehouses: [data.warehouses[0]]
+      }}
+      step={ProductVariantCreatorStep.prices}
+      warehouses={[props.warehouses[0]]}
     />
   ));
 
