@@ -33,10 +33,7 @@ import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import {
-  getAttributeIdFromColumnValue,
-  isAttributeColumnValue
-} from "@saleor/products/components/ProductListPage/utils";
+import { filterColumnIds } from "@saleor/products/components/ProductListPage/utils";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
@@ -219,18 +216,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }
   );
 
-  const columnIdsFilter = columns => {
-    columns = columns.filter(column => isAttributeColumnValue(column));
-    columns.forEach(
-      (attribute, index, arr) =>
-        (arr[index] = getAttributeIdFromColumnValue(attribute))
-    );
-    return columns;
-  };
-
   return (
     <AvailableInGridAttributesQuery
-      variables={{ first: 6, ids: columnIdsFilter(settings.columns) }}
+      variables={{ first: 6, ids: filterColumnIds(settings.columns) }}
     >
       {attributes => (
         <TypedProductListQuery displayLoader variables={queryVariables}>

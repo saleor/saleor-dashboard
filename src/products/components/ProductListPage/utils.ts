@@ -1,3 +1,5 @@
+import { ProductListColumns } from "@saleor/config";
+
 const prefix = "attribute";
 
 export function getAttributeColumnValue(id: string) {
@@ -10,4 +12,10 @@ export function isAttributeColumnValue(value: string) {
 
 export function getAttributeIdFromColumnValue(value: string) {
   return value.substr(prefix.length + 1);
+}
+
+export function filterColumnIds(columns: ProductListColumns[]) {
+  return columns
+    .filter(isAttributeColumnValue)
+    .map(getAttributeIdFromColumnValue);
 }
