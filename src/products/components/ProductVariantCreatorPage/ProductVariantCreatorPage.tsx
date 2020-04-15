@@ -1,4 +1,5 @@
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { FormattedMessage, useIntl, IntlShape } from "react-intl";
@@ -6,6 +7,7 @@ import { FormattedMessage, useIntl, IntlShape } from "react-intl";
 import useWizard from "@saleor/hooks/useWizard";
 import PageHeader from "@saleor/components/PageHeader";
 import Container from "@saleor/components/Container";
+import Hr from "@saleor/components/Hr";
 import { ProductVariantBulkCreateInput } from "../../../types/globalTypes";
 import { createInitialForm, ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatorContent, {
@@ -26,6 +28,12 @@ const useStyles = makeStyles(
       overflowX: "visible",
       overflowY: "hidden",
       width: 800
+    },
+    description: {
+      marginTop: theme.spacing()
+    },
+    hr: {
+      margin: theme.spacing(3, 0)
     }
   }),
   { name: "ProductVariantCreatePage" }
@@ -94,6 +102,29 @@ function getTitle(step: ProductVariantCreatorStep, intl: IntlShape): string {
   }
 }
 
+function getDescription(
+  step: ProductVariantCreatorStep,
+  intl: IntlShape
+): string {
+  switch (step) {
+    case ProductVariantCreatorStep.values:
+      return intl.formatMessage({
+        defaultMessage:
+          "Selected values will be used to create variants for the configurable product."
+      });
+    case ProductVariantCreatorStep.prices:
+      return intl.formatMessage({
+        defaultMessage:
+          "Based on your selections we will create 8 products. Use this step to customize price and stocks for your new products."
+      });
+    case ProductVariantCreatorStep.summary:
+      return intl.formatMessage({
+        defaultMessage:
+          "Here is the summary of variants that will be created. You can change prices, stocks an SKU for each one created."
+      });
+  }
+}
+
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props => {
   const {
     attributes,
@@ -136,12 +167,21 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
       type: ProductVariantCreateReducerActionType.reload
     });
 
-  React.useEffect(reloadForm, [attributes.length]);
+  React.useEffect(reloadForm, [attributes.length, warehouses.length]);
 
   return (
     <Container>
       <ProductVariantCreateTabs step={step} onStepClick={setStep} />
-      <PageHeader title={getTitle(step, intl)}>
+      <PageHeader
+        title={
+          <>
+            {getTitle(step, intl)}
+            <Typography className={classes.description} variant="body2">
+              {getDescription(step, intl)}
+            </Typography>
+          </>
+        }
+      >
         {step !== ProductVariantCreatorStep.values && (
           <Button className={classes.button} color="primary" onClick={prevStep}>
             <FormattedMessage
@@ -175,6 +215,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
           </Button>
         )}
       </PageHeader>
+      <Hr className={classes.hr} />
       <ProductVariantCreatorContent
         {...contentProps}
         attributes={attributes}

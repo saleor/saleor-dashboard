@@ -54,6 +54,7 @@ const useStyles = makeStyles(
       columnGap: theme.spacing(3) + "px",
       display: "grid",
       gridTemplateColumns: "repeat(3, 288px)",
+      marginTop: theme.spacing(2),
       rowGap: theme.spacing(2) + "px"
     },
     stockHeader: {
@@ -291,6 +292,12 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                   </div>
                 </>
               )}
+            </>
+          )}
+          {data.stock.mode === "attribute" && !!data.stock.attribute && (
+            <>
+              <FormSpacer />
+              <Hr />
             </>
           )}
           <FormSpacer />
