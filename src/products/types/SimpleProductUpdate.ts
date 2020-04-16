@@ -60,8 +60,8 @@ export interface SimpleProductUpdate_productUpdate_product_productType_variantAt
 
 export interface SimpleProductUpdate_productUpdate_product_productType {
   __typename: "ProductType";
-  variantAttributes: (SimpleProductUpdate_productUpdate_product_productType_variantAttributes | null)[] | null;
   id: string;
+  variantAttributes: (SimpleProductUpdate_productUpdate_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
 }

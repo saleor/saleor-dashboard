@@ -54,6 +54,7 @@ export interface ProductVariantAttributesFragment_productType_variantAttributes 
 
 export interface ProductVariantAttributesFragment_productType {
   __typename: "ProductType";
+  id: string;
   variantAttributes: (ProductVariantAttributesFragment_productType_variantAttributes | null)[] | null;
 }
 

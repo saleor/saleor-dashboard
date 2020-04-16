@@ -54,6 +54,7 @@ export interface CreateMultipleVariantsData_product_productType_variantAttribute
 
 export interface CreateMultipleVariantsData_product_productType {
   __typename: "ProductType";
+  id: string;
   variantAttributes: (CreateMultipleVariantsData_product_productType_variantAttributes | null)[] | null;
 }
 

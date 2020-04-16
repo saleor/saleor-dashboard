@@ -54,8 +54,8 @@ export interface Product_productType_variantAttributes {
 
 export interface Product_productType {
   __typename: "ProductType";
-  variantAttributes: (Product_productType_variantAttributes | null)[] | null;
   id: string;
+  variantAttributes: (Product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
 }
