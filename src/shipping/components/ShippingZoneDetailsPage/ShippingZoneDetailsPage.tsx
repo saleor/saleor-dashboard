@@ -11,9 +11,10 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { getStringOrPlaceholder } from "../../../misc";
 import { FetchMoreProps, SearchProps } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
@@ -27,7 +28,7 @@ import ShippingZoneWarehouses from "../ShippingZoneWarehouses";
 
 export interface FormData {
   name: string;
-  warehouse: string;
+  warehouses: string[];
 }
 
 export interface ShippingZoneDetailsPageProps
@@ -86,20 +87,26 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 
   const initialForm: FormData = {
     name: shippingZone?.name || "",
-    warehouse: shippingZone?.warehouses[0]?.id || null
+    warehouses: shippingZone?.warehouses?.map(warehouse => warehouse.id) || []
   };
-  const [warehouseDisplayValue, setWarehouseDisplayValue] = useStateFromProps(
-    shippingZone?.warehouses[0]?.name || ""
+  const [warehouseDisplayValues, setWarehouseDisplayValues] = useStateFromProps<
+    MultiAutocompleteChoiceType[]
+  >(
+    shippingZone?.warehouses?.map(warehouse => ({
+      label: warehouse.name,
+      value: warehouse.id
+    })) || []
   );
 
   const warehouseChoices = warehouses.map(warehouseToChoice);
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit }) => {
-        const handleWarehouseChange = createSingleAutocompleteSelectHandler(
-          change,
-          setWarehouseDisplayValue,
+      {({ change, data, hasChanged, submit, toggleValue }) => {
+        const handleWarehouseChange = createMultiAutocompleteSelectHandler(
+          toggleValue,
+          setWarehouseDisplayValues,
+          warehouseDisplayValues,
           warehouseChoices
         );
 
@@ -166,7 +173,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
               <div>
                 <ShippingZoneWarehouses
                   data={data}
-                  displayValue={warehouseDisplayValue}
+                  displayValues={warehouseDisplayValues}
                   hasMore={hasMore}
                   loading={loading}
                   onChange={handleWarehouseChange}

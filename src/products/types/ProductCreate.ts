@@ -60,8 +60,8 @@ export interface ProductCreate_productCreate_product_productType_variantAttribut
 
 export interface ProductCreate_productCreate_product_productType {
   __typename: "ProductType";
-  variantAttributes: (ProductCreate_productCreate_product_productType_variantAttributes | null)[] | null;
   id: string;
+  variantAttributes: (ProductCreate_productCreate_product_productType_variantAttributes | null)[] | null;
   name: string;
   hasVariants: boolean;
 }

@@ -44,6 +44,10 @@ import {
   AssignShippingZoneToWarehouse,
   AssignShippingZoneToWarehouseVariables
 } from "./types/AssignShippingZoneToWarehouse";
+import {
+  UnassignShippingZoneToWarehouse,
+  UnassignShippingZoneToWarehouseVariables
+} from "./types/UnassignShippingZoneToWarehouse";
 
 export const shippingErrorFragment = gql`
   fragment ShippingErrorFragment on ShippingError {
@@ -240,3 +244,24 @@ export const useAssignShippingZoneToWarehouse = makeMutation<
   AssignShippingZoneToWarehouse,
   AssignShippingZoneToWarehouseVariables
 >(assignShippingZoneToWarehouse);
+
+const unassignShippingZoneToWarehouse = gql`
+  ${warehouseErrorFragment}
+  mutation UnassignShippingZoneToWarehouse(
+    $warehouseId: ID!
+    $shippingZoneId: ID!
+  ) {
+    unassignWarehouseShippingZone(
+      id: $warehouseId
+      shippingZoneIds: [$shippingZoneId]
+    ) {
+      errors: warehouseErrors {
+        ...WarehouseErrorFragment
+      }
+    }
+  }
+`;
+export const useUnassignShippingZoneToWarehouse = makeMutation<
+  UnassignShippingZoneToWarehouse,
+  UnassignShippingZoneToWarehouseVariables
+>(unassignShippingZoneToWarehouse);

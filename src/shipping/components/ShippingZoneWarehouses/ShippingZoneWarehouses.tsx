@@ -6,17 +6,17 @@ import { useIntl } from "react-intl";
 import CardTitle from "@saleor/components/CardTitle";
 import { FetchMoreProps, SearchProps } from "@saleor/types";
 import { FormChange } from "@saleor/hooks/useForm";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType
-} from "@saleor/components/SingleAutocompleteSelectField";
+import MultiAutocompleteSelectField, {
+  MultiAutocompleteChoiceType
+} from "@saleor/components/MultiAutocompleteSelectField";
 
 interface ShippingZoneWarehousesFormData {
-  warehouse: string;
+  warehouses: string[];
 }
 interface ShippingZonewWarehousesProps extends FetchMoreProps, SearchProps {
   data: ShippingZoneWarehousesFormData;
-  displayValue: string;
-  warehouses: SingleAutocompleteChoiceType[];
+  displayValues: MultiAutocompleteChoiceType[];
+  warehouses: MultiAutocompleteChoiceType[];
   onChange: FormChange;
   onWarehouseAdd: () => void;
 }
@@ -24,7 +24,7 @@ interface ShippingZonewWarehousesProps extends FetchMoreProps, SearchProps {
 export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = props => {
   const {
     data,
-    displayValue,
+    displayValues,
     hasMore,
     loading,
     warehouses,
@@ -44,7 +44,7 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
         })}
       />
       <CardContent>
-        <SingleAutocompleteSelectField
+        <MultiAutocompleteSelectField
           add={{
             label: intl.formatMessage({
               defaultMessage: "Add New Warehouse",
@@ -53,7 +53,7 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
             onClick: onWarehouseAdd
           }}
           choices={warehouses}
-          displayValue={displayValue}
+          displayValues={displayValues}
           fetchChoices={onSearchChange}
           hasMore={hasMore}
           helperText={intl.formatMessage({
@@ -66,14 +66,14 @@ export const ShippingZoneWarehouses: React.FC<ShippingZonewWarehousesProps> = pr
             id: "shippingZoneWarehouses.autocomplete.label"
           })}
           loading={loading}
-          name="warehouse"
+          name="warehouses"
           onChange={onChange}
           onFetchMore={onFetchMore}
           placeholder={intl.formatMessage({
             defaultMessage: "Select Warehouse",
             description: "input placeholder"
           })}
-          value={data.warehouse}
+          value={data.warehouses}
         />
       </CardContent>
     </Card>
