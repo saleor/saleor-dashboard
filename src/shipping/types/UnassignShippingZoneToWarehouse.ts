@@ -8,7 +8,7 @@ import { WarehouseErrorCode } from "./../../types/globalTypes";
 // GraphQL mutation operation: UnassignShippingZoneToWarehouse
 // ====================================================
 
-export interface UnassignShippingZoneToWarehouse_unassignWarehouseShippingZone_warehouseErrors {
+export interface UnassignShippingZoneToWarehouse_unassignWarehouseShippingZone_errors {
   __typename: "WarehouseError";
   code: WarehouseErrorCode;
   field: string | null;
@@ -16,7 +16,7 @@ export interface UnassignShippingZoneToWarehouse_unassignWarehouseShippingZone_w
 
 export interface UnassignShippingZoneToWarehouse_unassignWarehouseShippingZone {
   __typename: "WarehouseShippingZoneUnassign";
-  warehouseErrors: UnassignShippingZoneToWarehouse_unassignWarehouseShippingZone_warehouseErrors[];
+  errors: UnassignShippingZoneToWarehouse_unassignWarehouseShippingZone_errors[];
 }
 
 export interface UnassignShippingZoneToWarehouse {

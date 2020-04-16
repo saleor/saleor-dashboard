@@ -1,3 +1,4 @@
+import { diff } from "fast-array-diff";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -14,7 +15,8 @@ import {
   useShippingRateDelete,
   useShippingZoneDelete,
   useShippingZoneUpdate,
-  useAssignShippingZoneToWarehouse
+  useAssignShippingZoneToWarehouse,
+  useUnassignShippingZoneToWarehouse
 } from "@saleor/shipping/mutations";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import ShippingZoneRateDialog from "@saleor/shipping/components/ShippingZoneRateDialog";
@@ -64,6 +66,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   );
 
   const [assignToWarehouse] = useAssignShippingZoneToWarehouse({});
+  const [unassignToWarehouse] = useUnassignShippingZoneToWarehouse({});
 
   const { data, loading } = useShippingZone({
     displayLoader: true,
@@ -144,27 +147,38 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     }
   });
 
-  const handleSubmit = async (data: FormData) => {
+  const handleSubmit = async (submitData: FormData) => {
     try {
       const updateResult = await updateShippingZone({
         variables: {
           id,
           input: {
-            name: data.name
+            name: submitData.name
           }
         }
       });
       const updateErrors = updateResult.data.shippingZoneUpdate.errors;
 
       if (updateErrors.length === 0) {
-        const assignResult = await assignToWarehouse({
-          variables: {
-            shippingZoneId: id,
-            warehouseId: data.warehouse
-          }
-        });
-        const assignErrors =
-          assignResult.data.assignWarehouseShippingZone.errors;
+        const warehouseDiff = diff(
+          data.shippingZone.warehouses.map(warehouse => warehouse.id),
+          submitData.warehouses
+        );
+        const assignResults = await Promise.all(
+          warehouseDiff.added.map(warehouseId =>
+            assignToWarehouse({
+              variables: {
+                shippingZoneId: id,
+                warehouseId
+              }
+            })
+          )
+        );
+        const assignErrors = assignResults
+          .map(
+            assignResult => assignResult.data.assignWarehouseShippingZone.errors
+          )
+          .reduce((acc, errors) => [...acc, ...errors], []);
 
         if (assignErrors.length === 0) {
           notify({
@@ -173,6 +187,33 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         } else {
           throw new Error(
             `Assigning to warehouse failed: ${assignErrors[0].code}`
+          );
+        }
+
+        const unassignResults = await Promise.all(
+          warehouseDiff.removed.map(warehouseId =>
+            unassignToWarehouse({
+              variables: {
+                shippingZoneId: id,
+                warehouseId
+              }
+            })
+          )
+        );
+        const unassignErrors = unassignResults
+          .map(
+            unassignResult =>
+              unassignResult.data.unassignWarehouseShippingZone.errors
+          )
+          .reduce((acc, errors) => [...acc, ...errors], []);
+
+        if (unassignErrors.length === 0) {
+          notify({
+            text: intl.formatMessage(commonMessages.savedChanges)
+          });
+        } else {
+          throw new Error(
+            `Assigning to warehouse failed: ${unassignErrors[0].code}`
           );
         }
       } else {
