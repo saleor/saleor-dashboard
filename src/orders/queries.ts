@@ -13,6 +13,10 @@ import {
   SearchOrderVariant as SearchOrderVariantType,
   SearchOrderVariantVariables
 } from "./types/SearchOrderVariant";
+import {
+  OrderFulfillData,
+  OrderFulfillDataVariables
+} from "./types/OrderFulfillData";
 
 export const fragmentOrderEvent = gql`
   fragment OrderEventFragment on OrderEvent {
@@ -334,3 +338,44 @@ export const useOrderVariantSearch = makeTopLevelSearch<
   SearchOrderVariantType,
   SearchOrderVariantVariables
 >(searchOrderVariant);
+
+const orderFulfillData = gql`
+  query OrderFulfillData($orderId: ID!) {
+    order(id: $orderId) {
+      id
+      lines {
+        id
+        isShippingRequired
+        productName
+        quantity
+        quantityFulfilled
+        variant {
+          id
+          name
+          sku
+          attributes {
+            values {
+              id
+              name
+            }
+          }
+          stocks {
+            id
+            warehouse {
+              id
+            }
+            quantity
+          }
+        }
+        thumbnail(size: 64) {
+          url
+        }
+      }
+      number
+    }
+  }
+`;
+export const useOrderFulfillData = makeQuery<
+  OrderFulfillData,
+  OrderFulfillDataVariables
+>(orderFulfillData);
