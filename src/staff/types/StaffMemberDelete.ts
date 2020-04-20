@@ -9,7 +9,7 @@ import { AccountErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface StaffMemberDelete_staffDelete_errors {
-  __typename: "AccountError";
+  __typename: "StaffError";
   code: AccountErrorCode;
   field: string | null;
 }

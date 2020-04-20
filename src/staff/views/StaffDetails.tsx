@@ -161,8 +161,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                         email: variables.email,
                                         firstName: variables.firstName,
                                         isActive: variables.isActive,
-                                        lastName: variables.lastName,
-                                        permissions: variables.permissions
+                                        lastName: variables.lastName
                                       }
                                     }
                                   })

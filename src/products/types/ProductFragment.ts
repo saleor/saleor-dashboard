@@ -29,6 +29,7 @@ export interface ProductFragment {
   name: string;
   thumbnail: ProductFragment_thumbnail | null;
   isAvailable: boolean | null;
+  isPublished: boolean;
   basePrice: ProductFragment_basePrice | null;
   productType: ProductFragment_productType;
 }

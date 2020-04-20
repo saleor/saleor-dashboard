@@ -5,21 +5,19 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { buttonMessages, commonMessages } from "@saleor/intl";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
-import getAccountErrorMessage from "@saleor/utils/errors/account";
+import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
+import getStaffErrorMessage from "@saleor/utils/errors/staff";
 
 export interface FormData {
   email: string;
@@ -59,7 +57,7 @@ const useStyles = makeStyles(
 
 interface StaffAddMemberDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: AccountErrorFragment[];
+  errors: StaffErrorFragment[];
   open: boolean;
   onClose: () => void;
   onConfirm: (data: FormData) => void;
@@ -92,10 +90,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
               <div className={classes.textFieldGrid}>
                 <TextField
                   error={!!formErrors.firstName}
-                  helperText={getAccountErrorMessage(
-                    formErrors.firstName,
-                    intl
-                  )}
+                  helperText={getStaffErrorMessage(formErrors.firstName, intl)}
                   label={intl.formatMessage(commonMessages.firstName)}
                   name="firstName"
                   type="text"
@@ -104,7 +99,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
                 />
                 <TextField
                   error={!!formErrors.lastName}
-                  helperText={getAccountErrorMessage(formErrors.lastName, intl)}
+                  helperText={getStaffErrorMessage(formErrors.lastName, intl)}
                   label={intl.formatMessage(commonMessages.lastName)}
                   name="lastName"
                   type="text"
@@ -116,28 +111,11 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
               <TextField
                 error={!!formErrors.email}
                 fullWidth
-                helperText={getAccountErrorMessage(formErrors.email, intl)}
+                helperText={getStaffErrorMessage(formErrors.email, intl)}
                 label={intl.formatMessage(commonMessages.email)}
                 name="email"
                 type="email"
                 value={data.email}
-                onChange={change}
-              />
-            </DialogContent>
-            <hr className={classes.hr} />
-            <DialogContent>
-              <Typography className={classes.sectionTitle}>
-                <FormattedMessage defaultMessage="Permissions" />
-              </Typography>
-              <Typography>
-                <FormattedMessage defaultMessage="Expand or restrict user’s permissions to access certain part of saleor system." />
-              </Typography>
-              <ControlledCheckbox
-                checked={data.fullAccess}
-                label={intl.formatMessage({
-                  defaultMessage: "User has full access"
-                })}
-                name="fullAccess"
                 onChange={change}
               />
             </DialogContent>

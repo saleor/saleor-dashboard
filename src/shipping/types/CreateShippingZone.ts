@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ShippingZoneInput, ShippingErrorCode } from "./../../types/globalTypes";
+import { ShippingZoneCreateInput, ShippingErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CreateShippingZone
@@ -39,5 +39,5 @@ export interface CreateShippingZone {
 }
 
 export interface CreateShippingZoneVariables {
-  input: ShippingZoneInput;
+  input: ShippingZoneCreateInput;
 }

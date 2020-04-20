@@ -2,14 +2,14 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { StaffInput, AccountErrorCode, PermissionEnum } from "./../../types/globalTypes";
+import { StaffUpdateInput, AccountErrorCode, PermissionEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: StaffMemberUpdate
 // ====================================================
 
 export interface StaffMemberUpdate_staffUpdate_errors {
-  __typename: "AccountError";
+  __typename: "StaffError";
   code: AccountErrorCode;
   field: string | null;
 }
@@ -20,7 +20,7 @@ export interface StaffMemberUpdate_staffUpdate_user_avatar {
 }
 
 export interface StaffMemberUpdate_staffUpdate_user_permissions {
-  __typename: "PermissionDisplay";
+  __typename: "Permission";
   code: PermissionEnum;
   name: string;
 }
@@ -48,5 +48,5 @@ export interface StaffMemberUpdate {
 
 export interface StaffMemberUpdateVariables {
   id: string;
-  input: StaffInput;
+  input: StaffUpdateInput;
 }

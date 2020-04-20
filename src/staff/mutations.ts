@@ -26,13 +26,19 @@ import {
   ChangeStaffPasswordVariables
 } from "./types/ChangeStaffPassword";
 
+const staffErrorFragment = gql`
+  fragment StaffErrorFragment on StaffError {
+    code
+    field
+  }
+`;
 const staffMemberAddMutation = gql`
-  ${accountFragmentError}
+  ${staffErrorFragment}
   ${staffMemberDetailsFragment}
   mutation StaffMemberAdd($input: StaffCreateInput!) {
     staffCreate(input: $input) {
-      errors: accountErrors {
-        ...AccountErrorFragment
+      errors: staffErrors {
+        ...StaffErrorFragment
       }
       user {
         ...StaffMemberDetailsFragment
@@ -48,10 +54,10 @@ export const TypedStaffMemberAddMutation = TypedMutation<
 const staffMemberUpdateMutation = gql`
   ${accountFragmentError}
   ${staffMemberDetailsFragment}
-  mutation StaffMemberUpdate($id: ID!, $input: StaffInput!) {
+  mutation StaffMemberUpdate($id: ID!, $input: StaffUpdateInput!) {
     staffUpdate(id: $id, input: $input) {
-      errors: accountErrors {
-        ...AccountErrorFragment
+      errors: staffErrors {
+        ...StaffErrorFragment
       }
       user {
         ...StaffMemberDetailsFragment
@@ -65,11 +71,11 @@ export const TypedStaffMemberUpdateMutation = TypedMutation<
 >(staffMemberUpdateMutation);
 
 const staffMemberDeleteMutation = gql`
-  ${accountFragmentError}
+  ${staffErrorFragment}
   mutation StaffMemberDelete($id: ID!) {
     staffDelete(id: $id) {
-      errors: accountErrors {
-        ...AccountErrorFragment
+      errors: staffErrors {
+        ...StaffErrorFragment
       }
     }
   }

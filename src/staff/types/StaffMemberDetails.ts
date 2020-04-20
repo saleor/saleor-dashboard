@@ -14,7 +14,7 @@ export interface StaffMemberDetails_user_avatar {
 }
 
 export interface StaffMemberDetails_user_permissions {
-  __typename: "PermissionDisplay";
+  __typename: "Permission";
   code: PermissionEnum;
   name: string;
 }

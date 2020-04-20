@@ -15,7 +15,7 @@ export interface ServiceUpdate_serviceAccountUpdate_errors {
 }
 
 export interface ServiceUpdate_serviceAccountUpdate_serviceAccount_permissions {
-  __typename: "PermissionDisplay";
+  __typename: "Permission";
   code: PermissionEnum;
   name: string;
 }
