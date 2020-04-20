@@ -1,20 +1,19 @@
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import Card from "@material-ui/core/Card";
-import Typography from "@material-ui/core/Typography";
+import CardActions from "@material-ui/core/CardActions";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import classNames from "classnames";
+import Typography from "@material-ui/core/Typography";
 
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { StockInput } from "@saleor/types/globalTypes";
 import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
-import TableCellAvatar, {
-  AVATAR_MARGIN
-} from "@saleor/components/TableCellAvatar";
+import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
@@ -24,18 +23,21 @@ import { OrderFulfillData_order } from "@saleor/orders/types/OrderFulfillData";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { update } from "@saleor/utils/lists";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 
 const useStyles = makeStyles(
   theme => ({
+    actionBar: {
+      flexDirection: "row",
+      paddingLeft: theme.spacing(2) + 2
+    },
     colName: {
       width: 300
     },
-    colNameLabel: {
-      marginLeft: AVATAR_MARGIN
-    },
     colQuantity: {
       textAlign: "right",
-      width: 200
+      width: 210
     },
     colQuantityContent: {
       alignItems: "center",
@@ -52,12 +54,17 @@ const useStyles = makeStyles(
     error: {
       color: theme.palette.error.main
     },
+    full: {
+      fontWeight: 600
+    },
+    quantityInnerInput: {
+      padding: "16px 0 14px 12px"
+    },
     quantityInput: {
-      width: "4rem"
+      width: 100
     },
     remainingQuantity: {
-      marginLeft: theme.spacing(),
-      paddingTop: 14
+      marginLeft: theme.spacing()
     },
     table: {
       "&&": {
@@ -98,7 +105,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const { change, data: formsetData } = useFormset<null, StockInput[]>(
+  const { change: formsetChange, data: formsetData } = useFormset<
+    null,
+    StockInput[]
+  >(
     order?.lines.map(line => ({
       data: null,
       id: line.id,
@@ -149,9 +159,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                 <TableHead>
                   <TableRow>
                     <TableCell className={classes.colName}>
-                      <span className={classes.colNameLabel}>
-                        <FormattedMessage defaultMessage="Product name" />
-                      </span>
+                      <FormattedMessage defaultMessage="Product name" />
                     </TableCell>
                     <TableCell className={classes.colSku}>
                       <FormattedMessage
@@ -179,6 +187,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                   {order?.lines.map((line, lineIndex) => {
                     const remainingQuantity =
                       line.quantity - line.quantityFulfilled;
+                    const quantityToFulfill = formsetData[
+                      lineIndex
+                    ].value.reduce(
+                      (quantityToFulfill, lineInput) =>
+                        quantityToFulfill + lineInput.quantity,
+                      0
+                    );
+                    const overfulfill = remainingQuantity < quantityToFulfill;
 
                     return (
                       <TableRow key={line.id}>
@@ -187,6 +203,15 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                           thumbnail={line?.thumbnail?.url}
                         >
                           {line.productName}
+                          <Typography color="textSecondary" variant="caption">
+                            {line.variant.attributes
+                              .map(attribute =>
+                                attribute.values
+                                  .map(attributeValue => attributeValue.name)
+                                  .join(", ")
+                              )
+                              .join(" / ")}
+                          </Typography>
                         </TableCellAvatar>
                         <TableCell className={classes.colSku}>
                           {line.variant.sku}
@@ -195,6 +220,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                           const warehouseStock = line.variant.stocks.find(
                             stock => stock.warehouse.id === warehouse.id
                           );
+                          const formsetStock = formsetData[
+                            lineIndex
+                          ].value.find(line => line.warehouse === warehouse.id);
+
                           if (!warehouseStock) {
                             return (
                               <TableCell
@@ -217,19 +246,32 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                                 <TextField
                                   type="number"
                                   inputProps={{
+                                    className: classes.quantityInnerInput,
                                     max: warehouseStock.quantity,
+                                    min: 0,
                                     style: { textAlign: "right" }
                                   }}
                                   className={classes.quantityInput}
-                                  value={
-                                    formsetData[lineIndex].value[0].quantity
+                                  value={formsetStock.quantity}
+                                  onChange={event =>
+                                    formsetChange(
+                                      line.id,
+                                      update(
+                                        {
+                                          quantity: parseInt(
+                                            event.target.value,
+                                            10
+                                          ),
+                                          warehouse: warehouse.id
+                                        },
+                                        formsetData[lineIndex].value,
+                                        (a, b) => a.warehouse === b.warehouse
+                                      )
+                                    )
                                   }
-                                  onChange={event => undefined}
                                   error={
-                                    remainingQuantity <
-                                      formsetData[lineIndex].value[0]
-                                        .quantity ||
-                                    formsetData[lineIndex].value[0].quantity >
+                                    overfulfill ||
+                                    formsetStock.quantity >
                                       warehouseStock.quantity
                                   }
                                 />
@@ -241,10 +283,15 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                           );
                         })}
                         <TableCell className={classes.colQuantityTotal}>
-                          {formsetData[lineIndex].value.reduce(
-                            (acc, stock) => acc + stock.quantity,
-                            0
-                          )}{" "}
+                          <span
+                            className={classNames({
+                              [classes.error]: overfulfill,
+                              [classes.full]:
+                                remainingQuantity <= quantityToFulfill
+                            })}
+                          >
+                            {quantityToFulfill}
+                          </span>{" "}
                           / {remainingQuantity}
                         </TableCell>
                       </TableRow>
@@ -252,9 +299,26 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                   })}
                 </TableBody>
               </ResponsiveTable>
+              <CardActions className={classes.actionBar}>
+                <ControlledCheckbox
+                  checked={data.sendInfo}
+                  label={intl.formatMessage({
+                    defaultMessage: "Send shipment details to customer",
+                    description: "checkbox"
+                  })}
+                  name="sendInfo"
+                  onChange={change}
+                />
+              </CardActions>
             </Card>
             <SaveButtonBar
               disabled={disabled}
+              labels={{
+                save: intl.formatMessage({
+                  defaultMessage: "Fulfill",
+                  description: "fulfill order, button"
+                })
+              }}
               state={saveButtonBar}
               onSave={submit}
               onCancel={onBack}
