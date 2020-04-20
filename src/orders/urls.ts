@@ -97,10 +97,14 @@ export type OrderUrlDialog =
   | "edit-shipping"
   | "edit-shipping-address"
   | "finalize"
-  | "fulfill"
   | "mark-paid"
   | "refund"
   | "void";
 export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;
 export const orderUrl = (id: string, params?: OrderUrlQueryParams) =>
   orderPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+export const orderFulfillPath = (id: string) =>
+  urlJoin(orderPath(id), "fulfill");
+export const orderFulfillUrl = (id: string) =>
+  orderFulfillPath(encodeURIComponent(id));

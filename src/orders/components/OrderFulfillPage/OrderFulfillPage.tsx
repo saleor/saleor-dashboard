@@ -25,6 +25,8 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { update } from "@saleor/utils/lists";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import { renderCollection } from "@saleor/misc";
+import Skeleton from "@saleor/components/Skeleton";
 
 const useStyles = makeStyles(
   theme => ({
@@ -86,7 +88,7 @@ export interface OrderFulfillPageProps {
   order: OrderFulfillData_order;
   saveButtonBar: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
-  onBack: () => undefined;
+  onBack: () => void;
   onSubmit: (data: OrderFulfillSubmitData) => void;
 }
 
@@ -167,7 +169,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                         description="product's sku"
                       />
                     </TableCell>
-                    {warehouses.map(warehouse => (
+                    {warehouses?.map(warehouse => (
                       <TableCell
                         key={warehouse.id}
                         className={classes.colQuantity}
@@ -184,7 +186,29 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {order?.lines.map((line, lineIndex) => {
+                  {renderCollection(order?.lines, (line, lineIndex) => {
+                    if (!line) {
+                      return (
+                        <TableRow>
+                          <TableCellAvatar className={classes.colName}>
+                            <Skeleton />
+                          </TableCellAvatar>
+                          <TableCell className={classes.colSku}>
+                            <Skeleton />
+                          </TableCell>
+                          {warehouses?.map(() => (
+                            <TableCell className={classes.colQuantity}>
+                              <Skeleton />
+                            </TableCell>
+                          ))}
+                          <TableCell className={classes.colQuantityTotal}>
+                            {" "}
+                            <Skeleton />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+
                     const remainingQuantity =
                       line.quantity - line.quantityFulfilled;
                     const quantityToFulfill = formsetData[
@@ -216,7 +240,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                         <TableCell className={classes.colSku}>
                           {line.variant.sku}
                         </TableCell>
-                        {warehouses.map(warehouse => {
+                        {warehouses?.map(warehouse => {
                           const warehouseStock = line.variant.stocks.find(
                             stock => stock.warehouse.id === warehouse.id
                           );
