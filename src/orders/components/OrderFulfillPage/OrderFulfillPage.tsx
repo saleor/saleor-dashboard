@@ -27,6 +27,7 @@ import { update } from "@saleor/utils/lists";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { renderCollection } from "@saleor/misc";
 import Skeleton from "@saleor/components/Skeleton";
+import AppHeader from "@saleor/components/AppHeader";
 
 const useStyles = makeStyles(
   theme => ({
@@ -136,6 +137,22 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
 
   return (
     <Container>
+      <AppHeader onBack={onBack}>
+        {order?.number
+          ? intl.formatMessage(
+              {
+                defaultMessage: "Order #{orderNumber}",
+                description: "page header with order number"
+              },
+              {
+                orderNumber: order.number
+              }
+            )
+          : intl.formatMessage({
+              defaultMessage: "Order",
+              description: "page header"
+            })}
+      </AppHeader>
       <PageHeader
         title={intl.formatMessage(
           {
