@@ -2,6 +2,8 @@ I want to merge this change because...
 
 <!-- Please mention all relevant issue numbers. -->
 
+**PR intended to be tested with API branch:** <!-- For example: feature/warehouses  -->
+
 ### Screenshots
 
 <!-- If your changes affect the UI, providing "before" and "after" screenshots will
