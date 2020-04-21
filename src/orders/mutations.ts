@@ -22,6 +22,7 @@ import {
   OrderDraftBulkCancel,
   OrderDraftBulkCancelVariables
 } from "./types/OrderDraftBulkCancel";
+import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
 import {
   OrderDraftCancel,
   OrderDraftCancelVariables
@@ -477,3 +478,20 @@ export const TypedOrderLineUpdateMutation = TypedMutation<
   OrderLineUpdate,
   OrderLineUpdateVariables
 >(orderLineUpdateMutation);
+
+const fulfillOrder = gql`
+  mutation FulfillOrder($orderId: ID!, $input: FulfillmentCreateInput!) {
+    orderFulfillmentCreate(order: $orderId, input: $input) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+export const useOrderFulfill = makeMutation<
+  FulfillOrder,
+  FulfillOrderVariables
+>(fulfillOrder);

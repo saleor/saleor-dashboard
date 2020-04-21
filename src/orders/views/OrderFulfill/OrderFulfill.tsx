@@ -7,6 +7,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import { orderUrl } from "@saleor/orders/urls";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { useOrderFulfill } from "@saleor/orders/mutations";
+import useNotifier from "@saleor/hooks/useNotifier";
 
 export interface OrderFulfillProps {
   orderId: string;
@@ -14,6 +16,7 @@ export interface OrderFulfillProps {
 
 const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
   const navigate = useNavigator();
+  const notify = useNotifier();
   const intl = useIntl();
   const { data, loading } = useOrderFulfillData({
     displayLoader: true,
@@ -25,6 +28,19 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
     displayLoader: true,
     variables: {
       first: 20
+    }
+  });
+  const [fulfillOrder, fulfillOrderOpts] = useOrderFulfill({
+    onCompleted: data => {
+      if (data.orderFulfillmentCreate.errors.length === 0) {
+        navigate(orderUrl(orderId));
+        notify({
+          text: intl.formatMessage({
+            defaultMessage: "Fulfilled Items",
+            description: "order fulfilled success message"
+          })
+        });
+      }
     }
   });
 
@@ -49,9 +65,19 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         }
       />
       <OrderFulfillPage
-        disabled={loading || warehousesLoading}
+        disabled={loading || warehousesLoading || fulfillOrderOpts.loading}
         onBack={() => navigate(orderUrl(orderId))}
-        onSubmit={() => undefined}
+        onSubmit={formData =>
+          fulfillOrder({
+            variables: {
+              input: {
+                lines: formData.items.map(line => line.value),
+                notifyCustomer: formData.sendInfo
+              },
+              orderId
+            }
+          })
+        }
         order={data?.order}
         saveButtonBar="default"
         warehouses={warehouseData?.warehouses.edges.map(edge => edge.node)}
