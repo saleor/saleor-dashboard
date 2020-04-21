@@ -53,7 +53,7 @@ const HomeSection = () => {
           ordersToFulfill={maybe(() => data.ordersToFulfill.totalCount)}
           productsOutOfStock={maybe(() => data.productsOutOfStock.totalCount)}
           userName={getUserName(user, true)}
-          userPermissions={maybe(() => user.permissions, [])}
+          userPermissions={user?.userPermissions || []}
         />
       )}
     </HomePageQuery>

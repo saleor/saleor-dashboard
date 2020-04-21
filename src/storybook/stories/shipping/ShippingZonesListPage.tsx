@@ -4,7 +4,7 @@ import React from "react";
 import {
   listActionsProps,
   pageListProps,
-  permissions
+  adminUserPermissions
 } from "../../../fixtures";
 import ShippingZonesListPage, {
   ShippingZonesListPageProps
@@ -22,7 +22,7 @@ const props: ShippingZonesListPageProps = {
   onRemove: () => undefined,
   onSubmit: () => undefined,
   shippingZones,
-  userPermissions: permissions
+  userPermissions: adminUserPermissions
 };
 
 storiesOf("Views / Shipping / Shipping zones list", module)

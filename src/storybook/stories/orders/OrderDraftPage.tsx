@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { fetchMoreProps, permissions } from "@saleor/fixtures";
+import { fetchMoreProps, adminUserPermissions } from "@saleor/fixtures";
 import OrderDraftPage, {
   OrderDraftPageProps
 } from "../../../orders/components/OrderDraftPage";
@@ -32,7 +32,7 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   onShippingMethodEdit: undefined,
   order,
   saveButtonBarState: "default",
-  userPermissions: permissions,
+  userPermissions: adminUserPermissions,
   users: clients,
   usersLoading: false
 };

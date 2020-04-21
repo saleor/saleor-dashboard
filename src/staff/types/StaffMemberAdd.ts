@@ -19,8 +19,15 @@ export interface StaffMemberAdd_staffCreate_user_avatar {
   url: string;
 }
 
-export interface StaffMemberAdd_staffCreate_user_permissions {
-  __typename: "Permission";
+export interface StaffMemberAdd_staffCreate_user_permissionGroups {
+  __typename: "Group";
+  id: string;
+  name: string;
+  userCanManage: boolean;
+}
+
+export interface StaffMemberAdd_staffCreate_user_userPermissions {
+  __typename: "UserPermission";
   code: PermissionEnum;
   name: string;
 }
@@ -33,7 +40,8 @@ export interface StaffMemberAdd_staffCreate_user {
   isActive: boolean;
   lastName: string;
   avatar: StaffMemberAdd_staffCreate_user_avatar | null;
-  permissions: (StaffMemberAdd_staffCreate_user_permissions | null)[] | null;
+  permissionGroups: (StaffMemberAdd_staffCreate_user_permissionGroups | null)[] | null;
+  userPermissions: (StaffMemberAdd_staffCreate_user_userPermissions | null)[] | null;
 }
 
 export interface StaffMemberAdd_staffCreate {

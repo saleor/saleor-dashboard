@@ -145,5 +145,9 @@ export const staffMember: StaffMemberDetails_user = {
   id: "VXNlcjoyMQ==",
   isActive: true,
   lastName: "Smith",
-  permissions
+  permissionGroups: [],
+  userPermissions: permissions.map(p => ({
+    ...p,
+    __typename: "UserPermission"
+  }))
 };

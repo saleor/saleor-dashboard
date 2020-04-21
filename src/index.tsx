@@ -45,6 +45,7 @@ import PageSection from "./pages";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
+import PermissionGroupSection from "./permissionGroups";
 import ServiceSection from "./services";
 import { serviceSection } from "./services/urls";
 import ShippingSection from "./shipping";
@@ -216,6 +217,11 @@ const Routes: React.FC = () => {
                     permissions={[PermissionEnum.MANAGE_STAFF]}
                     path="/staff"
                     component={StaffSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_STAFF]}
+                    path="/permission-groups"
+                    component={PermissionGroupSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_SETTINGS]}

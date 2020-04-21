@@ -1,7 +1,10 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
-import { toggle } from "../lists";
+import { toggle } from "@saleor/utils/lists";
 
+/**
+ * @param change Use toggleValue callback delivered by form
+ */
 function createMultiAutocompleteSelectHandler(
   change: FormChange,
   setSelected: (choices: MultiAutocompleteChoiceType[]) => void,

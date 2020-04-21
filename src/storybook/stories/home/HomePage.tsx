@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { permissions } from "@saleor/fixtures";
+import { adminUserPermissions } from "@saleor/fixtures";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import HomePage, { HomePageProps } from "../../../home/components/HomePage";
 import { shop as shopFixture } from "../../../home/fixtures";
@@ -24,7 +24,7 @@ const homePageProps: Omit<HomePageProps, "classes"> = {
   sales: shop.salesToday.gross,
   topProducts: shop.productTopToday.edges.map(edge => edge.node),
   userName: "admin@example.com",
-  userPermissions: permissions
+  userPermissions: adminUserPermissions
 };
 
 storiesOf("Views / HomePage", module)
@@ -52,7 +52,7 @@ storiesOf("Views / HomePage", module)
   .add("product permissions", () => (
     <HomePage
       {...homePageProps}
-      userPermissions={permissions.filter(
+      userPermissions={adminUserPermissions.filter(
         perm => perm.code === PermissionEnum.MANAGE_PRODUCTS
       )}
     />
@@ -60,7 +60,7 @@ storiesOf("Views / HomePage", module)
   .add("order permissions", () => (
     <HomePage
       {...homePageProps}
-      userPermissions={permissions.filter(
+      userPermissions={adminUserPermissions.filter(
         perm => perm.code === PermissionEnum.MANAGE_ORDERS
       )}
     />

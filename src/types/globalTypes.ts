@@ -575,6 +575,21 @@ export enum PermissionEnum {
   MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
 }
 
+export enum PermissionGroupErrorCode {
+  ASSIGN_NON_STAFF_MEMBER = "ASSIGN_NON_STAFF_MEMBER",
+  CANNOT_ADD_AND_REMOVE = "CANNOT_ADD_AND_REMOVE",
+  CANNOT_REMOVE_FROM_LAST_GROUP = "CANNOT_REMOVE_FROM_LAST_GROUP",
+  LEFT_NOT_MANAGEABLE_PERMISSION = "LEFT_NOT_MANAGEABLE_PERMISSION",
+  OUT_OF_SCOPE_PERMISSION = "OUT_OF_SCOPE_PERMISSION",
+  OUT_OF_SCOPE_USER = "OUT_OF_SCOPE_USER",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
+export enum PermissionGroupSortField {
+  NAME = "NAME",
+}
+
 export enum PluginSortField {
   IS_ACTIVE = "IS_ACTIVE",
   NAME = "NAME",
@@ -1085,6 +1100,29 @@ export interface PageTranslationInput {
   title?: string | null;
   content?: string | null;
   contentJson?: any | null;
+}
+
+export interface PermissionGroupCreateInput {
+  addPermissions?: PermissionEnum[] | null;
+  addUsers?: string[] | null;
+  name: string;
+}
+
+export interface PermissionGroupFilterInput {
+  search?: string | null;
+}
+
+export interface PermissionGroupSortingInput {
+  direction: OrderDirection;
+  field: PermissionGroupSortField;
+}
+
+export interface PermissionGroupUpdateInput {
+  addPermissions?: PermissionEnum[] | null;
+  addUsers?: string[] | null;
+  name?: string | null;
+  removePermissions?: PermissionEnum[] | null;
+  removeUsers?: string[] | null;
 }
 
 export interface PluginFilterInput {

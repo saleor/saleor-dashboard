@@ -195,7 +195,7 @@ const MenuList: React.FC<MenuListProps> = props => {
 
   const configutationMenu = createConfigurationMenu(intl).map(menu => {
     menu.menuItems.map(item =>
-      user.permissions.map(perm => perm.code).includes(item.permission)
+      user.userPermissions.map(perm => perm.code).includes(item.permission)
     );
   });
 
@@ -238,7 +238,9 @@ const MenuList: React.FC<MenuListProps> = props => {
 
         if (
           menuItem.permission &&
-          !user.permissions.map(perm => perm.code).includes(menuItem.permission)
+          !user.userPermissions
+            .map(perm => perm.code)
+            .includes(menuItem.permission)
         ) {
           return null;
         }

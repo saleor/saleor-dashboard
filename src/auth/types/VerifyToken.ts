@@ -8,8 +8,8 @@ import { PermissionEnum } from "./../../types/globalTypes";
 // GraphQL mutation operation: VerifyToken
 // ====================================================
 
-export interface VerifyToken_tokenVerify_user_permissions {
-  __typename: "Permission";
+export interface VerifyToken_tokenVerify_user_userPermissions {
+  __typename: "UserPermission";
   code: PermissionEnum;
   name: string;
 }
@@ -25,7 +25,7 @@ export interface VerifyToken_tokenVerify_user {
   email: string;
   firstName: string;
   lastName: string;
-  permissions: (VerifyToken_tokenVerify_user_permissions | null)[] | null;
+  userPermissions: (VerifyToken_tokenVerify_user_userPermissions | null)[] | null;
   avatar: VerifyToken_tokenVerify_user_avatar | null;
 }
 

@@ -25,7 +25,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
-import { maybe } from "@saleor/misc";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import Container from "../Container";
 import ErrorPage from "../ErrorPage";
@@ -314,7 +313,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
   const menuStructure = createMenuStructure(intl);
   const configurationMenu = createConfigurationMenu(intl);
-  const userPermissions = maybe(() => user.permissions, []);
+  const userPermissions = user?.userPermissions || [];
 
   const renderConfigure = configurationMenu.some(section =>
     section.menuItems.some(

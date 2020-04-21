@@ -3,10 +3,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { User } from "@saleor/auth/types/User";
-import { createConfigurationMenu } from "../../../configuration";
-import ConfigurationPage from "../../../configuration/ConfigurationPage";
-import { staffMember } from "../../../staff/fixtures";
-import Decorator from "../../Decorator";
+import { createConfigurationMenu } from "@saleor/configuration";
+import ConfigurationPage from "@saleor/configuration/ConfigurationPage";
+import { staffMember } from "@saleor/staff/fixtures";
+import Decorator from "@saleor/storybook/Decorator";
 
 const user = {
   __typename: staffMember.__typename,
@@ -20,7 +20,7 @@ const user = {
   isStaff: true,
   lastName: "Newton",
   note: null,
-  permissions: staffMember.permissions
+  userPermissions: staffMember.userPermissions
 };
 
 const Story: React.FC<{ user: User }> = ({ user }) => {
@@ -42,7 +42,7 @@ storiesOf("Views / Configuration", module)
     <Story
       user={{
         ...user,
-        permissions: user.permissions.slice(2, 6)
+        userPermissions: user.userPermissions.slice(2, 6)
       }}
     />
   ));

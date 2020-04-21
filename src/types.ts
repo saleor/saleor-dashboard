@@ -1,6 +1,6 @@
 import { MutationResult } from "react-apollo";
 
-import { User_permissions } from "./auth/types/User";
+import { User_userPermissions } from "./auth/types/User";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
 import { IFilter } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
@@ -31,6 +31,7 @@ export enum ListViews {
   PAGES_LIST = "PAGES_LIST",
   PLUGINS_LIST = "PLUGIN_LIST",
   PRODUCT_LIST = "PRODUCT_LIST",
+  PERMISSION_GROUP_LIST = "PERMISSION_GROUP_LIST",
   PRODUCT_TYPE_LIST = "PRODUCT_TYPE_LIST",
   SALES_LIST = "SALES_LIST",
   SHIPPING_METHODS_LIST = "SHIPPING_METHODS_LIST",
@@ -60,6 +61,13 @@ export interface SortPage<TSortKey extends string> {
   sort: Sort<TSortKey>;
   onSort: (field: TSortKey, id?: string) => void;
 }
+
+/**
+ * @param toggle Will be use to change status of item
+ * @param isChecked Returns true for ids of chosen items
+ * @param selected  Number of chosen items.
+ */
+
 export interface ListActionsWithoutToolbar {
   toggle: (id: string) => void;
   toggleAll: (items: React.ReactNodeArray, selected: number) => void;
@@ -165,7 +173,7 @@ export interface FetchMoreProps {
 export type TabActionDialog = "save-search" | "delete-search";
 
 export interface UserPermissionProps {
-  userPermissions: User_permissions[];
+  userPermissions: User_userPermissions[];
 }
 
 export interface MutationResultAdditionalProps {

@@ -1,10 +1,10 @@
 import React from "react";
 
-import { User_permissions } from "@saleor/auth/types/User";
+import { User_userPermissions } from "@saleor/auth/types/User";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 
 export function hasPermissions(
-  userPermissions: User_permissions[],
+  userPermissions: User_userPermissions[],
   requiredPermissions: PermissionEnum[]
 ): boolean {
   return requiredPermissions.reduce(
@@ -17,7 +17,7 @@ export function hasPermissions(
 export interface RequirePermissionsProps {
   children: React.ReactNode | React.ReactNodeArray;
   requiredPermissions: PermissionEnum[];
-  userPermissions: User_permissions[];
+  userPermissions: User_userPermissions[];
 }
 
 const RequirePermissions: React.FC<RequirePermissionsProps> = ({

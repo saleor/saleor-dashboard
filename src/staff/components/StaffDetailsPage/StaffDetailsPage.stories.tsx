@@ -1,29 +1,32 @@
 import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
-
-import { permissions } from "@saleor/fixtures";
 import StaffDetailsPage, {
   StaffDetailsPageProps
-} from "../../../staff/components/StaffDetailsPage";
-import { staffMember } from "../../../staff/fixtures";
-import Decorator from "../../Decorator";
+} from "@saleor/staff/components/StaffDetailsPage";
+import { staffMember } from "@saleor/staff/fixtures";
+import Decorator from "@saleor/storybook/Decorator";
+import { userPermissionGroups } from "@saleor/permissionGroups/fixtures";
 
 const props: Omit<StaffDetailsPageProps, "classes"> = {
+  availablePermissionGroups: [],
   canEditAvatar: false,
   canEditPreferences: false,
   canEditStatus: true,
   canRemove: true,
   disabled: false,
+  errors: [],
+  fetchMorePermissionGroups: undefined,
+  initialSearch: "",
   onBack: () => undefined,
   onChangePassword: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
+  onSearchChange: () => undefined,
   onSubmit: () => undefined,
-  permissions,
   saveButtonBarState: "default",
-  staffMember
+  staffMember: { ...staffMember, permissionGroups: userPermissionGroups }
 };
 
 storiesOf("Views / Staff / Staff member details", module)
@@ -32,15 +35,7 @@ storiesOf("Views / Staff / Staff member details", module)
   .add("loading", () => (
     <StaffDetailsPage {...props} disabled={true} staffMember={undefined} />
   ))
-  .add("not admin", () => (
-    <StaffDetailsPage
-      {...props}
-      staffMember={{
-        ...staffMember,
-        permissions: staffMember.permissions.slice(1)
-      }}
-    />
-  ))
+  .add("not admin", () => <StaffDetailsPage {...props} canEditStatus={false} />)
   .add("himself", () => (
     <StaffDetailsPage
       {...props}

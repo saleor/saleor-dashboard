@@ -9,12 +9,10 @@ import {
   tabPageProps,
   sortPageProps,
   filterPageProps
-} from "../../../fixtures";
-import StaffListPage, {
-  StaffListPageProps
-} from "../../../staff/components/StaffListPage";
-import { staffMembers } from "../../../staff/fixtures";
-import Decorator from "../../Decorator";
+} from "@saleor/fixtures";
+import { staffMembers } from "@saleor/staff/fixtures";
+import Decorator from "@saleor/storybook/Decorator";
+import StaffListPage, { StaffListPageProps } from ".";
 
 const props: StaffListPageProps = {
   ...pageListProps.default,
