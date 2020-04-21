@@ -905,7 +905,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
         }
       ],
       status: FulfillmentStatus.FULFILLED,
-      trackingNumber: ""
+      trackingNumber: "01nn12399su12nndfsy"
     }
   ],
   id: "T3JkZXI6OQ==",

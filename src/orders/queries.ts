@@ -73,11 +73,28 @@ export const fragmentOrderLine = gql`
     }
   }
 `;
+export const fulfillmentFragment = gql`
+  ${fragmentOrderLine}
+  fragment FulfillmentFragment on Fulfillment {
+    id
+    lines {
+      id
+      quantity
+      orderLine {
+        ...OrderLineFragment
+      }
+    }
+    fulfillmentOrder
+    status
+    trackingNumber
+  }
+`;
 
 export const fragmentOrderDetails = gql`
   ${fragmentAddress}
   ${fragmentOrderEvent}
   ${fragmentOrderLine}
+  ${fulfillmentFragment}
   fragment OrderDetailsFragment on Order {
     id
     billingAddress {
@@ -90,17 +107,7 @@ export const fragmentOrderDetails = gql`
       ...OrderEventFragment
     }
     fulfillments {
-      id
-      lines {
-        id
-        quantity
-        orderLine {
-          ...OrderLineFragment
-        }
-      }
-      fulfillmentOrder
-      status
-      trackingNumber
+      ...FulfillmentFragment
     }
     lines {
       ...OrderLineFragment
