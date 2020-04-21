@@ -41,6 +41,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add "Ready to capture" to the "Status" order filter - #430 by @dominik-zeglen
 - Reset state after closing - #456 by @dominik-zeglen
 - Password validation errors are not shown - #471 by @gabmartinez
+- Reset pagination when guest change the sorting of the list - #474 by @gabmartinez
 - Filter column ids before send it to GridAttributes operation - #476 by @gabmartinez
 - Display Is Published column correctly in main Product Listing - #475 by @gabmartinez
 

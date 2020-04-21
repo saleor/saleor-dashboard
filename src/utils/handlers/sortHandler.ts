@@ -1,5 +1,6 @@
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { Sort } from "@saleor/types";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { getSortUrlVariables } from "../sort";
 
 type CreateUrl<T extends string> = (params: Sort<T>) => string;
@@ -13,7 +14,8 @@ function createSortHandler<T extends string>(
     navigate(
       createUrl({
         ...params,
-        ...getSortUrlVariables(field, params)
+        ...getSortUrlVariables(field, params),
+        ...DEFAULT_INITIAL_PAGINATION_DATA
       }),
       true
     );
