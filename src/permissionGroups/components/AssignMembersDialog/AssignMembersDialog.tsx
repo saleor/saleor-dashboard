@@ -8,21 +8,14 @@ import ConfirmButton, {
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@material-ui/core/styles";
 import { getUserName, getUserInitials } from "@saleor/misc";
-import {
-  DialogProps,
-  FetchMoreProps,
-  SearchPageProps,
-  UserError
-} from "@saleor/types";
+import { DialogProps, FetchMoreProps, SearchPageProps } from "@saleor/types";
 import useElementScroll from "@saleor/hooks/useElementScroll";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import FormSpacer from "@saleor/components/FormSpacer";
 import React from "react";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableBody from "@material-ui/core/TableBody";
@@ -116,7 +109,6 @@ export interface AssignMembersDialogProps
     SearchPageProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
-  errors: UserError[];
   staffMembers: SearchStaffMembers_search_edges_node[];
   hasMore: boolean;
   onFetchMore: () => void;
@@ -148,18 +140,16 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   onSearchChange,
   onSubmit,
   open,
-  staffMembers,
-  errors: apiErrors
+  staffMembers
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
-  const errors = useModalDialogErrors(apiErrors, open);
   const [query, onQueryChange] = useSearchQuery(onSearchChange);
 
   const [selectedMembers, setSelectedMembers] = React.useState<
     SearchStaffMembers_search_edges_node[]
   >([]);
-  const mutationErrors = errors.map(err => err.message);
+
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
   const dropShadow =
@@ -285,16 +275,6 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           )}
         </InfiniteScroll>
       </DialogContent>
-      {mutationErrors.length > 0 && (
-        <DialogContent>
-          <FormSpacer />
-          {mutationErrors.map(err => (
-            <Typography key={err} color="error">
-              {err}
-            </Typography>
-          ))}
-        </DialogContent>
-      )}
       <DialogActions
         className={classNames({
           [classes.dropShadow]: dropShadow

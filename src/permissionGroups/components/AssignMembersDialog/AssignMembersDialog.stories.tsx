@@ -10,7 +10,6 @@ import { users } from "../../fixtures";
 const props: AssignMembersDialogProps = {
   confirmButtonState: "default",
   disabled: false,
-  errors: [],
   hasMore: true,
   initialSearch: "",
   loading: false,

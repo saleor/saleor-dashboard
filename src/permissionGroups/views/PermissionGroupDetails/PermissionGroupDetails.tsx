@@ -185,7 +185,6 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         hasMore={searchResult?.data?.search.pageInfo.hasNextPage}
         initialSearch=""
         confirmButtonState={permissionGroupUpdateResult.status}
-        errors={[]}
         open={params.action === "assign"}
         onClose={closeModal}
         onSubmit={formData => {
