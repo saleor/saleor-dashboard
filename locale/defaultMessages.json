@@ -2396,13 +2396,13 @@
     "context": "quantity of fulfilled products",
     "string": "Quantity"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_3123761129": {
+    "context": "dialog header",
+    "string": "Fulfill Products"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_3252172269": {
     "context": "fulfillment group",
     "string": "Tracking number"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_3928354289": {
-    "context": "dialog header",
-    "string": "Fulfill Oroducts"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_4046223826": {
     "string": "Product name"
@@ -4221,15 +4221,6 @@
   "src_dot_staff_dot_components_dot_StaffAddMemberDialog_dot_1481503299": {
     "context": "dialog header",
     "string": "Invite Staff Member"
-  },
-  "src_dot_staff_dot_components_dot_StaffAddMemberDialog_dot_1570990296": {
-    "string": "User has full access"
-  },
-  "src_dot_staff_dot_components_dot_StaffAddMemberDialog_dot_2690176844": {
-    "string": "Permissions"
-  },
-  "src_dot_staff_dot_components_dot_StaffAddMemberDialog_dot_351138560": {
-    "string": "Expand or restrict user’s permissions to access certain part of saleor system."
   },
   "src_dot_staff_dot_components_dot_StaffAddMemberDialog_dot_449055697": {
     "context": "button",
