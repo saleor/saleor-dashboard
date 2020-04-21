@@ -141,7 +141,9 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 title={staffMember?.email || "..."}
                               />
                               <StaffDetailsPage
-                                errors={updateResult?.data?.staffUpdate?.errors}
+                                errors={
+                                  updateResult?.data?.staffUpdate?.errors || []
+                                }
                                 canEditAvatar={isUserSameAsViewer}
                                 canEditPreferences={isUserSameAsViewer}
                                 canEditStatus={!isUserSameAsViewer}

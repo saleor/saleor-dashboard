@@ -43,7 +43,7 @@ const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props =>
     label: pg.name,
     value: pg.id
   }));
-  const formErrors = getFormErrors(["addGroups", "removeGroups"], errors || []);
+  const formErrors = getFormErrors(["addGroups", "removeGroups"], errors);
   return (
     <>
       <MultiAutocompleteSelectField
