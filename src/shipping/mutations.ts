@@ -98,7 +98,7 @@ export const TypedUpdateDefaultWeightUnit = TypedMutation<
 const createShippingZone = gql`
   ${countryFragment}
   ${shippingErrorFragment}
-  mutation CreateShippingZone($input: ShippingZoneInput!) {
+  mutation CreateShippingZone($input: ShippingZoneCreateInput!) {
     shippingZoneCreate(input: $input) {
       errors: shippingErrors {
         ...ShippingErrorFragment
@@ -122,7 +122,7 @@ export const TypedCreateShippingZone = TypedMutation<
 const updateShippingZone = gql`
   ${countryFragment}
   ${shippingErrorFragment}
-  mutation UpdateShippingZone($id: ID!, $input: ShippingZoneInput!) {
+  mutation UpdateShippingZone($id: ID!, $input: ShippingZoneUpdateInput!) {
     shippingZoneUpdate(id: $id, input: $input) {
       errors: shippingErrors {
         ...ShippingErrorFragment

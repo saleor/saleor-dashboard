@@ -141,9 +141,6 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
                 email: variables.email,
                 firstName: variables.firstName,
                 lastName: variables.lastName,
-                permissions: variables.fullAccess
-                  ? maybe(() => shop.permissions.map(perm => perm.code))
-                  : undefined,
                 redirectUrl: urlJoin(
                   window.location.origin,
                   APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,

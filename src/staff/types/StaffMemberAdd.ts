@@ -9,7 +9,7 @@ import { StaffCreateInput, AccountErrorCode, PermissionEnum } from "./../../type
 // ====================================================
 
 export interface StaffMemberAdd_staffCreate_errors {
-  __typename: "AccountError";
+  __typename: "StaffError";
   code: AccountErrorCode;
   field: string | null;
 }
@@ -20,7 +20,7 @@ export interface StaffMemberAdd_staffCreate_user_avatar {
 }
 
 export interface StaffMemberAdd_staffCreate_user_permissions {
-  __typename: "PermissionDisplay";
+  __typename: "Permission";
   code: PermissionEnum;
   name: string;
 }

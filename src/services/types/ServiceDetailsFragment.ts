@@ -9,7 +9,7 @@ import { PermissionEnum } from "./../../types/globalTypes";
 // ====================================================
 
 export interface ServiceDetailsFragment_permissions {
-  __typename: "PermissionDisplay";
+  __typename: "Permission";
   code: PermissionEnum;
   name: string;
 }

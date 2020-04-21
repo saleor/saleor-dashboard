@@ -373,7 +373,7 @@ export const permissions: ShopInfo_shop_permissions[] = [
     name: "Manage webhooks."
   }
 ].map(perm => ({
-  __typename: "PermissionDisplay" as "PermissionDisplay",
+  __typename: "Permission" as "Permission",
   ...perm
 }));
 

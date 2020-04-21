@@ -9,7 +9,7 @@
 export enum AccountErrorCode {
   ACTIVATE_OWN_ACCOUNT = "ACTIVATE_OWN_ACCOUNT",
   ACTIVATE_SUPERUSER_ACCOUNT = "ACTIVATE_SUPERUSER_ACCOUNT",
-  ASSIGN_NON_STAFF_MEMBER = "ASSIGN_NON_STAFF_MEMBER",
+  CANNOT_ADD_AND_REMOVE = "CANNOT_ADD_AND_REMOVE",
   DEACTIVATE_OWN_ACCOUNT = "DEACTIVATE_OWN_ACCOUNT",
   DEACTIVATE_SUPERUSER_ACCOUNT = "DEACTIVATE_SUPERUSER_ACCOUNT",
   DELETE_NON_STAFF_USER = "DELETE_NON_STAFF_USER",
@@ -18,8 +18,13 @@ export enum AccountErrorCode {
   DELETE_SUPERUSER_ACCOUNT = "DELETE_SUPERUSER_ACCOUNT",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
+  INVALID_CREDENTIALS = "INVALID_CREDENTIALS",
   INVALID_PASSWORD = "INVALID_PASSWORD",
+  LEFT_NOT_MANAGEABLE_PERMISSION = "LEFT_NOT_MANAGEABLE_PERMISSION",
   NOT_FOUND = "NOT_FOUND",
+  OUT_OF_SCOPE_GROUP = "OUT_OF_SCOPE_GROUP",
+  OUT_OF_SCOPE_PERMISSION = "OUT_OF_SCOPE_PERMISSION",
+  OUT_OF_SCOPE_USER = "OUT_OF_SCOPE_USER",
   PASSWORD_ENTIRELY_NUMERIC = "PASSWORD_ENTIRELY_NUMERIC",
   PASSWORD_TOO_COMMON = "PASSWORD_TOO_COMMON",
   PASSWORD_TOO_SHORT = "PASSWORD_TOO_SHORT",
@@ -348,6 +353,7 @@ export enum CountryCode {
 
 export enum DiscountErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
   REQUIRED = "REQUIRED",
@@ -633,6 +639,7 @@ export enum ServiceAccountSortField {
 
 export enum ShippingErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
+  CANNOT_ADD_AND_REMOVE = "CANNOT_ADD_AND_REMOVE",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   MAX_LESS_THAN_MIN = "MAX_LESS_THAN_MIN",
@@ -1247,10 +1254,19 @@ export interface ShippingPriceInput {
   shippingZone?: string | null;
 }
 
-export interface ShippingZoneInput {
+export interface ShippingZoneCreateInput {
   name?: string | null;
   countries?: (string | null)[] | null;
   default?: boolean | null;
+  addWarehouses?: (string | null)[] | null;
+}
+
+export interface ShippingZoneUpdateInput {
+  name?: string | null;
+  countries?: (string | null)[] | null;
+  default?: boolean | null;
+  addWarehouses?: (string | null)[] | null;
+  removeWarehouses?: (string | null)[] | null;
 }
 
 export interface ShopSettingsInput {
@@ -1280,17 +1296,18 @@ export interface StaffCreateInput {
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
-  permissions?: (PermissionEnum | null)[] | null;
+  addGroups?: string[] | null;
   redirectUrl?: string | null;
 }
 
-export interface StaffInput {
+export interface StaffUpdateInput {
   firstName?: string | null;
   lastName?: string | null;
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
-  permissions?: (PermissionEnum | null)[] | null;
+  addGroups?: string[] | null;
+  removeGroups?: string[] | null;
 }
 
 export interface StaffUserInput {

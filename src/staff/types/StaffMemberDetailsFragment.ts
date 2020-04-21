@@ -14,7 +14,7 @@ export interface StaffMemberDetailsFragment_avatar {
 }
 
 export interface StaffMemberDetailsFragment_permissions {
-  __typename: "PermissionDisplay";
+  __typename: "Permission";
   code: PermissionEnum;
   name: string;
 }

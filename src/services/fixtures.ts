@@ -30,7 +30,7 @@ export const service: ServiceDetails_serviceAccount = {
   name: "Magento Importer",
   permissions: [
     {
-      __typename: "PermissionDisplay" as "PermissionDisplay",
+      __typename: "Permission" as "Permission",
       code: PermissionEnum.MANAGE_PRODUCTS,
       name: "Manage products."
     }
