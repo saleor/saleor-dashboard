@@ -81,6 +81,10 @@ export const commonMessages = defineMessages({
 });
 
 export const buttonMessages = defineMessages({
+  accept: {
+    defaultMessage: "Accept",
+    description: "button"
+  },
   back: {
     defaultMessage: "Back",
     description: "button"

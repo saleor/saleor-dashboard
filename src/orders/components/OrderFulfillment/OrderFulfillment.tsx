@@ -144,7 +144,7 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
               menuItems={[
                 {
                   label: intl.formatMessage({
-                    defaultMessage: "Cancel shipment",
+                    defaultMessage: "Cancel Fulfillment",
                     description: "button"
                   }),
                   onSelect: onOrderFulfillmentCancel

@@ -2,6 +2,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { OrderErrorCode } from "@saleor/types/globalTypes";
+import { warehouseList } from "@saleor/warehouses/fixtures";
 import OrderFulfillmentCancelDialog, {
   OrderFulfillmentCancelDialogProps
 } from "../../../orders/components/OrderFulfillmentCancelDialog";
@@ -12,7 +13,8 @@ const props: OrderFulfillmentCancelDialogProps = {
   errors: [],
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
+  warehouses: warehouseList
 };
 
 storiesOf("Orders / OrderFulfillmentCancelDialog", module)
