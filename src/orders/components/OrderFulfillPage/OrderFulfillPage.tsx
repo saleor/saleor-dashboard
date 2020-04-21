@@ -232,7 +232,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                       lineIndex
                     ].value.reduce(
                       (quantityToFulfill, lineInput) =>
-                        quantityToFulfill + lineInput.quantity,
+                        quantityToFulfill + (lineInput.quantity || 0),
                       0
                     );
                     const overfulfill = remainingQuantity < quantityToFulfill;
@@ -281,6 +281,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                             );
                           }
 
+                          const availableQuantity =
+                            warehouseStock.quantity -
+                            warehouseStock.quantityAllocated;
+
                           return (
                             <TableCell className={classes.colQuantity}>
                               <div className={classes.colQuantityContent}>
@@ -312,12 +316,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                                   }
                                   error={
                                     overfulfill ||
-                                    formsetStock.quantity >
-                                      warehouseStock.quantity
+                                    formsetStock.quantity > availableQuantity
                                   }
                                 />
                                 <div className={classes.remainingQuantity}>
-                                  / {warehouseStock.quantity}
+                                  / {availableQuantity}
                                 </div>
                               </div>
                             </TableCell>

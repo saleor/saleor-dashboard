@@ -37,25 +37,29 @@ export const orderToFulfill: OrderFulfillData_order = {
             __typename: "Stock",
             id: "U3RvY2s6NTIy",
             warehouse: warehouseList[0],
-            quantity: 1217
+            quantity: 1217,
+            quantityAllocated: 10
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTIx",
             warehouse: warehouseList[1],
-            quantity: 1217
+            quantity: 1217,
+            quantityAllocated: 20
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTIz",
             warehouse: warehouseList[2],
-            quantity: 1217
+            quantity: 1217,
+            quantityAllocated: 4
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTI0",
             warehouse: warehouseList[3],
-            quantity: 1220
+            quantity: 1220,
+            quantityAllocated: 7
           }
         ]
       },
@@ -93,19 +97,22 @@ export const orderToFulfill: OrderFulfillData_order = {
             __typename: "Stock",
             id: "U3RvY2s6NTI=",
             warehouse: warehouseList[1],
-            quantity: 760
+            quantity: 760,
+            quantityAllocated: 2
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTE=",
             warehouse: warehouseList[2],
-            quantity: 760
+            quantity: 760,
+            quantityAllocated: 33
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTM=",
             warehouse: warehouseList[3],
-            quantity: 760
+            quantity: 760,
+            quantityAllocated: 4
           }
         ]
       },
@@ -143,13 +150,15 @@ export const orderToFulfill: OrderFulfillData_order = {
             __typename: "Stock",
             id: "U3RvY2s6NTc=",
             warehouse: warehouseList[0],
-            quantity: 587
+            quantity: 587,
+            quantityAllocated: 0
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTY=",
             warehouse: warehouseList[2],
-            quantity: 587
+            quantity: 587,
+            quantityAllocated: 1
           }
         ]
       },

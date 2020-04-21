@@ -27,6 +27,7 @@ export interface OrderFulfillData_order_lines_variant_stocks {
   id: string;
   warehouse: OrderFulfillData_order_lines_variant_stocks_warehouse;
   quantity: number;
+  quantityAllocated: number;
 }
 
 export interface OrderFulfillData_order_lines_variant {
