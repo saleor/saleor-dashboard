@@ -253,7 +253,7 @@ const Routes: React.FC = () => {
                     component={AttributeSection}
                   />
                   <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_SERVICE_ACCOUNTS]}
+                    permissions={[PermissionEnum.MANAGE_APPS]}
                     path={serviceSection}
                     component={ServiceSection}
                   />

@@ -365,8 +365,8 @@ export const permissions: ShopInfo_shop_permissions[] = [
     name: "Manage plugins."
   },
   {
-    code: PermissionEnum.MANAGE_SERVICE_ACCOUNTS,
-    name: "Manage service accounts."
+    code: PermissionEnum.MANAGE_APPS,
+    name: "Manage apps."
   },
   {
     code: PermissionEnum.MANAGE_WEBHOOKS,

@@ -160,7 +160,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Manage external integrations accounts"
           }),
           icon: <Bot fontSize="inherit" viewBox="0 0 44 44" />,
-          permission: PermissionEnum.MANAGE_SERVICE_ACCOUNTS,
+          permission: PermissionEnum.MANAGE_APPS,
           title: intl.formatMessage(sectionNames.serviceAccounts),
           url: serviceListUrl()
         },
