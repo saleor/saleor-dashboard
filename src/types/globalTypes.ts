@@ -1223,9 +1223,9 @@ export interface ProductVariantBulkCreateInput {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku: string;
-  stocks: StockInput[];
   trackInventory?: boolean | null;
   weight?: any | null;
+  stocks?: StockInput[] | null;
 }
 
 export interface ProductVariantCreateInput {
@@ -1233,7 +1233,6 @@ export interface ProductVariantCreateInput {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku?: string | null;
-  quantity?: number | null;
   trackInventory?: boolean | null;
   weight?: any | null;
   product: string;
@@ -1245,7 +1244,6 @@ export interface ProductVariantInput {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku?: string | null;
-  quantity?: number | null;
   trackInventory?: boolean | null;
   weight?: any | null;
 }
@@ -1459,6 +1457,7 @@ export interface WarehouseCreateInput {
 
 export interface WarehouseFilterInput {
   search?: string | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface WarehouseSortingInput {
