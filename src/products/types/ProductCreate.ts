@@ -224,7 +224,6 @@ export interface ProductCreateVariables {
   basePrice?: any | null;
   productType: string;
   sku?: string | null;
-  stockQuantity?: number | null;
   seo?: SeoInput | null;
   stocks: StockInput[];
   trackInventory: boolean;

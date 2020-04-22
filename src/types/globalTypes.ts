@@ -9,13 +9,13 @@
 export enum AccountErrorCode {
   ACTIVATE_OWN_ACCOUNT = "ACTIVATE_OWN_ACCOUNT",
   ACTIVATE_SUPERUSER_ACCOUNT = "ACTIVATE_SUPERUSER_ACCOUNT",
-  CANNOT_ADD_AND_REMOVE = "CANNOT_ADD_AND_REMOVE",
   DEACTIVATE_OWN_ACCOUNT = "DEACTIVATE_OWN_ACCOUNT",
   DEACTIVATE_SUPERUSER_ACCOUNT = "DEACTIVATE_SUPERUSER_ACCOUNT",
   DELETE_NON_STAFF_USER = "DELETE_NON_STAFF_USER",
   DELETE_OWN_ACCOUNT = "DELETE_OWN_ACCOUNT",
   DELETE_STAFF_ACCOUNT = "DELETE_STAFF_ACCOUNT",
   DELETE_SUPERUSER_ACCOUNT = "DELETE_SUPERUSER_ACCOUNT",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   INVALID_CREDENTIALS = "INVALID_CREDENTIALS",
@@ -45,8 +45,6 @@ export enum AttributeInputTypeEnum {
 
 export enum AttributeSortField {
   AVAILABLE_IN_GRID = "AVAILABLE_IN_GRID",
-  DASHBOARD_PRODUCT_POSITION = "DASHBOARD_PRODUCT_POSITION",
-  DASHBOARD_VARIANT_POSITION = "DASHBOARD_VARIANT_POSITION",
   FILTERABLE_IN_DASHBOARD = "FILTERABLE_IN_DASHBOARD",
   FILTERABLE_IN_STOREFRONT = "FILTERABLE_IN_STOREFRONT",
   IS_VARIANT_ONLY = "IS_VARIANT_ONLY",
@@ -460,6 +458,7 @@ export enum OrderErrorCode {
   CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
   FULFILL_ORDER_LINE = "FULFILL_ORDER_LINE",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
   INVALID = "INVALID",
   NOT_EDITABLE = "NOT_EDITABLE",
   NOT_FOUND = "NOT_FOUND",
@@ -585,6 +584,7 @@ export enum ProductErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = "ATTRIBUTE_ALREADY_ASSIGNED",
   ATTRIBUTE_CANNOT_BE_ASSIGNED = "ATTRIBUTE_CANNOT_BE_ASSIGNED",
   ATTRIBUTE_VARIANTS_DISABLED = "ATTRIBUTE_VARIANTS_DISABLED",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -639,7 +639,7 @@ export enum ServiceAccountSortField {
 
 export enum ShippingErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
-  CANNOT_ADD_AND_REMOVE = "CANNOT_ADD_AND_REMOVE",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   MAX_LESS_THAN_MIN = "MAX_LESS_THAN_MIN",
@@ -1184,9 +1184,9 @@ export interface ProductVariantBulkCreateInput {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku: string;
-  stocks: StockInput[];
   trackInventory?: boolean | null;
   weight?: any | null;
+  stocks?: StockInput[] | null;
 }
 
 export interface ProductVariantCreateInput {
@@ -1194,7 +1194,6 @@ export interface ProductVariantCreateInput {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku?: string | null;
-  quantity?: number | null;
   trackInventory?: boolean | null;
   weight?: any | null;
   product: string;
@@ -1206,7 +1205,6 @@ export interface ProductVariantInput {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku?: string | null;
-  quantity?: number | null;
   trackInventory?: boolean | null;
   weight?: any | null;
 }
@@ -1420,6 +1418,7 @@ export interface WarehouseCreateInput {
 
 export interface WarehouseFilterInput {
   search?: string | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface WarehouseSortingInput {

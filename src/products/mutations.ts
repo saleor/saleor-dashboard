@@ -300,7 +300,6 @@ export const productCreateMutation = gql`
     $basePrice: Decimal
     $productType: ID!
     $sku: String
-    $stockQuantity: Int
     $seo: SeoInput
     $stocks: [StockInput!]!
     $trackInventory: Boolean!
@@ -318,7 +317,6 @@ export const productCreateMutation = gql`
         basePrice: $basePrice
         productType: $productType
         sku: $sku
-        quantity: $stockQuantity
         seo: $seo
         stocks: $stocks
         trackInventory: $trackInventory
@@ -366,7 +364,6 @@ export const variantUpdateMutation = gql`
     $costPrice: Decimal
     $priceOverride: Decimal
     $sku: String
-    $quantity: Int
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
   ) {
@@ -377,7 +374,6 @@ export const variantUpdateMutation = gql`
         costPrice: $costPrice
         priceOverride: $priceOverride
         sku: $sku
-        quantity: $quantity
         trackInventory: $trackInventory
       }
     ) {

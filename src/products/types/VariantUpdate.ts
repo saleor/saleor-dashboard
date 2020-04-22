@@ -264,7 +264,6 @@ export interface VariantUpdateVariables {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku?: string | null;
-  quantity?: number | null;
   trackInventory: boolean;
   stocks: StockInput[];
 }
