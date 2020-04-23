@@ -4905,9 +4905,6 @@
     "context": "error message",
     "string": "Billing address is not set"
   },
-  "src_dot_utils_dot_errors_dot_cannotAddAndRemove": {
-    "string": "Cannot add and remove group the same time"
-  },
   "src_dot_utils_dot_errors_dot_cannotCancelFulfillment": {
     "context": "error message",
     "string": "This fulfillment cannot be cancelled"
@@ -4935,6 +4932,9 @@
     "context": "error message",
     "string": "Only pre-authorized payments can be captured"
   },
+  "src_dot_utils_dot_errors_dot_duplicatedInputItem": {
+    "string": "Cannot add and remove group the same time"
+  },
   "src_dot_utils_dot_errors_dot_graphqlError": {
     "string": "API error"
   },
@@ -4953,7 +4953,7 @@
     "string": "Only draft orders can be edited"
   },
   "src_dot_utils_dot_errors_dot_outOfScopeGroup": {
-    "string": "Group is out of your permissions scope"
+    "string": "Group is out of your permission scope"
   },
   "src_dot_utils_dot_errors_dot_outOfScopeUser": {
     "string": "User is out of your permissions scope"
