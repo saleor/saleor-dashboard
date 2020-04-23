@@ -34,12 +34,8 @@ const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({
     >
       <DialogContentText>
         <FormattedMessage
-          defaultMessage="You are not able to unassign {counter,plural,one{this member} other{{displayQuantity} members}} from group. Solve this problem to continue with request."
+          defaultMessage="You are not able to modify this group members. Solve this problem to continue with request."
           description="dialog content"
-          values={{
-            counter: 1,
-            displayQuantity: <strong>{1}</strong>
-          }}
         />
       </DialogContentText>
     </ActionDialog>

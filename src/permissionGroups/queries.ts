@@ -83,17 +83,17 @@ export const usePermissionGroupListQuery = makeQuery<
 
 export const permissionGroupDetailsQuery = gql`
   ${permissionGroupDetailsFragment}
-  query PermissionGroupDetails($id: ID!, $user_id: ID!) {
+  query PermissionGroupDetails($id: ID!, $userId: ID!) {
     permissionGroup(id: $id) {
       ...PermissionGroupDetailsFragment
     }
-    user(id: $user_id) {
+    user(id: $userId) {
       editableGroups {
         id
       }
       userPermissions {
         code
-        sourcePermissionGroups(userId: $user_id) {
+        sourcePermissionGroups(userId: $userId) {
           id
         }
       }

@@ -187,7 +187,11 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                         primary={perm.name.replace(/\./, "")}
                         secondary={
                           perm.lastSource &&
-                          "This group is last source of that permission"
+                          intl.formatMessage({
+                            defaultMessage:
+                              "This group is last source of that permission",
+                            description: "permission list item description"
+                          })
                         }
                       />
                     </ListItem>

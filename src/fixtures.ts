@@ -89,7 +89,7 @@ export const countries = [
   { code: "TD", name: "Chad" },
   { code: "CL", name: "Chile" },
   { code: "CN", name: "China" },
-  { code: "CX", name: "Chrpermissionsstmas Island" },
+  { code: "CX", name: "Christmas Island" },
   { code: "CC", name: "Cocos (Keeling) Islands" },
   { code: "CO", name: "Colombia" },
   { code: "KM", name: "Comoros" },

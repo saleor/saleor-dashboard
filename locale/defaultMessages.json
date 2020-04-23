@@ -912,6 +912,18 @@
     "context": "dialog header",
     "string": "Permissions"
   },
+  "src_dot_components_dot_AccountPermissions_dot_2731975416": {
+    "context": "card section description",
+    "string": "Available permissions"
+  },
+  "src_dot_components_dot_AccountPermissions_dot_2853621891": {
+    "context": "exceeded permissions description",
+    "string": "This groups permissions exceeds your own. You are able only to manage permissions that you have."
+  },
+  "src_dot_components_dot_AccountPermissions_dot_3674526441": {
+    "context": "permission list item description",
+    "string": "This group is last source of that permission"
+  },
   "src_dot_components_dot_AccountStatus_dot_2183517419": {
     "context": "section header",
     "string": "Account Status"
@@ -2959,6 +2971,14 @@
   "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_3532084010": {
     "string": "Search Staff Members"
   },
+  "src_dot_permissionGroups_dot_components_dot_MembersErrorDialog_dot_3005518110": {
+    "context": "dialog title",
+    "string": "Unassign users"
+  },
+  "src_dot_permissionGroups_dot_components_dot_MembersErrorDialog_dot_334280454": {
+    "context": "dialog content",
+    "string": "You are not able to modify this group members. Solve this problem to continue with request."
+  },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupCreatePage_dot_3765873075": {
     "context": "checkbox label",
     "string": "Group has full access to the store"
@@ -4931,6 +4951,12 @@
   "src_dot_utils_dot_errors_dot_notEditable": {
     "context": "error message",
     "string": "Only draft orders can be edited"
+  },
+  "src_dot_utils_dot_errors_dot_outOfScopeGroup": {
+    "string": "Group is out of your permissions scope"
+  },
+  "src_dot_utils_dot_errors_dot_outOfScopeUser": {
+    "string": "User is out of your permissions scope"
   },
   "src_dot_utils_dot_errors_dot_passwordNumeric": {
     "string": "Password cannot be entirely numeric"

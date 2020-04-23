@@ -50,7 +50,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
 
   const { data, loading, refetch } = usePermissionGroupDetailsQuery({
     displayLoader: true,
-    variables: { id, user_id: user?.user.id }
+    variables: { id, userId: user?.user.id }
   });
 
   const [membersList, setMembersList] = useStateFromProps(
