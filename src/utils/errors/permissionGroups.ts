@@ -10,11 +10,11 @@ const messages = defineMessages({
   assignNonStaffMember: {
     defaultMessage: "Only staff members can be assigned"
   },
-  cannotAddAndRemove: {
-    defaultMessage: "Cannot add and remove group the same time"
-  },
   cannotRemoveFromLastGroup: {
     defaultMessage: "Cannot remove user from last group"
+  },
+  duplicatedInputItem: {
+    defaultMessage: "Cannot add and remove group the same time"
   },
   permissionOutOfScope: {
     defaultMessage: "Those permissions are out of your scope"
@@ -32,8 +32,8 @@ function getPermissionGroupErrorMessage(
     switch (err.code) {
       case PermissionGroupErrorCode.ASSIGN_NON_STAFF_MEMBER:
         return intl.formatMessage(messages.assignNonStaffMember);
-      case PermissionGroupErrorCode.CANNOT_ADD_AND_REMOVE:
-        return intl.formatMessage(messages.cannotAddAndRemove);
+      case PermissionGroupErrorCode.DUPLICATED_INPUT_ITEM:
+        return intl.formatMessage(messages.duplicatedInputItem);
       case PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION:
         return intl.formatMessage(messages.permissionOutOfScope);
       case PermissionGroupErrorCode.CANNOT_REMOVE_FROM_LAST_GROUP:
