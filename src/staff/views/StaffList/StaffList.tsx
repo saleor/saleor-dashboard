@@ -23,6 +23,7 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { getSortParams } from "@saleor/utils/sort";
+import { getStringOrPlaceholder } from "@saleor/misc";
 
 import StaffAddMemberDialog, {
   AddMemberFormData
@@ -226,7 +227,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
               confirmButtonState="default"
               onClose={closeModal}
               onSubmit={handleTabDelete}
-              tabName={tabs[currentTab - 1]?.name || "..."}
+              tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
             />
           </>
         );

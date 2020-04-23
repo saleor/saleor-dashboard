@@ -10,7 +10,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
+import { maybe, getStringOrPlaceholder } from "@saleor/misc";
 import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
 
 import StaffDetailsPage from "../components/StaffDetailsPage/StaffDetailsPage";
@@ -138,7 +138,9 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                           return (
                             <>
                               <WindowTitle
-                                title={staffMember?.email || "..."}
+                                title={getStringOrPlaceholder(
+                                  staffMember?.email
+                                )}
                               />
                               <StaffDetailsPage
                                 errors={
@@ -222,7 +224,9 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                   <FormattedMessage
                                     defaultMessage="Are you sure you want to delete {email} from staff members?"
                                     values={{
-                                      email: data?.user?.email || "..."
+                                      email: getStringOrPlaceholder(
+                                        data?.user?.email
+                                      )
                                     }}
                                   />
                                 </DialogContentText>
@@ -244,7 +248,9 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                     values={{
                                       email: (
                                         <strong>
-                                          {data?.user?.email || "..."}
+                                          {getStringOrPlaceholder(
+                                            data?.user?.email
+                                          )}
                                         </strong>
                                       )
                                     }}

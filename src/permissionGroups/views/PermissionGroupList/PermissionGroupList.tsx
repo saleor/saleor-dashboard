@@ -17,6 +17,7 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import { usePermissionGroupListQuery } from "@saleor/permissionGroups/queries";
 import { PermissionGroupDelete } from "@saleor/permissionGroups/types/PermissionGroupDelete";
 import { usePermissionGroupDelete } from "@saleor/permissionGroups/mutations";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import PermissionGroupListPage from "../../components/PermissionGroupListPage";
 import {
   permissionGroupListUrl,
@@ -114,9 +115,9 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
             }
           })
         }
-        name={
-          permissionGroups?.find(group => group.id === params.id)?.name || "..."
-        }
+        name={getStringOrPlaceholder(
+          permissionGroups?.find(group => group.id === params.id)?.name
+        )}
         confirmButtonState={"default"}
         open={params.action === "remove"}
         onClose={closeModal}
