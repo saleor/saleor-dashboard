@@ -1,4 +1,5 @@
 import { PermissionEnum } from "@saleor/types/globalTypes";
+
 import { ServiceDetails_serviceAccount } from "./types/ServiceDetails";
 import { ServiceList_serviceAccounts_edges_node } from "./types/ServiceList";
 

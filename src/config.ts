@@ -32,6 +32,7 @@ export interface AppListViewSettings {
   [ListViews.SALES_LIST]: ListSettings;
   [ListViews.SHIPPING_METHODS_LIST]: ListSettings;
   [ListViews.STAFF_MEMBERS_LIST]: ListSettings;
+  [ListViews.PERMISSION_GROUP_LIST]: ListSettings;
   [ListViews.VOUCHER_LIST]: ListSettings;
   [ListViews.WEBHOOK_LIST]: ListSettings;
 }
@@ -71,6 +72,9 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY
   },
   [ListViews.STAFF_MEMBERS_LIST]: {
+    rowNumber: PAGINATE_BY
+  },
+  [ListViews.PERMISSION_GROUP_LIST]: {
     rowNumber: PAGINATE_BY
   },
   [ListViews.VOUCHER_LIST]: {

@@ -10,6 +10,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import photoIcon from "@assets/images/photo-icon.svg";
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
+import { getFormErrors } from "@saleor/utils/errors";
+import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
+import getStaffErrorMessage from "@saleor/utils/errors/staff";
 import { getUserInitials, maybe } from "../../../misc";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 
@@ -100,6 +103,7 @@ interface StaffPropertiesProps {
     firstName: string;
     lastName: string;
   };
+  errors: StaffErrorFragment[];
   disabled: boolean;
   staffMember: StaffMemberDetails_user;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -112,6 +116,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
     canEditAvatar,
     className,
     data,
+    errors,
     staffMember,
     onChange,
     onImageDelete,
@@ -123,6 +128,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
   const imgInputAnchor = React.createRef<HTMLInputElement>();
 
   const clickImgInput = () => imgInputAnchor.current.click();
+  const formErrors = getFormErrors(["id"], errors || []);
 
   return (
     <Card className={className}>
@@ -205,6 +211,13 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
           </div>
         </div>
       </CardContent>
+      {!!formErrors.id && (
+        <CardContent>
+          <Typography color="error">
+            {getStaffErrorMessage(formErrors.id, intl)}
+          </Typography>
+        </CardContent>
+      )}
     </Card>
   );
 };

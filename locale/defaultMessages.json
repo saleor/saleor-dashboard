@@ -16,6 +16,9 @@
   "configurationMenuPages": {
     "string": "Manage and add additional pages"
   },
+  "configurationMenuPermissionGroups": {
+    "string": "Manage your permission groups and their permissions"
+  },
   "configurationMenuProductTypes": {
     "string": "Define types of products you sell"
   },
@@ -902,16 +905,24 @@
     "context": "dialog title",
     "string": "Delete collections"
   },
-  "src_dot_components_dot_AccountPermissions_dot_1848599267": {
-    "context": "checkbox label",
-    "string": "User has full access to the store"
+  "src_dot_components_dot_AccountPermissionGroups_dot_2836633439": {
+    "string": "Permission groups"
   },
   "src_dot_components_dot_AccountPermissions_dot_2690176844": {
     "context": "dialog header",
     "string": "Permissions"
   },
-  "src_dot_components_dot_AccountPermissions_dot_3639008725": {
-    "string": "Expand or restrict user's permissions to access certain part of saleor system."
+  "src_dot_components_dot_AccountPermissions_dot_2731975416": {
+    "context": "card section description",
+    "string": "Available permissions"
+  },
+  "src_dot_components_dot_AccountPermissions_dot_2853621891": {
+    "context": "exceeded permissions description",
+    "string": "This groups permissions exceeds your own. You are able only to manage permissions that you have."
+  },
+  "src_dot_components_dot_AccountPermissions_dot_3674526441": {
+    "context": "permission list item description",
+    "string": "This group is last source of that permission"
   },
   "src_dot_components_dot_AccountStatus_dot_2183517419": {
     "context": "section header",
@@ -1192,6 +1203,10 @@
   "src_dot_components_dot_Navigator_dot_modes_dot_createOrder": {
     "context": "button",
     "string": "Create Order"
+  },
+  "src_dot_components_dot_Navigator_dot_modes_dot_createPermissionGroup": {
+    "context": "button",
+    "string": "Create Permission Group"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createProduct": {
     "context": "button",
@@ -2930,6 +2945,144 @@
     "context": "payment status",
     "string": "Partially refunded"
   },
+  "src_dot_permissionGroups": {
+    "context": "permission groups section name",
+    "string": "Permission Groups"
+  },
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1004218338": {
+    "context": "staff member status",
+    "string": "Inactive"
+  },
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1731102929": {
+    "context": "button",
+    "string": "Assign"
+  },
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_2986043376": {
+    "context": "dialog header",
+    "string": "Assign Staff Members"
+  },
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_3111990517": {
+    "string": "Search by name, email, etc..."
+  },
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_3247064221": {
+    "context": "staff member status",
+    "string": "Active"
+  },
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_3532084010": {
+    "string": "Search Staff Members"
+  },
+  "src_dot_permissionGroups_dot_components_dot_MembersErrorDialog_dot_3005518110": {
+    "context": "dialog title",
+    "string": "Unassign users"
+  },
+  "src_dot_permissionGroups_dot_components_dot_MembersErrorDialog_dot_334280454": {
+    "context": "dialog content",
+    "string": "You are not able to modify this group members. Solve this problem to continue with request."
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupCreatePage_dot_3765873075": {
+    "context": "checkbox label",
+    "string": "Group has full access to the store"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupCreatePage_dot_3920591233": {
+    "context": "card description",
+    "string": "Expand or restrict group's permissions to access certain part of saleor system."
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_2297471173": {
+    "context": "dialog content",
+    "string": "Are you sure you want to delete {name}?"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_3528974446": {
+    "context": "dialog title",
+    "string": "Delete permission group"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupDetailsPage_dot_3765873075": {
+    "context": "checkbox label",
+    "string": "Group has full access to the store"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupDetailsPage_dot_3920591233": {
+    "context": "card description",
+    "string": "Expand or restrict group's permissions to access certain part of saleor system."
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupInfo_dot_2081191949": {
+    "context": "text field label",
+    "string": "Group name"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupListPage_dot_613749311": {
+    "context": "button",
+    "string": "create permission group"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_2011544055": {
+    "context": "permission group name",
+    "string": "Permission Group Name"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_2734377620": {
+    "string": "Members"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_4190792473": {
+    "string": "Actions"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_425941108": {
+    "string": "No permission groups found"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_1004218338": {
+    "context": "staff member status",
+    "string": "Inactive"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_136112637": {
+    "context": "empty list message",
+    "string": "You haven’t assigned any member to this permission group yet."
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_1512872240": {
+    "string": "No members found"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_1789607185": {
+    "string": "Email Address"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_2457011428": {
+    "context": "button",
+    "string": "Assign members"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_2652621342": {
+    "context": "empty list message",
+    "string": "Please use Assign Members button to do so."
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_3247064221": {
+    "context": "staff member status",
+    "string": "Active"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_3397233744": {
+    "context": "header",
+    "string": "Group members"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_4190792473": {
+    "string": "Actions"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_636461959": {
+    "context": "staff member full name",
+    "string": "Name"
+  },
+  "src_dot_permissionGroups_dot_components_dot_UnassignMembersDialog_dot_3005518110": {
+    "context": "dialog title",
+    "string": "Unassign users"
+  },
+  "src_dot_permissionGroups_dot_components_dot_UnassignMembersDialog_dot_778652830": {
+    "context": "dialog content",
+    "string": "Are you sure you want to unassign {counter,plural,one{this member} other{{displayQuantity} members}}?"
+  },
+  "src_dot_permissionGroups_dot_views_dot_PermissionGroupCreate_dot_1140231710": {
+    "context": "window title",
+    "string": "Create category"
+  },
+  "src_dot_permissionGroups_dot_views_dot_PermissionGroupCreate_dot_3930588328": {
+    "string": "Permission group created"
+  },
+  "src_dot_permissionGroups_dot_views_dot_PermissionGroupDetails_dot_870815507": {
+    "context": "button title",
+    "string": "Unassign"
+  },
+  "src_dot_permissionGroups_dot_views_dot_PermissionGroupList_dot_92979760": {
+    "string": "Permission Group Deleted"
+  },
   "src_dot_plugins": {
     "context": "plugins section name",
     "string": "Plugins"
@@ -3698,6 +3851,10 @@
     "context": "service accounts section name",
     "string": "Service Accounts"
   },
+  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_1848599267": {
+    "context": "checkbox label",
+    "string": "User has full access to the store"
+  },
   "src_dot_services_dot_components_dot_ServiceCreatePage_dot_248507553": {
     "context": "header",
     "string": "Create New Account"
@@ -3705,6 +3862,10 @@
   "src_dot_services_dot_components_dot_ServiceCreatePage_dot_27827485": {
     "context": "checkbox label",
     "string": "Service account is active"
+  },
+  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_3639008725": {
+    "context": "card description",
+    "string": "Expand or restrict user's permissions to access certain part of saleor system."
   },
   "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_1336855942": {
     "string": "Generated Token"
@@ -3731,9 +3892,17 @@
     "context": "delete service account",
     "string": "Are you sure you want to delete {name}?"
   },
+  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_1848599267": {
+    "context": "checkbox label",
+    "string": "User has full access to the store"
+  },
   "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_27827485": {
     "context": "checkbox label",
     "string": "Service account is active"
+  },
+  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_3639008725": {
+    "context": "card description",
+    "string": "Expand or restrict user's permissions to access certain part of saleor system."
   },
   "src_dot_services_dot_components_dot_ServiceInfo_dot_3789449123": {
     "context": "service account",
@@ -4222,18 +4391,17 @@
     "context": "dialog header",
     "string": "Invite Staff Member"
   },
-  "src_dot_staff_dot_components_dot_StaffAddMemberDialog_dot_1570990296": {
-    "string": "User has full access"
-  },
-  "src_dot_staff_dot_components_dot_StaffAddMemberDialog_dot_2690176844": {
-    "string": "Permissions"
-  },
-  "src_dot_staff_dot_components_dot_StaffAddMemberDialog_dot_351138560": {
-    "string": "Expand or restrict user’s permissions to access certain part of saleor system."
-  },
   "src_dot_staff_dot_components_dot_StaffAddMemberDialog_dot_449055697": {
     "context": "button",
     "string": "Send invite"
+  },
+  "src_dot_staff_dot_components_dot_StaffDetailsPage_dot_22572205": {
+    "context": "card description",
+    "string": "User is assigned to:"
+  },
+  "src_dot_staff_dot_components_dot_StaffDetailsPage_dot_2690176844": {
+    "context": "dialog header",
+    "string": "Permissions"
   },
   "src_dot_staff_dot_components_dot_StaffDetailsPage_dot_881953347": {
     "context": "checkbox label",
@@ -4721,6 +4889,9 @@
     "context": "add authorization key error",
     "string": "Authorization key with this type already exists"
   },
+  "src_dot_utils_dot_errors_dot_assignNonStaffMember": {
+    "string": "Only staff members can be assigned"
+  },
   "src_dot_utils_dot_errors_dot_attributeAlreadyAssigned": {
     "string": "This attribute has already been assigned to this product type"
   },
@@ -4733,6 +4904,9 @@
   "src_dot_utils_dot_errors_dot_billingNotSet": {
     "context": "error message",
     "string": "Billing address is not set"
+  },
+  "src_dot_utils_dot_errors_dot_cannotAddAndRemove": {
+    "string": "Cannot add and remove group the same time"
   },
   "src_dot_utils_dot_errors_dot_cannotCancelFulfillment": {
     "context": "error message",
@@ -4749,6 +4923,9 @@
   "src_dot_utils_dot_errors_dot_cannotRefund": {
     "context": "error message",
     "string": "Manual payments can not be refunded"
+  },
+  "src_dot_utils_dot_errors_dot_cannotRemoveFromLastGroup": {
+    "string": "Cannot remove user from last group"
   },
   "src_dot_utils_dot_errors_dot_cannotVoid": {
     "context": "error message",
@@ -4775,12 +4952,21 @@
     "context": "error message",
     "string": "Only draft orders can be edited"
   },
+  "src_dot_utils_dot_errors_dot_outOfScopeGroup": {
+    "string": "Group is out of your permissions scope"
+  },
+  "src_dot_utils_dot_errors_dot_outOfScopeUser": {
+    "string": "User is out of your permissions scope"
+  },
   "src_dot_utils_dot_errors_dot_passwordNumeric": {
     "string": "Password cannot be entirely numeric"
   },
   "src_dot_utils_dot_errors_dot_paymentMissing": {
     "context": "error message",
     "string": "There's no payment associated with the order"
+  },
+  "src_dot_utils_dot_errors_dot_permissionOutOfScope": {
+    "string": "Those permissions are out of your scope"
   },
   "src_dot_utils_dot_errors_dot_shippingNotApplicable": {
     "context": "error message",
@@ -4802,6 +4988,9 @@
   },
   "src_dot_utils_dot_errors_dot_tooSimilar": {
     "string": "These passwords are too similar"
+  },
+  "src_dot_utils_dot_errors_dot_unique": {
+    "string": "This needs to be unique"
   },
   "src_dot_utils_dot_errors_dot_unknownError": {
     "string": "Unknown error"

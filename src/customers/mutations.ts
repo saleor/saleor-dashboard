@@ -36,7 +36,7 @@ import {
   UpdateCustomerAddressVariables
 } from "./types/UpdateCustomerAddress";
 
-export const accountFragmentError = gql`
+export const accountErrorFragment = gql`
   fragment AccountErrorFragment on AccountError {
     code
     field
@@ -44,7 +44,7 @@ export const accountFragmentError = gql`
 `;
 
 const updateCustomer = gql`
-  ${accountFragmentError}
+  ${accountErrorFragment}
   ${customerDetailsFragment}
   mutation UpdateCustomer($id: ID!, $input: CustomerInput!) {
     customerUpdate(id: $id, input: $input) {
@@ -63,7 +63,7 @@ export const TypedUpdateCustomerMutation = TypedMutation<
 >(updateCustomer);
 
 const createCustomer = gql`
-  ${accountFragmentError}
+  ${accountErrorFragment}
   mutation CreateCustomer($input: UserCreateInput!) {
     customerCreate(input: $input) {
       errors: accountErrors {
@@ -81,7 +81,7 @@ export const TypedCreateCustomerMutation = TypedMutation<
 >(createCustomer);
 
 const removeCustomer = gql`
-  ${accountFragmentError}
+  ${accountErrorFragment}
   mutation RemoveCustomer($id: ID!) {
     customerDelete(id: $id) {
       errors: accountErrors {
@@ -96,7 +96,7 @@ export const TypedRemoveCustomerMutation = TypedMutation<
 >(removeCustomer);
 
 const setCustomerDefaultAddress = gql`
-  ${accountFragmentError}
+  ${accountErrorFragment}
   ${customerAddressesFragment}
   mutation SetCustomerDefaultAddress(
     $addressId: ID!
@@ -119,7 +119,7 @@ export const TypedSetCustomerDefaultAddressMutation = TypedMutation<
 >(setCustomerDefaultAddress);
 
 const createCustomerAddress = gql`
-  ${accountFragmentError}
+  ${accountErrorFragment}
   ${customerAddressesFragment}
   ${fragmentAddress}
   mutation CreateCustomerAddress($id: ID!, $input: AddressInput!) {
@@ -142,7 +142,7 @@ export const TypedCreateCustomerAddressMutation = TypedMutation<
 >(createCustomerAddress);
 
 const updateCustomerAddress = gql`
-  ${accountFragmentError}
+  ${accountErrorFragment}
   ${fragmentAddress}
   mutation UpdateCustomerAddress($id: ID!, $input: AddressInput!) {
     addressUpdate(id: $id, input: $input) {
@@ -161,7 +161,7 @@ export const TypedUpdateCustomerAddressMutation = TypedMutation<
 >(updateCustomerAddress);
 
 const removeCustomerAddress = gql`
-  ${accountFragmentError}
+  ${accountErrorFragment}
   ${customerAddressesFragment}
   mutation RemoveCustomerAddress($id: ID!) {
     addressDelete(id: $id) {
@@ -180,7 +180,7 @@ export const TypedRemoveCustomerAddressMutation = TypedMutation<
 >(removeCustomerAddress);
 
 export const bulkRemoveCustomers = gql`
-  ${accountFragmentError}
+  ${accountErrorFragment}
   mutation BulkRemoveCustomers($ids: [ID]!) {
     customerBulkDelete(ids: $ids) {
       errors: accountErrors {

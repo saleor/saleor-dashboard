@@ -1,8 +1,3 @@
-import CircularProgress from "@material-ui/core/CircularProgress";
-import MenuItem from "@material-ui/core/MenuItem";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
 import classNames from "classnames";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
@@ -10,11 +5,17 @@ import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
 import chevronDown from "@assets/images/ChevronDown.svg";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import MenuItem from "@material-ui/core/MenuItem";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import AddIcon from "@material-ui/icons/Add";
 import Checkbox from "@saleor/components/Checkbox";
 import useElementScroll, {
   isScrolledToBottom
 } from "@saleor/hooks/useElementScroll";
 import { FetchMoreProps } from "@saleor/types";
+
 import Hr from "../Hr";
 
 const menuItemHeight = 46;
@@ -24,6 +25,7 @@ const offset = 24;
 export interface MultiAutocompleteChoiceType {
   label: string;
   value: any;
+  disabled?: boolean;
 }
 export interface MultiAutocompleteSelectFieldContentProps
   extends Partial<FetchMoreProps> {
@@ -66,7 +68,7 @@ const useStyles = makeStyles(
     },
     content: {
       maxHeight: menuItemHeight * maxMenuItems + theme.spacing(2),
-      overflow: "scroll",
+      overflowY: "scroll",
       padding: 8
     },
     hide: {
@@ -141,9 +143,7 @@ function getChoiceIndex(
   return choiceIndex;
 }
 
-const MultiAutocompleteSelectFieldContent: React.FC<
-  MultiAutocompleteSelectFieldContentProps
-> = props => {
+const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectFieldContentProps> = props => {
   const {
     choices,
     displayCustomValue,
@@ -210,6 +210,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<
                 className={classes.menuItem}
                 key={value.value}
                 selected={true}
+                disabled={value.disabled}
                 component="div"
                 {...getItemProps({
                   item: value.value
@@ -219,6 +220,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<
                 <Checkbox
                   className={classes.checkbox}
                   checked={true}
+                  disabled={value.disabled}
                   disableRipple
                 />
                 <span className={classes.menuItemLabel}>{value.label}</span>
@@ -239,6 +241,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<
                   className={classes.menuItem}
                   key={suggestion.value}
                   selected={highlightedIndex === choiceIndex}
+                  disabled={suggestion.disabled}
                   component="div"
                   {...getItemProps({
                     index: choiceIndex,

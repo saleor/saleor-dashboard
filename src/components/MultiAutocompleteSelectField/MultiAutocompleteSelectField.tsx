@@ -50,6 +50,20 @@ const useStyles = makeStyles(
     container: {
       flexGrow: 1,
       position: "relative"
+    },
+    disabledChipInner: {
+      "& svg": {
+        color: theme.palette.secondary.contrastText
+      },
+      alignItems: "center",
+      background: fade(theme.palette.secondary.main, 0.8),
+      borderRadius: 18,
+      color: theme.palette.primary.contrastText,
+      display: "flex",
+      justifyContent: "space-between",
+      margin: theme.spacing(1, 0),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(1)
     }
   }),
   { name: "MultiAutocompleteSelectField" }
@@ -172,16 +186,22 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
       <div className={classes.chipContainer}>
         {displayValues.map(value => (
           <div className={classes.chip} key={value.value}>
-            <div className={classes.chipInner}>
+            <div
+              className={
+                !value.disabled ? classes.chipInner : classes.disabledChipInner
+              }
+            >
               <Typography className={classes.chipLabel}>
                 {value.label}
               </Typography>
-              <IconButton
-                className={classes.chipClose}
-                onClick={() => handleSelect(value.value)}
-              >
-                <CloseIcon fontSize="small" />
-              </IconButton>
+              {!value.disabled && (
+                <IconButton
+                  className={classes.chipClose}
+                  onClick={() => handleSelect(value.value)}
+                >
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              )}
             </div>
           </div>
         ))}

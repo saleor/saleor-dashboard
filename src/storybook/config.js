@@ -6,7 +6,7 @@ const req = requireContext("../", true, /.stories.tsx$/);
 
 function loadStories() {
   // Story autodiscovery
-  req.keys().forEach(filename => req(filename));
+  req.keys().forEach((filename) => req(filename));
 
   // Components
   require("./stories/components/ActionDialog");
@@ -96,10 +96,6 @@ function loadStories() {
   require("./stories/navigation/MenuDetailsPage");
   require("./stories/navigation/MenuItemDialog");
   require("./stories/navigation/MenuListPage");
-
-  // Staff
-  require("./stories/staff/StaffListPage");
-  require("./stories/staff/StaffDetailsPage");
 
   // Pages
   require("./stories/pages/PageDetailsPage");

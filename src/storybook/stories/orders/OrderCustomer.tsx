@@ -2,7 +2,7 @@ import { Omit } from "@material-ui/core";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { permissions } from "@saleor/fixtures";
+import { adminUserPermissions } from "@saleor/fixtures";
 import OrderCustomer, {
   OrderCustomerProps
 } from "../../../orders/components/OrderCustomer";
@@ -20,7 +20,7 @@ const props: Omit<OrderCustomerProps, "classes"> = {
   onProfileView: () => undefined,
   onShippingAddressEdit: undefined,
   order,
-  userPermissions: permissions,
+  userPermissions: adminUserPermissions,
   users: clients
 };
 

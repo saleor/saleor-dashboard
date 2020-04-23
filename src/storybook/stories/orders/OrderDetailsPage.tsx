@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { permissions } from "@saleor/fixtures";
+import { adminUserPermissions } from "@saleor/fixtures";
 import OrderDetailsPage, {
   OrderDetailsPageProps
 } from "../../../orders/components/OrderDetailsPage";
@@ -34,7 +34,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onProfileView: () => undefined,
   onShippingAddressEdit: undefined,
   order,
-  userPermissions: permissions
+  userPermissions: adminUserPermissions
 };
 
 storiesOf("Views / Orders / Order details", module)

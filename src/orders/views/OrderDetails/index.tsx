@@ -192,7 +192,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             () => data.order.availableShippingMethods,
                             []
                           )}
-                          userPermissions={maybe(() => user.permissions, [])}
+                          userPermissions={user?.userPermissions || []}
                           onOrderCancel={() => openModal("cancel")}
                           onOrderFulfill={() => openModal("fulfill")}
                           onFulfillmentCancel={fulfillmentId =>
@@ -450,7 +450,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onProfileView={() =>
                             navigate(customerUrl(order.user.id))
                           }
-                          userPermissions={maybe(() => user.permissions, [])}
+                          userPermissions={user?.userPermissions || []}
                         />
                         <OrderDraftCancelDialog
                           confirmButtonState={orderDraftCancel.opts.status}

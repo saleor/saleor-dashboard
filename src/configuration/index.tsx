@@ -14,6 +14,7 @@ import ProductTypes from "@saleor/icons/ProductTypes";
 import ShippingMethods from "@saleor/icons/ShippingMethods";
 import SiteSettings from "@saleor/icons/SiteSettings";
 import StaffMembers from "@saleor/icons/StaffMembers";
+import PermissionGroups from "@saleor/icons/PermissionGroups";
 import Taxes from "@saleor/icons/Taxes";
 import Webhooks from "@saleor/icons/Webhooks";
 import { sectionNames } from "@saleor/intl";
@@ -26,6 +27,7 @@ import { serviceListUrl } from "@saleor/services/urls";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
+import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { taxSection } from "@saleor/taxes/urls";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { webhookListUrl } from "@saleor/webhooks/urls";
@@ -101,6 +103,17 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permission: PermissionEnum.MANAGE_STAFF,
           title: intl.formatMessage(sectionNames.staff),
           url: staffListUrl()
+        },
+        {
+          description: intl.formatMessage({
+            defaultMessage:
+              "Manage your permission groups and their permissions",
+            id: "configurationMenuPermissionGroups"
+          }),
+          icon: <PermissionGroups fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_STAFF,
+          title: intl.formatMessage(sectionNames.permissionGroups),
+          url: permissionGroupListUrl()
         }
       ]
     },

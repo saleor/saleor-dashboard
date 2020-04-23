@@ -177,7 +177,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
                                 <DeleteIcon />
                               </IconButton>
                             }
-                            userPermissions={maybe(() => user.permissions, [])}
+                            userPermissions={user?.userPermissions || []}
                           />
 
                           <ActionDialog

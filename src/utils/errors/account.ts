@@ -9,6 +9,12 @@ const messages = defineMessages({
   invalidPassword: {
     defaultMessage: "Invalid password"
   },
+  outOfScopeGroup: {
+    defaultMessage: "Group is out of your permissions scope"
+  },
+  outOfScopeUser: {
+    defaultMessage: "User is out of your permissions scope"
+  },
   passwordNumeric: {
     defaultMessage: "Password cannot be entirely numeric"
   },
@@ -20,6 +26,9 @@ const messages = defineMessages({
   },
   tooSimilar: {
     defaultMessage: "These passwords are too similar"
+  },
+  unique: {
+    defaultMessage: "This needs to be unique"
   }
 });
 
@@ -35,6 +44,10 @@ function getAccountErrorMessage(
         return intl.formatMessage(commonErrorMessages.invalid);
       case AccountErrorCode.INVALID_PASSWORD:
         return intl.formatMessage(messages.invalidPassword);
+      case AccountErrorCode.OUT_OF_SCOPE_USER:
+        return intl.formatMessage(messages.outOfScopeUser);
+      case AccountErrorCode.OUT_OF_SCOPE_GROUP:
+        return intl.formatMessage(messages.outOfScopeGroup);
       case AccountErrorCode.PASSWORD_ENTIRELY_NUMERIC:
         return intl.formatMessage(messages.passwordNumeric);
       case AccountErrorCode.PASSWORD_TOO_COMMON:
@@ -45,6 +58,8 @@ function getAccountErrorMessage(
         return intl.formatMessage(messages.tooSimilar);
       case AccountErrorCode.REQUIRED:
         return intl.formatMessage(commonMessages.requiredField);
+      case AccountErrorCode.UNIQUE:
+        return intl.formatMessage(messages.unique);
       default:
         return intl.formatMessage(commonErrorMessages.unknownError);
     }

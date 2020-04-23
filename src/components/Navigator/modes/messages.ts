@@ -31,6 +31,10 @@ const messages = defineMessages({
     defaultMessage: "Create Order",
     description: "button"
   },
+  createPermissionGroup: {
+    defaultMessage: "Create Permission Group",
+    description: "button"
+  },
   createProduct: {
     defaultMessage: "Create Product",
     description: "button"

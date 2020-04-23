@@ -8,8 +8,8 @@ import { PermissionEnum } from "./../../types/globalTypes";
 // GraphQL fragment: User
 // ====================================================
 
-export interface User_permissions {
-  __typename: "Permission";
+export interface User_userPermissions {
+  __typename: "UserPermission";
   code: PermissionEnum;
   name: string;
 }
@@ -25,6 +25,6 @@ export interface User {
   email: string;
   firstName: string;
   lastName: string;
-  permissions: (User_permissions | null)[] | null;
+  userPermissions: (User_userPermissions | null)[] | null;
   avatar: User_avatar | null;
 }
