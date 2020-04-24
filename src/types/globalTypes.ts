@@ -456,6 +456,7 @@ export enum OrderErrorCode {
   CANNOT_DELETE = "CANNOT_DELETE",
   CANNOT_REFUND = "CANNOT_REFUND",
   CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   FULFILL_ORDER_LINE = "FULFILL_ORDER_LINE",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
@@ -790,6 +791,7 @@ export enum WebhookEventTypeEnum {
 }
 
 export enum WebhookSortField {
+  APP = "APP",
   NAME = "NAME",
   SERVICE_ACCOUNT = "SERVICE_ACCOUNT",
   TARGET_URL = "TARGET_URL",
@@ -997,17 +999,6 @@ export interface FulfillmentCancelInput {
   restock?: boolean | null;
 }
 
-export interface FulfillmentCreateInput {
-  trackingNumber?: string | null;
-  notifyCustomer?: boolean | null;
-  lines: (FulfillmentLineInput | null)[];
-}
-
-export interface FulfillmentLineInput {
-  orderLineId?: string | null;
-  quantity?: number | null;
-}
-
 export interface FulfillmentUpdateTrackingInput {
   trackingNumber?: string | null;
   notifyCustomer?: boolean | null;
@@ -1072,6 +1063,21 @@ export interface OrderFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
+}
+
+export interface OrderFulfillInput {
+  lines: OrderFulfillLineInput[];
+  notifyCustomer?: boolean | null;
+}
+
+export interface OrderFulfillLineInput {
+  orderLineId?: string | null;
+  stocks: OrderFulfillStockInput[];
+}
+
+export interface OrderFulfillStockInput {
+  quantity?: number | null;
+  warehouse?: string | null;
 }
 
 export interface OrderLineCreateInput {
@@ -1478,6 +1484,7 @@ export interface WebhookCreateInput {
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
   serviceAccount?: string | null;
+  app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
 }
@@ -1497,6 +1504,7 @@ export interface WebhookUpdateInput {
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
   serviceAccount?: string | null;
+  app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
 }

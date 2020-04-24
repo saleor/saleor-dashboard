@@ -125,9 +125,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
             {orderMessages => (
               <OrderOperations
                 order={id}
-                onOrderFulfillmentCreate={
-                  orderMessages.handleOrderFulfillmentCreate
-                }
                 onNoteAdd={orderMessages.handleNoteAdd}
                 onOrderCancel={orderMessages.handleOrderCancel}
                 onOrderVoid={orderMessages.handleOrderVoid}

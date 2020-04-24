@@ -11,7 +11,7 @@ import classNames from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
-import { StockInput } from "@saleor/types/globalTypes";
+import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
 import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import Container from "@saleor/components/Container";
@@ -19,7 +19,10 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
-import { OrderFulfillData_order } from "@saleor/orders/types/OrderFulfillData";
+import {
+  OrderFulfillData_order,
+  OrderFulfillData_order_lines
+} from "@saleor/orders/types/OrderFulfillData";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -36,15 +39,17 @@ const useStyles = makeStyles(
       paddingLeft: theme.spacing(2) + 2
     },
     colName: {
-      width: 300
+      width: 250
     },
     colQuantity: {
-      textAlign: "right",
       width: 210
     },
     colQuantityContent: {
       alignItems: "center",
       display: "inline-flex"
+    },
+    colQuantityHeader: {
+      textAlign: "right"
     },
     colQuantityTotal: {
       textAlign: "right",
@@ -52,7 +57,7 @@ const useStyles = makeStyles(
     },
     colSku: {
       textAlign: "right",
-      width: 120
+      width: 150
     },
     error: {
       color: theme.palette.error.main
@@ -82,7 +87,7 @@ interface OrderFulfillFormData {
   sendInfo: boolean;
 }
 interface OrderFulfillSubmitData extends OrderFulfillFormData {
-  items: FormsetData<null, StockInput[]>;
+  items: FormsetData<null, OrderFulfillStockInput[]>;
 }
 export interface OrderFulfillPageProps {
   disabled: boolean;
@@ -97,6 +102,10 @@ const initialFormData: OrderFulfillFormData = {
   sendInfo: true
 };
 
+function getRemainingQuantity(line: OrderFulfillData_order_lines): number {
+  return line.quantity - line.quantityFulfilled;
+}
+
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
   disabled,
   order,
@@ -110,23 +119,25 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
 
   const { change: formsetChange, data: formsetData } = useFormset<
     null,
-    StockInput[]
+    OrderFulfillStockInput[]
   >(
-    order?.lines.map(line => ({
-      data: null,
-      id: line.id,
-      label: line.variant.attributes
-        .map(attribute =>
-          attribute.values
-            .map(attributeValue => attributeValue.name)
-            .join(" , ")
-        )
-        .join(" / "),
-      value: line.variant.stocks.map(stock => ({
-        quantity: 0,
-        warehouse: stock.warehouse.id
+    order?.lines
+      .filter(line => getRemainingQuantity(line) > 0)
+      .map(line => ({
+        data: null,
+        id: line.id,
+        label: line.variant.attributes
+          .map(attribute =>
+            attribute.values
+              .map(attributeValue => attributeValue.name)
+              .join(" , ")
+          )
+          .join(" / "),
+        value: line.variant.stocks.map(stock => ({
+          quantity: 0,
+          warehouse: stock.warehouse.id
+        }))
       }))
-    }))
   );
 
   const handleSubmit = (formData: OrderFulfillFormData) =>
@@ -189,7 +200,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                     {warehouses?.map(warehouse => (
                       <TableCell
                         key={warehouse.id}
-                        className={classes.colQuantity}
+                        className={classNames(
+                          classes.colQuantity,
+                          classes.colQuantityHeader
+                        )}
                       >
                         {warehouse.name}
                       </TableCell>
@@ -203,144 +217,151 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {renderCollection(order?.lines, (line, lineIndex) => {
-                    if (!line) {
-                      return (
-                        <TableRow>
-                          <TableCellAvatar className={classes.colName}>
-                            <Skeleton />
-                          </TableCellAvatar>
-                          <TableCell className={classes.colSku}>
-                            <Skeleton />
-                          </TableCell>
-                          {warehouses?.map(() => (
-                            <TableCell className={classes.colQuantity}>
+                  {renderCollection(
+                    order?.lines.filter(line => getRemainingQuantity(line) > 0),
+                    (line, lineIndex) => {
+                      if (!line) {
+                        return (
+                          <TableRow>
+                            <TableCellAvatar className={classes.colName}>
+                              <Skeleton />
+                            </TableCellAvatar>
+                            <TableCell className={classes.colSku}>
                               <Skeleton />
                             </TableCell>
-                          ))}
+                            {warehouses?.map(warehouse => (
+                              <TableCell
+                                className={classes.colQuantity}
+                                key={warehouse.id}
+                              >
+                                <Skeleton />
+                              </TableCell>
+                            ))}
+                            <TableCell className={classes.colQuantityTotal}>
+                              {" "}
+                              <Skeleton />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }
+
+                      const remainingQuantity = getRemainingQuantity(line);
+                      const quantityToFulfill = formsetData[
+                        lineIndex
+                      ].value.reduce(
+                        (quantityToFulfill, lineInput) =>
+                          quantityToFulfill + (lineInput.quantity || 0),
+                        0
+                      );
+                      const overfulfill = remainingQuantity < quantityToFulfill;
+
+                      return (
+                        <TableRow key={line.id}>
+                          <TableCellAvatar
+                            className={classes.colName}
+                            thumbnail={line?.thumbnail?.url}
+                          >
+                            {line.productName}
+                            <Typography color="textSecondary" variant="caption">
+                              {line.variant.attributes
+                                .map(attribute =>
+                                  attribute.values
+                                    .map(attributeValue => attributeValue.name)
+                                    .join(", ")
+                                )
+                                .join(" / ")}
+                            </Typography>
+                          </TableCellAvatar>
+                          <TableCell className={classes.colSku}>
+                            {line.variant.sku}
+                          </TableCell>
+                          {warehouses?.map(warehouse => {
+                            const warehouseStock = line.variant.stocks.find(
+                              stock => stock.warehouse.id === warehouse.id
+                            );
+                            const formsetStock = formsetData[
+                              lineIndex
+                            ].value.find(
+                              line => line.warehouse === warehouse.id
+                            );
+
+                            if (!warehouseStock) {
+                              return (
+                                <TableCell
+                                  className={classNames(
+                                    classes.colQuantity,
+                                    classes.error
+                                  )}
+                                >
+                                  <FormattedMessage
+                                    defaultMessage="No Stock"
+                                    description="no variant stock in warehouse"
+                                  />
+                                </TableCell>
+                              );
+                            }
+
+                            const availableQuantity =
+                              warehouseStock.quantity -
+                              warehouseStock.quantityAllocated;
+
+                            return (
+                              <TableCell className={classes.colQuantity}>
+                                <div className={classes.colQuantityContent}>
+                                  <TextField
+                                    type="number"
+                                    inputProps={{
+                                      className: classes.quantityInnerInput,
+                                      max: warehouseStock.quantity,
+                                      min: 0,
+                                      style: { textAlign: "right" }
+                                    }}
+                                    className={classes.quantityInput}
+                                    value={formsetStock.quantity}
+                                    onChange={event =>
+                                      formsetChange(
+                                        line.id,
+                                        update(
+                                          {
+                                            quantity: parseInt(
+                                              event.target.value,
+                                              10
+                                            ),
+                                            warehouse: warehouse.id
+                                          },
+                                          formsetData[lineIndex].value,
+                                          (a, b) => a.warehouse === b.warehouse
+                                        )
+                                      )
+                                    }
+                                    error={
+                                      overfulfill ||
+                                      formsetStock.quantity > availableQuantity
+                                    }
+                                  />
+                                  <div className={classes.remainingQuantity}>
+                                    / {availableQuantity}
+                                  </div>
+                                </div>
+                              </TableCell>
+                            );
+                          })}
                           <TableCell className={classes.colQuantityTotal}>
-                            {" "}
-                            <Skeleton />
+                            <span
+                              className={classNames({
+                                [classes.error]: overfulfill,
+                                [classes.full]:
+                                  remainingQuantity <= quantityToFulfill
+                              })}
+                            >
+                              {quantityToFulfill}
+                            </span>{" "}
+                            / {remainingQuantity}
                           </TableCell>
                         </TableRow>
                       );
                     }
-
-                    const remainingQuantity =
-                      line.quantity - line.quantityFulfilled;
-                    const quantityToFulfill = formsetData[
-                      lineIndex
-                    ].value.reduce(
-                      (quantityToFulfill, lineInput) =>
-                        quantityToFulfill + (lineInput.quantity || 0),
-                      0
-                    );
-                    const overfulfill = remainingQuantity < quantityToFulfill;
-
-                    return (
-                      <TableRow key={line.id}>
-                        <TableCellAvatar
-                          className={classes.colName}
-                          thumbnail={line?.thumbnail?.url}
-                        >
-                          {line.productName}
-                          <Typography color="textSecondary" variant="caption">
-                            {line.variant.attributes
-                              .map(attribute =>
-                                attribute.values
-                                  .map(attributeValue => attributeValue.name)
-                                  .join(", ")
-                              )
-                              .join(" / ")}
-                          </Typography>
-                        </TableCellAvatar>
-                        <TableCell className={classes.colSku}>
-                          {line.variant.sku}
-                        </TableCell>
-                        {warehouses?.map(warehouse => {
-                          const warehouseStock = line.variant.stocks.find(
-                            stock => stock.warehouse.id === warehouse.id
-                          );
-                          const formsetStock = formsetData[
-                            lineIndex
-                          ].value.find(line => line.warehouse === warehouse.id);
-
-                          if (!warehouseStock) {
-                            return (
-                              <TableCell
-                                className={classNames(
-                                  classes.colQuantity,
-                                  classes.error
-                                )}
-                              >
-                                <FormattedMessage
-                                  defaultMessage="No Stock"
-                                  description="no variant stock in warehouse"
-                                />
-                              </TableCell>
-                            );
-                          }
-
-                          const availableQuantity =
-                            warehouseStock.quantity -
-                            warehouseStock.quantityAllocated;
-
-                          return (
-                            <TableCell className={classes.colQuantity}>
-                              <div className={classes.colQuantityContent}>
-                                <TextField
-                                  type="number"
-                                  inputProps={{
-                                    className: classes.quantityInnerInput,
-                                    max: warehouseStock.quantity,
-                                    min: 0,
-                                    style: { textAlign: "right" }
-                                  }}
-                                  className={classes.quantityInput}
-                                  value={formsetStock.quantity}
-                                  onChange={event =>
-                                    formsetChange(
-                                      line.id,
-                                      update(
-                                        {
-                                          quantity: parseInt(
-                                            event.target.value,
-                                            10
-                                          ),
-                                          warehouse: warehouse.id
-                                        },
-                                        formsetData[lineIndex].value,
-                                        (a, b) => a.warehouse === b.warehouse
-                                      )
-                                    )
-                                  }
-                                  error={
-                                    overfulfill ||
-                                    formsetStock.quantity > availableQuantity
-                                  }
-                                />
-                                <div className={classes.remainingQuantity}>
-                                  / {availableQuantity}
-                                </div>
-                              </div>
-                            </TableCell>
-                          );
-                        })}
-                        <TableCell className={classes.colQuantityTotal}>
-                          <span
-                            className={classNames({
-                              [classes.error]: overfulfill,
-                              [classes.full]:
-                                remainingQuantity <= quantityToFulfill
-                            })}
-                          >
-                            {quantityToFulfill}
-                          </span>{" "}
-                          / {remainingQuantity}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  )}
                 </TableBody>
               </ResponsiveTable>
               <CardActions className={classes.actionBar}>

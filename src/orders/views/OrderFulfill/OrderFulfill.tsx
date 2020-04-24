@@ -32,7 +32,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
   });
   const [fulfillOrder, fulfillOrderOpts] = useOrderFulfill({
     onCompleted: data => {
-      if (data.orderFulfillmentCreate.errors.length === 0) {
+      if (data.orderFulfill.errors.length === 0) {
         navigate(orderUrl(orderId));
         notify({
           text: intl.formatMessage({
@@ -71,7 +71,10 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
           fulfillOrder({
             variables: {
               input: {
-                lines: formData.items.map(line => line.value),
+                lines: formData.items.map(line => ({
+                  orderLineId: line.id,
+                  stocks: line.value
+                })),
                 notifyCustomer: formData.sendInfo
               },
               orderId

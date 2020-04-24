@@ -2,30 +2,30 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentCreateInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
+import { OrderFulfillInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: FulfillOrder
 // ====================================================
 
-export interface FulfillOrder_orderFulfillmentCreate_errors {
+export interface FulfillOrder_orderFulfill_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_billingAddress_country {
+export interface FulfillOrder_orderFulfill_order_billingAddress_country {
   __typename: "CountryDisplay";
   code: string;
   country: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_billingAddress {
+export interface FulfillOrder_orderFulfill_order_billingAddress {
   __typename: "Address";
   city: string;
   cityArea: string;
   companyName: string;
-  country: FulfillOrder_orderFulfillmentCreate_order_billingAddress_country;
+  country: FulfillOrder_orderFulfill_order_billingAddress_country;
   countryArea: string;
   firstName: string;
   id: string;
@@ -36,13 +36,13 @@ export interface FulfillOrder_orderFulfillmentCreate_order_billingAddress {
   streetAddress2: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_events_user {
+export interface FulfillOrder_orderFulfill_order_events_user {
   __typename: "User";
   id: string;
   email: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_events {
+export interface FulfillOrder_orderFulfill_order_events {
   __typename: "OrderEvent";
   id: string;
   amount: number | null;
@@ -52,33 +52,33 @@ export interface FulfillOrder_orderFulfillmentCreate_order_events {
   message: string | null;
   quantity: number | null;
   type: OrderEventsEnum | null;
-  user: FulfillOrder_orderFulfillmentCreate_order_events_user | null;
+  user: FulfillOrder_orderFulfill_order_events_user | null;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_orderLine_unitPrice_gross {
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitPrice_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_orderLine_unitPrice_net {
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitPrice_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_orderLine_unitPrice {
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitPrice {
   __typename: "TaxedMoney";
-  gross: FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_orderLine_unitPrice_gross;
-  net: FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_orderLine_unitPrice_net;
+  gross: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitPrice_gross;
+  net: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitPrice_net;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_orderLine_thumbnail {
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_thumbnail {
   __typename: "Image";
   url: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_orderLine {
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
@@ -86,50 +86,50 @@ export interface FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_or
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_orderLine_unitPrice | null;
-  thumbnail: FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_orderLine_thumbnail | null;
+  unitPrice: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitPrice | null;
+  thumbnail: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_thumbnail | null;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines {
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines {
   __typename: "FulfillmentLine";
   id: string;
   quantity: number;
-  orderLine: FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines_orderLine | null;
+  orderLine: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine | null;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_fulfillments {
+export interface FulfillOrder_orderFulfill_order_fulfillments {
   __typename: "Fulfillment";
   id: string;
-  lines: (FulfillOrder_orderFulfillmentCreate_order_fulfillments_lines | null)[] | null;
+  lines: (FulfillOrder_orderFulfill_order_fulfillments_lines | null)[] | null;
   fulfillmentOrder: number;
   status: FulfillmentStatus;
   trackingNumber: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_lines_unitPrice_gross {
+export interface FulfillOrder_orderFulfill_order_lines_unitPrice_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_lines_unitPrice_net {
+export interface FulfillOrder_orderFulfill_order_lines_unitPrice_net {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_lines_unitPrice {
+export interface FulfillOrder_orderFulfill_order_lines_unitPrice {
   __typename: "TaxedMoney";
-  gross: FulfillOrder_orderFulfillmentCreate_order_lines_unitPrice_gross;
-  net: FulfillOrder_orderFulfillmentCreate_order_lines_unitPrice_net;
+  gross: FulfillOrder_orderFulfill_order_lines_unitPrice_gross;
+  net: FulfillOrder_orderFulfill_order_lines_unitPrice_net;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_lines_thumbnail {
+export interface FulfillOrder_orderFulfill_order_lines_thumbnail {
   __typename: "Image";
   url: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_lines {
+export interface FulfillOrder_orderFulfill_order_lines {
   __typename: "OrderLine";
   id: string;
   isShippingRequired: boolean;
@@ -137,22 +137,22 @@ export interface FulfillOrder_orderFulfillmentCreate_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
-  unitPrice: FulfillOrder_orderFulfillmentCreate_order_lines_unitPrice | null;
-  thumbnail: FulfillOrder_orderFulfillmentCreate_order_lines_thumbnail | null;
+  unitPrice: FulfillOrder_orderFulfill_order_lines_unitPrice | null;
+  thumbnail: FulfillOrder_orderFulfill_order_lines_thumbnail | null;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_shippingAddress_country {
+export interface FulfillOrder_orderFulfill_order_shippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
   country: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_shippingAddress {
+export interface FulfillOrder_orderFulfill_order_shippingAddress {
   __typename: "Address";
   city: string;
   cityArea: string;
   companyName: string;
-  country: FulfillOrder_orderFulfillmentCreate_order_shippingAddress_country;
+  country: FulfillOrder_orderFulfill_order_shippingAddress_country;
   countryArea: string;
   firstName: string;
   id: string;
@@ -163,120 +163,120 @@ export interface FulfillOrder_orderFulfillmentCreate_order_shippingAddress {
   streetAddress2: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_shippingMethod {
+export interface FulfillOrder_orderFulfill_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_shippingPrice_gross {
+export interface FulfillOrder_orderFulfill_order_shippingPrice_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_shippingPrice {
+export interface FulfillOrder_orderFulfill_order_shippingPrice {
   __typename: "TaxedMoney";
-  gross: FulfillOrder_orderFulfillmentCreate_order_shippingPrice_gross;
+  gross: FulfillOrder_orderFulfill_order_shippingPrice_gross;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_subtotal_gross {
+export interface FulfillOrder_orderFulfill_order_subtotal_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_subtotal {
+export interface FulfillOrder_orderFulfill_order_subtotal {
   __typename: "TaxedMoney";
-  gross: FulfillOrder_orderFulfillmentCreate_order_subtotal_gross;
+  gross: FulfillOrder_orderFulfill_order_subtotal_gross;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_total_gross {
+export interface FulfillOrder_orderFulfill_order_total_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_total_tax {
+export interface FulfillOrder_orderFulfill_order_total_tax {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_total {
+export interface FulfillOrder_orderFulfill_order_total {
   __typename: "TaxedMoney";
-  gross: FulfillOrder_orderFulfillmentCreate_order_total_gross;
-  tax: FulfillOrder_orderFulfillmentCreate_order_total_tax;
+  gross: FulfillOrder_orderFulfill_order_total_gross;
+  tax: FulfillOrder_orderFulfill_order_total_tax;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_totalAuthorized {
+export interface FulfillOrder_orderFulfill_order_totalAuthorized {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_totalCaptured {
+export interface FulfillOrder_orderFulfill_order_totalCaptured {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_user {
+export interface FulfillOrder_orderFulfill_order_user {
   __typename: "User";
   id: string;
   email: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_availableShippingMethods_price {
+export interface FulfillOrder_orderFulfill_order_availableShippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order_availableShippingMethods {
+export interface FulfillOrder_orderFulfill_order_availableShippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: FulfillOrder_orderFulfillmentCreate_order_availableShippingMethods_price | null;
+  price: FulfillOrder_orderFulfill_order_availableShippingMethods_price | null;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate_order {
+export interface FulfillOrder_orderFulfill_order {
   __typename: "Order";
   id: string;
-  billingAddress: FulfillOrder_orderFulfillmentCreate_order_billingAddress | null;
+  billingAddress: FulfillOrder_orderFulfill_order_billingAddress | null;
   canFinalize: boolean;
   created: any;
   customerNote: string;
-  events: (FulfillOrder_orderFulfillmentCreate_order_events | null)[] | null;
-  fulfillments: (FulfillOrder_orderFulfillmentCreate_order_fulfillments | null)[];
-  lines: (FulfillOrder_orderFulfillmentCreate_order_lines | null)[];
+  events: (FulfillOrder_orderFulfill_order_events | null)[] | null;
+  fulfillments: (FulfillOrder_orderFulfill_order_fulfillments | null)[];
+  lines: (FulfillOrder_orderFulfill_order_lines | null)[];
   number: string | null;
   paymentStatus: PaymentChargeStatusEnum | null;
-  shippingAddress: FulfillOrder_orderFulfillmentCreate_order_shippingAddress | null;
-  shippingMethod: FulfillOrder_orderFulfillmentCreate_order_shippingMethod | null;
+  shippingAddress: FulfillOrder_orderFulfill_order_shippingAddress | null;
+  shippingMethod: FulfillOrder_orderFulfill_order_shippingMethod | null;
   shippingMethodName: string | null;
-  shippingPrice: FulfillOrder_orderFulfillmentCreate_order_shippingPrice | null;
+  shippingPrice: FulfillOrder_orderFulfill_order_shippingPrice | null;
   status: OrderStatus;
-  subtotal: FulfillOrder_orderFulfillmentCreate_order_subtotal | null;
-  total: FulfillOrder_orderFulfillmentCreate_order_total | null;
+  subtotal: FulfillOrder_orderFulfill_order_subtotal | null;
+  total: FulfillOrder_orderFulfill_order_total | null;
   actions: (OrderAction | null)[];
-  totalAuthorized: FulfillOrder_orderFulfillmentCreate_order_totalAuthorized | null;
-  totalCaptured: FulfillOrder_orderFulfillmentCreate_order_totalCaptured | null;
-  user: FulfillOrder_orderFulfillmentCreate_order_user | null;
+  totalAuthorized: FulfillOrder_orderFulfill_order_totalAuthorized | null;
+  totalCaptured: FulfillOrder_orderFulfill_order_totalCaptured | null;
+  user: FulfillOrder_orderFulfill_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (FulfillOrder_orderFulfillmentCreate_order_availableShippingMethods | null)[] | null;
+  availableShippingMethods: (FulfillOrder_orderFulfill_order_availableShippingMethods | null)[] | null;
 }
 
-export interface FulfillOrder_orderFulfillmentCreate {
-  __typename: "FulfillmentCreate";
-  errors: FulfillOrder_orderFulfillmentCreate_errors[];
-  order: FulfillOrder_orderFulfillmentCreate_order | null;
+export interface FulfillOrder_orderFulfill {
+  __typename: "OrderFulfill";
+  errors: FulfillOrder_orderFulfill_errors[];
+  order: FulfillOrder_orderFulfill_order | null;
 }
 
 export interface FulfillOrder {
-  orderFulfillmentCreate: FulfillOrder_orderFulfillmentCreate | null;
+  orderFulfill: FulfillOrder_orderFulfill | null;
 }
 
 export interface FulfillOrderVariables {
   orderId: string;
-  input: FulfillmentCreateInput;
+  input: OrderFulfillInput;
 }
