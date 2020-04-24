@@ -10,7 +10,7 @@ const messages = defineMessages({
     defaultMessage: "Invalid password"
   },
   outOfScopeGroup: {
-    defaultMessage: "Group is out of your permissions scope"
+    defaultMessage: "Group is out of your permission scope"
   },
   outOfScopeUser: {
     defaultMessage: "User is out of your permissions scope"
