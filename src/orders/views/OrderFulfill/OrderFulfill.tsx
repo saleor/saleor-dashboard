@@ -33,7 +33,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
   const [fulfillOrder, fulfillOrderOpts] = useOrderFulfill({
     onCompleted: data => {
       if (data.orderFulfill.errors.length === 0) {
-        navigate(orderUrl(orderId));
+        navigate(orderUrl(orderId), true);
         notify({
           text: intl.formatMessage({
             defaultMessage: "Fulfilled Items",
