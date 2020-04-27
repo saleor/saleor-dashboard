@@ -251,6 +251,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 >
                   <Checkbox
                     checked={false}
+                    disabled={suggestion.disabled}
                     className={classes.checkbox}
                     disableRipple
                   />
