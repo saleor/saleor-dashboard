@@ -116,8 +116,8 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
                       )
                     : intl.formatMessage(
                         {
-                          defaultMessage: "Fulfilled ({quantity})",
-                          description: "section header"
+                          defaultMessage: "Cancelled ({quantity})",
+                          description: "cancelled fulfillment, section header"
                         },
                         {
                           quantity

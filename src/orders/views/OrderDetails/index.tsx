@@ -8,6 +8,7 @@ import useUser from "@saleor/hooks/useUser";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import { useWarehouseList } from "@saleor/warehouses/queries";
 import { customerUrl } from "../../../customers/urls";
 import {
   maybe,
@@ -94,6 +95,12 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     result: variantSearchOpts
   } = useOrderVariantSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const warehouses = useWarehouseList({
+    displayLoader: true,
+    variables: {
+      first: 30
+    }
   });
   const intl = useIntl();
 
@@ -339,6 +346,11 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                               ?.orderFulfillmentCancel.errors || []
                           }
                           open={params.action === "cancel-fulfillment"}
+                          warehouses={
+                            warehouses.data?.warehouses.edges.map(
+                              edge => edge.node
+                            ) || []
+                          }
                           onConfirm={variables =>
                             orderFulfillmentCancel.mutate({
                               id: params.id,

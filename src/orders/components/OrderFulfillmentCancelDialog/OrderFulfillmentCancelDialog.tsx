@@ -21,7 +21,7 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 
 export interface OrderFulfillmentCancelDialogFormData {
-  warehouse: string;
+  warehouseId: string;
 }
 
 const useStyles = makeStyles(
@@ -77,7 +77,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
       fullWidth
       maxWidth="sm"
     >
-      <Form initial={{ warehouse: null }} onSubmit={onConfirm}>
+      <Form initial={{ warehouseId: null }} onSubmit={onConfirm}>
         {({ change, data: formData, submit }) => {
           const handleChange = createSingleAutocompleteSelectHandler(
             change,
@@ -104,8 +104,8 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                       defaultMessage: "Select Warehouse",
                       description: "select warehouse to restock items"
                     })}
-                    name="warehouse"
-                    value={formData.warehouse}
+                    name="warehouseId"
+                    value={formData.warehouseId}
                     onChange={handleChange}
                   />
                 </div>
@@ -125,6 +125,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                   <FormattedMessage {...buttonMessages.back} />
                 </Button>
                 <ConfirmButton
+                  disabled={formData.warehouseId === null}
                   transitionState={confirmButtonState}
                   variant="contained"
                   onClick={submit}
