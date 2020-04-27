@@ -42,6 +42,7 @@ const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props =>
   const intl = useIntl();
 
   const choices = availablePermissionGroups?.map(pg => ({
+    disabled: !pg.userCanManage,
     label: pg.name,
     value: pg.id
   }));
