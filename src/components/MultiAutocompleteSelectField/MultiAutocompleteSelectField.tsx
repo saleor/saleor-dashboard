@@ -53,10 +53,10 @@ const useStyles = makeStyles(
     },
     disabledChipInner: {
       "& svg": {
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.grey[200]
       },
       alignItems: "center",
-      background: fade(theme.palette.secondary.main, 0.8),
+      background: fade(theme.palette.grey[400], 0.8),
       borderRadius: 18,
       color: theme.palette.primary.contrastText,
       display: "flex",
@@ -194,14 +194,14 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               <Typography className={classes.chipLabel}>
                 {value.label}
               </Typography>
-              {!value.disabled && (
-                <IconButton
-                  className={classes.chipClose}
-                  onClick={() => handleSelect(value.value)}
-                >
-                  <CloseIcon fontSize="small" />
-                </IconButton>
-              )}
+
+              <IconButton
+                className={classes.chipClose}
+                disabled={value.disabled}
+                onClick={() => handleSelect(value.value)}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
             </div>
           </div>
         ))}

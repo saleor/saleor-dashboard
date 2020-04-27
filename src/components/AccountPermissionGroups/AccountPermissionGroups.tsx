@@ -12,7 +12,9 @@ import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "../MultiAutocompleteSelectField";
 
-interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPageProps {
+export interface AccountPermissionGroupsProps
+  extends FetchMoreProps,
+    SearchPageProps {
   formData: {
     permissionGroups: string[];
   };
