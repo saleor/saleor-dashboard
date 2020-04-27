@@ -118,7 +118,7 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
             <>
               <DialogTitle>
                 <FormattedMessage
-                  defaultMessage="Fulfill Oroducts"
+                  defaultMessage="Fulfill Products"
                   description="dialog header"
                 />
               </DialogTitle>
