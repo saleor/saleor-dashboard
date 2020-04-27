@@ -460,6 +460,8 @@ const fulfillOrder = gql`
     orderFulfill(order: $orderId, input: $input) {
       errors: orderErrors {
         ...OrderErrorFragment
+        warehouse
+        orderLine
       }
       order {
         ...OrderDetailsFragment

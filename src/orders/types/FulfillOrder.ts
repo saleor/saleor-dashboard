@@ -12,6 +12,8 @@ export interface FulfillOrder_orderFulfill_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+  warehouse: string | null;
+  orderLine: string | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_billingAddress_country {

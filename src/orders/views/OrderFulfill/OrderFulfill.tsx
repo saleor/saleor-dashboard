@@ -66,6 +66,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
       />
       <OrderFulfillPage
         disabled={loading || warehousesLoading || fulfillOrderOpts.loading}
+        errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onBack={() => navigate(orderUrl(orderId))}
         onSubmit={formData =>
           fulfillOrder({

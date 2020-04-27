@@ -11,7 +11,10 @@ import classNames from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
-import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
+import {
+  OrderFulfillStockInput,
+  OrderErrorCode
+} from "@saleor/types/globalTypes";
 import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import Container from "@saleor/components/Container";
@@ -31,6 +34,7 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { renderCollection } from "@saleor/misc";
 import Skeleton from "@saleor/components/Skeleton";
 import AppHeader from "@saleor/components/AppHeader";
+import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
 
 const useStyles = makeStyles(
   theme => ({
@@ -91,6 +95,7 @@ interface OrderFulfillSubmitData extends OrderFulfillFormData {
 }
 export interface OrderFulfillPageProps {
   disabled: boolean;
+  errors: FulfillOrder_orderFulfill_errors[];
   order: OrderFulfillData_order;
   saveButtonBar: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
@@ -108,6 +113,7 @@ function getRemainingQuantity(line: OrderFulfillData_order_lines): number {
 
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
   disabled,
+  errors,
   order,
   saveButtonBar,
   warehouses,
@@ -336,7 +342,15 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
                                     }
                                     error={
                                       overfulfill ||
-                                      formsetStock.quantity > availableQuantity
+                                      formsetStock.quantity >
+                                        availableQuantity ||
+                                      !!errors?.find(
+                                        err =>
+                                          err.warehouse === warehouse.id &&
+                                          err.orderLine === line.id &&
+                                          err.code ===
+                                            OrderErrorCode.INSUFFICIENT_STOCK
+                                      )
                                     }
                                   />
                                   <div className={classes.remainingQuantity}>

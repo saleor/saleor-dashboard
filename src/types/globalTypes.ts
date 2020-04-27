@@ -24,6 +24,7 @@ export enum AccountErrorCode {
   NOT_FOUND = "NOT_FOUND",
   OUT_OF_SCOPE_GROUP = "OUT_OF_SCOPE_GROUP",
   OUT_OF_SCOPE_PERMISSION = "OUT_OF_SCOPE_PERMISSION",
+  OUT_OF_SCOPE_SERVICE_ACCOUNT = "OUT_OF_SCOPE_SERVICE_ACCOUNT",
   OUT_OF_SCOPE_USER = "OUT_OF_SCOPE_USER",
   PASSWORD_ENTIRELY_NUMERIC = "PASSWORD_ENTIRELY_NUMERIC",
   PASSWORD_TOO_COMMON = "PASSWORD_TOO_COMMON",
@@ -996,7 +997,7 @@ export interface DraftOrderInput {
 }
 
 export interface FulfillmentCancelInput {
-  restock?: boolean | null;
+  warehouseId: string;
 }
 
 export interface FulfillmentUpdateTrackingInput {
