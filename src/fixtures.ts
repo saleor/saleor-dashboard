@@ -370,7 +370,7 @@ export const permissions: ShopInfo_shop_permissions[] = [
     name: "Manage apps."
   },
   {
-    code: PermissionEnum.MANAGE_WEBHOOKS,
+    code: PermissionEnum.MANAGE_APPS,
     name: "Manage webhooks."
   }
 ].map(perm => ({

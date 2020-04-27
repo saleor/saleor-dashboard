@@ -244,7 +244,7 @@ const Routes: React.FC = () => {
                     component={TranslationsSection}
                   />
                   <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_WEBHOOKS]}
+                    permissions={[PermissionEnum.MANAGE_APPS]}
                     path="/webhooks"
                     component={WebhooksSection}
                   />
