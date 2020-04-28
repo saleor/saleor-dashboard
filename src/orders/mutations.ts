@@ -8,10 +8,6 @@ import {
   fragmentOrderEvent
 } from "./queries";
 import { OrderAddNote, OrderAddNoteVariables } from "./types/OrderAddNote";
-import {
-  OrderBulkCancel,
-  OrderBulkCancelVariables
-} from "./types/OrderBulkCancel";
 import { OrderCancel, OrderCancelVariables } from "./types/OrderCancel";
 import { OrderCapture, OrderCaptureVariables } from "./types/OrderCapture";
 import {
@@ -86,21 +82,6 @@ export const TypedOrderCancelMutation = TypedMutation<
   OrderCancel,
   OrderCancelVariables
 >(orderCancelMutation);
-
-const orderBulkCancelMutation = gql`
-  ${orderErrorFragment}
-  mutation OrderBulkCancel($ids: [ID]!) {
-    orderBulkCancel(ids: $ids) {
-      errors: orderErrors {
-        ...OrderErrorFragment
-      }
-    }
-  }
-`;
-export const TypedOrderBulkCancelMutation = TypedMutation<
-  OrderBulkCancel,
-  OrderBulkCancelVariables
->(orderBulkCancelMutation);
 
 const orderDraftCancelMutation = gql`
   ${fragmentOrderDetails}
