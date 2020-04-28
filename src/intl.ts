@@ -121,6 +121,10 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Manage",
     description: "button"
   },
+  ok: {
+    defaultMessage: "OK",
+    description: "button"
+  },
   remove: {
     defaultMessage: "Remove",
     description: "button"

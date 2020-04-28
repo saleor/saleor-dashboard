@@ -71,8 +71,8 @@ export const orderErrorFragment = gql`
 const orderCancelMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
-  mutation OrderCancel($id: ID!, $restock: Boolean!) {
-    orderCancel(id: $id, restock: $restock) {
+  mutation OrderCancel($id: ID!) {
+    orderCancel(id: $id) {
       errors: orderErrors {
         ...OrderErrorFragment
       }
@@ -89,8 +89,8 @@ export const TypedOrderCancelMutation = TypedMutation<
 
 const orderBulkCancelMutation = gql`
   ${orderErrorFragment}
-  mutation OrderBulkCancel($ids: [ID]!, $restock: Boolean!) {
-    orderBulkCancel(ids: $ids, restock: $restock) {
+  mutation OrderBulkCancel($ids: [ID]!) {
+    orderBulkCancel(ids: $ids) {
       errors: orderErrors {
         ...OrderErrorFragment
       }

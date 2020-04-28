@@ -21,8 +21,8 @@ export interface OrderCancelDialogProps {
   errors: OrderErrorFragment[];
   number: string;
   open: boolean;
-  onClose?();
-  onSubmit();
+  onClose: () => void;
+  onSubmit: () => void;
 }
 
 const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
@@ -50,8 +50,9 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
       <DialogContent>
         <DialogContentText>
           <FormattedMessage
-            defaultMessage="Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. Fulfilled items will be left untouched. Are you sure you want to cancel this order?"
+            defaultMessage="Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. <b>Order will not be refunded when cancelling order - You need to do it manually.</b> Are you sure you want to cancel this order?"
             values={{
+              b: (...chunks) => <b>{chunks}</b>,
               orderNumber
             }}
           />

@@ -91,6 +91,12 @@ export interface OrderDetailsFragment_fulfillments_lines {
   orderLine: OrderDetailsFragment_fulfillments_lines_orderLine | null;
 }
 
+export interface OrderDetailsFragment_fulfillments_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
 export interface OrderDetailsFragment_fulfillments {
   __typename: "Fulfillment";
   id: string;
@@ -98,6 +104,7 @@ export interface OrderDetailsFragment_fulfillments {
   fulfillmentOrder: number;
   status: FulfillmentStatus;
   trackingNumber: string;
+  warehouse: OrderDetailsFragment_fulfillments_warehouse | null;
 }
 
 export interface OrderDetailsFragment_lines_unitPrice_gross {

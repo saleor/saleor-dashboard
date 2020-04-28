@@ -9,6 +9,7 @@ import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import { customerUrl } from "../../../customers/urls";
 import {
   maybe,
@@ -16,7 +17,7 @@ import {
   getStringOrPlaceholder
 } from "../../../misc";
 import { productUrl } from "../../../products/urls";
-import { OrderStatus } from "../../../types/globalTypes";
+import { OrderStatus, FulfillmentStatus } from "../../../types/globalTypes";
 import OrderAddressEditDialog from "../../components/OrderAddressEditDialog";
 import OrderCancelDialog from "../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../components/OrderDetailsPage";
@@ -229,6 +230,17 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             navigate(customerUrl(order.user.id))
                           }
                         />
+                        <OrderCannotCancelOrderDialog
+                          onClose={closeModal}
+                          open={
+                            params.action === "cancel" &&
+                            order?.fulfillments.some(
+                              fulfillment =>
+                                fulfillment.status ===
+                                FulfillmentStatus.FULFILLED
+                            )
+                          }
+                        />
                         <OrderCancelDialog
                           confirmButtonState={orderCancel.opts.status}
                           errors={
@@ -237,10 +249,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           number={order?.number}
                           open={params.action === "cancel"}
                           onClose={closeModal}
-                          onSubmit={variables =>
+                          onSubmit={() =>
                             orderCancel.mutate({
-                              id,
-                              ...variables
+                              id
                             })
                           }
                         />

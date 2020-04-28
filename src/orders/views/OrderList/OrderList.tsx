@@ -164,11 +164,10 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   return (
     <TypedOrderBulkCancelMutation onCompleted={handleOrderBulkCancel}>
       {(orderBulkCancel, orderBulkCancelOpts) => {
-        const onOrderBulkCancel = (restock: boolean) =>
+        const onOrderBulkCancel = () =>
           orderBulkCancel({
             variables: {
-              ids: params.ids,
-              restock
+              ids: params.ids
             }
           });
 

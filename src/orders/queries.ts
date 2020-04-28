@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import makeQuery from "@saleor/hooks/makeQuery";
+import { warehouseFragment } from "@saleor/warehouses/queries";
 import { TypedQuery } from "../queries";
 import { OrderDetails, OrderDetailsVariables } from "./types/OrderDetails";
 import {
@@ -79,6 +80,7 @@ export const fragmentOrderLine = gql`
 `;
 export const fulfillmentFragment = gql`
   ${fragmentOrderLine}
+  ${warehouseFragment}
   fragment FulfillmentFragment on Fulfillment {
     id
     lines {
@@ -91,6 +93,9 @@ export const fulfillmentFragment = gql`
     fulfillmentOrder
     status
     trackingNumber
+    warehouse {
+      ...WarehouseFragment
+    }
   }
 `;
 

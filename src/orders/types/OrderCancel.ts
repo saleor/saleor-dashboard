@@ -97,6 +97,12 @@ export interface OrderCancel_orderCancel_order_fulfillments_lines {
   orderLine: OrderCancel_orderCancel_order_fulfillments_lines_orderLine | null;
 }
 
+export interface OrderCancel_orderCancel_order_fulfillments_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
 export interface OrderCancel_orderCancel_order_fulfillments {
   __typename: "Fulfillment";
   id: string;
@@ -104,6 +110,7 @@ export interface OrderCancel_orderCancel_order_fulfillments {
   fulfillmentOrder: number;
   status: FulfillmentStatus;
   trackingNumber: string;
+  warehouse: OrderCancel_orderCancel_order_fulfillments_warehouse | null;
 }
 
 export interface OrderCancel_orderCancel_order_lines_unitPrice_gross {
@@ -278,5 +285,4 @@ export interface OrderCancel {
 
 export interface OrderCancelVariables {
   id: string;
-  restock: boolean;
 }

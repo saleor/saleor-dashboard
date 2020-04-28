@@ -99,6 +99,12 @@ export interface FulfillOrder_orderFulfill_order_fulfillments_lines {
   orderLine: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine | null;
 }
 
+export interface FulfillOrder_orderFulfill_order_fulfillments_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
 export interface FulfillOrder_orderFulfill_order_fulfillments {
   __typename: "Fulfillment";
   id: string;
@@ -106,6 +112,7 @@ export interface FulfillOrder_orderFulfill_order_fulfillments {
   fulfillmentOrder: number;
   status: FulfillmentStatus;
   trackingNumber: string;
+  warehouse: FulfillOrder_orderFulfill_order_fulfillments_warehouse | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_lines_unitPrice_gross {

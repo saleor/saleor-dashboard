@@ -25,5 +25,4 @@ export interface OrderBulkCancel {
 
 export interface OrderBulkCancelVariables {
   ids: (string | null)[];
-  restock: boolean;
 }

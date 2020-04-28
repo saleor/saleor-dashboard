@@ -240,7 +240,7 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
                         color="textPrimary"
                         variant="body2"
                       >
-                        default
+                        {fulfillment.warehouse.name}
                       </Typography>
                     )
                   }}
