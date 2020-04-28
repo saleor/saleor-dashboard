@@ -14,9 +14,11 @@ import {
   orderPath,
   OrderUrlQueryParams,
   OrderDraftListUrlSortField,
-  OrderListUrlSortField
+  OrderListUrlSortField,
+  orderFulfillPath
 } from "./urls";
 import OrderDetailsComponent from "./views/OrderDetails";
+import OrderFulfillComponent from "./views/OrderFulfill";
 import OrderDraftListComponent from "./views/OrderDraftList";
 import OrderListComponent from "./views/OrderList";
 
@@ -57,6 +59,10 @@ const OrderDetails: React.FC<RouteComponentProps<any>> = ({
   );
 };
 
+const OrderFulfill: React.FC<RouteComponentProps<any>> = ({ match }) => (
+  <OrderFulfillComponent orderId={decodeURIComponent(match.params.id)} />
+);
+
 const Component = () => {
   const intl = useIntl();
 
@@ -66,6 +72,7 @@ const Component = () => {
       <Switch>
         <Route exact path={orderDraftListPath} component={OrderDraftList} />
         <Route exact path={orderListPath} component={OrderList} />
+        <Route path={orderFulfillPath(":id")} component={OrderFulfill} />
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>
     </>

@@ -18,8 +18,8 @@ export interface UseFormsetOutput<TData = object, TValue = any> {
   set: (data: FormsetData<TData, TValue>) => void;
 }
 function useFormset<TData = object, TValue = any>(
-  initial: FormsetData<TData>
-): UseFormsetOutput<TData> {
+  initial: FormsetData<TData, TValue>
+): UseFormsetOutput<TData, TValue> {
   const [data, setData] = useStateFromProps<FormsetData<TData, TValue>>(
     initial || []
   );

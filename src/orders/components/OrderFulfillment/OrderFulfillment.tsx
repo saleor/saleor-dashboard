@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import classNames from "classnames";
 
 import CardMenu from "@saleor/components/CardMenu";
 import CardTitle from "@saleor/components/CardTitle";
@@ -19,7 +20,7 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
-import { maybe, renderCollection } from "../../../misc";
+import { maybe, renderCollection, getStringOrPlaceholder } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 
@@ -46,7 +47,15 @@ const useStyles = makeStyles(
       textAlign: "right",
       width: 120
     },
-
+    infoLabel: {
+      display: "inline-block"
+    },
+    infoLabelWithMargin: {
+      marginBottom: theme.spacing()
+    },
+    infoRow: {
+      padding: theme.spacing(2, 3)
+    },
     orderNumber: {
       display: "inline",
       marginLeft: theme.spacing(1)
@@ -68,7 +77,7 @@ interface OrderFulfillmentProps {
   onTrackingCodeAdd: () => void;
 }
 
-const numberOfColumns = 3;
+const numberOfColumns = 4;
 
 const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
   const {
@@ -107,8 +116,8 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
                       )
                     : intl.formatMessage(
                         {
-                          defaultMessage: "Fulfilled ({quantity})",
-                          description: "section header"
+                          defaultMessage: "Cancelled ({quantity})",
+                          description: "cancelled fulfillment, section header"
                         },
                         {
                           quantity
@@ -135,7 +144,7 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
               menuItems={[
                 {
                   label: intl.formatMessage({
-                    defaultMessage: "Cancel shipment",
+                    defaultMessage: "Cancel Fulfillment",
                     description: "button"
                   }),
                   onSelect: onOrderFulfillmentCancel
@@ -216,18 +225,47 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
               </TableCell>
             </TableRow>
           ))}
-          {maybe(() => fulfillment.trackingNumber) && (
-            <TableRow>
-              <TableCell colSpan={numberOfColumns}>
+          <TableRow>
+            <TableCell className={classes.infoRow} colSpan={numberOfColumns}>
+              <Typography color="textSecondary" variant="body2">
                 <FormattedMessage
-                  defaultMessage="Tracking Number: {trackingNumber}"
+                  defaultMessage="Fulfilled from: {warehouseName}"
+                  description="fulfillment group"
                   values={{
-                    trackingNumber: fulfillment.trackingNumber
+                    warehouseName: (
+                      <Typography
+                        className={classNames(classes.infoLabel, {
+                          [classes.infoLabelWithMargin]: !!fulfillment?.trackingNumber
+                        })}
+                        color="textPrimary"
+                        variant="body2"
+                      >
+                        {getStringOrPlaceholder(fulfillment?.warehouse?.name)}
+                      </Typography>
+                    )
                   }}
                 />
-              </TableCell>
-            </TableRow>
-          )}
+              </Typography>
+              <Typography color="textSecondary" variant="body2">
+                {fulfillment?.trackingNumber && (
+                  <FormattedMessage
+                    defaultMessage="Tracking Number: {trackingNumber}"
+                    values={{
+                      trackingNumber: (
+                        <Typography
+                          className={classes.infoLabel}
+                          color="textPrimary"
+                          variant="body2"
+                        >
+                          {fulfillment.trackingNumber}
+                        </Typography>
+                      )
+                    }}
+                  />
+                )}
+              </Typography>
+            </TableCell>
+          </TableRow>
         </TableBody>
       </ResponsiveTable>
       {status === FulfillmentStatus.FULFILLED && !fulfillment.trackingNumber && (

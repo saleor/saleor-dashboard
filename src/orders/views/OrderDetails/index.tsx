@@ -8,6 +8,8 @@ import useUser from "@saleor/hooks/useUser";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import { useWarehouseList } from "@saleor/warehouses/queries";
+import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import { customerUrl } from "../../../customers/urls";
 import {
   maybe,
@@ -15,7 +17,7 @@ import {
   getStringOrPlaceholder
 } from "../../../misc";
 import { productUrl } from "../../../products/urls";
-import { OrderStatus } from "../../../types/globalTypes";
+import { OrderStatus, FulfillmentStatus } from "../../../types/globalTypes";
 import OrderAddressEditDialog from "../../components/OrderAddressEditDialog";
 import OrderCancelDialog from "../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../components/OrderDetailsPage";
@@ -25,7 +27,6 @@ import OrderDraftFinalizeDialog, {
 } from "../../components/OrderDraftFinalizeDialog";
 import OrderDraftPage from "../../components/OrderDraftPage";
 import OrderFulfillmentCancelDialog from "../../components/OrderFulfillmentCancelDialog";
-import OrderFulfillmentDialog from "../../components/OrderFulfillmentDialog";
 import OrderFulfillmentTrackingDialog from "../../components/OrderFulfillmentTrackingDialog";
 import OrderMarkAsPaidDialog from "../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
 import OrderPaymentDialog from "../../components/OrderPaymentDialog";
@@ -39,7 +40,8 @@ import {
   orderListUrl,
   orderUrl,
   OrderUrlQueryParams,
-  OrderUrlDialog
+  OrderUrlDialog,
+  orderFulfillUrl
 } from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 
@@ -95,6 +97,12 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   } = useOrderVariantSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const warehouses = useWarehouseList({
+    displayLoader: true,
+    variables: {
+      first: 30
+    }
+  });
   const intl = useIntl();
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -118,9 +126,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
             {orderMessages => (
               <OrderOperations
                 order={id}
-                onOrderFulfillmentCreate={
-                  orderMessages.handleOrderFulfillmentCreate
-                }
                 onNoteAdd={orderMessages.handleNoteAdd}
                 onOrderCancel={orderMessages.handleOrderCancel}
                 onOrderVoid={orderMessages.handleOrderVoid}
@@ -147,7 +152,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 {({
                   orderAddNote,
                   orderCancel,
-                  orderCreateFulfillment,
                   orderDraftUpdate,
                   orderLinesAdd,
                   orderLineDelete,
@@ -194,7 +198,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           )}
                           userPermissions={user?.userPermissions || []}
                           onOrderCancel={() => openModal("cancel")}
-                          onOrderFulfill={() => openModal("fulfill")}
+                          onOrderFulfill={() => navigate(orderFulfillUrl(id))}
                           onFulfillmentCancel={fulfillmentId =>
                             navigate(
                               orderUrl(id, {
@@ -226,6 +230,17 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             navigate(customerUrl(order.user.id))
                           }
                         />
+                        <OrderCannotCancelOrderDialog
+                          onClose={closeModal}
+                          open={
+                            params.action === "cancel" &&
+                            order?.fulfillments.some(
+                              fulfillment =>
+                                fulfillment.status ===
+                                FulfillmentStatus.FULFILLED
+                            )
+                          }
+                        />
                         <OrderCancelDialog
                           confirmButtonState={orderCancel.opts.status}
                           errors={
@@ -234,10 +249,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           number={order?.number}
                           open={params.action === "cancel"}
                           onClose={closeModal}
-                          onSubmit={variables =>
+                          onSubmit={() =>
                             orderCancel.mutate({
-                              id,
-                              ...variables
+                              id
                             })
                           }
                         />
@@ -298,38 +312,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             })
                           }
                         />
-                        <OrderFulfillmentDialog
-                          confirmButtonState={
-                            orderCreateFulfillment.opts.status
-                          }
-                          errors={
-                            orderCreateFulfillment.opts.data
-                              ?.orderFulfillmentCreate.errors || []
-                          }
-                          open={params.action === "fulfill"}
-                          lines={maybe(() => order.lines, []).filter(
-                            line => line.quantityFulfilled < line.quantity
-                          )}
-                          onClose={closeModal}
-                          onSubmit={variables =>
-                            orderCreateFulfillment.mutate({
-                              input: {
-                                ...variables,
-                                lines: maybe(() => order.lines, [])
-                                  .filter(
-                                    line =>
-                                      line.quantityFulfilled < line.quantity
-                                  )
-                                  .map((line, lineIndex) => ({
-                                    orderLineId: line.id,
-                                    quantity: variables.lines[lineIndex]
-                                  }))
-                                  .filter(line => line.quantity > 0)
-                              },
-                              order: order.id
-                            })
-                          }
-                        />
                         <OrderFulfillmentCancelDialog
                           confirmButtonState={
                             orderFulfillmentCancel.opts.status
@@ -339,6 +321,11 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                               ?.orderFulfillmentCancel.errors || []
                           }
                           open={params.action === "cancel-fulfillment"}
+                          warehouses={
+                            warehouses.data?.warehouses.edges.map(
+                              edge => edge.node
+                            ) || []
+                          }
                           onConfirm={variables =>
                             orderFulfillmentCancel.mutate({
                               id: params.id,

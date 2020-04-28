@@ -54,7 +54,7 @@ const useStyles = makeStyles(
       width: 120
     },
     quantityInput: {
-      width: "4rem"
+      width: 100
     },
     remainingQuantity: {
       marginLeft: theme.spacing(),
