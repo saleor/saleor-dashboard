@@ -20,7 +20,7 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
-import { maybe, renderCollection } from "../../../misc";
+import { maybe, renderCollection, getStringOrPlaceholder } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 
@@ -240,7 +240,7 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
                         color="textPrimary"
                         variant="body2"
                       >
-                        {fulfillment.warehouse.name}
+                        {getStringOrPlaceholder(fulfillment?.warehouse?.name)}
                       </Typography>
                     )
                   }}
