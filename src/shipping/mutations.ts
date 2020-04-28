@@ -1,7 +1,6 @@
 import gql from "graphql-tag";
 
 import makeMutation from "@saleor/hooks/makeMutation";
-import { warehouseErrorFragment } from "@saleor/warehouses/mutations";
 import { countryFragment } from "../taxes/queries";
 import { shippingMethodFragment, shippingZoneDetailsFragment } from "./queries";
 import {
@@ -40,14 +39,6 @@ import {
   UpdateShippingZone,
   UpdateShippingZoneVariables
 } from "./types/UpdateShippingZone";
-import {
-  AssignShippingZoneToWarehouse,
-  AssignShippingZoneToWarehouseVariables
-} from "./types/AssignShippingZoneToWarehouse";
-import {
-  UnassignShippingZoneToWarehouse,
-  UnassignShippingZoneToWarehouseVariables
-} from "./types/UnassignShippingZoneToWarehouse";
 
 export const shippingErrorFragment = gql`
   fragment ShippingErrorFragment on ShippingError {
@@ -223,45 +214,3 @@ export const useShippingRateBulkDelete = makeMutation<
   BulkDeleteShippingRate,
   BulkDeleteShippingRateVariables
 >(bulkDeleteShippingRate);
-
-const assignShippingZoneToWarehouse = gql`
-  ${warehouseErrorFragment}
-  mutation AssignShippingZoneToWarehouse(
-    $warehouseId: ID!
-    $shippingZoneId: ID!
-  ) {
-    assignWarehouseShippingZone(
-      id: $warehouseId
-      shippingZoneIds: [$shippingZoneId]
-    ) {
-      errors: warehouseErrors {
-        ...WarehouseErrorFragment
-      }
-    }
-  }
-`;
-export const useAssignShippingZoneToWarehouse = makeMutation<
-  AssignShippingZoneToWarehouse,
-  AssignShippingZoneToWarehouseVariables
->(assignShippingZoneToWarehouse);
-
-const unassignShippingZoneToWarehouse = gql`
-  ${warehouseErrorFragment}
-  mutation UnassignShippingZoneToWarehouse(
-    $warehouseId: ID!
-    $shippingZoneId: ID!
-  ) {
-    unassignWarehouseShippingZone(
-      id: $warehouseId
-      shippingZoneIds: [$shippingZoneId]
-    ) {
-      errors: warehouseErrors {
-        ...WarehouseErrorFragment
-      }
-    }
-  }
-`;
-export const useUnassignShippingZoneToWarehouse = makeMutation<
-  UnassignShippingZoneToWarehouse,
-  UnassignShippingZoneToWarehouseVariables
->(unassignShippingZoneToWarehouse);

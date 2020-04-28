@@ -14,9 +14,7 @@ import {
   useShippingRateUpdate,
   useShippingRateDelete,
   useShippingZoneDelete,
-  useShippingZoneUpdate,
-  useAssignShippingZoneToWarehouse,
-  useUnassignShippingZoneToWarehouse
+  useShippingZoneUpdate
 } from "@saleor/shipping/mutations";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import ShippingZoneRateDialog from "@saleor/shipping/components/ShippingZoneRateDialog";
@@ -64,9 +62,6 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       variables: DEFAULT_INITIAL_SEARCH_DATA
     }
   );
-
-  const [assignToWarehouse] = useAssignShippingZoneToWarehouse({});
-  const [unassignToWarehouse] = useUnassignShippingZoneToWarehouse({});
 
   const { data, loading } = useShippingZone({
     displayLoader: true,
@@ -147,83 +142,22 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     }
   });
 
-  const handleSubmit = async (submitData: FormData) => {
-    try {
-      const updateResult = await updateShippingZone({
-        variables: {
-          id,
-          input: {
-            name: submitData.name
-          }
+  const handleSubmit = (submitData: FormData) => {
+    const warehouseDiff = diff(
+      data.shippingZone.warehouses.map(warehouse => warehouse.id),
+      submitData.warehouses
+    );
+
+    updateShippingZone({
+      variables: {
+        id,
+        input: {
+          addWarehouses: warehouseDiff.added,
+          name: submitData.name,
+          removeWarehouses: warehouseDiff.removed
         }
-      });
-      const updateErrors = updateResult.data.shippingZoneUpdate.errors;
-
-      if (updateErrors.length === 0) {
-        const warehouseDiff = diff(
-          data.shippingZone.warehouses.map(warehouse => warehouse.id),
-          submitData.warehouses
-        );
-        const assignResults = await Promise.all(
-          warehouseDiff.added.map(warehouseId =>
-            assignToWarehouse({
-              variables: {
-                shippingZoneId: id,
-                warehouseId
-              }
-            })
-          )
-        );
-        const assignErrors = assignResults
-          .map(
-            assignResult => assignResult.data.assignWarehouseShippingZone.errors
-          )
-          .reduce((acc, errors) => [...acc, ...errors], []);
-
-        if (assignErrors.length === 0) {
-          notify({
-            text: intl.formatMessage(commonMessages.savedChanges)
-          });
-        } else {
-          throw new Error(
-            `Assigning to warehouse failed: ${assignErrors[0].code}`
-          );
-        }
-
-        const unassignResults = await Promise.all(
-          warehouseDiff.removed.map(warehouseId =>
-            unassignToWarehouse({
-              variables: {
-                shippingZoneId: id,
-                warehouseId
-              }
-            })
-          )
-        );
-        const unassignErrors = unassignResults
-          .map(
-            unassignResult =>
-              unassignResult.data.unassignWarehouseShippingZone.errors
-          )
-          .reduce((acc, errors) => [...acc, ...errors], []);
-
-        if (unassignErrors.length === 0) {
-          notify({
-            text: intl.formatMessage(commonMessages.savedChanges)
-          });
-        } else {
-          throw new Error(
-            `Assigning to warehouse failed: ${unassignErrors[0].code}`
-          );
-        }
-      } else {
-        throw new Error(`Updating failed: ${updateErrors[0].code}`);
       }
-    } catch (err) {
-      notify({
-        text: intl.formatMessage(commonMessages.somethingWentWrong)
-      });
-    }
+    });
   };
 
   if (data?.shippingZone === null) {
