@@ -165,6 +165,7 @@ export interface ProductImageUpdate_productImageUpdate_product_variants_stocks {
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: ProductImageUpdate_productImageUpdate_product_variants_stocks_warehouse;
 }
 

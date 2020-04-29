@@ -266,12 +266,14 @@ export const product: (
           __typename: "Stock",
           id: "1",
           quantity: 1,
+          quantityAllocated: 0,
           warehouse: warehouseList[0]
         },
         {
           __typename: "Stock",
           id: "2",
           quantity: 4,
+          quantityAllocated: 2,
           warehouse: warehouseList[1]
         }
       ],
@@ -301,6 +303,7 @@ export const product: (
           __typename: "Stock",
           id: "1",
           quantity: 13,
+          quantityAllocated: 2,
           warehouse: warehouseList[0]
         }
       ],

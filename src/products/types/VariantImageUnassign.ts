@@ -107,6 +107,7 @@ export interface VariantImageUnassign_variantImageUnassign_productVariant_stocks
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: VariantImageUnassign_variantImageUnassign_productVariant_stocks_warehouse;
 }
 

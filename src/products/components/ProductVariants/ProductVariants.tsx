@@ -296,7 +296,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               const isSelected = variant ? isChecked(variant.id) : false;
               const numAvailable =
                 variant && variant.stocks
-                  ? variant.stocks.reduce((acc, s) => acc + s.quantity, 0)
+                  ? variant.stocks.reduce(
+                      (acc, s) => acc + s.quantity - s.quantityAllocated,
+                      0
+                    )
                   : null;
 
               return (

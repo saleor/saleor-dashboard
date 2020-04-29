@@ -165,6 +165,7 @@ export interface SimpleProductUpdate_productUpdate_product_variants_stocks {
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: SimpleProductUpdate_productUpdate_product_variants_stocks_warehouse;
 }
 
@@ -307,6 +308,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_stocks 
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: SimpleProductUpdate_productVariantUpdate_productVariant_stocks_warehouse;
 }
 
@@ -430,6 +432,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_s
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: SimpleProductUpdate_productVariantStocksCreate_productVariant_stocks_warehouse;
 }
 
@@ -552,6 +555,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_s
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: SimpleProductUpdate_productVariantStocksDelete_productVariant_stocks_warehouse;
 }
 
@@ -675,6 +679,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_s
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: SimpleProductUpdate_productVariantStocksUpdate_productVariant_stocks_warehouse;
 }
 
