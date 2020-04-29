@@ -126,7 +126,7 @@ function getAvailabilityLabel(
         return intl.formatMessage(
           {
             defaultMessage:
-              "{stockQuantity,plural,other{{stockQuantity} available}}",
+              "{stockQuantity,plural,one{{stockQuantity} available} other{{stockQuantity} available}}",
             description: "product variant inventory"
           },
           {
@@ -238,7 +238,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
         <CardContent className={classes.warehouseSelectContainer}>
           <Typography className={classes.warehouseLabel}>
             <FormattedMessage
-              defaultMessage="Available inventoty at:"
+              defaultMessage="Available inventory at:"
               description="variant stock status"
             />
           </Typography>

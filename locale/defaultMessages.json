@@ -3806,6 +3806,14 @@
     "context": "product variant price",
     "string": "Price"
   },
+  "src_dot_products_dot_components_dot_ProductVariants_dot_1252282784": {
+    "context": "product variant inventory",
+    "string": "{stockQuantity,plural,one{{stockQuantity} available} other{{stockQuantity} available}}"
+  },
+  "src_dot_products_dot_components_dot_ProductVariants_dot_1614793985": {
+    "context": "variant stock status",
+    "string": "Available inventory at:"
+  },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1721716102": {
     "context": "button",
     "string": "Create variants"
@@ -3825,17 +3833,9 @@
     "context": "filtering option",
     "string": "All Warehouses"
   },
-  "src_dot_products_dot_components_dot_ProductVariants_dot_3284706946": {
-    "context": "variant stock status",
-    "string": "Available inventoty at:"
-  },
   "src_dot_products_dot_components_dot_ProductVariants_dot_3490038570": {
     "context": "product variant inventory status",
     "string": "Inventory"
-  },
-  "src_dot_products_dot_components_dot_ProductVariants_dot_387066717": {
-    "context": "product variant inventory",
-    "string": "{stockQuantity,plural,other{{stockQuantity} available}}"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_3989383405": {
     "context": "button",
