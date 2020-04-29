@@ -1256,6 +1256,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       __typename: "Stock",
       id: "1",
       quantity: 1,
+      quantityAllocated: 1,
       warehouse: {
         __typename: "Warehouse",
         id: "123",
@@ -1266,6 +1267,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       __typename: "Stock",
       id: "2",
       quantity: 4,
+      quantityAllocated: 2,
       warehouse: {
         __typename: "Warehouse",
         id: "1234",
