@@ -114,13 +114,15 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
       onKeyDown={handleKeyPress}
       tabIndex={0}
     >
-      <Link onClick={() => setOpen(open => !open)}>{current.label}</Link>
-      <ArrowDropdown
-        className={classNames(classes.arrow, {
-          [classes.rotate]: open
-        })}
-        color="primary"
-      />
+      <Link onClick={() => setOpen(open => !open)}>
+        {current.label}
+        <ArrowDropdown
+          className={classNames(classes.arrow, {
+            [classes.rotate]: open
+          })}
+          color="primary"
+        />
+      </Link>
 
       <Popper
         className={classes.popper}

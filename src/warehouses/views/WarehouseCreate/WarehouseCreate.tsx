@@ -7,7 +7,7 @@ import { warehouseListUrl, warehouseUrl } from "@saleor/warehouses/urls";
 import { useWarehouseCreate } from "@saleor/warehouses/mutations";
 import { commonMessages } from "@saleor/intl";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { maybe, findValueInEnum, getMutationStatus } from "@saleor/misc";
+import { findValueInEnum, getMutationStatus } from "@saleor/misc";
 import { CountryCode } from "@saleor/types/globalTypes";
 import useShop from "@saleor/hooks/useShop";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -36,12 +36,9 @@ const WarehouseCreate: React.FC = () => {
         })}
       />
       <WarehouseCreatePage
-        countries={maybe(() => shop.countries, [])}
+        countries={shop?.countries || []}
         disabled={createWarehouseOpts.loading}
-        errors={maybe(
-          () => createWarehouseOpts.data.createWarehouse.errors,
-          []
-        )}
+        errors={createWarehouseOpts.data?.createWarehouse.errors || []}
         saveButtonBarState={createWarehouseTransitionState}
         onBack={() => navigate(warehouseListUrl())}
         onSubmit={data =>

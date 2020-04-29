@@ -28,7 +28,7 @@ import {
 } from "@saleor/orders/types/OrderFulfillData";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import { Theme, makeStyles } from "@material-ui/core/styles";
 import { update } from "@saleor/utils/lists";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { renderCollection } from "@saleor/misc";
@@ -36,8 +36,32 @@ import Skeleton from "@saleor/components/Skeleton";
 import AppHeader from "@saleor/components/AppHeader";
 import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
 
-const useStyles = makeStyles(
+type ClassKey =
+  | "actionBar"
+  | "table"
+  | "colName"
+  | "colQuantity"
+  | "colQuantityContent"
+  | "colQuantityHeader"
+  | "colQuantityTotal"
+  | "colSku"
+  | "error"
+  | "full"
+  | "quantityInnerInput"
+  | "quantityInput"
+  | "remainingQuantity";
+const useStyles = makeStyles<Theme, OrderFulfillPageProps, ClassKey>(
   theme => ({
+    [theme.breakpoints.up("lg")]: {
+      colName: {
+        width: ({ warehouses }) => (warehouses?.length > 3 ? 250 : "auto")
+      }
+    },
+    [theme.breakpoints.only("md")]: {
+      colName: {
+        width: ({ warehouses }) => (warehouses?.length > 2 ? 250 : "auto")
+      }
+    },
     actionBar: {
       flexDirection: "row",
       paddingLeft: theme.spacing(2) + 2
@@ -111,17 +135,19 @@ function getRemainingQuantity(line: OrderFulfillData_order_lines): number {
   return line.quantity - line.quantityFulfilled;
 }
 
-const OrderFulfillPage: React.FC<OrderFulfillPageProps> = ({
-  disabled,
-  errors,
-  order,
-  saveButtonBar,
-  warehouses,
-  onBack,
-  onSubmit
-}) => {
+const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
+  const {
+    disabled,
+    errors,
+    order,
+    saveButtonBar,
+    warehouses,
+    onBack,
+    onSubmit
+  } = props;
+
   const intl = useIntl();
-  const classes = useStyles({});
+  const classes = useStyles(props);
 
   const { change: formsetChange, data: formsetData } = useFormset<
     null,

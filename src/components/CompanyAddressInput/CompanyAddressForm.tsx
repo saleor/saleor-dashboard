@@ -72,6 +72,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
     "city",
     "postalCode",
     "country",
+    "countryArea",
     "companyArea",
     "phone"
   ];
