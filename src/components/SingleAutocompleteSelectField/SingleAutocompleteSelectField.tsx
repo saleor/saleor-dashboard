@@ -10,7 +10,8 @@ import { FetchMoreProps } from "@saleor/types";
 import ArrowDropdownIcon from "../../icons/ArrowDropdown";
 import Debounce, { DebounceProps } from "../Debounce";
 import SingleAutocompleteSelectFieldContent, {
-  SingleAutocompleteChoiceType
+  SingleAutocompleteChoiceType,
+  SingleAutocompleteActionType
 } from "./SingleAutocompleteSelectFieldContent";
 
 const useStyles = makeStyles(
@@ -25,6 +26,7 @@ const useStyles = makeStyles(
 
 export interface SingleAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
+  add?: SingleAutocompleteActionType;
   error?: boolean;
   name: string;
   displayValue: string;
@@ -47,6 +49,7 @@ const DebounceAutocomplete: React.ComponentType<DebounceProps<
 
 const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectFieldProps> = props => {
   const {
+    add,
     allowCustomValues,
     choices,
     disabled,
@@ -144,6 +147,15 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                 />
                 {isOpen && (!!inputValue || !!choices.length) && (
                   <SingleAutocompleteSelectFieldContent
+                    add={
+                      !!add && {
+                        ...add,
+                        onClick: () => {
+                          add.onClick();
+                          closeMenu();
+                        }
+                      }
+                    }
                     choices={choices}
                     displayCustomValue={displayCustomValue}
                     emptyOption={emptyOption}

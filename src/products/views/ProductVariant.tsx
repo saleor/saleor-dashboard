@@ -7,7 +7,10 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import NotFoundPage from "@saleor/components/NotFoundPage";
-import { decimal, maybe } from "../../misc";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
+import { decimal } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage, {
   ProductVariantPageSubmitData
@@ -22,8 +25,11 @@ import {
   productUrl,
   productVariantAddUrl,
   productVariantEditUrl,
-  ProductVariantEditUrlQueryParams
+  ProductVariantEditUrlQueryParams,
+  ProductVariantEditUrlDialog
 } from "../urls";
+import ProductWarehousesDialog from "../components/ProductWarehousesDialog";
+import { useAddOrRemoveStocks } from "../mutations";
 
 interface ProductUpdateProps {
   variantId: string;
@@ -45,6 +51,36 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   useEffect(() => {
     setErrors([]);
   }, [variantId]);
+
+  const { result: searchWarehousesOpts } = useWarehouseSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 20
+    }
+  });
+
+  const [addOrRemoveStocks, addOrRemoveStocksOpts] = useAddOrRemoveStocks({
+    onCompleted: data => {
+      if (
+        data.productVariantStocksCreate.errors.length === 0 &&
+        data.productVariantStocksDelete.errors.length === 0
+      ) {
+        notify({
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
+        closeModal();
+      }
+    }
+  });
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductVariantEditUrlDialog,
+    ProductVariantEditUrlQueryParams
+  >(
+    navigate,
+    params => productVariantEditUrl(productId, variantId, params),
+    params
+  );
 
   const handleBack = () => navigate(productUrl(productId));
 
@@ -107,14 +143,14 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
               return (
                 <>
-                  <WindowTitle title={maybe(() => data.productVariant.name)} />
+                  <WindowTitle title={data?.productVariant?.name} />
                   <ProductVariantPage
                     errors={errors}
                     saveButtonBarState={updateVariant.opts.status}
                     loading={disableFormSave}
                     placeholderImage={placeholderImg}
                     variant={variant}
-                    header={variant ? variant.name || variant.sku : undefined}
+                    header={variant?.name || variant?.sku}
                     onAdd={() => navigate(productVariantAddUrl(productId))}
                     onBack={handleBack}
                     onDelete={() =>
@@ -125,25 +161,27 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                       )
                     }
                     onImageSelect={handleImageSelect}
-                    onSubmit={(data: ProductVariantPageSubmitData) => {
-                      if (variant) {
-                        updateVariant.mutate({
-                          attributes: data.attributes.map(attribute => ({
-                            id: attribute.id,
-                            values: [attribute.value]
-                          })),
-                          costPrice: decimal(data.costPrice),
-                          id: variantId,
-                          priceOverride: decimal(data.priceOverride),
-                          quantity: parseInt(data.quantity, 0),
-                          sku: data.sku,
-                          trackInventory: true // FIXME: missing in UI
-                        });
-                      }
-                    }}
+                    onSubmit={(data: ProductVariantPageSubmitData) =>
+                      updateVariant.mutate({
+                        attributes: data.attributes.map(attribute => ({
+                          id: attribute.id,
+                          values: [attribute.value]
+                        })),
+                        costPrice: decimal(data.costPrice),
+                        id: variantId,
+                        priceOverride: decimal(data.priceOverride),
+                        sku: data.sku,
+                        stocks: data.stocks.map(stock => ({
+                          quantity: parseInt(stock.value, 10),
+                          warehouse: stock.id
+                        })),
+                        trackInventory: data.trackInventory
+                      })
+                    }
                     onVariantClick={variantId => {
                       navigate(productVariantEditUrl(productId, variantId));
                     }}
+                    onWarehousesEdit={() => openModal("edit-stocks")}
                   />
                   <ProductVariantDeleteDialog
                     confirmButtonState={deleteVariant.opts.status}
@@ -156,7 +194,37 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                       })
                     }
                     open={params.action === "remove"}
-                    name={maybe(() => data.productVariant.name)}
+                    name={data?.productVariant?.name}
+                  />
+                  <ProductWarehousesDialog
+                    confirmButtonState={addOrRemoveStocksOpts.status}
+                    disabled={addOrRemoveStocksOpts.loading}
+                    errors={[
+                      ...(addOrRemoveStocksOpts.data?.productVariantStocksCreate
+                        .errors || []),
+                      ...(addOrRemoveStocksOpts.data?.productVariantStocksDelete
+                        .errors || [])
+                    ]}
+                    onClose={closeModal}
+                    open={params.action === "edit-stocks"}
+                    warehouses={searchWarehousesOpts.data?.search.edges.map(
+                      edge => edge.node
+                    )}
+                    warehousesWithStocks={
+                      variant?.stocks.map(stock => stock.warehouse.id) || []
+                    }
+                    onConfirm={data =>
+                      addOrRemoveStocks({
+                        variables: {
+                          add: data.added.map(id => ({
+                            quantity: 0,
+                            warehouse: id
+                          })),
+                          remove: data.removed,
+                          variantId
+                        }
+                      })
+                    }
                   />
                 </>
               );

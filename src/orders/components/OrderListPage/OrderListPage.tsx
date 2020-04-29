@@ -7,12 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
-import {
-  FilterPageProps,
-  ListActions,
-  PageListProps,
-  SortPage
-} from "@saleor/types";
+import { FilterPageProps, PageListProps, SortPage } from "@saleor/types";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
 import FilterBar from "@saleor/components/FilterBar";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
@@ -25,7 +20,6 @@ import {
 
 export interface OrderListPageProps
   extends PageListProps,
-    ListActions,
     FilterPageProps<OrderFilterKeys, OrderListFilterOpts>,
     SortPage<OrderListUrlSortField> {
   orders: OrderList_orders_edges_node[];

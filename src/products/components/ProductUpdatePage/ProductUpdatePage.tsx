@@ -34,7 +34,8 @@ import {
   getProductUpdatePageFormData,
   getSelectedAttributesFromProduct,
   ProductAttributeValueChoices,
-  ProductUpdatePageFormData
+  ProductUpdatePageFormData,
+  getStockInputFromProduct
 } from "../../utils/data";
 import {
   createAttributeChangeHandler,
@@ -45,8 +46,8 @@ import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
-import ProductStock from "../ProductStock";
 import ProductVariants from "../ProductVariants";
+import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
 export interface ProductUpdatePageProps extends ListActions {
   errors: ProductErrorFragment[];
@@ -63,6 +64,7 @@ export interface ProductUpdatePageProps extends ListActions {
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
+  onWarehousesEdit: () => void;
   onVariantsAdd: () => void;
   onVariantShow: (id: string) => () => void;
   onImageDelete: (id: string) => () => void;
@@ -71,7 +73,6 @@ export interface ProductUpdatePageProps extends ListActions {
   onImageEdit?(id: string);
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
-  onProductShow?();
   onSeoClick?();
   onSubmit?(data: ProductUpdatePageSubmitData);
   onVariantAdd?();
@@ -80,6 +81,7 @@ export interface ProductUpdatePageProps extends ListActions {
 export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
   attributes: ProductAttributeInput[];
   collections: string[];
+  stocks: ProductStockInput[];
 }
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
@@ -108,6 +110,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onVariantAdd,
   onVariantsAdd,
   onVariantShow,
+  onWarehousesEdit,
   isChecked,
   selected,
   toggle,
@@ -120,9 +123,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     () => getAttributeInputFromProduct(product),
     [product]
   );
+  const stockInput = React.useMemo(() => getStockInputFromProduct(product), [
+    product
+  ]);
   const { change: changeAttributeData, data: attributes } = useFormset(
     attributeInput
   );
+  const { change: changeStockData, data: stocks } = useFormset(stockInput);
 
   const [selectedAttributes, setSelectedAttributes] = useStateFromProps<
     ProductAttributeValueChoices[]
@@ -149,6 +156,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const handleSubmit = (data: ProductUpdatePageFormData) =>
     onSubmit({
       attributes,
+      stocks,
       ...data
     });
 
@@ -239,12 +247,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       toggleAll={toggleAll}
                     />
                   ) : (
-                    <ProductStock
+                    <ProductStocks
                       data={data}
                       disabled={disabled}
-                      product={product}
-                      onChange={change}
                       errors={errors}
+                      stocks={stocks}
+                      onChange={(id, value) => {
+                        triggerChange();
+                        changeStockData(id, value);
+                      }}
+                      onFormDataChange={change}
+                      onWarehousesEdit={onWarehousesEdit}
                     />
                   )}
                   <CardSpacer />

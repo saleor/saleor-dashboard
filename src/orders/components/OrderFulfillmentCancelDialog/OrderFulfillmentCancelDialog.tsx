@@ -11,25 +11,29 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import { buttonMessages } from "@saleor/intl";
 import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import FormSpacer from "@saleor/components/FormSpacer";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
+import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
+import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 
-export interface FormData {
-  restock: boolean;
+export interface OrderFulfillmentCancelDialogFormData {
+  warehouseId: string;
 }
 
 const useStyles = makeStyles(
   theme => ({
-    deleteButton: {
-      "&:hover": {
-        backgroundColor: theme.palette.error.main
-      },
-      backgroundColor: theme.palette.error.main,
-      color: theme.palette.error.contrastText
+    enableOverflow: {
+      overflow: "visible"
+    },
+    paragraph: {
+      marginBottom: theme.spacing(2)
+    },
+    selectCcontainer: {
+      width: "60%"
     }
   }),
   { name: "OrderFulfillmentCancelDialog" }
@@ -39,69 +43,99 @@ export interface OrderFulfillmentCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
+  warehouses: WarehouseFragment[];
   onClose();
-  onConfirm(data: FormData);
+  onConfirm(data: OrderFulfillmentCancelDialogFormData);
 }
 
 const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> = props => {
-  const { confirmButtonState, errors, open, onConfirm, onClose } = props;
+  const {
+    confirmButtonState,
+    errors,
+    open,
+    warehouses,
+    onConfirm,
+    onClose
+  } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
+  const [displayValue, setDisplayValue] = React.useState("");
+
+  const choices = warehouses?.map(warehouse => ({
+    label: warehouse.name,
+    value: warehouse.id
+  }));
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
-      <Form initial={{ restock: true }} onSubmit={onConfirm}>
-        {({ change, data, submit }) => (
-          <>
-            <DialogTitle>
-              <FormattedMessage
-                defaultMessage="Cancel Fulfillment"
-                description="dialog header"
-              />
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                <FormattedMessage defaultMessage="Are you sure you want to cancel this fulfillment?" />
-              </DialogContentText>
-              <ControlledCheckbox
-                checked={data.restock}
-                label={intl.formatMessage({
-                  defaultMessage: "Restock items?",
-                  description: "switch button"
-                })}
-                name="restock"
-                onChange={change}
-              />
-              {errors.length > 0 && (
-                <>
-                  <FormSpacer />
-                  {errors.map(err => (
-                    <DialogContentText color="error">
-                      {getOrderErrorMessage(err, intl)}
-                    </DialogContentText>
-                  ))}
-                </>
-              )}
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.back} />
-              </Button>
-              <ConfirmButton
-                transitionState={confirmButtonState}
-                className={classes.deleteButton}
-                variant="contained"
-                onClick={submit}
-              >
+    <Dialog
+      classes={{
+        paper: classes.enableOverflow
+      }}
+      onClose={onClose}
+      open={open}
+      fullWidth
+      maxWidth="sm"
+    >
+      <Form initial={{ warehouseId: null }} onSubmit={onConfirm}>
+        {({ change, data: formData, submit }) => {
+          const handleChange = createSingleAutocompleteSelectHandler(
+            change,
+            setDisplayValue,
+            choices
+          );
+          return (
+            <>
+              <DialogTitle>
                 <FormattedMessage
-                  defaultMessage="Cancel fulfillment"
-                  description="button"
+                  defaultMessage="Cancel Fulfillment"
+                  description="dialog header"
                 />
-              </ConfirmButton>
-            </DialogActions>
-          </>
-        )}
+              </DialogTitle>
+              <DialogContent className={classes.enableOverflow}>
+                <DialogContentText className={classes.paragraph}>
+                  <FormattedMessage defaultMessage="Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse." />
+                </DialogContentText>
+                <div className={classes.selectCcontainer}>
+                  <SingleAutocompleteSelectField
+                    choices={choices}
+                    displayValue={displayValue}
+                    label={intl.formatMessage({
+                      defaultMessage: "Select Warehouse",
+                      description: "select warehouse to restock items"
+                    })}
+                    name="warehouseId"
+                    value={formData.warehouseId}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.length > 0 && (
+                  <>
+                    <FormSpacer />
+                    {errors.map(err => (
+                      <DialogContentText color="error">
+                        {getOrderErrorMessage(err, intl)}
+                      </DialogContentText>
+                    ))}
+                  </>
+                )}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={onClose}>
+                  <FormattedMessage {...buttonMessages.back} />
+                </Button>
+                <ConfirmButton
+                  disabled={formData.warehouseId === null}
+                  transitionState={confirmButtonState}
+                  variant="contained"
+                  onClick={submit}
+                >
+                  <FormattedMessage {...buttonMessages.accept} />
+                </ConfirmButton>
+              </DialogActions>
+            </>
+          );
+        }}
       </Form>
     </Dialog>
   );

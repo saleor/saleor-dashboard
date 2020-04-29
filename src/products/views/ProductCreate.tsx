@@ -9,19 +9,31 @@ import useShop from "@saleor/hooks/useShop";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
+import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { decimal, maybe } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
 import { TypedProductCreateMutation } from "../mutations";
 import { ProductCreate } from "../types/ProductCreate";
-import { productListUrl, productUrl } from "../urls";
+import {
+  productListUrl,
+  productUrl,
+  ProductAddUrlDialog,
+  ProductAddUrlQueryParams,
+  productAddUrl
+} from "../urls";
+import ProductWarehousesDialog from "../components/ProductWarehousesDialog";
 
-interface ProductUpdateProps {
-  id: string;
+interface ProductCreateViewProps {
+  params: ProductAddUrlQueryParams;
 }
 
-export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
+export const ProductCreateView: React.FC<ProductCreateViewProps> = ({
+  params
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -47,6 +59,20 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
   } = useProductTypeSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const { result: searchWarehousesOpts } = useWarehouseSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 20
+    }
+  });
+  const [warehouses, setWarehouses] = React.useState<
+    SearchWarehouses_search_edges_node[]
+  >([]);
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductAddUrlDialog,
+    ProductAddUrlQueryParams
+  >(navigate, productAddUrl, params);
 
   const handleBack = () => navigate(productListUrl());
 
@@ -88,8 +114,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
                 title: formData.seoTitle
               },
               sku: formData.sku,
-              stockQuantity:
-                formData.stockQuantity !== null ? formData.stockQuantity : 0
+              stocks: formData.stocks.map(stock => ({
+                quantity: parseInt(stock.value, 0),
+                warehouse: stock.id
+              })),
+              trackInventory: formData.trackInventory
             }
           });
         };
@@ -124,6 +153,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
               productTypes={maybe(() =>
                 searchProductTypesOpts.data.search.edges.map(edge => edge.node)
               )}
+              warehouses={warehouses}
               onBack={handleBack}
               onSubmit={handleSubmit}
               saveButtonBarState={productCreateOpts.status}
@@ -148,6 +178,32 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
                 loading: searchProductTypesOpts.loading,
                 onFetchMore: loadMoreProductTypes
               }}
+              onWarehouseEdit={() => openModal("edit-stocks")}
+            />
+            <ProductWarehousesDialog
+              confirmButtonState="default"
+              disabled={false}
+              errors={[]}
+              onClose={closeModal}
+              open={params.action === "edit-stocks"}
+              warehouses={searchWarehousesOpts.data?.search.edges.map(
+                edge => edge.node
+              )}
+              warehousesWithStocks={warehouses.map(warehouse => warehouse.id)}
+              onConfirm={data => {
+                setWarehouses(
+                  [
+                    ...warehouses,
+                    ...data.added.map(
+                      addedId =>
+                        searchWarehousesOpts.data.search.edges.find(
+                          edge => edge.node.id === addedId
+                        ).node
+                    )
+                  ].filter(warehouse => !data.removed.includes(warehouse.id))
+                );
+                closeModal();
+              }}
             />
           </>
         );
@@ -155,4 +211,4 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = () => {
     </TypedProductCreateMutation>
   );
 };
-export default ProductUpdate;
+export default ProductCreateView;

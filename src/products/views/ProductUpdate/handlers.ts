@@ -40,11 +40,17 @@ export function createUpdateHandler(
     } else {
       updateSimpleProduct({
         ...productVariables,
+        addStocks: [],
+        deleteStocks: [],
         productVariantId: product.variants[0].id,
         productVariantInput: {
-          quantity: data.stockQuantity,
-          sku: data.sku
-        }
+          sku: data.sku,
+          trackInventory: data.trackInventory
+        },
+        updateStocks: data.stocks.map(stock => ({
+          quantity: parseInt(stock.value, 0),
+          warehouse: stock.id
+        }))
       });
     }
   };

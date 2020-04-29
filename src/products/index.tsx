@@ -18,14 +18,18 @@ import {
   ProductUrlQueryParams,
   productVariantAddPath,
   productVariantEditPath,
-  ProductVariantEditUrlQueryParams
+  ProductVariantEditUrlQueryParams,
+  ProductAddUrlQueryParams,
+  ProductVariantAddUrlQueryParams,
+  productVariantCreatorPath
 } from "./urls";
-import ProductCreate from "./views/ProductCreate";
+import ProductCreateComponent from "./views/ProductCreate";
 import ProductImageComponent from "./views/ProductImage";
 import ProductListComponent from "./views/ProductList";
 import ProductUpdateComponent from "./views/ProductUpdate";
 import ProductVariantComponent from "./views/ProductVariant";
 import ProductVariantCreateComponent from "./views/ProductVariantCreate";
+import ProductVariantCreatorComponent from "./views/ProductVariantCreator";
 
 const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
@@ -86,11 +90,30 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
 
 const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
   match
-}) => (
-  <ProductVariantCreateComponent
-    productId={decodeURIComponent(match.params.id)}
-  />
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ProductVariantAddUrlQueryParams = qs;
+
+  return (
+    <ProductVariantCreateComponent
+      productId={decodeURIComponent(match.params.id)}
+      params={params}
+    />
+  );
+};
+
+const ProductVariantCreator: React.FC<RouteComponentProps<{
+  id: string;
+}>> = ({ match }) => (
+  <ProductVariantCreatorComponent id={decodeURIComponent(match.params.id)} />
 );
+
+const ProductCreate: React.FC<RouteComponentProps> = ({ location }) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ProductAddUrlQueryParams = qs;
+
+  return <ProductCreateComponent params={params} />;
+};
 
 const Component = () => {
   const intl = useIntl();
@@ -101,6 +124,10 @@ const Component = () => {
       <Switch>
         <Route exact path={productListPath} component={ProductList} />
         <Route exact path={productAddPath} component={ProductCreate} />
+        <Route
+          path={productVariantCreatorPath(":id")}
+          component={ProductVariantCreator}
+        />
         <Route
           exact
           path={productVariantAddPath(":id")}

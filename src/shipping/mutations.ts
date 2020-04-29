@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { TypedMutation } from "../mutations";
+import makeMutation from "@saleor/hooks/makeMutation";
 import { countryFragment } from "../taxes/queries";
 import { shippingMethodFragment, shippingZoneDetailsFragment } from "./queries";
 import {
@@ -57,7 +57,7 @@ const deleteShippingZone = gql`
     }
   }
 `;
-export const TypedDeleteShippingZone = TypedMutation<
+export const useShippingZoneDelete = makeMutation<
   DeleteShippingZone,
   DeleteShippingZoneVariables
 >(deleteShippingZone);
@@ -72,7 +72,7 @@ const bulkDeleteShippingZone = gql`
     }
   }
 `;
-export const TypedBulkDeleteShippingZone = TypedMutation<
+export const useShippingZoneBulkDelete = makeMutation<
   BulkDeleteShippingZone,
   BulkDeleteShippingZoneVariables
 >(bulkDeleteShippingZone);
@@ -90,7 +90,7 @@ const updateDefaultWeightUnit = gql`
     }
   }
 `;
-export const TypedUpdateDefaultWeightUnit = TypedMutation<
+export const useDefaultWeightUnitUpdate = makeMutation<
   UpdateDefaultWeightUnit,
   UpdateDefaultWeightUnitVariables
 >(updateDefaultWeightUnit);
@@ -114,7 +114,7 @@ const createShippingZone = gql`
     }
   }
 `;
-export const TypedCreateShippingZone = TypedMutation<
+export const useShippingZoneCreate = makeMutation<
   CreateShippingZone,
   CreateShippingZoneVariables
 >(createShippingZone);
@@ -138,7 +138,7 @@ const updateShippingZone = gql`
     }
   }
 `;
-export const TypedUpdateShippingZone = TypedMutation<
+export const useShippingZoneUpdate = makeMutation<
   UpdateShippingZone,
   UpdateShippingZoneVariables
 >(updateShippingZone);
@@ -157,7 +157,7 @@ const updateShippingRate = gql`
     }
   }
 `;
-export const TypedUpdateShippingRate = TypedMutation<
+export const useShippingRateUpdate = makeMutation<
   UpdateShippingRate,
   UpdateShippingRateVariables
 >(updateShippingRate);
@@ -176,7 +176,7 @@ const createShippingRate = gql`
     }
   }
 `;
-export const TypedCreateShippingRate = TypedMutation<
+export const useShippingRateCreate = makeMutation<
   CreateShippingRate,
   CreateShippingRateVariables
 >(createShippingRate);
@@ -195,7 +195,7 @@ const deleteShippingRate = gql`
     }
   }
 `;
-export const TypedDeleteShippingRate = TypedMutation<
+export const useShippingRateDelete = makeMutation<
   DeleteShippingRate,
   DeleteShippingRateVariables
 >(deleteShippingRate);
@@ -210,7 +210,7 @@ const bulkDeleteShippingRate = gql`
     }
   }
 `;
-export const TypedBulkDeleteShippingRate = TypedMutation<
+export const useShippingRateBulkDelete = makeMutation<
   BulkDeleteShippingRate,
   BulkDeleteShippingRateVariables
 >(bulkDeleteShippingRate);

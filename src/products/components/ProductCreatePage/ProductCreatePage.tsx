@@ -28,6 +28,7 @@ import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps } from "../../../types";
 import {
   createAttributeChangeHandler,
@@ -41,7 +42,7 @@ import ProductAttributes, {
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
-import ProductStock from "../ProductStock";
+import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
 interface FormData {
   basePrice: number;
@@ -57,9 +58,11 @@ interface FormData {
   seoTitle: string;
   sku: string;
   stockQuantity: number;
+  trackInventory: boolean;
 }
 export interface ProductCreatePageSubmitData extends FormData {
   attributes: ProductAttributeInput[];
+  stocks: ProductStockInput[];
 }
 
 interface ProductCreatePageProps {
@@ -79,9 +82,11 @@ interface ProductCreatePageProps {
   }>;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
+  warehouses: SearchWarehouses_search_edges_node[];
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
+  onWarehouseEdit: () => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
 }
@@ -100,9 +105,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   header,
   productTypes: productTypeChoiceList,
   saveButtonBarState,
+  warehouses,
   onBack,
   fetchProductTypes,
-  onSubmit
+  onSubmit,
+  onWarehouseEdit
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -112,6 +119,18 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     data: attributes,
     set: setAttributeData
   } = useFormset<ProductAttributeInputData>([]);
+  const { change: changeStockData, data: stocks, set: setStocks } = useFormset<
+    null
+  >([]);
+  React.useEffect(() => {
+    const newStocks = warehouses.map(warehouse => ({
+      data: null,
+      id: warehouse.id,
+      label: warehouse.name,
+      value: stocks.find(stock => stock.id === warehouse.id)?.value || 0
+    }));
+    setStocks(newStocks);
+  }, [JSON.stringify(warehouses)]);
 
   // Ensures that it will not change after component rerenders, because it
   // generates different block keys and it causes editor to lose its content.
@@ -131,7 +150,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     seoDescription: "",
     seoTitle: "",
     sku: null,
-    stockQuantity: null
+    stockQuantity: null,
+    trackInventory: false
   };
 
   // Display values
@@ -145,12 +165,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     MultiAutocompleteChoiceType[]
   >([]);
 
-  const [productType, setProductType] = React.useState<ProductType>({
-    hasVariants: false,
-    id: "",
-    name: "",
-    productAttributes: []
-  });
+  const [productType, setProductType] = React.useState<ProductType>(null);
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
@@ -159,6 +174,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const handleSubmit = (data: FormData) =>
     onSubmit({
       attributes,
+      stocks,
       ...data
     });
 
@@ -232,14 +248,16 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                {!productType.hasVariants && (
+                {!!productType && !productType.hasVariants && (
                   <>
-                    <ProductStock
+                    <ProductStocks
                       data={data}
                       disabled={disabled}
-                      product={undefined}
-                      onChange={change}
+                      onChange={changeStockData}
+                      onFormDataChange={change}
                       errors={errors}
+                      stocks={stocks}
+                      onWarehousesEdit={onWarehouseEdit}
                     />
                     <CardSpacer />
                   </>
@@ -273,7 +291,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   fetchMoreProductTypes={fetchMoreProductTypes}
                   fetchProductTypes={fetchProductTypes}
                   productType={productType}
-                  productTypeInputDisplayValue={productType.name}
+                  productTypeInputDisplayValue={productType?.name || ""}
                   productTypes={productTypes}
                   onCategoryChange={handleCategorySelect}
                   onCollectionChange={handleCollectionSelect}

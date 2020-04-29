@@ -1644,5 +1644,17 @@ export const shippingZone: ShippingZoneDetailsFragment = {
       },
       type: ShippingMethodTypeEnum.PRICE
     }
+  ],
+  warehouses: [
+    {
+      __typename: "Warehouse",
+      id: "V2FyZWhvdXNlOmEzMThmMGZlLTcwMmYtNDNjYy1hYmFjLWZmZmMzN2Y3ZTliYw==",
+      name: "C our wares"
+    },
+    {
+      __typename: "Warehouse",
+      id: "V2FyZWhvdXNlOjJmN2UyOTlmLWEwMzMtNDhjZS1iYmM5LTFkZDM4NjU2ZjMwYw==",
+      name: "Be stocked"
+    }
   ]
 };

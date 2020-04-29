@@ -1,0 +1,18 @@
+import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
+import { WarehouseSortField } from "@saleor/types/globalTypes";
+import { createGetSortQueryVariables } from "@saleor/utils/sort";
+
+export function getSortQueryField(
+  sort: WarehouseListUrlSortField
+): WarehouseSortField {
+  switch (sort) {
+    case WarehouseListUrlSortField.name:
+      return WarehouseSortField.NAME;
+    default:
+      return undefined;
+  }
+}
+
+export const getSortQueryVariables = createGetSortQueryVariables(
+  getSortQueryField
+);

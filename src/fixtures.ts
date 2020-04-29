@@ -485,3 +485,23 @@ export const adminUserPermissions: User_userPermissions[] = [
     name: "Manage customers."
   }
 ];
+
+export const address = {
+  __typename: "Address" as "Address",
+  city: "Port Danielshire",
+  cityArea: "",
+  companyName: "",
+  country: {
+    __typename: "CountryDisplay" as "CountryDisplay",
+    code: "SE",
+    country: "Szwecja"
+  },
+  countryArea: "",
+  firstName: "Elizabeth",
+  id: "QWRkcmVzczoy",
+  lastName: "Vaughn",
+  phone: "",
+  postalCode: "52203",
+  streetAddress1: "419 Ruiz Orchard Apt. 199",
+  streetAddress2: "0238 Cremin Freeway"
+};

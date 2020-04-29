@@ -24,6 +24,7 @@ export enum AccountErrorCode {
   NOT_FOUND = "NOT_FOUND",
   OUT_OF_SCOPE_GROUP = "OUT_OF_SCOPE_GROUP",
   OUT_OF_SCOPE_PERMISSION = "OUT_OF_SCOPE_PERMISSION",
+  OUT_OF_SCOPE_SERVICE_ACCOUNT = "OUT_OF_SCOPE_SERVICE_ACCOUNT",
   OUT_OF_SCOPE_USER = "OUT_OF_SCOPE_USER",
   PASSWORD_ENTIRELY_NUMERIC = "PASSWORD_ENTIRELY_NUMERIC",
   PASSWORD_TOO_COMMON = "PASSWORD_TOO_COMMON",
@@ -456,6 +457,7 @@ export enum OrderErrorCode {
   CANNOT_DELETE = "CANNOT_DELETE",
   CANNOT_REFUND = "CANNOT_REFUND",
   CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   FULFILL_ORDER_LINE = "FULFILL_ORDER_LINE",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
@@ -689,6 +691,15 @@ export enum StockAvailability {
   OUT_OF_STOCK = "OUT_OF_STOCK",
 }
 
+export enum StockErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum TaxRateType {
   ACCOMMODATION = "ACCOMMODATION",
   ADMISSION_TO_CULTURAL_EVENTS = "ADMISSION_TO_CULTURAL_EVENTS",
@@ -746,6 +757,19 @@ export enum VoucherTypeEnum {
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }
 
+export enum WarehouseErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
+export enum WarehouseSortField {
+  NAME = "NAME",
+}
+
 export enum WebhookErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
@@ -768,6 +792,7 @@ export enum WebhookEventTypeEnum {
 }
 
 export enum WebhookSortField {
+  APP = "APP",
   NAME = "NAME",
   SERVICE_ACCOUNT = "SERVICE_ACCOUNT",
   TARGET_URL = "TARGET_URL",
@@ -972,18 +997,7 @@ export interface DraftOrderInput {
 }
 
 export interface FulfillmentCancelInput {
-  restock?: boolean | null;
-}
-
-export interface FulfillmentCreateInput {
-  trackingNumber?: string | null;
-  notifyCustomer?: boolean | null;
-  lines: (FulfillmentLineInput | null)[];
-}
-
-export interface FulfillmentLineInput {
-  orderLineId?: string | null;
-  quantity?: number | null;
+  warehouseId: string;
 }
 
 export interface FulfillmentUpdateTrackingInput {
@@ -1050,6 +1064,21 @@ export interface OrderFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
+}
+
+export interface OrderFulfillInput {
+  lines: OrderFulfillLineInput[];
+  notifyCustomer?: boolean | null;
+}
+
+export interface OrderFulfillLineInput {
+  orderLineId?: string | null;
+  stocks: OrderFulfillStockInput[];
+}
+
+export interface OrderFulfillStockInput {
+  quantity?: number | null;
+  warehouse?: string | null;
 }
 
 export interface OrderLineCreateInput {
@@ -1201,9 +1230,9 @@ export interface ProductVariantBulkCreateInput {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku: string;
-  quantity?: number | null;
   trackInventory?: boolean | null;
   weight?: any | null;
+  stocks?: StockInput[] | null;
 }
 
 export interface ProductVariantCreateInput {
@@ -1211,7 +1240,6 @@ export interface ProductVariantCreateInput {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku?: string | null;
-  quantity?: number | null;
   trackInventory?: boolean | null;
   weight?: any | null;
   product: string;
@@ -1223,7 +1251,6 @@ export interface ProductVariantInput {
   costPrice?: any | null;
   priceOverride?: any | null;
   sku?: string | null;
-  quantity?: number | null;
   trackInventory?: boolean | null;
   weight?: any | null;
 }
@@ -1415,11 +1442,50 @@ export interface VoucherSortingInput {
   field: VoucherSortField;
 }
 
+export interface WarehouseAddressInput {
+  streetAddress1: string;
+  streetAddress2?: string | null;
+  city: string;
+  cityArea?: string | null;
+  postalCode?: string | null;
+  country: CountryCode;
+  countryArea?: string | null;
+  phone?: string | null;
+}
+
+export interface WarehouseCreateInput {
+  slug?: string | null;
+  companyName?: string | null;
+  email?: string | null;
+  name: string;
+  address: WarehouseAddressInput;
+  shippingZones?: (string | null)[] | null;
+}
+
+export interface WarehouseFilterInput {
+  search?: string | null;
+  ids?: (string | null)[] | null;
+}
+
+export interface WarehouseSortingInput {
+  direction: OrderDirection;
+  field: WarehouseSortField;
+}
+
+export interface WarehouseUpdateInput {
+  slug?: string | null;
+  companyName?: string | null;
+  email?: string | null;
+  name?: string | null;
+  address?: WarehouseAddressInput | null;
+}
+
 export interface WebhookCreateInput {
   name?: string | null;
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
   serviceAccount?: string | null;
+  app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
 }
@@ -1439,6 +1505,7 @@ export interface WebhookUpdateInput {
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
   serviceAccount?: string | null;
+  app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
 }

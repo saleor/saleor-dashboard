@@ -1,5 +1,6 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MenuItem from "@material-ui/core/MenuItem";
+import Add from "@material-ui/icons/Add";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -24,8 +25,13 @@ export interface SingleAutocompleteChoiceType {
   label: string;
   value: any;
 }
+export interface SingleAutocompleteActionType {
+  label: string;
+  onClick: () => void;
+}
 export interface SingleAutocompleteSelectFieldContentProps
   extends Partial<FetchMoreProps> {
+  add?: SingleAutocompleteActionType;
   choices: SingleAutocompleteChoiceType[];
   displayCustomValue: boolean;
   emptyOption: boolean;
@@ -38,6 +44,14 @@ export interface SingleAutocompleteSelectFieldContentProps
 
 const useStyles = makeStyles(
   theme => ({
+    add: {
+      background: theme.palette.background.default,
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: "100%",
+      height: 24,
+      marginRight: theme.spacing(),
+      width: 24
+    },
     arrowContainer: {
       position: "relative"
     },
@@ -96,23 +110,23 @@ const useStyles = makeStyles(
 function getChoiceIndex(
   index: number,
   emptyValue: boolean,
-  customValue: boolean
+  customValue: boolean,
+  add: boolean
 ) {
   let choiceIndex = index;
   if (emptyValue) {
     choiceIndex += 1;
   }
-  if (customValue) {
+  if (customValue || add) {
     choiceIndex += 2;
   }
 
   return choiceIndex;
 }
 
-const SingleAutocompleteSelectFieldContent: React.FC<
-  SingleAutocompleteSelectFieldContentProps
-> = props => {
+const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFieldContentProps> = props => {
   const {
+    add,
     choices,
     displayCustomValue,
     emptyOption,
@@ -124,6 +138,10 @@ const SingleAutocompleteSelectFieldContent: React.FC<
     selectedItem,
     onFetchMore
   } = props;
+
+  if (!!add && !!displayCustomValue) {
+    throw new Error("Add and custom value cannot be displayed simultaneously");
+  }
 
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();
@@ -164,6 +182,20 @@ const SingleAutocompleteSelectFieldContent: React.FC<
                 </Typography>
               </MenuItem>
             )}
+            {add && (
+              <MenuItem
+                className={classes.menuItem}
+                component="div"
+                {...getItemProps({
+                  item: inputValue
+                })}
+                data-tc="singleautocomplete-select-option-add"
+                onClick={add.onClick}
+              >
+                <Add color="primary" className={classes.add} />
+                <Typography color="primary">{add.label}</Typography>
+              </MenuItem>
+            )}
             {displayCustomValue && (
               <MenuItem
                 className={classes.menuItem}
@@ -184,14 +216,15 @@ const SingleAutocompleteSelectFieldContent: React.FC<
                 />
               </MenuItem>
             )}
-            {choices.length > 0 && displayCustomValue && (
+            {choices.length > 0 && (!!add || displayCustomValue) && (
               <Hr className={classes.hr} />
             )}
             {choices.map((suggestion, index) => {
               const choiceIndex = getChoiceIndex(
                 index,
                 emptyOption,
-                displayCustomValue
+                displayCustomValue,
+                !!add
               );
 
               return (

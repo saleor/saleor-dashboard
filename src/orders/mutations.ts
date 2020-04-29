@@ -8,20 +8,13 @@ import {
   fragmentOrderEvent
 } from "./queries";
 import { OrderAddNote, OrderAddNoteVariables } from "./types/OrderAddNote";
-import {
-  OrderBulkCancel,
-  OrderBulkCancelVariables
-} from "./types/OrderBulkCancel";
 import { OrderCancel, OrderCancelVariables } from "./types/OrderCancel";
 import { OrderCapture, OrderCaptureVariables } from "./types/OrderCapture";
-import {
-  OrderCreateFulfillment,
-  OrderCreateFulfillmentVariables
-} from "./types/OrderCreateFulfillment";
 import {
   OrderDraftBulkCancel,
   OrderDraftBulkCancelVariables
 } from "./types/OrderDraftBulkCancel";
+import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
 import {
   OrderDraftCancel,
   OrderDraftCancelVariables
@@ -74,8 +67,8 @@ export const orderErrorFragment = gql`
 const orderCancelMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
-  mutation OrderCancel($id: ID!, $restock: Boolean!) {
-    orderCancel(id: $id, restock: $restock) {
+  mutation OrderCancel($id: ID!) {
+    orderCancel(id: $id) {
       errors: orderErrors {
         ...OrderErrorFragment
       }
@@ -89,21 +82,6 @@ export const TypedOrderCancelMutation = TypedMutation<
   OrderCancel,
   OrderCancelVariables
 >(orderCancelMutation);
-
-const orderBulkCancelMutation = gql`
-  ${orderErrorFragment}
-  mutation OrderBulkCancel($ids: [ID]!, $restock: Boolean!) {
-    orderBulkCancel(ids: $ids, restock: $restock) {
-      errors: orderErrors {
-        ...OrderErrorFragment
-      }
-    }
-  }
-`;
-export const TypedOrderBulkCancelMutation = TypedMutation<
-  OrderBulkCancel,
-  OrderBulkCancelVariables
->(orderBulkCancelMutation);
 
 const orderDraftCancelMutation = gql`
   ${fragmentOrderDetails}
@@ -233,28 +211,6 @@ export const TypedOrderCaptureMutation = TypedMutation<
   OrderCapture,
   OrderCaptureVariables
 >(orderCaptureMutation);
-
-const orderCreateFulfillmentMutation = gql`
-  ${fragmentOrderDetails}
-  ${orderErrorFragment}
-  mutation OrderCreateFulfillment(
-    $order: ID!
-    $input: FulfillmentCreateInput!
-  ) {
-    orderFulfillmentCreate(order: $order, input: $input) {
-      errors: orderErrors {
-        ...OrderErrorFragment
-      }
-      order {
-        ...OrderDetailsFragment
-      }
-    }
-  }
-`;
-export const TypedOrderCreateFulfillmentMutation = TypedMutation<
-  OrderCreateFulfillment,
-  OrderCreateFulfillmentVariables
->(orderCreateFulfillmentMutation);
 
 const orderFulfillmentUpdateTrackingMutation = gql`
   ${fragmentOrderDetails}
@@ -477,3 +433,24 @@ export const TypedOrderLineUpdateMutation = TypedMutation<
   OrderLineUpdate,
   OrderLineUpdateVariables
 >(orderLineUpdateMutation);
+
+const fulfillOrder = gql`
+  ${fragmentOrderDetails}
+  ${orderErrorFragment}
+  mutation FulfillOrder($orderId: ID!, $input: OrderFulfillInput!) {
+    orderFulfill(order: $orderId, input: $input) {
+      errors: orderErrors {
+        ...OrderErrorFragment
+        warehouse
+        orderLine
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+export const useOrderFulfill = makeMutation<
+  FulfillOrder,
+  FulfillOrderVariables
+>(fulfillOrder);

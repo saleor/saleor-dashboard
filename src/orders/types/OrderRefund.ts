@@ -97,6 +97,12 @@ export interface OrderRefund_orderRefund_order_fulfillments_lines {
   orderLine: OrderRefund_orderRefund_order_fulfillments_lines_orderLine | null;
 }
 
+export interface OrderRefund_orderRefund_order_fulfillments_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
 export interface OrderRefund_orderRefund_order_fulfillments {
   __typename: "Fulfillment";
   id: string;
@@ -104,6 +110,7 @@ export interface OrderRefund_orderRefund_order_fulfillments {
   fulfillmentOrder: number;
   status: FulfillmentStatus;
   trackingNumber: string;
+  warehouse: OrderRefund_orderRefund_order_fulfillments_warehouse | null;
 }
 
 export interface OrderRefund_orderRefund_order_lines_unitPrice_gross {

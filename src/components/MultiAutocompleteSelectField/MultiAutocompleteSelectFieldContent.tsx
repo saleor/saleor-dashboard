@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 import chevronDown from "@assets/images/ChevronDown.svg";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MenuItem from "@material-ui/core/MenuItem";
+import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -22,6 +23,10 @@ const menuItemHeight = 46;
 const maxMenuItems = 5;
 const offset = 24;
 
+export interface MultiAutocompleteActionType {
+  label: string;
+  onClick: () => void;
+}
 export interface MultiAutocompleteChoiceType {
   label: string;
   value: any;
@@ -29,6 +34,7 @@ export interface MultiAutocompleteChoiceType {
 }
 export interface MultiAutocompleteSelectFieldContentProps
   extends Partial<FetchMoreProps> {
+  add?: MultiAutocompleteActionType;
   choices: MultiAutocompleteChoiceType[];
   displayCustomValue: boolean;
   displayValues: MultiAutocompleteChoiceType[];
@@ -39,6 +45,14 @@ export interface MultiAutocompleteSelectFieldContentProps
 
 const useStyles = makeStyles(
   theme => ({
+    add: {
+      background: theme.palette.background.default,
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: "100%",
+      height: 24,
+      margin: theme.spacing(),
+      width: 24
+    },
     addIcon: {
       height: 24,
       margin: 9,
@@ -100,6 +114,7 @@ const useStyles = makeStyles(
       gridColumnGap: theme.spacing(1),
       gridTemplateColumns: "30px 1fr",
       height: "auto",
+      marginBottom: theme.spacing(0.5),
       padding: 0,
       whiteSpace: "normal"
     },
@@ -130,10 +145,11 @@ const useStyles = makeStyles(
 function getChoiceIndex(
   index: number,
   displayValues: MultiAutocompleteChoiceType[],
-  displayCustomValue: boolean
+  displayCustomValue: boolean,
+  add: boolean
 ) {
   let choiceIndex = index;
-  if (displayCustomValue) {
+  if (add || displayCustomValue) {
     choiceIndex += 2;
   }
   if (displayValues.length > 0) {
@@ -145,6 +161,7 @@ function getChoiceIndex(
 
 const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectFieldContentProps> = props => {
   const {
+    add,
     choices,
     displayCustomValue,
     displayValues,
@@ -155,6 +172,10 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
     inputValue,
     onFetchMore
   } = props;
+
+  if (!!add && !!displayCustomValue) {
+    throw new Error("Add and custom value cannot be displayed simultaneously");
+  }
 
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();
@@ -183,6 +204,20 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
         displayValues.length > 0 ||
         displayCustomValue ? (
           <>
+            {add && (
+              <MenuItem
+                className={classes.menuItem}
+                component="div"
+                {...getItemProps({
+                  item: inputValue
+                })}
+                data-tc="multiautocomplete-select-option-add"
+                onClick={add.onClick}
+              >
+                <AddIcon color="primary" className={classes.addIcon} />
+                <Typography color="primary">{add.label}</Typography>
+              </MenuItem>
+            )}
             {displayCustomValue && (
               <MenuItem
                 className={classes.menuItem}
@@ -233,7 +268,8 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
               const choiceIndex = getChoiceIndex(
                 index,
                 displayValues,
-                displayCustomValue
+                displayCustomValue,
+                !!add
               );
 
               return (

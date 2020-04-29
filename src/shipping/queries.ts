@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
-import { pageInfoFragment, TypedQuery } from "../queries";
+import makeQuery from "@saleor/hooks/makeQuery";
+import { pageInfoFragment } from "../queries";
 import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";
 import { ShippingZones, ShippingZonesVariables } from "./types/ShippingZones";
 
@@ -50,6 +51,10 @@ export const shippingZoneDetailsFragment = gql`
     shippingMethods {
       ...ShippingMethodFragment
     }
+    warehouses {
+      id
+      name
+    }
   }
 `;
 
@@ -74,7 +79,7 @@ const shippingZones = gql`
     }
   }
 `;
-export const TypedShippingZones = TypedQuery<
+export const useShippingZoneList = makeQuery<
   ShippingZones,
   ShippingZonesVariables
 >(shippingZones);
@@ -87,7 +92,6 @@ const shippingZone = gql`
     }
   }
 `;
-export const TypedShippingZone = TypedQuery<
-  ShippingZone,
-  ShippingZoneVariables
->(shippingZone);
+export const useShippingZone = makeQuery<ShippingZone, ShippingZoneVariables>(
+  shippingZone
+);

@@ -1,4 +1,5 @@
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import { warehouseList } from "@saleor/warehouses/fixtures";
 import { content } from "../storybook/stories/components/RichTextEditor";
 import { ProductDetails_product } from "./types/ProductDetails";
 import { ProductList_products_edges_node } from "./types/ProductList";
@@ -259,10 +260,22 @@ export const product: (
         amount: 678.78,
         currency: "USD"
       },
-      quantity: 12,
-      quantityAllocated: 1,
       sku: "87192-94370",
-      stockQuantity: 48
+      stocks: [
+        {
+          __typename: "Stock",
+          id: "1",
+          quantity: 1,
+          warehouse: warehouseList[0]
+        },
+        {
+          __typename: "Stock",
+          id: "2",
+          quantity: 4,
+          warehouse: warehouseList[1]
+        }
+      ],
+      trackInventory: true
     },
     {
       __typename: "ProductVariant",
@@ -282,10 +295,16 @@ export const product: (
       margin: 7,
       name: "silver",
       priceOverride: null,
-      quantity: 12,
-      quantityAllocated: 1,
       sku: "69055-15190",
-      stockQuantity: 14
+      stocks: [
+        {
+          __typename: "Stock",
+          id: "1",
+          quantity: 13,
+          warehouse: warehouseList[0]
+        }
+      ],
+      trackInventory: false
     }
   ]
 });
@@ -1228,9 +1247,30 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       }
     ]
   },
-  quantity: 19,
-  quantityAllocated: 12,
-  sku: "1230959124123"
+  sku: "1230959124123",
+  stocks: [
+    {
+      __typename: "Stock",
+      id: "1",
+      quantity: 1,
+      warehouse: {
+        __typename: "Warehouse",
+        id: "123",
+        name: "Warehouse 1"
+      }
+    },
+    {
+      __typename: "Stock",
+      id: "2",
+      quantity: 4,
+      warehouse: {
+        __typename: "Warehouse",
+        id: "1234",
+        name: "Warehouse 2"
+      }
+    }
+  ],
+  trackInventory: true
 });
 export const variantImages = (placeholderImage: string) =>
   variant(placeholderImage).images;
