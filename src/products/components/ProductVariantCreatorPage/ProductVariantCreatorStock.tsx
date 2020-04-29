@@ -129,13 +129,12 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
               <FormattedMessage
                 defaultMessage="Warehouses"
                 description="header"
-                id="productVariantCreatorStockSectionHeader"
+                id="productVariantCreatorWarehouseSectionHeader"
               />
             </Typography>
             <Typography className={classes.warehouseSubheader}>
               <FormattedMessage
                 defaultMessage="Based on your selections we will create {numberOfProducts} products. Use this step to customize price and stocks for your new products"
-                id="productVariantCreatorStockSectionHeader"
                 values={{
                   numberOfProducts: data.attributes.reduce(
                     (acc, attr) => acc + attr.values.length,
