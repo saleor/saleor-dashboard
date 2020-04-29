@@ -107,6 +107,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_stocks {
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: VariantUpdate_productVariantUpdate_productVariant_stocks_warehouse;
 }
 
@@ -230,6 +231,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_stocks 
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: VariantUpdate_productVariantStocksUpdate_productVariant_stocks_warehouse;
 }
 

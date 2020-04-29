@@ -25,6 +25,7 @@ export interface AddOrRemoveStocks_productVariantStocksCreate_productVariant_sto
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: AddOrRemoveStocks_productVariantStocksCreate_productVariant_stocks_warehouse;
 }
 
@@ -56,6 +57,7 @@ export interface AddOrRemoveStocks_productVariantStocksDelete_productVariant_sto
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: AddOrRemoveStocks_productVariantStocksDelete_productVariant_stocks_warehouse;
 }
 

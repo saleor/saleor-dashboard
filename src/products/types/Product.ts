@@ -159,6 +159,7 @@ export interface Product_variants_stocks {
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: Product_variants_stocks_warehouse;
 }
 

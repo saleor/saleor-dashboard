@@ -37,6 +37,7 @@ export const stockFragment = gql`
   fragment StockFragment on Stock {
     id
     quantity
+    quantityAllocated
     warehouse {
       id
       name

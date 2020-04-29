@@ -107,6 +107,7 @@ export interface VariantImageAssign_variantImageAssign_productVariant_stocks {
   __typename: "Stock";
   id: string;
   quantity: number;
+  quantityAllocated: number;
   warehouse: VariantImageAssign_variantImageAssign_productVariant_stocks_warehouse;
 }
 
