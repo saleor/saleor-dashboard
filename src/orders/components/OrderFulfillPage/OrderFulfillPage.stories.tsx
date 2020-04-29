@@ -41,4 +41,7 @@ storiesOf("Views / Orders / Fulfill order", module)
         }
       ]}
     />
+  ))
+  .add("one warehouse", () => (
+    <OrderFulfillPage {...props} warehouses={warehouseList.slice(0, 1)} />
   ));

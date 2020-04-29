@@ -38,4 +38,4 @@ export const pluginPath = (id: string) => urlJoin(pluginSection, id);
 export type PluginUrlDialog = "clear" | "edit";
 export type PluginUrlQueryParams = Dialog<PluginUrlDialog> & SingleAction;
 export const pluginUrl = (id: string, params?: PluginUrlQueryParams) =>
-  pluginPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+  pluginPath(encodeURIComponent(id)) + "/?" + stringifyQs(params);

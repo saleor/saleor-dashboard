@@ -111,7 +111,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
-        defaultMessage: "Product Settings"
+        defaultMessage: "Shipping Settings"
       }),
       menuItems: [
         {
