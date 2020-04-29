@@ -18,6 +18,7 @@ import { usePermissionGroupListQuery } from "@saleor/permissionGroups/queries";
 import { PermissionGroupDelete } from "@saleor/permissionGroups/types/PermissionGroupDelete";
 import { usePermissionGroupDelete } from "@saleor/permissionGroups/mutations";
 import { getStringOrPlaceholder } from "@saleor/misc";
+import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
 import PermissionGroupListPage from "../../components/PermissionGroupListPage";
 import {
   permissionGroupListUrl,
@@ -74,6 +75,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
   >(navigate, permissionGroupListUrl, params);
 
   const permissionGroups = data?.permissionGroups?.edges.map(edge => edge.node);
+  const [deleteError, setDeleteError] = React.useState<string>();
 
   const handleDeleteSuccess = (data: PermissionGroupDelete) => {
     if (data.permissionGroupDelete.errors.length === 0) {
@@ -83,7 +85,15 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
         })
       });
       refetch();
+      setDeleteError("");
       closeModal();
+    } else {
+      setDeleteError(
+        getPermissionGroupErrorMessage(
+          data.permissionGroupDelete.errors[0],
+          intl
+        )
+      );
     }
   };
 
@@ -115,6 +125,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
             }
           })
         }
+        error={deleteError}
         name={getStringOrPlaceholder(
           permissionGroups?.find(group => group.id === params.id)?.name
         )}

@@ -16,4 +16,10 @@ const props: PermissionDeleteDialogProps = {
 
 storiesOf("Views / Permission Groups / Permission Group Delete", module)
   .addDecorator(Decorator)
-  .add("remove single", () => <PermissionGroupDeleteDialog {...props} />);
+  .add("remove single", () => <PermissionGroupDeleteDialog {...props} />)
+  .add("Got error", () => (
+    <PermissionGroupDeleteDialog
+      {...props}
+      error={"Something went realy wrong."}
+    />
+  ));

@@ -4,17 +4,20 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import { Typography } from "@material-ui/core";
 
 export interface PermissionDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  open: boolean;
+  error?: string;
   name: string;
-  onConfirm: () => void;
   onClose: () => void;
+  onConfirm: () => void;
+  open: boolean;
 }
 
 const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
   confirmButtonState,
+  error,
   name,
   onClose,
   onConfirm,
@@ -43,6 +46,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
           }}
         />
       </DialogContentText>
+      {!!error && <Typography color="error">{error}</Typography>}
     </ActionDialog>
   );
 };

@@ -17,5 +17,6 @@ export interface PermissionGroupFragment {
   __typename: "Group";
   id: string;
   name: string;
+  userCanManage: boolean;
   users: (PermissionGroupFragment_users | null)[] | null;
 }

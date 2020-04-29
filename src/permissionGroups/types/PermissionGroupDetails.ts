@@ -33,6 +33,7 @@ export interface PermissionGroupDetails_permissionGroup {
   __typename: "Group";
   id: string;
   name: string;
+  userCanManage: boolean;
   users: (PermissionGroupDetails_permissionGroup_users | null)[] | null;
   permissions: (PermissionGroupDetails_permissionGroup_permissions | null)[] | null;
 }
