@@ -33,6 +33,7 @@ export interface PermissionGroupDetailsFragment {
   __typename: "Group";
   id: string;
   name: string;
+  userCanManage: boolean;
   users: (PermissionGroupDetailsFragment_users | null)[] | null;
   permissions: (PermissionGroupDetailsFragment_permissions | null)[] | null;
 }

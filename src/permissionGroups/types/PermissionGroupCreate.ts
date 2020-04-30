@@ -39,6 +39,7 @@ export interface PermissionGroupCreate_permissionGroupCreate_group {
   __typename: "Group";
   id: string;
   name: string;
+  userCanManage: boolean;
   users: (PermissionGroupCreate_permissionGroupCreate_group_users | null)[] | null;
   permissions: (PermissionGroupCreate_permissionGroupCreate_group_permissions | null)[] | null;
 }

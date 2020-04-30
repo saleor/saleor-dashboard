@@ -148,14 +148,16 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
               <TableCell className={classes.colActions}>
                 {permissionGroup ? (
                   <>
-                    <IconButton
-                      color="primary"
-                      onClick={stopPropagation(() =>
-                        onDelete(permissionGroup.id)
-                      )}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    {permissionGroup.userCanManage && (
+                      <IconButton
+                        color="primary"
+                        onClick={stopPropagation(() =>
+                          onDelete(permissionGroup.id)
+                        )}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    )}
                     <IconButton color="primary">
                       <EditIcon />
                     </IconButton>

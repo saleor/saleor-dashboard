@@ -19,6 +19,7 @@ export interface PermissionGroupList_permissionGroups_edges_node {
   __typename: "Group";
   id: string;
   name: string;
+  userCanManage: boolean;
   users: (PermissionGroupList_permissionGroups_edges_node_users | null)[] | null;
 }
 

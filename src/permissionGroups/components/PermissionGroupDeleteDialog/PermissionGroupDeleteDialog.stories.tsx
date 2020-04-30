@@ -5,6 +5,20 @@ import PermissionGroupDeleteDialog, {
   PermissionDeleteDialogProps
 } from "@saleor/permissionGroups/components/PermissionGroupDeleteDialog";
 import Decorator from "@saleor/storybook/Decorator";
+import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
+import { PermissionGroupErrorCode } from "@saleor/types/globalTypes";
+
+const permissionsError: PermissionGroupErrorFragment = {
+  __typename: "PermissionGroupError",
+  code: PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION,
+  field: null
+};
+
+const requiredError: PermissionGroupErrorFragment = {
+  __typename: "PermissionGroupError",
+  code: PermissionGroupErrorCode.REQUIRED,
+  field: null
+};
 
 const props: PermissionDeleteDialogProps = {
   confirmButtonState: "default",
@@ -16,4 +30,10 @@ const props: PermissionDeleteDialogProps = {
 
 storiesOf("Views / Permission Groups / Permission Group Delete", module)
   .addDecorator(Decorator)
-  .add("remove single", () => <PermissionGroupDeleteDialog {...props} />);
+  .add("remove single", () => <PermissionGroupDeleteDialog {...props} />)
+  .add("Got permissions error", () => (
+    <PermissionGroupDeleteDialog {...props} error={permissionsError} />
+  ))
+  .add("Get random permission group error", () => (
+    <PermissionGroupDeleteDialog {...props} error={requiredError} />
+  ));
