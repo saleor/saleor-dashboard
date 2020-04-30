@@ -5,10 +5,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Typography } from "@material-ui/core";
+import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
+import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
+import { PermissionGroupErrorCode } from "@saleor/types/globalTypes";
 
 export interface PermissionDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  error?: string;
+  error?: PermissionGroupErrorFragment;
   name: string;
   onClose: () => void;
   onConfirm: () => void;
@@ -24,6 +27,17 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
   open
 }) => {
   const intl = useIntl();
+
+  let errorMessage;
+  if (error?.code === PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION) {
+    errorMessage = intl.formatMessage({
+      defaultMessage:
+        "Cant's delete group which is out of your permission scope",
+      description: "deletion error message"
+    });
+  } else if (!!error) {
+    errorMessage = getPermissionGroupErrorMessage(error, intl);
+  }
 
   return (
     <ActionDialog
@@ -46,7 +60,7 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
           }}
         />
       </DialogContentText>
-      {!!error && <Typography color="error">{error}</Typography>}
+      {!!errorMessage && <Typography color="error">{errorMessage}</Typography>}
     </ActionDialog>
   );
 };
