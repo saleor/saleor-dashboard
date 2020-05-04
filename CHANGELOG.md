@@ -4,6 +4,8 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Update product stock management to newest design - #515 by @dominik-zeglen
+
 ## 2.10.0
 
 - Fix minor bugs - #244 by @dominik-zeglen
