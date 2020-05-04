@@ -4,6 +4,8 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## 2.10.0
+
 - Fix minor bugs - #244 by @dominik-zeglen
 - Fix tax settings updating - #243 by @dominik-zeglen
 - Add secret fields in plugin configuration - #246 by @dominik-zeglen
