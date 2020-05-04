@@ -48,7 +48,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   const intl = useIntl();
   const user = useUser();
 
-  const { data, loading, refetch } = usePermissionGroupDetailsQuery({
+  const { data, loading } = usePermissionGroupDetailsQuery({
     displayLoader: true,
     variables: { id, userId: user?.user.id }
   });
@@ -63,13 +63,18 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
+  const amIInGroup = data?.permissionGroup.users.some(
+    pmUser => pmUser.id === user.user?.id
+  );
+
   const handleUpdateSuccess = (data: PermissionGroupUpdate) => {
     if (data.permissionGroupUpdate.errors.length === 0) {
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      refetch();
-      closeModal();
+      if (amIInGroup) {
+        user.refetch();
+      }
     } else if (
       data.permissionGroupUpdate.errors.some(e => e.field === "removeUsers")
     ) {

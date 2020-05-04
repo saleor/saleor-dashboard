@@ -56,6 +56,7 @@ export interface PermissionGroupDetails_user_userPermissions {
 
 export interface PermissionGroupDetails_user {
   __typename: "User";
+  id: string;
   editableGroups: (PermissionGroupDetails_user_editableGroups | null)[] | null;
   userPermissions: (PermissionGroupDetails_user_userPermissions | null)[] | null;
 }

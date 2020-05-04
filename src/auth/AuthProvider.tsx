@@ -1,4 +1,5 @@
 import React from "react";
+import { ApolloQueryResult } from "apollo-client";
 
 import {
   isSupported as isCredentialsManagementAPISupported,
@@ -12,6 +13,8 @@ import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { User } from "./types/User";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 import { getAuthToken, removeAuthToken, setAuthToken } from "./utils";
+import { UserDetailsQuery } from "./queries";
+import { UserDetails } from "./types/UserDetails";
 import { UserContext } from "./";
 
 interface AuthProviderOperationsProps {
@@ -143,6 +146,14 @@ class AuthProvider extends React.Component<
     return tokenVerifyFn({ variables: { token } });
   };
 
+  refetch = (refetchFn: () => Promise<ApolloQueryResult<UserDetails>>) => {
+    refetchFn().then(data => {
+      this.setState({
+        user: data.data.me
+      });
+    });
+  };
+
   render() {
     const { children, tokenAuth, tokenVerify } = this.props;
     const tokenAuthOpts = tokenAuth[1];
@@ -151,24 +162,29 @@ class AuthProvider extends React.Component<
     const isAuthenticated = !!user;
 
     return (
-      <UserContext.Provider
-        value={{
-          login: this.login,
-          loginByToken: this.loginByToken,
-          logout: this.logout,
-          tokenAuthLoading: tokenAuthOpts.loading,
-          tokenVerifyLoading: tokenVerifyOpts.loading,
-          user
-        }}
-      >
-        {children({
-          hasToken: !!getAuthToken(),
-          isAuthenticated,
-          tokenAuthLoading: tokenAuthOpts.loading,
-          tokenVerifyLoading: tokenVerifyOpts.loading,
-          user
-        })}
-      </UserContext.Provider>
+      <UserDetailsQuery>
+        {({ refetch }) => (
+          <UserContext.Provider
+            value={{
+              login: this.login,
+              loginByToken: this.loginByToken,
+              logout: this.logout,
+              refetch: () => this.refetch(refetch),
+              tokenAuthLoading: tokenAuthOpts.loading,
+              tokenVerifyLoading: tokenVerifyOpts.loading,
+              user
+            }}
+          >
+            {children({
+              hasToken: !!getAuthToken(),
+              isAuthenticated,
+              tokenAuthLoading: tokenAuthOpts.loading,
+              tokenVerifyLoading: tokenVerifyOpts.loading,
+              user
+            })}
+          </UserContext.Provider>
+        )}
+      </UserDetailsQuery>
     );
   }
 }

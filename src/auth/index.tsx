@@ -21,12 +21,14 @@ interface UserContext {
   tokenAuthLoading: boolean;
   tokenVerifyLoading: boolean;
   user?: User;
+  refetch: () => void;
 }
 
 export const UserContext = React.createContext<UserContext>({
   login: undefined,
   loginByToken: undefined,
   logout: undefined,
+  refetch: undefined,
   tokenAuthLoading: false,
   tokenVerifyLoading: false
 });

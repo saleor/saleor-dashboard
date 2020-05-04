@@ -19,6 +19,7 @@ import { PermissionGroupDelete } from "@saleor/permissionGroups/types/Permission
 import { usePermissionGroupDelete } from "@saleor/permissionGroups/mutations";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
+import useUser from "@saleor/hooks/useUser";
 import PermissionGroupListPage from "../../components/PermissionGroupListPage";
 import {
   permissionGroupListUrl,
@@ -40,6 +41,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
   const paginate = usePaginator();
   const notify = useNotifier();
   const intl = useIntl();
+  const user = useUser();
   const { updateListSettings, settings } = useListSettings(
     ListViews.STAFF_MEMBERS_LIST
   );

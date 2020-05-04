@@ -89,6 +89,7 @@ export const permissionGroupDetailsQuery = gql`
       ...PermissionGroupDetailsFragment
     }
     user(id: $userId) {
+      id
       editableGroups {
         id
       }
