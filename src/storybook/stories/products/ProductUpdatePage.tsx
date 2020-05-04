@@ -10,6 +10,7 @@ import ProductUpdatePage, {
 import { product as productFixture } from "@saleor/products/fixtures";
 import { ProductUpdatePageFormData } from "@saleor/products/utils/data";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { warehouseList } from "@saleor/warehouses/fixtures";
 import Decorator from "../../Decorator";
 
 const product = productFixture(placeholderImage);
@@ -34,11 +35,11 @@ const props: ProductUpdatePageProps = {
   onVariantAdd: () => undefined,
   onVariantShow: () => undefined,
   onVariantsAdd: () => undefined,
-  onWarehousesEdit: () => undefined,
   placeholderImage,
   product,
   saveButtonBarState: "default",
-  variants: product.variants
+  variants: product.variants,
+  warehouses: warehouseList
 };
 
 storiesOf("Views / Products / Product edit", module)

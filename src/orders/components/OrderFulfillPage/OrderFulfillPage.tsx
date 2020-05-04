@@ -338,7 +338,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               warehouseStock.quantityAllocated;
 
                             return (
-                              <TableCell className={classes.colQuantity}>
+                              <TableCell
+                                className={classes.colQuantity}
+                                key={warehouseStock.id}
+                              >
                                 <div className={classes.colQuantityContent}>
                                   <TextField
                                     type="number"

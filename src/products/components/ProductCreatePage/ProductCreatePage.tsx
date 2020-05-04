@@ -86,7 +86,6 @@ interface ProductCreatePageProps {
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
-  onWarehouseEdit: () => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
 }
@@ -108,8 +107,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   warehouses,
   onBack,
   fetchProductTypes,
-  onSubmit,
-  onWarehouseEdit
+  onSubmit
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -119,18 +117,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     data: attributes,
     set: setAttributeData
   } = useFormset<ProductAttributeInputData>([]);
-  const { change: changeStockData, data: stocks, set: setStocks } = useFormset<
-    null
-  >([]);
-  React.useEffect(() => {
-    const newStocks = warehouses.map(warehouse => ({
-      data: null,
-      id: warehouse.id,
-      label: warehouse.name,
-      value: stocks.find(stock => stock.id === warehouse.id)?.value || 0
-    }));
-    setStocks(newStocks);
-  }, [JSON.stringify(warehouses)]);
+  const {
+    add: addStock,
+    change: changeStockData,
+    data: stocks,
+    remove: removeStock
+  } = useFormset<null, string>([]);
 
   // Ensures that it will not change after component rerenders, because it
   // generates different block keys and it causes editor to lose its content.
@@ -253,11 +245,29 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     <ProductStocks
                       data={data}
                       disabled={disabled}
-                      onChange={changeStockData}
                       onFormDataChange={change}
                       errors={errors}
                       stocks={stocks}
-                      onWarehousesEdit={onWarehouseEdit}
+                      warehouses={warehouses}
+                      onChange={(id, value) => {
+                        triggerChange();
+                        changeStockData(id, value);
+                      }}
+                      onWarehouseStockAdd={id => {
+                        triggerChange();
+                        addStock({
+                          data: null,
+                          id,
+                          label: warehouses.find(
+                            warehouse => warehouse.id === id
+                          ).name,
+                          value: "0"
+                        });
+                      }}
+                      onWarehouseStockDelete={id => {
+                        triggerChange();
+                        removeStock(id);
+                      }}
                     />
                     <CardSpacer />
                   </>

@@ -16,9 +16,7 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
-import ProductWarehousesDialog from "@saleor/products/components/ProductWarehousesDialog";
-import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
-import { useAddOrRemoveStocks } from "@saleor/products/mutations";
+import { useWarehouseList } from "@saleor/warehouses/queries";
 import { getMutationState, maybe } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import ProductUpdateOperations from "../../containers/ProductUpdateOperations";
@@ -71,24 +69,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-  const { result: searchWarehousesOpts } = useWarehouseSearch({
+  const warehouses = useWarehouseList({
+    displayLoader: true,
     variables: {
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 20
-    }
-  });
-
-  const [addOrRemoveStocks, addOrRemoveStocksOpts] = useAddOrRemoveStocks({
-    onCompleted: data => {
-      if (
-        data.productVariantStocksCreate.errors.length === 0 &&
-        data.productVariantStocksDelete.errors.length === 0
-      ) {
-        notify({
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        closeModal();
-      }
+      first: 50
     }
   });
 
@@ -238,6 +222,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                     header={maybe(() => product.name)}
                     placeholderImage={placeholderImg}
                     product={product}
+                    warehouses={
+                      warehouses.data?.warehouses.edges.map(
+                        edge => edge.node
+                      ) || []
+                    }
                     variants={maybe(() => product.variants)}
                     onBack={handleBack}
                     onDelete={() => openModal("remove")}
@@ -282,7 +271,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                       loading: searchCollectionsOpts.loading,
                       onFetchMore: loadMoreCollections
                     }}
-                    onWarehousesEdit={() => openModal("edit-stocks")}
                   />
                   <ActionDialog
                     open={params.action === "remove"}
@@ -333,40 +321,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                       />
                     </DialogContentText>
                   </ActionDialog>
-                  {!product?.productType?.hasVariants && (
-                    <ProductWarehousesDialog
-                      confirmButtonState={addOrRemoveStocksOpts.status}
-                      disabled={addOrRemoveStocksOpts.loading}
-                      errors={[
-                        ...(addOrRemoveStocksOpts.data
-                          ?.productVariantStocksCreate.errors || []),
-                        ...(addOrRemoveStocksOpts.data
-                          ?.productVariantStocksDelete.errors || [])
-                      ]}
-                      onClose={closeModal}
-                      open={params.action === "edit-stocks"}
-                      warehouses={searchWarehousesOpts.data?.search.edges.map(
-                        edge => edge.node
-                      )}
-                      warehousesWithStocks={
-                        product?.variants[0].stocks.map(
-                          stock => stock.warehouse.id
-                        ) || []
-                      }
-                      onConfirm={data =>
-                        addOrRemoveStocks({
-                          variables: {
-                            add: data.added.map(id => ({
-                              quantity: 0,
-                              warehouse: id
-                            })),
-                            remove: data.removed,
-                            variantId: product.variants[0].id
-                          }
-                        })
-                      }
-                    />
-                  )}
                 </>
               );
             }}
