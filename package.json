@@ -194,6 +194,7 @@
     "build-storybook": "build-storybook -c src/storybook/ -o build/storybook",
     "test": "jest src/",
     "test-e2e": "testcafe 'chrome:headless' .testcafe",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "serve:lhci": "NODE_ENV=production npm run server"
   }
 }
