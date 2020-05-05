@@ -1427,6 +1427,9 @@
   "src_dot_configuration_dot_1233229030": {
     "string": "Miscellaneous"
   },
+  "src_dot_configuration_dot_1440737903": {
+    "string": "Shipping Settings"
+  },
   "src_dot_configuration_dot_1639245766": {
     "string": "View and update your webhook and their settings"
   },
@@ -3073,6 +3076,10 @@
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_3528974446": {
     "context": "dialog title",
     "string": "Delete permission group"
+  },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_956177443": {
+    "context": "deletion error message",
+    "string": "Cant's delete group which is out of your permission scope"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupDetailsPage_dot_3765873075": {
     "context": "checkbox label",

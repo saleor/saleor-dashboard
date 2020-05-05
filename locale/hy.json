@@ -1,7 +1,7 @@
 {
   "OrderCancelDialogHeader": {
     "context": "dialog header",
-    "string": "Cancel Order"
+    "string": "Պատվերի Չեղարկում"
   },
   "configurationMenuAttributes": {
     "string": "Determine attributes used to create product types"
@@ -38,7 +38,7 @@
   },
   "homeActivityCardHeader": {
     "context": "header",
-    "string": "Activity"
+    "string": "Գործունեություն"
   },
   "homeActivityCardNoActivities": {
     "string": "No activities found"
@@ -58,7 +58,7 @@
     "string": "No orders ready to fulfill"
   },
   "homeNotificationTableOrders": {
-    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}"
+    "string": "{amount, plural,one {Պատվերը պատրաստ է կատարման} other {{amount} Պատվերները պատրաստ են կատարման}}"
   },
   "homeNotificationTablePayments": {
     "string": "{amount, plural,one {One payment to capture} other {{amount} Payments to capture}}"
@@ -74,7 +74,7 @@
   },
   "homeProductListCardOrders": {
     "context": "number of ordered products",
-    "string": "{amount, plural,one {One ordered} other {{amount} Ordered}}"
+    "string": "{amount, plural,one {Պատվերված է} other {{amount} Պատվերված են}}"
   },
   "homeProductsListCardHeader": {
     "context": "header",
@@ -933,7 +933,7 @@
   },
   "src_dot_components_dot_AccountStatus_dot_2183517419": {
     "context": "section header",
-    "string": "Account Status"
+    "string": "Հաշվի կարգավիճակը"
   },
   "src_dot_components_dot_AccountStatus_dot_2683780981": {
     "string": "If you want to disable this account uncheck the box below"
@@ -1427,6 +1427,9 @@
   "src_dot_configuration_dot_1233229030": {
     "string": "Miscellaneous"
   },
+  "src_dot_configuration_dot_1440737903": {
+    "string": "Shipping Settings"
+  },
   "src_dot_configuration_dot_1639245766": {
     "string": "View and update your webhook and their settings"
   },
@@ -1499,7 +1502,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_1967111456": {
     "context": "header",
-    "string": "Address Information"
+    "string": "Հասցեի Տեղեկատվություն"
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_2758581442": {
     "context": "subsection header",
@@ -2463,7 +2466,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_693960049": {
     "context": "product's sku",
-    "string": "SKU"
+    "string": "ՊՊՄ"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentCancelDialog_dot_1097287358": {
     "string": "Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
@@ -2493,7 +2496,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_693960049": {
     "context": "product's sku",
-    "string": "SKU"
+    "string": "ՊՊՄ"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentTrackingDialog_dot_3252172269": {
     "string": "Հետևելու համարը"
@@ -3074,6 +3077,10 @@
     "context": "dialog title",
     "string": "Delete permission group"
   },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_956177443": {
+    "context": "deletion error message",
+    "string": "Cant's delete group which is out of your permission scope"
+  },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupDetailsPage_dot_3765873075": {
     "context": "checkbox label",
     "string": "Group has full access to the store"
@@ -3098,7 +3105,7 @@
     "string": "Members"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_4190792473": {
-    "string": "Actions"
+    "string": "Գործողություններ"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_425941108": {
     "string": "No permission groups found"
@@ -3134,7 +3141,7 @@
     "string": "Group members"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_4190792473": {
-    "string": "Actions"
+    "string": "Գործողություններ"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_636461959": {
     "context": "staff member full name",
@@ -3236,7 +3243,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_4120604650": {
     "context": "user action bar",
-    "string": "Action"
+    "string": "Գործողություն"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_636461959": {
     "context": "plugin name",
@@ -3728,7 +3735,7 @@
     "string": "Based on your selections we will create {numberOfProducts} products. Use this step to customize price and stocks for your new products"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_693960049": {
-    "string": "SKU"
+    "string": "ՊՊՄ"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_705096461": {
     "context": "variant creation step",
@@ -3846,7 +3853,7 @@
     "string": "Not stocked"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_693960049": {
-    "string": "SKU"
+    "string": "ՊՊՄ"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_998917294": {
     "context": "product variant name",
@@ -4130,7 +4137,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceTokens_dot_4190792473": {
     "context": "table actions",
-    "string": "Actions"
+    "string": "Գործողություններ"
   },
   "src_dot_services_dot_components_dot_ServiceTokens_dot_426959482": {
     "context": "header",
@@ -4439,7 +4446,7 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1114030884": {
     "context": "button",
-    "string": "Add key"
+    "string": "Ավելացնել բանալի"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1270286507": {
     "context": "authentication provider name",
@@ -5108,7 +5115,7 @@
   },
   "src_dot_utils_dot_errors_dot_shippingRequired": {
     "context": "error message",
-    "string": "Shipping method is required for this order"
+    "string": "Առաքման տարբերակը պահանջվում է այս պատվերի համար"
   },
   "src_dot_utils_dot_errors_dot_skuUnique": {
     "context": "bulk variant create error",
@@ -5119,10 +5126,10 @@
     "string": "Slug must be unique for each warehouse"
   },
   "src_dot_utils_dot_errors_dot_tooCommon": {
-    "string": "This password is too commonly used"
+    "string": "Այս գաղտնաբառը չափազանց հաճախ է օգտագործվում"
   },
   "src_dot_utils_dot_errors_dot_tooShort": {
-    "string": "This password is too short"
+    "string": "Այս գաղտնաբառը շատ կարճ է"
   },
   "src_dot_utils_dot_errors_dot_tooSimilar": {
     "string": "These passwords are too similar"
@@ -5131,7 +5138,7 @@
     "string": "This needs to be unique"
   },
   "src_dot_utils_dot_errors_dot_unknownError": {
-    "string": "Unknown error"
+    "string": "Անհայտ սխալ"
   },
   "src_dot_utils_dot_errors_dot_variantNoDigitalContent": {
     "string": "This variant does not have any digital content"
@@ -5146,7 +5153,7 @@
   },
   "src_dot_warehouses_dot_components_dot_WarehouseCreatePage_dot_1967111456": {
     "context": "warehouse",
-    "string": "Address Information"
+    "string": "Հասցեի Տեղեկատվություն"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseCreatePage_dot_934572530": {
     "context": "header",
@@ -5162,7 +5169,7 @@
   },
   "src_dot_warehouses_dot_components_dot_WarehouseDetailsPage_dot_1967111456": {
     "context": "warehouse",
-    "string": "Address Information"
+    "string": "Հասցեի Տեղեկատվություն"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseInfo_dot_2622674857": {
     "string": "Warehouse Name"
@@ -5179,13 +5186,13 @@
     "string": "Create Warehouse"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseList_dot_1225932315": {
-    "string": "Shipping Zones"
+    "string": "Առաքման Շրջաներ"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseList_dot_3787396469": {
     "string": "No warehouses found"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseList_dot_4190792473": {
-    "string": "Actions"
+    "string": "Գործողություններ"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseList_dot_636461959": {
     "context": "warehouse",
@@ -5193,7 +5200,7 @@
   },
   "src_dot_warehouses_dot_components_dot_WarehouseZones_dot_1225932315": {
     "context": "zones that warehouse sends to",
-    "string": "Shipping Zones"
+    "string": "Առաքման Շրջաներ"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseZones_dot_2423245141": {
     "string": "This warehouse has no shipping zones assigned."
@@ -5224,15 +5231,15 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1436364351": {
     "context": "section header",
-    "string": "Events"
+    "string": "Իրադարձություններ"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1606361075": {
     "context": "event",
-    "string": "Order updated"
+    "string": "Պատվերը թարմացված է"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",
-    "string": "All events"
+    "string": "Բոլոր իրադարձությունները"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2899821092": {
     "context": "event",
@@ -5248,15 +5255,15 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3400883706": {
     "context": "event",
-    "string": "Order created"
+    "string": "Պատվերը ստեղծված է"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3617444329": {
     "context": "event",
-    "string": "Order cancelled"
+    "string": "Պատվերը չեղարկված է"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3907151399": {
     "context": "event",
-    "string": "Order fulfilled"
+    "string": "Պատվերը կատարված է"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3970234993": {
     "context": "event",
@@ -5349,7 +5356,7 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_4120604650": {
     "context": "user action bar",
-    "string": "Action"
+    "string": "Գործողություն"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_618422799": {
     "string": "Unnamed webhook"
@@ -5363,7 +5370,7 @@
     "string": "Create Webhook"
   },
   "src_dot_yes": {
-    "string": "Yes"
+    "string": "Այո"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",
