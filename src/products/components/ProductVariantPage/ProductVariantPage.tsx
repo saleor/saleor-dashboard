@@ -1,4 +1,5 @@
 import React from "react";
+import { diff } from "fast-array-diff";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -17,6 +18,7 @@ import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
+import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import { maybe } from "../../../misc";
 import { ProductVariant } from "../../types/ProductVariant";
 import ProductVariantAttributes, {
@@ -38,7 +40,9 @@ export interface ProductVariantPageFormData {
 export interface ProductVariantPageSubmitData
   extends ProductVariantPageFormData {
   attributes: FormsetData<VariantAttributeInputData, string>;
-  stocks: ProductStockInput[];
+  addStocks: ProductStockInput[];
+  updateStocks: ProductStockInput[];
+  removeStocks: string[];
 }
 
 interface ProductVariantPageProps {
@@ -48,7 +52,7 @@ interface ProductVariantPageProps {
   loading?: boolean;
   placeholderImage?: string;
   header: string;
-  onWarehousesEdit: () => void;
+  warehouses: WarehouseFragment[];
   onAdd();
   onBack();
   onDelete();
@@ -64,12 +68,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   placeholderImage,
   saveButtonBarState,
   variant,
+  warehouses,
   onAdd,
   onBack,
   onDelete,
   onImageSelect,
   onSubmit,
-  onWarehousesEdit,
   onVariantClick
 }) => {
   const attributeInput = React.useMemo(
@@ -82,7 +86,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   const { change: changeAttributeData, data: attributes } = useFormset(
     attributeInput
   );
-  const { change: changeStockData, data: stocks } = useFormset(stockInput);
+  const {
+    add: addStock,
+    change: changeStockData,
+    data: stocks,
+    remove: removeStock
+  } = useFormset(stockInput);
 
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
@@ -106,12 +115,23 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     trackInventory: variant?.trackInventory
   };
 
-  const handleSubmit = (data: ProductVariantPageFormData) =>
+  const handleSubmit = (data: ProductVariantPageFormData) => {
+    const dataStocks = stocks.map(stock => stock.id);
+    const variantStocks = variant.stocks.map(stock => stock.warehouse.id);
+    const stockDiff = diff(variantStocks, dataStocks);
+
     onSubmit({
       ...data,
+      addStocks: stocks.filter(stock =>
+        stockDiff.added.some(addedStock => addedStock === stock.id)
+      ),
       attributes,
-      stocks
+      removeStocks: stockDiff.removed,
+      updateStocks: stocks.filter(
+        stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
+      )
     });
+  };
 
   return (
     <>
@@ -180,12 +200,27 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       disabled={loading}
                       errors={errors}
                       stocks={stocks}
+                      warehouses={warehouses}
                       onChange={(id, value) => {
                         triggerChange();
                         changeStockData(id, value);
                       }}
                       onFormDataChange={change}
-                      onWarehousesEdit={onWarehousesEdit}
+                      onWarehouseStockAdd={id => {
+                        triggerChange();
+                        addStock({
+                          data: null,
+                          id,
+                          label: warehouses.find(
+                            warehouse => warehouse.id === id
+                          ).name,
+                          value: "0"
+                        });
+                      }}
+                      onWarehouseStockDelete={id => {
+                        triggerChange();
+                        removeStock(id);
+                      }}
                     />
                   </div>
                 </Grid>

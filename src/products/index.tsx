@@ -19,11 +19,9 @@ import {
   productVariantAddPath,
   productVariantEditPath,
   ProductVariantEditUrlQueryParams,
-  ProductAddUrlQueryParams,
-  ProductVariantAddUrlQueryParams,
   productVariantCreatorPath
 } from "./urls";
-import ProductCreateComponent from "./views/ProductCreate";
+import ProductCreate from "./views/ProductCreate";
 import ProductImageComponent from "./views/ProductImage";
 import ProductListComponent from "./views/ProductList";
 import ProductUpdateComponent from "./views/ProductUpdate";
@@ -90,30 +88,17 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
 
 const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
   match
-}) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: ProductVariantAddUrlQueryParams = qs;
-
-  return (
-    <ProductVariantCreateComponent
-      productId={decodeURIComponent(match.params.id)}
-      params={params}
-    />
-  );
-};
+}) => (
+  <ProductVariantCreateComponent
+    productId={decodeURIComponent(match.params.id)}
+  />
+);
 
 const ProductVariantCreator: React.FC<RouteComponentProps<{
   id: string;
 }>> = ({ match }) => (
   <ProductVariantCreatorComponent id={decodeURIComponent(match.params.id)} />
 );
-
-const ProductCreate: React.FC<RouteComponentProps> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: ProductAddUrlQueryParams = qs;
-
-  return <ProductCreateComponent params={params} />;
-};
 
 const Component = () => {
   const intl = useIntl();

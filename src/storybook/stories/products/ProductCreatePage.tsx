@@ -33,7 +33,6 @@ storiesOf("Views / Products / Create product", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       saveButtonBarState="default"
-      onWarehouseEdit={() => undefined}
       warehouses={warehouseList}
     />
   ))
@@ -55,7 +54,6 @@ storiesOf("Views / Products / Create product", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       saveButtonBarState="default"
-      onWarehouseEdit={() => undefined}
       warehouses={undefined}
     />
   ))
@@ -83,7 +81,6 @@ storiesOf("Views / Products / Create product", module)
       onBack={() => undefined}
       onSubmit={() => undefined}
       saveButtonBarState="default"
-      onWarehouseEdit={() => undefined}
       warehouses={warehouseList}
     />
   ));
