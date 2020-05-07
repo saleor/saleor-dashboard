@@ -85,6 +85,7 @@ const useStyles = makeStyles<Theme, OrderFulfillPageProps, ClassKey>(
     },
     colSku: {
       textAlign: "right",
+      textOverflow: "ellipsis",
       width: 150
     },
     error: {
