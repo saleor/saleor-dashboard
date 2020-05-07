@@ -50,6 +50,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Display Is Published column correctly in main Product Listing - #475 by @gabmartinez
 - Add Permission Groups section - #406 by @krzysztofwolski
 - Add warehouse management - #390 by @dominik-zeglen
+- Fix minor visual bugs - #521 by @dominik-zeglen
 
 ## 2.0.0
 
