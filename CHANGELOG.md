@@ -4,8 +4,6 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- Update product stock management to newest design - #515 by @dominik-zeglen
-
 ## 2.10.0
 
 - Fix minor bugs - #244 by @dominik-zeglen
@@ -52,6 +50,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add warehouse management - #390 by @dominik-zeglen
 - Fix minor visual bugs - #521 by @dominik-zeglen
 - Handle session expiration - #520 by @dominik-zeglen
+- Update product stock management to newest design - #515 by @dominik-zeglen
 
 ## 2.0.0
 
