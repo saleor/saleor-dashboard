@@ -17,6 +17,7 @@ import useAppState from "@saleor/hooks/useAppState";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth, { getAuthToken, removeAuthToken } from "./auth";
+import { isJwtError } from "./auth/errors";
 import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
@@ -66,7 +67,10 @@ interface ResponseError extends ErrorResponse {
 }
 
 const invalidTokenLink = onError((error: ResponseError) => {
-  if (error.networkError && error.networkError.statusCode === 401) {
+  if (
+    (error.networkError && error.networkError.statusCode === 401) ||
+    error.graphQLErrors?.some(isJwtError)
+  ) {
     removeAuthToken();
   }
 });

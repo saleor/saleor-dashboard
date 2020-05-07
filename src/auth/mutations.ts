@@ -9,6 +9,7 @@ import {
 import { SetPassword, SetPasswordVariables } from "./types/SetPassword";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
+import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
 
 export const fragmentUser = gql`
   fragment User on User {
@@ -98,3 +99,16 @@ export const SetPasswordMutation = TypedMutation<
   SetPassword,
   SetPasswordVariables
 >(setPassword);
+
+const refreshToken = gql`
+  mutation RefreshToken($token: String!) {
+    tokenRefresh(token: $token) {
+      token
+      payload
+    }
+  }
+`;
+export const TokenRefreshMutation = TypedMutation<
+  RefreshToken,
+  RefreshTokenVariables
+>(refreshToken);

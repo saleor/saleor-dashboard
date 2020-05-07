@@ -8,6 +8,8 @@ import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
 import { maybe, getMutationStatus } from "./misc";
 import { MutationResultAdditionalProps } from "./types";
+import { isJwtError } from "./auth/errors";
+import useUser from "./hooks/useUser";
 
 export interface TypedMutationInnerProps<TData, TVariables> {
   children: (
@@ -27,6 +29,7 @@ export function TypedMutation<TData, TVariables>(
   return (props: TypedMutationInnerProps<TData, TVariables>) => {
     const notify = useNotifier();
     const intl = useIntl();
+    const user = useUser();
     const { children, onCompleted, onError, variables } = props;
 
     return (
@@ -43,6 +46,11 @@ export function TypedMutation<TData, TVariables>(
           ) {
             notify({
               text: intl.formatMessage(commonMessages.readOnly)
+            });
+          } else if (err.graphQLErrors.every(isJwtError)) {
+            user.logout();
+            notify({
+              text: intl.formatMessage(commonMessages.sessionExpired)
             });
           } else {
             notify({
