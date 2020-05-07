@@ -51,6 +51,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add Permission Groups section - #406 by @krzysztofwolski
 - Add warehouse management - #390 by @dominik-zeglen
 - Fix minor visual bugs - #521 by @dominik-zeglen
+- Handle session expiration - #520 by @dominik-zeglen
 
 ## 2.0.0
 
