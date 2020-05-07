@@ -56,6 +56,9 @@ export const commonMessages = defineMessages({
   savedChanges: {
     defaultMessage: "Saved changes"
   },
+  sessionExpired: {
+    defaultMessage: "Your session has expired. Please log in again to continue."
+  },
   somethingWentWrong: {
     defaultMessage: "Saleor ran into an unexpected problem"
   },
