@@ -37,6 +37,7 @@ export interface OrderFulfillData_order_lines_variant {
   sku: string;
   attributes: OrderFulfillData_order_lines_variant_attributes[];
   stocks: (OrderFulfillData_order_lines_variant_stocks | null)[] | null;
+  trackInventory: boolean;
 }
 
 export interface OrderFulfillData_order_lines_thumbnail {
