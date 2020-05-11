@@ -51,6 +51,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix minor visual bugs - #521 by @dominik-zeglen
 - Handle session expiration - #520 by @dominik-zeglen
 - Update product stock management to newest design - #515 by @dominik-zeglen
+- Display correct error if there were no graphql errors - #525 by @dominik-zeglen
 
 ## 2.0.0
 
