@@ -50,7 +50,7 @@ function makeMutation<TData, TVariables>(
           notify({
             text: intl.formatMessage(commonMessages.readOnly)
           });
-        } else if (err.graphQLErrors.every(isJwtError)) {
+        } else if (err.graphQLErrors.some(isJwtError)) {
           user.logout();
           notify({
             text: intl.formatMessage(commonMessages.sessionExpired)

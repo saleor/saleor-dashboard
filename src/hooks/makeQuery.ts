@@ -64,7 +64,7 @@ function makeQuery<TData, TVariables>(
     }, [queryData.loading]);
 
     if (queryData.error) {
-      if (queryData.error.graphQLErrors.every(isJwtError)) {
+      if (queryData.error.graphQLErrors.some(isJwtError)) {
         user.logout();
         notify({
           text: intl.formatMessage(commonMessages.sessionExpired)
