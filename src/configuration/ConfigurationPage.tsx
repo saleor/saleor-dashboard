@@ -76,8 +76,10 @@ const useStyles = makeStyles(
       margin: 0
     },
     icon: {
-      color: theme.palette.primary.main,
-      fontSize: 48
+      fontSize: 48,
+      "& path":{
+        fill:theme.palette.primary.main,
+      }
     },
     sectionDescription: {},
     sectionTitle: {
