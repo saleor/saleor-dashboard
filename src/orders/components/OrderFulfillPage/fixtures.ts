@@ -61,7 +61,8 @@ export const orderToFulfill: OrderFulfillData_order = {
             quantity: 1220,
             quantityAllocated: 7
           }
-        ]
+        ],
+        trackInventory: false
       },
       thumbnail: {
         __typename: "Image",
@@ -114,7 +115,8 @@ export const orderToFulfill: OrderFulfillData_order = {
             quantity: 760,
             quantityAllocated: 4
           }
-        ]
+        ],
+        trackInventory: true
       },
       thumbnail: {
         __typename: "Image",
@@ -160,7 +162,8 @@ export const orderToFulfill: OrderFulfillData_order = {
             quantity: 587,
             quantityAllocated: 1
           }
-        ]
+        ],
+        trackInventory: true
       },
       thumbnail: {
         __typename: "Image",
