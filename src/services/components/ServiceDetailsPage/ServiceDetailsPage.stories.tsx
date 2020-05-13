@@ -1,9 +1,9 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import { permissions } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { AccountErrorCode } from "@saleor/types/globalTypes";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import { service } from "../../fixtures";
 import ServiceDetailsPage, {
   ServiceDetailsPageProps

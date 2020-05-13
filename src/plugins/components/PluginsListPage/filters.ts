@@ -1,9 +1,8 @@
-import { defineMessages, IntlShape } from "react-intl";
-
-import { FilterOpts } from "@saleor/types";
 import { IFilter } from "@saleor/components/Filter";
-import { createBooleanField } from "@saleor/utils/filters/fields";
 import { commonMessages } from "@saleor/intl";
+import { FilterOpts } from "@saleor/types";
+import { createBooleanField } from "@saleor/utils/filters/fields";
+import { defineMessages, IntlShape } from "react-intl";
 
 export enum PluginFilterKeys {
   active = "active"

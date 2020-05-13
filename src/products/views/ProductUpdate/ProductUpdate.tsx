@@ -1,11 +1,9 @@
+import placeholderImg from "@assets/images/placeholder255x255.png";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
-import placeholderImg from "@assets/images/placeholder255x255.png";
 import ActionDialog from "@saleor/components/ActionDialog";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -15,8 +13,10 @@ import { commonMessages } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import NotFoundPage from "@saleor/components/NotFoundPage";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { getMutationState, maybe } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import ProductUpdateOperations from "../../containers/ProductUpdateOperations";
@@ -31,11 +31,11 @@ import {
   productImageUrl,
   productListUrl,
   productUrl,
+  ProductUrlDialog,
   ProductUrlQueryParams,
   productVariantAddUrl,
-  productVariantEditUrl,
-  ProductUrlDialog,
-  productVariantCreatorUrl
+  productVariantCreatorUrl,
+  productVariantEditUrl
 } from "../../urls";
 import {
   createImageReorderHandler,

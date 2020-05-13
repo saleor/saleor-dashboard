@@ -3,9 +3,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import ExternalLink from "@saleor/components/ExternalLink";
 import Form from "@saleor/components/Form";
@@ -20,6 +17,9 @@ import { SearchCustomers_search_edges_node } from "@saleor/searches/types/Search
 import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { customerUrl } from "../../../customers/urls";
 import { createHref, maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";

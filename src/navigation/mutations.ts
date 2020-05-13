@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+
 import { TypedMutation } from "../mutations";
 import { menuItemFragment, menuItemNestedFragment } from "./queries";
 import {

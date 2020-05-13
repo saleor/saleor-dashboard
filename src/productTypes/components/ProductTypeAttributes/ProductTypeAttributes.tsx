@@ -5,9 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -20,6 +17,9 @@ import TableHead from "@saleor/components/TableHead";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import {
   ProductTypeDetails_productType_productAttributes,
   ProductTypeDetails_productType_variantAttributes

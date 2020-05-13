@@ -1,13 +1,12 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import FormSpacer from "@saleor/components/FormSpacer";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface OrderDraftCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

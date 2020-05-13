@@ -1,11 +1,10 @@
-import React from "react";
-import { useIntl } from "react-intl";
-import slugify from "slugify";
-
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { maybe } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import {
   add,
   isSelected,
@@ -13,9 +12,10 @@ import {
   remove,
   updateAtIndex
 } from "@saleor/utils/lists";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import React from "react";
+import { useIntl } from "react-intl";
+import slugify from "slugify";
+
 import AttributePage from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog, {
@@ -25,10 +25,10 @@ import { AttributeCreateMutation } from "../../mutations";
 import { AttributeCreate } from "../../types/AttributeCreate";
 import {
   attributeAddUrl,
+  AttributeAddUrlDialog,
   AttributeAddUrlQueryParams,
   attributeListUrl,
-  attributeUrl,
-  AttributeAddUrlDialog
+  attributeUrl
 } from "../../urls";
 
 interface AttributeDetailsProps {

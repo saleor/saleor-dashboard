@@ -1,11 +1,11 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import { attribute } from "@saleor/attributes/fixtures";
 import {
   AttributeValueType,
   ProductErrorCode
 } from "@saleor/types/globalTypes";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import AttributeValueEditDialog, {
   AttributeValueEditDialogProps
 } from "../../../attributes/components/AttributeValueEditDialog";

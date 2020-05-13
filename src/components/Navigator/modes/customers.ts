@@ -1,8 +1,8 @@
-import { IntlShape } from "react-intl";
-
 import { customerUrl } from "@saleor/customers/urls";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
+import { IntlShape } from "react-intl";
+
 import { QuickSearchAction } from "../types";
 import messages from "./messages";
 

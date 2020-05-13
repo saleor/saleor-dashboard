@@ -10,9 +10,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
@@ -26,8 +23,11 @@ import { buttonMessages } from "@saleor/intl";
 import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
-import { OrderDetails_order_lines } from "../../types/OrderDetails";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe } from "../../../misc";
+import { OrderDetails_order_lines } from "../../types/OrderDetails";
 
 export interface FormData {
   lines: number[];

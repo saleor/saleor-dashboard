@@ -1,14 +1,13 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
+import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
-import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
+import React from "react";
+import { useIntl } from "react-intl";
 
 export interface ShippingZoneInfoProps {
   data: Record<"name", string>;

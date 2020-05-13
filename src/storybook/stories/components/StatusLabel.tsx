@@ -1,7 +1,7 @@
+import StatusLabel from "@saleor/components/StatusLabel";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import StatusLabel from "@saleor/components/StatusLabel";
 import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 

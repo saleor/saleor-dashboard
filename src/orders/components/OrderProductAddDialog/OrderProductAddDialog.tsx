@@ -10,26 +10,26 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import InfiniteScroll from "react-infinite-scroller";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
+import FormSpacer from "@saleor/components/FormSpacer";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
-import { FetchMoreProps } from "@saleor/types";
 import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
+import { FetchMoreProps } from "@saleor/types";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import FormSpacer from "@saleor/components/FormSpacer";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
+import React from "react";
+import InfiniteScroll from "react-infinite-scroller";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import {
   SearchOrderVariant_search_edges_node,
   SearchOrderVariant_search_edges_node_variants

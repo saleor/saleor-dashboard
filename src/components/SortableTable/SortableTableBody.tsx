@@ -1,9 +1,8 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TableBody, { TableBodyProps } from "@material-ui/core/TableBody";
+import { ReorderAction } from "@saleor/types";
 import React from "react";
 import { SortableContainer } from "react-sortable-hoc";
-
-import { ReorderAction } from "@saleor/types";
 
 const InnerSortableTableBody = SortableContainer<TableBodyProps>(
   ({ children, ...props }) => <TableBody {...props}>{children}</TableBody>
@@ -29,9 +28,10 @@ const useStyles = makeStyles(
   { name: "SortableTableBody" }
 );
 
-const SortableTableBody: React.FC<
-  Omit<TableBodyProps & SortableTableBodyProps, "ref">
-> = props => {
+const SortableTableBody: React.FC<Omit<
+  TableBodyProps & SortableTableBodyProps,
+  "ref"
+>> = props => {
   const classes = useStyles({});
 
   return (

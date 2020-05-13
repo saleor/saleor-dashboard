@@ -1,16 +1,13 @@
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import {
   areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFilterOpts,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
-  getFilterOpts
+  saveFilterTab
 } from "@saleor/attributes/views/AttributeList/filters";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -22,11 +19,14 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import useShop from "@saleor/hooks/useShop";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import useShop from "@saleor/hooks/useShop";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { PAGINATE_BY } from "../../../config";
 import useBulkActions from "../../../hooks/useBulkActions";
 import { maybe } from "../../../misc";
@@ -38,12 +38,12 @@ import { AttributeBulkDelete } from "../../types/AttributeBulkDelete";
 import {
   attributeAddUrl,
   attributeListUrl,
+  AttributeListUrlDialog,
   AttributeListUrlQueryParams,
-  attributeUrl,
-  AttributeListUrlDialog
+  attributeUrl
 } from "../../urls";
-import { getSortQueryVariables } from "./sort";
 import { getFilterQueryParam } from "./filters";
+import { getSortQueryVariables } from "./sort";
 
 interface AttributeListProps {
   params: AttributeListUrlQueryParams;

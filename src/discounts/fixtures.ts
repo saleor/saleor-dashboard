@@ -1,4 +1,5 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
+
 import {
   DiscountValueTypeEnum,
   SaleType,

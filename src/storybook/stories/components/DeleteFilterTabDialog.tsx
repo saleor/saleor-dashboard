@@ -1,9 +1,9 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import DeleteFilterTabDialog, {
   DeleteFilterTabDialogProps
 } from "@saleor/components/DeleteFilterTabDialog";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import Decorator from "../../Decorator";
 
 const props: DeleteFilterTabDialogProps = {

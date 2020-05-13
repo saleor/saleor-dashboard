@@ -1,9 +1,9 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import CardTitle from "@saleor/components/CardTitle";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import CardTitle from "@saleor/components/CardTitle";
 import { ListActions, PageListProps } from "../../../types";
 import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
 import CategoryProductList from "../CategoryProductList";

@@ -1,9 +1,9 @@
 import { Omit } from "@material-ui/core";
+import { listActionsProps } from "@saleor/fixtures";
+import { formError } from "@saleor/storybook/misc";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { listActionsProps } from "@saleor/fixtures";
-import { formError } from "@saleor/storybook/misc";
 import ProductTypeDetailsPage, {
   ProductTypeDetailsPageProps,
   ProductTypeForm

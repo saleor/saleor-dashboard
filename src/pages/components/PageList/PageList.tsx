@@ -4,20 +4,20 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { PageListUrlSortField } from "@saleor/pages/urls";
-import TableCellHeader from "@saleor/components/TableCellHeader";
+import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { PageList_pages_edges_node } from "../../types/PageList";
 
 export interface PageListProps

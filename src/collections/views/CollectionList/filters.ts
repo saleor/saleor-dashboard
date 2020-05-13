@@ -1,23 +1,24 @@
 import {
+  CollectionFilterKeys,
+  CollectionListFilterOpts
+} from "@saleor/collections/components/CollectionListPage";
+import { IFilterElement } from "@saleor/components/Filter";
+import { findValueInEnum, maybe } from "@saleor/misc";
+import {
   CollectionFilterInput,
   CollectionPublished
 } from "@saleor/types/globalTypes";
-import { IFilterElement } from "@saleor/components/Filter";
-import { maybe, findValueInEnum } from "@saleor/misc";
-import {
-  CollectionListFilterOpts,
-  CollectionFilterKeys
-} from "@saleor/collections/components/CollectionListPage";
-import {
-  CollectionListUrlFilters,
-  CollectionListUrlFiltersEnum,
-  CollectionListUrlQueryParams
-} from "../../urls";
+
 import {
   createFilterTabUtils,
   createFilterUtils,
   getSingleEnumValueQueryParam
 } from "../../../utils/filters";
+import {
+  CollectionListUrlFilters,
+  CollectionListUrlFiltersEnum,
+  CollectionListUrlQueryParams
+} from "../../urls";
 
 export const COLLECTION_FILTERS_KEY = "collectionFilters";
 

@@ -7,12 +7,12 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { authorizationKeyTypes, maybe, renderCollection } from "../../../misc";
 import { ICONBUTTON_SIZE } from "../../../theme";
 import { AuthorizationKeyType } from "../../../types/globalTypes";

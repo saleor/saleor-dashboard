@@ -1,13 +1,11 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { API_URI } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { maybe, getStringOrPlaceholder } from "@saleor/misc";
+import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import ServiceDeleteDialog from "@saleor/services/components/ServiceDeleteDialog";
 import ServiceTokenCreateDialog from "@saleor/services/components/ServiceTokenCreateDialog";
 import ServiceTokenDeleteDialog from "@saleor/services/components/ServiceTokenDeleteDialog";
@@ -22,7 +20,9 @@ import { ServiceTokenCreate } from "@saleor/services/types/ServiceTokenCreate";
 import { ServiceTokenDelete } from "@saleor/services/types/ServiceTokenDelete";
 import { ServiceUpdate } from "@saleor/services/types/ServiceUpdate";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import NotFoundPage from "@saleor/components/NotFoundPage";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import ServiceDetailsPage, {
   ServiceDetailsPageFormData
 } from "../../components/ServiceDetailsPage";

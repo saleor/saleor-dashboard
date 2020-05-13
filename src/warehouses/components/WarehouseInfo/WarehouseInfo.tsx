@@ -1,15 +1,14 @@
-import React from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
-import { commonMessages } from "@saleor/intl";
 import { FormChange } from "@saleor/hooks/useForm";
+import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
-import { WarehouseErrorFragment } from "@saleor/warehouses/types/WarehouseErrorFragment";
 import getWarehouseErrorMessage from "@saleor/utils/errors/warehouse";
+import { WarehouseErrorFragment } from "@saleor/warehouses/types/WarehouseErrorFragment";
+import React from "react";
+import { useIntl } from "react-intl";
 
 export interface WarehouseInfoProps {
   data: Record<"name", string>;

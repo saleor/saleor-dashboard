@@ -5,13 +5,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
-import { FormattedMessage } from "react-intl";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -34,9 +33,7 @@ export interface ProductVariantDeleteDialogProps {
   onConfirm?();
 }
 
-const ProductVariantDeleteDialog: React.FC<
-  ProductVariantDeleteDialogProps
-> = props => {
+const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = props => {
   const { confirmButtonState, name, open, onConfirm, onClose } = props;
 
   const classes = useStyles(props);

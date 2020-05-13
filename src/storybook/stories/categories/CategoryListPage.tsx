@@ -1,18 +1,18 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import CategoryListPage, {
   CategoryTableProps
 } from "@saleor/categories/components/CategoryListPage";
 import { categories } from "@saleor/categories/fixtures";
+import { CategoryListUrlSortField } from "@saleor/categories/urls";
 import {
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps,
-  sortPageProps
+  sortPageProps,
+  tabPageProps
 } from "@saleor/fixtures";
-import { CategoryListUrlSortField } from "@saleor/categories/urls";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import Decorator from "../../Decorator";
 
 const categoryTableProps: CategoryTableProps = {

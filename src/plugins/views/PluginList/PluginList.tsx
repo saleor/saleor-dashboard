@@ -1,41 +1,41 @@
+import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData
+} from "@saleor/components/SaveFilterTabDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import useShop from "@saleor/hooks/useShop";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import useShop from "@saleor/hooks/useShop";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
-} from "@saleor/components/SaveFilterTabDialog";
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import PluginsListPage from "../../components/PluginsListPage/PluginsListPage";
 import { usePluginsListQuery } from "../../queries";
 import {
-  PluginListUrlQueryParams,
   pluginListUrl,
-  pluginUrl,
-  PluginListUrlDialog
+  PluginListUrlDialog,
+  PluginListUrlQueryParams,
+  pluginUrl
 } from "../../urls";
-import { getSortQueryVariables } from "./sort";
 import {
-  getFilterQueryParam,
-  getFilterOpts,
-  getFilterTabs,
   areFiltersApplied,
-  saveFilterTab,
-  getActiveFilters,
   deleteFilterTab,
-  getFilterVariables
+  getActiveFilters,
+  getFilterOpts,
+  getFilterQueryParam,
+  getFilterTabs,
+  getFilterVariables,
+  saveFilterTab
 } from "./filters";
+import { getSortQueryVariables } from "./sort";
 
 interface PluginsListProps {
   params: PluginListUrlQueryParams;

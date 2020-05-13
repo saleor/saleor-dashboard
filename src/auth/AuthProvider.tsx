@@ -1,23 +1,23 @@
-import React from "react";
-
+import { maybe } from "@saleor/misc";
 import {
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
+import React from "react";
 import { MutationFunction, MutationResult } from "react-apollo";
-import { maybe } from "@saleor/misc";
+
+import { UserContext } from "./";
 import {
+  TokenRefreshMutation,
   TypedTokenAuthMutation,
-  TypedVerifyTokenMutation,
-  TokenRefreshMutation
+  TypedVerifyTokenMutation
 } from "./mutations";
+import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { User } from "./types/User";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 import { getAuthToken, removeAuthToken, setAuthToken } from "./utils";
-import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
-import { UserContext } from "./";
 
 interface AuthProviderOperationsProps {
   children: (props: {

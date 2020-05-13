@@ -1,7 +1,6 @@
-import isArray from "lodash-es/isArray";
-
-import { IFilterElement, IFilter } from "@saleor/components/Filter";
+import { IFilter, IFilterElement } from "@saleor/components/Filter";
 import { findValueInEnum } from "@saleor/misc";
+import isArray from "lodash-es/isArray";
 
 function createFilterUtils<
   TQueryParams extends object,

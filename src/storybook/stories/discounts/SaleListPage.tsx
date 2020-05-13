@@ -1,21 +1,21 @@
+import { SaleListUrlSortField } from "@saleor/discounts/urls";
+import {
+  DiscountStatusEnum,
+  DiscountValueTypeEnum
+} from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { SaleListUrlSortField } from "@saleor/discounts/urls";
-import {
-  DiscountValueTypeEnum,
-  DiscountStatusEnum
-} from "@saleor/types/globalTypes";
 import SaleListPage, {
   SaleListPageProps
 } from "../../../discounts/components/SaleListPage";
 import { saleList } from "../../../discounts/fixtures";
 import {
+  filterPageProps,
   listActionsProps,
   pageListProps,
-  tabPageProps,
   sortPageProps,
-  filterPageProps
+  tabPageProps
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
 

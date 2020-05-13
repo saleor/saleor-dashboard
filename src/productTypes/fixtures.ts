@@ -2,6 +2,7 @@ import {
   SearchProductTypes_search_edges_node,
   SearchProductTypes_search_edges_node_productAttributes
 } from "@saleor/searches/types/SearchProductTypes";
+
 import { AttributeInputTypeEnum } from "../types/globalTypes";
 import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
 import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";
@@ -468,9 +469,8 @@ export const attributes: SearchProductTypes_search_edges_node_productAttributes[
   }
 ].map(edge => edge.node);
 
-export const productTypes: Array<
-  SearchProductTypes_search_edges_node & ProductTypeList_productTypes_edges_node
-> = [
+export const productTypes: Array<SearchProductTypes_search_edges_node &
+  ProductTypeList_productTypes_edges_node> = [
   {
     __typename: "ProductType" as "ProductType",
     hasVariants: true,

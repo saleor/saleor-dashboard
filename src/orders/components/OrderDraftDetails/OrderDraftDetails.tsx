@@ -1,10 +1,10 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import CardTitle from "@saleor/components/CardTitle";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import CardTitle from "@saleor/components/CardTitle";
 import { maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderDraftDetailsProducts, {

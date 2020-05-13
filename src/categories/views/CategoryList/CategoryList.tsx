@@ -1,9 +1,6 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -17,9 +14,12 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
 import { useCategoryBulkDeleteMutation } from "../../mutations";
 import { useRootCategoriesQuery } from "../../queries";
@@ -27,10 +27,10 @@ import { CategoryBulkDelete } from "../../types/CategoryBulkDelete";
 import {
   categoryAddUrl,
   categoryListUrl,
+  CategoryListUrlDialog,
   CategoryListUrlFilters,
   CategoryListUrlQueryParams,
-  categoryUrl,
-  CategoryListUrlDialog
+  categoryUrl
 } from "../../urls";
 import {
   areFiltersApplied,

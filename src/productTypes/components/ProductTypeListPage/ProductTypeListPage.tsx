@@ -1,20 +1,20 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import AppHeader from "@saleor/components/AppHeader";
+import Container from "@saleor/components/Container";
+import FilterBar from "@saleor/components/FilterBar";
+import PageHeader from "@saleor/components/PageHeader";
+import { sectionNames } from "@saleor/intl";
+import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import AppHeader from "@saleor/components/AppHeader";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import FilterBar from "@saleor/components/FilterBar";
-import { sectionNames } from "@saleor/intl";
-import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import {
+  FilterPageProps,
   ListActions,
   PageListProps,
-  FilterPageProps,
-  TabPageProps,
-  SortPage
+  SortPage,
+  TabPageProps
 } from "../../../types";
 import { ProductTypeList_productTypes_edges_node } from "../../types/ProductTypeList";
 import ProductTypeList from "../ProductTypeList";

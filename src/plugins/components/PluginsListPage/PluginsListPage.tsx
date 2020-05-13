@@ -1,19 +1,19 @@
-import React from "react";
 import Card from "@material-ui/core/Card";
-import { useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
+import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
+import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import {
+  FilterPageProps,
   PageListProps,
   SortPage,
-  FilterPageProps,
   TabPageProps
 } from "@saleor/types";
-import { PluginListUrlSortField } from "@saleor/plugins/urls";
-import FilterBar from "@saleor/components/FilterBar";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
 import PluginsList from "../PluginsList/PluginsList";
 import {

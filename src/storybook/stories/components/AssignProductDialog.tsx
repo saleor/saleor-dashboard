@@ -1,11 +1,11 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import AssignProductDialog, {
   AssignProductDialogProps
 } from "@saleor/components/AssignProductDialog";
 import { products } from "@saleor/products/fixtures";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import Decorator from "../../Decorator";
 
 const props: AssignProductDialogProps = {

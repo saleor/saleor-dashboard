@@ -1,11 +1,10 @@
-import { IntlShape, defineMessages } from "react-intl";
-
-import { FilterOpts, MinMax } from "@saleor/types";
 import { IFilter } from "@saleor/components/Filter";
+import { FilterOpts, MinMax } from "@saleor/types";
 import {
   createDateField,
   createNumberField
 } from "@saleor/utils/filters/fields";
+import { defineMessages, IntlShape } from "react-intl";
 
 export enum CustomerFilterKeys {
   joined = "joined",

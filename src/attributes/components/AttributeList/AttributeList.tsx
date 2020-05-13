@@ -3,20 +3,20 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import { AttributeListUrlSortField } from "@saleor/attributes/urls";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import { AttributeListUrlSortField } from "@saleor/attributes/urls";
 import { getArrowDirection } from "@saleor/utils/sort";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 
 export interface AttributeListProps

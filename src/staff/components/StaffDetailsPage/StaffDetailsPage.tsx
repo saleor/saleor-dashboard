@@ -1,6 +1,3 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import { Card, CardContent, Typography } from "@material-ui/core";
 import AccountPermissionGroups from "@saleor/components/AccountPermissionGroups";
 import AccountStatus from "@saleor/components/AccountStatus";
@@ -19,9 +16,12 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { getUserName } from "@saleor/misc";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
+import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
-import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 import StaffPassword from "../StaffPassword/StaffPassword";
 import StaffPreferences from "../StaffPreferences";

@@ -1,9 +1,9 @@
+import placeholderImage from "@assets/images/placeholder60x60.png";
 import { Omit } from "@material-ui/core";
+import { OrderErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import placeholderImage from "@assets/images/placeholder60x60.png";
-import { OrderErrorCode } from "@saleor/types/globalTypes";
 import OrderFulfillmentDialog, {
   OrderFulfillmentDialogProps
 } from "../../../orders/components/OrderFulfillmentDialog";

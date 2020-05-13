@@ -1,9 +1,9 @@
-import React from "react";
-
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import { isSelected } from "@saleor/utils/lists";
+import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+import React from "react";
+
 import { ProductVariantCreateFormData } from "./form";
 import ProductVariantCreatePriceAndSku from "./ProductVariantCreatorPriceAndSku";
 import ProductVariantCreateSummary from "./ProductVariantCreatorSummary";

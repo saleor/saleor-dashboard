@@ -1,6 +1,3 @@
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -8,13 +5,16 @@ import Container from "@saleor/components/Container";
 import CountryList from "@saleor/components/CountryList";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
-import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
+import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { getStringOrPlaceholder } from "../../../misc";
 import { FetchMoreProps, SearchProps } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";

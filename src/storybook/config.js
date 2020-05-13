@@ -6,7 +6,7 @@ const req = requireContext("../", true, /.stories.tsx$/);
 
 function loadStories() {
   // Story autodiscovery
-  req.keys().forEach((filename) => req(filename));
+  req.keys().forEach(filename => req(filename));
 
   // Components
   require("./stories/components/ActionDialog");

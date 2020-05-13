@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+
 import ImageIcon from "../../icons/Image";
 import Dropzone from "../Dropzone";
 

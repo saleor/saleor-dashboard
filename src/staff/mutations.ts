@@ -1,6 +1,7 @@
-import gql from "graphql-tag";
-import makeMutation from "@saleor/hooks/makeMutation";
 import { accountErrorFragment } from "@saleor/customers/mutations";
+import makeMutation from "@saleor/hooks/makeMutation";
+import gql from "graphql-tag";
+
 import { TypedMutation } from "../mutations";
 import { staffMemberDetailsFragment } from "./queries";
 import {

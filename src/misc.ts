@@ -7,9 +7,9 @@ import { ConfirmButtonTransitionState } from "./components/ConfirmButton/Confirm
 import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
+  MutationResultAdditionalProps,
   PartialMutationProviderOutput,
-  UserError,
-  MutationResultAdditionalProps
+  UserError
 } from "./types";
 import {
   AddressInput,

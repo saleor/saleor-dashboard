@@ -1,11 +1,11 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import { countries } from "@saleor/fixtures";
 import useMultiAutocomplete from "@saleor/hooks/useMultiAutocomplete";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
 import { ChoiceProvider } from "@saleor/storybook/mock";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import MultiAutocompleteSelectField, {
   MultiAutocompleteSelectFieldProps
 } from "./MultiAutocompleteSelectField";

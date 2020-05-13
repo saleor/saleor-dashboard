@@ -4,9 +4,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -15,6 +12,9 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
 import { TaxRateType } from "@saleor/types/globalTypes";
+import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+
 import { maybe, renderCollection } from "../../../misc";
 import { CountryList_shop_countries_vat_reducedRates } from "../../types/CountryList";
 

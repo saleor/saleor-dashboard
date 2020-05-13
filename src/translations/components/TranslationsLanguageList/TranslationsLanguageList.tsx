@@ -4,12 +4,12 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
-import { FormattedMessage } from "react-intl";
-
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import Skeleton from "@saleor/components/Skeleton";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+
 import { maybe, renderCollection } from "../../../misc";
 
 export interface TranslationsLanguageListProps {
@@ -29,9 +29,7 @@ const useStyles = makeStyles(
   { name: "TranslationsLanguageList" }
 );
 
-const TranslationsLanguageList: React.FC<
-  TranslationsLanguageListProps
-> = props => {
+const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props => {
   const { languages, onRowClick } = props;
 
   const classes = useStyles(props);

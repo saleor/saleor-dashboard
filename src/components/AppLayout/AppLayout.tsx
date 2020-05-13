@@ -1,3 +1,6 @@
+import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
+import saleorDarkLogo from "@assets/images/logo-dark.svg";
+import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -9,15 +12,6 @@ import Menu from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
-import classNames from "classnames";
-import React from "react";
-import SVG from "react-inlinesvg";
-import { FormattedMessage, useIntl } from "react-intl";
-import useRouter from "use-react-router";
-
-import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
-import saleorDarkLogo from "@assets/images/logo-dark.svg";
-import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import { createConfigurationMenu } from "@saleor/configuration";
 import useAppState from "@saleor/hooks/useAppState";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
@@ -26,6 +20,12 @@ import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
+import classNames from "classnames";
+import React from "react";
+import SVG from "react-inlinesvg";
+import { FormattedMessage, useIntl } from "react-intl";
+import useRouter from "use-react-router";
+
 import Container from "../Container";
 import ErrorPage from "../ErrorPage";
 import AppActionContext from "./AppActionContext";

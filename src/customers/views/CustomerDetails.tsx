@@ -1,13 +1,13 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import NotFoundPage from "@saleor/components/NotFoundPage";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe } from "../../misc";
 import { orderListUrl, orderUrl } from "../../orders/urls";
 import CustomerDetailsPage from "../components/CustomerDetailsPage/CustomerDetailsPage";

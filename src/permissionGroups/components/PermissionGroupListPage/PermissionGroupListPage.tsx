@@ -1,15 +1,15 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
-import { PermissionGroupListUrlSortField } from "../../urls";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { PageListProps, SortPage } from "../../../types";
 import { PermissionGroupList_permissionGroups_edges_node } from "../../types/PermissionGroupList";
+import { PermissionGroupListUrlSortField } from "../../urls";
 import PermissionGroupList from "../PermissionGroupList";
 
 export interface PermissionGroupListPageProps

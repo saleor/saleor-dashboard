@@ -1,23 +1,23 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
+import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import { isSecretField } from "@saleor/plugins/utils";
 import { UserError } from "@saleor/types";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import CardSpacer from "@saleor/components/CardSpacer";
-import Hr from "@saleor/components/Hr";
-import { ChangeEvent } from "@saleor/hooks/useForm";
-import { isSecretField } from "@saleor/plugins/utils";
 import { Plugin_plugin } from "../../types/Plugin";
 import PluginAuthorization from "../PluginAuthorization";
 import PluginInfo from "../PluginInfo";

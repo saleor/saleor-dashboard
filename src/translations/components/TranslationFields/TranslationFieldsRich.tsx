@@ -1,11 +1,11 @@
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import DraftRenderer from "@saleor/components/DraftRenderer";
 import Form from "@saleor/components/Form";
 import RichTextEditor from "@saleor/components/RichTextEditor";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import TranslationFieldsSave from "./TranslationFieldsSave";
 
 interface TranslationFieldsRichProps {

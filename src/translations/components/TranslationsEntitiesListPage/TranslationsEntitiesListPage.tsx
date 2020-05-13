@@ -1,16 +1,16 @@
 import Card from "@material-ui/core/Card";
-import React from "react";
-import { IntlShape, useIntl } from "react-intl";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
-import SearchInput from "@saleor/components/SearchBar/SearchInput";
 import PageHeader from "@saleor/components/PageHeader";
+import SearchInput from "@saleor/components/SearchBar/SearchInput";
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import FilterTabs, { FilterTab } from "@saleor/components/TableFilter";
 import { maybe } from "@saleor/misc";
 import { SearchPageProps } from "@saleor/types";
+import React from "react";
+import { IntlShape, useIntl } from "react-intl";
+
 import { TranslatableEntities } from "../../urls";
 
 export interface TranslationsEntitiesListPageProps extends SearchPageProps {

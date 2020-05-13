@@ -1,5 +1,6 @@
-import { useEffect } from "react";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
+import { useEffect } from "react";
+
 import { AppListViewSettings, defaultListSettings } from "./../config";
 import { ListSettings, ListViews } from "./../types";
 

@@ -1,22 +1,22 @@
+import makeQuery from "@saleor/hooks/makeQuery";
+import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import gql from "graphql-tag";
 
-import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
-import makeQuery from "@saleor/hooks/makeQuery";
 import { TypedQuery } from "../queries";
 import { OrderDetails, OrderDetailsVariables } from "./types/OrderDetails";
 import {
   OrderDraftList,
   OrderDraftListVariables
 } from "./types/OrderDraftList";
+import {
+  OrderFulfillData,
+  OrderFulfillDataVariables
+} from "./types/OrderFulfillData";
 import { OrderList, OrderListVariables } from "./types/OrderList";
 import {
   SearchOrderVariant as SearchOrderVariantType,
   SearchOrderVariantVariables
 } from "./types/SearchOrderVariant";
-import {
-  OrderFulfillData,
-  OrderFulfillDataVariables
-} from "./types/OrderFulfillData";
 
 export const fragmentOrderEvent = gql`
   fragment OrderEventFragment on OrderEvent {

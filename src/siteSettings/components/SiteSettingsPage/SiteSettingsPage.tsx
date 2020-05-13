@@ -1,9 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
+import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -14,10 +12,12 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
-import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
-import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe } from "../../../misc";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 import { SiteSettings_shop } from "../../types/SiteSettings";

@@ -1,12 +1,20 @@
-import gql from "graphql-tag";
-
 import makeQuery from "@saleor/hooks/makeQuery";
 import { warehouseFragment } from "@saleor/warehouses/queries";
+import gql from "graphql-tag";
+
 import { pageInfoFragment, TypedQuery } from "../queries";
 import {
   AvailableInGridAttributes,
   AvailableInGridAttributesVariables
 } from "./types/AvailableInGridAttributes";
+import {
+  CreateMultipleVariantsData,
+  CreateMultipleVariantsDataVariables
+} from "./types/CreateMultipleVariantsData";
+import {
+  InitialProductFilterData,
+  InitialProductFilterDataVariables
+} from "./types/InitialProductFilterData";
 import {
   ProductDetails,
   ProductDetailsVariables
@@ -24,14 +32,6 @@ import {
   ProductVariantDetails,
   ProductVariantDetailsVariables
 } from "./types/ProductVariantDetails";
-import {
-  InitialProductFilterData,
-  InitialProductFilterDataVariables
-} from "./types/InitialProductFilterData";
-import {
-  CreateMultipleVariantsData,
-  CreateMultipleVariantsDataVariables
-} from "./types/CreateMultipleVariantsData";
 
 export const stockFragment = gql`
   fragment StockFragment on Stock {

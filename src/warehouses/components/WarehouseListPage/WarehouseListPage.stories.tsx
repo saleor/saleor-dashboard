@@ -1,17 +1,17 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import {
   pageListProps,
-  tabPageProps,
+  searchPageProps,
   sortPageProps,
-  searchPageProps
+  tabPageProps
 } from "@saleor/fixtures";
+import Decorator from "@saleor/storybook/Decorator";
 import WarehouseListPage, {
   WarehouseListPageProps
 } from "@saleor/warehouses/components/WarehouseListPage";
-import Decorator from "@saleor/storybook/Decorator";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import { warehouseList } from "../../fixtures";
 
 const props: WarehouseListPageProps = {

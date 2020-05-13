@@ -1,6 +1,7 @@
 import TableRow, { TableRowProps } from "@material-ui/core/TableRow";
 import React from "react";
 import { SortableElement } from "react-sortable-hoc";
+
 import SortableHandle from "./SortableHandle";
 
 const SortableTableRow = SortableElement<TableRowProps>(

@@ -1,4 +1,4 @@
-import { useReducer, useEffect, Dispatch } from "react";
+import { Dispatch, useEffect, useReducer } from "react";
 
 import reduceFilter, { FilterReducerAction } from "./reducer";
 import { IFilter, IFilterElement } from "./types";

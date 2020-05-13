@@ -1,13 +1,12 @@
-import { defineMessages, IntlShape } from "react-intl";
-
+import { IFilter } from "@saleor/components/Filter";
+import { commonMessages } from "@saleor/intl";
 import { FilterOpts } from "@saleor/types";
 import {
   ProductTypeConfigurable,
   ProductTypeEnum
 } from "@saleor/types/globalTypes";
-import { IFilter } from "@saleor/components/Filter";
-import { commonMessages } from "@saleor/intl";
 import { createOptionsField } from "@saleor/utils/filters/fields";
+import { defineMessages, IntlShape } from "react-intl";
 
 export enum ProductTypeFilterKeys {
   configurable = "configurable",

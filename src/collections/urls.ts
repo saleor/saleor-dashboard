@@ -7,8 +7,8 @@ import {
   Dialog,
   Filters,
   Pagination,
-  TabActionDialog,
-  Sort
+  Sort,
+  TabActionDialog
 } from "../types";
 
 const collectionSectionUrl = "/collections/";

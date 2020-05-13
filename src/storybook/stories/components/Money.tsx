@@ -1,7 +1,7 @@
+import Money, { MoneyProps } from "@saleor/components/Money";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Money, { MoneyProps } from "@saleor/components/Money";
 import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 

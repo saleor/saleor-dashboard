@@ -1,6 +1,6 @@
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import makeQuery from "@saleor/hooks/makeQuery";
 import { pageInfoFragment } from "../queries";
 import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";
 import { ShippingZones, ShippingZonesVariables } from "./types/ShippingZones";

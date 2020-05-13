@@ -1,14 +1,14 @@
+import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
 import {
+  filterPageProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps,
   sortPageProps,
-  filterPageProps
+  tabPageProps
 } from "../../../fixtures";
 import OrderDraftListPage, {
   OrderDraftListPageProps

@@ -1,12 +1,12 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import { attributes } from "@saleor/attributes/fixtures";
 import { fetchMoreProps } from "@saleor/fixtures";
 import AssignAttributeDialog, {
   AssignAttributeDialogProps
 } from "@saleor/productTypes/components/AssignAttributeDialog";
 import { formError } from "@saleor/storybook/misc";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import Decorator from "../../Decorator";
 
 const props: AssignAttributeDialogProps = {

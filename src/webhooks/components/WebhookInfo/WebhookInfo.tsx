@@ -3,9 +3,6 @@ import CardContent from "@material-ui/core/CardContent";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
@@ -17,6 +14,9 @@ import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
 import { WebhookErrorFragment } from "@saleor/webhooks/types/WebhookErrorFragment";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { FormData } from "../WebhooksDetailsPage";
 
 interface WebhookInfoProps {

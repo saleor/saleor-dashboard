@@ -1,9 +1,6 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import { RawDraftContentState } from "draft-js";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -15,7 +12,10 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { sectionNames } from "@saleor/intl";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { RawDraftContentState } from "draft-js";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe } from "../../../misc";
 import { TabListActions } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";

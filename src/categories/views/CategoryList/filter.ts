@@ -1,4 +1,5 @@
 import { CategoryFilterInput } from "@saleor/types/globalTypes";
+
 import {
   createFilterTabUtils,
   createFilterUtils

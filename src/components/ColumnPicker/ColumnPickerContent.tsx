@@ -4,15 +4,15 @@ import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
+import useElementScroll from "@saleor/hooks/useElementScroll";
+import { buttonMessages } from "@saleor/intl";
+import { FetchMoreProps } from "@saleor/types";
+import { isSelected } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { FormattedMessage } from "react-intl";
 
-import useElementScroll from "@saleor/hooks/useElementScroll";
-import { buttonMessages } from "@saleor/intl";
-import { FetchMoreProps } from "@saleor/types";
-import { isSelected } from "@saleor/utils/lists";
 import ControlledCheckbox from "../ControlledCheckbox";
 import Hr from "../Hr";
 

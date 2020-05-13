@@ -1,7 +1,7 @@
+import { formError } from "@saleor/storybook/misc";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { formError } from "@saleor/storybook/misc";
 import ProductTypeAttributeEditDialog, {
   ProductTypeAttributeEditDialogProps
 } from "../../../productTypes/components/ProductTypeAttributeEditDialog";

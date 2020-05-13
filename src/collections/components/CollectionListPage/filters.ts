@@ -1,10 +1,9 @@
-import { defineMessages, IntlShape } from "react-intl";
-
+import { IFilter } from "@saleor/components/Filter";
 import { commonMessages } from "@saleor/intl";
 import { FilterOpts } from "@saleor/types";
 import { CollectionPublished } from "@saleor/types/globalTypes";
-import { IFilter } from "@saleor/components/Filter";
 import { createOptionsField } from "@saleor/utils/filters/fields";
+import { defineMessages, IntlShape } from "react-intl";
 
 export interface CollectionListFilterOpts {
   status: FilterOpts<CollectionPublished>;

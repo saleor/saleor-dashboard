@@ -1,19 +1,19 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import {
+  filterPageProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps,
   sortPageProps,
-  filterPageProps
+  tabPageProps
 } from "@saleor/fixtures";
 import ServiceListPage, {
   ServiceListPageProps
 } from "@saleor/services/components/ServiceListPage";
-import Decorator from "@saleor/storybook/Decorator";
 import { ServiceListUrlSortField } from "@saleor/services/urls";
+import Decorator from "@saleor/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import { serviceList } from "../../fixtures";
 
 const props: ServiceListPageProps = {

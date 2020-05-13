@@ -1,5 +1,6 @@
-import gql from "graphql-tag";
 import makeQuery from "@saleor/hooks/makeQuery";
+import gql from "graphql-tag";
+
 import { TypedQuery } from "../queries";
 import { StaffList, StaffListVariables } from "./types/StaffList";
 import {

@@ -2,8 +2,8 @@ import Button from "@material-ui/core/Button";
 import {
   createStyles,
   Theme,
-  withStyles,
-  WithStyles
+  WithStyles,
+  withStyles
 } from "@material-ui/core/styles";
 import TextField, { StandardTextFieldProps } from "@material-ui/core/TextField";
 import React from "react";

@@ -4,9 +4,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
@@ -15,6 +12,8 @@ import { buttonMessages } from "@saleor/intl";
 import { MenuErrorFragment } from "@saleor/navigation/types/MenuErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getMenuErrorMessage from "@saleor/utils/errors/menu";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface MenuCreateDialogFormData {
   name: string;

@@ -1,10 +1,10 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import Timeline, {
   TimelineEvent,
   TimelineNote
 } from "@saleor/components/Timeline";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import Decorator from "../../Decorator";
 
 storiesOf("Generics / Timeline", module)

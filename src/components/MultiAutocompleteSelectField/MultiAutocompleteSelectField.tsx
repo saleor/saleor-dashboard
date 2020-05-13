@@ -1,19 +1,19 @@
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
+import Debounce, { DebounceProps } from "@saleor/components/Debounce";
+import ArrowDropdownIcon from "@saleor/icons/ArrowDropdown";
+import { FetchMoreProps } from "@saleor/types";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
 
-import { fade } from "@material-ui/core/styles/colorManipulator";
-import Debounce, { DebounceProps } from "@saleor/components/Debounce";
-import ArrowDropdownIcon from "@saleor/icons/ArrowDropdown";
-import { FetchMoreProps } from "@saleor/types";
 import MultiAutocompleteSelectFieldContent, {
-  MultiAutocompleteChoiceType,
-  MultiAutocompleteActionType
+  MultiAutocompleteActionType,
+  MultiAutocompleteChoiceType
 } from "./MultiAutocompleteSelectFieldContent";
 
 const useStyles = makeStyles(

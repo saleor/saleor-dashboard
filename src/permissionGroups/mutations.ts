@@ -1,6 +1,5 @@
-import gql from "graphql-tag";
-
 import makeMutation from "@saleor/hooks/makeMutation";
+import gql from "graphql-tag";
 
 import { permissionGroupDetailsFragment } from "./queries";
 import {

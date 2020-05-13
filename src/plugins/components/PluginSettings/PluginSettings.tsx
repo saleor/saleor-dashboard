@@ -4,13 +4,13 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
 import { UserError } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
+import { getFieldError } from "@saleor/utils/errors";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
-import { getFieldError } from "@saleor/utils/errors";
 import { FormData } from "../PluginsDetailsPage";
 
 interface PluginSettingsProps {

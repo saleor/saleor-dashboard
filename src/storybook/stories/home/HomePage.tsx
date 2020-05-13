@@ -1,10 +1,10 @@
+import placeholderImage from "@assets/images/placeholder60x60.png";
 import { Omit } from "@material-ui/core";
+import { adminUserPermissions } from "@saleor/fixtures";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import placeholderImage from "@assets/images/placeholder60x60.png";
-import { adminUserPermissions } from "@saleor/fixtures";
-import { PermissionEnum } from "@saleor/types/globalTypes";
 import HomePage, { HomePageProps } from "../../../home/components/HomePage";
 import { shop as shopFixture } from "../../../home/fixtures";
 import Decorator from "../../Decorator";

@@ -1,18 +1,18 @@
+import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
-import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   pageCreatePath,
   pageListPath,
   PageListUrlQueryParams,
+  PageListUrlSortField,
   pagePath,
-  PageUrlQueryParams,
-  PageListUrlSortField
+  PageUrlQueryParams
 } from "./urls";
 import PageCreate from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";

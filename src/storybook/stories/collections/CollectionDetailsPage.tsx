@@ -1,10 +1,10 @@
+import placeholderCollectionImage from "@assets/images/block1.jpg";
+import placeholderProductImage from "@assets/images/placeholder60x60.png";
 import { Omit } from "@material-ui/core";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import placeholderCollectionImage from "@assets/images/block1.jpg";
-import placeholderProductImage from "@assets/images/placeholder60x60.png";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
 import CollectionDetailsPage, {
   CollectionDetailsPageProps
 } from "../../../collections/components/CollectionDetailsPage";

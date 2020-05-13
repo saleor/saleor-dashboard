@@ -8,17 +8,17 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import Skeleton from "@saleor/components/Skeleton";
+import TableCellHeader from "@saleor/components/TableCellHeader";
+import TablePagination from "@saleor/components/TablePagination";
+import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
+import { ServiceListUrlSortField } from "@saleor/services/urls";
+import { ListProps, SortPage } from "@saleor/types";
+import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TablePagination from "@saleor/components/TablePagination";
-import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
-import { ListProps, SortPage } from "@saleor/types";
-import { ServiceListUrlSortField } from "@saleor/services/urls";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import { getArrowDirection } from "@saleor/utils/sort";
 import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
 
 export interface ServiceListProps

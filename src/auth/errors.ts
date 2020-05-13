@@ -1,5 +1,5 @@
-import { GraphQLError } from "graphql";
 import { findValueInEnum } from "@saleor/misc";
+import { GraphQLError } from "graphql";
 
 export enum JWTError {
   invalid = "JSONWebTokenError",

@@ -1,8 +1,8 @@
+import Decorator from "@saleor/storybook/Decorator";
+import { WebhookErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "@saleor/storybook/Decorator";
-import { WebhookErrorCode } from "@saleor/types/globalTypes";
 import { webhook } from "../../fixtures";
 import WebhooksDetailsPage, {
   WebhooksDetailsPageProps

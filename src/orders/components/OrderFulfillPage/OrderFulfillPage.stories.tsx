@@ -1,11 +1,11 @@
+import Decorator from "@saleor/storybook/Decorator";
+import { OrderErrorCode } from "@saleor/types/globalTypes";
+import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "@saleor/storybook/Decorator";
-import { warehouseList } from "@saleor/warehouses/fixtures";
-import { OrderErrorCode } from "@saleor/types/globalTypes";
-import OrderFulfillPage, { OrderFulfillPageProps } from "./OrderFulfillPage";
 import { orderToFulfill } from "./fixtures";
+import OrderFulfillPage, { OrderFulfillPageProps } from "./OrderFulfillPage";
 
 const props: OrderFulfillPageProps = {
   disabled: false,

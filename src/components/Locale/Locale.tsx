@@ -1,6 +1,3 @@
-import React from "react";
-import { IntlProvider } from "react-intl";
-
 import locale_AR from "@locale/ar.json";
 import locale_AZ from "@locale/az.json";
 import locale_BG from "@locale/bg.json";
@@ -10,8 +7,8 @@ import locale_CS from "@locale/cs.json";
 import locale_DA from "@locale/da.json";
 import locale_DE from "@locale/de.json";
 import locale_EL from "@locale/el.json";
-import locale_ES from "@locale/es.json";
 import locale_ES_CO from "@locale/es_CO.json";
+import locale_ES from "@locale/es.json";
 import locale_ET from "@locale/et.json";
 import locale_FA from "@locale/fa.json";
 import locale_FR from "@locale/fr.json";
@@ -27,8 +24,8 @@ import locale_MN from "@locale/mn.json";
 import locale_NB from "@locale/nb.json";
 import locale_NL from "@locale/nl.json";
 import locale_PL from "@locale/pl.json";
-import locale_PT from "@locale/pt.json";
 import locale_PT_BR from "@locale/pt_BR.json";
+import locale_PT from "@locale/pt.json";
 import locale_RO from "@locale/ro.json";
 import locale_RU from "@locale/ru.json";
 import locale_SK from "@locale/sk.json";
@@ -43,6 +40,8 @@ import locale_VI from "@locale/vi.json";
 import locale_ZH_HANS from "@locale/zh-Hans.json";
 import locale_ZH_HANT from "@locale/zh-Hant.json";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
+import React from "react";
+import { IntlProvider } from "react-intl";
 
 export enum Locale {
   AR = "ar",

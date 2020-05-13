@@ -1,6 +1,6 @@
+import { TypedMutation } from "@saleor/mutations";
 import gql from "graphql-tag";
 
-import { TypedMutation } from "@saleor/mutations";
 import { attributeDetailsFragment } from "./queries";
 import {
   AttributeBulkDelete,

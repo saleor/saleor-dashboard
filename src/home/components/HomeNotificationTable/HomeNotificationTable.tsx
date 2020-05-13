@@ -5,14 +5,13 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import React from "react";
-import { FormattedMessage } from "react-intl";
-
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({

@@ -19,9 +19,12 @@ interface ProductImagesReorderProviderProps
   }>;
 }
 
-const ProductImagesReorderProvider: React.FC<
-  ProductImagesReorderProviderProps
-> = ({ children, productId, productImages, ...mutationProps }) => (
+const ProductImagesReorderProvider: React.FC<ProductImagesReorderProviderProps> = ({
+  children,
+  productId,
+  productImages,
+  ...mutationProps
+}) => (
   <TypedProductImagesReorder {...mutationProps}>
     {(mutate, mutationResult) =>
       children(opts => {

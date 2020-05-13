@@ -1,14 +1,14 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ReorderEvent } from "@saleor/types";
-import { move } from "@saleor/utils/lists";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { getProductErrorMessage } from "@saleor/utils/errors";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { move } from "@saleor/utils/lists";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
 import AttributePage from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
@@ -31,8 +31,8 @@ import { AttributeValueUpdate } from "../../types/AttributeValueUpdate";
 import {
   attributeListUrl,
   attributeUrl,
-  AttributeUrlQueryParams,
-  AttributeUrlDialog
+  AttributeUrlDialog,
+  AttributeUrlQueryParams
 } from "../../urls";
 
 interface AttributeDetailsProps {

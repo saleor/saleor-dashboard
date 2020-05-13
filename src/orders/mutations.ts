@@ -1,12 +1,13 @@
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import makeMutation from "@saleor/hooks/makeMutation";
 import { TypedMutation } from "../mutations";
 import {
   fragmentAddress,
   fragmentOrderDetails,
   fragmentOrderEvent
 } from "./queries";
+import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
 import { OrderAddNote, OrderAddNoteVariables } from "./types/OrderAddNote";
 import { OrderCancel, OrderCancelVariables } from "./types/OrderCancel";
 import { OrderCapture, OrderCaptureVariables } from "./types/OrderCapture";
@@ -14,7 +15,6 @@ import {
   OrderDraftBulkCancel,
   OrderDraftBulkCancelVariables
 } from "./types/OrderDraftBulkCancel";
-import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
 import {
   OrderDraftCancel,
   OrderDraftCancelVariables

@@ -1,21 +1,20 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-
+import Container from "@saleor/components/Container";
+import FilterBar from "@saleor/components/FilterBar";
+import PageHeader from "@saleor/components/PageHeader";
+import { sectionNames } from "@saleor/intl";
+import { OrderListUrlSortField } from "@saleor/orders/urls";
+import { FilterPageProps, PageListProps, SortPage } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import { sectionNames } from "@saleor/intl";
-import { FilterPageProps, PageListProps, SortPage } from "@saleor/types";
-import { OrderListUrlSortField } from "@saleor/orders/urls";
-import FilterBar from "@saleor/components/FilterBar";
 import { OrderList_orders_edges_node } from "../../types/OrderList";
 import OrderList from "../OrderList";
 import {
   createFilterStructure,
-  OrderListFilterOpts,
-  OrderFilterKeys
+  OrderFilterKeys,
+  OrderListFilterOpts
 } from "./filters";
 
 export interface OrderListPageProps

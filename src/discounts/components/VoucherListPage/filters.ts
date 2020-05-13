@@ -1,16 +1,15 @@
-import { defineMessages, IntlShape } from "react-intl";
-
-import {
-  createOptionsField,
-  createNumberField,
-  createDateField
-} from "@saleor/utils/filters/fields";
-import {
-  VoucherDiscountType,
-  DiscountStatusEnum
-} from "@saleor/types/globalTypes";
-import { MinMax, FilterOpts } from "@saleor/types";
 import { IFilter } from "@saleor/components/Filter";
+import { FilterOpts, MinMax } from "@saleor/types";
+import {
+  DiscountStatusEnum,
+  VoucherDiscountType
+} from "@saleor/types/globalTypes";
+import {
+  createDateField,
+  createNumberField,
+  createOptionsField
+} from "@saleor/utils/filters/fields";
+import { defineMessages, IntlShape } from "react-intl";
 
 export enum VoucherFilterKeys {
   saleType = "saleType",

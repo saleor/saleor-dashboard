@@ -1,23 +1,23 @@
-import { useIntl } from "react-intl";
-import React from "react";
-
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
+import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import NotFoundPage from "@saleor/components/NotFoundPage";
 import { useWarehouseList } from "@saleor/warehouses/queries";
-import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { customerUrl } from "../../../customers/urls";
 import {
+  getStringOrPlaceholder,
   maybe,
-  transformAddressToForm,
-  getStringOrPlaceholder
+  transformAddressToForm
 } from "../../../misc";
 import { productUrl } from "../../../products/urls";
-import { OrderStatus, FulfillmentStatus } from "../../../types/globalTypes";
+import { FulfillmentStatus, OrderStatus } from "../../../types/globalTypes";
 import OrderAddressEditDialog from "../../components/OrderAddressEditDialog";
 import OrderCancelDialog from "../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../components/OrderDetailsPage";
@@ -37,11 +37,11 @@ import OrderOperations from "../../containers/OrderOperations";
 import { TypedOrderDetailsQuery, useOrderVariantSearch } from "../../queries";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import {
+  orderFulfillUrl,
   orderListUrl,
   orderUrl,
-  OrderUrlQueryParams,
   OrderUrlDialog,
-  orderFulfillUrl
+  OrderUrlQueryParams
 } from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 

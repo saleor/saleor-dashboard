@@ -1,6 +1,6 @@
+import { PageInfoFragment } from "@saleor/types/PageInfoFragment";
 import { DocumentNode } from "graphql";
 
-import { PageInfoFragment } from "@saleor/types/PageInfoFragment";
 import makeSearch, { SearchVariables, UseSearchHook } from "./makeSearch";
 
 export interface SearchData {

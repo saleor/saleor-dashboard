@@ -1,5 +1,6 @@
-import { defineMessages, IntlShape } from "react-intl";
-
+import { IFilter } from "@saleor/components/Filter";
+import { commonMessages } from "@saleor/intl";
+import { orderStatusMessages } from "@saleor/misc";
 import { FilterOpts, MinMax } from "@saleor/types";
 import { OrderStatusFilter } from "@saleor/types/globalTypes";
 import {
@@ -7,9 +8,7 @@ import {
   createOptionsField,
   createTextField
 } from "@saleor/utils/filters/fields";
-import { IFilter } from "@saleor/components/Filter";
-import { orderStatusMessages } from "@saleor/misc";
-import { commonMessages } from "@saleor/intl";
+import { defineMessages, IntlShape } from "react-intl";
 
 export enum OrderFilterKeys {
   created = "created",

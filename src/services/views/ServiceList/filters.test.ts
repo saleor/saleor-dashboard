@@ -1,12 +1,12 @@
-import { createIntl } from "react-intl";
-import { stringify as stringifyQs } from "qs";
-
-import { ServiceListUrlFilters } from "@saleor/services/urls";
 import { createFilterStructure } from "@saleor/services/components/ServiceListPage";
+import { ServiceListUrlFilters } from "@saleor/services/urls";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
-import { getFilterVariables, getFilterQueryParam } from "./filters";
+import { stringify as stringifyQs } from "qs";
+import { createIntl } from "react-intl";
+
+import { getFilterQueryParam, getFilterVariables } from "./filters";
 
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {

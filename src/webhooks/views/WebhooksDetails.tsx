@@ -1,6 +1,4 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -8,11 +6,13 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import useServiceAccountSearch from "@saleor/searches/useServiceAccountSearch";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
 import { WebhookDelete } from "@saleor/webhooks/types/WebhookDelete";
 import { WebhookUpdate } from "@saleor/webhooks/types/WebhookUpdate";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import NotFoundPage from "@saleor/components/NotFoundPage";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { getStringOrPlaceholder } from "../../misc";
 import WebhooksDetailsPage from "../components/WebhooksDetailsPage";
 import { TypedWebhookDelete, TypedWebhookUpdate } from "../mutations";

@@ -1,5 +1,6 @@
-import gql from "graphql-tag";
 import makeQuery from "@saleor/hooks/makeQuery";
+import gql from "graphql-tag";
+
 import { pageInfoFragment, TypedQuery } from "../queries";
 import { MenuDetails, MenuDetailsVariables } from "./types/MenuDetails";
 import { MenuList, MenuListVariables } from "./types/MenuList";

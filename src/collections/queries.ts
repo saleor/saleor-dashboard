@@ -1,6 +1,6 @@
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import makeQuery from "@saleor/hooks/makeQuery";
 import { TypedQuery } from "../queries";
 import {
   CollectionDetails,

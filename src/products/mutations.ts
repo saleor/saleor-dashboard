@@ -1,8 +1,17 @@
-import gql from "graphql-tag";
-
 import { productErrorFragment } from "@saleor/attributes/mutations";
 import makeMutation from "@saleor/hooks/makeMutation";
+import gql from "graphql-tag";
+
 import { TypedMutation } from "../mutations";
+import { fragmentVariant, productFragmentDetails } from "./queries";
+import {
+  productBulkDelete,
+  productBulkDeleteVariables
+} from "./types/productBulkDelete";
+import {
+  productBulkPublish,
+  productBulkPublishVariables
+} from "./types/productBulkPublish";
 import { ProductCreate, ProductCreateVariables } from "./types/ProductCreate";
 import { ProductDelete, ProductDeleteVariables } from "./types/ProductDelete";
 import {
@@ -23,6 +32,14 @@ import {
 } from "./types/ProductImageUpdate";
 import { ProductUpdate, ProductUpdateVariables } from "./types/ProductUpdate";
 import {
+  ProductVariantBulkCreate,
+  ProductVariantBulkCreateVariables
+} from "./types/ProductVariantBulkCreate";
+import {
+  ProductVariantBulkDelete,
+  ProductVariantBulkDeleteVariables
+} from "./types/ProductVariantBulkDelete";
+import {
   SimpleProductUpdate,
   SimpleProductUpdateVariables
 } from "./types/SimpleProductUpdate";
@@ -37,24 +54,6 @@ import {
   VariantImageUnassignVariables
 } from "./types/VariantImageUnassign";
 import { VariantUpdate, VariantUpdateVariables } from "./types/VariantUpdate";
-
-import { fragmentVariant, productFragmentDetails } from "./queries";
-import {
-  productBulkDelete,
-  productBulkDeleteVariables
-} from "./types/productBulkDelete";
-import {
-  productBulkPublish,
-  productBulkPublishVariables
-} from "./types/productBulkPublish";
-import {
-  ProductVariantBulkCreate,
-  ProductVariantBulkCreateVariables
-} from "./types/ProductVariantBulkCreate";
-import {
-  ProductVariantBulkDelete,
-  ProductVariantBulkDeleteVariables
-} from "./types/ProductVariantBulkDelete";
 
 export const bulkProductErrorFragment = gql`
   fragment BulkProductErrorFragment on BulkProductError {

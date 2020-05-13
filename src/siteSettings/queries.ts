@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+
 import { fragmentAddress } from "../orders/queries";
 import { TypedQuery } from "../queries";
 import { SiteSettings } from "./types/SiteSettings";

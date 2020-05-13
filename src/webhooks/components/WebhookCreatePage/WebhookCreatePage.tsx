@@ -13,9 +13,9 @@ import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/single
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
+import { WebhookErrorFragment } from "@saleor/webhooks/types/WebhookErrorFragment";
 import React from "react";
 import { useIntl } from "react-intl";
-import { WebhookErrorFragment } from "@saleor/webhooks/types/WebhookErrorFragment";
 
 export interface FormData {
   events: WebhookEventTypeEnum[];

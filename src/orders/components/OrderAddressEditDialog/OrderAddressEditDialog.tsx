@@ -4,9 +4,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import AddressEdit from "@saleor/components/AddressEdit";
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -18,9 +15,11 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   {

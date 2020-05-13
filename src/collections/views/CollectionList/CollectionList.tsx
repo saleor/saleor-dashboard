@@ -2,9 +2,6 @@ import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -17,14 +14,17 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import useShop from "@saleor/hooks/useShop";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
 import {
   TypedCollectionBulkDelete,
@@ -36,19 +36,19 @@ import { CollectionBulkPublish } from "../../types/CollectionBulkPublish";
 import {
   collectionAddUrl,
   collectionListUrl,
+  CollectionListUrlDialog,
   CollectionListUrlQueryParams,
-  collectionUrl,
-  CollectionListUrlDialog
+  collectionUrl
 } from "../../urls";
 import {
   areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFilterOpts,
+  getFilterQueryParam,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
-  getFilterQueryParam,
-  getFilterOpts
+  saveFilterTab
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 

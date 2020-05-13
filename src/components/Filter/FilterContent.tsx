@@ -1,28 +1,28 @@
+import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Paper from "@material-ui/core/Paper";
 import Radio from "@material-ui/core/Radio";
-import Typography from "@material-ui/core/Typography";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import React from "react";
-import { FormattedMessage, useIntl, IntlShape } from "react-intl";
-import classNames from "classnames";
-
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import { buttonMessages } from "@saleor/intl";
-import { TextField } from "@material-ui/core";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from "@material-ui/core/Typography";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import Hr from "../Hr";
+import { buttonMessages } from "@saleor/intl";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+
 import Checkbox from "../Checkbox";
-import SingleSelectField from "../SingleSelectField";
-import { SingleAutocompleteChoiceType } from "../SingleAutocompleteSelectField";
 import FormSpacer from "../FormSpacer";
+import Hr from "../Hr";
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
-import { IFilter, FieldType, FilterType } from "./types";
+import { SingleAutocompleteChoiceType } from "../SingleAutocompleteSelectField";
+import SingleSelectField from "../SingleSelectField";
 import Arrow from "./Arrow";
-import { FilterReducerAction } from "./reducer";
 import FilterAutocompleteField from "./FilterAutocompleteField";
 import FilterOptionField from "./FilterOptionField";
+import { FilterReducerAction } from "./reducer";
+import { FieldType, FilterType, IFilter } from "./types";
 
 export interface FilterContentProps<T extends string = string> {
   currencySymbol: string;

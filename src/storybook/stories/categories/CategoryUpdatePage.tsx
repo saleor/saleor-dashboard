@@ -1,15 +1,14 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { Omit } from "@material-ui/core";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
-
-import { ProductErrorCode } from "@saleor/types/globalTypes";
-import { category as categoryFixture } from "../../../categories/fixtures";
 
 import CategoryUpdatePage, {
   CategoryPageTab,
   CategoryUpdatePageProps
 } from "../../../categories/components/CategoryUpdatePage";
+import { category as categoryFixture } from "../../../categories/fixtures";
 import { listActionsProps } from "../../../fixtures";
 import Decorator from "../../Decorator";
 

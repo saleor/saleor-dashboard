@@ -1,11 +1,11 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import ColumnPicker, {
   ColumnPickerProps
 } from "@saleor/components/ColumnPicker";
 import { ColumnPickerChoice } from "@saleor/components/ColumnPicker/ColumnPickerContent";
 import CardDecorator from "@saleor/storybook/CardDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import Decorator from "../../Decorator";
 
 const columns: ColumnPickerChoice[] = [

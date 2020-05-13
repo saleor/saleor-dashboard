@@ -1,7 +1,6 @@
-import { RawDraftContentState } from "draft-js";
-
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import {
   ProductDetails_product,
@@ -10,12 +9,13 @@ import {
 } from "@saleor/products/types/ProductDetails";
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
 import { StockInput } from "@saleor/types/globalTypes";
-import { FormsetAtomicData } from "@saleor/hooks/useFormset";
+import { RawDraftContentState } from "draft-js";
+
 import { ProductAttributeInput } from "../components/ProductAttributes";
+import { ProductStockInput } from "../components/ProductStocks";
 import { VariantAttributeInput } from "../components/ProductVariantAttributes";
 import { ProductVariant } from "../types/ProductVariant";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
-import { ProductStockInput } from "../components/ProductStocks";
 
 export interface Collection {
   id: string;

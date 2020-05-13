@@ -1,9 +1,9 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
 import { formError } from "@saleor/storybook/misc";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import ResetPasswordPage, { ResetPasswordPageProps } from "./ResetPasswordPage";
 
 const props: ResetPasswordPageProps = {

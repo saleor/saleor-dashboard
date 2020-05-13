@@ -1,7 +1,7 @@
+import { Locale, RawLocaleProvider } from "@saleor/components/Locale";
 import React from "react";
 import { IntlProvider } from "react-intl";
 
-import { Locale, RawLocaleProvider } from "@saleor/components/Locale";
 import { Provider as DateProvider } from "../components/Date/DateContext";
 import { MessageManager } from "../components/messages";
 import ThemeProvider from "../components/Theme";

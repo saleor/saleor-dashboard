@@ -1,9 +1,9 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { OrderAddNote } from "../../types/OrderAddNote";
 import { OrderCancel } from "../../types/OrderCancel";
 import { OrderCapture } from "../../types/OrderCapture";

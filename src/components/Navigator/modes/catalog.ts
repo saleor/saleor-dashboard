@@ -1,11 +1,11 @@
-import { score } from "fuzzaldrin";
-import { IntlShape } from "react-intl";
-
 import { categoryUrl } from "@saleor/categories/urls";
 import { collectionUrl } from "@saleor/collections/urls";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { maybe } from "@saleor/misc";
 import { productUrl } from "@saleor/products/urls";
+import { score } from "fuzzaldrin";
+import { IntlShape } from "react-intl";
+
 import { SearchCatalog } from "../queries/types/SearchCatalog";
 import { QuickSearchAction, QuickSearchActionInput } from "../types";
 import messages from "./messages";

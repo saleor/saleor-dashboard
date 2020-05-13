@@ -1,8 +1,4 @@
-import { convertFromRaw, RawDraftContentState } from "draft-js";
-import { diff } from "fast-array-diff";
-import React from "react";
-import { useIntl } from "react-intl";
-
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -23,8 +19,12 @@ import { SearchCollections_search_edges_node } from "@saleor/searches/types/Sear
 import { FetchMoreProps, ListActions } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+import { convertFromRaw, RawDraftContentState } from "draft-js";
+import { diff } from "fast-array-diff";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import {
   ProductDetails_product,
   ProductDetails_product_images,
@@ -35,9 +35,9 @@ import {
   getChoices,
   getProductUpdatePageFormData,
   getSelectedAttributesFromProduct,
+  getStockInputFromProduct,
   ProductAttributeValueChoices,
-  ProductUpdatePageFormData,
-  getStockInputFromProduct
+  ProductUpdatePageFormData
 } from "../../utils/data";
 import {
   createAttributeChangeHandler,
@@ -48,8 +48,8 @@ import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
-import ProductVariants from "../ProductVariants";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import ProductVariants from "../ProductVariants";
 
 export interface ProductUpdatePageProps extends ListActions {
   errors: ProductErrorFragment[];

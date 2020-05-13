@@ -1,7 +1,4 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -9,6 +6,9 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe } from "../../misc";
 import PluginsDetailsPage from "../components/PluginsDetailsPage";
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
@@ -19,8 +19,8 @@ import { PluginUpdate } from "../types/PluginUpdate";
 import {
   pluginListUrl,
   pluginUrl,
-  PluginUrlQueryParams,
-  PluginUrlDialog
+  PluginUrlDialog,
+  PluginUrlQueryParams
 } from "../urls";
 import { isSecretField } from "../utils";
 

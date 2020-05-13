@@ -1,6 +1,3 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -11,7 +8,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { maybe, getStringOrPlaceholder } from "@saleor/misc";
+import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { SearchServiceAccount_search_edges_node } from "@saleor/searches/types/SearchServiceAccount";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -21,6 +18,8 @@ import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
 import { WebhookDetails_webhook } from "@saleor/webhooks/types/WebhookDetails";
 import { WebhookErrorFragment } from "@saleor/webhooks/types/WebhookErrorFragment";
 import { isUnnamed } from "@saleor/webhooks/utils";
+import React from "react";
+import { useIntl } from "react-intl";
 
 export interface FormData {
   events: WebhookEventTypeEnum[];

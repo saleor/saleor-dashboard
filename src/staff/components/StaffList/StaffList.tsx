@@ -5,12 +5,9 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import classNames from "classnames";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
 import {
   getUserInitials,
@@ -18,10 +15,13 @@ import {
   maybe,
   renderCollection
 } from "@saleor/misc";
-import { ListProps, SortPage } from "@saleor/types";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
-import TableCellHeader from "@saleor/components/TableCellHeader";
+import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 
 const useStyles = makeStyles(

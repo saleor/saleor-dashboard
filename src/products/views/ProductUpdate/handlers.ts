@@ -5,9 +5,9 @@ import { ProductImageCreateVariables } from "@saleor/products/types/ProductImage
 import { ProductImageReorderVariables } from "@saleor/products/types/ProductImageReorder";
 import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
 import { SimpleProductUpdateVariables } from "@saleor/products/types/SimpleProductUpdate";
+import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { ReorderEvent } from "@saleor/types";
 import { arrayMove } from "react-sortable-hoc";
-import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 
 export function createUpdateHandler(
   product: ProductDetails_product,

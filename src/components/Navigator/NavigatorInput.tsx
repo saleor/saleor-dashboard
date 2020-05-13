@@ -1,6 +1,7 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
 import { useIntl } from "react-intl";
+
 import { QuickSearchMode } from "./types";
 
 const useStyles = makeStyles(

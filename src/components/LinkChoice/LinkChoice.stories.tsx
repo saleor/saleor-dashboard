@@ -1,9 +1,9 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import { countries } from "@saleor/fixtures";
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import Form from "../Form";
 import LinkChoice, { LinkChoiceProps } from "./LinkChoice";
 

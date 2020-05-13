@@ -2,6 +2,7 @@ import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import { toggle } from "@saleor/utils/lists";
+
 import { ProductAttributeInputData } from "../components/ProductAttributes";
 import {
   getAttributeInputFromProductType,

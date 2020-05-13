@@ -1,9 +1,6 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -21,30 +18,33 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import SaleListPage from "../../components/SaleListPage";
 import { TypedSaleBulkDelete } from "../../mutations";
 import { useSaleListQuery } from "../../queries";
 import { SaleBulkDelete } from "../../types/SaleBulkDelete";
 import {
   saleAddUrl,
-  SaleListUrlQueryParams,
-  saleUrl,
   saleListUrl,
-  SaleListUrlDialog
+  SaleListUrlDialog,
+  SaleListUrlQueryParams,
+  saleUrl
 } from "../../urls";
 import {
   areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFilterOpts,
+  getFilterQueryParam,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
-  getFilterQueryParam,
-  getFilterOpts
+  saveFilterTab
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 

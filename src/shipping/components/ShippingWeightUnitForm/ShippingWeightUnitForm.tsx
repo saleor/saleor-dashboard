@@ -2,14 +2,14 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import Form from "@saleor/components/Form";
 import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { buttonMessages, sectionNames } from "@saleor/intl";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { WeightUnitsEnum } from "../../../types/globalTypes";
 
 export interface FormData {

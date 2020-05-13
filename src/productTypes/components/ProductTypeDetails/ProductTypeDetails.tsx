@@ -2,13 +2,12 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import { commonMessages } from "@saleor/intl";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
+import React from "react";
+import { useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   {

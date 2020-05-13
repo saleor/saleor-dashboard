@@ -1,11 +1,11 @@
+import { attributes } from "@saleor/attributes/fixtures";
+import Container from "@saleor/components/Container";
+import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { attributes } from "@saleor/attributes/fixtures";
-import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
-import Container from "@saleor/components/Container";
-import { warehouseList } from "@saleor/warehouses/fixtures";
 import Decorator from "../../../storybook/Decorator";
 import { createVariants } from "./createVariants";
 import { AllOrAttribute, ProductVariantCreateFormData } from "./form";

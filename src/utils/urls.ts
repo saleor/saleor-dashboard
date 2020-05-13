@@ -1,5 +1,5 @@
-import { stringify } from "qs";
 import isArray from "lodash-es/isArray";
+import { stringify } from "qs";
 
 export function stringifyQs(params: object): string {
   return stringify(params, {

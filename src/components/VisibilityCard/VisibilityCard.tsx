@@ -3,13 +3,13 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { DateContext } from "../Date/DateContext";
 import FormSpacer from "../FormSpacer";
 

@@ -1,6 +1,6 @@
+import { accountErrorFragment } from "@saleor/customers/mutations";
 import gql from "graphql-tag";
 
-import { accountErrorFragment } from "@saleor/customers/mutations";
 import { TypedMutation } from "../mutations";
 import { serviceDetailsFragment, serviceFragment } from "./queries";
 import { ServiceCreate, ServiceCreateVariables } from "./types/ServiceCreate";

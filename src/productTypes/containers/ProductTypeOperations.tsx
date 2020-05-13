@@ -1,7 +1,7 @@
+import { AttributeTypeEnum, ReorderInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { MutationFunction } from "react-apollo";
 
-import { AttributeTypeEnum, ReorderInput } from "@saleor/types/globalTypes";
 import { getMutationProviderData } from "../../misc";
 import { PartialMutationProviderOutput } from "../../types";
 import {

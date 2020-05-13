@@ -1,14 +1,13 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
-import { FetchMoreProps, SearchProps } from "@saleor/types";
-import { FormChange } from "@saleor/hooks/useForm";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "@saleor/components/MultiAutocompleteSelectField";
+import { FormChange } from "@saleor/hooks/useForm";
+import { FetchMoreProps, SearchProps } from "@saleor/types";
+import React from "react";
+import { useIntl } from "react-intl";
 
 interface ShippingZoneWarehousesFormData {
   warehouses: string[];

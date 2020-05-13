@@ -11,7 +11,8 @@ const Plugins = createSvgIcon(
         fill="#06847B"
       />
     </g>
-  </>
-, "Plugins")
+  </>,
+  "Plugins"
+);
 
 export default Plugins;

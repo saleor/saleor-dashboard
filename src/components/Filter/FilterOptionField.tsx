@@ -1,10 +1,10 @@
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
-import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import classNames from "classnames";
-
 import { toggle } from "@saleor/utils/lists";
+import classNames from "classnames";
+import React from "react";
+
 import Checkbox from "../Checkbox";
 import { FilterBaseFieldProps } from "./types";
 

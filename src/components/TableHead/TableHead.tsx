@@ -11,7 +11,6 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { Node } from "../../types";
-
 import Checkbox from "../Checkbox";
 
 export interface TableHeadProps extends MuiTableHeadProps {

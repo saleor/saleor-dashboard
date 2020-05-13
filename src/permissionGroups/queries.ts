@@ -1,17 +1,16 @@
-import gql from "graphql-tag";
-
 import makeQuery from "@saleor/hooks/makeQuery";
 import { staffMemberFragment } from "@saleor/staff/queries";
+import gql from "graphql-tag";
 
 import { pageInfoFragment } from "../queries";
-import {
-  PermissionGroupList,
-  PermissionGroupListVariables
-} from "./types/PermissionGroupList";
 import {
   PermissionGroupDetails,
   PermissionGroupDetailsVariables
 } from "./types/PermissionGroupDetails";
+import {
+  PermissionGroupList,
+  PermissionGroupListVariables
+} from "./types/PermissionGroupList";
 export const permissionGroupFragment = gql`
   fragment PermissionGroupFragment on Group {
     id

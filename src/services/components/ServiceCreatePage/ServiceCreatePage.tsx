@@ -1,6 +1,3 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import AccountPermissions from "@saleor/components/AccountPermissions";
 import AccountStatus from "@saleor/components/AccountStatus";
 import AppHeader from "@saleor/components/AppHeader";
@@ -12,11 +9,14 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
+import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { PermissionEnum } from "@saleor/types/globalTypes";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import ServiceInfo from "../ServiceInfo";
 
 export interface ServiceCreatePageFormData {

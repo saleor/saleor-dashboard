@@ -4,10 +4,6 @@ import IconButton from "@material-ui/core/IconButton";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import classNames from "classnames";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
@@ -21,6 +17,9 @@ import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import { ProductDetails_product_attributes_attribute_values } from "@saleor/products/types/ProductDetails";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ProductAttributeInputData {
   inputType: AttributeInputTypeEnum;

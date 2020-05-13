@@ -1,27 +1,27 @@
-import React from "react";
+import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData
+} from "@saleor/components/SaveFilterTabDialog";
+import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { useIntl } from "react-intl";
-
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
-} from "@saleor/components/SaveFilterTabDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
+import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ServiceDeleteMutation } from "@saleor/services/mutations";
 import { ServiceDelete } from "@saleor/services/types/ServiceDelete";
 import { ListViews } from "@saleor/types";
-import { getSortParams } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import useShop from "@saleor/hooks/useShop";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { getSortParams } from "@saleor/utils/sort";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import ServiceDeleteDialog from "../../components/ServiceDeleteDialog";
 import ServiceListPage from "../../components/ServiceListPage";
 import { useServiceListQuery } from "../../queries";
@@ -36,11 +36,11 @@ import {
   areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
-  getFilterTabs,
+  getFilterOpts,
   getFilterQueryParam,
+  getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
-  getFilterOpts
+  saveFilterTab
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 

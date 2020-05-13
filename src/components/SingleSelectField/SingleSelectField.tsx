@@ -1,5 +1,6 @@
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { InputProps } from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
@@ -8,7 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { InputProps } from "@material-ui/core/Input";
 
 const useStyles = makeStyles(
   theme => ({

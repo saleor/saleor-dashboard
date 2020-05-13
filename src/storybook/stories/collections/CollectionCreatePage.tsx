@@ -1,8 +1,8 @@
 import { Omit } from "@material-ui/core";
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { ProductErrorCode } from "@saleor/types/globalTypes";
 import CollectionCreatePage, {
   CollectionCreatePageProps
 } from "../../../collections/components/CollectionCreatePage";

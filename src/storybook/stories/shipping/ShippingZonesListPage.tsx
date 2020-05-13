@@ -2,9 +2,9 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import {
+  adminUserPermissions,
   listActionsProps,
-  pageListProps,
-  adminUserPermissions
+  pageListProps
 } from "../../../fixtures";
 import ShippingZonesListPage, {
   ShippingZonesListPageProps

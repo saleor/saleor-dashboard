@@ -7,11 +7,11 @@ import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { buttonMessages } from "@saleor/intl";
 import { ContentState } from "draft-js";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { buttonMessages } from "@saleor/intl";
 import Link from "../Link";
 
 interface LinkEntityProps {

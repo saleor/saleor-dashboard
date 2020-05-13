@@ -2,9 +2,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { FormSpacer } from "@saleor/components/FormSpacer";
@@ -14,6 +11,9 @@ import TextFieldWithChoice from "@saleor/components/TextFieldWithChoice";
 import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { translateVoucherTypes } from "../../translations";
 import { FormData } from "../VoucherDetailsPage";

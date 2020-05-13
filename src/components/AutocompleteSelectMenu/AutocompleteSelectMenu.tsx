@@ -4,11 +4,11 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import ArrowBack from "@material-ui/icons/ArrowBack";
+import { buttonMessages } from "@saleor/intl";
 import Downshift from "downshift";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { buttonMessages } from "@saleor/intl";
 import {
   getMenuItemByPath,
   IMenu,
@@ -34,9 +34,9 @@ const validationError: Error = new Error(
   "Values supplied to AutocompleteSelectMenu should be unique"
 );
 
-const DebounceAutocomplete: React.ComponentType<
-  DebounceProps<string>
-> = Debounce;
+const DebounceAutocomplete: React.ComponentType<DebounceProps<
+  string
+>> = Debounce;
 
 const useStyles = makeStyles(
   theme => ({

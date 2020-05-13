@@ -1,15 +1,15 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import React from "react";
-
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import CardSpacer from "@saleor/components/CardSpacer";
+import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Debounce from "@saleor/components/Debounce";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { isSelected } from "@saleor/utils/lists";
-import CardTitle from "@saleor/components/CardTitle";
-import CardSpacer from "@saleor/components/CardSpacer";
+import React from "react";
+
 import { ProductVariantCreateFormData } from "./form";
 
 export interface ProductVariantCreatorValuesProps {

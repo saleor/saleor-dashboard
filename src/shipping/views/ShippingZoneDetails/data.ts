@@ -1,7 +1,8 @@
+import { CreateShippingRateVariables } from "@saleor/shipping/types/CreateShippingRate";
+import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
 import { ShippingZoneUrlQueryParams } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
-import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
-import { CreateShippingRateVariables } from "@saleor/shipping/types/CreateShippingRate";
+
 import { FormData as ShippingZoneRateDialogFormData } from "../../components/ShippingZoneRateDialog";
 
 export function getCreateShippingRateVariables(

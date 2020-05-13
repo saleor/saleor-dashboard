@@ -1,4 +1,5 @@
 import { removeAtIndex } from "@saleor/utils/lists";
+
 import useStateFromProps from "./useStateFromProps";
 
 export type FormsetChange<TValue = any> = (id: string, value: TValue) => void;

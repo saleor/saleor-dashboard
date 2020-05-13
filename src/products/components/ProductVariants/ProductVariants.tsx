@@ -7,17 +7,17 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl, IntlShape } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
+import LinkChoice from "@saleor/components/LinkChoice";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import LinkChoice from "@saleor/components/LinkChoice";
+import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions } from "../../../types";
 import {

@@ -1,7 +1,4 @@
-import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
-import React from "react";
-import { useIntl } from "react-intl";
-
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -25,10 +22,13 @@ import {
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/searches/types/SearchProductTypes";
+import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { FetchMoreProps } from "../../../types";
 import {
   createAttributeChangeHandler,

@@ -1,10 +1,10 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import AssignMembersDialog, {
   AssignMembersDialogProps
 } from "@saleor/permissionGroups/components/AssignMembersDialog";
 import Decorator from "@saleor/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import { users } from "../../fixtures";
 
 const props: AssignMembersDialogProps = {

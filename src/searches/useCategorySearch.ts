@@ -1,7 +1,7 @@
-import gql from "graphql-tag";
-
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import { pageInfoFragment } from "@saleor/queries";
+import gql from "graphql-tag";
+
 import {
   SearchCategories,
   SearchCategoriesVariables

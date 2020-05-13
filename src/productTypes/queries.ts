@@ -1,7 +1,7 @@
-import gql from "graphql-tag";
-
 import { attributeFragment } from "@saleor/attributes/queries";
 import makeQuery from "@saleor/hooks/makeQuery";
+import gql from "graphql-tag";
+
 import { pageInfoFragment, TypedQuery } from "../queries";
 import { ProductTypeCreateData } from "./types/ProductTypeCreateData";
 import {

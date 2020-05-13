@@ -8,8 +8,6 @@ import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
@@ -18,6 +16,8 @@ import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
 
 const useStyles = makeStyles(
@@ -74,9 +74,7 @@ interface CategoryProductListProps extends ListProps, ListActions {
   products: CategoryDetails_category_products_edges_node[];
 }
 
-export const CategoryProductList: React.FC<
-  CategoryProductListProps
-> = props => {
+export const CategoryProductList: React.FC<CategoryProductListProps> = props => {
   const {
     disabled,
     isChecked,

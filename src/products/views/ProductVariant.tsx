@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
-
 import placeholderImg from "@assets/images/placeholder255x255.png";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import NotFoundPage from "@saleor/components/NotFoundPage";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+
 import { decimal } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage, {
@@ -24,8 +24,8 @@ import {
   productUrl,
   productVariantAddUrl,
   productVariantEditUrl,
-  ProductVariantEditUrlQueryParams,
-  ProductVariantEditUrlDialog
+  ProductVariantEditUrlDialog,
+  ProductVariantEditUrlQueryParams
 } from "../urls";
 import { mapFormsetStockToStockInput } from "../utils/data";
 

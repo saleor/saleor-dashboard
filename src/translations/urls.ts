@@ -1,7 +1,7 @@
+import { Pagination } from "@saleor/types";
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { Pagination } from "@saleor/types";
 import { TranslationsEntitiesListFilterTab } from "./components/TranslationsEntitiesListPage";
 
 export enum TranslatableEntities {

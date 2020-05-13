@@ -4,16 +4,15 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
+import FormSpacer from "@saleor/components/FormSpacer";
 import { buttonMessages } from "@saleor/intl";
 import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
-import FormSpacer from "@saleor/components/FormSpacer";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface OrderPaymentVoidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

@@ -1,15 +1,15 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
+import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { SaleType } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
-import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { FormData } from "../SaleDetailsPage";
 
 export interface SaleValueProps {
