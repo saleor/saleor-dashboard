@@ -26,6 +26,9 @@ jobs:
           name: Package lock security test
           command: npx lockfile-lint --path package-lock.json --allowed-hosts npm
       - run:
+          name: Run linters
+          command: npm run lint
+      - run:
           name: Install Lighthouse tools
           command: sudo npm install -g @lhci/cli
       - run:
