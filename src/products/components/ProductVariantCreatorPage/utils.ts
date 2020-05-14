@@ -1,7 +1,8 @@
 import {
-  ProductDetails_product_productType_variantAttributes_values,
-  ProductDetails_product_productType_variantAttributes
+  ProductDetails_product_productType_variantAttributes,
+  ProductDetails_product_productType_variantAttributes_values
 } from "@saleor/products/types/ProductDetails";
+
 import { ProductVariantCreateFormData } from "./form";
 
 export function getPriceAttributeValues(

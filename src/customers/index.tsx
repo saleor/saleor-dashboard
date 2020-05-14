@@ -1,10 +1,10 @@
+import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
-import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   customerAddPath,
@@ -12,9 +12,9 @@ import {
   CustomerAddressesUrlQueryParams,
   customerListPath,
   CustomerListUrlQueryParams,
+  CustomerListUrlSortField,
   customerPath,
-  CustomerUrlQueryParams,
-  CustomerListUrlSortField
+  CustomerUrlQueryParams
 } from "./urls";
 import CustomerAddressesViewComponent from "./views/CustomerAddresses";
 import CustomerCreateView from "./views/CustomerCreate";

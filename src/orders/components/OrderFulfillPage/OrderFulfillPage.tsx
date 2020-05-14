@@ -1,41 +1,40 @@
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
-import classNames from "classnames";
 import Typography from "@material-ui/core/Typography";
-
-import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
-import {
-  OrderFulfillStockInput,
-  OrderErrorCode
-} from "@saleor/types/globalTypes";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { CSSProperties } from "@material-ui/styles";
+import AppHeader from "@saleor/components/AppHeader";
+import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import Container from "@saleor/components/Container";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
+import PageHeader from "@saleor/components/PageHeader";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Skeleton from "@saleor/components/Skeleton";
+import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
+import { renderCollection } from "@saleor/misc";
+import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
 import {
   OrderFulfillData_order,
   OrderFulfillData_order_lines
 } from "@saleor/orders/types/OrderFulfillData";
-import CardTitle from "@saleor/components/CardTitle";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { Theme, makeStyles } from "@material-ui/core/styles";
+import {
+  OrderErrorCode,
+  OrderFulfillStockInput
+} from "@saleor/types/globalTypes";
 import { update } from "@saleor/utils/lists";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { renderCollection } from "@saleor/misc";
-import Skeleton from "@saleor/components/Skeleton";
-import AppHeader from "@saleor/components/AppHeader";
-import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
-import { CSSProperties } from "@material-ui/styles";
+import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 type ClassKey =
   | "actionBar"

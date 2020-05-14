@@ -1,20 +1,20 @@
+import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
-import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   pluginListPath,
   PluginListUrlQueryParams,
+  PluginListUrlSortField,
   pluginPath,
-  PluginUrlQueryParams,
-  PluginListUrlSortField
+  PluginUrlQueryParams
 } from "./urls";
-import PluginsDetailsComponent from "./views/PluginsDetails";
 import PluginsListComponent from "./views/PluginList";
+import PluginsDetailsComponent from "./views/PluginsDetails";
 
 const PluginList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));

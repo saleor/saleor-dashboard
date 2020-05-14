@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
+import LoginLoading from "./components/LoginLoading";
 import { User } from "./types/User";
 import {
   newPasswordPath,
@@ -12,7 +13,6 @@ import LoginView from "./views/Login";
 import NewPassword from "./views/NewPassword";
 import ResetPassword from "./views/ResetPassword";
 import ResetPasswordSuccess from "./views/ResetPasswordSuccess";
-import LoginLoading from "./components/LoginLoading";
 
 interface UserContext {
   login: (username: string, password: string) => void;

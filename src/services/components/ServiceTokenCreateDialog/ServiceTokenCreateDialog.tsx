@@ -5,12 +5,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -19,6 +16,8 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import { buttonMessages } from "@saleor/intl";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ServiceTokenCreateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -54,9 +53,7 @@ function handleCopy(token: string) {
   navigator.clipboard.writeText(token);
 }
 
-const ServiceTokenCreateDialog: React.FC<
-  ServiceTokenCreateDialogProps
-> = props => {
+const ServiceTokenCreateDialog: React.FC<ServiceTokenCreateDialogProps> = props => {
   const { confirmButtonState, open, token, onClose, onCreate } = props;
   const [step, setStep] = React.useState<ServiceTokenCreateStep>("form");
   const intl = useIntl();

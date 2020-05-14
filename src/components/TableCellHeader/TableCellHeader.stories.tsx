@@ -3,10 +3,10 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Decorator from "../../storybook/Decorator";
 import TableCellHeader, {
   TableCellHeaderArrowDirection

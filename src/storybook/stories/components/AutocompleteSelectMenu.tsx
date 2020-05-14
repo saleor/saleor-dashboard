@@ -1,12 +1,12 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import AutocompleteSelectMenu, {
   AutocompleteSelectMenuProps
 } from "@saleor/components/AutocompleteSelectMenu";
 import Form from "@saleor/components/Form";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import { getMenuItemByValue, IMenu } from "../../../utils/menu";
 import Decorator from "../../Decorator";
 

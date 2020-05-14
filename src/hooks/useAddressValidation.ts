@@ -1,10 +1,9 @@
-import { useState } from "react";
-
 import { AddressTypeInput } from "@saleor/customers/types";
-import { transformFormToAddress } from "@saleor/misc";
-import { AddressInput, AccountErrorCode } from "@saleor/types/globalTypes";
-import { add, remove } from "@saleor/utils/lists";
 import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { transformFormToAddress } from "@saleor/misc";
+import { AccountErrorCode, AddressInput } from "@saleor/types/globalTypes";
+import { add, remove } from "@saleor/utils/lists";
+import { useState } from "react";
 
 interface UseAddressValidation<T> {
   errors: AccountErrorFragment[];

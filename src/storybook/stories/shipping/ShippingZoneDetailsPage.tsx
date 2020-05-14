@@ -1,9 +1,9 @@
+import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
+import { ShippingErrorCode } from "@saleor/types/globalTypes";
+import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { ShippingErrorCode } from "@saleor/types/globalTypes";
-import { warehouseList } from "@saleor/warehouses/fixtures";
-import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
 import ShippingZoneDetailsPage, {
   ShippingZoneDetailsPageProps
 } from "../../../shipping/components/ShippingZoneDetailsPage";

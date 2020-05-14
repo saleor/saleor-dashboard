@@ -1,6 +1,5 @@
-import React from "react";
-
 import useForm, { UseFormResult } from "@saleor/hooks/useForm";
+import React from "react";
 
 export interface FormProps<T> {
   children: (props: UseFormResult<T>) => React.ReactNode;

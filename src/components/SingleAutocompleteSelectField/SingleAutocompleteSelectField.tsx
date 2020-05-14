@@ -1,17 +1,17 @@
 import { InputProps } from "@material-ui/core/Input";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { FetchMoreProps } from "@saleor/types";
 import Downshift from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
 
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { FetchMoreProps } from "@saleor/types";
 import ArrowDropdownIcon from "../../icons/ArrowDropdown";
 import Debounce, { DebounceProps } from "../Debounce";
 import SingleAutocompleteSelectFieldContent, {
-  SingleAutocompleteChoiceType,
-  SingleAutocompleteActionType
+  SingleAutocompleteActionType,
+  SingleAutocompleteChoiceType
 } from "./SingleAutocompleteSelectFieldContent";
 
 const useStyles = makeStyles(

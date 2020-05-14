@@ -1,10 +1,11 @@
-import { CustomerFilterInput } from "@saleor/types/globalTypes";
-import { maybe } from "@saleor/misc";
 import { IFilterElement } from "@saleor/components/Filter";
 import {
   CustomerFilterKeys,
   CustomerListFilterOpts
 } from "@saleor/customers/components/CustomerListPage";
+import { maybe } from "@saleor/misc";
+import { CustomerFilterInput } from "@saleor/types/globalTypes";
+
 import {
   createFilterTabUtils,
   createFilterUtils,

@@ -1,14 +1,13 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
-import { FormChange } from "@saleor/hooks/useForm";
 import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { FormChange } from "@saleor/hooks/useForm";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
+import React from "react";
+import { useIntl } from "react-intl";
 
 export interface ServiceInfoProps {
   data: {

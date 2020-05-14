@@ -1,15 +1,14 @@
-import { defineMessages, IntlShape } from "react-intl";
-
-import { FilterOpts, MinMax, AutocompleteFilterOpts } from "@saleor/types";
+import { IFilter } from "@saleor/components/Filter";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { sectionNames } from "@saleor/intl";
+import { AutocompleteFilterOpts, FilterOpts, MinMax } from "@saleor/types";
 import { StockAvailability } from "@saleor/types/globalTypes";
 import {
+  createAutocompleteField,
   createOptionsField,
-  createPriceField,
-  createAutocompleteField
+  createPriceField
 } from "@saleor/utils/filters/fields";
-import { IFilter } from "@saleor/components/Filter";
-import { sectionNames } from "@saleor/intl";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { defineMessages, IntlShape } from "react-intl";
 
 export enum ProductFilterKeys {
   attributes = "attributes",

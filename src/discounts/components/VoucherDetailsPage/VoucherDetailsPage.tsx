@@ -1,7 +1,4 @@
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -13,8 +10,11 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { RequirementsPicker } from "@saleor/discounts/types";
-import { sectionNames } from "@saleor/intl";
 import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import { sectionNames } from "@saleor/intl";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe, splitDateTime } from "../../../misc";
 import { ListProps, TabListActions } from "../../../types";
 import {

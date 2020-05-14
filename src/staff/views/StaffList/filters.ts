@@ -1,10 +1,11 @@
-import { StaffUserInput, StaffMemberStatus } from "@saleor/types/globalTypes";
-import { maybe, findValueInEnum } from "@saleor/misc";
 import { IFilterElement } from "@saleor/components/Filter";
+import { findValueInEnum, maybe } from "@saleor/misc";
 import {
-  StaffListFilterOpts,
-  StaffFilterKeys
+  StaffFilterKeys,
+  StaffListFilterOpts
 } from "@saleor/staff/components/StaffListPage";
+import { StaffMemberStatus, StaffUserInput } from "@saleor/types/globalTypes";
+
 import {
   createFilterTabUtils,
   createFilterUtils,

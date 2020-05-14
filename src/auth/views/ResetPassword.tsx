@@ -1,10 +1,10 @@
+import { APP_MOUNT_URI } from "@saleor/config";
+import useNavigator from "@saleor/hooks/useNavigator";
+import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
-import { APP_MOUNT_URI } from "@saleor/config";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { commonMessages } from "@saleor/intl";
 import ResetPasswordPage, {
   ResetPasswordPageFormData
 } from "../components/ResetPasswordPage";

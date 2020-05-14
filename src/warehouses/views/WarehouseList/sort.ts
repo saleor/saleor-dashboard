@@ -1,6 +1,6 @@
-import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
 import { WarehouseSortField } from "@saleor/types/globalTypes";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
+import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
 
 export function getSortQueryField(
   sort: WarehouseListUrlSortField

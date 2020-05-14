@@ -1,20 +1,21 @@
-import { ServiceAccountFilterInput } from "@saleor/types/globalTypes";
-import {
-  ServiceListFilterOpts,
-  ServiceFilterKeys
-} from "@saleor/services/components/ServiceListPage/filters";
-import { maybe, parseBoolean } from "@saleor/misc";
 import { IFilterElement } from "@saleor/components/Filter";
+import { maybe, parseBoolean } from "@saleor/misc";
 import {
-  ServiceListUrlFilters,
-  ServiceListUrlFiltersEnum,
-  ServiceListUrlQueryParams
-} from "../../urls";
+  ServiceFilterKeys,
+  ServiceListFilterOpts
+} from "@saleor/services/components/ServiceListPage/filters";
+import { ServiceAccountFilterInput } from "@saleor/types/globalTypes";
+
 import {
   createFilterTabUtils,
   createFilterUtils,
   getSingleValueQueryParam
 } from "../../../utils/filters";
+import {
+  ServiceListUrlFilters,
+  ServiceListUrlFiltersEnum,
+  ServiceListUrlQueryParams
+} from "../../urls";
 
 export const STAFF_FILTERS_KEY = "staffFilters";
 

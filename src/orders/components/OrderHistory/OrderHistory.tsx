@@ -1,8 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
-
 import Form from "@saleor/components/Form";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
@@ -12,6 +9,9 @@ import {
   TimelineEvent,
   TimelineNote
 } from "@saleor/components/Timeline";
+import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+
 import {
   OrderEventsEmailsEnum,
   OrderEventsEnum

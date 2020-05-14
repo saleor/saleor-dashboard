@@ -1,13 +1,12 @@
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe, renderCollection } from "../../../misc";
 import { AddressTypeEnum } from "../../../types/globalTypes";
 import { CustomerAddresses_user } from "../../types/CustomerAddresses";
@@ -46,9 +45,7 @@ const useStyles = makeStyles(
   { name: "CustomerAddressListPage" }
 );
 
-const CustomerAddressListPage: React.FC<
-  CustomerAddressListPageProps
-> = props => {
+const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props => {
   const {
     customer,
     disabled,

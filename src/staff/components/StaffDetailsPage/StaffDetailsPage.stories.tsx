@@ -1,12 +1,12 @@
 import { Omit } from "@material-ui/core";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { userPermissionGroups } from "@saleor/permissionGroups/fixtures";
 import StaffDetailsPage, {
   StaffDetailsPageProps
 } from "@saleor/staff/components/StaffDetailsPage";
 import { staffMember } from "@saleor/staff/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
-import { userPermissionGroups } from "@saleor/permissionGroups/fixtures";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
 const props: Omit<StaffDetailsPageProps, "classes"> = {
   availablePermissionGroups: [],

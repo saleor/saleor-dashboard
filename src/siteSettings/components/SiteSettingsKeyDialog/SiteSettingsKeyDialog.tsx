@@ -4,17 +4,17 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { buttonMessages } from "@saleor/intl";
+import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
 import { DialogProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
-import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
 import getShopErrorMessage from "@saleor/utils/errors/shop";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { authorizationKeyTypes } from "../../../misc";
 import { AuthorizationKeyType } from "../../../types/globalTypes";
 

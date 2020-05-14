@@ -3,15 +3,14 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import { getFormErrors } from "@saleor/utils/errors";
 import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
+import { getFormErrors } from "@saleor/utils/errors";
 import getShopErrorMessage from "@saleor/utils/errors/shop";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface SiteSettingsMailingFormData {
   defaultMailSenderName: string;

@@ -1,6 +1,6 @@
-import { IFilterElement, FieldType } from "@saleor/components/Filter";
+import { FieldType, IFilterElement } from "@saleor/components/Filter";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { MinMax, FetchMoreProps, SearchPageProps } from "@saleor/types";
+import { FetchMoreProps, MinMax, SearchPageProps } from "@saleor/types";
 
 export function createPriceField<T extends string>(
   name: T,

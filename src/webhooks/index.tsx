@@ -1,22 +1,22 @@
+import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
-import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   webhookAddUrl,
   webhookListPath,
   WebhookListUrlQueryParams,
+  WebhookListUrlSortField,
   webhookPath,
-  WebhookUrlQueryParams,
-  WebhookListUrlSortField
+  WebhookUrlQueryParams
 } from "./urls";
+import WebhooksList from "./views/WebhookList";
 import WebhookCreate from "./views/WebhooksCreate";
 import WebhooksDetails from "./views/WebhooksDetails";
-import WebhooksList from "./views/WebhookList";
 
 const WebhookList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));

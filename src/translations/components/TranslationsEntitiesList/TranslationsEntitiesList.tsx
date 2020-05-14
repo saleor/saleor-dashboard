@@ -5,15 +5,15 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import Skeleton from "@saleor/components/Skeleton";
+import TablePagination from "@saleor/components/TablePagination";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TablePagination from "@saleor/components/TablePagination";
-import Skeleton from "@saleor/components/Skeleton";
-import { ListProps } from "../../../types";
 import { maybe, renderCollection } from "../../../misc";
+import { ListProps } from "../../../types";
 
 export interface TranslatableEntity {
   id: string;
@@ -44,9 +44,7 @@ const useStyles = makeStyles(
   },
   { name: "TranslationsEntitiesList" }
 );
-const TranslationsEntitiesList: React.FC<
-  TranslationsEntitiesListProps
-> = props => {
+const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props => {
   const {
     disabled,
     entities,

@@ -1,7 +1,7 @@
+import { MenuListUrlSortField } from "@saleor/navigation/urls";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { MenuListUrlSortField } from "@saleor/navigation/urls";
 import {
   listActionsProps,
   pageListProps,

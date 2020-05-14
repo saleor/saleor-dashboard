@@ -1,7 +1,8 @@
 import { IFilter } from "@saleor/components/Filter";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { Sort, Pagination, ActiveTab, Search } from "@saleor/types";
-import { getFilterQueryParams, GetFilterQueryParam } from "../filters";
+import { ActiveTab, Pagination, Search, Sort } from "@saleor/types";
+
+import { GetFilterQueryParam, getFilterQueryParams } from "../filters";
 
 type RequiredParams = ActiveTab & Search & Sort & Pagination;
 type CreateUrl = (params: RequiredParams) => string;

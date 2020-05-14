@@ -1,15 +1,15 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { commonMessages } from "@saleor/intl";
-import { getFormErrors } from "@saleor/utils/errors";
 import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
+import { getFormErrors } from "@saleor/utils/errors";
 import getShopErrorMessage from "@saleor/utils/errors/shop";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { SiteSettingsPageFormData } from "../SiteSettingsPage";
 
 interface SiteSettingsDetailsProps {

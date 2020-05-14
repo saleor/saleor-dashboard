@@ -1,10 +1,11 @@
-import { AttributeFilterInput } from "@saleor/types/globalTypes";
-import { maybe, parseBoolean } from "@saleor/misc";
-import { IFilterElement } from "@saleor/components/Filter";
 import {
-  AttributeListFilterOpts,
-  AttributeFilterKeys
+  AttributeFilterKeys,
+  AttributeListFilterOpts
 } from "@saleor/attributes/components/AttributeListPage";
+import { IFilterElement } from "@saleor/components/Filter";
+import { maybe, parseBoolean } from "@saleor/misc";
+import { AttributeFilterInput } from "@saleor/types/globalTypes";
+
 import {
   createFilterTabUtils,
   createFilterUtils,

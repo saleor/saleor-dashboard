@@ -1,16 +1,16 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
-import { FormData } from "../VoucherDetailsPage";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
+import { FormData } from "../VoucherDetailsPage";
 
 interface VoucherTypesProps {
   data: FormData;

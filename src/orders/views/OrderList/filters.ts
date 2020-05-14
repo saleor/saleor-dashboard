@@ -1,8 +1,9 @@
-import { findInEnum, maybe, findValueInEnum } from "@saleor/misc";
+import { findInEnum, findValueInEnum, maybe } from "@saleor/misc";
 import {
-  OrderListFilterOpts,
-  OrderFilterKeys
+  OrderFilterKeys,
+  OrderListFilterOpts
 } from "@saleor/orders/components/OrderListPage/filters";
+
 import { IFilterElement } from "../../../components/Filter";
 import {
   OrderFilterInput,

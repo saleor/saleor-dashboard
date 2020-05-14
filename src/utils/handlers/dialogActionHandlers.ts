@@ -1,5 +1,5 @@
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { Dialog, BulkAction, SingleAction } from "@saleor/types";
+import { BulkAction, Dialog, SingleAction } from "@saleor/types";
 
 type Url<T extends Dialog<any>> = (params: T) => string;
 type CreateCloseModal<

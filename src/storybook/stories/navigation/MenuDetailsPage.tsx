@@ -1,7 +1,7 @@
+import { MenuErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { MenuErrorCode } from "@saleor/types/globalTypes";
 import MenuDetailsPage, {
   MenuDetailsPageProps
 } from "../../../navigation/components/MenuDetailsPage";

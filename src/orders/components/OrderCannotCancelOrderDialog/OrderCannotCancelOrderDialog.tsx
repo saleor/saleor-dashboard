@@ -5,11 +5,10 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import React from "react";
-import { FormattedMessage } from "react-intl";
-
 import { buttonMessages } from "@saleor/intl";
 import { DialogProps } from "@saleor/types";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({

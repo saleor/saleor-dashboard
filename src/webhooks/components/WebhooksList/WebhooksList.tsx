@@ -7,19 +7,19 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import React from "react";
-import { useIntl, FormattedMessage } from "react-intl";
-import classNames from "classnames";
-
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, SortPage } from "@saleor/types";
-import { WebhookListUrlSortField } from "@saleor/webhooks/urls";
-import TableCellHeader from "@saleor/components/TableCellHeader";
 import { getArrowDirection } from "@saleor/utils/sort";
+import { WebhookListUrlSortField } from "@saleor/webhooks/urls";
 import { isUnnamed } from "@saleor/webhooks/utils";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { Webhooks_webhooks_edges_node } from "../../types/Webhooks";
 
 export interface WebhooksListProps

@@ -1,11 +1,11 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { decimal, joinDateTime, maybe } from "../../misc";
 import {
   DiscountValueTypeEnum,

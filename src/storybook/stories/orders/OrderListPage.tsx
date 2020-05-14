@@ -1,11 +1,11 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import OrderListPage, {
   OrderListPageProps
 } from "@saleor/orders/components/OrderListPage";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
 import { OrderStatusFilter } from "@saleor/types/globalTypes";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import {
   filterPageProps,
   listActionsProps,

@@ -1,11 +1,11 @@
+import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import {
+  filterPageProps,
   pageListProps,
-  sortPageProps,
-  filterPageProps
+  sortPageProps
 } from "../../../fixtures";
 import PluginsListPage, {
   PluginsListPageProps

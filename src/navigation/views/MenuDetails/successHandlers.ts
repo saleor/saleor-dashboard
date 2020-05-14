@@ -1,6 +1,6 @@
+import { commonMessages } from "@saleor/intl";
 import { IntlShape } from "react-intl";
 
-import { commonMessages } from "@saleor/intl";
 import { UseNavigatorResult } from "../../../hooks/useNavigator";
 import { UseNotifierResult } from "../../../hooks/useNotifier";
 import { MenuDelete } from "../../types/MenuDelete";

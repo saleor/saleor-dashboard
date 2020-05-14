@@ -1,9 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import RadioGroupField from "@saleor/components/RadioGroupField";
@@ -11,6 +8,9 @@ import { RequirementsPicker } from "@saleor/discounts/types";
 import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { FormData } from "../VoucherDetailsPage";
 
 interface VoucherRequirementsProps {

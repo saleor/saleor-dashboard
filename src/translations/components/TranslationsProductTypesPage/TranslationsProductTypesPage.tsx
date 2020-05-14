@@ -1,12 +1,12 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { maybe } from "../../../misc";
 import { LanguageCodeEnum } from "../../../types/globalTypes";
 import { ProductTypeTranslationFragment } from "../../types/ProductTypeTranslationFragment";
@@ -23,9 +23,7 @@ export const fieldNames = {
   value: "attributeValue"
 };
 
-const TranslationsProductTypesPage: React.FC<
-  TranslationsProductTypesPageProps
-> = ({
+const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> = ({
   activeField,
   disabled,
   languages,

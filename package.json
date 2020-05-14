@@ -117,11 +117,12 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.3.5",
-    "eslint": "^6.7.1",
+    "eslint": "^6.8.0",
     "eslint-loader": "^3.0.2",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-local-rules": "^0.1.1",
     "eslint-plugin-prefer-arrow": "^1.1.6",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
     "file-loader": "^5.0.2",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
     "html-webpack-plugin": "^3.2.0",
@@ -178,22 +179,29 @@
       "eslint --fix",
       "prettier --write",
       "git add"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
     ]
   },
   "scripts": {
-    "build": "webpack -p",
-    "extract-json-messages": "rimraf build/locale && cross-env NODE_ENV=extract babel src 'src/**/*.{ts,tsx}' -o build/dashboard.bundle.js",
-    "transpile-messages": "node scripts/transpile-tx.js",
-    "extract-messages": "npm run extract-json-messages && npm run transpile-messages",
+    "build-storybook": "build-storybook -c src/storybook/ -o build/storybook",
     "build-types": "apollo client:codegen --target=typescript types --globalTypesFile=src/types/globalTypes.ts",
-    "check-types": "tsc --noEmit",
+    "build": "webpack -p",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
+    "check-types": "tsc --noEmit",
+    "extract-json-messages": "rimraf build/locale && cross-env NODE_ENV=extract babel src 'src/**/*.{ts,tsx}' -o build/dashboard.bundle.js",
+    "extract-messages": "npm run extract-json-messages && npm run transpile-messages",
     "generate-component": "plop --plopfile .plop/plopfile.js",
+    "heroku-postbuild": "npm run build",
+    "serve:lhci": "NODE_ENV=production npm run server",
     "start": "webpack-dev-server --open -d",
     "storybook": "start-storybook -p 3000 -c src/storybook/",
-    "build-storybook": "build-storybook -c src/storybook/ -o build/storybook",
-    "test": "jest src/",
     "test-e2e": "testcafe 'chrome:headless' .testcafe",
-    "heroku-postbuild": "npm run build"
+    "test": "jest src/",
+    "transpile-messages": "node scripts/transpile-tx.js",
+    "lint": "npx eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix ; npx prettier --check \"src/**/*.@(tsx|ts|jsx|js)\" --write"
   }
 }

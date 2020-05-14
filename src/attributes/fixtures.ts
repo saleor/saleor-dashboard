@@ -3,6 +3,7 @@ import {
   AttributeInputTypeEnum,
   AttributeValueType
 } from "@saleor/types/globalTypes";
+
 import { AttributeDetailsFragment } from "./types/AttributeDetailsFragment";
 import { AttributeList_attributes_edges_node } from "./types/AttributeList";
 
@@ -36,10 +37,8 @@ export const attribute: AttributeDetailsFragment = {
   visibleInStorefront: true
 };
 
-export const attributes: Array<
-  AttributeList_attributes_edges_node &
-    ProductDetails_product_productType_variantAttributes
-> = [
+export const attributes: Array<AttributeList_attributes_edges_node &
+  ProductDetails_product_productType_variantAttributes> = [
   {
     node: {
       __typename: "Attribute" as "Attribute",

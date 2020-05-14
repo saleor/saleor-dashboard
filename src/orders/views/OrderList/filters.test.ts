@@ -1,14 +1,14 @@
-import { createIntl } from "react-intl";
-import { stringify as stringifyQs } from "qs";
-
-import { OrderListUrlFilters } from "@saleor/orders/urls";
-import { createFilterStructure } from "@saleor/orders/components/OrderListPage";
-import { getFilterQueryParams } from "@saleor/utils/filters";
 import { date } from "@saleor/fixtures";
+import { createFilterStructure } from "@saleor/orders/components/OrderListPage";
+import { OrderListUrlFilters } from "@saleor/orders/urls";
+import { OrderStatusFilter } from "@saleor/types/globalTypes";
+import { getFilterQueryParams } from "@saleor/utils/filters";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
-import { OrderStatusFilter } from "@saleor/types/globalTypes";
-import { getFilterVariables, getFilterQueryParam } from "./filters";
+import { stringify as stringifyQs } from "qs";
+import { createIntl } from "react-intl";
+
+import { getFilterQueryParam, getFilterVariables } from "./filters";
 
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {

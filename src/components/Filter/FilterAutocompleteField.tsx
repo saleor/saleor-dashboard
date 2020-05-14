@@ -1,15 +1,15 @@
-import React from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import { toggle } from "@saleor/utils/lists";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { toggle } from "@saleor/utils/lists";
-import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
-import Link from "../Link";
 import Checkbox from "../Checkbox";
 import Hr from "../Hr";
+import Link from "../Link";
+import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { FilterBaseFieldProps } from "./types";
 
 interface FilterAutocompleteFieldProps extends FilterBaseFieldProps {

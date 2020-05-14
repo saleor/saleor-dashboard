@@ -1,16 +1,16 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import {
+  filterPageProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps,
   sortPageProps,
-  filterPageProps
+  tabPageProps
 } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { WebhookListUrlSortField } from "@saleor/webhooks/urls";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import { webhookList } from "../../fixtures";
 import WebhooksListPage, { WebhooksListPageProps } from "./WebhooksListPage";
 

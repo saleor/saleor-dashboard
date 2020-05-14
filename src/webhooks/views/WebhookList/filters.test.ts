@@ -1,12 +1,12 @@
-import { createIntl } from "react-intl";
-import { stringify as stringifyQs } from "qs";
-
-import { WebhookListUrlFilters } from "@saleor/webhooks/urls";
-import { createFilterStructure } from "@saleor/webhooks/components/WebhooksListPage";
 import { getFilterQueryParams } from "@saleor/utils/filters";
+import { createFilterStructure } from "@saleor/webhooks/components/WebhooksListPage";
+import { WebhookListUrlFilters } from "@saleor/webhooks/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
-import { getFilterVariables, getFilterQueryParam } from "./filters";
+import { stringify as stringifyQs } from "qs";
+import { createIntl } from "react-intl";
+
+import { getFilterQueryParam, getFilterVariables } from "./filters";
 
 describe("Filtering query params", () => {
   it("should be empty object if no params given", () => {

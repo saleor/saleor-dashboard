@@ -1,32 +1,32 @@
-import { diff } from "fast-array-diff";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
+import NotFoundPage from "@saleor/components/NotFoundPage";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import ShippingZoneAddWarehouseDialog from "@saleor/shipping/components/ShippingZoneAddWarehouseDialog";
+import ShippingZoneCountriesAssignDialog from "@saleor/shipping/components/ShippingZoneCountriesAssignDialog";
+import ShippingZoneRateDialog from "@saleor/shipping/components/ShippingZoneRateDialog";
 import {
   useShippingRateCreate,
-  useShippingRateUpdate,
   useShippingRateDelete,
+  useShippingRateUpdate,
   useShippingZoneDelete,
   useShippingZoneUpdate
 } from "@saleor/shipping/mutations";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import ShippingZoneRateDialog from "@saleor/shipping/components/ShippingZoneRateDialog";
-import useShop from "@saleor/hooks/useShop";
-import ShippingZoneCountriesAssignDialog from "@saleor/shipping/components/ShippingZoneCountriesAssignDialog";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import ShippingZoneAddWarehouseDialog from "@saleor/shipping/components/ShippingZoneAddWarehouseDialog";
 import { useWarehouseCreate } from "@saleor/warehouses/mutations";
-import { getStringOrPlaceholder, findValueInEnum } from "../../../misc";
+import { diff } from "fast-array-diff";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { findValueInEnum, getStringOrPlaceholder } from "../../../misc";
 import {
-  ShippingMethodTypeEnum,
-  CountryCode
+  CountryCode,
+  ShippingMethodTypeEnum
 } from "../../../types/globalTypes";
 import ShippingZoneDetailsPage, {
   FormData
@@ -35,8 +35,8 @@ import { useShippingZone } from "../../queries";
 import {
   shippingZonesListUrl,
   shippingZoneUrl,
-  ShippingZoneUrlQueryParams,
-  ShippingZoneUrlDialog
+  ShippingZoneUrlDialog,
+  ShippingZoneUrlQueryParams
 } from "../../urls";
 import {
   getCreateShippingRateVariables,

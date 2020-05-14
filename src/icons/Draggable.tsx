@@ -25,7 +25,8 @@ const Draggable = createSvgIcon(
         <stop offset="1" stopColor="#3EE7CD" />
       </linearGradient>
     </defs>
-  </>
-, "Draggable")
+  </>,
+  "Draggable"
+);
 
 export default Draggable;

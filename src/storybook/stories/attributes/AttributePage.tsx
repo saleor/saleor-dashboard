@@ -1,6 +1,3 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import AttributePage, {
   AttributePageProps
 } from "@saleor/attributes/components/AttributePage";
@@ -9,6 +6,9 @@ import {
   AttributeInputTypeEnum,
   ProductErrorCode
 } from "@saleor/types/globalTypes";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import Decorator from "../../Decorator";
 
 const props: AttributePageProps = {

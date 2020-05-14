@@ -1,17 +1,17 @@
+import {
+  filterPageProps,
+  pageListProps,
+  searchPageProps,
+  sortPageProps,
+  tabPageProps
+} from "@saleor/fixtures";
+import { staffMembers } from "@saleor/staff/fixtures";
+import { StaffListUrlSortField } from "@saleor/staff/urls";
+import Decorator from "@saleor/storybook/Decorator";
+import { StaffMemberStatus } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { StaffListUrlSortField } from "@saleor/staff/urls";
-import { StaffMemberStatus } from "@saleor/types/globalTypes";
-import {
-  pageListProps,
-  searchPageProps,
-  tabPageProps,
-  sortPageProps,
-  filterPageProps
-} from "@saleor/fixtures";
-import { staffMembers } from "@saleor/staff/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
 import StaffListPage, { StaffListPageProps } from ".";
 
 const props: StaffListPageProps = {

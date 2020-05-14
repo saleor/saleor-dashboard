@@ -1,8 +1,8 @@
+import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
+import { OrderDraftCreate } from "@saleor/orders/types/OrderDraftCreate";
 import { MutationFunction } from "react-apollo";
 import { IntlShape } from "react-intl";
 
-import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { OrderDraftCreate } from "@saleor/orders/types/OrderDraftCreate";
 import { QuickSearchAction, QuickSearchMode } from "../../types";
 import { searchInCommands } from "../commands";
 import { sortScores } from "../utils";

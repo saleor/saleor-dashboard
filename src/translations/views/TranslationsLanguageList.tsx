@@ -1,7 +1,7 @@
-import React from "react";
-
 import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
+import React from "react";
+
 import { maybe } from "../../misc";
 import TranslationsLanguageListPage from "../components/TranslationsLanguageListPage";
 import { languageEntitiesUrl } from "../urls";

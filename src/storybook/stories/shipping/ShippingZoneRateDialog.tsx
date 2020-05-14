@@ -6,8 +6,8 @@ import ShippingZoneRateDialog, {
 } from "../../../shipping/components/ShippingZoneRateDialog";
 import { shippingZone } from "../../../shipping/fixtures";
 import {
-  ShippingMethodTypeEnum,
-  ShippingErrorCode
+  ShippingErrorCode,
+  ShippingMethodTypeEnum
 } from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
 

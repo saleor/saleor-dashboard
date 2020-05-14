@@ -1,8 +1,8 @@
-import { IntlShape } from "react-intl";
-
-import { MenuErrorCode } from "@saleor/types/globalTypes";
 import { commonMessages } from "@saleor/intl";
 import { MenuErrorFragment } from "@saleor/navigation/types/MenuErrorFragment";
+import { MenuErrorCode } from "@saleor/types/globalTypes";
+import { IntlShape } from "react-intl";
+
 import commonErrorMessages from "./common";
 
 function getMenuErrorMessage(

@@ -1,4 +1,5 @@
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
+
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { FilterReducerAction } from "./reducer";
 

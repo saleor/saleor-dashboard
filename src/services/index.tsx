@@ -1,18 +1,18 @@
+import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
-import { asSortParams } from "@saleor/utils/sort";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   serviceAddPath,
   serviceListPath,
   ServiceListUrlQueryParams,
+  ServiceListUrlSortField,
   servicePath,
-  ServiceUrlQueryParams,
-  ServiceListUrlSortField
+  ServiceUrlQueryParams
 } from "./urls";
 import ServiceCreate from "./views/ServiceCreate";
 import ServiceDetailsComponent from "./views/ServiceDetails";

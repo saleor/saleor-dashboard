@@ -1,5 +1,6 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { maybe } from "@saleor/misc";
+
 import useListActions from "./useListActions";
 
 function useMultiAutocomplete(initial: MultiAutocompleteChoiceType[] = []) {

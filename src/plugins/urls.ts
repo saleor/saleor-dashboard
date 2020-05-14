@@ -2,12 +2,12 @@ import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
 import {
+  ActiveTab,
   Dialog,
+  Filters,
   Pagination,
   SingleAction,
   Sort,
-  Filters,
-  ActiveTab,
   TabActionDialog
 } from "../types";
 

@@ -1,6 +1,3 @@
-import { score } from "fuzzaldrin";
-import { IntlShape } from "react-intl";
-
 import { attributeListUrl } from "@saleor/attributes/urls";
 import { categoryListUrl } from "@saleor/categories/urls";
 import { collectionListUrl } from "@saleor/collections/urls";
@@ -20,8 +17,11 @@ import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
 import { countryListUrl } from "@saleor/taxes/urls";
 import { languageListUrl } from "@saleor/translations/urls";
-import { webhookListUrl } from "@saleor/webhooks/urls";
 import { warehouseListUrl } from "@saleor/warehouses/urls";
+import { webhookListUrl } from "@saleor/webhooks/urls";
+import { score } from "fuzzaldrin";
+import { IntlShape } from "react-intl";
+
 import { QuickSearchActionInput } from "../../types";
 
 interface View {

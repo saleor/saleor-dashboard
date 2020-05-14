@@ -1,15 +1,11 @@
-import { OrderDraftFilterInput } from "@saleor/types/globalTypes";
-import { maybe } from "@saleor/misc";
 import { IFilterElement } from "@saleor/components/Filter";
+import { maybe } from "@saleor/misc";
 import {
   OrderDraftFilterKeys,
   OrderDraftListFilterOpts
 } from "@saleor/orders/components/OrderDraftListPage";
-import {
-  OrderDraftListUrlFilters,
-  OrderDraftListUrlFiltersEnum,
-  OrderDraftListUrlQueryParams
-} from "../../urls";
+import { OrderDraftFilterInput } from "@saleor/types/globalTypes";
+
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -17,6 +13,11 @@ import {
   getMinMaxQueryParam,
   getSingleValueQueryParam
 } from "../../../utils/filters";
+import {
+  OrderDraftListUrlFilters,
+  OrderDraftListUrlFiltersEnum,
+  OrderDraftListUrlQueryParams
+} from "../../urls";
 
 export const ORDER_DRAFT_FILTERS_KEY = "orderDraftFilters";
 

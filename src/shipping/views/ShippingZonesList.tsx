@@ -1,9 +1,6 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -16,22 +13,25 @@ import usePaginator, {
 import useShop from "@saleor/hooks/useShop";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
-import { maybe, getStringOrPlaceholder } from "@saleor/misc";
+import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import ShippingZonesListPage from "../components/ShippingZonesListPage";
 import {
+  useDefaultWeightUnitUpdate,
   useShippingZoneBulkDelete,
-  useShippingZoneDelete,
-  useDefaultWeightUnitUpdate
+  useShippingZoneDelete
 } from "../mutations";
 import { useShippingZoneList } from "../queries";
 import {
   shippingZoneAddUrl,
   shippingZonesListUrl,
+  ShippingZonesListUrlDialog,
   ShippingZonesListUrlQueryParams,
-  shippingZoneUrl,
-  ShippingZonesListUrlDialog
+  shippingZoneUrl
 } from "../urls";
 
 interface ShippingZonesListProps {

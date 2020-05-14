@@ -1,13 +1,13 @@
-import { createIntl } from "react-intl";
-import { stringify as stringifyQs } from "qs";
-
-import { ProductListUrlFilters } from "@saleor/products/urls";
 import { createFilterStructure } from "@saleor/products/components/ProductListPage";
+import { ProductListUrlFilters } from "@saleor/products/urls";
+import { StockAvailability } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
-import { StockAvailability } from "@saleor/types/globalTypes";
-import { getFilterVariables, getFilterQueryParam } from "./filters";
+import { stringify as stringifyQs } from "qs";
+import { createIntl } from "react-intl";
+
+import { getFilterQueryParam, getFilterVariables } from "./filters";
 import { productListFilterOpts } from "./fixtures";
 
 describe("Filtering query params", () => {

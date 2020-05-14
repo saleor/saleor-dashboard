@@ -1,7 +1,6 @@
-import React from "react";
-
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField/SingleAutocompleteSelectFieldContent";
 import { FetchMoreProps } from "@saleor/types";
+import React from "react";
 
 interface ChoiceProviderProps {
   children: (

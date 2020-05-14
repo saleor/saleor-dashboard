@@ -1,5 +1,4 @@
-import { defineMessages, IntlShape } from "react-intl";
-
+import { IFilter } from "@saleor/components/Filter";
 import { FilterOpts, MinMax } from "@saleor/types";
 import {
   DiscountStatusEnum,
@@ -9,7 +8,7 @@ import {
   createDateField,
   createOptionsField
 } from "@saleor/utils/filters/fields";
-import { IFilter } from "@saleor/components/Filter";
+import { defineMessages, IntlShape } from "react-intl";
 
 export enum SaleFilterKeys {
   saleType = "saleType",

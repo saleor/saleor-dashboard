@@ -1,26 +1,26 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import Container from "@saleor/components/Container";
+import FilterBar from "@saleor/components/FilterBar";
+import PageHeader from "@saleor/components/PageHeader";
+import { CustomerListUrlSortField } from "@saleor/customers/urls";
+import { sectionNames } from "@saleor/intl";
+import {
+  FilterPageProps,
+  ListActions,
+  PageListProps,
+  SortPage,
+  TabPageProps
+} from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import { sectionNames } from "@saleor/intl";
-import {
-  ListActions,
-  PageListProps,
-  TabPageProps,
-  SortPage,
-  FilterPageProps
-} from "@saleor/types";
-import { CustomerListUrlSortField } from "@saleor/customers/urls";
-import FilterBar from "@saleor/components/FilterBar";
-import CustomerList from "../CustomerList/CustomerList";
 import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
+import CustomerList from "../CustomerList/CustomerList";
 import {
+  createFilterStructure,
   CustomerFilterKeys,
-  CustomerListFilterOpts,
-  createFilterStructure
+  CustomerListFilterOpts
 } from "./filters";
 
 export interface CustomerListPageProps

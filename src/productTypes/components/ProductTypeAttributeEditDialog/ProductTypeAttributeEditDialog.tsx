@@ -4,15 +4,14 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import ListField from "@saleor/components/ListField";
 import { buttonMessages } from "@saleor/intl";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface FormData {
   name: string;

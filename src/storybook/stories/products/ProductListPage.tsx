@@ -1,13 +1,13 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { defaultListSettings } from "@saleor/config";
 import { products as productListFixture } from "@saleor/products/fixtures";
 import { ProductListUrlSortField } from "@saleor/products/urls";
+import { productListFilterOpts } from "@saleor/products/views/ProductList/fixtures";
 import { attributes } from "@saleor/productTypes/fixtures";
 import { ListViews } from "@saleor/types";
-import { productListFilterOpts } from "@saleor/products/views/ProductList/fixtures";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import {
   fetchMoreProps,
   filterPageProps,

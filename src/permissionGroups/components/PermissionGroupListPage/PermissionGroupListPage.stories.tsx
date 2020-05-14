@@ -1,17 +1,16 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
 import {
   listActionsProps,
   pageListProps,
   sortPageProps
 } from "@saleor/fixtures";
-
 import PermissionGroupListPage, {
   PermissionGroupListPageProps
 } from "@saleor/permissionGroups/components/PermissionGroupListPage";
-import Decorator from "@saleor/storybook/Decorator";
-import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
 import { permissionGroups } from "@saleor/permissionGroups/fixtures";
+import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
+import Decorator from "@saleor/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
 const props: PermissionGroupListPageProps = {
   permissionGroups,

@@ -1,8 +1,8 @@
 import { Omit } from "@material-ui/core";
+import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { AccountErrorCode } from "@saleor/types/globalTypes";
 import CustomerDetailsPage, {
   CustomerDetailsPageProps
 } from "../../../customers/components/CustomerDetailsPage";

@@ -1,8 +1,8 @@
+import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
 import { countryListPath, countryTaxRatesPath } from "./urls";
 import CountryList from "./views/CountryList";

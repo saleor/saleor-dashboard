@@ -1,7 +1,7 @@
+import { DiscountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { DiscountErrorCode } from "@saleor/types/globalTypes";
 import SaleCreatePage, {
   SaleCreatePageProps
 } from "../../../discounts/components/SaleCreatePage";

@@ -1,6 +1,3 @@
-import React from "react";
-import { IntlShape, useIntl } from "react-intl";
-
 import { attributeListUrl } from "@saleor/attributes/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -9,30 +6,33 @@ import Attributes from "@saleor/icons/Attributes";
 import Bot from "@saleor/icons/Bot";
 import Navigation from "@saleor/icons/Navigation";
 import Pages from "@saleor/icons/Pages";
+import PermissionGroups from "@saleor/icons/PermissionGroups";
 import Plugins from "@saleor/icons/Plugins";
 import ProductTypes from "@saleor/icons/ProductTypes";
 import ShippingMethods from "@saleor/icons/ShippingMethods";
 import SiteSettings from "@saleor/icons/SiteSettings";
 import StaffMembers from "@saleor/icons/StaffMembers";
-import PermissionGroups from "@saleor/icons/PermissionGroups";
 import Taxes from "@saleor/icons/Taxes";
+import Warehouses from "@saleor/icons/Warehouses";
 import Webhooks from "@saleor/icons/Webhooks";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { pageListUrl } from "@saleor/pages/urls";
+import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { pluginListUrl } from "@saleor/plugins/urls";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
 import { serviceListUrl } from "@saleor/services/urls";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
-import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { taxSection } from "@saleor/taxes/urls";
 import { PermissionEnum } from "@saleor/types/globalTypes";
-import { webhookListUrl } from "@saleor/webhooks/urls";
-import Warehouses from "@saleor/icons/Warehouses";
 import { warehouseSection } from "@saleor/warehouses/urls";
+import { webhookListUrl } from "@saleor/webhooks/urls";
+import React from "react";
+import { IntlShape, useIntl } from "react-intl";
+
 import ConfigurationPage, { MenuSection } from "./ConfigurationPage";
 
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {

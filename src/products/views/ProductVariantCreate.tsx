@@ -1,13 +1,13 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import NotFoundPage from "@saleor/components/NotFoundPage";
 import { commonMessages } from "@saleor/intl";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { decimal } from "../../misc";
 import ProductVariantCreatePage, {
   ProductVariantCreatePageSubmitData
@@ -15,7 +15,7 @@ import ProductVariantCreatePage, {
 import { TypedVariantCreateMutation } from "../mutations";
 import { TypedProductVariantCreateQuery } from "../queries";
 import { VariantCreate } from "../types/VariantCreate";
-import { productUrl, productVariantEditUrl, productListUrl } from "../urls";
+import { productListUrl, productUrl, productVariantEditUrl } from "../urls";
 
 interface ProductVariantCreateProps {
   productId: string;

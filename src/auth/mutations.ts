@@ -1,7 +1,8 @@
+import { accountErrorFragment } from "@saleor/customers/mutations";
 import gql from "graphql-tag";
 
-import { accountErrorFragment } from "@saleor/customers/mutations";
 import { TypedMutation } from "../mutations";
+import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
 import {
   RequestPasswordReset,
   RequestPasswordResetVariables
@@ -9,7 +10,6 @@ import {
 import { SetPassword, SetPasswordVariables } from "./types/SetPassword";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
-import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
 
 export const fragmentUser = gql`
   fragment User on User {

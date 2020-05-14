@@ -1,7 +1,7 @@
-import { IntlShape, defineMessages } from "react-intl";
-
 import { ShippingErrorCode } from "@saleor/types/globalTypes";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
+import { defineMessages, IntlShape } from "react-intl";
+
 import { ShippingErrorFragment } from "../../types/ShippingErrorFragment";
 
 const messages = defineMessages({

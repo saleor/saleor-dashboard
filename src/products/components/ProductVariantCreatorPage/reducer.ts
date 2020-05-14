@@ -1,12 +1,13 @@
+import { StockInput } from "@saleor/types/globalTypes";
 import {
   add,
   remove,
   removeAtIndex,
   toggle,
-  updateAtIndex,
-  update
+  update,
+  updateAtIndex
 } from "@saleor/utils/lists";
-import { StockInput } from "@saleor/types/globalTypes";
+
 import { createVariants } from "./createVariants";
 import {
   ProductVariantCreateFormData,

@@ -1,14 +1,14 @@
+import configureIcon from "@assets/images/menu-configure-icon.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import useTheme from "@saleor/hooks/useTheme";
+import { sectionNames } from "@saleor/intl";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 import { matchPath } from "react-router";
 
-import configureIcon from "@assets/images/menu-configure-icon.svg";
-import useTheme from "@saleor/hooks/useTheme";
-import { sectionNames } from "@saleor/intl";
 import { User } from "../../auth/types/User";
 import {
   configurationMenuUrl,

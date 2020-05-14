@@ -1,4 +1,5 @@
 import { getUserName } from "@saleor/misc";
+
 import { PermissionGroupDetails_permissionGroup_users } from "./types/PermissionGroupDetails";
 import { MembersListUrlSortField } from "./urls";
 

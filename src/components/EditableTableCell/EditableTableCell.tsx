@@ -4,10 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import TextField, { TextFieldProps } from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import useForm from "@saleor/hooks/useForm";
 import classNames from "classnames";
 import React from "react";
-
-import useForm from "@saleor/hooks/useForm";
 
 const useStyles = makeStyles(
   theme => ({

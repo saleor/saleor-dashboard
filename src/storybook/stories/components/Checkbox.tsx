@@ -1,8 +1,8 @@
+import Checkbox, { CheckboxProps } from "@saleor/components/Checkbox";
+import Form from "@saleor/components/Form";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Checkbox, { CheckboxProps } from "@saleor/components/Checkbox";
-import Form from "@saleor/components/Form";
 import CardDecorator from "../../CardDecorator";
 import Decorator from "../../Decorator";
 

@@ -1,7 +1,7 @@
+import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import Decorator from "../../../storybook/Decorator";
 import PluginSecretFieldDialog, {
   PluginSecretFieldDialogProps

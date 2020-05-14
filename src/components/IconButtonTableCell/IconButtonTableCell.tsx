@@ -1,8 +1,8 @@
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
-import React from "react";
 import classNames from "classnames";
+import React from "react";
 
 import { stopPropagation } from "../../misc";
 import { ICONBUTTON_SIZE } from "../../theme";

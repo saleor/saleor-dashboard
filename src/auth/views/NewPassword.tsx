@@ -1,9 +1,9 @@
+import useNavigator from "@saleor/hooks/useNavigator";
+import useUser from "@saleor/hooks/useUser";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { RouteComponentProps } from "react-router";
 
-import useNavigator from "@saleor/hooks/useNavigator";
-import useUser from "@saleor/hooks/useUser";
 import NewPasswordPage, {
   NewPasswordPageFormData
 } from "../components/NewPasswordPage";

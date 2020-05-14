@@ -1,6 +1,3 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -10,8 +7,11 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
-import { sectionNames } from "@saleor/intl";
 import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import { sectionNames } from "@saleor/intl";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { maybe, splitDateTime } from "../../../misc";
 import { ListProps, TabListActions } from "../../../types";
 import { SaleType as SaleTypeEnum } from "../../../types/globalTypes";

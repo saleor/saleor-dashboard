@@ -1,7 +1,7 @@
+import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { ProductErrorCode } from "@saleor/types/globalTypes";
 import CategoryCreatePage, {
   CategoryCreatePageProps
 } from "../../../categories/components/CategoryCreatePage";

@@ -9,8 +9,8 @@ import {
   FiltersWithMultipleValues,
   Pagination,
   SingleAction,
-  TabActionDialog,
-  Sort
+  Sort,
+  TabActionDialog
 } from "../types";
 
 const orderSectionUrl = "/orders";

@@ -1,20 +1,20 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
-import { useIntl } from "react-intl";
-import slugify from "slugify";
-
+import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { commonMessages } from "@saleor/intl";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
-import { getProductErrorMessage, getFormErrors } from "@saleor/utils/errors";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
-import { AttributePageFormData } from "../AttributePage";
+import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import React from "react";
+import { useIntl } from "react-intl";
+import slugify from "slugify";
+
 import { getAttributeSlugErrorMessage } from "../../errors";
+import { AttributePageFormData } from "../AttributePage";
 
 export interface AttributeDetailsProps {
   canChangeType: boolean;

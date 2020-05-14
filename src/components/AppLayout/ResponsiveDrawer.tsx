@@ -2,6 +2,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
+
 import {
   drawerWidth,
   drawerWidthExpanded,

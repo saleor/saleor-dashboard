@@ -1,13 +1,13 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import Typography from "@material-ui/core/Typography";
 import { FormChange } from "@saleor/hooks/useForm";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
+import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
-import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
 import getStaffErrorMessage from "@saleor/utils/errors/staff";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "../MultiAutocompleteSelectField";

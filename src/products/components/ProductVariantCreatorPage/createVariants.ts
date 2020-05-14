@@ -1,4 +1,5 @@
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
+
 import {
   AllOrAttribute,
   Attribute,

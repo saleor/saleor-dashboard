@@ -1,8 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { useIntl } from "react-intl";
-
 import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -15,6 +12,9 @@ import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { maybe } from "../../../misc";
 import { DraftOrderInput } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";

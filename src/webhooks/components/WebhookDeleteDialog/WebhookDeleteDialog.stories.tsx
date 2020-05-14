@@ -1,7 +1,7 @@
+import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "@saleor/storybook/Decorator";
 import WebhookDeleteDialog, {
   WebhookDeleteDialogProps
 } from "./WebhookDeleteDialog";

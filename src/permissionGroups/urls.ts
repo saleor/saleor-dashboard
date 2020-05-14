@@ -1,14 +1,13 @@
-import { stringify as stringifyQs } from "qs";
-import urlJoin from "url-join";
-
 import {
   BulkAction,
   Dialog,
   Pagination,
-  TabActionDialog,
+  SingleAction,
   Sort,
-  SingleAction
+  TabActionDialog
 } from "@saleor/types";
+import { stringify as stringifyQs } from "qs";
+import urlJoin from "url-join";
 
 const permissionGroupSection = "/permission-groups/";
 

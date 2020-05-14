@@ -1,13 +1,13 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import { address, countries } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { WarehouseErrorCode } from "@saleor/types/globalTypes";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import { warehouseList } from "../../fixtures";
 import WarehouseDetailsPage, {
-  WarehouseDetailsPageProps,
-  WarehouseDetailsPageFormData
+  WarehouseDetailsPageFormData,
+  WarehouseDetailsPageProps
 } from "./WarehouseDetailsPage";
 
 const props: WarehouseDetailsPageProps = {

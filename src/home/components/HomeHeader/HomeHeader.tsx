@@ -1,9 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Skeleton from "@saleor/components/Skeleton";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import Skeleton from "@saleor/components/Skeleton";
 
 const useStyles = makeStyles(
   theme => ({

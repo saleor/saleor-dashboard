@@ -1,12 +1,12 @@
 import Button from "@material-ui/core/Button";
 import Portal from "@material-ui/core/Portal";
 import { makeStyles } from "@material-ui/core/styles";
+import useWindowScroll from "@saleor/hooks/useWindowScroll";
+import { buttonMessages } from "@saleor/intl";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import useWindowScroll from "@saleor/hooks/useWindowScroll";
-import { buttonMessages } from "@saleor/intl";
 import { maybe } from "../../misc";
 import AppActionContext from "../AppLayout/AppActionContext";
 import ConfirmButton, {

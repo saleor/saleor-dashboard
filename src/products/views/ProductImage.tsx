@@ -1,11 +1,11 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
+import ActionDialog from "@saleor/components/ActionDialog";
+import NotFoundPage from "@saleor/components/NotFoundPage";
+import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ActionDialog from "@saleor/components/ActionDialog";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import NotFoundPage from "@saleor/components/NotFoundPage";
 import { maybe } from "../../misc";
 import ProductImagePage from "../components/ProductImagePage";
 import {
@@ -17,8 +17,8 @@ import { ProductImageUpdate } from "../types/ProductImageUpdate";
 import {
   productImageUrl,
   ProductImageUrlQueryParams,
-  productUrl,
-  productListUrl
+  productListUrl,
+  productUrl
 } from "../urls";
 
 interface ProductImageProps {

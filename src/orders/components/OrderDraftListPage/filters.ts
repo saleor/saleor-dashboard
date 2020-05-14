@@ -1,8 +1,7 @@
-import { IntlShape, defineMessages } from "react-intl";
-
+import { IFilter } from "@saleor/components/Filter";
 import { FilterOpts, MinMax } from "@saleor/types";
 import { createDateField, createTextField } from "@saleor/utils/filters/fields";
-import { IFilter } from "@saleor/components/Filter";
+import { defineMessages, IntlShape } from "react-intl";
 
 export enum OrderDraftFilterKeys {
   created = "created",

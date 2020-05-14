@@ -1,13 +1,13 @@
+import { asSortParams } from "@saleor/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { asSortParams } from "@saleor/utils/sort";
 import {
   menuListPath,
-  menuPath,
   MenuListUrlQueryParams,
-  MenuListUrlSortField
+  MenuListUrlSortField,
+  menuPath
 } from "./urls";
 import MenuDetailsComponent from "./views/MenuDetails";
 import MenuListComponent from "./views/MenuList";

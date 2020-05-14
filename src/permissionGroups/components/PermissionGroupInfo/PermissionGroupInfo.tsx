@@ -1,6 +1,3 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
@@ -10,6 +7,8 @@ import { commonMessages } from "@saleor/intl";
 import { PermissionGroupErrorFragment } from "@saleor/permissionGroups/types/PermissionGroupErrorFragment";
 import { getFieldError, getFormErrors } from "@saleor/utils/errors";
 import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
+import React from "react";
+import { useIntl } from "react-intl";
 
 export interface PermissionGroupInfoProps {
   disabled: boolean;

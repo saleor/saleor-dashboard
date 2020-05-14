@@ -1,8 +1,6 @@
 import Button from "@material-ui/core/Button";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import { attributeUrl } from "@saleor/attributes/urls";
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -13,7 +11,9 @@ import { maybe } from "@saleor/misc";
 import AssignAttributeDialog from "@saleor/productTypes/components/AssignAttributeDialog";
 import { ReorderEvent } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
-import NotFoundPage from "@saleor/components/NotFoundPage";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import ProductTypeAttributeUnassignDialog from "../../components/ProductTypeAttributeUnassignDialog";
 import ProductTypeBulkAttributeUnassignDialog from "../../components/ProductTypeBulkAttributeUnassignDialog";
 import ProductTypeDeleteDialog from "../../components/ProductTypeDeleteDialog";

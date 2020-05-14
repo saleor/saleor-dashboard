@@ -1,3 +1,4 @@
+import { User_userPermissions } from "./auth/types/User";
 import { ShopInfo_shop_permissions } from "./components/Shop/types/ShopInfo";
 import {
   FetchMoreProps,
@@ -9,7 +10,6 @@ import {
   TabPageProps
 } from "./types";
 import { PermissionEnum } from "./types/globalTypes";
-import { User_userPermissions } from "./auth/types/User";
 
 const pageInfo = {
   hasNextPage: true,

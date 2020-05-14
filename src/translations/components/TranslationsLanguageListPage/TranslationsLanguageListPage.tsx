@@ -1,10 +1,10 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 // tslint:disable no-submodule-imports
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import TranslationsLanguageList from "../TranslationsLanguageList";
 
 export interface TranslationsLanguageListPageProps {
@@ -13,9 +13,10 @@ export interface TranslationsLanguageListPageProps {
   onRowClick: (code: string) => void;
 }
 
-const TranslationsLanguageListPage: React.FC<
-  TranslationsLanguageListPageProps
-> = ({ languages, onRowClick }) => {
+const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> = ({
+  languages,
+  onRowClick
+}) => {
   const intl = useIntl();
 
   return (

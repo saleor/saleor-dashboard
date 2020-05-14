@@ -1,6 +1,3 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -8,6 +5,9 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { ServiceCreateMutation } from "@saleor/services/mutations";
 import { ServiceCreate as ServiceCreateData } from "@saleor/services/types/ServiceCreate";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import ServiceCreatePage, {
   ServiceCreatePageFormData
 } from "../../components/ServiceCreatePage";

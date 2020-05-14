@@ -1,9 +1,8 @@
-import { IntlShape, defineMessages } from "react-intl";
-
+import { IFilter } from "@saleor/components/Filter";
 import { FilterOpts } from "@saleor/types";
 import { StaffMemberStatus } from "@saleor/types/globalTypes";
-import { IFilter } from "@saleor/components/Filter";
 import { createOptionsField } from "@saleor/utils/filters/fields";
+import { defineMessages, IntlShape } from "react-intl";
 
 export enum StaffFilterKeys {
   status = "status"

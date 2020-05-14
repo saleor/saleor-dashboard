@@ -9,10 +9,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { filter } from "fuzzaldrin";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -23,6 +19,9 @@ import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { buttonMessages } from "@saleor/intl";
+import { filter } from "fuzzaldrin";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface FormData {
   countries: string[];
@@ -61,9 +60,7 @@ const useStyles = makeStyles(
   }),
   { name: "ShippingZoneCountriesAssignDialog" }
 );
-const ShippingZoneCountriesAssignDialog: React.FC<
-  ShippingZoneCountriesAssignDialogProps
-> = props => {
+const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDialogProps> = props => {
   const {
     confirmButtonState,
     isDefault,

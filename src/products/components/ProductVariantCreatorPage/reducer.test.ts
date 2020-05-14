@@ -6,8 +6,8 @@ import {
   warehouses
 } from "./fixtures";
 import reducer, {
-  VariantField,
-  ProductVariantCreateReducerActionType
+  ProductVariantCreateReducerActionType,
+  VariantField
 } from "./reducer";
 
 function execActions<TState, TAction>(

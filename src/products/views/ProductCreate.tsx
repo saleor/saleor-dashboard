@@ -1,6 +1,3 @@
-import React from "react";
-import { useIntl } from "react-intl";
-
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -10,6 +7,9 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import React from "react";
+import { useIntl } from "react-intl";
+
 import { decimal, maybe } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData

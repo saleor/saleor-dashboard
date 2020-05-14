@@ -1,11 +1,11 @@
+import { attributes } from "@saleor/attributes/fixtures";
+import { categories } from "@saleor/categories/fixtures";
+import { collections } from "@saleor/collections/fixtures";
+import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
 import {
   ProductListFilterOpts,
   ProductStatus
 } from "@saleor/products/components/ProductListPage";
-import { attributes } from "@saleor/attributes/fixtures";
-import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
-import { categories } from "@saleor/categories/fixtures";
-import { collections } from "@saleor/collections/fixtures";
 import { productTypes } from "@saleor/productTypes/fixtures";
 import { StockAvailability } from "@saleor/types/globalTypes";
 

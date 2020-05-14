@@ -1,19 +1,19 @@
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import AttributeListPage, {
   AttributeListPageProps
 } from "@saleor/attributes/components/AttributeListPage";
 import { attributes } from "@saleor/attributes/fixtures";
+import { AttributeListUrlSortField } from "@saleor/attributes/urls";
 import {
+  filterPageProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps,
   sortPageProps,
-  filterPageProps
+  tabPageProps
 } from "@saleor/fixtures";
-import { AttributeListUrlSortField } from "@saleor/attributes/urls";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import Decorator from "../../Decorator";
 
 const props: AttributeListPageProps = {

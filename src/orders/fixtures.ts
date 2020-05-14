@@ -1,6 +1,7 @@
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
-import { MessageDescriptor } from "react-intl";
 import { warehouseList } from "@saleor/warehouses/fixtures";
+import { MessageDescriptor } from "react-intl";
+
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 import {
   FulfillmentStatus,

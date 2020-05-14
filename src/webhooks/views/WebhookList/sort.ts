@@ -1,6 +1,6 @@
-import { WebhookListUrlSortField } from "@saleor/webhooks/urls";
 import { WebhookSortField } from "@saleor/types/globalTypes";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
+import { WebhookListUrlSortField } from "@saleor/webhooks/urls";
 
 export function getSortQueryField(
   sort: WebhookListUrlSortField

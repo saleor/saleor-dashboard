@@ -1,13 +1,13 @@
+import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import useTheme from "@saleor/hooks/useTheme";
+import { createHref } from "@saleor/misc";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
 
-import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
-import useTheme from "@saleor/hooks/useTheme";
-import { createHref } from "@saleor/misc";
 import { drawerNestedMenuWidth, drawerWidthExpandedMobile } from "./consts";
 import { IActiveSubMenu } from "./MenuList";
 import { IMenuItem } from "./menuStructure";

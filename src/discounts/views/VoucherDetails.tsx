@@ -1,8 +1,5 @@
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ActionDialog from "@saleor/components/ActionDialog";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
@@ -21,6 +18,9 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { categoryUrl } from "../../categories/urls";
 import { collectionUrl } from "../../collections/urls";
 import { decimal, joinDateTime, maybe } from "../../misc";
@@ -48,8 +48,8 @@ import { VoucherUpdate } from "../types/VoucherUpdate";
 import {
   voucherListUrl,
   voucherUrl,
-  VoucherUrlQueryParams,
-  VoucherUrlDialog
+  VoucherUrlDialog,
+  VoucherUrlQueryParams
 } from "../urls";
 
 interface VoucherDetailsProps {

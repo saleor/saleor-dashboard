@@ -6,9 +6,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
@@ -17,11 +14,14 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
-import { buttonMessages } from "@saleor/intl";
-import { getFormErrors } from "@saleor/utils/errors";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import getShippingErrorMessage from "@saleor/utils/errors/shipping";
+import { buttonMessages } from "@saleor/intl";
 import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
+import { getFormErrors } from "@saleor/utils/errors";
+import getShippingErrorMessage from "@saleor/utils/errors/shipping";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { maybe } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import { ShippingZoneDetailsFragment_shippingMethods } from "../../types/ShippingZoneDetailsFragment";

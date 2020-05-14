@@ -1,11 +1,10 @@
+import notFoundImage from "@assets/images/what.svg";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
-
-import notFoundImage from "@assets/images/what.svg";
 
 export interface ErrorPageProps {
   onBack: () => void;

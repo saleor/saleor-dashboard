@@ -1,15 +1,16 @@
+import { IFilterElement } from "@saleor/components/Filter";
+import { maybe, parseBoolean } from "@saleor/misc";
 import { WebhookFilterInput } from "@saleor/types/globalTypes";
 import {
   createFilterTabUtils,
   createFilterUtils,
   getSingleValueQueryParam
 } from "@saleor/utils/filters";
-import { IFilterElement } from "@saleor/components/Filter";
 import {
-  WebhookListFilterOpts,
-  WebhookFilterKeys
+  WebhookFilterKeys,
+  WebhookListFilterOpts
 } from "@saleor/webhooks/components/WebhooksListPage";
-import { parseBoolean, maybe } from "@saleor/misc";
+
 import {
   WebhookListUrlFilters,
   WebhookListUrlFiltersEnum,

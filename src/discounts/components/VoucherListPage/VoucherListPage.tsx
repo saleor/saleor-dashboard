@@ -1,26 +1,26 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import Container from "@saleor/components/Container";
+import FilterBar from "@saleor/components/FilterBar";
+import PageHeader from "@saleor/components/PageHeader";
+import { VoucherListUrlSortField } from "@saleor/discounts/urls";
+import { sectionNames } from "@saleor/intl";
+import {
+  FilterPageProps,
+  ListActions,
+  PageListProps,
+  SortPage,
+  TabPageProps
+} from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import FilterBar from "@saleor/components/FilterBar";
-import { sectionNames } from "@saleor/intl";
-import {
-  ListActions,
-  PageListProps,
-  TabPageProps,
-  SortPage,
-  FilterPageProps
-} from "@saleor/types";
-import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { VoucherList_vouchers_edges_node } from "../../types/VoucherList";
 import VoucherList from "../VoucherList";
 import {
+  createFilterStructure,
   VoucherFilterKeys,
-  VoucherListFilterOpts,
-  createFilterStructure
+  VoucherListFilterOpts
 } from "./filters";
 
 export interface VoucherListPageProps

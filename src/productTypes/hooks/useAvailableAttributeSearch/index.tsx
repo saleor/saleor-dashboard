@@ -1,7 +1,7 @@
-import gql from "graphql-tag";
-
 import makeSearch from "@saleor/hooks/makeSearch";
 import { pageInfoFragment } from "@saleor/queries";
+import gql from "graphql-tag";
+
 import {
   SearchAttributes,
   SearchAttributesVariables

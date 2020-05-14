@@ -6,9 +6,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -18,6 +15,9 @@ import {
 } from "@saleor/components/SortableTable";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ReorderAction } from "@saleor/types";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { AttributeDetailsFragment_values } from "../../types/AttributeDetailsFragment";
 
 export interface AttributeValuesProps {

@@ -5,12 +5,12 @@ import React from "react";
 import { Query, QueryResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
+import { isJwtError } from "./auth/errors";
 import useAppState from "./hooks/useAppState";
 import useNotifier from "./hooks/useNotifier";
+import useUser from "./hooks/useUser";
 import { commonMessages } from "./intl";
 import { maybe, RequireAtLeastOne } from "./misc";
-import { isJwtError } from "./auth/errors";
-import useUser from "./hooks/useUser";
 
 export interface LoadMore<TData, TVariables> {
   loadMore: (

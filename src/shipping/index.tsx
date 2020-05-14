@@ -1,9 +1,9 @@
+import { sectionNames } from "@saleor/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { sectionNames } from "@saleor/intl";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   shippingZoneAddPath,
@@ -25,9 +25,9 @@ const ShippingZonesList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface ShippingZoneDetailsRouteProps {
   id: string;
 }
-const ShippingZoneDetails: React.FC<
-  RouteComponentProps<ShippingZoneDetailsRouteProps>
-> = ({ location, match }) => {
+const ShippingZoneDetails: React.FC<RouteComponentProps<
+  ShippingZoneDetailsRouteProps
+>> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ShippingZoneUrlQueryParams = qs;
   return (

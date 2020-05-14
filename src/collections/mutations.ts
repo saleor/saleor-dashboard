@@ -1,6 +1,6 @@
+import { productErrorFragment } from "@saleor/attributes/mutations";
 import gql from "graphql-tag";
 
-import { productErrorFragment } from "@saleor/attributes/mutations";
 import { TypedMutation } from "../mutations";
 import {
   collectionDetailsFragment,

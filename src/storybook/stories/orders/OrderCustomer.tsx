@@ -1,8 +1,8 @@
 import { Omit } from "@material-ui/core";
+import { adminUserPermissions } from "@saleor/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { adminUserPermissions } from "@saleor/fixtures";
 import OrderCustomer, {
   OrderCustomerProps
 } from "../../../orders/components/OrderCustomer";

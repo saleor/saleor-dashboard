@@ -1,6 +1,3 @@
-import React from "react";
-import { diff } from "fast-array-diff";
-
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -19,8 +16,12 @@ import {
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
 import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
+import { diff } from "fast-array-diff";
+import React from "react";
+
 import { maybe } from "../../../misc";
 import { ProductVariant } from "../../types/ProductVariant";
+import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductVariantAttributes, {
   VariantAttributeInputData
 } from "../ProductVariantAttributes";
@@ -28,7 +29,6 @@ import ProductVariantImages from "../ProductVariantImages";
 import ProductVariantImageSelectDialog from "../ProductVariantImageSelectDialog";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
-import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
 export interface ProductVariantPageFormData {
   costPrice: string;

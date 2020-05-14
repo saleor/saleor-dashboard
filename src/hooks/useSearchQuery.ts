@@ -1,6 +1,5 @@
-import React from "react";
-
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import React from "react";
 
 export type UseSearchQuery = [string, (event: ChangeEvent) => void, () => void];
 function useSearchQuery(

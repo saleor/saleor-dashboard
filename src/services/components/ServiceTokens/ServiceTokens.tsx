@@ -7,14 +7,13 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ServiceDetailsFragment_tokens } from "@saleor/services/types/ServiceDetailsFragment";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ServiceTokensProps {
   tokens: ServiceDetailsFragment_tokens[];
