@@ -810,6 +810,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
   canFinalize: true,
   created: "2018-09-11T09:37:28.185874+00:00",
   customerNote: "Lorem ipsum dolor sit amet",
+  discount: null,
   events: [
     {
       __typename: "OrderEvent",
@@ -1043,6 +1044,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   customerNote: "Lorem ipsum dolor sit",
   events: [],
   fulfillments: [],
+  discount: null,
   id: "T3JkZXI6MjQ=",
   lines: [
     {
