@@ -246,6 +246,12 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMeth
   price: OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods_price | null;
 }
 
+export interface OrderLinesAdd_draftOrderLinesCreate_order_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderLinesAdd_draftOrderLinesCreate_order {
   __typename: "Order";
   id: string;
@@ -271,6 +277,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order {
   user: OrderLinesAdd_draftOrderLinesCreate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods | null)[] | null;
+  discount: OrderLinesAdd_draftOrderLinesCreate_order_discount | null;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate {

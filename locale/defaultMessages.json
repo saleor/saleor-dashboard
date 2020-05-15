@@ -2749,6 +2749,10 @@
     "context": "order payment",
     "string": "Outstanding Balance"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
+    "context": "order discount",
+    "string": "Discount"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
     "context": "order payment",
     "string": "Preauthorized amount"

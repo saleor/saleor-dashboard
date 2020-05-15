@@ -159,6 +159,20 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 )}
               </td>
             </tr>
+            {maybe(() => order && order.discount.amount !== 0) ? (
+              <tr>
+                <td>
+                  <FormattedMessage
+                    defaultMessage="Discount"
+                    description="order discount"
+                  />
+                </td>
+                <td />
+                <td className={classes.textRight}>
+                  -<Money money={order.discount} />
+                </td>
+              </tr>
+            ) : null}
             <tr className={classes.totalRow}>
               <td>
                 <FormattedMessage

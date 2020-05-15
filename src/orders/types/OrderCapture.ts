@@ -246,6 +246,12 @@ export interface OrderCapture_orderCapture_order_availableShippingMethods {
   price: OrderCapture_orderCapture_order_availableShippingMethods_price | null;
 }
 
+export interface OrderCapture_orderCapture_order_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderCapture_orderCapture_order {
   __typename: "Order";
   id: string;
@@ -271,6 +277,7 @@ export interface OrderCapture_orderCapture_order {
   user: OrderCapture_orderCapture_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderCapture_orderCapture_order_availableShippingMethods | null)[] | null;
+  discount: OrderCapture_orderCapture_order_discount | null;
 }
 
 export interface OrderCapture_orderCapture {

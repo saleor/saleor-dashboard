@@ -246,6 +246,12 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods 
   price: OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods_price | null;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   __typename: "Order";
   id: string;
@@ -271,6 +277,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   user: OrderMarkAsPaid_orderMarkAsPaid_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods | null)[] | null;
+  discount: OrderMarkAsPaid_orderMarkAsPaid_order_discount | null;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid {

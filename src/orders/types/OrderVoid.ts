@@ -246,6 +246,12 @@ export interface OrderVoid_orderVoid_order_availableShippingMethods {
   price: OrderVoid_orderVoid_order_availableShippingMethods_price | null;
 }
 
+export interface OrderVoid_orderVoid_order_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderVoid_orderVoid_order {
   __typename: "Order";
   id: string;
@@ -271,6 +277,7 @@ export interface OrderVoid_orderVoid_order {
   user: OrderVoid_orderVoid_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderVoid_orderVoid_order_availableShippingMethods | null)[] | null;
+  discount: OrderVoid_orderVoid_order_discount | null;
 }
 
 export interface OrderVoid_orderVoid {

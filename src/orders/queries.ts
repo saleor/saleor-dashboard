@@ -174,6 +174,10 @@ export const fragmentOrderDetails = gql`
         currency
       }
     }
+    discount {
+      amount
+      currency
+    }
   }
 `;
 

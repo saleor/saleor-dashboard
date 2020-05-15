@@ -248,6 +248,12 @@ export interface FulfillOrder_orderFulfill_order_availableShippingMethods {
   price: FulfillOrder_orderFulfill_order_availableShippingMethods_price | null;
 }
 
+export interface FulfillOrder_orderFulfill_order_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface FulfillOrder_orderFulfill_order {
   __typename: "Order";
   id: string;
@@ -273,6 +279,7 @@ export interface FulfillOrder_orderFulfill_order {
   user: FulfillOrder_orderFulfill_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (FulfillOrder_orderFulfill_order_availableShippingMethods | null)[] | null;
+  discount: FulfillOrder_orderFulfill_order_discount | null;
 }
 
 export interface FulfillOrder_orderFulfill {
