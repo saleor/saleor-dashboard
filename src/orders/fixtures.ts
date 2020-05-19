@@ -1042,9 +1042,9 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   canFinalize: true,
   created: "2018-09-20T23:23:39.811428+00:00",
   customerNote: "Lorem ipsum dolor sit",
+  discount: null,
   events: [],
   fulfillments: [],
-  discount: null,
   id: "T3JkZXI6MjQ=",
   lines: [
     {
