@@ -1,6 +1,6 @@
 # Saleor Dashboard
 
-![1 copy 2x](https://user-images.githubusercontent.com/5421321/47799917-8afd7a00-dd2b-11e8-88c7-63588e25bcea.png)
+![1 copy 2x](https://user-images.githubusercontent.com/12252472/82304218-54925900-99bc-11ea-8980-3b907548ffdd.png)
 
 A GraphQL-powered, single-page dashboard application for [Saleor](https://github.com/mirumee/saleor/).
 
