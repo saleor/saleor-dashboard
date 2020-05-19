@@ -87,3 +87,5 @@ To build the application bundle run:
 ```
 $ npm run build
 ```
+
+#### Crafted with ❤️ by [Mirumee Software](https://mirumee.com)
