@@ -246,6 +246,12 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_availableShippingMethod
   price: OrderDraftUpdate_draftOrderUpdate_order_availableShippingMethods_price | null;
 }
 
+export interface OrderDraftUpdate_draftOrderUpdate_order_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderDraftUpdate_draftOrderUpdate_order {
   __typename: "Order";
   id: string;
@@ -271,6 +277,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order {
   user: OrderDraftUpdate_draftOrderUpdate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDraftUpdate_draftOrderUpdate_order_availableShippingMethods | null)[] | null;
+  discount: OrderDraftUpdate_draftOrderUpdate_order_discount | null;
 }
 
 export interface OrderDraftUpdate_draftOrderUpdate {

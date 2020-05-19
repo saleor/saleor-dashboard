@@ -246,6 +246,12 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_availableSh
   price: OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods_price | null;
 }
 
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   __typename: "Order";
   id: string;
@@ -271,6 +277,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   user: OrderFulfillmentCancel_orderFulfillmentCancel_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods | null)[] | null;
+  discount: OrderFulfillmentCancel_orderFulfillmentCancel_order_discount | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel {

@@ -246,6 +246,12 @@ export interface OrderRefund_orderRefund_order_availableShippingMethods {
   price: OrderRefund_orderRefund_order_availableShippingMethods_price | null;
 }
 
+export interface OrderRefund_orderRefund_order_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderRefund_orderRefund_order {
   __typename: "Order";
   id: string;
@@ -271,6 +277,7 @@ export interface OrderRefund_orderRefund_order {
   user: OrderRefund_orderRefund_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderRefund_orderRefund_order_availableShippingMethods | null)[] | null;
+  discount: OrderRefund_orderRefund_order_discount | null;
 }
 
 export interface OrderRefund_orderRefund {

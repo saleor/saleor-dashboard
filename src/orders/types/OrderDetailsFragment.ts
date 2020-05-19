@@ -240,6 +240,12 @@ export interface OrderDetailsFragment_availableShippingMethods {
   price: OrderDetailsFragment_availableShippingMethods_price | null;
 }
 
+export interface OrderDetailsFragment_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderDetailsFragment {
   __typename: "Order";
   id: string;
@@ -265,4 +271,5 @@ export interface OrderDetailsFragment {
   user: OrderDetailsFragment_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDetailsFragment_availableShippingMethods | null)[] | null;
+  discount: OrderDetailsFragment_discount | null;
 }

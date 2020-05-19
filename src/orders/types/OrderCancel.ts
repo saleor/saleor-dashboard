@@ -246,6 +246,12 @@ export interface OrderCancel_orderCancel_order_availableShippingMethods {
   price: OrderCancel_orderCancel_order_availableShippingMethods_price | null;
 }
 
+export interface OrderCancel_orderCancel_order_discount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderCancel_orderCancel_order {
   __typename: "Order";
   id: string;
@@ -271,6 +277,7 @@ export interface OrderCancel_orderCancel_order {
   user: OrderCancel_orderCancel_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderCancel_orderCancel_order_availableShippingMethods | null)[] | null;
+  discount: OrderCancel_orderCancel_order_discount | null;
 }
 
 export interface OrderCancel_orderCancel {
