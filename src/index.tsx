@@ -1,5 +1,3 @@
-import Navigator from "@saleor/components/Navigator";
-import useAppState from "@saleor/hooks/useAppState";
 import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
@@ -14,6 +12,9 @@ import ErrorBoundary from "react-error-boundary";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import Navigator from "@saleor/components/Navigator";
+import useAppState from "@saleor/hooks/useAppState";
+import TagManager from "react-gtm-module";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth, { getAuthToken, removeAuthToken } from "./auth";
@@ -31,7 +32,7 @@ import { MessageManager } from "./components/messages";
 import { ShopProvider } from "./components/Shop";
 import ThemeProvider from "./components/Theme";
 import { WindowTitle } from "./components/WindowTitle";
-import { API_URI, APP_MOUNT_URI } from "./config";
+import { API_URI, APP_MOUNT_URI, GTM_ID } from "./config";
 import ConfigurationSection, { createConfigurationMenu } from "./configuration";
 import AppStateProvider from "./containers/AppState";
 import { CustomerSection } from "./customers";
@@ -64,6 +65,10 @@ interface ResponseError extends ErrorResponse {
     statusCode?: number;
     bodyText?: string;
   };
+}
+
+if (process.env.GTM_ID !== undefined) {
+  TagManager.initialize({ gtmId: GTM_ID });
 }
 
 const invalidTokenLink = onError((error: ResponseError) => {
