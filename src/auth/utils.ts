@@ -1,3 +1,7 @@
+import { UseNotifierResult } from "@saleor/hooks/useNotifier";
+import { commonMessages } from "@saleor/intl";
+import { IntlShape } from "react-intl";
+
 const TOKEN_STORAGE_KEY = "dashboardAuth";
 
 export const getAuthToken = () =>
@@ -12,4 +16,13 @@ export const setAuthToken = (token: string, persist: boolean) =>
 export const removeAuthToken = () => {
   localStorage.removeItem(TOKEN_STORAGE_KEY);
   sessionStorage.removeItem(TOKEN_STORAGE_KEY);
+};
+
+export const displayDemoMessage = (
+  intl: IntlShape,
+  notify: UseNotifierResult
+) => {
+  notify({
+    text: intl.formatMessage(commonMessages.demo)
+  });
 };

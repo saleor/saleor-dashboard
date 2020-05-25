@@ -10,6 +10,11 @@ export const commonMessages = defineMessages({
   dashboard: {
     defaultMessage: "Dashboard"
   },
+  demo: {
+    defaultMessage:
+      "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes.",
+    description: "notification message after log in"
+  },
   description: {
     defaultMessage: "Description"
   },

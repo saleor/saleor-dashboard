@@ -1,14 +1,14 @@
-import { maybe } from "@saleor/misc";
-import React from "react";
-import { useIntl } from "react-intl";
-
+import { DEMO_MODE } from "@saleor/config";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { maybe } from "@saleor/misc";
 import {
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
+import React from "react";
 import { MutationFunction, MutationResult } from "react-apollo";
+import { useIntl } from "react-intl";
 
 import { UserContext } from "./";
 import {
@@ -20,7 +20,12 @@ import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { User } from "./types/User";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
-import { getAuthToken, removeAuthToken, setAuthToken } from "./utils";
+import {
+  displayDemoMessage,
+  getAuthToken,
+  removeAuthToken,
+  setAuthToken
+} from "./utils";
 
 interface AuthProviderOperationsProps {
   children: (props: {
@@ -37,13 +42,11 @@ const AuthProviderOperations: React.FC<AuthProviderOperationsProps> = ({
   const intl = useIntl();
   const notify = useNotifier();
 
-  const handleLogin = () =>
-    notify({
-      text: intl.formatMessage({
-        defaultMessage:
-          "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
-      })
-    });
+  const handleLogin = () => {
+    if (DEMO_MODE) {
+      displayDemoMessage(intl, notify);
+    }
+  };
 
   return (
     <TypedTokenAuthMutation>
@@ -89,7 +92,7 @@ interface AuthProviderProps {
     MutationFunction<RefreshToken, RefreshTokenVariables>,
     MutationResult<RefreshToken>
   ];
-  onLogin: () => void;
+  onLogin?: () => void;
 }
 
 interface AuthProviderState {
@@ -153,7 +156,9 @@ class AuthProvider extends React.Component<
 
     tokenAuthFn({ variables: { email, password } }).then(result => {
       if (result && !result.data.tokenCreate.errors.length) {
-        onLogin();
+        if (!!onLogin) {
+          onLogin();
+        }
         saveCredentials(result.data.tokenCreate.user, password);
       }
     });
