@@ -11,6 +11,7 @@ import React from "react";
 import { ApolloProvider } from "react-apollo";
 import { render } from "react-dom";
 import ErrorBoundary from "react-error-boundary";
+import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -31,7 +32,7 @@ import { MessageManager } from "./components/messages";
 import { ShopProvider } from "./components/Shop";
 import ThemeProvider from "./components/Theme";
 import { WindowTitle } from "./components/WindowTitle";
-import { API_URI, APP_MOUNT_URI } from "./config";
+import { API_URI, APP_MOUNT_URI, GTM_ID } from "./config";
 import ConfigurationSection, { createConfigurationMenu } from "./configuration";
 import AppStateProvider from "./containers/AppState";
 import { CustomerSection } from "./customers";
@@ -64,6 +65,10 @@ interface ResponseError extends ErrorResponse {
     statusCode?: number;
     bodyText?: string;
   };
+}
+
+if (process.env.GTM_ID !== undefined) {
+  TagManager.initialize({ gtmId: GTM_ID });
 }
 
 const invalidTokenLink = onError((error: ResponseError) => {

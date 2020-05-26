@@ -1675,6 +1675,10 @@
     "context": "button",
     "string": "Delete"
   },
+  "src_dot_demo": {
+    "context": "notification message after log in",
+    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+  },
   "src_dot_description": {
     "string": "Description"
   },

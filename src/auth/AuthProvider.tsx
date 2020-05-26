@@ -1,3 +1,5 @@
+import { DEMO_MODE } from "@saleor/config";
+import useNotifier from "@saleor/hooks/useNotifier";
 import { maybe } from "@saleor/misc";
 import {
   isSupported as isCredentialsManagementAPISupported,
@@ -6,6 +8,7 @@ import {
 } from "@saleor/utils/credentialsManagement";
 import React from "react";
 import { MutationFunction, MutationResult } from "react-apollo";
+import { useIntl } from "react-intl";
 
 import { UserContext } from "./";
 import {
@@ -17,7 +20,12 @@ import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { User } from "./types/User";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
-import { getAuthToken, removeAuthToken, setAuthToken } from "./utils";
+import {
+  displayDemoMessage,
+  getAuthToken,
+  removeAuthToken,
+  setAuthToken
+} from "./utils";
 
 interface AuthProviderOperationsProps {
   children: (props: {
@@ -30,27 +38,39 @@ interface AuthProviderOperationsProps {
 }
 const AuthProviderOperations: React.FC<AuthProviderOperationsProps> = ({
   children
-}) => (
-  <TypedTokenAuthMutation>
-    {(...tokenAuth) => (
-      <TypedVerifyTokenMutation>
-        {(...tokenVerify) => (
-          <TokenRefreshMutation>
-            {(...tokenRefresh) => (
-              <AuthProvider
-                tokenAuth={tokenAuth}
-                tokenVerify={tokenVerify}
-                tokenRefresh={tokenRefresh}
-              >
-                {children}
-              </AuthProvider>
-            )}
-          </TokenRefreshMutation>
-        )}
-      </TypedVerifyTokenMutation>
-    )}
-  </TypedTokenAuthMutation>
-);
+}) => {
+  const intl = useIntl();
+  const notify = useNotifier();
+
+  const handleLogin = () => {
+    if (DEMO_MODE) {
+      displayDemoMessage(intl, notify);
+    }
+  };
+
+  return (
+    <TypedTokenAuthMutation>
+      {(...tokenAuth) => (
+        <TypedVerifyTokenMutation>
+          {(...tokenVerify) => (
+            <TokenRefreshMutation>
+              {(...tokenRefresh) => (
+                <AuthProvider
+                  tokenAuth={tokenAuth}
+                  tokenVerify={tokenVerify}
+                  tokenRefresh={tokenRefresh}
+                  onLogin={handleLogin}
+                >
+                  {children}
+                </AuthProvider>
+              )}
+            </TokenRefreshMutation>
+          )}
+        </TypedVerifyTokenMutation>
+      )}
+    </TypedTokenAuthMutation>
+  );
+};
 
 interface AuthProviderProps {
   children: (props: {
@@ -72,6 +92,7 @@ interface AuthProviderProps {
     MutationFunction<RefreshToken, RefreshTokenVariables>,
     MutationResult<RefreshToken>
   ];
+  onLogin?: () => void;
 }
 
 interface AuthProviderState {
@@ -130,11 +151,14 @@ class AuthProvider extends React.Component<
   }
 
   login = async (email: string, password: string) => {
-    const { tokenAuth } = this.props;
+    const { tokenAuth, onLogin } = this.props;
     const [tokenAuthFn] = tokenAuth;
 
     tokenAuthFn({ variables: { email, password } }).then(result => {
       if (result && !result.data.tokenCreate.errors.length) {
+        if (!!onLogin) {
+          onLogin();
+        }
         saveCredentials(result.data.tokenCreate.user, password);
       }
     });
