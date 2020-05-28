@@ -44,6 +44,27 @@ export enum AddressTypeEnum {
   SHIPPING = "SHIPPING",
 }
 
+export enum AppErrorCode {
+  FORBIDDEN = "FORBIDDEN",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  INVALID_MANIFEST_FORMAT = "INVALID_MANIFEST_FORMAT",
+  INVALID_PERMISSION = "INVALID_PERMISSION",
+  INVALID_STATUS = "INVALID_STATUS",
+  INVALID_URL_FORMAT = "INVALID_URL_FORMAT",
+  MANIFEST_URL_CANT_CONNECT = "MANIFEST_URL_CANT_CONNECT",
+  NOT_FOUND = "NOT_FOUND",
+  OUT_OF_SCOPE_APP = "OUT_OF_SCOPE_APP",
+  OUT_OF_SCOPE_PERMISSION = "OUT_OF_SCOPE_PERMISSION",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
+export enum AppTypeEnum {
+  CUSTOM = "CUSTOM",
+  EXTERNAL = "EXTERNAL",
+}
+
 export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
   MULTISELECT = "MULTISELECT",
@@ -605,7 +626,6 @@ export enum PermissionEnum {
   MANAGE_STAFF = "MANAGE_STAFF",
   MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
   MANAGE_USERS = "MANAGE_USERS",
-  MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
 }
 
 export enum PermissionGroupErrorCode {
@@ -851,6 +871,19 @@ export interface AddressInput {
   country?: CountryCode | null;
   countryArea?: string | null;
   phone?: string | null;
+}
+
+export interface AppInput {
+  name?: string | null;
+  isActive?: boolean | null;
+  permissions?: (PermissionEnum | null)[] | null;
+}
+
+export interface AppInstallInput {
+  appName?: string | null;
+  manifestUrl?: string | null;
+  activateAfterInstallation?: boolean | null;
+  permissions?: (PermissionEnum | null)[] | null;
 }
 
 export interface AttributeAssignInput {
