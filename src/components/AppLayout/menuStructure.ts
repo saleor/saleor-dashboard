@@ -1,3 +1,4 @@
+import appsIcon from "@assets/images/menu-apps-icon.svg";
 import catalogIcon from "@assets/images/menu-catalog-icon.svg";
 import customerIcon from "@assets/images/menu-customers-icon.svg";
 import discountsIcon from "@assets/images/menu-discounts-icon.svg";
@@ -7,6 +8,7 @@ import translationIcon from "@assets/images/menu-translation-icon.svg";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { IntlShape } from "react-intl";
 
+import { appsListPath } from "../../apps/urls";
 import { categoryListUrl } from "../../categories/urls";
 import { collectionListUrl } from "../../collections/urls";
 import { customerListUrl } from "../../customers/urls";
@@ -101,6 +103,13 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
       icon: discountsIcon,
       label: intl.formatMessage(commonMessages.discounts),
       permission: PermissionEnum.MANAGE_DISCOUNTS
+    },
+    {
+      ariaLabel: "apps",
+      icon: appsIcon,
+      label: intl.formatMessage(sectionNames.apps),
+      permission: PermissionEnum.MANAGE_APPS,
+      url: appsListPath
     },
     {
       ariaLabel: "translations",
