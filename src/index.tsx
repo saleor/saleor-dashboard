@@ -14,6 +14,8 @@ import ErrorBoundary from "react-error-boundary";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import AppsSection from "./apps";
+import { appsSection } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth, { getAuthToken, removeAuthToken } from "./auth";
@@ -250,7 +252,7 @@ const Routes: React.FC = () => {
                     component={TranslationsSection}
                   />
                   <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_WEBHOOKS]}
+                    permissions={[PermissionEnum.MANAGE_APPS]}
                     path="/webhooks"
                     component={WebhooksSection}
                   />
@@ -268,6 +270,11 @@ const Routes: React.FC = () => {
                     permissions={[PermissionEnum.MANAGE_APPS]}
                     path={serviceSection}
                     component={ServiceSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_APPS]}
+                    path={appsSection}
+                    component={AppsSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PRODUCTS]}
