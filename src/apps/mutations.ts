@@ -90,6 +90,25 @@ export const appInstallMutation = gql`
   }
 `;
 
+export const appRetryInstallMutation = gql`
+  mutation AppRetryInstall($id: ID!) {
+    appRetryInstall(id: $id) {
+      appInstallation {
+        id
+        status
+        appName
+        manifestUrl
+      }
+      appErrors {
+        field
+        message
+        code
+        permissions
+      }
+    }
+  }
+`;
+
 export const useAppCreate = makeMutation<AppCreate, AppCreateVariables>(
   appCreateMutation
 );
@@ -102,6 +121,8 @@ export const useAppInstallMutation = makeMutation<
   AppInstall,
   AppInstallVariables
 >(appInstallMutation);
+
+export const useAppRetryInstallMutation = makeMutation(appRetryInstallMutation);
 
 export const useAppManifestFetchMutation = makeMutation<
   AppFetch,

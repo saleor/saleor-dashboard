@@ -20,6 +20,7 @@ export const PAGINATE_BY = 20;
 
 export type ProductListColumns = "productType" | "isPublished" | "price";
 export interface AppListViewSettings {
+  [ListViews.APPS_LIST]: ListSettings;
   [ListViews.CATEGORY_LIST]: ListSettings;
   [ListViews.COLLECTION_LIST]: ListSettings;
   [ListViews.CUSTOMER_LIST]: ListSettings;
@@ -38,6 +39,9 @@ export interface AppListViewSettings {
   [ListViews.WEBHOOK_LIST]: ListSettings;
 }
 export const defaultListSettings: AppListViewSettings = {
+  [ListViews.APPS_LIST]: {
+    rowNumber: 10
+  },
   [ListViews.CATEGORY_LIST]: {
     rowNumber: PAGINATE_BY
   },

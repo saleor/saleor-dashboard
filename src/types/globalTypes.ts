@@ -55,6 +55,11 @@ export enum AppErrorCode {
   UNIQUE = "UNIQUE",
 }
 
+export enum AppSortField {
+  CREATION_DATE = "CREATION_DATE",
+  NAME = "NAME",
+}
+
 export enum AppTypeEnum {
   CUSTOM = "CUSTOM",
   EXTERNAL = "EXTERNAL",
@@ -848,6 +853,11 @@ export interface AddressInput {
   phone?: string | null;
 }
 
+export interface AppFilterInput {
+  search?: string | null;
+  isActive?: boolean | null;
+}
+
 export interface AppInput {
   name?: string | null;
   isActive?: boolean | null;
@@ -859,6 +869,11 @@ export interface AppInstallInput {
   manifestUrl?: string | null;
   activateAfterInstallation?: boolean | null;
   permissions?: (PermissionEnum | null)[] | null;
+}
+
+export interface AppSortingInput {
+  direction: OrderDirection;
+  field: AppSortField;
 }
 
 export interface AttributeAssignInput {

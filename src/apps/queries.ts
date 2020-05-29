@@ -1,6 +1,7 @@
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
+import { AppsInstallations } from "./types/AppsInstallations";
 import { AppsList, AppsListVariables } from "./types/AppsList";
 
 export const appFragment = gql`
@@ -31,8 +32,29 @@ export const appFragment = gql`
 
 const installedAppsList = gql`
   ${appFragment}
-  query AppsList($before: String, $after: String, $first: Int, $last: Int) {
-    apps(before: $before, after: $after, first: $first, last: $last) {
+  query AppsList(
+    $filter: AppFilterInput
+    $sortBy: AppSortingInput
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+  ) {
+    apps(
+      filter: $filter
+      sortBy: $sortBy
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      totalCount
       edges {
         node {
           ...AppFragment
@@ -42,6 +64,22 @@ const installedAppsList = gql`
   }
 `;
 
+const appsInProgressList = gql`
+  query AppsInstallations {
+    appsInstallations {
+      status
+      message
+      appName
+      manifestUrl
+      id
+    }
+  }
+`;
+
 export const useInstalledAppsListQuery = makeQuery<AppsList, AppsListVariables>(
   installedAppsList
+);
+
+export const useAppsInProgressListQuery = makeQuery<AppsInstallations, {}>(
+  appsInProgressList
 );
