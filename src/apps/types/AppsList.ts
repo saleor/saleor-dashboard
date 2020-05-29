@@ -2,11 +2,19 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AppTypeEnum } from "./../../types/globalTypes";
+import { AppFilterInput, AppSortingInput, AppTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: AppsList
 // ====================================================
+
+export interface AppsList_apps_pageInfo {
+  __typename: "PageInfo";
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+  endCursor: string | null;
+}
 
 export interface AppsList_apps_edges_node_privateMetadata {
   __typename: "MetadataItem";
@@ -49,6 +57,8 @@ export interface AppsList_apps_edges {
 
 export interface AppsList_apps {
   __typename: "AppCountableConnection";
+  pageInfo: AppsList_apps_pageInfo;
+  totalCount: number | null;
   edges: AppsList_apps_edges[];
 }
 
@@ -57,6 +67,8 @@ export interface AppsList {
 }
 
 export interface AppsListVariables {
+  filter?: AppFilterInput | null;
+  sortBy?: AppSortingInput | null;
   before?: string | null;
   after?: string | null;
   first?: number | null;

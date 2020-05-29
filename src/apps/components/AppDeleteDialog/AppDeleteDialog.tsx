@@ -11,6 +11,7 @@ export interface AppDeleteDialogProps {
   name: string;
   onClose: () => void;
   onConfirm: () => void;
+  type: "CUSTOM" | "EXTERNAL";
 }
 
 const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
@@ -18,7 +19,8 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
   open,
   name,
   onClose,
-  onConfirm
+  onConfirm,
+  type
 }) => {
   const intl = useIntl();
 
@@ -37,13 +39,21 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
       <DialogContentText>
         {["", null].includes(name) ? (
           <FormattedMessage
-            defaultMessage="Deleting app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+            defaultMessage="Are you sure you want to delete this app?"
             description="delete app"
           />
-        ) : (
+        ) : type === "EXTERNAL" ? (
           <FormattedMessage
             defaultMessage="Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
             description="delete app"
+            values={{
+              name: <strong>{getStringOrPlaceholder(name)}</strong>
+            }}
+          />
+        ) : (
+          <FormattedMessage
+            defaultMessage="Deleting {name}, you will delete all the data and webhooks regarding this app. Are you sure you want to do that?"
+            description="delete custom app"
             values={{
               name: <strong>{getStringOrPlaceholder(name)}</strong>
             }}
