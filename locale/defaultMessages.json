@@ -298,6 +298,86 @@
     "context": "button",
     "string": "Accept"
   },
+  "src_dot_apps": {
+    "context": "apps section name",
+    "string": "Apps"
+  },
+  "src_dot_apps_dot_components_dot_ActiveText_dot_31853942": {
+    "context": "app status",
+    "string": "active"
+  },
+  "src_dot_apps_dot_components_dot_ActiveText_dot_3239722049": {
+    "context": "app status",
+    "string": "inactive"
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_1347203024": {
+    "context": "delete custom app",
+    "string": "Deleting {name}, you will delete all the data and webhooks regarding this app. Are you sure you want to do that?"
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_1462011531": {
+    "context": "dialog header",
+    "string": "Delete App"
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_330001535": {
+    "context": "delete app",
+    "string": "Are you sure you want to delete this app?"
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_3817179919": {
+    "context": "delete app",
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_1675189051": {
+    "context": "section header",
+    "string": "Ongoing Installations"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_2398081356": {
+    "context": "retry installation",
+    "string": "Retry"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_2504919537": {
+    "context": "app installation",
+    "string": "Installing app.."
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_2868351060": {
+    "context": "app installation error",
+    "string": "There was a problem during installation"
+  },
+  "src_dot_apps_dot_components_dot_CustomApps_dot_3152347892": {
+    "context": "custom apps content",
+    "string": "Your custom created apps will be shown here."
+  },
+  "src_dot_apps_dot_components_dot_CustomApps_dot_3230241731": {
+    "context": "create app button",
+    "string": "Create App"
+  },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_1636202177": {
+    "context": "about app",
+    "string": "About"
+  },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_186286611": {
+    "context": "apps content",
+    "string": "You don’t have any installed apps in your dashboard"
+  },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_917140256": {
+    "context": "section header",
+    "string": "Installed Apps"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_2932910073": {
+    "context": "section header",
+    "string": "Saleor Marketplace"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_3259214524": {
+    "context": "marketplace content",
+    "string": "Marketplace is coming soon"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_3910026447": {
+    "context": "marketplace button",
+    "string": "Visit Marketplace"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_52985091": {
+    "context": "marketplace content",
+    "string": "Discover great free and paid apps in our Saleor Marketplace."
+  },
   "src_dot_attributes": {
     "context": "attributes section name",
     "string": "Attributes"
@@ -1475,6 +1555,9 @@
   "src_dot_create": {
     "context": "button",
     "string": "Create"
+  },
+  "src_dot_customApps": {
+    "string": "Custom Apps"
   },
   "src_dot_customers": {
     "context": "customers section name",
