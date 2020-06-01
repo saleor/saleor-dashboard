@@ -1,4 +1,5 @@
 import Button from "@material-ui/core/Button";
+import Progress from "@material-ui/core/CircularProgress";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -52,7 +53,10 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
               {status === "PENDING" && (
                 <>
                   <TableCell
-                    className={classNames(classes.colAction, classes.colName)}
+                    className={classNames(
+                      classes.colAction,
+                      classes.colInstallAction
+                    )}
                   >
                     <Typography variant="body2" className={classes.text}>
                       <FormattedMessage
@@ -60,45 +64,33 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                         description="app installation"
                       />
                     </Typography>
+                    <div className={classes.colSpinner}>
+                      <Progress size={20} />
+                    </div>
                   </TableCell>
-                  <TableCell
-                    className={classNames(
-                      classes.colAction,
-                      classes.retryBtnCol
-                    )}
-                  />
                 </>
               )}
               {status === "FAILED" && (
-                <>
-                  <TableCell
-                    className={classNames(classes.colAction, classes.colName)}
-                  >
-                    <Typography variant="body2" className={classes.error}>
-                      <FormattedMessage
-                        defaultMessage="There was a problem during installation"
-                        description="app installation error"
-                      />
-                      <ErrorIcon />
-                    </Typography>
-                  </TableCell>
-                  <TableCell
-                    className={classNames(
-                      classes.colAction,
-                      classes.retryBtnCol
-                    )}
-                  >
-                    <Button
-                      color="primary"
-                      onClick={() => onAppInstallRetry(id)}
-                    >
-                      <FormattedMessage
-                        defaultMessage="Retry"
-                        description="retry installation"
-                      />
-                    </Button>
-                  </TableCell>
-                </>
+                <TableCell
+                  className={classNames(
+                    classes.colAction,
+                    classes.colInstallAction
+                  )}
+                >
+                  <Typography variant="body2" className={classes.error}>
+                    <FormattedMessage
+                      defaultMessage="There was a problem during installation"
+                      description="app installation error"
+                    />
+                    <ErrorIcon />
+                  </Typography>
+                  <Button color="primary" onClick={() => onAppInstallRetry(id)}>
+                    <FormattedMessage
+                      defaultMessage="Retry"
+                      description="retry installation"
+                    />
+                  </Button>
+                </TableCell>
               )}
             </TableRow>
           ))
