@@ -43,6 +43,11 @@ export const useStyles = makeStyles(
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(2)
     },
+    customTooltip: {
+      backgroundColor: theme.palette.error.main,
+      color: theme.palette.primary.contrastText,
+      padding: theme.spacing(2)
+    },
     error: {
       "& svg": {
         bottom: theme.spacing(0.2),
