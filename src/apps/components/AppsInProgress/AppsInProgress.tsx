@@ -3,6 +3,7 @@ import Progress from "@material-ui/core/CircularProgress";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import ErrorIcon from "@material-ui/icons/Error";
 import CardTitle from "@saleor/components/CardTitle";
@@ -45,30 +46,28 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
         {disabled ? (
           <AppsSkeleton />
         ) : (
-          appsList.map(({ status, appName, id }) => (
+          appsList.map(({ status, appName, id, message }) => (
             <TableRow key={id} className={classes.tableRow}>
               <TableCell className={classes.colName}>
                 <span data-tc="name">{appName}</span>
               </TableCell>
               {status === "PENDING" && (
-                <>
-                  <TableCell
-                    className={classNames(
-                      classes.colAction,
-                      classes.colInstallAction
-                    )}
-                  >
-                    <Typography variant="body2" className={classes.text}>
-                      <FormattedMessage
-                        defaultMessage="Installing app.."
-                        description="app installation"
-                      />
-                    </Typography>
-                    <div className={classes.colSpinner}>
-                      <Progress size={20} />
-                    </div>
-                  </TableCell>
-                </>
+                <TableCell
+                  className={classNames(
+                    classes.colAction,
+                    classes.colInstallAction
+                  )}
+                >
+                  <Typography variant="body2" className={classes.text}>
+                    <FormattedMessage
+                      defaultMessage="Installing app.."
+                      description="app installation"
+                    />
+                  </Typography>
+                  <div className={classes.colSpinner}>
+                    <Progress size={20} />
+                  </div>
+                </TableCell>
               )}
               {status === "FAILED" && (
                 <TableCell
@@ -82,7 +81,14 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                       defaultMessage="There was a problem during installation"
                       description="app installation error"
                     />
-                    <ErrorIcon />
+                    <Tooltip
+                      title={<Typography variant="body2">{message}</Typography>}
+                      classes={{
+                        tooltip: classes.customTooltip
+                      }}
+                    >
+                      <ErrorIcon />
+                    </Tooltip>
                   </Typography>
                   <Button color="primary" onClick={() => onAppInstallRetry(id)}>
                     <FormattedMessage
