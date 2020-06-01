@@ -27,18 +27,30 @@ export const useStyles = makeStyles(
       },
       textAlign: "right"
     },
+    colInstallAction: {
+      "& > *": {
+        display: "inline-flex"
+      }
+    },
     colName: {
       paddingLeft: 0,
-      width: 250
+      width: theme.spacing(30)
+    },
+    colSpinner: {
+      "& svg": {
+        textAlign: "right"
+      },
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(2)
     },
     error: {
       "& svg": {
+        bottom: theme.spacing(0.2),
         marginLeft: theme.spacing(0.6),
-        position: "relative",
-        top: theme.spacing(0.8)
+        position: "relative"
       },
       color: theme.palette.error.main,
-      marginBottom: theme.spacing(0.7)
+      margin: theme.spacing(0, 1, 0.7, 0)
     },
     hr: {
       border: "none",

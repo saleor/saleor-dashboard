@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AppFilterInput, AppSortingInput, AppTypeEnum } from "./../../types/globalTypes";
+import { AppSortingInput, AppFilterInput, AppTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: AppsList
@@ -67,10 +67,10 @@ export interface AppsList {
 }
 
 export interface AppsListVariables {
-  filter?: AppFilterInput | null;
-  sortBy?: AppSortingInput | null;
   before?: string | null;
   after?: string | null;
   first?: number | null;
   last?: number | null;
+  sort?: AppSortingInput | null;
+  filter?: AppFilterInput | null;
 }

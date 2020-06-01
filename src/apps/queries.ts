@@ -33,20 +33,20 @@ export const appFragment = gql`
 const installedAppsList = gql`
   ${appFragment}
   query AppsList(
-    $filter: AppFilterInput
-    $sortBy: AppSortingInput
     $before: String
     $after: String
     $first: Int
     $last: Int
+    $sort: AppSortingInput
+    $filter: AppFilterInput
   ) {
     apps(
-      filter: $filter
-      sortBy: $sortBy
       before: $before
       after: $after
       first: $first
       last: $last
+      sortBy: $sort
+      filter: $filter
     ) {
       pageInfo {
         hasNextPage
