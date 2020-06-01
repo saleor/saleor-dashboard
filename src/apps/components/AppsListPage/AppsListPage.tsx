@@ -1,21 +1,15 @@
+import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ListProps } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import React, { useMemo } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
-import { useAppDelete } from "../../mutations";
 import { AppDelete } from "../../types/AppDelete";
 import { AppsInstallations } from "../../types/AppsInstallations";
 import { AppsList, AppsList_apps_edges } from "../../types/AppsList";
-import {
-  AppListUrlDialog,
-  AppListUrlQueryParams,
-  appsListUrl
-} from "../../urls";
+import { AppListUrlQueryParams } from "../../urls";
 import AppDeleteDialog from "../AppDeleteDialog";
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
 import CustomApps from "../CustomApps/CustomApps";
@@ -25,8 +19,14 @@ import Marketplace from "../Marketplace";
 export interface AppsListPageProps extends ListProps {
   appsList: AppsList;
   appsInProgressList?: AppsInstallations;
+  confirmButtonState: ConfirmButtonTransitionState;
   loadingAppsInProgress: boolean;
   params: AppListUrlQueryParams;
+  handleRemoveConfirm: () => void;
+  onClose: () => void;
+  onRemove: (
+    action: "remove-app" | "remove-custom-app"
+  ) => (id: string) => void;
   onAppRemove: (data: AppDelete) => void;
   onAppInstallRetry: (id: string) => void;
 }
@@ -37,66 +37,34 @@ const getCurrentAppName = (id: string, collection: AppsList_apps_edges[]) =>
 const AppsListPage: React.FC<AppsListPageProps> = ({
   appsList,
   appsInProgressList,
+  confirmButtonState,
   loadingAppsInProgress,
+  handleRemoveConfirm,
   params,
+  onClose,
+  onRemove,
   onAppRemove,
   onAppInstallRetry,
   ...listProps
 }) => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const { action } = params;
 
   const appsInProgress = appsInProgressList?.appsInstallations;
   const apps = appsList?.apps?.edges || [];
-  const installedApps = useMemo(
-    () => apps.filter(({ node }) => node.type === "EXTERNAL"),
-    [apps.length]
-  );
-  const customApps = useMemo(
-    () => apps.filter(({ node }) => node.type === "CUSTOM"),
-    [apps.length]
-  );
+  const installedApps = apps.filter(({ node }) => node.type === "EXTERNAL");
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    AppListUrlDialog,
-    AppListUrlQueryParams
-  >(navigate, appsListUrl, params);
-
-  const [deleteApp, deleteAppOpts] = useAppDelete({
-    onCompleted: data => {
-      onAppRemove(data);
-      closeModal();
-    }
-  });
-
-  const handleRemove = (action: AppListUrlDialog) => (id: string) => {
-    openModal(action);
-    navigate(
-      appsListUrl({
-        ...params,
-        action,
-        id
-      })
-    );
-  };
-
-  const handleRemoveConfirm = () =>
-    deleteApp({
-      variables: {
-        id: params.id
-      }
-    });
+  const customApps = apps.filter(({ node }) => node.type === "CUSTOM");
 
   return (
     <>
       <AppDeleteDialog
-        confirmButtonState={deleteAppOpts.status}
+        confirmButtonState={confirmButtonState}
         name={getCurrentAppName(
           params.id,
           action === "remove-app" ? installedApps : customApps
         )}
-        onClose={closeModal}
+        onClose={onClose}
         onConfirm={handleRemoveConfirm}
         type={action === "remove-app" ? "EXTERNAL" : "CUSTOM"}
         open={action === "remove-app" || action === "remove-custom-app"}
@@ -112,13 +80,13 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
         )}
         <InstalledApps
           appsList={installedApps}
-          onRemove={handleRemove("remove-app")}
+          onRemove={onRemove("remove-app")}
           {...listProps}
         />
         <CustomApps
           appsList={customApps}
           disabled={listProps.disabled}
-          onRemove={handleRemove("remove-custom-app")}
+          onRemove={onRemove("remove-custom-app")}
         />
         <Marketplace />
       </Container>

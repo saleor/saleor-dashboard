@@ -6,12 +6,15 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { ListViews } from "@saleor/types";
-import React, { useEffect } from "react";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import React, { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps } from "react-router-dom";
 
+import { AppSortField, OrderDirection } from "../../../types/globalTypes";
 import AppsListPage from "../../components/AppsListPage";
 import {
+  useAppDelete,
   useAppInstallMutation,
   useAppManifestFetchMutation,
   useAppRetryInstallMutation
@@ -21,7 +24,12 @@ import {
   useInstalledAppsListQuery
 } from "../../queries";
 import { AppDelete } from "../../types/AppDelete";
-import { AppListUrlQueryParams, appUrl } from "../../urls";
+import {
+  AppListUrlDialog,
+  AppListUrlQueryParams,
+  appsListUrl,
+  appUrl
+} from "../../urls";
 
 const MANIFEST_ATTR = "manifestUrl";
 
@@ -36,6 +44,16 @@ export const AppsList: React.FC<AppsListProps> = ({ history, params }) => {
   const { updateListSettings, settings } = useListSettings(ListViews.APPS_LIST);
   const paginate = usePaginator();
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const queryVariables = useMemo(
+    () => ({
+      ...paginationState,
+      sort: {
+        direction: OrderDirection.DESC,
+        field: AppSortField.CREATION_DATE
+      }
+    }),
+    [params]
+  );
 
   const [fetchManifest, fetchManifestResult] = useAppManifestFetchMutation({});
   const [installApp] = useAppInstallMutation({});
@@ -50,16 +68,27 @@ export const AppsList: React.FC<AppsListProps> = ({ history, params }) => {
     displayLoader: true,
     variables: paginationState
   });
-
   const { data, loading, refetch } = useInstalledAppsListQuery({
     displayLoader: true,
-    variables: paginationState
+    variables: queryVariables
   });
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     data?.apps?.pageInfo,
     paginationState,
     params
   );
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    AppListUrlDialog,
+    AppListUrlQueryParams
+  >(navigate, appsListUrl, params);
+
+  const [deleteApp, deleteAppOpts] = useAppDelete({
+    onCompleted: data => {
+      onAppRemove(data);
+      closeModal();
+    }
+  });
 
   useEffect(() => {
     const manifestUrl = params[MANIFEST_ATTR];
@@ -106,6 +135,13 @@ export const AppsList: React.FC<AppsListProps> = ({ history, params }) => {
     }
   }, [installRetryAppResult.status]);
 
+  const handleRemoveConfirm = () =>
+    deleteApp({
+      variables: {
+        id: params.id
+      }
+    });
+
   const onAppRemove = (data: AppDelete) => {
     if (data.appDelete.appErrors.length === 0) {
       notify({
@@ -121,17 +157,24 @@ export const AppsList: React.FC<AppsListProps> = ({ history, params }) => {
     <AppsListPage
       appsList={data}
       appsInProgressList={appsInProgressData}
+      confirmButtonState={deleteAppOpts.status}
       params={params}
       loadingAppsInProgress={loadingAppsInProgress}
       disabled={loading}
       settings={settings}
       pageInfo={pageInfo}
+      onClose={closeModal}
       onNextPage={loadNextPage}
       onPreviousPage={loadPreviousPage}
       onUpdateListSettings={updateListSettings}
       onRowClick={id => () => navigate(appUrl(id))}
       onAppRemove={onAppRemove}
       onAppInstallRetry={onAppInstallRetry}
+      handleRemoveConfirm={handleRemoveConfirm}
+      onRemove={action => id =>
+        openModal(action, {
+          id
+        })}
     />
   );
 };
