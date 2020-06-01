@@ -1,9 +1,11 @@
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import { sectionNames } from "@saleor/intl";
-import React from "react";
-import { useIntl } from "react-intl";
+import React, { useEffect } from "react";
 
+import AppDetailsPage from "../../components/AppDetailsPage";
+import {
+  useAppActivateMutation,
+  useAppDeactivateMutation
+} from "../../mutations";
+import { useAppDetails } from "../../queries";
 import { AppListUrlQueryParams } from "../../urls";
 
 interface AppDetailsProps {
@@ -11,13 +13,33 @@ interface AppDetailsProps {
   params: AppListUrlQueryParams;
 }
 
-export const AppDetails: React.FC<AppDetailsProps> = () => {
-  const intl = useIntl();
+export const AppDetails: React.FC<AppDetailsProps> = ({ id }) => {
+  const { data, refetch } = useAppDetails({
+    displayLoader: true,
+    variables: { id }
+  });
+  const mutationOpts = { variables: { id } };
+  const [activateApp, activateAppResult] = useAppActivateMutation({});
+  const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({});
 
+  useEffect(() => {
+    const { status, data } = activateAppResult;
+    if (status === "success" && data) {
+      refetch();
+    }
+  }, [activateAppResult.status]);
+  useEffect(() => {
+    const { status, data } = deactivateAppResult;
+    if (status === "success" && data) {
+      refetch();
+    }
+  }, [deactivateAppResult.status]);
   return (
-    <Container>
-      <PageHeader title={intl.formatMessage(sectionNames.apps)} />
-    </Container>
+    <AppDetailsPage
+      data={data?.app}
+      onAppActivate={() => activateApp(mutationOpts)}
+      onAppDeactivate={() => deactivateApp(mutationOpts)}
+    />
   );
 };
 
