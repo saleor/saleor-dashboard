@@ -18,9 +18,20 @@ export const useStyles = makeStyles(
       },
       padding: 0
     },
+    appHeader: {
+      marginBottom: theme.spacing(3)
+    },
+    appHeaderLinks: {
+      "& img": {
+        marginRight: theme.spacing(1)
+      },
+      display: "flex",
+      padding: theme.spacing(2, 0)
+    },
     appName: {
       color: theme.palette.primary.main
     },
+
     colAction: {
       "&&": {
         paddingRight: theme.spacing(1)
@@ -57,6 +68,19 @@ export const useStyles = makeStyles(
       color: theme.palette.error.main,
       margin: theme.spacing(0, 1, 0.7, 0)
     },
+    headerLinkContainer: {
+      "& span": {
+        fontWeight: 500
+      },
+      alignItems: "center",
+      display: "flex",
+      fontSize: theme.spacing(2),
+      fontWeight: 500,
+      lineHeight: 1.2,
+      marginRight: theme.spacing(3),
+      padding: 0,
+      textTransform: "none"
+    },
     hr: {
       border: "none",
       borderTop: `1px solid ${theme.palette.divider}`,
@@ -64,6 +88,10 @@ export const useStyles = makeStyles(
       marginBottom: 0,
       marginTop: 0,
       width: "100%"
+    },
+    linkContainer: {
+      fontWeight: 500,
+      marginTop: theme.spacing(1.5)
     },
     marketplaceContent: {
       "& button": {
@@ -73,6 +101,15 @@ export const useStyles = makeStyles(
         padding: theme.spacing(2, 3, 0, 3)
       },
       padding: theme.spacing(1)
+    },
+    permissionsContainer: {
+      "& li": {
+        "&:last-child": {
+          marginBottom: 0
+        },
+        marginBottom: theme.spacing(1)
+      },
+      paddingLeft: theme.spacing(2)
     },
     retryBtnCol: {
       paddingRight: theme.spacing(1),

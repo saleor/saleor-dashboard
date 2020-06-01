@@ -1,6 +1,7 @@
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
+import { App, AppVariables } from "./types/App";
 import { AppsInstallations } from "./types/AppsInstallations";
 import { AppsList, AppsListVariables } from "./types/AppsList";
 
@@ -76,6 +77,22 @@ const appsInProgressList = gql`
   }
 `;
 
+const appDetails = gql`
+  ${appFragment}
+  query App($id: ID!) {
+    app(id: $id) {
+      ...AppFragment
+      aboutApp
+      permissions {
+        code
+        name
+      }
+      dataPrivacy
+      dataPrivacyUrl
+    }
+  }
+`;
+
 export const useInstalledAppsListQuery = makeQuery<AppsList, AppsListVariables>(
   installedAppsList
 );
@@ -83,3 +100,5 @@ export const useInstalledAppsListQuery = makeQuery<AppsList, AppsListVariables>(
 export const useAppsInProgressListQuery = makeQuery<AppsInstallations, {}>(
   appsInProgressList
 );
+
+export const useAppDetails = makeQuery<App, AppVariables>(appDetails);
