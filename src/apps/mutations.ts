@@ -113,26 +113,22 @@ export const appRetryInstallMutation = gql`
 `;
 
 export const appActivateMutation = gql`
+  ${appError}
   mutation AppActivate($id: ID!) {
     appActivate(id: $id) {
-      appErrors {
-        field
-        message
-        code
-        permissions
+      errors: appErrors {
+        ...AppErrorFragment
       }
     }
   }
 `;
 
 export const appDeactivateMutation = gql`
+  ${appError}
   mutation AppDeactivate($id: ID!) {
     appDeactivate(id: $id) {
-      appErrors {
-        field
-        message
-        code
-        permissions
+      errors: appErrors {
+        ...AppErrorFragment
       }
     }
   }
