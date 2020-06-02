@@ -7,6 +7,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { commonMessages } from "@saleor/intl";
+import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -18,31 +19,16 @@ import CardContainer from "../CardContainer";
 
 export interface CustomAppsProps {
   appsList: AppsList_apps_edges[];
-  disabled: boolean;
   onCustomAppCreate?: () => void;
   onRemove: (id: string) => void;
 }
 
 const CustomApps: React.FC<CustomAppsProps> = ({
-  appsList = [],
-  disabled,
+  appsList,
   onRemove,
   onCustomAppCreate
 }) => {
   const classes = useStyles({});
-
-  const createBtnProps = !!onCustomAppCreate
-    ? {
-        action: (
-          <Button color="primary" onClick={onCustomAppCreate}>
-            <FormattedMessage
-              defaultMessage="Create App"
-              description="create app button"
-            />
-          </Button>
-        )
-      }
-    : {};
 
   return (
     <CardContainer
@@ -50,7 +36,16 @@ const CustomApps: React.FC<CustomAppsProps> = ({
         <>
           <CardHeader
             className={classes.title}
-            {...createBtnProps}
+            action={
+              !!onCustomAppCreate && (
+                <Button color="primary" onClick={onCustomAppCreate}>
+                  <FormattedMessage
+                    defaultMessage="Create App"
+                    description="create app button"
+                  />
+                </Button>
+              )
+            }
             title={
               <Typography
                 className={classes.title}
@@ -66,33 +61,39 @@ const CustomApps: React.FC<CustomAppsProps> = ({
       }
     >
       <TableBody>
-        {disabled ? (
-          <AppsSkeleton />
-        ) : !!appsList.length ? (
-          appsList.map(({ node: { id, name, isActive } }) => (
-            <TableRow key={id} className={classes.tableRow}>
+        {renderCollection(
+          appsList,
+          (app, index) =>
+            app ? (
+              <TableRow key={app.node.id} className={classes.tableRow}>
+                <TableCell className={classes.colName}>
+                  <span data-tc="name">{app.node.name}</span>
+                  <ActiveText isActive={app.node.isActive} />
+                </TableCell>
+                <TableCell className={classes.colAction}>
+                  <IconButton
+                    color="primary"
+                    onClick={() => onRemove(app.node.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ) : (
+              <AppsSkeleton key={index} />
+            ),
+          () => (
+            <TableRow className={classes.tableRow}>
               <TableCell className={classes.colName}>
-                <span data-tc="name">{name}</span>
-                <ActiveText isActive={isActive} />
-              </TableCell>
-              <TableCell className={classes.colAction}>
-                <IconButton color="primary" onClick={() => onRemove(id)}>
-                  <DeleteIcon />
-                </IconButton>
+                <Typography className={classes.text} variant="body2">
+                  <FormattedMessage
+                    defaultMessage="Your custom created apps will be shown here."
+                    description="custom apps content"
+                  />
+                </Typography>
               </TableCell>
             </TableRow>
-          ))
-        ) : (
-          <TableRow className={classes.tableRow}>
-            <TableCell className={classes.colName}>
-              <Typography className={classes.text} variant="body2">
-                <FormattedMessage
-                  defaultMessage="Your custom created apps will be shown here."
-                  description="custom apps content"
-                />
-              </Typography>
-            </TableCell>
-          </TableRow>
+          )
         )}
       </TableBody>
     </CardContainer>

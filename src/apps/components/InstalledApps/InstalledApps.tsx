@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import TablePagination from "@saleor/components/TablePagination";
+import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -25,7 +26,7 @@ export interface InstalledAppsProps extends ListProps {
 const numberOfColumns = 2;
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
-  appsList = [],
+  appsList,
   onRemove,
   settings,
   disabled,
@@ -67,41 +68,47 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
           </TableRow>
         </TableFooter>
         <TableBody>
-          {disabled ? (
-            <AppsSkeleton />
-          ) : !!appsList.length ? (
-            appsList.map(({ node: { id, name, isActive } }) => (
-              <TableRow key={id} className={classes.tableRow}>
+          {renderCollection(
+            appsList,
+            (app, index) =>
+              app ? (
+                <TableRow key={app.node.id} className={classes.tableRow}>
+                  <TableCell className={classes.colName}>
+                    <span data-tc="name" className={classes.appName}>
+                      {app.node.name}
+                    </span>
+                    <ActiveText isActive={app.node.isActive} />
+                  </TableCell>
+                  <TableCell className={classes.colAction}>
+                    <Button color="primary" onClick={onRowClick(app.node.id)}>
+                      <FormattedMessage
+                        defaultMessage="About"
+                        description="about app"
+                      />
+                    </Button>
+                    <IconButton
+                      color="primary"
+                      onClick={() => onRemove(app.node.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                <AppsSkeleton key={index} />
+              ),
+            () => (
+              <TableRow className={classes.tableRow}>
                 <TableCell className={classes.colName}>
-                  <span data-tc="name" className={classes.appName}>
-                    {name}
-                  </span>
-                  <ActiveText isActive={isActive} />
-                </TableCell>
-                <TableCell className={classes.colAction}>
-                  <Button color="primary" onClick={onRowClick(id)}>
+                  <Typography className={classes.text} variant="body2">
                     <FormattedMessage
-                      defaultMessage="About"
-                      description="about app"
+                      defaultMessage="You don’t have any installed apps in your dashboard"
+                      description="apps content"
                     />
-                  </Button>
-                  <IconButton color="primary" onClick={() => onRemove(id)}>
-                    <DeleteIcon />
-                  </IconButton>
+                  </Typography>
                 </TableCell>
               </TableRow>
-            ))
-          ) : (
-            <TableRow className={classes.tableRow}>
-              <TableCell className={classes.colName}>
-                <Typography className={classes.text} variant="body2">
-                  <FormattedMessage
-                    defaultMessage="You don’t have any installed apps in your dashboard"
-                    description="apps content"
-                  />
-                </Typography>
-              </TableCell>
-            </TableRow>
+            )
           )}
         </TableBody>
       </>

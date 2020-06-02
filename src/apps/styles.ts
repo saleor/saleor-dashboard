@@ -93,5 +93,5 @@ export const useStyles = makeStyles(
       lineHeight: 1
     }
   }),
-  { name: "WebhooksList" }
+  { name: "AppList" }
 );

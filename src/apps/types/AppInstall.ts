@@ -16,7 +16,7 @@ export interface AppInstall_appInstall_appInstallation {
   manifestUrl: string;
 }
 
-export interface AppInstall_appInstall_appErrors {
+export interface AppInstall_appInstall_errors {
   __typename: "AppError";
   field: string | null;
   message: string | null;
@@ -27,7 +27,7 @@ export interface AppInstall_appInstall_appErrors {
 export interface AppInstall_appInstall {
   __typename: "AppInstall";
   appInstallation: AppInstall_appInstall_appInstallation | null;
-  appErrors: AppInstall_appInstall_appErrors[];
+  errors: AppInstall_appInstall_errors[];
 }
 
 export interface AppInstall {
