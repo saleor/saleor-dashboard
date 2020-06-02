@@ -25,6 +25,7 @@ export const useStyles = makeStyles(
       "& img": {
         marginRight: theme.spacing(1)
       },
+      alignItems: "center",
       display: "flex",
       padding: theme.spacing(2, 0)
     },
