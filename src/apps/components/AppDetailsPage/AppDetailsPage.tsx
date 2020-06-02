@@ -7,6 +7,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import ExternalLink from "@saleor/components/ExternalLink";
 import PageHeader from "@saleor/components/PageHeader";
+import Skeleton from "@saleor/components/Skeleton";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,7 +24,7 @@ interface AppDetailsPageProps {
 }
 
 export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
-  data = {},
+  data,
   onAppActivate,
   onAppDeactivate
 }) => {
@@ -40,50 +41,59 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           data-tc="open-app"
           target="_blank"
         >
-          <FormattedMessage defaultMessage="Open" description="button" />
+          <FormattedMessage defaultMessage="Open App" description="button" />
         </Button>
       </PageHeader>
       <div className={classes.appHeader}>
-        <div className={classes.appHeaderLinks}>
-          <ExternalLink
-            className={classes.headerLinkContainer}
-            href={data?.supportUrl}
-            target="_blank"
-          >
-            <img src={supportIcon} alt="" />
-
-            <FormattedMessage defaultMessage="Get Support" description="link" />
-          </ExternalLink>
-          <ExternalLink
-            className={classes.headerLinkContainer}
-            href={data?.configurationUrl}
-            target="_blank"
-          >
-            <img src={settingsIcon} alt="" />
-
-            <FormattedMessage
-              defaultMessage="Edit settings"
-              description="link"
-            />
-          </ExternalLink>
-          <Button
-            variant="text"
-            color="primary"
-            className={classes.headerLinkContainer}
-            disableFocusRipple
-            onClick={data.isActive ? onAppDeactivate : onAppActivate}
-          >
-            <img src={activateIcon} alt="" />
-            {data?.isActive ? (
+        {data ? (
+          <div className={classes.appHeaderLinks}>
+            <ExternalLink
+              className={classes.headerLinkContainer}
+              href={data.supportUrl}
+              target="_blank"
+            >
+              <img src={supportIcon} alt="" />
               <FormattedMessage
-                defaultMessage="Deactivate"
+                defaultMessage="Get Support"
                 description="link"
               />
-            ) : (
-              <FormattedMessage defaultMessage="Activate" description="link" />
-            )}
-          </Button>
-        </div>
+            </ExternalLink>
+            <ExternalLink
+              className={classes.headerLinkContainer}
+              href={data.configurationUrl}
+              target="_blank"
+            >
+              <img src={settingsIcon} alt="" />
+
+              <FormattedMessage
+                defaultMessage="Edit settings"
+                description="link"
+              />
+            </ExternalLink>
+            <Button
+              variant="text"
+              color="primary"
+              className={classes.headerLinkContainer}
+              disableFocusRipple
+              onClick={data.isActive ? onAppDeactivate : onAppActivate}
+            >
+              <img src={activateIcon} alt="" />
+              {data?.isActive ? (
+                <FormattedMessage
+                  defaultMessage="Deactivate"
+                  description="link"
+                />
+              ) : (
+                <FormattedMessage
+                  defaultMessage="Activate"
+                  description="link"
+                />
+              )}
+            </Button>
+          </div>
+        ) : (
+          <Skeleton />
+        )}
         <div className={classes.hr} />
       </div>
       <Grid spacing={3} container>
@@ -96,7 +106,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               })}
             />
             <CardContent>
-              <Typography>{data?.aboutApp}</Typography>
+              {data ? <Typography>{data?.aboutApp}</Typography> : <Skeleton />}
             </CardContent>
           </Card>
         </Grid>
@@ -115,12 +125,14 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                   description="apps about permissions"
                 />
               </Typography>
-              {!!data?.permissions?.length && (
+              {!!data?.permissions?.length ? (
                 <ul className={classes.permissionsContainer}>
                   {data?.permissions?.map(perm => (
                     <li key={perm.code}>{perm.name}</li>
                   ))}
                 </ul>
+              ) : (
+                <Skeleton />
               )}
             </CardContent>
           </Card>
@@ -134,17 +146,23 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               })}
             />
             <CardContent>
-              <Typography>{data?.dataPrivacy}</Typography>
-              <ExternalLink
-                className={classes.linkContainer}
-                href={data?.dataPrivacyUrl}
-                target="_blank"
-              >
-                <FormattedMessage
-                  defaultMessage="View this app’s privacy policy"
-                  description="app privacy policy link"
-                />
-              </ExternalLink>
+              {data ? (
+                <>
+                  <Typography>{data.dataPrivacy}</Typography>
+                  <ExternalLink
+                    className={classes.linkContainer}
+                    href={data?.dataPrivacyUrl}
+                    target="_blank"
+                  >
+                    <FormattedMessage
+                      defaultMessage="View this app’s privacy policy"
+                      description="app privacy policy link"
+                    />
+                  </ExternalLink>
+                </>
+              ) : (
+                <Skeleton />
+              )}
             </CardContent>
           </Card>
         </Grid>
