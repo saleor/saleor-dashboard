@@ -1,4 +1,9 @@
-import { AppTypeEnum, JobStatusEnum } from "../types/globalTypes";
+import {
+  AppTypeEnum,
+  JobStatusEnum,
+  PermissionEnum
+} from "../types/globalTypes";
+import { App_app } from "./types/App";
 import { AppsInstallations_appsInstallations } from "./types/AppsInstallations";
 import { AppsList_apps_edges } from "./types/AppsList";
 
@@ -91,3 +96,35 @@ export const appsInProgress: AppsInstallations_appsInstallations[] = [
     status: JobStatusEnum.SUCCESS
   }
 ];
+
+export const appDetails: App_app = {
+  __typename: "App",
+  aboutApp: "Lorem ipsum",
+  appUrl: "http://localhost:8888/app",
+  configurationUrl: "htpp://localhost:8888/configuration",
+  created: "2020-06-02T12:24:26.818138+00:00",
+  dataPrivacy: "Lorem ipsum",
+  dataPrivacyUrl: "http://localhost:8888/app-data-privacy",
+  homepageUrl: "http://localhost:8888/homepage",
+  id: "QXBwOjE4MQ==",
+  isActive: true,
+  metadata: [],
+  name: "app1",
+  permissions: [
+    {
+      __typename: "Permission",
+      code: PermissionEnum.MANAGE_ORDERS,
+      name: "Manage orders."
+    },
+    {
+      __typename: "Permission",
+      code: PermissionEnum.MANAGE_USERS,
+      name: "Manage customers."
+    }
+  ],
+  privateMetadata: [],
+  supportUrl: "http://localhost:8888/support",
+  type: AppTypeEnum.EXTERNAL,
+  version: "1.0.0",
+  webhooks: []
+};

@@ -10,6 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import ReactMarkdown from "react-markdown";
 
 import activateIcon from "../../../../assets/images/activate-icon.svg";
 import settingsIcon from "../../../../assets/images/settings-icon.svg";
@@ -17,16 +18,18 @@ import supportIcon from "../../../../assets/images/support-icon.svg";
 import { useStyles } from "../../styles";
 import { App_app } from "../../types/App";
 
-interface AppDetailsPageProps {
+export interface AppDetailsPageProps {
+  loading: boolean;
   data: App_app;
-  onAppActivate: () => void;
-  onAppDeactivate: () => void;
+  onAppActivateOpen: () => void;
+  onAppDeactivateOpen: () => void;
 }
 
 export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   data,
-  onAppActivate,
-  onAppDeactivate
+  loading,
+  onAppActivateOpen,
+  onAppDeactivateOpen
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -75,7 +78,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               color="primary"
               className={classes.headerLinkContainer}
               disableFocusRipple
-              onClick={data.isActive ? onAppDeactivate : onAppActivate}
+              onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
             >
               <img src={activateIcon} alt="" />
               {data?.isActive ? (
@@ -106,7 +109,11 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               })}
             />
             <CardContent>
-              {data ? <Typography>{data?.aboutApp}</Typography> : <Skeleton />}
+              {!loading ? (
+                <ReactMarkdown source={data?.aboutApp} />
+              ) : (
+                <Skeleton />
+              )}
             </CardContent>
           </Card>
         </Grid>
@@ -119,18 +126,22 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               })}
             />
             <CardContent>
-              <Typography>
-                <FormattedMessage
-                  defaultMessage="This app has permissions to:"
-                  description="apps about permissions"
-                />
-              </Typography>
-              {!!data?.permissions?.length ? (
-                <ul className={classes.permissionsContainer}>
-                  {data?.permissions?.map(perm => (
-                    <li key={perm.code}>{perm.name}</li>
-                  ))}
-                </ul>
+              {!loading ? (
+                <>
+                  <Typography>
+                    <FormattedMessage
+                      defaultMessage="This app has permissions to:"
+                      description="apps about permissions"
+                    />
+                  </Typography>
+                  {!!data?.permissions?.length && (
+                    <ul className={classes.permissionsContainer}>
+                      {data?.permissions?.map(perm => (
+                        <li key={perm.code}>{perm.name}</li>
+                      ))}
+                    </ul>
+                  )}
+                </>
               ) : (
                 <Skeleton />
               )}
@@ -146,9 +157,9 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               })}
             />
             <CardContent>
-              {data ? (
+              {!loading ? (
                 <>
-                  <Typography>{data.dataPrivacy}</Typography>
+                  <Typography>{data?.dataPrivacy}</Typography>
                   <ExternalLink
                     className={classes.linkContainer}
                     href={data?.dataPrivacyUrl}

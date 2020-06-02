@@ -35,7 +35,8 @@ export const useStyles = makeStyles(
 
     colAction: {
       "&&": {
-        paddingRight: theme.spacing(1)
+        paddingRight: theme.spacing(1),
+        textAlign: "right"
       },
       textAlign: "right"
     },

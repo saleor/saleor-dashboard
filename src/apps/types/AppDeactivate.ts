@@ -8,7 +8,7 @@ import { AppErrorCode, PermissionEnum } from "./../../types/globalTypes";
 // GraphQL mutation operation: AppDeactivate
 // ====================================================
 
-export interface AppDeactivate_appDeactivate_appErrors {
+export interface AppDeactivate_appDeactivate_errors {
   __typename: "AppError";
   field: string | null;
   message: string | null;
@@ -18,7 +18,7 @@ export interface AppDeactivate_appDeactivate_appErrors {
 
 export interface AppDeactivate_appDeactivate {
   __typename: "AppDeactivate";
-  appErrors: AppDeactivate_appDeactivate_appErrors[];
+  errors: AppDeactivate_appDeactivate_errors[];
 }
 
 export interface AppDeactivate {

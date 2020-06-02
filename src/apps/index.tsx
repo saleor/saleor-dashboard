@@ -5,7 +5,11 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
-import { AppListUrlQueryParams, appPath } from "./urls";
+import {
+  AppDetailsUrlQueryParams,
+  AppListUrlQueryParams,
+  appPath
+} from "./urls";
 import { appsListPath } from "./urls";
 import AppDetailsView from "./views/AppDetails";
 import AppsListView from "./views/AppsList";
@@ -14,7 +18,7 @@ const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
 }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: AppListUrlQueryParams = qs;
+  const params: AppDetailsUrlQueryParams = qs;
 
   return (
     <AppDetailsView id={decodeURIComponent(match.params.id)} params={params} />
