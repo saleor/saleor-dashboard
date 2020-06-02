@@ -24,16 +24,18 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id }) => {
 
   useEffect(() => {
     const { status, data } = activateAppResult;
-    if (status === "success" && data) {
+    if (status === "success" && data?.appActivate?.appErrors.length === 0) {
       refetch();
     }
   }, [activateAppResult.status]);
+
   useEffect(() => {
     const { status, data } = deactivateAppResult;
-    if (status === "success" && data) {
+    if (status === "success" && data?.appDeactivate?.appErrors.length === 0) {
       refetch();
     }
   }, [deactivateAppResult.status]);
+
   return (
     <AppDetailsPage
       data={data?.app}
