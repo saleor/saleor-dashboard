@@ -3,11 +3,13 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import AppHeader from "@saleor/components/AppHeader";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import ExternalLink from "@saleor/components/ExternalLink";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
+import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactMarkdown from "react-markdown";
@@ -23,19 +25,24 @@ export interface AppDetailsPageProps {
   data: App_app;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
+  onBack: () => void;
 }
 
 export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   data,
   loading,
   onAppActivateOpen,
-  onAppDeactivateOpen
+  onAppDeactivateOpen,
+  onBack
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
   return (
     <Container>
+      <AppHeader onBack={onBack}>
+        {intl.formatMessage(sectionNames.apps)}
+      </AppHeader>
       <PageHeader title={data?.name}>
         <Button
           href={data?.homepageUrl}
