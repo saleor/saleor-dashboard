@@ -334,13 +334,13 @@
     "context": "retry installation",
     "string": "Retry"
   },
-  "src_dot_apps_dot_components_dot_AppsInProgress_dot_2504919537": {
-    "context": "app installation",
-    "string": "Installing app.."
-  },
   "src_dot_apps_dot_components_dot_AppsInProgress_dot_2868351060": {
     "context": "app installation error",
     "string": "There was a problem during installation"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_3733091754": {
+    "context": "app installation",
+    "string": "Installing app..."
   },
   "src_dot_apps_dot_components_dot_CustomApps_dot_3152347892": {
     "context": "custom apps content",
