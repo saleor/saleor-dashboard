@@ -7,19 +7,26 @@ import { AppDelete, AppDeleteVariables } from "./types/AppDelete";
 import { AppFetch, AppFetchVariables } from "./types/AppFetch";
 import { AppInstall, AppInstallVariables } from "./types/AppInstall";
 
+export const appError = gql`
+  fragment AppErrorFragment on AppError {
+    field
+    message
+    code
+    permissions
+  }
+`;
+
 export const appCreateMutation = gql`
   ${appFragment}
+  ${appError}
   mutation AppCreate($input: AppInput!) {
     appCreate(input: $input) {
       authToken
       app {
         ...AppFragment
       }
-      appErrors {
-        field
-        message
-        code
-        permissions
+      errors: appErrors {
+        ...AppErrorFragment
       }
     }
   }
@@ -27,16 +34,14 @@ export const appCreateMutation = gql`
 
 export const appDeleteMutation = gql`
   ${appFragment}
+  ${appError}
   mutation AppDelete($id: ID!) {
     appDelete(id: $id) {
       app {
         ...AppFragment
       }
-      appErrors {
-        field
-        message
-        code
-        permissions
+      errors: appErrors {
+        ...AppErrorFragment
       }
     }
   }
@@ -62,7 +67,7 @@ export const appFetchMutation = gql`
           name
         }
       }
-      appErrors {
+      errors: appErrors {
         field
         message
         code
@@ -72,6 +77,7 @@ export const appFetchMutation = gql`
 `;
 
 export const appInstallMutation = gql`
+  ${appError}
   mutation AppInstall($input: AppInstallInput!) {
     appInstall(input: $input) {
       appInstallation {
@@ -80,17 +86,15 @@ export const appInstallMutation = gql`
         appName
         manifestUrl
       }
-      appErrors {
-        field
-        message
-        code
-        permissions
+      errors: appErrors {
+        ...AppErrorFragment
       }
     }
   }
 `;
 
 export const appRetryInstallMutation = gql`
+  ${appError}
   mutation AppRetryInstall($id: ID!) {
     appRetryInstall(id: $id) {
       appInstallation {
@@ -99,11 +103,8 @@ export const appRetryInstallMutation = gql`
         appName
         manifestUrl
       }
-      appErrors {
-        field
-        message
-        code
-        permissions
+      errors: appErrors {
+        ...AppErrorFragment
       }
     }
   }
