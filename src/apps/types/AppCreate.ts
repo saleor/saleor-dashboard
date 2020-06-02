@@ -42,7 +42,7 @@ export interface AppCreate_appCreate_app {
   webhooks: (AppCreate_appCreate_app_webhooks | null)[] | null;
 }
 
-export interface AppCreate_appCreate_appErrors {
+export interface AppCreate_appCreate_errors {
   __typename: "AppError";
   field: string | null;
   message: string | null;
@@ -54,7 +54,7 @@ export interface AppCreate_appCreate {
   __typename: "AppCreate";
   authToken: string | null;
   app: AppCreate_appCreate_app | null;
-  appErrors: AppCreate_appCreate_appErrors[];
+  errors: AppCreate_appCreate_errors[];
 }
 
 export interface AppCreate {

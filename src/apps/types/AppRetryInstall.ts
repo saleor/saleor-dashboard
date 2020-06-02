@@ -16,7 +16,7 @@ export interface AppRetryInstall_appRetryInstall_appInstallation {
   manifestUrl: string;
 }
 
-export interface AppRetryInstall_appRetryInstall_appErrors {
+export interface AppRetryInstall_appRetryInstall_errors {
   __typename: "AppError";
   field: string | null;
   message: string | null;
@@ -27,7 +27,7 @@ export interface AppRetryInstall_appRetryInstall_appErrors {
 export interface AppRetryInstall_appRetryInstall {
   __typename: "AppRetryInstall";
   appInstallation: AppRetryInstall_appRetryInstall_appInstallation | null;
-  appErrors: AppRetryInstall_appRetryInstall_appErrors[];
+  errors: AppRetryInstall_appRetryInstall_errors[];
 }
 
 export interface AppRetryInstall {

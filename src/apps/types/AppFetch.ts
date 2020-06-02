@@ -30,7 +30,7 @@ export interface AppFetch_appFetchManifest_manifest {
   permissions: (AppFetch_appFetchManifest_manifest_permissions | null)[] | null;
 }
 
-export interface AppFetch_appFetchManifest_appErrors {
+export interface AppFetch_appFetchManifest_errors {
   __typename: "AppError";
   field: string | null;
   message: string | null;
@@ -40,7 +40,7 @@ export interface AppFetch_appFetchManifest_appErrors {
 export interface AppFetch_appFetchManifest {
   __typename: "AppFetchManifest";
   manifest: AppFetch_appFetchManifest_manifest | null;
-  appErrors: AppFetch_appFetchManifest_appErrors[];
+  errors: AppFetch_appFetchManifest_errors[];
 }
 
 export interface AppFetch {

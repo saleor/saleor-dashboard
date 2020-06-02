@@ -42,7 +42,7 @@ export interface AppDelete_appDelete_app {
   webhooks: (AppDelete_appDelete_app_webhooks | null)[] | null;
 }
 
-export interface AppDelete_appDelete_appErrors {
+export interface AppDelete_appDelete_errors {
   __typename: "AppError";
   field: string | null;
   message: string | null;
@@ -53,7 +53,7 @@ export interface AppDelete_appDelete_appErrors {
 export interface AppDelete_appDelete {
   __typename: "AppDelete";
   app: AppDelete_appDelete_app | null;
-  appErrors: AppDelete_appDelete_appErrors[];
+  errors: AppDelete_appDelete_errors[];
 }
 
 export interface AppDelete {

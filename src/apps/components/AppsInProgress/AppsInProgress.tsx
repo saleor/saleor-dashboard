@@ -7,13 +7,13 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import ErrorIcon from "@material-ui/icons/Error";
 import CardTitle from "@saleor/components/CardTitle";
+import { renderCollection } from "@saleor/misc";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
 import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
-import AppsSkeleton from "../AppsSkeleton";
 import CardContainer from "../CardContainer";
 
 export interface AppsInProgressProps {
@@ -43,64 +43,60 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
       }
     >
       <TableBody>
-        {disabled ? (
-          <AppsSkeleton />
-        ) : (
-          appsList.map(({ status, appName, id, message }) => (
-            <TableRow key={id} className={classes.tableRow}>
-              <TableCell className={classes.colName}>
-                <span data-tc="name">{appName}</span>
+        {renderCollection(appsList, ({ status, appName, id, message }) => (
+          <TableRow key={id} className={classes.tableRow}>
+            <TableCell className={classes.colName}>
+              <span data-tc="name">{appName}</span>
+            </TableCell>
+            {status === "PENDING" && (
+              <TableCell
+                className={classNames(
+                  classes.colAction,
+                  classes.colInstallAction
+                )}
+              >
+                <Typography variant="body2" className={classes.text}>
+                  <FormattedMessage
+                    defaultMessage="Installing app..."
+                    description="app installation"
+                  />
+                </Typography>
+                <div className={classes.colSpinner}>
+                  <Progress size={20} />
+                </div>
               </TableCell>
-              {status === "PENDING" && (
-                <TableCell
-                  className={classNames(
-                    classes.colAction,
-                    classes.colInstallAction
-                  )}
-                >
-                  <Typography variant="body2" className={classes.text}>
-                    <FormattedMessage
-                      defaultMessage="Installing app.."
-                      description="app installation"
-                    />
-                  </Typography>
-                  <div className={classes.colSpinner}>
-                    <Progress size={20} />
-                  </div>
-                </TableCell>
-              )}
-              {status === "FAILED" && (
-                <TableCell
-                  className={classNames(
-                    classes.colAction,
-                    classes.colInstallAction
-                  )}
-                >
-                  <Typography variant="body2" className={classes.error}>
-                    <FormattedMessage
-                      defaultMessage="There was a problem during installation"
-                      description="app installation error"
-                    />
-                    <Tooltip
-                      title={<Typography variant="body2">{message}</Typography>}
-                      classes={{
-                        tooltip: classes.customTooltip
-                      }}
-                    >
-                      <ErrorIcon />
-                    </Tooltip>
-                  </Typography>
-                  <Button color="primary" onClick={() => onAppInstallRetry(id)}>
-                    <FormattedMessage
-                      defaultMessage="Retry"
-                      description="retry installation"
-                    />
-                  </Button>
-                </TableCell>
-              )}
-            </TableRow>
-          ))
-        )}
+            )}
+            {status === "FAILED" && (
+              <TableCell
+                className={classNames(
+                  classes.colAction,
+                  classes.colInstallAction
+                )}
+              >
+                <Typography variant="body2" className={classes.error}>
+                  <FormattedMessage
+                    defaultMessage="There was a problem during installation"
+                    description="app installation error"
+                  />
+                  <Tooltip
+                    title={<Typography variant="body2">{message}</Typography>}
+                    classes={{
+                      tooltip: classes.customTooltip
+                    }}
+                  >
+                    <ErrorIcon />
+                  </Tooltip>
+                </Typography>
+                <Button color="primary" onClick={() => onAppInstallRetry(id)}>
+                  <FormattedMessage
+                    defaultMessage="Retry"
+                    description="retry installation"
+                  />
+                </Button>
+              </TableCell>
+            )}
+          </TableRow>
+        ))}
       </TableBody>
     </CardContainer>
   );

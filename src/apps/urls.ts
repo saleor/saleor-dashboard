@@ -25,3 +25,5 @@ export const appUrl = (id: string, params?: AppListUrlQueryParams) =>
 
 export const appsListUrl = (params?: AppListUrlQueryParams) =>
   appsListPath + "?" + stringifyQs(params);
+
+export const MANIFEST_ATTR = "manifestUrl";
