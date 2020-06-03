@@ -6,7 +6,7 @@ import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-interface StaffStatusProps {
+interface AppStatusProps {
   data: {
     isActive: boolean;
   };
@@ -15,7 +15,7 @@ interface StaffStatusProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const StaffStatus: React.FC<StaffStatusProps> = ({
+const AppStatus: React.FC<AppStatusProps> = ({
   data,
   disabled,
   label,
@@ -27,13 +27,13 @@ const StaffStatus: React.FC<StaffStatusProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Account Status",
+          defaultMessage: "App Status",
           description: "section header"
         })}
       />
       <CardContent>
         <Typography>
-          <FormattedMessage defaultMessage="If you want to disable this account uncheck the box below" />
+          <FormattedMessage defaultMessage="If you want to disable this App please uncheck the box below." />
         </Typography>
         <ControlledCheckbox
           checked={data.isActive}
@@ -46,5 +46,5 @@ const StaffStatus: React.FC<StaffStatusProps> = ({
     </Card>
   );
 };
-StaffStatus.displayName = "StaffStatus";
-export default StaffStatus;
+AppStatus.displayName = "AppStatus";
+export default AppStatus;

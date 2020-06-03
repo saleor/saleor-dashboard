@@ -19,6 +19,7 @@ export interface AppsListPageProps extends ListProps {
   appsInProgressList?: AppsInstallations;
   loadingAppsInProgress: boolean;
   handleRemoveConfirm: () => void;
+  navigateToCustomApp: (id: string) => () => void;
   onInstalledAppRemove: (id: string) => void;
   onCustomAppRemove: (id: string) => void;
   onAppRemove: (data: AppDelete) => void;
@@ -31,6 +32,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   installedAppsList,
   loadingAppsInProgress,
   handleRemoveConfirm,
+  navigateToCustomApp,
   onInstalledAppRemove,
   onCustomAppRemove,
   onAppRemove,
@@ -56,7 +58,11 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
         onRemove={onInstalledAppRemove}
         {...listProps}
       />
-      <CustomApps appsList={customAppsList} onRemove={onCustomAppRemove} />
+      <CustomApps
+        appsList={customAppsList}
+        navigateToCustomApp={navigateToCustomApp}
+        onRemove={onCustomAppRemove}
+      />
       <Marketplace />
     </Container>
   );

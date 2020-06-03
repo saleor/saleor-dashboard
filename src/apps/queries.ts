@@ -25,6 +25,11 @@ export const appFragment = gql`
       key
       value
     }
+    tokens {
+      authToken
+      id
+      name
+    }
     webhooks {
       name
     }
