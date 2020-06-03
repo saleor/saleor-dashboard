@@ -310,6 +310,38 @@
     "context": "app status",
     "string": "inactive"
   },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_1499521723": {
+    "context": "dialog header",
+    "string": "Activate App"
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3356885734": {
+    "context": "activate app",
+    "string": "Are you sure you want to activate {name}? Activating will start gathering events."
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3761045983": {
+    "context": "activate app",
+    "string": "Are you sure you want to activate this app? Activating will start gathering events"
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3865193889": {
+    "context": "button label",
+    "string": "Activate"
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_1782042241": {
+    "context": "button label",
+    "string": "Deactivate"
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_2031792590": {
+    "context": "dialog header",
+    "string": "Dectivate App"
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_2955925498": {
+    "context": "deactivate app",
+    "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app. You will be still billed for the app."
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_329373780": {
+    "context": "deactivate app",
+    "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app. You will be still billed for the app."
+  },
   "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_1347203024": {
     "context": "delete custom app",
     "string": "Deleting {name}, you will delete all the data and webhooks regarding this app. Are you sure you want to do that?"
@@ -325,6 +357,46 @@
   "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_3817179919": {
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_1782042241": {
+    "context": "link",
+    "string": "Deactivate"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_2432433023": {
+    "context": "app privacy policy link",
+    "string": "View this app’s privacy policy"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_2973480575": {
+    "context": "link",
+    "string": "Edit settings"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3744068622": {
+    "context": "section header",
+    "string": "Data privacy"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3768793197": {
+    "context": "link",
+    "string": "Get Support"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3817397882": {
+    "context": "button",
+    "string": "Open App"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3865193889": {
+    "context": "link",
+    "string": "Activate"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3916538164": {
+    "context": "section header",
+    "string": "App permissions"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_846582072": {
+    "context": "apps about permissions",
+    "string": "This app has permissions to:"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_85811128": {
+    "context": "section header",
+    "string": "About this app"
   },
   "src_dot_apps_dot_components_dot_AppsInProgress_dot_1675189051": {
     "context": "section header",
