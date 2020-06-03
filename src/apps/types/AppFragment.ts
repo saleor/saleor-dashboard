@@ -20,6 +20,13 @@ export interface AppFragment_metadata {
   value: string;
 }
 
+export interface AppFragment_tokens {
+  __typename: "AppToken";
+  authToken: string | null;
+  id: string;
+  name: string | null;
+}
+
 export interface AppFragment_webhooks {
   __typename: "Webhook";
   name: string;
@@ -39,5 +46,6 @@ export interface AppFragment {
   version: string | null;
   privateMetadata: (AppFragment_privateMetadata | null)[];
   metadata: (AppFragment_metadata | null)[];
+  tokens: (AppFragment_tokens | null)[] | null;
   webhooks: (AppFragment_webhooks | null)[] | null;
 }

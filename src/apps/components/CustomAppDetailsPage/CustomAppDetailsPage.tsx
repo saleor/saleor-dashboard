@@ -1,6 +1,7 @@
+import { AppErrorFragment } from "@saleor/apps/types/AppErrorFragment";
 import AccountPermissions from "@saleor/components/AccountPermissions";
 import AppHeader from "@saleor/components/AppHeader";
-import AccountStatus from "@saleor/components/AppStatus";
+import AppStatus from "@saleor/components/AppStatus";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -9,33 +10,32 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { ServiceDetails_serviceAccount } from "@saleor/services/types/ServiceDetails";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
-import getAccountErrorMessage from "@saleor/utils/errors/account";
+import getAppErrorMessage from "@saleor/utils/errors/app";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ServiceDefaultToken from "../ServiceDefaultToken";
-import ServiceInfo from "../ServiceInfo";
-import ServiceTokens from "../ServiceTokens";
+import { AppUpdate_appUpdate_app } from "../../types/AppUpdate";
+import CustomAppDefaultToken from "../CustomAppDefaultToken";
+import CustomAppInformation from "../CustomAppInformation";
+import CustomAppTokens from "../CustomAppTokens";
 
-export interface ServiceDetailsPageFormData {
+export interface CustomAppDetailsPageFormData {
   hasFullAccess: boolean;
   isActive: boolean;
   name: string;
   permissions: PermissionEnum[];
 }
-export interface ServiceDetailsPageProps {
+export interface CustomAppDetailsPageProps {
   apiUri: string;
   disabled: boolean;
-  errors: AccountErrorFragment[];
+  errors: AppErrorFragment[];
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  service: ServiceDetails_serviceAccount;
+  app: AppUpdate_appUpdate_app;
   token: string;
   onApiUriClick: () => void;
   onBack: () => void;
@@ -43,17 +43,17 @@ export interface ServiceDetailsPageProps {
   onDelete: () => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
-  onSubmit: (data: ServiceDetailsPageFormData) => void;
+  onSubmit: (data: CustomAppDetailsPageFormData) => void;
 }
 
-const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
+const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   const {
     apiUri,
     disabled,
     errors,
     permissions,
     saveButtonBarState,
-    service,
+    app,
     token,
     onApiUriClick,
     onBack,
@@ -66,36 +66,33 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
   const intl = useIntl();
 
   const formErrors = getFormErrors(["permissions"], errors || []);
-  const permissionsError = getAccountErrorMessage(formErrors.permissions, intl);
+  const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
 
-  const initialForm: ServiceDetailsPageFormData = {
-    hasFullAccess: maybe(
-      () =>
-        permissions.filter(
-          perm =>
-            maybe(() => service.permissions, []).filter(
-              userPerm => userPerm.code === perm.code
-            ).length === 0
-        ).length === 0,
-      false
-    ),
-    isActive: maybe(() => service.isActive, false),
-    name: maybe(() => service.name, ""),
-    permissions: maybe(() => service.permissions, []).map(perm => perm.code)
+  const initialForm: CustomAppDetailsPageFormData = {
+    hasFullAccess:
+      permissions?.filter(
+        perm =>
+          app?.permissions?.filter(userPerm => userPerm.code === perm.code)
+            .length === 0
+      ).length === 0 || false,
+    isActive: !!app?.isActive,
+    name: app?.name || "",
+    permissions: app?.permissions?.map(perm => perm.code) || []
   };
+
   return (
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
       {({ data, change, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
-            {intl.formatMessage(sectionNames.serviceAccounts)}
+            {intl.formatMessage(sectionNames.apps)}
           </AppHeader>
-          <PageHeader title={maybe(() => service.name)} />
+          <PageHeader title={maybe(() => app.name)} />
           <Grid>
             <div>
               {token && (
                 <>
-                  <ServiceDefaultToken
+                  <CustomAppDefaultToken
                     apiUri={apiUri}
                     token={token}
                     onApiUriClick={onApiUriClick}
@@ -104,15 +101,15 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
                   <CardSpacer />
                 </>
               )}
-              <ServiceInfo
+              <CustomAppInformation
                 data={data}
                 disabled={disabled}
                 errors={errors}
                 onChange={change}
               />
               <CardSpacer />
-              <ServiceTokens
-                tokens={service?.tokens}
+              <CustomAppTokens
+                tokens={app?.tokens}
                 onCreate={onTokenCreate}
                 onDelete={onTokenDelete}
               />
@@ -126,7 +123,7 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
                 permissionsExceeded={false}
                 onChange={change}
                 fullAccessLabel={intl.formatMessage({
-                  defaultMessage: "User has full access to the store",
+                  defaultMessage: "Grant this account full access to the store",
                   description: "checkbox label"
                 })}
                 description={intl.formatMessage({
@@ -136,11 +133,11 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
                 })}
               />
               <CardSpacer />
-              <AccountStatus
+              <AppStatus
                 data={data}
                 disabled={disabled}
                 label={intl.formatMessage({
-                  defaultMessage: "Service account is active",
+                  defaultMessage: "App is active",
                   description: "checkbox label"
                 })}
                 onChange={change}
@@ -160,5 +157,5 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = props => {
   );
 };
 
-ServiceDetailsPage.displayName = "ServiceDetailsPage";
-export default ServiceDetailsPage;
+CustomAppDetailsPage.displayName = "CustomAppDetailsPage";
+export default CustomAppDetailsPage;

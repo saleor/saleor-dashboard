@@ -20,13 +20,22 @@ export enum AppListUrlSortField {
   active = "active"
 }
 
+export type CustomAppUrlDialog = "create-token" | "remove" | "remove-token";
+export type CustomAppUrlQueryParams = Dialog<CustomAppUrlDialog> & SingleAction;
+
 export const appsSection = "/apps/";
 export const appsListPath = appsSection;
 
+export const customAppListPath = "/apps/custom/";
+
 export const appPath = (id: string) => urlJoin(appsSection, id);
+export const customAppPath = (id: string) => urlJoin(customAppListPath, id);
 
 export const appUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
   appPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+export const customAppUrl = (id: string, params?: CustomAppUrlQueryParams) =>
+  customAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const appsListUrl = (params?: AppListUrlQueryParams) =>
   appsListPath + "?" + stringifyQs(params);

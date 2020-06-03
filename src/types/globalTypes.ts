@@ -901,6 +901,11 @@ export interface AppSortingInput {
   field: AppSortField;
 }
 
+export interface AppTokenInput {
+  name?: string | null;
+  app: string;
+}
+
 export interface AttributeAssignInput {
   id: string;
   type: AttributeTypeEnum;
