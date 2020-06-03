@@ -19,14 +19,16 @@ import CardContainer from "../CardContainer";
 
 export interface CustomAppsProps {
   appsList: AppsList_apps_edges[];
+  navigateToCustomApp: (id: string) => () => void;
   onCustomAppCreate?: () => void;
   onRemove: (id: string) => void;
 }
 
 const CustomApps: React.FC<CustomAppsProps> = ({
   appsList,
+  onCustomAppCreate,
   onRemove,
-  onCustomAppCreate
+  navigateToCustomApp
 }) => {
   const classes = useStyles({});
 
@@ -65,7 +67,11 @@ const CustomApps: React.FC<CustomAppsProps> = ({
           appsList,
           (app, index) =>
             app ? (
-              <TableRow key={app.node.id} className={classes.tableRow}>
+              <TableRow
+                key={app.node.id}
+                className={classes.tableRow}
+                onClick={navigateToCustomApp(app.node.id)}
+              >
                 <TableCell className={classes.colName}>
                   <span data-tc="name">{app.node.name}</span>
                   <ActiveText isActive={app.node.isActive} />

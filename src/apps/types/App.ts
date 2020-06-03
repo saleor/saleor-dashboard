@@ -20,6 +20,13 @@ export interface App_app_metadata {
   value: string;
 }
 
+export interface App_app_tokens {
+  __typename: "AppToken";
+  authToken: string | null;
+  id: string;
+  name: string | null;
+}
+
 export interface App_app_webhooks {
   __typename: "Webhook";
   name: string;
@@ -45,6 +52,7 @@ export interface App_app {
   version: string | null;
   privateMetadata: (App_app_privateMetadata | null)[];
   metadata: (App_app_metadata | null)[];
+  tokens: (App_app_tokens | null)[] | null;
   webhooks: (App_app_webhooks | null)[] | null;
   aboutApp: string | null;
   permissions: (App_app_permissions | null)[] | null;

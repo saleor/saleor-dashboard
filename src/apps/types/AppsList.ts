@@ -28,6 +28,13 @@ export interface AppsList_apps_edges_node_metadata {
   value: string;
 }
 
+export interface AppsList_apps_edges_node_tokens {
+  __typename: "AppToken";
+  authToken: string | null;
+  id: string;
+  name: string | null;
+}
+
 export interface AppsList_apps_edges_node_webhooks {
   __typename: "Webhook";
   name: string;
@@ -47,6 +54,7 @@ export interface AppsList_apps_edges_node {
   version: string | null;
   privateMetadata: (AppsList_apps_edges_node_privateMetadata | null)[];
   metadata: (AppsList_apps_edges_node_metadata | null)[];
+  tokens: (AppsList_apps_edges_node_tokens | null)[] | null;
   webhooks: (AppsList_apps_edges_node_webhooks | null)[] | null;
 }
 
