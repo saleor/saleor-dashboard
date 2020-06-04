@@ -27,9 +27,18 @@ export interface AppCreate_appCreate_app_tokens {
   name: string | null;
 }
 
+export interface AppCreate_appCreate_app_webhooks_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+}
+
 export interface AppCreate_appCreate_app_webhooks {
   __typename: "Webhook";
+  id: string;
   name: string;
+  isActive: boolean;
+  app: AppCreate_appCreate_app_webhooks_app;
 }
 
 export interface AppCreate_appCreate_app {

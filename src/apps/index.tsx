@@ -1,4 +1,5 @@
 import { sectionNames } from "@saleor/intl";
+import WebhooksRoutes from "@saleor/webhooks";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -79,6 +80,7 @@ const Component = () => {
             />
           )}
         />
+        <WebhooksRoutes />
       </Switch>
     </>
   );
