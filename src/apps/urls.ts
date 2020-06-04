@@ -20,7 +20,10 @@ export enum AppListUrlSortField {
   active = "active"
 }
 
-export type CustomAppUrlDialog = "create-token" | "remove" | "remove-token";
+export type CustomAppUrlDialog =
+  | "create-token"
+  | "remove-webhook"
+  | "remove-token";
 export type CustomAppUrlQueryParams = Dialog<CustomAppUrlDialog> & SingleAction;
 
 export const appsSection = "/apps/";

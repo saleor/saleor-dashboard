@@ -8,8 +8,8 @@ import { WebhookFilterInput, WebhookSortingInput } from "./../../types/globalTyp
 // GraphQL query operation: Webhooks
 // ====================================================
 
-export interface Webhooks_webhooks_edges_node_serviceAccount {
-  __typename: "ServiceAccount";
+export interface Webhooks_webhooks_edges_node_app {
+  __typename: "App";
   id: string;
   name: string | null;
 }
@@ -19,7 +19,7 @@ export interface Webhooks_webhooks_edges_node {
   id: string;
   name: string;
   isActive: boolean;
-  serviceAccount: Webhooks_webhooks_edges_node_serviceAccount;
+  app: Webhooks_webhooks_edges_node_app;
 }
 
 export interface Webhooks_webhooks_edges {

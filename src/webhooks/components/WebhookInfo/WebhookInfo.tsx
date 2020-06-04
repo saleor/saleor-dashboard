@@ -23,11 +23,7 @@ interface WebhookInfoProps {
   data: FormData;
   disabled: boolean;
   errors: WebhookErrorFragment[];
-  serviceDisplayValue: string;
-  services: SingleAutocompleteChoiceType[];
   onChange: (event: React.ChangeEvent<any>) => void;
-  serviceOnChange: (event: ChangeEvent) => void;
-  fetchServiceAccounts: (data: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -47,17 +43,12 @@ const useStyles = makeStyles(
 const WebhookInfo: React.FC<WebhookInfoProps> = ({
   data,
   disabled,
-  services,
-  serviceDisplayValue,
-  fetchServiceAccounts,
   errors,
-  onChange,
-  serviceOnChange
+  onChange
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
-  const serviceAccountError = errors.find(error => error.field === null);
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
 
   return (
@@ -94,23 +85,6 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
             description: "webhook specific information"
           })}
         </Typography>
-        <SingleAutocompleteSelectField
-          disabled={disabled}
-          displayValue={serviceDisplayValue}
-          label={intl.formatMessage({
-            defaultMessage: "Assign to Service Account"
-          })}
-          error={!!serviceAccountError}
-          helperText={getWebhookErrorMessage(serviceAccountError, intl)}
-          name="serviceAccount"
-          onChange={serviceOnChange}
-          value={data.serviceAccount}
-          choices={services}
-          fetchChoices={fetchServiceAccounts}
-          InputProps={{
-            autoComplete: "off"
-          }}
-        />
         <FormSpacer />
         <TextField
           disabled={disabled}

@@ -2,7 +2,6 @@ import { webhooksFragment } from "@saleor/fragments/webhooks";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
 import {
   WebhookDetails,
   WebhookDetailsVariables
@@ -58,7 +57,8 @@ const webhooksDetails = gql`
     }
   }
 `;
-export const TypedWebhooksDetailsQuery = TypedQuery<
+
+export const useWebhooksDetailsQuery = makeQuery<
   WebhookDetails,
   WebhookDetailsVariables
 >(webhooksDetails);

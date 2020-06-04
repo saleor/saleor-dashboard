@@ -11,10 +11,10 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import { sectionNames } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
+import WebhooksList from "@saleor/webhooks/components/WebhooksList";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -40,10 +40,12 @@ export interface CustomAppDetailsPageProps {
   onApiUriClick: () => void;
   onBack: () => void;
   onTokenDelete: (id: string) => void;
-  onDelete: () => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
   onSubmit: (data: CustomAppDetailsPageFormData) => void;
+  onWebhookCreate: () => void;
+  onWebhookRemove: (id: string) => void;
+  navigateToWebhookDetails: (id: string) => () => void;
 }
 
 const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
@@ -54,16 +56,20 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     permissions,
     saveButtonBarState,
     app,
+    navigateToWebhookDetails,
     token,
     onApiUriClick,
     onBack,
-    onDelete,
     onTokenClose,
     onTokenCreate,
     onTokenDelete,
-    onSubmit
+    onSubmit,
+    onWebhookCreate,
+    onWebhookRemove
   } = props;
   const intl = useIntl();
+
+  const webhooks = app?.webhooks;
 
   const formErrors = getFormErrors(["permissions"], errors || []);
   const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
@@ -87,7 +93,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.apps)}
           </AppHeader>
-          <PageHeader title={maybe(() => app.name)} />
+          <PageHeader title={app?.name} />
           <Grid>
             <div>
               {token && (
@@ -112,6 +118,13 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
                 tokens={app?.tokens}
                 onCreate={onTokenCreate}
                 onDelete={onTokenDelete}
+              />
+              <CardSpacer />
+              <WebhooksList
+                webhooks={webhooks}
+                onRemove={onWebhookRemove}
+                onRowClick={navigateToWebhookDetails}
+                onCreate={app?.isActive && onWebhookCreate}
               />
             </div>
             <div>
@@ -149,7 +162,6 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
             state={saveButtonBarState}
             onCancel={onBack}
             onSave={submit}
-            onDelete={onDelete}
           />
         </Container>
       )}
