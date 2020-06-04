@@ -1,9 +1,9 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
+import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import ExternalLink from "@saleor/components/ExternalLink";
@@ -106,85 +106,78 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         )}
         <div className={classes.hr} />
       </div>
-      <Grid spacing={3} container>
-        <Grid xs={12} item>
-          <Card>
-            <CardTitle
-              title={intl.formatMessage({
-                defaultMessage: "About this app",
-                description: "section header"
-              })}
-            />
-            <CardContent>
-              {!loading ? (
-                <ReactMarkdown source={data?.aboutApp} />
-              ) : (
-                <Skeleton />
+
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "About this app",
+            description: "section header"
+          })}
+        />
+        <CardContent>
+          {!loading ? <ReactMarkdown source={data?.aboutApp} /> : <Skeleton />}
+        </CardContent>
+      </Card>
+      <CardSpacer />
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "App permissions",
+            description: "section header"
+          })}
+        />
+        <CardContent>
+          {!loading ? (
+            <>
+              <Typography>
+                <FormattedMessage
+                  defaultMessage="This app has permissions to:"
+                  description="apps about permissions"
+                />
+              </Typography>
+              {!!data?.permissions?.length && (
+                <ul className={classes.permissionsContainer}>
+                  {data?.permissions?.map(perm => (
+                    <li key={perm.code}>{perm.name}</li>
+                  ))}
+                </ul>
               )}
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid xs={12} item>
-          <Card>
-            <CardTitle
-              title={intl.formatMessage({
-                defaultMessage: "App permissions",
-                description: "section header"
-              })}
-            />
-            <CardContent>
-              {!loading ? (
-                <>
-                  <Typography>
-                    <FormattedMessage
-                      defaultMessage="This app has permissions to:"
-                      description="apps about permissions"
-                    />
-                  </Typography>
-                  {!!data?.permissions?.length && (
-                    <ul className={classes.permissionsContainer}>
-                      {data?.permissions?.map(perm => (
-                        <li key={perm.code}>{perm.name}</li>
-                      ))}
-                    </ul>
-                  )}
-                </>
-              ) : (
-                <Skeleton />
-              )}
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid xs={12} item>
-          <Card>
-            <CardTitle
-              title={intl.formatMessage({
-                defaultMessage: "Data privacy",
-                description: "section header"
-              })}
-            />
-            <CardContent>
-              {!loading ? (
-                <>
-                  <Typography>{data?.dataPrivacy}</Typography>
-                  <ExternalLink
-                    className={classes.linkContainer}
-                    href={data?.dataPrivacyUrl}
-                    target="_blank"
-                  >
-                    <FormattedMessage
-                      defaultMessage="View this app’s privacy policy"
-                      description="app privacy policy link"
-                    />
-                  </ExternalLink>
-                </>
-              ) : (
-                <Skeleton />
-              )}
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+            </>
+          ) : (
+            <Skeleton />
+          )}
+        </CardContent>
+      </Card>
+      <CardSpacer />
+
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Data privacy",
+            description: "section header"
+          })}
+        />
+        <CardContent>
+          {!loading ? (
+            <>
+              <Typography>{data?.dataPrivacy}</Typography>
+              <ExternalLink
+                className={classes.linkContainer}
+                href={data?.dataPrivacyUrl}
+                target="_blank"
+              >
+                <FormattedMessage
+                  defaultMessage="View this app’s privacy policy"
+                  description="app privacy policy link"
+                />
+              </ExternalLink>
+            </>
+          ) : (
+            <Skeleton />
+          )}
+        </CardContent>
+      </Card>
+      <CardSpacer />
     </Container>
   );
 };
