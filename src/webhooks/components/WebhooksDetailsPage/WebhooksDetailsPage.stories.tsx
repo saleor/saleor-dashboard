@@ -9,6 +9,7 @@ import WebhooksDetailsPage, {
 } from "./WebhooksDetailsPage";
 
 const props: WebhooksDetailsPageProps = {
+  appName: "app",
   disabled: false,
   errors: [],
   onBack: () => undefined,
