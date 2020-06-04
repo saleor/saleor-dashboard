@@ -8,8 +8,8 @@ import { WebhookEventTypeEnum } from "./../../types/globalTypes";
 // GraphQL query operation: WebhookDetails
 // ====================================================
 
-export interface WebhookDetails_webhook_serviceAccount {
-  __typename: "ServiceAccount";
+export interface WebhookDetails_webhook_app {
+  __typename: "App";
   id: string;
   name: string | null;
 }
@@ -24,7 +24,7 @@ export interface WebhookDetails_webhook {
   id: string;
   name: string;
   isActive: boolean;
-  serviceAccount: WebhookDetails_webhook_serviceAccount;
+  app: WebhookDetails_webhook_app;
   events: WebhookDetails_webhook_events[];
   secretKey: string | null;
   targetUrl: string;

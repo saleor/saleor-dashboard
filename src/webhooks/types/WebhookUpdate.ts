@@ -14,8 +14,8 @@ export interface WebhookUpdate_webhookUpdate_errors {
   field: string | null;
 }
 
-export interface WebhookUpdate_webhookUpdate_webhook_serviceAccount {
-  __typename: "ServiceAccount";
+export interface WebhookUpdate_webhookUpdate_webhook_app {
+  __typename: "App";
   id: string;
   name: string | null;
 }
@@ -25,7 +25,7 @@ export interface WebhookUpdate_webhookUpdate_webhook {
   id: string;
   name: string;
   isActive: boolean;
-  serviceAccount: WebhookUpdate_webhookUpdate_webhook_serviceAccount;
+  app: WebhookUpdate_webhookUpdate_webhook_app;
 }
 
 export interface WebhookUpdate_webhookUpdate {

@@ -6,8 +6,8 @@
 // GraphQL fragment: WebhooksDetailsFragment
 // ====================================================
 
-export interface WebhooksDetailsFragment_serviceAccount {
-  __typename: "ServiceAccount";
+export interface WebhooksDetailsFragment_app {
+  __typename: "App";
   id: string;
   name: string | null;
 }
@@ -17,5 +17,5 @@ export interface WebhooksDetailsFragment {
   id: string;
   name: string;
   isActive: boolean;
-  serviceAccount: WebhooksDetailsFragment_serviceAccount;
+  app: WebhooksDetailsFragment_app;
 }

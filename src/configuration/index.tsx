@@ -14,7 +14,6 @@ import SiteSettings from "@saleor/icons/SiteSettings";
 import StaffMembers from "@saleor/icons/StaffMembers";
 import Taxes from "@saleor/icons/Taxes";
 import Warehouses from "@saleor/icons/Warehouses";
-import Webhooks from "@saleor/icons/Webhooks";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { menuListUrl } from "@saleor/navigation/urls";
@@ -29,7 +28,6 @@ import { staffListUrl } from "@saleor/staff/urls";
 import { taxSection } from "@saleor/taxes/urls";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { warehouseSection } from "@saleor/warehouses/urls";
-import { webhookListUrl } from "@saleor/webhooks/urls";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -195,15 +193,6 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permission: PermissionEnum.MANAGE_APPS,
           title: intl.formatMessage(sectionNames.serviceAccounts),
           url: serviceListUrl()
-        },
-        {
-          description: intl.formatMessage({
-            defaultMessage: "View and update your webhook and their settings"
-          }),
-          icon: <Webhooks fontSize="inherit" viewBox="0 0 44 44" />,
-          permission: PermissionEnum.MANAGE_APPS,
-          title: intl.formatMessage(sectionNames.webhooks),
-          url: webhookListUrl()
         }
       ]
     }

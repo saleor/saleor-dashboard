@@ -61,7 +61,6 @@ import TranslationsSection from "./translations";
 import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
-import WebhooksSection from "./webhooks";
 
 interface ResponseError extends ErrorResponse {
   networkError?: Error & {
@@ -258,11 +257,6 @@ const Routes: React.FC = () => {
                     permissions={[PermissionEnum.MANAGE_TRANSLATIONS]}
                     path="/translations"
                     component={TranslationsSection}
-                  />
-                  <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_APPS]}
-                    path="/webhooks"
-                    component={WebhooksSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_MENUS]}

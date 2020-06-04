@@ -1,3 +1,5 @@
+import TokenCreateDialog from "@saleor/apps/components/TokenCreateDialog";
+import TokenDeleteDialog from "@saleor/apps/components/TokenDeleteDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { API_URI } from "@saleor/config";
@@ -5,10 +7,12 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getStringOrPlaceholder, maybe } from "@saleor/misc";
-import ServiceTokenCreateDialog from "@saleor/services/components/ServiceTokenCreateDialog";
-import ServiceTokenDeleteDialog from "@saleor/services/components/ServiceTokenDeleteDialog";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
+import { useWebhookDeleteMutation } from "@saleor/webhooks/mutations";
+import { WebhookDelete } from "@saleor/webhooks/types/WebhookDelete";
+import { webhookAddPath, webhookPath } from "@saleor/webhooks/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -61,6 +65,29 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
     variables: { id }
   });
 
+  const onWebhookDelete = (data: WebhookDelete) => {
+    if (data.webhookDelete.errors.length === 0) {
+      notify({
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      navigate(customAppUrl(id));
+      closeModal();
+      refetch();
+    }
+  };
+
+  const [webhookDelete, webhookDeleteOpts] = useWebhookDeleteMutation({
+    onCompleted: onWebhookDelete
+  });
+
+  const handleRemoveWebhookConfirm = () => {
+    webhookDelete({
+      variables: {
+        id: params.id
+      }
+    });
+  };
+
   const onAppUpdate = (data: AppUpdate) => {
     if (data?.appUpdate?.errors?.length === 0) {
       notify({
@@ -89,6 +116,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       closeModal();
     }
   };
+
   const [updateApp, updateAppOpts] = useAppUpdateMutation({
     onCompleted: onAppUpdate
   });
@@ -130,6 +158,8 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       }
     });
 
+  const currentToken = data?.app?.tokens?.find(token => token.id === params.id);
+
   return (
     <>
       <WindowTitle title={getStringOrPlaceholder(customApp?.name)} />
@@ -138,9 +168,9 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         disabled={loading}
         errors={updateAppOpts.data?.appUpdate?.errors || []}
         token={token}
+        navigateToWebhookDetails={id => () => navigate(webhookPath(id))}
         onApiUriClick={() => open(API_URI, "blank")}
         onBack={handleBack}
-        onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
         onTokenClose={onTokenClose}
         onTokenCreate={() => openModal("create-token")}
@@ -149,30 +179,42 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
             id
           })
         }
+        onWebhookCreate={() => navigate(webhookAddPath(id))}
+        onWebhookRemove={id =>
+          openModal("remove-webhook", {
+            id
+          })
+        }
         permissions={shop?.permissions}
         app={data?.app}
         saveButtonBarState={updateAppOpts.status}
       />
-      <ServiceTokenCreateDialog
+      <TokenCreateDialog
         confirmButtonState={createTokenOpts.status}
         onClose={closeModal}
         onCreate={handleTokenCreate}
         open={params.action === "create-token"}
         token={createTokenOpts.data?.appTokenCreate.authToken}
       />
-      <ServiceTokenDeleteDialog
+      <TokenDeleteDialog
         confirmButtonState={deleteTokenOpts.status}
-        name={maybe(() => {
-          const token = data.app.tokens.find(token => token.id === params.id);
-          if (token.name) {
-            return token.name;
-          }
-
-          return `**** ${token.authToken}`;
-        }, "...")}
+        name={
+          currentToken?.name || currentToken?.authToken
+            ? `**** ${currentToken.authToken}`
+            : "..."
+        }
         onClose={closeModal}
         onConfirm={handleTokenDelete}
         open={params.action === "remove-token"}
+      />
+      <WebhookDeleteDialog
+        confirmButtonState={webhookDeleteOpts.status}
+        name={
+          data?.app?.webhooks.find(webhook => webhook.id === params.id)?.name
+        }
+        onClose={closeModal}
+        onConfirm={handleRemoveWebhookConfirm}
+        open={params.action === "remove-webhook"}
       />
     </>
   );
