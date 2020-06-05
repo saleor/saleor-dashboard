@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import TablePagination from "@saleor/components/TablePagination";
-import { renderCollection } from "@saleor/misc";
+import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -72,7 +72,11 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
             appsList,
             (app, index) =>
               app ? (
-                <TableRow key={app.node.id} className={classes.tableRow}>
+                <TableRow
+                  key={app.node.id}
+                  className={classes.tableRow}
+                  onClick={onRowClick(app.node.id)}
+                >
                   <TableCell className={classes.colName}>
                     <span data-tc="name" className={classes.appName}>
                       {app.node.name}
@@ -88,7 +92,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     </Button>
                     <IconButton
                       color="primary"
-                      onClick={() => onRemove(app.node.id)}
+                      onClick={stopPropagation(() => onRemove(app.node.id))}
                     >
                       <DeleteIcon />
                     </IconButton>

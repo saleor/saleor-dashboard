@@ -15,7 +15,7 @@ import { AppSortField, OrderDirection } from "../../../types/globalTypes";
 import AppDeleteDialog from "../../components/AppDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
 import {
-  useAppDelete,
+  useAppDeleteMutation,
   useAppInstallMutation,
   useAppManifestFetchMutation,
   useAppRetryInstallMutation
@@ -31,6 +31,7 @@ import {
   AppListUrlQueryParams,
   appsListUrl,
   appUrl,
+  customAppAddUrl,
   customAppUrl,
   MANIFEST_ATTR
 } from "../../urls";
@@ -85,7 +86,7 @@ export const AppsList: React.FC<AppsListProps> = ({ history, params }) => {
     AppListUrlQueryParams
   >(navigate, appsListUrl, params);
 
-  const [deleteApp, deleteAppOpts] = useAppDelete({
+  const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
     onCompleted: data => {
       onAppRemove(data);
       closeModal();
@@ -188,6 +189,7 @@ export const AppsList: React.FC<AppsListProps> = ({ history, params }) => {
         onAppInstallRetry={onAppInstallRetry}
         handleRemoveConfirm={handleRemoveConfirm}
         navigateToCustomApp={id => () => navigate(customAppUrl(id))}
+        navigateToCustomAppCreate={() => navigate(customAppAddUrl)}
         onInstalledAppRemove={id =>
           openModal("remove-app", {
             id

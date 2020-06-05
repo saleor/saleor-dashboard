@@ -39,6 +39,8 @@ export const appUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
 
 export const customAppUrl = (id: string, params?: CustomAppUrlQueryParams) =>
   customAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+export const customAppAddPath = urlJoin(customAppListPath, "add");
+export const customAppAddUrl = customAppAddPath;
 
 export const appsListUrl = (params?: AppListUrlQueryParams) =>
   appsListPath + "?" + stringifyQs(params);
