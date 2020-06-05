@@ -32,7 +32,7 @@ const AppStatus: React.FC<AppStatusProps> = ({
         })}
       />
       <CardContent>
-        <Typography>
+        <Typography variant="body2">
           <FormattedMessage defaultMessage="If you want to disable this App please uncheck the box below." />
         </Typography>
         <ControlledCheckbox

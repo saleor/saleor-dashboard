@@ -7,7 +7,7 @@ import commonErrorMessages from "./common";
 
 const messages = defineMessages({
   invalidManifestFormat: {
-    defaultMessage: "Manifest format is invalid"
+    defaultMessage: "Invalid manifest format"
   },
   invalidPermission: {
     defaultMessage: "Permission is invalid"
@@ -24,9 +24,8 @@ const messages = defineMessages({
   outOfScopeGroup: {
     defaultMessage: "Group is out of your permission scope"
   },
-
   outOfScopePermission: {
-    defaultMessage: "Permission is out of your permissions scope"
+    defaultMessage: "Permission is out of your scope"
   },
   unique: {
     defaultMessage: "This needs to be unique"
