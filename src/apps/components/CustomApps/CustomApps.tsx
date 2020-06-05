@@ -73,7 +73,9 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                 onClick={navigateToCustomApp(app.node.id)}
               >
                 <TableCell className={classes.colName}>
-                  <span data-tc="name">{app.node.name}</span>
+                  <span data-tc="name" className={classes.appName}>
+                    {app.node.name}
+                  </span>
                   <ActiveText isActive={app.node.isActive} />
                 </TableCell>
                 <TableCell className={classes.colAction}>

@@ -8,7 +8,7 @@ export const commonMessages = defineMessages({
     defaultMessage: "Catalog"
   },
   customApps: {
-    defaultMessage: "Custom Apps"
+    defaultMessage: "Local Apps"
   },
   dashboard: {
     defaultMessage: "Dashboard"
