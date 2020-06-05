@@ -9,6 +9,9 @@ export const useStyles = makeStyles(
         }
       }
     },
+    alignRight: {
+      textAlign: "right"
+    },
     appContainer: {
       marginBottom: theme.spacing(3)
     },
@@ -90,6 +93,9 @@ export const useStyles = makeStyles(
       marginBottom: 0,
       marginTop: 0,
       width: "100%"
+    },
+    installText: {
+      color: theme.palette.primary.contrastText
     },
     linkContainer: {
       fontWeight: 500,

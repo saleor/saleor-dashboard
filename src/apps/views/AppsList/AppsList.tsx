@@ -9,15 +9,12 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
-import { RouteComponentProps } from "react-router-dom";
 
 import { AppSortField, OrderDirection } from "../../../types/globalTypes";
 import AppDeleteDialog from "../../components/AppDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
 import {
   useAppDeleteMutation,
-  useAppInstallMutation,
-  useAppManifestFetchMutation,
   useAppRetryInstallMutation
 } from "../../mutations";
 import {
@@ -32,17 +29,16 @@ import {
   appsListUrl,
   appUrl,
   customAppAddUrl,
-  customAppUrl,
-  MANIFEST_ATTR
+  customAppUrl
 } from "../../urls";
 
 const getCurrentAppName = (id: string, collection?: AppsList_apps_edges[]) =>
   collection?.find(edge => edge.node.id === id)?.node?.name;
-interface AppsListProps extends RouteComponentProps {
+interface AppsListProps {
   params: AppListUrlQueryParams;
 }
 
-export const AppsList: React.FC<AppsListProps> = ({ history, params }) => {
+export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const { action } = params;
   const notify = useNotifier();
   const intl = useIntl();
@@ -57,9 +53,6 @@ export const AppsList: React.FC<AppsListProps> = ({ history, params }) => {
       field: AppSortField.CREATION_DATE
     }
   };
-
-  const [fetchManifest, fetchManifestResult] = useAppManifestFetchMutation({});
-  const [installApp] = useAppInstallMutation({});
   const [retryInstallApp, installRetryAppResult] = useAppRetryInstallMutation(
     {}
   );
@@ -92,39 +85,6 @@ export const AppsList: React.FC<AppsListProps> = ({ history, params }) => {
       closeModal();
     }
   });
-
-  useEffect(() => {
-    const manifestUrl = params[MANIFEST_ATTR];
-    if (manifestUrl) {
-      fetchManifest({ variables: { manifestUrl } });
-    }
-  }, []);
-
-  useEffect(() => {
-    const manifestUrl = params[MANIFEST_ATTR];
-    const { data, status } = fetchManifestResult;
-    if (manifestUrl && data && status === "success") {
-      const {
-        data: {
-          appFetchManifest: { manifest }
-        }
-      } = fetchManifestResult;
-      if (manifest) {
-        installApp({
-          variables: {
-            input: {
-              appName: manifest.name,
-              manifestUrl,
-              permissions: manifest.permissions.map(
-                permission => permission.code
-              )
-            }
-          }
-        });
-      }
-      history.replace(history.location.pathname);
-    }
-  }, [fetchManifestResult.status]);
 
   useEffect(() => {
     const { data, status } = installRetryAppResult;
