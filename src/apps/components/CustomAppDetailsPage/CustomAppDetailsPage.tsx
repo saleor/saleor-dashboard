@@ -136,7 +136,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
                 permissionsExceeded={false}
                 onChange={change}
                 fullAccessLabel={intl.formatMessage({
-                  defaultMessage: "Grant this account full access to the store",
+                  defaultMessage: "Grant this app full access to the store",
                   description: "checkbox label"
                 })}
                 description={intl.formatMessage({

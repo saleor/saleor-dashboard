@@ -7,7 +7,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { commonMessages } from "@saleor/intl";
-import { renderCollection } from "@saleor/misc";
+import { renderCollection, stopPropagation } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -20,13 +20,13 @@ import CardContainer from "../CardContainer";
 export interface CustomAppsProps {
   appsList: AppsList_apps_edges[];
   navigateToCustomApp: (id: string) => () => void;
-  onCustomAppCreate?: () => void;
+  navigateToCustomAppCreate?: () => void;
   onRemove: (id: string) => void;
 }
 
 const CustomApps: React.FC<CustomAppsProps> = ({
   appsList,
-  onCustomAppCreate,
+  navigateToCustomAppCreate,
   onRemove,
   navigateToCustomApp
 }) => {
@@ -39,8 +39,8 @@ const CustomApps: React.FC<CustomAppsProps> = ({
           <CardHeader
             className={classes.title}
             action={
-              !!onCustomAppCreate && (
-                <Button color="primary" onClick={onCustomAppCreate}>
+              !!navigateToCustomAppCreate && (
+                <Button color="primary" onClick={navigateToCustomAppCreate}>
                   <FormattedMessage
                     defaultMessage="Create App"
                     description="create app button"
@@ -81,7 +81,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                 <TableCell className={classes.colAction}>
                   <IconButton
                     color="primary"
-                    onClick={() => onRemove(app.node.id)}
+                    onClick={stopPropagation(() => onRemove(app.node.id))}
                   >
                     <DeleteIcon />
                   </IconButton>
