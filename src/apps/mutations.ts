@@ -1,4 +1,5 @@
 import makeMutation from "@saleor/hooks/makeMutation";
+import { webhooksFragment } from "@saleor/webhooks/queries";
 import gql from "graphql-tag";
 
 import { appFragment } from "./queries";
@@ -33,6 +34,7 @@ export const appError = gql`
 
 export const appCreateMutation = gql`
   ${appFragment}
+  ${webhooksFragment}
   ${appError}
   mutation AppCreate($input: AppInput!) {
     appCreate(input: $input) {
@@ -49,6 +51,7 @@ export const appCreateMutation = gql`
 
 export const appDeleteMutation = gql`
   ${appFragment}
+  ${webhooksFragment}
   ${appError}
   mutation AppDelete($id: ID!) {
     appDelete(id: $id) {
@@ -150,6 +153,7 @@ export const appDeactivateMutation = gql`
 export const appUpdateMutation = gql`
   ${appError}
   ${appFragment}
+  ${webhooksFragment}
   mutation AppUpdate($id: ID!, $input: AppInput!) {
     appUpdate(id: $id, input: $input) {
       app {
@@ -201,11 +205,11 @@ export const appTokenDeleteMutation = gql`
   }
 `;
 
-export const useAppCreate = makeMutation<AppCreate, AppCreateVariables>(
+export const useAppCreateMutation = makeMutation<AppCreate, AppCreateVariables>(
   appCreateMutation
 );
 
-export const useAppDelete = makeMutation<AppDelete, AppDeleteVariables>(
+export const useAppDeleteMutation = makeMutation<AppDelete, AppDeleteVariables>(
   appDeleteMutation
 );
 

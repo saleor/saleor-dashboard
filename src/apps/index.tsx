@@ -10,12 +10,14 @@ import {
   AppDetailsUrlQueryParams,
   AppListUrlQueryParams,
   appPath,
+  appsListPath,
+  customAppAddPath,
   customAppPath,
   CustomAppUrlQueryParams
 } from "./urls";
-import { appsListPath } from "./urls";
 import AppDetailsView from "./views/AppDetails";
 import AppsListView from "./views/AppsList";
+import CustomAppCreateView from "./views/CustomAppCreate";
 import CustomAppDetailsView from "./views/CustomAppDetails";
 
 const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
@@ -71,6 +73,10 @@ const Component = () => {
         <Route exact path={appPath(":id")} component={AppDetails} />
         <Route
           exact
+          path={customAppAddPath}
+          render={() => <CustomAppCreateView setToken={setToken} />}
+        />
+        <Route
           path={customAppPath(":id")}
           render={props => (
             <CustomAppDetails
@@ -80,6 +86,7 @@ const Component = () => {
             />
           )}
         />
+
         <WebhooksRoutes />
       </Switch>
     </>
