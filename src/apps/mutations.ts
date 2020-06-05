@@ -2,7 +2,9 @@ import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { appFragment } from "./queries";
+import { AppActivate, AppActivateVariables } from "./types/AppActivate";
 import { AppCreate, AppCreateVariables } from "./types/AppCreate";
+import { AppDeactivate, AppDeactivateVariables } from "./types/AppDeactivate";
 import { AppDelete, AppDeleteVariables } from "./types/AppDelete";
 import { AppFetch, AppFetchVariables } from "./types/AppFetch";
 import { AppInstall, AppInstallVariables } from "./types/AppInstall";
@@ -110,6 +112,28 @@ export const appRetryInstallMutation = gql`
   }
 `;
 
+export const appActivateMutation = gql`
+  ${appError}
+  mutation AppActivate($id: ID!) {
+    appActivate(id: $id) {
+      errors: appErrors {
+        ...AppErrorFragment
+      }
+    }
+  }
+`;
+
+export const appDeactivateMutation = gql`
+  ${appError}
+  mutation AppDeactivate($id: ID!) {
+    appDeactivate(id: $id) {
+      errors: appErrors {
+        ...AppErrorFragment
+      }
+    }
+  }
+`;
+
 export const useAppCreate = makeMutation<AppCreate, AppCreateVariables>(
   appCreateMutation
 );
@@ -129,3 +153,12 @@ export const useAppManifestFetchMutation = makeMutation<
   AppFetch,
   AppFetchVariables
 >(appFetchMutation);
+
+export const useAppActivateMutation = makeMutation<
+  AppActivate,
+  AppActivateVariables
+>(appActivateMutation);
+export const useAppDeactivateMutation = makeMutation<
+  AppDeactivate,
+  AppDeactivateVariables
+>(appDeactivateMutation);
