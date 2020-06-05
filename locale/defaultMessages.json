@@ -414,6 +414,65 @@
     "context": "app installation",
     "string": "Installing app..."
   },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_1336855942": {
+    "string": "Generated Token"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_2080322626": {
+    "string": "This token gives you access to your shop's API, which you'll find here: {url}"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_2864204643": {
+    "context": "button",
+    "string": "Copied"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_3406541221": {
+    "context": "button",
+    "string": "Copy token"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_4189999598": {
+    "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_1743577105": {
+    "context": "checkbox label",
+    "string": "Grant this account full access to the store"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_3076071936": {
+    "context": "card description",
+    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_570656367": {
+    "context": "checkbox label",
+    "string": "App is active"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppInformation_dot_2860466085": {
+    "context": "header",
+    "string": "App Information"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppInformation_dot_3001692357": {
+    "context": "custom app name",
+    "string": "App Name"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_2446088470": {
+    "context": "custom app token key",
+    "string": "Key"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_2639089057": {
+    "string": "No tokens found"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_3209034045": {
+    "context": "header",
+    "string": "Tokens"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_3875340101": {
+    "context": "button",
+    "string": "Create Token"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_4017491013": {
+    "string": "Token Note"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_4190792473": {
+    "context": "table actions",
+    "string": "Actions"
+  },
   "src_dot_apps_dot_components_dot_CustomApps_dot_3152347892": {
     "context": "custom apps content",
     "string": "Your custom created apps will be shown here."
@@ -422,6 +481,10 @@
     "context": "create app button",
     "string": "Create App"
   },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_1554529776": {
+    "context": "section header",
+    "string": "External Apps"
+  },
   "src_dot_apps_dot_components_dot_InstalledApps_dot_1636202177": {
     "context": "about app",
     "string": "About"
@@ -429,10 +492,6 @@
   "src_dot_apps_dot_components_dot_InstalledApps_dot_186286611": {
     "context": "apps content",
     "string": "You don’t have any installed apps in your dashboard"
-  },
-  "src_dot_apps_dot_components_dot_InstalledApps_dot_917140256": {
-    "context": "section header",
-    "string": "Installed Apps"
   },
   "src_dot_apps_dot_components_dot_Marketplace_dot_2932910073": {
     "context": "section header",
@@ -449,6 +508,38 @@
   "src_dot_apps_dot_components_dot_Marketplace_dot_52985091": {
     "context": "marketplace content",
     "string": "Discover great free and paid apps in our Saleor Marketplace."
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_1336855942": {
+    "string": "Generated Token"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_2530792168": {
+    "string": "Access token is used to authenticate service accounts"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_3009959880": {
+    "string": "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_3406541221": {
+    "context": "button",
+    "string": "Copy token"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_3875340101": {
+    "context": "header",
+    "string": "Create Token"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_4017491013": {
+    "string": "Token Note"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_4120989039": {
+    "context": "create service token, button",
+    "string": "Create"
+  },
+  "src_dot_apps_dot_components_dot_TokenDeleteDialog_dot_2164262076": {
+    "context": "dialog title",
+    "string": "Delete Token"
+  },
+  "src_dot_apps_dot_components_dot_TokenDeleteDialog_dot_981802752": {
+    "context": "delete token",
+    "string": "Are you sure you want to delete token {token}?"
   },
   "src_dot_attributes": {
     "context": "attributes section name",
@@ -1083,13 +1174,6 @@
     "context": "permission list item description",
     "string": "This group is last source of that permission"
   },
-  "src_dot_components_dot_AccountStatus_dot_2183517419": {
-    "context": "section header",
-    "string": "Account Status"
-  },
-  "src_dot_components_dot_AccountStatus_dot_2683780981": {
-    "string": "If you want to disable this account uncheck the box below"
-  },
   "src_dot_components_dot_AddressEdit_dot_1139500589": {
     "string": "Country"
   },
@@ -1121,6 +1205,13 @@
   "src_dot_components_dot_AppLayout_dot_248888005": {
     "context": "button",
     "string": "Account Settings"
+  },
+  "src_dot_components_dot_AppStatus_dot_1624959454": {
+    "string": "If you want to disable this App please uncheck the box below."
+  },
+  "src_dot_components_dot_AppStatus_dot_1750277107": {
+    "context": "section header",
+    "string": "App Status"
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_1305061437": {
     "string": "Search Categories"
@@ -1594,9 +1685,6 @@
   "src_dot_configuration_dot_1440737903": {
     "string": "Shipping Settings"
   },
-  "src_dot_configuration_dot_1639245766": {
-    "string": "View and update your webhook and their settings"
-  },
   "src_dot_configuration_dot_2326418019": {
     "string": "Attributes and Product Typess"
   },
@@ -1629,7 +1717,7 @@
     "string": "Create"
   },
   "src_dot_customApps": {
-    "string": "Custom Apps"
+    "string": "Local Apps"
   },
   "src_dot_customers": {
     "context": "customers section name",
@@ -5332,6 +5420,9 @@
   "src_dot_utils_dot_errors_dot_invalid": {
     "string": "Invalid value"
   },
+  "src_dot_utils_dot_errors_dot_invalidManifestFormat": {
+    "string": "Invalid manifest format"
+  },
   "src_dot_utils_dot_errors_dot_invalidPassword": {
     "string": "Invalid password"
   },
@@ -5361,6 +5452,9 @@
   },
   "src_dot_utils_dot_errors_dot_outOfScopeGroup": {
     "string": "Group is out of your permission scope"
+  },
+  "src_dot_utils_dot_errors_dot_outOfScopePermission": {
+    "string": "Permission is out of your scope"
   },
   "src_dot_utils_dot_errors_dot_outOfScopeUser": {
     "string": "User is out of your permissions scope"
@@ -5587,9 +5681,6 @@
     "context": "webhook specific information",
     "string": "Webhook specific information"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_819389696": {
-    "string": "Assign to Service Account"
-  },
   "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_2772025990": {
     "context": "webhooks active",
     "string": "Webhook is active"
@@ -5610,31 +5701,16 @@
     "context": "header",
     "string": "{webhookName} Details"
   },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_1432828311": {
-    "string": "Search Webhooks"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_2295583901": {
-    "context": "button",
-    "string": "Create webhook"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_3300314452": {
-    "context": "tab name",
-    "string": "All Webhooks"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_active": {
-    "context": "webhook",
-    "string": "Active"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_inactive": {
-    "context": "webhook",
-    "string": "Inactive"
-  },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_1153324159": {
     "string": "No webhooks found"
   },
-  "src_dot_webhooks_dot_components_dot_WebhooksList_dot_2487865635": {
-    "context": "webhook service account",
-    "string": "Service Account"
+  "src_dot_webhooks_dot_components_dot_WebhooksList_dot_3493926696": {
+    "context": "button",
+    "string": "Create Webhook"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhooksList_dot_3861572549": {
+    "context": "header",
+    "string": "Webhooks"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_4120604650": {
     "context": "user action bar",

@@ -141,7 +141,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
                 })}
                 description={intl.formatMessage({
                   defaultMessage:
-                    "Expand or restrict user's permissions to access certain part of saleor system.",
+                    "Expand or restrict app permissions to access certain part of Saleor system.",
                   description: "card description"
                 })}
               />
