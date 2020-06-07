@@ -19,6 +19,7 @@ interface UserContext {
   loginByToken: (token: string, user: User) => void;
   logout: () => void;
   tokenAuthLoading: boolean;
+  tokenRefresh: () => Promise<void>;
   tokenVerifyLoading: boolean;
   user?: User;
 }
@@ -28,6 +29,7 @@ export const UserContext = React.createContext<UserContext>({
   loginByToken: undefined,
   logout: undefined,
   tokenAuthLoading: false,
+  tokenRefresh: undefined,
   tokenVerifyLoading: false
 });
 

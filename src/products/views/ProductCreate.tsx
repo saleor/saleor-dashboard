@@ -9,31 +9,16 @@ import useShop from "@saleor/hooks/useShop";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+import { useWarehouseList } from "@saleor/warehouses/queries";
 import { decimal, maybe } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
 import { TypedProductCreateMutation } from "../mutations";
 import { ProductCreate } from "../types/ProductCreate";
-import {
-  productListUrl,
-  productUrl,
-  ProductAddUrlDialog,
-  ProductAddUrlQueryParams,
-  productAddUrl
-} from "../urls";
-import ProductWarehousesDialog from "../components/ProductWarehousesDialog";
+import { productListUrl, productUrl } from "../urls";
 
-interface ProductCreateViewProps {
-  params: ProductAddUrlQueryParams;
-}
-
-export const ProductCreateView: React.FC<ProductCreateViewProps> = ({
-  params
-}) => {
+export const ProductCreateView: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -59,20 +44,12 @@ export const ProductCreateView: React.FC<ProductCreateViewProps> = ({
   } = useProductTypeSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-  const { result: searchWarehousesOpts } = useWarehouseSearch({
+  const warehouses = useWarehouseList({
+    displayLoader: true,
     variables: {
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 20
+      first: 50
     }
   });
-  const [warehouses, setWarehouses] = React.useState<
-    SearchWarehouses_search_edges_node[]
-  >([]);
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    ProductAddUrlDialog,
-    ProductAddUrlQueryParams
-  >(navigate, productAddUrl, params);
 
   const handleBack = () => navigate(productListUrl());
 
@@ -153,7 +130,6 @@ export const ProductCreateView: React.FC<ProductCreateViewProps> = ({
               productTypes={maybe(() =>
                 searchProductTypesOpts.data.search.edges.map(edge => edge.node)
               )}
-              warehouses={warehouses}
               onBack={handleBack}
               onSubmit={handleSubmit}
               saveButtonBarState={productCreateOpts.status}
@@ -178,32 +154,9 @@ export const ProductCreateView: React.FC<ProductCreateViewProps> = ({
                 loading: searchProductTypesOpts.loading,
                 onFetchMore: loadMoreProductTypes
               }}
-              onWarehouseEdit={() => openModal("edit-stocks")}
-            />
-            <ProductWarehousesDialog
-              confirmButtonState="default"
-              disabled={false}
-              errors={[]}
-              onClose={closeModal}
-              open={params.action === "edit-stocks"}
-              warehouses={searchWarehousesOpts.data?.search.edges.map(
-                edge => edge.node
-              )}
-              warehousesWithStocks={warehouses.map(warehouse => warehouse.id)}
-              onConfirm={data => {
-                setWarehouses(
-                  [
-                    ...warehouses,
-                    ...data.added.map(
-                      addedId =>
-                        searchWarehousesOpts.data.search.edges.find(
-                          edge => edge.node.id === addedId
-                        ).node
-                    )
-                  ].filter(warehouse => !data.removed.includes(warehouse.id))
-                );
-                closeModal();
-              }}
+              warehouses={
+                warehouses.data?.warehouses.edges.map(edge => edge.node) || []
+              }
             />
           </>
         );

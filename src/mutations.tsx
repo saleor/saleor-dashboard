@@ -6,8 +6,10 @@ import { useIntl } from "react-intl";
 
 import useNotifier from "./hooks/useNotifier";
 import { commonMessages } from "./intl";
-import { maybe, getMutationStatus } from "./misc";
+import { getMutationStatus } from "./misc";
 import { MutationResultAdditionalProps } from "./types";
+import { isJwtError } from "./auth/errors";
+import useUser from "./hooks/useUser";
 
 export interface TypedMutationInnerProps<TData, TVariables> {
   children: (
@@ -27,6 +29,7 @@ export function TypedMutation<TData, TVariables>(
   return (props: TypedMutationInnerProps<TData, TVariables>) => {
     const notify = useNotifier();
     const intl = useIntl();
+    const user = useUser();
     const { children, onCompleted, onError, variables } = props;
 
     return (
@@ -34,15 +37,22 @@ export function TypedMutation<TData, TVariables>(
         mutation={mutation}
         onCompleted={onCompleted}
         onError={(err: ApolloError) => {
+          if (err.networkError) {
+            notify({
+              text: intl.formatMessage(commonMessages.somethingWentWrong)
+            });
+          }
           if (
-            maybe(
-              () =>
-                err.graphQLErrors[0].extensions.exception.code ===
-                "ReadOnlyException"
-            )
+            err.graphQLErrors[0].extensions.exception?.code ===
+            "ReadOnlyException"
           ) {
             notify({
               text: intl.formatMessage(commonMessages.readOnly)
+            });
+          } else if (err.graphQLErrors.some(isJwtError)) {
+            user.logout();
+            notify({
+              text: intl.formatMessage(commonMessages.sessionExpired)
             });
           } else {
             notify({

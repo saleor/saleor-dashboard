@@ -208,7 +208,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     >
       <DialogTitle>
         <FormattedMessage
-          defaultMessage="Create Product"
+          defaultMessage="Add Product"
           description="dialog header"
         />
       </DialogTitle>

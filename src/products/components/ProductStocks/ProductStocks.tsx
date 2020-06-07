@@ -1,4 +1,8 @@
-import Button from "@material-ui/core/Button";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Popper from "@material-ui/core/Popper";
+import { fade } from "@material-ui/core/styles/colorManipulator";
+import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Table from "@material-ui/core/Table";
@@ -11,6 +15,10 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { useIntl, FormattedMessage } from "react-intl";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Paper from "@material-ui/core/Paper";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetAtomicData } from "@saleor/hooks/useFormset";
@@ -21,7 +29,8 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { renderCollection } from "@saleor/misc";
-import Link from "@saleor/components/Link";
+import { ICONBUTTON_SIZE } from "@saleor/theme";
+import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 
 export type ProductStockInput = FormsetAtomicData<null, string>;
 export interface ProductStockFormData {
@@ -34,13 +43,19 @@ export interface ProductStocksProps {
   disabled: boolean;
   errors: UserError[];
   stocks: ProductStockInput[];
+  warehouses: WarehouseFragment[];
   onChange: FormsetChange;
   onFormDataChange: FormChange;
-  onWarehousesEdit: () => void;
+  onWarehouseStockAdd: (warehouseId: string) => void;
+  onWarehouseStockDelete: (warehouseId: string) => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
+    colAction: {
+      padding: 0,
+      width: ICONBUTTON_SIZE + theme.spacing()
+    },
     colName: {},
     colQuantity: {
       textAlign: "right",
@@ -55,6 +70,19 @@ const useStyles = makeStyles(
     },
     inputComponent: {
       width: 100
+    },
+    menuItem: {
+      "&:not(:last-of-type)": {
+        marginBottom: theme.spacing(2)
+      }
+    },
+    paper: {
+      padding: theme.spacing(2)
+    },
+    popper: {
+      boxShadow: `0px 5px 10px 0 ${fade(theme.palette.common.black, 0.05)}`,
+      marginTop: theme.spacing(1),
+      zIndex: 2
     },
     quantityContainer: {
       paddingTop: theme.spacing()
@@ -80,12 +108,20 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   disabled,
   errors,
   stocks,
+  warehouses,
   onChange,
   onFormDataChange,
-  onWarehousesEdit
+  onWarehouseStockAdd,
+  onWarehouseStockDelete
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
+  const anchor = React.useRef<HTMLDivElement>();
+  const [isExpanded, setExpansionState] = React.useState(false);
+
+  const warehousesToAssign = warehouses.filter(
+    warehouse => !stocks.some(stock => stock.id === warehouse.id)
+  );
 
   return (
     <Card>
@@ -140,17 +176,6 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 description="header"
               />
             </span>
-            <Button
-              className={classes.editWarehouses}
-              color="primary"
-              data-cy="edit-warehouses"
-              onClick={onWarehousesEdit}
-            >
-              <FormattedMessage
-                defaultMessage="Edit Warehouses"
-                description="button"
-              />
-            </Button>
           </div>
         </Typography>
       </CardContent>
@@ -169,44 +194,89 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 description="tabel column header"
               />
             </TableCell>
+            <TableCell className={classes.colAction} />
           </TableRow>
         </TableHead>
         <TableBody>
-          {renderCollection(
-            stocks,
-            stock => (
-              <TableRow key={stock.id}>
-                <TableCell className={classes.colName}>{stock.label}</TableCell>
-                <TableCell className={classes.colQuantity}>
-                  <TextField
-                    className={classes.inputComponent}
-                    disabled={disabled}
-                    fullWidth
-                    inputProps={{
-                      className: classes.input,
-                      min: 0,
-                      type: "number"
-                    }}
-                    onChange={event => onChange(stock.id, event.target.value)}
-                    value={stock.value}
-                  />
-                </TableCell>
-              </TableRow>
-            ),
-            () => (
-              <TableRow>
-                <TableCell colSpan={2}>
+          {renderCollection(stocks, stock => (
+            <TableRow key={stock.id}>
+              <TableCell className={classes.colName}>{stock.label}</TableCell>
+              <TableCell className={classes.colQuantity}>
+                <TextField
+                  className={classes.inputComponent}
+                  disabled={disabled}
+                  fullWidth
+                  inputProps={{
+                    className: classes.input,
+                    min: 0,
+                    type: "number"
+                  }}
+                  onChange={event => onChange(stock.id, event.target.value)}
+                  value={stock.value}
+                />
+              </TableCell>
+              <TableCell className={classes.colAction}>
+                <IconButton
+                  color="primary"
+                  onClick={() => onWarehouseStockDelete(stock.id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+          {warehousesToAssign.length > 0 && (
+            <TableRow>
+              <TableCell colSpan={2}>
+                <Typography variant="body2">
                   <FormattedMessage
-                    defaultMessage={
-                      "This product doesn't have any stock. You can add it <l>here</l>."
-                    }
-                    values={{
-                      l: str => <Link onClick={onWarehousesEdit}>{str}</Link>
-                    }}
+                    defaultMessage="Assign Warehouse"
+                    description="button"
                   />
-                </TableCell>
-              </TableRow>
-            )
+                </Typography>
+              </TableCell>
+              <TableCell className={classes.colAction}>
+                <ClickAwayListener onClickAway={() => setExpansionState(false)}>
+                  <div ref={anchor}>
+                    <IconButton
+                      color="primary"
+                      onClick={() => setExpansionState(!isExpanded)}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                    <Popper
+                      className={classes.popper}
+                      open={isExpanded}
+                      anchorEl={anchor.current}
+                      transition
+                      placement="top-end"
+                    >
+                      {({ TransitionProps }) => (
+                        <Grow
+                          {...TransitionProps}
+                          style={{
+                            transformOrigin: "right top"
+                          }}
+                        >
+                          <Paper className={classes.paper}>
+                            {warehousesToAssign.map(warehouse => (
+                              <MenuItem
+                                className={classes.menuItem}
+                                onClick={() =>
+                                  onWarehouseStockAdd(warehouse.id)
+                                }
+                              >
+                                {warehouse.name}
+                              </MenuItem>
+                            ))}
+                          </Paper>
+                        </Grow>
+                      )}
+                    </Popper>
+                  </div>
+                </ClickAwayListener>
+              </TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>

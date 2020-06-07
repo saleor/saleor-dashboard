@@ -147,7 +147,8 @@ export default (colors: IThemeColors): Theme =>
           },
           "&::placeholder": {
             opacity: "1 !important" as any
-          }
+          },
+          color: colors.font.default
         },
         underline: {
           "&:after": {
@@ -198,7 +199,7 @@ export default (colors: IThemeColors): Theme =>
               color: colors.primary
             }
           },
-          color: colors.input.text
+          color: fade(colors.input.text, 0.6)
         },
         shrink: {
           // Negates x0.75 scale

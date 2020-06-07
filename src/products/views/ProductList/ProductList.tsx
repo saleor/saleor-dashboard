@@ -306,7 +306,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                                 .hasNextPage,
                             false
                           )}
-                          onAdd={() => navigate(productAddUrl())}
+                          onAdd={() => navigate(productAddUrl)}
                           disabled={loading}
                           products={maybe(() =>
                             data.products.edges.map(edge => edge.node)

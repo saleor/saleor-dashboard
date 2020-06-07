@@ -51,7 +51,6 @@ interface ProductVariantCreatePageProps {
   onBack: () => void;
   onSubmit: (data: ProductVariantCreatePageSubmitData) => void;
   onVariantClick: (variantId: string) => void;
-  onWarehouseEdit: () => void;
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
@@ -64,8 +63,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   warehouses,
   onBack,
   onSubmit,
-  onVariantClick,
-  onWarehouseEdit
+  onVariantClick
 }) => {
   const intl = useIntl();
   const attributeInput = React.useMemo(
@@ -75,18 +73,12 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   const { change: changeAttributeData, data: attributes } = useFormset(
     attributeInput
   );
-  const { change: changeStockData, data: stocks, set: setStocks } = useFormset<
-    null
-  >([]);
-  React.useEffect(() => {
-    const newStocks = warehouses.map(warehouse => ({
-      data: null,
-      id: warehouse.id,
-      label: warehouse.name,
-      value: stocks.find(stock => stock.id === warehouse.id)?.value || 0
-    }));
-    setStocks(newStocks);
-  }, [JSON.stringify(warehouses)]);
+  const {
+    add: addStock,
+    change: changeStockData,
+    data: stocks,
+    remove: removeStock
+  } = useFormset<null, string>([]);
 
   const initialForm: ProductVariantCreatePageFormData = {
     costPrice: "",
@@ -148,11 +140,28 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 <ProductStocks
                   data={data}
                   disabled={disabled}
-                  onChange={changeStockData}
                   onFormDataChange={change}
                   errors={errors}
                   stocks={stocks}
-                  onWarehousesEdit={onWarehouseEdit}
+                  warehouses={warehouses}
+                  onChange={(id, value) => {
+                    triggerChange();
+                    changeStockData(id, value);
+                  }}
+                  onWarehouseStockAdd={id => {
+                    triggerChange();
+                    addStock({
+                      data: null,
+                      id,
+                      label: warehouses.find(warehouse => warehouse.id === id)
+                        .name,
+                      value: "0"
+                    });
+                  }}
+                  onWarehouseStockDelete={id => {
+                    triggerChange();
+                    removeStock(id);
+                  }}
                 />
               </div>
             </Grid>

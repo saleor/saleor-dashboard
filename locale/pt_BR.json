@@ -326,7 +326,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1005562666": {
     "context": "attribute's editor component",
-    "string": "Catalog Input type for Store Owner"
+    "string": "Tipo de entrada do catálogo para o proprietário da loja"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1336738461": {
     "context": "product attribute type",
@@ -1426,6 +1426,9 @@
   },
   "src_dot_configuration_dot_1233229030": {
     "string": "Miscellaneous"
+  },
+  "src_dot_configuration_dot_1440737903": {
+    "string": "Shipping Settings"
   },
   "src_dot_configuration_dot_1639245766": {
     "string": "View and update your webhook and their settings"
@@ -2664,7 +2667,7 @@
     "string": "Created"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
-    "string": "Fulfillment status"
+    "string": "Fulfillment status"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_2743232155": {
     "context": "payment status",
@@ -3074,6 +3077,10 @@
     "context": "dialog title",
     "string": "Delete permission group"
   },
+  "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_956177443": {
+    "context": "deletion error message",
+    "string": "Cant's delete group which is out of your permission scope"
+  },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupDetailsPage_dot_3765873075": {
     "context": "checkbox label",
     "string": "Group has full access to the store"
@@ -3220,7 +3227,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3523826683": {
     "context": "tab name",
-    "string": "All Plugins"
+    "string": "Todos os Plugins"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_active": {
     "context": "plugin",
@@ -4512,7 +4519,7 @@
     "string": "Métodos de Autentificação "
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_866304242": {
-    "string": "This where you will find all of the settings determining your stores e-mails. You can determine main email address and some of the contents of your emails."
+    "string": "É aqui que você encontra todas as configurações que determinam os e-mails das suas lojas. Você pode determinar o endereço de email principal e parte do conteúdo dos seus emails."
   },
   "src_dot_somethingWentWrong": {
     "string": "Saleor ran into an unexpected problem"
@@ -4612,7 +4619,7 @@
     "string": "Selecting this will change the language of your dashboard"
   },
   "src_dot_staff_dot_components_dot_StaffPreferences_dot_2162129531": {
-    "string": "Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
+    "string": "Observe que, embora todos os ajustes de moeda e data estejam concluídos, as traduções de idiomas estão em diferentes graus de conclusão."
   },
   "src_dot_staff_dot_components_dot_StaffPreferences_dot_2281358617": {
     "string": "Preferred Language"

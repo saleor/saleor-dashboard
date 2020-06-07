@@ -371,6 +371,7 @@ const orderFulfillData = gql`
             quantity
             quantityAllocated
           }
+          trackInventory
         }
         thumbnail(size: 64) {
           url
