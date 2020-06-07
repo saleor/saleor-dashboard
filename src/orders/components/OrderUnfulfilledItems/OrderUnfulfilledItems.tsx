@@ -40,6 +40,10 @@ const useStyles = makeStyles(
       textAlign: "center",
       width: 120
     },
+    colSKU: {
+      paddingLeft: 0,
+      width: "auto"
+    },
     colTotal: {
       textAlign: "right",
       width: 120
@@ -97,6 +101,11 @@ const OrderUnfulfilledItems: React.FC<OrderUnfulfilledItemsProps> = props => {
                 />
               </span>
             </TableCell>
+            <TableCell className={classes.colSKU}>
+              <span>
+                <FormattedMessage defaultMessage="SKU" />
+              </span>
+            </TableCell>
             <TableCell className={classes.colQuantity}>
               <FormattedMessage
                 defaultMessage="Quantity"
@@ -130,6 +139,9 @@ const OrderUnfulfilledItems: React.FC<OrderUnfulfilledItemsProps> = props => {
               >
                 {maybe(() => line.productName) || <Skeleton />}
               </TableCellAvatar>
+              <TableCell className={classes.colSKU}>
+                {maybe(() => line.productSku) || <Skeleton />}
+              </TableCell>
               <TableCell className={classes.colQuantity}>
                 {maybe(() => line.quantity - line.quantityFulfilled) || (
                   <Skeleton />
