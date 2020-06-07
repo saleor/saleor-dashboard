@@ -43,6 +43,10 @@ const useStyles = makeStyles(
       textAlign: "center",
       width: 120
     },
+    colSKU: {
+      paddingLeft: 0,
+      width: "auto"
+    },
     colTotal: {
       textAlign: "right",
       width: 120
@@ -165,6 +169,11 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
                 />
               </span>
             </TableCell>
+            <TableCell className={classes.colSKU}>
+              <span>
+                <FormattedMessage defaultMessage="SKU" />
+              </span>
+            </TableCell>
             <TableCell className={classes.colQuantity}>
               <FormattedMessage
                 defaultMessage="Quantity"
@@ -198,6 +207,9 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
               >
                 {maybe(() => line.orderLine.productName) || <Skeleton />}
               </TableCellAvatar>
+              <TableCell className={classes.colSKU}>
+                {maybe(() => line.orderLine.productSku) || <Skeleton />}
+              </TableCell>
               <TableCell className={classes.colQuantity}>
                 {maybe(() => line.quantity) || <Skeleton />}
               </TableCell>
