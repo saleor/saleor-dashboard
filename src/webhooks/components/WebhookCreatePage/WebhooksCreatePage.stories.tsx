@@ -8,13 +8,11 @@ import WebhookCreatePage, { WebhookCreatePageProps } from "./WebhookCreatePage";
 const props: WebhookCreatePageProps = {
   disabled: false,
   errors: [],
-  fetchServiceAccounts: () => undefined,
   onBack: () => undefined,
   onSubmit: () => undefined,
-  saveButtonBarState: "default",
-  services: []
+  saveButtonBarState: "default"
 };
-storiesOf("Views / Webhooks / Create webhook", module)
+storiesOf("Views / Apps / Webhooks / Create webhook", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhookCreatePage {...props} />)
   .add("loading", () => <WebhookCreatePage {...props} disabled={true} />)

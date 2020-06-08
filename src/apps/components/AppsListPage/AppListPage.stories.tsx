@@ -24,6 +24,8 @@ const props: AppsListPageProps = {
   handleRemoveConfirm: () => undefined,
   installedAppsList: appsList,
   loadingAppsInProgress: false,
+  navigateToCustomApp: () => undefined,
+  navigateToCustomAppCreate: () => undefined,
   onAppInstallRetry: () => undefined,
   onAppRemove: () => undefined,
   onCustomAppRemove: () => undefined,

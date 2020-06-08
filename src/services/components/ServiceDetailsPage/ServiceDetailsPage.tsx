@@ -1,6 +1,6 @@
 import AccountPermissions from "@saleor/components/AccountPermissions";
-import AccountStatus from "@saleor/components/AccountStatus";
 import AppHeader from "@saleor/components/AppHeader";
+import AccountStatus from "@saleor/components/AppStatus";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";

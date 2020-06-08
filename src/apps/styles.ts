@@ -100,7 +100,7 @@ export const useStyles = makeStyles(
         marginTop: theme.spacing(1)
       },
       "&:last-child": {
-        padding: theme.spacing(2, 3, 0, 3)
+        padding: theme.spacing(2, 3, 2, 3)
       },
       padding: theme.spacing(1)
     },

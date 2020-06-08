@@ -20,9 +20,25 @@ export interface AppCreate_appCreate_app_metadata {
   value: string;
 }
 
+export interface AppCreate_appCreate_app_tokens {
+  __typename: "AppToken";
+  authToken: string | null;
+  id: string;
+  name: string | null;
+}
+
+export interface AppCreate_appCreate_app_webhooks_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+}
+
 export interface AppCreate_appCreate_app_webhooks {
   __typename: "Webhook";
+  id: string;
   name: string;
+  isActive: boolean;
+  app: AppCreate_appCreate_app_webhooks_app;
 }
 
 export interface AppCreate_appCreate_app {
@@ -39,6 +55,7 @@ export interface AppCreate_appCreate_app {
   version: string | null;
   privateMetadata: (AppCreate_appCreate_app_privateMetadata | null)[];
   metadata: (AppCreate_appCreate_app_metadata | null)[];
+  tokens: (AppCreate_appCreate_app_tokens | null)[] | null;
   webhooks: (AppCreate_appCreate_app_webhooks | null)[] | null;
 }
 

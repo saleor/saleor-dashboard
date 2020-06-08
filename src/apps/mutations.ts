@@ -1,4 +1,5 @@
 import makeMutation from "@saleor/hooks/makeMutation";
+import { webhooksFragment } from "@saleor/webhooks/queries";
 import gql from "graphql-tag";
 
 import { appFragment } from "./queries";
@@ -8,6 +9,19 @@ import { AppDeactivate, AppDeactivateVariables } from "./types/AppDeactivate";
 import { AppDelete, AppDeleteVariables } from "./types/AppDelete";
 import { AppFetch, AppFetchVariables } from "./types/AppFetch";
 import { AppInstall, AppInstallVariables } from "./types/AppInstall";
+import {
+  AppRetryInstall,
+  AppRetryInstallVariables
+} from "./types/AppRetryInstall";
+import {
+  AppTokenCreate,
+  AppTokenCreateVariables
+} from "./types/AppTokenCreate";
+import {
+  AppTokenDelete,
+  AppTokenDeleteVariables
+} from "./types/AppTokenDelete";
+import { AppUpdate, AppUpdateVariables } from "./types/AppUpdate";
 
 export const appError = gql`
   fragment AppErrorFragment on AppError {
@@ -20,6 +34,7 @@ export const appError = gql`
 
 export const appCreateMutation = gql`
   ${appFragment}
+  ${webhooksFragment}
   ${appError}
   mutation AppCreate($input: AppInput!) {
     appCreate(input: $input) {
@@ -36,6 +51,7 @@ export const appCreateMutation = gql`
 
 export const appDeleteMutation = gql`
   ${appFragment}
+  ${webhooksFragment}
   ${appError}
   mutation AppDelete($id: ID!) {
     appDelete(id: $id) {
@@ -134,11 +150,66 @@ export const appDeactivateMutation = gql`
   }
 `;
 
-export const useAppCreate = makeMutation<AppCreate, AppCreateVariables>(
+export const appUpdateMutation = gql`
+  ${appError}
+  ${appFragment}
+  ${webhooksFragment}
+  mutation AppUpdate($id: ID!, $input: AppInput!) {
+    appUpdate(id: $id, input: $input) {
+      app {
+        ...AppFragment
+        permissions {
+          code
+          name
+        }
+      }
+      errors: appErrors {
+        ...AppErrorFragment
+        message
+        permissions
+      }
+    }
+  }
+`;
+
+export const appTokenCreateMutation = gql`
+  ${appError}
+  mutation AppTokenCreate($input: AppTokenInput!) {
+    appTokenCreate(input: $input) {
+      appToken {
+        name
+        authToken
+        id
+      }
+      authToken
+      errors: appErrors {
+        ...AppErrorFragment
+      }
+    }
+  }
+`;
+
+export const appTokenDeleteMutation = gql`
+  ${appError}
+  mutation AppTokenDelete($id: ID!) {
+    appTokenDelete(id: $id) {
+      appToken {
+        name
+        authToken
+        id
+      }
+      errors: appErrors {
+        ...AppErrorFragment
+      }
+    }
+  }
+`;
+
+export const useAppCreateMutation = makeMutation<AppCreate, AppCreateVariables>(
   appCreateMutation
 );
 
-export const useAppDelete = makeMutation<AppDelete, AppDeleteVariables>(
+export const useAppDeleteMutation = makeMutation<AppDelete, AppDeleteVariables>(
   appDeleteMutation
 );
 
@@ -147,7 +218,10 @@ export const useAppInstallMutation = makeMutation<
   AppInstallVariables
 >(appInstallMutation);
 
-export const useAppRetryInstallMutation = makeMutation(appRetryInstallMutation);
+export const useAppRetryInstallMutation = makeMutation<
+  AppRetryInstall,
+  AppRetryInstallVariables
+>(appRetryInstallMutation);
 
 export const useAppManifestFetchMutation = makeMutation<
   AppFetch,
@@ -158,7 +232,22 @@ export const useAppActivateMutation = makeMutation<
   AppActivate,
   AppActivateVariables
 >(appActivateMutation);
+
 export const useAppDeactivateMutation = makeMutation<
   AppDeactivate,
   AppDeactivateVariables
 >(appDeactivateMutation);
+
+export const useAppUpdateMutation = makeMutation<AppUpdate, AppUpdateVariables>(
+  appUpdateMutation
+);
+
+export const useAppTokenCreateMutation = makeMutation<
+  AppTokenCreate,
+  AppTokenCreateVariables
+>(appTokenCreateMutation);
+
+export const useAppTokenDeleteMutation = makeMutation<
+  AppTokenDelete,
+  AppTokenDeleteVariables
+>(appTokenDeleteMutation);

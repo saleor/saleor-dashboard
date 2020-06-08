@@ -1,4 +1,5 @@
 import makeQuery from "@saleor/hooks/makeQuery";
+import { webhooksFragment } from "@saleor/webhooks/queries";
 import gql from "graphql-tag";
 
 import { App, AppVariables } from "./types/App";
@@ -25,14 +26,20 @@ export const appFragment = gql`
       key
       value
     }
-    webhooks {
+    tokens {
+      authToken
+      id
       name
+    }
+    webhooks {
+      ...WebhookFragment
     }
   }
 `;
 
 const installedAppsList = gql`
   ${appFragment}
+  ${webhooksFragment}
   query AppsList(
     $before: String
     $after: String
@@ -79,6 +86,7 @@ const appsInProgressList = gql`
 
 const appDetails = gql`
   ${appFragment}
+  ${webhooksFragment}
   query App($id: ID!) {
     app(id: $id) {
       ...AppFragment
