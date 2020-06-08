@@ -2,7 +2,7 @@ version: 2
 jobs:
   build-lint-benchmark:
     docker:
-      - image: circleci/node:10.7.0-browsers
+      - image: circleci/node:14.4.0-browsers
     steps:
       - checkout
       - restore_cache:
@@ -22,12 +22,6 @@ jobs:
       - run:
           name: Build application
           command: npm run build
-      - run:
-          name: Package lock security test
-          command: npx lockfile-lint --path package-lock.json --allowed-hosts npm
-      - run:
-          name: Run linters
-          command: npm run lint
       - run:
           name: Install Lighthouse tools
           command: sudo npm install -g @lhci/cli
