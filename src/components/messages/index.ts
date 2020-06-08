@@ -5,6 +5,7 @@ export interface IMessage {
   title?: string;
   text: string;
   onUndo?: () => void;
+  status?: "success" | "error" | "info";
 }
 export type IMessageContext = (message: IMessage) => void;
 export const MessageContext = createContext<IMessageContext>(undefined);

@@ -1,6 +1,8 @@
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import AppActivateDialog from "../../components/AppActivateDialog";
 import AppDeactivateDialog from "../../components/AppDeactivateDialog";
@@ -28,6 +30,8 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
     variables: { id }
   });
   const navigate = useNavigator();
+  const notify = useNotifier();
+  const intl = useIntl();
   const mutationOpts = { variables: { id } };
   const [activateApp, activateAppResult] = useAppActivateMutation({
     onCompleted: data => {
@@ -51,8 +55,26 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
     AppDetailsUrlQueryParams
   >(navigate, params => appUrl(id, params), params);
 
-  const handleActivateConfirm = () => activateApp(mutationOpts);
-  const handleDeactivateConfirm = () => deactivateApp(mutationOpts);
+  const handleActivateConfirm = () => {
+    activateApp(mutationOpts);
+    notify({
+      status: "success" as "success",
+      text: intl.formatMessage({
+        defaultMessage: "App activated",
+        description: "snackbar text"
+      })
+    });
+  };
+  const handleDeactivateConfirm = () => {
+    deactivateApp(mutationOpts);
+    notify({
+      status: "success" as "success",
+      text: intl.formatMessage({
+        defaultMessage: "App deactivated",
+        description: "snackbar text"
+      })
+    });
+  };
 
   return (
     <>
