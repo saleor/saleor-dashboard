@@ -198,7 +198,6 @@ export const simpleProductUpdateMutation = gql`
     $descriptionJson: JSONString
     $isPublished: Boolean!
     $name: String
-    $basePrice: Decimal
     $productVariantId: ID!
     $productVariantInput: ProductVariantInput!
     $seo: SeoInput
@@ -217,7 +216,6 @@ export const simpleProductUpdateMutation = gql`
         descriptionJson: $descriptionJson
         isPublished: $isPublished
         name: $name
-        basePrice: $basePrice
         seo: $seo
       }
     ) {
@@ -288,7 +286,6 @@ export const productCreateMutation = gql`
     $descriptionJson: JSONString
     $isPublished: Boolean!
     $name: String!
-    $basePrice: Decimal
     $productType: ID!
     $sku: String
     $seo: SeoInput
@@ -305,7 +302,6 @@ export const productCreateMutation = gql`
         descriptionJson: $descriptionJson
         isPublished: $isPublished
         name: $name
-        basePrice: $basePrice
         productType: $productType
         sku: $sku
         seo: $seo

@@ -721,7 +721,6 @@ export interface SimpleProductUpdateVariables {
   descriptionJson?: any | null;
   isPublished: boolean;
   name?: string | null;
-  basePrice?: any | null;
   productVariantId: string;
   productVariantInput: ProductVariantInput;
   seo?: SeoInput | null;

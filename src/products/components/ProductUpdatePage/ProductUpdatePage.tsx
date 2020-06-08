@@ -47,7 +47,6 @@ import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
-import ProductPricing from "../ProductPricing";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductVariants from "../ProductVariants";
 
@@ -159,7 +158,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
-  const currency = maybe(() => product.basePrice.currency);
   const hasVariants = maybe(() => product.productType.hasVariants, false);
 
   const handleSubmit = (data: ProductUpdatePageFormData) => {
@@ -245,14 +243,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       onMultiChange={handleAttributeMultiChange}
                     />
                   )}
-                  <CardSpacer />
-                  <ProductPricing
-                    currency={currency}
-                    data={data}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={change}
-                  />
                   <CardSpacer />
                   {hasVariants ? (
                     <ProductVariants

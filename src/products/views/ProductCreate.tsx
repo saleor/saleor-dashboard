@@ -2,7 +2,6 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -10,7 +9,7 @@ import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { decimal, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
@@ -21,7 +20,6 @@ import { productListUrl, productUrl } from "../urls";
 export const ProductCreateView: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const shop = useShop();
   const intl = useIntl();
   const {
     loadMore: loadMoreCategories,
@@ -74,7 +72,6 @@ export const ProductCreateView: React.FC = () => {
                 id: attribute.id,
                 values: attribute.value
               })),
-              basePrice: decimal(formData.basePrice),
               category: formData.category,
               chargeTaxes: formData.chargeTaxes,
               collections: formData.collections,
@@ -109,7 +106,6 @@ export const ProductCreateView: React.FC = () => {
               })}
             />
             <ProductCreatePage
-              currency={maybe(() => shop.defaultCurrency)}
               categories={maybe(
                 () => searchCategoryOpts.data.search.edges,
                 []
