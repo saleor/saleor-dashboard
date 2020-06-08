@@ -302,6 +302,14 @@
     "context": "apps section name",
     "string": "Apps"
   },
+  "src_dot_apps_dot_components_dot_1462011531": {
+    "context": "dialog header",
+    "string": "Delete App"
+  },
+  "src_dot_apps_dot_components_dot_2297471173": {
+    "context": "delete app",
+    "string": "Are you sure you want to delete {name}?"
+  },
   "src_dot_apps_dot_components_dot_ActiveText_dot_31853942": {
     "context": "app status",
     "string": "active"
@@ -398,6 +406,42 @@
     "context": "section header",
     "string": "About this app"
   },
+  "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_1152717819": {
+    "context": "title",
+    "string": "There’s a problem with app."
+  },
+  "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_1261716527": {
+    "context": "content",
+    "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
+  },
+  "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_3375237564": {
+    "context": "button",
+    "string": "Back to homepage"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_1100803171": {
+    "context": "install app privacy",
+    "string": "Uninstalling the app will remove all your customer’s personal data stored by {name}. After x hours, request will be sent to {name} to erase all of the data. "
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_127674832": {
+    "context": "app data privacy link",
+    "string": "Learn more about data privacy"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_2538706256": {
+    "context": "install button",
+    "string": "Install App"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_2936990163": {
+    "context": "install app permissions",
+    "string": "Installing this app will give it following permissions:"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_3688014441": {
+    "context": "section header",
+    "string": "You are about to install {name}"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_3916538164": {
+    "context": "section header",
+    "string": "App permissions"
+  },
   "src_dot_apps_dot_components_dot_AppsInProgress_dot_1675189051": {
     "context": "section header",
     "string": "Ongoing Installations"
@@ -413,6 +457,22 @@
   "src_dot_apps_dot_components_dot_AppsInProgress_dot_3733091754": {
     "context": "app installation",
     "string": "Installing app..."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_1414896555": {
+    "context": "checkbox label",
+    "string": "Grant this app full access to the store"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_3076071936": {
+    "context": "card description",
+    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_3189779214": {
+    "context": "header",
+    "string": "Create New App"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_570656367": {
+    "context": "checkbox label",
+    "string": "App is active"
   },
   "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_1336855942": {
     "string": "Generated Token"
@@ -431,9 +491,9 @@
   "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_4189999598": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
   },
-  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_1743577105": {
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_1414896555": {
     "context": "checkbox label",
-    "string": "Grant this account full access to the store"
+    "string": "Grant this app full access to the store"
   },
   "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_3076071936": {
     "context": "card description",
@@ -540,6 +600,14 @@
   "src_dot_apps_dot_components_dot_TokenDeleteDialog_dot_981802752": {
     "context": "delete token",
     "string": "Are you sure you want to delete token {token}?"
+  },
+  "src_dot_apps_dot_views_dot_AppInstall_dot_2538706256": {
+    "context": "window title",
+    "string": "Install App"
+  },
+  "src_dot_apps_dot_views_dot_CustomAppCreate_dot_3230241731": {
+    "context": "window title",
+    "string": "Create App"
   },
   "src_dot_attributes": {
     "context": "attributes section name",
@@ -1941,6 +2009,10 @@
     "context": "button",
     "string": "Delete"
   },
+  "src_dot_demo": {
+    "context": "notification message after log in",
+    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+  },
   "src_dot_description": {
     "string": "Description"
   },
@@ -2802,6 +2874,10 @@
     "context": "cancelled fulfillment, section header",
     "string": "Cancelled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
     "context": "button",
     "string": "Cancel Fulfillment"
@@ -3116,6 +3192,10 @@
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2886647373": {
     "context": "section header",
     "string": "Unfulfilled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
     "context": "order line total price",
