@@ -38,7 +38,7 @@ jobs:
 
       - name: Run tsc
         run: |
-          npm run tsc
+          npm run check-types
 
       - name: Run lint
         run: |
@@ -95,4 +95,4 @@ jobs:
       - name: Check message extraction
         run: |
           npm run extract-messages
-          git diff ./locale
+          git diff --exit-code ./locale
