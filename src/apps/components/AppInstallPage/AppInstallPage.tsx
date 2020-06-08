@@ -1,3 +1,5 @@
+import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
+import plusIcon from "@assets/images/plus-icon.svg";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -7,8 +9,8 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
-import Skeleton from "@saleor/components/Skeleton";
 import { buttonMessages } from "@saleor/intl";
+import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -16,7 +18,6 @@ import { useStyles } from "../../styles";
 import { AppFetch } from "../../types/AppFetch";
 
 export interface AppInstallPageProps {
-  loading: boolean;
   data: AppFetch;
   navigateToAppsList: () => void;
   onSubmit: () => void;
@@ -24,7 +25,6 @@ export interface AppInstallPageProps {
 
 export const AppInstallPage: React.FC<AppInstallPageProps> = ({
   data,
-  loading,
   navigateToAppsList,
   onSubmit
 }) => {
@@ -36,18 +36,35 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
   return (
     <Container>
       <CardSpacer />
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(
-            {
-              defaultMessage: `You are about to install {name}`,
-              description: "section header"
-            },
-            { name }
-          )}
-        />
-        <CardContent></CardContent>
-      </Card>
+      {name && (
+        <Card>
+          <CardTitle
+            title={intl.formatMessage(
+              {
+                defaultMessage: `You are about to install {name}`,
+                description: "section header"
+              },
+              { name }
+            )}
+          />
+          <CardContent className={classes.installCard}>
+            <div className={classes.installAppContainer}>
+              <div
+                className={classNames(
+                  classes.installIcon,
+                  classes.installSaleorIcon
+                )}
+              >
+                <img src={saleorDarkLogoSmall} alt="" />
+              </div>
+              <img src={plusIcon} alt="" />
+              <div className={classes.installIcon}>
+                <h2>{name?.charAt(0).toUpperCase()}</h2>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
       <CardSpacer />
       <Card>
         <CardTitle
@@ -57,33 +74,36 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           })}
         />
         <CardContent>
-          {!loading ? (
-            <>
-              <Typography>
-                <FormattedMessage
-                  defaultMessage="Installing this app will give it following permissions:"
-                  description="install app permissions"
-                />
-              </Typography>
-              {!!data?.appFetchManifest?.manifest?.permissions?.length && (
-                <ul className={classes.permissionsContainer}>
-                  {data?.appFetchManifest?.manifest?.permissions?.map(perm => (
-                    <li key={perm.code}>{perm.name}</li>
-                  ))}
-                </ul>
-              )}
-              <Hr />
-              <Typography variant="body2">
-                <FormattedMessage
-                  defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. After x hours, request will be sent to {name} to erase all of the data. Learn more about data privacy"
-                  description="install app privacy"
-                  values={{ name }}
-                />
-              </Typography>
-            </>
-          ) : (
-            <Skeleton />
+          <Typography className={classes.installPermissionTitle}>
+            <FormattedMessage
+              defaultMessage="Installing this app will give it following permissions:"
+              description="install app permissions"
+            />
+          </Typography>
+          {!!data?.appFetchManifest?.manifest?.permissions?.length && (
+            <ul className={classes.permissionsContainer}>
+              {data?.appFetchManifest?.manifest?.permissions?.map(perm => (
+                <li key={perm.code}>{perm.name}</li>
+              ))}
+            </ul>
           )}
+          <Hr className={classes.installSpacer} />
+          <Typography variant="body2" className={classes.installPrivacyText}>
+            <FormattedMessage
+              defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. After x hours, request will be sent to {name} to erase all of the data. "
+              description="install app privacy"
+              values={{ name }}
+            />
+            <a
+              href={data?.appFetchManifest?.manifest?.dataPrivacyUrl}
+              target="_blank"
+            >
+              <FormattedMessage
+                defaultMessage="Learn more about data privacy"
+                description="app data privacy link"
+              />
+            </a>
+          </Typography>
         </CardContent>
       </Card>
       <CardSpacer />
