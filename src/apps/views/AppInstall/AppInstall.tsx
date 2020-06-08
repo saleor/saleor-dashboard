@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps } from "react-router-dom";
 
+import AppInstallErrorPage from "../../components/AppInstallErrorPage";
 import AppInstallPage from "../../components/AppInstallPage";
 import {
   useAppInstallMutation,
@@ -30,8 +31,10 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
   const [fetchManifest, fetchManifestOpts] = useAppManifestFetchMutation({
     onCompleted: data => {
       if (data.appFetchManifest.errors.length) {
-        notify({
-          text: intl.formatMessage({ defaultMessage: "Error" })
+        data.appFetchManifest.errors.forEach(error => {
+          notify({
+            text: error.message
+          });
         });
       }
     }
@@ -54,14 +57,13 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
   const navigateToAppsList = () => navigate(appsListUrl());
 
   const handleSubmit = () => {
+    const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
     installApp({
       variables: {
         input: {
-          appName: fetchManifestOpts?.data?.appFetchManifest?.manifest?.name,
+          appName: manifest?.name,
           manifestUrl,
-          permissions: fetchManifestOpts?.data?.appFetchManifest?.manifest?.permissions.map(
-            permission => permission.code
-          )
+          permissions: manifest?.permissions.map(permission => permission.code)
         }
       }
     });
@@ -70,6 +72,8 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
   useEffect(() => {
     if (manifestUrl) {
       fetchManifest({ variables: { manifestUrl } });
+    } else {
+      navigate(appsListUrl());
     }
   }, []);
 
@@ -81,12 +85,15 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
           description: "window title"
         })}
       />
-      <AppInstallPage
-        data={fetchManifestOpts?.data}
-        navigateToAppsList={navigateToAppsList}
-        loading={false}
-        onSubmit={handleSubmit}
-      />
+      {!!fetchManifestOpts.data?.appFetchManifest?.errors?.length ? (
+        <AppInstallErrorPage onBack={() => navigate("/")} />
+      ) : (
+        <AppInstallPage
+          data={fetchManifestOpts?.data}
+          navigateToAppsList={navigateToAppsList}
+          onSubmit={handleSubmit}
+        />
+      )}
     </>
   );
 };
