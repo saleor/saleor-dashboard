@@ -4,6 +4,7 @@ import {
   PermissionEnum
 } from "../types/globalTypes";
 import { App_app } from "./types/App";
+import { AppFetch_appFetchManifest_manifest } from "./types/AppFetch";
 import { AppsInstallations_appsInstallations } from "./types/AppsInstallations";
 import { AppsList_apps_edges } from "./types/AppsList";
 
@@ -131,4 +132,32 @@ export const appDetails: App_app = {
   type: AppTypeEnum.EXTERNAL,
   version: "1.0.0",
   webhooks: []
+};
+
+export const installApp: AppFetch_appFetchManifest_manifest = {
+  __typename: "Manifest",
+
+  about: "Lorem ipsum",
+  appUrl: null,
+  configurationUrl: null,
+  dataPrivacy: null,
+  dataPrivacyUrl: null,
+  homepageUrl: null,
+  identifier: "app",
+  name: "app",
+  permissions: [
+    {
+      __typename: "Permission",
+      code: PermissionEnum.MANAGE_USERS,
+      name: "Manage users"
+    },
+    {
+      __typename: "Permission",
+      code: PermissionEnum.MANAGE_ORDERS,
+      name: "Manage orders"
+    }
+  ],
+  supportUrl: null,
+  tokenTargetUrl: null,
+  version: "1.0"
 };

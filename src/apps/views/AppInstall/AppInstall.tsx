@@ -39,7 +39,6 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
       }
     }
   });
-
   const [installApp] = useAppInstallMutation({
     onCompleted: data => {
       if (data.appInstall.errors.length === 0) {
@@ -89,9 +88,10 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
         <AppInstallErrorPage onBack={() => navigate("/")} />
       ) : (
         <AppInstallPage
-          data={fetchManifestOpts?.data}
+          data={fetchManifestOpts?.data?.appFetchManifest?.manifest}
           navigateToAppsList={navigateToAppsList}
           onSubmit={handleSubmit}
+          loading={fetchManifestOpts?.loading}
         />
       )}
     </>
