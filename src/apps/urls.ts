@@ -3,6 +3,8 @@ import urlJoin from "url-join";
 
 import { ActiveTab, Dialog, Pagination, SingleAction } from "../types";
 
+export const MANIFEST_ATTR = "manifestUrl";
+
 export type AppListUrlDialog = "remove" | "remove-app" | "remove-custom-app";
 
 export type AppDetailsUrlDialog = "app-activate" | "app-deactivate";
@@ -14,6 +16,8 @@ export type AppListUrlQueryParams = ActiveTab &
 
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
   SingleAction;
+
+export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
 
 export enum AppListUrlSortField {
   name = "name",
@@ -33,6 +37,8 @@ export const customAppListPath = "/apps/custom/";
 
 export const appPath = (id: string) => urlJoin(appsSection, id);
 export const customAppPath = (id: string) => urlJoin(customAppListPath, id);
+export const appInstallPath = urlJoin(appsSection, "install");
+export const appInstallUrl = appInstallPath;
 
 export const appUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
   appPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
@@ -44,5 +50,3 @@ export const customAppAddUrl = customAppAddPath;
 
 export const appsListUrl = (params?: AppListUrlQueryParams) =>
   appsListPath + "?" + stringifyQs(params);
-
-export const MANIFEST_ATTR = "manifestUrl";

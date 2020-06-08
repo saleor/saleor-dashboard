@@ -9,6 +9,9 @@ export const useStyles = makeStyles(
         }
       }
     },
+    alignRight: {
+      textAlign: "right"
+    },
     appContainer: {
       marginBottom: theme.spacing(3)
     },
@@ -90,6 +93,64 @@ export const useStyles = makeStyles(
       marginBottom: 0,
       marginTop: 0,
       width: "100%"
+    },
+    installAppContainer: {
+      "& > div": {
+        position: "relative"
+      },
+      "& img": {
+        position: "relative"
+      },
+      display: "flex",
+      justifyContent: "space-between",
+      padding: theme.spacing(2, 0),
+      position: "relative",
+      width: theme.spacing(35)
+    },
+    installCard: {
+      "&:before": {
+        backgroundColor: theme.palette.divider,
+        content: "''",
+        height: 2,
+        position: "absolute",
+        top: "50%",
+        transform: "translateY(-50%)",
+        width: theme.spacing(30)
+      },
+      display: "flex",
+      justifyContent: "center",
+      position: "relative"
+    },
+    installIcon: {
+      alignItems: "center",
+      backgroundColor: theme.palette.divider,
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: "50%",
+      display: "flex",
+      height: theme.spacing(9),
+      justifyContent: "center",
+      overflow: "hidden",
+      width: theme.spacing(9)
+    },
+    installPermissionTitle: {
+      fontWeight: 500
+    },
+    installPrivacyText: {
+      "& a": {
+        color: theme.palette.primary.main,
+        textDecoration: "none"
+      },
+      color: theme.palette.text.hint
+    },
+    installSaleorIcon: {
+      backgroundColor: theme.palette.secondary.main,
+      border: "none"
+    },
+    installSpacer: {
+      margin: theme.spacing(2, 0)
+    },
+    installText: {
+      color: theme.palette.primary.contrastText
     },
     linkContainer: {
       fontWeight: 500,

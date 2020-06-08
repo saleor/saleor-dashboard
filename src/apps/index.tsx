@@ -8,6 +8,8 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   AppDetailsUrlQueryParams,
+  appInstallPath,
+  AppInstallUrlQueryParams,
   AppListUrlQueryParams,
   appPath,
   appsListPath,
@@ -16,6 +18,7 @@ import {
   CustomAppUrlQueryParams
 } from "./urls";
 import AppDetailsView from "./views/AppDetails";
+import AppInstallView from "./views/AppInstall";
 import AppsListView from "./views/AppsList";
 import CustomAppCreateView from "./views/CustomAppCreate";
 import CustomAppDetailsView from "./views/CustomAppDetails";
@@ -29,6 +32,13 @@ const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   return (
     <AppDetailsView id={decodeURIComponent(match.params.id)} params={params} />
   );
+};
+
+const AppInstall: React.FC<RouteComponentProps> = props => {
+  const qs = parseQs(location.search.substr(1));
+  const params: AppInstallUrlQueryParams = qs;
+
+  return <AppInstallView params={params} {...props} />;
 };
 
 interface CustomAppDetailsProps extends RouteComponentProps<{ id: string }> {
@@ -54,13 +64,12 @@ const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({
   );
 };
 
-const AppsList: React.FC<RouteComponentProps> = props => {
+const AppsList: React.FC<RouteComponentProps> = () => {
   const qs = parseQs(location.search.substr(1));
   const params: AppListUrlQueryParams = qs;
 
-  return <AppsListView params={params} {...props} />;
+  return <AppsListView params={params} />;
 };
-
 const Component = () => {
   const intl = useIntl();
   const [token, setToken] = React.useState<string>(null);
@@ -70,13 +79,15 @@ const Component = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.apps)} />
       <Switch>
         <Route exact path={appsListPath} component={AppsList} />
-        <Route exact path={appPath(":id")} component={AppDetails} />
         <Route
           exact
           path={customAppAddPath}
           render={() => <CustomAppCreateView setToken={setToken} />}
         />
+        <Route exact path={appInstallPath} component={AppInstall} />
+        <Route exact path={appPath(":id")} component={AppDetails} />
         <Route
+          exact
           path={customAppPath(":id")}
           render={props => (
             <CustomAppDetails
