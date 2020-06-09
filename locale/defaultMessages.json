@@ -302,14 +302,6 @@
     "context": "apps section name",
     "string": "Apps"
   },
-  "src_dot_apps_dot_components_dot_1462011531": {
-    "context": "dialog header",
-    "string": "Delete App"
-  },
-  "src_dot_apps_dot_components_dot_2297471173": {
-    "context": "delete app",
-    "string": "Are you sure you want to delete {name}?"
-  },
   "src_dot_apps_dot_components_dot_ActiveText_dot_31853942": {
     "context": "app status",
     "string": "active"
@@ -601,9 +593,21 @@
     "context": "delete token",
     "string": "Are you sure you want to delete token {token}?"
   },
+  "src_dot_apps_dot_views_dot_AppDetails_dot_2021043385": {
+    "context": "snackbar text",
+    "string": "App activated"
+  },
+  "src_dot_apps_dot_views_dot_AppDetails_dot_3791371350": {
+    "context": "snackbar text",
+    "string": "App deactivated"
+  },
   "src_dot_apps_dot_views_dot_AppInstall_dot_2538706256": {
     "context": "window title",
     "string": "Install App"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_3076215778": {
+    "context": "snackbar text",
+    "string": "App successfully removed"
   },
   "src_dot_apps_dot_views_dot_CustomAppCreate_dot_3230241731": {
     "context": "window title",
