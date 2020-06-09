@@ -3,7 +3,6 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import Attributes from "@saleor/icons/Attributes";
-import Bot from "@saleor/icons/Bot";
 import Navigation from "@saleor/icons/Navigation";
 import Pages from "@saleor/icons/Pages";
 import PermissionGroups from "@saleor/icons/PermissionGroups";
@@ -21,7 +20,6 @@ import { pageListUrl } from "@saleor/pages/urls";
 import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { pluginListUrl } from "@saleor/plugins/urls";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
-import { serviceListUrl } from "@saleor/services/urls";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
@@ -184,15 +182,6 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permission: PermissionEnum.MANAGE_PLUGINS,
           title: intl.formatMessage(sectionNames.plugins),
           url: pluginListUrl()
-        },
-        {
-          description: intl.formatMessage({
-            defaultMessage: "Manage external integrations accounts"
-          }),
-          icon: <Bot fontSize="inherit" viewBox="0 0 44 44" />,
-          permission: PermissionEnum.MANAGE_APPS,
-          title: intl.formatMessage(sectionNames.serviceAccounts),
-          url: serviceListUrl()
         }
       ]
     }
