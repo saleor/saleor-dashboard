@@ -605,10 +605,28 @@
     "context": "window title",
     "string": "Install App"
   },
+<<<<<<< HEAD
+=======
+  "src_dot_apps_dot_views_dot_AppsList_dot_1180774955": {
+    "context": "message content",
+    "string": "{name} is ready to be used"
+  },
+>>>>>>> add notifications for app installations
   "src_dot_apps_dot_views_dot_AppsList_dot_3076215778": {
     "context": "snackbar text",
     "string": "App successfully removed"
   },
+<<<<<<< HEAD
+=======
+  "src_dot_apps_dot_views_dot_AppsList_dot_539268521": {
+    "context": "message title",
+    "string": "Couldn’t Install {name}"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_966773578": {
+    "context": "message title",
+    "string": "App installed"
+  },
+>>>>>>> add notifications for app installations
   "src_dot_apps_dot_views_dot_CustomAppCreate_dot_3230241731": {
     "context": "window title",
     "string": "Create App"

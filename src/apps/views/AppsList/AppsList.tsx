@@ -6,10 +6,11 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { AppSortField, OrderDirection } from "../../../types/globalTypes";
+import { JobStatusEnum } from "../../../types/globalTypes";
 import AppDeleteDialog from "../../components/AppDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
 import {
@@ -21,6 +22,7 @@ import {
   useInstalledAppsListQuery
 } from "../../queries";
 import { AppDelete } from "../../types/AppDelete";
+import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
 import { AppsList_apps_edges } from "../../types/AppsList";
 import {
   AppListUrlDialog,
@@ -52,15 +54,15 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       field: AppSortField.CREATION_DATE
     }
   };
-  const [retryInstallApp, installRetryAppResult] = useAppRetryInstallMutation(
-    {}
-  );
+  const prevAppsInProgressData = useRef<
+    null | AppsInstallations_appsInstallations[]
+  >(null);
   const {
     data: appsInProgressData,
     loading: loadingAppsInProgress,
     refetch: appsInProgressRefetch
   } = useAppsInProgressListQuery({
-    displayLoader: true,
+    displayLoader: false,
     variables: paginationState
   });
   const { data, loading, refetch } = useInstalledAppsListQuery({
@@ -72,7 +74,36 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     paginationState,
     params
   );
-
+  const installedAppNotify = (name: string) => {
+    notify({
+      status: "success" as "success",
+      text: intl.formatMessage(
+        {
+          defaultMessage: "{name} is ready to be used",
+          description: "message content"
+        },
+        { name }
+      ),
+      title: intl.formatMessage({
+        defaultMessage: "App installed",
+        description: "message title"
+      })
+    });
+  };
+  const [retryInstallApp] = useAppRetryInstallMutation({
+    onCompleted: data => {
+      const errors = data.appRetryInstall.errors;
+      if (!errors.length) {
+        appsInProgressRefetch();
+        refetch();
+        installedAppNotify(data.appRetryInstall.appInstallation.appName);
+      } else {
+        errors.forEach(error =>
+          notify({ status: "error" as "error", text: error.message })
+        );
+      }
+    }
+  });
   const [openModal, closeModal] = createDialogActionHandlers<
     AppListUrlDialog,
     AppListUrlQueryParams
@@ -86,16 +117,53 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   });
 
   useEffect(() => {
-    const { data, status } = installRetryAppResult;
-    if (data) {
-      if (status !== "success") {
-        appsInProgressRefetch();
-      } else {
-        appsInProgressRefetch();
-        refetch();
+    let id: number | null = null;
+    const appsInProgress = appsInProgressData?.appsInstallations || [];
+
+    appsInProgress.forEach(app => {
+      const prevState = prevAppsInProgressData.current?.find(
+        prevApp => prevApp.id === app.id
+      );
+      if (prevState?.status !== app.status) {
+        switch (app.status) {
+          case JobStatusEnum.SUCCESS:
+            installedAppNotify(app.appName);
+            refetch();
+            break;
+          case JobStatusEnum.FAILED:
+            notify({
+              status: "error" as "error",
+              text: app.message,
+              title: intl.formatMessage(
+                {
+                  defaultMessage: "Couldn’t Install {name}",
+                  description: "message title"
+                },
+                { name: app.appName }
+              )
+            });
+            break;
+          case JobStatusEnum.PENDING:
+            if (!id) {
+              id = window.setInterval(() => appsInProgressRefetch(), 3000);
+            }
+            break;
+        }
       }
+    });
+
+    if (appsInProgress.length) {
+      prevAppsInProgressData.current = appsInProgress;
     }
-  }, [installRetryAppResult.status]);
+
+    if (
+      !appsInProgress.some(app => app.status === JobStatusEnum.PENDING) &&
+      id
+    ) {
+      clearInterval(id);
+    }
+    return () => id && clearInterval(id);
+  }, [appsInProgressData]);
 
   const handleRemoveConfirm = () =>
     deleteApp({
