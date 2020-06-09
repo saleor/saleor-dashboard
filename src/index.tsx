@@ -51,8 +51,6 @@ import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
-import ServiceSection from "./services";
-import { serviceSection } from "./services/urls";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
@@ -267,11 +265,6 @@ const Routes: React.FC = () => {
                     permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     path={attributeSection}
                     component={AttributeSection}
-                  />
-                  <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_APPS]}
-                    path={serviceSection}
-                    component={ServiceSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_APPS]}
