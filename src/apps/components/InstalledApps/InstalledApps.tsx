@@ -15,9 +15,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
 import { AppsList_apps_edges } from "../../types/AppsList";
-import ActiveText from "../ActiveText";
 import AppsSkeleton from "../AppsSkeleton";
 import CardContainer from "../CardContainer";
+import DeactivatedText from "../DeactivatedText";
 
 export interface InstalledAppsProps extends ListProps {
   appsList: AppsList_apps_edges[];
@@ -81,7 +81,11 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     <span data-tc="name" className={classes.appName}>
                       {app.node.name}
                     </span>
-                    <ActiveText isActive={app.node.isActive} />
+                    {!app.node.isActive && (
+                      <div className={classes.statusWrapper}>
+                        <DeactivatedText />
+                      </div>
+                    )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <Button color="primary" onClick={onRowClick(app.node.id)}>
