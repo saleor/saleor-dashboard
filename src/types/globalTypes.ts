@@ -390,6 +390,7 @@ export enum LanguageCodeEnum {
   ES_CO = "ES_CO",
   ET = "ET",
   FA = "FA",
+  FI = "FI",
   FR = "FR",
   HI = "HI",
   HU = "HU",
@@ -409,10 +410,12 @@ export enum LanguageCodeEnum {
   RO = "RO",
   RU = "RU",
   SK = "SK",
+  SL = "SL",
   SQ = "SQ",
   SR = "SR",
   SV = "SV",
   SW = "SW",
+  TA = "TA",
   TH = "TH",
   TR = "TR",
   UK = "UK",
@@ -467,6 +470,7 @@ export enum OrderErrorCode {
   ORDER_NO_SHIPPING_ADDRESS = "ORDER_NO_SHIPPING_ADDRESS",
   PAYMENT_ERROR = "PAYMENT_ERROR",
   PAYMENT_MISSING = "PAYMENT_MISSING",
+  PRODUCT_NOT_PUBLISHED = "PRODUCT_NOT_PUBLISHED",
   REQUIRED = "REQUIRED",
   SHIPPING_METHOD_NOT_APPLICABLE = "SHIPPING_METHOD_NOT_APPLICABLE",
   SHIPPING_METHOD_REQUIRED = "SHIPPING_METHOD_REQUIRED",
@@ -1180,12 +1184,12 @@ export interface ProductFilterInput {
   collections?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   hasCategory?: boolean | null;
-  price?: PriceRangeInput | null;
   attributes?: (AttributeInput | null)[] | null;
   stockAvailability?: StockAvailability | null;
   productType?: string | null;
   stocks?: ProductStockFilterInput | null;
   search?: string | null;
+  price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
 }
@@ -1228,7 +1232,7 @@ export interface ProductTypeSortingInput {
 export interface ProductVariantBulkCreateInput {
   attributes: (AttributeValueInput | null)[];
   costPrice?: any | null;
-  priceOverride?: any | null;
+  price?: any | null;
   sku: string;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1238,7 +1242,7 @@ export interface ProductVariantBulkCreateInput {
 export interface ProductVariantCreateInput {
   attributes: (AttributeValueInput | null)[];
   costPrice?: any | null;
-  priceOverride?: any | null;
+  price?: any | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1249,7 +1253,7 @@ export interface ProductVariantCreateInput {
 export interface ProductVariantInput {
   attributes?: (AttributeValueInput | null)[] | null;
   costPrice?: any | null;
-  priceOverride?: any | null;
+  price?: any | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;

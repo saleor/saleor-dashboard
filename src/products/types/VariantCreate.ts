@@ -55,7 +55,7 @@ export interface VariantCreate_productVariantCreate_productVariant_images {
   url: string;
 }
 
-export interface VariantCreate_productVariantCreate_productVariant_priceOverride {
+export interface VariantCreate_productVariantCreate_productVariant_price {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -118,7 +118,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
   costPrice: VariantCreate_productVariantCreate_productVariant_costPrice | null;
   images: (VariantCreate_productVariantCreate_productVariant_images | null)[] | null;
   name: string;
-  priceOverride: VariantCreate_productVariantCreate_productVariant_priceOverride | null;
+  price: VariantCreate_productVariantCreate_productVariant_price | null;
   product: VariantCreate_productVariantCreate_productVariant_product;
   sku: string;
   stocks: (VariantCreate_productVariantCreate_productVariant_stocks | null)[] | null;

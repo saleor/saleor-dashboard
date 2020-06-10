@@ -78,12 +78,6 @@ export interface ProductUpdate_productUpdate_product_collections {
   name: string;
 }
 
-export interface ProductUpdate_productUpdate_product_basePrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ProductUpdate_productUpdate_product_margin {
   __typename: "Margin";
   start: number | null;
@@ -149,7 +143,7 @@ export interface ProductUpdate_productUpdate_product_images {
   url: string;
 }
 
-export interface ProductUpdate_productUpdate_product_variants_priceOverride {
+export interface ProductUpdate_productUpdate_product_variants_price {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -174,7 +168,7 @@ export interface ProductUpdate_productUpdate_product_variants {
   id: string;
   sku: string;
   name: string;
-  priceOverride: ProductUpdate_productUpdate_product_variants_priceOverride | null;
+  price: ProductUpdate_productUpdate_product_variants_price | null;
   margin: number | null;
   stocks: (ProductUpdate_productUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
@@ -191,7 +185,6 @@ export interface ProductUpdate_productUpdate_product {
   seoDescription: string | null;
   category: ProductUpdate_productUpdate_product_category | null;
   collections: (ProductUpdate_productUpdate_product_collections | null)[] | null;
-  basePrice: ProductUpdate_productUpdate_product_basePrice | null;
   margin: ProductUpdate_productUpdate_product_margin | null;
   purchaseCost: ProductUpdate_productUpdate_product_purchaseCost | null;
   isAvailable: boolean | null;

@@ -32,7 +32,7 @@ export interface CountryList_shop {
   chargeTaxesOnShipping: boolean;
   includeTaxesInPrices: boolean;
   displayGrossPrices: boolean;
-  countries: (CountryList_shop_countries | null)[];
+  countries: CountryList_shop_countries[];
 }
 
 export interface CountryList {

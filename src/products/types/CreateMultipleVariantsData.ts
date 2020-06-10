@@ -58,18 +58,11 @@ export interface CreateMultipleVariantsData_product_productType {
   variantAttributes: (CreateMultipleVariantsData_product_productType_variantAttributes | null)[] | null;
 }
 
-export interface CreateMultipleVariantsData_product_basePrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface CreateMultipleVariantsData_product {
   __typename: "Product";
   id: string;
   attributes: CreateMultipleVariantsData_product_attributes[];
   productType: CreateMultipleVariantsData_product_productType;
-  basePrice: CreateMultipleVariantsData_product_basePrice | null;
 }
 
 export interface CreateMultipleVariantsData_warehouses_edges_node {

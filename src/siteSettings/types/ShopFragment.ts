@@ -51,7 +51,7 @@ export interface ShopFragment {
   __typename: "Shop";
   authorizationKeys: (ShopFragment_authorizationKeys | null)[];
   companyAddress: ShopFragment_companyAddress | null;
-  countries: (ShopFragment_countries | null)[];
+  countries: ShopFragment_countries[];
   customerSetPasswordUrl: string | null;
   defaultMailSenderAddress: string | null;
   defaultMailSenderName: string | null;

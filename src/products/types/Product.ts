@@ -72,12 +72,6 @@ export interface Product_collections {
   name: string;
 }
 
-export interface Product_basePrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface Product_margin {
   __typename: "Margin";
   start: number | null;
@@ -143,7 +137,7 @@ export interface Product_images {
   url: string;
 }
 
-export interface Product_variants_priceOverride {
+export interface Product_variants_price {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -168,7 +162,7 @@ export interface Product_variants {
   id: string;
   sku: string;
   name: string;
-  priceOverride: Product_variants_priceOverride | null;
+  price: Product_variants_price | null;
   margin: number | null;
   stocks: (Product_variants_stocks | null)[] | null;
   trackInventory: boolean;
@@ -185,7 +179,6 @@ export interface Product {
   seoDescription: string | null;
   category: Product_category | null;
   collections: (Product_collections | null)[] | null;
-  basePrice: Product_basePrice | null;
   margin: Product_margin | null;
   purchaseCost: Product_purchaseCost | null;
   isAvailable: boolean | null;

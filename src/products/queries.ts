@@ -71,9 +71,6 @@ export const productFragment = gql`
     }
     isAvailable
     isPublished
-    basePrice {
-      ...Money
-    }
     productType {
       id
       name
@@ -137,9 +134,6 @@ export const productFragmentDetails = gql`
       id
       name
     }
-    basePrice {
-      ...Money
-    }
     margin {
       start
       stop
@@ -177,7 +171,7 @@ export const productFragmentDetails = gql`
       id
       sku
       name
-      priceOverride {
+      price {
         ...Money
       }
       margin
@@ -226,7 +220,7 @@ export const fragmentVariant = gql`
       url
     }
     name
-    priceOverride {
+    price {
       ...Money
     }
     product {
@@ -487,9 +481,6 @@ const createMultipleVariantsData = gql`
   query CreateMultipleVariantsData($id: ID!) {
     product(id: $id) {
       ...ProductVariantAttributesFragment
-      basePrice {
-        ...Money
-      }
     }
     warehouses(first: 20) {
       edges {
