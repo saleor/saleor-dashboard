@@ -54,6 +54,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       field: AppSortField.CREATION_DATE
     }
   };
+  const intervalId = useRef<null | number>(null);
   const prevAppsInProgressData = useRef<
     null | AppsInstallations_appsInstallations[]
   >(null);
@@ -69,6 +70,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables
   });
+
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     data?.apps?.pageInfo,
     paginationState,
@@ -117,7 +119,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   });
 
   useEffect(() => {
-    let id: number | null = null;
     const appsInProgress = appsInProgressData?.appsInstallations || [];
 
     appsInProgress.forEach(app => {
@@ -144,8 +145,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
             });
             break;
           case JobStatusEnum.PENDING:
-            if (!id) {
-              id = window.setInterval(() => appsInProgressRefetch(), 3000);
+            if (!intervalId.current) {
+              intervalId.current = window.setInterval(
+                () => appsInProgressRefetch(),
+                3000
+              );
             }
             break;
         }
@@ -158,11 +162,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
 
     if (
       !appsInProgress.some(app => app.status === JobStatusEnum.PENDING) &&
-      id
+      intervalId.current
     ) {
-      clearInterval(id);
+      clearInterval(intervalId.current);
     }
-    return () => id && clearInterval(id);
+    return () => intervalId.current && clearInterval(intervalId.current);
   }, [appsInProgressData]);
 
   const handleRemoveConfirm = () =>

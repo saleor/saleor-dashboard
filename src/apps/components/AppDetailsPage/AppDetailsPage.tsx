@@ -19,6 +19,7 @@ import settingsIcon from "../../../../assets/images/settings-icon.svg";
 import supportIcon from "../../../../assets/images/support-icon.svg";
 import { useStyles } from "../../styles";
 import { App_app } from "../../types/App";
+import DeactivatedText from "../DeactivatedText";
 
 export interface AppDetailsPageProps {
   loading: boolean;
@@ -43,7 +44,13 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
       <AppHeader onBack={onBack}>
         {intl.formatMessage(sectionNames.apps)}
       </AppHeader>
-      <PageHeader title={data?.name}>
+      <PageHeader
+        title={
+          <>
+            {data?.name} {!data?.isActive && <DeactivatedText />}
+          </>
+        }
+      >
         <Button
           href={data?.homepageUrl}
           color="primary"
