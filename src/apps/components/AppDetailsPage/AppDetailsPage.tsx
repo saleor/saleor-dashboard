@@ -10,7 +10,7 @@ import ExternalLink from "@saleor/components/ExternalLink";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactMarkdown from "react-markdown";
 
@@ -38,6 +38,24 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
+  const [settingsUrl, setSettingsUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!settingsUrl && data?.configurationUrl) {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "http://127.0.0.1:8080/configuration/form/");
+      xhr.setRequestHeader("x-saleor-domain", "localhost:8000");
+      xhr.responseType = "blob";
+      xhr.onload = (e: ProgressEvent) => {
+        const target = e.currentTarget as XMLHttpRequest;
+        // const blob = new Blob([target.response], {type:"application/javascript"});
+        const urlCreator = window.URL || window.webkitURL;
+        const url = urlCreator.createObjectURL(target.response);
+        setSettingsUrl(url);
+      };
+      xhr.send();
+    }
+  }, [data]);
 
   return (
     <Container>
@@ -113,6 +131,14 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         )}
         <div className={classes.hr} />
       </div>
+
+      <iframe src={settingsUrl} height="400" width="100%" scrolling="no" />
+      <iframe
+        src="http://127.0.0.1:8080/configuration/form/"
+        height="400"
+        width="100%"
+        scrolling="no"
+      />
 
       <Card>
         <CardTitle
