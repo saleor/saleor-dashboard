@@ -387,7 +387,8 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                     overfulfill ||
                                     (line.variant.trackInventory &&
                                       formsetStock.quantity >
-                                        availableQuantity) ||
+                                        availableQuantity +
+                                          remainingQuantity) ||
                                     !!errors?.find(
                                       err =>
                                         err.warehouse === warehouse.id &&
@@ -402,7 +403,8 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                       <div
                                         className={classes.remainingQuantity}
                                       >
-                                        / {availableQuantity}
+                                        /{" "}
+                                        {availableQuantity + remainingQuantity}
                                       </div>
                                     )
                                   }}
