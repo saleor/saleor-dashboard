@@ -256,7 +256,7 @@ export const product: (
       ],
       margin: 2,
       name: "Cordoba Oro",
-      priceOverride: {
+      price: {
         __typename: "Money",
         amount: 678.78,
         currency: "USD"
@@ -297,7 +297,7 @@ export const product: (
       ],
       margin: 7,
       name: "silver",
-      priceOverride: null,
+      price: null,
       sku: "69055-15190",
       stocks: [
         {
@@ -1121,7 +1121,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     }
   ],
   name: "Extended Hard",
-  priceOverride: {
+  price: {
     __typename: "Money",
     amount: 100,
     currency: "USD"

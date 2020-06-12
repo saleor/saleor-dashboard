@@ -32,7 +32,7 @@ import ProductVariantPrice from "../ProductVariantPrice";
 
 export interface ProductVariantPageFormData {
   costPrice: string;
-  priceOverride: string;
+  price: string;
   sku: string;
   trackInventory: boolean;
 }
@@ -110,7 +110,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
 
   const initialForm: ProductVariantPageFormData = {
     costPrice: maybe(() => variant.costPrice.amount.toString(), ""),
-    priceOverride: maybe(() => variant.priceOverride.amount.toString(), ""),
+    price: maybe(() => variant.price.amount.toString(), ""),
     sku: maybe(() => variant.sku, ""),
     trackInventory: variant?.trackInventory
   };
@@ -182,10 +182,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     <CardSpacer />
                     <ProductVariantPrice
                       errors={errors}
-                      priceOverride={data.priceOverride}
+                      price={data.price}
                       currencySymbol={
-                        variant && variant.priceOverride
-                          ? variant.priceOverride.currency
+                        variant && variant.price
+                          ? variant.price.currency
                           : variant && variant.costPrice
                           ? variant.costPrice.currency
                           : ""

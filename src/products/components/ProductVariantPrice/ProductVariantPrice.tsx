@@ -21,7 +21,7 @@ const useStyles = makeStyles(
 
 interface ProductVariantPriceProps {
   currencySymbol?: string;
-  priceOverride?: string;
+  price?: string;
   costPrice?: string;
   errors: ProductErrorFragment[];
   loading?: boolean;
@@ -29,14 +29,7 @@ interface ProductVariantPriceProps {
 }
 
 const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
-  const {
-    currencySymbol,
-    costPrice,
-    errors,
-    priceOverride,
-    loading,
-    onChange
-  } = props;
+  const { currencySymbol, costPrice, errors, price, loading, onChange } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -56,7 +49,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
           <div>
             <PriceField
               error={!!formErrors.price_override}
-              name="priceOverride"
+              name="price"
               label={intl.formatMessage({
                 defaultMessage: "Selling price override"
               })}
@@ -65,10 +58,10 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                 intl.formatMessage({
                   defaultMessage: "Optional",
                   description: "optional field",
-                  id: "productVariantPriceOptionalPriceOverrideField"
+                  id: "productVariantPriceOptionalPriceField"
                 })
               }
-              value={priceOverride}
+              value={price}
               currencySymbol={currencySymbol}
               onChange={onChange}
               disabled={loading}

@@ -28,7 +28,7 @@ import ProductVariantPrice from "../ProductVariantPrice";
 interface ProductVariantCreatePageFormData {
   costPrice: string;
   images: string[];
-  priceOverride: string;
+  price: string;
   quantity: string;
   sku: string;
   trackInventory: boolean;
@@ -83,7 +83,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   const initialForm: ProductVariantCreatePageFormData = {
     costPrice: "",
     images: maybe(() => product.images.map(image => image.id)),
-    priceOverride: "",
+    price: "",
     quantity: "0",
     sku: "",
     trackInventory: true
@@ -130,7 +130,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 <CardSpacer />
                 <ProductVariantPrice
                   errors={errors}
-                  priceOverride={data.priceOverride}
+                  price={data.price}
                   currencySymbol={currencySymbol}
                   costPrice={data.costPrice}
                   loading={disabled}

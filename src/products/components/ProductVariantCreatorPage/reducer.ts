@@ -301,7 +301,7 @@ function changeVariantData(
     ...state.variants[variantIndex]
   };
   if (field === "price") {
-    variant.priceOverride = value;
+    variant.price = value;
   } else if (field === "sku") {
     variant.sku = value;
   }
