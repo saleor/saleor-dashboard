@@ -232,16 +232,16 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   />
                 )}
                 <CardSpacer />
-                <ProductPricing
-                  currency={currency}
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <CardSpacer />
                 {!!productType && !productType.hasVariants && (
                   <>
+                    <ProductPricing
+                      currency={currency}
+                      data={data}
+                      disabled={disabled}
+                      errors={errors}
+                      onChange={change}
+                    />
+                    <CardSpacer />
                     <ProductStocks
                       data={data}
                       disabled={disabled}
