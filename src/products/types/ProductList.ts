@@ -36,6 +36,17 @@ export interface ProductList_products_edges_node_attributes {
   values: (ProductList_products_edges_node_attributes_values | null)[];
 }
 
+export interface ProductList_products_edges_node_variants_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductList_products_edges_node_variants {
+  __typename: "ProductVariant";
+  price: ProductList_products_edges_node_variants_price | null;
+}
+
 export interface ProductList_products_edges_node {
   __typename: "Product";
   id: string;
@@ -45,6 +56,7 @@ export interface ProductList_products_edges_node {
   isPublished: boolean;
   productType: ProductList_products_edges_node_productType;
   attributes: ProductList_products_edges_node_attributes[];
+  variants: (ProductList_products_edges_node_variants | null)[] | null;
 }
 
 export interface ProductList_products_edges {

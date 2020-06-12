@@ -330,6 +330,12 @@ const productListQuery = gql`
               name
             }
           }
+          variants {
+            price {
+              amount
+              currency
+            }
+          }
         }
       }
       pageInfo {

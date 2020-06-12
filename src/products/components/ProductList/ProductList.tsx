@@ -18,6 +18,7 @@ import { ProductListColumns } from "@saleor/config";
 import { maybe, renderCollection } from "@saleor/misc";
 import {
   getAttributeIdFromColumnValue,
+  getProductPriceRange,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
@@ -372,13 +373,48 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     displayColumns={settings.columns}
                   >
                     <TableCell className={classes.colPrice}>
-                      {maybe(() => product.basePrice) &&
-                      maybe(() => product.basePrice.amount) !== undefined &&
-                      maybe(() => product.basePrice.currency) !== undefined ? (
-                        <Money money={product.basePrice} />
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {maybe<React.ReactNode>(() => {
+                        const { max, min } = getProductPriceRange(
+                          product.variants
+                        );
+                        const currency = product.variants[0].price.currency;
+
+                        if (max === min) {
+                          return (
+                            <Money
+                              money={{
+                                amount: min,
+                                currency
+                              }}
+                            />
+                          );
+                        } else {
+                          return (
+                            <>
+                              {intl.formatMessage({
+                                defaultMessage: "From",
+                                description: "from"
+                              })}{" "}
+                              <Money
+                                money={{
+                                  amount: min,
+                                  currency
+                                }}
+                              />{" "}
+                              {intl.formatMessage({
+                                defaultMessage: "to",
+                                description: "to"
+                              })}{" "}
+                              <Money
+                                money={{
+                                  amount: max,
+                                  currency
+                                }}
+                              />
+                            </>
+                          );
+                        }
+                      }, <Skeleton />)}
                     </TableCell>
                   </DisplayColumn>
                 </TableRow>
