@@ -318,11 +318,6 @@ export const products = (
   {
     __typename: "Product",
     attributes: [],
-    basePrice: {
-      __typename: "Money",
-      amount: 15,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo2MQ==",
     isAvailable: true,
     isPublished: true,
@@ -335,16 +330,37 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 15,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 35,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 49,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
     attributes: [],
-    basePrice: {
-      __typename: "Money",
-      amount: 15,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo2NA==",
     isAvailable: true,
     isPublished: false,
@@ -357,16 +373,37 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 15,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 30,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 49,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
     attributes: [],
-    basePrice: {
-      __typename: "Money",
-      amount: 15,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo2NQ==",
     isAvailable: true,
     isPublished: false,
@@ -379,7 +416,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 15,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 30,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 49,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -399,11 +462,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 3,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo3NQ==",
     isAvailable: true,
     isPublished: true,
@@ -416,7 +474,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -436,11 +520,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 3,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo3Ng==",
     isAvailable: true,
     isPublished: true,
@@ -453,7 +532,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -473,11 +578,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 3,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo3Mg==",
     isAvailable: true,
     isPublished: true,
@@ -490,7 +590,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -510,11 +636,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 3,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo3MQ==",
     isAvailable: true,
     isPublished: true,
@@ -527,7 +648,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -547,11 +694,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 3,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo3NA==",
     isAvailable: true,
     isPublished: true,
@@ -564,7 +706,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -584,11 +752,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 3,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo3OQ==",
     isAvailable: true,
     isPublished: false,
@@ -601,7 +764,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -621,11 +810,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 3,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo3Mw==",
     isAvailable: true,
     isPublished: true,
@@ -638,7 +822,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -658,11 +868,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 3,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo3OA==",
     isAvailable: true,
     isPublished: true,
@@ -675,7 +880,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -695,11 +926,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 30,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo4OQ==",
     isAvailable: true,
     isPublished: true,
@@ -712,7 +938,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -732,11 +984,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 30,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDoxMDc=",
     isAvailable: true,
     isPublished: true,
@@ -749,7 +996,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -769,11 +1042,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 30,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDoxMDg=",
     isAvailable: true,
     isPublished: true,
@@ -786,7 +1054,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -806,11 +1100,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 30,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDoxMDk=",
     isAvailable: true,
     isPublished: true,
@@ -823,7 +1112,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -843,11 +1158,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 30,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDoxMTA=",
     isAvailable: true,
     isPublished: true,
@@ -860,7 +1170,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -880,11 +1216,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 30,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDoxMTU=",
     isAvailable: true,
     isPublished: false,
@@ -897,7 +1228,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -917,11 +1274,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 30,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDoxMTY=",
     isAvailable: true,
     isPublished: true,
@@ -934,7 +1286,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -954,11 +1332,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 30,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDoxMTc=",
     isAvailable: true,
     isPublished: true,
@@ -971,7 +1344,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   },
   {
     __typename: "Product",
@@ -991,11 +1390,6 @@ export const products = (
         ]
       }
     ],
-    basePrice: {
-      __typename: "Money",
-      amount: 20,
-      currency: "USD"
-    },
     id: "UHJvZHVjdDo4NQ==",
     isAvailable: true,
     isPublished: false,
@@ -1008,7 +1402,33 @@ export const products = (
     thumbnail: {
       __typename: "Image",
       url: placeholderImage
-    }
+    },
+    variants: [
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 5,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 7,
+          currency: "USD"
+        }
+      },
+      {
+        __typename: "ProductVariant",
+        price: {
+          __typename: "Money",
+          amount: 3,
+          currency: "USD"
+        }
+      }
+    ]
   }
 ];
 
