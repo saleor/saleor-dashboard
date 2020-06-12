@@ -41,9 +41,11 @@ import ProductAttributes, {
 } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
+import ProductPricing from "../ProductPricing";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
 interface FormData {
+  basePrice: number;
   publicationDate: string;
   category: string;
   collections: string[];
@@ -67,6 +69,7 @@ interface ProductCreatePageProps {
   errors: ProductErrorFragment[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
+  currency: string;
   disabled: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
@@ -88,6 +91,7 @@ interface ProductCreatePageProps {
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
+  currency,
   disabled,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
@@ -126,6 +130,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     convertToRaw(ContentState.createFromText(""))
   );
   const initialData: FormData = {
+    basePrice: 0,
     category: "",
     chargeTaxes: false,
     collections: [],
@@ -226,6 +231,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     onMultiChange={handleAttributeMultiChange}
                   />
                 )}
+                <CardSpacer />
+                <ProductPricing
+                  currency={currency}
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
                 <CardSpacer />
                 {!!productType && !productType.hasVariants && (
                   <>

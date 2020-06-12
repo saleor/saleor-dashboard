@@ -215,6 +215,7 @@ export interface ProductCreateVariables {
   descriptionJson?: any | null;
   isPublished: boolean;
   name: string;
+  basePrice?: any | null;
   productType: string;
   sku?: string | null;
   seo?: SeoInput | null;

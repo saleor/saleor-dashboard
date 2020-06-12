@@ -112,6 +112,7 @@ storiesOf("Views / Products / Product edit", module)
     <ProductUpdatePage
       {...props}
       errors={([
+        "basePrice",
         "category",
         "chargeTaxes",
         "collections",
