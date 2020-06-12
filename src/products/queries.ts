@@ -62,7 +62,6 @@ export const fragmentProductImage = gql`
 `;
 
 export const productFragment = gql`
-  ${fragmentMoney}
   fragment ProductFragment on Product {
     id
     name
@@ -475,7 +474,6 @@ export const AvailableInGridAttributesQuery = TypedQuery<
 >(availableInGridAttributes);
 
 const createMultipleVariantsData = gql`
-  ${fragmentMoney}
   ${productVariantAttributesFragment}
   ${warehouseFragment}
   query CreateMultipleVariantsData($id: ID!) {
