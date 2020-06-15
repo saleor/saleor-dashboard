@@ -36,8 +36,10 @@ const useStyles = makeStyles(
   }
 );
 
-export interface RadioGroupFieldChoice {
-  value: string;
+export interface RadioGroupFieldChoice<
+  T extends string | number = string | number
+> {
+  value: T;
   label: React.ReactNode;
 }
 
@@ -49,7 +51,7 @@ interface RadioGroupFieldProps {
   hint?: string;
   label?: string;
   name?: string;
-  value: string;
+  value: string | number;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
