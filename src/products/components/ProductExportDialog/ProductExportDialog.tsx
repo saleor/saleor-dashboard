@@ -6,18 +6,43 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
+import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import { buttonMessages } from "@saleor/intl";
 import { DialogProps } from "@saleor/types";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductExportDialogSettings from "../ProductExportDialogSettings";
 
 export interface ProductExportSubmitData {}
 
 export enum ProductExportStep {
+  INFO,
   SETTINGS
 }
+
+function useSteps(): Array<Step<ProductExportStep>> {
+  const intl = useIntl();
+
+  return [
+    {
+      label: intl.formatMessage({
+        defaultMessage: "Information exported",
+        description: "product export to csv file, header"
+      }),
+      value: ProductExportStep.INFO
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "Export Settings",
+        description: "product export to csv file, header"
+      }),
+      value: ProductExportStep.SETTINGS
+    }
+  ];
+}
+
+const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
 export interface ProductExportDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -31,6 +56,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   open
 }) => {
   const [step, setStep] = React.useState(ProductExportStep.SETTINGS);
+  const steps = useSteps();
 
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
@@ -41,6 +67,11 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
         />
       </DialogTitle>
       <DialogContent>
+        <ProductExportSteps
+          currentStep={step}
+          steps={steps}
+          onStepClick={setStep}
+        />
         {step === ProductExportStep.SETTINGS && <ProductExportDialogSettings />}
       </DialogContent>
       <DialogActions>
