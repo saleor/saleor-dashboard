@@ -4,7 +4,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { commonMessages } from "@saleor/intl";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { useEffect } from "react";
@@ -108,7 +107,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const onAppRemove = (data: AppDelete) => {
     if (data.appDelete.errors.length === 0) {
       notify({
-        text: intl.formatMessage(commonMessages.savedChanges)
+        status: "success" as "success",
+        text: intl.formatMessage({
+          defaultMessage: "App successfully removed",
+          description: "snackbar text"
+        })
       });
       refetch();
     }
