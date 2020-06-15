@@ -58,7 +58,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
   const handleActivateConfirm = () => {
     activateApp(mutationOpts);
     notify({
-      status: "success" as "success",
+      status: "success",
       text: intl.formatMessage({
         defaultMessage: "App activated",
         description: "snackbar text"
@@ -68,7 +68,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
   const handleDeactivateConfirm = () => {
     deactivateApp(mutationOpts);
     notify({
-      status: "success" as "success",
+      status: "success",
       text: intl.formatMessage({
         defaultMessage: "App deactivated",
         description: "snackbar text"
