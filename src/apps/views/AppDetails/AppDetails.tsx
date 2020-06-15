@@ -15,6 +15,7 @@ import { useAppDetails } from "../../queries";
 import {
   AppDetailsUrlDialog,
   AppDetailsUrlQueryParams,
+  appSettingsUrl,
   appsListPath,
   appUrl
 } from "../../urls";
@@ -95,6 +96,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
       <AppDetailsPage
         data={data?.app}
         loading={loading}
+        navigateToAppSettings={() => navigate(appSettingsUrl(id))}
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
         onBack={() => navigate(appsListPath)}
