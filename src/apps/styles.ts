@@ -35,7 +35,14 @@ export const useStyles = makeStyles(
     appName: {
       color: theme.palette.primary.main
     },
-
+    appSettingsHeader: {
+      "& > button, & > a": {
+        "&:last-child": {
+          marginRight: 0
+        },
+        marginRight: theme.spacing(2)
+      }
+    },
     colAction: {
       "&&": {
         paddingRight: theme.spacing(1),
@@ -93,6 +100,16 @@ export const useStyles = makeStyles(
       marginBottom: 0,
       marginTop: 0,
       width: "100%"
+    },
+    iframeHide: {
+      display: "none"
+    },
+    iframeShow: {
+      "& > iframe": {
+        border: "none",
+        minHeight: "75vh",
+        width: "100%"
+      }
     },
     installAppContainer: {
       "& > div": {
