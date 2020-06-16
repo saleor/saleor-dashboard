@@ -302,14 +302,6 @@
     "context": "apps section name",
     "string": "Apps"
   },
-  "src_dot_apps_dot_components_dot_ActiveText_dot_31853942": {
-    "context": "app status",
-    "string": "active"
-  },
-  "src_dot_apps_dot_components_dot_ActiveText_dot_3239722049": {
-    "context": "app status",
-    "string": "inactive"
-  },
   "src_dot_apps_dot_components_dot_AppActivateDialog_dot_1499521723": {
     "context": "dialog header",
     "string": "Activate App"
@@ -533,6 +525,10 @@
     "context": "create app button",
     "string": "Create App"
   },
+  "src_dot_apps_dot_components_dot_DeactivatedText_dot_3064552173": {
+    "context": "app status",
+    "string": "Deactivated"
+  },
   "src_dot_apps_dot_components_dot_InstalledApps_dot_1554529776": {
     "context": "section header",
     "string": "External Apps"
@@ -605,19 +601,14 @@
     "context": "window title",
     "string": "Install App"
   },
-<<<<<<< HEAD
-=======
   "src_dot_apps_dot_views_dot_AppsList_dot_1180774955": {
     "context": "message content",
     "string": "{name} is ready to be used"
   },
->>>>>>> add notifications for app installations
   "src_dot_apps_dot_views_dot_AppsList_dot_3076215778": {
     "context": "snackbar text",
     "string": "App successfully removed"
   },
-<<<<<<< HEAD
-=======
   "src_dot_apps_dot_views_dot_AppsList_dot_539268521": {
     "context": "message title",
     "string": "Couldn’t Install {name}"
@@ -626,7 +617,6 @@
     "context": "message title",
     "string": "App installed"
   },
->>>>>>> add notifications for app installations
   "src_dot_apps_dot_views_dot_CustomAppCreate_dot_3230241731": {
     "context": "window title",
     "string": "Create App"
