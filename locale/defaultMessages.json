@@ -250,7 +250,7 @@
     "context": "optional field",
     "string": "Optional"
   },
-  "productVariantPriceOptionalPriceOverrideField": {
+  "productVariantPriceOptionalPriceField": {
     "context": "optional field",
     "string": "Optional"
   },

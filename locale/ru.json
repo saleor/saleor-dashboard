@@ -4,28 +4,28 @@
     "string": "Отменить заказ"
   },
   "configurationMenuAttributes": {
-    "string": "Determine attributes used to create product types"
+    "string": "Определить атрибуты, используемые для создания типов товаров"
   },
   "configurationMenuNavigation": {
-    "string": "Define how users can navigate through your store"
+    "string": "Задать как пользователи могут перемещаться по вашему магазину"
   },
   "configurationMenuPages": {
-    "string": "Manage and add additional pages"
+    "string": "Управление и добавление дополнительных страниц"
   },
   "configurationMenuPermissionGroups": {
-    "string": "Manage your permission groups and their permissions"
+    "string": "Управление группами разрешений и их разрешениями"
   },
   "configurationMenuProductTypes": {
-    "string": "Define types of products you sell"
+    "string": "Задать типы продаваемых товаров"
   },
   "configurationMenuShipping": {
-    "string": "Manage how you ship out orders"
+    "string": "Управление доставкой заказов"
   },
   "configurationMenuSiteSettings": {
-    "string": "View and update your site settings"
+    "string": "Просмотр и обновление настроек вашего сайта"
   },
   "configurationMenuStaff": {
-    "string": "Manage your employees and their permissions"
+    "string": "Управление сотрудниками и их правами"
   },
   "configurationMenuTaxes": {
     "string": "Manage how your store charges tax"
@@ -41,24 +41,24 @@
     "string": "Активность"
   },
   "homeActivityCardNoActivities": {
-    "string": "No activities found"
+    "string": "Никаких действий не найдено"
   },
   "homeAnalyticsCardHeader": {
     "string": "Сегодня"
   },
   "homeHeaderText": {
     "context": "header",
-    "string": "Hello there, {userName}"
+    "string": "Привет, {userName}"
   },
   "homeHeaderTextCaption": {
     "context": "subheader",
-    "string": "Here is some information we gathered about your store"
+    "string": "Вот некоторые сведения, которые мы собрали о вашем магазине"
   },
   "homeNotificationTableNoOrders": {
     "string": "No orders ready to fulfill"
   },
   "homeNotificationTableOrders": {
-    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}"
+    "string": "{amount, plural,one {Один заказ готов к исполнению} few {{amount} заказа готовы к исполнению} many {{amount} заказов готовы к исполнению} other {{amount} заказов готовы к исполнению}}"
   },
   "homeNotificationTablePayments": {
     "string": "{amount, plural,one {One payment to capture} other {{amount} Payments to capture}}"
@@ -70,7 +70,7 @@
     "string": "No payments waiting for capture"
   },
   "homeNotificationsTableNoProducts": {
-    "string": "No products out of stock"
+    "string": "Нет продуктов с малым остатком на складе"
   },
   "homeProductListCardOrders": {
     "context": "number of ordered products",
@@ -78,14 +78,14 @@
   },
   "homeProductsListCardHeader": {
     "context": "header",
-    "string": "Top Products"
+    "string": "Лучшие товары"
   },
   "homeProductsListCardNoProducts": {
-    "string": "No products found"
+    "string": "Товары не найдены"
   },
   "homeScreenDisclaimer": {
     "context": "header",
-    "string": "Disclaimer"
+    "string": "Предупреждение"
   },
   "homeScreenDisclaimerText1": {
     "string": "The new dashboard and the GraphQL API are preview-quality software."
@@ -95,24 +95,24 @@
   },
   "homeScreenHeader": {
     "context": "header",
-    "string": "Hello there, {userName}"
+    "string": "Привет, {userName}"
   },
   "menuCreateDialogHeader": {
     "context": "dialog header",
-    "string": "Create Menu"
+    "string": "Создать меню"
   },
   "menuCreateDialogMenuTitleLabel": {
-    "string": "Menu Title"
+    "string": "Заголовок меню"
   },
   "menuDetailsDeleteMenuContent": {
     "string": "Вы уверены, что хотите удалить menu {menuName}?"
   },
   "menuDetailsDeleteMenuHeader": {
     "context": "dialog header",
-    "string": "Delete Menu"
+    "string": "Удалить меню"
   },
   "menuDetailsPageHelperText": {
-    "string": "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
+    "string": "Создание структуры навигации выполняется путем перетаскивания. Просто создайте новый пункт меню, а затем перетащите его в предназначенное ему место. Вы можете перемещать элементы на друг друга для создания древовидной структуры и перетаскивать элементы вверх и вниз для создания иерархии"
   },
   "menuItemDialogAddItem": {
     "context": "create new menu item, header",
@@ -120,11 +120,11 @@
   },
   "menuItemDialogAddLink": {
     "context": "add link to navigation",
-    "string": "Link to: {url}"
+    "string": "Ссылка на: {url}"
   },
   "menuItemDialogEditItem": {
     "context": "edit menu item, header",
-    "string": "Edit Item"
+    "string": "Редактировать элемент"
   },
   "menuItemDialogLinkLabel": {
     "context": "label",
@@ -139,11 +139,11 @@
   },
   "menuItemsAddItem": {
     "context": "add new menu item",
-    "string": "Create new item"
+    "string": "Создать новый элемент"
   },
   "menuItemsHeader": {
     "context": "header",
-    "string": "Menu Items"
+    "string": "Элементы меню"
   },
   "menuItemsPlaceholder": {
     "string": "Добавьте новый пункт, чтобы начать создавать меню."
@@ -152,11 +152,11 @@
     "string": "Created menu"
   },
   "menuListDeleteMenuContent": {
-    "string": "Are you sure you want to delete {menuName}?"
+    "string": "Вы уверены, что хотите удалить {menuName}?"
   },
   "menuListDeleteMenuHeader": {
     "context": "dialog header",
-    "string": "Delete Menu"
+    "string": "Удалить меню"
   },
   "menuListDeleteMenusContent": {
     "string": "{counter,plural,one {Are you sure you want to delete this menu?} other {Are you sure you want to delete {displayQuantity} menus?}}"
@@ -170,20 +170,20 @@
   },
   "menuListItems": {
     "context": "number of menu items",
-    "string": "Items"
+    "string": "Элементы"
   },
   "menuListMenutitle": {
-    "string": "Menu Title"
+    "string": "Заголовок меню"
   },
   "menuListNoMenus": {
     "string": "No menus found"
   },
   "menuListPageAddMenu": {
     "context": "button",
-    "string": "Create Menu"
+    "string": "Создать меню"
   },
   "menuPropertiesMenuTitle": {
-    "string": "Menu Title"
+    "string": "Заголовок меню"
   },
   "orderCustomerBillingAddressNotSet": {
     "context": "no address is set in draft order",
@@ -215,11 +215,11 @@
   },
   "productTypeCreateHeader": {
     "context": "window title",
-    "string": "Create Product Type"
+    "string": "Создать тип продукта"
   },
   "productTypeCreatePageHeader": {
     "context": "header",
-    "string": "Create Product Type"
+    "string": "Создать тип продукта"
   },
   "productTypeTaxesHeader": {
     "context": "section header",
@@ -244,13 +244,13 @@
   },
   "productVariantCreatorWarehouseSectionHeader": {
     "context": "header",
-    "string": "Warehouses"
+    "string": "Склады"
   },
   "productVariantPriceOptionalCostPriceField": {
     "context": "optional field",
     "string": "Optional"
   },
-  "productVariantPriceOptionalPriceOverrideField": {
+  "productVariantPriceOptionalPriceField": {
     "context": "optional field",
     "string": "Optional"
   },
@@ -288,7 +288,7 @@
   },
   "shippingZoneWarehouses_dot_autocomplete_dot_label": {
     "context": "autocomplete select label",
-    "string": "Warehouse"
+    "string": "Склад"
   },
   "siteSettingsMailingHelperText": {
     "context": "helper text",
@@ -314,7 +314,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeBulkDeleteDialog_dot_1655187315": {
     "context": "dialog title",
-    "string": "Delete attributes"
+    "string": "Удалить атрибуты"
   },
   "src_dot_attributes_dot_components_dot_AttributeDeleteDialog_dot_1889602489": {
     "context": "dialog title",
@@ -322,7 +322,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeDeleteDialog_dot_3738429348": {
     "context": "dialog content",
-    "string": "Are you sure you want to delete {attributeName}?"
+    "string": "Вы уверены, что Вы хотите удалить { attributeName }?"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1005562666": {
     "context": "attribute's editor component",
@@ -403,7 +403,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_643174786": {
     "context": "attribute is visible",
-    "string": "Visible"
+    "string": "Видимый"
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_691600601": {
     "context": "attribute's label'",
@@ -419,11 +419,11 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_1877630205": {
     "context": "attribute properties regarding storefront",
-    "string": "Storefront Properties"
+    "string": "Свойства витрины"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_26409543": {
     "context": "attribute properties regarding dashboard",
-    "string": "Dashboard Properties"
+    "string": "Свойства дашборда"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3590282519": {
     "context": "attribute position in storefront filters",
@@ -560,7 +560,7 @@
   },
   "src_dot_back": {
     "context": "button",
-    "string": "Back"
+    "string": "Назад"
   },
   "src_dot_cancel": {
     "context": "button",
@@ -639,11 +639,11 @@
     "string": "Цена"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_1657559629": {
-    "string": "No products found"
+    "string": "Товары не найдены"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_2341910657": {
     "context": "product",
@@ -663,7 +663,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryProducts_dot_4164156574": {
     "context": "header",
-    "string": "Products in {categoryName}"
+    "string": "Товаров в {categoryName}"
   },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_2159874182": {
     "context": "number of subcategories in category",
@@ -682,7 +682,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_770296100": {
     "context": "button",
-    "string": "Create subcategory"
+    "string": "Создать подкатегорию"
   },
   "src_dot_categories_dot_views_dot_1140231710": {
     "context": "window title",
@@ -819,11 +819,11 @@
     "string": "Опубликовано"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1657559629": {
-    "string": "No products found"
+    "string": "Товары не найдены"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_2341910657": {
     "context": "product is not published",
@@ -1399,7 +1399,7 @@
     "string": "Set publication date"
   },
   "src_dot_components_dot_VisibilityCard_dot_643174786": {
-    "string": "Visible"
+    "string": "Видимый"
   },
   "src_dot_components_dot_VisibilityCard_dot_77815154": {
     "string": "Скрыто"
@@ -1675,6 +1675,10 @@
     "context": "button",
     "string": "Удалить"
   },
+  "src_dot_demo": {
+    "context": "notification message after log in",
+    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+  },
   "src_dot_description": {
     "string": "Описание"
   },
@@ -1749,7 +1753,7 @@
     "string": "Время активности"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_1657559629": {
-    "string": "No products found"
+    "string": "Товары не найдены"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2100305525": {
     "context": "button",
@@ -2532,6 +2536,10 @@
     "context": "cancelled fulfillment, section header",
     "string": "Cancelled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "Единица складского учёта"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
     "context": "button",
     "string": "Отменить пополнение"
@@ -2749,6 +2757,10 @@
     "context": "order payment",
     "string": "Outstanding Balance"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
+    "context": "order discount",
+    "string": "Скидка"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
     "context": "order payment",
     "string": "Авторизованное число"
@@ -2768,16 +2780,16 @@
     "context": "order total price",
     "string": "Сумма"
   },
-  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_1542417144": {
-    "context": "dialog header",
-    "string": "Create Product"
-  },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
     "string": "SKU {sku}"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2336947364": {
     "string": "Search by product name, attribute, product type etc..."
+  },
+  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2775402904": {
+    "context": "dialog header",
+    "string": "Добавить товар"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2850255786": {
     "string": "Search Products"
@@ -2808,6 +2820,10 @@
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2886647373": {
     "context": "section header",
     "string": "Unfulfilled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "Единица складского учёта"
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
     "context": "order line total price",
@@ -3363,7 +3379,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_type": {
     "context": "product type is digital or physical",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_1126553969": {
     "string": "No product types found"
@@ -3378,7 +3394,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_1952810469": {
     "context": "product type is either simple or configurable",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_2253986440": {
     "context": "product type name",
@@ -3507,7 +3523,7 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_3550330425": {
     "string": "Search Products..."
@@ -3545,18 +3561,18 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_visible": {
     "context": "product is visible",
-    "string": "Visible"
+    "string": "Видимый"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_1134347598": {
     "context": "product price",
     "string": "Цена"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_1657559629": {
-    "string": "No products found"
+    "string": "Товары не найдены"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_2341910657": {
     "context": "product status",
@@ -3621,16 +3637,13 @@
     "context": "header",
     "string": "Количество"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3143542809": {
-    "string": "This product doesn't have any stock. You can add it <l>here</l>."
-  },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3482985373": {
-    "context": "button",
-    "string": "Edit Warehouses"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3633706025": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
+    "context": "button",
+    "string": "Assign Warehouse"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
@@ -3858,13 +3871,6 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_998917294": {
     "context": "product variant name",
     "string": "Варианты"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_3482985373": {
-    "context": "dialog header",
-    "string": "Edit Warehouses"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_4112406382": {
-    "string": "Select warehouses that stock selected product"
   },
   "src_dot_products_dot_views_dot_1542417144": {
     "context": "window title",
@@ -4147,6 +4153,9 @@
     "context": "window title",
     "string": "Create Service Account"
   },
+  "src_dot_sessionExpired": {
+    "string": "Your session has expired. Please log in again to continue."
+  },
   "src_dot_shipping": {
     "context": "shipping section name",
     "string": "Shipping Methods"
@@ -4336,7 +4345,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneWarehouses_dot_1221560277": {
     "context": "section header",
-    "string": "Warehouse"
+    "string": "Склад"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneWarehouses_dot_2304484478": {
     "context": "button",
@@ -5149,7 +5158,7 @@
   },
   "src_dot_warehouses": {
     "context": "warehouses section name",
-    "string": "Warehouses"
+    "string": "Склады"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseCreatePage_dot_1967111456": {
     "context": "warehouse",
