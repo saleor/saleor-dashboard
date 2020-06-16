@@ -61,8 +61,8 @@ export enum AppSortField {
 }
 
 export enum AppTypeEnum {
-  CUSTOM = "CUSTOM",
-  EXTERNAL = "EXTERNAL",
+  LOCAL = "LOCAL",
+  THIRDPARTY = "THIRDPARTY",
 }
 
 export enum AttributeInputTypeEnum {
@@ -856,6 +856,7 @@ export interface AddressInput {
 export interface AppFilterInput {
   search?: string | null;
   isActive?: boolean | null;
+  type?: AppTypeEnum | null;
 }
 
 export interface AppInput {
