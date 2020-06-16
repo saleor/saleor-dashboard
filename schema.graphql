@@ -355,6 +355,7 @@ type AppFetchManifest {
 input AppFilterInput {
   search: String
   isActive: Boolean
+  type: AppTypeEnum
 }
 
 input AppInput {
@@ -448,8 +449,8 @@ type AppTokenVerify {
 }
 
 enum AppTypeEnum {
-  CUSTOM
-  EXTERNAL
+  LOCAL
+  THIRDPARTY
 }
 
 type AppUpdate {

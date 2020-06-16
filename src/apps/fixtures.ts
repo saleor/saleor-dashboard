@@ -24,7 +24,7 @@ export const appsList: AppsList_apps_edges[] = [
       privateMetadata: [],
       supportUrl: "http://localhost:8888/support",
       tokens: [],
-      type: AppTypeEnum.EXTERNAL,
+      type: AppTypeEnum.THIRDPARTY,
       version: "1.0.0",
       webhooks: []
     }
@@ -44,7 +44,7 @@ export const appsList: AppsList_apps_edges[] = [
       privateMetadata: [],
       supportUrl: "http://localhost:8888/support",
       tokens: [],
-      type: AppTypeEnum.EXTERNAL,
+      type: AppTypeEnum.THIRDPARTY,
       version: "1.0.0",
       webhooks: []
     }
@@ -67,7 +67,7 @@ export const customAppsList: AppsList_apps_edges[] = [
       privateMetadata: [],
       supportUrl: "http://localhost:8888/support",
       tokens: [],
-      type: AppTypeEnum.CUSTOM,
+      type: AppTypeEnum.LOCAL,
       version: "1.0.0",
       webhooks: []
     }
@@ -129,7 +129,7 @@ export const appDetails: App_app = {
   privateMetadata: [],
   supportUrl: "http://localhost:8888/support",
   tokens: [],
-  type: AppTypeEnum.EXTERNAL,
+  type: AppTypeEnum.THIRDPARTY,
   version: "1.0.0",
   webhooks: []
 };
