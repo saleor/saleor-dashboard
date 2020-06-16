@@ -13,13 +13,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductExportDialogSettings from "./ProductExportDialogSettings";
-
-export interface ProductExportSubmitData {}
-
-export enum ProductExportStep {
-  INFO,
-  SETTINGS
-}
+import { ProductExportStep, ProductExportSubmitData } from "./types";
 
 function useSteps(): Array<Step<ProductExportStep>> {
   const intl = useIntl();
