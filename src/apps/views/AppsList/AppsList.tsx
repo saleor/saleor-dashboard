@@ -1,4 +1,5 @@
 import useListSettings from "@saleor/hooks/useListSettings";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -10,7 +11,6 @@ import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { AppSortField, OrderDirection } from "../../../types/globalTypes";
-import { JobStatusEnum } from "../../../types/globalTypes";
 import AppDeleteDialog from "../../components/AppDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
 import {
@@ -22,7 +22,6 @@ import {
   useInstalledAppsListQuery
 } from "../../queries";
 import { AppDelete } from "../../types/AppDelete";
-import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
 import { AppsList_apps_edges } from "../../types/AppsList";
 import {
   AppListUrlDialog,
@@ -41,6 +40,10 @@ interface AppsListProps {
 
 export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const { action } = params;
+  const [activeInstallations, setActiveInstallations] = useLocalStorage(
+    "activeInstallations",
+    []
+  );
   const notify = useNotifier();
   const intl = useIntl();
   const navigate = useNavigator();
@@ -54,10 +57,14 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       field: AppSortField.CREATION_DATE
     }
   };
+
   const intervalId = useRef<null | number>(null);
-  const prevAppsInProgressData = useRef<
-    null | AppsInstallations_appsInstallations[]
-  >(null);
+
+  const removeInstallation = (id: string) =>
+    setActiveInstallations(installations =>
+      installations.filter(item => item.id !== id)
+    );
+
   const {
     data: appsInProgressData,
     loading: loadingAppsInProgress,
@@ -78,7 +85,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   );
   const installedAppNotify = (name: string) => {
     notify({
-      status: "success" as "success",
+      status: "success",
       text: intl.formatMessage(
         {
           defaultMessage: "{name} is ready to be used",
@@ -96,12 +103,14 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     onCompleted: data => {
       const errors = data.appRetryInstall.errors;
       if (!errors.length) {
-        appsInProgressRefetch();
-        refetch();
-        installedAppNotify(data.appRetryInstall.appInstallation.appName);
+        const appInstallation = data.appRetryInstall.appInstallation;
+        setActiveInstallations(installations => [
+          ...installations,
+          { id: appInstallation.id, name: appInstallation.appName }
+        ]);
       } else {
         errors.forEach(error =>
-          notify({ status: "error" as "error", text: error.message })
+          notify({ status: "error", text: error.message })
         );
       }
     }
@@ -120,54 +129,51 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
 
   useEffect(() => {
     const appsInProgress = appsInProgressData?.appsInstallations || [];
-
-    appsInProgress.forEach(app => {
-      const prevState = prevAppsInProgressData.current?.find(
-        prevApp => prevApp.id === app.id
-      );
-      if (prevState?.status !== app.status) {
-        switch (app.status) {
-          case JobStatusEnum.SUCCESS:
-            installedAppNotify(app.appName);
-            refetch();
-            break;
-          case JobStatusEnum.FAILED:
-            notify({
-              status: "error" as "error",
-              text: app.message,
-              title: intl.formatMessage(
-                {
-                  defaultMessage: "Couldn’t Install {name}",
-                  description: "message title"
-                },
-                { name: app.appName }
-              )
-            });
-            break;
-          case JobStatusEnum.PENDING:
-            if (!intervalId.current) {
-              intervalId.current = window.setInterval(
-                () => appsInProgressRefetch(),
-                3000
-              );
-            }
-            break;
-        }
+    if (activeInstallations.length && appsInProgress.length) {
+      if (!intervalId.current) {
+        intervalId.current = window.setInterval(
+          () => appsInProgressRefetch(),
+          3000
+        );
       }
-    });
-
-    if (appsInProgress.length) {
-      prevAppsInProgressData.current = appsInProgress;
+      activeInstallations.forEach(installation => {
+        const item = appsInProgress?.find(app => app.id === installation.id);
+        if (!item) {
+          removeInstallation(installation.id);
+          installedAppNotify(installation.name);
+          appsInProgressRefetch();
+        } else if (item.status === "SUCCESS") {
+          removeInstallation(installation.id);
+          installedAppNotify(item.appName);
+          refetch();
+        } else if (item.status === "FAILED") {
+          removeInstallation(installation.id);
+          notify({
+            status: "error",
+            text: item.message,
+            title: intl.formatMessage(
+              {
+                defaultMessage: "Couldn’t Install {name}",
+                description: "message title"
+              },
+              { name: item.appName }
+            )
+          });
+        }
+      });
     }
-
-    if (
-      !appsInProgress.some(app => app.status === JobStatusEnum.PENDING) &&
-      intervalId.current
-    ) {
+    if (!activeInstallations.length && intervalId.current) {
       clearInterval(intervalId.current);
+      intervalId.current = null;
     }
-    return () => intervalId.current && clearInterval(intervalId.current);
-  }, [appsInProgressData]);
+
+    return () => {
+      if (intervalId.current) {
+        clearInterval(intervalId.current);
+        intervalId.current = null;
+      }
+    };
+  }, [activeInstallations.length, appsInProgressData]);
 
   const handleRemoveConfirm = () =>
     deleteApp({
@@ -179,7 +185,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const onAppRemove = (data: AppDelete) => {
     if (data.appDelete.errors.length === 0) {
       notify({
-        status: "success" as "success",
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "App successfully removed",
           description: "snackbar text"
