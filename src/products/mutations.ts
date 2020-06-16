@@ -1,6 +1,7 @@
 import {
   bulkProductErrorFragment,
   bulkStockErrorFragment,
+  csvErrorFragment,
   productErrorFragment,
   stockErrorFragment
 } from "@saleor/fragments/errors";
@@ -558,6 +559,25 @@ export const ProductVariantBulkDeleteMutation = gql`
   }
 `;
 export const TypedProductVariantBulkDeleteMutation = TypedMutation<
+  ProductVariantBulkDelete,
+  ProductVariantBulkDeleteVariables
+>(ProductVariantBulkDeleteMutation);
+
+export const productExportMutation = gql`
+  ${exportFileFragment}
+  ${csvErrorFragment}
+  mutation ProductExport($input: ExportProductsInput!) {
+    exportProducts(input: $input) {
+      exportFile {
+        ...ExportFileFragment
+      }
+      errors: csvErrors {
+        ...CsvErrorFragment
+      }
+    }
+  }
+`;
+export const exportProducts = makeMutation<
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 >(ProductVariantBulkDeleteMutation);

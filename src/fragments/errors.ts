@@ -111,3 +111,10 @@ export const invoiceErrorFragment = gql`
     field
   }
 `;
+
+export const csvErrorFragment = gql`
+  fragment CsvErrorFragment on CsvError {
+    code
+    field
+  }
+`;

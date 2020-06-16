@@ -231,3 +231,11 @@ export const fragmentVariant = gql`
     trackInventory
   }
 `;
+
+export const exportFileFragment = gql`
+  fragment ExportFileFragment on ExportFile {
+    id
+    status
+    url
+  }
+`;
