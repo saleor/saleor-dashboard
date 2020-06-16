@@ -6,15 +6,7 @@ import RadioGroupField, {
 import React from "react";
 import { useIntl } from "react-intl";
 
-export enum ProductsToExport {
-  ALL,
-  SEARCH,
-  SELECTED
-}
-export enum ProductExportType {
-  CSV,
-  SPREADSHEET
-}
+import { ProductExportType, ProductsToExport } from "./types";
 
 const useStyles = makeStyles(
   theme => ({
