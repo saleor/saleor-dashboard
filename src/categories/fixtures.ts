@@ -117,11 +117,6 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjA=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 83.3,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyMQ==",
           isAvailable: true,
           name: "Gardner-Schultz",
@@ -130,7 +125,25 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: { __typename: "Image", url: placeholderImage },
+          variants: [
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 5,
+                currency: "USD"
+              }
+            },
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            }
+          ]
         }
       },
       {
@@ -138,11 +151,6 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjE=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 68.27,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyMg==",
           isAvailable: true,
           name: "James, Martinez and Murray",
@@ -151,7 +159,25 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: { __typename: "Image", url: placeholderImage },
+          variants: [
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 5,
+                currency: "USD"
+              }
+            },
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            }
+          ]
         }
       },
       {
@@ -159,11 +185,6 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjI=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 21.43,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyMw==",
           isAvailable: true,
           name: "Curtis, Joyce and Turner",
@@ -172,7 +193,25 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: { __typename: "Image", url: placeholderImage },
+          variants: [
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 5,
+                currency: "USD"
+              }
+            },
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            }
+          ]
         }
       },
       {
@@ -180,11 +219,6 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjM=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 62.76,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyNA==",
           isAvailable: true,
           name: "Davis, Brown and Ray",
@@ -193,7 +227,25 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: { __typename: "Image", url: placeholderImage },
+          variants: [
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 5,
+                currency: "USD"
+              }
+            },
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            }
+          ]
         }
       },
       {
@@ -201,11 +253,6 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjQ=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 7.13,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyNQ==",
           isAvailable: true,
           name: "Gallegos Ltd",
@@ -214,7 +261,25 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: { __typename: "Image", url: placeholderImage },
+          variants: [
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 5,
+                currency: "USD"
+              }
+            },
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            }
+          ]
         }
       },
       {
@@ -222,11 +287,6 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjU=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 48.82,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyNg==",
           isAvailable: true,
           name: "Franklin Inc",
@@ -235,7 +295,25 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: { __typename: "Image", url: placeholderImage },
+          variants: [
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 5,
+                currency: "USD"
+              }
+            },
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            }
+          ]
         }
       },
       {
@@ -243,11 +321,6 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjY=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 27.34,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyNw==",
           isAvailable: true,
           name: "Williams-Taylor",
@@ -256,7 +329,25 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: { __typename: "Image", url: placeholderImage },
+          variants: [
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 5,
+                currency: "USD"
+              }
+            },
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            }
+          ]
         }
       },
       {
@@ -264,11 +355,6 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjc=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 75.42,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyOA==",
           isAvailable: true,
           name: "Riddle, Evans and Hicks",
@@ -277,7 +363,25 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: { __typename: "Image", url: placeholderImage },
+          variants: [
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 5,
+                currency: "USD"
+              }
+            },
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            }
+          ]
         }
       },
       {
@@ -285,11 +389,6 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjg=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 86.62,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDoyOQ==",
           isAvailable: true,
           name: "Hebert-Sherman",
@@ -298,7 +397,25 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: { __typename: "Image", url: placeholderImage },
+          variants: [
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 5,
+                currency: "USD"
+              }
+            },
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            }
+          ]
         }
       },
       {
@@ -306,11 +423,6 @@ export const category: (
         cursor: "YXJyYXljb25uZWN0aW9uOjk=",
         node: {
           __typename: "Product",
-          basePrice: {
-            __typename: "Money",
-            amount: 48.66,
-            currency: "USD"
-          },
           id: "UHJvZHVjdDozMA==",
           isAvailable: true,
           name: "Carter and Sons",
@@ -319,7 +431,25 @@ export const category: (
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage }
+          thumbnail: { __typename: "Image", url: placeholderImage },
+          variants: [
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 5,
+                currency: "USD"
+              }
+            },
+            {
+              __typename: "ProductVariant" as "ProductVariant",
+              price: {
+                __typename: "Money" as "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            }
+          ]
         }
       }
     ],

@@ -73,6 +73,17 @@ export interface CategoryDetails_category_products_edges_node_productType {
   name: string;
 }
 
+export interface CategoryDetails_category_products_edges_node_variants_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CategoryDetails_category_products_edges_node_variants {
+  __typename: "ProductVariant";
+  price: CategoryDetails_category_products_edges_node_variants_price | null;
+}
+
 export interface CategoryDetails_category_products_edges_node {
   __typename: "Product";
   id: string;
@@ -80,6 +91,7 @@ export interface CategoryDetails_category_products_edges_node {
   isAvailable: boolean | null;
   thumbnail: CategoryDetails_category_products_edges_node_thumbnail | null;
   productType: CategoryDetails_category_products_edges_node_productType;
+  variants: (CategoryDetails_category_products_edges_node_variants | null)[] | null;
 }
 
 export interface CategoryDetails_category_products_edges {

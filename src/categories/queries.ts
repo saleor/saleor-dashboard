@@ -112,6 +112,12 @@ export const categoryDetails = gql`
               id
               name
             }
+            variants {
+              price {
+                amount
+                currency
+              }
+            }
           }
         }
       }

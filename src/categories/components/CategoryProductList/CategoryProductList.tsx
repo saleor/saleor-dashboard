@@ -14,6 +14,7 @@ import TableCellAvatar, {
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
+import { getProductPriceRange } from "@saleor/products/components/ProductListPage/utils";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -207,13 +208,41 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                     )}
                   </TableCell>
                   <TableCell className={classes.colPrice}>
-                    {maybe(() => product.basePrice) &&
-                    maybe(() => product.basePrice.amount) !== undefined &&
-                    maybe(() => product.basePrice.currency) !== undefined ? (
-                      <Money money={product.basePrice} />
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {maybe<React.ReactNode>(() => {
+                      const { max, min } = getProductPriceRange(
+                        product.variants
+                      );
+                      const currency = product.variants[0].price.currency;
+
+                      if (max === min) {
+                        return (
+                          <Money
+                            money={{
+                              amount: min,
+                              currency
+                            }}
+                          />
+                        );
+                      } else {
+                        return (
+                          <>
+                            <Money
+                              money={{
+                                amount: min,
+                                currency
+                              }}
+                            />
+                            {" - "}
+                            <Money
+                              money={{
+                                amount: max,
+                                currency
+                              }}
+                            />
+                          </>
+                        );
+                      }
+                    }, <Skeleton />)}
                   </TableCell>
                 </TableRow>
               );
