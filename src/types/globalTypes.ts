@@ -381,6 +381,12 @@ export enum CountryCode {
   ZW = "ZW",
 }
 
+export enum CsvErrorCode {
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+}
+
 export enum DiscountErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
@@ -399,6 +405,17 @@ export enum DiscountStatusEnum {
 export enum DiscountValueTypeEnum {
   FIXED = "FIXED",
   PERCENTAGE = "PERCENTAGE",
+}
+
+export enum ExportScope {
+  ALL = "ALL",
+  FILTER = "FILTER",
+  IDS = "IDS",
+}
+
+export enum FileTypesEnum {
+  CSV = "CSV",
+  XLSX = "XLSX",
 }
 
 export enum FulfillmentStatus {
@@ -666,6 +683,24 @@ export enum ProductErrorCode {
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
   VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT",
+}
+
+export enum ProductFieldEnum {
+  CATEGORY = "CATEGORY",
+  CHARGE_TAXES = "CHARGE_TAXES",
+  COLLECTIONS = "COLLECTIONS",
+  COST_PRICE = "COST_PRICE",
+  DESCRIPTION = "DESCRIPTION",
+  NAME = "NAME",
+  PRICE = "PRICE",
+  PRICE_OVERRIDE = "PRICE_OVERRIDE",
+  PRODUCT_IMAGES = "PRODUCT_IMAGES",
+  PRODUCT_TYPE = "PRODUCT_TYPE",
+  PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
+  VARIANT_IMAGES = "VARIANT_IMAGES",
+  VARIANT_SKU = "VARIANT_SKU",
+  VARIANT_WEIGHT = "VARIANT_WEIGHT",
+  VISIBLE = "VISIBLE",
 }
 
 export enum ProductOrderField {
@@ -1077,6 +1112,20 @@ export interface DraftOrderInput {
   shippingMethod?: string | null;
   voucher?: string | null;
   customerNote?: string | null;
+}
+
+export interface ExportInfoInput {
+  attributes?: string[] | null;
+  warehouses?: string[] | null;
+  fields?: ProductFieldEnum[] | null;
+}
+
+export interface ExportProductsInput {
+  scope: ExportScope;
+  filter?: ProductFilterInput | null;
+  ids?: string[] | null;
+  exportInfo: ExportInfoInput;
+  fileType: FileTypesEnum;
 }
 
 export interface FulfillmentCancelInput {

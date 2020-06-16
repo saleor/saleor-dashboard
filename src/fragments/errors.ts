@@ -120,3 +120,10 @@ export const appErrorFragment = gql`
     permissions
   }
 `;
+
+export const csvErrorFragment = gql`
+  fragment CsvErrorFragment on CsvError {
+    code
+    field
+  }
+`;
