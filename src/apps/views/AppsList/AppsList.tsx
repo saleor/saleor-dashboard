@@ -11,7 +11,11 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
-import { AppSortField, OrderDirection } from "../../../types/globalTypes";
+import {
+  AppSortField,
+  AppTypeEnum,
+  OrderDirection
+} from "../../../types/globalTypes";
 import AppDeleteDialog from "../../components/AppDeleteDialog";
 import AppInProgressDeleteDialog from "../../components/AppInProgressDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
@@ -22,6 +26,7 @@ import {
 } from "../../mutations";
 import {
   useAppsInProgressListQuery,
+  useCustomAppsListQuery,
   useInstalledAppsListQuery
 } from "../../queries";
 import { AppDelete } from "../../types/AppDelete";
@@ -61,7 +66,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const paginate = usePaginator();
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = {
-    ...paginationState,
     sort: {
       direction: OrderDirection.DESC,
       field: AppSortField.CREATION_DATE
@@ -80,12 +84,17 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     loading: loadingAppsInProgress,
     refetch: appsInProgressRefetch
   } = useAppsInProgressListQuery({
-    displayLoader: false,
-    variables: paginationState
+    displayLoader: false
   });
   const { data, loading, refetch } = useInstalledAppsListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: {
+      ...paginationState,
+      ...queryVariables,
+      filter: {
+        type: AppTypeEnum.THIRDPARTY
+      }
+    }
   });
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
@@ -93,6 +102,22 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     paginationState,
     params
   );
+
+  const {
+    data: customAppsData,
+    loading: customAppsLoading,
+    refetch: customAppsRefetch
+  } = useCustomAppsListQuery({
+    displayLoader: true,
+    variables: {
+      first: 100,
+      ...queryVariables,
+      filter: {
+        type: AppTypeEnum.LOCAL
+      }
+    }
+  });
+
   const installedAppNotify = (name: string) => {
     notify({
       status: "success",
@@ -222,7 +247,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const onAppRemove = (data: AppDelete) => {
     if (data.appDelete.errors.length === 0) {
       removeAppNotify();
-      refetch();
+      if (action === "remove-custom-app") {
+        customAppsRefetch();
+      } else {
+        refetch();
+      }
     }
   };
   const onAppInProgressRemove = (data: AppDeleteFailedInstallation) => {
@@ -234,9 +263,8 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const onAppInstallRetry = (id: string) =>
     retryInstallApp({ variables: { id } });
 
-  const apps = data?.apps?.edges;
-  const installedApps = apps?.filter(({ node }) => node.type === "EXTERNAL");
-  const customApps = apps?.filter(({ node }) => node.type === "CUSTOM");
+  const installedApps = data?.apps?.edges;
+  const customApps = customAppsData?.apps?.edges;
 
   return (
     <>
@@ -266,7 +294,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         customAppsList={customApps}
         appsInProgressList={appsInProgressData}
         loadingAppsInProgress={loadingAppsInProgress}
-        disabled={loading}
+        disabled={loading || customAppsLoading}
         settings={settings}
         pageInfo={pageInfo}
         onNextPage={loadNextPage}
