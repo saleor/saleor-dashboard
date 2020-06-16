@@ -12,7 +12,7 @@ import { DialogProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ProductExportDialogSettings from "../ProductExportDialogSettings";
+import ProductExportDialogSettings from "./ProductExportDialogSettings";
 
 export interface ProductExportSubmitData {}
 
