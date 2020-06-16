@@ -3,6 +3,7 @@ import Hr from "@saleor/components/Hr";
 import RadioGroupField, {
   RadioGroupFieldChoice
 } from "@saleor/components/RadioGroupField";
+import { ExportScope, FileTypesEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -26,48 +27,46 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
   const classes = useStyles({});
   const intl = useIntl();
 
-  const productsToExportChoices: Array<RadioGroupFieldChoice<
-    ProductsToExport
-  >> = [
+  const productsToExportChoices: Array<RadioGroupFieldChoice<ExportScope>> = [
     {
       label: intl.formatMessage({
         defaultMessage: "All products",
         description: "export all products to csv file"
       }),
-      value: ProductsToExport.ALL
+      value: ExportScope.ALL
     },
     {
       label: intl.formatMessage({
         defaultMessage: "Selected products",
         description: "export selected products to csv file"
       }),
-      value: ProductsToExport.SELECTED
+      value: ExportScope.IDS
     },
     {
       label: intl.formatMessage({
         defaultMessage: "Current search",
         description: "export filtered products to csv file"
       }),
-      value: ProductsToExport.SEARCH
+      value: ExportScope.FILTER
     }
   ];
 
   const productExportTypeChoices: Array<RadioGroupFieldChoice<
-    ProductExportType
+    FileTypesEnum
   >> = [
     {
       label: intl.formatMessage({
         defaultMessage: "Spreadsheet for Excel, Numbers etc.",
         description: "export products as spreadsheet"
       }),
-      value: ProductExportType.SPREADSHEET
+      value: FileTypesEnum.XLSX
     },
     {
       label: intl.formatMessage({
         defaultMessage: "Plain CSV file",
         description: "export products as csv file"
       }),
-      value: ProductExportType.CSV
+      value: FileTypesEnum.CSV
     }
   ];
 
