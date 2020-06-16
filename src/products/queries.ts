@@ -112,6 +112,12 @@ const productVariantAttributesFragment = gql`
         }
       }
     }
+    variants {
+      price {
+        amount
+        currency
+      }
+    }
   }
 `;
 

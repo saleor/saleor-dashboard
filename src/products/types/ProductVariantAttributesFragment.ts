@@ -58,9 +58,21 @@ export interface ProductVariantAttributesFragment_productType {
   variantAttributes: (ProductVariantAttributesFragment_productType_variantAttributes | null)[] | null;
 }
 
+export interface ProductVariantAttributesFragment_variants_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariantAttributesFragment_variants {
+  __typename: "ProductVariant";
+  price: ProductVariantAttributesFragment_variants_price | null;
+}
+
 export interface ProductVariantAttributesFragment {
   __typename: "Product";
   id: string;
   attributes: ProductVariantAttributesFragment_attributes[];
   productType: ProductVariantAttributesFragment_productType;
+  variants: (ProductVariantAttributesFragment_variants | null)[] | null;
 }

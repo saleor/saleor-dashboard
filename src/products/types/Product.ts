@@ -60,6 +60,37 @@ export interface Product_productType {
   hasVariants: boolean;
 }
 
+export interface Product_variants_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface Product_variants_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
+export interface Product_variants_stocks {
+  __typename: "Stock";
+  id: string;
+  quantity: number;
+  quantityAllocated: number;
+  warehouse: Product_variants_stocks_warehouse;
+}
+
+export interface Product_variants {
+  __typename: "ProductVariant";
+  price: Product_variants_price | null;
+  id: string;
+  sku: string;
+  name: string;
+  margin: number | null;
+  stocks: (Product_variants_stocks | null)[] | null;
+  trackInventory: boolean;
+}
+
 export interface Product_category {
   __typename: "Category";
   id: string;
@@ -137,42 +168,12 @@ export interface Product_images {
   url: string;
 }
 
-export interface Product_variants_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface Product_variants_stocks_warehouse {
-  __typename: "Warehouse";
-  id: string;
-  name: string;
-}
-
-export interface Product_variants_stocks {
-  __typename: "Stock";
-  id: string;
-  quantity: number;
-  quantityAllocated: number;
-  warehouse: Product_variants_stocks_warehouse;
-}
-
-export interface Product_variants {
-  __typename: "ProductVariant";
-  id: string;
-  sku: string;
-  name: string;
-  price: Product_variants_price | null;
-  margin: number | null;
-  stocks: (Product_variants_stocks | null)[] | null;
-  trackInventory: boolean;
-}
-
 export interface Product {
   __typename: "Product";
   id: string;
   attributes: Product_attributes[];
   productType: Product_productType;
+  variants: (Product_variants | null)[] | null;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -187,5 +188,4 @@ export interface Product {
   publicationDate: any | null;
   pricing: Product_pricing | null;
   images: (Product_images | null)[] | null;
-  variants: (Product_variants | null)[] | null;
 }

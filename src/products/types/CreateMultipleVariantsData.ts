@@ -58,11 +58,23 @@ export interface CreateMultipleVariantsData_product_productType {
   variantAttributes: (CreateMultipleVariantsData_product_productType_variantAttributes | null)[] | null;
 }
 
+export interface CreateMultipleVariantsData_product_variants_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CreateMultipleVariantsData_product_variants {
+  __typename: "ProductVariant";
+  price: CreateMultipleVariantsData_product_variants_price | null;
+}
+
 export interface CreateMultipleVariantsData_product {
   __typename: "Product";
   id: string;
   attributes: CreateMultipleVariantsData_product_attributes[];
   productType: CreateMultipleVariantsData_product_productType;
+  variants: (CreateMultipleVariantsData_product_variants | null)[] | null;
 }
 
 export interface CreateMultipleVariantsData_warehouses_edges_node {

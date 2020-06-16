@@ -60,6 +60,37 @@ export interface ProductDetails_product_productType {
   hasVariants: boolean;
 }
 
+export interface ProductDetails_product_variants_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductDetails_product_variants_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
+export interface ProductDetails_product_variants_stocks {
+  __typename: "Stock";
+  id: string;
+  quantity: number;
+  quantityAllocated: number;
+  warehouse: ProductDetails_product_variants_stocks_warehouse;
+}
+
+export interface ProductDetails_product_variants {
+  __typename: "ProductVariant";
+  price: ProductDetails_product_variants_price | null;
+  id: string;
+  sku: string;
+  name: string;
+  margin: number | null;
+  stocks: (ProductDetails_product_variants_stocks | null)[] | null;
+  trackInventory: boolean;
+}
+
 export interface ProductDetails_product_category {
   __typename: "Category";
   id: string;
@@ -137,42 +168,12 @@ export interface ProductDetails_product_images {
   url: string;
 }
 
-export interface ProductDetails_product_variants_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductDetails_product_variants_stocks_warehouse {
-  __typename: "Warehouse";
-  id: string;
-  name: string;
-}
-
-export interface ProductDetails_product_variants_stocks {
-  __typename: "Stock";
-  id: string;
-  quantity: number;
-  quantityAllocated: number;
-  warehouse: ProductDetails_product_variants_stocks_warehouse;
-}
-
-export interface ProductDetails_product_variants {
-  __typename: "ProductVariant";
-  id: string;
-  sku: string;
-  name: string;
-  price: ProductDetails_product_variants_price | null;
-  margin: number | null;
-  stocks: (ProductDetails_product_variants_stocks | null)[] | null;
-  trackInventory: boolean;
-}
-
 export interface ProductDetails_product {
   __typename: "Product";
   id: string;
   attributes: ProductDetails_product_attributes[];
   productType: ProductDetails_product_productType;
+  variants: (ProductDetails_product_variants | null)[] | null;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -187,7 +188,6 @@ export interface ProductDetails_product {
   publicationDate: any | null;
   pricing: ProductDetails_product_pricing | null;
   images: (ProductDetails_product_images | null)[] | null;
-  variants: (ProductDetails_product_variants | null)[] | null;
 }
 
 export interface ProductDetails {

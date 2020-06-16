@@ -66,6 +66,37 @@ export interface SimpleProductUpdate_productUpdate_product_productType {
   hasVariants: boolean;
 }
 
+export interface SimpleProductUpdate_productUpdate_product_variants_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_variants_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_variants_stocks {
+  __typename: "Stock";
+  id: string;
+  quantity: number;
+  quantityAllocated: number;
+  warehouse: SimpleProductUpdate_productUpdate_product_variants_stocks_warehouse;
+}
+
+export interface SimpleProductUpdate_productUpdate_product_variants {
+  __typename: "ProductVariant";
+  price: SimpleProductUpdate_productUpdate_product_variants_price | null;
+  id: string;
+  sku: string;
+  name: string;
+  margin: number | null;
+  stocks: (SimpleProductUpdate_productUpdate_product_variants_stocks | null)[] | null;
+  trackInventory: boolean;
+}
+
 export interface SimpleProductUpdate_productUpdate_product_category {
   __typename: "Category";
   id: string;
@@ -143,42 +174,12 @@ export interface SimpleProductUpdate_productUpdate_product_images {
   url: string;
 }
 
-export interface SimpleProductUpdate_productUpdate_product_variants_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface SimpleProductUpdate_productUpdate_product_variants_stocks_warehouse {
-  __typename: "Warehouse";
-  id: string;
-  name: string;
-}
-
-export interface SimpleProductUpdate_productUpdate_product_variants_stocks {
-  __typename: "Stock";
-  id: string;
-  quantity: number;
-  quantityAllocated: number;
-  warehouse: SimpleProductUpdate_productUpdate_product_variants_stocks_warehouse;
-}
-
-export interface SimpleProductUpdate_productUpdate_product_variants {
-  __typename: "ProductVariant";
-  id: string;
-  sku: string;
-  name: string;
-  price: SimpleProductUpdate_productUpdate_product_variants_price | null;
-  margin: number | null;
-  stocks: (SimpleProductUpdate_productUpdate_product_variants_stocks | null)[] | null;
-  trackInventory: boolean;
-}
-
 export interface SimpleProductUpdate_productUpdate_product {
   __typename: "Product";
   id: string;
   attributes: SimpleProductUpdate_productUpdate_product_attributes[];
   productType: SimpleProductUpdate_productUpdate_product_productType;
+  variants: (SimpleProductUpdate_productUpdate_product_variants | null)[] | null;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -193,7 +194,6 @@ export interface SimpleProductUpdate_productUpdate_product {
   publicationDate: any | null;
   pricing: SimpleProductUpdate_productUpdate_product_pricing | null;
   images: (SimpleProductUpdate_productUpdate_product_images | null)[] | null;
-  variants: (SimpleProductUpdate_productUpdate_product_variants | null)[] | null;
 }
 
 export interface SimpleProductUpdate_productUpdate {
