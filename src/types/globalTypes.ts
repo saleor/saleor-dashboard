@@ -350,6 +350,12 @@ export enum CountryCode {
   ZW = "ZW",
 }
 
+export enum CsvErrorCode {
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+}
+
 export enum DiscountErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
@@ -370,9 +376,27 @@ export enum DiscountValueTypeEnum {
   PERCENTAGE = "PERCENTAGE",
 }
 
+export enum ExportScope {
+  ALL = "ALL",
+  FILTER = "FILTER",
+  IDS = "IDS",
+}
+
+export enum FileTypesEnum {
+  CSV = "CSV",
+  XLSX = "XLSX",
+}
+
 export enum FulfillmentStatus {
   CANCELED = "CANCELED",
   FULFILLED = "FULFILLED",
+}
+
+export enum JobStatusEnum {
+  DELETED = "DELETED",
+  FAILED = "FAILED",
+  PENDING = "PENDING",
+  SUCCESS = "SUCCESS",
 }
 
 export enum LanguageCodeEnum {
@@ -390,6 +414,7 @@ export enum LanguageCodeEnum {
   ES_CO = "ES_CO",
   ET = "ET",
   FA = "FA",
+  FI = "FI",
   FR = "FR",
   HI = "HI",
   HU = "HU",
@@ -409,10 +434,12 @@ export enum LanguageCodeEnum {
   RO = "RO",
   RU = "RU",
   SK = "SK",
+  SL = "SL",
   SQ = "SQ",
   SR = "SR",
   SV = "SV",
   SW = "SW",
+  TA = "TA",
   TH = "TH",
   TR = "TR",
   UK = "UK",
@@ -467,6 +494,7 @@ export enum OrderErrorCode {
   ORDER_NO_SHIPPING_ADDRESS = "ORDER_NO_SHIPPING_ADDRESS",
   PAYMENT_ERROR = "PAYMENT_ERROR",
   PAYMENT_MISSING = "PAYMENT_MISSING",
+  PRODUCT_NOT_PUBLISHED = "PRODUCT_NOT_PUBLISHED",
   REQUIRED = "REQUIRED",
   SHIPPING_METHOD_NOT_APPLICABLE = "SHIPPING_METHOD_NOT_APPLICABLE",
   SHIPPING_METHOD_REQUIRED = "SHIPPING_METHOD_REQUIRED",
@@ -610,6 +638,24 @@ export enum ProductErrorCode {
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
   VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT",
+}
+
+export enum ProductFieldEnum {
+  CATEGORY = "CATEGORY",
+  CHARGE_TAXES = "CHARGE_TAXES",
+  COLLECTIONS = "COLLECTIONS",
+  COST_PRICE = "COST_PRICE",
+  DESCRIPTION = "DESCRIPTION",
+  NAME = "NAME",
+  PRICE = "PRICE",
+  PRICE_OVERRIDE = "PRICE_OVERRIDE",
+  PRODUCT_IMAGES = "PRODUCT_IMAGES",
+  PRODUCT_TYPE = "PRODUCT_TYPE",
+  PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
+  VARIANT_IMAGES = "VARIANT_IMAGES",
+  VARIANT_SKU = "VARIANT_SKU",
+  VARIANT_WEIGHT = "VARIANT_WEIGHT",
+  VISIBLE = "VISIBLE",
 }
 
 export enum ProductOrderField {
@@ -994,6 +1040,20 @@ export interface DraftOrderInput {
   shippingMethod?: string | null;
   voucher?: string | null;
   customerNote?: string | null;
+}
+
+export interface ExportInfoInput {
+  attributes?: string[] | null;
+  warehouses?: string[] | null;
+  fields?: ProductFieldEnum[] | null;
+}
+
+export interface ExportProductsInput {
+  scope: ExportScope;
+  filter?: ProductFilterInput | null;
+  ids?: string[] | null;
+  exportInfo: ExportInfoInput;
+  fileType: FileTypesEnum;
 }
 
 export interface FulfillmentCancelInput {

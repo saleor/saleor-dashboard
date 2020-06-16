@@ -290,6 +290,12 @@ input AppTokenInput {
   app: ID!
 }
 
+type AppTokenVerify {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  valid: Boolean!
+  appErrors: [AppError!]!
+}
+
 type AppUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   appErrors: [AppError!]!
@@ -502,7 +508,7 @@ type AttributeValue implements Node {
   id: ID!
   name: String
   slug: String
-  type: AttributeValueType
+  type: AttributeValueType @deprecated(reason: "Use the `inputType` field to determine the type of attribute's value. This field will be removed after 2020-07-31.")
   translation(languageCode: LanguageCodeEnum!): AttributeValueTranslation
   inputType: AttributeInputTypeEnum
 }
@@ -757,7 +763,6 @@ type Checkout implements Node & ObjectWithMetadata {
   created: DateTime!
   lastChange: DateTime!
   user: User
-  token: UUID!
   quantity: Int!
   billingAddress: Address
   shippingAddress: Address
@@ -774,12 +779,13 @@ type Checkout implements Node & ObjectWithMetadata {
   privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
   meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   availableShippingMethods: [ShippingMethod]!
-  availablePaymentGateways: [PaymentGateway]!
+  availablePaymentGateways: [PaymentGateway!]!
   email: String!
   isShippingRequired: Boolean!
   lines: [CheckoutLine]
   shippingPrice: TaxedMoney
   subtotalPrice: TaxedMoney
+  token: UUID!
   totalPrice: TaxedMoney
 }
 
@@ -867,6 +873,7 @@ enum CheckoutErrorCode {
   BILLING_ADDRESS_NOT_SET
   CHECKOUT_NOT_FULLY_PAID
   GRAPHQL_ERROR
+  PRODUCT_NOT_PUBLISHED
   INSUFFICIENT_STOCK
   INVALID
   INVALID_SHIPPING_METHOD
@@ -1450,6 +1457,18 @@ type CreditCard {
   expYear: Int!
 }
 
+type CsvError {
+  field: String
+  message: String
+  code: CsvErrorCode!
+}
+
+enum CsvErrorCode {
+  INVALID
+  NOT_FOUND
+  REQUIRED
+}
+
 type CustomerBulkDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
@@ -1609,12 +1628,12 @@ input DigitalContentUploadInput {
 }
 
 type DigitalContentUrl implements Node {
-  token: UUID!
   content: DigitalContent!
   created: DateTime!
   downloadNum: Int!
   id: ID!
   url: String
+  token: UUID!
 }
 
 type DigitalContentUrlCreate {
@@ -1742,6 +1761,96 @@ type DraftOrderUpdate {
 type Error {
   field: String
   message: String
+}
+
+type ExportEvent implements Node {
+  id: ID!
+  date: DateTime!
+  type: ExportEventsEnum!
+  user: User
+  app: App
+  message: String!
+}
+
+enum ExportEventsEnum {
+  EXPORT_PENDING
+  EXPORT_SUCCESS
+  EXPORT_FAILED
+  EXPORT_DELETED
+  EXPORTED_FILE_SENT
+  EXPORT_FAILED_INFO_SENT
+}
+
+type ExportFile implements Node & Job {
+  id: ID!
+  user: User
+  app: App
+  status: JobStatusEnum!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  url: String
+  events: [ExportEvent!]
+}
+
+type ExportFileCountableConnection {
+  pageInfo: PageInfo!
+  edges: [ExportFileCountableEdge!]!
+  totalCount: Int
+}
+
+type ExportFileCountableEdge {
+  node: ExportFile!
+  cursor: String!
+}
+
+input ExportFileFilterInput {
+  createdAt: DateTimeRangeInput
+  updatedAt: DateTimeRangeInput
+  status: JobStatusEnum
+  user: String
+  app: String
+}
+
+enum ExportFileSortField {
+  STATUS
+  CREATED_AT
+  UPDATED_AT
+}
+
+input ExportFileSortingInput {
+  direction: OrderDirection!
+  field: ExportFileSortField!
+}
+
+input ExportInfoInput {
+  attributes: [ID!]
+  warehouses: [ID!]
+  fields: [ProductFieldEnum!]
+}
+
+type ExportProducts {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  exportFile: ExportFile
+  csvErrors: [CsvError!]!
+}
+
+input ExportProductsInput {
+  scope: ExportScope!
+  filter: ProductFilterInput
+  ids: [ID!]
+  exportInfo: ExportInfoInput!
+  fileType: FileTypesEnum!
+}
+
+enum ExportScope {
+  ALL
+  IDS
+  FILTER
+}
+
+enum FileTypesEnum {
+  CSV
+  XLSX
 }
 
 type Fulfillment implements Node & ObjectWithMetadata {
@@ -1940,6 +2049,19 @@ input IntRangeInput {
 
 scalar JSONString
 
+interface Job {
+  status: JobStatusEnum!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum JobStatusEnum {
+  PENDING
+  SUCCESS
+  FAILED
+  DELETED
+}
+
 enum LanguageCodeEnum {
   AR
   AZ
@@ -1955,6 +2077,7 @@ enum LanguageCodeEnum {
   ES_CO
   ET
   FA
+  FI
   FR
   HI
   HU
@@ -1974,10 +2097,12 @@ enum LanguageCodeEnum {
   RO
   RU
   SK
+  SL
   SQ
   SR
-  SW
   SV
+  SW
+  TA
   TH
   TR
   UK
@@ -2439,6 +2564,7 @@ type Mutation {
   voucherCataloguesAdd(id: ID!, input: CatalogueInput!): VoucherAddCatalogues
   voucherCataloguesRemove(id: ID!, input: CatalogueInput!): VoucherRemoveCatalogues
   voucherTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): VoucherTranslate
+  exportProducts(input: ExportProductsInput!): ExportProducts
   tokenCreate(email: String!, password: String!): CreateToken
   tokenRefresh(token: String!): RefreshToken
   tokenVerify(token: String!): VerifyToken
@@ -2465,6 +2591,7 @@ type Mutation {
   appDelete(id: ID!): AppDelete
   appTokenCreate(input: AppTokenInput!): AppTokenCreate
   appTokenDelete(id: ID!): AppTokenDelete
+  appTokenVerify(token: String!): AppTokenVerify
   requestPasswordReset(email: String!, redirectUrl: String!): RequestPasswordReset
   confirmAccount(email: String!, token: String!): ConfirmAccount
   setPassword(token: String!, email: String!, password: String!): SetPassword
@@ -2669,6 +2796,7 @@ enum OrderErrorCode {
   FULFILL_ORDER_LINE
   GRAPHQL_ERROR
   INVALID
+  PRODUCT_NOT_PUBLISHED
   NOT_FOUND
   ORDER_NO_SHIPPING_ADDRESS
   PAYMENT_ERROR
@@ -3094,6 +3222,9 @@ enum PaymentErrorCode {
   INVALID
   NOT_FOUND
   PARTIAL_PAYMENT_NOT_ALLOWED
+  SHIPPING_ADDRESS_NOT_SET
+  INVALID_SHIPPING_METHOD
+  SHIPPING_METHOD_NOT_SET
   PAYMENT_ERROR
   REQUIRED
   UNIQUE
@@ -3101,6 +3232,7 @@ enum PaymentErrorCode {
 
 type PaymentGateway {
   name: String!
+  id: ID!
   config: [GatewayConfigLine!]!
 }
 
@@ -3419,6 +3551,24 @@ enum ProductErrorCode {
   VARIANT_NO_DIGITAL_CONTENT
 }
 
+enum ProductFieldEnum {
+  NAME
+  DESCRIPTION
+  PRODUCT_TYPE
+  CATEGORY
+  VISIBLE
+  PRODUCT_WEIGHT
+  COLLECTIONS
+  CHARGE_TAXES
+  PRICE
+  PRODUCT_IMAGES
+  VARIANT_SKU
+  PRICE_OVERRIDE
+  COST_PRICE
+  VARIANT_WEIGHT
+  VARIANT_IMAGES
+}
+
 input ProductFilterInput {
   isPublished: Boolean
   collections: [ID]
@@ -3716,7 +3866,7 @@ type ProductVariant implements Node & ObjectWithMetadata {
   meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   quantity: Int! @deprecated(reason: "Use the stock field instead. This field will be removed after 2020-07-31.")
   quantityAllocated: Int @deprecated(reason: "Use the stock field instead. This field will be removed after 2020-07-31.")
-  stockQuantity: Int! @deprecated(reason: "Use the stock field instead. This field will be removed after 2020-07-31.")
+  stockQuantity: Int! @deprecated(reason: "Use the quantityAvailable field instead. This field will be removed after 2020-07-31.")
   priceOverride: Money
   pricing: VariantPricingInfo
   isAvailable: Boolean @deprecated(reason: "Use the stock field instead. This field will be removed after 2020-07-31.")
@@ -3729,6 +3879,7 @@ type ProductVariant implements Node & ObjectWithMetadata {
   translation(languageCode: LanguageCodeEnum!): ProductVariantTranslation
   digitalContent: DigitalContent
   stocks(countryCode: CountryCode): [Stock]
+  quantityAvailable(countryCode: CountryCode): Int!
 }
 
 type ProductVariantBulkCreate {
@@ -3883,10 +4034,10 @@ type Query {
   attributes(filter: AttributeFilterInput, sortBy: AttributeSortingInput, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
   attribute(id: ID!): Attribute
   categories(filter: CategoryFilterInput, sortBy: CategorySortingInput, level: Int, before: String, after: String, first: Int, last: Int): CategoryCountableConnection
-  category(id: ID!): Category
-  collection(id: ID!): Collection
+  category(id: ID, slug: String): Category
+  collection(id: ID, slug: String): Collection
   collections(filter: CollectionFilterInput, sortBy: CollectionSortingInput, before: String, after: String, first: Int, last: Int): CollectionCountableConnection
-  product(id: ID!): Product
+  product(id: ID, slug: String): Product
   products(filter: ProductFilterInput, sortBy: ProductOrder, stockAvailability: StockAvailability, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   productType(id: ID!): ProductType
   productTypes(filter: ProductTypeFilterInput, sortBy: ProductTypeSortingInput, before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection
@@ -3915,6 +4066,8 @@ type Query {
   sales(filter: SaleFilterInput, sortBy: SaleSortingInput, query: String, before: String, after: String, first: Int, last: Int): SaleCountableConnection
   voucher(id: ID!): Voucher
   vouchers(filter: VoucherFilterInput, sortBy: VoucherSortingInput, query: String, before: String, after: String, first: Int, last: Int): VoucherCountableConnection
+  exportFile(id: ID!): ExportFile
+  exportFiles(filter: ExportFileFilterInput, sortBy: ExportFileSortingInput, before: String, after: String, first: Int, last: Int): ExportFileCountableConnection
   taxTypes: [TaxType]
   checkout(token: UUID): Checkout
   checkouts(before: String, after: String, first: Int, last: Int): CheckoutCountableConnection
@@ -4352,9 +4505,10 @@ input ShippingZoneUpdateInput {
 }
 
 type Shop {
+  availablePaymentGateways: [PaymentGateway!]!
   geolocalization: Geolocalization
   authorizationKeys: [AuthorizationKey]!
-  countries(languageCode: LanguageCodeEnum): [CountryDisplay]!
+  countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
   currencies: [String]!
   defaultCurrency: String!
   defaultCountry: CountryDisplay
@@ -4561,7 +4715,6 @@ type Stock implements Node {
   productVariant: ProductVariant!
   quantity: Int!
   id: ID!
-  stockQuantity: Int!
   quantityAllocated: Int!
 }
 

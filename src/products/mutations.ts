@@ -3,7 +3,11 @@ import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
-import { fragmentVariant, productFragmentDetails } from "./queries";
+import {
+  exportFileFragment,
+  fragmentVariant,
+  productFragmentDetails
+} from "./queries";
 import {
   productBulkDelete,
   productBulkDeleteVariables
@@ -71,6 +75,12 @@ const bulkStockErrorFragment = gql`
 `;
 const stockErrorFragment = gql`
   fragment StockErrorFragment on StockError {
+    code
+    field
+  }
+`;
+const csvErrorFragment = gql`
+  fragment CsvErrorFragment on CsvError {
     code
     field
   }
@@ -571,6 +581,25 @@ export const ProductVariantBulkDeleteMutation = gql`
   }
 `;
 export const TypedProductVariantBulkDeleteMutation = TypedMutation<
+  ProductVariantBulkDelete,
+  ProductVariantBulkDeleteVariables
+>(ProductVariantBulkDeleteMutation);
+
+export const productExportMutation = gql`
+  ${exportFileFragment}
+  ${csvErrorFragment}
+  mutation ProductExport($input: ExportProductsInput!) {
+    exportProducts(input: $input) {
+      exportFile {
+        ...ExportFileFragment
+      }
+      errors: csvErrors {
+        ...CsvErrorFragment
+      }
+    }
+  }
+`;
+export const exportProducts = makeMutation<
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 >(ProductVariantBulkDeleteMutation);

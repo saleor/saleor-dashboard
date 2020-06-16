@@ -256,6 +256,14 @@ export const fragmentVariant = gql`
   }
 `;
 
+export const exportFileFragment = gql`
+  fragment ExportFileFragment on ExportFile {
+    id
+    status
+    url
+  }
+`;
+
 const initialProductFilterDataQuery = gql`
   query InitialProductFilterData(
     $categories: [ID!]

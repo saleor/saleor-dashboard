@@ -57,7 +57,7 @@ export interface AuthorizationKeyAdd_authorizationKeyAdd_shop {
   __typename: "Shop";
   authorizationKeys: (AuthorizationKeyAdd_authorizationKeyAdd_shop_authorizationKeys | null)[];
   companyAddress: AuthorizationKeyAdd_authorizationKeyAdd_shop_companyAddress | null;
-  countries: (AuthorizationKeyAdd_authorizationKeyAdd_shop_countries | null)[];
+  countries: AuthorizationKeyAdd_authorizationKeyAdd_shop_countries[];
   customerSetPasswordUrl: string | null;
   defaultMailSenderAddress: string | null;
   defaultMailSenderName: string | null;
