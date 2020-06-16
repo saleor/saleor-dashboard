@@ -24,10 +24,7 @@ interface InstallAppCreateProps extends RouteComponentProps {
 export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
   params
 }) => {
-  const [_, setActiveInstallations] = useLocalStorage(
-    "activeInstallations",
-    []
-  );
+  const [, setActiveInstallations] = useLocalStorage("activeInstallations", []);
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
