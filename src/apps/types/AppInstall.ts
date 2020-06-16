@@ -14,7 +14,6 @@ export interface AppInstall_appInstall_appInstallation {
   status: JobStatusEnum;
   appName: string;
   manifestUrl: string;
-  message: string | null;
 }
 
 export interface AppInstall_appInstall_errors {

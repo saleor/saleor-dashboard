@@ -12,8 +12,10 @@ import { useIntl } from "react-intl";
 
 import { AppSortField, OrderDirection } from "../../../types/globalTypes";
 import AppDeleteDialog from "../../components/AppDeleteDialog";
+import AppInProgressDeleteDialog from "../../components/AppInProgressDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
 import {
+  useAppDeleteFailedInstallationMutation,
   useAppDeleteMutation,
   useAppRetryInstallMutation
 } from "../../mutations";
@@ -22,6 +24,8 @@ import {
   useInstalledAppsListQuery
 } from "../../queries";
 import { AppDelete } from "../../types/AppDelete";
+import { AppDeleteFailedInstallation } from "../../types/AppDeleteFailedInstallation";
+import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
 import { AppsList_apps_edges } from "../../types/AppsList";
 import {
   AppListUrlDialog,
@@ -34,6 +38,11 @@ import {
 
 const getCurrentAppName = (id: string, collection?: AppsList_apps_edges[]) =>
   collection?.find(edge => edge.node.id === id)?.node?.name;
+
+const getAppInProgressName = (
+  id: string,
+  collection?: AppsInstallations_appsInstallations[]
+) => collection?.find(app => app.id === id)?.appName;
 interface AppsListProps {
   params: AppListUrlQueryParams;
 }
@@ -127,6 +136,16 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     }
   });
 
+  const [
+    deleteInProgressApp,
+    deleteInProgressAppOpts
+  ] = useAppDeleteFailedInstallationMutation({
+    onCompleted: data => {
+      onAppInProgressRemove(data);
+      closeModal();
+    }
+  });
+
   useEffect(() => {
     const appsInProgress = appsInProgressData?.appsInstallations || [];
     if (activeInstallations.length && appsInProgress.length) {
@@ -175,6 +194,13 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     };
   }, [activeInstallations.length, appsInProgressData]);
 
+  const handleRemoveInProgressConfirm = () =>
+    deleteInProgressApp({
+      variables: {
+        id: params.id
+      }
+    });
+
   const handleRemoveConfirm = () =>
     deleteApp({
       variables: {
@@ -182,16 +208,26 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       }
     });
 
+  const removeAppNotify = () => {
+    notify({
+      status: "success",
+      text: intl.formatMessage({
+        defaultMessage: "App successfully removed",
+        description: "snackbar text"
+      })
+    });
+  };
+
   const onAppRemove = (data: AppDelete) => {
     if (data.appDelete.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage({
-          defaultMessage: "App successfully removed",
-          description: "snackbar text"
-        })
-      });
+      removeAppNotify();
       refetch();
+    }
+  };
+  const onAppInProgressRemove = (data: AppDeleteFailedInstallation) => {
+    if (data.appDeleteFailedInstallation.errors.length === 0) {
+      removeAppNotify();
+      appsInProgressRefetch();
     }
   };
   const onAppInstallRetry = (id: string) =>
@@ -213,6 +249,16 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         onConfirm={handleRemoveConfirm}
         type={action === "remove-app" ? "EXTERNAL" : "CUSTOM"}
         open={action === "remove-app" || action === "remove-custom-app"}
+      />
+      <AppInProgressDeleteDialog
+        confirmButtonState={deleteInProgressAppOpts.status}
+        name={getAppInProgressName(
+          params.id,
+          appsInProgressData?.appsInstallations
+        )}
+        onClose={closeModal}
+        onConfirm={handleRemoveInProgressConfirm}
+        open={action === "remove"}
       />
       <AppsListPage
         installedAppsList={installedApps}
@@ -238,6 +284,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         }
         onCustomAppRemove={id =>
           openModal("remove-custom-app", {
+            id
+          })
+        }
+        onAppInProgressRemove={id =>
+          openModal("remove", {
             id
           })
         }

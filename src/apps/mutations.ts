@@ -7,6 +7,10 @@ import { AppActivate, AppActivateVariables } from "./types/AppActivate";
 import { AppCreate, AppCreateVariables } from "./types/AppCreate";
 import { AppDeactivate, AppDeactivateVariables } from "./types/AppDeactivate";
 import { AppDelete, AppDeleteVariables } from "./types/AppDelete";
+import {
+  AppDeleteFailedInstallation,
+  AppDeleteFailedInstallationVariables
+} from "./types/AppDeleteFailedInstallation";
 import { AppFetch, AppFetchVariables } from "./types/AppFetch";
 import { AppInstall, AppInstallVariables } from "./types/AppInstall";
 import {
@@ -57,6 +61,23 @@ export const appDeleteMutation = gql`
     appDelete(id: $id) {
       app {
         ...AppFragment
+      }
+      errors: appErrors {
+        ...AppErrorFragment
+      }
+    }
+  }
+`;
+
+export const appDeleteFailedInstallationMutation = gql`
+  ${appError}
+  mutation AppDeleteFailedInstallation($id: ID!) {
+    appDeleteFailedInstallation(id: $id) {
+      appInstallation {
+        id
+        status
+        appName
+        message
       }
       errors: appErrors {
         ...AppErrorFragment
@@ -212,6 +233,11 @@ export const useAppCreateMutation = makeMutation<AppCreate, AppCreateVariables>(
 export const useAppDeleteMutation = makeMutation<AppDelete, AppDeleteVariables>(
   appDeleteMutation
 );
+
+export const useAppDeleteFailedInstallationMutation = makeMutation<
+  AppDeleteFailedInstallation,
+  AppDeleteFailedInstallationVariables
+>(appDeleteFailedInstallationMutation);
 
 export const useAppInstallMutation = makeMutation<
   AppInstall,
