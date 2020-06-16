@@ -324,6 +324,7 @@ export const products = (
     name: "Nebula Night Sky Paint",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6Nw==",
       name: "Paint"
     },
@@ -367,6 +368,7 @@ export const products = (
     name: "Light Speed Yellow Paint",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6Nw==",
       name: "Paint"
     },
@@ -410,6 +412,7 @@ export const products = (
     name: "Hyperspace Turquoise Paint",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6Nw==",
       name: "Paint"
     },
@@ -468,6 +471,7 @@ export const products = (
     name: "Pineapple Juice",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice"
     },
@@ -526,6 +530,7 @@ export const products = (
     name: "Coconut Juice",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice"
     },
@@ -584,6 +589,7 @@ export const products = (
     name: "Apple Juice",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice"
     },
@@ -642,6 +648,7 @@ export const products = (
     name: "Orange Juice",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice"
     },
@@ -700,6 +707,7 @@ export const products = (
     name: "Banana Juice",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice"
     },
@@ -758,6 +766,7 @@ export const products = (
     name: "Bean Juice",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice"
     },
@@ -816,6 +825,7 @@ export const products = (
     name: "Carrot Juice",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice"
     },
@@ -874,6 +884,7 @@ export const products = (
     name: "Green Juice",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice"
     },
@@ -932,6 +943,7 @@ export const products = (
     name: "Code Division T-shirt",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)"
     },
@@ -990,6 +1002,7 @@ export const products = (
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)"
     },
@@ -1048,6 +1061,7 @@ export const products = (
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)"
     },
@@ -1106,6 +1120,7 @@ export const products = (
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)"
     },
@@ -1164,6 +1179,7 @@ export const products = (
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)"
     },
@@ -1222,6 +1238,7 @@ export const products = (
     name: "Black Hoodie",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)"
     },
@@ -1280,6 +1297,7 @@ export const products = (
     name: "Blue Hoodie",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)"
     },
@@ -1338,6 +1356,7 @@ export const products = (
     name: "Mustard Hoodie",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)"
     },
@@ -1396,6 +1415,7 @@ export const products = (
     name: "Colored Parrot Cushion",
     productType: {
       __typename: "ProductType",
+      hasVariants: true,
       id: "UHJvZHVjdFR5cGU6MTI=",
       name: "Cushion"
     },

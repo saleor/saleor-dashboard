@@ -73,6 +73,7 @@ export const productFragment = gql`
     productType {
       id
       name
+      hasVariants
     }
   }
 `;

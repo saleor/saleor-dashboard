@@ -62,8 +62,16 @@ const useStyles = makeStyles(
       }
     },
     colNameFixed: {},
+    colNameGrid: {
+      display: "grid",
+      gridColumn: 1
+    },
     colNameHeader: {
       marginLeft: AVATAR_MARGIN
+    },
+    colNameType: {
+      color: theme.palette.text.secondary,
+      fontSize: "0.8rem"
     },
     colPrice: {
       textAlign: "right"
@@ -297,7 +305,21 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     thumbnail={maybe(() => product.thumbnail.url)}
                     data-tc="name"
                   >
-                    {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
+                    {maybe<React.ReactNode>(
+                      () => (
+                        <div className={classes.colNameGrid}>
+                          <span>{product.name}</span>
+                          {product && product.productType && (
+                            <span className={classes.colNameType}>
+                              {product.productType.hasVariants
+                                ? "Configurable"
+                                : "Simple"}
+                            </span>
+                          )}
+                        </div>
+                      ),
+                      <Skeleton />
+                    )}
                   </TableCellAvatar>
                   <DisplayColumn
                     column="productType"
@@ -391,20 +413,13 @@ export const ProductList: React.FC<ProductListProps> = props => {
                         } else {
                           return (
                             <>
-                              {intl.formatMessage({
-                                defaultMessage: "From",
-                                description: "from"
-                              })}{" "}
                               <Money
                                 money={{
                                   amount: min,
                                   currency
                                 }}
-                              />{" "}
-                              {intl.formatMessage({
-                                defaultMessage: "to",
-                                description: "to"
-                              })}{" "}
+                              />
+                              {" - "}
                               <Money
                                 money={{
                                   amount: max,

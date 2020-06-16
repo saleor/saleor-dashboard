@@ -15,6 +15,7 @@ export interface ProductFragment_productType {
   __typename: "ProductType";
   id: string;
   name: string;
+  hasVariants: boolean;
 }
 
 export interface ProductFragment {

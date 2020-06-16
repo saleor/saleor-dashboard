@@ -17,6 +17,7 @@ export interface ProductList_products_edges_node_productType {
   __typename: "ProductType";
   id: string;
   name: string;
+  hasVariants: boolean;
 }
 
 export interface ProductList_products_edges_node_attributes_attribute {
