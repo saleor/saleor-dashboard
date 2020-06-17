@@ -3,11 +3,17 @@ import Hr from "@saleor/components/Hr";
 import RadioGroupField, {
   RadioGroupFieldChoice
 } from "@saleor/components/RadioGroupField";
-import { ExportScope, FileTypesEnum } from "@saleor/types/globalTypes";
+import { ChangeEvent } from "@saleor/hooks/useForm";
+import { CsvErrorFragment } from "@saleor/products/types/CsvErrorFragment";
+import {
+  ExportProductsInput,
+  ExportScope,
+  FileTypesEnum
+} from "@saleor/types/globalTypes";
+import { getFormErrors } from "@saleor/utils/errors";
+import getCsvErrorMessage from "@saleor/utils/errors/csv";
 import React from "react";
 import { useIntl } from "react-intl";
-
-import { ProductExportType, ProductsToExport } from "./types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -21,11 +27,23 @@ const useStyles = makeStyles(
   }
 );
 
-export interface ProductExportDialogSettingsProps {}
+export interface ProductExportDialogSettingsProps {
+  data: ExportProductsInput;
+  errors: CsvErrorFragment[];
+  onChange: (event: ChangeEvent) => void;
+}
 
-const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = () => {
+const formFields: Array<keyof ExportProductsInput> = ["fileType", "scope"];
+
+const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = ({
+  data,
+  errors,
+  onChange
+}) => {
   const classes = useStyles({});
   const intl = useIntl();
+
+  const formErrors = getFormErrors(formFields, errors);
 
   const productsToExportChoices: Array<RadioGroupFieldChoice<ExportScope>> = [
     {
@@ -74,22 +92,28 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
     <>
       <RadioGroupField
         choices={productsToExportChoices}
+        error={!!formErrors.scope}
+        hint={getCsvErrorMessage(formErrors.scope, intl)}
         label={intl.formatMessage({
           defaultMessage: "Export information for:",
           description: "export products to csv file, choice field label"
         })}
-        onChange={() => undefined}
-        value={ProductsToExport.ALL}
+        name={"scope" as keyof ExportProductsInput}
+        onChange={onChange}
+        value={data.scope}
       />
       <Hr className={classes.hr} />
       <RadioGroupField
         choices={productExportTypeChoices}
+        error={!!formErrors.fileType}
+        hint={getCsvErrorMessage(formErrors.fileType, intl)}
         label={intl.formatMessage({
           defaultMessage: "Export as:",
           description: "export products as csv or spreadsheet file"
         })}
-        onChange={() => undefined}
-        value={ProductExportType.CSV}
+        name={"fileType" as keyof ExportProductsInput}
+        onChange={onChange}
+        value={data.fileType}
       />
     </>
   );
