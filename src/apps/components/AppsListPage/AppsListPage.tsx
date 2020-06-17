@@ -5,7 +5,6 @@ import { ListProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { AppDelete } from "../../types/AppDelete";
 import { AppsInstallations } from "../../types/AppsInstallations";
 import { AppsList_apps_edges } from "../../types/AppsList";
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
@@ -18,12 +17,10 @@ export interface AppsListPageProps extends ListProps {
   customAppsList: AppsList_apps_edges[];
   appsInProgressList?: AppsInstallations;
   loadingAppsInProgress: boolean;
-  handleRemoveConfirm: () => void;
   navigateToCustomApp: (id: string) => () => void;
   navigateToCustomAppCreate: () => void;
   onInstalledAppRemove: (id: string) => void;
   onCustomAppRemove: (id: string) => void;
-  onAppRemove: (data: AppDelete) => void;
   onAppInProgressRemove: (id: string) => void;
   onAppInstallRetry: (id: string) => void;
 }
@@ -33,12 +30,10 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   customAppsList,
   installedAppsList,
   loadingAppsInProgress,
-  handleRemoveConfirm,
   navigateToCustomApp,
   navigateToCustomAppCreate,
   onInstalledAppRemove,
   onCustomAppRemove,
-  onAppRemove,
   onAppInProgressRemove,
   onAppInstallRetry,
   ...listProps
