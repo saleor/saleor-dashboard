@@ -148,7 +148,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
 
   useEffect(() => {
     const appsInProgress = appsInProgressData?.appsInstallations || [];
-    if (activeInstallations.length && appsInProgress.length) {
+    if (activeInstallations.length && !!appsInProgressData) {
       if (!intervalId.current) {
         intervalId.current = window.setInterval(
           () => appsInProgressRefetch(),
