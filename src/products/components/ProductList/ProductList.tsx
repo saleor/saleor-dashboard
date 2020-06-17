@@ -3,6 +3,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
+import Typography from "@material-ui/core/Typography";
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -65,16 +66,11 @@ const useStyles = makeStyles(
       }
     },
     colNameFixed: {},
-    colNameGrid: {
-      display: "grid",
-      gridColumn: 1
-    },
     colNameHeader: {
       marginLeft: AVATAR_MARGIN
     },
-    colNameType: {
-      color: theme.palette.text.secondary,
-      fontSize: "0.8rem"
+    colNameWrapper: {
+      display: "block"
     },
     colPrice: {
       textAlign: "right"
@@ -349,14 +345,16 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     data-tc="name"
                   >
                     {product?.productType ? (
-                      <div className={classes.colNameGrid}>
+                      <div className={classes.colNameWrapper}>
                         <span>{product.name}</span>
                         {product && product.productType && (
-                          <span className={classes.colNameType}>
-                            {product.productType.hasVariants
-                              ? "Configurable"
-                              : "Simple"}
-                          </span>
+                          <Typography variant="caption">
+                            {product.productType.hasVariants ? (
+                              <FormattedMessage defaultMessage="Configurable" />
+                            ) : (
+                              <FormattedMessage defaultMessage="Simple" />
+                            )}
+                          </Typography>
                         )}
                       </div>
                     ) : (
