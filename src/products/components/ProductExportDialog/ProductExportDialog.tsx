@@ -7,13 +7,21 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
+import Form from "@saleor/components/Form";
+import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
+import { CsvErrorFragment } from "@saleor/products/types/CsvErrorFragment";
 import { DialogProps } from "@saleor/types";
+import {
+  ExportProductsInput,
+  ExportScope,
+  FileTypesEnum
+} from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductExportDialogSettings from "./ProductExportDialogSettings";
-import { ProductExportStep, ProductExportSubmitData } from "./types";
+import { ProductExportStep } from "./types";
 
 function useSteps(): Array<Step<ProductExportStep>> {
   const intl = useIntl();
@@ -36,54 +44,75 @@ function useSteps(): Array<Step<ProductExportStep>> {
   ];
 }
 
+const initialForm: ExportProductsInput = {
+  exportInfo: {},
+  fileType: FileTypesEnum.CSV,
+  scope: ExportScope.ALL
+};
+
 const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
 export interface ProductExportDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  onSubmit: (data: ProductExportSubmitData) => void;
+  errors: CsvErrorFragment[];
+  onSubmit: (data: ExportProductsInput) => void;
 }
 
 const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   confirmButtonState,
+  errors,
   onClose,
   onSubmit,
   open
 }) => {
   const [step, setStep] = React.useState(ProductExportStep.SETTINGS);
   const steps = useSteps();
+  const dialogErrors = useModalDialogErrors(errors, open);
 
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
-      <DialogTitle>
-        <FormattedMessage
-          defaultMessage="Export Information"
-          description="export products to csv file, dialog header"
-        />
-      </DialogTitle>
-      <DialogContent>
-        <ProductExportSteps
-          currentStep={step}
-          steps={steps}
-          onStepClick={setStep}
-        />
-        {step === ProductExportStep.SETTINGS && <ProductExportDialogSettings />}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
-        <ConfirmButton
-          onClick={onSubmit}
-          transitionState={confirmButtonState}
-          variant="contained"
-          type="submit"
-        >
-          <FormattedMessage
-            defaultMessage="export products"
-            description="export products to csv file, button"
-          />
-        </ConfirmButton>
-      </DialogActions>
+      <Form initial={initialForm} onSubmit={onSubmit}>
+        {({ change, data, submit }) => (
+          <>
+            <DialogTitle>
+              <FormattedMessage
+                defaultMessage="Export Information"
+                description="export products to csv file, dialog header"
+              />
+            </DialogTitle>
+            <DialogContent>
+              <ProductExportSteps
+                currentStep={step}
+                steps={steps}
+                onStepClick={setStep}
+              />
+              {step === ProductExportStep.SETTINGS && (
+                <ProductExportDialogSettings
+                  data={data}
+                  errors={dialogErrors}
+                  onChange={change}
+                />
+              )}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={onClose}>
+                <FormattedMessage {...buttonMessages.back} />
+              </Button>
+              <ConfirmButton
+                onClick={submit}
+                transitionState={confirmButtonState}
+                variant="contained"
+                type="submit"
+              >
+                <FormattedMessage
+                  defaultMessage="export products"
+                  description="export products to csv file, button"
+                />
+              </ConfirmButton>
+            </DialogActions>
+          </>
+        )}
+      </Form>
     </Dialog>
   );
 };
