@@ -18,6 +18,7 @@ import {
 } from "./types/productBulkPublish";
 import { ProductCreate, ProductCreateVariables } from "./types/ProductCreate";
 import { ProductDelete, ProductDeleteVariables } from "./types/ProductDelete";
+import { ProductExport, ProductExportVariables } from "./types/ProductExport";
 import {
   ProductImageCreate,
   ProductImageCreateVariables
@@ -599,7 +600,7 @@ export const productExportMutation = gql`
     }
   }
 `;
-export const exportProducts = makeMutation<
-  ProductVariantBulkDelete,
-  ProductVariantBulkDeleteVariables
->(ProductVariantBulkDeleteMutation);
+export const useProductExport = makeMutation<
+  ProductExport,
+  ProductExportVariables
+>(productExportMutation);
