@@ -347,7 +347,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     {product?.productType ? (
                       <div className={classes.colNameWrapper}>
                         <span>{product.name}</span>
-                        {product && product.productType && (
+                        {product?.productType && (
                           <Typography variant="caption">
                             {product.productType.hasVariants ? (
                               <FormattedMessage defaultMessage="Configurable" />
