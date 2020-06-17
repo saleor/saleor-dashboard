@@ -10,7 +10,7 @@ import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import Form from "@saleor/components/Form";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { CsvErrorFragment } from "@saleor/products/types/CsvErrorFragment";
+import { ExportErrorFragment } from "@saleor/products/types/ExportErrorFragment";
 import { DialogProps } from "@saleor/types";
 import {
   ExportProductsInput,
@@ -58,7 +58,7 @@ const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
 export interface ProductExportDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: CsvErrorFragment[];
+  errors: ExportErrorFragment[];
   onSubmit: (data: ExportProductsInput) => void;
 }
 

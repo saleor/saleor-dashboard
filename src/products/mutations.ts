@@ -1,7 +1,7 @@
 import {
   bulkProductErrorFragment,
   bulkStockErrorFragment,
-  csvErrorFragment,
+  exportErrorFragment,
   productErrorFragment,
   stockErrorFragment
 } from "@saleor/fragments/errors";
@@ -572,14 +572,14 @@ export const TypedProductVariantBulkDeleteMutation = TypedMutation<
 
 export const productExportMutation = gql`
   ${exportFileFragment}
-  ${csvErrorFragment}
+  ${exportErrorFragment}
   mutation ProductExport($input: ExportProductsInput!) {
     exportProducts(input: $input) {
       exportFile {
         ...ExportFileFragment
       }
-      errors: csvErrors {
-        ...CsvErrorFragment
+      errors: exportErrors {
+        ...ExportErrorFragment
       }
     }
   }

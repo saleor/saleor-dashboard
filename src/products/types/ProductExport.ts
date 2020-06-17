@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ExportProductsInput, JobStatusEnum, CsvErrorCode } from "./../../types/globalTypes";
+import { ExportProductsInput, JobStatusEnum, ExportErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductExport
@@ -16,8 +16,8 @@ export interface ProductExport_exportProducts_exportFile {
 }
 
 export interface ProductExport_exportProducts_errors {
-  __typename: "CsvError";
-  code: CsvErrorCode;
+  __typename: "ExportError";
+  code: ExportErrorCode;
   field: string | null;
 }
 
