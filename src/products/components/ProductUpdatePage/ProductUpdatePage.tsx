@@ -159,7 +159,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
-  const currency = maybe(() => product.variants[0].price.currency);
+  const currency =
+    product?.variants?.length && product.variants[0].price.currency;
   const hasVariants = maybe(() => product.productType.hasVariants, false);
 
   const handleSubmit = (data: ProductUpdatePageFormData) => {
@@ -263,7 +264,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       disabled={disabled}
                       variants={variants}
                       fallbackPrice={
-                        product ? product.variants[0].price : undefined
+                        product?.variants?.length
+                          ? product.variants[0].price
+                          : undefined
                       }
                       onRowClick={onVariantShow}
                       onVariantAdd={onVariantAdd}

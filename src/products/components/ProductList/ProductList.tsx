@@ -22,7 +22,10 @@ import {
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
-import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
+import {
+  ProductList_products_edges_node,
+  ProductList_products_edges_node_variants
+} from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
@@ -138,6 +141,46 @@ export const ProductList: React.FC<ProductListProps> = props => {
     isAttributeColumnValue
   );
   const numberOfColumns = 2 + settings.columns.length;
+
+  const getProductPrice = (
+    variants: ProductList_products_edges_node_variants[]
+  ) => {
+    if (!variants.length) {
+      return null;
+    }
+
+    const { max, min } = getProductPriceRange(variants);
+    const currency = variants[0].price.currency;
+
+    if (max === min) {
+      return (
+        <Money
+          money={{
+            amount: min,
+            currency
+          }}
+        />
+      );
+    } else {
+      return (
+        <>
+          <Money
+            money={{
+              amount: min,
+              currency
+            }}
+          />
+          {" - "}
+          <Money
+            money={{
+              amount: max,
+              currency
+            }}
+          />
+        </>
+      );
+    }
+  };
 
   return (
     <div className={classes.tableContainer}>
@@ -305,19 +348,18 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     thumbnail={maybe(() => product.thumbnail.url)}
                     data-tc="name"
                   >
-                    {maybe<React.ReactNode>(
-                      () => (
-                        <div className={classes.colNameGrid}>
-                          <span>{product.name}</span>
-                          {product && product.productType && (
-                            <span className={classes.colNameType}>
-                              {product.productType.hasVariants
-                                ? "Configurable"
-                                : "Simple"}
-                            </span>
-                          )}
-                        </div>
-                      ),
+                    {product?.productType ? (
+                      <div className={classes.colNameGrid}>
+                        <span>{product.name}</span>
+                        {product && product.productType && (
+                          <span className={classes.colNameType}>
+                            {product.productType.hasVariants
+                              ? "Configurable"
+                              : "Simple"}
+                          </span>
+                        )}
+                      </div>
+                    ) : (
                       <Skeleton />
                     )}
                   </TableCellAvatar>
@@ -395,41 +437,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     displayColumns={settings.columns}
                   >
                     <TableCell className={classes.colPrice}>
-                      {maybe<React.ReactNode>(() => {
-                        const { max, min } = getProductPriceRange(
-                          product.variants
-                        );
-                        const currency = product.variants[0].price.currency;
-
-                        if (max === min) {
-                          return (
-                            <Money
-                              money={{
-                                amount: min,
-                                currency
-                              }}
-                            />
-                          );
-                        } else {
-                          return (
-                            <>
-                              <Money
-                                money={{
-                                  amount: min,
-                                  currency
-                                }}
-                              />
-                              {" - "}
-                              <Money
-                                money={{
-                                  amount: max,
-                                  currency
-                                }}
-                              />
-                            </>
-                          );
-                        }
-                      }, <Skeleton />)}
+                      {product?.variants ? (
+                        getProductPrice(product.variants)
+                      ) : (
+                        <Skeleton />
+                      )}
                     </TableCell>
                   </DisplayColumn>
                 </TableRow>

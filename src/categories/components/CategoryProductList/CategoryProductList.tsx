@@ -19,7 +19,10 @@ import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
+import {
+  CategoryDetails_category_products_edges_node,
+  CategoryDetails_category_products_edges_node_variants
+} from "../../types/CategoryDetails";
 
 const useStyles = makeStyles(
   theme => ({
@@ -94,6 +97,46 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
   const intl = useIntl();
 
   const numberOfColumns = 5;
+
+  const getProductPrice = (
+    variants: CategoryDetails_category_products_edges_node_variants[]
+  ) => {
+    if (!variants.length) {
+      return null;
+    }
+
+    const { max, min } = getProductPriceRange(variants);
+    const currency = variants[0].price.currency;
+
+    if (max === min) {
+      return (
+        <Money
+          money={{
+            amount: min,
+            currency
+          }}
+        />
+      );
+    } else {
+      return (
+        <>
+          <Money
+            money={{
+              amount: min,
+              currency
+            }}
+          />
+          {" - "}
+          <Money
+            money={{
+              amount: max,
+              currency
+            }}
+          />
+        </>
+      );
+    }
+  };
 
   return (
     <div className={classes.tableContainer}>
@@ -208,41 +251,11 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                     )}
                   </TableCell>
                   <TableCell className={classes.colPrice}>
-                    {maybe<React.ReactNode>(() => {
-                      const { max, min } = getProductPriceRange(
-                        product.variants
-                      );
-                      const currency = product.variants[0].price.currency;
-
-                      if (max === min) {
-                        return (
-                          <Money
-                            money={{
-                              amount: min,
-                              currency
-                            }}
-                          />
-                        );
-                      } else {
-                        return (
-                          <>
-                            <Money
-                              money={{
-                                amount: min,
-                                currency
-                              }}
-                            />
-                            {" - "}
-                            <Money
-                              money={{
-                                amount: max,
-                                currency
-                              }}
-                            />
-                          </>
-                        );
-                      }
-                    }, <Skeleton />)}
+                    {product?.variants ? (
+                      getProductPrice(product.variants)
+                    ) : (
+                      <Skeleton />
+                    )}
                   </TableCell>
                 </TableRow>
               );
