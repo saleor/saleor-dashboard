@@ -39,6 +39,7 @@ const props: ProductListPageProps = {
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
   filterOpts: productListFilterOpts,
   gridAttributes: attributes,
+  onExport: () => undefined,
   products,
   settings: {
     ...pageListProps.default.settings,
