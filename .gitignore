@@ -28,6 +28,7 @@ build/
 coverage/
 dist/
 *\.egg*
+yarn.lock
 # data
 /docs/_build/
 /media/
