@@ -14,6 +14,7 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { JobStatusEnum } from "../../../types/globalTypes";
 import { useStyles } from "../../styles";
 import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
 import CardContainer from "../CardContainer";
@@ -52,7 +53,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
             <TableCell className={classes.colName}>
               <span data-tc="name">{appName}</span>
             </TableCell>
-            {status === "PENDING" && (
+            {status === JobStatusEnum.PENDING && (
               <TableCell
                 className={classNames(
                   classes.colAction,
@@ -70,7 +71,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                 </div>
               </TableCell>
             )}
-            {status === "FAILED" && (
+            {status === JobStatusEnum.FAILED && (
               <TableCell
                 className={classNames(
                   classes.colAction,
