@@ -21,9 +21,9 @@ export function getProductPriceRange(
   let min = productVariants[0].price.amount;
 
   for (let i = 1, len = productVariants.length; i < len; i++) {
-    const price = productVariants[i].price;
-    max = price.amount > max ? price.amount : max;
-    min = price.amount < min ? price.amount : min;
+    const curr = productVariants[i].price.amount;
+    max = curr > max ? curr : max;
+    min = curr < min ? curr : min;
   }
 
   return {
