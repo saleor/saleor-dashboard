@@ -1,5 +1,8 @@
 import Decorator from "@saleor/storybook/Decorator";
-import { CsvErrorCode, ExportProductsInput } from "@saleor/types/globalTypes";
+import {
+  ExportErrorCode,
+  ExportProductsInput
+} from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -23,8 +26,8 @@ storiesOf("Views / Products / Export / Export settings", module)
       {...props}
       errors={(["fileType", "scope"] as Array<keyof ExportProductsInput>).map(
         field => ({
-          __typename: "CsvError",
-          code: CsvErrorCode.INVALID,
+          __typename: "ExportError",
+          code: ExportErrorCode.INVALID,
           field
         })
       )}
