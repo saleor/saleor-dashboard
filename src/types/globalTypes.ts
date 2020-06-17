@@ -350,12 +350,6 @@ export enum CountryCode {
   ZW = "ZW",
 }
 
-export enum CsvErrorCode {
-  INVALID = "INVALID",
-  NOT_FOUND = "NOT_FOUND",
-  REQUIRED = "REQUIRED",
-}
-
 export enum DiscountErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
@@ -374,6 +368,12 @@ export enum DiscountStatusEnum {
 export enum DiscountValueTypeEnum {
   FIXED = "FIXED",
   PERCENTAGE = "PERCENTAGE",
+}
+
+export enum ExportErrorCode {
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
 }
 
 export enum ExportScope {
@@ -1052,7 +1052,7 @@ export interface ExportProductsInput {
   scope: ExportScope;
   filter?: ProductFilterInput | null;
   ids?: string[] | null;
-  exportInfo: ExportInfoInput;
+  exportInfo?: ExportInfoInput | null;
   fileType: FileTypesEnum;
 }
 

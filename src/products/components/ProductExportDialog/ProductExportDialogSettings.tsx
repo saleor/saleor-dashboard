@@ -4,14 +4,14 @@ import RadioGroupField, {
   RadioGroupFieldChoice
 } from "@saleor/components/RadioGroupField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { CsvErrorFragment } from "@saleor/products/types/CsvErrorFragment";
+import { ExportErrorFragment } from "@saleor/products/types/ExportErrorFragment";
 import {
   ExportProductsInput,
   ExportScope,
   FileTypesEnum
 } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
-import getCsvErrorMessage from "@saleor/utils/errors/csv";
+import getExportErrorMessage from "@saleor/utils/errors/export";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
 
 export interface ProductExportDialogSettingsProps {
   data: ExportProductsInput;
-  errors: CsvErrorFragment[];
+  errors: ExportErrorFragment[];
   onChange: (event: ChangeEvent) => void;
 }
 
@@ -93,7 +93,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
       <RadioGroupField
         choices={productsToExportChoices}
         error={!!formErrors.scope}
-        hint={getCsvErrorMessage(formErrors.scope, intl)}
+        hint={getExportErrorMessage(formErrors.scope, intl)}
         label={intl.formatMessage({
           defaultMessage: "Export information for:",
           description: "export products to csv file, choice field label"
@@ -106,7 +106,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
       <RadioGroupField
         choices={productExportTypeChoices}
         error={!!formErrors.fileType}
-        hint={getCsvErrorMessage(formErrors.fileType, intl)}
+        hint={getExportErrorMessage(formErrors.fileType, intl)}
         label={intl.formatMessage({
           defaultMessage: "Export as:",
           description: "export products as csv or spreadsheet file"

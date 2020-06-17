@@ -80,8 +80,8 @@ const stockErrorFragment = gql`
     field
   }
 `;
-const csvErrorFragment = gql`
-  fragment CsvErrorFragment on CsvError {
+const exportErrorFragment = gql`
+  fragment ExportErrorFragment on ExportError {
     code
     field
   }
@@ -588,14 +588,14 @@ export const TypedProductVariantBulkDeleteMutation = TypedMutation<
 
 export const productExportMutation = gql`
   ${exportFileFragment}
-  ${csvErrorFragment}
+  ${exportErrorFragment}
   mutation ProductExport($input: ExportProductsInput!) {
     exportProducts(input: $input) {
       exportFile {
         ...ExportFileFragment
       }
-      errors: csvErrors {
-        ...CsvErrorFragment
+      errors: exportErrors {
+        ...ExportErrorFragment
       }
     }
   }
