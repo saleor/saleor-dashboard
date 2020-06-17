@@ -3568,6 +3568,7 @@
     "string": "Price"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_150865454": {
+    "context": "product type",
     "string": "Simple"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_1657559629": {
@@ -3582,6 +3583,7 @@
     "string": "Not published"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_2754779425": {
+    "context": "product type",
     "string": "Configurable"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_3640454975": {
