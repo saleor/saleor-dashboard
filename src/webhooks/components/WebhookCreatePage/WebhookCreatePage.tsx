@@ -6,7 +6,6 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { sectionNames } from "@saleor/intl";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
@@ -25,6 +24,7 @@ export interface FormData {
 }
 
 export interface WebhookCreatePageProps {
+  appName: string;
   disabled: boolean;
   errors: WebhookErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -33,6 +33,7 @@ export interface WebhookCreatePageProps {
 }
 
 const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
+  appName = "",
   disabled,
   errors,
   saveButtonBarState,
@@ -53,9 +54,7 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ data, hasChanged, submit, change }) => (
         <Container>
-          <AppHeader onBack={onBack}>
-            {intl.formatMessage(sectionNames.webhooks)}
-          </AppHeader>
+          <AppHeader onBack={onBack}>{appName}</AppHeader>
           <PageHeader
             title={intl.formatMessage({
               defaultMessage: "Create Webhook",
