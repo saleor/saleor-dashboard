@@ -88,8 +88,8 @@ export interface ProductCreate_productCreate_product_variants_stocks {
 
 export interface ProductCreate_productCreate_product_variants {
   __typename: "ProductVariant";
-  price: ProductCreate_productCreate_product_variants_price | null;
   id: string;
+  price: ProductCreate_productCreate_product_variants_price | null;
   sku: string;
   name: string;
   margin: number | null;

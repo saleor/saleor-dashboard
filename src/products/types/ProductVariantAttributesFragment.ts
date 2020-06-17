@@ -66,6 +66,7 @@ export interface ProductVariantAttributesFragment_variants_price {
 
 export interface ProductVariantAttributesFragment_variants {
   __typename: "ProductVariant";
+  id: string;
   price: ProductVariantAttributesFragment_variants_price | null;
 }
 

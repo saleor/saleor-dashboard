@@ -129,6 +129,7 @@ export const category: (
           variants: [
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 5,
@@ -137,6 +138,7 @@ export const category: (
             },
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 10,
@@ -163,6 +165,7 @@ export const category: (
           variants: [
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 5,
@@ -171,6 +174,7 @@ export const category: (
             },
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 10,
@@ -197,6 +201,7 @@ export const category: (
           variants: [
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 5,
@@ -205,6 +210,7 @@ export const category: (
             },
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 10,
@@ -231,6 +237,7 @@ export const category: (
           variants: [
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 5,
@@ -239,6 +246,7 @@ export const category: (
             },
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 10,
@@ -265,6 +273,7 @@ export const category: (
           variants: [
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 5,
@@ -273,6 +282,7 @@ export const category: (
             },
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 10,
@@ -299,6 +309,7 @@ export const category: (
           variants: [
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 5,
@@ -307,6 +318,7 @@ export const category: (
             },
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 10,
@@ -333,6 +345,7 @@ export const category: (
           variants: [
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 5,
@@ -341,6 +354,7 @@ export const category: (
             },
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 10,
@@ -367,6 +381,7 @@ export const category: (
           variants: [
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 5,
@@ -375,6 +390,7 @@ export const category: (
             },
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 10,
@@ -401,6 +417,7 @@ export const category: (
           variants: [
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 5,
@@ -409,6 +426,7 @@ export const category: (
             },
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 10,
@@ -435,6 +453,7 @@ export const category: (
           variants: [
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 5,
@@ -443,6 +462,7 @@ export const category: (
             },
             {
               __typename: "ProductVariant" as "ProductVariant",
+              id: "pv70010",
               price: {
                 __typename: "Money" as "Money",
                 amount: 10,

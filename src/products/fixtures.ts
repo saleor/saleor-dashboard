@@ -335,6 +335,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 15,
@@ -343,6 +344,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 35,
@@ -351,6 +353,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 49,
@@ -379,6 +382,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 15,
@@ -387,6 +391,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 30,
@@ -395,6 +400,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 49,
@@ -423,6 +429,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 15,
@@ -431,6 +438,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 30,
@@ -439,6 +447,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 49,
@@ -482,6 +491,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -490,6 +500,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -498,6 +509,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -541,6 +553,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -549,6 +562,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -557,6 +571,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -600,6 +615,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -608,6 +624,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -616,6 +633,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -659,6 +677,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -667,6 +686,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -675,6 +695,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -718,6 +739,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -726,6 +748,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -734,6 +757,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -777,6 +801,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -785,6 +810,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -793,6 +819,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -836,6 +863,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -844,6 +872,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -852,6 +881,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -895,6 +925,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -903,6 +934,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -911,6 +943,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -954,6 +987,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -962,6 +996,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -970,6 +1005,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -1013,6 +1049,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -1021,6 +1058,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -1029,6 +1067,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -1072,6 +1111,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -1080,6 +1120,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -1088,6 +1129,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -1131,6 +1173,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -1139,6 +1182,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -1147,6 +1191,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -1190,6 +1235,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -1198,6 +1244,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -1206,6 +1253,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -1249,6 +1297,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -1257,6 +1306,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -1265,6 +1315,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -1308,6 +1359,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -1316,6 +1368,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -1324,6 +1377,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -1367,6 +1421,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -1375,6 +1430,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -1383,6 +1439,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,
@@ -1426,6 +1483,7 @@ export const products = (
     variants: [
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 5,
@@ -1434,6 +1492,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 7,
@@ -1442,6 +1501,7 @@ export const products = (
       },
       {
         __typename: "ProductVariant",
+        id: "pv70010",
         price: {
           __typename: "Money",
           amount: 3,

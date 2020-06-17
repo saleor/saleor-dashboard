@@ -81,6 +81,7 @@ export interface CategoryDetails_category_products_edges_node_variants_price {
 
 export interface CategoryDetails_category_products_edges_node_variants {
   __typename: "ProductVariant";
+  id: string;
   price: CategoryDetails_category_products_edges_node_variants_price | null;
 }
 

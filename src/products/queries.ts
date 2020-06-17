@@ -79,6 +79,7 @@ export const productFragment = gql`
 `;
 
 const productVariantAttributesFragment = gql`
+  ${fragmentMoney}
   fragment ProductVariantAttributesFragment on Product {
     id
     attributes {
@@ -113,9 +114,9 @@ const productVariantAttributesFragment = gql`
       }
     }
     variants {
+      id
       price {
-        amount
-        currency
+        ...Money
       }
     }
   }
@@ -308,6 +309,7 @@ export const useInitialProductFilterDataQuery = makeQuery<
 >(initialProductFilterDataQuery);
 
 const productListQuery = gql`
+  ${fragmentMoney}
   ${productFragment}
   query ProductList(
     $first: Int
@@ -338,9 +340,9 @@ const productListQuery = gql`
             }
           }
           variants {
+            id
             price {
-              amount
-              currency
+              ...Money
             }
           }
         }

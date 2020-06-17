@@ -45,6 +45,7 @@ export interface ProductList_products_edges_node_variants_price {
 
 export interface ProductList_products_edges_node_variants {
   __typename: "ProductVariant";
+  id: string;
   price: ProductList_products_edges_node_variants_price | null;
 }
 

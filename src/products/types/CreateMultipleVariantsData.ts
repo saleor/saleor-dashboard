@@ -66,6 +66,7 @@ export interface CreateMultipleVariantsData_product_variants_price {
 
 export interface CreateMultipleVariantsData_product_variants {
   __typename: "ProductVariant";
+  id: string;
   price: CreateMultipleVariantsData_product_variants_price | null;
 }
 

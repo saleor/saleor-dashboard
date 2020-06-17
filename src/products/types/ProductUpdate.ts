@@ -88,8 +88,8 @@ export interface ProductUpdate_productUpdate_product_variants_stocks {
 
 export interface ProductUpdate_productUpdate_product_variants {
   __typename: "ProductVariant";
-  price: ProductUpdate_productUpdate_product_variants_price | null;
   id: string;
+  price: ProductUpdate_productUpdate_product_variants_price | null;
   sku: string;
   name: string;
   margin: number | null;
