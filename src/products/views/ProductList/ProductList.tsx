@@ -154,6 +154,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           })
         });
         closeModal();
+        reset();
       }
     }
   });
@@ -520,6 +521,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           errors={
                             exportProductsOpts.data?.exportProducts.errors || []
                           }
+                          selectedProducts={listElements.length}
                           onClose={closeModal}
                           onSubmit={data =>
                             exportProducts({
