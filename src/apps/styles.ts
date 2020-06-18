@@ -93,16 +93,6 @@ export const useStyles = makeStyles(
       marginTop: 0,
       width: "100%"
     },
-    iframeHide: {
-      display: "none"
-    },
-    iframeShow: {
-      "& > iframe": {
-        border: "none",
-        minHeight: "75vh",
-        width: "100%"
-      }
-    },
     installAppContainer: {
       "& > div": {
         position: "relative"

@@ -50,7 +50,7 @@ export const useStyles = makeStyles(
       marginTop: 0,
       width: "100%"
     },
-    iframeShow: {
+    iframeContainer: {
       "& > iframe": {
         border: "none",
         minHeight: "75vh",

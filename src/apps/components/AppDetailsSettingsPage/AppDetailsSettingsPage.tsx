@@ -4,6 +4,7 @@ import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
+import Hr from "@saleor/components/Hr";
 import useTheme from "@saleor/hooks/useTheme";
 import { sectionNames } from "@saleor/intl";
 import classNames from "classnames";
@@ -129,9 +130,10 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
       </Grid>
       <CardSpacer />
 
-      <div className={classes.hr} />
+      <Hr />
+
       <CardSpacer />
-      <div ref={iframeRef} className={classes.iframeShow} />
+      <div ref={iframeRef} className={classes.iframeContainer} />
       <CardSpacer />
     </Container>
   );
