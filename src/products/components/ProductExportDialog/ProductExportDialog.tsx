@@ -3,6 +3,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Typography from "@material-ui/core/Typography";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
@@ -17,6 +18,7 @@ import {
   ExportScope,
   FileTypesEnum
 } from "@saleor/types/globalTypes";
+import getExportErrorMessage from "@saleor/utils/errors/export";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -59,6 +61,7 @@ const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 export interface ProductExportDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: ExportErrorFragment[];
+  selectedProducts: number;
   onSubmit: (data: ExportProductsInput) => void;
 }
 
@@ -67,11 +70,14 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   errors,
   onClose,
   onSubmit,
-  open
+  open,
+  selectedProducts
 }) => {
   const [step, setStep] = React.useState(ProductExportStep.SETTINGS);
   const steps = useSteps();
   const dialogErrors = useModalDialogErrors(errors, open);
+  const notFormErrors = dialogErrors.filter(err => !err.field);
+  const intl = useIntl();
 
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
@@ -94,10 +100,22 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
                 <ProductExportDialogSettings
                   data={data}
                   errors={dialogErrors}
+                  selectedProducts={selectedProducts}
                   onChange={change}
                 />
               )}
             </DialogContent>
+
+            {notFormErrors.length > 0 && (
+              <DialogContent>
+                {notFormErrors.map(err => (
+                  <Typography color="error">
+                    {getExportErrorMessage(err, intl)}
+                  </Typography>
+                ))}
+              </DialogContent>
+            )}
+
             <DialogActions>
               <Button onClick={onClose}>
                 <FormattedMessage {...buttonMessages.back} />

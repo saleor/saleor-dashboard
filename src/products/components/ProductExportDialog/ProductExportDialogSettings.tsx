@@ -30,6 +30,7 @@ const useStyles = makeStyles(
 export interface ProductExportDialogSettingsProps {
   data: ExportProductsInput;
   errors: ExportErrorFragment[];
+  selectedProducts: number;
   onChange: (event: ChangeEvent) => void;
 }
 
@@ -38,7 +39,8 @@ const formFields: Array<keyof ExportProductsInput> = ["fileType", "scope"];
 const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = ({
   data,
   errors,
-  onChange
+  onChange,
+  selectedProducts
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -54,10 +56,16 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
       value: ExportScope.ALL
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "Selected products",
-        description: "export selected products to csv file"
-      }),
+      disabled: selectedProducts === 0,
+      label: intl.formatMessage(
+        {
+          defaultMessage: "Selected products ({number})",
+          description: "export selected products to csv file"
+        },
+        {
+          number: selectedProducts
+        }
+      ),
       value: ExportScope.IDS
     },
     {
