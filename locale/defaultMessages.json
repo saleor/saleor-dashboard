@@ -390,6 +390,18 @@
     "context": "section header",
     "string": "About this app"
   },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_1462011531": {
+    "context": "dialog header",
+    "string": "Delete App"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_330001535": {
+    "context": "delete app",
+    "string": "Are you sure you want to delete this app?"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_3817179919": {
+    "context": "delete app",
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+  },
   "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_1152717819": {
     "context": "title",
     "string": "There’s a problem with app."
@@ -602,11 +614,11 @@
     "string": "Install App"
   },
   "src_dot_apps_dot_views_dot_AppsList_dot_1180774955": {
-    "context": "message content",
+    "context": "app has been installed",
     "string": "{name} is ready to be used"
   },
   "src_dot_apps_dot_views_dot_AppsList_dot_3076215778": {
-    "context": "snackbar text",
+    "context": "app has been removed",
     "string": "App successfully removed"
   },
   "src_dot_apps_dot_views_dot_AppsList_dot_539268521": {
