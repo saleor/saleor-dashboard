@@ -1,15 +1,19 @@
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
+import Grid from "@saleor/components/Grid";
+import useTheme from "@saleor/hooks/useTheme";
 import { sectionNames } from "@saleor/intl";
+import classNames from "classnames";
 import React, { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import urlJoin from "url-join";
 
-import { useStyles } from "../../styles";
 import { App_app } from "../../types/App";
+import { useStyles } from "./styles";
+import useSettingsBreadcrumbs from "./useSettingsBreadcrumbs";
 
 export interface AppDetailsSettingsPageProps {
   backendHost: string;
@@ -29,10 +33,12 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
   const iframeRef = useRef(null);
   const intl = useIntl();
   const classes = useStyles({});
+  const { sendThemeToExtension } = useTheme();
+  const [breadcrumbs, onBreadcrumbClick] = useSettingsBreadcrumbs();
 
   useEffect(() => {
     if (!iframeRef.current?.innerHTML && data?.configurationUrl) {
-      fetch(data.configurationUrl, {
+      fetch(data?.configurationUrl, {
         headers: { "x-saleor-domain": backendHost },
         method: "GET"
       })
@@ -43,6 +49,7 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
 
           const iFrame = document.createElement("iframe");
           iFrame.src = "about:blank";
+          iFrame.id = "extension-app";
           iframeRef.current.innerHTML = "";
           iframeRef.current.appendChild(iFrame);
           const iFrameDoc =
@@ -54,6 +61,7 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
           formScript.src = `${urlJoin(url.origin, formURL.pathname)}`;
           iFrameDoc.write(content.documentElement.innerHTML);
           iFrameDoc.close();
+          iFrame.contentWindow.onload = sendThemeToExtension;
         })
         .catch(() => onError());
     }
@@ -64,7 +72,30 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
       <AppHeader onBack={onBack}>
         {intl.formatMessage(sectionNames.apps)}
       </AppHeader>
-      <PageHeader title={data?.name}>
+      <Grid variant="uniform">
+        <div className={classes.breadcrumbContainer}>
+          <div className={classes.breadcrumbs}>
+            <Typography
+              className={classNames(
+                classes.breadcrumb,
+                classes.breadcrumbDisabled
+              )}
+              variant="h5"
+            >
+              {data?.name}
+            </Typography>
+            {breadcrumbs.map(b => (
+              <Typography
+                className={classes.breadcrumb}
+                variant="h5"
+                onClick={() => onBreadcrumbClick(b.value)}
+                key={b.label}
+              >
+                {b.label}
+              </Typography>
+            ))}
+          </div>
+        </div>
         <div className={classes.appSettingsHeader}>
           <Button
             onClick={navigateToDashboard}
@@ -95,7 +126,8 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
             />
           </Button>
         </div>
-      </PageHeader>
+      </Grid>
+      <CardSpacer />
 
       <div className={classes.hr} />
       <CardSpacer />
