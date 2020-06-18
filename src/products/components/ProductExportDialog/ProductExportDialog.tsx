@@ -10,6 +10,7 @@ import ConfirmButton, {
 import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import Form from "@saleor/components/Form";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import useWizard from "@saleor/hooks/useWizard";
 import { buttonMessages } from "@saleor/intl";
 import { ExportErrorFragment } from "@saleor/products/types/ExportErrorFragment";
 import { DialogProps } from "@saleor/types";
@@ -73,7 +74,10 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   open,
   selectedProducts
 }) => {
-  const [step, setStep] = React.useState(ProductExportStep.SETTINGS);
+  const [step, { set: setStep }] = useWizard(ProductExportStep.SETTINGS, [
+    ProductExportStep.INFO,
+    ProductExportStep.SETTINGS
+  ]);
   const steps = useSteps();
   const dialogErrors = useModalDialogErrors(errors, open);
   const notFormErrors = dialogErrors.filter(err => !err.field);
