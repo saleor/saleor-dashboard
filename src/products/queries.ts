@@ -113,10 +113,18 @@ const productVariantAttributesFragment = gql`
         }
       }
     }
-    variants {
-      id
-      price {
-        ...Money
+    pricing {
+      priceRangeUndiscounted {
+        start {
+          gross {
+            ...Money
+          }
+        }
+        stop {
+          gross {
+            ...Money
+          }
+        }
       }
     }
   }
@@ -158,14 +166,14 @@ export const productFragmentDetails = gql`
     chargeTaxes
     publicationDate
     pricing {
-      priceRange {
+      priceRangeUndiscounted {
         start {
-          net {
+          gross {
             ...Money
           }
         }
         stop {
-          net {
+          gross {
             ...Money
           }
         }
@@ -339,10 +347,18 @@ const productListQuery = gql`
               name
             }
           }
-          variants {
-            id
-            price {
-              ...Money
+          pricing {
+            priceRangeUndiscounted {
+              start {
+                gross {
+                  ...Money
+                }
+              }
+              stop {
+                gross {
+                  ...Money
+                }
+              }
             }
           }
         }

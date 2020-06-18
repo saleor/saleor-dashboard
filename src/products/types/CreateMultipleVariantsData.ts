@@ -58,16 +58,37 @@ export interface CreateMultipleVariantsData_product_productType {
   variantAttributes: (CreateMultipleVariantsData_product_productType_variantAttributes | null)[] | null;
 }
 
-export interface CreateMultipleVariantsData_product_variants_price {
+export interface CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted_start_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CreateMultipleVariantsData_product_variants {
-  __typename: "ProductVariant";
-  id: string;
-  price: CreateMultipleVariantsData_product_variants_price | null;
+export interface CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted_start {
+  __typename: "TaxedMoney";
+  gross: CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted_start_gross;
+}
+
+export interface CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted_stop_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted_stop {
+  __typename: "TaxedMoney";
+  gross: CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted_stop_gross;
+}
+
+export interface CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted {
+  __typename: "TaxedMoneyRange";
+  start: CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted_start | null;
+  stop: CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted_stop | null;
+}
+
+export interface CreateMultipleVariantsData_product_pricing {
+  __typename: "ProductPricingInfo";
+  priceRangeUndiscounted: CreateMultipleVariantsData_product_pricing_priceRangeUndiscounted | null;
 }
 
 export interface CreateMultipleVariantsData_product {
@@ -75,7 +96,7 @@ export interface CreateMultipleVariantsData_product {
   id: string;
   attributes: CreateMultipleVariantsData_product_attributes[];
   productType: CreateMultipleVariantsData_product_productType;
-  variants: (CreateMultipleVariantsData_product_variants | null)[] | null;
+  pricing: CreateMultipleVariantsData_product_pricing | null;
 }
 
 export interface CreateMultipleVariantsData_warehouses_edges_node {

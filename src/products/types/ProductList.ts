@@ -37,16 +37,37 @@ export interface ProductList_products_edges_node_attributes {
   values: (ProductList_products_edges_node_attributes_values | null)[];
 }
 
-export interface ProductList_products_edges_node_variants_price {
+export interface ProductList_products_edges_node_pricing_priceRangeUndiscounted_start_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ProductList_products_edges_node_variants {
-  __typename: "ProductVariant";
-  id: string;
-  price: ProductList_products_edges_node_variants_price | null;
+export interface ProductList_products_edges_node_pricing_priceRangeUndiscounted_start {
+  __typename: "TaxedMoney";
+  gross: ProductList_products_edges_node_pricing_priceRangeUndiscounted_start_gross;
+}
+
+export interface ProductList_products_edges_node_pricing_priceRangeUndiscounted_stop_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductList_products_edges_node_pricing_priceRangeUndiscounted_stop {
+  __typename: "TaxedMoney";
+  gross: ProductList_products_edges_node_pricing_priceRangeUndiscounted_stop_gross;
+}
+
+export interface ProductList_products_edges_node_pricing_priceRangeUndiscounted {
+  __typename: "TaxedMoneyRange";
+  start: ProductList_products_edges_node_pricing_priceRangeUndiscounted_start | null;
+  stop: ProductList_products_edges_node_pricing_priceRangeUndiscounted_stop | null;
+}
+
+export interface ProductList_products_edges_node_pricing {
+  __typename: "ProductPricingInfo";
+  priceRangeUndiscounted: ProductList_products_edges_node_pricing_priceRangeUndiscounted | null;
 }
 
 export interface ProductList_products_edges_node {
@@ -58,7 +79,7 @@ export interface ProductList_products_edges_node {
   isPublished: boolean;
   productType: ProductList_products_edges_node_productType;
   attributes: ProductList_products_edges_node_attributes[];
-  variants: (ProductList_products_edges_node_variants | null)[] | null;
+  pricing: ProductList_products_edges_node_pricing | null;
 }
 
 export interface ProductList_products_edges {

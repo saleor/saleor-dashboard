@@ -8,6 +8,13 @@ import {
 } from "./types/CategoryDetails";
 import { RootCategories } from "./types/RootCategories";
 
+export const fragmentMoney = gql`
+  fragment Money on Money {
+    amount
+    currency
+  }
+`;
+
 export const categoryFragment = gql`
   fragment CategoryFragment on Category {
     id
@@ -73,6 +80,7 @@ export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(
 );
 
 export const categoryDetails = gql`
+  ${fragmentMoney}
   ${categoryFragment}
   ${categoryDetailsFragment}
   ${pageInfoFragment}
@@ -112,11 +120,18 @@ export const categoryDetails = gql`
               id
               name
             }
-            variants {
-              id
-              price {
-                amount
-                currency
+            pricing {
+              priceRangeUndiscounted {
+                start {
+                  gross {
+                    ...Money
+                  }
+                }
+                stop {
+                  gross {
+                    ...Money
+                  }
+                }
               }
             }
           }

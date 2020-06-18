@@ -120,32 +120,34 @@ export const category: (
           id: "UHJvZHVjdDoyMQ==",
           isAvailable: true,
           name: "Gardner-Schultz",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage },
-          variants: [
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 5,
-                currency: "USD"
-              }
-            },
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 10,
-                currency: "USD"
-              }
-            }
-          ]
+          thumbnail: { __typename: "Image", url: placeholderImage }
         }
       },
       {
@@ -156,32 +158,34 @@ export const category: (
           id: "UHJvZHVjdDoyMg==",
           isAvailable: true,
           name: "James, Martinez and Murray",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage },
-          variants: [
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 5,
-                currency: "USD"
-              }
-            },
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 10,
-                currency: "USD"
-              }
-            }
-          ]
+          thumbnail: { __typename: "Image", url: placeholderImage }
         }
       },
       {
@@ -192,32 +196,34 @@ export const category: (
           id: "UHJvZHVjdDoyMw==",
           isAvailable: true,
           name: "Curtis, Joyce and Turner",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage },
-          variants: [
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 5,
-                currency: "USD"
-              }
-            },
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 10,
-                currency: "USD"
-              }
-            }
-          ]
+          thumbnail: { __typename: "Image", url: placeholderImage }
         }
       },
       {
@@ -228,32 +234,34 @@ export const category: (
           id: "UHJvZHVjdDoyNA==",
           isAvailable: true,
           name: "Davis, Brown and Ray",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage },
-          variants: [
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 5,
-                currency: "USD"
-              }
-            },
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 10,
-                currency: "USD"
-              }
-            }
-          ]
+          thumbnail: { __typename: "Image", url: placeholderImage }
         }
       },
       {
@@ -264,32 +272,34 @@ export const category: (
           id: "UHJvZHVjdDoyNQ==",
           isAvailable: true,
           name: "Gallegos Ltd",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage },
-          variants: [
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 5,
-                currency: "USD"
-              }
-            },
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 10,
-                currency: "USD"
-              }
-            }
-          ]
+          thumbnail: { __typename: "Image", url: placeholderImage }
         }
       },
       {
@@ -300,32 +310,34 @@ export const category: (
           id: "UHJvZHVjdDoyNg==",
           isAvailable: true,
           name: "Franklin Inc",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage },
-          variants: [
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 5,
-                currency: "USD"
-              }
-            },
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 10,
-                currency: "USD"
-              }
-            }
-          ]
+          thumbnail: { __typename: "Image", url: placeholderImage }
         }
       },
       {
@@ -336,32 +348,34 @@ export const category: (
           id: "UHJvZHVjdDoyNw==",
           isAvailable: true,
           name: "Williams-Taylor",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage },
-          variants: [
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 5,
-                currency: "USD"
-              }
-            },
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 10,
-                currency: "USD"
-              }
-            }
-          ]
+          thumbnail: { __typename: "Image", url: placeholderImage }
         }
       },
       {
@@ -372,32 +386,34 @@ export const category: (
           id: "UHJvZHVjdDoyOA==",
           isAvailable: true,
           name: "Riddle, Evans and Hicks",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage },
-          variants: [
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 5,
-                currency: "USD"
-              }
-            },
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 10,
-                currency: "USD"
-              }
-            }
-          ]
+          thumbnail: { __typename: "Image", url: placeholderImage }
         }
       },
       {
@@ -408,32 +424,34 @@ export const category: (
           id: "UHJvZHVjdDoyOQ==",
           isAvailable: true,
           name: "Hebert-Sherman",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage },
-          variants: [
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 5,
-                currency: "USD"
-              }
-            },
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 10,
-                currency: "USD"
-              }
-            }
-          ]
+          thumbnail: { __typename: "Image", url: placeholderImage }
         }
       },
       {
@@ -444,32 +462,34 @@ export const category: (
           id: "UHJvZHVjdDozMA==",
           isAvailable: true,
           name: "Carter and Sons",
+          pricing: {
+            __typename: "ProductPricingInfo",
+            priceRangeUndiscounted: {
+              __typename: "TaxedMoneyRange",
+              start: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 3,
+                  currency: "USD"
+                }
+              },
+              stop: {
+                __typename: "TaxedMoney",
+                gross: {
+                  __typename: "Money",
+                  amount: 8,
+                  currency: "USD"
+                }
+              }
+            }
+          },
           productType: {
             __typename: "ProductType",
             id: "UHJvZHVjdFR5cGU6Mw==",
             name: "Coffee"
           },
-          thumbnail: { __typename: "Image", url: placeholderImage },
-          variants: [
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 5,
-                currency: "USD"
-              }
-            },
-            {
-              __typename: "ProductVariant" as "ProductVariant",
-              id: "pv70010",
-              price: {
-                __typename: "Money" as "Money",
-                amount: 10,
-                currency: "USD"
-              }
-            }
-          ]
+          thumbnail: { __typename: "Image", url: placeholderImage }
         }
       }
     ],

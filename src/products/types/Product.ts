@@ -60,35 +60,37 @@ export interface Product_productType {
   hasVariants: boolean;
 }
 
-export interface Product_variants_price {
+export interface Product_pricing_priceRangeUndiscounted_start_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface Product_variants_stocks_warehouse {
-  __typename: "Warehouse";
-  id: string;
-  name: string;
+export interface Product_pricing_priceRangeUndiscounted_start {
+  __typename: "TaxedMoney";
+  gross: Product_pricing_priceRangeUndiscounted_start_gross;
 }
 
-export interface Product_variants_stocks {
-  __typename: "Stock";
-  id: string;
-  quantity: number;
-  quantityAllocated: number;
-  warehouse: Product_variants_stocks_warehouse;
+export interface Product_pricing_priceRangeUndiscounted_stop_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
 }
 
-export interface Product_variants {
-  __typename: "ProductVariant";
-  id: string;
-  price: Product_variants_price | null;
-  sku: string;
-  name: string;
-  margin: number | null;
-  stocks: (Product_variants_stocks | null)[] | null;
-  trackInventory: boolean;
+export interface Product_pricing_priceRangeUndiscounted_stop {
+  __typename: "TaxedMoney";
+  gross: Product_pricing_priceRangeUndiscounted_stop_gross;
+}
+
+export interface Product_pricing_priceRangeUndiscounted {
+  __typename: "TaxedMoneyRange";
+  start: Product_pricing_priceRangeUndiscounted_start | null;
+  stop: Product_pricing_priceRangeUndiscounted_stop | null;
+}
+
+export interface Product_pricing {
+  __typename: "ProductPricingInfo";
+  priceRangeUndiscounted: Product_pricing_priceRangeUndiscounted | null;
 }
 
 export interface Product_category {
@@ -127,39 +129,6 @@ export interface Product_purchaseCost {
   stop: Product_purchaseCost_stop | null;
 }
 
-export interface Product_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface Product_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: Product_pricing_priceRange_start_net;
-}
-
-export interface Product_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface Product_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: Product_pricing_priceRange_stop_net;
-}
-
-export interface Product_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: Product_pricing_priceRange_start | null;
-  stop: Product_pricing_priceRange_stop | null;
-}
-
-export interface Product_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: Product_pricing_priceRange | null;
-}
-
 export interface Product_images {
   __typename: "ProductImage";
   id: string;
@@ -168,12 +137,43 @@ export interface Product_images {
   url: string;
 }
 
+export interface Product_variants_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface Product_variants_stocks_warehouse {
+  __typename: "Warehouse";
+  id: string;
+  name: string;
+}
+
+export interface Product_variants_stocks {
+  __typename: "Stock";
+  id: string;
+  quantity: number;
+  quantityAllocated: number;
+  warehouse: Product_variants_stocks_warehouse;
+}
+
+export interface Product_variants {
+  __typename: "ProductVariant";
+  id: string;
+  sku: string;
+  name: string;
+  price: Product_variants_price | null;
+  margin: number | null;
+  stocks: (Product_variants_stocks | null)[] | null;
+  trackInventory: boolean;
+}
+
 export interface Product {
   __typename: "Product";
   id: string;
   attributes: Product_attributes[];
   productType: Product_productType;
-  variants: (Product_variants | null)[] | null;
+  pricing: Product_pricing | null;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
@@ -186,6 +186,6 @@ export interface Product {
   isPublished: boolean;
   chargeTaxes: boolean;
   publicationDate: any | null;
-  pricing: Product_pricing | null;
   images: (Product_images | null)[] | null;
+  variants: (Product_variants | null)[] | null;
 }

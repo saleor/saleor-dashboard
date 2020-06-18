@@ -73,16 +73,37 @@ export interface CategoryDetails_category_products_edges_node_productType {
   name: string;
 }
 
-export interface CategoryDetails_category_products_edges_node_variants_price {
+export interface CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted_start_gross {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface CategoryDetails_category_products_edges_node_variants {
-  __typename: "ProductVariant";
-  id: string;
-  price: CategoryDetails_category_products_edges_node_variants_price | null;
+export interface CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted_start {
+  __typename: "TaxedMoney";
+  gross: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted_start_gross;
+}
+
+export interface CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted_stop_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted_stop {
+  __typename: "TaxedMoney";
+  gross: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted_stop_gross;
+}
+
+export interface CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted {
+  __typename: "TaxedMoneyRange";
+  start: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted_start | null;
+  stop: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted_stop | null;
+}
+
+export interface CategoryDetails_category_products_edges_node_pricing {
+  __typename: "ProductPricingInfo";
+  priceRangeUndiscounted: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted | null;
 }
 
 export interface CategoryDetails_category_products_edges_node {
@@ -92,7 +113,7 @@ export interface CategoryDetails_category_products_edges_node {
   isAvailable: boolean | null;
   thumbnail: CategoryDetails_category_products_edges_node_thumbnail | null;
   productType: CategoryDetails_category_products_edges_node_productType;
-  variants: (CategoryDetails_category_products_edges_node_variants | null)[] | null;
+  pricing: CategoryDetails_category_products_edges_node_pricing | null;
 }
 
 export interface CategoryDetails_category_products_edges {

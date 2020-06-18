@@ -14,14 +14,13 @@ import TableCellAvatar, {
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { maybe, renderCollection } from "@saleor/misc";
-import { getProductPriceRange } from "@saleor/products/components/ProductListPage/utils";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
   CategoryDetails_category_products_edges_node,
-  CategoryDetails_category_products_edges_node_variants
+  CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
 } from "../../types/CategoryDetails";
 
 const useStyles = makeStyles(
@@ -99,21 +98,26 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
   const numberOfColumns = 5;
 
   const getProductPrice = (
-    variants: CategoryDetails_category_products_edges_node_variants[]
+    priceRangeUndiscounted: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
   ) => {
-    if (!variants.length) {
+    if (!priceRangeUndiscounted) {
       return null;
     }
 
-    const { max, min } = getProductPriceRange(variants);
-    const currency = variants[0].price.currency;
+    const { start, stop } = priceRangeUndiscounted;
+    const {
+      gross: { amount: startAmount }
+    } = start;
+    const {
+      gross: { amount: stopAmount }
+    } = stop;
 
-    if (max === min) {
+    if (startAmount === stopAmount) {
       return (
         <Money
           money={{
-            amount: min,
-            currency
+            amount: startAmount,
+            currency: start.gross.currency
           }}
         />
       );
@@ -122,15 +126,15 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
         <>
           <Money
             money={{
-              amount: min,
-              currency
+              amount: startAmount,
+              currency: start.gross.currency
             }}
           />
           {" - "}
           <Money
             money={{
-              amount: max,
-              currency
+              amount: stopAmount,
+              currency: stop.gross.currency
             }}
           />
         </>
@@ -251,8 +255,8 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                     )}
                   </TableCell>
                   <TableCell className={classes.colPrice}>
-                    {product?.variants ? (
-                      getProductPrice(product.variants)
+                    {product?.pricing?.priceRangeUndiscounted ? (
+                      getProductPrice(product?.pricing?.priceRangeUndiscounted)
                     ) : (
                       <Skeleton />
                     )}
