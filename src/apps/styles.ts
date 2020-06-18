@@ -35,14 +35,6 @@ export const useStyles = makeStyles(
     appName: {
       color: theme.palette.primary.main
     },
-    appSettingsHeader: {
-      "& > button, & > a": {
-        "&:last-child": {
-          marginRight: 0
-        },
-        marginRight: theme.spacing(2)
-      }
-    },
     colAction: {
       "&&": {
         paddingRight: theme.spacing(1),
