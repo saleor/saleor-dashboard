@@ -350,9 +350,15 @@ export const ProductList: React.FC<ProductListProps> = props => {
                         {product?.productType && (
                           <Typography variant="caption">
                             {product.productType.hasVariants ? (
-                              <FormattedMessage defaultMessage="Configurable" />
+                              <FormattedMessage
+                                defaultMessage="Configurable"
+                                description="product type"
+                              />
                             ) : (
-                              <FormattedMessage defaultMessage="Simple" />
+                              <FormattedMessage
+                                defaultMessage="Simple"
+                                description="product type"
+                              />
                             )}
                           </Typography>
                         )}
