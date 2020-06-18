@@ -302,14 +302,6 @@
     "context": "apps section name",
     "string": "Apps"
   },
-  "src_dot_apps_dot_components_dot_ActiveText_dot_31853942": {
-    "context": "app status",
-    "string": "active"
-  },
-  "src_dot_apps_dot_components_dot_ActiveText_dot_3239722049": {
-    "context": "app status",
-    "string": "inactive"
-  },
   "src_dot_apps_dot_components_dot_AppActivateDialog_dot_1499521723": {
     "context": "dialog header",
     "string": "Activate App"
@@ -397,6 +389,18 @@
   "src_dot_apps_dot_components_dot_AppDetailsPage_dot_85811128": {
     "context": "section header",
     "string": "About this app"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_1462011531": {
+    "context": "dialog header",
+    "string": "Delete App"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_330001535": {
+    "context": "delete app",
+    "string": "Are you sure you want to delete this app?"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_3817179919": {
+    "context": "delete app",
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
   },
   "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_1152717819": {
     "context": "title",
@@ -533,6 +537,10 @@
     "context": "create app button",
     "string": "Create App"
   },
+  "src_dot_apps_dot_components_dot_DeactivatedText_dot_3064552173": {
+    "context": "app status",
+    "string": "Deactivated"
+  },
   "src_dot_apps_dot_components_dot_InstalledApps_dot_1554529776": {
     "context": "section header",
     "string": "External Apps"
@@ -605,9 +613,21 @@
     "context": "window title",
     "string": "Install App"
   },
+  "src_dot_apps_dot_views_dot_AppsList_dot_1180774955": {
+    "context": "app has been installed",
+    "string": "{name} is ready to be used"
+  },
   "src_dot_apps_dot_views_dot_AppsList_dot_3076215778": {
-    "context": "snackbar text",
+    "context": "app has been removed",
     "string": "App successfully removed"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_539268521": {
+    "context": "message title",
+    "string": "Couldn’t Install {name}"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_966773578": {
+    "context": "message title",
+    "string": "App installed"
   },
   "src_dot_apps_dot_views_dot_CustomAppCreate_dot_3230241731": {
     "context": "window title",

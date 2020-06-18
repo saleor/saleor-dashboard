@@ -13,9 +13,9 @@ import { FormattedMessage } from "react-intl";
 
 import { useStyles } from "../../styles";
 import { AppsList_apps_edges } from "../../types/AppsList";
-import ActiveText from "../ActiveText";
 import AppsSkeleton from "../AppsSkeleton";
 import CardContainer from "../CardContainer";
+import DeactivatedText from "../DeactivatedText";
 
 export interface CustomAppsProps {
   appsList: AppsList_apps_edges[];
@@ -76,7 +76,11 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                   <span data-tc="name" className={classes.appName}>
                     {app.node.name}
                   </span>
-                  <ActiveText isActive={app.node.isActive} />
+                  {!app.node.isActive && (
+                    <div className={classes.statusWrapper}>
+                      <DeactivatedText />
+                    </div>
+                  )}
                 </TableCell>
                 <TableCell className={classes.colAction}>
                   <IconButton

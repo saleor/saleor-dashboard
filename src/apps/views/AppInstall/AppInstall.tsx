@@ -1,4 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React, { useEffect } from "react";
@@ -23,6 +24,7 @@ interface InstallAppCreateProps extends RouteComponentProps {
 export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
   params
 }) => {
+  const [, setActiveInstallations] = useLocalStorage("activeInstallations", []);
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -41,7 +43,12 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
   });
   const [installApp] = useAppInstallMutation({
     onCompleted: data => {
+      const installationData = data.appInstall.appInstallation;
       if (data.appInstall.errors.length === 0) {
+        setActiveInstallations(activeInstallations => [
+          ...activeInstallations,
+          { id: installationData.id, name: installationData.appName }
+        ]);
         navigateToAppsList();
       } else {
         data.appInstall.errors.forEach(error => {
