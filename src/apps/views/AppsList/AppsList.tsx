@@ -6,6 +6,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { ListViews } from "@saleor/types";
+import getAppErrorMessage from "@saleor/utils/errors/app";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
@@ -98,7 +99,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       text: intl.formatMessage(
         {
           defaultMessage: "{name} is ready to be used",
-          description: "message content"
+          description: "app has been installed"
         },
         { name }
       ),
@@ -119,7 +120,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         ]);
       } else {
         errors.forEach(error =>
-          notify({ status: "error", text: error.message })
+          notify({ status: "error", text: getAppErrorMessage(error, intl) })
         );
       }
     }
@@ -213,7 +214,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       status: "success",
       text: intl.formatMessage({
         defaultMessage: "App successfully removed",
-        description: "snackbar text"
+        description: "app has been removed"
       })
     });
   };
