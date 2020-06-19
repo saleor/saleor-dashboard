@@ -12,12 +12,14 @@ import {
   AppInstallUrlQueryParams,
   AppListUrlQueryParams,
   appPath,
+  appSettingsPath,
   appsListPath,
   customAppAddPath,
   customAppPath,
   CustomAppUrlQueryParams
 } from "./urls";
 import AppDetailsView from "./views/AppDetails";
+import AppDetailsSettingsView from "./views/AppDetailsSettings";
 import AppInstallView from "./views/AppInstall";
 import AppsListView from "./views/AppsList";
 import CustomAppCreateView from "./views/CustomAppCreate";
@@ -33,6 +35,10 @@ const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
     <AppDetailsView id={decodeURIComponent(match.params.id)} params={params} />
   );
 };
+
+const AppDetailsSettings: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match
+}) => <AppDetailsSettingsView id={decodeURIComponent(match.params.id)} />;
 
 const AppInstall: React.FC<RouteComponentProps> = props => {
   const qs = parseQs(location.search.substr(1));
@@ -86,6 +92,11 @@ const Component = () => {
         />
         <Route exact path={appInstallPath} component={AppInstall} />
         <Route exact path={appPath(":id")} component={AppDetails} />
+        <Route
+          exact
+          path={appSettingsPath(":id")}
+          component={AppDetailsSettings}
+        />
         <Route
           exact
           path={customAppPath(":id")}

@@ -35,7 +35,6 @@ export const useStyles = makeStyles(
     appName: {
       color: theme.palette.primary.main
     },
-
     colAction: {
       "&&": {
         paddingRight: theme.spacing(1),

@@ -24,6 +24,7 @@ import DeactivatedText from "../DeactivatedText";
 export interface AppDetailsPageProps {
   loading: boolean;
   data: App_app;
+  navigateToAppSettings: () => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
   onBack: () => void;
@@ -32,6 +33,7 @@ export interface AppDetailsPageProps {
 export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   data,
   loading,
+  navigateToAppSettings,
   onAppActivateOpen,
   onAppDeactivateOpen,
   onBack
@@ -75,10 +77,10 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                 description="link"
               />
             </ExternalLink>
-            <ExternalLink
+            <Button
+              color="primary"
               className={classes.headerLinkContainer}
-              href={data.configurationUrl}
-              target="_blank"
+              onClick={navigateToAppSettings}
             >
               <img src={settingsIcon} alt="" />
 
@@ -86,7 +88,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                 defaultMessage="Edit settings"
                 description="link"
               />
-            </ExternalLink>
+            </Button>
             <Button
               variant="text"
               color="primary"

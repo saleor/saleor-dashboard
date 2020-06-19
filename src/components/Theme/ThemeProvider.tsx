@@ -1,5 +1,10 @@
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import React from "react";
+import {
+  ExtensionMessageType,
+  sendMessageToExtension,
+  ThemeChangeMessage
+} from "@saleor/macaw-ui/extensions";
+import React, { useEffect } from "react";
 import Helmet from "react-helmet";
 
 import Baseline from "../../Baseline";
@@ -8,10 +13,12 @@ import { dark, light } from "./themes";
 
 interface IThemeContext {
   isDark: boolean;
+  sendThemeToExtension: () => void;
   toggleTheme: () => void;
 }
 export const ThemeContext = React.createContext<IThemeContext>({
   isDark: false,
+  sendThemeToExtension: () => undefined,
   toggleTheme: () => undefined
 });
 
@@ -23,10 +30,23 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   isDefaultDark
 }) => {
   const [isDark, setDark] = React.useState(isDefaultDark);
+  const sendThemeToExtension = () =>
+    sendMessageToExtension<ThemeChangeMessage>(
+      {
+        theme: isDark ? "dark" : "light",
+        type: ExtensionMessageType.THEME
+      },
+      "*"
+    );
+
   const toggleTheme = () => {
     setDark(!isDark);
     localStorage.setItem("theme", (!isDark).toString());
   };
+
+  useEffect(() => {
+    sendThemeToExtension();
+  }, [isDark]);
 
   const theme = createTheme(isDark ? dark : light);
 
@@ -34,6 +54,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     <ThemeContext.Provider
       value={{
         isDark,
+        sendThemeToExtension,
         toggleTheme
       }}
     >
