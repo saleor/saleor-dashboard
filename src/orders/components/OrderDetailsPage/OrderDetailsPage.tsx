@@ -20,6 +20,7 @@ import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderFulfillment from "../OrderFulfillment";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
+import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItems";
 
@@ -178,6 +179,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             onShippingAddressEdit={onShippingAddressEdit}
             onProfileView={onProfileView}
           />
+          <CardSpacer />
+          <OrderInvoiceList />
           <CardSpacer />
           <OrderCustomerNote note={maybe(() => order.customerNote)} />
         </div>

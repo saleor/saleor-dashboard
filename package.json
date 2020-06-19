@@ -196,7 +196,6 @@
     "check-types": "tsc --noEmit",
     "extract-json-messages": "rimraf build/locale && cross-env NODE_ENV=extract babel src 'src/**/*.{ts,tsx}' -o build/dashboard.bundle.js",
     "extract-messages": "npm run extract-json-messages && npm run transpile-messages",
-    "generate-component": "plop --plopfile .plop/plopfile.js",
     "heroku-postbuild": "npm run build",
     "serve:lhci": "NODE_ENV=production npm run server",
     "start": "webpack-dev-server -d",
