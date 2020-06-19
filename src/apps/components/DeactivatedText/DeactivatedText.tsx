@@ -8,7 +8,10 @@ export const DeactivatedText: React.FC<{}> = () => {
   const classes = useStyles({});
   return (
     <Typography className={classes.root}>
-      <FormattedMessage defaultMessage="Deactivated" description="app status" />
+      <FormattedMessage
+        defaultMessage="Deactivated"
+        description="app deactivated"
+      />
     </Typography>
   );
 };
