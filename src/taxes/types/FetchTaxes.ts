@@ -20,7 +20,7 @@ export interface FetchTaxes_shopFetchTaxRates_shop_countries {
 
 export interface FetchTaxes_shopFetchTaxRates_shop {
   __typename: "Shop";
-  countries: (FetchTaxes_shopFetchTaxRates_shop_countries | null)[];
+  countries: FetchTaxes_shopFetchTaxRates_shop_countries[];
 }
 
 export interface FetchTaxes_shopFetchTaxRates {

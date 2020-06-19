@@ -3,6 +3,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
+import Typography from "@material-ui/core/Typography";
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -21,7 +22,10 @@ import {
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
-import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
+import {
+  ProductList_products_edges_node,
+  ProductList_products_edges_node_pricing_priceRangeUndiscounted
+} from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
@@ -39,7 +43,7 @@ const useStyles = makeStyles(
         width: "auto"
       },
       colPrice: {
-        width: 200
+        width: 300
       },
       colPublished: {
         width: 200
@@ -63,6 +67,9 @@ const useStyles = makeStyles(
     colNameFixed: {},
     colNameHeader: {
       marginLeft: AVATAR_MARGIN
+    },
+    colNameWrapper: {
+      display: "block"
     },
     colPrice: {
       textAlign: "right"
@@ -129,6 +136,51 @@ export const ProductList: React.FC<ProductListProps> = props => {
     isAttributeColumnValue
   );
   const numberOfColumns = 2 + settings.columns.length;
+
+  const getProductPrice = (
+    priceRangeUndiscounted: ProductList_products_edges_node_pricing_priceRangeUndiscounted
+  ) => {
+    if (!priceRangeUndiscounted) {
+      return null;
+    }
+
+    const { start, stop } = priceRangeUndiscounted;
+    const {
+      gross: { amount: startAmount }
+    } = start;
+    const {
+      gross: { amount: stopAmount }
+    } = stop;
+
+    if (startAmount === stopAmount) {
+      return (
+        <Money
+          money={{
+            amount: startAmount,
+            currency: start.gross.currency
+          }}
+        />
+      );
+    } else {
+      return (
+        <>
+          <Money
+            money={{
+              amount: startAmount,
+              currency: start.gross.currency
+            }}
+          />
+          {" - "}
+          <Money
+            money={{
+              amount: stopAmount,
+              currency: stop.gross.currency
+            }}
+          />
+        </>
+      );
+    }
+  };
 
   return (
     <div className={classes.tableContainer}>
@@ -296,7 +348,28 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     thumbnail={maybe(() => product.thumbnail.url)}
                     data-tc="name"
                   >
-                    {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
+                    {product?.productType ? (
+                      <div className={classes.colNameWrapper}>
+                        <span>{product.name}</span>
+                        {product?.productType && (
+                          <Typography variant="caption">
+                            {product.productType.hasVariants ? (
+                              <FormattedMessage
+                                defaultMessage="Configurable"
+                                description="product type"
+                              />
+                            ) : (
+                              <FormattedMessage
+                                defaultMessage="Simple"
+                                description="product type"
+                              />
+                            )}
+                          </Typography>
+                        )}
+                      </div>
+                    ) : (
+                      <Skeleton />
+                    )}
                   </TableCellAvatar>
                   <DisplayColumn
                     column="productType"
@@ -372,10 +445,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     displayColumns={settings.columns}
                   >
                     <TableCell className={classes.colPrice}>
-                      {maybe(() => product.basePrice) &&
-                      maybe(() => product.basePrice.amount) !== undefined &&
-                      maybe(() => product.basePrice.currency) !== undefined ? (
-                        <Money money={product.basePrice} />
+                      {product?.pricing?.priceRangeUndiscounted ? (
+                        getProductPrice(
+                          product?.pricing?.priceRangeUndiscounted
+                        )
                       ) : (
                         <Skeleton />
                       )}

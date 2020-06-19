@@ -75,7 +75,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
                           values: [attribute.value]
                         })),
                       costPrice: decimal(formData.costPrice),
-                      priceOverride: decimal(formData.priceOverride),
+                      price: decimal(formData.price),
                       product: productId,
                       sku: formData.sku,
                       stocks: formData.stocks.map(stock => ({

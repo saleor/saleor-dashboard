@@ -250,7 +250,7 @@
     "context": "optional field",
     "string": "Заавал биш"
   },
-  "productVariantPriceOptionalPriceOverrideField": {
+  "productVariantPriceOptionalPriceField": {
     "context": "optional field",
     "string": "Заавал биш"
   },
@@ -292,7 +292,7 @@
   },
   "siteSettingsMailingHelperText": {
     "context": "helper text",
-    "string": "Mailing Configuration"
+    "string": "Имэйлийн тохиргоо"
   },
   "src_dot_accept": {
     "context": "button",
@@ -369,11 +369,11 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_filterableInDashboard": {
     "context": "use attribute in filtering",
-    "string": "Filterable in Dashboard"
+    "string": "Dashboard дээрээс шүүх боломжтой"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_filterableInStorefront": {
     "context": "use attribute in filtering",
-    "string": "Filterable in Storefront"
+    "string": "Storefront дээрээс шүүх боломжтой"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_isVariantOnly": {
     "context": "attribute can be used only in variants",
@@ -1106,7 +1106,7 @@
     "string": "Хайлтыг хадгалах"
   },
   "src_dot_components_dot_FilterCard_dot_996289613": {
-    "string": "Filters"
+    "string": "Шүүлтүүр"
   },
   "src_dot_components_dot_Filter_dot_2332404293": {
     "context": "search",
@@ -1129,11 +1129,11 @@
     "string": "хооронд"
   },
   "src_dot_components_dot_Filter_dot_996289613": {
-    "string": "Filters"
+    "string": "Шүүлтүүр"
   },
   "src_dot_components_dot_ImageUpload_dot_1731007575": {
     "context": "image upload",
-    "string": "Drop here to upload"
+    "string": "Энд файлаа хуулна уу"
   },
   "src_dot_components_dot_LanguageSwitch_dot_4150219184": {
     "context": "button",
@@ -1609,7 +1609,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerOrders_dot_2889196282": {
     "context": "number of order",
-    "string": "No. of Order"
+    "string": "Захиалгын дугаар"
   },
   "src_dot_customers_dot_components_dot_CustomerOrders_dot_3029139173": {
     "context": "button",
@@ -1674,6 +1674,10 @@
   "src_dot_delete": {
     "context": "button",
     "string": "Устгах"
+  },
+  "src_dot_demo": {
+    "context": "notification message after log in",
+    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
   },
   "src_dot_description": {
     "string": "Тайлбар"
@@ -1912,11 +1916,11 @@
     "string": "Код үүсгэх"
   },
   "src_dot_discounts_dot_components_dot_VoucherLimits_dot_2215544659": {
-    "string": "Limit number of times this discount can be used in total"
+    "string": "Нийт ашиглах боломжтой тоо"
   },
   "src_dot_discounts_dot_components_dot_VoucherLimits_dot_3459612469": {
     "context": "limit voucher",
-    "string": "Limit to one use per customer"
+    "string": "1 хэрэглэгчийн ашиглах хязгаар"
   },
   "src_dot_discounts_dot_components_dot_VoucherLimits_dot_3751756157": {
     "context": "voucher usage limit, header",
@@ -1924,7 +1928,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherLimits_dot_557552777": {
     "context": "voucher",
-    "string": "Limit of Uses"
+    "string": "Ашиглах хязгаар"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1112241061": {
     "context": "tab name",
@@ -2162,7 +2166,7 @@
   },
   "src_dot_done": {
     "context": "button",
-    "string": "Done"
+    "string": "Дууссан"
   },
   "src_dot_draft": {
     "context": "order status",
@@ -2170,10 +2174,10 @@
   },
   "src_dot_draftOrders": {
     "context": "draft orders section name",
-    "string": "Draft Orders"
+    "string": "Ноорог захиалгууд"
   },
   "src_dot_drafts": {
-    "string": "Drafts"
+    "string": "Нооргууд"
   },
   "src_dot_edit": {
     "context": "button",
@@ -2193,7 +2197,7 @@
   },
   "src_dot_fulfilled": {
     "context": "order status",
-    "string": "Fulfilled"
+    "string": "Биелүүлсэн"
   },
   "src_dot_generalInformations": {
     "string": "Ерөнхий мэдээлэл"
@@ -2357,7 +2361,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_1161061962": {
     "context": "dialog header",
-    "string": "Finalize Draft Order"
+    "string": "Ноорог захиалгыг дуусгах"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_1297434244": {
     "string": "No user information"
@@ -2370,7 +2374,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2725265632": {
     "context": "button",
-    "string": "Finalize"
+    "string": "Дуусгах"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_2824936338": {
     "string": "Shipping method provided, but no product requires it"
@@ -2383,7 +2387,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_678764806": {
     "context": "button",
-    "string": "Finalize anyway"
+    "string": "Дуусгах"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_2826235371": {
     "context": "button",
@@ -2408,7 +2412,7 @@
     "string": "Биелэгдээхгүй захиалгууд олдсонгүй"
   },
   "src_dot_orders_dot_components_dot_OrderDraftList_dot_2889196282": {
-    "string": "No. of Order"
+    "string": "Захиалгын дугаар"
   },
   "src_dot_orders_dot_components_dot_OrderDraftList_dot_3426593715": {
     "string": "Хэрэглэгч"
@@ -2427,7 +2431,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftPage_dot_2725265632": {
     "context": "button",
-    "string": "Finalize"
+    "string": "Дуусгах"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_1608534452": {
     "context": "page header",
@@ -2439,7 +2443,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_2095687440": {
     "context": "fulfill order, button",
-    "string": "Fulfill"
+    "string": "Биелүүлэх"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_2588284040": {
     "context": "no variant stock in warehouse",
@@ -2526,11 +2530,15 @@
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_3494686506": {
     "context": "section header",
-    "string": "Fulfilled ({quantity})"
+    "string": "Биелүүлсэн ({quantity})"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_4039425374": {
     "context": "cancelled fulfillment, section header",
     "string": "Cancelled ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
     "context": "button",
@@ -2550,7 +2558,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1521936480": {
     "context": "order history message",
-    "string": "Fulfilled {quantity} items"
+    "string": "Биелүүлэгдсэн {quantity} ширхэг захиалга байна"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1527620381": {
     "context": "order history message",
@@ -2562,7 +2570,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1867847329": {
     "context": "order history message",
-    "string": "Links to the order's digital goods were sent"
+    "string": "Дижитал бүтээгдэхүүнийг ашиглах заавар хэрэглэгч рүү илгээгдсэн"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_1964864749": {
     "context": "order history message",
@@ -2598,11 +2606,11 @@
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3081292385": {
     "context": "order history message",
-    "string": "Fulfillment confirmation was sent to customer"
+    "string": "Захиалга баталгаажсан тухай хэрэглэгчид мэдэгдсэн"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3095247195": {
     "context": "order history message",
-    "string": "Draft order was created"
+    "string": "Ноорог захиалга амжилттай үүсгэгдлээ"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3328124376": {
     "context": "order history message",
@@ -2667,14 +2675,14 @@
     "string": "Үүсгэгдлээ"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
-    "string": "Fulfillment status"
+    "string": "Төлөв"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_2743232155": {
     "context": "payment status",
     "string": "Төлбөр"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_2889196282": {
-    "string": "No. of Order"
+    "string": "Захиалгын дугаар"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_3426593715": {
     "context": "e-mail or full name",
@@ -2749,6 +2757,10 @@
     "context": "order payment",
     "string": "Үлдэгдэл"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
+    "context": "order discount",
+    "string": "Хямдрал"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
     "context": "order payment",
     "string": "Preauthorized amount"
@@ -2768,16 +2780,16 @@
     "context": "order total price",
     "string": "Нийт"
   },
-  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_1542417144": {
-    "context": "dialog header",
-    "string": "Бүтээгдэхүүн үүсгэх"
-  },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
     "string": "SKU {sku}"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2336947364": {
     "string": "Search by product name, attribute, product type etc..."
+  },
+  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2775402904": {
+    "context": "dialog header",
+    "string": "Add Product"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2850255786": {
     "string": "Бүтээгдэхүүнүүдээс хайх"
@@ -2799,7 +2811,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2095687440": {
     "context": "button",
-    "string": "Fulfill"
+    "string": "Биелүүлэх"
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2796503714": {
     "context": "ordered products",
@@ -2809,6 +2821,10 @@
     "context": "section header",
     "string": "Unfulfilled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
+  },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
     "context": "order line total price",
     "string": "Нийт"
@@ -2817,13 +2833,13 @@
     "string": "Payment successfully captured"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1435191432": {
-    "string": "Draft order successfully finalized"
+    "string": "Ноорог захиалгыг амжилттай дуусгалаа"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1468420349": {
     "string": "Order line deleted"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1475565380": {
-    "string": "Fulfillment successfully updated"
+    "string": "Амжилттай шинэчлэгдлээ"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1632861387": {
     "string": "Order line updated"
@@ -2838,7 +2854,7 @@
     "string": "Захиалга амжилттай цуцлагдлаа"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3178394068": {
-    "string": "Note successfully added"
+    "string": "Амжилттай нэмэгдлээ"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3280942553": {
     "string": "Order payment successfully voided"
@@ -2861,7 +2877,7 @@
     "string": "Draft Order #{orderNumber}"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
-    "string": "Fulfillment successfully cancelled"
+    "string": "Амжилттай цуцлагдаа"
   },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1161115149": {
     "context": "dialog header",
@@ -3621,16 +3637,13 @@
     "context": "header",
     "string": "Тоо хэмжээ"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3143542809": {
-    "string": "This product doesn't have any stock. You can add it <l>here</l>."
-  },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3482985373": {
-    "context": "button",
-    "string": "Edit Warehouses"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3633706025": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
+    "context": "button",
+    "string": "Assign Warehouse"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
@@ -3858,13 +3871,6 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_998917294": {
     "context": "product variant name",
     "string": "Variant"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_3482985373": {
-    "context": "dialog header",
-    "string": "Edit Warehouses"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_4112406382": {
-    "string": "Select warehouses that stock selected product"
   },
   "src_dot_products_dot_views_dot_1542417144": {
     "context": "window title",
@@ -4146,6 +4152,9 @@
   "src_dot_services_dot_views_dot_ServiceCreate_dot_3167211165": {
     "context": "window title",
     "string": "Create Service Account"
+  },
+  "src_dot_sessionExpired": {
+    "string": "Your session has expired. Please log in again to continue."
   },
   "src_dot_shipping": {
     "context": "shipping section name",
@@ -4465,7 +4474,7 @@
     "string": "No keys"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_1124962330": {
-    "string": "Mailing email address"
+    "string": "Имэйл хаяг"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_1672275992": {
     "context": "email sender",
@@ -4473,7 +4482,7 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_280712237": {
     "context": "section header",
-    "string": "Mailing Configuration"
+    "string": "Имэйлийн тохиргоо"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_297689661": {
     "string": "Configurate your email address from which all automatic emails will be sent to your customers."
@@ -4488,7 +4497,7 @@
     "string": "Веб Хаяг"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_70179174": {
-    "string": "Mailing email sender"
+    "string": "Илгээгч"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_1004240342": {
     "string": "This adress will be used to generate invoices and calculate shipping rates."
@@ -4506,7 +4515,7 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_280712237": {
     "context": "section header",
-    "string": "Mailing Configuration"
+    "string": "Имэйлийн тохиргоо"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_3657173399": {
     "string": "Таны энд оруулсан имэйл хаягийг таны харилцагчдын холбоо барих хаяг болгон ашиглах болно."
@@ -4830,7 +4839,7 @@
   },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_363646127": {
     "context": "button",
-    "string": "Discard"
+    "string": "Болих"
   },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_3793796047": {
     "string": "No translation yet"

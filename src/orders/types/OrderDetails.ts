@@ -282,7 +282,7 @@ export interface OrderDetails_shop_countries {
 
 export interface OrderDetails_shop {
   __typename: "Shop";
-  countries: (OrderDetails_shop_countries | null)[];
+  countries: OrderDetails_shop_countries[];
   defaultWeightUnit: WeightUnitsEnum | null;
 }
 

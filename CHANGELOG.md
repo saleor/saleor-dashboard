@@ -5,6 +5,7 @@ All notable, unreleased changes to this project will be documented in this file.
 ## [Unreleased]
 
 - Add sku column to fulfillment cards - #538 by @dominik-zeglen
+- Migrate product base price to variant prices - #555 by @orzechdev
 
 ## 2.10.0
 

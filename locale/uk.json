@@ -1,47 +1,47 @@
 {
   "OrderCancelDialogHeader": {
     "context": "dialog header",
-    "string": "Відмінити замовлення"
+    "string": "Скасувати замовлення"
   },
   "configurationMenuAttributes": {
-    "string": "Determine attributes used to create product types"
+    "string": "Визначте атрибути, які використовуються для створення типів товарів"
   },
   "configurationMenuNavigation": {
-    "string": "Define how users can navigate through your store"
+    "string": "Визначте, які користувачі можуть переміщатися по вашому магазину"
   },
   "configurationMenuPages": {
-    "string": "Manage and add additional pages"
+    "string": "Управління та додавання допоміжних сторінок"
   },
   "configurationMenuPermissionGroups": {
-    "string": "Manage your permission groups and their permissions"
+    "string": "Управління групами дозволів та їх дозволами"
   },
   "configurationMenuProductTypes": {
-    "string": "Define types of products you sell"
+    "string": "Визначте типи товарів, які ви продаєте"
   },
   "configurationMenuShipping": {
-    "string": "Manage how you ship out orders"
+    "string": "Управління, як ви відправляєте замовлення"
   },
   "configurationMenuSiteSettings": {
-    "string": "View and update your site settings"
+    "string": "Перегляд та оновлення налаштувань вашого сайту"
   },
   "configurationMenuStaff": {
-    "string": "Manage your employees and their permissions"
+    "string": "Управління співробітниками та їх дозволами"
   },
   "configurationMenuTaxes": {
-    "string": "Manage how your store charges tax"
+    "string": "Управління, як ваш магазин стягує податок"
   },
   "configurationMenuWarehouses": {
-    "string": "Manage and update your warehouse information"
+    "string": "Управління та оновлення інформації про ваш склад"
   },
   "configurationPluginsPages": {
-    "string": "View and update your plugins and their settings."
+    "string": "Перегляд та оновлення плагінів та їх налаштувань"
   },
   "homeActivityCardHeader": {
     "context": "header",
     "string": "Активність"
   },
   "homeActivityCardNoActivities": {
-    "string": "No activities found"
+    "string": "Не знайдено діяльності"
   },
   "homeAnalyticsCardHeader": {
     "string": "Сьогодні"
@@ -52,13 +52,13 @@
   },
   "homeHeaderTextCaption": {
     "context": "subheader",
-    "string": "Here is some information we gathered about your store"
+    "string": "Ось деякі відомості, які ми зібрали про ваш магазин"
   },
   "homeNotificationTableNoOrders": {
-    "string": "No orders ready to fulfill"
+    "string": "Замовлення не готові до виконання"
   },
   "homeNotificationTableOrders": {
-    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}"
+    "string": "{amount, plural,one {Замовлення готове до виконання} few {{amount} Замовлення готові до виконання} many {{amount} Замовлень готові до виконання} other {{amount} Замовлення готові до виконання}}"
   },
   "homeNotificationTablePayments": {
     "string": "{amount, plural,one {One payment to capture} other {{amount} Payments to capture}}"
@@ -70,7 +70,7 @@
     "string": "No payments waiting for capture"
   },
   "homeNotificationsTableNoProducts": {
-    "string": "No products out of stock"
+    "string": "Немає товарів на складі"
   },
   "homeProductListCardOrders": {
     "context": "number of ordered products",
@@ -78,10 +78,10 @@
   },
   "homeProductsListCardHeader": {
     "context": "header",
-    "string": "Top Products"
+    "string": "Популярні товари"
   },
   "homeProductsListCardNoProducts": {
-    "string": "No products found"
+    "string": "Не знайдено жодного товару"
   },
   "homeScreenDisclaimer": {
     "context": "header",
@@ -99,17 +99,17 @@
   },
   "menuCreateDialogHeader": {
     "context": "dialog header",
-    "string": "Create Menu"
+    "string": "Створити меню"
   },
   "menuCreateDialogMenuTitleLabel": {
     "string": "Menu Title"
   },
   "menuDetailsDeleteMenuContent": {
-    "string": "Are you sure you want to delete menu {menuName}?"
+    "string": "Ви впевнені, що хочете видалити меню {menuName}?"
   },
   "menuDetailsDeleteMenuHeader": {
     "context": "dialog header",
-    "string": "Delete Menu"
+    "string": "Видалити меню"
   },
   "menuDetailsPageHelperText": {
     "string": "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
@@ -120,18 +120,18 @@
   },
   "menuItemDialogAddLink": {
     "context": "add link to navigation",
-    "string": "Link to: {url}"
+    "string": "Посилання до: {url}"
   },
   "menuItemDialogEditItem": {
     "context": "edit menu item, header",
-    "string": "Edit Item"
+    "string": "Редагувати елемент"
   },
   "menuItemDialogLinkLabel": {
     "context": "label",
     "string": "Посилання"
   },
   "menuItemDialogLinkPlaceholder": {
-    "string": "Start typing to begin search..."
+    "string": "Почніть вводити текст, щоб розпочати пошук..."
   },
   "menuItemDialogNameLabel": {
     "context": "menu item name",
@@ -139,34 +139,34 @@
   },
   "menuItemsAddItem": {
     "context": "add new menu item",
-    "string": "Create new item"
+    "string": "Створити новий елемент"
   },
   "menuItemsHeader": {
     "context": "header",
-    "string": "Menu Items"
+    "string": "Пункти меню"
   },
   "menuItemsPlaceholder": {
     "string": "Додати новий пункт меню, щоб розпочати роботу з меню"
   },
   "menuListCreatedMenu": {
-    "string": "Created menu"
+    "string": "Меню створено"
   },
   "menuListDeleteMenuContent": {
-    "string": "Are you sure you want to delete {menuName}?"
+    "string": "Ви впевнені, що хочете видалити {menuName}?"
   },
   "menuListDeleteMenuHeader": {
     "context": "dialog header",
-    "string": "Delete Menu"
+    "string": "Видалити меню"
   },
   "menuListDeleteMenusContent": {
     "string": "{counter,plural,one {Are you sure you want to delete this menu?} other {Are you sure you want to delete {displayQuantity} menus?}}"
   },
   "menuListDeleteMenusHeader": {
     "context": "dialog header",
-    "string": "Delete Menus"
+    "string": "Видалити меню"
   },
   "menuListDeletedMenu": {
-    "string": "Deleted menu"
+    "string": "Видалити меню"
   },
   "menuListItems": {
     "context": "number of menu items",
@@ -180,7 +180,7 @@
   },
   "menuListPageAddMenu": {
     "context": "button",
-    "string": "Create Menu"
+    "string": "Створити меню"
   },
   "menuPropertiesMenuTitle": {
     "string": "Menu Title"
@@ -199,11 +199,11 @@
   },
   "orderPaymentShippingDoesNotApply": {
     "context": "order does not require shipping",
-    "string": "does not apply"
+    "string": "не застосовується"
   },
   "orderPaymentVATDoesNotApply": {
     "context": "vat not included in order price",
-    "string": "does not apply"
+    "string": "не застосовується"
   },
   "productStatusLabel": {
     "context": "product",
@@ -215,18 +215,18 @@
   },
   "productTypeCreateHeader": {
     "context": "window title",
-    "string": "Create Product Type"
+    "string": "Створіть тип товару"
   },
   "productTypeCreatePageHeader": {
     "context": "header",
-    "string": "Create Product Type"
+    "string": "Створіть тип товару"
   },
   "productTypeTaxesHeader": {
     "context": "section header",
-    "string": "Taxes"
+    "string": "Податки"
   },
   "productTypeTaxesInputLabel": {
-    "string": "Taxes"
+    "string": "Податки"
   },
   "productVariantCreatePricesPriceInputLabel": {
     "string": "Ціна"
@@ -244,23 +244,23 @@
   },
   "productVariantCreatorWarehouseSectionHeader": {
     "context": "header",
-    "string": "Warehouses"
+    "string": "Склади"
   },
   "productVariantPriceOptionalCostPriceField": {
     "context": "optional field",
     "string": "Optional"
   },
-  "productVariantPriceOptionalPriceOverrideField": {
+  "productVariantPriceOptionalPriceField": {
     "context": "optional field",
     "string": "Optional"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",
-    "string": "Categories ({quantity})"
+    "string": "Категорії ({quantity})"
   },
   "saleDetailsPageCollectionsQuantity": {
     "context": "number of collections",
-    "string": "Collections ({quantity})"
+    "string": "Колекції ({quantity})"
   },
   "saleDetailsPageProductsQuantity": {
     "context": "number of products",
@@ -268,15 +268,15 @@
   },
   "saleDetailsUnassignCategory": {
     "context": "unassign category from sale, button",
-    "string": "Unassign"
+    "string": "Скасувати"
   },
   "saleDetailsUnassignCollection": {
     "context": "unassign collection from sale, button",
-    "string": "Unassign"
+    "string": "Скасувати"
   },
   "saleDetailsUnassignProduct": {
     "context": "unassign product from sale, button",
-    "string": "Unassign"
+    "string": "Скасувати"
   },
   "shippingZoneDetailsDialogsDeleteShippingMethod": {
     "context": "delete shipping method",
@@ -314,7 +314,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeBulkDeleteDialog_dot_1655187315": {
     "context": "dialog title",
-    "string": "Delete attributes"
+    "string": "Видалити атрибути"
   },
   "src_dot_attributes_dot_components_dot_AttributeDeleteDialog_dot_1889602489": {
     "context": "dialog title",
@@ -322,7 +322,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeDeleteDialog_dot_3738429348": {
     "context": "dialog content",
-    "string": "Are you sure you want to delete {attributeName}?"
+    "string": "Ви впевнені, що хочете видалити {attributeName}?"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1005562666": {
     "context": "attribute's editor component",
@@ -334,7 +334,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2592224946": {
     "context": "check to require attribute to have value",
-    "string": "Value Required"
+    "string": "Необхідне значення"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3334509011": {
     "context": "product attribute type",
@@ -342,7 +342,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3605174225": {
     "context": "attribute's slug short code label",
-    "string": "Attribute Code"
+    "string": "Код атрибуту"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_4107478955": {
     "context": "attribute slug input field helper text",
@@ -350,7 +350,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_691600601": {
     "context": "attribute's label",
-    "string": "Default Label"
+    "string": "Мітка за замовчуванням"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_2417065806": {
     "context": "tab name",
@@ -358,7 +358,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_3824684885": {
     "context": "button",
-    "string": "Create attribute"
+    "string": "Створити атрибут"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_3916653510": {
     "string": "Search Attribute"
@@ -377,45 +377,45 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_isVariantOnly": {
     "context": "attribute can be used only in variants",
-    "string": "Variant Only"
+    "string": "Тільки варіант"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_valueRequired": {
     "context": "attribute value is required",
-    "string": "Value Required"
+    "string": "Необхідне значення"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_visibleInStorefront": {
     "context": "attribute",
-    "string": "Visible on Product Page in Storefront"
+    "string": "Відомий на сторінці продукту у вітрині"
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_1192828581": {
     "string": "No attributes found"
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_2186555805": {
     "context": "attribute can be searched in storefront",
-    "string": "Use in faceted search"
+    "string": "Використовувати при багатофункціональному пошуку"
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_2235596452": {
     "context": "attribute can be searched in dashboard",
     "string": "Searchable"
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_3605174225": {
-    "string": "Attribute Code"
+    "string": "Код атрибуту"
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_643174786": {
     "context": "attribute is visible",
-    "string": "Visible"
+    "string": "Видимий"
   },
   "src_dot_attributes_dot_components_dot_AttributeList_dot_691600601": {
     "context": "attribute's label'",
-    "string": "Default Label"
+    "string": "Мітка за замовчуванням"
   },
   "src_dot_attributes_dot_components_dot_AttributePage_dot_2855501559": {
     "context": "page title",
-    "string": "Create New Attribute"
+    "string": "Створити новий атрибут"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_1318123158": {
     "context": "attribute is filterable in storefront",
-    "string": "Use in Faceted Navigation"
+    "string": "Використовувати в багатоаспектній навігації"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_1877630205": {
     "context": "attribute properties regarding storefront",
@@ -423,7 +423,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_26409543": {
     "context": "attribute properties regarding dashboard",
-    "string": "Dashboard Properties"
+    "string": "Властивості інформаційної панелі"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3590282519": {
     "context": "attribute position in storefront filters",
@@ -431,7 +431,7 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_3876764312": {
     "context": "attribute",
-    "string": "Visible on Product Page in Storefront"
+    "string": "Відомий на сторінці продукту у вітрині"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_4048785456": {
     "string": "If enabled this attribute can be used as a column in product table."
@@ -442,21 +442,21 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_714335445": {
     "context": "use attribute in filtering",
-    "string": "Use in Filtering"
+    "string": "Використання у фільтруванні"
   },
   "src_dot_attributes_dot_components_dot_AttributeProperties_dot_787251583": {
     "string": "If enabled, you’ll be able to use this attribute to filter products in product list."
   },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_1326420604": {
     "context": "delete attribute value",
-    "string": "Are you sure you want to delete \"{name}\" value?"
+    "string": "Ви впевнені, що хочете видалити \"{name}\" значення?"
   },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_203246037": {
     "context": "dialog title",
-    "string": "Delete attribute value"
+    "string": "Видалити значення атрибута"
   },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_4031078167": {
-    "string": "Are you sure you want to delete \"{name}\" value? If you delete it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
+    "string": "Ви впевнені, що хочете видалити \"{name}\" значення? Якщо ви видалите його, ви не зможете призначити його жодному з продуктів з \"{attributeName}\" властивістю."
   },
   "src_dot_attributes_dot_components_dot_AttributeValueEditDialog_dot_1395607402": {
     "context": "edit attribute value",
@@ -472,11 +472,11 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeValues_dot_1397696159": {
     "context": "attribute values list: name column header",
-    "string": "Default Store View"
+    "string": "Перегляд магазину за замовчуванням"
   },
   "src_dot_attributes_dot_components_dot_AttributeValues_dot_1565474525": {
     "context": "attribute values list: slug column header",
-    "string": "Admin"
+    "string": "Адміністратор"
   },
   "src_dot_attributes_dot_components_dot_AttributeValues_dot_2054206599": {
     "context": "No attribute values found",
@@ -484,21 +484,21 @@
   },
   "src_dot_attributes_dot_components_dot_AttributeValues_dot_224159874": {
     "context": "section header",
-    "string": "Attribute Values"
+    "string": "Значення атрибуту"
   },
   "src_dot_attributes_dot_components_dot_AttributeValues_dot_351422234": {
     "context": "assign attribute value button",
-    "string": "Assign value"
+    "string": "Призначити значення"
   },
   "src_dot_attributes_dot_views_dot_AttributeCreate_dot_11941964": {
     "string": "Successfully created attribute"
   },
   "src_dot_attributes_dot_views_dot_AttributeDetails_dot_423042761": {
     "context": "attribute value deleted",
-    "string": "Value deleted"
+    "string": "Значення видалено"
   },
   "src_dot_attributes_dot_views_dot_AttributeDetails_dot_499456739": {
-    "string": "Attribute deleted"
+    "string": "Атрибут видалено"
   },
   "src_dot_attributes_dot_views_dot_AttributeDetails_dot_634268988": {
     "context": "added new attribute value",
@@ -506,7 +506,7 @@
   },
   "src_dot_attributes_dot_views_dot_AttributeList_dot_3218248395": {
     "context": "deleted multiple attributes",
-    "string": "Attributes successfully delete"
+    "string": "Атрибути успішно видаляються"
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_109182747": {
     "context": "button",
@@ -533,7 +533,7 @@
     "string": "Set new password"
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_2799926859": {
-    "string": "Confirm Password"
+    "string": "Підтвердіть пароль"
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_4253911811": {
     "string": "Passwords do not match"
@@ -547,7 +547,7 @@
   },
   "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_2245157344": {
     "context": "button",
-    "string": "Back to login"
+    "string": "Повернутися до авторизації"
   },
   "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_4066297200": {
     "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
@@ -556,11 +556,11 @@
     "string": "Provided email address does not exist in our database."
   },
   "src_dot_availability": {
-    "string": "Availability"
+    "string": "Доступність"
   },
   "src_dot_back": {
     "context": "button",
-    "string": "Back"
+    "string": "Назад"
   },
   "src_dot_cancel": {
     "context": "button",
@@ -579,7 +579,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryBackground_dot_2224943474": {
     "context": "section header",
-    "string": "Background Image (optional)"
+    "string": "Фонове зображення (необов’язково)"
   },
   "src_dot_categories_dot_components_dot_CategoryBackground_dot_3289097895": {
     "context": "field is optional",
@@ -587,7 +587,7 @@
   },
   "src_dot_categories_dot_components_dot_CategoryCreatePage_dot_236319840": {
     "context": "page header",
-    "string": "Create New Category"
+    "string": "Створити нову категорію"
   },
   "src_dot_categories_dot_components_dot_CategoryCreatePage_dot_2563994280": {
     "string": "Додати заголовок та опис для пошукової системи, щоб полегшити пошук цієї категорії"
@@ -598,17 +598,17 @@
   },
   "src_dot_categories_dot_components_dot_CategoryDeleteDialog_dot_847492725": {
     "context": "delete category",
-    "string": "Are you sure you want to delete {categoryName}?"
+    "string": "Ви впевнені, що хочете видалити {categoryName}?"
   },
   "src_dot_categories_dot_components_dot_CategoryDetailsForm_dot_1214235329": {
-    "string": "Category Name"
+    "string": "Назва категорії"
   },
   "src_dot_categories_dot_components_dot_CategoryDetailsForm_dot_4037703468": {
-    "string": "Category Description"
+    "string": "Опис категорії"
   },
   "src_dot_categories_dot_components_dot_CategoryListPage_dot_1140231710": {
     "context": "button",
-    "string": "Create category"
+    "string": "Створити категорію"
   },
   "src_dot_categories_dot_components_dot_CategoryListPage_dot_3841025483": {
     "string": "Search Category"
@@ -618,7 +618,7 @@
     "string": "Всі категорії"
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_1214235329": {
-    "string": "Category Name"
+    "string": "Назва категорії"
   },
   "src_dot_categories_dot_components_dot_CategoryList_dot_2054128296": {
     "string": "No categories found"
@@ -639,11 +639,11 @@
     "string": "Ціна"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_1657559629": {
-    "string": "No products found"
+    "string": "Не знайдено жодного товару"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_2341910657": {
     "context": "product",
@@ -682,17 +682,17 @@
   },
   "src_dot_categories_dot_components_dot_CategoryUpdatePage_dot_770296100": {
     "context": "button",
-    "string": "Create subcategory"
+    "string": "Створити підкатегорію"
   },
   "src_dot_categories_dot_views_dot_1140231710": {
     "context": "window title",
-    "string": "Create category"
+    "string": "Створити категорію"
   },
   "src_dot_categories_dot_views_dot_1204353135": {
     "string": "{counter,plural,one {Are you sure you want to delete this product?} other {Are you sure you want to delete {displayQuantity} products?}}"
   },
   "src_dot_categories_dot_views_dot_1754466114": {
-    "string": "Category created"
+    "string": "Категорія створена"
   },
   "src_dot_categories_dot_views_dot_1823337870": {
     "string": "{counter,plural,one {Are you sure you want to delete this category?} other {Are you sure you want to delete {displayQuantity} categories?}}"
@@ -702,21 +702,21 @@
     "string": "Видалити категорію"
   },
   "src_dot_categories_dot_views_dot_2189424032": {
-    "string": "Category deleted"
+    "string": "Категорія видалена"
   },
   "src_dot_categories_dot_views_dot_2507763081": {
     "context": "dialog title",
-    "string": "Delete products"
+    "string": "Видалити товари"
   },
   "src_dot_categories_dot_views_dot_3488150607": {
     "string": "Remember this will also delete all products assigned to this category."
   },
   "src_dot_categories_dot_views_dot_712767046": {
     "context": "dialog title",
-    "string": "Delete categories"
+    "string": "Видалити категорії"
   },
   "src_dot_categories_dot_views_dot_847492725": {
-    "string": "Are you sure you want to delete {categoryName}?"
+    "string": "Ви впевнені, що хочете видалити {categoryName}?"
   },
   "src_dot_categories_dot_views_dot_CategoryList_dot_1823337870": {
     "string": "{counter,plural,one {Are you sure you want to delete this category?} other {Are you sure you want to delete {displayQuantity} categories?}}"
@@ -726,7 +726,7 @@
   },
   "src_dot_categories_dot_views_dot_CategoryList_dot_712767046": {
     "context": "dialog title",
-    "string": "Delete categories"
+    "string": "Видалити категорії"
   },
   "src_dot_clear": {
     "context": "button",
@@ -738,11 +738,11 @@
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_1815688500": {
     "context": "collection",
-    "string": "since {date}"
+    "string": "розміщено з {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_2001551496": {
     "context": "collection",
-    "string": "will be visible from {date}"
+    "string": "буде видно з {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionCreatePage_dot_946315389": {
     "string": "Додати заголовок та опис для пошукової системи, щоб полегшити пошук цієї колекції"
@@ -753,15 +753,15 @@
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_1815688500": {
     "context": "collection",
-    "string": "since {date}"
+    "string": "розміщено з {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2001551496": {
     "context": "collection",
-    "string": "will be visible from {date}"
+    "string": "буде видно з {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_2906897537": {
     "context": "switch button",
-    "string": "Feature on Homepage"
+    "string": "Функції на головній сторінці"
   },
   "src_dot_collections_dot_components_dot_CollectionDetailsPage_dot_946315389": {
     "string": "Додати заголовок та опис для пошукової системи, щоб полегшити пошук цієї колекції"
@@ -772,7 +772,7 @@
   },
   "src_dot_collections_dot_components_dot_CollectionImage_dot_2224943474": {
     "context": "section header",
-    "string": "Background Image (optional)"
+    "string": "Фонове зображення (необов’язково)"
   },
   "src_dot_collections_dot_components_dot_CollectionImage_dot_3289097895": {
     "context": "field is optional",
@@ -787,7 +787,7 @@
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_686910896": {
     "context": "button",
-    "string": "Create collection"
+    "string": "Створити колекцію"
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_hidden": {
     "context": "collection",
@@ -808,22 +808,22 @@
     "string": "No. of Products"
   },
   "src_dot_collections_dot_components_dot_CollectionList_dot_2759199473": {
-    "string": "Collection Name"
+    "string": "Назва колекції"
   },
   "src_dot_collections_dot_components_dot_CollectionList_dot_3326160357": {
     "context": "collection availability",
-    "string": "Availability"
+    "string": "Доступність"
   },
   "src_dot_collections_dot_components_dot_CollectionList_dot_3640454975": {
     "context": "collection is published",
     "string": "Опубліковано"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1657559629": {
-    "string": "No products found"
+    "string": "Не знайдено жодного товару"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_2341910657": {
     "context": "product is not published",
@@ -839,7 +839,7 @@
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_460524544": {
     "context": "button",
-    "string": "Assign product"
+    "string": "Призначити товар"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_636461959": {
     "context": "product name",
@@ -852,32 +852,32 @@
     "string": "Товар доданий до колекції"
   },
   "src_dot_collections_dot_views_dot_2402899582": {
-    "string": "Are you sure you want to delete collection's image?"
+    "string": "Ви впевнені, що хочете видалити зображення колекції?"
   },
   "src_dot_collections_dot_views_dot_3215481647": {
     "string": "{counter,plural,one {Are you sure you want to unassign this product?} other {Are you sure you want to unassign {displayQuantity} products?}}"
   },
   "src_dot_collections_dot_views_dot_3482612628": {
-    "string": "Deleted product from collection"
+    "string": "Видалений товар із колекції"
   },
   "src_dot_collections_dot_views_dot_3791354625": {
     "context": "dialog title",
     "string": "Unassign products from collection"
   },
   "src_dot_collections_dot_views_dot_523939418": {
-    "string": "Are you sure you want to delete {collectionName}?"
+    "string": "Ви впевнені, що хочете видалити {collectionName}?"
   },
   "src_dot_collections_dot_views_dot_686910896": {
     "context": "window title",
-    "string": "Create collection"
+    "string": "Створити колекцію"
   },
   "src_dot_collections_dot_views_dot_699514132": {
     "context": "dialog title",
-    "string": "Delete Collection"
+    "string": "Видалити колекцію"
   },
   "src_dot_collections_dot_views_dot_870815507": {
     "context": "unassign product from collection, button",
-    "string": "Unassign"
+    "string": "Скасувати"
   },
   "src_dot_collections_dot_views_dot_942133001": {
     "context": "dialog title",
@@ -899,7 +899,7 @@
   },
   "src_dot_collections_dot_views_dot_CollectionList_dot_2637364047": {
     "context": "dialog title",
-    "string": "Unpublish collections"
+    "string": "Скасувати публікацію колекцій"
   },
   "src_dot_collections_dot_views_dot_CollectionList_dot_2756013640": {
     "string": "{counter,plural,one {Are you sure you want to publish this collection?} other {Are you sure you want to publish {displayQuantity} collections?}}"
@@ -910,7 +910,7 @@
   },
   "src_dot_collections_dot_views_dot_CollectionList_dot_3817188998": {
     "context": "dialog title",
-    "string": "Delete collections"
+    "string": "Видалити колекції"
   },
   "src_dot_components_dot_AccountPermissionGroups_dot_2836633439": {
     "string": "Permission groups"
@@ -951,13 +951,13 @@
     "string": "місто"
   },
   "src_dot_components_dot_AddressEdit_dot_2965971965": {
-    "string": "ZIP / Postal code"
+    "string": "Поштовий індекс"
   },
   "src_dot_components_dot_AddressEdit_dot_3121963259": {
     "string": "Адреса 2"
   },
   "src_dot_components_dot_AddressEdit_dot_3570415321": {
-    "string": "Company"
+    "string": "Компанія"
   },
   "src_dot_components_dot_AddressEdit_dot_944851093": {
     "string": "Country area"
@@ -975,32 +975,32 @@
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_190977792": {
     "context": "dialog header",
-    "string": "Assign Categories"
+    "string": "Призначити категорії"
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_3690273268": {
     "string": "Search by category name, etc..."
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_3973677075": {
     "context": "button",
-    "string": "Assign categories"
+    "string": "Призначити категорії"
   },
   "src_dot_components_dot_AssignCollectionDialog_dot_1035511604": {
     "context": "button",
-    "string": "Assign collections"
+    "string": "Призначити колекції"
   },
   "src_dot_components_dot_AssignCollectionDialog_dot_2605414502": {
     "string": "Search by collection name, etc..."
   },
   "src_dot_components_dot_AssignCollectionDialog_dot_3992923611": {
     "context": "dialog header",
-    "string": "Assign Collection"
+    "string": "Призначити колекцю"
   },
   "src_dot_components_dot_AssignCollectionDialog_dot_4057224233": {
     "string": "Search Collection"
   },
   "src_dot_components_dot_AssignProductDialog_dot_2100305525": {
     "context": "button",
-    "string": "Assign products"
+    "string": "Призначити товари"
   },
   "src_dot_components_dot_AssignProductDialog_dot_2336947364": {
     "string": "Search by product name, attribute, product type etc..."
@@ -1010,7 +1010,7 @@
   },
   "src_dot_components_dot_AssignProductDialog_dot_649693468": {
     "context": "dialog header",
-    "string": "Assign Product"
+    "string": "Призначити товар"
   },
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "No results"
@@ -1025,7 +1025,7 @@
   },
   "src_dot_components_dot_ColumnPicker_dot_2715399461": {
     "context": "pick columns to display",
-    "string": "{numberOfSelected} columns selected out of {numberOfTotal}"
+    "string": "{numberOfSelected} стовпців обрано з {numberOfTotal}"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_1139500589": {
     "string": "Країна"
@@ -1040,13 +1040,13 @@
     "string": "місто"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_2965971965": {
-    "string": "ZIP / Postal code"
+    "string": "Поштовий індекс"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_3121963259": {
     "string": "Адреса 2"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_3570415321": {
-    "string": "Company"
+    "string": "Компанія"
   },
   "src_dot_components_dot_CompanyAddressInput_dot_944851093": {
     "string": "Country area"
@@ -1057,18 +1057,18 @@
   },
   "src_dot_components_dot_CountryList_dot_2460766407": {
     "context": "number of countries",
-    "string": "{number} Countries"
+    "string": "Країни {number}"
   },
   "src_dot_components_dot_CountryList_dot_2747492886": {
     "context": "button",
-    "string": "Assign countries"
+    "string": "Призначити країни"
   },
   "src_dot_components_dot_DeleteFilterTabDialog_dot_2173195312": {
     "context": "custom search delete, dialog header",
-    "string": "Delete Search"
+    "string": "Видалити пошук"
   },
   "src_dot_components_dot_DeleteFilterTabDialog_dot_71479100": {
-    "string": "Are you sure you want to delete {name} search tab?"
+    "string": "Ви впевнені, що хочете видалити {name} вкладку пошуку?"
   },
   "src_dot_components_dot_ErrorMessageCard_dot_2845142593": {
     "context": "header",
@@ -1076,7 +1076,7 @@
   },
   "src_dot_components_dot_ErrorPage_dot_1723676032": {
     "context": "button",
-    "string": "Back to home"
+    "string": "Повернутися на головну"
   },
   "src_dot_components_dot_ErrorPage_dot_2736139139": {
     "string": "Ooops!..."
@@ -1085,21 +1085,21 @@
     "string": "Помилка"
   },
   "src_dot_components_dot_ErrorPage_dot_3090161573": {
-    "string": "Don't worry, everything is gonna be fine"
+    "string": "Не хвилюйтесь, все буде добре"
   },
   "src_dot_components_dot_ErrorPage_dot_3182212440": {
-    "string": "We've encountered a problem..."
+    "string": "Ми зіткнулися з проблемою..."
   },
   "src_dot_components_dot_FileUpload_dot_3050254265": {
     "context": "upload file, button",
-    "string": "Upload"
+    "string": "Завантажити"
   },
   "src_dot_components_dot_FilterBar_dot_2173195312": {
     "context": "button",
-    "string": "Delete Search"
+    "string": "Видалити пошук"
   },
   "src_dot_components_dot_FilterBar_dot_2340527467": {
-    "string": "Custom Filter"
+    "string": "Спеціальний фільтр"
   },
   "src_dot_components_dot_FilterBar_dot_3268463180": {
     "context": "button",
@@ -1114,11 +1114,11 @@
   },
   "src_dot_components_dot_Filter_dot_2683154806": {
     "context": "is filter range or value",
-    "string": "equal to"
+    "string": "дорівнює"
   },
   "src_dot_components_dot_Filter_dot_2779594451": {
     "context": "filter range separator",
-    "string": "and"
+    "string": "та"
   },
   "src_dot_components_dot_Filter_dot_4190318230": {
     "context": "search results",
@@ -1126,7 +1126,7 @@
   },
   "src_dot_components_dot_Filter_dot_773313536": {
     "context": "is filter range or value",
-    "string": "between"
+    "string": "між"
   },
   "src_dot_components_dot_Filter_dot_996289613": {
     "string": "Фільтр"
@@ -1145,7 +1145,7 @@
   },
   "src_dot_components_dot_MoneyRange_dot_12301532": {
     "context": "money",
-    "string": "to {money}"
+    "string": "до {money}"
   },
   "src_dot_components_dot_MoneyRange_dot_1316359951": {
     "context": "money",
@@ -1153,7 +1153,7 @@
   },
   "src_dot_components_dot_MoneyRange_dot_3729849657": {
     "context": "money",
-    "string": "from {money}"
+    "string": "від {money}"
   },
   "src_dot_components_dot_MultiAutocompleteSelectField_dot_1477537381": {
     "context": "add custom select input option",
@@ -1171,7 +1171,7 @@
   },
   "src_dot_components_dot_Navigator_dot_1167695965": {
     "context": "navigator placeholder",
-    "string": "Type Command"
+    "string": "Введіть команду"
   },
   "src_dot_components_dot_Navigator_dot_1643417013": {
     "context": "navigator placeholder",
@@ -1183,7 +1183,7 @@
   },
   "src_dot_components_dot_Navigator_dot_2874620973": {
     "context": "navigator placeholder",
-    "string": "Type {key} to see available actions"
+    "string": "Введіть {key}, щоб переглянути доступні дії"
   },
   "src_dot_components_dot_Navigator_dot_2935523260": {
     "context": "navigator placeholder",
@@ -1221,19 +1221,19 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createCategory": {
     "context": "button",
-    "string": "Create Category"
+    "string": "Створити категорію"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createCollection": {
     "context": "button",
-    "string": "Create Collection"
+    "string": "Створити колекцію"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createCustomer": {
     "context": "button",
-    "string": "Create Customer"
+    "string": "Створити клієнта"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createOrder": {
     "context": "button",
-    "string": "Create Order"
+    "string": "Створити замовлення"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createPermissionGroup": {
     "context": "button",
@@ -1241,11 +1241,11 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createProduct": {
     "context": "button",
-    "string": "Create Product"
+    "string": "Створити товар"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createVoucher": {
     "context": "button",
-    "string": "Create Voucher"
+    "string": "Створити купон"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_customerWithName": {
     "string": "{firstName} {lastName}"
@@ -1272,7 +1272,7 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_helpMode": {
     "context": "navigator help mode description",
-    "string": "Display Help"
+    "string": "Показати довідку"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_helpOrdersMode": {
     "context": "navigator order mode description",
@@ -1317,7 +1317,7 @@
     "string": "Invalid content"
   },
   "src_dot_components_dot_RichTextEditor_dot_2925475978": {
-    "string": "URL Linked"
+    "string": "URL-адреса"
   },
   "src_dot_components_dot_RichTextEditor_dot_4035057905": {
     "string": "Image URL"
@@ -1335,10 +1335,10 @@
   },
   "src_dot_components_dot_SearchBar_dot_2173195312": {
     "context": "button",
-    "string": "Delete Search"
+    "string": "Видалити пошук"
   },
   "src_dot_components_dot_SearchBar_dot_2340527467": {
-    "string": "Custom Filter"
+    "string": "Спеціальний фільтр"
   },
   "src_dot_components_dot_SearchBar_dot_3268463180": {
     "context": "button",
@@ -1351,7 +1351,7 @@
     "string": "Search engine description"
   },
   "src_dot_components_dot_SeoForm_dot_2378618579": {
-    "string": "If empty, the preview shows what will be autogenerated."
+    "string": "Якщо порожньо, попередній перегляд покаже, що буде створено автоматично"
   },
   "src_dot_components_dot_SeoForm_dot_3198271020": {
     "context": "button",
@@ -1362,7 +1362,7 @@
   },
   "src_dot_components_dot_SeoForm_dot_3877274856": {
     "context": "character limit",
-    "string": "{numberOfCharacters} of {maxCharacters} characters"
+    "string": "{numberOfCharacters} з {maxCharacters} символів"
   },
   "src_dot_components_dot_SingleAutocompleteSelectField_dot_1477537381": {
     "context": "add custom select input option",
@@ -1389,7 +1389,7 @@
   },
   "src_dot_components_dot_VisibilityCard_dot_1459686496": {
     "context": "section header",
-    "string": "Visibility"
+    "string": "Видимість"
   },
   "src_dot_components_dot_VisibilityCard_dot_2060790769": {
     "context": "publish on date",
@@ -1399,14 +1399,14 @@
     "string": "Set publication date"
   },
   "src_dot_components_dot_VisibilityCard_dot_643174786": {
-    "string": "Visible"
+    "string": "Видимий"
   },
   "src_dot_components_dot_VisibilityCard_dot_77815154": {
     "string": "Hidden"
   },
   "src_dot_components_dot_WeightRange_dot_264731940": {
     "context": "weight",
-    "string": "to {value} {unit}"
+    "string": "до {value} {unit}"
   },
   "src_dot_components_dot_WeightRange_dot_2892071052": {
     "context": "weight",
@@ -1414,7 +1414,7 @@
   },
   "src_dot_components_dot_WeightRange_dot_4256193688": {
     "context": "weight",
-    "string": "from {value} {unit}"
+    "string": "від {value} {unit}"
   },
   "src_dot_components_dot_Weight_dot_2781622322": {
     "context": "weight",
@@ -1431,10 +1431,10 @@
     "string": "Shipping Settings"
   },
   "src_dot_configuration_dot_1639245766": {
-    "string": "View and update your webhook and their settings"
+    "string": "Перегляд та оновлення вебхуків та їх налаштувань"
   },
   "src_dot_configuration_dot_2326418019": {
-    "string": "Attributes and Product Typess"
+    "string": "Атрибути та типи продуктів"
   },
   "src_dot_configuration_dot_2387898569": {
     "string": "Manage external integrations accounts"
@@ -1447,7 +1447,7 @@
   },
   "src_dot_confirm": {
     "context": "button",
-    "string": "Confirm"
+    "string": "Підтвердіть"
   },
   "src_dot_create": {
     "context": "button",
@@ -1467,7 +1467,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_1090326769": {
     "context": "customer's address book, header",
-    "string": "{fullName}'s Address Book"
+    "string": "{fullName} Адресна книга"
   },
   "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_1428369222": {
     "string": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
@@ -1481,13 +1481,13 @@
   },
   "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_489918044": {
     "context": "customer details, header",
-    "string": "{fullName} Details"
+    "string": "{fullName} Деталі"
   },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_1224809208": {
-    "string": "Default Address"
+    "string": "Адреса за замовчуванням"
   },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_1578192486": {
-    "string": "Default Billing Address"
+    "string": "Платіжна адреса за замовчуванням"
   },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_2131178753": {
     "context": "button",
@@ -1498,7 +1498,7 @@
     "string": "Set as default billing address"
   },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_4109348993": {
-    "string": "Default Shipping Address"
+    "string": "Адреса доставки за замовчуванням"
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_1967111456": {
     "context": "header",
@@ -1513,11 +1513,11 @@
     "string": "Адреса"
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_3870425261": {
-    "string": "This customer has no addresses yet"
+    "string": "Цей клієнт ще не має адреси"
   },
   "src_dot_customers_dot_components_dot_CustomerAddresses_dot_4282475982": {
     "context": "subsection header",
-    "string": "Billing Address"
+    "string": "Адреса виставлення рахунку"
   },
   "src_dot_customers_dot_components_dot_CustomerCreateAddress_dot_1751533141": {
     "context": "page header",
@@ -1528,7 +1528,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerCreateDetails_dot_3063084773": {
     "context": "header",
-    "string": "Customer Overview"
+    "string": "Огляд клієнта"
   },
   "src_dot_customers_dot_components_dot_CustomerCreateNote_dot_1520756907": {
     "context": "notes about customer header",
@@ -1543,15 +1543,15 @@
   },
   "src_dot_customers_dot_components_dot_CustomerCreatePage_dot_4025686004": {
     "context": "page header",
-    "string": "Create Customer"
+    "string": "Створити клієнта"
   },
   "src_dot_customers_dot_components_dot_CustomerDetails_dot_2968565128": {
     "context": "check to mark this account as active",
-    "string": "User account active"
+    "string": "Обліковий запис користувача активний"
   },
   "src_dot_customers_dot_components_dot_CustomerDetails_dot_3298169382": {
     "context": "section subheader",
-    "string": "Active member since {date}"
+    "string": "Активний учасник з {date}"
   },
   "src_dot_customers_dot_components_dot_CustomerDetails_dot_577013340": {
     "context": "note about customer",
@@ -1563,14 +1563,14 @@
   },
   "src_dot_customers_dot_components_dot_CustomerInfo_dot_778526801": {
     "context": "customer contact section, header",
-    "string": "Contact Informations"
+    "string": "Контактна інформація"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_1643417013": {
     "string": "Search Customer"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_2859116187": {
     "context": "button",
-    "string": "Create customer"
+    "string": "Створити клієнта"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_477293306": {
     "context": "tab name",
@@ -1594,10 +1594,10 @@
     "string": "No customers found"
   },
   "src_dot_customers_dot_components_dot_CustomerList_dot_2339105195": {
-    "string": "Customer Email"
+    "string": "Електронна пошта клієнта"
   },
   "src_dot_customers_dot_components_dot_CustomerList_dot_4154265139": {
-    "string": "Customer Name"
+    "string": "Ім'я клієнта"
   },
   "src_dot_customers_dot_components_dot_CustomerOrders_dot_1756106276": {
     "context": "order status",
@@ -1613,7 +1613,7 @@
   },
   "src_dot_customers_dot_components_dot_CustomerOrders_dot_3029139173": {
     "context": "button",
-    "string": "View all orders"
+    "string": "Переглянути всі замовлення"
   },
   "src_dot_customers_dot_components_dot_CustomerOrders_dot_4205493358": {
     "context": "order placement date",
@@ -1634,15 +1634,15 @@
   },
   "src_dot_customers_dot_components_dot_CustomerStats_dot_2543847016": {
     "context": "section header",
-    "string": "Customer History"
+    "string": "Історія клієнта"
   },
   "src_dot_customers_dot_views_dot_1927691511": {
     "context": "delete customer, dialog content",
-    "string": "Are you sure you want to delete {email}?"
+    "string": "Ви впевнені, що хочете видалити {email}?"
   },
   "src_dot_customers_dot_views_dot_1998583641": {
     "context": "dialog header",
-    "string": "Delete Customer"
+    "string": "Видалити клієнта"
   },
   "src_dot_customers_dot_views_dot_2657976015": {
     "context": "dialog header",
@@ -1650,23 +1650,23 @@
   },
   "src_dot_customers_dot_views_dot_2859116187": {
     "context": "window title",
-    "string": "Create customer"
+    "string": "Створити клієнта"
   },
   "src_dot_customers_dot_views_dot_3689332763": {
-    "string": "Are you sure you want to delete this address from users address book?"
+    "string": "Ви впевнені, що хочете видалити цю адресу з адресної книги користувачів?"
   },
   "src_dot_customers_dot_views_dot_3901579344": {
-    "string": "Customer Removed"
+    "string": "Клієнта видалено"
   },
   "src_dot_customers_dot_views_dot_3970234993": {
-    "string": "Customer created"
+    "string": "Клієнт створений"
   },
   "src_dot_customers_dot_views_dot_CustomerList_dot_1932444813": {
     "string": "{counter,plural,one {Are you sure you want to delete this customer?} other {Are you sure you want to delete {displayQuantity} customers?}}"
   },
   "src_dot_customers_dot_views_dot_CustomerList_dot_2136923553": {
     "context": "dialog header",
-    "string": "Delete Customers"
+    "string": "Видалити клієнтів"
   },
   "src_dot_dashboard": {
     "string": "Центр керування "
@@ -1675,6 +1675,10 @@
     "context": "button",
     "string": "Видалити"
   },
+  "src_dot_demo": {
+    "context": "notification message after log in",
+    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+  },
   "src_dot_description": {
     "string": "Опис"
   },
@@ -1682,7 +1686,7 @@
     "string": "Знижки "
   },
   "src_dot_discounts_dot_components_dot_DiscountCategories_dot_1567318211": {
-    "string": "Category name"
+    "string": "Назва категорії"
   },
   "src_dot_discounts_dot_components_dot_DiscountCategories_dot_1681512341": {
     "context": "section header",
@@ -1697,11 +1701,11 @@
   },
   "src_dot_discounts_dot_components_dot_DiscountCategories_dot_3973677075": {
     "context": "button",
-    "string": "Assign categories"
+    "string": "Призначити категорії"
   },
   "src_dot_discounts_dot_components_dot_DiscountCollections_dot_1035511604": {
     "context": "button",
-    "string": "Assign collections"
+    "string": "Призначити колекції"
   },
   "src_dot_discounts_dot_components_dot_DiscountCollections_dot_2137803833": {
     "string": "No collections found"
@@ -1711,7 +1715,7 @@
     "string": "Продукти"
   },
   "src_dot_discounts_dot_components_dot_DiscountCollections_dot_3011396316": {
-    "string": "Collection name"
+    "string": "Назва колекції"
   },
   "src_dot_discounts_dot_components_dot_DiscountCollections_dot_452750900": {
     "context": "section header",
@@ -1719,7 +1723,7 @@
   },
   "src_dot_discounts_dot_components_dot_DiscountCountrySelectDialog_dot_1585396479": {
     "context": "dialog header",
-    "string": "Assign Countries"
+    "string": "Призначити країни"
   },
   "src_dot_discounts_dot_components_dot_DiscountCountrySelectDialog_dot_2110418881": {
     "context": "search box placeholder",
@@ -1734,11 +1738,11 @@
   },
   "src_dot_discounts_dot_components_dot_DiscountCountrySelectDialog_dot_2747492886": {
     "context": "button",
-    "string": "Assign countries"
+    "string": "Призначити країни"
   },
   "src_dot_discounts_dot_components_dot_DiscountCountrySelectDialog_dot_2777439857": {
     "context": "country selection",
-    "string": "Countries A to Z"
+    "string": "Країни від А до Я"
   },
   "src_dot_discounts_dot_components_dot_DiscountDates_dot_1596226028": {
     "context": "voucher end date, switch button",
@@ -1749,11 +1753,11 @@
     "string": "Активні дати"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_1657559629": {
-    "string": "No products found"
+    "string": "Не знайдено жодного товару"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2100305525": {
     "context": "button",
-    "string": "Assign products"
+    "string": "Призначити товари"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2341910657": {
     "context": "product is not published",
@@ -1775,7 +1779,7 @@
   },
   "src_dot_discounts_dot_components_dot_SaleCreatePage_dot_3866518732": {
     "context": "page header",
-    "string": "Create Sale"
+    "string": "Створити розпродаж"
   },
   "src_dot_discounts_dot_components_dot_SaleInfo_dot_636461959": {
     "context": "sale name",
@@ -1786,7 +1790,7 @@
   },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_3866518732": {
     "context": "button",
-    "string": "Create Sale"
+    "string": "Створити розпродаж"
   },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_3907768880": {
     "context": "tab name",
@@ -1821,7 +1825,7 @@
     "string": "Статус"
   },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_type": {
-    "string": "Discount Type"
+    "string": "Тип знижки"
   },
   "src_dot_discounts_dot_components_dot_SaleList_dot_1148029984": {
     "context": "sale value",
@@ -1852,7 +1856,7 @@
   },
   "src_dot_discounts_dot_components_dot_SaleType_dot_3216816841": {
     "context": "percentage or fixed, header",
-    "string": "Discount Type"
+    "string": "Тип знижки"
   },
   "src_dot_discounts_dot_components_dot_SaleType_dot_3688224049": {
     "context": "discount type",
@@ -1868,11 +1872,11 @@
   },
   "src_dot_discounts_dot_components_dot_SaleValue_dot_1205967018": {
     "context": "sale discount",
-    "string": "Discount Value"
+    "string": "Значення знижки"
   },
   "src_dot_discounts_dot_components_dot_VoucherCreatePage_dot_1357216572": {
     "context": "page header",
-    "string": "Create Voucher"
+    "string": "Створити купон"
   },
   "src_dot_discounts_dot_components_dot_VoucherDates_dot_1596226028": {
     "context": "voucher end date, switch button",
@@ -1883,10 +1887,10 @@
     "string": "Активні дати"
   },
   "src_dot_discounts_dot_components_dot_VoucherDetailsPage_dot_2071139683": {
-    "string": "Voucher applies to all countries"
+    "string": "Купони поширюються на всі країни"
   },
   "src_dot_discounts_dot_components_dot_VoucherDetailsPage_dot_2102960822": {
-    "string": "Voucher is limited to these countries"
+    "string": "Купони обмежуються цими країнами"
   },
   "src_dot_discounts_dot_components_dot_VoucherDetailsPage_dot_3109712047": {
     "context": "voucher country range",
@@ -1894,18 +1898,18 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherDetailsPage_dot_346170541": {
     "context": "number of categories",
-    "string": "Categories ({quantity})"
+    "string": "Категорії ({quantity})"
   },
   "src_dot_discounts_dot_components_dot_VoucherDetailsPage_dot_3673147015": {
     "context": "number of collections",
-    "string": "Collections ({quantity})"
+    "string": "Колекції ({quantity})"
   },
   "src_dot_discounts_dot_components_dot_VoucherDetailsPage_dot_846927739": {
     "context": "number of products",
     "string": "Products ({quantity})"
   },
   "src_dot_discounts_dot_components_dot_VoucherInfo_dot_1262795626": {
-    "string": "Discount Code"
+    "string": "Код знижки"
   },
   "src_dot_discounts_dot_components_dot_VoucherInfo_dot_1944363009": {
     "context": "voucher code, button",
@@ -1920,7 +1924,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherLimits_dot_3751756157": {
     "context": "voucher usage limit, header",
-    "string": "Usage Limit"
+    "string": "Обмеження використання"
   },
   "src_dot_discounts_dot_components_dot_VoucherLimits_dot_557552777": {
     "context": "voucher",
@@ -1935,7 +1939,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_614836274": {
     "context": "button",
-    "string": "Create voucher"
+    "string": "Створити купон"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_active": {
     "context": "voucher status",
@@ -1967,10 +1971,10 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_timesUsed": {
     "context": "voucher",
-    "string": "Times used"
+    "string": "Використовувані часи"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_type": {
-    "string": "Discount Type"
+    "string": "Тип знижки"
   },
   "src_dot_discounts_dot_components_dot_VoucherList_dot_1148029984": {
     "context": "voucher value",
@@ -1986,7 +1990,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherList_dot_3917820600": {
     "context": "voucher uses",
-    "string": "Uses"
+    "string": "Використовується"
   },
   "src_dot_discounts_dot_components_dot_VoucherList_dot_47059407": {
     "context": "voucher is active from date",
@@ -2025,11 +2029,11 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherSummary_dot_2735425668": {
     "context": "voucher",
-    "string": "Applies to"
+    "string": "Відноситься до"
   },
   "src_dot_discounts_dot_components_dot_VoucherSummary_dot_3751756157": {
     "context": "voucher value requirement",
-    "string": "Usage Limit"
+    "string": "Обмеження використання"
   },
   "src_dot_discounts_dot_components_dot_VoucherSummary_dot_78726751": {
     "context": "voucher code",
@@ -2037,7 +2041,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherTypes_dot_3216816841": {
     "context": "header",
-    "string": "Discount Type"
+    "string": "Тип знижки"
   },
   "src_dot_discounts_dot_components_dot_VoucherTypes_dot_3289659291": {
     "context": "voucher discount type",
@@ -2056,14 +2060,14 @@
     "string": "Значення"
   },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_1205967018": {
-    "string": "Discount Value"
+    "string": "Значення знижки"
   },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_1492866942": {
     "context": "voucher application, switch button",
     "string": "Only once per order"
   },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_1960678372": {
-    "string": "Voucher Specific Information"
+    "string": "Конкретна інформація по купону"
   },
   "src_dot_discounts_dot_components_dot_VoucherValue_dot_4189095909": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
@@ -2081,7 +2085,7 @@
     "string": "Відправлення "
   },
   "src_dot_discounts_dot_views_dot_1162257691": {
-    "string": "Deleted voucher"
+    "string": "Видалений купон"
   },
   "src_dot_discounts_dot_views_dot_1402402714": {
     "context": "dialog header",
@@ -2089,7 +2093,7 @@
   },
   "src_dot_discounts_dot_views_dot_1457489953": {
     "context": "dialog content",
-    "string": "Are you sure you want to delete {saleName}?"
+    "string": "Ви впевнені, що хочете видалити {saleName}?"
   },
   "src_dot_discounts_dot_views_dot_1827854264": {
     "context": "dialog header",
@@ -2120,7 +2124,7 @@
   },
   "src_dot_discounts_dot_views_dot_3261917848": {
     "context": "dialog content",
-    "string": "Are you sure you want to delete {voucherCode}?"
+    "string": "Ви впевнені, що хочете видалити {voucherCode}?"
   },
   "src_dot_discounts_dot_views_dot_3395246518": {
     "context": "dialog header",
@@ -2131,7 +2135,7 @@
   },
   "src_dot_discounts_dot_views_dot_506030254": {
     "context": "dialog header",
-    "string": "Delete Sale"
+    "string": "Видалити розпродаж"
   },
   "src_dot_discounts_dot_views_dot_655651329": {
     "string": "Successfully created voucher"
@@ -2142,11 +2146,11 @@
   },
   "src_dot_discounts_dot_views_dot_895379508": {
     "context": "dialog header",
-    "string": "Delete Voucher"
+    "string": "Видалити купон"
   },
   "src_dot_discounts_dot_views_dot_SaleList_dot_2809303671": {
     "context": "dialog header",
-    "string": "Delete Sales"
+    "string": "Видалити розпродажі"
   },
   "src_dot_discounts_dot_views_dot_SaleList_dot_372098008": {
     "context": "dialog content",
@@ -2158,7 +2162,7 @@
   },
   "src_dot_discounts_dot_views_dot_VoucherList_dot_367317371": {
     "context": "dialog header",
-    "string": "Delete Vouchers"
+    "string": "Видалити купони"
   },
   "src_dot_done": {
     "context": "button",
@@ -2170,17 +2174,17 @@
   },
   "src_dot_draftOrders": {
     "context": "draft orders section name",
-    "string": "Draft Orders"
+    "string": "Чернетка замовлень"
   },
   "src_dot_drafts": {
-    "string": "Drafts"
+    "string": "Чернетки"
   },
   "src_dot_edit": {
     "context": "button",
     "string": "Редагувати"
   },
   "src_dot_email": {
-    "string": "E-mail Address"
+    "string": "Електронна адреса"
   },
   "src_dot_endDate": {
     "string": "End Date"
@@ -2200,7 +2204,7 @@
   },
   "src_dot_home": {
     "context": "home section name",
-    "string": "Дім "
+    "string": "Головна"
   },
   "src_dot_home_dot_components_dot_HomeActivityCard_dot_draft": {
     "string": "Order #{orderId} was placed from draft by {userEmail}"
@@ -2247,7 +2251,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderBulkCancelDialog_dot_1528036340": {
     "context": "dialog header",
-    "string": "Cancel Orders"
+    "string": "Скасувати замовлення"
   },
   "src_dot_orders_dot_components_dot_OrderBulkCancelDialog_dot_4224885638": {
     "string": "{counter,plural,one {Are you sure you want to cancel this order?} other {Are you sure you want to cancel {displayQuantity} orders?}}"
@@ -2271,14 +2275,14 @@
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_2312694610": {
     "context": "subheader",
-    "string": "Contact Information"
+    "string": "Контактна інформація"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_2433460203": {
     "string": "Search Customers"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_2672803871": {
     "context": "link",
-    "string": "View Profile"
+    "string": "Переглянути профіль"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_2758581442": {
     "string": "Shipping Address"
@@ -2292,10 +2296,10 @@
     "string": "Same as shipping address"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_4172383244": {
-    "string": "Anonymous user"
+    "string": "Анонімний користувач"
   },
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_4282475982": {
-    "string": "Billing Address"
+    "string": "Адреса виставлення рахунку"
   },
   "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_1854613983": {
     "context": "button",
@@ -2303,10 +2307,10 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftCancelDialog_dot_1961675716": {
     "context": "dialog header",
-    "string": "Delete Daft Order"
+    "string": "Видалити чернетку замовлення"
   },
   "src_dot_orders_dot_components_dot_OrderDraftCancelDialog_dot_66064347": {
-    "string": "Are you sure you want to delete draft #{orderNumber}?"
+    "string": "Ви впевнені, що хочете видалити чернетку #{orderNumber}?"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_1134347598": {
     "context": "price or ordered products",
@@ -2353,7 +2357,7 @@
     "string": "Додати товари"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_115822814": {
-    "string": "No billing address"
+    "string": "Платіжна адреса відсутня"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_1161061962": {
     "context": "dialog header",
@@ -2379,7 +2383,7 @@
     "string": "Some products require shipping, but no method provided"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_3358029330": {
-    "string": "Are you sure you want to finalize draft #{orderNumber}?"
+    "string": "Ви впевнені, що хочете завершити чернетку #{orderNumber}?"
   },
   "src_dot_orders_dot_components_dot_OrderDraftFinalizeDialog_dot_678764806": {
     "context": "button",
@@ -2387,7 +2391,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_2826235371": {
     "context": "button",
-    "string": "Create order"
+    "string": "Створити замовлення"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_551325728": {
     "context": "tab name",
@@ -2398,7 +2402,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_created": {
     "context": "draft order",
-    "string": "Created"
+    "string": "Створено"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_customer": {
     "context": "draft order",
@@ -2477,7 +2481,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentCancelDialog_dot_732594284": {
     "context": "dialog header",
-    "string": "Cancel Fulfillment"
+    "string": "Скасувати виконання"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_2796503714": {
     "context": "quantity of fulfilled products",
@@ -2522,7 +2526,7 @@
     "string": "Кількість"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_3254150098": {
-    "string": "Tracking Number: {trackingNumber}"
+    "string": "Номер відслідковування: {trackingNumber}"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_3494686506": {
     "context": "section header",
@@ -2532,9 +2536,13 @@
     "context": "cancelled fulfillment, section header",
     "string": "Cancelled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
     "context": "button",
-    "string": "Cancel Fulfillment"
+    "string": "Скасувати виконання"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_77179533": {
     "context": "fulfillment group",
@@ -2590,7 +2598,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2655541129": {
     "context": "order history message",
-    "string": "Order was fully paid"
+    "string": "Замовлення було повністю оплачено"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_2770854455": {
     "context": "order history message",
@@ -2602,7 +2610,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3095247195": {
     "context": "order history message",
-    "string": "Draft order was created"
+    "string": "Чернетку замовлення створено"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3328124376": {
     "context": "order history message",
@@ -2649,7 +2657,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_2826235371": {
     "context": "button",
-    "string": "Create order"
+    "string": "Створити замовлення"
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_355376157": {
     "string": "Search Orders..."
@@ -2664,7 +2672,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
-    "string": "Created"
+    "string": "Створено"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
     "string": "Fulfillment status"
@@ -2692,7 +2700,7 @@
     "string": "No orders found"
   },
   "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_2823153104": {
-    "string": "Are you sure you want to mark this order as paid?"
+    "string": "Ви впевнені, що хочете позначити це замовлення як оплачене?"
   },
   "src_dot_orders_dot_components_dot_OrderMarkAsPaidDialog_dot_4196844912": {
     "context": "dialog header",
@@ -2700,7 +2708,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_1466130374": {
     "context": "dialog header",
-    "string": "Capture Payment"
+    "string": "Зарахувати платіж"
   },
   "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_250371749": {
     "context": "dialog header",
@@ -2711,11 +2719,11 @@
     "string": "Обсяг"
   },
   "src_dot_orders_dot_components_dot_OrderPaymentVoidDialog_dot_2217048637": {
-    "string": "Are you sure you want to void this payment?"
+    "string": "Ви впевнені, що хочете відмінити цей платіж?"
   },
   "src_dot_orders_dot_components_dot_OrderPaymentVoidDialog_dot_3089049828": {
     "context": "dialog header",
-    "string": "Void Payment"
+    "string": "Відмінити платіж"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_1325966144": {
     "context": "order shipping method name",
@@ -2723,11 +2731,11 @@
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_1817306106": {
     "context": "vat included in order price",
-    "string": "VAT included"
+    "string": "ПДВ включено"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_2183023165": {
     "context": "ordered products",
-    "string": "{quantity} items"
+    "string": "{quantity} предметів"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_2320183694": {
     "context": "order payment",
@@ -2735,7 +2743,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_2444197639": {
     "context": "void payment, button",
-    "string": "Void"
+    "string": "Відмінити"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_2845258362": {
     "context": "button",
@@ -2749,12 +2757,16 @@
     "context": "order payment",
     "string": "Outstanding Balance"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
+    "context": "order discount",
+    "string": "Знижка "
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
     "context": "order payment",
     "string": "Попередньо авторизована оплата"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3955023266": {
-    "string": "Taxes"
+    "string": "Податки"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_4211710217": {
     "context": "capture payment, button",
@@ -2768,16 +2780,16 @@
     "context": "order total price",
     "string": "Разом"
   },
-  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_1542417144": {
-    "context": "dialog header",
-    "string": "Create Product"
-  },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
     "string": "SKU {sku}"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2336947364": {
     "string": "Search by product name, attribute, product type etc..."
+  },
+  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2775402904": {
+    "context": "dialog header",
+    "string": "Додати продукт"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2850255786": {
     "string": "Search Products"
@@ -2807,7 +2819,11 @@
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2886647373": {
     "context": "section header",
-    "string": "Unfulfilled ({quantity})"
+    "string": "Невиконано ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
     "context": "order line total price",
@@ -2865,10 +2881,10 @@
   },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1161115149": {
     "context": "dialog header",
-    "string": "Delete Order Drafts"
+    "string": "Видалити чернетки замовлень"
   },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1648805446": {
-    "string": "Deleted draft orders"
+    "string": "Видалити чернутки замовлень"
   },
   "src_dot_orders_dot_views_dot_OrderDraftList_dot_1738939038": {
     "string": "Order draft successfully created"
@@ -2898,18 +2914,18 @@
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1068617485": {
     "context": "page header",
-    "string": "Create Page"
+    "string": "Створити сторінку"
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1815688500": {
     "context": "page",
-    "string": "since {date}"
+    "string": "розміщено з {date}"
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_1996767833": {
     "string": "Додати заголовок та опис для пошукової системи, щоб полегшити пошук цієї сторінки"
   },
   "src_dot_pages_dot_components_dot_PageDetailsPage_dot_2001551496": {
     "context": "page",
-    "string": "will be visible from {date}"
+    "string": "буде видно з {date}"
   },
   "src_dot_pages_dot_components_dot_PageInfo_dot_1116746286": {
     "context": "page content",
@@ -2921,7 +2937,7 @@
   },
   "src_dot_pages_dot_components_dot_PageListPage_dot_3785394515": {
     "context": "button",
-    "string": "Create page"
+    "string": "Створити замовлення"
   },
   "src_dot_pages_dot_components_dot_PageList_dot_1124600214": {
     "context": "dialog header",
@@ -2929,14 +2945,14 @@
   },
   "src_dot_pages_dot_components_dot_PageList_dot_1459686496": {
     "context": "page status",
-    "string": "Visibility"
+    "string": "Видимість"
   },
   "src_dot_pages_dot_components_dot_PageList_dot_2489163252": {
     "string": "No pages found"
   },
   "src_dot_pages_dot_components_dot_PageList_dot_3478065224": {
     "context": "page internal name",
-    "string": "Slug"
+    "string": "Описова частина"
   },
   "src_dot_pages_dot_components_dot_PageList_dot_3640454975": {
     "context": "page status",
@@ -2951,25 +2967,25 @@
   },
   "src_dot_pages_dot_components_dot_PageSlug_dot_3478065224": {
     "context": "page internal name",
-    "string": "Slug"
+    "string": "Описова частина"
   },
   "src_dot_pages_dot_components_dot_PageSlug_dot_4210828158": {
     "string": "If empty, URL will be autogenerated from Page Name"
   },
   "src_dot_pages_dot_views_dot_1068617485": {
     "context": "header",
-    "string": "Create Page"
+    "string": "Створити сторінку"
   },
   "src_dot_pages_dot_views_dot_2680158037": {
     "string": "Successfully created new page"
   },
   "src_dot_pages_dot_views_dot_3246254285": {
     "context": "dialog header",
-    "string": "Delete Page"
+    "string": "Видалити замовлення"
   },
   "src_dot_pages_dot_views_dot_754348000": {
     "context": "delete page",
-    "string": "Are you sure you want to delete {title}?"
+    "string": "Ви впевнені, що хочете видалити {title}?"
   },
   "src_dot_pages_dot_views_dot_PageList_dot_1080715663": {
     "context": "notification",
@@ -2981,7 +2997,7 @@
   },
   "src_dot_pages_dot_views_dot_PageList_dot_158565417": {
     "context": "dialog header",
-    "string": "Unpublish Pages"
+    "string": "Скасувати публікацію торінки"
   },
   "src_dot_pages_dot_views_dot_PageList_dot_1640740095": {
     "context": "dialog content",
@@ -3009,7 +3025,7 @@
   },
   "src_dot_pages_dot_views_dot_PageList_dot_2782958373": {
     "context": "dialog header",
-    "string": "Delete Pages"
+    "string": "Видалити сторінки"
   },
   "src_dot_paid": {
     "context": "payment status",
@@ -3033,7 +3049,7 @@
   },
   "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1004218338": {
     "context": "staff member status",
-    "string": "Inactive"
+    "string": "Неактивний"
   },
   "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1731102929": {
     "context": "button",
@@ -3112,7 +3128,7 @@
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_1004218338": {
     "context": "staff member status",
-    "string": "Inactive"
+    "string": "Неактивний"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupMemberList_dot_136112637": {
     "context": "empty list message",
@@ -3157,14 +3173,14 @@
   },
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupCreate_dot_1140231710": {
     "context": "window title",
-    "string": "Create category"
+    "string": "Створити категорію"
   },
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupCreate_dot_3930588328": {
     "string": "Permission group created"
   },
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupDetails_dot_870815507": {
     "context": "button title",
-    "string": "Unassign"
+    "string": "Скасувати"
   },
   "src_dot_permissionGroups_dot_views_dot_PermissionGroupList_dot_92979760": {
     "string": "Permission Group Deleted"
@@ -3175,7 +3191,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginAuthorization_dot_768575093": {
     "context": "section header",
-    "string": "Authorization"
+    "string": "Авторизація"
   },
   "src_dot_plugins_dot_components_dot_PluginInfo_dot_1049131348": {
     "context": "plugin name",
@@ -3194,7 +3210,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_3032939398": {
     "context": "header",
-    "string": "Add Value to Authorization Field"
+    "string": "Додати значення в полі авторизації"
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_4269236107": {
     "context": "header",
@@ -3210,7 +3226,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3352026836": {
     "context": "header",
-    "string": "{pluginName} Details"
+    "string": "Деталі {pluginName}"
   },
   "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3425535100": {
     "context": "section header",
@@ -3227,7 +3243,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3523826683": {
     "context": "tab name",
-    "string": "All Plugins"
+    "string": "Всі плагіни"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_active": {
     "context": "plugin",
@@ -3235,7 +3251,7 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_deactivated": {
     "context": "plugin",
-    "string": "Inactive"
+    "string": "Неактивний"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_3247064221": {
     "context": "plugin status",
@@ -3254,7 +3270,7 @@
   },
   "src_dot_plugins_dot_views_dot_1096544448": {
     "context": "header",
-    "string": "Authorization Field Delete"
+    "string": "Видалити поле авторизації"
   },
   "src_dot_plugins_dot_views_dot_955370043": {
     "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
@@ -3265,11 +3281,11 @@
   },
   "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_2173976534": {
     "context": "button",
-    "string": "Assign attributes"
+    "string": "Призначити атрибути"
   },
   "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_3922579741": {
     "context": "dialog header",
-    "string": "Assign Attribute"
+    "string": "Призначити атрибут"
   },
   "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_4205644805": {
     "string": "No results found"
@@ -3281,7 +3297,7 @@
     "string": "Search Attributes"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributeEditDialog_dot_1228425832": {
-    "string": "Attribute name"
+    "string": "Назва атрибуту"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributeEditDialog_dot_335542212": {
     "string": "Значення атрибутів"
@@ -3291,21 +3307,21 @@
     "string": "Unassign Attribute From Product Type"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributeUnassignDialog_dot_722498450": {
-    "string": "Are you sure you want to unassign {attributeName} from {productTypeName}?"
+    "string": "Ви впевнені, що хочете скасувати призначення {attributeName} з {productTypeName}?"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_1192828581": {
     "string": "No attributes found"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_1228425832": {
-    "string": "Attribute name"
+    "string": "Назва атрибуту"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_1656462109": {
     "context": "button",
-    "string": "Assign attribute"
+    "string": "Призначити атрибут"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_3478065224": {
     "context": "attribute internal name",
-    "string": "Slug"
+    "string": "Описова частина"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_3559259966": {
     "context": "section header",
@@ -3313,7 +3329,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_888493112": {
     "context": "section header",
-    "string": "Variant Attributes"
+    "string": "Варіантні атрибутів"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeBulkAttributeUnassignDialog_dot_2646729060": {
     "context": "unassign multiple attributes from product type",
@@ -3329,7 +3345,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDeleteDialog_dot_924066985": {
     "context": "dialog header",
-    "string": "Delete Product Type"
+    "string": "Видалити тип товару"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetailsPage_dot_1217376589": {
     "context": "switch button",
@@ -3347,11 +3363,11 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_3479705616": {
     "context": "button",
-    "string": "create product type"
+    "string": "створити тип товару"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_configurable": {
     "context": "product type",
-    "string": "Configurable"
+    "string": "Налаштовується"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_digital": {
     "context": "product",
@@ -3363,7 +3379,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_type": {
     "context": "product type is digital or physical",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_1126553969": {
     "string": "No product types found"
@@ -3378,15 +3394,15 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_1952810469": {
     "context": "product type is either simple or configurable",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_2253986440": {
     "context": "product type name",
-    "string": "Type Name"
+    "string": "Введіть назву"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_2754779425": {
     "context": "product type",
-    "string": "Configurable"
+    "string": "Налаштовується"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_881286562": {
     "context": "product type",
@@ -3405,17 +3421,17 @@
     "string": "Is this product shippable?"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeShipping_dot_2927891783": {
-    "string": "Used to calculate rates for shipping for products of this product type, when specific weight is not given"
+    "string": "Використовується для обчислення тарифів на доставку продукції цього типу товару, коли конкретна вага не наводиться"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeShipping_dot_746695941": {
-    "string": "Weight"
+    "string": "Вага"
   },
   "src_dot_productTypes_dot_views_dot_3822478981": {
     "string": "Successfully created product type"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_4080551769": {
     "context": "dialog header",
-    "string": "Delete Product Types"
+    "string": "Видалити типи товарів"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_4269954457": {
     "context": "dialog content",
@@ -3426,7 +3442,7 @@
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_870815507": {
     "context": "unassign attribute from product type, button",
-    "string": "Unassign"
+    "string": "Скасувати"
   },
   "src_dot_products": {
     "context": "products section name",
@@ -3434,7 +3450,7 @@
   },
   "src_dot_products_dot_components_dot_ProductAttributes_dot_1071548120": {
     "context": "number of product attributes",
-    "string": "{number} Attributes"
+    "string": "{number} Властивості"
   },
   "src_dot_products_dot_components_dot_ProductAttributes_dot_1148029984": {
     "context": "attribute value",
@@ -3460,11 +3476,11 @@
   },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_1815688500": {
     "context": "product",
-    "string": "since {date}"
+    "string": "розміщено з {date}"
   },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2001551496": {
     "context": "product",
-    "string": "will be visible from {date}"
+    "string": "буде видно з {date}"
   },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2706108815": {
     "string": "Додати заголовок та опис для пошукової системи, щоб полегшити пошук цього товару"
@@ -3503,11 +3519,11 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1542417144": {
     "context": "button",
-    "string": "Create Product"
+    "string": "Створити товар"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_3550330425": {
     "string": "Search Products..."
@@ -3522,7 +3538,7 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_available": {
     "context": "product status",
-    "string": "Available"
+    "string": "Доступні"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_hidden": {
     "context": "product is hidden",
@@ -3541,22 +3557,22 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_visibility": {
     "context": "product visibility",
-    "string": "Visibility"
+    "string": "Видимість"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_visible": {
     "context": "product is visible",
-    "string": "Visible"
+    "string": "Видимий"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_1134347598": {
     "context": "product price",
     "string": "Ціна"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_1657559629": {
-    "string": "No products found"
+    "string": "Не знайдено жодного товару"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_1952810469": {
     "context": "product type",
-    "string": "Type"
+    "string": "Тип"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_2341910657": {
     "context": "product status",
@@ -3586,7 +3602,7 @@
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_2754779425": {
     "context": "product is configurable",
-    "string": "Configurable"
+    "string": "Налаштовується"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_2805838453": {
     "context": "field is optional",
@@ -3611,7 +3627,7 @@
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2622674857": {
     "context": "tabel column header",
-    "string": "Warehouse Name"
+    "string": "Назва складу"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2729628316": {
     "context": "tabel column header",
@@ -3621,38 +3637,35 @@
     "context": "header",
     "string": "Кількість"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3143542809": {
-    "string": "This product doesn't have any stock. You can add it <l>here</l>."
-  },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3482985373": {
-    "context": "button",
-    "string": "Edit Warehouses"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3633706025": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
+    "context": "button",
+    "string": "Assign Warehouse"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_1815688500": {
     "context": "product",
-    "string": "since {date}"
+    "string": "розміщено з {date}"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2001551496": {
     "context": "product",
-    "string": "will be visible from {date}"
+    "string": "буде видно з {date}"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2706108815": {
     "string": "Додати заголовок та опис для пошукової системи, щоб полегшити пошук цього товару"
   },
   "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_1536841622": {
     "context": "product attribute error",
-    "string": "All attributes should have value"
+    "string": "Всі атрибути повинні мати значення"
   },
   "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_258966189": {
     "context": "product attribute error",
-    "string": "This variant already exists"
+    "string": "Цей варіант вже існує"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_2853608829": {
     "context": "button",
@@ -3660,7 +3673,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_3726089650": {
     "context": "button",
-    "string": "Delete Variant"
+    "string": "Видалити варіант"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1134347598": {
     "context": "variant price",
@@ -3671,7 +3684,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_168343345": {
     "context": "variant attribute",
-    "string": "Attribute"
+    "string": "Атрибут"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_1808330403": {
     "context": "variant attribute",
@@ -3702,16 +3715,16 @@
     "string": "Підсумок"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_2783195765": {
-    "string": "Apply single price to all SKUs"
+    "string": "Застосовуйте єдину ціну до всіх SKU"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_3387090508": {
-    "string": "Apply unique stock by attribute to each SKU"
+    "string": "Застосовуйте унікальний запас за властивісню до кожного SKU"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_3570949907": {
-    "string": "Apply unique prices by attribute to each SKU"
+    "string": "Застосовуйте унікальні ціни за властивостями до кожного SKU"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_3601538615": {
-    "string": "Apply single stock to all SKUs"
+    "string": "Застосовуйте одиночний запас до всіх SKU"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_3673120330": {
     "context": "button",
@@ -3762,7 +3775,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantDeleteDialog_dot_3726089650": {
     "context": "dialog header",
-    "string": "Delete Variant"
+    "string": "Видалити варіант"
   },
   "src_dot_products_dot_components_dot_ProductVariantImageSelectDialog_dot_3196043669": {
     "context": "dialog header",
@@ -3799,7 +3812,7 @@
     "string": "Cost price override"
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_2238565650": {
-    "string": "Selling price override"
+    "string": "Ціна продажу перевищена"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1001303107": {
     "context": "product variant inventory",
@@ -3807,7 +3820,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1033175132": {
     "context": "product variant inventory",
-    "string": "Unavailable"
+    "string": "Недоступний"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1134347598": {
     "context": "product variant price",
@@ -3823,7 +3836,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1721716102": {
     "context": "button",
-    "string": "Create variants"
+    "string": "Створіть варіанти"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_2153006789": {
     "context": "section header",
@@ -3834,11 +3847,11 @@
     "string": "{numLocations,plural,one {{numAvailable} available at {numLocations} location} other {{numAvailable} available at {numLocations} locations}}"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_277989856": {
-    "string": "Use variants for products that come in a variety of versions for example different sizes or colors"
+    "string": "Використовуйте варіанти для товарів, які випускаються в різних версіях, наприклад, різних розмірів або кольорів"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_3203451491": {
     "context": "filtering option",
-    "string": "All Warehouses"
+    "string": "Всі склади"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_3490038570": {
     "context": "product variant inventory status",
@@ -3846,7 +3859,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_3989383405": {
     "context": "button",
-    "string": "Create variant"
+    "string": "Створіть варіант"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_4017567521": {
     "context": "product variant inventory",
@@ -3859,16 +3872,9 @@
     "context": "product variant name",
     "string": "Варіант"
   },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_3482985373": {
-    "context": "dialog header",
-    "string": "Edit Warehouses"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_4112406382": {
-    "string": "Select warehouses that stock selected product"
-  },
   "src_dot_products_dot_views_dot_1542417144": {
     "context": "window title",
-    "string": "Create Product"
+    "string": "Створити товар"
   },
   "src_dot_products_dot_views_dot_1591632382": {
     "context": "page header",
@@ -3876,24 +3882,24 @@
   },
   "src_dot_products_dot_views_dot_1731766393": {
     "context": "dialog header",
-    "string": "Delete Image"
+    "string": "Видалити зображення"
   },
   "src_dot_products_dot_views_dot_2279302139": {
-    "string": "Variant removed"
+    "string": "Варіант видалено"
   },
   "src_dot_products_dot_views_dot_2362587265": {
     "context": "header",
-    "string": "Create Variant"
+    "string": "Створити купон"
   },
   "src_dot_products_dot_views_dot_2880386427": {
-    "string": "Are you sure you want to delete this image?"
+    "string": "Ви впевнені, що хочете видалити це зображення?"
   },
   "src_dot_products_dot_views_dot_2899821092": {
-    "string": "Product created"
+    "string": "Товар створено"
   },
   "src_dot_products_dot_views_dot_3989383405": {
     "context": "window title",
-    "string": "Create variant"
+    "string": "Створіть варіант"
   },
   "src_dot_products_dot_views_dot_ProductList_dot_1204353135": {
     "context": "dialog content",
@@ -3917,7 +3923,7 @@
   },
   "src_dot_products_dot_views_dot_ProductList_dot_3362608461": {
     "context": "dialog header",
-    "string": "Unpublish Products"
+    "string": "Скасувати публікацію товару"
   },
   "src_dot_products_dot_views_dot_ProductList_dot_3518737068": {
     "context": "dialog content",
@@ -3925,7 +3931,7 @@
   },
   "src_dot_products_dot_views_dot_ProductList_dot_400629795": {
     "context": "dialog header",
-    "string": "Delete Products"
+    "string": "Видалити товари"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_1177237881": {
     "context": "dialog content",
@@ -3933,7 +3939,7 @@
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_1454532689": {
     "context": "dialog header",
-    "string": "Delete Product Variants"
+    "string": "Видалити варіанти товарів"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",
@@ -3944,7 +3950,7 @@
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_879305849": {
     "context": "dialog header",
-    "string": "Delete Product"
+    "string": "Видалити товар"
   },
   "src_dot_products_dot_views_dot_ProductVariantCreator_dot_2292700443": {
     "context": "success message",
@@ -3977,7 +3983,7 @@
     "string": "Видалити"
   },
   "src_dot_requiredField": {
-    "string": "This field is required"
+    "string": "Це поле є обов'язковим"
   },
   "src_dot_sales": {
     "context": "sales section name",
@@ -3996,11 +4002,11 @@
   },
   "src_dot_services_dot_components_dot_ServiceCreatePage_dot_1848599267": {
     "context": "checkbox label",
-    "string": "User has full access to the store"
+    "string": "Користувач має повний доступ до магазину"
   },
   "src_dot_services_dot_components_dot_ServiceCreatePage_dot_248507553": {
     "context": "header",
-    "string": "Create New Account"
+    "string": "Створити новій обліковий запис"
   },
   "src_dot_services_dot_components_dot_ServiceCreatePage_dot_27827485": {
     "context": "checkbox label",
@@ -4011,25 +4017,25 @@
     "string": "Expand or restrict user's permissions to access certain part of saleor system."
   },
   "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_1336855942": {
-    "string": "Generated Token"
+    "string": "Створено ідентифікаційний знак"
   },
   "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_2080322626": {
-    "string": "This token gives you access to your shop's API, which you'll find here: {url}"
+    "string": "Цей ідентифікаційний знак надає вам доступ до API вашого магазину, який ви знайдете тут: {url}"
   },
   "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_2864204643": {
     "context": "button",
-    "string": "Copied"
+    "string": "Скопійовано"
   },
   "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_3406541221": {
     "context": "button",
-    "string": "Copy token"
+    "string": "Скопіювати токен"
   },
   "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_4189999598": {
-    "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+    "string": "Ми створили ваш ідентифікаційний знак за замовчуванням. Не забудьте скопіювати свій новий особистий ідентифікаційний знак доступу зараз. Ви більше не зможете його побачити."
   },
   "src_dot_services_dot_components_dot_ServiceDeleteDialog_dot_1534767622": {
     "context": "dialog header",
-    "string": "Delete Service Account"
+    "string": "Видалити службовий обліковий запис"
   },
   "src_dot_services_dot_components_dot_ServiceDeleteDialog_dot_2297471173": {
     "context": "delete service account",
@@ -4037,7 +4043,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_1848599267": {
     "context": "checkbox label",
-    "string": "User has full access to the store"
+    "string": "Користувач має повний доступ до магазину"
   },
   "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_27827485": {
     "context": "checkbox label",
@@ -4064,7 +4070,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceListPage_dot_624280156": {
     "context": "button",
-    "string": "Create account"
+    "string": "Створити обліковий запис"
   },
   "src_dot_services_dot_components_dot_ServiceListPage_dot_active": {
     "context": "service account",
@@ -4072,7 +4078,7 @@
   },
   "src_dot_services_dot_components_dot_ServiceListPage_dot_deactivated": {
     "context": "service account",
-    "string": "Inactive"
+    "string": "Неактивний"
   },
   "src_dot_services_dot_components_dot_ServiceList_dot_1342308051": {
     "string": "No service accounts found"
@@ -4083,31 +4089,31 @@
   },
   "src_dot_services_dot_components_dot_ServiceList_dot_3239722049": {
     "context": "account status",
-    "string": "inactive"
+    "string": "неактивний"
   },
   "src_dot_services_dot_components_dot_ServiceList_dot_636461959": {
     "context": "service name",
     "string": "Назва"
   },
   "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_1336855942": {
-    "string": "Generated Token"
+    "string": "Створено ідентифікаційний знак"
   },
   "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_2530792168": {
     "string": "Токен доступу використовується для автентифікації в акаунтах сервісів"
   },
   "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3009959880": {
-    "string": "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+    "string": "Ми створили ваш ідентифікаційний знак. Не забудьте скопіювати свій новий особистий ідентифікаційний знак доступу зараз. Ви більше не зможете його побачити."
   },
   "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3406541221": {
     "context": "button",
-    "string": "Copy token"
+    "string": "Скопіювати токен"
   },
   "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3875340101": {
     "context": "header",
-    "string": "Create Token"
+    "string": "Створити токен"
   },
   "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_4017491013": {
-    "string": "Token Note"
+    "string": "Примітка токену"
   },
   "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_4120989039": {
     "context": "create service token, button",
@@ -4115,25 +4121,25 @@
   },
   "src_dot_services_dot_components_dot_ServiceTokenDeleteDialog_dot_1534767622": {
     "context": "dialog title",
-    "string": "Delete Service Account"
+    "string": "Видалити службовий обліковий запис"
   },
   "src_dot_services_dot_components_dot_ServiceTokenDeleteDialog_dot_981802752": {
     "context": "delete token",
-    "string": "Are you sure you want to delete token {token}?"
+    "string": "Ви впевнені, що хочете видалити токен {token}?"
   },
   "src_dot_services_dot_components_dot_ServiceTokens_dot_2446088470": {
     "context": "service account key",
     "string": "Ключ"
   },
   "src_dot_services_dot_components_dot_ServiceTokens_dot_2639089057": {
-    "string": "No tokens found"
+    "string": "Не знайдено ідентифікаційного знаку"
   },
   "src_dot_services_dot_components_dot_ServiceTokens_dot_3875340101": {
     "context": "button",
-    "string": "Create Token"
+    "string": "Створити токен"
   },
   "src_dot_services_dot_components_dot_ServiceTokens_dot_4017491013": {
-    "string": "Token Note"
+    "string": "Примітка токену"
   },
   "src_dot_services_dot_components_dot_ServiceTokens_dot_4190792473": {
     "context": "table actions",
@@ -4145,20 +4151,23 @@
   },
   "src_dot_services_dot_views_dot_ServiceCreate_dot_3167211165": {
     "context": "window title",
-    "string": "Create Service Account"
+    "string": "Створити сервісний обліковий запис"
+  },
+  "src_dot_sessionExpired": {
+    "string": "Your session has expired. Please log in again to continue."
   },
   "src_dot_shipping": {
     "context": "shipping section name",
     "string": "Shipping Methods"
   },
   "src_dot_shipping_dot_components_dot_ShippingWeightUnitForm_dot_2863708228": {
-    "string": "This unit will be used as default shipping weight"
+    "string": "Ця одиниця буде використовуватися як вага доставки за замовчуванням"
   },
   "src_dot_shipping_dot_components_dot_ShippingWeightUnitForm_dot_549146363": {
     "string": "Shipping Weight Unit"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneAddWarehouseDialog_dot_2622674857": {
-    "string": "Warehouse Name"
+    "string": "Назва складу"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneAddWarehouseDialog_dot_3173942020": {
     "context": "header, dialog",
@@ -4172,7 +4181,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_1585396479": {
     "context": "dialog header",
-    "string": "Assign Countries"
+    "string": "Призначити країни"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_1818089229": {
     "string": "If selected, this will add all of the countries not selected to other shipping zones"
@@ -4185,11 +4194,11 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2747492886": {
     "context": "button",
-    "string": "Assign countries"
+    "string": "Призначити країни"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_2777439857": {
     "context": "country selection",
-    "string": "Countries A to Z"
+    "string": "Країни від А до Я"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCountriesAssignDialog_dot_3510295703": {
     "string": "Search Countries"
@@ -4202,7 +4211,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_4049462680": {
     "context": "header",
-    "string": "Create New Shipping Zone"
+    "string": "Створити нову зону доставки"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_4270729636": {
     "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
@@ -4237,11 +4246,11 @@
     "string": "Rate Price"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1486599614": {
-    "string": "This will be shown to customers at checkout"
+    "string": "Це буде показано клієнтам при оформленні замовлення"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_1542600502": {
     "context": "button",
-    "string": "Update rate"
+    "string": "Частота оновлення"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_16061680": {
     "context": "button",
@@ -4252,15 +4261,15 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2215090771": {
     "context": "shipping method, switch button",
-    "string": "This is free shipping"
+    "string": "Це безкоштовна доставка"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2324036635": {
     "context": "order weight range",
-    "string": "Weight range"
+    "string": "Ваговий діапазон"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2533614652": {
     "context": "order price range",
-    "string": "Value range"
+    "string": "Діапазон значень"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRateDialog_dot_2892088870": {
     "context": "dialog header",
@@ -4313,7 +4322,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRates_dot_1923873558": {
     "context": "shipping method price range",
-    "string": "Value Range"
+    "string": "Діапазон значень"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRates_dot_1961493435": {
     "string": "No shipping rates found"
@@ -4324,11 +4333,11 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRates_dot_2600677138": {
     "context": "shipping method weight range",
-    "string": "Weight Range"
+    "string": "Діапазон ваги"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRates_dot_383202459": {
     "context": "weight based shipping methods, section header",
-    "string": "Weight Based Rates"
+    "string": "Тарифи на основі ваги"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRates_dot_636461959": {
     "context": "shipping method name",
@@ -4359,7 +4368,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZonesList_dot_2673544109": {
     "context": "button",
-    "string": "Create shipping zone"
+    "string": "Створити зону доставки"
   },
   "src_dot_shipping_dot_components_dot_ShippingZonesList_dot_3109712047": {
     "string": "Країни"
@@ -4372,15 +4381,15 @@
     "string": "No shipping zones found"
   },
   "src_dot_shipping_dot_views_dot_1005071028": {
-    "string": "Are you sure you want to delete {shippingZoneName} shipping zone?"
+    "string": "Ви впевнені, що хочете видалити {shippingZoneName} зону доставки?"
   },
   "src_dot_shipping_dot_views_dot_1010705153": {
     "context": "dialog header",
-    "string": "Delete Shipping Zone"
+    "string": "Видалити зону доставки"
   },
   "src_dot_shipping_dot_views_dot_1711385401": {
     "context": "dialog header",
-    "string": "Delete Shipping Zones"
+    "string": "Видалити зони доставки"
   },
   "src_dot_shipping_dot_views_dot_725201918": {
     "context": "dialog content",
@@ -4388,19 +4397,19 @@
   },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_1010705153": {
     "context": "dialog header",
-    "string": "Delete Shipping Zone"
+    "string": "Видалити зону доставки"
   },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_131963671": {
     "context": "unassign country",
-    "string": "Are you sure you want to delete {countryName} from this shipping zone?"
+    "string": "Ви впевнені, що хочете видалити {countryName} з цієї зони доставки?"
   },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_1502359905": {
     "context": "dialog header",
-    "string": "Delete Shipping Method"
+    "string": "Видалити спосіб доставки"
   },
   "src_dot_shipping_dot_views_dot_ShippingZoneDetails_dot_3133838427": {
     "context": "unassign country, dialog header",
-    "string": "Delete from Shipping Zone"
+    "string": "Видалити із зони доставки"
   },
   "src_dot_show": {
     "context": "button",
@@ -4420,7 +4429,7 @@
     "string": "Name of your store"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsDetails_dot_3808773492": {
-    "string": "URL of your online store"
+    "string": "URL-адреса вашого інтернет-магазину"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsDetails_dot_529433178": {
     "string": "Store description is shown on taskbar after your store name"
@@ -4438,7 +4447,7 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_3039841202": {
     "context": "authentication provider name",
-    "string": "Authentication type"
+    "string": "Тип аутентифікації"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeyDialog_dot_50561933": {
     "context": "button",
@@ -4450,11 +4459,11 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_1270286507": {
     "context": "authentication provider name",
-    "string": "Authentication Type"
+    "string": "Тип аутентифікації"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_226491688": {
     "context": "section header",
-    "string": "Authentication Keys"
+    "string": "Ключі аутентифікації"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsKeys_dot_2446088470": {
     "context": "authentication provider API key",
@@ -4476,16 +4485,16 @@
     "string": "Mailing Configuration"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_297689661": {
-    "string": "Configurate your email address from which all automatic emails will be sent to your customers."
+    "string": "Налаштуйте свою електронну адресу, з якої всі автоматичні електронні листи будуть відправлені вашим клієнтам."
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_3211348653": {
-    "string": "Customer password reset URL"
+    "string": "URL-адреса відновлення пароля клієнта"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_3447841451": {
     "string": "This URL will be used as a main URL for password resets. It will be sent via email."
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_50742153": {
-    "string": "URL address"
+    "string": "URL-адреса"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsMailing_dot_70179174": {
     "string": "Mailing email sender"
@@ -4494,7 +4503,7 @@
     "string": "This adress will be used to generate invoices and calculate shipping rates."
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_1214877701": {
-    "string": "Authentication method defines additional ways that customers can log in to your ecommerce."
+    "string": "Спосіб аутентифікації визначає додаткові способи, за якими клієнти можуть увійти у до ващої електронної комерції."
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_229184360": {
     "context": "section header",
@@ -4502,7 +4511,7 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_2768400497": {
     "context": "section header",
-    "string": "Company Information"
+    "string": "Інформація про компанію"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_280712237": {
     "context": "section header",
@@ -4516,7 +4525,7 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_4088830385": {
     "context": "section header",
-    "string": "Authentication Methods"
+    "string": "Способи аутентифікації"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_866304242": {
     "string": "This where you will find all of the settings determining your stores e-mails. You can determine main email address and some of the contents of your emails."
@@ -4565,7 +4574,7 @@
   },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_deactivated": {
     "context": "staff member's account",
-    "string": "Deactivated"
+    "string": "Деактивовано"
   },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_status": {
     "context": "staff member's account",
@@ -4573,7 +4582,7 @@
   },
   "src_dot_staff_dot_components_dot_StaffList_dot_1004218338": {
     "context": "staff member status",
-    "string": "Inactive"
+    "string": "Неактивний"
   },
   "src_dot_staff_dot_components_dot_StaffList_dot_1789607185": {
     "string": "Email Address"
@@ -4605,11 +4614,11 @@
     "string": "Previous Password"
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_1274006906": {
-    "string": "You should change your password every month to avoid security issues."
+    "string": "Ви повинні змінювати свій пароль щомісяця, щоб уникнути проблем з безпекою."
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_1434811103": {
     "context": "button",
-    "string": "Change your password"
+    "string": "Змінити пароль"
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_2237029987": {
     "context": "header",
@@ -4634,25 +4643,25 @@
   },
   "src_dot_staff_dot_components_dot_StaffProperties_dot_2771097267": {
     "context": "button",
-    "string": "Change photo"
+    "string": "Змінити фото"
   },
   "src_dot_staff_dot_components_dot_StaffProperties_dot_457748370": {
     "context": "button",
-    "string": "Delete photo"
+    "string": "Видалити фотографію"
   },
   "src_dot_staff_dot_views_dot_1308770978": {
     "context": "dialog header",
-    "string": "delete Staff User"
+    "string": "видалити Користувача персоналу"
   },
   "src_dot_staff_dot_views_dot_3945766678": {
-    "string": "Are you sure you want to remove {email} avatar?"
+    "string": "Ви впевнені, що хочете видалити {email} аватар?"
   },
   "src_dot_staff_dot_views_dot_701332676": {
     "context": "dialog header",
-    "string": "Delete Staff User Avatar"
+    "string": "Видалити aватар користувача персоналу"
   },
   "src_dot_staff_dot_views_dot_8878988": {
-    "string": "Are you sure you want to delete {email} from staff members?"
+    "string": "Ви впевнені, що хочете видалити {email} зі співробітників?"
   },
   "src_dot_startDate": {
     "string": "Start Date"
@@ -4668,11 +4677,11 @@
   },
   "src_dot_taxes": {
     "context": "taxes section name",
-    "string": "Taxes"
+    "string": "Податки"
   },
   "src_dot_taxes_dot_components_dot_CountryListPage_dot_3955023266": {
     "context": "header",
-    "string": "Taxes"
+    "string": "Податки"
   },
   "src_dot_taxes_dot_components_dot_CountryList_dot_110033143": {
     "string": "No countries found"
@@ -4681,10 +4690,10 @@
     "string": "Reduced Tax Rates"
   },
   "src_dot_taxes_dot_components_dot_CountryList_dot_4039455144": {
-    "string": "Country Code"
+    "string": "Код країни"
   },
   "src_dot_taxes_dot_components_dot_CountryList_dot_577035076": {
-    "string": "Country Name"
+    "string": "Назва країни"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1040021611": {
     "context": "tax rate",
@@ -4696,7 +4705,7 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1323923780": {
     "context": "tax rate",
-    "string": "Bikes"
+    "string": "Велосипеди"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1451721797": {
     "context": "tax rate",
@@ -4710,11 +4719,11 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2185495435": {
     "context": "tax rate",
-    "string": "Admission to cultural events"
+    "string": "Прийом на культурні заходи"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2201910191": {
     "context": "tax rate",
-    "string": "Baby foodstuffs"
+    "string": "Дитячі продукти харчування"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_231341634": {
     "context": "tax rate",
@@ -4726,11 +4735,11 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2394675125": {
     "context": "tax rate",
-    "string": "Books"
+    "string": "Книги"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2465450918": {
     "context": "tax rate",
-    "string": "Agricultural supplies"
+    "string": "Сільськогосподарські приналежності"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2482229874": {
     "context": "tax rate",
@@ -4742,7 +4751,7 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2557534380": {
     "context": "tax rate",
-    "string": "Admission to entertainment events"
+    "string": "Прийом на розважальні заходи"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2584490289": {
     "context": "tax rate",
@@ -4750,7 +4759,7 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2616794607": {
     "context": "tax rate",
-    "string": "Admission to sporting events"
+    "string": "Прийом на спортивні заходи"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2737618795": {
     "context": "header",
@@ -4777,11 +4786,11 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_3525010870": {
     "context": "tax rate",
-    "string": "Water"
+    "string": "Вода"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_3911019760": {
     "context": "tax rate",
-    "string": "Advertising"
+    "string": "Реклама"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_4199760668": {
     "context": "tax rate",
@@ -4789,7 +4798,7 @@
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_752780599": {
     "context": "tax rate",
-    "string": "Wine"
+    "string": "Вино"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_776474251": {
     "context": "tax rate",
@@ -4800,13 +4809,13 @@
     "string": "Pharmaceuticals"
   },
   "src_dot_taxes_dot_components_dot_TaxConfiguration_dot_142803418": {
-    "string": "All products prices are entered with tax included"
+    "string": "Всі ціни на товари вводяться з урахуванням податку"
   },
   "src_dot_taxes_dot_components_dot_TaxConfiguration_dot_2102582640": {
     "string": "Показувати валові ціни клієнтам у магазині"
   },
   "src_dot_taxes_dot_components_dot_TaxConfiguration_dot_2654711891": {
-    "string": "Charge taxes on shipping rates"
+    "string": "Стягнення податків на тарифи на доставку"
   },
   "src_dot_taxes_dot_components_dot_TaxConfiguration_dot_3375540052": {
     "context": "button",
@@ -4817,16 +4826,16 @@
   },
   "src_dot_translations": {
     "context": "translations section name",
-    "string": "Translations"
+    "string": "Переклади"
   },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_1308081812": {
-    "string": "{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
+    "string": "{numberOfFields} Перекладів, {numberOfTranslatedFields} Завершено"
   },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_1348655672": {
     "string": "Original String"
   },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_2481190613": {
-    "string": "Translation"
+    "string": "Переклад"
   },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_363646127": {
     "context": "button",
@@ -4836,13 +4845,13 @@
     "string": "No translation yet"
   },
   "src_dot_translations_dot_components_dot_TranslationsCategoriesPage_dot_1214235329": {
-    "string": "Category Name"
+    "string": "Назва категорії"
   },
   "src_dot_translations_dot_components_dot_TranslationsCategoriesPage_dot_1406947243": {
     "string": "Search Engine Description"
   },
   "src_dot_translations_dot_components_dot_TranslationsCategoriesPage_dot_1611537010": {
-    "string": "Translation Category \"{categoryName}\" - {languageCode}"
+    "string": "Переклад категорії \"{categoryName}\" - {languageCode}"
   },
   "src_dot_translations_dot_components_dot_TranslationsCategoriesPage_dot_2496919463": {
     "string": "Search Engine Title"
@@ -4857,11 +4866,11 @@
     "string": "Search Engine Title"
   },
   "src_dot_translations_dot_components_dot_TranslationsCollectionsPage_dot_2759199473": {
-    "string": "Collection Name"
+    "string": "Назва колекції"
   },
   "src_dot_translations_dot_components_dot_TranslationsCollectionsPage_dot_3055443821": {
     "context": "header",
-    "string": "Translation Collection \"{collectionName}\" - {languageCode}"
+    "string": "Переклад колекції \"{collectionName}\" - {languageCode}"
   },
   "src_dot_translations_dot_components_dot_TranslationsCollectionsPage_dot_3468022343": {
     "string": "Search Engine Preview"
@@ -4883,7 +4892,7 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2460580333": {
     "context": "header",
-    "string": "Translations to {language}"
+    "string": "Переклади на {language}"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_2559018090": {
     "string": "Search Page"
@@ -4917,13 +4926,13 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_1136143456": {
     "context": "translation progress",
-    "string": "{current} of {max}"
+    "string": "{current} до {max}"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_4176487406": {
     "string": "No translatable entities found"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_49462429": {
-    "string": "Completed Translations"
+    "string": "Завершені переклади"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_636461959": {
     "context": "entity (product, collection, shipping method) name",
@@ -4950,7 +4959,7 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_2806429775": {
     "context": "header",
-    "string": "Translation Page \"{pageName}\" - {languageCode}"
+    "string": "Переклад сторінки \"{pageName}\" - {languageCode}"
   },
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_3468022343": {
     "string": "Search Engine Preview"
@@ -4960,22 +4969,22 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_1281101905": {
     "context": "header",
-    "string": "Translation Product Type \"{productTypeName}\" - {languageCode}"
+    "string": "Переклад типу товару \"{productTypeName}\" - {languageCode}"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_1567737068": {
     "context": "attribute values",
-    "string": "Value {number}"
+    "string": "Значення {number}"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_2510190956": {
     "context": "header",
     "string": "Product Attribute ({attributeName})"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_2642976392": {
-    "string": "Attribute Name"
+    "string": "Назва атрибуту"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_3538502409": {
     "context": "header",
-    "string": "Variant Attribute ({attributeName})"
+    "string": "Варіант атрибутів ({attributeName})"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_1406947243": {
     "string": "Search Engine Description"
@@ -4988,7 +4997,7 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_2713974050": {
     "context": "header",
-    "string": "Translation Product \"{productName}\" - {languageCode}"
+    "string": "Переклад товару \"{productName}\" - {languageCode}"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_3374163063": {
     "string": "Опис"
@@ -4998,33 +5007,33 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsSalesPage_dot_3731955064": {
     "context": "header",
-    "string": "Translation Sale \"{saleName}\" - {languageCode}"
+    "string": "Переклад розпродажу \"{saleName}\" - {languageCode}"
   },
   "src_dot_translations_dot_components_dot_TranslationsSalesPage_dot_898281424": {
     "string": "Sale Name"
   },
   "src_dot_translations_dot_components_dot_TranslationsVouchersPage_dot_2447510181": {
     "context": "header",
-    "string": "Translation Voucher \"{voucherName}\" - {languageCode}"
+    "string": "Переклад купону \"{voucherName}\" - {languageCode}"
   },
   "src_dot_translations_dot_components_dot_TranslationsVouchersPage_dot_2599922713": {
-    "string": "Voucher Name"
+    "string": "Назва"
   },
   "src_dot_undo": {
     "context": "button",
-    "string": "Undo"
+    "string": "Скасувати"
   },
   "src_dot_unfulfilled": {
     "context": "order status",
-    "string": "Unfulfilled"
+    "string": "Невиконано"
   },
   "src_dot_unpaid": {
     "context": "payment status",
-    "string": "Unpaid"
+    "string": "Неоплачений"
   },
   "src_dot_uploadImage": {
     "context": "button",
-    "string": "Upload image"
+    "string": "Завантажити зображення"
   },
   "src_dot_utils_dot_errors_dot_alreadyExists": {
     "context": "add authorization key error",
@@ -5060,54 +5069,54 @@
   },
   "src_dot_utils_dot_errors_dot_cannotRefund": {
     "context": "error message",
-    "string": "Manual payments can not be refunded"
+    "string": "Оплата в ручному режимі не може бути повернена"
   },
   "src_dot_utils_dot_errors_dot_cannotRemoveFromLastGroup": {
-    "string": "Cannot remove user from last group"
+    "string": "Неможливо видалити користувача з останньої групи"
   },
   "src_dot_utils_dot_errors_dot_cannotVoid": {
     "context": "error message",
-    "string": "Only pre-authorized payments can be voided"
+    "string": "Тільки попередньо авторизовані платежі можуть бути анульовані"
   },
   "src_dot_utils_dot_errors_dot_captureInactive": {
     "context": "error message",
     "string": "Лише попередньо авторизовані оплати можуть бути прийняті"
   },
   "src_dot_utils_dot_errors_dot_duplicatedInputItem": {
-    "string": "Cannot add and remove group the same time"
+    "string": "Неможливо додати та видалити групу одночасно"
   },
   "src_dot_utils_dot_errors_dot_graphqlError": {
-    "string": "API error"
+    "string": "Помилка API"
   },
   "src_dot_utils_dot_errors_dot_invalid": {
-    "string": "Invalid value"
+    "string": "Неприпустиме значення"
   },
   "src_dot_utils_dot_errors_dot_invalidPassword": {
-    "string": "Invalid password"
+    "string": "Неправильний пароль"
   },
   "src_dot_utils_dot_errors_dot_noShippingAddress": {
     "context": "error message",
-    "string": "Cannot choose a shipping method for an order without the shipping address"
+    "string": "Неможливо вибрати спосіб доставки для замовлення без адреси доставки"
   },
   "src_dot_utils_dot_errors_dot_notEditable": {
     "context": "error message",
-    "string": "Only draft orders can be edited"
+    "string": "Редагувати можуть лише чернетки замовлень"
   },
   "src_dot_utils_dot_errors_dot_outOfScopeGroup": {
-    "string": "Group is out of your permission scope"
+    "string": "Група виходить за межі вашого дозволу"
   },
   "src_dot_utils_dot_errors_dot_outOfScopeUser": {
-    "string": "User is out of your permissions scope"
+    "string": "Користувач виходить за межі вашого дозволу"
   },
   "src_dot_utils_dot_errors_dot_passwordNumeric": {
-    "string": "Password cannot be entirely numeric"
+    "string": "Пароль не може бути повністю з цифр"
   },
   "src_dot_utils_dot_errors_dot_paymentMissing": {
     "context": "error message",
-    "string": "There's no payment associated with the order"
+    "string": "Немає оплати, пов'язаної із замовленням"
   },
   "src_dot_utils_dot_errors_dot_permissionOutOfScope": {
-    "string": "Those permissions are out of your scope"
+    "string": "Ці дозволи не входять у ваш обсяг"
   },
   "src_dot_utils_dot_errors_dot_shippingNotApplicable": {
     "context": "error message",
@@ -5115,33 +5124,33 @@
   },
   "src_dot_utils_dot_errors_dot_shippingRequired": {
     "context": "error message",
-    "string": "Shipping method is required for this order"
+    "string": "Для цього замовлення необхідний спосіб доставки"
   },
   "src_dot_utils_dot_errors_dot_skuUnique": {
     "context": "bulk variant create error",
-    "string": "SKUs must be unique"
+    "string": "Код товару повинен бути унікальним"
   },
   "src_dot_utils_dot_errors_dot_slugUnique": {
     "context": "error message",
-    "string": "Slug must be unique for each warehouse"
+    "string": "Службове поле повинно бути унікальним для кожного складу"
   },
   "src_dot_utils_dot_errors_dot_tooCommon": {
-    "string": "This password is too commonly used"
+    "string": "Цей пароль занадто часто використовується"
   },
   "src_dot_utils_dot_errors_dot_tooShort": {
-    "string": "This password is too short"
+    "string": "Цей пароль занадто короткий"
   },
   "src_dot_utils_dot_errors_dot_tooSimilar": {
-    "string": "These passwords are too similar"
+    "string": "Ці паролі занадто схожі"
   },
   "src_dot_utils_dot_errors_dot_unique": {
-    "string": "This needs to be unique"
+    "string": "Це повинно бути унікальним"
   },
   "src_dot_utils_dot_errors_dot_unknownError": {
-    "string": "Unknown error"
+    "string": "Невідома помилка"
   },
   "src_dot_utils_dot_errors_dot_variantNoDigitalContent": {
-    "string": "This variant does not have any digital content"
+    "string": "Цей варіант не має жодного вмісту"
   },
   "src_dot_vouchers": {
     "context": "vouchers section name",
@@ -5149,7 +5158,7 @@
   },
   "src_dot_warehouses": {
     "context": "warehouses section name",
-    "string": "Warehouses"
+    "string": "Склади"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseCreatePage_dot_1967111456": {
     "context": "warehouse",
@@ -5157,39 +5166,39 @@
   },
   "src_dot_warehouses_dot_components_dot_WarehouseCreatePage_dot_934572530": {
     "context": "header",
-    "string": "Create Warehouse"
+    "string": "Створити склад"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseDeleteDialog_dot_1355303260": {
     "context": "dialog content",
-    "string": "Are you sure you want to delete {warehouseName}?"
+    "string": "Ви впевнені, що хочете видалити {warehouseName}?"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseDeleteDialog_dot_3857661071": {
     "context": "dialog title",
-    "string": "Delete Warehouse"
+    "string": "Видалити склад"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseDetailsPage_dot_1967111456": {
     "context": "warehouse",
     "string": "Інформація про адресу"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseInfo_dot_2622674857": {
-    "string": "Warehouse Name"
+    "string": "Назва складу"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_2304765290": {
-    "string": "Search Warehouse"
+    "string": "Пошук складу"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_3203451491": {
     "context": "tab name",
-    "string": "All Warehouses"
+    "string": "Всі склади"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_934572530": {
     "context": "button",
-    "string": "Create Warehouse"
+    "string": "Створити склад"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseList_dot_1225932315": {
-    "string": "Shipping Zones"
+    "string": "Зони доставки"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseList_dot_3787396469": {
-    "string": "No warehouses found"
+    "string": "Складів не знайдено"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseList_dot_4190792473": {
     "string": "Дії"
@@ -5200,26 +5209,26 @@
   },
   "src_dot_warehouses_dot_components_dot_WarehouseZones_dot_1225932315": {
     "context": "zones that warehouse sends to",
-    "string": "Shipping Zones"
+    "string": "Зони доставки"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseZones_dot_2423245141": {
-    "string": "This warehouse has no shipping zones assigned."
+    "string": "На цьому складі не призначені зони доставки."
   },
   "src_dot_warehouses_dot_views_dot_WarehouseCreate_dot_934572530": {
     "context": "header",
-    "string": "Create Warehouse"
+    "string": "Створити склад"
   },
   "src_dot_webhooks": {
     "context": "webhooks section name",
-    "string": "Webhooks"
+    "string": "Система сповіщення подій"
   },
   "src_dot_webhooks_dot_components_dot_WebhookCreatePage_dot_3493926696": {
     "context": "header",
-    "string": "Create Webhook"
+    "string": "Створити вебхук"
   },
   "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_216945727": {
     "context": "delete webhook",
-    "string": "Are you sure you want to delete this webhook?"
+    "string": "Ви впевнені, що хочете видалити цюй вебхук?"
   },
   "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_2297471173": {
     "context": "delete webhook",
@@ -5227,27 +5236,27 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_3514087611": {
     "context": "dialog header",
-    "string": "Delete Webhook"
+    "string": "Видалити вебхук"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1436364351": {
     "context": "section header",
-    "string": "Events"
+    "string": "Події"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1606361075": {
     "context": "event",
-    "string": "Order updated"
+    "string": "Замовлення оновлено"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",
-    "string": "All events"
+    "string": "Всі події"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2899821092": {
     "context": "event",
-    "string": "Product created"
+    "string": "Товар створено"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3051538277": {
     "context": "webhook events",
-    "string": "Expand or restrict webhooks permissions to register certain events in Saleor system."
+    "string": "Розширюйте або обмежуйте дозволи вебхуків для реєстрації подій у системі Saleor."
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3345061702": {
     "context": "event",
@@ -5255,89 +5264,89 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3400883706": {
     "context": "event",
-    "string": "Order created"
+    "string": "Замовлення створено"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3617444329": {
     "context": "event",
-    "string": "Order cancelled"
+    "string": "Замовлення скасовано"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3907151399": {
     "context": "event",
-    "string": "Order fulfilled"
+    "string": "Замовлення виконано"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3970234993": {
     "context": "event",
-    "string": "Customer created"
+    "string": "Клієнт створений"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_40035964": {
     "context": "event",
-    "string": "Changed quantity in checkout"
+    "string": "Змінено кількість в замовленні"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
     "context": "event",
-    "string": "Fulfillment created"
+    "string": "Виконання створено"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
     "context": "webhook",
-    "string": "Target URL"
+    "string": "Ціль URL-адреси"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1826224431": {
     "context": "webhook",
-    "string": "Webhook Name"
+    "string": "Назва"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_330298209": {
     "context": "section header",
-    "string": "Webhook Information"
+    "string": "Інформація"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3763861707": {
     "context": "webhook target url help text",
-    "string": "This URL will receive webhook POST requests"
+    "string": "Ця URL-адреса отримуватиме вебхук POST запити"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3809115222": {
     "context": "webhook secret key help text",
-    "string": "secret key is used to create a hash signature with each payload. *optional field"
+    "string": "секретний ключ використовується для створення хеш-підпису з кожним корисним навантаженням. *необов’язкове поле"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3995417850": {
     "context": "webhook",
-    "string": "Secrect Key"
+    "string": "Секретний ключ"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_4194304040": {
     "context": "webhook specific information",
-    "string": "Webhook specific information"
+    "string": "Спеціально інформація системи сповіщення подій"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_819389696": {
-    "string": "Assign to Service Account"
+    "string": "Призначити службовий обліковий запис"
   },
   "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_2772025990": {
     "context": "webhooks active",
-    "string": "Webhook is active"
+    "string": "Система сповіщення подій активна"
   },
   "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_313090629": {
     "context": "webhook active",
-    "string": "If you want to disable this webhook please uncheck the box below."
+    "string": "Якщо ви хочете відключити цей вебхук, зніміть прапорець нижче."
   },
   "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_596557805": {
     "context": "section header",
-    "string": "Webhook Status"
+    "string": "Статус системи сповіщення подій"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_1595053355": {
     "context": "header",
-    "string": "Unnamed Webhook Details"
+    "string": "Деталі вебхуку без назви"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_408706360": {
     "context": "header",
-    "string": "{webhookName} Details"
+    "string": "Деталі {webhookName}"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_1432828311": {
-    "string": "Search Webhooks"
+    "string": "Пошук вебхуку"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_2295583901": {
     "context": "button",
-    "string": "Create webhook"
+    "string": "Створіть вебхук"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_3300314452": {
     "context": "tab name",
-    "string": "All Webhooks"
+    "string": "Всі вебхуки"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_active": {
     "context": "webhook",
@@ -5345,21 +5354,21 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_inactive": {
     "context": "webhook",
-    "string": "Inactive"
+    "string": "Неактивний"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_1153324159": {
-    "string": "No webhooks found"
+    "string": "Вебхук не знайдено"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_2487865635": {
     "context": "webhook service account",
-    "string": "Service Account"
+    "string": "Обліковий запис служби"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_4120604650": {
     "context": "user action bar",
     "string": "Дія"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_618422799": {
-    "string": "Unnamed webhook"
+    "string": "Вебхук без назви"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_636461959": {
     "context": "webhook name",
@@ -5367,21 +5376,21 @@
   },
   "src_dot_webhooks_dot_views_dot_3493926696": {
     "context": "window title",
-    "string": "Create Webhook"
+    "string": "Створити вебхук"
   },
   "src_dot_yes": {
     "string": "Так "
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",
-    "string": "Unassign"
+    "string": "Скасувати"
   },
   "voucherDetailsUnassignCollection": {
     "context": "unassign collection from voucher, button",
-    "string": "Unassign"
+    "string": "Скасувати"
   },
   "voucherDetailsUnassignProduct": {
     "context": "unassign product from voucher, button",
-    "string": "Unassign"
+    "string": "Скасувати"
   }
 }

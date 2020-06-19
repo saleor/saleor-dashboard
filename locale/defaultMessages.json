@@ -250,7 +250,7 @@
     "context": "optional field",
     "string": "Optional"
   },
-  "productVariantPriceOptionalPriceOverrideField": {
+  "productVariantPriceOptionalPriceField": {
     "context": "optional field",
     "string": "Optional"
   },
@@ -3567,6 +3567,10 @@
     "context": "product price",
     "string": "Price"
   },
+  "src_dot_products_dot_components_dot_ProductList_dot_150865454": {
+    "context": "product type",
+    "string": "Simple"
+  },
   "src_dot_products_dot_components_dot_ProductList_dot_1657559629": {
     "string": "No products found"
   },
@@ -3577,6 +3581,10 @@
   "src_dot_products_dot_components_dot_ProductList_dot_2341910657": {
     "context": "product status",
     "string": "Not published"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_2754779425": {
+    "context": "product type",
+    "string": "Configurable"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_3640454975": {
     "context": "product status",

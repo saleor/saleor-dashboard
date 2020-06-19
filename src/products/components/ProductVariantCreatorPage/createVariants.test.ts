@@ -43,7 +43,7 @@ describe("Creates variant matrix", () => {
     );
 
     variants.forEach(variant => {
-      expect(variant.priceOverride).toBe(price);
+      expect(variant.price).toBe(price);
       variant.stocks.forEach((_, stockIndex) => {
         expect(variant.stocks[stockIndex].quantity).toBe(stock[stockIndex]);
       });
@@ -98,7 +98,7 @@ describe("Creates variant matrix", () => {
             ).values[0] === attributeValue
         )
         .forEach(variant => {
-          expect(variant.priceOverride).toBe(
+          expect(variant.price).toBe(
             (price * (attributeValueIndex + 1)).toString()
           );
         });
@@ -141,7 +141,7 @@ describe("Creates variant matrix", () => {
     );
 
     variants.forEach(variant => {
-      expect(variant.priceOverride).toBe(price);
+      expect(variant.price).toBe(price);
     });
 
     attribute.values.forEach((attributeValue, attributeValueIndex) => {
@@ -210,7 +210,7 @@ describe("Creates variant matrix", () => {
             ).values[0] === attributeValue
         )
         .forEach(variant => {
-          expect(variant.priceOverride).toBe(
+          expect(variant.price).toBe(
             (price * (attributeValueIndex + 1)).toString()
           );
         });

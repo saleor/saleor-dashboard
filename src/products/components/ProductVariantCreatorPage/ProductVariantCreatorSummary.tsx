@@ -203,7 +203,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
             error => error.index === variantIndex
           );
           const variantFormErrors = getFormErrors(
-            ["priceOverride", "quantity", "sku"],
+            ["price", "quantity", "sku"],
             variantErrors
           );
 
@@ -234,9 +234,9 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                     endAdornment: currencySymbol
                   }}
                   className={classes.input}
-                  error={!!variantFormErrors.priceOverride}
+                  error={!!variantFormErrors.price}
                   helperText={getBulkProductErrorMessage(
-                    variantFormErrors.priceOverride,
+                    variantFormErrors.price,
                     intl
                   )}
                   inputProps={{
@@ -244,7 +244,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                     type: "number"
                   }}
                   fullWidth
-                  value={variant.priceOverride}
+                  value={variant.price}
                   onChange={event =>
                     onVariantDataChange(
                       variantIndex,

@@ -55,7 +55,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_images {
   url: string;
 }
 
-export interface VariantUpdate_productVariantUpdate_productVariant_priceOverride {
+export interface VariantUpdate_productVariantUpdate_productVariant_price {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -118,7 +118,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   costPrice: VariantUpdate_productVariantUpdate_productVariant_costPrice | null;
   images: (VariantUpdate_productVariantUpdate_productVariant_images | null)[] | null;
   name: string;
-  priceOverride: VariantUpdate_productVariantUpdate_productVariant_priceOverride | null;
+  price: VariantUpdate_productVariantUpdate_productVariant_price | null;
   product: VariantUpdate_productVariantUpdate_productVariant_product;
   sku: string;
   stocks: (VariantUpdate_productVariantUpdate_productVariant_stocks | null)[] | null;
@@ -179,7 +179,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_images 
   url: string;
 }
 
-export interface VariantUpdate_productVariantStocksUpdate_productVariant_priceOverride {
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_price {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -242,7 +242,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   costPrice: VariantUpdate_productVariantStocksUpdate_productVariant_costPrice | null;
   images: (VariantUpdate_productVariantStocksUpdate_productVariant_images | null)[] | null;
   name: string;
-  priceOverride: VariantUpdate_productVariantStocksUpdate_productVariant_priceOverride | null;
+  price: VariantUpdate_productVariantStocksUpdate_productVariant_price | null;
   product: VariantUpdate_productVariantStocksUpdate_productVariant_product;
   sku: string;
   stocks: (VariantUpdate_productVariantStocksUpdate_productVariant_stocks | null)[] | null;
@@ -333,7 +333,7 @@ export interface VariantUpdateVariables {
   id: string;
   attributes?: (AttributeValueInput | null)[] | null;
   costPrice?: any | null;
-  priceOverride?: any | null;
+  price?: any | null;
   sku?: string | null;
   trackInventory: boolean;
   stocks: StockInput[];

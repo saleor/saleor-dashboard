@@ -51,7 +51,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
         })}
       />
       <ProductVariantCreatorPage
-        defaultPrice={data?.product?.basePrice.amount.toString()}
+        defaultPrice={data?.product?.pricing?.priceRangeUndiscounted?.start?.gross.amount.toString()}
         errors={
           bulkProductVariantCreateOpts.data?.productVariantBulkCreate.errors ||
           []

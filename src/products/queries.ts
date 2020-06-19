@@ -62,7 +62,6 @@ export const fragmentProductImage = gql`
 `;
 
 export const productFragment = gql`
-  ${fragmentMoney}
   fragment ProductFragment on Product {
     id
     name
@@ -71,17 +70,16 @@ export const productFragment = gql`
     }
     isAvailable
     isPublished
-    basePrice {
-      ...Money
-    }
     productType {
       id
       name
+      hasVariants
     }
   }
 `;
 
 const productVariantAttributesFragment = gql`
+  ${fragmentMoney}
   fragment ProductVariantAttributesFragment on Product {
     id
     attributes {
@@ -115,6 +113,20 @@ const productVariantAttributesFragment = gql`
         }
       }
     }
+    pricing {
+      priceRangeUndiscounted {
+        start {
+          gross {
+            ...Money
+          }
+        }
+        stop {
+          gross {
+            ...Money
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -137,9 +149,6 @@ export const productFragmentDetails = gql`
       id
       name
     }
-    basePrice {
-      ...Money
-    }
     margin {
       start
       stop
@@ -157,14 +166,14 @@ export const productFragmentDetails = gql`
     chargeTaxes
     publicationDate
     pricing {
-      priceRange {
+      priceRangeUndiscounted {
         start {
-          net {
+          gross {
             ...Money
           }
         }
         stop {
-          net {
+          gross {
             ...Money
           }
         }
@@ -177,7 +186,7 @@ export const productFragmentDetails = gql`
       id
       sku
       name
-      priceOverride {
+      price {
         ...Money
       }
       margin
@@ -226,7 +235,7 @@ export const fragmentVariant = gql`
       url
     }
     name
-    priceOverride {
+    price {
       ...Money
     }
     product {
@@ -308,6 +317,7 @@ export const useInitialProductFilterDataQuery = makeQuery<
 >(initialProductFilterDataQuery);
 
 const productListQuery = gql`
+  ${fragmentMoney}
   ${productFragment}
   query ProductList(
     $first: Int
@@ -335,6 +345,20 @@ const productListQuery = gql`
             values {
               id
               name
+            }
+          }
+          pricing {
+            priceRangeUndiscounted {
+              start {
+                gross {
+                  ...Money
+                }
+              }
+              stop {
+                gross {
+                  ...Money
+                }
+              }
             }
           }
         }
@@ -481,15 +505,11 @@ export const AvailableInGridAttributesQuery = TypedQuery<
 >(availableInGridAttributes);
 
 const createMultipleVariantsData = gql`
-  ${fragmentMoney}
   ${productVariantAttributesFragment}
   ${warehouseFragment}
   query CreateMultipleVariantsData($id: ID!) {
     product(id: $id) {
       ...ProductVariantAttributesFragment
-      basePrice {
-        ...Money
-      }
     }
     warehouses(first: 20) {
       edges {

@@ -1,4 +1,5 @@
 import makeQuery from "@saleor/hooks/makeQuery";
+import { fragmentMoney } from "@saleor/products/queries";
 import gql from "graphql-tag";
 
 import { pageInfoFragment } from "../queries";
@@ -73,6 +74,7 @@ export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(
 );
 
 export const categoryDetails = gql`
+  ${fragmentMoney}
   ${categoryFragment}
   ${categoryDetailsFragment}
   ${pageInfoFragment}
@@ -104,10 +106,6 @@ export const categoryDetails = gql`
           node {
             id
             name
-            basePrice {
-              amount
-              currency
-            }
             isAvailable
             thumbnail {
               url
@@ -115,6 +113,20 @@ export const categoryDetails = gql`
             productType {
               id
               name
+            }
+            pricing {
+              priceRangeUndiscounted {
+                start {
+                  gross {
+                    ...Money
+                  }
+                }
+                stop {
+                  gross {
+                    ...Money
+                  }
+                }
+              }
             }
           }
         }

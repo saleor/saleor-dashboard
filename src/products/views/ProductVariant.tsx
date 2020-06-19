@@ -155,7 +155,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                         })),
                         costPrice: decimal(data.costPrice),
                         id: variantId,
-                        priceOverride: decimal(data.priceOverride),
+                        price: decimal(data.price),
                         removeStocks: data.removeStocks,
                         sku: data.sku,
                         stocks: data.updateStocks.map(

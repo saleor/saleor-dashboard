@@ -47,7 +47,7 @@ export interface ProductVariant_images {
   url: string;
 }
 
-export interface ProductVariant_priceOverride {
+export interface ProductVariant_price {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -110,7 +110,7 @@ export interface ProductVariant {
   costPrice: ProductVariant_costPrice | null;
   images: (ProductVariant_images | null)[] | null;
   name: string;
-  priceOverride: ProductVariant_priceOverride | null;
+  price: ProductVariant_price | null;
   product: ProductVariant_product;
   sku: string;
   stocks: (ProductVariant_stocks | null)[] | null;

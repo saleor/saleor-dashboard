@@ -60,6 +60,39 @@ export interface ProductDetails_product_productType {
   hasVariants: boolean;
 }
 
+export interface ProductDetails_product_pricing_priceRangeUndiscounted_start_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductDetails_product_pricing_priceRangeUndiscounted_start {
+  __typename: "TaxedMoney";
+  gross: ProductDetails_product_pricing_priceRangeUndiscounted_start_gross;
+}
+
+export interface ProductDetails_product_pricing_priceRangeUndiscounted_stop_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductDetails_product_pricing_priceRangeUndiscounted_stop {
+  __typename: "TaxedMoney";
+  gross: ProductDetails_product_pricing_priceRangeUndiscounted_stop_gross;
+}
+
+export interface ProductDetails_product_pricing_priceRangeUndiscounted {
+  __typename: "TaxedMoneyRange";
+  start: ProductDetails_product_pricing_priceRangeUndiscounted_start | null;
+  stop: ProductDetails_product_pricing_priceRangeUndiscounted_stop | null;
+}
+
+export interface ProductDetails_product_pricing {
+  __typename: "ProductPricingInfo";
+  priceRangeUndiscounted: ProductDetails_product_pricing_priceRangeUndiscounted | null;
+}
+
 export interface ProductDetails_product_category {
   __typename: "Category";
   id: string;
@@ -70,12 +103,6 @@ export interface ProductDetails_product_collections {
   __typename: "Collection";
   id: string;
   name: string;
-}
-
-export interface ProductDetails_product_basePrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
 }
 
 export interface ProductDetails_product_margin {
@@ -102,39 +129,6 @@ export interface ProductDetails_product_purchaseCost {
   stop: ProductDetails_product_purchaseCost_stop | null;
 }
 
-export interface ProductDetails_product_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductDetails_product_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: ProductDetails_product_pricing_priceRange_start_net;
-}
-
-export interface ProductDetails_product_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductDetails_product_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: ProductDetails_product_pricing_priceRange_stop_net;
-}
-
-export interface ProductDetails_product_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: ProductDetails_product_pricing_priceRange_start | null;
-  stop: ProductDetails_product_pricing_priceRange_stop | null;
-}
-
-export interface ProductDetails_product_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: ProductDetails_product_pricing_priceRange | null;
-}
-
 export interface ProductDetails_product_images {
   __typename: "ProductImage";
   id: string;
@@ -143,7 +137,7 @@ export interface ProductDetails_product_images {
   url: string;
 }
 
-export interface ProductDetails_product_variants_priceOverride {
+export interface ProductDetails_product_variants_price {
   __typename: "Money";
   amount: number;
   currency: string;
@@ -168,7 +162,7 @@ export interface ProductDetails_product_variants {
   id: string;
   sku: string;
   name: string;
-  priceOverride: ProductDetails_product_variants_priceOverride | null;
+  price: ProductDetails_product_variants_price | null;
   margin: number | null;
   stocks: (ProductDetails_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
@@ -179,20 +173,19 @@ export interface ProductDetails_product {
   id: string;
   attributes: ProductDetails_product_attributes[];
   productType: ProductDetails_product_productType;
+  pricing: ProductDetails_product_pricing | null;
   name: string;
   descriptionJson: any;
   seoTitle: string | null;
   seoDescription: string | null;
   category: ProductDetails_product_category | null;
   collections: (ProductDetails_product_collections | null)[] | null;
-  basePrice: ProductDetails_product_basePrice | null;
   margin: ProductDetails_product_margin | null;
   purchaseCost: ProductDetails_product_purchaseCost | null;
   isAvailable: boolean | null;
   isPublished: boolean;
   chargeTaxes: boolean;
   publicationDate: any | null;
-  pricing: ProductDetails_product_pricing | null;
   images: (ProductDetails_product_images | null)[] | null;
   variants: (ProductDetails_product_variants | null)[] | null;
 }

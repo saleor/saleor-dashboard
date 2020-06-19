@@ -250,7 +250,7 @@
     "context": "optional field",
     "string": "Opcional"
   },
-  "productVariantPriceOptionalPriceOverrideField": {
+  "productVariantPriceOptionalPriceField": {
     "context": "optional field",
     "string": "Opcional"
   },
@@ -1675,6 +1675,10 @@
     "context": "button",
     "string": "Borrar"
   },
+  "src_dot_demo": {
+    "context": "notification message after log in",
+    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+  },
   "src_dot_description": {
     "string": "Descripción"
   },
@@ -2532,6 +2536,10 @@
     "context": "cancelled fulfillment, section header",
     "string": "({quantity}) cancelados"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
     "context": "button",
     "string": "Cancelar envío"
@@ -2749,6 +2757,10 @@
     "context": "order payment",
     "string": "Saldo pendiente"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
+    "context": "order discount",
+    "string": "Descuento"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
     "context": "order payment",
     "string": "Monto preautorizado"
@@ -2768,16 +2780,16 @@
     "context": "order total price",
     "string": "Total"
   },
-  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_1542417144": {
-    "context": "dialog header",
-    "string": "Crear producto"
-  },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
     "string": "SKU {sku}"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2336947364": {
     "string": "Buscar por nombre de producto, atributo, tipo de producto, etc."
+  },
+  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2775402904": {
+    "context": "dialog header",
+    "string": "Agregar Producto"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2850255786": {
     "string": "Buscar Productos"
@@ -2808,6 +2820,10 @@
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2886647373": {
     "context": "section header",
     "string": "No cumplido ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
     "context": "order line total price",
@@ -3621,16 +3637,13 @@
     "context": "header",
     "string": "Cantidad"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3143542809": {
-    "string": "Este producto no tiene stock. Puedes agregarlo <l>aquí</l>."
-  },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3482985373": {
-    "context": "button",
-    "string": "Editar almacenes"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3633706025": {
     "context": "product inventory, checkbox",
     "string": "Seguimiento de inventario"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
+    "context": "button",
+    "string": "Assign Warehouse"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "El seguimiento de inventario activo calculará automáticamente los cambios de stock"
@@ -3858,13 +3871,6 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_998917294": {
     "context": "product variant name",
     "string": "Variante"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_3482985373": {
-    "context": "dialog header",
-    "string": "Editar almacenes"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_4112406382": {
-    "string": "Seleccione los almacenes que tienen el producto seleccionado."
   },
   "src_dot_products_dot_views_dot_1542417144": {
     "context": "window title",
@@ -4146,6 +4152,9 @@
   "src_dot_services_dot_views_dot_ServiceCreate_dot_3167211165": {
     "context": "window title",
     "string": "Crear cuenta de servicio"
+  },
+  "src_dot_sessionExpired": {
+    "string": "Your session has expired. Please log in again to continue."
   },
   "src_dot_shipping": {
     "context": "shipping section name",

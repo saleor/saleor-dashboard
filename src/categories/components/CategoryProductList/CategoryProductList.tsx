@@ -18,7 +18,10 @@ import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
+import {
+  CategoryDetails_category_products_edges_node,
+  CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
+} from "../../types/CategoryDetails";
 
 const useStyles = makeStyles(
   theme => ({
@@ -27,7 +30,7 @@ const useStyles = makeStyles(
         width: "auto"
       },
       colPrice: {
-        width: 200
+        width: 300
       },
       colPublished: {
         width: 200
@@ -93,6 +96,51 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
   const intl = useIntl();
 
   const numberOfColumns = 5;
+
+  const getProductPrice = (
+    priceRangeUndiscounted: CategoryDetails_category_products_edges_node_pricing_priceRangeUndiscounted
+  ) => {
+    if (!priceRangeUndiscounted) {
+      return null;
+    }
+
+    const { start, stop } = priceRangeUndiscounted;
+    const {
+      gross: { amount: startAmount }
+    } = start;
+    const {
+      gross: { amount: stopAmount }
+    } = stop;
+
+    if (startAmount === stopAmount) {
+      return (
+        <Money
+          money={{
+            amount: startAmount,
+            currency: start.gross.currency
+          }}
+        />
+      );
+    } else {
+      return (
+        <>
+          <Money
+            money={{
+              amount: startAmount,
+              currency: start.gross.currency
+            }}
+          />
+          {" - "}
+          <Money
+            money={{
+              amount: stopAmount,
+              currency: stop.gross.currency
+            }}
+          />
+        </>
+      );
+    }
+  };
 
   return (
     <div className={classes.tableContainer}>
@@ -207,10 +255,8 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                     )}
                   </TableCell>
                   <TableCell className={classes.colPrice}>
-                    {maybe(() => product.basePrice) &&
-                    maybe(() => product.basePrice.amount) !== undefined &&
-                    maybe(() => product.basePrice.currency) !== undefined ? (
-                      <Money money={product.basePrice} />
+                    {product?.pricing?.priceRangeUndiscounted ? (
+                      getProductPrice(product?.pricing?.priceRangeUndiscounted)
                     ) : (
                       <Skeleton />
                     )}

@@ -250,7 +250,7 @@
     "context": "optional field",
     "string": "Không bắt buộc"
   },
-  "productVariantPriceOptionalPriceOverrideField": {
+  "productVariantPriceOptionalPriceField": {
     "context": "optional field",
     "string": "Không bắt buộc"
   },
@@ -1675,6 +1675,10 @@
     "context": "button",
     "string": "Xoá"
   },
+  "src_dot_demo": {
+    "context": "notification message after log in",
+    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+  },
   "src_dot_description": {
     "string": "Mô tả"
   },
@@ -2532,6 +2536,10 @@
     "context": "cancelled fulfillment, section header",
     "string": "Cancelled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderFulfillment_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
+  },
   "src_dot_orders_dot_components_dot_OrderFulfillment_dot_732594284": {
     "context": "button",
     "string": "Huỷ Giao Hàng"
@@ -2749,6 +2757,10 @@
     "context": "order payment",
     "string": "Số tiền cần xử lý"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
+    "context": "order discount",
+    "string": "Discount"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
     "context": "order payment",
     "string": "Số tiền đã được uỷ quyền"
@@ -2768,16 +2780,16 @@
     "context": "order total price",
     "string": "Tổng"
   },
-  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_1542417144": {
-    "context": "dialog header",
-    "string": "Tạo Sản Phẩm"
-  },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
     "string": "SKU {sku}"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2336947364": {
     "string": "Tìm bằng tên sản phẩm, thuộc tính, chủng loại, ..."
+  },
+  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2775402904": {
+    "context": "dialog header",
+    "string": "Add Product"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2850255786": {
     "string": "Tìm Các Sản Phẩm"
@@ -2808,6 +2820,10 @@
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_2886647373": {
     "context": "section header",
     "string": "Chưa Đáp Ứng ({quantity})"
+  },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_693960049": {
+    "context": "ordered product sku",
+    "string": "SKU"
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledItems_dot_878013594": {
     "context": "order line total price",
@@ -3621,16 +3637,13 @@
     "context": "header",
     "string": "Số lượng"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3143542809": {
-    "string": "This product doesn't have any stock. You can add it <l>here</l>."
-  },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3482985373": {
-    "context": "button",
-    "string": "Edit Warehouses"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3633706025": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
+    "context": "button",
+    "string": "Assign Warehouse"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
@@ -3858,13 +3871,6 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_998917294": {
     "context": "product variant name",
     "string": "Biến Thể"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_3482985373": {
-    "context": "dialog header",
-    "string": "Edit Warehouses"
-  },
-  "src_dot_products_dot_components_dot_ProductWarehousesDialog_dot_4112406382": {
-    "string": "Select warehouses that stock selected product"
   },
   "src_dot_products_dot_views_dot_1542417144": {
     "context": "window title",
@@ -4146,6 +4152,9 @@
   "src_dot_services_dot_views_dot_ServiceCreate_dot_3167211165": {
     "context": "window title",
     "string": "Tạo Tài Khoản Dịch Vụ"
+  },
+  "src_dot_sessionExpired": {
+    "string": "Your session has expired. Please log in again to continue."
   },
   "src_dot_shipping": {
     "context": "shipping section name",

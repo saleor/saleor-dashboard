@@ -57,7 +57,7 @@ export interface AuthorizationKeyDelete_authorizationKeyDelete_shop {
   __typename: "Shop";
   authorizationKeys: (AuthorizationKeyDelete_authorizationKeyDelete_shop_authorizationKeys | null)[];
   companyAddress: AuthorizationKeyDelete_authorizationKeyDelete_shop_companyAddress | null;
-  countries: (AuthorizationKeyDelete_authorizationKeyDelete_shop_countries | null)[];
+  countries: AuthorizationKeyDelete_authorizationKeyDelete_shop_countries[];
   customerSetPasswordUrl: string | null;
   defaultMailSenderAddress: string | null;
   defaultMailSenderName: string | null;

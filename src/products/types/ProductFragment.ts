@@ -11,16 +11,11 @@ export interface ProductFragment_thumbnail {
   url: string;
 }
 
-export interface ProductFragment_basePrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface ProductFragment_productType {
   __typename: "ProductType";
   id: string;
   name: string;
+  hasVariants: boolean;
 }
 
 export interface ProductFragment {
@@ -30,6 +25,5 @@ export interface ProductFragment {
   thumbnail: ProductFragment_thumbnail | null;
   isAvailable: boolean | null;
   isPublished: boolean;
-  basePrice: ProductFragment_basePrice | null;
   productType: ProductFragment_productType;
 }
