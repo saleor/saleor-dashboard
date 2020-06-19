@@ -1,4 +1,5 @@
 import makeQuery from "@saleor/hooks/makeQuery";
+import { fragmentMoney } from "@saleor/products/queries";
 import gql from "graphql-tag";
 
 import { pageInfoFragment } from "../queries";
@@ -7,13 +8,6 @@ import {
   CategoryDetailsVariables
 } from "./types/CategoryDetails";
 import { RootCategories } from "./types/RootCategories";
-
-export const fragmentMoney = gql`
-  fragment Money on Money {
-    amount
-    currency
-  }
-`;
 
 export const categoryFragment = gql`
   fragment CategoryFragment on Category {
