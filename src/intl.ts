@@ -141,6 +141,10 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Save",
     description: "button"
   },
+  send: {
+    defaultMessage: "Send",
+    description: "button"
+  },
   show: {
     defaultMessage: "Show",
     description: "button"
