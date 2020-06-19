@@ -72,7 +72,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       field: AppSortField.CREATION_DATE
     }
   };
-
   const intervalId = useRef<null | number>(null);
 
   const removeInstallation = (id: string) =>
@@ -111,7 +110,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   } = useCustomAppsListQuery({
     displayLoader: true,
     variables: {
-      first: 100,
+      first: 1000,
       ...queryVariables,
       filter: {
         type: AppTypeEnum.LOCAL

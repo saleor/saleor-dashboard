@@ -390,6 +390,18 @@
     "context": "section header",
     "string": "About this app"
   },
+  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_198187074": {
+    "context": "button",
+    "string": "Support/FAQ"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_3302125406": {
+    "context": "button",
+    "string": "My App"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_3662390044": {
+    "context": "button",
+    "string": "Dashboard"
+  },
   "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_1462011531": {
     "context": "dialog header",
     "string": "Delete App"
@@ -538,12 +550,8 @@
     "string": "Create App"
   },
   "src_dot_apps_dot_components_dot_DeactivatedText_dot_3064552173": {
-    "context": "app status",
+    "context": "app deactivated",
     "string": "Deactivated"
-  },
-  "src_dot_apps_dot_components_dot_InstalledApps_dot_1554529776": {
-    "context": "section header",
-    "string": "External Apps"
   },
   "src_dot_apps_dot_components_dot_InstalledApps_dot_1636202177": {
     "context": "about app",
@@ -552,6 +560,10 @@
   "src_dot_apps_dot_components_dot_InstalledApps_dot_186286611": {
     "context": "apps content",
     "string": "You don’t have any installed apps in your dashboard"
+  },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_2008086393": {
+    "context": "section header",
+    "string": "Thirdparty Apps"
   },
   "src_dot_apps_dot_components_dot_Marketplace_dot_2932910073": {
     "context": "section header",
@@ -600,6 +612,10 @@
   "src_dot_apps_dot_components_dot_TokenDeleteDialog_dot_981802752": {
     "context": "delete token",
     "string": "Are you sure you want to delete token {token}?"
+  },
+  "src_dot_apps_dot_views_dot_AppDetailsSettings_dot_2140018198": {
+    "context": "app settings error",
+    "string": "Failed to fetch app settings"
   },
   "src_dot_apps_dot_views_dot_AppDetails_dot_2021043385": {
     "context": "snackbar text",
@@ -1779,9 +1795,6 @@
   },
   "src_dot_configuration_dot_1742602794": {
     "string": "Attributes and Product Types"
-  },
-  "src_dot_configuration_dot_2387898569": {
-    "string": "Manage external integrations accounts"
   },
   "src_dot_configuration_dot_3140151600": {
     "string": "Staff Settings"
@@ -4424,159 +4437,6 @@
   "src_dot_serviceAccounts": {
     "context": "service accounts section name",
     "string": "Service Accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_1848599267": {
-    "context": "checkbox label",
-    "string": "User has full access to the store"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_248507553": {
-    "context": "header",
-    "string": "Create New Account"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_27827485": {
-    "context": "checkbox label",
-    "string": "Service account is active"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_3639008725": {
-    "context": "card description",
-    "string": "Expand or restrict user's permissions to access certain part of saleor system."
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_1336855942": {
-    "string": "Generated Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_2080322626": {
-    "string": "This token gives you access to your shop's API, which you'll find here: {url}"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_2864204643": {
-    "context": "button",
-    "string": "Copied"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_3406541221": {
-    "context": "button",
-    "string": "Copy token"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_4189999598": {
-    "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
-  },
-  "src_dot_services_dot_components_dot_ServiceDeleteDialog_dot_1534767622": {
-    "context": "dialog header",
-    "string": "Delete Service Account"
-  },
-  "src_dot_services_dot_components_dot_ServiceDeleteDialog_dot_2297471173": {
-    "context": "delete service account",
-    "string": "Are you sure you want to delete {name}?"
-  },
-  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_1848599267": {
-    "context": "checkbox label",
-    "string": "User has full access to the store"
-  },
-  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_27827485": {
-    "context": "checkbox label",
-    "string": "Service account is active"
-  },
-  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_3639008725": {
-    "context": "card description",
-    "string": "Expand or restrict user's permissions to access certain part of saleor system."
-  },
-  "src_dot_services_dot_components_dot_ServiceInfo_dot_3789449123": {
-    "context": "service account",
-    "string": "Account Name"
-  },
-  "src_dot_services_dot_components_dot_ServiceInfo_dot_426959482": {
-    "context": "header",
-    "string": "Service Account Information"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_1895355592": {
-    "string": "Search Service Accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_4040605455": {
-    "context": "tab name",
-    "string": "All Service Accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_624280156": {
-    "context": "button",
-    "string": "Create account"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_active": {
-    "context": "service account",
-    "string": "Active"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_deactivated": {
-    "context": "service account",
-    "string": "Inactive"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_1342308051": {
-    "string": "No service accounts found"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_31853942": {
-    "context": "account status",
-    "string": "active"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_3239722049": {
-    "context": "account status",
-    "string": "inactive"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_636461959": {
-    "context": "service name",
-    "string": "Name"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_1336855942": {
-    "string": "Generated Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_2530792168": {
-    "string": "Access token is used to authenticate service accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3009959880": {
-    "string": "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3406541221": {
-    "context": "button",
-    "string": "Copy token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3875340101": {
-    "context": "header",
-    "string": "Create Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_4017491013": {
-    "string": "Token Note"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_4120989039": {
-    "context": "create service token, button",
-    "string": "Create"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenDeleteDialog_dot_1534767622": {
-    "context": "dialog title",
-    "string": "Delete Service Account"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenDeleteDialog_dot_981802752": {
-    "context": "delete token",
-    "string": "Are you sure you want to delete token {token}?"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_2446088470": {
-    "context": "service account key",
-    "string": "Key"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_2639089057": {
-    "string": "No tokens found"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_3875340101": {
-    "context": "button",
-    "string": "Create Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_4017491013": {
-    "string": "Token Note"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_4190792473": {
-    "context": "table actions",
-    "string": "Actions"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_426959482": {
-    "context": "header",
-    "string": "Service Account Information"
-  },
-  "src_dot_services_dot_views_dot_ServiceCreate_dot_3167211165": {
-    "context": "window title",
-    "string": "Create Service Account"
   },
   "src_dot_sessionExpired": {
     "string": "Your session has expired. Please log in again to continue."
