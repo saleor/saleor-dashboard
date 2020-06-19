@@ -45,7 +45,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
       header={
         <CardTitle
           title={intl.formatMessage({
-            defaultMessage: "External Apps",
+            defaultMessage: "Thirdparty Apps",
             description: "section header"
           })}
         />
