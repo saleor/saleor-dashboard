@@ -2,7 +2,7 @@ import React from "react";
 
 import BackgroundTasksContext from "./context";
 import { handleTask, queueCustom } from "./tasks";
-import { QueuedTask, Task, TaskData } from "./types";
+import { QueuedTask, Task, TaskData, TaskStatus } from "./types";
 
 export const backgroundTasksRefreshTime = 15 * 1000;
 
@@ -12,7 +12,34 @@ export function useBackgroundTasks() {
 
   React.useEffect(() => {
     const intervalId = setInterval(() => {
-      tasks.current = tasks.current.filter(task => !handleTask(task));
+      const queue = async () => {
+        tasks.current = tasks.current.filter(
+          task => task.status !== TaskStatus.ENDED
+        );
+        try {
+          await Promise.all(
+            tasks.current.map(async task => {
+              let hasFinished: boolean;
+
+              try {
+                hasFinished = await handleTask(task);
+              } catch (error) {
+                throw error;
+              }
+              if (hasFinished) {
+                const taskIndex = tasks.current.findIndex(
+                  t => t.id === task.id
+                );
+                tasks.current[taskIndex].status = TaskStatus.ENDED;
+              }
+            })
+          );
+        } catch (error) {
+          throw error;
+        }
+      };
+
+      queue();
     }, backgroundTasksRefreshTime);
 
     return () => clearInterval(intervalId);

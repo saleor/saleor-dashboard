@@ -1,15 +1,14 @@
-import { QueuedTask, TaskData } from "./types";
+import { QueuedTask, TaskData, TaskStatus } from "./types";
 
-export function handleTask(task: QueuedTask) {
-  let ok: boolean;
+export async function handleTask(task: QueuedTask): Promise<boolean> {
+  let ok = false;
   try {
-    ok = task.handle();
+    ok = await task.handle();
+    if (ok) {
+      task.onCompleted();
+    }
   } catch (error) {
     task.onError(error);
-  }
-
-  if (ok) {
-    task.onCompleted();
   }
 
   return ok;
@@ -36,7 +35,8 @@ export function queueCustom(
       handle: data.handle,
       id,
       onCompleted: data.onCompleted,
-      onError: data.onError || handleError
+      onError: data.onError || handleError,
+      status: TaskStatus.PENDING
     }
   ];
 }
