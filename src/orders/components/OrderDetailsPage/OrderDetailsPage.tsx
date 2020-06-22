@@ -26,17 +26,17 @@ import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItems";
 
 const useStyles = makeStyles(
-  theme => ({
+  (theme) => ({
     date: {
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     header: {
       display: "flex",
-      marginBottom: 0
-    }
+      marginBottom: 0,
+    },
   }),
   {
-    name: "OrderDetailsPage"
+    name: "OrderDetailsPage",
   }
 );
 
@@ -67,7 +67,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onInvoiceClick(invoice: InvoiceFragment);
 }
 
-const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
+const OrderDetailsPage: React.FC<OrderDetailsPageProps> = (props) => {
   const {
     order,
     userPermissions,
@@ -84,7 +84,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onPaymentVoid,
     onShippingAddressEdit,
     onProfileView,
-    onInvoiceClick
+    onInvoiceClick,
   } = props;
   const classes = useStyles(props);
 
@@ -94,7 +94,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const canEditAddresses = maybe(() => order.status) !== OrderStatus.CANCELED;
   const canFulfill = maybe(() => order.status) !== OrderStatus.CANCELED;
   const unfulfilled = maybe(() => order.lines, []).filter(
-    line => line.quantityFulfilled < line.quantity
+    (line) => line.quantityFulfilled < line.quantity
   );
 
   return (
@@ -113,10 +113,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               {
                 label: intl.formatMessage({
                   defaultMessage: "Cancel order",
-                  description: "button"
+                  description: "button",
                 }),
-                onSelect: onOrderCancel
-              }
+                onSelect: onOrderCancel,
+              },
             ]}
           />
         )}

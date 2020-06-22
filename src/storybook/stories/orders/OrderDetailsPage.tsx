@@ -21,6 +21,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   countries,
   onBack: () => undefined,
   onBillingAddressEdit: undefined,
+  onClickInvoice: () => undefined,
   onFulfillmentCancel: () => undefined,
   onFulfillmentTrackingNumberUpdate: () => undefined,
   onInvoiceClick: () => undefined,
