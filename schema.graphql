@@ -1442,11 +1442,22 @@ type CountryDisplay {
   vat: VAT
 }
 
-type CreateToken {
-  token: String
+type CreateInvoice {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  accountErrors: [AccountError!]!
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
+}
+
+input CreateInvoiceInput {
+  number: String!
+  url: String!
+}
+
+type CreateToken {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  token: String
   user: User
+  accountErrors: [AccountError!]!
 }
 
 type CreditCard {
@@ -1541,6 +1552,12 @@ input DateTimeRangeInput {
 }
 
 scalar Decimal
+
+type DeleteInvoice {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
+}
 
 type DeleteMetadata {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
@@ -1945,7 +1962,50 @@ input IntRangeInput {
   lte: Int
 }
 
+type Invoice implements ObjectWithMetadata & Job & Node {
+  id: ID!
+  metadata: [MetadataItem]!
+  status: JobStatusEnum!
+  number: String
+  externalUrl: String
+  privateMetadata: [MetadataItem]!
+  privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
+  meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  url: String
+}
+
+type InvoiceError {
+  field: String
+  message: String
+  code: InvoiceErrorCode!
+}
+
+enum InvoiceErrorCode {
+  REQUIRED
+  NOT_READY
+  URL_NOT_SET
+  EMAIL_NOT_SET
+  NUMBER_NOT_SET
+  NOT_FOUND
+  INVALID_STATUS
+}
+
 scalar JSONString
+
+interface Job {
+  status: JobStatusEnum!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum JobStatusEnum {
+  PENDING
+  SUCCESS
+  FAILED
+  DELETED
+}
 
 enum LanguageCodeEnum {
   AR
@@ -2430,6 +2490,12 @@ type Mutation {
   menuItemUpdate(id: ID!, input: MenuItemInput!): MenuItemUpdate
   menuItemTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): MenuItemTranslate
   menuItemMove(menu: ID!, moves: [MenuItemMoveInput]!): MenuItemMove
+  requestInvoice(number: String, orderId: ID!): RequestInvoice
+  requestDeleteInvoice(id: ID!): RequestDeleteInvoice
+  createInvoice(input: CreateInvoiceInput!, orderId: ID!): CreateInvoice
+  deleteInvoice(id: ID!): DeleteInvoice
+  updateInvoice(id: ID!, input: UpdateInvoiceInput!): UpdateInvoice
+  sendInvoiceEmail(id: ID!): SendInvoiceEmail
   giftCardActivate(id: ID!): GiftCardActivate
   giftCardCreate(input: GiftCardCreateInput!): GiftCardCreate
   giftCardDeactivate(id: ID!): GiftCardDeactivate
@@ -2576,6 +2642,7 @@ type Order implements Node & ObjectWithMetadata {
   lines: [OrderLine]!
   actions: [OrderAction]!
   availableShippingMethods: [ShippingMethod]
+  invoices: [Invoice]
   number: String
   isPaid: Boolean
   paymentStatus: PaymentChargeStatusEnum
@@ -2753,6 +2820,7 @@ enum OrderEventsEnum {
   ORDER_FULLY_PAID
   UPDATED_ADDRESS
   EMAIL_SENT
+  PAYMENT_AUTHORIZED
   PAYMENT_CAPTURED
   PAYMENT_REFUNDED
   PAYMENT_VOIDED
@@ -3176,8 +3244,8 @@ enum PermissionEnum {
 
 type PermissionGroupCreate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  group: Group
   permissionGroupErrors: [PermissionGroupError!]!
+  group: Group
 }
 
 input PermissionGroupCreateInput {
@@ -3226,8 +3294,8 @@ input PermissionGroupSortingInput {
 
 type PermissionGroupUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  group: Group
   permissionGroupErrors: [PermissionGroupError!]!
+  group: Group
 }
 
 input PermissionGroupUpdateInput {
@@ -3972,10 +4040,22 @@ enum ReportingPeriod {
   THIS_MONTH
 }
 
+type RequestDeleteInvoice {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
+}
+
 type RequestEmailChange {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   user: User
   accountErrors: [AccountError!]!
+}
+
+type RequestInvoice {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
 }
 
 type RequestPasswordReset {
@@ -4101,6 +4181,12 @@ type SaleUpdate {
 type SelectedAttribute {
   attribute: Attribute!
   values: [AttributeValue]!
+}
+
+type SendInvoiceEmail {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
 }
 
 input SeoInput {
@@ -4336,8 +4422,8 @@ type ShippingZoneCountableEdge {
 
 type ShippingZoneCreate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  shippingZone: ShippingZone
   shippingErrors: [ShippingError!]!
+  shippingZone: ShippingZone
 }
 
 input ShippingZoneCreateInput {
@@ -4355,8 +4441,8 @@ type ShippingZoneDelete {
 
 type ShippingZoneUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  shippingZone: ShippingZone
   shippingErrors: [ShippingError!]!
+  shippingZone: ShippingZone
 }
 
 input ShippingZoneUpdateInput {
@@ -4749,6 +4835,17 @@ input TranslationInput {
 
 scalar UUID
 
+type UpdateInvoice {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  invoiceErrors: [InvoiceError!]!
+  invoice: Invoice
+}
+
+input UpdateInvoiceInput {
+  number: String
+  url: String
+}
+
 type UpdateMetadata {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   metadataErrors: [MetadataError!]!
@@ -5125,14 +5222,14 @@ input WarehouseFilterInput {
 
 type WarehouseShippingZoneAssign {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  warehouse: Warehouse
   warehouseErrors: [WarehouseError!]!
+  warehouse: Warehouse
 }
 
 type WarehouseShippingZoneUnassign {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  warehouse: Warehouse
   warehouseErrors: [WarehouseError!]!
+  warehouse: Warehouse
 }
 
 enum WarehouseSortField {
@@ -5198,8 +5295,8 @@ input WebhookCreateInput {
 
 type WebhookDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  webhook: Webhook
   webhookErrors: [WebhookError!]!
+  webhook: Webhook
 }
 
 type WebhookError {
@@ -5228,6 +5325,9 @@ enum WebhookEventTypeEnum {
   ORDER_UPDATED
   ORDER_CANCELLED
   ORDER_FULFILLED
+  INVOICE_REQUESTED
+  INVOICE_DELETED
+  INVOICE_SENT
   CUSTOMER_CREATED
   PRODUCT_CREATED
   CHECKOUT_QUANTITY_CHANGED
@@ -5245,6 +5345,9 @@ enum WebhookSampleEventTypeEnum {
   ORDER_UPDATED
   ORDER_CANCELLED
   ORDER_FULFILLED
+  INVOICE_REQUESTED
+  INVOICE_DELETED
+  INVOICE_SENT
   CUSTOMER_CREATED
   PRODUCT_CREATED
   CHECKOUT_QUANTITY_CHANGED
@@ -5265,8 +5368,8 @@ input WebhookSortingInput {
 
 type WebhookUpdate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
-  webhook: Webhook
   webhookErrors: [WebhookError!]!
+  webhook: Webhook
 }
 
 input WebhookUpdateInput {

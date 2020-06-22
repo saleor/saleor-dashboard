@@ -252,6 +252,14 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order_discount {
   currency: string;
 }
 
+export interface OrderLinesAdd_draftOrderLinesCreate_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+}
+
 export interface OrderLinesAdd_draftOrderLinesCreate_order {
   __typename: "Order";
   id: string;
@@ -278,6 +286,7 @@ export interface OrderLinesAdd_draftOrderLinesCreate_order {
   userEmail: string | null;
   availableShippingMethods: (OrderLinesAdd_draftOrderLinesCreate_order_availableShippingMethods | null)[] | null;
   discount: OrderLinesAdd_draftOrderLinesCreate_order_discount | null;
+  invoices: (OrderLinesAdd_draftOrderLinesCreate_order_invoices | null)[] | null;
 }
 
 export interface OrderLinesAdd_draftOrderLinesCreate {

@@ -252,6 +252,14 @@ export interface OrderCapture_orderCapture_order_discount {
   currency: string;
 }
 
+export interface OrderCapture_orderCapture_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+}
+
 export interface OrderCapture_orderCapture_order {
   __typename: "Order";
   id: string;
@@ -278,6 +286,7 @@ export interface OrderCapture_orderCapture_order {
   userEmail: string | null;
   availableShippingMethods: (OrderCapture_orderCapture_order_availableShippingMethods | null)[] | null;
   discount: OrderCapture_orderCapture_order_discount | null;
+  invoices: (OrderCapture_orderCapture_order_invoices | null)[] | null;
 }
 
 export interface OrderCapture_orderCapture {

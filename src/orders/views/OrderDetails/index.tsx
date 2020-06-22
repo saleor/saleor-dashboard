@@ -229,6 +229,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onProfileView={() =>
                             navigate(customerUrl(order.user.id))
                           }
+                          onClickInvoice={invoice =>
+                            window.open(invoice.url, "_blank")
+                          }
                         />
                         <OrderCannotCancelOrderDialog
                           onClose={closeModal}
