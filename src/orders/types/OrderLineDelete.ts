@@ -252,6 +252,14 @@ export interface OrderLineDelete_draftOrderLineDelete_order_discount {
   currency: string;
 }
 
+export interface OrderLineDelete_draftOrderLineDelete_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+}
+
 export interface OrderLineDelete_draftOrderLineDelete_order {
   __typename: "Order";
   id: string;
@@ -278,6 +286,7 @@ export interface OrderLineDelete_draftOrderLineDelete_order {
   userEmail: string | null;
   availableShippingMethods: (OrderLineDelete_draftOrderLineDelete_order_availableShippingMethods | null)[] | null;
   discount: OrderLineDelete_draftOrderLineDelete_order_discount | null;
+  invoices: (OrderLineDelete_draftOrderLineDelete_order_invoices | null)[] | null;
 }
 
 export interface OrderLineDelete_draftOrderLineDelete {

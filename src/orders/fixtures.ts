@@ -914,6 +914,15 @@ export const order = (placeholder: string): OrderDetails_order => ({
     }
   ],
   id: "T3JkZXI6OQ==",
+  invoices: [
+    {
+      __typename: "Invoice",
+      createdAt: "2020-06-22T13:52:05.094636+00:00",
+      id: "SW52b2ljZTox",
+      number: "1",
+      url: "anything"
+    }
+  ],
   lines: [
     {
       __typename: "OrderLine",
@@ -1046,6 +1055,15 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   events: [],
   fulfillments: [],
   id: "T3JkZXI6MjQ=",
+  invoices: [
+    {
+      __typename: "Invoice",
+      createdAt: "2020-06-22T13:52:05.094636+00:00",
+      id: "SW52b2ljZTox",
+      number: "1",
+      url: "anything"
+    }
+  ],
   lines: [
     {
       __typename: "OrderLine" as "OrderLine",

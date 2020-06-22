@@ -9,6 +9,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
+import { InvoiceFragment } from "@saleor/orders/types/InvoiceFragment";
 import { UserPermissionProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -63,6 +64,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onOrderCancel();
   onNoteAdd(data: HistoryFormData);
   onProfileView();
+  onClickInvoice(invoice: InvoiceFragment);
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
@@ -81,7 +83,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onPaymentRefund,
     onPaymentVoid,
     onShippingAddressEdit,
-    onProfileView
+    onProfileView,
+    onClickInvoice
   } = props;
   const classes = useStyles(props);
 
@@ -180,7 +183,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             onProfileView={onProfileView}
           />
           <CardSpacer />
-          <OrderInvoiceList />
+          <OrderInvoiceList
+            invoices={order?.invoices}
+            onClickInvoice={onClickInvoice}
+          />
           <CardSpacer />
           <OrderCustomerNote note={maybe(() => order.customerNote)} />
         </div>

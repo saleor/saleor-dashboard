@@ -252,6 +252,14 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_discount {
   currency: string;
 }
 
+export interface OrderDraftUpdate_draftOrderUpdate_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+}
+
 export interface OrderDraftUpdate_draftOrderUpdate_order {
   __typename: "Order";
   id: string;
@@ -278,6 +286,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order {
   userEmail: string | null;
   availableShippingMethods: (OrderDraftUpdate_draftOrderUpdate_order_availableShippingMethods | null)[] | null;
   discount: OrderDraftUpdate_draftOrderUpdate_order_discount | null;
+  invoices: (OrderDraftUpdate_draftOrderUpdate_order_invoices | null)[] | null;
 }
 
 export interface OrderDraftUpdate_draftOrderUpdate {

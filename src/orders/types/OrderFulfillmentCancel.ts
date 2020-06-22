@@ -252,6 +252,14 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_discount {
   currency: string;
 }
 
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+}
+
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   __typename: "Order";
   id: string;
@@ -278,6 +286,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   userEmail: string | null;
   availableShippingMethods: (OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods | null)[] | null;
   discount: OrderFulfillmentCancel_orderFulfillmentCancel_order_discount | null;
+  invoices: (OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices | null)[] | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel {

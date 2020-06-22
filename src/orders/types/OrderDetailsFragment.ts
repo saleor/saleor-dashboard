@@ -246,6 +246,14 @@ export interface OrderDetailsFragment_discount {
   currency: string;
 }
 
+export interface OrderDetailsFragment_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+}
+
 export interface OrderDetailsFragment {
   __typename: "Order";
   id: string;
@@ -272,4 +280,5 @@ export interface OrderDetailsFragment {
   userEmail: string | null;
   availableShippingMethods: (OrderDetailsFragment_availableShippingMethods | null)[] | null;
   discount: OrderDetailsFragment_discount | null;
+  invoices: (OrderDetailsFragment_invoices | null)[] | null;
 }

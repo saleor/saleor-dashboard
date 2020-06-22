@@ -252,6 +252,14 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_discount {
   currency: string;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+}
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   __typename: "Order";
   id: string;
@@ -278,6 +286,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   userEmail: string | null;
   availableShippingMethods: (OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods | null)[] | null;
   discount: OrderMarkAsPaid_orderMarkAsPaid_order_discount | null;
+  invoices: (OrderMarkAsPaid_orderMarkAsPaid_order_invoices | null)[] | null;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid {
