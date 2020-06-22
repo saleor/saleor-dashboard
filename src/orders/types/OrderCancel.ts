@@ -252,6 +252,14 @@ export interface OrderCancel_orderCancel_order_discount {
   currency: string;
 }
 
+export interface OrderCancel_orderCancel_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+}
+
 export interface OrderCancel_orderCancel_order {
   __typename: "Order";
   id: string;
@@ -278,6 +286,7 @@ export interface OrderCancel_orderCancel_order {
   userEmail: string | null;
   availableShippingMethods: (OrderCancel_orderCancel_order_availableShippingMethods | null)[] | null;
   discount: OrderCancel_orderCancel_order_discount | null;
+  invoices: (OrderCancel_orderCancel_order_invoices | null)[] | null;
 }
 
 export interface OrderCancel_orderCancel {

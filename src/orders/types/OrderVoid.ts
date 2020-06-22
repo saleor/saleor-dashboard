@@ -252,6 +252,14 @@ export interface OrderVoid_orderVoid_order_discount {
   currency: string;
 }
 
+export interface OrderVoid_orderVoid_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+}
+
 export interface OrderVoid_orderVoid_order {
   __typename: "Order";
   id: string;
@@ -278,6 +286,7 @@ export interface OrderVoid_orderVoid_order {
   userEmail: string | null;
   availableShippingMethods: (OrderVoid_orderVoid_order_availableShippingMethods | null)[] | null;
   discount: OrderVoid_orderVoid_order_discount | null;
+  invoices: (OrderVoid_orderVoid_order_invoices | null)[] | null;
 }
 
 export interface OrderVoid_orderVoid {

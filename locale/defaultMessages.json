@@ -2667,6 +2667,33 @@
     "context": "order history message",
     "string": "Order was cancelled"
   },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_24460204": {
+    "context": "section header",
+    "string": "Invoices"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_2489266682": {
+    "context": "invoice number",
+    "string": "Invoice no"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_2739475235": {
+    "context": "invoice create date prefix",
+    "string": "created"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_3340654960": {
+    "string": "No invoices to be shown"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_3589949197": {
+    "context": "invoice number prefix",
+    "string": "Invoice"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_4120604650": {
+    "context": "action for invoice",
+    "string": "Action"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_949234851": {
+    "context": "generate invoice button",
+    "string": "Generate"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_2826235371": {
     "context": "button",
     "string": "Create order"
@@ -4016,6 +4043,10 @@
   "src_dot_savedChanges": {
     "string": "Saved changes"
   },
+  "src_dot_send": {
+    "context": "button",
+    "string": "Send"
+  },
   "src_dot_serviceAccounts": {
     "context": "service accounts section name",
     "string": "Service Accounts"
@@ -5258,6 +5289,10 @@
     "context": "dialog header",
     "string": "Delete Webhook"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368317066": {
+    "context": "event",
+    "string": "Invoice deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1436364351": {
     "context": "section header",
     "string": "Events"
@@ -5269,6 +5304,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",
     "string": "All events"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2862596150": {
+    "context": "event",
+    "string": "Invoice sent"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2899821092": {
     "context": "event",
@@ -5301,6 +5340,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_40035964": {
     "context": "event",
     "string": "Changed quantity in checkout"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4186057882": {
+    "context": "event",
+    "string": "Invoice requested"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
     "context": "event",
