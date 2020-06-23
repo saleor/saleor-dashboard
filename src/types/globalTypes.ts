@@ -380,6 +380,23 @@ export enum FulfillmentStatus {
   FULFILLED = "FULFILLED",
 }
 
+export enum InvoiceErrorCode {
+  EMAIL_NOT_SET = "EMAIL_NOT_SET",
+  INVALID_STATUS = "INVALID_STATUS",
+  NOT_FOUND = "NOT_FOUND",
+  NOT_READY = "NOT_READY",
+  NUMBER_NOT_SET = "NUMBER_NOT_SET",
+  REQUIRED = "REQUIRED",
+  URL_NOT_SET = "URL_NOT_SET",
+}
+
+export enum JobStatusEnum {
+  DELETED = "DELETED",
+  FAILED = "FAILED",
+  PENDING = "PENDING",
+  SUCCESS = "SUCCESS",
+}
+
 export enum LanguageCodeEnum {
   AR = "AR",
   AZ = "AZ",

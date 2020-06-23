@@ -104,6 +104,7 @@ export const fragmentInvoice = gql`
     number
     createdAt
     url
+    status
   }
 `;
 
