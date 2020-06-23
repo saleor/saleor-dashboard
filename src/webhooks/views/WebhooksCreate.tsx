@@ -1,3 +1,4 @@
+import { useAppDetails } from "@saleor/apps/queries";
 import { customAppUrl } from "@saleor/apps/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -21,9 +22,12 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
+  const { data } = useAppDetails({ variables: { id } });
+
   const onSubmit = (data: WebhookCreateData) => {
     if (data.webhookCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(webhookUrl(data.webhookCreate.webhook.id));
@@ -60,6 +64,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
         })}
       />
       <WebhookCreatePage
+        appName={data?.app?.name}
         disabled={false}
         errors={webhookCreateOpts.data?.webhookCreate.errors || []}
         onBack={handleBack}

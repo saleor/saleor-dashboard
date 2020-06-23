@@ -35,6 +35,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
       if (data.appFetchManifest.errors.length) {
         data.appFetchManifest.errors.forEach(error => {
           notify({
+            status: "error",
             text: error.message
           });
         });
@@ -91,7 +92,8 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
           description: "window title"
         })}
       />
-      {!!fetchManifestOpts.data?.appFetchManifest?.errors?.length ? (
+      {!!fetchManifestOpts.data?.appFetchManifest?.errors?.length ||
+      !!fetchManifestOpts.error ? (
         <AppInstallErrorPage onBack={() => navigate("/")} />
       ) : (
         <AppInstallPage

@@ -27,6 +27,7 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
   const onSubmit = (data: AppCreate) => {
     if (data.appCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(customAppUrl(data.appCreate.app.id));

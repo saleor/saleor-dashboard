@@ -6,6 +6,7 @@ import React from "react";
 import WebhookCreatePage, { WebhookCreatePageProps } from "./WebhookCreatePage";
 
 const props: WebhookCreatePageProps = {
+  appName: "App",
   disabled: false,
   errors: [],
   onBack: () => undefined,

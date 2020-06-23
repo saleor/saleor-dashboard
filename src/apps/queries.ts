@@ -72,6 +72,35 @@ const installedAppsList = gql`
   }
 `;
 
+const customAppsList = gql`
+  ${appFragment}
+  ${webhooksFragment}
+  query AppsList(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $sort: AppSortingInput
+    $filter: AppFilterInput
+  ) {
+    apps(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      sortBy: $sort
+      filter: $filter
+    ) {
+      totalCount
+      edges {
+        node {
+          ...AppFragment
+        }
+      }
+    }
+  }
+`;
+
 const appsInProgressList = gql`
   query AppsInstallations {
     appsInstallations {
@@ -103,6 +132,10 @@ const appDetails = gql`
 
 export const useInstalledAppsListQuery = makeQuery<AppsList, AppsListVariables>(
   installedAppsList
+);
+
+export const useCustomAppsListQuery = makeQuery<AppsList, AppsListVariables>(
+  customAppsList
 );
 
 export const useAppsInProgressListQuery = makeQuery<AppsInstallations, {}>(

@@ -11,7 +11,12 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
-import { AppSortField, OrderDirection } from "../../../types/globalTypes";
+import {
+  AppSortField,
+  AppTypeEnum,
+  JobStatusEnum,
+  OrderDirection
+} from "../../../types/globalTypes";
 import AppDeleteDialog from "../../components/AppDeleteDialog";
 import AppInProgressDeleteDialog from "../../components/AppInProgressDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
@@ -22,6 +27,7 @@ import {
 } from "../../mutations";
 import {
   useAppsInProgressListQuery,
+  useCustomAppsListQuery,
   useInstalledAppsListQuery
 } from "../../queries";
 import { AppDelete } from "../../types/AppDelete";
@@ -61,13 +67,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const paginate = usePaginator();
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = {
-    ...paginationState,
     sort: {
       direction: OrderDirection.DESC,
       field: AppSortField.CREATION_DATE
     }
   };
-
   const intervalId = useRef<null | number>(null);
 
   const removeInstallation = (id: string) =>
@@ -80,12 +84,17 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     loading: loadingAppsInProgress,
     refetch: appsInProgressRefetch
   } = useAppsInProgressListQuery({
-    displayLoader: false,
-    variables: paginationState
+    displayLoader: false
   });
   const { data, loading, refetch } = useInstalledAppsListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: {
+      ...paginationState,
+      ...queryVariables,
+      filter: {
+        type: AppTypeEnum.THIRDPARTY
+      }
+    }
   });
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
@@ -93,6 +102,22 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     paginationState,
     params
   );
+
+  const {
+    data: customAppsData,
+    loading: customAppsLoading,
+    refetch: customAppsRefetch
+  } = useCustomAppsListQuery({
+    displayLoader: true,
+    variables: {
+      first: 1000,
+      ...queryVariables,
+      filter: {
+        type: AppTypeEnum.LOCAL
+      }
+    }
+  });
+
   const installedAppNotify = (name: string) => {
     notify({
       status: "success",
@@ -130,20 +155,29 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     AppListUrlQueryParams
   >(navigate, appsListUrl, params);
 
+  const onAppRemove = (data: AppDelete) => {
+    if (data.appDelete.errors.length === 0) {
+      if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
+        customAppsRefetch();
+      } else {
+        refetch();
+      }
+      closeModal();
+      removeAppNotify();
+    }
+  };
+
   const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
     onCompleted: data => {
       onAppRemove(data);
-      closeModal();
     }
   });
-
   const [
     deleteInProgressApp,
     deleteInProgressAppOpts
   ] = useAppDeleteFailedInstallationMutation({
     onCompleted: data => {
       onAppInProgressRemove(data);
-      closeModal();
     }
   });
 
@@ -153,7 +187,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       if (!intervalId.current) {
         intervalId.current = window.setInterval(
           () => appsInProgressRefetch(),
-          3000
+          2000
         );
       }
       activeInstallations.forEach(installation => {
@@ -162,11 +196,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           removeInstallation(installation.id);
           installedAppNotify(installation.name);
           appsInProgressRefetch();
-        } else if (item.status === "SUCCESS") {
+        } else if (item.status === JobStatusEnum.SUCCESS) {
           removeInstallation(installation.id);
           installedAppNotify(item.appName);
           refetch();
-        } else if (item.status === "FAILED") {
+        } else if (item.status === JobStatusEnum.FAILED) {
           removeInstallation(installation.id);
           notify({
             status: "error",
@@ -219,24 +253,18 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     });
   };
 
-  const onAppRemove = (data: AppDelete) => {
-    if (data.appDelete.errors.length === 0) {
-      removeAppNotify();
-      refetch();
-    }
-  };
   const onAppInProgressRemove = (data: AppDeleteFailedInstallation) => {
     if (data.appDeleteFailedInstallation.errors.length === 0) {
       removeAppNotify();
       appsInProgressRefetch();
+      closeModal();
     }
   };
   const onAppInstallRetry = (id: string) =>
     retryInstallApp({ variables: { id } });
 
-  const apps = data?.apps?.edges;
-  const installedApps = apps?.filter(({ node }) => node.type === "EXTERNAL");
-  const customApps = apps?.filter(({ node }) => node.type === "CUSTOM");
+  const installedApps = data?.apps?.edges;
+  const customApps = customAppsData?.apps?.edges;
 
   return (
     <>
@@ -266,16 +294,14 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         customAppsList={customApps}
         appsInProgressList={appsInProgressData}
         loadingAppsInProgress={loadingAppsInProgress}
-        disabled={loading}
+        disabled={loading || customAppsLoading}
         settings={settings}
         pageInfo={pageInfo}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onRowClick={id => () => navigate(appUrl(id))}
-        onAppRemove={onAppRemove}
         onAppInstallRetry={onAppInstallRetry}
-        handleRemoveConfirm={handleRemoveConfirm}
         navigateToCustomApp={id => () => navigate(customAppUrl(id))}
         navigateToCustomAppCreate={() => navigate(customAppAddUrl)}
         onInstalledAppRemove={id =>

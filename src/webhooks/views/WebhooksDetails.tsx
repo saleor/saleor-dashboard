@@ -29,6 +29,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
 
     if (errors.length === 0 && webhook) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
