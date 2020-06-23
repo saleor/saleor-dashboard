@@ -13,6 +13,8 @@ import {
   defaultListSettings,
   ProductListColumns
 } from "@saleor/config";
+import { Task } from "@saleor/containers/BackgroundTasks/types";
+import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -80,6 +82,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
+  const { queue } = useBackgroundTask();
   const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
@@ -152,6 +155,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             defaultMessage: "Exporting CSV",
             description: "waiting for export to end, header"
           })
+        });
+        queue(Task.EXPORT, {
+          id: data.exportProducts.exportFile.id
         });
         closeModal();
         reset();
