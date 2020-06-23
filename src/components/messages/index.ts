@@ -9,7 +9,7 @@ export interface IMessage {
   autohide?: number;
   expandText?: string;
   title?: string;
-  text: string;
+  text: React.ReactNode;
   onUndo?: () => void;
   status?: Status;
 }

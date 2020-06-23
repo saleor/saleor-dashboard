@@ -1,6 +1,7 @@
 import { IMessageContext } from "@saleor/components/messages";
 import { commonMessages } from "@saleor/intl";
 import { CheckOrderInvoicesStatus } from "@saleor/orders/types/CheckOrderInvoicesStatus";
+import { CheckExportFileStatus } from "@saleor/products/types/CheckExportFileStatus";
 import { JobStatusEnum } from "@saleor/types/globalTypes";
 import { ApolloQueryResult } from "apollo-client";
 import { defineMessages, IntlShape } from "react-intl";
@@ -12,7 +13,15 @@ import {
   TaskStatus
 } from "./types";
 
-export const messages = defineMessages({
+const messages = defineMessages({
+  exportFinishedText: {
+    defaultMessage:
+      "Product export has finished and was sent to your email address."
+  },
+  exportFinishedTitle: {
+    defaultMessage: "Exporting CSV finished",
+    description: "csv file exporting has finished, header"
+  },
   invoiceGenerateFinishedText: {
     defaultMessage:
       "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
@@ -26,6 +35,17 @@ export const messages = defineMessages({
     description: "dialog header, title"
   }
 });
+
+function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
+  switch (jobStatus) {
+    case JobStatusEnum.SUCCESS:
+      return TaskStatus.SUCCESS;
+    case JobStatusEnum.PENDING:
+      return TaskStatus.PENDING;
+    default:
+      return TaskStatus.FAILURE;
+  }
+}
 
 export async function handleTask(task: QueuedTask): Promise<TaskStatus> {
   let status = TaskStatus.PENDING;
@@ -89,11 +109,7 @@ export function queueInvoiceGenerate(
           invoice => invoice.id === generateInvoice.invoiceId
         ).status;
 
-        return status === JobStatusEnum.SUCCESS
-          ? TaskStatus.SUCCESS
-          : status === JobStatusEnum.PENDING
-          ? TaskStatus.PENDING
-          : TaskStatus.FAILURE;
+        return getTaskStatus(status);
       },
       id,
       onCompleted: data =>
@@ -107,6 +123,34 @@ export function queueInvoiceGenerate(
               text: intl.formatMessage(commonMessages.somethingWentWrong),
               title: intl.formatMessage(messages.invoiceGenerationFailedTitle)
             }),
+      onError: handleError,
+      status: TaskStatus.PENDING
+    }
+  ];
+}
+
+export function queueExport(
+  id: number,
+  tasks: React.MutableRefObject<QueuedTask[]>,
+  fetch: () => Promise<ApolloQueryResult<CheckExportFileStatus>>,
+  notify: IMessageContext,
+  intl: IntlShape
+) {
+  tasks.current = [
+    ...tasks.current,
+    {
+      handle: async () => {
+        const result = await fetch();
+        const status = result.data.exportFile.status;
+
+        return getTaskStatus(status);
+      },
+      id,
+      onCompleted: () =>
+        notify({
+          text: intl.formatMessage(messages.exportFinishedText),
+          title: intl.formatMessage(messages.exportFinishedTitle)
+        }),
       onError: handleError,
       status: TaskStatus.PENDING
     }
