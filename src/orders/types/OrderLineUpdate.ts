@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderLineInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
+import { OrderLineInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLineUpdate
@@ -258,6 +258,7 @@ export interface OrderLineUpdate_draftOrderLineUpdate_order_invoices {
   number: string | null;
   createdAt: any;
   url: string | null;
+  status: JobStatusEnum;
 }
 
 export interface OrderLineUpdate_draftOrderLineUpdate_order {

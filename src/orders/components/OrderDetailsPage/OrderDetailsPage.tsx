@@ -65,6 +65,8 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onNoteAdd(data: HistoryFormData);
   onProfileView();
   onInvoiceClick(invoice: InvoiceFragment);
+  onInvoiceGenerate();
+  onInvoiceSend(invoice: InvoiceFragment);
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = (props) => {
@@ -85,6 +87,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = (props) => {
     onShippingAddressEdit,
     onProfileView,
     onInvoiceClick,
+    onInvoiceGenerate,
+    onInvoiceSend,
   } = props;
   const classes = useStyles(props);
 
@@ -186,6 +190,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = (props) => {
           <OrderInvoiceList
             invoices={order?.invoices}
             onInvoiceClick={onInvoiceClick}
+            onInvoiceGenerate={onInvoiceGenerate}
+            onInvoiceSend={onInvoiceSend}
           />
           <CardSpacer />
           <OrderCustomerNote note={maybe(() => order.customerNote)} />

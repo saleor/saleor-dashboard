@@ -1,5 +1,8 @@
 import { fragmentAddress } from "@saleor/fragments/address";
-import { orderErrorFragment } from "@saleor/fragments/errors";
+import {
+  invoiceErrorFragment,
+  orderErrorFragment
+} from "@saleor/fragments/errors";
 import {
   fragmentOrderDetails,
   fragmentOrderEvent
@@ -9,6 +12,10 @@ import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
+import {
+  InvoiceRequest,
+  InvoiceRequestVariables
+} from "./types/InvoiceRequest";
 import { OrderAddNote, OrderAddNoteVariables } from "./types/OrderAddNote";
 import { OrderCancel, OrderCancelVariables } from "./types/OrderCancel";
 import { OrderCapture, OrderCaptureVariables } from "./types/OrderCapture";
@@ -448,3 +455,22 @@ export const useOrderFulfill = makeMutation<
   FulfillOrder,
   FulfillOrderVariables
 >(fulfillOrder);
+
+const invoiceRequestMutation = gql`
+  ${invoiceErrorFragment}
+  ${fragmentInvoice}
+  mutation InvoiceRequest($orderId: ID!) {
+    requestInvoice(orderId: $orderId) {
+      errors: invoiceErrors {
+        ...InvoiceErrorFragment
+      }
+      invoice {
+        ...InvoiceFragment
+      }
+    }
+  }
+`;
+export const TypedInvoiceRequestMutation = TypedMutation<
+  InvoiceRequest,
+  InvoiceRequestVariables
+>(invoiceRequestMutation);
