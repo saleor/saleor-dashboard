@@ -10,6 +10,10 @@ import {
 } from "./queries";
 import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
 import {
+  InvoiceEmailSend,
+  InvoiceEmailSendVariables
+} from "./types/InvoiceEmailSend";
+import {
   InvoiceRequest,
   InvoiceRequestVariables
 } from "./types/InvoiceRequest";
@@ -485,3 +489,22 @@ export const TypedInvoiceRequestMutation = TypedMutation<
   InvoiceRequest,
   InvoiceRequestVariables
 >(invoiceRequestMutation);
+
+const invoiceEmailSendMutation = gql`
+  ${invoiceErrorFragment}
+  ${fragmentInvoice}
+  mutation InvoiceEmailSend($id: ID!) {
+    sendInvoiceEmail(id: $id) {
+      errors: invoiceErrors {
+        ...InvoiceErrorFragment
+      }
+      invoice {
+        ...InvoiceFragment
+      }
+    }
+  }
+`;
+export const TypedInvoiceEmailSendMutation = TypedMutation<
+  InvoiceEmailSend,
+  InvoiceEmailSendVariables
+>(invoiceEmailSendMutation);
