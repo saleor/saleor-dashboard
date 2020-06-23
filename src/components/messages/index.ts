@@ -1,8 +1,12 @@
 import { createContext } from "react";
 
 export interface IMessage {
-  action?: () => void;
+  actionBtn?: {
+    label: string;
+    action: () => void;
+  };
   autohide?: number;
+  expandText?: string;
   title?: string;
   text: string;
   onUndo?: () => void;

@@ -24,11 +24,13 @@ export const MessageManager = props => {
     text: ""
   });
   const [opened, setOpened] = useState(false);
+  const [expand, setExpand] = useState(false);
 
   const classes = useStyles({});
   const {
-    action,
-    autohide = 3000,
+    actionBtn,
+    autohide = 9000,
+    expandText,
     title,
     text,
     key,
@@ -105,47 +107,79 @@ export const MessageManager = props => {
         }
         title={title}
         action={[
-          !!onUndo ? (
-            <Button
-              key="undo"
-              color="default"
-              size="small"
-              onClick={handleClose as any}
-              data-tc="button-undo"
+          !!expandText ? (
+            <div
+              className={classNames(classes.expandedContainer, {
+                [classes.expandedContainerInfo]: status === "info"
+              })}
             >
-              <FormattedMessage
-                defaultMessage="Undo"
-                description="snackbar button undo"
-              />
-            </Button>
+              <div
+                className={classNames(
+                  classes.expandedContainerContent,
+                  expand ? classes.expandedText : classes.hiddenText
+                )}
+              >
+                <p>{expandText}</p>
+              </div>
+              <button
+                className={classNames(classes.expandBtn, {
+                  [classes.expandBtnInfo]: status === "info"
+                })}
+                onClick={() => {
+                  setExpand(expand => !expand);
+                }}
+              >
+                {!expand ? (
+                  <FormattedMessage
+                    defaultMessage="Expand"
+                    description="snackbar expand"
+                  />
+                ) : (
+                  <FormattedMessage
+                    defaultMessage="Collapse"
+                    description="snackbar collapse"
+                  />
+                )}
+              </button>
+            </div>
           ) : (
             undefined
           ),
-          !!action ? (
-            <Button
-              key="action"
-              color="default"
-              size="small"
-              onClick={() => {
-                action();
-                handleClose(null, null);
-              }}
-              data-tc="button-action"
-            >
-              <FormattedMessage
-                defaultMessage="Action"
-                description="snackbar button action"
-              />
-            </Button>
-          ) : (
-            undefined
-          ),
+          <div key="actions" className={classes.actionContainer}>
+            {!!onUndo && (
+              <Button
+                key="undo"
+                color="default"
+                size="small"
+                onClick={handleClose as any}
+                data-tc="button-undo"
+              >
+                <FormattedMessage
+                  defaultMessage="Undo"
+                  description="snackbar button undo"
+                />
+              </Button>
+            )}
+            {!!actionBtn && (
+              <Button
+                key="action"
+                color="default"
+                size="small"
+                onClick={actionBtn.action}
+                data-tc="button-action"
+              >
+                {actionBtn.label}
+              </Button>
+            )}
+          </div>,
           <IconButton
             key="close"
             aria-label="Close"
             color="inherit"
             onClick={handleClose as any}
-            className={classes.closeBtn}
+            className={classNames(classes.closeBtn, {
+              [classes.closeBtnInfo]: status === "info"
+            })}
           >
             <CloseIcon />
           </IconButton>,

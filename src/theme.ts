@@ -344,8 +344,9 @@ export default (colors: IThemeColors): Theme =>
             }
           },
           display: "block",
-          paddingBottom: 15,
-          paddingLeft: 0
+          paddingBottom: 10,
+          paddingLeft: 0,
+          paddingRight: 45
         },
         message: {
           fontSize: 16
