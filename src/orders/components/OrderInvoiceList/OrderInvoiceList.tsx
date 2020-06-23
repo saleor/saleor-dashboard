@@ -15,8 +15,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import { buttonMessages } from "@saleor/intl";
 import { InvoiceFragment } from "@saleor/orders/types/InvoiceFragment";
 import React from "react";
-import { useIntl } from "react-intl";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   () => ({
