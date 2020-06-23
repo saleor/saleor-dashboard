@@ -15,10 +15,22 @@ export const useStyles = makeStyles(
       from: { transform: "translateX(-100%)" },
       to: { transform: "translateX(0)" }
     },
+    actionContainer: {
+      marginLeft: -8
+    },
     closeBtn: {
+      "& svg": {
+        maxHeight: 18,
+        maxWidth: 18
+      },
+      color: "#fff",
+      padding: 10,
       position: "absolute",
       right: 0,
-      top: 0
+      top: 7
+    },
+    closeBtnInfo: {
+      color: theme.palette.text.primary
     },
     error: {
       "& > div": {
@@ -28,10 +40,59 @@ export const useStyles = makeStyles(
         "&:before": {
           backgroundImage: `url(${errorIcon})`
         },
-
         backgroundColor: theme.palette.error.main,
         color: "#fff"
       }
+    },
+    expandBtn: {
+      "&:before": {
+        borderLeft: "4px solid transparent",
+        borderRight: "4px solid transparent",
+        borderTop: "8px solid #fff",
+        content: "''",
+        display: "block",
+        height: 0,
+        position: "absolute",
+        right: 0,
+        top: "50%",
+        transform: "translateY(-50%)",
+        width: 0
+      },
+      background: "transparent",
+      border: "none",
+      color: "#fff",
+      cursor: "pointer",
+      fontSize: theme.spacing(2),
+      outline: "none",
+      padding: 0,
+      paddingRight: 15,
+      position: "relative"
+    },
+    expandBtnInfo: {
+      "&:before": {
+        borderTop: `8px solid ${theme.palette.text.primary}`
+      },
+      color: theme.palette.text.primary
+    },
+    expandedContainer: {
+      "& p": {
+        margin: theme.spacing(1, 0)
+      },
+      color: "#fff",
+      marginBottom: 5
+    },
+    expandedContainerContent: {
+      overflow: "hidden",
+      transition: "max-height .6s ease"
+    },
+    expandedContainerInfo: {
+      color: theme.palette.text.secondary
+    },
+    expandedText: {
+      maxHeight: 500
+    },
+    hiddenText: {
+      maxHeight: 0
     },
     progressBar: {
       backgroundColor: infoColor,
