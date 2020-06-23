@@ -920,7 +920,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       createdAt: "2020-06-22T13:52:05.094636+00:00",
       id: "SW52b2ljZTox",
       number: "1",
-      url: "anything"
+      url: "invoice1"
     }
   ],
   lines: [
@@ -1061,7 +1061,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       createdAt: "2020-06-22T13:52:05.094636+00:00",
       id: "SW52b2ljZTox",
       number: "1",
-      url: "anything"
+      url: "invoice1"
     }
   ],
   lines: [
