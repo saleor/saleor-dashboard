@@ -19,7 +19,7 @@ export const productAddPath = urlJoin(productSection, "add");
 export const productAddUrl = productAddPath;
 
 export const productAddBulkPath = urlJoin(productSection, "add-bulk");
-export const productAddBulkUrl = productAddPath;
+export const productAddBulkUrl = productAddBulkPath;
 
 export const productListPath = productSection;
 export type ProductListUrlDialog =
