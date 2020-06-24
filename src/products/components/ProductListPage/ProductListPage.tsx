@@ -41,6 +41,7 @@ export interface ProductListPageProps
   activeAttributeSortId: string;
   availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
+  onAddBulk: () => void;
   gridAttributes: AvailableInGridAttributes_grid_edges_node[];
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
@@ -70,6 +71,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     tabs,
     totalGridAttributes,
     onAdd,
+    onAddBulk,
     onAll,
     onFetchMore,
     onFilterChange,
@@ -144,6 +146,14 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             defaultMessage="Create Product"
             description="button"
           />
+        </Button>
+        <Button
+          onClick={onAddBulk}
+          color="primary"
+          variant="contained"
+          data-tc="add-product"
+        >
+          <FormattedMessage defaultMessage="Upload CSV" description="button" />
         </Button>
       </PageHeader>
       <Card>

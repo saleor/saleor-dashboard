@@ -6,6 +6,7 @@ import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { OrderDraftCreate } from "@saleor/orders/types/OrderDraftCreate";
 import { permissionGroupAddUrl } from "@saleor/permissionGroups/urls";
 import { productAddUrl } from "@saleor/products/urls";
+import { productAddBulkUrl } from "@saleor/products/urls";
 import { score } from "fuzzaldrin";
 import { MutationFunction } from "react-apollo";
 import { IntlShape } from "react-intl";
@@ -47,6 +48,13 @@ export function searchInCommands(
       label: intl.formatMessage(messages.createProduct),
       onClick: () => {
         navigate(productAddUrl);
+        return false;
+      }
+    },
+    {
+      label: intl.formatMessage(messages.createProductBulk),
+      onClick: () => {
+        navigate(productAddBulkUrl);
         return false;
       }
     },

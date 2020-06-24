@@ -8,6 +8,7 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
+  productAddBulkPath,
   productAddPath,
   productImagePath,
   ProductImageUrlQueryParams,
@@ -22,6 +23,7 @@ import {
   ProductVariantEditUrlQueryParams
 } from "./urls";
 import ProductCreate from "./views/ProductCreate";
+import ProductCreateBulk from "./views/ProductCreateBulk";
 import ProductImageComponent from "./views/ProductImage";
 import ProductListComponent from "./views/ProductList";
 import ProductUpdateComponent from "./views/ProductUpdate";
@@ -109,6 +111,8 @@ const Component = () => {
       <Switch>
         <Route exact path={productListPath} component={ProductList} />
         <Route exact path={productAddPath} component={ProductCreate} />
+        <Route exact path={productAddBulkPath} component={ProductCreateBulk} />
+
         <Route
           path={productVariantCreatorPath(":id")}
           component={ProductVariantCreator}
