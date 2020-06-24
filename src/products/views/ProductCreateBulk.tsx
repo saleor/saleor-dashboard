@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -70,10 +71,10 @@ export const ProductCreateView: React.FC = () => {
         const handleSubmit = (formData: ProductCreatePageSubmitData) => {
           const products = ["createme", "createme2", "createme3"];
 
-          // console.log(formData)
+          console.log(formData);
           if (formData) {
             for (const p in products) {
-              // console.log('productCreate', products[p])
+              console.log("productCreate", products[p]);
             }
           }
 
