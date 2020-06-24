@@ -11,9 +11,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { decimal, maybe } from "../../misc";
-import ProductCreatePage, {
+import ProductCreatePageBulk, {
   ProductCreatePageSubmitData
-} from "../components/ProductCreatePage";
+} from "../components/ProductCreatePageBulk";
 import { TypedProductCreateMutation } from "../mutations";
 import { ProductCreate } from "../types/ProductCreate";
 import { productListUrl, productUrl } from "../urls";
@@ -108,7 +108,7 @@ export const ProductCreateView: React.FC = () => {
                 description: "window title"
               })}
             />
-            <ProductCreatePage
+            <ProductCreatePageBulk
               currency={maybe(() => shop.defaultCurrency)}
               categories={maybe(
                 () => searchCategoryOpts.data.search.edges,
