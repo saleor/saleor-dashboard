@@ -1,9 +1,12 @@
-import { IMessageContext, MessageContext } from "@saleor/components/messages";
-import { useContext } from "react";
+import { IMessage } from "@saleor/components/messages";
+import { useAlert } from "react-alert";
 
-export type UseNotifierResult = IMessageContext;
+export type UseNotifierResult = (options: IMessage) => void;
 function useNotifier(): UseNotifierResult {
-  const notify = useContext(MessageContext);
+  const alert = useAlert();
+  const notify = (options: IMessage) => {
+    alert.show(options, options.autohide && { timeout: options.autohide });
+  };
   return notify;
 }
 export default useNotifier;
