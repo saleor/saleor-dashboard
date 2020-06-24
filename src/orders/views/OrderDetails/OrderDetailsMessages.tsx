@@ -4,6 +4,8 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { InvoiceEmailSend } from "../../types/InvoiceEmailSend";
+import { InvoiceRequest } from "../../types/InvoiceRequest";
 import { OrderAddNote } from "../../types/OrderAddNote";
 import { OrderCancel } from "../../types/OrderCancel";
 import { OrderCapture } from "../../types/OrderCapture";
@@ -42,6 +44,8 @@ interface OrderDetailsMessages {
     handlePaymentRefund: (data: OrderRefund) => void;
     handleShippingMethodUpdate: (data: OrderShippingMethodUpdate) => void;
     handleUpdate: (data: OrderUpdate) => void;
+    handleInvoiceGeneratePending: (data: InvoiceRequest) => void;
+    handleInvoiceSend: (data: InvoiceEmailSend) => void;
   }) => React.ReactElement;
   id: string;
   params: OrderUrlQueryParams;
@@ -251,11 +255,39 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
+  const handleInvoiceGeneratePending = (data: InvoiceRequest) => {
+    const errs = data.requestInvoice?.errors;
+    if (errs.length === 0) {
+      pushMessage({
+        text: intl.formatMessage({
+          defaultMessage:
+            "We’re generating the invoice you requested. Please wait a couple of moments"
+        }),
+        title: intl.formatMessage({
+          defaultMessage: "Invoice is Generating"
+        })
+      });
+      closeModal();
+    }
+  };
+  const handleInvoiceSend = (data: InvoiceEmailSend) => {
+    const errs = data.sendInvoiceEmail?.errors;
+    if (errs.length === 0) {
+      pushMessage({
+        text: intl.formatMessage({
+          defaultMessage: "Invoice email sent"
+        })
+      });
+      closeModal();
+    }
+  };
 
   return children({
     handleDraftCancel,
     handleDraftFinalize,
     handleDraftUpdate,
+    handleInvoiceGeneratePending,
+    handleInvoiceSend,
     handleNoteAdd,
     handleOrderCancel,
     handleOrderFulfillmentCancel,

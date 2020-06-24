@@ -148,8 +148,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onDraftFinalize={orderMessages.handleDraftFinalize}
                 onDraftCancel={orderMessages.handleDraftCancel}
                 onOrderMarkAsPaid={orderMessages.handleOrderMarkAsPaid}
-                onInvoiceRequest={() => null}
-                onInvoiceSend={() => null}
+                onInvoiceRequest={orderMessages.handleInvoiceGeneratePending}
+                onInvoiceSend={orderMessages.handleInvoiceSend}
               >
                 {({
                   orderAddNote,
