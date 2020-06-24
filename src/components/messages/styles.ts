@@ -36,13 +36,15 @@ export const useStyles = makeStyles(
       "& > div": {
         "& button span": {
           color: "#fff"
-        },
+        }
+      },
+      "& > div:first-child": {
         "&:before": {
           backgroundImage: `url(${errorIcon})`
-        },
-        backgroundColor: theme.palette.error.main,
-        color: "#fff"
-      }
+        }
+      },
+      backgroundColor: theme.palette.error.main,
+      color: "#fff"
     },
     expandBtn: {
       "&:before": {
@@ -122,6 +124,9 @@ export const useStyles = makeStyles(
     },
     snackbar: {
       "& > div": {
+        paddingLeft: 60
+      },
+      "& > div:first-child": {
         "&:before": {
           backgroundImage: `url(${infoIcon})`,
           backgroundRepeat: "no-repeat",
@@ -134,22 +139,30 @@ export const useStyles = makeStyles(
           top: 13,
           width: 32
         },
-        paddingLeft: 60,
+        paddingTop: 10,
         position: "relative"
-      }
+      },
+      borderRadius: 4
+    },
+    snackbarContainer: {
+      borderRadius: 4,
+      display: "block",
+      margin: theme.spacing(2, 2, 0, 0),
+      maxWidth: 480,
+      pointerEvents: "all",
+      position: "relative"
     },
     success: {
-      "& > div": {
-        "& button span": {
-          color: "#fff"
-        },
+      "& > div:first-child": {
         "&:before": {
           backgroundImage: `url(${successIcon})`
-        },
-
-        backgroundColor: successColor,
+        }
+      },
+      "& button span": {
         color: "#fff"
-      }
+      },
+      backgroundColor: successColor,
+      color: "#fff"
     },
     text: {
       color: "#fff",
@@ -159,16 +172,16 @@ export const useStyles = makeStyles(
       paddingTop: 5
     },
     warning: {
-      "& > div": {
-        "& button span": {
-          color: "#fff"
-        },
+      "& > div:first-child": {
         "&:before": {
           backgroundImage: `url(${warningIcon})`
-        },
-        backgroundColor: warningColor,
+        }
+      },
+      "& button span": {
         color: "#fff"
-      }
+      },
+      backgroundColor: warningColor,
+      color: "#fff"
     }
   }),
   { name: "MessageManager" }

@@ -1,91 +1,37 @@
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import classNames from "classnames";
 import React, { useState } from "react";
+import { AlertComponentPropsWithStyle } from "react-alert";
 import { FormattedMessage } from "react-intl";
 
-import { IMessage, MessageContext } from "./";
+import { IMessage } from "./";
 import { useStyles } from "./styles";
 
-interface Message extends IMessage {
-  key: string;
+export interface IMessageManagerProps extends AlertComponentPropsWithStyle {
+  message: IMessage;
 }
 
-export const MessageManager = props => {
-  const { children } = props;
+export const MessageManager: React.FC<IMessageManagerProps> = props => {
+  const {
+    close,
+    options: { timeout },
+    message: { actionBtn, expandText, status, title, text, onUndo }
+  } = props;
 
-  const [message, setMessage] = useState<Message>({
-    key: "0",
-    onUndo: undefined,
-    status: "info",
-    text: ""
-  });
-  const [opened, setOpened] = useState(false);
   const [expand, setExpand] = useState(false);
 
   const classes = useStyles({});
-  const {
-    actionBtn,
-    autohide = 9000,
-    expandText,
-    title,
-    text,
-    key,
-    onUndo,
-    status = "info"
-  } = message;
-
-  const queue = [];
-
-  const handleClose = (_, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpened(false);
-  };
-
-  const processQueue = () => {
-    if (queue.length > 0) {
-      setMessage(queue.shift());
-      setOpened(true);
-    }
-  };
-
-  const handleExited = () => {
-    processQueue();
-  };
-
-  const pushMessage = (message: IMessage) => {
-    queue.push({
-      key: new Date().getTime(),
-      ...message
-    });
-
-    if (opened) {
-      setOpened(false);
-    } else {
-      processQueue();
-    }
-  };
 
   return (
-    <>
-      <Snackbar
-        key={key}
-        anchorOrigin={{
-          horizontal: "right",
-          vertical: "top"
-        }}
-        open={opened}
-        autoHideDuration={autohide}
-        onClose={handleClose}
-        onExited={handleExited}
-        ContentProps={{
-          "aria-describedby": "message-id"
-        }}
+    <div key={props.id} className={classes.snackbarContainer}>
+      <SnackbarContent
+        id={props.id}
+        key={props.id}
+        aria-describedby="message-id"
         className={classNames(classes.snackbar, {
           [classes.error]: status === "error",
           [classes.success]: status === "success",
@@ -105,10 +51,10 @@ export const MessageManager = props => {
             </Typography>
           </span>
         }
-        title={title}
         action={[
           !!expandText ? (
             <div
+              key="expanded"
               className={classNames(classes.expandedContainer, {
                 [classes.expandedContainerInfo]: status === "info"
               })}
@@ -151,7 +97,7 @@ export const MessageManager = props => {
                 key="undo"
                 color="default"
                 size="small"
-                onClick={handleClose as any}
+                onClick={close}
                 data-tc="button-undo"
               >
                 <FormattedMessage
@@ -176,7 +122,7 @@ export const MessageManager = props => {
             key="close"
             aria-label="Close"
             color="inherit"
-            onClick={handleClose as any}
+            onClick={close}
             className={classNames(classes.closeBtn, {
               [classes.closeBtnInfo]: status === "info"
             })}
@@ -186,20 +132,17 @@ export const MessageManager = props => {
           <div className={classes.progressBarContainer} key="progressBar">
             <div
               className={classNames(classes.progressBar, {
-                [classes.progressBarActive]: opened,
+                [classes.progressBarActive]: true,
                 [classes.progressBarSuccess]: status === "success",
                 [classes.progressBarWarning]: status === "warning",
                 [classes.progressBarError]: status === "error"
               })}
-              style={{ ["--animationTime" as any]: `${autohide}ms` }}
+              style={{ ["--animationTime" as any]: `${timeout}ms` }}
             />
           </div>
         ]}
       />
-      <MessageContext.Provider value={pushMessage}>
-        {children}
-      </MessageContext.Provider>
-    </>
+    </div>
   );
 };
 
