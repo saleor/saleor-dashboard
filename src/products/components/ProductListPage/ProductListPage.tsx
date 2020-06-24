@@ -41,7 +41,6 @@ export interface ProductListPageProps
   activeAttributeSortId: string;
   availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
-  onAddBulk: () => void;
   gridAttributes: AvailableInGridAttributes_grid_edges_node[];
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
