@@ -13,6 +13,7 @@ import {
   filterPageProps,
   listActionsProps,
   pageListProps,
+  pageListPropsBulk,
   sortPageProps
 } from "../../../fixtures";
 import ProductListPage, {
@@ -25,6 +26,7 @@ const products = productListFixture(placeholderImage);
 const props: ProductListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
+  ...pageListPropsBulk.default,
   ...filterPageProps,
   ...fetchMoreProps,
   ...{

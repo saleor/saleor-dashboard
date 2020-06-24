@@ -88,6 +88,13 @@ export interface PageListProps<TColumns extends string = string>
   onAdd: () => void;
 }
 
+export interface PageListPropsBulk<TColumns extends string = string>
+  extends ListProps<TColumns> {
+  defaultSettings?: ListSettings<TColumns>;
+  onAdd: () => void;
+  onAddBulk: () => void;
+}
+
 export interface SearchProps {
   onSearchChange: (value: string) => void;
 }

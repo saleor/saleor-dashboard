@@ -18,7 +18,7 @@ import {
   FetchMoreProps,
   FilterPageProps,
   ListActions,
-  PageListProps,
+  PageListPropsBulk,
   SortPage
 } from "@saleor/types";
 import React from "react";
@@ -33,7 +33,7 @@ import {
 } from "./filters";
 
 export interface ProductListPageProps
-  extends PageListProps<ProductListColumns>,
+  extends PageListPropsBulk<ProductListColumns>,
     ListActions,
     FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
     FetchMoreProps,
