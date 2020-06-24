@@ -4,6 +4,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
+import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { useWarehouseList } from "@saleor/warehouses/queries";
@@ -237,13 +238,13 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onInvoiceClick={(invoice) =>
                             window.open(invoice.url, "_blank")
                           }
-                          onGenerateInvoice={() =>
+                          onInvoiceGenerate={() =>
                             orderInvoiceRequest.mutate({
                               orderId: id,
                             })
                           }
-                          onSendInvoice={(invoice) =>
-                            orderInvoiceSend.mutate({ id: invoice.id })
+                          onInvoiceSend={(invoice) =>
+                            openModal("invoice-send", { id: invoice.id })
                           }
                         />
                         <OrderCannotCancelOrderDialog
@@ -374,6 +375,21 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             })
                           }
                           onClose={closeModal}
+                        />
+                        <OrderInvoiceEmailSendDialog
+                          confirmButtonState={orderInvoiceSend.opts.status}
+                          errors={
+                            orderInvoiceSend.opts.data?.sendInvoiceEmail
+                              .errors || []
+                          }
+                          open={params.action === "invoice-send"}
+                          invoice={order?.invoices?.find(
+                            (invoice) => invoice.id === params.id
+                          )}
+                          onClose={closeModal}
+                          onSubmit={() =>
+                            orderInvoiceSend.mutate({ id: params.id })
+                          }
                         />
                       </>
                     ) : (
