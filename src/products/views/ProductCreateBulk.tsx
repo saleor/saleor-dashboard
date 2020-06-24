@@ -68,36 +68,74 @@ export const ProductCreateView: React.FC = () => {
     <TypedProductCreateMutation onCompleted={handleSuccess}>
       {(productCreate, productCreateOpts) => {
         const handleSubmit = (formData: ProductCreatePageSubmitData) => {
-          productCreate({
-            variables: {
-              attributes: formData.attributes.map(attribute => ({
-                id: attribute.id,
-                values: attribute.value
-              })),
-              basePrice: decimal(formData.basePrice),
-              category: formData.category,
-              chargeTaxes: formData.chargeTaxes,
-              collections: formData.collections,
-              descriptionJson: JSON.stringify(formData.description),
-              isPublished: formData.isPublished,
-              name: formData.name,
-              productType: formData.productType,
-              publicationDate:
-                formData.publicationDate !== ""
-                  ? formData.publicationDate
-                  : null,
-              seo: {
-                description: formData.seoDescription,
-                title: formData.seoTitle
-              },
-              sku: formData.sku,
-              stocks: formData.stocks.map(stock => ({
-                quantity: parseInt(stock.value, 0),
-                warehouse: stock.id
-              })),
-              trackInventory: formData.trackInventory
+          const products = ["createme", "createme2", "createme3"];
+
+          // console.log(formData)
+          if (formData) {
+            for (const p in products) {
+              // console.log('productCreate', products[p])
             }
-          });
+          }
+
+          // productCreate({
+          //   variables: {
+          //     attributes: formData.attributes.map(attribute => ({
+          //       id: attribute.id,
+          //       values: attribute.value
+          //     })),
+          //     basePrice: decimal(formData.basePrice),
+          //     category: formData.category,
+          //     chargeTaxes: formData.chargeTaxes,productCreate({
+          //   variables: {
+          //     attributes: formData.attributes.map(attribute => ({
+          //       id: attribute.id,
+          //       values: attribute.value
+          //     })),
+          //     basePrice: decimal(formData.basePrice),
+          //     category: formData.category,
+          //     chargeTaxes: formData.chargeTaxes,
+          //     collections: formData.collections,
+          //     descriptionJson: JSON.stringify(formData.description),
+          //     isPublished: formData.isPublished,
+          //     name: formData.name,
+          //     productType: formData.productType,
+          //     publicationDate:
+          //       formData.publicationDate !== ""
+          //         ? formData.publicationDate
+          //         : null,
+          //     seo: {
+          //       description: formData.seoDescription,
+          //       title: formData.seoTitle
+          //     },
+          //     sku: formData.sku,
+          //     stocks: formData.stocks.map(stock => ({
+          //       quantity: parseInt(stock.value, 0),
+          //       warehouse: stock.id
+          //     })),
+          //     trackInventory: formData.trackInventory
+          //   }
+          // });
+          //     collections: formData.collections,
+          //     descriptionJson: JSON.stringify(formData.description),
+          //     isPublished: formData.isPublished,
+          //     name: formData.name,
+          //     productType: formData.productType,
+          //     publicationDate:
+          //       formData.publicationDate !== ""
+          //         ? formData.publicationDate
+          //         : null,
+          //     seo: {
+          //       description: formData.seoDescription,
+          //       title: formData.seoTitle
+          //     },
+          //     sku: formData.sku,
+          //     stocks: formData.stocks.map(stock => ({
+          //       quantity: parseInt(stock.value, 0),
+          //       warehouse: stock.id
+          //     })),
+          //     trackInventory: formData.trackInventory
+          //   }
+          // });
         };
 
         return (
