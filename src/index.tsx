@@ -8,7 +8,7 @@ import { setContext } from "apollo-link-context";
 import { ErrorResponse, onError } from "apollo-link-error";
 import { createUploadLink } from "apollo-upload-client";
 import React from "react";
-import { positions, Provider as AlertProvider } from "react-alert";
+import { Provider as AlertProvider } from "react-alert";
 import { ApolloProvider } from "react-apollo";
 import { render } from "react-dom";
 import ErrorBoundary from "react-error-boundary";
@@ -29,7 +29,7 @@ import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
 import { DateProvider } from "./components/Date";
 import { LocaleProvider } from "./components/Locale";
-import { MessageManager } from "./components/messages";
+import { MessageManager, notificationOptions } from "./components/messages";
 import { ShopProvider } from "./components/Shop";
 import ThemeProvider from "./components/Theme";
 import { WindowTitle } from "./components/WindowTitle";
@@ -125,15 +125,6 @@ const apolloClient = new ApolloClient({
   }),
   link: invalidTokenLink.concat(authLink.concat(link))
 });
-
-const notificationOptions = {
-  containerStyle: {
-    zIndex: 1000
-  },
-  offset: "20px",
-  position: positions.TOP_RIGHT,
-  timeout: 3000
-};
 
 const App: React.FC = () => {
   const isDark = localStorage.getItem("theme") === "true";
