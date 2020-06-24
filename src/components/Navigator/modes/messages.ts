@@ -39,6 +39,10 @@ const messages = defineMessages({
     defaultMessage: "Create Product",
     description: "button"
   },
+  createProductBulk: {
+    defaultMessage: "Create Bulk Product",
+    description: "button"
+  },
   createVoucher: {
     defaultMessage: "Create Voucher",
     description: "button"

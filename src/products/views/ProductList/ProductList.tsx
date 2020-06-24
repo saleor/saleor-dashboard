@@ -51,6 +51,7 @@ import {
 import { productBulkDelete } from "../../types/productBulkDelete";
 import { productBulkPublish } from "../../types/productBulkPublish";
 import {
+  productAddBulkUrl,
   productAddUrl,
   productListUrl,
   ProductListUrlDialog,
@@ -307,6 +308,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                             false
                           )}
                           onAdd={() => navigate(productAddUrl)}
+                          onAddBulk={() => navigate(productAddBulkUrl)}
                           disabled={loading}
                           products={maybe(() =>
                             data.products.edges.map(edge => edge.node)

@@ -5,6 +5,7 @@ import {
   FilterPageProps,
   ListActions,
   PageListProps,
+  PageListPropsBulk,
   SearchPageProps,
   SortPage,
   TabPageProps
@@ -28,6 +29,28 @@ export const pageListProps: { [key: string]: PageListProps } = {
   loading: {
     disabled: true,
     onAdd: undefined,
+    onNextPage: undefined,
+    onPreviousPage: undefined,
+    onRowClick: () => undefined,
+    pageInfo,
+    settings: undefined
+  }
+};
+export const pageListPropsBulk: { [key: string]: PageListPropsBulk } = {
+  default: {
+    disabled: false,
+    onAdd: undefined,
+    onAddBulk: undefined,
+    onNextPage: undefined,
+    onPreviousPage: undefined,
+    onRowClick: () => undefined,
+    pageInfo,
+    settings: { rowNumber: 20 }
+  },
+  loading: {
+    disabled: true,
+    onAdd: undefined,
+    onAddBulk: undefined,
     onNextPage: undefined,
     onPreviousPage: undefined,
     onRowClick: () => undefined,

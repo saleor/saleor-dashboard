@@ -18,7 +18,7 @@ import {
   FetchMoreProps,
   FilterPageProps,
   ListActions,
-  PageListProps,
+  PageListPropsBulk,
   SortPage
 } from "@saleor/types";
 import React from "react";
@@ -33,7 +33,7 @@ import {
 } from "./filters";
 
 export interface ProductListPageProps
-  extends PageListProps<ProductListColumns>,
+  extends PageListPropsBulk<ProductListColumns>,
     ListActions,
     FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
     FetchMoreProps,
@@ -70,6 +70,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     tabs,
     totalGridAttributes,
     onAdd,
+    onAddBulk,
     onAll,
     onFetchMore,
     onFilterChange,
@@ -144,6 +145,14 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             defaultMessage="Create Product"
             description="button"
           />
+        </Button>
+        <Button
+          onClick={onAddBulk}
+          color="primary"
+          variant="contained"
+          data-tc="add-product"
+        >
+          <FormattedMessage defaultMessage="Upload CSV" description="button" />
         </Button>
       </PageHeader>
       <Card>
