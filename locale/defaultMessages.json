@@ -2667,6 +2667,13 @@
     "context": "order history message",
     "string": "Order was cancelled"
   },
+  "src_dot_orders_dot_components_dot_OrderInvoiceEmailSendDialog_dot_1821123638": {
+    "string": "Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
+  },
+  "src_dot_orders_dot_components_dot_OrderInvoiceEmailSendDialog_dot_2166306944": {
+    "context": "dialog header",
+    "string": "Send Invoice"
+  },
   "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_24460204": {
     "context": "section header",
     "string": "Invoices"
@@ -2868,6 +2875,9 @@
     "context": "order line total price",
     "string": "Total"
   },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_1039259580": {
+    "string": "We’re generating the invoice you requested. Please wait a couple of moments"
+  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1056718390": {
     "string": "Payment successfully captured"
   },
@@ -2900,6 +2910,12 @@
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3367579693": {
     "string": "Order successfully updated"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
+    "string": "Invoice email sent"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_55607988": {
+    "string": "Invoice is Generating"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_580490159": {
     "context": "window title",
@@ -5136,6 +5152,10 @@
   "src_dot_utils_dot_errors_dot_duplicatedInputItem": {
     "string": "Cannot add and remove group the same time"
   },
+  "src_dot_utils_dot_errors_dot_emailNotSet": {
+    "context": "error message",
+    "string": "Email address is not set"
+  },
   "src_dot_utils_dot_errors_dot_graphqlError": {
     "string": "API error"
   },
@@ -5145,6 +5165,10 @@
   "src_dot_utils_dot_errors_dot_invalidPassword": {
     "string": "Invalid password"
   },
+  "src_dot_utils_dot_errors_dot_invalidStatus": {
+    "context": "error message",
+    "string": "Cannot request an invoice for draft order"
+  },
   "src_dot_utils_dot_errors_dot_noShippingAddress": {
     "context": "error message",
     "string": "Cannot choose a shipping method for an order without the shipping address"
@@ -5152,6 +5176,18 @@
   "src_dot_utils_dot_errors_dot_notEditable": {
     "context": "error message",
     "string": "Only draft orders can be edited"
+  },
+  "src_dot_utils_dot_errors_dot_notFound": {
+    "context": "error message",
+    "string": "Invoice not found"
+  },
+  "src_dot_utils_dot_errors_dot_notReady": {
+    "context": "error message",
+    "string": "Billing address is not set or invoice is not ready to be send"
+  },
+  "src_dot_utils_dot_errors_dot_numberNotSet": {
+    "context": "error message",
+    "string": "Number not set for an invoice"
   },
   "src_dot_utils_dot_errors_dot_outOfScopeGroup": {
     "string": "Group is out of your permission scope"
@@ -5199,6 +5235,10 @@
   },
   "src_dot_utils_dot_errors_dot_unknownError": {
     "string": "Unknown error"
+  },
+  "src_dot_utils_dot_errors_dot_urlNotSet": {
+    "context": "error message",
+    "string": "URL not set for an invoice"
   },
   "src_dot_utils_dot_errors_dot_variantNoDigitalContent": {
     "string": "This variant does not have any digital content"
