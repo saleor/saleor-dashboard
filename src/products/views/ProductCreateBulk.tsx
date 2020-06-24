@@ -149,6 +149,7 @@ export const ProductCreateView: React.FC = () => {
                 description: "window title"
               })}
             />
+
             <ProductCreatePageBulk
               currency={maybe(() => shop.defaultCurrency)}
               categories={maybe(

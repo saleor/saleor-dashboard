@@ -1,3 +1,6 @@
+// import ProductPricing from "../ProductPricing";
+// import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import Button from "@material-ui/core/Button";
 import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -8,7 +11,7 @@ import Grid from "@saleor/components/Grid";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import SeoForm from "@saleor/components/SeoForm";
+// import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
@@ -25,7 +28,8 @@ import { SearchProductTypes_search_edges_node_productAttributes } from "@saleor/
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
+// import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
+import { RawDraftContentState } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -39,10 +43,8 @@ import ProductAttributes, {
   ProductAttributeInput,
   ProductAttributeInputData
 } from "../ProductAttributes";
-import ProductDetailsForm from "../ProductDetailsForm";
+// import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
-import ProductPricing from "../ProductPricing";
-import ProductStocks, { ProductStockInput } from "../ProductStocks";
 
 interface FormData {
   basePrice: number;
@@ -60,9 +62,10 @@ interface FormData {
   stockQuantity: number;
   trackInventory: boolean;
 }
+
 export interface ProductCreatePageSubmitData extends FormData {
   attributes: ProductAttributeInput[];
-  stocks: ProductStockInput[];
+  // stocks: ProductStockInput[];
 }
 
 interface ProductCreatePageProps {
@@ -91,7 +94,7 @@ interface ProductCreatePageProps {
 }
 
 export const ProductCreatePageBulk: React.FC<ProductCreatePageProps> = ({
-  currency,
+  // currency,
   disabled,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
@@ -101,10 +104,10 @@ export const ProductCreatePageBulk: React.FC<ProductCreatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   fetchMoreProductTypes,
-  header,
+  // header,
   productTypes: productTypeChoiceList,
   saveButtonBarState,
-  warehouses,
+  // warehouses,
   onBack,
   fetchProductTypes,
   onSubmit
@@ -117,18 +120,21 @@ export const ProductCreatePageBulk: React.FC<ProductCreatePageProps> = ({
     data: attributes,
     set: setAttributeData
   } = useFormset<ProductAttributeInputData>([]);
-  const {
-    add: addStock,
-    change: changeStockData,
-    data: stocks,
-    remove: removeStock
-  } = useFormset<null, string>([]);
+
+  // const {
+  //   add: addStock,
+  //   change: changeStockData,
+  //   data: stocks,
+  //   remove: removeStock
+  // } = useFormset<null, string>([]);
 
   // Ensures that it will not change after component rerenders, because it
   // generates different block keys and it causes editor to lose its content.
-  const initialDescription = React.useRef(
-    convertToRaw(ContentState.createFromText(""))
-  );
+
+  // const initialDescription = React.useRef(
+  //   convertToRaw(ContentState.createFromText(""))
+  // );
+
   const initialData: FormData = {
     basePrice: 0,
     category: "",
@@ -166,7 +172,7 @@ export const ProductCreatePageBulk: React.FC<ProductCreatePageProps> = ({
   const handleSubmit = (data: FormData) =>
     onSubmit({
       attributes,
-      stocks,
+      // stocks,
       ...data
     });
 
@@ -212,17 +218,9 @@ export const ProductCreatePageBulk: React.FC<ProductCreatePageProps> = ({
             <AppHeader onBack={onBack}>
               {intl.formatMessage(sectionNames.products)}
             </AppHeader>
-            <PageHeader title={header} />
+            <PageHeader title={"Bulk Upload Products"} />
             <Grid>
               <div>
-                <p>WHY ARE YOU THIS WAY</p>
-                <ProductDetailsForm
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  initialDescription={initialDescription.current}
-                  onChange={change}
-                />
                 <CardSpacer />
                 {attributes.length > 0 && (
                   <ProductAttributes
@@ -233,58 +231,20 @@ export const ProductCreatePageBulk: React.FC<ProductCreatePageProps> = ({
                   />
                 )}
                 <CardSpacer />
-                <ProductPricing
-                  currency={currency}
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
+                <Button variant="contained" component="label">
+                  Upload CSV
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={() => alert("!")}
+                  />
+                </Button>
                 <CardSpacer />
                 {!!productType && !productType.hasVariants && (
                   <>
-                    <ProductStocks
-                      data={data}
-                      disabled={disabled}
-                      onFormDataChange={change}
-                      errors={errors}
-                      stocks={stocks}
-                      warehouses={warehouses}
-                      onChange={(id, value) => {
-                        triggerChange();
-                        changeStockData(id, value);
-                      }}
-                      onWarehouseStockAdd={id => {
-                        triggerChange();
-                        addStock({
-                          data: null,
-                          id,
-                          label: warehouses.find(
-                            warehouse => warehouse.id === id
-                          ).name,
-                          value: "0"
-                        });
-                      }}
-                      onWarehouseStockDelete={id => {
-                        triggerChange();
-                        removeStock(id);
-                      }}
-                    />
                     <CardSpacer />
                   </>
                 )}
-                <SeoForm
-                  helperText={intl.formatMessage({
-                    defaultMessage:
-                      "Add search engine title and description to make this product easier to find"
-                  })}
-                  title={data.seoTitle}
-                  titlePlaceholder={data.name}
-                  description={data.seoDescription}
-                  descriptionPlaceholder={data.seoTitle}
-                  loading={disabled}
-                  onChange={change}
-                />
               </div>
               <div>
                 <ProductOrganization
