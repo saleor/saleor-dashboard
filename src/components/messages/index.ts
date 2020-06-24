@@ -1,5 +1,4 @@
-import { createContext } from "react";
-
+import { positions } from "react-alert";
 export interface IMessage {
   actionBtn?: {
     label: string;
@@ -12,8 +11,14 @@ export interface IMessage {
   onUndo?: () => void;
   status?: "success" | "error" | "info" | "warning";
 }
-export type IMessageContext = (message: IMessage) => void;
-export const MessageContext = createContext<IMessageContext>(undefined);
+
+export const notificationOptions = {
+  containerStyle: {
+    zIndex: 1000
+  },
+  offset: "20px",
+  position: positions.TOP_RIGHT,
+  timeout: 3000
+};
 
 export * from "./MessageManager";
-export default MessageContext.Consumer;

@@ -19,7 +19,7 @@ export const MessageManager: React.FC<IMessageManagerProps> = props => {
   const {
     close,
     options: { timeout },
-    message: { actionBtn, expandText, status, title, text, onUndo }
+    message: { actionBtn, expandText, status = "info", title, text, onUndo }
   } = props;
 
   const [expand, setExpand] = useState(false);
@@ -33,6 +33,7 @@ export const MessageManager: React.FC<IMessageManagerProps> = props => {
         key={props.id}
         aria-describedby="message-id"
         className={classNames(classes.snackbar, {
+          [classes.info]: status === "info",
           [classes.error]: status === "error",
           [classes.success]: status === "success",
           [classes.warning]: status === "warning"

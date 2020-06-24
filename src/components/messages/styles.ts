@@ -26,7 +26,7 @@ export const useStyles = makeStyles(
       color: "#fff",
       padding: 10,
       position: "absolute",
-      right: 0,
+      right: 5,
       top: 7
     },
     closeBtnInfo: {
@@ -96,6 +96,13 @@ export const useStyles = makeStyles(
     hiddenText: {
       maxHeight: 0
     },
+    info: {
+      "& > div:first-child": {
+        "&:before": {
+          backgroundImage: `url(${infoIcon})`
+        }
+      }
+    },
     progressBar: {
       backgroundColor: infoColor,
       height: 8,
@@ -128,7 +135,6 @@ export const useStyles = makeStyles(
       },
       "& > div:first-child": {
         "&:before": {
-          backgroundImage: `url(${infoIcon})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "contain",
           content: "''",
@@ -139,10 +145,11 @@ export const useStyles = makeStyles(
           top: 13,
           width: 32
         },
-        paddingTop: 10,
+        paddingTop: 16,
         position: "relative"
       },
-      borderRadius: 4
+      borderRadius: 4,
+      paddingBottom: 15
     },
     snackbarContainer: {
       borderRadius: 4,

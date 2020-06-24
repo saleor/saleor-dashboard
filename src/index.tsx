@@ -1,11 +1,12 @@
 import { API_URI, APP_MOUNT_URI, GTM_ID } from "./config";
-import { Provider as AlertProvider, positions } from "react-alert";
 import Auth, { getAuthToken, removeAuthToken } from "./auth";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ConfigurationSection, { createConfigurationMenu } from "./configuration";
 import { ErrorResponse, onError } from "apollo-link-error";
 import { InMemoryCache, defaultDataIdFromObject } from "apollo-cache-inmemory";
+import { MessageManager, notificationOptions } from "./components/messages";
 
+import { Provider as AlertProvider } from "react-alert";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
 import { ApolloProvider } from "react-apollo";
@@ -24,7 +25,6 @@ import ErrorBoundary from "react-error-boundary";
 import HomePage from "./home";
 import { LocaleProvider } from "./components/Locale";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
-import { MessageManager } from "./components/messages";
 import NavigationSection from "./navigation";
 import Navigator from "@saleor/components/Navigator";
 import { NotFound } from "./NotFound";
@@ -126,15 +126,6 @@ const apolloClient = new ApolloClient({
   }),
   link: invalidTokenLink.concat(authLink.concat(link))
 });
-
-const notificationOptions = {
-  containerStyle: {
-    zIndex: 1000
-  },
-  offset: "20px",
-  position: positions.TOP_RIGHT,
-  timeout: 3000
-};
 
 const App: React.FC = () => {
   const isDark = localStorage.getItem("theme") === "true";

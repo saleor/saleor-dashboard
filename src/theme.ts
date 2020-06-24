@@ -357,8 +357,7 @@ export default (colors: IThemeColors): Theme =>
             "0 6px 10px 0px rgba(0, 0, 0, 0.15), 0 1px 18px 0px rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.10)",
           color: colors.font.default,
           display: "block",
-          maxWidth: 480,
-          padding: 0
+          maxWidth: 480
         }
       },
       MuiSwitch: {
