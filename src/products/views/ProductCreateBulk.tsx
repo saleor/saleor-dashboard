@@ -78,6 +78,8 @@ export const ProductCreateView: React.FC = () => {
             }
           }
 
+          console.log(decimal, productCreate);
+
           // productCreate({
           //   variables: {
           //     attributes: formData.attributes.map(attribute => ({
