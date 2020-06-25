@@ -464,7 +464,7 @@ const invoiceRequestMutation = gql`
   ${invoiceErrorFragment}
   ${fragmentInvoice}
   mutation InvoiceRequest($orderId: ID!) {
-    requestInvoice(orderId: $orderId) {
+    invoiceRequest(orderId: $orderId) {
       errors: invoiceErrors {
         ...InvoiceErrorFragment
       }
@@ -483,7 +483,7 @@ const invoiceEmailSendMutation = gql`
   ${invoiceErrorFragment}
   ${fragmentInvoice}
   mutation InvoiceEmailSend($id: ID!) {
-    sendInvoiceEmail(id: $id) {
+    invoiceSendEmail(id: $id) {
       errors: invoiceErrors {
         ...InvoiceErrorFragment
       }

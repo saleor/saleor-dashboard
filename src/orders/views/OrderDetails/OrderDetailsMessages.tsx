@@ -256,7 +256,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleInvoiceGeneratePending = (data: InvoiceRequest) => {
-    const errs = data.requestInvoice?.errors;
+    const errs = data.invoiceRequest?.errors;
     if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
@@ -271,7 +271,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleInvoiceSend = (data: InvoiceEmailSend) => {
-    const errs = data.sendInvoiceEmail?.errors;
+    const errs = data.invoiceSendEmail?.errors;
     if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
