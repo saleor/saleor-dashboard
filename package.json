@@ -198,7 +198,7 @@
     "generate-component": "plop --plopfile .plop/plopfile.js",
     "heroku-postbuild": "npm run build",
     "serve:lhci": "NODE_ENV=production npm run server",
-    "start": "webpack-dev-server --open -d",
+    "start": "webpack-dev-server -d",
     "storybook": "start-storybook -p 3000 -c src/storybook/",
     "test-e2e": "testcafe 'chrome:headless' .testcafe",
     "test": "jest src/",
