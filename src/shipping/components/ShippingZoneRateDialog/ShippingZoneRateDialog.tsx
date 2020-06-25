@@ -37,6 +37,7 @@ export interface FormData {
   maxValue: string;
   isFree: boolean;
   price: string;
+  type: ShippingMethodTypeEnum;
 }
 
 export interface ShippingZoneRateDialogProps {
@@ -104,7 +105,8 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
           minValue: "",
           name: "",
           noLimits: false,
-          price: ""
+          price: "",
+          type: null
         }
       : {
           isFree: maybe(() => rate.price.amount === 0, false),
@@ -118,7 +120,8 @@ const ShippingZoneRateDialog: React.FC<ShippingZoneRateDialogProps> = props => {
               : maybe(() => rate.minimumOrderWeight.value.toString(), ""),
           name: maybe(() => rate.name, ""),
           noLimits: false,
-          price: maybe(() => rate.price.amount.toString(), "")
+          price: maybe(() => rate.price.amount.toString(), ""),
+          type: variant
         };
   if (action === "edit") {
     initialForm.noLimits = !initialForm.maxValue && !initialForm.minValue;

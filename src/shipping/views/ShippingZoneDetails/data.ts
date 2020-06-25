@@ -50,14 +50,22 @@ export function getUpdateShippingRateVariables(
   params: ShippingZoneUrlQueryParams,
   id: string
 ): UpdateShippingRateVariables {
+  const isPriceType = data.type === ShippingMethodTypeEnum.PRICE
+  const parsedMinValue = parseFloat(data.minValue)
+  const parsedMaxValue = parseFloat(data.maxValue)
+  const isPriceSet = !data.noLimits && isPriceType
+  const isWeightSet = !data.noLimits && !isPriceType
   return {
     id: params.id,
     input: {
-      maximumOrderPrice: data.noLimits ? null : parseFloat(data.maxValue),
-      minimumOrderPrice: data.noLimits ? null : parseFloat(data.minValue),
+      maximumOrderPrice: isPriceSet ? parsedMaxValue : null,
+      maximumOrderWeight: isWeightSet ? parsedMaxValue : null,
+      minimumOrderPrice: isPriceSet ?  parsedMinValue : null,
+      minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       price: data.isFree ? 0 : parseFloat(data.price),
-      shippingZone: id
+      shippingZone: id,
+      type: data.type
     }
   };
 }
