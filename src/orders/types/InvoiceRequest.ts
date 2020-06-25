@@ -8,13 +8,13 @@ import { InvoiceErrorCode, JobStatusEnum } from "./../../types/globalTypes";
 // GraphQL mutation operation: InvoiceRequest
 // ====================================================
 
-export interface InvoiceRequest_requestInvoice_errors {
+export interface InvoiceRequest_invoiceRequest_errors {
   __typename: "InvoiceError";
   code: InvoiceErrorCode;
   field: string | null;
 }
 
-export interface InvoiceRequest_requestInvoice_invoice {
+export interface InvoiceRequest_invoiceRequest_invoice {
   __typename: "Invoice";
   id: string;
   number: string | null;
@@ -23,14 +23,14 @@ export interface InvoiceRequest_requestInvoice_invoice {
   status: JobStatusEnum;
 }
 
-export interface InvoiceRequest_requestInvoice {
-  __typename: "RequestInvoice";
-  errors: InvoiceRequest_requestInvoice_errors[];
-  invoice: InvoiceRequest_requestInvoice_invoice | null;
+export interface InvoiceRequest_invoiceRequest {
+  __typename: "InvoiceRequest";
+  errors: InvoiceRequest_invoiceRequest_errors[];
+  invoice: InvoiceRequest_invoiceRequest_invoice | null;
 }
 
 export interface InvoiceRequest {
-  requestInvoice: InvoiceRequest_requestInvoice | null;
+  invoiceRequest: InvoiceRequest_invoiceRequest | null;
 }
 
 export interface InvoiceRequestVariables {
