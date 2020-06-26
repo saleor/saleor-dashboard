@@ -13,6 +13,7 @@ export const appsList: AppsList_apps_edges[] = [
     __typename: "AppCountableEdge",
     node: {
       __typename: "App",
+      accessToken: "token",
       appUrl: "http://localhost:8888/app",
       configurationUrl: "htpp://localhost:8888/configuration",
       created: "2020-05-01T11:24:54.937261+00:00",
@@ -33,6 +34,7 @@ export const appsList: AppsList_apps_edges[] = [
     __typename: "AppCountableEdge",
     node: {
       __typename: "App",
+      accessToken: "token",
       appUrl: "http://localhost:8888/app",
       configurationUrl: "htpp://localhost:8888/configuration",
       created: "2020-06-01T11:24:54.937261+00:00",
@@ -56,6 +58,7 @@ export const customAppsList: AppsList_apps_edges[] = [
     __typename: "AppCountableEdge",
     node: {
       __typename: "App",
+      accessToken: "token",
       appUrl: "http://localhost:8888/app",
       configurationUrl: "htpp://localhost:8888/configuration",
       created: "2020-05-02T11:24:54.937261+00:00",
@@ -104,6 +107,7 @@ export const appsInProgress: AppsInstallations_appsInstallations[] = [
 export const appDetails: App_app = {
   __typename: "App",
   aboutApp: "Lorem ipsum",
+  accessToken: "token",
   appUrl: "http://localhost:8888/app",
   configurationUrl: "htpp://localhost:8888/configuration",
   created: "2020-06-02T12:24:26.818138+00:00",

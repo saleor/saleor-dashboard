@@ -53,6 +53,7 @@ export interface AppDelete_appDelete_app {
   configurationUrl: string | null;
   supportUrl: string | null;
   version: string | null;
+  accessToken: string | null;
   privateMetadata: (AppDelete_appDelete_app_privateMetadata | null)[];
   metadata: (AppDelete_appDelete_app_metadata | null)[];
   tokens: (AppDelete_appDelete_app_tokens | null)[] | null;

@@ -261,6 +261,7 @@ type App implements Node & ObjectWithMetadata {
   configurationUrl: String
   appUrl: String
   version: String
+  accessToken: String
 }
 
 type AppActivate {

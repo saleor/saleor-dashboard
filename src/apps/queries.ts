@@ -18,6 +18,7 @@ export const appFragment = gql`
     configurationUrl
     supportUrl
     version
+    accessToken
     privateMetadata {
       key
       value
@@ -37,7 +38,7 @@ export const appFragment = gql`
   }
 `;
 
-const installedAppsList = gql`
+const appsList = gql`
   ${appFragment}
   ${webhooksFragment}
   query AppsList(
@@ -62,35 +63,6 @@ const installedAppsList = gql`
         startCursor
         endCursor
       }
-      totalCount
-      edges {
-        node {
-          ...AppFragment
-        }
-      }
-    }
-  }
-`;
-
-const customAppsList = gql`
-  ${appFragment}
-  ${webhooksFragment}
-  query AppsList(
-    $before: String
-    $after: String
-    $first: Int
-    $last: Int
-    $sort: AppSortingInput
-    $filter: AppFilterInput
-  ) {
-    apps(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-      sortBy: $sort
-      filter: $filter
-    ) {
       totalCount
       edges {
         node {
@@ -130,12 +102,8 @@ const appDetails = gql`
   }
 `;
 
-export const useInstalledAppsListQuery = makeQuery<AppsList, AppsListVariables>(
-  installedAppsList
-);
-
-export const useCustomAppsListQuery = makeQuery<AppsList, AppsListVariables>(
-  customAppsList
+export const useAppsListQuery = makeQuery<AppsList, AppsListVariables>(
+  appsList
 );
 
 export const useAppsInProgressListQuery = makeQuery<AppsInstallations, {}>(
