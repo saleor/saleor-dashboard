@@ -53,6 +53,7 @@ export interface AppCreate_appCreate_app {
   configurationUrl: string | null;
   supportUrl: string | null;
   version: string | null;
+  accessToken: string | null;
   privateMetadata: (AppCreate_appCreate_app_privateMetadata | null)[];
   metadata: (AppCreate_appCreate_app_metadata | null)[];
   tokens: (AppCreate_appCreate_app_tokens | null)[] | null;

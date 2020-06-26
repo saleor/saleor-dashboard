@@ -102,9 +102,8 @@ export const SetPasswordMutation = TypedMutation<
 
 const refreshToken = gql`
   mutation RefreshToken($token: String!) {
-    tokenRefresh(token: $token) {
+    tokenRefresh(csrfToken: $token) {
       token
-      payload
     }
   }
 `;

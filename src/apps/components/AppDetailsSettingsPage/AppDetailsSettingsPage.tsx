@@ -40,7 +40,10 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
   useEffect(() => {
     if (!iframeRef.current?.innerHTML && data?.configurationUrl) {
       fetch(data?.configurationUrl, {
-        headers: { "x-saleor-domain": backendHost },
+        headers: {
+          "x-saleor-domain": backendHost,
+          "x-saleor-token": data.accessToken
+        },
         method: "GET"
       })
         .then(async response => {

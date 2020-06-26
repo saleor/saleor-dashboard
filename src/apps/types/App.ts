@@ -59,6 +59,7 @@ export interface App_app {
   configurationUrl: string | null;
   supportUrl: string | null;
   version: string | null;
+  accessToken: string | null;
   privateMetadata: (App_app_privateMetadata | null)[];
   metadata: (App_app_metadata | null)[];
   tokens: (App_app_tokens | null)[] | null;

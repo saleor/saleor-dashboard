@@ -20,6 +20,11 @@ export enum AccountErrorCode {
   INVALID = "INVALID",
   INVALID_CREDENTIALS = "INVALID_CREDENTIALS",
   INVALID_PASSWORD = "INVALID_PASSWORD",
+  JWT_DECODE_ERROR = "JWT_DECODE_ERROR",
+  JWT_INVALID_CSRF_TOKEN = "JWT_INVALID_CSRF_TOKEN",
+  JWT_INVALID_TOKEN = "JWT_INVALID_TOKEN",
+  JWT_MISSING_TOKEN = "JWT_MISSING_TOKEN",
+  JWT_SIGNATURE_EXPIRED = "JWT_SIGNATURE_EXPIRED",
   LEFT_NOT_MANAGEABLE_PERMISSION = "LEFT_NOT_MANAGEABLE_PERMISSION",
   NOT_FOUND = "NOT_FOUND",
   OUT_OF_SCOPE_GROUP = "OUT_OF_SCOPE_GROUP",
@@ -448,6 +453,7 @@ export enum LanguageCodeEnum {
   SR = "SR",
   SV = "SV",
   SW = "SW",
+  TA = "TA",
   TH = "TH",
   TR = "TR",
   UK = "UK",
@@ -502,6 +508,7 @@ export enum OrderErrorCode {
   ORDER_NO_SHIPPING_ADDRESS = "ORDER_NO_SHIPPING_ADDRESS",
   PAYMENT_ERROR = "PAYMENT_ERROR",
   PAYMENT_MISSING = "PAYMENT_MISSING",
+  PRODUCT_NOT_PUBLISHED = "PRODUCT_NOT_PUBLISHED",
   REQUIRED = "REQUIRED",
   SHIPPING_METHOD_NOT_APPLICABLE = "SHIPPING_METHOD_NOT_APPLICABLE",
   SHIPPING_METHOD_REQUIRED = "SHIPPING_METHOD_REQUIRED",
@@ -533,6 +540,7 @@ export enum OrderEventsEnum {
   ORDER_MARKED_AS_PAID = "ORDER_MARKED_AS_PAID",
   OTHER = "OTHER",
   OVERSOLD_ITEMS = "OVERSOLD_ITEMS",
+  PAYMENT_AUTHORIZED = "PAYMENT_AUTHORIZED",
   PAYMENT_CAPTURED = "PAYMENT_CAPTURED",
   PAYMENT_FAILED = "PAYMENT_FAILED",
   PAYMENT_REFUNDED = "PAYMENT_REFUNDED",
@@ -682,11 +690,6 @@ export enum SaleSortField {
 export enum SaleType {
   FIXED = "FIXED",
   PERCENTAGE = "PERCENTAGE",
-}
-
-export enum ServiceAccountSortField {
-  CREATION_DATE = "CREATION_DATE",
-  NAME = "NAME",
 }
 
 export enum ShippingErrorCode {
@@ -1349,27 +1352,6 @@ export interface SaleSortingInput {
 export interface SeoInput {
   title?: string | null;
   description?: string | null;
-}
-
-export interface ServiceAccountFilterInput {
-  search?: string | null;
-  isActive?: boolean | null;
-}
-
-export interface ServiceAccountInput {
-  name?: string | null;
-  isActive?: boolean | null;
-  permissions?: (PermissionEnum | null)[] | null;
-}
-
-export interface ServiceAccountSortingInput {
-  direction: OrderDirection;
-  field: ServiceAccountSortField;
-}
-
-export interface ServiceAccountTokenInput {
-  name?: string | null;
-  serviceAccount: string;
 }
 
 export interface ShippingPriceInput {

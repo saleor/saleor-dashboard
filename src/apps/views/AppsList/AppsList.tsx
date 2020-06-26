@@ -25,11 +25,7 @@ import {
   useAppDeleteMutation,
   useAppRetryInstallMutation
 } from "../../mutations";
-import {
-  useAppsInProgressListQuery,
-  useCustomAppsListQuery,
-  useInstalledAppsListQuery
-} from "../../queries";
+import { useAppsInProgressListQuery, useAppsListQuery } from "../../queries";
 import { AppDelete } from "../../types/AppDelete";
 import { AppDeleteFailedInstallation } from "../../types/AppDeleteFailedInstallation";
 import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
@@ -86,7 +82,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   } = useAppsInProgressListQuery({
     displayLoader: false
   });
-  const { data, loading, refetch } = useInstalledAppsListQuery({
+  const { data, loading, refetch } = useAppsListQuery({
     displayLoader: true,
     variables: {
       ...paginationState,
@@ -107,7 +103,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     data: customAppsData,
     loading: customAppsLoading,
     refetch: customAppsRefetch
-  } = useCustomAppsListQuery({
+  } = useAppsListQuery({
     displayLoader: true,
     variables: {
       first: 1000,
