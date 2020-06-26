@@ -14,9 +14,9 @@ export interface IMessage {
 
 export const notificationOptions = {
   containerStyle: {
-    zIndex: 1000
+    zIndex: 1200
   },
-  offset: "20px",
+
   position: positions.TOP_RIGHT,
   timeout: 3000
 };
