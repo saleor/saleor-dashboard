@@ -61,6 +61,7 @@ export interface AppsList_apps_edges_node {
   configurationUrl: string | null;
   supportUrl: string | null;
   version: string | null;
+  accessToken: string | null;
   privateMetadata: (AppsList_apps_edges_node_privateMetadata | null)[];
   metadata: (AppsList_apps_edges_node_metadata | null)[];
   tokens: (AppsList_apps_edges_node_tokens | null)[] | null;

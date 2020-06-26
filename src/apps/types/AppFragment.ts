@@ -53,6 +53,7 @@ export interface AppFragment {
   configurationUrl: string | null;
   supportUrl: string | null;
   version: string | null;
+  accessToken: string | null;
   privateMetadata: (AppFragment_privateMetadata | null)[];
   metadata: (AppFragment_metadata | null)[];
   tokens: (AppFragment_tokens | null)[] | null;

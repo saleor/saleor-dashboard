@@ -706,11 +706,6 @@ export enum SaleType {
   PERCENTAGE = "PERCENTAGE",
 }
 
-export enum ServiceAccountSortField {
-  CREATION_DATE = "CREATION_DATE",
-  NAME = "NAME",
-}
-
 export enum ShippingErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
@@ -1374,27 +1369,6 @@ export interface SaleSortingInput {
 export interface SeoInput {
   title?: string | null;
   description?: string | null;
-}
-
-export interface ServiceAccountFilterInput {
-  search?: string | null;
-  isActive?: boolean | null;
-}
-
-export interface ServiceAccountInput {
-  name?: string | null;
-  isActive?: boolean | null;
-  permissions?: (PermissionEnum | null)[] | null;
-}
-
-export interface ServiceAccountSortingInput {
-  direction: OrderDirection;
-  field: ServiceAccountSortField;
-}
-
-export interface ServiceAccountTokenInput {
-  name?: string | null;
-  serviceAccount: string;
 }
 
 export interface ShippingPriceInput {
