@@ -1,9 +1,14 @@
 export enum Task {
-  CUSTOM
+  CUSTOM,
+  INVOICE_GENERATE
 }
 export enum TaskStatus {
   PENDING,
   ENDED
+}
+export interface InvoiceGenerateParams {
+  orderId: string;
+  invoiceId: string;
 }
 
 export interface QueuedTask {
@@ -14,7 +19,10 @@ export interface QueuedTask {
   onError: (error: Error) => void;
 }
 
+export type TaskParams = InvoiceGenerateParams;
+
 export interface TaskData {
+  params?: TaskParams;
   handle?: () => Promise<boolean>;
   onCompleted?: () => void;
   onError?: () => void;
