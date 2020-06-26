@@ -128,7 +128,7 @@ describe("Background task provider", () => {
         jest.advanceTimersByTime(backgroundTasksRefreshTime);
 
         setImmediate(() => {
-          expect(tasks[1].onCompleted).toHaveBeenCalled();
+          expect(tasks[0].onCompleted).toHaveBeenCalled();
           expect(tasks[1].onCompleted).toHaveBeenCalled();
 
           done();
