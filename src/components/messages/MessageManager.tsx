@@ -133,7 +133,6 @@ export const MessageManager: React.FC<IMessageManagerProps> = props => {
           <div className={classes.progressBarContainer} key="progressBar">
             <div
               className={classNames(classes.progressBar, {
-                [classes.progressBarActive]: true,
                 [classes.progressBarSuccess]: status === "success",
                 [classes.progressBarWarning]: status === "warning",
                 [classes.progressBarError]: status === "error"
