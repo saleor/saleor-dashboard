@@ -1,3 +1,4 @@
+import { messages } from "@saleor/containers/BackgroundTasks/tasks";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -45,6 +46,7 @@ interface OrderDetailsMessages {
     handleShippingMethodUpdate: (data: OrderShippingMethodUpdate) => void;
     handleUpdate: (data: OrderUpdate) => void;
     handleInvoiceGeneratePending: (data: InvoiceRequest) => void;
+    handleInvoiceGenerateFinished: (data: InvoiceRequest) => void;
     handleInvoiceSend: (data: InvoiceEmailSend) => void;
   }) => React.ReactElement;
   id: string;
@@ -270,6 +272,16 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
+  const handleInvoiceGenerateFinished = (data: InvoiceRequest) => {
+    const errs = data.invoiceRequest?.errors;
+    if (errs.length === 0) {
+      pushMessage({
+        text: intl.formatMessage(messages.invoiceGenerateFinishedText),
+        title: intl.formatMessage(messages.invoiceGenerateFinishedTitle)
+      });
+      closeModal();
+    }
+  };
   const handleInvoiceSend = (data: InvoiceEmailSend) => {
     const errs = data.invoiceSendEmail?.errors;
     if (errs.length === 0) {
@@ -286,6 +298,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     handleDraftCancel,
     handleDraftFinalize,
     handleDraftUpdate,
+    handleInvoiceGenerateFinished,
     handleInvoiceGeneratePending,
     handleInvoiceSend,
     handleNoteAdd,

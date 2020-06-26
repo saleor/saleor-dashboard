@@ -1,10 +1,15 @@
 export enum Task {
-  CUSTOM
+  CUSTOM,
+  INVOICE_GENERATE
 }
 export enum TaskStatus {
   FAILURE,
   PENDING,
   SUCCESS
+}
+export interface InvoiceGenerateParams {
+  orderId: string;
+  invoiceId: string;
 }
 
 export interface OnCompletedTaskData {
@@ -21,6 +26,7 @@ export interface QueuedTask {
 }
 
 export interface TaskData {
+  generateInvoice?: InvoiceGenerateParams;
   id?: string;
   handle?: () => Promise<TaskStatus>;
   onCompleted?: OnCompletedTaskFn;

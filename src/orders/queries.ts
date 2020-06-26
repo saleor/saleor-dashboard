@@ -228,3 +228,15 @@ export const useOrderFulfillData = makeQuery<
   OrderFulfillData,
   OrderFulfillDataVariables
 >(orderFulfillData);
+
+export const checkOrderInvoicesStatus = gql`
+  ${fragmentInvoice}
+  query CheckOrderInvoicesStatus($id: ID!) {
+    order(id: $id) {
+      id
+      invoices {
+        ...InvoiceFragment
+      }
+    }
+  }
+`;

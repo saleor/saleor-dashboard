@@ -1,4 +1,31 @@
-import { QueuedTask, TaskData, TaskStatus } from "./types";
+import { IMessageContext } from "@saleor/components/messages";
+import { commonMessages } from "@saleor/intl";
+import { CheckOrderInvoicesStatus } from "@saleor/orders/types/CheckOrderInvoicesStatus";
+import { JobStatusEnum } from "@saleor/types/globalTypes";
+import { ApolloQueryResult } from "apollo-client";
+import { defineMessages, IntlShape } from "react-intl";
+
+import {
+  InvoiceGenerateParams,
+  QueuedTask,
+  TaskData,
+  TaskStatus
+} from "./types";
+
+export const messages = defineMessages({
+  invoiceGenerateFinishedText: {
+    defaultMessage:
+      "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
+  },
+  invoiceGenerateFinishedTitle: {
+    defaultMessage: "Invoice Generated",
+    description: "invoice generating has finished, header"
+  },
+  invoiceGenerationFailedTitle: {
+    defaultMessage: "Invoice Generation",
+    description: "dialog header, title"
+  }
+});
 
 export async function handleTask(task: QueuedTask): Promise<TaskStatus> {
   let status = TaskStatus.PENDING;
@@ -37,6 +64,49 @@ export function queueCustom(
       id,
       onCompleted: data.onCompleted,
       onError: data.onError || handleError,
+      status: TaskStatus.PENDING
+    }
+  ];
+}
+
+export function queueInvoiceGenerate(
+  id: number,
+  generateInvoice: InvoiceGenerateParams,
+  tasks: React.MutableRefObject<QueuedTask[]>,
+  fetch: () => Promise<ApolloQueryResult<CheckOrderInvoicesStatus>>,
+  notify: IMessageContext,
+  intl: IntlShape
+) {
+  if (!generateInvoice) {
+    throw new Error("generateInvoice is required when creating custom task");
+  }
+  tasks.current = [
+    ...tasks.current,
+    {
+      handle: async () => {
+        const result = await fetch();
+        const status = result.data.order.invoices.find(
+          invoice => invoice.id === generateInvoice.invoiceId
+        ).status;
+
+        return status === JobStatusEnum.SUCCESS
+          ? TaskStatus.SUCCESS
+          : status === JobStatusEnum.PENDING
+          ? TaskStatus.PENDING
+          : TaskStatus.FAILURE;
+      },
+      id,
+      onCompleted: data =>
+        data.status === TaskStatus.SUCCESS
+          ? notify({
+              text: intl.formatMessage(messages.invoiceGenerateFinishedText),
+              title: intl.formatMessage(messages.invoiceGenerateFinishedTitle)
+            })
+          : notify({
+              text: intl.formatMessage(commonMessages.somethingWentWrong),
+              title: intl.formatMessage(messages.invoiceGenerationFailedTitle)
+            }),
+      onError: handleError,
       status: TaskStatus.PENDING
     }
   ];

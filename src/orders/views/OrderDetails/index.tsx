@@ -1,10 +1,13 @@
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { Task } from "@saleor/containers/BackgroundTasks/types";
+import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { InvoiceRequest } from "@saleor/orders/types/InvoiceRequest";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { useWarehouseList } from "@saleor/warehouses/queries";
@@ -18,7 +21,11 @@ import {
   transformAddressToForm,
 } from "../../../misc";
 import { productUrl } from "../../../products/urls";
-import { FulfillmentStatus, OrderStatus } from "../../../types/globalTypes";
+import {
+  FulfillmentStatus,
+  JobStatusEnum,
+  OrderStatus,
+} from "../../../types/globalTypes";
 import OrderAddressEditDialog from "../../components/OrderAddressEditDialog";
 import OrderCancelDialog from "../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../components/OrderDetailsPage";
@@ -104,6 +111,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
       first: 30,
     },
   });
+  const { queue } = useBackgroundTask();
   const intl = useIntl();
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -149,7 +157,21 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onDraftFinalize={orderMessages.handleDraftFinalize}
                 onDraftCancel={orderMessages.handleDraftCancel}
                 onOrderMarkAsPaid={orderMessages.handleOrderMarkAsPaid}
-                onInvoiceRequest={orderMessages.handleInvoiceGeneratePending}
+                onInvoiceRequest={(data: InvoiceRequest) => {
+                  if (
+                    data.invoiceRequest.invoice.status === JobStatusEnum.SUCCESS
+                  ) {
+                    orderMessages.handleInvoiceGenerateFinished(data);
+                  } else {
+                    orderMessages.handleInvoiceGeneratePending(data);
+                    queue(Task.INVOICE_GENERATE, {
+                      params: {
+                        invoiceId: data.invoiceRequest.invoice.id,
+                        orderId: id,
+                      },
+                    });
+                  }
+                }}
                 onInvoiceSend={orderMessages.handleInvoiceSend}
               >
                 {({
