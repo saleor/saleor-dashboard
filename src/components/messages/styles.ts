@@ -104,13 +104,11 @@ export const useStyles = makeStyles(
       }
     },
     progressBar: {
+      animation: `$bar var(--animationTime) ease both`,
       backgroundColor: infoColor,
       height: 8,
       transform: "translateX(-100%)",
       width: "100%"
-    },
-    progressBarActive: {
-      animation: `$bar var(--animationTime) ease both`
     },
     progressBarContainer: {
       borderRadius: "0 0 4px 4px",
