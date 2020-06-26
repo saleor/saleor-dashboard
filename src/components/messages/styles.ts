@@ -149,13 +149,15 @@ export const useStyles = makeStyles(
         position: "relative"
       },
       borderRadius: 4,
-      paddingBottom: 15
+      paddingBottom: 15,
+      paddingRight: 40,
+      position: "relative"
     },
     snackbarContainer: {
       borderRadius: 4,
       display: "block",
-      margin: theme.spacing(2, 2, 0, 0),
-      maxWidth: 480,
+      margin: theme.spacing(2, 2, 0, 2),
+      maxWidth: 450,
       pointerEvents: "all",
       position: "relative"
     },
