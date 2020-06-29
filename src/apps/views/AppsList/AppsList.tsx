@@ -106,7 +106,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   } = useAppsListQuery({
     displayLoader: true,
     variables: {
-      first: 1000,
+      first: 100,
       ...queryVariables,
       filter: {
         type: AppTypeEnum.LOCAL
