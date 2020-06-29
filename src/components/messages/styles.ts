@@ -148,7 +148,7 @@ export const useStyles = makeStyles(
       },
       borderRadius: 4,
       paddingBottom: 15,
-      paddingRight: 40,
+      paddingRight: 45,
       position: "relative"
     },
     snackbarContainer: {

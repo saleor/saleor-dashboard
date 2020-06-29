@@ -14,6 +14,9 @@ export interface IMessage {
 
 export const notificationOptions = {
   containerStyle: {
+    display: "grid",
+    gridTemplateRows: "repeat(auto-fill, minmax(90px, 1fr)",
+    justifyContent: "end",
     zIndex: 1200
   },
 
