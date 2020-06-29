@@ -1,5 +1,6 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -7,9 +8,6 @@ import AppDetailsSettingsPage from "../../components/AppDetailsSettingsPage";
 import { useAppDetails } from "../../queries";
 import { appsListPath, appUrl } from "../../urls";
 
-const BACKEND_HOST = process.env.API_URI
-  ? new URL(process.env.API_URI).host
-  : "";
 interface AppDetailsSetttingsProps {
   id: string;
 }
@@ -17,6 +15,7 @@ interface AppDetailsSetttingsProps {
 export const AppDetailsSettings: React.FC<AppDetailsSetttingsProps> = ({
   id
 }) => {
+  const shop = useShop();
   const { data } = useAppDetails({
     displayLoader: true,
     variables: { id }
@@ -27,7 +26,7 @@ export const AppDetailsSettings: React.FC<AppDetailsSetttingsProps> = ({
 
   return (
     <AppDetailsSettingsPage
-      backendHost={BACKEND_HOST}
+      backendHost={shop?.domain.host}
       data={data?.app}
       navigateToDashboard={() => navigate(appUrl(id))}
       onBack={() => navigate(appsListPath)}
