@@ -37,13 +37,13 @@ const useStyles = makeStyles(
 
 interface OrderInvoiceListProps {
   invoices: InvoiceFragment[];
-  onGenerateInvoice?: () => void;
-  onClickInvoice?: (invoice: InvoiceFragment) => void;
-  onSendInvoice?: (invoice: InvoiceFragment) => void;
+  onInvoiceGenerate?: () => void;
+  onInvoiceClick?: (invoice: InvoiceFragment) => void;
+  onInvoiceSend?: (invoice: InvoiceFragment) => void;
 }
 
 const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
-  const { invoices, onGenerateInvoice, onClickInvoice, onSendInvoice } = props;
+  const { invoices, onInvoiceGenerate, onInvoiceClick, onInvoiceSend } = props;
 
   const classes = useStyles(props);
 
@@ -57,8 +57,8 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           description: "section header"
         })}
         toolbar={
-          onGenerateInvoice && (
-            <Button color="primary" onClick={onGenerateInvoice}>
+          onInvoiceGenerate && (
+            <Button color="primary" onClick={onInvoiceGenerate}>
               <FormattedMessage
                 defaultMessage="Generate"
                 description="generate invoice button"
@@ -84,7 +84,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                     description="invoice number"
                   />
                 </TableCellHeader>
-                {onSendInvoice && (
+                {onInvoiceSend && (
                   <TableCellHeader className={classes.colAction}>
                     <FormattedMessage
                       defaultMessage="Action"
@@ -99,11 +99,11 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                 <TableRow key={invoice.id}>
                   <TableCell
                     className={
-                      onClickInvoice
+                      onInvoiceClick
                         ? classes.colNumberClickable
                         : classes.colNumber
                     }
-                    onClick={() => onClickInvoice(invoice)}
+                    onClick={() => onInvoiceClick(invoice)}
                   >
                     <FormattedMessage
                       defaultMessage="Invoice"
@@ -118,10 +118,10 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                       <Date date={invoice.createdAt} plain />
                     </Typography>
                   </TableCell>
-                  {onSendInvoice && (
+                  {onInvoiceSend && (
                     <TableCell
                       className={classes.colAction}
-                      onClick={() => onSendInvoice(invoice)}
+                      onClick={() => onInvoiceSend(invoice)}
                     >
                       <Button color="primary">
                         <FormattedMessage {...buttonMessages.send} />
