@@ -5,19 +5,22 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import classNames from "classnames";
 import React, { useState } from "react";
-import { AlertComponentPropsWithStyle } from "react-alert";
 import { FormattedMessage } from "react-intl";
 
-import { IMessage } from "./";
+import { IMessage, INotification } from "./";
 import { useStyles } from "./styles";
 
-export interface IMessageManagerProps extends AlertComponentPropsWithStyle {
+export interface IMessageManagerProps extends INotification {
   message: IMessage;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
-export const MessageManager: React.FC<IMessageManagerProps> = props => {
+export const MessageManagerTemplate: React.FC<IMessageManagerProps> = props => {
   const {
     close,
+    onMouseEnter,
+    onMouseLeave,
     options: { timeout },
     message: { actionBtn, expandText, status = "info", title, text, onUndo }
   } = props;
@@ -27,7 +30,12 @@ export const MessageManager: React.FC<IMessageManagerProps> = props => {
   const classes = useStyles({});
 
   return (
-    <div key={props.id} className={classes.snackbarContainer}>
+    <div
+      key={props.id}
+      className={classes.snackbarContainer}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <SnackbarContent
         id={props.id}
         key={props.id}
@@ -145,5 +153,3 @@ export const MessageManager: React.FC<IMessageManagerProps> = props => {
     </div>
   );
 };
-
-export default MessageManager;

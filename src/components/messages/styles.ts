@@ -8,6 +8,7 @@ import { darken } from "@material-ui/core/styles/colorManipulator";
 const successColor = "#60DAA0";
 const warningColor = "#FFB84E";
 const infoColor = "#CAD8DF";
+const errorColor = "#FE6E76";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -32,6 +33,17 @@ export const useStyles = makeStyles(
     closeBtnInfo: {
       color: theme.palette.text.primary
     },
+    container: {
+      alignItems: "flex-end",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      left: 0,
+      pointerEvents: "none",
+      position: "fixed",
+      top: 0,
+      width: "100%"
+    },
     error: {
       "& > div": {
         "& button span": {
@@ -43,7 +55,7 @@ export const useStyles = makeStyles(
           backgroundImage: `url(${errorIcon})`
         }
       },
-      backgroundColor: theme.palette.error.main,
+      backgroundColor: errorColor,
       color: "#fff"
     },
     expandBtn: {
@@ -119,7 +131,7 @@ export const useStyles = makeStyles(
       width: "calc(100%)"
     },
     progressBarError: {
-      backgroundColor: darken(theme.palette.error.main, 0.2)
+      backgroundColor: darken(errorColor, 0.2)
     },
     progressBarSuccess: {
       backgroundColor: darken(successColor, 0.2)
@@ -145,6 +157,11 @@ export const useStyles = makeStyles(
         },
         paddingTop: 16,
         position: "relative"
+      },
+      "&:hover": {
+        "& [class*='progressBar']": {
+          animationPlayState: "paused"
+        }
       },
       borderRadius: 4,
       paddingBottom: 15,

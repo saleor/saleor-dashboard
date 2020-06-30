@@ -1,66 +1,65 @@
-import { API_URI, APP_MOUNT_URI, GTM_ID } from "./config";
-import Auth, { getAuthToken, removeAuthToken } from "./auth";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ConfigurationSection, { createConfigurationMenu } from "./configuration";
-import { ErrorResponse, onError } from "apollo-link-error";
-import { InMemoryCache, defaultDataIdFromObject } from "apollo-cache-inmemory";
-import { MessageManager, notificationOptions } from "./components/messages";
-
-import { Provider as AlertProvider } from "react-alert";
+import Navigator from "@saleor/components/Navigator";
+import useAppState from "@saleor/hooks/useAppState";
+import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
-import { ApolloProvider } from "react-apollo";
-import AppLayout from "./components/AppLayout";
-import AppStateProvider from "./containers/AppState";
-import AttributeSection from "./attributes";
-import AuthProvider from "./auth/AuthProvider";
-import BackgroundTasksProvider from "./containers/BackgroundTasks";
 import { BatchHttpLink } from "apollo-link-batch-http";
+import { setContext } from "apollo-link-context";
+import { ErrorResponse, onError } from "apollo-link-error";
+import { createUploadLink } from "apollo-upload-client";
+import React from "react";
+import { ApolloProvider } from "react-apollo";
+import { render } from "react-dom";
+import ErrorBoundary from "react-error-boundary";
+import TagManager from "react-gtm-module";
+import { useIntl } from "react-intl";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import AttributeSection from "./attributes";
+import { attributeSection } from "./attributes/urls";
+import Auth, { getAuthToken, removeAuthToken } from "./auth";
+import AuthProvider from "./auth/AuthProvider";
+import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
+import SectionRoute from "./auth/components/SectionRoute";
+import { isJwtError } from "./auth/errors";
+import { hasPermission } from "./auth/misc";
 import CategorySection from "./categories";
 import CollectionSection from "./collections";
-import { CustomerSection } from "./customers";
+import AppLayout from "./components/AppLayout";
 import { DateProvider } from "./components/Date";
-import DiscountSection from "./discounts";
-import ErrorBoundary from "react-error-boundary";
-import HomePage from "./home";
 import { LocaleProvider } from "./components/Locale";
-import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
+import MessageManagerProvider from "./components/messages";
+import { ShopProvider } from "./components/Shop";
+import ThemeProvider from "./components/Theme";
+import { WindowTitle } from "./components/WindowTitle";
+import { API_URI, APP_MOUNT_URI, GTM_ID } from "./config";
+import ConfigurationSection, { createConfigurationMenu } from "./configuration";
+import AppStateProvider from "./containers/AppState";
+import BackgroundTasksProvider from "./containers/BackgroundTasks";
+import { CustomerSection } from "./customers";
+import DiscountSection from "./discounts";
+import HomePage from "./home";
+import { commonMessages } from "./intl";
 import NavigationSection from "./navigation";
-import Navigator from "@saleor/components/Navigator";
+import { navigationSection } from "./navigation/urls";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
-import { PermissionEnum } from "./types/globalTypes";
 import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
-import React from "react";
-import SectionRoute from "./auth/components/SectionRoute";
 import ServiceSection from "./services";
+import { serviceSection } from "./services/urls";
 import ShippingSection from "./shipping";
-import { ShopProvider } from "./components/Shop";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
-import TagManager from "react-gtm-module";
 import TaxesSection from "./taxes";
-import ThemeProvider from "./components/Theme";
 import TranslationsSection from "./translations";
+import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
-import WebhooksSection from "./webhooks";
-import { WindowTitle } from "./components/WindowTitle";
-import { attributeSection } from "./attributes/urls";
-import { commonMessages } from "./intl";
-import { createUploadLink } from "apollo-upload-client";
-import { hasPermission } from "./auth/misc";
-import { isJwtError } from "./auth/errors";
-import { navigationSection } from "./navigation/urls";
-import { render } from "react-dom";
-import { serviceSection } from "./services/urls";
-import { setContext } from "apollo-link-context";
-import useAppState from "@saleor/hooks/useAppState";
-import { useIntl } from "react-intl";
 import { warehouseSection } from "./warehouses/urls";
+import WebhooksSection from "./webhooks";
 
 interface ResponseError extends ErrorResponse {
   networkError?: Error & {
@@ -136,7 +135,7 @@ const App: React.FC = () => {
         <ThemeProvider isDefaultDark={isDark}>
           <DateProvider>
             <LocaleProvider>
-              <AlertProvider {...notificationOptions} template={MessageManager}>
+              <MessageManagerProvider>
                 <BackgroundTasksProvider>
                   <AppStateProvider>
                     <ShopProvider>
@@ -144,7 +143,7 @@ const App: React.FC = () => {
                     </ShopProvider>
                   </AppStateProvider>
                 </BackgroundTasksProvider>
-              </AlertProvider>
+              </MessageManagerProvider>
             </LocaleProvider>
           </DateProvider>
         </ThemeProvider>
