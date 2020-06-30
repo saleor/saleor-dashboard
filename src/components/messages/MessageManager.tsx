@@ -7,11 +7,10 @@ import classNames from "classnames";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { IMessage, INotification } from "./";
+import { INotification } from "./";
 import { useStyles } from "./styles";
 
 export interface IMessageManagerProps extends INotification {
-  message: IMessage;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
@@ -21,8 +20,8 @@ export const MessageManagerTemplate: React.FC<IMessageManagerProps> = props => {
     close,
     onMouseEnter,
     onMouseLeave,
-    options: { timeout },
-    message: { actionBtn, expandText, status = "info", title, text, onUndo }
+    message: { actionBtn, expandText, status = "info", title, text, onUndo },
+    timeout
   } = props;
 
   const [expand, setExpand] = useState(false);

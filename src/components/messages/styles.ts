@@ -42,7 +42,8 @@ export const useStyles = makeStyles(
       pointerEvents: "none",
       position: "fixed",
       top: 0,
-      width: "100%"
+      width: "100%",
+      zIndex: 1200
     },
     error: {
       "& > div": {

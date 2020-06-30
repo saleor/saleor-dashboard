@@ -4,11 +4,9 @@ import { TransitionGroup } from "react-transition-group";
 
 import {
   INotification,
-  INotificationContext,
   ITimer,
   MessageContext,
-  MessageManagerTemplate,
-  types
+  MessageManagerTemplate
 } from ".";
 import Container from "./Container";
 import Transition from "./Transition";
@@ -22,7 +20,6 @@ const containerStyle = {
 
 const MessageManagerProvider = ({ children }) => {
   const root = useRef(null);
-  const notificationContext = useRef<INotificationContext>(null);
   const timersArr = useRef<ITimer[]>([]);
   const [notifications, setNotifications] = useState<INotification[]>([]);
 
@@ -41,59 +38,46 @@ const MessageManagerProvider = ({ children }) => {
   }, []);
 
   const timerCallback = (notification: INotification) => {
-    remove(notification);
+    remove(notification.id);
     timersArr.current = timersArr.current.filter(
       timer => timer.id !== notification.id
     );
   };
 
-  const remove = useCallback(notification => {
+  const remove = useCallback(notificationId => {
     setNotifications(currentNotifications =>
-      currentNotifications.filter(n => n.id !== notification.id)
+      currentNotifications.filter(n => n.id !== notificationId)
     );
   }, []);
 
-  const show = useCallback(
-    (message = {}, options = {}) => {
-      const id = Math.random()
-        .toString(36)
-        .substr(2, 9);
+  const show = useCallback((message = {}, timeout = 3000) => {
+    const id = Math.random()
+      .toString(36)
+      .substr(2, 9);
 
-      const notificationOptions = {
-        timeout: 4000,
-        type: types.INFO,
-        ...options
-      };
+    const notification = {
+      close: () => remove(id),
+      id,
+      message,
+      timeout
+    };
 
-      const notification = {
-        close: () => remove(alert),
-        id,
-        message,
-        options: notificationOptions
-      };
+    const timeoutId = window.setTimeout(() => {
+      timerCallback(notification);
+    }, timeout);
 
-      const {
-        options: { timeout }
-      } = notification;
+    timersArr.current.push({
+      id: notification.id,
+      notification,
+      remaining: timeout,
+      start: new Date().getTime(),
+      timeoutId
+    });
 
-      const timeoutId = window.setTimeout(() => {
-        timerCallback(notification);
-      }, timeout);
+    setNotifications(state => [notification, ...state]);
 
-      timersArr.current.push({
-        id: notification.id,
-        notification,
-        remaining: timeout,
-        start: new Date().getTime(),
-        timeoutId
-      });
-
-      setNotifications(state => [notification, ...state]);
-
-      return notification;
-    },
-    [remove]
-  );
+    return notification;
+  }, []);
 
   const getCurrentTimer = (notification: INotification) => {
     const currentTimerIndex = timersArr.current.findIndex(
@@ -121,13 +105,8 @@ const MessageManagerProvider = ({ children }) => {
     }
   };
 
-  notificationContext.current = {
-    remove,
-    show
-  };
-
   return (
-    <MessageContext.Provider value={notificationContext}>
+    <MessageContext.Provider value={{ remove, show }}>
       {children}
       {root.current &&
         createPortal(

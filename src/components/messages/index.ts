@@ -14,15 +14,10 @@ export interface IMessage {
   status?: Status;
 }
 
-export interface IOptions {
-  timeout: number;
-  type?: Status;
-}
-
 export interface INotification {
   id: string;
   message: IMessage;
-  options: IOptions;
+  timeout: number;
   close: () => void;
 }
 
@@ -41,14 +36,12 @@ export const types = {
   WARNING: "warning"
 };
 export interface INotificationContext {
-  show: (message: IMessage, options?: IOptions) => void;
+  show: (message: IMessage, timeout?: number) => void;
   remove: (notification: INotification) => void;
 }
 
 export type IMessageContext = (message: IMessage) => void;
-export const MessageContext = createContext<
-  React.MutableRefObject<INotificationContext>
->(null);
+export const MessageContext = createContext<INotificationContext>(null);
 
 export * from "./MessageManager";
 export * from "./MessageManagerProvider";
