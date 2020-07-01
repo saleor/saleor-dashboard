@@ -9,7 +9,6 @@
 export interface RefreshToken_tokenRefresh {
   __typename: "RefreshToken";
   token: string | null;
-  payload: any | null;
 }
 
 export interface RefreshToken {
