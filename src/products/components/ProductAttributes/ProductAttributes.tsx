@@ -157,7 +157,7 @@ const ProductAttributes: React.FC<ProductAttributesProps> = ({
           <IconButton
             className={classes.expansionBarButton}
             onClick={toggleExpansion}
-            data-tc="product-attributes-expand"
+            data-test="product-attributes-expand"
           >
             <ArrowDropDownIcon
               className={classNames(classes.expansionBarButtonIcon, {
@@ -175,11 +175,11 @@ const ProductAttributes: React.FC<ProductAttributesProps> = ({
                 <Grid className={classes.attributeSection} variant="uniform">
                   <div
                     className={classes.attributeSectionLabel}
-                    data-tc="product-attribute-label"
+                    data-test="product-attribute-label"
                   >
                     <Typography>{attribute.label}</Typography>
                   </div>
-                  <div data-tc="product-attribute-value">
+                  <div data-test="product-attribute-value">
                     {attribute.data.inputType ===
                     AttributeInputTypeEnum.DROPDOWN ? (
                       <SingleAutocompleteSelectField

@@ -150,8 +150,8 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                 onClick={collection ? onRowClick(collection.id) : undefined}
                 key={collection ? collection.id : "skeleton"}
                 selected={isSelected}
-                data-tc="id"
-                data-tc-id={maybe(() => collection.id)}
+                data-test="id"
+                data-test-id={maybe(() => collection.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -161,7 +161,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                     onChange={() => toggle(collection.id)}
                   />
                 </TableCell>
-                <TableCell className={classes.colName} data-tc="name">
+                <TableCell className={classes.colName} data-test="name">
                   {maybe<React.ReactNode>(() => collection.name, <Skeleton />)}
                 </TableCell>
                 <TableCell className={classes.colProducts}>
@@ -172,8 +172,8 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                 </TableCell>
                 <TableCell
                   className={classes.colAvailability}
-                  data-tc="published"
-                  data-tc-published={maybe(() => collection.isPublished)}
+                  data-test="published"
+                  data-test-published={maybe(() => collection.isPublished)}
                 >
                   {maybe(
                     () => (

@@ -165,8 +165,8 @@ const CategoryList: React.FC<CategoryListProps> = props => {
                 onClick={category ? onRowClick(category.id) : undefined}
                 key={category ? category.id : "skeleton"}
                 selected={isSelected}
-                data-tc="id"
-                data-tc-id={maybe(() => category.id)}
+                data-test="id"
+                data-test-id={maybe(() => category.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -176,7 +176,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
                     onChange={() => toggle(category.id)}
                   />
                 </TableCell>
-                <TableCell className={classes.colName} data-tc="name">
+                <TableCell className={classes.colName} data-test="name">
                   {category && category.name ? category.name : <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.colSubcategories}>

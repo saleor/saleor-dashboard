@@ -332,8 +332,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   key={product ? product.id : "skeleton"}
                   onClick={product && onRowClick(product.id)}
                   className={classes.link}
-                  data-tc="id"
-                  data-tc-id={maybe(() => product.id)}
+                  data-test="id"
+                  data-test-id={maybe(() => product.id)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -346,7 +346,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   <TableCellAvatar
                     className={classes.colName}
                     thumbnail={maybe(() => product.thumbnail.url)}
-                    data-tc="name"
+                    data-test="name"
                   >
                     {product?.productType ? (
                       <div className={classes.colNameWrapper}>
@@ -377,7 +377,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell
                       className={classes.colType}
-                      data-tc="product-type"
+                      data-test="product-type"
                     >
                       {product && product.productType ? (
                         product.productType.name
@@ -392,8 +392,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell
                       className={classes.colPublished}
-                      data-tc="isPublished"
-                      data-tc-is-published={maybe(() => product.isPublished)}
+                      data-test="isPublished"
+                      data-test-is-published={maybe(() => product.isPublished)}
                     >
                       {product &&
                       maybe(() => product.isPublished !== undefined) ? (
@@ -420,8 +420,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     <TableCell
                       className={classes.colAttribute}
                       key={gridAttribute}
-                      data-tc="attribute"
-                      data-tc-attribute={getAttributeIdFromColumnValue(
+                      data-test="attribute"
+                      data-test-attribute={getAttributeIdFromColumnValue(
                         gridAttribute
                       )}
                     >

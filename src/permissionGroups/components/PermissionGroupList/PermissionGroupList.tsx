@@ -125,19 +125,21 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
               onClick={
                 permissionGroup ? onRowClick(permissionGroup.id) : undefined
               }
-              data-tc="id"
-              data-tc-id={maybe(() => permissionGroup.id)}
+              data-test="id"
+              data-test-id={maybe(() => permissionGroup.id)}
             >
               <TableCell className={classes.colName}>
                 {permissionGroup ? (
-                  <span data-tc="name">{permissionGroup.name}</span>
+                  <span data-test="name">{permissionGroup.name}</span>
                 ) : (
                   <Skeleton />
                 )}
               </TableCell>
               <TableCell className={classes.colMembers}>
                 {permissionGroup ? (
-                  <span data-tc="members">{permissionGroup.users.length}</span>
+                  <span data-test="members">
+                    {permissionGroup.users.length}
+                  </span>
                 ) : (
                   <Skeleton />
                 )}

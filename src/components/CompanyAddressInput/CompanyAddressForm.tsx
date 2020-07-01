@@ -160,7 +160,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           choices={countries}
           InputProps={{
             inputProps: {
-              autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+              autoComplete: "none"
             }
           }}
         />

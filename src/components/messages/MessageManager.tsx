@@ -73,7 +73,7 @@ export class MessageManager extends React.Component<{}, MessageManagerState> {
             "aria-describedby": "message-id"
           }}
           message={
-            <span id="message-id" data-tc="notification">
+            <span id="message-id" data-test="notification">
               {title && (
                 <Typography variant="h5" style={{ marginBottom: "1rem" }}>
                   {title}
@@ -90,7 +90,7 @@ export class MessageManager extends React.Component<{}, MessageManagerState> {
                 color="secondary"
                 size="small"
                 onClick={this.handleClose as any}
-                data-tc="button-undo"
+                data-test="button-undo"
               >
                 UNDO
               </Button>

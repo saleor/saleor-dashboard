@@ -130,13 +130,13 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               hover={!!warehouse}
               onClick={warehouse ? onRowClick(warehouse.id) : undefined}
               key={warehouse ? warehouse.id : "skeleton"}
-              data-tc="id"
-              data-tc-id={maybe(() => warehouse.id)}
+              data-test="id"
+              data-test-id={maybe(() => warehouse.id)}
             >
-              <TableCell className={classes.colName} data-tc="name">
+              <TableCell className={classes.colName} data-test="name">
                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
               </TableCell>
-              <TableCell className={classes.colZones} data-tc="zones">
+              <TableCell className={classes.colZones} data-test="zones">
                 {maybe<React.ReactNode>(
                   () =>
                     warehouse.shippingZones.edges

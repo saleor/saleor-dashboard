@@ -138,7 +138,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onClick={onAdd}
           color="primary"
           variant="contained"
-          data-tc="add-product"
+          data-test="add-product"
         >
           <FormattedMessage
             defaultMessage="Create Product"

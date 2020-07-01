@@ -70,7 +70,7 @@ const ImageTile: React.FC<ImageTileProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <div className={classes.imageContainer} data-tc="product-image">
+    <div className={classes.imageContainer} data-test="product-image">
       <div
         className={classNames(classes.imageOverlay, {
           [classes.imageOverlayShow]: loading
