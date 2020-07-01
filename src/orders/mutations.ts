@@ -490,6 +490,11 @@ const invoiceEmailSendMutation = gql`
       invoice {
         ...InvoiceFragment
       }
+      order {
+        invoices {
+          ...InvoiceFragment
+        }
+      }
     }
   }
 `;
