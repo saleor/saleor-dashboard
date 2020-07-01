@@ -260,7 +260,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                     (line, lineIndex) => {
                       if (!line) {
                         return (
-                          <TableRow key="skeleton">
+                          <TableRow key={lineIndex}>
                             <TableCellAvatar className={classes.colName}>
                               <Skeleton />
                             </TableCellAvatar>
