@@ -25,6 +25,7 @@ export const ServiceCreate: React.FC<ServiceCreateProps> = ({ setToken }) => {
   const onSubmit = (data: ServiceCreateData) => {
     if (data.serviceAccountCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(serviceUrl(data.serviceAccountCreate.serviceAccount.id));

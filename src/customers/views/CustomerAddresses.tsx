@@ -53,6 +53,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     if (data.addressSetDefault.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -68,6 +69,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     if (data.addressUpdate.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -77,6 +79,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     if (data.addressDelete.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }

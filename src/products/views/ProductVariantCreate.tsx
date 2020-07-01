@@ -47,6 +47,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         const handleCreateSuccess = (data: VariantCreate) => {
           if (data.productVariantCreate.errors.length === 0) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(

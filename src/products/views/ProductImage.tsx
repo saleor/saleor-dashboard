@@ -3,6 +3,7 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -39,7 +40,10 @@ export const ProductImage: React.FC<ProductImageProps> = ({
   const handleBack = () => navigate(productUrl(productId));
   const handleUpdateSuccess = (data: ProductImageUpdate) => {
     if (data.productImageUpdate.errors.length === 0) {
-      notify({ text: "Saved changes" });
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
     }
   };
   return (

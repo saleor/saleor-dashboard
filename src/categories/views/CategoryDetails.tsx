@@ -80,6 +80,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const handleCategoryDelete = (data: CategoryDelete) => {
     if (data.categoryDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Category deleted"
         })
@@ -99,6 +100,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       );
       if (backgroundImageError) {
         notify({
+          status: "error",
           text: intl.formatMessage(commonMessages.somethingWentWrong)
         });
       }
@@ -113,6 +115,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     if (data.categoryBulkDelete.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       reset();
@@ -144,6 +147,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     if (data.productBulkDelete.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       refetch();

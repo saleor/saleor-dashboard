@@ -57,6 +57,7 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
   const onAttributeUpdate = (data: UpdateAttributeTranslations) => {
     if (data.attributeTranslate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);
@@ -65,6 +66,7 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
   const onAttributeValueUpdate = (data: UpdateAttributeValueTranslations) => {
     if (data.attributeValueTranslate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);

@@ -62,6 +62,7 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
   const onServiceUpdate = (data: ServiceUpdate) => {
     if (maybe(() => data.serviceAccountUpdate.errors.length === 0)) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -69,6 +70,7 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
   const onServiceDelete = (data: ServiceDelete) => {
     if (data.serviceAccountDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(serviceListUrl());
@@ -94,6 +96,7 @@ export const ServiceDetails: React.FC<OrderListProps> = ({
         const onTokenDelete = (data: ServiceTokenDelete) => {
           if (maybe(() => data.serviceAccountTokenDelete.errors.length === 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
             refetch();

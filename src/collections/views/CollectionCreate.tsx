@@ -19,6 +19,7 @@ export const CollectionCreate: React.FC = () => {
   const handleCollectionCreateSuccess = (data: CreateCollection) => {
     if (data.collectionCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(collectionUrl(data.collectionCreate.collection.id));
@@ -29,6 +30,7 @@ export const CollectionCreate: React.FC = () => {
       );
       if (backgroundImageError) {
         notify({
+          status: "error",
           text: intl.formatMessage(commonMessages.somethingWentWrong)
         });
       }

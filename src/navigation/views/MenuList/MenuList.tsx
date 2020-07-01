@@ -79,6 +79,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const handleCreate = (data: MenuCreate) => {
     if (data.menuCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Created menu",
           id: "menuListCreatedMenu"
@@ -91,6 +92,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const handleBulkDelete = (data: MenuBulkDelete) => {
     if (data.menuBulkDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();
@@ -102,6 +104,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const handleDelete = (data: MenuDelete) => {
     if (data.menuDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Deleted menu",
           id: "menuListDeletedMenu"

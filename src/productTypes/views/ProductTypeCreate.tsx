@@ -21,6 +21,7 @@ export const ProductTypeCreate: React.FC = () => {
   const handleCreateSuccess = (updateData: ProductTypeCreateMutation) => {
     if (updateData.productTypeCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Successfully created product type"
         })

@@ -44,6 +44,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const handlePageRemove = (data: PageRemove) => {
     if (data.pageDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(pageListUrl());

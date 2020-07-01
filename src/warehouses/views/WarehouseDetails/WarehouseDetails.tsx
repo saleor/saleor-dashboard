@@ -44,7 +44,10 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
   const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdate({
     onCompleted: data => {
       if (data.updateWarehouse.errors.length === 0) {
-        notify({ text: intl.formatMessage(commonMessages.savedChanges) });
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges)
+        });
       }
     }
   });
@@ -54,6 +57,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
     onCompleted: data => {
       if (data.deleteWarehouse.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         navigate(warehouseListUrl());

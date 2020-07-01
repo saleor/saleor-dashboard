@@ -21,6 +21,7 @@ export const PageCreate: React.FC<PageCreateProps> = () => {
   const handlePageCreate = (data: PageCreateData) => {
     if (data.pageCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Successfully created new page"
         })

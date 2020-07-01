@@ -53,6 +53,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
   const onUpdate = (data: UpdateVoucherTranslations) => {
     if (data.voucherTranslate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);

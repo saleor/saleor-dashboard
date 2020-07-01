@@ -56,6 +56,7 @@ export const ProductCreateView: React.FC = () => {
   const handleSuccess = (data: ProductCreate) => {
     if (data.productCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Product created"
         })

@@ -137,6 +137,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const handleVoucherBulkDelete = (data: VoucherBulkDelete) => {
     if (data.voucherBulkDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       reset();

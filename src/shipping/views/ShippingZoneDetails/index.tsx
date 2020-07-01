@@ -80,6 +80,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.shippingPriceCreate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
@@ -91,6 +92,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.shippingPriceUpdate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
@@ -102,6 +104,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.shippingPriceDelete.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
@@ -113,6 +116,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.shippingZoneDelete.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         navigate(shippingZonesListUrl(), true);
@@ -124,6 +128,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.shippingZoneUpdate.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();
@@ -135,6 +140,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     onCompleted: data => {
       if (data.createWarehouse.errors.length === 0) {
         notify({
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
         closeModal();

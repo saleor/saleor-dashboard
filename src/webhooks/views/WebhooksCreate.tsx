@@ -32,6 +32,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = () => {
   const onSubmit = (data: WebhookCreateData) => {
     if (data.webhookCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(webhookUrl(data.webhookCreate.webhook.id));

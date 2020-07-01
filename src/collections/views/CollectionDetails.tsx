@@ -79,6 +79,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         const handleCollectionUpdate = (data: CollectionUpdate) => {
           if (data.collectionUpdate.errors.length === 0) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(collectionUrl(id));
@@ -89,6 +90,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             );
             if (backgroundImageError) {
               notify({
+                status: "error",
                 text: intl.formatMessage(commonMessages.somethingWentWrong)
               });
             }
@@ -105,6 +107,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         const handleProductAssign = (data: CollectionAssignProduct) => {
           if (data.collectionAddProducts.errors.length === 0) {
             notify({
+              status: "success",
               text: intl.formatMessage({
                 defaultMessage: "Added product to collection"
               })
@@ -116,6 +119,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         const handleProductUnassign = (data: UnassignCollectionProduct) => {
           if (data.collectionRemoveProducts.errors.length === 0) {
             notify({
+              status: "success",
               text: intl.formatMessage({
                 defaultMessage: "Deleted product from collection"
               })
@@ -128,6 +132,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         const handleCollectionRemove = (data: RemoveCollection) => {
           if (data.collectionDelete.errors.length === 0) {
             notify({
+              status: "success",
               text: intl.formatMessage({
                 defaultMessage: "Deleted collection"
               })

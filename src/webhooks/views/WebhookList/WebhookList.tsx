@@ -119,6 +119,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
   const onWebhookDelete = (data: WebhookDelete) => {
     if (data.webhookDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(webhookListUrl());

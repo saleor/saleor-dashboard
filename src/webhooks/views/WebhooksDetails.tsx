@@ -51,6 +51,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
   const onWebhookDelete = (data: WebhookDelete) => {
     if (data.webhookDelete?.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(webhookListUrl());
@@ -63,6 +64,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({
 
     if (errors.length === 0 && webhook) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();

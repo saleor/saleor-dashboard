@@ -61,6 +61,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
   const handleUpdate = (data: PluginUpdate) => {
     if (data.pluginUpdate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();

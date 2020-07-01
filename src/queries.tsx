@@ -86,6 +86,7 @@ export function TypedQuery<TData, TVariables>(
             if (queryData.error.graphQLErrors.some(isJwtError)) {
               user.logout();
               notify({
+                status: "error",
                 text: intl.formatMessage(commonMessages.sessionExpired)
               });
             } else if (
@@ -96,6 +97,7 @@ export function TypedQuery<TData, TVariables>(
               )
             ) {
               notify({
+                status: "error",
                 text: intl.formatMessage(commonMessages.somethingWentWrong)
               });
             }

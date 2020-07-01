@@ -129,6 +129,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     if (data.attributeBulkDelete.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Attributes successfully delete",
           description: "deleted multiple attributes"

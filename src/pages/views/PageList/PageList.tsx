@@ -77,6 +77,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     if (data.pageBulkPublish.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Published pages",
           description: "notification"
@@ -91,6 +92,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     if (data.pageBulkDelete.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Removed pages",
           description: "notification"

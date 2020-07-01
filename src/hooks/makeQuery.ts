@@ -67,6 +67,7 @@ function makeQuery<TData, TVariables>(
       if (queryData.error.graphQLErrors.some(isJwtError)) {
         user.logout();
         notify({
+          status: "error",
           text: intl.formatMessage(commonMessages.sessionExpired)
         });
       } else if (
@@ -76,6 +77,7 @@ function makeQuery<TData, TVariables>(
         )
       ) {
         notify({
+          status: "error",
           text: intl.formatMessage(commonMessages.somethingWentWrong)
         });
       }
