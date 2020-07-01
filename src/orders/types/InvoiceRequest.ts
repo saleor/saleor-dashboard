@@ -23,10 +23,25 @@ export interface InvoiceRequest_invoiceRequest_invoice {
   status: JobStatusEnum;
 }
 
+export interface InvoiceRequest_invoiceRequest_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+  status: JobStatusEnum;
+}
+
+export interface InvoiceRequest_invoiceRequest_order {
+  __typename: "Order";
+  invoices: (InvoiceRequest_invoiceRequest_order_invoices | null)[] | null;
+}
+
 export interface InvoiceRequest_invoiceRequest {
   __typename: "InvoiceRequest";
   errors: InvoiceRequest_invoiceRequest_errors[];
   invoice: InvoiceRequest_invoiceRequest_invoice | null;
+  order: InvoiceRequest_invoiceRequest_order | null;
 }
 
 export interface InvoiceRequest {

@@ -482,6 +482,11 @@ const invoiceRequestMutation = gql`
       invoice {
         ...InvoiceFragment
       }
+      order {
+        invoices {
+          ...InvoiceFragment
+        }
+      }
     }
   }
 `;
