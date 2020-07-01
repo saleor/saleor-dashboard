@@ -76,8 +76,8 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
                   <FormSpacer />
                   {errors
                     .filter(err => !formFields.includes(err.field))
-                    .map(err => (
-                      <DialogContentText color="error">
+                    .map((err, index) => (
+                      <DialogContentText color="error" key={index}>
                         {getOrderErrorMessage(err, intl)}
                       </DialogContentText>
                     ))}

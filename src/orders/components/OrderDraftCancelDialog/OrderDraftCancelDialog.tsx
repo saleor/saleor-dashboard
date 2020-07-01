@@ -40,7 +40,7 @@ const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
       })}
       variant="delete"
     >
-      <DialogContentText>
+      <DialogContentText key="cancel">
         <FormattedMessage
           defaultMessage="Are you sure you want to delete draft #{orderNumber}?"
           values={{
@@ -51,8 +51,8 @@ const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
       {errors.length > 0 && (
         <>
           <FormSpacer />
-          {errors.map(err => (
-            <DialogContentText color="error">
+          {errors.map((err, index) => (
+            <DialogContentText color="error" key={index}>
               {getOrderErrorMessage(err, intl)}
             </DialogContentText>
           ))}

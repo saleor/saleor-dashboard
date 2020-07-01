@@ -120,8 +120,8 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
               {nonFieldErrors.length > 0 && (
                 <>
                   <FormSpacer />
-                  {nonFieldErrors.map(err => (
-                    <DialogContentText color="error">
+                  {nonFieldErrors.map((err, index) => (
+                    <DialogContentText color="error" key={index}>
                       {getOrderErrorMessage(err, intl)}
                     </DialogContentText>
                   ))}

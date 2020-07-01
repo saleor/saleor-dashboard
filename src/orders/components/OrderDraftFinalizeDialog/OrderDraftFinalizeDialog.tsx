@@ -109,8 +109,8 @@ const OrderDraftFinalizeDialog: React.FC<OrderDraftFinalizeDialogProps> = ({
         {errors.length > 0 && (
           <>
             <FormSpacer />
-            {errors.map(err => (
-              <DialogContentText color="error">
+            {errors.map((err, index) => (
+              <DialogContentText color="error" key={index}>
                 {getOrderErrorMessage(err, intl)}
               </DialogContentText>
             ))}
