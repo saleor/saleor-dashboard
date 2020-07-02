@@ -11,16 +11,15 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import { buttonMessages } from "@saleor/intl";
 import { InvoiceErrorFragment } from "@saleor/orders/types/InvoiceErrorFragment";
 import { InvoiceFragment } from "@saleor/orders/types/InvoiceFragment";
+import { DialogProps } from "@saleor/types";
 import getInvoiceErrorMessage from "@saleor/utils/errors/invoice";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderInvoiceEmailSendDialogProps {
+export interface OrderInvoiceEmailSendDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: InvoiceErrorFragment[];
-  open: boolean;
   invoice: InvoiceFragment;
-  onClose: () => void;
   onSend: () => void;
 }
 
