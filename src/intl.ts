@@ -179,6 +179,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Categories",
     description: "categories section name"
   },
+  channels: {
+    defaultMessage: "Channels",
+    description: "channels section name"
+  },
   collections: {
     defaultMessage: "Collections",
     description: "collections section name"
@@ -194,6 +198,10 @@ export const sectionNames = defineMessages({
   draftOrders: {
     defaultMessage: "Draft Orders",
     description: "draft orders section name"
+  },
+  exchangeRates: {
+    defaultMessage: "Exchange Rates",
+    description: "Manage and Update your warehouse information"
   },
   home: {
     defaultMessage: "Home",
