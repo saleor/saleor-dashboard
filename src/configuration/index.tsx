@@ -39,7 +39,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
     {
       label: intl.formatMessage({
-        defaultMessage: "Attributes and Product Typess"
+        defaultMessage: "Attributes and Product Types"
       }),
       menuItems: [
         {
