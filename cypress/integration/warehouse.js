@@ -1,0 +1,25 @@
+// <reference types="cypress" />
+describe("Warehouse settings", () => {
+  beforeEach(() => {
+    cy.clearSessionData();
+    cy.loginUser("admin@example.com", "admin");
+  });
+
+  it("Warehouse section visible in the configuration", () => {
+    cy.visit("/configuration/")
+      .get("[data-testid=warehouses][data-test=settingsSubsection]")
+      .click();
+    cy.location("pathname").should("eq", "/dashboard/warehouses/");
+  });
+
+  it("Editing warehouse is available", () => {
+    cy.visit("/dashboard/warehouses")
+      .get("[data-testId=africa]")
+      .get("[data-test=editButton]")
+      .first()
+      .click()
+      .get("[data-test=generalInformationSection]");
+
+    // cy.location("pathname").should("contain", "/dashboard/warehouses/");
+  });
+});

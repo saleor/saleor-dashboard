@@ -224,6 +224,7 @@ const MenuList: React.FC<MenuListProps> = props => {
       className={classNames(className, {
         [classes.menuIsActive]: activeSubMenu.isActive
       })}
+      data-test="mainMenu"
     >
       {/* FIXME: this .split("?")[0] looks gross */}
       {menuItems.map(menuItem => {
@@ -257,6 +258,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                 [classes.menuListItemActive]: isAnyChildActive
               })}
               key={menuItem.label}
+              data-testId={menuItem.label.toLowerCase()}
             >
               <div
                 className={classNames(classes.menuItemHover, {
