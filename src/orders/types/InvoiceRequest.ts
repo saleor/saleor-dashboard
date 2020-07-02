@@ -34,6 +34,7 @@ export interface InvoiceRequest_invoiceRequest_order_invoices {
 
 export interface InvoiceRequest_invoiceRequest_order {
   __typename: "Order";
+  id: string;
   invoices: (InvoiceRequest_invoiceRequest_order_invoices | null)[] | null;
 }
 

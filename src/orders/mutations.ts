@@ -491,6 +491,7 @@ const invoiceEmailSendMutation = gql`
         ...InvoiceFragment
       }
       order {
+        id
         invoices {
           ...InvoiceFragment
         }
