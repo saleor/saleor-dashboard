@@ -11,13 +11,6 @@ import {
 import Container from "./Container";
 import Transition from "./Transition";
 
-const containerStyle = {
-  display: "grid",
-  gridTemplateRows: "repeat(auto-fill, minmax(90px, 1fr)",
-  justifyContent: "end",
-  zIndex: 1200
-};
-
 const MessageManagerProvider = ({ children }) => {
   const root = useRef(null);
   const timersArr = useRef<ITimer[]>([]);
@@ -51,28 +44,26 @@ const MessageManagerProvider = ({ children }) => {
   }, []);
 
   const show = useCallback((message = {}, timeout = 3000) => {
-    const id = Math.random()
-      .toString(36)
-      .substr(2, 9);
-
+    const id = Date.now();
     const notification = {
       close: () => remove(id),
       id,
       message,
       timeout
     };
+    if (timeout !== null) {
+      const timeoutId = window.setTimeout(() => {
+        timerCallback(notification);
+      }, timeout);
 
-    const timeoutId = window.setTimeout(() => {
-      timerCallback(notification);
-    }, timeout);
-
-    timersArr.current.push({
-      id: notification.id,
-      notification,
-      remaining: timeout,
-      start: new Date().getTime(),
-      timeoutId
-    });
+      timersArr.current.push({
+        id: notification.id,
+        notification,
+        remaining: timeout,
+        start: new Date().getTime(),
+        timeoutId
+      });
+    }
 
     setNotifications(state => [notification, ...state]);
 
@@ -112,16 +103,20 @@ const MessageManagerProvider = ({ children }) => {
         createPortal(
           <TransitionGroup
             appear
-            options={{ containerStyle, position: "top right" }}
+            options={{ position: "top right" }}
             component={Container}
           >
             {!!notifications.length &&
               notifications.map(notification => (
                 <Transition key={notification.id}>
                   <MessageManagerTemplate
-                    onMouseEnter={() => pauseTimer(notification)}
-                    onMouseLeave={() => resumeTimer(notification)}
                     {...notification}
+                    {...(!!notification.timeout
+                      ? {
+                          onMouseEnter: () => pauseTimer(notification),
+                          onMouseLeave: () => resumeTimer(notification)
+                        }
+                      : {})}
                   />
                 </Transition>
               ))}

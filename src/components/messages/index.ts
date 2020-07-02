@@ -15,14 +15,14 @@ export interface IMessage {
 }
 
 export interface INotification {
-  id: string;
+  id: number;
   message: IMessage;
   timeout: number;
   close: () => void;
 }
 
 export interface ITimer {
-  id: string;
+  id: number;
   notification: INotification;
   remaining: number;
   start: number;
@@ -36,7 +36,7 @@ export const types = {
   WARNING: "warning"
 };
 export interface INotificationContext {
-  show: (message: IMessage, timeout?: number) => void;
+  show: (message: IMessage, timeout?: number | null) => void;
   remove: (notification: INotification) => void;
 }
 

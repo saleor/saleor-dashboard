@@ -11,8 +11,8 @@ import { INotification } from "./";
 import { useStyles } from "./styles";
 
 export interface IMessageManagerProps extends INotification {
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
 export const MessageManagerTemplate: React.FC<IMessageManagerProps> = props => {
@@ -32,11 +32,11 @@ export const MessageManagerTemplate: React.FC<IMessageManagerProps> = props => {
     <div
       key={props.id}
       className={classes.snackbarContainer}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={onMouseEnter && onMouseEnter}
+      onMouseLeave={onMouseLeave && onMouseLeave}
     >
       <SnackbarContent
-        id={props.id}
+        id={props.id.toString()}
         key={props.id}
         aria-describedby="message-id"
         className={classNames(classes.snackbar, {

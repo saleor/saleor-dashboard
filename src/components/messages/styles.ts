@@ -34,10 +34,9 @@ export const useStyles = makeStyles(
       color: theme.palette.text.primary
     },
     container: {
-      alignItems: "flex-end",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
+      display: "grid",
+      gridTemplateRows: "repeat(auto-fill, minmax(90px, 1fr))",
+      justifyContent: "end",
       left: 0,
       pointerEvents: "none",
       position: "fixed",
@@ -166,6 +165,7 @@ export const useStyles = makeStyles(
       },
       borderRadius: 4,
       paddingBottom: 15,
+      paddingLeft: 5,
       paddingRight: 45,
       position: "relative"
     },
