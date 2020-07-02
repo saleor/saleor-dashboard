@@ -483,6 +483,7 @@ const invoiceRequestMutation = gql`
         ...InvoiceFragment
       }
       order {
+        id
         invoices {
           ...InvoiceFragment
         }
