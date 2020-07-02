@@ -164,7 +164,7 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
                             <TextField
                               type="number"
                               inputProps={{
-                                max: remainingQuantity,
+                                max: remainingQuantity.toString(),
                                 style: { textAlign: "right" }
                               }}
                               className={classes.quantityInput}
@@ -213,8 +213,8 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
                     <FormSpacer />
                     {errors
                       .filter(err => !formFields.includes(err.field))
-                      .map(err => (
-                        <DialogContentText color="error">
+                      .map((err, index) => (
+                        <DialogContentText color="error" key={index}>
                           {getOrderErrorMessage(err, intl)}
                         </DialogContentText>
                       ))}

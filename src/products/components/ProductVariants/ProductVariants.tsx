@@ -211,7 +211,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               onClick={onVariantAdd}
               variant="text"
               color="primary"
-              data-tc="button-add-variant"
+              data-test="button-add-variant"
             >
               <FormattedMessage
                 defaultMessage="Create variant"
@@ -223,7 +223,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
               onClick={onVariantsAdd}
               variant="text"
               color="primary"
-              data-tc="button-add-variants"
+              data-test="button-add-variants"
             >
               <FormattedMessage
                 defaultMessage="Create variants"
@@ -318,14 +318,14 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                       onChange={() => toggle(variant.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-tc="name">
+                  <TableCell className={classes.colName} data-test="name">
                     {variant ? variant.name || variant.sku : <Skeleton />}
                   </TableCell>
-                  <TableCell className={classes.colSku} data-tc="sku">
+                  <TableCell className={classes.colSku} data-test="sku">
                     {variant ? variant.sku : <Skeleton />}
                   </TableCell>
                   <Hidden smDown>
-                    <TableCell className={classes.colPrice} data-tc="price">
+                    <TableCell className={classes.colPrice} data-test="price">
                       {variant ? (
                         variant.price ? (
                           <Money money={variant.price} />
@@ -341,7 +341,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
                   </Hidden>
                   <TableCell
                     className={classes.colInventory}
-                    data-tc="inventory"
+                    data-test="inventory"
                   >
                     {numAvailable === null ? (
                       <Skeleton />

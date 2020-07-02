@@ -260,7 +260,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                     (line, lineIndex) => {
                       if (!line) {
                         return (
-                          <TableRow>
+                          <TableRow key={lineIndex}>
                             <TableCellAvatar className={classes.colName}>
                               <Skeleton />
                             </TableCellAvatar>
@@ -326,6 +326,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             if (!warehouseStock) {
                               return (
                                 <TableCell
+                                  key="skeleton"
                                   className={classNames(
                                     classes.colQuantity,
                                     classes.error
@@ -358,9 +359,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                           .variant.trackInventory
                                       }
                                     ),
-                                    max:
+                                    max: (
                                       line.variant.trackInventory &&
-                                      warehouseStock.quantity,
+                                      warehouseStock.quantity
+                                    ).toString(),
                                     min: 0,
                                     style: { textAlign: "right" }
                                   }}
@@ -409,7 +411,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               </TableCell>
                             );
                           })}
-                          <TableCell className={classes.colQuantityTotal}>
+                          <TableCell
+                            className={classes.colQuantityTotal}
+                            key="total"
+                          >
                             <span
                               className={classNames({
                                 [classes.error]: overfulfill,

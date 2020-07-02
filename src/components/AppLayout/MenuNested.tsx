@@ -162,7 +162,7 @@ const MenuNested: React.FC<MenuNestedProps> = props => {
               className={classNames(classes.menuListNestedClose, {
                 [classes.menuListNestedCloseDark]: isDark
               })}
-              data-tc={ariaLabel}
+              data-test={ariaLabel}
               onClick={() =>
                 closeSubMenu({
                   isActive: false,
@@ -178,7 +178,7 @@ const MenuNested: React.FC<MenuNestedProps> = props => {
           <a
             className={classNames(classes.menuListNestedItem)}
             href={createHref(item.url)}
-            data-tc={ariaLabel}
+            data-test={ariaLabel}
             onClick={event => closeMenu(item.url, event)}
             key={item.label}
           >

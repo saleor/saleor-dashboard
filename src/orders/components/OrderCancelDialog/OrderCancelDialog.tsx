@@ -47,7 +47,7 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
         />
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>
+        <DialogContentText key="cancel">
           <FormattedMessage
             defaultMessage="Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. <b>Order will not be refunded when cancelling order - You need to do it manually.</b> Are you sure you want to cancel this order?"
             values={{
@@ -59,8 +59,8 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
         {errors.length > 0 && (
           <>
             <FormSpacer />
-            {errors.map(err => (
-              <DialogContentText color="error">
+            {errors.map((err, index) => (
+              <DialogContentText color="error" key={index}>
                 {getOrderErrorMessage(err, intl)}
               </DialogContentText>
             ))}

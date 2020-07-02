@@ -193,9 +193,9 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 key={attribute ? attribute.id : "skeleton"}
                 onClick={attribute && onRowClick(attribute.id)}
                 className={classes.link}
-                data-tc="id"
-                data-tc-id={maybe(() => attribute.id)}
-                data-tc-values={JSON.stringify(
+                data-test="id"
+                data-test-id={maybe(() => attribute.id)}
+                data-test-values={JSON.stringify(
                   maybe(() => attribute.values, [])
                 )}
               >
@@ -207,16 +207,16 @@ const AttributeList: React.FC<AttributeListProps> = ({
                     onChange={() => toggle(attribute.id)}
                   />
                 </TableCell>
-                <TableCell className={classes.colSlug} data-tc="slug">
+                <TableCell className={classes.colSlug} data-test="slug">
                   {attribute ? attribute.slug : <Skeleton />}
                 </TableCell>
-                <TableCell className={classes.colName} data-tc="name">
+                <TableCell className={classes.colName} data-test="name">
                   {attribute ? attribute.name : <Skeleton />}
                 </TableCell>
                 <TableCell
                   className={classes.colVisible}
-                  data-tc="visible"
-                  data-tc-visible={maybe(() => attribute.visibleInStorefront)}
+                  data-test="visible"
+                  data-test-visible={maybe(() => attribute.visibleInStorefront)}
                 >
                   {attribute ? (
                     translateBoolean(attribute.visibleInStorefront, intl)
@@ -226,8 +226,8 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 </TableCell>
                 <TableCell
                   className={classes.colSearchable}
-                  data-tc="searchable"
-                  data-tc-searchable={maybe(
+                  data-test="searchable"
+                  data-test-searchable={maybe(
                     () => attribute.filterableInDashboard
                   )}
                 >
@@ -239,8 +239,8 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 </TableCell>
                 <TableCell
                   className={classes.colFaceted}
-                  data-tc="use-in-faceted-search"
-                  data-tc-use-in-faceted-search={maybe(
+                  data-test="use-in-faceted-search"
+                  data-test-use-in-faceted-search={maybe(
                     () => attribute.filterableInStorefront
                   )}
                 >

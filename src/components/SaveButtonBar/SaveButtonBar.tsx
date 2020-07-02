@@ -104,7 +104,7 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
                     variant="contained"
                     onClick={onDelete}
                     className={classes.deleteButton}
-                    data-tc="button-bar-delete"
+                    data-test="button-bar-delete"
                   >
                     {labels && labels.delete
                       ? labels.delete
@@ -116,7 +116,7 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
                   className={classes.cancelButton}
                   variant="text"
                   onClick={onCancel}
-                  data-tc="button-bar-cancel"
+                  data-test="button-bar-cancel"
                 >
                   {maybe(
                     () => labels.cancel,
@@ -127,7 +127,7 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
                   disabled={disabled}
                   onClick={onSave}
                   transitionState={state}
-                  data-tc="button-bar-confirm"
+                  data-test="button-bar-confirm"
                 >
                   {maybe(
                     () => labels.save,

@@ -222,7 +222,7 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
               disabled={loading}
               variant="text"
               color="primary"
-              data-tc="button-upload-image"
+              data-test="button-upload-image"
             >
               {intl.formatMessage(commonMessages.uploadImage)}
             </Button>

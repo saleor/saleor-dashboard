@@ -264,7 +264,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                     menuItem.ariaLabel === activeSubMenu.label &&
                     activeSubMenu.isActive
                 })}
-                data-tc={menuItem.label}
+                data-test={menuItem.label}
                 onClick={() => handleSubMenu(menuItem.ariaLabel)}
               >
                 <SVG

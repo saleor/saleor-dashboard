@@ -125,10 +125,10 @@ const ServiceList: React.FC<ServiceListProps> = props => {
               onClick={service ? onRowClick(service.id) : undefined}
             >
               <TableCell className={classes.colName}>
-                <span data-tc="name">
+                <span data-test="name">
                   {maybe<React.ReactNode>(() => service.name, <Skeleton />)}
                 </span>
-                <Typography data-tc="isActive" variant="caption">
+                <Typography data-test="isActive" variant="caption">
                   {maybe(() =>
                     service.isActive ? (
                       <FormattedMessage
