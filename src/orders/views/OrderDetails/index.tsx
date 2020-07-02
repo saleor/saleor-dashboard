@@ -256,16 +256,20 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onProfileView={() =>
                             navigate(customerUrl(order.user.id))
                           }
-                          onInvoiceClick={invoice =>
-                            window.open(invoice.url, "_blank")
+                          onInvoiceClick={id =>
+                            window.open(
+                              order.invoices.find(invoice => invoice.id === id)
+                                ?.url,
+                              "_blank"
+                            )
                           }
                           onInvoiceGenerate={() =>
                             orderInvoiceRequest.mutate({
                               orderId: id
                             })
                           }
-                          onInvoiceSend={invoice =>
-                            openModal("invoice-send", { id: invoice.id })
+                          onInvoiceSend={id =>
+                            openModal("invoice-send", { id })
                           }
                         />
                         <OrderCannotCancelOrderDialog

@@ -38,8 +38,8 @@ const useStyles = makeStyles(
 interface OrderInvoiceListProps {
   invoices: InvoiceFragment[];
   onInvoiceGenerate: () => void;
-  onInvoiceClick: (invoice: InvoiceFragment) => void;
-  onInvoiceSend: (invoice: InvoiceFragment) => void;
+  onInvoiceClick: (invoiceId: string) => void;
+  onInvoiceSend: (invoiceId: string) => void;
 }
 
 const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
@@ -109,7 +109,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                         ? classes.colNumberClickable
                         : classes.colNumber
                     }
-                    onClick={() => onInvoiceClick(invoice)}
+                    onClick={() => onInvoiceClick(invoice.id)}
                   >
                     <FormattedMessage
                       defaultMessage="Invoice"
@@ -127,7 +127,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                   {onInvoiceSend && (
                     <TableCell
                       className={classes.colAction}
-                      onClick={() => onInvoiceSend(invoice)}
+                      onClick={() => onInvoiceSend(invoice.id)}
                     >
                       <Button color="primary">
                         <FormattedMessage {...buttonMessages.send} />

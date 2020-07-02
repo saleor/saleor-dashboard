@@ -9,7 +9,6 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
-import { InvoiceFragment } from "@saleor/orders/types/InvoiceFragment";
 import { UserPermissionProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -64,9 +63,9 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onOrderCancel();
   onNoteAdd(data: HistoryFormData);
   onProfileView();
-  onInvoiceClick(invoice: InvoiceFragment);
+  onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
-  onInvoiceSend(invoice: InvoiceFragment);
+  onInvoiceSend(invoiceId: string);
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
