@@ -54,8 +54,8 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
         {errors.length > 0 && (
           <>
             <FormSpacer />
-            {errors.map(err => (
-              <DialogContentText color="error">
+            {errors.map((err, idx) => (
+              <DialogContentText key={idx} color="error">
                 {getInvoiceErrorMessage(err, intl)}
               </DialogContentText>
             ))}
