@@ -3,6 +3,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import Attributes from "@saleor/icons/Attributes";
+import Channels from "@saleor/icons/Channels";
 import Navigation from "@saleor/icons/Navigation";
 import Pages from "@saleor/icons/Pages";
 import PermissionGroups from "@saleor/icons/PermissionGroups";
@@ -15,6 +16,7 @@ import Taxes from "@saleor/icons/Taxes";
 import Warehouses from "@saleor/icons/Warehouses";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import { multichannelsListUrl } from "@saleor/multichannels/urls";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { pageListUrl } from "@saleor/pages/urls";
 import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
@@ -129,6 +131,23 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           permission: PermissionEnum.MANAGE_PRODUCTS,
           title: intl.formatMessage(sectionNames.warehouses),
           url: warehouseSection
+        }
+      ]
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "Multichannel"
+      }),
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Define and manage your sales channels",
+            id: "configurationMenuChannels"
+          }),
+          icon: <Channels fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_PRODUCTS,
+          title: intl.formatMessage(sectionNames.channels),
+          url: multichannelsListUrl()
         }
       ]
     },
