@@ -46,7 +46,7 @@ export const MessageManagerTemplate: React.FC<IMessageManagerProps> = props => {
           [classes.warning]: status === "warning"
         })}
         message={
-          <span id="message-id" data-tc="notification">
+          <span id="message-id" data-test="notification">
             {title && (
               <Typography variant="h5" style={{ fontWeight: "bold" }}>
                 {title}
@@ -106,7 +106,7 @@ export const MessageManagerTemplate: React.FC<IMessageManagerProps> = props => {
                 color="default"
                 size="small"
                 onClick={close}
-                data-tc="button-undo"
+                data-test="button-undo"
               >
                 <FormattedMessage
                   defaultMessage="Undo"
@@ -120,7 +120,7 @@ export const MessageManagerTemplate: React.FC<IMessageManagerProps> = props => {
                 color="default"
                 size="small"
                 onClick={actionBtn.action}
-                data-tc="button-action"
+                data-test="button-action"
               >
                 {actionBtn.label}
               </Button>
