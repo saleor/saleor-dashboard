@@ -193,7 +193,7 @@ const MenuList: React.FC<MenuListProps> = props => {
   });
   const intl = useIntl();
 
-  const configutationMenu = createConfigurationMenu(intl).map(menu => {
+  const configurationMenu = createConfigurationMenu(intl).map(menu => {
     menu.menuItems.map(item =>
       user.userPermissions.map(perm => perm.code).includes(item.permission)
     );
@@ -332,7 +332,7 @@ const MenuList: React.FC<MenuListProps> = props => {
           </a>
         );
       })}
-      {renderConfigure && configutationMenu.length > 0 && (
+      {renderConfigure && configurationMenu.length > 0 && (
         <a
           className={classes.menuListItem}
           href={createHref(configurationMenuUrl)}
