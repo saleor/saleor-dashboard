@@ -21,16 +21,16 @@ const useStyles = makeStyles(
   () => ({
     cardContentTable: {
       "&:last-child": {
-        padding: 0,
+        padding: 0
       },
-      padding: 0,
+      padding: 0
     },
     colAction: { paddingRight: "0.5rem", width: "auto" },
     colNumber: { width: "100%" },
     colNumberClickable: {
       cursor: "pointer",
-      width: "100%",
-    },
+      width: "100%"
+    }
   }),
   { name: "OrderInvoiceList" }
 );
@@ -42,7 +42,7 @@ interface OrderInvoiceListProps {
   onInvoiceSend: (invoice: InvoiceFragment) => void;
 }
 
-const OrderInvoiceList: React.FC<OrderInvoiceListProps> = (props) => {
+const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
   const { invoices, onInvoiceGenerate, onInvoiceClick, onInvoiceSend } = props;
 
   const classes = useStyles(props);
@@ -50,7 +50,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = (props) => {
   const intl = useIntl();
 
   const generatedInvoices = invoices?.filter(
-    (invoice) => invoice.status === "SUCCESS"
+    invoice => invoice.status === "SUCCESS"
   );
 
   return (
@@ -58,7 +58,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = (props) => {
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Invoices",
-          description: "section header",
+          description: "section header"
         })}
         toolbar={
           onInvoiceGenerate && (
@@ -101,7 +101,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {generatedInvoices.map((invoice) => (
+              {generatedInvoices.map(invoice => (
                 <TableRow key={invoice.id}>
                   <TableCell
                     className={
