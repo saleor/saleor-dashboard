@@ -7,7 +7,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { buttonMessages } from "@saleor/intl";
 import { InvoiceErrorFragment } from "@saleor/orders/types/InvoiceErrorFragment";
@@ -16,17 +15,13 @@ import getInvoiceErrorMessage from "@saleor/utils/errors/invoice";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface FormData {
-  amount: number;
-}
-
 export interface OrderInvoiceEmailSendDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: InvoiceErrorFragment[];
   open: boolean;
   invoice: InvoiceFragment;
   onClose: () => void;
-  onSubmit: () => void;
+  onSend: () => void;
 }
 
 const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = ({
@@ -35,57 +30,51 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
   open,
   invoice,
   onClose,
-  onSubmit
+  onSend
 }) => {
   const intl = useIntl();
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
-      <Form onSubmit={onSubmit}>
-        {({ submit }) => (
+      <DialogTitle>
+        {intl.formatMessage({
+          defaultMessage: "Send Invoice",
+          description: "dialog header"
+        })}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          <FormattedMessage
+            defaultMessage="Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
+            values={{
+              invoiceNumber: <strong>{invoice?.number}</strong>
+            }}
+          />
+        </DialogContentText>
+        {errors.length > 0 && (
           <>
-            <DialogTitle>
-              {intl.formatMessage({
-                defaultMessage: "Send Invoice",
-                description: "dialog header"
-              })}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                <FormattedMessage
-                  defaultMessage="Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
-                  values={{
-                    invoiceNumber: <strong>{invoice?.number}</strong>
-                  }}
-                />
+            <FormSpacer />
+            {errors.map(err => (
+              <DialogContentText color="error">
+                {getInvoiceErrorMessage(err, intl)}
               </DialogContentText>
-              {errors.length > 0 && (
-                <>
-                  <FormSpacer />
-                  {errors.map(err => (
-                    <DialogContentText color="error">
-                      {getInvoiceErrorMessage(err, intl)}
-                    </DialogContentText>
-                  ))}
-                </>
-              )}
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.back} />
-              </Button>
-              <ConfirmButton
-                transitionState={confirmButtonState}
-                color="primary"
-                variant="contained"
-                onClick={submit}
-              >
-                <FormattedMessage {...buttonMessages.send} />
-              </ConfirmButton>
-            </DialogActions>
+            ))}
           </>
         )}
-      </Form>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>
+          <FormattedMessage {...buttonMessages.back} />
+        </Button>
+        <ConfirmButton
+          transitionState={confirmButtonState}
+          color="primary"
+          variant="contained"
+          onClick={onSend}
+        >
+          <FormattedMessage {...buttonMessages.send} />
+        </ConfirmButton>
+      </DialogActions>
     </Dialog>
   );
 };
