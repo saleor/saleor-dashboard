@@ -27,18 +27,19 @@ export const MessageManagerTemplate: React.FC<IMessageManagerProps> = props => {
   const [expand, setExpand] = useState(false);
 
   const classes = useStyles({});
+  const id = props.id.toString();
 
   return (
     <div
       key={props.id}
       className={classes.snackbarContainer}
-      onMouseEnter={onMouseEnter && onMouseEnter}
-      onMouseLeave={onMouseLeave && onMouseLeave}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <SnackbarContent
-        id={props.id.toString()}
-        key={props.id}
-        aria-describedby="message-id"
+        id={id}
+        key={id}
+        aria-describedby={`message-id-${id}`}
         className={classNames(classes.snackbar, {
           [classes.info]: status === "info",
           [classes.error]: status === "error",
@@ -46,7 +47,7 @@ export const MessageManagerTemplate: React.FC<IMessageManagerProps> = props => {
           [classes.warning]: status === "warning"
         })}
         message={
-          <span id="message-id" data-test="notification">
+          <span id={`message-id-${id}`} data-test="notification">
             {title && (
               <Typography variant="h5" style={{ fontWeight: "bold" }}>
                 {title}
