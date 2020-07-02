@@ -35,7 +35,7 @@ const useStyles = makeStyles(
   { name: "OrderInvoiceList" }
 );
 
-interface OrderInvoiceListProps {
+export interface OrderInvoiceListProps {
   invoices: InvoiceFragment[];
   onInvoiceGenerate: () => void;
   onInvoiceClick: (invoiceId: string) => void;
