@@ -18,20 +18,20 @@ import { customerUrl } from "../../../customers/urls";
 import {
   getStringOrPlaceholder,
   maybe,
-  transformAddressToForm,
+  transformAddressToForm
 } from "../../../misc";
 import { productUrl } from "../../../products/urls";
 import {
   FulfillmentStatus,
   JobStatusEnum,
-  OrderStatus,
+  OrderStatus
 } from "../../../types/globalTypes";
 import OrderAddressEditDialog from "../../components/OrderAddressEditDialog";
 import OrderCancelDialog from "../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../components/OrderDetailsPage";
 import OrderDraftCancelDialog from "../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
 import OrderDraftFinalizeDialog, {
-  OrderDraftFinalizeWarning,
+  OrderDraftFinalizeWarning
 } from "../../components/OrderDraftFinalizeDialog";
 import OrderDraftPage from "../../components/OrderDraftPage";
 import OrderFulfillmentCancelDialog from "../../components/OrderFulfillmentCancelDialog";
@@ -49,7 +49,7 @@ import {
   orderListUrl,
   orderUrl,
   OrderUrlDialog,
-  OrderUrlQueryParams,
+  OrderUrlQueryParams
 } from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 
@@ -67,7 +67,7 @@ const orderDraftFinalizeWarnings = (order: OrderDetails_order) => {
   if (
     order &&
     order.lines &&
-    order.lines.filter((line) => line.isShippingRequired).length > 0 &&
+    order.lines.filter(line => line.isShippingRequired).length > 0 &&
     order.shippingMethod === null
   ) {
     warnings.push(OrderDraftFinalizeWarning.NO_SHIPPING_METHOD);
@@ -75,7 +75,7 @@ const orderDraftFinalizeWarnings = (order: OrderDetails_order) => {
   if (
     order &&
     order.lines &&
-    order.lines.filter((line) => line.isShippingRequired).length === 0 &&
+    order.lines.filter(line => line.isShippingRequired).length === 0 &&
     order.shippingMethod !== null
   ) {
     warnings.push(OrderDraftFinalizeWarning.UNNECESSARY_SHIPPING_METHOD);
@@ -94,22 +94,22 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const {
     loadMore: loadMoreCustomers,
     search: searchUsers,
-    result: users,
+    result: users
   } = useCustomerSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const {
     loadMore,
     search: variantSearch,
-    result: variantSearchOpts,
+    result: variantSearchOpts
   } = useOrderVariantSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: DEFAULT_INITIAL_SEARCH_DATA
   });
   const warehouses = useWarehouseList({
     displayLoader: true,
     variables: {
-      first: 30,
-    },
+      first: 30
+    }
   });
   const { queue } = useBackgroundTask();
   const intl = useIntl();
@@ -117,7 +117,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderUrlDialog,
     OrderUrlQueryParams
-  >(navigate, (params) => orderUrl(id, params), params);
+  >(navigate, params => orderUrl(id, params), params);
 
   const handleBack = () => navigate(orderListUrl());
 
@@ -132,7 +132,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
 
         return (
           <OrderDetailsMessages id={id} params={params}>
-            {(orderMessages) => (
+            {orderMessages => (
               <OrderOperations
                 order={id}
                 onNoteAdd={orderMessages.handleNoteAdd}
@@ -167,8 +167,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                     queue(Task.INVOICE_GENERATE, {
                       params: {
                         invoiceId: data.invoiceRequest.invoice.id,
-                        orderId: id,
-                      },
+                        orderId: id
+                      }
                     });
                   }
                 }}
@@ -192,7 +192,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderDraftFinalize,
                   orderPaymentMarkAsPaid,
                   orderInvoiceRequest,
-                  orderInvoiceSend,
+                  orderInvoiceSend
                 }) => (
                   <>
                     {order?.status !== OrderStatus.DRAFT ? (
@@ -201,20 +201,20 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           title={intl.formatMessage(
                             {
                               defaultMessage: "Order #{orderNumber}",
-                              description: "window title",
+                              description: "window title"
                             },
                             {
                               orderNumber: getStringOrPlaceholder(
                                 data?.order?.number
-                              ),
+                              )
                             }
                           )}
                         />
                         <OrderDetailsPage
-                          onNoteAdd={(variables) =>
+                          onNoteAdd={variables =>
                             orderAddNote.mutate({
                               input: variables,
-                              order: id,
+                              order: id
                             })
                           }
                           onBack={handleBack}
@@ -226,27 +226,26 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           userPermissions={user?.userPermissions || []}
                           onOrderCancel={() => openModal("cancel")}
                           onOrderFulfill={() => navigate(orderFulfillUrl(id))}
-                          onFulfillmentCancel={(fulfillmentId) =>
+                          onFulfillmentCancel={fulfillmentId =>
                             navigate(
                               orderUrl(id, {
                                 action: "cancel-fulfillment",
-                                id: fulfillmentId,
+                                id: fulfillmentId
                               })
                             )
                           }
-                          onFulfillmentTrackingNumberUpdate={(fulfillmentId) =>
+                          onFulfillmentTrackingNumberUpdate={fulfillmentId =>
                             navigate(
                               orderUrl(id, {
                                 action: "edit-fulfillment",
-                                id: fulfillmentId,
+                                id: fulfillmentId
                               })
                             )
                           }
                           onPaymentCapture={() => openModal("capture")}
                           onPaymentVoid={() => openModal("void")}
                           onPaymentRefund={() => openModal("refund")}
-                          onProductClick={(id) => () =>
-                            navigate(productUrl(id))}
+                          onProductClick={id => () => navigate(productUrl(id))}
                           onBillingAddressEdit={() =>
                             openModal("edit-billing-address")
                           }
@@ -257,15 +256,15 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onProfileView={() =>
                             navigate(customerUrl(order.user.id))
                           }
-                          onInvoiceClick={(invoice) =>
+                          onInvoiceClick={invoice =>
                             window.open(invoice.url, "_blank")
                           }
                           onInvoiceGenerate={() =>
                             orderInvoiceRequest.mutate({
-                              orderId: id,
+                              orderId: id
                             })
                           }
-                          onInvoiceSend={(invoice) =>
+                          onInvoiceSend={invoice =>
                             openModal("invoice-send", { id: invoice.id })
                           }
                         />
@@ -274,7 +273,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           open={
                             params.action === "cancel" &&
                             order?.fulfillments.some(
-                              (fulfillment) =>
+                              fulfillment =>
                                 fulfillment.status ===
                                 FulfillmentStatus.FULFILLED
                             )
@@ -290,7 +289,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onClose={closeModal}
                           onSubmit={() =>
                             orderCancel.mutate({
-                              id,
+                              id
                             })
                           }
                         />
@@ -305,7 +304,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onClose={closeModal}
                           onConfirm={() =>
                             orderPaymentMarkAsPaid.mutate({
-                              id,
+                              id
                             })
                           }
                           open={params.action === "mark-paid"}
@@ -327,10 +326,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           open={params.action === "capture"}
                           variant="capture"
                           onClose={closeModal}
-                          onSubmit={(variables) =>
+                          onSubmit={variables =>
                             orderPaymentCapture.mutate({
                               ...variables,
-                              id,
+                              id
                             })
                           }
                         />
@@ -344,10 +343,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           open={params.action === "refund"}
                           variant="refund"
                           onClose={closeModal}
-                          onSubmit={(variables) =>
+                          onSubmit={variables =>
                             orderPaymentRefund.mutate({
                               ...variables,
-                              id,
+                              id
                             })
                           }
                         />
@@ -362,13 +361,13 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           open={params.action === "cancel-fulfillment"}
                           warehouses={
                             warehouses.data?.warehouses.edges.map(
-                              (edge) => edge.node
+                              edge => edge.node
                             ) || []
                           }
-                          onConfirm={(variables) =>
+                          onConfirm={variables =>
                             orderFulfillmentCancel.mutate({
                               id: params.id,
-                              input: variables,
+                              input: variables
                             })
                           }
                           onClose={closeModal}
@@ -384,16 +383,16 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           open={params.action === "edit-fulfillment"}
                           trackingNumber={getStringOrPlaceholder(
                             data?.order?.fulfillments.find(
-                              (fulfillment) => fulfillment.id === params.id
+                              fulfillment => fulfillment.id === params.id
                             )?.trackingNumber
                           )}
-                          onConfirm={(variables) =>
+                          onConfirm={variables =>
                             orderFulfillmentUpdateTracking.mutate({
                               id: params.id,
                               input: {
                                 ...variables,
-                                notifyCustomer: true,
-                              },
+                                notifyCustomer: true
+                              }
                             })
                           }
                           onClose={closeModal}
@@ -406,10 +405,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           }
                           open={params.action === "invoice-send"}
                           invoice={order?.invoices?.find(
-                            (invoice) => invoice.id === params.id
+                            invoice => invoice.id === params.id
                           )}
                           onClose={closeModal}
-                          onSubmit={() =>
+                          onSend={() =>
                             orderInvoiceSend.mutate({ id: params.id })
                           }
                         />
@@ -420,26 +419,26 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           title={intl.formatMessage(
                             {
                               defaultMessage: "Draft Order #{orderNumber}",
-                              description: "window title",
+                              description: "window title"
                             },
                             {
                               orderNumber: getStringOrPlaceholder(
                                 data?.order?.number
-                              ),
+                              )
                             }
                           )}
                         />
                         <OrderDraftPage
                           disabled={loading}
-                          onNoteAdd={(variables) =>
+                          onNoteAdd={variables =>
                             orderAddNote.mutate({
                               input: variables,
-                              order: id,
+                              order: id
                             })
                           }
                           users={maybe(
                             () =>
-                              users.data.search.edges.map((edge) => edge.node),
+                              users.data.search.edges.map(edge => edge.node),
                             []
                           )}
                           hasMore={maybe(
@@ -450,10 +449,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           fetchUsers={searchUsers}
                           loading={users.loading}
                           usersLoading={users.loading}
-                          onCustomerEdit={(data) =>
+                          onCustomerEdit={data =>
                             orderDraftUpdate.mutate({
                               id,
-                              input: data,
+                              input: data
                             })
                           }
                           onDraftFinalize={() => openModal("finalize")}
@@ -462,12 +461,12 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onBack={() => navigate(orderListUrl())}
                           order={order}
                           countries={maybe(() => data.shop.countries, []).map(
-                            (country) => ({
+                            country => ({
                               code: country.code,
-                              label: country.country,
+                              label: country.country
                             })
                           )}
-                          onProductClick={(id) => () =>
+                          onProductClick={id => () =>
                             navigate(productUrl(encodeURIComponent(id)))}
                           onBillingAddressEdit={() =>
                             openModal("edit-billing-address")
@@ -478,13 +477,13 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onShippingMethodEdit={() =>
                             openModal("edit-shipping")
                           }
-                          onOrderLineRemove={(id) =>
+                          onOrderLineRemove={id =>
                             orderLineDelete.mutate({ id })
                           }
                           onOrderLineChange={(id, data) =>
                             orderLineUpdate.mutate({
                               id,
-                              input: data,
+                              input: data
                             })
                           }
                           saveButtonBarState="default"
@@ -528,12 +527,12 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           shippingMethod={order?.shippingMethod?.id}
                           shippingMethods={order?.availableShippingMethods}
                           onClose={closeModal}
-                          onSubmit={(variables) =>
+                          onSubmit={variables =>
                             orderShippingMethodUpdate.mutate({
                               id,
                               input: {
-                                shippingMethod: variables.shippingMethod,
-                              },
+                                shippingMethod: variables.shippingMethod
+                              }
                             })
                           }
                         />
@@ -549,18 +548,18 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             variantSearchOpts.data?.search.pageInfo.hasNextPage
                           }
                           products={variantSearchOpts.data?.search.edges.map(
-                            (edge) => edge.node
+                            edge => edge.node
                           )}
                           onClose={closeModal}
                           onFetch={variantSearch}
                           onFetchMore={loadMore}
-                          onSubmit={(variants) =>
+                          onSubmit={variants =>
                             orderLinesAdd.mutate({
                               id,
-                              input: variants.map((variant) => ({
+                              input: variants.map(variant => ({
                                 quantity: 1,
-                                variantId: variant.id,
-                              })),
+                                variantId: variant.id
+                              }))
                             })
                           }
                         />
@@ -570,21 +569,21 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                       confirmButtonState={orderUpdate.opts.status}
                       address={transformAddressToForm(order?.shippingAddress)}
                       countries={
-                        data?.shop?.countries.map((country) => ({
+                        data?.shop?.countries.map(country => ({
                           code: country.code,
-                          label: country.country,
+                          label: country.country
                         })) || []
                       }
                       errors={orderUpdate.opts.data?.orderUpdate.errors || []}
                       open={params.action === "edit-shipping-address"}
                       variant="shipping"
                       onClose={closeModal}
-                      onConfirm={(shippingAddress) =>
+                      onConfirm={shippingAddress =>
                         orderUpdate.mutate({
                           id,
                           input: {
-                            shippingAddress,
-                          },
+                            shippingAddress
+                          }
                         })
                       }
                     />
@@ -592,21 +591,21 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                       confirmButtonState={orderUpdate.opts.status}
                       address={transformAddressToForm(order?.billingAddress)}
                       countries={
-                        data?.shop?.countries.map((country) => ({
+                        data?.shop?.countries.map(country => ({
                           code: country.code,
-                          label: country.country,
+                          label: country.country
                         })) || []
                       }
                       errors={orderUpdate.opts.data?.orderUpdate.errors || []}
                       open={params.action === "edit-billing-address"}
                       variant="billing"
                       onClose={closeModal}
-                      onConfirm={(billingAddress) =>
+                      onConfirm={billingAddress =>
                         orderUpdate.mutate({
                           id,
                           input: {
-                            billingAddress,
-                          },
+                            billingAddress
+                          }
                         })
                       }
                     />
