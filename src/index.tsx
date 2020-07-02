@@ -39,6 +39,8 @@ import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import HomePage from "./home";
 import { commonMessages } from "./intl";
+import MultichannelsSection from "./multichannels";
+import { multichannelsSection } from "./multichannels/urls";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
 import { NotFound } from "./NotFound";
@@ -248,6 +250,11 @@ const Routes: React.FC = () => {
                 permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                 path={warehouseSection}
                 component={WarehouseSection}
+              />
+              <SectionRoute
+                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                path={multichannelsSection}
+                component={MultichannelsSection}
               />
               {createConfigurationMenu(intl).filter(menu =>
                 menu.menuItems.map(item => hasPermission(item.permission, user))
