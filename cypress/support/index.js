@@ -4,7 +4,7 @@ Cypress.Commands.add("loginUser", (email, password) =>
     .type(email)
     .get("input[name='password']")
     .type(password)
-    .get("[data-tc=submit]")
+    .get("[data-test=submit]")
     .click()
 );
 

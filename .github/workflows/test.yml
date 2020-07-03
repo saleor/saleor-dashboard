@@ -78,8 +78,13 @@ jobs:
         uses: actions/checkout@v1
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        env:
+          API_URI: https://pwa.demo.saleor.rocks/graphql/
         with:
-          start: API_URI=https://pwa.demo.saleor.rocks/graphql/ npm start
+          start: |
+            npm start
+          wait-on: http://localhost:9000
+          wait-on-timeout: 120
 
   translation-messages:
     runs-on: ubuntu-latest
