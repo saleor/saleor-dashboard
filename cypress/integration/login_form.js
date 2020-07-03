@@ -10,6 +10,12 @@ describe("User authorization", () => {
       cy.loginUser("admin@example.com", "admin");
       cy.get("[data-test=welcomeHeader]").contains("Hello there");
     });
+
+    it("should fail for wrong password", () => {
+      cy.visit("/");
+      cy.loginUser("admin@example.com", "wrong-password");
+      cy.get("[data-test=loginErrorMessage]");
+    });
   });
 
   describe("Logout", () => {
