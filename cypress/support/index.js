@@ -6,11 +6,17 @@ Cypress.Commands.add("loginUser", (email, password) =>
     .type(password)
     .get("[data-tc=submit]")
     .click()
-    .get("[data-test=welcomeHeader]")
-    .should("contain", "Hello there", { timeoout: 20000 })
 );
 
 Cypress.Commands.add("clearSessionData", () => {
+  // Because of known cypress bug, not all local storage data are cleared.
+  // Here is workaround to ensure tests have no side effects.
+  // Suggested usage:
+
+  // beforeEach(() => {
+  //   cy.clearSessionData();
+  // });
+
   cy.clearCookies();
   cy.clearLocalStorage();
   cy.visit("/", {

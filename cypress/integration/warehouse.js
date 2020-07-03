@@ -14,12 +14,10 @@ describe("Warehouse settings", () => {
 
   it("Editing warehouse is available", () => {
     cy.visit("/dashboard/warehouses")
-      .get("[data-testId=africa]")
+      .get("[data-testid=africa]")
       .get("[data-test=editButton]")
       .first()
       .click()
       .get("[data-test=generalInformationSection]");
-
-    // cy.location("pathname").should("contain", "/dashboard/warehouses/");
   });
 });

@@ -67,7 +67,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
           {error && (
-            <div className={classes.panel}>
+            <div className={classes.panel} data-test="loginErrorMessage">
               <Typography variant="caption">
                 <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
               </Typography>

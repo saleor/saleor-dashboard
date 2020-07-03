@@ -258,7 +258,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                 [classes.menuListItemActive]: isAnyChildActive
               })}
               key={menuItem.label}
-              data-testId={menuItem.label.toLowerCase()}
+              data-testid={menuItem.label.toLowerCase()}
             >
               <div
                 className={classNames(classes.menuItemHover, {
