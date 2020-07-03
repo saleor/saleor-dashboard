@@ -71,7 +71,7 @@ jobs:
         run: |
           npm run test
 
- cypress-run:
+  cypress-run:
     runs-on: ubuntu-16.04
     steps:
       - name: Checkout
