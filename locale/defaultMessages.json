@@ -1420,6 +1420,18 @@
     "context": "weight",
     "string": "{value} {unit}"
   },
+  "src_dot_components_dot_messages_dot_1219076963": {
+    "context": "snackbar expand",
+    "string": "Expand"
+  },
+  "src_dot_components_dot_messages_dot_2473863536": {
+    "context": "snackbar button undo",
+    "string": "Undo"
+  },
+  "src_dot_components_dot_messages_dot_3444275093": {
+    "context": "snackbar collapse",
+    "string": "Collapse"
+  },
   "src_dot_configuration": {
     "context": "configuration section name",
     "string": "Configuration"

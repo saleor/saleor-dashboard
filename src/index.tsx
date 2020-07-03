@@ -28,7 +28,7 @@ import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
 import { DateProvider } from "./components/Date";
 import { LocaleProvider } from "./components/Locale";
-import { MessageManager } from "./components/messages";
+import MessageManagerProvider from "./components/messages";
 import { ShopProvider } from "./components/Shop";
 import ThemeProvider from "./components/Theme";
 import { WindowTitle } from "./components/WindowTitle";
@@ -135,7 +135,7 @@ const App: React.FC = () => {
         <ThemeProvider isDefaultDark={isDark}>
           <DateProvider>
             <LocaleProvider>
-              <MessageManager>
+              <MessageManagerProvider>
                 <BackgroundTasksProvider>
                   <AppStateProvider>
                     <ShopProvider>
@@ -143,7 +143,7 @@ const App: React.FC = () => {
                     </ShopProvider>
                   </AppStateProvider>
                 </BackgroundTasksProvider>
-              </MessageManager>
+              </MessageManagerProvider>
             </LocaleProvider>
           </DateProvider>
         </ThemeProvider>
