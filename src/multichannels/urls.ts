@@ -1,5 +1,22 @@
-export const multichannelsSection = "/multichannels/";
+import urlJoin from "url-join";
 
-export const multichannelsListPath = multichannelsSection;
+import { Dialog, Filters, TabActionDialog } from "../types";
 
-export const multichannelsListUrl = () => multichannelsListPath;
+export enum ChannelsListUrlFiltersEnum {
+  query = "query"
+}
+export type ChannelsListUrlFilters = Filters<ChannelsListUrlFiltersEnum>;
+export type MultichannelsListUrlDialog = "remove" | TabActionDialog;
+export type MultichannelsListUrlQueryParams = Dialog<
+  MultichannelsListUrlDialog
+> &
+  ChannelsListUrlFilters;
+
+export const channelsSection = "/multichannels/";
+
+export const channelsListPath = channelsSection;
+
+export const channelsListUrl = () => channelsListPath;
+
+export const channelAddPath = urlJoin(channelsSection, "add");
+export const channelAddUrl = channelAddPath;
