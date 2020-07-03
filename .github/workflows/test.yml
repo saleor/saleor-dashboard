@@ -83,8 +83,13 @@ jobs:
         with:
           start: |
             npm start
-          wait-on: http://localhost:9000
+          wait-on: http://localhost:9000/
           wait-on-timeout: 120
+      - uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
 
   translation-messages:
     runs-on: ubuntu-latest
