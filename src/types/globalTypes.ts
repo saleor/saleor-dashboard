@@ -84,6 +84,15 @@ export enum CategorySortField {
   SUBCATEGORY_COUNT = "SUBCATEGORY_COUNT",
 }
 
+export enum ChannelErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum CollectionPublished {
   HIDDEN = "HIDDEN",
   PUBLISHED = "PUBLISHED",
@@ -587,6 +596,7 @@ export enum PaymentChargeStatusEnum {
 
 export enum PermissionEnum {
   MANAGE_APPS = "MANAGE_APPS",
+  MANAGE_CHANNELS = "MANAGE_CHANNELS",
   MANAGE_CHECKOUTS = "MANAGE_CHECKOUTS",
   MANAGE_DISCOUNTS = "MANAGE_DISCOUNTS",
   MANAGE_GIFT_CARD = "MANAGE_GIFT_CARD",
@@ -944,6 +954,12 @@ export interface CategoryInput {
 export interface CategorySortingInput {
   direction: OrderDirection;
   field: CategorySortField;
+}
+
+export interface ChannelCreateInput {
+  name: string;
+  slug: string;
+  currencyCode: string;
 }
 
 export interface CollectionCreateInput {

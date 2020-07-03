@@ -18,7 +18,7 @@ import Warehouses from "@saleor/icons/Warehouses";
 import Webhooks from "@saleor/icons/Webhooks";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { multichannelsListUrl } from "@saleor/multichannels/urls";
+import { channelsListUrl } from "@saleor/multichannels/urls";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { pageListUrl } from "@saleor/pages/urls";
 import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
@@ -151,7 +151,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           icon: <Channels fontSize="inherit" viewBox="0 0 44 44" />,
           permission: PermissionEnum.MANAGE_PRODUCTS,
           title: intl.formatMessage(sectionNames.channels),
-          url: multichannelsListUrl()
+          url: channelsListUrl()
         }
       ]
     },
