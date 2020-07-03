@@ -230,7 +230,7 @@ export const useOrderFulfillData = makeQuery<
 >(orderFulfillData);
 
 export const checkOrderInvoicesStatus = gql`
-  ${fragmentInvoice}
+  ${invoiceFragment}
   query CheckOrderInvoicesStatus($id: ID!) {
     order(id: $id) {
       id

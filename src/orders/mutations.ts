@@ -462,7 +462,7 @@ export const useOrderFulfill = makeMutation<
 
 const invoiceRequestMutation = gql`
   ${invoiceErrorFragment}
-  ${fragmentInvoice}
+  ${invoiceFragment}
   mutation InvoiceRequest($orderId: ID!) {
     invoiceRequest(orderId: $orderId) {
       errors: invoiceErrors {
@@ -481,7 +481,7 @@ export const TypedInvoiceRequestMutation = TypedMutation<
 
 const invoiceEmailSendMutation = gql`
   ${invoiceErrorFragment}
-  ${fragmentInvoice}
+  ${invoiceFragment}
   mutation InvoiceEmailSend($id: ID!) {
     invoiceSendEmail(id: $id) {
       errors: invoiceErrors {
