@@ -98,7 +98,7 @@ export const fulfillmentFragment = gql`
   }
 `;
 
-export const fragmentInvoice = gql`
+export const invoiceFragment = gql`
   fragment InvoiceFragment on Invoice {
     id
     number
@@ -113,7 +113,7 @@ export const fragmentOrderDetails = gql`
   ${fragmentOrderEvent}
   ${fragmentOrderLine}
   ${fulfillmentFragment}
-  ${fragmentInvoice}
+  ${invoiceFragment}
   fragment OrderDetailsFragment on Order {
     id
     billingAddress {
@@ -405,7 +405,7 @@ export const useOrderFulfillData = makeQuery<
 >(orderFulfillData);
 
 export const checkOrderInvoicesStatus = gql`
-  ${fragmentInvoice}
+  ${invoiceFragment}
   query CheckOrderInvoicesStatus($id: ID!) {
     order(id: $id) {
       id

@@ -4,9 +4,9 @@ import gql from "graphql-tag";
 import { TypedMutation } from "../mutations";
 import {
   fragmentAddress,
-  fragmentInvoice,
   fragmentOrderDetails,
-  fragmentOrderEvent
+  fragmentOrderEvent,
+  invoiceFragment
 } from "./queries";
 import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
 import {
@@ -473,7 +473,7 @@ export const useOrderFulfill = makeMutation<
 
 const invoiceRequestMutation = gql`
   ${invoiceErrorFragment}
-  ${fragmentInvoice}
+  ${invoiceFragment}
   mutation InvoiceRequest($orderId: ID!) {
     invoiceRequest(orderId: $orderId) {
       errors: invoiceErrors {
@@ -498,7 +498,7 @@ export const TypedInvoiceRequestMutation = TypedMutation<
 
 const invoiceEmailSendMutation = gql`
   ${invoiceErrorFragment}
-  ${fragmentInvoice}
+  ${invoiceFragment}
   mutation InvoiceEmailSend($id: ID!) {
     invoiceSendEmail(id: $id) {
       errors: invoiceErrors {
