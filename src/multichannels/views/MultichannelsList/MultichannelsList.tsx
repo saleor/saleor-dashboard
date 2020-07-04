@@ -1,18 +1,13 @@
 import { configurationMenuUrl } from "@saleor/configuration";
 import useNavigator from "@saleor/hooks/useNavigator";
-// import useNotifier from "@saleor/hooks/useNotifier";
-// import { commonMessages } from "@saleor/intl";
-// import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-// import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import React from "react";
 
-// import { useIntl } from "react-intl";
 import MultichannelsListPage from "../../pages/MultichannelsListPage";
 import { useChannelsList } from "../../queries";
 import {
   channelAddUrl,
-  // channelsListUrl,
-  // MultichannelsListUrlDialog,
+  channelsListUrl,
+  channelUrl,
   MultichannelsListUrlQueryParams
 } from "../../urls";
 
@@ -26,17 +21,19 @@ export const MultichannelsList: React.FC<MultichannelsListProps> = ({
   const navigate = useNavigator();
   // const notify = useNotifier();
   const { data, loading } = useChannelsList({ displayLoader: true });
-  // const intl = useIntl();
-
-  // const [openModal, closeModal] = createDialogActionHandlers<
-  //   MultichannelsListUrlDialog,
-  //   MultichannelsListUrlQueryParams
-  // >(navigate, channelsListUrl, params);
 
   const navigateToChannelCreate = () => navigate(channelAddUrl);
 
   const onRemove = () => null;
-  // const  getFilterQueryParam = params => ({ search: params.query });
+
+  const handleSearchChange = (query: string) => {
+    navigate(
+      channelsListUrl({
+        ...params,
+        query
+      })
+    );
+  };
 
   return (
     <MultichannelsListPage
@@ -45,11 +42,9 @@ export const MultichannelsList: React.FC<MultichannelsListProps> = ({
       disabled={loading}
       navigateToChannelCreate={navigateToChannelCreate}
       onBack={() => navigate(configurationMenuUrl)}
-      onRowClick={id => () => null}
+      onRowClick={id => () => navigate(channelUrl(id))}
       onRemove={onRemove}
-      onSearchChange={(value: string) => null}
-      // onAll={resetFilters}
-      // onFilterChange={changeFilters}
+      onSearchChange={handleSearchChange}
     />
   );
 };
