@@ -26,11 +26,21 @@ export const useStyles = makeStyles(
     columnPicker: {
       marginRight: theme.spacing(3)
     },
+    search: {
+      "& > div": {
+        width: "100%"
+      },
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      padding: theme.spacing(1, 3)
+    },
     table: {
       tableLayout: "fixed"
     },
     tableRow: {
       cursor: "pointer"
+    },
+    tabsRoot: {
+      marginBottom: theme.spacing(1)
     }
   }),
   { name: "ChannelsListPage" }

@@ -5,14 +5,16 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Tabs from "@material-ui/core/Tabs";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-// import SearchInput from "@saleor/components/SearchInput";
+import SearchInput from "@saleor/components/SearchBar/SearchInput";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import { FilterTab } from "@saleor/components/TableFilter";
 import { sectionNames } from "@saleor/intl";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { SearchPageProps } from "@saleor/types";
@@ -62,17 +64,25 @@ export const MultichannelsListPage: React.FC<MultichannelsListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        {/* <SearchInput
-          initialSearch={initialSearch}
-          onSearchChange={onSearchChange}
-          // allTabLabel={intl.formatMessage({
-          //   defaultMessage: "All Channels",
-          //   description: "tab name"
-          // })}
-          // searchPlaceholder={intl.formatMessage({
-          //   defaultMessage: "Search Channels"
-          // })}
-        /> */}
+        <div className={classes.search}>
+          <Tabs value={0} indicatorColor="primary" className={classes.tabsRoot}>
+            <FilterTab
+              selected
+              onClick={() => null}
+              label={intl.formatMessage({
+                defaultMessage: "All Channels",
+                description: "tab name"
+              })}
+            />
+          </Tabs>
+          <SearchInput
+            initialSearch={initialSearch}
+            onSearchChange={onSearchChange}
+            placeholder={intl.formatMessage({
+              defaultMessage: "Search Channels"
+            })}
+          />
+        </div>
         <ResponsiveTable>
           <TableHead>
             <TableRow>
