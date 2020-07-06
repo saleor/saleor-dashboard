@@ -23,6 +23,8 @@ import SectionRoute from "./auth/components/SectionRoute";
 import authLink from "./auth/link";
 import { hasPermission } from "./auth/misc";
 import CategorySection from "./categories";
+import ChannelsSection from "./channels";
+import { channelsSection } from "./channels/urls";
 import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
 import { DateProvider } from "./components/Date";
@@ -39,8 +41,6 @@ import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import HomePage from "./home";
 import { commonMessages } from "./intl";
-import MultichannelsSection from "./multichannels";
-import { channelsSection } from "./multichannels/urls";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
 import { NotFound } from "./NotFound";
@@ -254,7 +254,7 @@ const Routes: React.FC = () => {
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                 path={channelsSection}
-                component={MultichannelsSection}
+                component={ChannelsSection}
               />
               {createConfigurationMenu(intl).filter(menu =>
                 menu.menuItems.map(item => hasPermission(item.permission, user))

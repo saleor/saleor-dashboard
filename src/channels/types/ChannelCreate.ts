@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ChannelCreateInput, ChannelErrorCode } from "./../../types/globalTypes";
+import { ChannelCreateInput, ChannelErrorCode } from "../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ChannelCreate
@@ -18,9 +18,9 @@ export interface ChannelCreate_channelCreate_channel {
 
 export interface ChannelCreate_channelCreate_errors {
   __typename: "ChannelError";
+  code: ChannelErrorCode;
   field: string | null;
   message: string | null;
-  code: ChannelErrorCode;
 }
 
 export interface ChannelCreate_channelCreate {
