@@ -1,4 +1,5 @@
 import { attributeListUrl } from "@saleor/attributes/urls";
+import { channelsListUrl } from "@saleor/channels/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
@@ -18,7 +19,6 @@ import Warehouses from "@saleor/icons/Warehouses";
 import Webhooks from "@saleor/icons/Webhooks";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { channelsListUrl } from "@saleor/multichannels/urls";
 import { menuListUrl } from "@saleor/navigation/urls";
 import { pageListUrl } from "@saleor/pages/urls";
 import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
