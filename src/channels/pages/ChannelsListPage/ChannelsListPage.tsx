@@ -21,10 +21,11 @@ import { SearchPageProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { Channels_channels } from "../../types/Channels";
 import { useStyles } from "./styles";
 
-interface MultichannelsListPageProps extends SearchPageProps {
-  channelsList: any[];
+interface ChannelsListPageProps extends SearchPageProps {
+  channelsList: Channels_channels[];
   navigateToChannelCreate: () => void;
   disabled: boolean;
   onBack: () => void;
@@ -34,7 +35,7 @@ interface MultichannelsListPageProps extends SearchPageProps {
 
 const numberOfColumns = 2;
 
-export const MultichannelsListPage: React.FC<MultichannelsListPageProps> = ({
+export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   channelsList,
   initialSearch,
   navigateToChannelCreate,
@@ -143,4 +144,5 @@ export const MultichannelsListPage: React.FC<MultichannelsListPageProps> = ({
   );
 };
 
-export default MultichannelsListPage;
+ChannelsListPage.displayName = "ChannelsListPage";
+export default ChannelsListPage;
