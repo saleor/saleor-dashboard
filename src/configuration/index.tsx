@@ -149,7 +149,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "configurationMenuChannels"
           }),
           icon: <Channels fontSize="inherit" viewBox="0 0 44 44" />,
-          permission: PermissionEnum.MANAGE_PRODUCTS,
+          permission: PermissionEnum.MANAGE_CHANNELS,
           title: intl.formatMessage(sectionNames.channels),
           url: channelsListUrl()
         }
