@@ -2,21 +2,28 @@ export enum Task {
   CUSTOM
 }
 export enum TaskStatus {
+  FAILURE,
   PENDING,
-  ENDED
+  SUCCESS
 }
+
+export interface OnCompletedTaskData {
+  status: TaskStatus;
+}
+export type OnCompletedTaskFn = (data: OnCompletedTaskData) => void;
 
 export interface QueuedTask {
   id: number;
-  handle: () => Promise<boolean>;
+  handle: () => Promise<TaskStatus>;
   status: TaskStatus;
-  onCompleted: () => void;
+  onCompleted: OnCompletedTaskFn;
   onError: (error: Error) => void;
 }
 
 export interface TaskData {
-  handle?: () => Promise<boolean>;
-  onCompleted?: () => void;
+  id?: string;
+  handle?: () => Promise<TaskStatus>;
+  onCompleted?: OnCompletedTaskFn;
   onError?: () => void;
 }
 

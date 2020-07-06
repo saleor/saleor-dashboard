@@ -58,6 +58,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Handle untracked products - #523 by @dominik-zeglen
 - Display correct error if there were no graphql errors - #525 by @dominik-zeglen
 - Add background task manager - #574 by @dominik-zeglen
+- Handle task failure and fix task duplication - #588 by @dominik-zeglen
 
 ## 2.0.0
 
