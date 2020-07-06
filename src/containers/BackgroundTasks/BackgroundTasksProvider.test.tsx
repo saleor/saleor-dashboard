@@ -1,16 +1,30 @@
+import { JobStatusEnum } from "@saleor/types/globalTypes";
 import { renderHook } from "@testing-library/react-hooks";
-import { createMockClient } from "mock-apollo-client";
+import { createMockClient, RequestHandlerResponse } from "mock-apollo-client";
 
 import {
   backgroundTasksRefreshTime,
   useBackgroundTasks
 } from "./BackgroundTasksProvider";
-import { OnCompletedTaskData, Task, TaskData, TaskStatus } from "./types";
+import { checkExportFileStatus } from "./queries";
+import { Task, TaskData, TaskStatus } from "./types";
+import { CheckExportFileStatus } from "./types/CheckExportFileStatus";
 
 jest.useFakeTimers();
 
 function renderBackgroundTasks() {
   const mockClient = createMockClient();
+  mockClient.setRequestHandler(checkExportFileStatus, () =>
+    Promise.resolve<RequestHandlerResponse<CheckExportFileStatus>>({
+      data: {
+        exportFile: {
+          __typename: "ExportFile",
+          id: "123",
+          status: JobStatusEnum.SUCCESS
+        }
+      }
+    })
+  );
   const intl = {
     formatMessage: ({ defaultMessage }) => defaultMessage
   };
@@ -75,33 +89,6 @@ describe("Background task provider", () => {
       expect(handle).toHaveBeenCalledTimes(1);
       expect(onCompleted).toHaveBeenCalledTimes(0);
       expect(onError).toHaveBeenCalledTimes(1);
-
-      done();
-    });
-  });
-
-  it("can handle task failure", done => {
-    const handle = jest.fn<Promise<TaskStatus>, []>(
-      () => new Promise(resolve => resolve(TaskStatus.FAILURE))
-    );
-    const onCompleted = jest.fn((data: OnCompletedTaskData) =>
-      expect(data.status).toBe(TaskStatus.FAILURE)
-    );
-    const onError = jest.fn();
-
-    const { result } = renderBackgroundTasks();
-
-    result.current.queue(Task.CUSTOM, {
-      handle,
-      onCompleted,
-      onError
-    });
-
-    jest.runOnlyPendingTimers();
-
-    setImmediate(() => {
-      expect(handle).toHaveBeenCalledTimes(1);
-      expect(onCompleted).toHaveBeenCalledTimes(1);
 
       done();
     });

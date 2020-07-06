@@ -1,13 +1,12 @@
 import { IMessageContext } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { checkOrderInvoicesStatus } from "@saleor/orders/queries";
-import { checkExportFileStatus } from "@saleor/products/queries";
 import ApolloClient from "apollo-client";
 import React from "react";
 import { useApolloClient } from "react-apollo";
 import { IntlShape, useIntl } from "react-intl";
 
 import BackgroundTasksContext from "./context";
+import { checkExportFileStatus, checkOrderInvoicesStatus } from "./queries";
 import {
   handleTask,
   queueCustom,
