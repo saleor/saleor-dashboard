@@ -1,0 +1,32 @@
+import { stringify as stringifyQs } from "qs";
+import urlJoin from "url-join";
+
+import { Dialog, Filters, Sort, TabActionDialog } from "../types";
+
+export enum ChannelsListUrlFiltersEnum {
+  query = "query"
+}
+export enum ChannelsListUrlSortField {
+  name = "name"
+}
+export type ChannelsListUrlSort = Sort<ChannelsListUrlSortField>;
+export type ChannelsListUrlFilters = Filters<ChannelsListUrlFiltersEnum>;
+export type ChannelsListUrlDialog = "remove" | TabActionDialog;
+export type ChannelsListUrlQueryParams = Dialog<ChannelsListUrlDialog> &
+  ChannelsListUrlFilters &
+  ChannelsListUrlSort;
+
+export const channelsSection = "/channels/";
+
+export const channelsListPath = channelsSection;
+
+export const channelsListUrl = (params?: ChannelsListUrlQueryParams) =>
+  channelsListPath + "?" + stringifyQs(params);
+
+export const channelAddPath = urlJoin(channelsSection, "add");
+export const channelAddUrl = channelAddPath;
+
+export const channelPath = (id: string) => urlJoin(channelsSection, id);
+
+export const channelUrl = (id: string, params?: ChannelsListUrlQueryParams) =>
+  channelPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

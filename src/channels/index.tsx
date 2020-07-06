@@ -1,31 +1,40 @@
 import { sectionNames } from "@saleor/intl";
+import { asSortParams } from "@saleor/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
-import { channelAddPath, channelsListPath } from "./urls";
+import {
+  channelAddPath,
+  channelsListPath,
+  ChannelsListUrlQueryParams,
+  ChannelsListUrlSortField
+} from "./urls";
 import ChannelCreateComponent from "./views/ChannelCreate";
-import MultichannelsListComponent from "./views/MultichannelsList";
+import ChannelsListComponent from "./views/ChannelsList";
 
-const MultichannelsList: React.FC<RouteComponentProps> = ({ location }) => {
+const ChannelsList: React.FC<RouteComponentProps> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
-
-  return <MultichannelsListComponent params={qs} />;
+  const params: ChannelsListUrlQueryParams = asSortParams(
+    qs,
+    ChannelsListUrlSortField
+  );
+  return <ChannelsListComponent params={params} />;
 };
 
-export const MultichannelsSection: React.FC<{}> = () => {
+export const ChannelsSection: React.FC<{}> = () => {
   const intl = useIntl();
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.channels)} />
       <Switch>
-        <Route exact path={channelsListPath} component={MultichannelsList} />
+        <Route exact path={channelsListPath} component={ChannelsList} />
         <Route exact path={channelAddPath} component={ChannelCreateComponent} />
       </Switch>
     </>
   );
 };
-export default MultichannelsSection;
+export default ChannelsSection;
