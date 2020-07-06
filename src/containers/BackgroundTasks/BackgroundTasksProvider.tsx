@@ -11,7 +11,7 @@ import { QueuedTask, Task, TaskData, TaskStatus } from "./types";
 
 export const backgroundTasksRefreshTime = 15 * 1000;
 
-// TODO: Remove underscores when these arguments would be finally useful
+// TODO: Remove underscores when working on #575 or similar PR
 export function useBackgroundTasks(
   _apolloClient: ApolloClient<any>,
   _notify: IMessageContext,
