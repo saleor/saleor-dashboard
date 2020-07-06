@@ -2,24 +2,21 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 
-import MultichannelsListPage from "../../pages/MultichannelsListPage";
+import ChannelsListPage from "../../pages/ChannelsListPage";
 import { useChannelsList } from "../../queries";
 import {
   channelAddUrl,
   channelsListUrl,
-  channelUrl,
-  MultichannelsListUrlQueryParams
+  ChannelsListUrlQueryParams,
+  channelUrl
 } from "../../urls";
 
-interface MultichannelsListProps {
-  params: MultichannelsListUrlQueryParams;
+interface ChannelsListProps {
+  params: ChannelsListUrlQueryParams;
 }
 
-export const MultichannelsList: React.FC<MultichannelsListProps> = ({
-  params
-}) => {
+export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   const navigate = useNavigator();
-  // const notify = useNotifier();
   const { data, loading } = useChannelsList({ displayLoader: true });
 
   const navigateToChannelCreate = () => navigate(channelAddUrl);
@@ -36,7 +33,7 @@ export const MultichannelsList: React.FC<MultichannelsListProps> = ({
   };
 
   return (
-    <MultichannelsListPage
+    <ChannelsListPage
       channelsList={data?.channels}
       initialSearch={params.query || ""}
       disabled={loading}
@@ -49,4 +46,5 @@ export const MultichannelsList: React.FC<MultichannelsListProps> = ({
   );
 };
 
-export default MultichannelsList;
+ChannelsList.displayName = "ChannelsList";
+export default ChannelsList;
