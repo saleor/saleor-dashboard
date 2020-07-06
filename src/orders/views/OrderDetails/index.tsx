@@ -165,7 +165,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   } else {
                     orderMessages.handleInvoiceGeneratePending(data);
                     queue(Task.INVOICE_GENERATE, {
-                      params: {
+                      generateInvoice: {
                         invoiceId: data.invoiceRequest.invoice.id,
                         orderId: id
                       }
