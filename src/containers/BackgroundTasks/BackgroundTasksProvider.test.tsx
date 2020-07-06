@@ -133,20 +133,22 @@ describe("Background task provider", () => {
   it("can queue multiple tasks", done => {
     let cycle = 0;
 
-    const tasks: TaskData[] = [
-      {
-        handle: jest.fn(() =>
-          Promise.resolve(cycle > 1 ? TaskStatus.SUCCESS : TaskStatus.PENDING)
-        ),
-        onCompleted: jest.fn()
-      },
-      {
-        handle: jest.fn(() =>
-          Promise.resolve(cycle > 2 ? TaskStatus.SUCCESS : TaskStatus.PENDING)
-        ),
-        onCompleted: jest.fn()
-      }
-    ];
+    // Completed in two cycles
+    const shortTask = {
+      handle: jest.fn(() =>
+        Promise.resolve(cycle > 1 ? TaskStatus.SUCCESS : TaskStatus.PENDING)
+      ),
+      onCompleted: jest.fn()
+    };
+
+    // Completed in three cycles
+    const longTask = {
+      handle: jest.fn(() =>
+        Promise.resolve(cycle > 2 ? TaskStatus.SUCCESS : TaskStatus.PENDING)
+      ),
+      onCompleted: jest.fn()
+    };
+    const tasks: TaskData[] = [shortTask, longTask];
 
     const { result } = renderBackgroundTasks();
 
@@ -157,30 +159,30 @@ describe("Background task provider", () => {
     jest.advanceTimersByTime(backgroundTasksRefreshTime + 100);
 
     setImmediate(() => {
-      expect(tasks[0].handle).toHaveBeenCalledTimes(1);
-      expect(tasks[1].handle).toHaveBeenCalledTimes(1);
-      expect(tasks[0].onCompleted).toHaveBeenCalledTimes(0);
-      expect(tasks[1].onCompleted).toHaveBeenCalledTimes(0);
+      expect(shortTask.handle).toHaveBeenCalledTimes(1);
+      expect(longTask.handle).toHaveBeenCalledTimes(1);
+      expect(shortTask.onCompleted).toHaveBeenCalledTimes(0);
+      expect(longTask.onCompleted).toHaveBeenCalledTimes(0);
 
       // Set time to backgroundTasksRefreshTime * 2
       cycle += 1;
       jest.advanceTimersByTime(backgroundTasksRefreshTime);
 
       setImmediate(() => {
-        expect(tasks[0].handle).toHaveBeenCalledTimes(2);
-        expect(tasks[1].handle).toHaveBeenCalledTimes(2);
-        expect(tasks[0].onCompleted).toHaveBeenCalledTimes(1);
-        expect(tasks[1].onCompleted).toHaveBeenCalledTimes(0);
+        expect(shortTask.handle).toHaveBeenCalledTimes(2);
+        expect(longTask.handle).toHaveBeenCalledTimes(2);
+        expect(shortTask.onCompleted).toHaveBeenCalledTimes(1);
+        expect(longTask.onCompleted).toHaveBeenCalledTimes(0);
 
         // Set time to backgroundTasksRefreshTime * 3
         cycle += 1;
         jest.advanceTimersByTime(backgroundTasksRefreshTime);
 
         setImmediate(() => {
-          expect(tasks[0].handle).toHaveBeenCalledTimes(2);
-          expect(tasks[1].handle).toHaveBeenCalledTimes(3);
-          expect(tasks[0].onCompleted).toHaveBeenCalledTimes(1);
-          expect(tasks[1].onCompleted).toHaveBeenCalledTimes(1);
+          expect(shortTask.handle).toHaveBeenCalledTimes(2);
+          expect(longTask.handle).toHaveBeenCalledTimes(3);
+          expect(shortTask.onCompleted).toHaveBeenCalledTimes(1);
+          expect(longTask.onCompleted).toHaveBeenCalledTimes(1);
 
           done();
         });
