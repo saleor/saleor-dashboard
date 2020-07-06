@@ -1,7 +1,5 @@
 import { IMessageContext } from "@saleor/components/messages";
 import { commonMessages } from "@saleor/intl";
-import { CheckOrderInvoicesStatus } from "@saleor/orders/types/CheckOrderInvoicesStatus";
-import { CheckExportFileStatus } from "@saleor/products/types/CheckExportFileStatus";
 import { JobStatusEnum } from "@saleor/types/globalTypes";
 import { ApolloQueryResult } from "apollo-client";
 import { defineMessages, IntlShape } from "react-intl";
@@ -12,6 +10,8 @@ import {
   TaskData,
   TaskStatus
 } from "./types";
+import { CheckExportFileStatus } from "./types/CheckExportFileStatus";
+import { CheckOrderInvoicesStatus } from "./types/CheckOrderInvoicesStatus";
 
 const messages = defineMessages({
   exportFinishedText: {
