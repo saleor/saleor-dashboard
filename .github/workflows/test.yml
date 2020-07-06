@@ -43,6 +43,7 @@ jobs:
       - name: Run lint
         run: |
           npm run lint
+          git diff --exit-code ./src
 
   jest-tests:
     runs-on: ubuntu-latest
