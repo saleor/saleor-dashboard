@@ -1461,6 +1461,13 @@
     "context": "button",
     "string": "Confirm"
   },
+  "src_dot_containers_dot_BackgroundTasks_dot_invoiceGenerateFinishedText": {
+    "string": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
+  },
+  "src_dot_containers_dot_BackgroundTasks_dot_invoiceGenerateFinishedTitle": {
+    "context": "invoice generating has finished, header",
+    "string": "Invoice Generated"
+  },
   "src_dot_create": {
     "context": "button",
     "string": "Create"
