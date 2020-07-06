@@ -73,6 +73,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             const handleAttributeAssignSuccess = (data: AssignAttribute) => {
               if (data.attributeAssign.errors.length === 0) {
                 notify({
+                  status: "success",
                   text: intl.formatMessage(commonMessages.savedChanges)
                 });
                 closeModal();
@@ -88,6 +89,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             ) => {
               if (data.attributeUnassign.errors.length === 0) {
                 notify({
+                  status: "success",
                   text: intl.formatMessage(commonMessages.savedChanges)
                 });
                 closeModal();
@@ -100,6 +102,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             ) => {
               if (deleteData.productTypeDelete.errors.length === 0) {
                 notify({
+                  status: "success",
                   text: intl.formatMessage({
                     defaultMessage: "Product type deleted"
                   })
@@ -115,6 +118,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                 updateData.productTypeUpdate.errors.length === 0
               ) {
                 notify({
+                  status: "success",
                   text: intl.formatMessage(commonMessages.savedChanges)
                 });
               } else if (

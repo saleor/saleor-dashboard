@@ -76,6 +76,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const handleCreate = (data: AttributeCreate) => {
     if (data.attributeCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Successfully created attribute"
         })

@@ -50,6 +50,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
   const onUpdate = (data: UpdateProductTranslations) => {
     if (data.productTranslate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);

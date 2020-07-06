@@ -41,6 +41,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
   const handleCustomerUpdateSuccess = (data: UpdateCustomer) => {
     if (data.customerUpdate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -48,6 +49,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
   const handleCustomerRemoveSuccess = (data: RemoveCustomer) => {
     if (data.customerDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Customer Removed"
         })

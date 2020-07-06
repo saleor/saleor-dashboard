@@ -101,6 +101,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   const handleVoucherDelete = (data: VoucherDelete) => {
     if (data.voucherDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Deleted voucher"
         })
@@ -113,6 +114,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     if (data.voucherUpdate.errors.length === 0) {
       closeModal();
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }

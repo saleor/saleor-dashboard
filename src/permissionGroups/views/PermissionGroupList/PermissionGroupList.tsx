@@ -81,6 +81,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
   const handleDeleteSuccess = (data: PermissionGroupDelete) => {
     if (data.permissionGroupDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Permission Group Deleted"
         })

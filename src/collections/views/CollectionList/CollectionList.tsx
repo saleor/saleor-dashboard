@@ -139,6 +139,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const handleCollectionBulkDelete = (data: CollectionBulkDelete) => {
     if (data.collectionBulkDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       refetch();
@@ -150,6 +151,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const handleCollectionBulkPublish = (data: CollectionBulkPublish) => {
     if (data.collectionBulkPublish.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       refetch();

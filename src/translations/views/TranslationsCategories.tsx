@@ -50,6 +50,7 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
   const onUpdate = (data: UpdateCategoryTranslations) => {
     if (data.categoryTranslate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);

@@ -127,6 +127,7 @@ export const ServiceList: React.FC<ServiceListProps> = ({ params }) => {
   const onRemove = (data: ServiceDelete) => {
     if (data.serviceAccountDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();

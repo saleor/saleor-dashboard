@@ -134,6 +134,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const handleBulkCustomerDelete = (data: BulkRemoveCustomers) => {
     if (data.customerBulkDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       reset();

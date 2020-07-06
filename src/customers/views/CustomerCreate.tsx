@@ -19,6 +19,7 @@ export const CustomerCreate: React.FC<{}> = () => {
   const handleCreateCustomerSuccess = (data: CreateCustomer) => {
     if (data.customerCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Customer created"
         })

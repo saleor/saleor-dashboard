@@ -48,15 +48,18 @@ function makeMutation<TData, TVariables>(
           )
         ) {
           notify({
+            status: "error",
             text: intl.formatMessage(commonMessages.readOnly)
           });
         } else if (err.graphQLErrors.some(isJwtError)) {
           user.logout();
           notify({
+            status: "error",
             text: intl.formatMessage(commonMessages.sessionExpired)
           });
         } else {
           notify({
+            status: "error",
             text: intl.formatMessage(commonMessages.somethingWentWrong)
           });
         }

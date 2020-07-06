@@ -133,6 +133,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const handleProductTypeBulkDelete = (data: ProductTypeBulkDelete) => {
     if (data.productTypeBulkDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       reset();

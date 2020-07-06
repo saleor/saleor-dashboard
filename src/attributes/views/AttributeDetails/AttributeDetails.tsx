@@ -53,6 +53,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const handleDelete = (data: AttributeDelete) => {
     if (data.attributeDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Attribute deleted"
         })
@@ -63,6 +64,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const handleValueDelete = (data: AttributeValueDelete) => {
     if (data.attributeValueDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Value deleted",
           description: "attribute value deleted"
@@ -73,18 +75,25 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   };
   const handleUpdate = (data: AttributeUpdate) => {
     if (data.attributeUpdate.errors.length === 0) {
-      notify({ text: intl.formatMessage(commonMessages.savedChanges) });
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
     }
   };
   const handleValueUpdate = (data: AttributeValueUpdate) => {
     if (data.attributeValueUpdate.errors.length === 0) {
-      notify({ text: intl.formatMessage(commonMessages.savedChanges) });
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
       closeModal();
     }
   };
   const handleValueCreate = (data: AttributeValueCreate) => {
     if (data.attributeValueCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Added new value",
           description: "added new attribute value"
@@ -96,6 +105,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const handleValueReorderMutation = (data: AttributeValueReorder) => {
     if (data.attributeReorderValues.errors.length !== 0) {
       notify({
+        status: "error",
         text: getProductErrorMessage(
           data.attributeReorderValues.errors[0],
           intl

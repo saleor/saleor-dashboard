@@ -56,6 +56,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const handleChangePassword = (data: ChangeStaffPassword) => {
     if (data.passwordChange.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       closeModal();
@@ -87,6 +88,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberUpdate = (data: StaffMemberUpdate) => {
           if (!maybe(() => data.staffUpdate.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
@@ -94,6 +96,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberDelete = (data: StaffMemberDelete) => {
           if (!maybe(() => data.staffDelete.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(staffListUrl());
@@ -102,6 +105,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberAvatarUpdate = (data: StaffAvatarUpdate) => {
           if (!maybe(() => data.userAvatarUpdate.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
@@ -109,6 +113,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         const handleStaffMemberAvatarDelete = (data: StaffAvatarDelete) => {
           if (!maybe(() => data.userAvatarDelete.errors.length !== 0)) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
             navigate(staffMemberDetailsUrl(id));

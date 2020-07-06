@@ -38,6 +38,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
   const handleAddKeySuccess = (data: AuthorizationKeyAdd) => {
     if (data.authorizationKeyAdd.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(siteSettingsUrl());
@@ -46,10 +47,12 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
   const handleDeleteKeySuccess = (data: AuthorizationKeyDelete) => {
     if (data.authorizationKeyDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     } else {
       notify({
+        status: "error",
         text: intl.formatMessage(commonMessages.somethingWentWrong)
       });
     }
@@ -61,6 +64,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = ({ params }) => {
       data.shopAddressUpdate.errors.length === 0
     ) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }

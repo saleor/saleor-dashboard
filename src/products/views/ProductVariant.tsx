@@ -79,6 +79,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
         const handleDelete = () => {
           notify({
+            status: "success",
             text: intl.formatMessage({
               defaultMessage: "Variant removed"
             })
@@ -87,7 +88,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         };
         const handleUpdate = (data: VariantUpdate) => {
           if (data.productVariantUpdate.errors.length === 0) {
-            notify({ text: intl.formatMessage(commonMessages.savedChanges) });
+            notify({
+              status: "success",
+              text: intl.formatMessage(commonMessages.savedChanges)
+            });
           } else {
             setErrors(data.productVariantUpdate.errors);
           }

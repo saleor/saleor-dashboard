@@ -133,6 +133,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const handleStaffMemberAddSuccess = (data: StaffMemberAdd) => {
     if (data.staffCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(staffMemberDetailsUrl(data.staffCreate.user.id));

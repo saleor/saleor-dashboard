@@ -50,6 +50,7 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
   const onUpdate = (data: UpdateCollectionTranslations) => {
     if (data.collectionTranslate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate("?", true);

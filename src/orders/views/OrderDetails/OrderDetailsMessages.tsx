@@ -66,6 +66,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderCapture?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Payment successfully captured"
         })
@@ -77,6 +78,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderRefund?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Payment successfully refunded"
         })
@@ -88,6 +90,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderMarkAsPaid?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order marked as paid"
         })
@@ -99,6 +102,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderCancel?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order successfully cancelled"
         })
@@ -110,6 +114,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.draftOrderDelete?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order successfully cancelled"
         })
@@ -121,6 +126,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderVoid?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order payment successfully voided"
         })
@@ -132,6 +138,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderAddNote?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Note successfully added"
         })
@@ -142,6 +149,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderUpdate?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order successfully updated"
         })
@@ -152,6 +160,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.draftOrderUpdate?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order successfully updated"
         })
@@ -162,6 +171,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderUpdateShipping?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Shipping method successfully updated"
         })
@@ -173,6 +183,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.draftOrderLineDelete?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order line deleted"
         })
@@ -183,6 +194,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.draftOrderLinesCreate?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order line added"
         })
@@ -194,6 +206,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.draftOrderLineUpdate?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Order line updated"
         })
@@ -204,6 +217,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderFulfillmentCancel?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Fulfillment successfully cancelled"
         })
@@ -217,6 +231,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderFulfillmentUpdateTracking?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Fulfillment successfully updated"
         })
@@ -228,6 +243,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.draftOrderComplete?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Draft order successfully finalized"
         })

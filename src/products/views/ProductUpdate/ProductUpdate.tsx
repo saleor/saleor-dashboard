@@ -94,6 +94,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
         const handleDelete = () => {
           notify({
+            status: "success",
             text: intl.formatMessage({
               defaultMessage: "Product removed"
             })
@@ -103,6 +104,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         const handleUpdate = (data: ProductUpdateMutationResult) => {
           if (data.productUpdate.errors.length === 0) {
             notify({
+              status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
           }
@@ -115,12 +117,14 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           );
           if (imageError) {
             notify({
+              status: "error",
               text: intl.formatMessage(commonMessages.somethingWentWrong)
             });
           }
         };
         const handleImageDeleteSuccess = () =>
           notify({
+            status: "success",
             text: intl.formatMessage(commonMessages.savedChanges)
           });
         const handleVariantAdd = () => navigate(productVariantAddUrl(id));

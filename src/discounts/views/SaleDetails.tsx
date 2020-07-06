@@ -99,6 +99,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   const handleSaleDelete = (data: SaleDelete) => {
     if (data.saleDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Removed sale"
         })
@@ -110,6 +111,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   const handleSaleUpdate = (data: SaleUpdate) => {
     if (data.saleUpdate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }

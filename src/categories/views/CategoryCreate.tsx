@@ -24,6 +24,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
   const handleSuccess = (data: CategoryCreate) => {
     if (data.categoryCreate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage({
           defaultMessage: "Category created"
         })

@@ -243,6 +243,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               if (data.productBulkDelete.errors.length === 0) {
                 closeModal();
                 notify({
+                  status: "success",
                   text: intl.formatMessage(commonMessages.savedChanges)
                 });
                 reset();
@@ -254,6 +255,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               if (data.productBulkPublish.errors.length === 0) {
                 closeModal();
                 notify({
+                  status: "success",
                   text: intl.formatMessage(commonMessages.savedChanges)
                 });
                 reset();

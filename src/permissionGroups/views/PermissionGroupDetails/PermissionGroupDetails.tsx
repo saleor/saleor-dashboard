@@ -66,6 +66,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   const handleUpdateSuccess = (data: PermissionGroupUpdate) => {
     if (data.permissionGroupUpdate.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       refetch();
