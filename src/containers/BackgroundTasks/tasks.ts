@@ -1,17 +1,19 @@
 import { QueuedTask, TaskData, TaskStatus } from "./types";
 
-export async function handleTask(task: QueuedTask): Promise<boolean> {
-  let ok = false;
+export async function handleTask(task: QueuedTask): Promise<TaskStatus> {
+  let status = TaskStatus.PENDING;
   try {
-    ok = await task.handle();
-    if (ok) {
-      task.onCompleted();
+    status = await task.handle();
+    if (status !== TaskStatus.PENDING) {
+      task.onCompleted({
+        status
+      });
     }
   } catch (error) {
     task.onError(error);
   }
 
-  return ok;
+  return status;
 }
 
 export function handleError(error: Error) {
@@ -28,7 +30,6 @@ export function queueCustom(
     .forEach(field => {
       throw new Error(`${field} is required when creating custom task`);
     });
-
   tasks.current = [
     ...tasks.current,
     {
