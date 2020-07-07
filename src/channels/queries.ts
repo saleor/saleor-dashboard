@@ -5,6 +5,15 @@ import gql from "graphql-tag";
 import { Channel, ChannelVariables } from "./types/Channel";
 import { Channels } from "./types/Channels";
 
+export const channelDetailsFragment = gql`
+  fragment ChannelDetailsFragment on Channel {
+    id
+    name
+    slug
+    currencyCode
+  }
+`;
+
 export const channelsList = gql`
   ${channelDetailsFragment}
   query Channels {
