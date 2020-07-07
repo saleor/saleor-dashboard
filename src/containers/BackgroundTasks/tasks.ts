@@ -99,6 +99,7 @@ export function queueInvoiceGenerate(
       onCompleted: data =>
         data.status === TaskStatus.SUCCESS
           ? notify({
+              status: "success",
               text: intl.formatMessage(messages.invoiceGenerateFinishedText),
               title: intl.formatMessage(messages.invoiceGenerateFinishedTitle)
             })

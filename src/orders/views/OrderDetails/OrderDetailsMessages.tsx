@@ -276,6 +276,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.invoiceRequest?.errors;
     if (errs.length === 0) {
       pushMessage({
+        status: "success",
         text: intl.formatMessage(messages.invoiceGenerateFinishedText),
         title: intl.formatMessage(messages.invoiceGenerateFinishedTitle)
       });

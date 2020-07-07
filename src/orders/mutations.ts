@@ -5,7 +5,8 @@ import {
 } from "@saleor/fragments/errors";
 import {
   fragmentOrderDetails,
-  fragmentOrderEvent
+  fragmentOrderEvent,
+  invoiceFragment
 } from "@saleor/fragments/orders";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
@@ -489,12 +490,6 @@ const invoiceEmailSendMutation = gql`
       }
       invoice {
         ...InvoiceFragment
-      }
-      order {
-        id
-        invoices {
-          ...InvoiceFragment
-        }
       }
     }
   }
