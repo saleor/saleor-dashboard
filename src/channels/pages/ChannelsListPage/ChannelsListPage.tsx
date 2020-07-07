@@ -63,7 +63,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
       </PageHeader>
       <Card>
         <div className={classes.search}>
-          <Tabs value={0} indicatorColor="primary" className={classes.tabsRoot}>
+          <Tabs value={0} indicatorColor="primary">
             <FilterTab
               selected
               onClick={() => null}
@@ -98,6 +98,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                 <TableRow
                   hover={!!channel}
                   key={channel ? channel.id : "skeleton"}
+                  className={classes.tableRow}
                   onClick={!!channel ? onRowClick(channel.id) : undefined}
                 >
                   <TableCell className={classes.colName}>
