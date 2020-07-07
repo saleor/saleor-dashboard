@@ -68,16 +68,16 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Fulfillment created",
       description: "event"
     }),
+    [WebhookEventTypeEnum.INVOICE_DELETED]: intl.formatMessage({
+      defaultMessage: "Invoice deleted",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.INVOICE_REQUESTED]: intl.formatMessage({
       defaultMessage: "Invoice requested",
       description: "event"
     }),
     [WebhookEventTypeEnum.INVOICE_SENT]: intl.formatMessage({
       defaultMessage: "Invoice sent",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.INVOICE_DELETED]: intl.formatMessage({
-      defaultMessage: "Invoice deleted",
       description: "event"
     })
   };
