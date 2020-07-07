@@ -5,10 +5,10 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import React from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
-import { ChannelStatus } from "../../components/ChannelStatus";
+import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
 import { ChannelErrorFragment } from "../../types/ChannelErrorFragment";
 
-interface ChannelCreatePageProps {
+export interface ChannelCreatePageProps {
   disabled: boolean;
   errors: ChannelErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
