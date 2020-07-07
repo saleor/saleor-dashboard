@@ -26,7 +26,7 @@ export interface FormData {
 export interface ChannelFormProps {
   data: FormData;
   disabled: boolean;
-  errors: any;
+  errors: ChannelErrorFragment[];
   onChange: FormChange;
 }
 
