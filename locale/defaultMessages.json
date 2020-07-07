@@ -1468,6 +1468,10 @@
     "context": "invoice generating has finished, header",
     "string": "Invoice Generated"
   },
+  "src_dot_containers_dot_BackgroundTasks_dot_invoiceGenerationFailedTitle": {
+    "context": "dialog header, title",
+    "string": "Invoice Generation"
+  },
   "src_dot_create": {
     "context": "button",
     "string": "Create"
