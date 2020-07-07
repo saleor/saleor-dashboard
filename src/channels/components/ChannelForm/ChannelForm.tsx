@@ -2,6 +2,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -25,6 +26,7 @@ export interface FormData {
 export interface ChannelFormProps {
   data: FormData;
   disabled: boolean;
+  editableCurrency?: boolean;
   errors: ChannelErrorFragment[];
   onChange: FormChange;
 }
@@ -32,6 +34,7 @@ export interface ChannelFormProps {
 export const ChannelForm: React.FC<ChannelFormProps> = ({
   data,
   disabled,
+  editableCurrency,
   errors,
   onChange
 }) => {
@@ -111,19 +114,34 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           })}
         />
         <CardContent>
-          <TextField
-            error={!!formErrors.currencyCode}
-            helperText={getChannelsErrorMessage(formErrors?.currencyCode, intl)}
-            disabled={disabled}
-            fullWidth
-            label={intl.formatMessage({
-              defaultMessage: "Currency",
-              description: "channel currency"
-            })}
-            name="currencyCode"
-            value={data.currencyCode}
-            onChange={onChange}
-          />
+          {editableCurrency ? (
+            <TextField
+              error={!!formErrors.currencyCode}
+              helperText={getChannelsErrorMessage(
+                formErrors?.currencyCode,
+                intl
+              )}
+              disabled={disabled}
+              fullWidth
+              label={intl.formatMessage({
+                defaultMessage: "Currency",
+                description: "channel currency"
+              })}
+              name="currencyCode"
+              value={data.currencyCode}
+              onChange={onChange}
+            />
+          ) : (
+            <>
+              <Typography variant="caption" className={classes.label}>
+                <FormattedMessage
+                  defaultMessage="Selected Currency"
+                  description="selected currency"
+                />
+              </Typography>
+              <Typography>{data.currencyCode}</Typography>
+            </>
+          )}
         </CardContent>
       </Card>
     </>

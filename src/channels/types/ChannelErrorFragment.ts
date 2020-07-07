@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ChannelErrorCode } from "../../types/globalTypes";
+import { ChannelErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ChannelErrorFragment
