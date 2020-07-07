@@ -252,7 +252,7 @@ const Routes: React.FC = () => {
                 component={WarehouseSection}
               />
               <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                permissions={[PermissionEnum.MANAGE_CHANNELS]}
                 path={channelsSection}
                 component={ChannelsSection}
               />
