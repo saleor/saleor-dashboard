@@ -1,3 +1,4 @@
+import { AttributeTranslationFragment } from "@saleor/fragments/types/AttributeTranslationFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
   createPaginationState
@@ -19,7 +20,6 @@ import {
   TypedSaleTranslations,
   TypedVoucherTranslations
 } from "../queries";
-import { AttributeTranslationFragment } from "../types/AttributeTranslationFragment";
 import {
   languageEntitiesUrl,
   LanguageEntitiesUrlQueryParams,

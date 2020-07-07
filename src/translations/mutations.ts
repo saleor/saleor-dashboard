@@ -1,6 +1,3 @@
-import gql from "graphql-tag";
-
-import { TypedMutation } from "../mutations";
 import {
   categoryTranslationFragment,
   collectionTranslationFragment,
@@ -8,7 +5,10 @@ import {
   productTranslationFragment,
   saleTranslationFragment,
   voucherTranslationFragment
-} from "./queries";
+} from "@saleor/fragments/translations";
+import gql from "graphql-tag";
+
+import { TypedMutation } from "../mutations";
 import {
   UpdateAttributeTranslations,
   UpdateAttributeTranslationsVariables

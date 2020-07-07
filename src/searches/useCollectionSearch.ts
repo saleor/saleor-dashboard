@@ -1,5 +1,5 @@
+import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
-import { pageInfoFragment } from "@saleor/queries";
 import gql from "graphql-tag";
 
 import {

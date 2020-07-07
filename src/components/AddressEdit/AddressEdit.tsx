@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { AddressTypeInput } from "@saleor/customers/types";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import getOrderErrorMessage from "@saleor/utils/errors/order";

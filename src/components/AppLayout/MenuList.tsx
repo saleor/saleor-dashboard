@@ -1,6 +1,7 @@
 import configureIcon from "@assets/images/menu-configure-icon.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { User } from "@saleor/fragments/types/User";
 import useTheme from "@saleor/hooks/useTheme";
 import { sectionNames } from "@saleor/intl";
 import classNames from "classnames";
@@ -9,7 +10,6 @@ import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 import { matchPath } from "react-router";
 
-import { User } from "../../auth/types/User";
 import {
   configurationMenuUrl,
   createConfigurationMenu

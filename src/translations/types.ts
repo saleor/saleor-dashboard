@@ -1,5 +1,5 @@
-import { ConfirmButtonTransitionState } from "../../components/ConfirmButton";
-import { ShopInfo_shop_languages } from "../../components/Shop/types/ShopInfo";
+import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 
 export interface TranslationsEntitiesPageProps {
   activeField: string;

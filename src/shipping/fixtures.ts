@@ -1,6 +1,7 @@
+import { ShippingZoneDetailsFragment } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
+import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
+
 import { ShippingMethodTypeEnum } from "../types/globalTypes";
-import { ShippingZoneDetailsFragment } from "./types/ShippingZoneDetailsFragment";
-import { ShippingZoneFragment } from "./types/ShippingZoneFragment";
 
 export const shippingZones: ShippingZoneFragment[] = [
   {

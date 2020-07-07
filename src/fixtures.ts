@@ -1,5 +1,5 @@
-import { User_userPermissions } from "./auth/types/User";
 import { ShopInfo_shop_permissions } from "./components/Shop/types/ShopInfo";
+import { User_userPermissions } from "./fragments/types/User";
 import {
   FetchMoreProps,
   FilterPageProps,

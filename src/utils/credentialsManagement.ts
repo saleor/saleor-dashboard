@@ -1,4 +1,4 @@
-import { User } from "@saleor/auth/types/User";
+import { User } from "@saleor/fragments/types/User";
 
 export const isSupported =
   navigator.credentials && navigator.credentials.preventSilentAccess;

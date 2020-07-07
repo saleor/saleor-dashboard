@@ -1,8 +1,8 @@
-import { productErrorFragment } from "@saleor/attributes/mutations";
+import { categoryDetailsFragment } from "@saleor/fragments/categories";
+import { productErrorFragment } from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import { categoryDetailsFragment } from "./queries";
 import {
   CategoryBulkDelete,
   CategoryBulkDeleteVariables

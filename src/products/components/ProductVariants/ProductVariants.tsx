@@ -15,6 +15,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
+import { ProductVariant_costPrice } from "@saleor/fragments/types/ProductVariant";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -24,7 +25,6 @@ import {
   ProductDetails_product_variants,
   ProductDetails_product_variants_stocks_warehouse
 } from "../../types/ProductDetails";
-import { ProductVariant_costPrice } from "../../types/ProductVariant";
 
 function getWarehouseChoices(
   variants: ProductDetails_product_variants[],

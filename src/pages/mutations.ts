@@ -1,7 +1,8 @@
+import { pageErrorFragment } from "@saleor/fragments/errors";
+import { pageDetailsFragment } from "@saleor/fragments/pages";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
-import { pageDetailsFragment } from "./queries";
 import {
   PageBulkPublish,
   PageBulkPublishVariables
@@ -13,13 +14,6 @@ import {
 import { PageCreate, PageCreateVariables } from "./types/PageCreate";
 import { PageRemove, PageRemoveVariables } from "./types/PageRemove";
 import { PageUpdate, PageUpdateVariables } from "./types/PageUpdate";
-
-const pageErrorFragment = gql`
-  fragment PageErrorFragment on PageError {
-    code
-    field
-  }
-`;
 
 const pageCreate = gql`
   ${pageDetailsFragment}

@@ -1,4 +1,5 @@
 import { DEMO_MODE } from "@saleor/config";
+import { User } from "@saleor/fragments/types/User";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { maybe } from "@saleor/misc";
 import {
@@ -18,7 +19,6 @@ import {
 } from "./mutations";
 import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
-import { User } from "./types/User";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 import {
   displayDemoMessage,

@@ -1,5 +1,6 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import {
@@ -14,7 +15,6 @@ import { RawDraftContentState } from "draft-js";
 import { ProductAttributeInput } from "../components/ProductAttributes";
 import { ProductStockInput } from "../components/ProductStocks";
 import { VariantAttributeInput } from "../components/ProductVariantAttributes";
-import { ProductVariant } from "../types/ProductVariant";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 
 export interface Collection {

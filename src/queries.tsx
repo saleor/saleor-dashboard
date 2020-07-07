@@ -1,6 +1,5 @@
 import { ApolloQueryResult } from "apollo-client";
 import { DocumentNode } from "graphql";
-import gql from "graphql-tag";
 import React from "react";
 import { Query, QueryResult } from "react-apollo";
 import { useIntl } from "react-intl";
@@ -163,12 +162,3 @@ export function TypedQuery<TData, TVariables>(
     );
   };
 }
-
-export const pageInfoFragment = gql`
-  fragment PageInfoFragment on PageInfo {
-    endCursor
-    hasNextPage
-    hasPreviousPage
-    startCursor
-  }
-`;

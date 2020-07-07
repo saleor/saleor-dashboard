@@ -1,12 +1,13 @@
+import { fragmentAddress } from "@saleor/fragments/address";
+import { orderErrorFragment } from "@saleor/fragments/errors";
+import {
+  fragmentOrderDetails,
+  fragmentOrderEvent
+} from "@saleor/fragments/orders";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
-import {
-  fragmentAddress,
-  fragmentOrderDetails,
-  fragmentOrderEvent
-} from "./queries";
 import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
 import { OrderAddNote, OrderAddNoteVariables } from "./types/OrderAddNote";
 import { OrderCancel, OrderCancelVariables } from "./types/OrderCancel";
@@ -56,13 +57,6 @@ import {
 } from "./types/OrderShippingMethodUpdate";
 import { OrderUpdate, OrderUpdateVariables } from "./types/OrderUpdate";
 import { OrderVoid, OrderVoidVariables } from "./types/OrderVoid";
-
-export const orderErrorFragment = gql`
-  fragment OrderErrorFragment on OrderError {
-    code
-    field
-  }
-`;
 
 const orderCancelMutation = gql`
   ${fragmentOrderDetails}

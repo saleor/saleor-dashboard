@@ -1,7 +1,7 @@
 import Typography from "@material-ui/core/Typography";
+import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
-import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getStaffErrorMessage from "@saleor/utils/errors/staff";

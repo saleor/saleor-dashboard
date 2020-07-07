@@ -1,6 +1,6 @@
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { BulkProductErrorFragment } from "@saleor/fragments/types/BulkProductErrorFragment";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { BulkProductErrorFragment } from "@saleor/products/types/BulkProductErrorFragment";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 

@@ -19,6 +19,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
@@ -31,7 +32,6 @@ import {
   OrderFulfillStockInput
 } from "@saleor/types/globalTypes";
 import { update } from "@saleor/utils/lists";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -1,7 +1,7 @@
+import { productTypeDetailsFragment } from "@saleor/fragments/productTypes";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
-import { productTypeDetailsFragment } from "./queries";
 import {
   AssignAttribute,
   AssignAttributeVariables

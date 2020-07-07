@@ -6,8 +6,8 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
 import { sectionNames } from "@saleor/intl";
-import { MenuErrorFragment } from "@saleor/navigation/types/MenuErrorFragment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

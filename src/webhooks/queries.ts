@@ -1,3 +1,4 @@
+import { webhooksFragment } from "@saleor/fragments/webhooks";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
@@ -7,25 +8,6 @@ import {
   WebhookDetailsVariables
 } from "./types/WebhookDetails";
 import { Webhooks, WebhooksVariables } from "./types/Webhooks";
-
-export const webhooksFragment = gql`
-  fragment WebhookFragment on Webhook {
-    id
-    name
-    isActive
-    serviceAccount {
-      id
-      name
-    }
-  }
-`;
-
-export const webhooksDetailsFragment = gql`
-  ${webhooksFragment}
-  fragment WebhooksDetailsFragment on Webhook {
-    ...WebhookFragment
-  }
-`;
 
 const webhooksList = gql`
   ${webhooksFragment}

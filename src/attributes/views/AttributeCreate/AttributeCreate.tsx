@@ -1,4 +1,4 @@
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { maybe } from "@saleor/misc";

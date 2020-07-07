@@ -6,6 +6,8 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, {
   FormsetChange,
   FormsetData
@@ -15,12 +17,10 @@ import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import { diff } from "fast-array-diff";
 import React from "react";
 
 import { maybe } from "../../../misc";
-import { ProductVariant } from "../../types/ProductVariant";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductVariantAttributes, {
   VariantAttributeInputData

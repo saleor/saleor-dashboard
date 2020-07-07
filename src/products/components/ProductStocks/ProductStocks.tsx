@@ -21,13 +21,13 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import { ICONBUTTON_SIZE } from "@saleor/theme";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

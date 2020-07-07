@@ -13,13 +13,12 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ICONBUTTON_SIZE } from "@saleor/theme";
 import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { ShippingZoneFragment } from "../../types/ShippingZoneFragment";
 
 export interface ShippingZonesListProps extends ListProps, ListActions {
   shippingZones: ShippingZoneFragment[];

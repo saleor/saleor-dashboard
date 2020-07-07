@@ -5,10 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
+import { ProductImageFragment } from "@saleor/fragments/types/ProductImageFragment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { ProductImage } from "../../types/ProductImage";
 
 const useStyles = makeStyles(
   theme => ({
@@ -43,7 +42,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductVariantImagesProps {
-  images?: ProductImage[];
+  images?: ProductImageFragment[];
   placeholderImage?: string;
   disabled: boolean;
   onImageAdd();
