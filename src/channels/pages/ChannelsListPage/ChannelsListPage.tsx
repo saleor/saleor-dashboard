@@ -11,21 +11,19 @@ import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import SearchInput from "@saleor/components/SearchBar/SearchInput";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { FilterTab } from "@saleor/components/TableFilter";
 import { sectionNames } from "@saleor/intl";
 import { renderCollection, stopPropagation } from "@saleor/misc";
-import { SearchPageProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Channels_channels } from "../../types/Channels";
 import { useStyles } from "./styles";
 
-interface ChannelsListPageProps extends SearchPageProps {
-  channelsList: Channels_channels[];
+export interface ChannelsListPageProps {
+  channelsList: Channels_channels[] | [];
   navigateToChannelCreate: () => void;
   disabled: boolean;
   onBack: () => void;
@@ -37,15 +35,14 @@ const numberOfColumns = 2;
 
 export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   channelsList,
-  initialSearch,
   navigateToChannelCreate,
   onBack,
   onRemove,
-  onRowClick,
-  onSearchChange
+  onRowClick
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
+
   return (
     <Container>
       <AppHeader onBack={onBack}>
@@ -76,13 +73,6 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
               })}
             />
           </Tabs>
-          <SearchInput
-            initialSearch={initialSearch}
-            onSearchChange={onSearchChange}
-            placeholder={intl.formatMessage({
-              defaultMessage: "Search Channels"
-            })}
-          />
         </div>
         <ResponsiveTable>
           <TableHead>
