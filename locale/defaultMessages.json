@@ -6,6 +6,9 @@
   "configurationMenuAttributes": {
     "string": "Determine attributes used to create product types"
   },
+  "configurationMenuChannels": {
+    "string": "Define and manage your sales channels"
+  },
   "configurationMenuNavigation": {
     "string": "Define how users can navigate through your store"
   },
@@ -1150,6 +1153,89 @@
     "context": "dialog title",
     "string": "Delete categories"
   },
+  "src_dot_channels": {
+    "context": "channels section name",
+    "string": "Channels"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_1223259680": {
+    "context": "channel settings",
+    "string": "Channel Settings"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_2864204643": {
+    "context": "button",
+    "string": "Copied"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_3478065224": {
+    "context": "channel slug",
+    "string": "Slug"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_3511613983": {
+    "context": "channel name",
+    "string": "Channel Name"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_383867403": {
+    "context": "button",
+    "string": "Copy"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_3873626327": {
+    "context": "currency title",
+    "string": "Currency"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_4053872131": {
+    "context": "channel currency",
+    "string": "Select Currency"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_1004218338": {
+    "context": "inactive",
+    "string": "Inactive"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_1756106276": {
+    "context": "status",
+    "string": "Status"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_1782042241": {
+    "context": "deactivate",
+    "string": "Deactivate"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_2605883031": {
+    "context": "channel status title",
+    "string": "Channel Status"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_3247064221": {
+    "context": "active",
+    "string": "Active"
+  },
+  "src_dot_channels_dot_components_dot_ChannelStatus_dot_3865193889": {
+    "context": "activate",
+    "string": "Activate"
+  },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_3511613983": {
+    "context": "channel name",
+    "string": "Channel Name"
+  },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_4097816011": {
+    "string": "No channels found"
+  },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_4190792473": {
+    "context": "table actions",
+    "string": "Actions"
+  },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_4224047662": {
+    "context": "button",
+    "string": "Create Channel"
+  },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_706346085": {
+    "context": "tab name",
+    "string": "All Channels"
+  },
+  "src_dot_channels_dot_views_dot_ChannelCreate_dot_4169662653": {
+    "context": "channel create",
+    "string": "New Channel"
+  },
+  "src_dot_channels_dot_views_dot_ChannelCreate_dot_4224047662": {
+    "context": "window title",
+    "string": "Create Channel"
+  },
   "src_dot_clear": {
     "context": "button",
     "string": "Clear"
@@ -1925,6 +2011,9 @@
   "src_dot_configuration_dot_3655543906": {
     "string": "Product Settings"
   },
+  "src_dot_configuration_dot_887806978": {
+    "string": "Multichannel"
+  },
   "src_dot_confirm": {
     "context": "button",
     "string": "Confirm"
@@ -2695,6 +2784,10 @@
   },
   "src_dot_endHour": {
     "string": "End Hour"
+  },
+  "src_dot_exchangeRates": {
+    "context": "Manage and Update your warehouse information",
+    "string": "Exchange Rates"
   },
   "src_dot_firstName": {
     "string": "First Name"
@@ -5628,6 +5721,12 @@
   "src_dot_utils_dot_errors_dot_captureInactive": {
     "context": "error message",
     "string": "Only pre-authorized payments can be captured"
+  },
+  "src_dot_utils_dot_errors_dot_channelAlreadyExist": {
+    "string": "This channel has already been created"
+  },
+  "src_dot_utils_dot_errors_dot_channelUnique": {
+    "string": "Slug must be unique"
   },
   "src_dot_utils_dot_errors_dot_duplicatedInputItem": {
     "string": "Cannot add and remove group the same time"
