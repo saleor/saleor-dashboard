@@ -1,4 +1,3 @@
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -9,6 +8,8 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -19,7 +20,6 @@ import { SearchCollections_search_edges_node } from "@saleor/searches/types/Sear
 import { FetchMoreProps, ListActions } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import { convertFromRaw, RawDraftContentState } from "draft-js";
 import { diff } from "fast-array-diff";
 import React from "react";

@@ -1,20 +1,17 @@
+import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import {
+  serviceDetailsFragment,
+  serviceFragment
+} from "@saleor/fragments/services";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { pageInfoFragment, TypedQuery } from "../queries";
+import { TypedQuery } from "../queries";
 import {
   ServiceDetails,
   ServiceDetailsVariables
 } from "./types/ServiceDetails";
 import { ServiceList, ServiceListVariables } from "./types/ServiceList";
-
-export const serviceFragment = gql`
-  fragment ServiceFragment on ServiceAccount {
-    id
-    name
-    isActive
-  }
-`;
 
 const serviceList = gql`
   ${pageInfoFragment}
@@ -49,22 +46,6 @@ const serviceList = gql`
 export const useServiceListQuery = makeQuery<ServiceList, ServiceListVariables>(
   serviceList
 );
-
-export const serviceDetailsFragment = gql`
-  ${serviceFragment}
-  fragment ServiceDetailsFragment on ServiceAccount {
-    ...ServiceFragment
-    permissions {
-      code
-      name
-    }
-    tokens {
-      id
-      name
-      authToken
-    }
-  }
-`;
 
 const serviceDetails = gql`
   ${serviceDetailsFragment}

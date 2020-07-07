@@ -1,4 +1,5 @@
-import { accountErrorFragment } from "@saleor/customers/mutations";
+import { fragmentUser } from "@saleor/fragments/auth";
+import { accountErrorFragment } from "@saleor/fragments/errors";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
@@ -10,22 +11,6 @@ import {
 import { SetPassword, SetPasswordVariables } from "./types/SetPassword";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
-
-export const fragmentUser = gql`
-  fragment User on User {
-    id
-    email
-    firstName
-    lastName
-    userPermissions {
-      code
-      name
-    }
-    avatar {
-      url
-    }
-  }
-`;
 
 export const tokenAuthMutation = gql`
   ${fragmentUser}

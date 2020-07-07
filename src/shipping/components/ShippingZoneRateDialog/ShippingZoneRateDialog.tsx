@@ -14,9 +14,10 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
+import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import { ShippingZoneDetailsFragment_shippingMethods } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
@@ -24,7 +25,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
-import { ShippingZoneDetailsFragment_shippingMethods } from "../../types/ShippingZoneDetailsFragment";
 import {
   getShippingPriceRateErrorMessage,
   getShippingWeightRateErrorMessage

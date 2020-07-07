@@ -1,4 +1,3 @@
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -7,6 +6,7 @@ import Form from "@saleor/components/Form";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
 import React from "react";

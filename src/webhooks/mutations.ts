@@ -1,17 +1,11 @@
+import { webhookErrorFragment } from "@saleor/fragments/errors";
+import { webhooksDetailsFragment } from "@saleor/fragments/webhooks";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
-import { webhooksDetailsFragment } from "./queries";
 import { WebhookCreate, WebhookCreateVariables } from "./types/WebhookCreate";
 import { WebhookDelete, WebhookDeleteVariables } from "./types/WebhookDelete";
 import { WebhookUpdate, WebhookUpdateVariables } from "./types/WebhookUpdate";
-
-const webhookErrorFragment = gql`
-  fragment WebhookErrorFragment on WebhookError {
-    code
-    field
-  }
-`;
 
 const webhookCreate = gql`
   ${webhooksDetailsFragment}

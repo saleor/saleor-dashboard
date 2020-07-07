@@ -1,3 +1,7 @@
+import {
+  ProductTypeDetailsFragment,
+  ProductTypeDetailsFragment_productAttributes
+} from "@saleor/fragments/types/ProductTypeDetailsFragment";
 import { AttributeTypeEnum, ReorderInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { MutationFunction } from "react-apollo";
@@ -24,10 +28,6 @@ import {
   ProductTypeDeleteVariables
 } from "../types/ProductTypeDelete";
 import {
-  ProductTypeDetailsFragment,
-  ProductTypeDetailsFragment_productAttributes
-} from "../types/ProductTypeDetailsFragment";
-import {
   ProductTypeUpdate,
   ProductTypeUpdateVariables
 } from "../types/ProductTypeUpdate";
@@ -37,9 +37,7 @@ import {
 } from "../types/UnassignAttribute";
 
 function moveAttribute(
-  attributes:
-    | ProductTypeDetailsFragment_productAttributes[]
-    | ProductTypeDetailsFragment_productAttributes[],
+  attributes: ProductTypeDetailsFragment_productAttributes[],
   move: ReorderInput
 ) {
   const attributeIndex = attributes.findIndex(

@@ -1,11 +1,11 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
+import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";

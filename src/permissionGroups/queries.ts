@@ -1,8 +1,11 @@
+import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import {
+  permissionGroupDetailsFragment,
+  permissionGroupFragment
+} from "@saleor/fragments/permissionGroups";
 import makeQuery from "@saleor/hooks/makeQuery";
-import { staffMemberFragment } from "@saleor/staff/queries";
 import gql from "graphql-tag";
 
-import { pageInfoFragment } from "../queries";
 import {
   PermissionGroupDetails,
   PermissionGroupDetailsVariables
@@ -11,40 +14,6 @@ import {
   PermissionGroupList,
   PermissionGroupListVariables
 } from "./types/PermissionGroupList";
-export const permissionGroupFragment = gql`
-  fragment PermissionGroupFragment on Group {
-    id
-    name
-    userCanManage
-    users {
-      id
-      firstName
-      lastName
-    }
-  }
-`;
-
-export const permissionFragment = gql`
-  fragment PermissionFragment on Permission {
-    code
-    name
-  }
-`;
-
-export const permissionGroupDetailsFragment = gql`
-  ${permissionGroupFragment}
-  ${permissionFragment}
-  ${staffMemberFragment}
-  fragment PermissionGroupDetailsFragment on Group {
-    ...PermissionGroupFragment
-    permissions {
-      ...PermissionFragment
-    }
-    users {
-      ...StaffMemberFragment
-    }
-  }
-`;
 
 export const permissionGroupListQuery = gql`
   ${pageInfoFragment}

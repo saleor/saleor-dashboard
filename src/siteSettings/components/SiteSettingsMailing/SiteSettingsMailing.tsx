@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import { ShopErrorFragment } from "@saleor/siteSettings/types/ShopErrorFragment";
+import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getShopErrorMessage from "@saleor/utils/errors/shop";
 import React from "react";

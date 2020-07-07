@@ -1,7 +1,7 @@
+import { countryFragment, shopTaxesFragment } from "@saleor/fragments/taxes";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
-import { countryFragment, shopTaxesFragment } from "./queries";
 import { FetchTaxes } from "./types/FetchTaxes";
 import {
   UpdateTaxSettings,

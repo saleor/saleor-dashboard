@@ -1,9 +1,9 @@
+import { User } from "@saleor/fragments/types/User";
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
 import LoginLoading from "./components/LoginLoading";
-import { User } from "./types/User";
 import {
   newPasswordPath,
   passwordResetPath,

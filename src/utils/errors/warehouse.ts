@@ -1,6 +1,6 @@
+import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { WarehouseErrorCode } from "@saleor/types/globalTypes";
-import { WarehouseErrorFragment } from "@saleor/warehouses/types/WarehouseErrorFragment";
 import { defineMessages, IntlShape } from "react-intl";
 
 import commonErrorMessages from "./common";

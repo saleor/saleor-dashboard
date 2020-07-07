@@ -1,9 +1,9 @@
 import { MutationResult } from "react-apollo";
 
-import { User_userPermissions } from "./auth/types/User";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
 import { IFilter } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
+import { User_userPermissions } from "./fragments/types/User";
 
 export interface UserError {
   field: string | null;

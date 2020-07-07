@@ -1,11 +1,14 @@
-import { productErrorFragment } from "@saleor/attributes/mutations";
-import gql from "graphql-tag";
-
-import { TypedMutation } from "../mutations";
 import {
   collectionDetailsFragment,
   collectionProductFragment
-} from "./queries";
+} from "@saleor/fragments/collections";
+import {
+  productErrorFragment,
+  shopErrorFragment
+} from "@saleor/fragments/errors";
+import gql from "graphql-tag";
+
+import { TypedMutation } from "../mutations";
 import {
   CollectionAssignProduct,
   CollectionAssignProductVariables
@@ -39,13 +42,6 @@ import {
   UnassignCollectionProductVariables
 } from "./types/UnassignCollectionProduct";
 
-export const ShopErrorFragment = gql`
-  fragment ShopErrorFragment on ShopError {
-    code
-    field
-  }
-`;
-
 const collectionUpdate = gql`
   ${collectionDetailsFragment}
   ${productErrorFragment}
@@ -68,7 +64,7 @@ export const TypedCollectionUpdateMutation = TypedMutation<
 const collectionUpdateWithHomepage = gql`
   ${collectionDetailsFragment}
   ${productErrorFragment}
-  ${ShopErrorFragment}
+  ${shopErrorFragment}
   mutation CollectionUpdateWithHomepage(
     $id: ID!
     $input: CollectionInput!

@@ -3,7 +3,7 @@ import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
-import { DiscountErrorFragment } from "@saleor/discounts/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";

@@ -3,7 +3,7 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";

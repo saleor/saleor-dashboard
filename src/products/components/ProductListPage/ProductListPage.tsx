@@ -10,9 +10,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import { ProductListColumns } from "@saleor/config";
 import { sectionNames } from "@saleor/intl";
 import {
-  AvailableInGridAttributes_availableInGrid_edges_node,
-  AvailableInGridAttributes_grid_edges_node
-} from "@saleor/products/types/AvailableInGridAttributes";
+  GridAttributes_availableInGrid_edges_node,
+  GridAttributes_grid_edges_node
+} from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import {
   FetchMoreProps,
@@ -39,9 +39,9 @@ export interface ProductListPageProps
     FetchMoreProps,
     SortPage<ProductListUrlSortField> {
   activeAttributeSortId: string;
-  availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
+  availableInGridAttributes: GridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
-  gridAttributes: AvailableInGridAttributes_grid_edges_node[];
+  gridAttributes: GridAttributes_grid_edges_node[];
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
 }

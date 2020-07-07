@@ -12,9 +12,9 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { isSelected } from "@saleor/utils/lists";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,9 +1,17 @@
-import { productErrorFragment } from "@saleor/attributes/mutations";
+import {
+  bulkProductErrorFragment,
+  bulkStockErrorFragment,
+  productErrorFragment,
+  stockErrorFragment
+} from "@saleor/fragments/errors";
+import {
+  fragmentVariant,
+  productFragmentDetails
+} from "@saleor/fragments/products";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
-import { fragmentVariant, productFragmentDetails } from "./queries";
 import {
   productBulkDelete,
   productBulkDeleteVariables
@@ -54,27 +62,6 @@ import {
   VariantImageUnassignVariables
 } from "./types/VariantImageUnassign";
 import { VariantUpdate, VariantUpdateVariables } from "./types/VariantUpdate";
-
-export const bulkProductErrorFragment = gql`
-  fragment BulkProductErrorFragment on BulkProductError {
-    field
-    code
-    index
-  }
-`;
-const bulkStockErrorFragment = gql`
-  fragment BulkStockErrorFragment on BulkStockError {
-    code
-    field
-    index
-  }
-`;
-const stockErrorFragment = gql`
-  fragment StockErrorFragment on StockError {
-    code
-    field
-  }
-`;
 
 export const productImageCreateMutation = gql`
   ${productErrorFragment}

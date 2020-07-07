@@ -9,8 +9,12 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import {
+  ShippingZoneDetailsFragment,
+  ShippingZoneDetailsFragment_warehouses
+} from "@saleor/fragments/types/ShippingZoneDetailsFragment";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { ShippingErrorFragment } from "@saleor/shipping/types/ShippingErrorFragment";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -18,10 +22,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getStringOrPlaceholder } from "../../../misc";
 import { FetchMoreProps, SearchProps } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
-import {
-  ShippingZoneDetailsFragment,
-  ShippingZoneDetailsFragment_warehouses
-} from "../../types/ShippingZoneDetailsFragment";
 import ShippingZoneInfo from "../ShippingZoneInfo";
 import ShippingZoneRates from "../ShippingZoneRates";
 import ShippingZoneWarehouses from "../ShippingZoneWarehouses";

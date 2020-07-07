@@ -2,7 +2,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import CardTitle from "@saleor/components/CardTitle";
-import { PageErrorFragment } from "@saleor/pages/types/PageErrorFragment";
+import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import React from "react";

@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
-import { AccountErrorFragment } from "@saleor/customers/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import React from "react";

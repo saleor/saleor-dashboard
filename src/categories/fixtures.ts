@@ -1,6 +1,7 @@
+import { CategoryFragment } from "@saleor/fragments/types/CategoryFragment";
+
 import { content } from "../storybook/stories/components/RichTextEditor";
 import { CategoryDetails_category } from "./types/CategoryDetails";
-import { CategoryFragment } from "./types/CategoryFragment";
 
 export const categories: CategoryFragment[] = [
   {

@@ -21,7 +21,7 @@ import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
-import { AvailableInGridAttributes_grid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
+import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import {
   ProductList_products_edges_node,
   ProductList_products_edges_node_pricing_priceRangeUndiscounted
@@ -104,7 +104,7 @@ interface ProductListProps
     ListActions,
     SortPage<ProductListUrlSortField> {
   activeAttributeSortId: string;
-  gridAttributes: AvailableInGridAttributes_grid_edges_node[];
+  gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
 }
 

@@ -1,7 +1,8 @@
+import { attributeDetailsFragment } from "@saleor/fragments/attributes";
+import { productErrorFragment } from "@saleor/fragments/errors";
 import { TypedMutation } from "@saleor/mutations";
 import gql from "graphql-tag";
 
-import { attributeDetailsFragment } from "./queries";
 import {
   AttributeBulkDelete,
   AttributeBulkDeleteVariables
@@ -34,13 +35,6 @@ import {
   AttributeValueUpdate,
   AttributeValueUpdateVariables
 } from "./types/AttributeValueUpdate";
-
-export const productErrorFragment = gql`
-  fragment ProductErrorFragment on ProductError {
-    code
-    field
-  }
-`;
 
 const attributeBulkDelete = gql`
   ${productErrorFragment}

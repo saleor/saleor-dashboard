@@ -1,10 +1,10 @@
+import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
 import { content } from "../storybook/stories/components/RichTextEditor";
 import { ProductDetails_product } from "./types/ProductDetails";
 import { ProductList_products_edges_node } from "./types/ProductList";
-import { ProductVariant } from "./types/ProductVariant";
 import { ProductVariantCreateData_product } from "./types/ProductVariantCreateData";
 
 export const product: (

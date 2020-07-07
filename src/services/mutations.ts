@@ -1,8 +1,11 @@
-import { accountErrorFragment } from "@saleor/customers/mutations";
+import { accountErrorFragment } from "@saleor/fragments/errors";
+import {
+  serviceDetailsFragment,
+  serviceFragment
+} from "@saleor/fragments/services";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
-import { serviceDetailsFragment, serviceFragment } from "./queries";
 import { ServiceCreate, ServiceCreateVariables } from "./types/ServiceCreate";
 import { ServiceDelete, ServiceDeleteVariables } from "./types/ServiceDelete";
 import {

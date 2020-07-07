@@ -10,12 +10,12 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import { AddressTypeInput } from "@saleor/customers/types";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { OrderErrorFragment } from "@saleor/orders/types/OrderErrorFragment";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";

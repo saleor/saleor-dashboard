@@ -10,8 +10,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { ServiceDetailsFragment_tokens } from "@saleor/fragments/types/ServiceDetailsFragment";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ServiceDetailsFragment_tokens } from "@saleor/services/types/ServiceDetailsFragment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

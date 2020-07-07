@@ -8,9 +8,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
+import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { sectionNames } from "@saleor/intl";
-import { PageErrorFragment } from "@saleor/pages/types/PageErrorFragment";
 import {
   ContentState,
   convertFromRaw,

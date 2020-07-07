@@ -1,8 +1,9 @@
+import { fragmentAddress } from "@saleor/fragments/address";
+import { shopErrorFragment } from "@saleor/fragments/errors";
+import { shopFragment } from "@saleor/fragments/shop";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
-import { fragmentAddress } from "../orders/queries";
-import { shopFragment } from "./queries";
 import {
   AuthorizationKeyAdd,
   AuthorizationKeyAddVariables
@@ -16,12 +17,6 @@ import {
   ShopSettingsUpdateVariables
 } from "./types/ShopSettingsUpdate";
 
-const shopErrorFragment = gql`
-  fragment ShopErrorFragment on ShopError {
-    code
-    field
-  }
-`;
 const authorizationKeyAdd = gql`
   ${shopErrorFragment}
   ${shopFragment}

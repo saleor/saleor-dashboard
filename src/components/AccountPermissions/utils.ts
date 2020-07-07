@@ -1,5 +1,5 @@
-import { User_userPermissions } from "@saleor/auth/types/User";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
+import { User_userPermissions } from "@saleor/fragments/types/User";
 import { PermissionGroupDetails_user_userPermissions } from "@saleor/permissionGroups/types/PermissionGroupDetails";
 
 export const getLastSourcesOfPermission = (

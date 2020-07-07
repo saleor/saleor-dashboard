@@ -13,12 +13,11 @@ import {
   SortableTableBody,
   SortableTableRow
 } from "@saleor/components/SortableTable";
+import { AttributeDetailsFragment_values } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { AttributeDetailsFragment_values } from "../../types/AttributeDetailsFragment";
 
 export interface AttributeValuesProps {
   disabled: boolean;

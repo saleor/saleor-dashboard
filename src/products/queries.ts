@@ -1,16 +1,24 @@
+import { pageInfoFragment } from "@saleor/fragments/pageInfo";
+import {
+  fragmentMoney,
+  fragmentVariant,
+  productFragment,
+  productFragmentDetails,
+  productVariantAttributesFragment
+} from "@saleor/fragments/products";
+import { warehouseFragment } from "@saleor/fragments/warehouses";
 import makeQuery from "@saleor/hooks/makeQuery";
-import { warehouseFragment } from "@saleor/warehouses/queries";
 import gql from "graphql-tag";
 
-import { pageInfoFragment, TypedQuery } from "../queries";
-import {
-  AvailableInGridAttributes,
-  AvailableInGridAttributesVariables
-} from "./types/AvailableInGridAttributes";
+import { TypedQuery } from "../queries";
 import {
   CreateMultipleVariantsData,
   CreateMultipleVariantsDataVariables
 } from "./types/CreateMultipleVariantsData";
+import {
+  GridAttributes,
+  GridAttributesVariables
+} from "./types/GridAttributes";
 import {
   InitialProductFilterData,
   InitialProductFilterDataVariables
@@ -32,238 +40,6 @@ import {
   ProductVariantDetails,
   ProductVariantDetailsVariables
 } from "./types/ProductVariantDetails";
-
-export const stockFragment = gql`
-  fragment StockFragment on Stock {
-    id
-    quantity
-    quantityAllocated
-    warehouse {
-      id
-      name
-    }
-  }
-`;
-
-export const fragmentMoney = gql`
-  fragment Money on Money {
-    amount
-    currency
-  }
-`;
-
-export const fragmentProductImage = gql`
-  fragment ProductImageFragment on ProductImage {
-    id
-    alt
-    sortOrder
-    url
-  }
-`;
-
-export const productFragment = gql`
-  fragment ProductFragment on Product {
-    id
-    name
-    thumbnail {
-      url
-    }
-    isAvailable
-    isPublished
-    productType {
-      id
-      name
-      hasVariants
-    }
-  }
-`;
-
-const productVariantAttributesFragment = gql`
-  ${fragmentMoney}
-  fragment ProductVariantAttributesFragment on Product {
-    id
-    attributes {
-      attribute {
-        id
-        slug
-        name
-        inputType
-        valueRequired
-        values {
-          id
-          name
-          slug
-        }
-      }
-      values {
-        id
-        name
-        slug
-      }
-    }
-    productType {
-      id
-      variantAttributes {
-        id
-        name
-        values {
-          id
-          name
-          slug
-        }
-      }
-    }
-    pricing {
-      priceRangeUndiscounted {
-        start {
-          gross {
-            ...Money
-          }
-        }
-        stop {
-          gross {
-            ...Money
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const productFragmentDetails = gql`
-  ${fragmentProductImage}
-  ${fragmentMoney}
-  ${productVariantAttributesFragment}
-  ${stockFragment}
-  fragment Product on Product {
-    ...ProductVariantAttributesFragment
-    name
-    descriptionJson
-    seoTitle
-    seoDescription
-    category {
-      id
-      name
-    }
-    collections {
-      id
-      name
-    }
-    margin {
-      start
-      stop
-    }
-    purchaseCost {
-      start {
-        ...Money
-      }
-      stop {
-        ...Money
-      }
-    }
-    isAvailable
-    isPublished
-    chargeTaxes
-    publicationDate
-    pricing {
-      priceRangeUndiscounted {
-        start {
-          gross {
-            ...Money
-          }
-        }
-        stop {
-          gross {
-            ...Money
-          }
-        }
-      }
-    }
-    images {
-      ...ProductImageFragment
-    }
-    variants {
-      id
-      sku
-      name
-      price {
-        ...Money
-      }
-      margin
-      stocks {
-        ...StockFragment
-      }
-      trackInventory
-    }
-    productType {
-      id
-      name
-      hasVariants
-    }
-  }
-`;
-
-export const fragmentVariant = gql`
-  ${fragmentMoney}
-  ${fragmentProductImage}
-  ${stockFragment}
-  fragment ProductVariant on ProductVariant {
-    id
-    attributes {
-      attribute {
-        id
-        name
-        slug
-        valueRequired
-        values {
-          id
-          name
-          slug
-        }
-      }
-      values {
-        id
-        name
-        slug
-      }
-    }
-    costPrice {
-      ...Money
-    }
-    images {
-      id
-      url
-    }
-    name
-    price {
-      ...Money
-    }
-    product {
-      id
-      images {
-        ...ProductImageFragment
-      }
-      name
-      thumbnail {
-        url
-      }
-      variants {
-        id
-        name
-        sku
-        images {
-          id
-          url
-        }
-      }
-    }
-    sku
-    stocks {
-      ...StockFragment
-    }
-    trackInventory
-  }
-`;
 
 const initialProductFilterDataQuery = gql`
   query InitialProductFilterData(
@@ -500,8 +276,8 @@ const availableInGridAttributes = gql`
   }
 `;
 export const AvailableInGridAttributesQuery = TypedQuery<
-  AvailableInGridAttributes,
-  AvailableInGridAttributesVariables
+  GridAttributes,
+  GridAttributesVariables
 >(availableInGridAttributes);
 
 const createMultipleVariantsData = gql`

@@ -1,6 +1,6 @@
 import CardSpacer from "@saleor/components/CardSpacer";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
-import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import React from "react";
 
 import {
