@@ -25,6 +25,7 @@ export const ChannelCreateView = ({}) => {
   const onSubmit = (data: ChannelCreate) => {
     if (!data.channelCreate.errors.length) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       handleBack();
