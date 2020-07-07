@@ -1,0 +1,27 @@
+name: TEST-ENV-CLEANUP
+
+on:
+  pull_request:
+    types: [closed]
+    branches: ["*"]
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rlespinasse/github-slug-action@master
+      - name: Set domain
+        run: |
+          echo "::set-env name=domain::${{ env.GITHUB_HEAD_REF_SLUG }}.dashboard.saleor.rocks"
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Remove S3 directory
+        run: aws s3 rm s3://test-envs-stack-dashboards5d35b643-nempmfdd9fv/${{ env.domain }}
+
+      - name: Invalidate cache
+        run: aws cloudfront create-invalidation --distribution-id E1INMM566C4FJP --paths "/${{ env.domain }}/*"
