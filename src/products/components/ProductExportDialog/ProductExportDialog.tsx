@@ -9,10 +9,10 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import Form from "@saleor/components/Form";
+import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useWizard from "@saleor/hooks/useWizard";
 import { buttonMessages } from "@saleor/intl";
-import { ExportErrorFragment } from "@saleor/products/types/ExportErrorFragment";
 import { DialogProps } from "@saleor/types";
 import {
   ExportProductsInput,

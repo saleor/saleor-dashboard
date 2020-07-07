@@ -6,6 +6,7 @@ import {
   stockErrorFragment
 } from "@saleor/fragments/errors";
 import {
+  exportFileFragment,
   fragmentVariant,
   productFragmentDetails
 } from "@saleor/fragments/products";

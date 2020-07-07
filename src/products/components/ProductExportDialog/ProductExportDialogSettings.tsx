@@ -3,8 +3,8 @@ import Hr from "@saleor/components/Hr";
 import RadioGroupField, {
   RadioGroupFieldChoice
 } from "@saleor/components/RadioGroupField";
+import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { ExportErrorFragment } from "@saleor/products/types/ExportErrorFragment";
 import {
   ExportProductsInput,
   ExportScope,

@@ -1,5 +1,5 @@
+import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { ExportErrorFragment } from "@saleor/products/types/ExportErrorFragment";
 import { ExportErrorCode } from "@saleor/types/globalTypes";
 import { IntlShape } from "react-intl";
 
