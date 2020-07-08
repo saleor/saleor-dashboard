@@ -15,6 +15,9 @@ jobs:
 
       - uses: rlespinasse/github-slug-action@master
 
+      - name: Echo repository
+        run: echo ${{ github.repository }}
+
       - name: Set domain
         # Set test instance domain based on branch name slug
         run: |
