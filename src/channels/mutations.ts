@@ -1,15 +1,8 @@
+import { channelErrorFragment } from "@saleor/fragments/channels";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { ChannelCreate, ChannelCreateVariables } from "./types/ChannelCreate";
-
-export const channelErrorFragment = gql`
-  fragment ChannelErrorFragment on ChannelError {
-    code
-    field
-    message
-  }
-`;
 
 export const channelCreateMutation = gql`
   ${channelErrorFragment}
