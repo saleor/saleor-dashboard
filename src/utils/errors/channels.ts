@@ -1,4 +1,4 @@
-import { ChannelErrorFragment } from "@saleor/channels/types/ChannelErrorFragment";
+import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { ChannelErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";

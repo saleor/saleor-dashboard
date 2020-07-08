@@ -2,10 +2,10 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import useClipboard from "@saleor/hooks/useClipboard";
 import { FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
@@ -14,7 +14,6 @@ import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ChannelErrorFragment } from "../../types/ChannelErrorFragment";
 import { useStyles } from "../styles";
 
 export interface FormData {
