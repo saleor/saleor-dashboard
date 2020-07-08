@@ -2,11 +2,11 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import React from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
-import { ChannelErrorFragment } from "../../types/ChannelErrorFragment";
 
 export interface ChannelCreatePageProps {
   disabled: boolean;

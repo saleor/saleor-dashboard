@@ -1,6 +1,6 @@
+import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import { ChannelErrorCode } from "@saleor/types/globalTypes";
 
-import { ChannelErrorFragment } from "./types/ChannelErrorFragment";
 import { Channels_channels } from "./types/Channels";
 
 export const channelCreateErrors: ChannelErrorFragment[] = [
