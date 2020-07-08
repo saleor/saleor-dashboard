@@ -112,19 +112,13 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           })}
         />
         <CardContent>
-          <Typography className={classes.currencyTitle}>
-            <FormattedMessage
-              defaultMessage="Currency"
-              description="currency title"
-            />
-          </Typography>
           <TextField
             error={!!formErrors.currencyCode}
             helperText={getChannelsErrorMessage(formErrors?.currencyCode, intl)}
             disabled={disabled}
             fullWidth
             label={intl.formatMessage({
-              defaultMessage: "Select Currency",
+              defaultMessage: "Currency",
               description: "channel currency"
             })}
             name="currencyCode"
