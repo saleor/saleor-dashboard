@@ -2,8 +2,9 @@ import { IMessageContext } from "@saleor/components/messages";
 import { commonMessages } from "@saleor/intl";
 import { JobStatusEnum } from "@saleor/types/globalTypes";
 import { ApolloQueryResult } from "apollo-client";
-import { defineMessages, IntlShape } from "react-intl";
+import { IntlShape } from "react-intl";
 
+import messages from "./messages";
 import {
   InvoiceGenerateParams,
   QueuedTask,
@@ -12,29 +13,6 @@ import {
 } from "./types";
 import { CheckExportFileStatus } from "./types/CheckExportFileStatus";
 import { CheckOrderInvoicesStatus } from "./types/CheckOrderInvoicesStatus";
-
-const messages = defineMessages({
-  exportFinishedText: {
-    defaultMessage:
-      "Product export has finished and was sent to your email address."
-  },
-  exportFinishedTitle: {
-    defaultMessage: "Exporting CSV finished",
-    description: "csv file exporting has finished, header"
-  },
-  invoiceGenerateFinishedText: {
-    defaultMessage:
-      "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
-  },
-  invoiceGenerateFinishedTitle: {
-    defaultMessage: "Invoice Generated",
-    description: "invoice generating has finished, header"
-  },
-  invoiceGenerationFailedTitle: {
-    defaultMessage: "Invoice Generation",
-    description: "dialog header, title"
-  }
-});
 
 function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
   switch (jobStatus) {
@@ -120,6 +98,7 @@ export function queueInvoiceGenerate(
               title: intl.formatMessage(messages.invoiceGenerateFinishedTitle)
             })
           : notify({
+              status: "error",
               text: intl.formatMessage(commonMessages.somethingWentWrong),
               title: intl.formatMessage(messages.invoiceGenerationFailedTitle)
             }),
@@ -146,11 +125,18 @@ export function queueExport(
         return getTaskStatus(status);
       },
       id,
-      onCompleted: () =>
-        notify({
-          text: intl.formatMessage(messages.exportFinishedText),
-          title: intl.formatMessage(messages.exportFinishedTitle)
-        }),
+      onCompleted: data =>
+        data.status === TaskStatus.SUCCESS
+          ? notify({
+              status: "success",
+              text: intl.formatMessage(messages.exportFinishedText),
+              title: intl.formatMessage(messages.exportFinishedTitle)
+            })
+          : notify({
+              status: "error",
+              text: intl.formatMessage(commonMessages.somethingWentWrong),
+              title: intl.formatMessage(messages.exportFailedTitle)
+            }),
       onError: handleError,
       status: TaskStatus.PENDING
     }
