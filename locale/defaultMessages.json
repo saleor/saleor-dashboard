@@ -1178,12 +1178,8 @@
     "string": "Copy"
   },
   "src_dot_channels_dot_components_dot_ChannelForm_dot_3873626327": {
-    "context": "currency title",
-    "string": "Currency"
-  },
-  "src_dot_channels_dot_components_dot_ChannelForm_dot_4053872131": {
     "context": "channel currency",
-    "string": "Select Currency"
+    "string": "Currency"
   },
   "src_dot_channels_dot_components_dot_ChannelStatus_dot_1004218338": {
     "context": "inactive",
