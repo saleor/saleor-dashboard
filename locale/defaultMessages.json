@@ -798,10 +798,6 @@
     "context": "button",
     "string": "Create Channel"
   },
-  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_706346085": {
-    "context": "tab name",
-    "string": "All Channels"
-  },
   "src_dot_channels_dot_views_dot_ChannelCreate_dot_4169662653": {
     "context": "channel create",
     "string": "New Channel"
