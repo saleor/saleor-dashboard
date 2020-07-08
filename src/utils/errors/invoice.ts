@@ -1,5 +1,5 @@
+import { InvoiceErrorFragment } from "@saleor/fragments/types/InvoiceErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { InvoiceErrorFragment } from "@saleor/orders/types/InvoiceErrorFragment";
 import { InvoiceErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 

@@ -8,9 +8,9 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { InvoiceErrorFragment } from "@saleor/fragments/types/InvoiceErrorFragment";
+import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { buttonMessages } from "@saleor/intl";
-import { InvoiceErrorFragment } from "@saleor/orders/types/InvoiceErrorFragment";
-import { InvoiceFragment } from "@saleor/orders/types/InvoiceFragment";
 import { DialogProps } from "@saleor/types";
 import getInvoiceErrorMessage from "@saleor/utils/errors/invoice";
 import React from "react";

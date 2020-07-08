@@ -12,8 +12,8 @@ import Date from "@saleor/components/Date";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { buttonMessages } from "@saleor/intl";
-import { InvoiceFragment } from "@saleor/orders/types/InvoiceFragment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

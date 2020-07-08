@@ -1,3 +1,4 @@
+import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
@@ -11,7 +12,6 @@ import {
   OrderStatus,
   PaymentChargeStatusEnum
 } from "../types/globalTypes";
-import { InvoiceFragment } from "./types/InvoiceFragment";
 import { OrderDetails_order } from "./types/OrderDetails";
 import { OrderList_orders_edges_node } from "./types/OrderList";
 import { SearchOrderVariant_search_edges_node } from "./types/SearchOrderVariant";
