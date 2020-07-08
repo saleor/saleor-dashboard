@@ -8,7 +8,10 @@ import ChannelDeleteDialog, {
 } from "./ChannelDeleteDialog";
 
 const props: ChannelDeleteDialogProps = {
-  channelsList,
+  channelsChoices: channelsList.map(channel => ({
+    label: channel.name,
+    value: channel.id
+  })),
   confirmButtonState: "default",
   onClose: () => undefined,
   onConfirm: () => undefined,

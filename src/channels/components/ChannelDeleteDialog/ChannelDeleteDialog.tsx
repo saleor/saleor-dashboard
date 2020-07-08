@@ -1,15 +1,17 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
+import Typography from "@material-ui/core/Typography";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { SingleSelectField } from "@saleor/components/SingleSelectField";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Channels_channels } from "../../types/Channels";
 import { useStyles } from "../styles";
 
 export interface ChannelDeleteDialogProps {
-  channelsList: Channels_channels[];
+  channelsChoices: Array<{
+    value: string;
+    label: string | React.ReactNode;
+  }>;
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   onClose: () => void;
@@ -17,7 +19,7 @@ export interface ChannelDeleteDialogProps {
 }
 
 const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
-  channelsList,
+  channelsChoices = [],
   confirmButtonState,
   open,
   onClose,
@@ -25,11 +27,10 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const channelsChoices = channelsList.map(channel => ({
-    label: channel.name,
-    value: channel.id
-  }));
-  const [choice, setValue] = useState(channelsChoices[0]);
+  const [choice, setValue] = useState({
+    value: channelsChoices[0].value,
+    name: "channels"
+  });
 
   return (
     <ActionDialog
@@ -43,27 +44,32 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
       })}
       variant="delete"
     >
-      <DialogContentText>
-        <FormattedMessage
-          defaultMessage="All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:."
-          description="delete channel"
-        />
+      <div>
+        <Typography>
+          <FormattedMessage
+            defaultMessage="All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:."
+            description="delete channel"
+          />
+        </Typography>
         <div className={classes.select}>
           <SingleSelectField
             choices={channelsChoices}
+            name="channels"
             label={intl.formatMessage({
               defaultMessage: "Select Channel",
               description: "dialog header"
             })}
             value={choice.value}
-            onChange={setValue}
+            onChange={e => setValue(e.target)}
           />
         </div>
-        <FormattedMessage
-          defaultMessage="Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?"
-          description="delete channel"
-        />
-      </DialogContentText>
+        <Typography>
+          <FormattedMessage
+            defaultMessage="Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?"
+            description="delete channel"
+          />
+        </Typography>
+      </div>
     </ActionDialog>
   );
 };
