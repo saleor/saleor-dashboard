@@ -63,11 +63,22 @@ export const fulfillmentFragment = gql`
   }
 `;
 
+export const invoiceFragment = gql`
+  fragment InvoiceFragment on Invoice {
+    id
+    number
+    createdAt
+    url
+    status
+  }
+`;
+
 export const fragmentOrderDetails = gql`
   ${fragmentAddress}
   ${fragmentOrderEvent}
   ${fragmentOrderLine}
   ${fulfillmentFragment}
+  ${invoiceFragment}
   fragment OrderDetailsFragment on Order {
     id
     billingAddress {
@@ -142,6 +153,9 @@ export const fragmentOrderDetails = gql`
     discount {
       amount
       currency
+    }
+    invoices {
+      ...InvoiceFragment
     }
   }
 `;

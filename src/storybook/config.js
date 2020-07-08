@@ -134,6 +134,7 @@ function loadStories() {
   require("./stories/orders/OrderPaymentVoidDialog");
   require("./stories/orders/OrderProductAddDialog");
   require("./stories/orders/OrderShippingMethodEditDialog");
+  require("./stories/orders/OrderInvoiceList");
 
   // Product types
   require("./stories/productTypes/ProductTypeAttributeUnassignDialog");

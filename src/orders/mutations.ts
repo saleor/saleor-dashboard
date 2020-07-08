@@ -1,14 +1,26 @@
 import { fragmentAddress } from "@saleor/fragments/address";
-import { orderErrorFragment } from "@saleor/fragments/errors";
+import {
+  invoiceErrorFragment,
+  orderErrorFragment
+} from "@saleor/fragments/errors";
 import {
   fragmentOrderDetails,
-  fragmentOrderEvent
+  fragmentOrderEvent,
+  invoiceFragment
 } from "@saleor/fragments/orders";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
 import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
+import {
+  InvoiceEmailSend,
+  InvoiceEmailSendVariables
+} from "./types/InvoiceEmailSend";
+import {
+  InvoiceRequest,
+  InvoiceRequestVariables
+} from "./types/InvoiceRequest";
 import { OrderAddNote, OrderAddNoteVariables } from "./types/OrderAddNote";
 import { OrderCancel, OrderCancelVariables } from "./types/OrderCancel";
 import { OrderCapture, OrderCaptureVariables } from "./types/OrderCapture";
@@ -448,3 +460,47 @@ export const useOrderFulfill = makeMutation<
   FulfillOrder,
   FulfillOrderVariables
 >(fulfillOrder);
+
+const invoiceRequestMutation = gql`
+  ${invoiceErrorFragment}
+  ${invoiceFragment}
+  mutation InvoiceRequest($orderId: ID!) {
+    invoiceRequest(orderId: $orderId) {
+      errors: invoiceErrors {
+        ...InvoiceErrorFragment
+      }
+      invoice {
+        ...InvoiceFragment
+      }
+      order {
+        id
+        invoices {
+          ...InvoiceFragment
+        }
+      }
+    }
+  }
+`;
+export const TypedInvoiceRequestMutation = TypedMutation<
+  InvoiceRequest,
+  InvoiceRequestVariables
+>(invoiceRequestMutation);
+
+const invoiceEmailSendMutation = gql`
+  ${invoiceErrorFragment}
+  ${invoiceFragment}
+  mutation InvoiceEmailSend($id: ID!) {
+    invoiceSendEmail(id: $id) {
+      errors: invoiceErrors {
+        ...InvoiceErrorFragment
+      }
+      invoice {
+        ...InvoiceFragment
+      }
+    }
+  }
+`;
+export const TypedInvoiceEmailSendMutation = TypedMutation<
+  InvoiceEmailSend,
+  InvoiceEmailSendVariables
+>(invoiceEmailSendMutation);

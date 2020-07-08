@@ -104,3 +104,10 @@ export const webhookErrorFragment = gql`
     field
   }
 `;
+
+export const invoiceErrorFragment = gql`
+  fragment InvoiceErrorFragment on InvoiceError {
+    code
+    field
+  }
+`;

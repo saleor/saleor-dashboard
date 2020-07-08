@@ -1,3 +1,4 @@
+import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
@@ -5,6 +6,7 @@ import { MessageDescriptor } from "react-intl";
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 import {
   FulfillmentStatus,
+  JobStatusEnum,
   OrderAction,
   OrderEventsEnum,
   OrderStatus,
@@ -914,6 +916,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
     }
   ],
   id: "T3JkZXI6OQ==",
+  invoices: [
+    {
+      __typename: "Invoice",
+      createdAt: "2020-06-22T13:52:05.094636+00:00",
+      id: "SW52b2ljZTox",
+      number: "1",
+      status: JobStatusEnum.SUCCESS,
+      url: "invoice1"
+    }
+  ],
   lines: [
     {
       __typename: "OrderLine",
@@ -1046,6 +1058,16 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   events: [],
   fulfillments: [],
   id: "T3JkZXI6MjQ=",
+  invoices: [
+    {
+      __typename: "Invoice",
+      createdAt: "2020-06-22T13:52:05.094636+00:00",
+      id: "SW52b2ljZTox",
+      number: "1",
+      status: JobStatusEnum.SUCCESS,
+      url: "invoice1"
+    }
+  ],
   lines: [
     {
       __typename: "OrderLine" as "OrderLine",
@@ -1296,5 +1318,44 @@ export const orderLineSearch = (
         sku: "75799450"
       }
     ]
+  }
+];
+
+export const invoices: InvoiceFragment[] = [
+  {
+    __typename: "Invoice",
+    createdAt: "2020-07-02T12:13:56.901097+00:00",
+    id: "SW52b2ljZTo0",
+    number: "1/07/2020",
+    status: JobStatusEnum.PENDING,
+    url:
+      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-1fef611b-7514-4dc6-aee3-09a8232b1d6a.pdf"
+  },
+  {
+    __typename: "Invoice",
+    createdAt: "2020-07-02T09:06:17.059412+00:00",
+    id: "SW52b2ljZToz",
+    number: "1/07/2020",
+    status: JobStatusEnum.SUCCESS,
+    url:
+      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-8df26967-ad21-4075-a446-cef44ae05197.pdf"
+  },
+  {
+    __typename: "Invoice",
+    createdAt: "2020-07-02T09:05:58.300952+00:00",
+    id: "SW52b2ljZToy",
+    number: "1/07/2020",
+    status: JobStatusEnum.SUCCESS,
+    url:
+      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-5ebc85e0-e587-4386-8292-9b85839281e6.pdf"
+  },
+  {
+    __typename: "Invoice",
+    createdAt: "2020-07-02T09:04:27.257562+00:00",
+    id: "SW52b2ljZTox",
+    number: "1/07/2020",
+    status: JobStatusEnum.SUCCESS,
+    url:
+      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-0e449e10-ef4b-4066-bebe-361f670b6820.pdf"
   }
 ];

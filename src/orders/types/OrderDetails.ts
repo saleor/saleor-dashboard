@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, WeightUnitsEnum } from "./../../types/globalTypes";
+import { OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: OrderDetails
@@ -246,6 +246,15 @@ export interface OrderDetails_order_discount {
   currency: string;
 }
 
+export interface OrderDetails_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+  status: JobStatusEnum;
+}
+
 export interface OrderDetails_order {
   __typename: "Order";
   id: string;
@@ -272,6 +281,7 @@ export interface OrderDetails_order {
   userEmail: string | null;
   availableShippingMethods: (OrderDetails_order_availableShippingMethods | null)[] | null;
   discount: OrderDetails_order_discount | null;
+  invoices: (OrderDetails_order_invoices | null)[] | null;
 }
 
 export interface OrderDetails_shop_countries {

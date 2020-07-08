@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderFulfillInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
+import { OrderFulfillInput, OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: FulfillOrder
@@ -254,6 +254,15 @@ export interface FulfillOrder_orderFulfill_order_discount {
   currency: string;
 }
 
+export interface FulfillOrder_orderFulfill_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+  status: JobStatusEnum;
+}
+
 export interface FulfillOrder_orderFulfill_order {
   __typename: "Order";
   id: string;
@@ -280,6 +289,7 @@ export interface FulfillOrder_orderFulfill_order {
   userEmail: string | null;
   availableShippingMethods: (FulfillOrder_orderFulfill_order_availableShippingMethods | null)[] | null;
   discount: FulfillOrder_orderFulfill_order_discount | null;
+  invoices: (FulfillOrder_orderFulfill_order_invoices | null)[] | null;
 }
 
 export interface FulfillOrder_orderFulfill {

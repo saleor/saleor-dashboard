@@ -99,7 +99,8 @@ export type OrderUrlDialog =
   | "finalize"
   | "mark-paid"
   | "refund"
-  | "void";
+  | "void"
+  | "invoice-send";
 export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;
 export const orderUrl = (id: string, params?: OrderUrlQueryParams) =>
   orderPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

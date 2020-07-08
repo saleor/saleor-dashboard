@@ -1,9 +1,13 @@
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { Task } from "@saleor/containers/BackgroundTasks/types";
+import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
+import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { InvoiceRequest } from "@saleor/orders/types/InvoiceRequest";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { useWarehouseList } from "@saleor/warehouses/queries";
@@ -17,7 +21,11 @@ import {
   transformAddressToForm
 } from "../../../misc";
 import { productUrl } from "../../../products/urls";
-import { FulfillmentStatus, OrderStatus } from "../../../types/globalTypes";
+import {
+  FulfillmentStatus,
+  JobStatusEnum,
+  OrderStatus
+} from "../../../types/globalTypes";
 import OrderAddressEditDialog from "../../components/OrderAddressEditDialog";
 import OrderCancelDialog from "../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../components/OrderDetailsPage";
@@ -103,6 +111,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
       first: 30
     }
   });
+  const { queue } = useBackgroundTask();
   const intl = useIntl();
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -148,6 +157,22 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onDraftFinalize={orderMessages.handleDraftFinalize}
                 onDraftCancel={orderMessages.handleDraftCancel}
                 onOrderMarkAsPaid={orderMessages.handleOrderMarkAsPaid}
+                onInvoiceRequest={(data: InvoiceRequest) => {
+                  if (
+                    data.invoiceRequest.invoice.status === JobStatusEnum.SUCCESS
+                  ) {
+                    orderMessages.handleInvoiceGenerateFinished(data);
+                  } else {
+                    orderMessages.handleInvoiceGeneratePending(data);
+                    queue(Task.INVOICE_GENERATE, {
+                      generateInvoice: {
+                        invoiceId: data.invoiceRequest.invoice.id,
+                        orderId: id
+                      }
+                    });
+                  }
+                }}
+                onInvoiceSend={orderMessages.handleInvoiceSend}
               >
                 {({
                   orderAddNote,
@@ -165,7 +190,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderFulfillmentUpdateTracking,
                   orderDraftCancel,
                   orderDraftFinalize,
-                  orderPaymentMarkAsPaid
+                  orderPaymentMarkAsPaid,
+                  orderInvoiceRequest,
+                  orderInvoiceSend
                 }) => (
                   <>
                     {order?.status !== OrderStatus.DRAFT ? (
@@ -228,6 +255,21 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                           onPaymentPaid={() => openModal("mark-paid")}
                           onProfileView={() =>
                             navigate(customerUrl(order.user.id))
+                          }
+                          onInvoiceClick={id =>
+                            window.open(
+                              order.invoices.find(invoice => invoice.id === id)
+                                ?.url,
+                              "_blank"
+                            )
+                          }
+                          onInvoiceGenerate={() =>
+                            orderInvoiceRequest.mutate({
+                              orderId: id
+                            })
+                          }
+                          onInvoiceSend={id =>
+                            openModal("invoice-send", { id })
                           }
                         />
                         <OrderCannotCancelOrderDialog
@@ -358,6 +400,21 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             })
                           }
                           onClose={closeModal}
+                        />
+                        <OrderInvoiceEmailSendDialog
+                          confirmButtonState={orderInvoiceSend.opts.status}
+                          errors={
+                            orderInvoiceSend.opts.data?.invoiceSendEmail
+                              .errors || []
+                          }
+                          open={params.action === "invoice-send"}
+                          invoice={order?.invoices?.find(
+                            invoice => invoice.id === params.id
+                          )}
+                          onClose={closeModal}
+                          onSend={() =>
+                            orderInvoiceSend.mutate({ id: params.id })
+                          }
                         />
                       </>
                     ) : (

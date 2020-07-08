@@ -1,21 +1,21 @@
 import { IMessageContext } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { checkOrderInvoicesStatus } from "@saleor/orders/queries";
 import ApolloClient from "apollo-client";
 import React from "react";
 import { useApolloClient } from "react-apollo";
 import { IntlShape, useIntl } from "react-intl";
 
 import BackgroundTasksContext from "./context";
-import { handleTask, queueCustom } from "./tasks";
+import { handleTask, queueCustom, queueInvoiceGenerate } from "./tasks";
 import { QueuedTask, Task, TaskData, TaskStatus } from "./types";
 
 export const backgroundTasksRefreshTime = 15 * 1000;
 
-// TODO: Remove underscores when working on #575 or similar PR
 export function useBackgroundTasks(
-  _apolloClient: ApolloClient<any>,
-  _notify: IMessageContext,
-  _intl: IntlShape
+  apolloClient: ApolloClient<any>,
+  notify: IMessageContext,
+  intl: IntlShape
 ) {
   const idCounter = React.useRef(0);
   const tasks = React.useRef<QueuedTask[]>([]);
@@ -63,6 +63,23 @@ export function useBackgroundTasks(
     switch (type) {
       case Task.CUSTOM:
         queueCustom(idCounter.current, tasks, data);
+        break;
+      case Task.INVOICE_GENERATE:
+        queueInvoiceGenerate(
+          idCounter.current,
+          data.generateInvoice,
+          tasks,
+          () =>
+            apolloClient.query({
+              fetchPolicy: "network-only",
+              query: checkOrderInvoicesStatus,
+              variables: {
+                id: data.generateInvoice.orderId
+              }
+            }),
+          notify,
+          intl
+        );
         break;
     }
 

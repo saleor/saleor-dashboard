@@ -20,6 +20,7 @@ import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderFulfillment from "../OrderFulfillment";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
+import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItems";
 
@@ -62,6 +63,9 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onOrderCancel();
   onNoteAdd(data: HistoryFormData);
   onProfileView();
+  onInvoiceClick(invoiceId: string);
+  onInvoiceGenerate();
+  onInvoiceSend(invoiceId: string);
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
@@ -80,7 +84,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onPaymentRefund,
     onPaymentVoid,
     onShippingAddressEdit,
-    onProfileView
+    onProfileView,
+    onInvoiceClick,
+    onInvoiceGenerate,
+    onInvoiceSend
   } = props;
   const classes = useStyles(props);
 
@@ -177,6 +184,13 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             onBillingAddressEdit={onBillingAddressEdit}
             onShippingAddressEdit={onShippingAddressEdit}
             onProfileView={onProfileView}
+          />
+          <CardSpacer />
+          <OrderInvoiceList
+            invoices={order?.invoices}
+            onInvoiceClick={onInvoiceClick}
+            onInvoiceGenerate={onInvoiceGenerate}
+            onInvoiceSend={onInvoiceSend}
           />
           <CardSpacer />
           <OrderCustomerNote note={maybe(() => order.customerNote)} />

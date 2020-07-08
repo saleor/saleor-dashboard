@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction } from "./../../types/globalTypes";
+import { OrderErrorCode, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderVoid
@@ -252,6 +252,15 @@ export interface OrderVoid_orderVoid_order_discount {
   currency: string;
 }
 
+export interface OrderVoid_orderVoid_order_invoices {
+  __typename: "Invoice";
+  id: string;
+  number: string | null;
+  createdAt: any;
+  url: string | null;
+  status: JobStatusEnum;
+}
+
 export interface OrderVoid_orderVoid_order {
   __typename: "Order";
   id: string;
@@ -278,6 +287,7 @@ export interface OrderVoid_orderVoid_order {
   userEmail: string | null;
   availableShippingMethods: (OrderVoid_orderVoid_order_availableShippingMethods | null)[] | null;
   discount: OrderVoid_orderVoid_order_discount | null;
+  invoices: (OrderVoid_orderVoid_order_invoices | null)[] | null;
 }
 
 export interface OrderVoid_orderVoid {
