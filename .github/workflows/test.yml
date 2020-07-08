@@ -10,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: test
+        run: echo "TEST TEST"
+
       - name: Validate lock file
         run: |
           npx lockfile-lint --path package-lock.json --allowed-hosts npm yarn
