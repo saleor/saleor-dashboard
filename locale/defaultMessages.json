@@ -2693,10 +2693,6 @@
     "context": "section header",
     "string": "Invoices"
   },
-  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_2489266682": {
-    "context": "invoice number",
-    "string": "Invoice no"
-  },
   "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_2739475235": {
     "context": "invoice create date prefix",
     "string": "created"
@@ -2707,10 +2703,6 @@
   "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_3589949197": {
     "context": "invoice number prefix",
     "string": "Invoice"
-  },
-  "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_4120604650": {
-    "context": "action for invoice",
-    "string": "Action"
   },
   "src_dot_orders_dot_components_dot_OrderInvoiceList_dot_949234851": {
     "context": "generate invoice button",
