@@ -15,47 +15,6 @@ jobs:
 
       - uses: rlespinasse/github-slug-action@master
 
-      - name: Start deployment
-        uses: bobheadxi/deployments@master
-        id: deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: ${{ env.GITHUB_HEAD_REF_SLUG }}
-          ref: ${{ github.head_ref }}
-
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-
-      - name: Install deps
-        run: |
-          npm ci
-
-      - name: Set API URI
-        # Setting API_URI env variable from PR description
-        env:
-          pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: API_URI=
-          pattern: (http|https)://[a-zA-Z0-9.]+/graphql/?
-        run: |
-          echo "::set-env name=API_URI::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
-
-      - name: Run build
-        env:
-          APP_MOUNT_URI: /
-          STATIC_URL: /
-        run: |
-          npm run build
-
       - name: Set domain
         # Set test instance domain based on branch name slug
         run: |
@@ -68,18 +27,5 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      - name: Deploy to S3
-        run: aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ env.domain }}
-
       - name: Invalidate cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ env.domain }}/*"
-
-      - name: Update deployment status
-        uses: bobheadxi/deployments@master
-        if: always()
-        with:
-          step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
-          env_url: https://${{ env.domain }}/
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
