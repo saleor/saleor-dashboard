@@ -292,6 +292,16 @@ const OrderFulfillment: React.FC<OrderFulfillmentProps> = props => {
           </Button>
         </CardActions>
       )}
+      {status === FulfillmentStatus.FULFILLED && fulfillment.trackingNumber && (
+        <CardActions>
+          <Button color="primary" onClick={onTrackingCodeAdd}>
+            <FormattedMessage
+              defaultMessage="Edit tracking"
+              description="fulfillment group tracking number"
+            />
+          </Button>
+        </CardActions>
+      )}
     </Card>
   );
 };
