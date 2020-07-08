@@ -17,6 +17,10 @@ export const useStyles = makeStyles(
     },
     label: {
       color: theme.palette.text.secondary
+    },
+    select: {
+      marginBottom: theme.spacing(1),
+      marginTop: theme.spacing(1)
     }
   }),
   { name: "ChannelCreatePage" }
