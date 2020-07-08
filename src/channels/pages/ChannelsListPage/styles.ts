@@ -26,13 +26,6 @@ export const useStyles = makeStyles(
     columnPicker: {
       marginRight: theme.spacing(3)
     },
-    search: {
-      "& > div": {
-        width: "100%"
-      },
-      borderBottom: `1px solid ${theme.palette.divider}`,
-      padding: theme.spacing(1, 3, 0, 3)
-    },
     table: {
       tableLayout: "fixed"
     },
