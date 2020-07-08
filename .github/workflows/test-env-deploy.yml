@@ -1,8 +1,9 @@
 name: TEST-ENV-DEPLOYMENT
+# Build and deploy test instance for every pull request
 
 on:
   pull_request:
-    # we need to look for "edited" action because eg. API_URI can change in the PR description
+    # trigger on "edited" to update instance when configuration changes in PR description
     types: [opened, reopened, edited, synchronize]
     branches: ["*"]
 
@@ -12,12 +13,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: rlespinasse/github-slug-action@master
+
+      - name: Start deployment
+        uses: bobheadxi/deployments@master
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ env.GITHUB_HEAD_REF_SLUG }}
+          ref: ${{ github.head_ref }}
+
       - name: Cache node modules
         uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
           key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
@@ -30,7 +41,7 @@ jobs:
           npm ci
 
       - name: Set API URI
-        # getting API_URI from PR description in case it has been changed
+        # Setting API_URI env variable from PR description
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
           prefix: API_URI=
@@ -45,14 +56,12 @@ jobs:
         run: |
           npm run build
 
-      - uses: rlespinasse/github-slug-action@master
       - name: Set domain
-        # generate normalized domain name, get rid of characters that may be found in branch names, but cannot be used in domain name like "/"
+        # Set test instance domain based on branch name slug
         run: |
           echo "::set-env name=domain::${{ env.GITHUB_HEAD_REF_SLUG }}.dashboard.saleor.rocks"
 
       - name: Configure AWS credentials
-        # get credentials for AWS from GitHub repo secrets
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -60,11 +69,17 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Deploy to S3
-        run: aws s3 sync ./build/dashboard s3://test-envs-stack-dashboards5d35b643-nempmfdd9fv/${{ env.domain }}
+        run: aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ env.domain }}
 
       - name: Invalidate cache
-        run: aws cloudfront create-invalidation --distribution-id E1INMM566C4FJP --paths "/${{ env.domain }}/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ env.domain }}/*"
 
-      - name: Print URL
-        run: |
-          echo https://${{ env.domain }}/
+      - name: Update deployment status
+        uses: bobheadxi/deployments@master
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env_url: https://${{ env.domain }}/
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
