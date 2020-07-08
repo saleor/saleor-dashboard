@@ -2,6 +2,7 @@ name: TEST-ENV-DEPLOYMENT
 
 on:
   pull_request:
+    # we need to look for "edited" action because eg. API_URI can change in the PR description
     types: [opened, reopened, edited, synchronize]
     branches: ["*"]
 
@@ -29,6 +30,7 @@ jobs:
           npm ci
 
       - name: Set API URI
+        # getting API_URI from PR description in case it has been changed
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
           prefix: API_URI=
@@ -45,10 +47,12 @@ jobs:
 
       - uses: rlespinasse/github-slug-action@master
       - name: Set domain
+        # generate normalized domain name, get rid of characters that may be found in branch names, but cannot be used in domain name like "/"
         run: |
           echo "::set-env name=domain::${{ env.GITHUB_HEAD_REF_SLUG }}.dashboard.saleor.rocks"
 
       - name: Configure AWS credentials
+        # get credentials for AWS from GitHub repo secrets
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
