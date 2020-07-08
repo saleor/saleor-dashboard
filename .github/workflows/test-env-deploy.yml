@@ -15,8 +15,8 @@ jobs:
 
       - uses: rlespinasse/github-slug-action@master
 
-      - name: Echo repository
-        run: echo ${{ github.head_ref }}
+      - name: Echo source repository
+        run: echo ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Set domain
         # Set test instance domain based on branch name slug
