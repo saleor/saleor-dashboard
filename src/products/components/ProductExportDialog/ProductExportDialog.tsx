@@ -23,6 +23,7 @@ import getExportErrorMessage from "@saleor/utils/errors/export";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import ProductExportDialogInfo from "./ProductExportDialogInfo";
 import ProductExportDialogSettings from "./ProductExportDialogSettings";
 
 export enum ProductExportStep {
@@ -52,7 +53,9 @@ function useSteps(): Array<Step<ProductExportStep>> {
 }
 
 const initialForm: ExportProductsInput = {
-  exportInfo: {},
+  exportInfo: {
+    fields: []
+  },
   fileType: FileTypesEnum.CSV,
   scope: ExportScope.ALL
 };
@@ -74,7 +77,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   open,
   selectedProducts
 }) => {
-  const [step, { set: setStep }] = useWizard(ProductExportStep.SETTINGS, [
+  const [step, { set: setStep }] = useWizard(ProductExportStep.INFO, [
     ProductExportStep.INFO,
     ProductExportStep.SETTINGS
   ]);
@@ -100,6 +103,13 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
                 steps={steps}
                 onStepClick={setStep}
               />
+              {step === ProductExportStep.INFO && (
+                <ProductExportDialogInfo
+                  data={data}
+                  errors={dialogErrors}
+                  onChange={change}
+                />
+              )}
               {step === ProductExportStep.SETTINGS && (
                 <ProductExportDialogSettings
                   data={data}
