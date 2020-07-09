@@ -17,6 +17,7 @@ import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { useWarehouseList } from "@saleor/warehouses/queries";
+import useShop from "@saleor/hooks/useShop";
 import { getMutationState, maybe } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import ProductUpdateOperations from "../../containers/ProductUpdateOperations";
@@ -75,6 +76,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       first: 50
     }
   });
+  const shop = useShop();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
@@ -213,6 +215,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                   <ProductUpdatePage
                     categories={categories}
                     collections={collections}
+                    defaultWeightUnit={shop?.defaultWeightUnit}
                     disabled={disableFormSave}
                     errors={errors}
                     fetchCategories={searchCategories}

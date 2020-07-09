@@ -770,4 +770,5 @@ export interface SimpleProductUpdateVariables {
   addStocks: StockInput[];
   deleteStocks: string[];
   updateStocks: StockInput[];
+  weight?: any | null;
 }

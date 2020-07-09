@@ -43,6 +43,7 @@ import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import ProductShipping from "../ProductShipping/ProductShipping";
 
 interface FormData {
   basePrice: number;
@@ -59,6 +60,7 @@ interface FormData {
   sku: string;
   stockQuantity: number;
   trackInventory: boolean;
+  weight: string;
 }
 export interface ProductCreatePageSubmitData extends FormData {
   attributes: ProductAttributeInput[];
@@ -82,6 +84,7 @@ interface ProductCreatePageProps {
   }>;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
+  weightUnit: string;
   warehouses: SearchWarehouses_search_edges_node[];
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
@@ -107,6 +110,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   warehouses,
   onBack,
   fetchProductTypes,
+  weightUnit,
   onSubmit
 }: ProductCreatePageProps) => {
   const intl = useIntl();
@@ -143,7 +147,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     seoTitle: "",
     sku: null,
     stockQuantity: null,
-    trackInventory: false
+    trackInventory: false,
+    weight: ""
   };
 
   // Display values
@@ -242,6 +247,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 <CardSpacer />
                 {!!productType && !productType.hasVariants && (
                   <>
+                    <ProductShipping
+                      data={data}
+                      disabled={disabled}
+                      errors={errors}
+                      weightUnit={weightUnit}
+                      onChange={change}
+                    />
+                    <CardSpacer />
                     <ProductStocks
                       data={data}
                       disabled={disabled}

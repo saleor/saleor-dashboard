@@ -50,8 +50,10 @@ import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
 import ProductVariants from "../ProductVariants";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import ProductShipping from "../ProductShipping/ProductShipping";
 
 export interface ProductUpdatePageProps extends ListActions {
+  defaultWeightUnit: string;
   errors: ProductErrorFragment[];
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
@@ -89,6 +91,7 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
 }
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
+  defaultWeightUnit,
   disabled,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
@@ -269,33 +272,43 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       toggleAll={toggleAll}
                     />
                   ) : (
-                    <ProductStocks
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      stocks={stocks}
-                      warehouses={warehouses}
-                      onChange={(id, value) => {
-                        triggerChange();
-                        changeStockData(id, value);
-                      }}
-                      onFormDataChange={change}
-                      onWarehouseStockAdd={id => {
-                        triggerChange();
-                        addStock({
-                          data: null,
-                          id,
-                          label: warehouses.find(
-                            warehouse => warehouse.id === id
-                          ).name,
-                          value: "0"
-                        });
-                      }}
-                      onWarehouseStockDelete={id => {
-                        triggerChange();
-                        removeStock(id);
-                      }}
-                    />
+                    <>
+                      <ProductShipping
+                        data={data}
+                        disabled={disabled}
+                        errors={errors}
+                        weightUnit={product?.weight?.unit || defaultWeightUnit}
+                        onChange={change}
+                      />
+                      <CardSpacer />
+                      <ProductStocks
+                        data={data}
+                        disabled={disabled}
+                        errors={errors}
+                        stocks={stocks}
+                        warehouses={warehouses}
+                        onChange={(id, value) => {
+                          triggerChange();
+                          changeStockData(id, value);
+                        }}
+                        onFormDataChange={change}
+                        onWarehouseStockAdd={id => {
+                          triggerChange();
+                          addStock({
+                            data: null,
+                            id,
+                            label: warehouses.find(
+                              warehouse => warehouse.id === id
+                            ).name,
+                            value: "0"
+                          });
+                        }}
+                        onWarehouseStockDelete={id => {
+                          triggerChange();
+                          removeStock(id);
+                        }}
+                      />
+                    </>
                   )}
                   <CardSpacer />
                   <SeoForm
