@@ -1,8 +1,8 @@
+import { appFragment } from "@saleor/fragments/apps";
+import { webhooksFragment } from "@saleor/fragments/webhooks";
 import makeMutation from "@saleor/hooks/makeMutation";
-import { webhooksFragment } from "@saleor/webhooks/queries";
 import gql from "graphql-tag";
 
-import { appFragment } from "./queries";
 import { AppActivate, AppActivateVariables } from "./types/AppActivate";
 import { AppCreate, AppCreateVariables } from "./types/AppCreate";
 import { AppDeactivate, AppDeactivateVariables } from "./types/AppDeactivate";

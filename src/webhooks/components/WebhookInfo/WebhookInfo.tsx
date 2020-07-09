@@ -6,11 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType
-} from "@saleor/components/SingleAutocompleteSelectField";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
-import { ChangeEvent } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
