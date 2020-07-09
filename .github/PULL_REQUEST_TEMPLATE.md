@@ -20,3 +20,10 @@ greatly reduce the amount of work needed to review your work. -->
 1. [ ] The changes are tested.
 1. [ ] Type definitions are up to date.
 1. [ ] Changes are mentioned in the changelog.
+
+### Test environment config
+
+<!-- Do not remove this section. It is required to properly setup test instance.
+Modify API_URI if you want test instance to use custom backend. -->
+
+API_URI=https://master.staging.saleor.rocks/graphql/
