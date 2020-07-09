@@ -14,10 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: rlespinasse/github-slug-action@master
+      - uses: rlespinasse/github-slug-action@2.0.0
 
       - name: Start deployment
-        uses: bobheadxi/deployments@master
+        uses: bobheadxi/deployments@v0.4.2
         id: deployment
         with:
           step: start
@@ -76,7 +76,7 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ env.domain }}/*"
 
       - name: Update deployment status
-        uses: bobheadxi/deployments@master
+        uses: bobheadxi/deployments@v0.4.2
         if: always()
         with:
           step: finish

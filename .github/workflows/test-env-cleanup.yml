@@ -10,7 +10,7 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - uses: rlespinasse/github-slug-action@master
+      - uses: rlespinasse/github-slug-action@2.0.0
       - name: Set domain
         # Set test instance domain based on branch name slug
         run: |
@@ -30,7 +30,7 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ env.domain }}/*"
 
       - name: Mark deployment as deactivated
-        uses: bobheadxi/deployments@master
+        uses: bobheadxi/deployments@v0.4.2
         with:
           step: deactivate-env
           token: ${{ secrets.GITHUB_TOKEN }}
