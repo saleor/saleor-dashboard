@@ -41,17 +41,20 @@ jobs:
         run: |
           npm ci
 
-      - name: Set API URI
-        # Setting API_URI env variable from PR description
+      - name: Get custom API_URI
+        id: api_uri
+        # Search for API_URI in PR description
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
           prefix: API_URI=
           pattern: (http|https)://[a-zA-Z0-9.]+/graphql/?
         run: |
-          echo "::set-env name=API_URI::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
+          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
 
       - name: Run build
         env:
+          # Use custom API_URI or the default one
+          API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://master.staging.saleor.rocks/graphql/' }}
           APP_MOUNT_URI: /
           STATIC_URL: /
         run: |

@@ -24,7 +24,7 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Remove S3 directory
-        run: aws s3 rm s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ env.domain }}
+        run: aws s3 rm --recursive s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ env.domain }}/
 
       - name: Invalidate cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ env.domain }}/*"
