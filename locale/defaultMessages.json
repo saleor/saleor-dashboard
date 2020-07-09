@@ -5378,9 +5378,15 @@
   "src_dot_utils_dot_errors_dot_invalidPassword": {
     "string": "Invalid password"
   },
+  "src_dot_utils_dot_errors_dot_invalidPermission": {
+    "string": "Permission is invalid"
+  },
   "src_dot_utils_dot_errors_dot_invalidStatus": {
     "context": "error message",
-    "string": "Cannot request an invoice for draft order"
+    "string": "Status is invalid"
+  },
+  "src_dot_utils_dot_errors_dot_invalidUrlFormat": {
+    "string": "Url has invalid format"
   },
   "src_dot_utils_dot_errors_dot_noShippingAddress": {
     "context": "error message",
@@ -5401,6 +5407,9 @@
   "src_dot_utils_dot_errors_dot_numberNotSet": {
     "context": "error message",
     "string": "Number not set for an invoice"
+  },
+  "src_dot_utils_dot_errors_dot_outOfScopeApp": {
+    "string": "App is out of your permissions scope"
   },
   "src_dot_utils_dot_errors_dot_outOfScopeGroup": {
     "string": "Group is out of your permission scope"

@@ -11,6 +11,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Handle task failure and fix task duplication - #588 by @dominik-zeglen
 - Move fragments to separate directory to avoid circular imports - #592 by @dominik-zeglen
 - Add order invoices management - #570 by @orzechdev
+- create Apps - #599 by @AlicjaSzu
 
 ## 2.10.0
 
