@@ -185,11 +185,19 @@ export const productFragmentDetails = gql`
         ...StockFragment
       }
       trackInventory
+      weight {
+        unit
+        value
+      }
     }
     productType {
       id
       name
       hasVariants
+    }
+    weight {
+      unit
+      value
     }
   }
 `;
@@ -253,6 +261,10 @@ export const fragmentVariant = gql`
       ...StockFragment
     }
     trackInventory
+    weight {
+      unit
+      value
+    }
   }
 `;
 

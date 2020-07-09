@@ -169,6 +169,12 @@ export interface ProductImageUpdate_productImageUpdate_product_variants_stocks {
   warehouse: ProductImageUpdate_productImageUpdate_product_variants_stocks_warehouse;
 }
 
+export interface ProductImageUpdate_productImageUpdate_product_variants_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
+}
+
 export interface ProductImageUpdate_productImageUpdate_product_variants {
   __typename: "ProductVariant";
   id: string;
@@ -178,6 +184,13 @@ export interface ProductImageUpdate_productImageUpdate_product_variants {
   margin: number | null;
   stocks: (ProductImageUpdate_productImageUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
+  weight: ProductImageUpdate_productImageUpdate_product_variants_weight | null;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
 }
 
 export interface ProductImageUpdate_productImageUpdate_product {
@@ -201,6 +214,7 @@ export interface ProductImageUpdate_productImageUpdate_product {
   pricing: ProductImageUpdate_productImageUpdate_product_pricing | null;
   images: (ProductImageUpdate_productImageUpdate_product_images | null)[] | null;
   variants: (ProductImageUpdate_productImageUpdate_product_variants | null)[] | null;
+  weight: ProductImageUpdate_productImageUpdate_product_weight | null;
 }
 
 export interface ProductImageUpdate_productImageUpdate {

@@ -21,6 +21,7 @@ import {
 import { WarehouseFragment } from "@saleor/warehouses/types/WarehouseFragment";
 import { maybe } from "../../../misc";
 import { ProductVariant } from "../../types/ProductVariant";
+import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductVariantAttributes, {
   VariantAttributeInputData
 } from "../ProductVariantAttributes";
@@ -35,6 +36,7 @@ export interface ProductVariantPageFormData {
   priceOverride: string;
   sku: string;
   trackInventory: boolean;
+  weight: string;
 }
 
 export interface ProductVariantPageSubmitData
@@ -46,6 +48,7 @@ export interface ProductVariantPageSubmitData
 }
 
 interface ProductVariantPageProps {
+  defaultWeightUnit: string;
   variant?: ProductVariant;
   errors: VariantUpdate_productVariantUpdate_errors[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -62,6 +65,7 @@ interface ProductVariantPageProps {
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+  defaultWeightUnit,
   errors,
   loading,
   header,
@@ -112,7 +116,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     costPrice: maybe(() => variant.costPrice.amount.toString(), ""),
     priceOverride: maybe(() => variant.priceOverride.amount.toString(), ""),
     sku: maybe(() => variant.sku, ""),
-    trackInventory: variant?.trackInventory
+    trackInventory: variant?.trackInventory,
+    weight: variant?.weight?.value.toString() || ""
   };
 
   const handleSubmit = (data: ProductVariantPageFormData) => {
@@ -192,6 +197,14 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       }
                       costPrice={data.costPrice}
                       loading={loading}
+                      onChange={change}
+                    />
+                    <CardSpacer />
+                    <ProductShipping
+                      data={data}
+                      disabled={loading}
+                      errors={errors}
+                      weightUnit={variant?.weight?.unit || defaultWeightUnit}
                       onChange={change}
                     />
                     <CardSpacer />

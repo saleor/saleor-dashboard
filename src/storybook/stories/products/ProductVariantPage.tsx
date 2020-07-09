@@ -14,6 +14,7 @@ storiesOf("Views / Products / Product variant details", module)
   .addDecorator(Decorator)
   .add("when loaded data", () => (
     <ProductVariantPage
+      defaultWeightUnit="kg"
       header={variant.name || variant.sku}
       errors={[]}
       variant={variant}
@@ -29,6 +30,7 @@ storiesOf("Views / Products / Product variant details", module)
   ))
   .add("when loading data", () => (
     <ProductVariantPage
+      defaultWeightUnit="kg"
       header={undefined}
       errors={[]}
       loading={true}
@@ -45,6 +47,7 @@ storiesOf("Views / Products / Product variant details", module)
   ))
   .add("attribute errors", () => (
     <ProductVariantPage
+      defaultWeightUnit="kg"
       header={variant.name || variant.sku}
       variant={variant}
       onAdd={() => undefined}

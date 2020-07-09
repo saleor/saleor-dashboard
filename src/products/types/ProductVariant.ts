@@ -103,6 +103,12 @@ export interface ProductVariant_stocks {
   warehouse: ProductVariant_stocks_warehouse;
 }
 
+export interface ProductVariant_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
+}
+
 export interface ProductVariant {
   __typename: "ProductVariant";
   id: string;
@@ -115,4 +121,5 @@ export interface ProductVariant {
   sku: string;
   stocks: (ProductVariant_stocks | null)[] | null;
   trackInventory: boolean;
+  weight: ProductVariant_weight | null;
 }
