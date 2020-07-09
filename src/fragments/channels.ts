@@ -7,3 +7,12 @@ export const channelErrorFragment = gql`
     message
   }
 `;
+
+export const channelDetailsFragment = gql`
+  fragment ChannelDetailsFragment on Channel {
+    id
+    name
+    slug
+    currencyCode
+  }
+`;

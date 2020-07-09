@@ -1,8 +1,10 @@
-import { channelErrorFragment } from "@saleor/fragments/channels";
+import {
+  channelDetailsFragment,
+  channelErrorFragment
+} from "@saleor/fragments/channels";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import { channelDetailsFragment } from "./queries";
 import { ChannelCreate, ChannelCreateVariables } from "./types/ChannelCreate";
 import { ChannelUpdate, ChannelUpdateVariables } from "./types/ChannelUpdate";
 

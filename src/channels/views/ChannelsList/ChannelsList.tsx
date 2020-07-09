@@ -24,13 +24,15 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
 
   const channelsChoices = useMemo(
     () =>
-      data?.channels?.map(channel => ({
-        label: channel.name,
-        value: channel.id
-      })),
-    [data?.channels?.length]
+      params.id &&
+      data?.channels
+        ?.map(channel => ({
+          label: channel.name,
+          value: channel.id
+        }))
+        .filter(channel => channel.value !== params.id),
+    [data?.channels?.length, params.id]
   );
-
   const navigateToChannelCreate = () => navigate(channelAddUrl);
 
   const handleRemoveConfirm = () => null;
