@@ -22,27 +22,6 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const {
-    search: searchServiceAccount,
-    result: searchServiceAccountOpt
-  } = useServiceAccountSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
-  });
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    WebhookUrlDialog,
-    WebhookUrlQueryParams
-  >(navigate, params => webhookUrl(id, params), params);
-
-  const onWebhookDelete = (data: WebhookDelete) => {
-    if (data.webhookDelete?.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-      navigate(webhookListUrl());
-    }
-  };
 
   const onWebhookUpdate = (data: WebhookUpdate) => {
     const errors = data.webhookUpdate?.errors;

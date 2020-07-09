@@ -1,42 +1,11 @@
+import { appFragment } from "@saleor/fragments/apps";
+import { webhooksFragment } from "@saleor/fragments/webhooks";
 import makeQuery from "@saleor/hooks/makeQuery";
-import { webhooksFragment } from "@saleor/webhooks/queries";
 import gql from "graphql-tag";
 
 import { App, AppVariables } from "./types/App";
 import { AppsInstallations } from "./types/AppsInstallations";
 import { AppsList, AppsListVariables } from "./types/AppsList";
-
-export const appFragment = gql`
-  fragment AppFragment on App {
-    id
-    name
-    created
-    isActive
-    type
-    homepageUrl
-    appUrl
-    configurationUrl
-    supportUrl
-    version
-    accessToken
-    privateMetadata {
-      key
-      value
-    }
-    metadata {
-      key
-      value
-    }
-    tokens {
-      authToken
-      id
-      name
-    }
-    webhooks {
-      ...WebhookFragment
-    }
-  }
-`;
 
 const appsList = gql`
   ${appFragment}

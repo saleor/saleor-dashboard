@@ -7,7 +7,6 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
-import { sectionNames } from "@saleor/intl";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
