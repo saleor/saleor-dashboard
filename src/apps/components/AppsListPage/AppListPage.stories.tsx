@@ -31,7 +31,8 @@ const props: AppsListPageProps = {
   onInstalledAppRemove: () => undefined,
   onNextPage: () => undefined,
   onPreviousPage: () => undefined,
-  onRowClick: () => undefined
+  onRowClick: () => undefined,
+  onSettingsRowClick: () => undefined
 };
 
 storiesOf("Views / Apps / Apps list", module)

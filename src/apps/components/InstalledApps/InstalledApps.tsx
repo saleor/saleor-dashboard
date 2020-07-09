@@ -22,6 +22,7 @@ import DeactivatedText from "../DeactivatedText";
 export interface InstalledAppsProps extends ListProps {
   appsList: AppsList_apps_edges[];
   onRemove: (id: string) => void;
+  onSettingsRowClick: (id: string) => () => void;
 }
 const numberOfColumns = 2;
 
@@ -34,6 +35,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   onPreviousPage,
   onRowClick,
   onUpdateListSettings,
+  onSettingsRowClick,
   pageInfo,
   ...props
 }) => {
@@ -75,7 +77,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                 <TableRow
                   key={app.node.id}
                   className={classes.tableRow}
-                  onClick={onRowClick(app.node.id)}
+                  onClick={onSettingsRowClick(app.node.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-tc="name" className={classes.appName}>
@@ -88,7 +90,10 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <Button color="primary" onClick={onRowClick(app.node.id)}>
+                    <Button
+                      color="primary"
+                      onClick={stopPropagation(onRowClick(app.node.id))}
+                    >
                       <FormattedMessage
                         defaultMessage="About"
                         description="about app"
