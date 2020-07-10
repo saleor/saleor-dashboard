@@ -4,7 +4,7 @@ name: TEST-ENV-DEPLOYMENT
 on:
   pull_request:
     # trigger on "edited" to update instance when configuration changes in PR description
-    types: [opened, reopened, edited, synchronize]
+    types: [opened, reopened, synchronize]
     branches: ["*"]
 
 jobs:
