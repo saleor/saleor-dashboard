@@ -111,6 +111,12 @@ export interface VariantCreate_productVariantCreate_productVariant_stocks {
   warehouse: VariantCreate_productVariantCreate_productVariant_stocks_warehouse;
 }
 
+export interface VariantCreate_productVariantCreate_productVariant_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
+}
+
 export interface VariantCreate_productVariantCreate_productVariant {
   __typename: "ProductVariant";
   id: string;
@@ -123,6 +129,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
   sku: string;
   stocks: (VariantCreate_productVariantCreate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
+  weight: VariantCreate_productVariantCreate_productVariant_weight | null;
 }
 
 export interface VariantCreate_productVariantCreate {

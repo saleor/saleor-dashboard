@@ -1,4 +1,4 @@
-import { decimal } from "@saleor/misc";
+import { decimal, weight } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
@@ -48,7 +48,8 @@ export function createUpdateHandler(
           sku: data.sku,
           trackInventory: data.trackInventory
         },
-        updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
+        updateStocks: data.updateStocks.map(mapFormsetStockToStockInput),
+        weight: weight(data.weight)
       });
     }
   };

@@ -6,21 +6,20 @@ import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
-import { WeightUnitsEnum } from "../../../types/globalTypes";
 
 interface ProductTypeShippingProps {
   data: {
     isShippingRequired: boolean;
     weight: number | null;
   };
-  defaultWeightUnit: WeightUnitsEnum;
+  weightUnit: string;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
   data,
-  defaultWeightUnit,
+  weightUnit,
   disabled,
   onChange
 }) => {
@@ -48,7 +47,7 @@ const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
         {data.isShippingRequired && (
           <TextField
             disabled={disabled}
-            InputProps={{ endAdornment: defaultWeightUnit }}
+            InputProps={{ endAdornment: weightUnit }}
             label={intl.formatMessage({
               defaultMessage: "Weight"
             })}

@@ -59,6 +59,10 @@ export function decimal(value: string | number) {
   return value;
 }
 
+export function weight(value: string) {
+  return value === "" ? null : parseFloat(value);
+}
+
 export const removeDoubleSlashes = (url: string) =>
   url.replace(/([^:]\/)\/+/g, "$1");
 

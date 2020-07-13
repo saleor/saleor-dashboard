@@ -51,7 +51,9 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
-  const [displayCountry, setDisplayCountry] = useStateFromProps("");
+  const [displayCountry, setDisplayCountry] = useStateFromProps(
+    warehouse?.address?.country.country || ""
+  );
 
   const {
     errors: validationErrors,

@@ -163,6 +163,12 @@ export interface Product_variants_stocks {
   warehouse: Product_variants_stocks_warehouse;
 }
 
+export interface Product_variants_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
+}
+
 export interface Product_variants {
   __typename: "ProductVariant";
   id: string;
@@ -172,6 +178,13 @@ export interface Product_variants {
   margin: number | null;
   stocks: (Product_variants_stocks | null)[] | null;
   trackInventory: boolean;
+  weight: Product_variants_weight | null;
+}
+
+export interface Product_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
 }
 
 export interface Product {
@@ -195,4 +208,5 @@ export interface Product {
   pricing: Product_pricing | null;
   images: (Product_images | null)[] | null;
   variants: (Product_variants | null)[] | null;
+  weight: Product_weight | null;
 }

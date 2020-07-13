@@ -2,7 +2,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -14,7 +14,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
 import { VariantCreate_productVariantCreate_errors } from "@saleor/products/types/VariantCreate";
-import { ProductErrorCode } from "@saleor/types/globalTypes";
+import { getProductVariantAttributeErrorMessage } from "@saleor/utils/errors/product";
 import { ProductVariant_attributes_attribute_values } from "../../types/ProductVariant";
 
 export interface VariantAttributeInputData {
@@ -67,19 +67,6 @@ function getAttributeValueChoices(
   }));
 }
 
-function translateErrors(intl: IntlShape) {
-  return {
-    [ProductErrorCode.REQUIRED]: intl.formatMessage({
-      defaultMessage: "All attributes should have value",
-      description: "product attribute error"
-    }),
-    [ProductErrorCode.UNIQUE]: intl.formatMessage({
-      defaultMessage: "This variant already exists",
-      description: "product attribute error"
-    })
-  };
-}
-
 const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   attributes,
   disabled,
@@ -87,8 +74,6 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   onChange
 }) => {
   const intl = useIntl();
-
-  const translatedErrors = translateErrors(intl);
 
   return (
     <Card>
@@ -127,7 +112,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
               .filter(error => error.field === "attributes")
               .map(error => (
                 <Typography color="error" key={error.code}>
-                  {translatedErrors[error.code]}
+                  {getProductVariantAttributeErrorMessage(error, intl)}
                 </Typography>
               ))}
           </>
