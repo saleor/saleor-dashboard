@@ -4,6 +4,8 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## 2.10.1
+
 - Add weight field and fix warehouse country selection - #597 by @dominik-zeglen
 - Fix weight based rate update - #604 by @dominik-zeglen
 
