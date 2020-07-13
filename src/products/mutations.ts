@@ -135,7 +135,7 @@ export const productUpdateMutation = gql`
     $chargeTaxes: Boolean!
     $collections: [ID]
     $descriptionJson: JSONString
-    $isPublished: Boolean!
+    # $isPublished: Boolean!
     $name: String
     $basePrice: Decimal
     $seo: SeoInput
@@ -149,7 +149,7 @@ export const productUpdateMutation = gql`
         chargeTaxes: $chargeTaxes
         collections: $collections
         descriptionJson: $descriptionJson
-        isPublished: $isPublished
+        # isPublished: $isPublished
         name: $name
         basePrice: $basePrice
         seo: $seo
@@ -183,7 +183,7 @@ export const simpleProductUpdateMutation = gql`
     $chargeTaxes: Boolean!
     $collections: [ID]
     $descriptionJson: JSONString
-    $isPublished: Boolean!
+    # $isPublished: Boolean!
     $name: String
     $basePrice: Decimal
     $productVariantId: ID!
@@ -202,7 +202,7 @@ export const simpleProductUpdateMutation = gql`
         chargeTaxes: $chargeTaxes
         collections: $collections
         descriptionJson: $descriptionJson
-        isPublished: $isPublished
+        # isPublished: $isPublished
         name: $name
         basePrice: $basePrice
         seo: $seo
@@ -273,7 +273,7 @@ export const productCreateMutation = gql`
     $chargeTaxes: Boolean!
     $collections: [ID]
     $descriptionJson: JSONString
-    $isPublished: Boolean!
+    # $isPublished: Boolean!
     $name: String!
     $basePrice: Decimal
     $productType: ID!
@@ -290,7 +290,7 @@ export const productCreateMutation = gql`
         chargeTaxes: $chargeTaxes
         collections: $collections
         descriptionJson: $descriptionJson
-        isPublished: $isPublished
+        # isPublished: $isPublished
         name: $name
         basePrice: $basePrice
         productType: $productType
@@ -516,8 +516,8 @@ export const TypedProductBulkDeleteMutation = TypedMutation<
 
 export const productBulkPublishMutation = gql`
   ${productErrorFragment}
-  mutation productBulkPublish($ids: [ID!]!, $isPublished: Boolean!) {
-    productBulkPublish(ids: $ids, isPublished: $isPublished) {
+  mutation productBulkPublish($ids: [ID!]!) {
+    productBulkPublish(ids: $ids) {
       errors: productErrors {
         ...ProductErrorFragment
       }

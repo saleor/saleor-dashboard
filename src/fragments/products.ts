@@ -36,11 +36,19 @@ export const productFragment = gql`
       url
     }
     isAvailable
-    isPublished
     productType {
       id
       name
       hasVariants
+    }
+    channelListing {
+      channel {
+        id
+        name
+        slug
+      }
+      isPublished
+      publicationDate
     }
   }
 `;
@@ -129,9 +137,14 @@ export const productFragmentDetails = gql`
       }
     }
     isAvailable
-    isPublished
     chargeTaxes
-    publicationDate
+    channelListing {
+      channel {
+        name
+      }
+      isPublished
+      publicationDate
+    }
     pricing {
       priceRangeUndiscounted {
         start {

@@ -129,6 +129,18 @@ export interface Product_purchaseCost {
   stop: Product_purchaseCost_stop | null;
 }
 
+export interface Product_channelListing_channel {
+  __typename: "Channel";
+  name: string;
+}
+
+export interface Product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: Product_channelListing_channel;
+  isPublished: boolean;
+  publicationDate: any | null;
+}
+
 export interface Product_images {
   __typename: "ProductImage";
   id: string;
@@ -183,9 +195,8 @@ export interface Product {
   margin: Product_margin | null;
   purchaseCost: Product_purchaseCost | null;
   isAvailable: boolean | null;
-  isPublished: boolean;
   chargeTaxes: boolean;
-  publicationDate: any | null;
+  channelListing: Product_channelListing[] | null;
   images: (Product_images | null)[] | null;
   variants: (Product_variants | null)[] | null;
 }

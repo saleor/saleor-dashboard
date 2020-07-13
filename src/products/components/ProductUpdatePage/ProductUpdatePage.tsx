@@ -1,5 +1,6 @@
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -7,10 +8,8 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -122,7 +121,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   toolbar
 }) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
   const attributeInput = React.useMemo(
     () => getAttributeInputFromProduct(product),
     [product]
@@ -344,29 +342,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onCollectionChange={handleCollectionSelect}
                   />
                   <CardSpacer />
-                  <VisibilityCard
-                    data={data}
+                  <ChannelsAvailability
+                    channels={product?.channelListing}
                     errors={errors}
                     disabled={disabled}
-                    hiddenMessage={intl.formatMessage(
-                      {
-                        defaultMessage: "will be visible from {date}",
-                        description: "product"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate)
-                      }
-                    )}
                     onChange={change}
-                    visibleMessage={intl.formatMessage(
-                      {
-                        defaultMessage: "since {date}",
-                        description: "product"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate)
-                      }
-                    )}
                   />
                 </div>
               </Grid>

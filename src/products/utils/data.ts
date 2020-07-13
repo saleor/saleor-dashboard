@@ -5,6 +5,7 @@ import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import {
   ProductDetails_product,
+  ProductDetails_product_channelListing,
   ProductDetails_product_collections,
   ProductDetails_product_variants
 } from "@saleor/products/types/ProductDetails";
@@ -171,12 +172,11 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
 export interface ProductUpdatePageFormData {
   basePrice: number;
   category: string | null;
+  channelListing: ProductDetails_product_channelListing[];
   collections: string[];
   chargeTaxes: boolean;
   description: RawDraftContentState;
-  isPublished: boolean;
   name: string;
-  publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   sku: string;
@@ -190,15 +190,14 @@ export function getProductUpdatePageFormData(
   return {
     basePrice: maybe(() => product.variants[0].price.amount, 0),
     category: maybe(() => product.category.id, ""),
+    channelListing: product?.channelListing || [],
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),
       []
     ),
     description: maybe(() => JSON.parse(product.descriptionJson)),
-    isPublished: maybe(() => product.isPublished, false),
     name: maybe(() => product.name, ""),
-    publicationDate: maybe(() => product.publicationDate, ""),
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),
     sku: maybe(
