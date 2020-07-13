@@ -2,7 +2,12 @@ import { ShippingZoneUrlQueryParams } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
 import { CreateShippingRateVariables } from "@saleor/shipping/types/CreateShippingRate";
+import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
 import { FormData as ShippingZoneRateDialogFormData } from "../../components/ShippingZoneRateDialog";
+
+function getValue(value: string, hasLimits: boolean): number | null {
+  return hasLimits ? null : parseFloat(value);
+}
 
 export function getCreateShippingRateVariables(
   data: ShippingZoneRateDialogFormData,
@@ -13,28 +18,20 @@ export function getCreateShippingRateVariables(
     input: {
       maximumOrderPrice:
         params.type === ShippingMethodTypeEnum.PRICE
-          ? data.noLimits
-            ? null
-            : parseFloat(data.maxValue)
+          ? getValue(data.maxValue, data.noLimits)
           : null,
       maximumOrderWeight:
         params.type === ShippingMethodTypeEnum.WEIGHT
-          ? data.noLimits
-            ? null
-            : parseFloat(data.maxValue)
+          ? getValue(data.maxValue, data.noLimits)
           : null,
 
       minimumOrderPrice:
         params.type === ShippingMethodTypeEnum.PRICE
-          ? data.noLimits
-            ? null
-            : parseFloat(data.minValue)
+          ? getValue(data.maxValue, data.noLimits)
           : null,
       minimumOrderWeight:
         params.type === ShippingMethodTypeEnum.WEIGHT
-          ? data.noLimits
-            ? null
-            : parseFloat(data.minValue)
+          ? getValue(data.minValue, data.noLimits)
           : null,
       name: data.name,
       price: data.isFree ? 0 : parseFloat(data.price),
@@ -46,17 +43,36 @@ export function getCreateShippingRateVariables(
 
 export function getUpdateShippingRateVariables(
   data: ShippingZoneRateDialogFormData,
-  params: ShippingZoneUrlQueryParams,
-  id: string
+  shippingRate: ShippingZone_shippingZone_shippingMethods,
+  shippingZoneId: string
 ): UpdateShippingRateVariables {
-  return {
-    id: params.id,
+  const base: UpdateShippingRateVariables = {
+    id: shippingRate.id,
     input: {
-      maximumOrderPrice: data.noLimits ? null : parseFloat(data.maxValue),
-      minimumOrderPrice: data.noLimits ? null : parseFloat(data.minValue),
       name: data.name,
       price: data.isFree ? 0 : parseFloat(data.price),
-      shippingZone: id
+      shippingZone: shippingZoneId,
+      type: shippingRate.type
+    }
+  };
+
+  if (shippingRate.type === ShippingMethodTypeEnum.PRICE) {
+    return {
+      ...base,
+      input: {
+        ...base.input,
+        maximumOrderPrice: getValue(data.maxValue, data.noLimits),
+        minimumOrderPrice: getValue(data.minValue, data.noLimits)
+      }
+    };
+  }
+
+  return {
+    ...base,
+    input: {
+      ...base.input,
+      maximumOrderWeight: getValue(data.maxValue, data.noLimits),
+      minimumOrderWeight: getValue(data.minValue, data.noLimits)
     }
   };
 }
