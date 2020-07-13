@@ -4,12 +4,14 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import Date from "@saleor/components/Date";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableCellHeader from "@saleor/components/TableCellHeader";
 import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { buttonMessages } from "@saleor/intl";
 import React from "react";
@@ -80,9 +82,27 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           </Typography>
         ) : (
           <ResponsiveTable>
+            <TableHead>
+              <TableRow>
+                <TableCellHeader className={classes.colNumber}>
+                  <FormattedMessage
+                    defaultMessage="Invoice no"
+                    description="invoice number"
+                  />
+                </TableCellHeader>
+                {onInvoiceSend && (
+                  <TableCellHeader className={classes.colAction}>
+                    <FormattedMessage
+                      defaultMessage="Action"
+                      description="action for invoice"
+                    />
+                  </TableCellHeader>
+                )}
+              </TableRow>
+            </TableHead>
             <TableBody>
               {generatedInvoices.map(invoice => (
-                <TableRow key={invoice.id} hover={!!invoice}>
+                <TableRow key={invoice.id}>
                   <TableCell
                     className={
                       onInvoiceClick

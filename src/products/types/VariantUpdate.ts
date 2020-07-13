@@ -111,6 +111,12 @@ export interface VariantUpdate_productVariantUpdate_productVariant_stocks {
   warehouse: VariantUpdate_productVariantUpdate_productVariant_stocks_warehouse;
 }
 
+export interface VariantUpdate_productVariantUpdate_productVariant_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
+}
+
 export interface VariantUpdate_productVariantUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
@@ -123,6 +129,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   sku: string;
   stocks: (VariantUpdate_productVariantUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
+  weight: VariantUpdate_productVariantUpdate_productVariant_weight | null;
 }
 
 export interface VariantUpdate_productVariantUpdate {
@@ -235,6 +242,12 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_stocks 
   warehouse: VariantUpdate_productVariantStocksUpdate_productVariant_stocks_warehouse;
 }
 
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
+}
+
 export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   __typename: "ProductVariant";
   id: string;
@@ -247,6 +260,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   sku: string;
   stocks: (VariantUpdate_productVariantStocksUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
+  weight: VariantUpdate_productVariantStocksUpdate_productVariant_weight | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate {
@@ -337,4 +351,5 @@ export interface VariantUpdateVariables {
   sku?: string | null;
   trackInventory: boolean;
   stocks: StockInput[];
+  weight?: any | null;
 }

@@ -227,9 +227,15 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         disabled={updateShippingRateOpts.loading}
         errors={updateShippingRateOpts.data?.shippingPriceUpdate.errors || []}
         onClose={closeModal}
-        onSubmit={data =>
+        onSubmit={submitData =>
           updateShippingRate({
-            variables: getUpdateShippingRateVariables(data, params, id)
+            variables: getUpdateShippingRateVariables(
+              submitData,
+              data?.shippingZone?.shippingMethods.find(
+                shippingMethod => shippingMethod.id === params.id
+              ),
+              id
+            )
           })
         }
         open={params.action === "edit-rate"}

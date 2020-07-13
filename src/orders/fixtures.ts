@@ -830,6 +830,30 @@ export const order = (placeholder: string): OrderDetails_order => ({
         email: "admin@example.com",
         id: "QWRkcmVzczoxNQ=="
       }
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
+      date: "2019-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: null,
+      id: "T3JkZXJFdmVudDo0",
+      message: "This is note",
+      quantity: null,
+      type: OrderEventsEnum.NOTE_ADDED,
+      user: null
+    },
+    {
+      __typename: "OrderEvent",
+      amount: null,
+      date: "2019-09-17T13:22:24.376193+00:00",
+      email: null,
+      emailType: null,
+      id: "T3JkZXJFdmVudDo1",
+      message: "This is note",
+      quantity: null,
+      type: OrderEventsEnum.NOTE_ADDED,
+      user: null
     }
   ],
   fulfillments: [

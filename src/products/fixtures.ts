@@ -278,7 +278,12 @@ export const product: (
           warehouse: warehouseList[1]
         }
       ],
-      trackInventory: true
+      trackInventory: true,
+      weight: {
+        __typename: "Weight",
+        unit: "kg",
+        value: 3
+      }
     },
     {
       __typename: "ProductVariant",
@@ -308,9 +313,19 @@ export const product: (
           warehouse: warehouseList[0]
         }
       ],
-      trackInventory: false
+      trackInventory: false,
+      weight: {
+        __typename: "Weight",
+        unit: "kg",
+        value: 4
+      }
     }
-  ]
+  ],
+  weight: {
+    __typename: "Weight",
+    unit: "kg",
+    value: 5
+  }
 });
 export const products = (
   placeholderImage: string
@@ -1654,7 +1669,12 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       }
     }
   ],
-  trackInventory: true
+  trackInventory: true,
+  weight: {
+    __typename: "Weight",
+    unit: "kg",
+    value: 6
+  }
 });
 export const variantImages = (placeholderImage: string) =>
   variant(placeholderImage).images;

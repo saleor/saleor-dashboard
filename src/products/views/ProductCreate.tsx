@@ -10,7 +10,7 @@ import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { decimal, maybe } from "../../misc";
+import { decimal, maybe, weight } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
@@ -96,7 +96,8 @@ export const ProductCreateView: React.FC = () => {
                 quantity: parseInt(stock.value, 0),
                 warehouse: stock.id
               })),
-              trackInventory: formData.trackInventory
+              trackInventory: formData.trackInventory,
+              weight: weight(formData.weight)
             }
           });
         };
@@ -158,6 +159,7 @@ export const ProductCreateView: React.FC = () => {
               warehouses={
                 warehouses.data?.warehouses.edges.map(edge => edge.node) || []
               }
+              weightUnit={shop?.defaultWeightUnit}
             />
           </>
         );

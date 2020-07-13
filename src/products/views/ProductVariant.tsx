@@ -3,13 +3,14 @@ import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { decimal } from "../../misc";
+import { decimal, weight } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage, {
   ProductVariantPageSubmitData
@@ -40,6 +41,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   productId,
   params
 }) => {
+  const shop = useShop();
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -133,6 +135,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                 <>
                   <WindowTitle title={data?.productVariant?.name} />
                   <ProductVariantPage
+                    defaultWeightUnit={shop?.defaultWeightUnit}
                     errors={errors}
                     saveButtonBarState={updateVariant.opts.status}
                     loading={disableFormSave}
@@ -165,7 +168,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
                         stocks: data.updateStocks.map(
                           mapFormsetStockToStockInput
                         ),
-                        trackInventory: data.trackInventory
+                        trackInventory: data.trackInventory,
+                        weight: weight(data.weight)
                       })
                     }
                     onVariantClick={variantId => {

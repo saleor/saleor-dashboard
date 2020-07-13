@@ -174,6 +174,12 @@ export interface ProductCreate_productCreate_product_variants {
   trackInventory: boolean;
 }
 
+export interface ProductCreate_productCreate_product_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
+}
+
 export interface ProductCreate_productCreate_product {
   __typename: "Product";
   id: string;
@@ -194,6 +200,7 @@ export interface ProductCreate_productCreate_product {
   publicationDate: any | null;
   images: (ProductCreate_productCreate_product_images | null)[] | null;
   variants: (ProductCreate_productCreate_product_variants | null)[] | null;
+  weight: ProductCreate_productCreate_product_weight | null;
 }
 
 export interface ProductCreate_productCreate {
@@ -221,4 +228,5 @@ export interface ProductCreateVariables {
   seo?: SeoInput | null;
   stocks: StockInput[];
   trackInventory: boolean;
+  weight?: any | null;
 }

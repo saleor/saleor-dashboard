@@ -168,6 +168,12 @@ export interface ProductDetails_product_variants {
   trackInventory: boolean;
 }
 
+export interface ProductDetails_product_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
+}
+
 export interface ProductDetails_product {
   __typename: "Product";
   id: string;
@@ -188,6 +194,7 @@ export interface ProductDetails_product {
   publicationDate: any | null;
   images: (ProductDetails_product_images | null)[] | null;
   variants: (ProductDetails_product_variants | null)[] | null;
+  weight: ProductDetails_product_weight | null;
 }
 
 export interface ProductDetails {

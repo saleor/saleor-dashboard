@@ -15,6 +15,7 @@ storiesOf("Views / Products / Create product variant", module)
   .add("default", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      weightUnit="kg"
       disabled={false}
       errors={[]}
       header="Add variant"
@@ -29,6 +30,7 @@ storiesOf("Views / Products / Create product variant", module)
   .add("with errors", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      weightUnit="kg"
       disabled={false}
       errors={[
         {
@@ -59,6 +61,7 @@ storiesOf("Views / Products / Create product variant", module)
   .add("when loading data", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      weightUnit="kg"
       disabled={true}
       errors={[]}
       header="Add variant"
@@ -73,6 +76,7 @@ storiesOf("Views / Products / Create product variant", module)
   .add("add first variant", () => (
     <ProductVariantCreatePage
       currencySymbol="USD"
+      weightUnit="kg"
       disabled={false}
       errors={[]}
       header="Add variant"
