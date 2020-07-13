@@ -113,7 +113,11 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                   description="install app privacy"
                   values={{ name }}
                 />
-                <a href={data?.dataPrivacyUrl} target="_blank">
+                <a
+                  href={data?.dataPrivacyUrl}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
                   <FormattedMessage
                     defaultMessage="Learn more about data privacy"
                     description="app data privacy link"
