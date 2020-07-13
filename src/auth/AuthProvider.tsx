@@ -7,8 +7,7 @@ import {
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
-import React from "react";
-import { MutationFunction, MutationResult } from "react-apollo";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { UserContext } from "./";
@@ -17,9 +16,6 @@ import {
   useTokenRefreshMutation,
   useTokenVerifyMutation
 } from "./mutations";
-import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
-import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
-import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 import {
   displayDemoMessage,
   getAuthToken,
@@ -27,126 +23,61 @@ import {
   setAuthToken
 } from "./utils";
 
-interface AuthProviderOperationsProps {
-  children: (props: {
-    hasToken: boolean;
-    isAuthenticated: boolean;
-    tokenAuthLoading: boolean;
-    tokenVerifyLoading: boolean;
-    user: User;
-  }) => React.ReactNode;
+interface AuthProviderProps {
+  children: React.ReactNode;
 }
-const AuthProviderOperations: React.FC<AuthProviderOperationsProps> = ({
-  children
-}) => {
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const intl = useIntl();
   const notify = useNotifier();
 
-  const tokenAuth = useTokenAuthMutation({});
-  const tokenRefresh = useTokenRefreshMutation({});
-  const tokenVerify = useTokenVerifyMutation({});
+  const [tokenAuth, tokenAuthOpts] = useTokenAuthMutation({});
+  const [tokenRefresh] = useTokenRefreshMutation({});
+  const [tokenVerify, tokenVerifyOpts] = useTokenVerifyMutation({});
 
-  const handleLogin = () => {
+  const [userContext, setUserContext] = useState<undefined | User>(undefined);
+  const [persistToken] = useState<boolean>(false);
+
+  const onLogin = () => {
     if (DEMO_MODE) {
       displayDemoMessage(intl, notify);
     }
   };
 
-  return (
-    <AuthProvider
-      tokenAuth={tokenAuth}
-      tokenVerify={tokenVerify}
-      tokenRefresh={tokenRefresh}
-      onLogin={handleLogin}
-    >
-      {children}
-    </AuthProvider>
-  );
-};
+  useEffect(() => {
+    const token = getAuthToken();
+    if (!!token && !userContext) {
+      verifyToken(token);
+    } else {
+      loginWithCredentialsManagementAPI(login);
+    }
+  }, []);
 
-interface AuthProviderProps {
-  children: (props: {
-    hasToken: boolean;
-    isAuthenticated: boolean;
-    tokenAuthLoading: boolean;
-    tokenVerifyLoading: boolean;
-    user: User;
-  }) => React.ReactNode;
-  tokenAuth: [
-    MutationFunction<TokenAuth, TokenAuthVariables>,
-    MutationResult<TokenAuth>
-  ];
-  tokenVerify: [
-    MutationFunction<VerifyToken, VerifyTokenVariables>,
-    MutationResult<VerifyToken>
-  ];
-  tokenRefresh: [
-    MutationFunction<RefreshToken, RefreshTokenVariables>,
-    MutationResult<RefreshToken>
-  ];
-  onLogin?: () => void;
-}
-
-interface AuthProviderState {
-  user: User;
-  persistToken: boolean;
-}
-
-class AuthProvider extends React.Component<
-  AuthProviderProps,
-  AuthProviderState
-> {
-  constructor(props) {
-    super(props);
-    this.state = { persistToken: false, user: undefined };
-  }
-
-  componentWillReceiveProps(props: AuthProviderProps) {
-    const { tokenAuth, tokenVerify } = props;
-    const tokenAuthOpts = tokenAuth[1];
-    const tokenVerifyOpts = tokenVerify[1];
-
+  useEffect(() => {
     if (tokenAuthOpts.error || tokenVerifyOpts.error) {
-      this.logout();
+      logout();
     }
     if (tokenAuthOpts.data) {
       const user = tokenAuthOpts.data.tokenCreate.user;
       // FIXME: Now we set state also when auth fails and returned user is
       // `null`, because the LoginView uses this `null` to display error.
-      this.setState({ user });
+      setUserContext(user);
       if (user) {
-        setAuthToken(
-          tokenAuthOpts.data.tokenCreate.token,
-          this.state.persistToken
-        );
+        setAuthToken(tokenAuthOpts.data.tokenCreate.token, persistToken);
       }
     } else {
       if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
-        this.logout();
+        logout();
       } else {
         const user = maybe(() => tokenVerifyOpts.data.tokenVerify.user);
         if (!!user) {
-          this.setState({ user });
+          setUserContext(user);
         }
       }
     }
-  }
+  }, [tokenAuthOpts, tokenVerifyOpts]);
 
-  componentDidMount() {
-    const { user } = this.state;
-    const token = getAuthToken();
-    if (!!token && !user) {
-      this.verifyToken(token);
-    } else {
-      loginWithCredentialsManagementAPI(this.login);
-    }
-  }
-
-  login = async (email: string, password: string) => {
-    const { tokenAuth, onLogin } = this.props;
-    const [tokenAuthFn] = tokenAuth;
-
-    tokenAuthFn({ variables: { email, password } }).then(result => {
+  const login = async (email: string, password: string) => {
+    tokenAuth({ variables: { email, password } }).then(result => {
       if (result && !result.data.tokenCreate.errors.length) {
         if (!!onLogin) {
           onLogin();
@@ -156,65 +87,57 @@ class AuthProvider extends React.Component<
     });
   };
 
-  loginByToken = (token: string, user: User) => {
-    this.setState({ user });
-    setAuthToken(token, this.state.persistToken);
+  const loginByToken = (token: string, user: User) => {
+    setUserContext(user);
+    setAuthToken(token, persistToken);
   };
 
-  logout = () => {
-    this.setState({ user: undefined });
+  const logout = () => {
+    setUserContext(undefined);
     if (isCredentialsManagementAPISupported) {
       navigator.credentials.preventSilentAccess();
     }
     removeAuthToken();
   };
 
-  verifyToken = (token: string) => {
-    const { tokenVerify } = this.props;
-    const [tokenVerifyFn] = tokenVerify;
+  const verifyToken = (token: string) => tokenVerify({ variables: { token } });
 
-    return tokenVerifyFn({ variables: { token } });
-  };
-
-  refreshToken = async () => {
-    const { tokenRefresh } = this.props;
-    const [tokenRefreshFn] = tokenRefresh;
+  const refreshToken = async () => {
     const token = getAuthToken();
 
-    const refreshData = await tokenRefreshFn({ variables: { token } });
+    const refreshData = await tokenRefresh({ variables: { token } });
 
-    setAuthToken(refreshData.data.tokenRefresh.token, this.state.persistToken);
+    setAuthToken(refreshData.data.tokenRefresh.token, persistToken);
   };
 
-  render() {
-    const { children, tokenAuth, tokenVerify } = this.props;
-    const tokenAuthOpts = tokenAuth[1];
-    const tokenVerifyOpts = tokenVerify[1];
-    const { user } = this.state;
-    const isAuthenticated = !!user;
+  return (
+    <UserContext.Provider
+      value={{
+        login,
+        loginByToken,
+        logout,
+        tokenAuthLoading: tokenAuthOpts.loading,
+        tokenRefresh: refreshToken,
+        tokenVerifyLoading: tokenVerifyOpts.loading,
+        user: userContext
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
+};
 
-    return (
-      <UserContext.Provider
-        value={{
-          login: this.login,
-          loginByToken: this.loginByToken,
-          logout: this.logout,
-          tokenAuthLoading: tokenAuthOpts.loading,
-          tokenRefresh: this.refreshToken,
-          tokenVerifyLoading: tokenVerifyOpts.loading,
-          user
-        }}
-      >
-        {children({
-          hasToken: !!getAuthToken(),
-          isAuthenticated,
-          tokenAuthLoading: tokenAuthOpts.loading,
-          tokenVerifyLoading: tokenVerifyOpts.loading,
-          user
-        })}
-      </UserContext.Provider>
-    );
-  }
-}
+export const useAuth = () => {
+  const user = useContext(UserContext);
+  const isAuthenticated = !!user;
 
-export default AuthProviderOperations;
+  return {
+    hasToken: !!getAuthToken(),
+    isAuthenticated,
+    tokenAuthLoading: user.tokenAuthLoading,
+    tokenVerifyLoading: user.tokenVerifyLoading,
+    user
+  };
+};
+
+export default AuthProvider;
