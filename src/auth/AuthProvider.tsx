@@ -13,9 +13,9 @@ import { useIntl } from "react-intl";
 
 import { UserContext } from "./";
 import {
-  TokenRefreshMutation,
-  TypedTokenAuthMutation,
-  TypedVerifyTokenMutation
+  useTokenAuthMutation,
+  useTokenRefreshMutation,
+  useTokenVerifyMutation
 } from "./mutations";
 import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
@@ -42,6 +42,10 @@ const AuthProviderOperations: React.FC<AuthProviderOperationsProps> = ({
   const intl = useIntl();
   const notify = useNotifier();
 
+  const tokenAuth = useTokenAuthMutation({});
+  const tokenRefresh = useTokenRefreshMutation({});
+  const tokenVerify = useTokenVerifyMutation({});
+
   const handleLogin = () => {
     if (DEMO_MODE) {
       displayDemoMessage(intl, notify);
@@ -49,26 +53,14 @@ const AuthProviderOperations: React.FC<AuthProviderOperationsProps> = ({
   };
 
   return (
-    <TypedTokenAuthMutation>
-      {(...tokenAuth) => (
-        <TypedVerifyTokenMutation>
-          {(...tokenVerify) => (
-            <TokenRefreshMutation>
-              {(...tokenRefresh) => (
-                <AuthProvider
-                  tokenAuth={tokenAuth}
-                  tokenVerify={tokenVerify}
-                  tokenRefresh={tokenRefresh}
-                  onLogin={handleLogin}
-                >
-                  {children}
-                </AuthProvider>
-              )}
-            </TokenRefreshMutation>
-          )}
-        </TypedVerifyTokenMutation>
-      )}
-    </TypedTokenAuthMutation>
+    <AuthProvider
+      tokenAuth={tokenAuth}
+      tokenVerify={tokenVerify}
+      tokenRefresh={tokenRefresh}
+      onLogin={handleLogin}
+    >
+      {children}
+    </AuthProvider>
   );
 };
 
