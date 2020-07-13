@@ -1,5 +1,6 @@
 import { fragmentUser } from "@saleor/fragments/auth";
 import { accountErrorFragment } from "@saleor/fragments/errors";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
@@ -17,7 +18,7 @@ export const tokenAuthMutation = gql`
   mutation TokenAuth($email: String!, $password: String!) {
     tokenCreate(email: $email, password: $password) {
       token
-      errors {
+      errors: accountErrors {
         field
         message
       }
@@ -27,11 +28,9 @@ export const tokenAuthMutation = gql`
     }
   }
 `;
-
-export const TypedTokenAuthMutation = TypedMutation<
-  TokenAuth,
-  TokenAuthVariables
->(tokenAuthMutation);
+export const useTokenAuthMutation = makeMutation<TokenAuth, TokenAuthVariables>(
+  tokenAuthMutation
+);
 
 export const tokenVerifyMutation = gql`
   ${fragmentUser}
@@ -44,11 +43,22 @@ export const tokenVerifyMutation = gql`
     }
   }
 `;
-
-export const TypedVerifyTokenMutation = TypedMutation<
+export const useTokenVerifyMutation = makeMutation<
   VerifyToken,
   VerifyTokenVariables
 >(tokenVerifyMutation);
+
+const refreshToken = gql`
+  mutation RefreshToken($token: String!) {
+    tokenRefresh(csrfToken: $token) {
+      token
+    }
+  }
+`;
+export const useTokenRefreshMutation = makeMutation<
+  RefreshToken,
+  RefreshTokenVariables
+>(refreshToken);
 
 export const requestPasswordReset = gql`
   ${accountErrorFragment}
@@ -84,15 +94,3 @@ export const SetPasswordMutation = TypedMutation<
   SetPassword,
   SetPasswordVariables
 >(setPassword);
-
-const refreshToken = gql`
-  mutation RefreshToken($token: String!) {
-    tokenRefresh(csrfToken: $token) {
-      token
-    }
-  }
-`;
-export const TokenRefreshMutation = TypedMutation<
-  RefreshToken,
-  RefreshTokenVariables
->(refreshToken);
