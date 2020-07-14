@@ -129,6 +129,10 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Manage",
     description: "button"
   },
+  nextStep: {
+    defaultMessage: "Next",
+    description: "go to next step, button"
+  },
   ok: {
     defaultMessage: "OK",
     description: "button"
