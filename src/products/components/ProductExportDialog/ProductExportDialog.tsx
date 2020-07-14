@@ -77,7 +77,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   open,
   selectedProducts
 }) => {
-  const [step, { set: setStep }] = useWizard(ProductExportStep.INFO, [
+  const [step, { next, set: setStep }] = useWizard(ProductExportStep.INFO, [
     ProductExportStep.INFO,
     ProductExportStep.SETTINGS
   ]);
@@ -104,11 +104,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
                 onStepClick={setStep}
               />
               {step === ProductExportStep.INFO && (
-                <ProductExportDialogInfo
-                  data={data}
-                  errors={dialogErrors}
-                  onChange={change}
-                />
+                <ProductExportDialogInfo data={data} onChange={change} />
               )}
               {step === ProductExportStep.SETTINGS && (
                 <ProductExportDialogSettings
@@ -134,16 +130,23 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
               <Button onClick={onClose}>
                 <FormattedMessage {...buttonMessages.back} />
               </Button>
-              <ConfirmButton
-                transitionState={confirmButtonState}
-                variant="contained"
-                type="submit"
-              >
-                <FormattedMessage
-                  defaultMessage="export products"
-                  description="export products to csv file, button"
-                />
-              </ConfirmButton>
+              {step === ProductExportStep.INFO && (
+                <Button color="primary" variant="contained" onClick={next}>
+                  <FormattedMessage {...buttonMessages.nextStep} />
+                </Button>
+              )}
+              {step === ProductExportStep.SETTINGS && (
+                <ConfirmButton
+                  transitionState={confirmButtonState}
+                  variant="contained"
+                  type="submit"
+                >
+                  <FormattedMessage
+                    defaultMessage="export products"
+                    description="export products to csv file, button"
+                  />
+                </ConfirmButton>
+              )}
             </DialogActions>
           </>
         )}

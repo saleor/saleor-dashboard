@@ -2,28 +2,22 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
-import Accordion from "@saleor/components/Accordion";
-import Hr from "@saleor/components/Hr";
-import RadioGroupField, {
-  RadioGroupFieldChoice
-} from "@saleor/components/RadioGroupField";
-import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
+import Accordion, { AccordionProps } from "@saleor/components/Accordion";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { buttonMessages } from "@saleor/intl";
 import {
   ExportProductsInput,
-  ExportScope,
-  FileTypesEnum,
   ProductFieldEnum
 } from "@saleor/types/globalTypes";
-import { getFormErrors } from "@saleor/utils/errors";
-import getExportErrorMessage from "@saleor/utils/errors/export";
+import { toggle } from "@saleor/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
+    accordion: {
+      marginBottom: theme.spacing(2)
+    },
     checkbox: {
       position: "relative",
       right: -theme.spacing(1.5)
@@ -49,7 +43,11 @@ const useStyles = makeStyles(
   }
 );
 
-const Option: React.FC<{ checked: boolean }> = ({ checked, children }) => {
+const Option: React.FC<{
+  checked: boolean;
+  name: string;
+  onChange: (event: ChangeEvent) => void;
+}> = ({ checked, children, name, onChange }) => {
   const classes = useStyles({});
 
   return (
@@ -58,8 +56,10 @@ const Option: React.FC<{ checked: boolean }> = ({ checked, children }) => {
       control={
         <Checkbox
           className={classes.checkbox}
-          color="primary"
           checked={checked}
+          color="primary"
+          name={name}
+          onChange={onChange}
         />
       }
       className={classes.label}
@@ -69,25 +69,14 @@ const Option: React.FC<{ checked: boolean }> = ({ checked, children }) => {
   );
 };
 
-export interface ProductExportDialogInfoProps {
+const FieldAccordion: React.FC<AccordionProps & {
   data: ExportProductsInput;
-  errors: ExportErrorFragment[];
+  fields: ProductFieldEnum[];
   onChange: (event: ChangeEvent) => void;
-}
-
-const formFields: Array<keyof ExportProductsInput> = ["fileType", "scope"];
-
-const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
-  data,
-  errors,
-  onChange
-}) => {
-  const classes = useStyles({});
+}> = ({ data, fields, onChange, ...props }) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(formFields, errors);
-
-  const fields: Record<ProductFieldEnum, string> = {
+  const fieldNames: Record<ProductFieldEnum, string> = {
     [ProductFieldEnum.CATEGORY]: intl.formatMessage({
       defaultMessage: "Category",
       description: "product field"
@@ -147,6 +136,55 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
   };
 
   return (
+    <Accordion
+      title={intl.formatMessage({
+        defaultMessage: "SEO Information",
+        description: "informations about product seo, header"
+      })}
+      {...props}
+    >
+      {fields.map(field => (
+        <Option
+          checked={data.exportInfo.fields.includes(field)}
+          name={field}
+          onChange={onChange}
+          key={field}
+        >
+          {fieldNames[field]}
+        </Option>
+      ))}
+    </Accordion>
+  );
+};
+
+export interface ProductExportDialogInfoProps {
+  data: ExportProductsInput;
+  onChange: (event: ChangeEvent) => void;
+}
+
+const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
+  data,
+  onChange
+}) => {
+  const classes = useStyles({});
+  const intl = useIntl();
+
+  const handleFieldChange = (event: ChangeEvent) =>
+    onChange({
+      target: {
+        name: "exportInfo",
+        value: {
+          ...data.exportInfo,
+          fields: toggle(
+            event.target.name,
+            data.exportInfo.fields,
+            (a, b) => a === b
+          )
+        }
+      }
+    });
+
+  return (
     <>
       <Typography className={classes.dialogLabel}>
         <FormattedMessage
@@ -154,22 +192,63 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           description="select product informations to be exported"
         />
       </Typography>
-      <Accordion
+      <FieldAccordion
+        className={classes.accordion}
         title={intl.formatMessage({
           defaultMessage: "Product Organization",
           description: "informations about product organization, header"
         })}
-      >
-        <Option checked={true}>
-          {intl.formatMessage(buttonMessages.selectAll)}
-        </Option>
-        <Hr className={classes.hr} />
-        {Object.keys(fields).map(field => (
-          <Option checked={data.exportInfo.fields[field]} key={field}>
-            {fields[field]}
-          </Option>
-        ))}
-      </Accordion>
+        data={data}
+        fields={[
+          ProductFieldEnum.CATEGORY,
+          ProductFieldEnum.COLLECTIONS,
+          ProductFieldEnum.PRODUCT_TYPE
+        ]}
+        onChange={handleFieldChange}
+      />
+      <FieldAccordion
+        className={classes.accordion}
+        title={intl.formatMessage({
+          defaultMessage: "Financial Information",
+          description: "informations about product prices etc, header"
+        })}
+        data={data}
+        fields={[
+          ProductFieldEnum.CHARGE_TAXES,
+          ProductFieldEnum.COST_PRICE,
+          ProductFieldEnum.VARIANT_PRICE,
+          ProductFieldEnum.VISIBLE
+        ]}
+        onChange={handleFieldChange}
+      />{" "}
+      <FieldAccordion
+        className={classes.accordion}
+        title={intl.formatMessage({
+          defaultMessage: "Inventory Information",
+          description: "informations about product stock, header"
+        })}
+        data={data}
+        fields={[
+          ProductFieldEnum.PRODUCT_WEIGHT,
+          ProductFieldEnum.VARIANT_SKU,
+          ProductFieldEnum.VARIANT_WEIGHT
+        ]}
+        onChange={handleFieldChange}
+      />
+      <FieldAccordion
+        title={intl.formatMessage({
+          defaultMessage: "SEO Information",
+          description: "informations about product seo, header"
+        })}
+        data={data}
+        fields={[
+          ProductFieldEnum.DESCRIPTION,
+          ProductFieldEnum.NAME,
+          ProductFieldEnum.PRODUCT_IMAGES,
+          ProductFieldEnum.VARIANT_IMAGES
+        ]}
+        onChange={handleFieldChange}
+      />
     </>
   );
 };

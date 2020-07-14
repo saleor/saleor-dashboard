@@ -3,6 +3,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import classNames from "classnames";
 import React from "react";
 
 import Hr from "../Hr";
@@ -36,20 +37,23 @@ const useStyles = makeStyles(
 );
 
 export interface AccordionProps {
+  className?: string;
   initialExpand?: boolean;
   title: string;
 }
 
 const Accordion: React.FC<AccordionProps> = ({
   children,
+  className,
   initialExpand,
-  title
+  title,
+  ...props
 }) => {
   const classes = useStyles({});
   const [expanded, setExpanded] = React.useState(!!initialExpand);
 
   return (
-    <div className={classes.root}>
+    <div className={classNames(classes.root, className)} {...props}>
       <div className={classes.title}>
         <Typography className={classes.titleText}>{title}</Typography>
         <div className={classes.expandButton}>
