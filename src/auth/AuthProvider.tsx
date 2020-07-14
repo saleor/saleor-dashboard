@@ -26,6 +26,7 @@ import {
 interface AuthProviderProps {
   children: React.ReactNode;
 }
+
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const intl = useIntl();
   const notify = useNotifier();
@@ -136,7 +137,7 @@ export const useAuth = () => {
     isAuthenticated,
     tokenAuthLoading: user.tokenAuthLoading,
     tokenVerifyLoading: user.tokenVerifyLoading,
-    user
+    user: user.user
   };
 };
 
