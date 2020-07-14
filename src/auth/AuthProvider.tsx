@@ -1,21 +1,25 @@
 import { DEMO_MODE } from "@saleor/config";
 import { User } from "@saleor/fragments/types/User";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { maybe } from "@saleor/misc";
+import { getMutationStatus, maybe } from "@saleor/misc";
 import {
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
 import React, { useContext, useEffect, useState } from "react";
+import { useMutation } from "react-apollo";
 import { useIntl } from "react-intl";
 
 import { UserContext } from "./";
 import {
-  useTokenAuthMutation,
-  useTokenRefreshMutation,
-  useTokenVerifyMutation
+  tokenAuthMutation,
+  tokenRefreshMutation,
+  tokenVerifyMutation
 } from "./mutations";
+import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
+import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
+import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 import {
   displayDemoMessage,
   getAuthToken,
@@ -31,9 +35,26 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const intl = useIntl();
   const notify = useNotifier();
 
-  const [tokenAuth, tokenAuthOpts] = useTokenAuthMutation({});
-  const [tokenRefresh] = useTokenRefreshMutation({});
-  const [tokenVerify, tokenVerifyOpts] = useTokenVerifyMutation({});
+  const [tokenAuth, tokenAuthResult] = useMutation<
+    TokenAuth,
+    TokenAuthVariables
+  >(tokenAuthMutation);
+  const [tokenRefresh] = useMutation<RefreshToken, RefreshTokenVariables>(
+    tokenRefreshMutation
+  );
+  const [tokenVerify, tokenVerifyResult] = useMutation<
+    VerifyToken,
+    VerifyTokenVariables
+  >(tokenVerifyMutation);
+
+  const tokenAuthOpts = {
+    ...tokenAuthResult,
+    status: getMutationStatus(tokenAuthResult)
+  };
+  const tokenVerifyOpts = {
+    ...tokenVerifyResult,
+    status: getMutationStatus(tokenVerifyResult)
+  };
 
   const [userContext, setUserContext] = useState<undefined | User>(undefined);
   const [persistToken] = useState<boolean>(false);
@@ -130,7 +151,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 export const useAuth = () => {
   const user = useContext(UserContext);
-  const isAuthenticated = !!user;
+  const isAuthenticated = !!user.user;
 
   return {
     hasToken: !!getAuthToken(),
