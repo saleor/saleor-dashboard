@@ -21,7 +21,7 @@ import { Channels_channels } from "../../types/Channels";
 import { useStyles } from "./styles";
 
 export interface ChannelsListPageProps {
-  channelsList?: Channels_channels[];
+  channelsList: Channels_channels[] | undefined;
   navigateToChannelCreate: () => void;
   disabled: boolean;
   onBack: () => void;

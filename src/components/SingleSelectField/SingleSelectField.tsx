@@ -25,11 +25,12 @@ const useStyles = makeStyles(
   { name: "SingleSelectField" }
 );
 
+export type Choices = Array<{
+  value: string;
+  label: string | React.ReactNode;
+}>;
 interface SingleSelectFieldProps {
-  choices: Array<{
-    value: string;
-    label: string | React.ReactNode;
-  }>;
+  choices: Choices;
   className?: string;
   disabled?: boolean;
   error?: boolean;

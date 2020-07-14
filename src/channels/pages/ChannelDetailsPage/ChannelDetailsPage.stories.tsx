@@ -23,9 +23,9 @@ storiesOf("Views / Channels / Channel details", module)
   .add("loading", () => (
     <ChannelDetailsPage {...props} saveButtonBarState={"loading"} />
   ))
-  .add("with data", () => <ChannelDetailsPage {...props} data={channel} />)
-  .add("withouth editable currency code", () => (
-    <ChannelDetailsPage {...props} editableCurrency={false} data={channel} />
+  .add("with data", () => <ChannelDetailsPage {...props} channel={channel} />)
+  .add("without editable currency code", () => (
+    <ChannelDetailsPage {...props} editableCurrency={false} channel={channel} />
   ))
   .add("with errors", () => (
     <ChannelDetailsPage {...props} errors={channelCreateErrors} />

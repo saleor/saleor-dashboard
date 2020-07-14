@@ -830,9 +830,6 @@
     "context": "window title",
     "string": "Channel details"
   },
-  "src_dot_channels_dot_views_dot_ChannelDetails_dot_2817437093": {
-    "string": "{name}"
-  },
   "src_dot_clear": {
     "context": "button",
     "string": "Clear"

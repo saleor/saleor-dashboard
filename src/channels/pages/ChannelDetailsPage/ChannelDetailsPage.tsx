@@ -10,7 +10,7 @@ import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
 import { Channel_channel } from "../../types/Channel";
 
 export interface ChannelDetailsPageProps {
-  data?: Channel_channel;
+  channel?: Channel_channel;
   disabled: boolean;
   editableCurrency?: boolean;
   errors: ChannelErrorFragment[];
@@ -26,7 +26,7 @@ const initialData: FormData = {
 };
 
 export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
-  data,
+  channel,
   disabled,
   editableCurrency = true,
   errors,
@@ -34,7 +34,7 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   onSubmit,
   saveButtonBarState
 }) => (
-  <Form onSubmit={data => onSubmit(data)} initial={data || initialData}>
+  <Form onSubmit={onSubmit} initial={channel || initialData}>
     {({ change, data, hasChanged, submit }) => (
       <>
         <Grid>

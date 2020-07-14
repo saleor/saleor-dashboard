@@ -1,17 +1,17 @@
 import Typography from "@material-ui/core/Typography";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import { SingleSelectField } from "@saleor/components/SingleSelectField";
+import {
+  Choices,
+  SingleSelectField
+} from "@saleor/components/SingleSelectField";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../styles";
 
 export interface ChannelDeleteDialogProps {
-  channelsChoices: Array<{
-    value: string;
-    label: string | React.ReactNode;
-  }>;
+  channelsChoices: Choices;
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   onClose: () => void;
@@ -27,10 +27,9 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const [choice, setValue] = useState({
-    name: "channels",
-    value: channelsChoices[0].value
-  });
+  const [choice, setChoice] = useState(
+    !!channelsChoices.length ? channelsChoices[0].value : ""
+  );
 
   return (
     <ActionDialog
@@ -59,8 +58,8 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
               defaultMessage: "Select Channel",
               description: "dialog header"
             })}
-            value={choice.value}
-            onChange={e => setValue(e.target)}
+            value={choice}
+            onChange={e => setChoice(e.target.value)}
           />
         </div>
         <Typography>

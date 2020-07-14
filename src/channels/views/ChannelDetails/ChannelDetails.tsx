@@ -7,7 +7,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { ChannelUpdateInput } from "../../../types/globalTypes";
 import { useChannelUpdateMutation } from "../../mutations";
@@ -66,18 +66,9 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id }) => {
         <AppHeader onBack={handleBack}>
           {intl.formatMessage(sectionNames.channels)}
         </AppHeader>
-        <PageHeader
-          title={
-            <FormattedMessage
-              defaultMessage="{name}"
-              values={{
-                name: data?.channel?.name
-              }}
-            />
-          }
-        />
+        <PageHeader title={data?.channel?.name} />
         <ChannelDetailsPage
-          data={data?.channel}
+          channel={data?.channel}
           disabled={updateChannelOpts.loading || loading}
           editableCurrency={false}
           errors={updateChannelOpts?.data?.channelUpdate?.errors || []}
