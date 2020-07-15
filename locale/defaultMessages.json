@@ -1461,6 +1461,16 @@
     "context": "button",
     "string": "Confirm"
   },
+  "src_dot_containers_dot_BackgroundTasks_dot_exportFailedTitle": {
+    "string": "Product Export Failed"
+  },
+  "src_dot_containers_dot_BackgroundTasks_dot_exportFinishedText": {
+    "string": "Product export has finished and was sent to your email address."
+  },
+  "src_dot_containers_dot_BackgroundTasks_dot_exportFinishedTitle": {
+    "context": "csv file exporting has finished, header",
+    "string": "Exporting CSV finished"
+  },
   "src_dot_containers_dot_BackgroundTasks_dot_invoiceGenerateFinishedText": {
     "string": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
   },
@@ -2248,6 +2258,10 @@
   "src_dot_navigation": {
     "context": "navigation section name",
     "string": "Navigation"
+  },
+  "src_dot_nextStep": {
+    "context": "go to next step, button",
+    "string": "Next"
   },
   "src_dot_no": {
     "string": "No"
@@ -3555,6 +3569,137 @@
     "context": "product name",
     "string": "Name"
   },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_108342258": {
+    "context": "button",
+    "string": "Load More"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1198255427": {
+    "context": "export all products to csv file",
+    "string": "All products"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1459686496": {
+    "context": "product field",
+    "string": "Visibility"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1755013298": {
+    "context": "product field",
+    "string": "Category"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1890035856": {
+    "context": "informations about product organization, header",
+    "string": "Product Organization"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1952810469": {
+    "context": "product field",
+    "string": "Type"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2051669917": {
+    "context": "product field",
+    "string": "Cost Price"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2119710854": {
+    "context": "informations about product seo, header",
+    "string": "SEO Information"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2167661409": {
+    "context": "export selected products to csv file",
+    "string": "Selected products ({number})"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_222873645": {
+    "context": "product field",
+    "string": "Collections"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2318723509": {
+    "context": "export products to csv file, choice field label",
+    "string": "Export information for:"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2659464408": {
+    "context": "product export to csv file, header",
+    "string": "Information exported"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2693217446": {
+    "context": "export products as csv or spreadsheet file",
+    "string": "Export as:"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2726203891": {
+    "context": "export filtered products to csv file",
+    "string": "Current search"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2883720012": {
+    "context": "export products to csv file, button",
+    "string": "export products"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2949617129": {
+    "context": "product field",
+    "string": "Product Images"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3012202273": {
+    "context": "export products to csv file, dialog header",
+    "string": "Export Information"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3365843236": {
+    "context": "product export to csv file, header",
+    "string": "Export Settings"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3374163063": {
+    "context": "product field",
+    "string": "Description"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3441755345": {
+    "context": "product field",
+    "string": "Charge Taxes"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3518309850": {
+    "context": "export products as spreadsheet",
+    "string": "Spreadsheet for Excel, Numbers etc."
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3544554440": {
+    "context": "product field",
+    "string": "Variant Weight"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3599582104": {
+    "string": "Search Atrtibuttes"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3919525499": {
+    "context": "informations about product stock, header",
+    "string": "Inventory Information"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_4118932547": {
+    "context": "export products as csv file",
+    "string": "Plain CSV file"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_4160582036": {
+    "context": "product field",
+    "string": "Variant Price"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_472026385": {
+    "context": "select product informations to be exported",
+    "string": "Information exported:"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_524117994": {
+    "context": "input helper text, search attributes",
+    "string": "Search by attribute name"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_636461959": {
+    "context": "product field",
+    "string": "Name"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_693960049": {
+    "context": "product field",
+    "string": "SKU"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_734825715": {
+    "context": "informations about product prices etc, header",
+    "string": "Financial Information"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_746695941": {
+    "context": "product field",
+    "string": "Weight"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_897437458": {
+    "context": "product field",
+    "string": "Variant Images"
+  },
   "src_dot_products_dot_components_dot_ProductImageNavigation_dot_3060635772": {
     "context": "section header",
     "string": "All Photos"
@@ -3590,6 +3735,10 @@
   "src_dot_products_dot_components_dot_ProductListPage_dot_1952810469": {
     "context": "product type",
     "string": "Type"
+  },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_2059406063": {
+    "context": "export products to csv file, button",
+    "string": "Export Products"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_3550330425": {
     "string": "Search Products..."
@@ -3979,6 +4128,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
   },
+  "src_dot_products_dot_views_dot_ProductList_dot_1505423810": {
+    "context": "waiting for export to end, header",
+    "string": "Exporting CSV"
+  },
   "src_dot_products_dot_views_dot_ProductList_dot_1547167026": {
     "context": "publish product, button",
     "string": "Publish"
@@ -4006,6 +4159,9 @@
   "src_dot_products_dot_views_dot_ProductList_dot_400629795": {
     "context": "dialog header",
     "string": "Delete Products"
+  },
+  "src_dot_products_dot_views_dot_ProductList_dot_44832327": {
+    "string": "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_1177237881": {
     "context": "dialog content",
@@ -4069,6 +4225,10 @@
   },
   "src_dot_savedChanges": {
     "string": "Saved changes"
+  },
+  "src_dot_selectAll": {
+    "context": "select all options, button",
+    "string": "Select All"
   },
   "src_dot_send": {
     "context": "button",
