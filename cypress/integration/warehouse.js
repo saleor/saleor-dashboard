@@ -17,7 +17,7 @@ describe("Warehouse settings", () => {
 
   it("Editing warehouse is available", () => {
     cy.visit("/dashboard/warehouses")
-      .get("[data-testid=africa]")
+      .get("[data-testid=defaultwarehouse]")
       .get("[data-test=editButton]")
       .first()
       .click()
