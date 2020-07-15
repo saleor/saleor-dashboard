@@ -13,7 +13,8 @@ import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useWizard from "@saleor/hooks/useWizard";
 import { buttonMessages } from "@saleor/intl";
-import { DialogProps } from "@saleor/types";
+import { SearchAttributes_search_edges_node } from "@saleor/searches/types/SearchAttributes";
+import { DialogProps, FetchMoreProps } from "@saleor/types";
 import {
   ExportProductsInput,
   ExportScope,
@@ -54,6 +55,7 @@ function useSteps(): Array<Step<ProductExportStep>> {
 
 const initialForm: ExportProductsInput = {
   exportInfo: {
+    attributes: [],
     fields: []
   },
   fileType: FileTypesEnum.CSV,
@@ -62,10 +64,12 @@ const initialForm: ExportProductsInput = {
 
 const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
-export interface ProductExportDialogProps extends DialogProps {
+export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
+  attributes: SearchAttributes_search_edges_node[];
   confirmButtonState: ConfirmButtonTransitionState;
   errors: ExportErrorFragment[];
   selectedProducts: number;
+  onFetch: (query: string) => void;
   onSubmit: (data: ExportProductsInput) => void;
 }
 
@@ -75,12 +79,13 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   onClose,
   onSubmit,
   open,
-  selectedProducts
+  selectedProducts,
+  ...fetchMoreProps
 }) => {
-  const [step, { next, set: setStep }] = useWizard(ProductExportStep.INFO, [
+  const [step, { next, prev, set: setStep }] = useWizard(
     ProductExportStep.INFO,
-    ProductExportStep.SETTINGS
-  ]);
+    [ProductExportStep.INFO, ProductExportStep.SETTINGS]
+  );
   const steps = useSteps();
   const dialogErrors = useModalDialogErrors(errors, open);
   const notFormErrors = dialogErrors.filter(err => !err.field);
@@ -104,7 +109,11 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
                 onStepClick={setStep}
               />
               {step === ProductExportStep.INFO && (
-                <ProductExportDialogInfo data={data} onChange={change} />
+                <ProductExportDialogInfo
+                  data={data}
+                  onChange={change}
+                  {...fetchMoreProps}
+                />
               )}
               {step === ProductExportStep.SETTINGS && (
                 <ProductExportDialogSettings
@@ -127,9 +136,16 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
             )}
 
             <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.back} />
-              </Button>
+              {step === ProductExportStep.INFO && (
+                <Button onClick={onClose}>
+                  <FormattedMessage {...buttonMessages.cancel} />
+                </Button>
+              )}
+              {step === ProductExportStep.SETTINGS && (
+                <Button onClick={prev}>
+                  <FormattedMessage {...buttonMessages.back} />
+                </Button>
+              )}
               {step === ProductExportStep.INFO && (
                 <Button color="primary" variant="contained" onClick={next}>
                   <FormattedMessage {...buttonMessages.nextStep} />

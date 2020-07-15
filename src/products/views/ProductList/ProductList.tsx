@@ -31,6 +31,7 @@ import {
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import { ProductListVariables } from "@saleor/products/types/ProductList";
+import useAttributeSearch from "@saleor/searches/useAttributeSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -114,6 +115,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5
+    }
+  });
+  const searchAttributes = useAttributeSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 10
     }
   });
 
@@ -522,6 +529,16 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           </DialogContentText>
                         </ActionDialog>
                         <ProductExportDialog
+                          attributes={(
+                            searchAttributes.result.data?.search.edges || []
+                          ).map(edge => edge.node)}
+                          hasMore={
+                            searchAttributes.result.data?.search.pageInfo
+                              .hasNextPage
+                          }
+                          loading={searchAttributes.result.loading}
+                          onFetch={searchAttributes.search}
+                          onFetchMore={searchAttributes.loadMore}
                           open={params.action === "export"}
                           confirmButtonState={exportProductsOpts.status}
                           errors={
