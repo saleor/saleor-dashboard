@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 
 import { ChannelCreateInput } from "../../../types/globalTypes";
 import { useChannelCreateMutation } from "../../mutations";
-import ChannelCreatePage from "../../pages/ChannelCreatePage";
+import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { ChannelCreate } from "../../types/ChannelCreate";
 import { channelsListUrl } from "../../urls";
 
@@ -61,7 +61,7 @@ export const ChannelCreateView = ({}) => {
             description: "channel create"
           })}
         />
-        <ChannelCreatePage
+        <ChannelDetailsPage
           disabled={createChannelOpts.loading}
           errors={createChannelOpts?.data?.channelCreate?.errors || []}
           onSubmit={handleSubmit}
