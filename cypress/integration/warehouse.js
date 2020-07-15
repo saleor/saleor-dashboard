@@ -12,12 +12,12 @@ describe("Warehouse settings", () => {
     cy.visit("/configuration/")
       .get("[data-testid=warehouses][data-test=settingsSubsection]")
       .click();
-    cy.location("pathname").should("eq", "/dashboard/warehouses/");
+    cy.location("pathname").should("eq", "/warehouses/");
   });
 
   it("Editing warehouse is available", () => {
-    cy.visit("/dashboard/warehouses")
-      .get("[data-testid=africa]")
+    cy.visit(`/warehouses`)
+      .get("[data-testid=defaultwarehouse]")
       .get("[data-test=editButton]")
       .first()
       .click()

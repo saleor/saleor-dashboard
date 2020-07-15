@@ -29,7 +29,7 @@ describe("User authorization", () => {
         .click()
         .get("[data-test=accountSettingsButton]")
         .click();
-      cy.location("pathname").should("contains", "/dashboard/staff/");
+      cy.location("pathname").should("contains", "/staff/");
     });
   });
 });
