@@ -1082,6 +1082,11 @@ export interface ChannelCreateInput {
   currencyCode: string;
 }
 
+export interface ChannelUpdateInput {
+  name?: string | null;
+  slug?: string | null;
+}
+
 export interface CollectionCreateInput {
   isPublished?: boolean | null;
   name?: string | null;

@@ -17,7 +17,11 @@ export const useStyles = makeStyles(
     },
     label: {
       color: theme.palette.text.secondary
+    },
+    select: {
+      marginBottom: theme.spacing(2),
+      marginTop: theme.spacing(2)
     }
   }),
-  { name: "ChannelCreatePage" }
+  { name: "ChannelComponents" }
 );
