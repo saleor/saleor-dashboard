@@ -66,15 +66,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    const token = getAuthToken();
-    if (!!token && !userContext) {
-      verifyToken(token);
-    } else {
-      loginWithCredentialsManagementAPI(login);
-    }
-  }, []);
-
-  useEffect(() => {
     if (tokenAuthOpts.error || tokenVerifyOpts.error) {
       logout();
     }
@@ -97,6 +88,15 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     }
   }, [tokenAuthOpts, tokenVerifyOpts]);
+
+  useEffect(() => {
+    const token = getAuthToken();
+    if (!!token && !userContext) {
+      verifyToken(token);
+    } else {
+      loginWithCredentialsManagementAPI(login);
+    }
+  }, []);
 
   const login = async (email: string, password: string) => {
     tokenAuth({ variables: { email, password } }).then(result => {
