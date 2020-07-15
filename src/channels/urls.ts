@@ -1,7 +1,7 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { Dialog, Filters, Sort, TabActionDialog } from "../types";
+import { Dialog, Filters, SingleAction, Sort } from "../types";
 
 export enum ChannelsListUrlFiltersEnum {
   query = "query"
@@ -11,10 +11,11 @@ export enum ChannelsListUrlSortField {
 }
 export type ChannelsListUrlSort = Sort<ChannelsListUrlSortField>;
 export type ChannelsListUrlFilters = Filters<ChannelsListUrlFiltersEnum>;
-export type ChannelsListUrlDialog = "remove" | TabActionDialog;
+export type ChannelsListUrlDialog = "remove";
 export type ChannelsListUrlQueryParams = Dialog<ChannelsListUrlDialog> &
   ChannelsListUrlFilters &
-  ChannelsListUrlSort;
+  ChannelsListUrlSort &
+  SingleAction;
 
 export const channelsSection = "/channels/";
 
