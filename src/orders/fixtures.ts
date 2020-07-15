@@ -820,6 +820,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       date: "2018-09-17T13:22:24.376193+00:00",
       email: null,
       emailType: null,
+      invoiceNumber: "23/07/2020",
       id: "T3JkZXJFdmVudDoyMQ==",
       message: null,
       quantity: 1,

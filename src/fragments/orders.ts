@@ -9,6 +9,7 @@ export const fragmentOrderEvent = gql`
     date
     email
     emailType
+    invoiceNumber
     message
     quantity
     type
