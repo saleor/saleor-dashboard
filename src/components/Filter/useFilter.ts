@@ -17,7 +17,11 @@ function useFilter<T extends string>(initialFilter: IFilter<T>): UseFilter<T> {
   const reset = () =>
     dispatchFilterAction({
       payload: {
-        new: initialFilter
+        new: initialFilter.map(each => ({
+          ...each,
+          active: false,
+          value: []
+        }))
       },
       type: "reset"
     });
