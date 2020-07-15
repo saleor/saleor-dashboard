@@ -6,14 +6,24 @@ import {
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { attributes } from "../../../attributes/fixtures";
 import ProductExportDialog, {
   ProductExportDialogProps
 } from "./ProductExportDialog";
 
 const props: ProductExportDialogProps = {
+  attributes: attributes.map(attr => ({
+    __typename: "Attribute",
+    id: attr.id,
+    name: attr.name
+  })),
   confirmButtonState: "default",
   errors: [],
+  hasMore: true,
+  loading: true,
   onClose: () => undefined,
+  onFetch: () => undefined,
+  onFetchMore: () => undefined,
   onSubmit: () => undefined,
   open: true,
   selectedProducts: 18

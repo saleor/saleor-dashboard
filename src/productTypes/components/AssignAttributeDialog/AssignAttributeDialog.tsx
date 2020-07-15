@@ -30,7 +30,7 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SearchAttributes_productType_availableAttributes_edges_node } from "../../hooks/useAvailableAttributeSearch/types/SearchAttributes";
+import { SearchAvailableAttributes_productType_availableAttributes_edges_node } from "../../hooks/useAvailableAttributeSearch/types/SearchAvailableAttributes";
 
 const useStyles = makeStyles(
   theme => ({
@@ -63,7 +63,7 @@ export interface AssignAttributeDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: string[];
   open: boolean;
-  attributes: SearchAttributes_productType_availableAttributes_edges_node[];
+  attributes: SearchAvailableAttributes_productType_availableAttributes_edges_node[];
   selected: string[];
   onClose: () => void;
   onFetch: (query: string) => void;

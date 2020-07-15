@@ -1,9 +1,17 @@
+import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Accordion, { AccordionProps } from "@saleor/components/Accordion";
+import Hr from "@saleor/components/Hr";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import useSearchQuery from "@saleor/hooks/useSearchQuery";
+import { sectionNames } from "@saleor/intl";
+import { SearchAttributes_search_edges_node } from "@saleor/searches/types/SearchAttributes";
+import { FetchMoreProps } from "@saleor/types";
 import {
   ExportProductsInput,
   ProductFieldEnum
@@ -12,6 +20,8 @@ import { toggle } from "@saleor/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
+
+const attributeNamePrefix = "attribute-";
 
 const useStyles = makeStyles(
   theme => ({
@@ -36,6 +46,11 @@ const useStyles = makeStyles(
       justifyContent: "space-between",
       margin: theme.spacing(0),
       width: "100%"
+    },
+    loadMoreContainer: {
+      display: "flex",
+      justifyContent: "center",
+      marginTop: theme.spacing(2)
     }
   }),
   {
@@ -157,17 +172,25 @@ const FieldAccordion: React.FC<AccordionProps & {
   );
 };
 
-export interface ProductExportDialogInfoProps {
+export interface ProductExportDialogInfoProps extends FetchMoreProps {
+  attributes: SearchAttributes_search_edges_node[];
   data: ExportProductsInput;
   onChange: (event: ChangeEvent) => void;
+  onFetch: (query: string) => void;
 }
 
 const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
+  attributes,
   data,
-  onChange
+  hasMore,
+  loading,
+  onChange,
+  onFetch,
+  onFetchMore
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
+  const [query, onQueryChange] = useSearchQuery(onFetch);
 
   const handleFieldChange = (event: ChangeEvent) =>
     onChange({
@@ -178,6 +201,21 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           fields: toggle(
             event.target.name,
             data.exportInfo.fields,
+            (a, b) => a === b
+          )
+        }
+      }
+    });
+
+  const handleAtrtibuteChange = (event: ChangeEvent) =>
+    onChange({
+      target: {
+        name: "exportInfo",
+        value: {
+          ...data.exportInfo,
+          attributes: toggle(
+            event.target.name.substr(attributeNamePrefix.length),
+            data.exportInfo.attributes,
             (a, b) => a === b
           )
         }
@@ -206,6 +244,52 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         ]}
         onChange={handleFieldChange}
       />
+      <Accordion
+        className={classes.accordion}
+        title={intl.formatMessage(sectionNames.attributes)}
+      >
+        <TextField
+          name="query"
+          value={query}
+          onChange={onQueryChange}
+          label={intl.formatMessage({
+            defaultMessage: "Search Atrtibuttes"
+          })}
+          placeholder={intl.formatMessage({
+            defaultMessage: "Search by attribute name",
+            description: "input helper text, search attributes"
+          })}
+          fullWidth
+          InputProps={{
+            autoComplete: "off",
+            endAdornment: loading && <CircularProgress size={16} />
+          }}
+        />
+        <Hr className={classes.hr} />
+        {attributes.map(attribute => (
+          <Option
+            checked={data.exportInfo.attributes.includes(attribute.id)}
+            name={attributeNamePrefix + attribute.id}
+            onChange={handleAtrtibuteChange}
+            key={attribute.id}
+          >
+            {attribute.name}
+          </Option>
+        ))}
+        {(hasMore || loading) && (
+          <div className={classes.loadMoreContainer}>
+            {hasMore && !loading && (
+              <Button color="primary" onClick={onFetchMore}>
+                <FormattedMessage
+                  defaultMessage="Load More"
+                  description="button"
+                />
+              </Button>
+            )}
+            {loading && <CircularProgress size={32} />}
+          </div>
+        )}
+      </Accordion>
       <FieldAccordion
         className={classes.accordion}
         title={intl.formatMessage({
@@ -220,7 +304,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           ProductFieldEnum.VISIBLE
         ]}
         onChange={handleFieldChange}
-      />{" "}
+      />
       <FieldAccordion
         className={classes.accordion}
         title={intl.formatMessage({
