@@ -21,7 +21,7 @@ import { Channels_channels } from "../../types/Channels";
 import { useStyles } from "./styles";
 
 export interface ChannelsListPageProps {
-  channelsList: Channels_channels[] | [];
+  channelsList: Channels_channels[] | undefined;
   navigateToChannelCreate: () => void;
   disabled: boolean;
   onBack: () => void;
@@ -92,18 +92,20 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                       {channel?.name || <Skeleton />}
                     </span>
                   </TableCell>
-                  <TableCell className={classes.colAction}>
-                    <IconButton
-                      color="primary"
-                      onClick={
-                        channel
-                          ? stopPropagation(() => onRemove(channel.id))
-                          : undefined
-                      }
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
+                  {channelsList?.length > 1 && (
+                    <TableCell className={classes.colAction}>
+                      <IconButton
+                        color="primary"
+                        onClick={
+                          channel
+                            ? stopPropagation(() => onRemove(channel.id))
+                            : undefined
+                        }
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  )}
                 </TableRow>
               ),
               () => (
