@@ -927,10 +927,6 @@
     "context": "product type",
     "string": "Type"
   },
-  "src_dot_collections_dot_components_dot_CollectionProducts_dot_2341910657": {
-    "context": "product is not published",
-    "string": "Not published"
-  },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_3640454975": {
     "context": "product is published",
     "string": "Published"
@@ -1116,6 +1112,32 @@
   },
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "No results"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_1815688500": {
+    "context": "product channel",
+    "string": "since {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_2060790769": {
+    "context": "publish on date",
+    "string": "Publish on"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_3285520461": {
+    "context": "product channel",
+    "string": "Will become available on {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_3326160357": {
+    "context": "section header",
+    "string": "Availability"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_4037103586": {
+    "context": "section header button",
+    "string": "Manage"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_643174786": {
+    "string": "Visible"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_77815154": {
+    "string": "Hidden"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",
@@ -1886,10 +1908,6 @@
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2100305525": {
     "context": "button",
     "string": "Assign products"
-  },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2341910657": {
-    "context": "product is not published",
-    "string": "Not published"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2697405188": {
     "string": "Product Name"
@@ -3653,14 +3671,6 @@
     "context": "product organization, header",
     "string": "Organization"
   },
-  "src_dot_products_dot_components_dot_ProductCreatePage_dot_1815688500": {
-    "context": "product",
-    "string": "since {date}"
-  },
-  "src_dot_products_dot_components_dot_ProductCreatePage_dot_2001551496": {
-    "context": "product",
-    "string": "will be visible from {date}"
-  },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2706108815": {
     "string": "Add search engine title and description to make this product easier to find"
   },
@@ -3757,17 +3767,17 @@
     "context": "product type",
     "string": "Type"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_2341910657": {
-    "context": "product status",
-    "string": "Not published"
-  },
   "src_dot_products_dot_components_dot_ProductList_dot_2754779425": {
     "context": "product type",
     "string": "Configurable"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_3640454975": {
+  "src_dot_products_dot_components_dot_ProductList_dot_3326160357": {
+    "context": "product channels",
+    "string": "Availability"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_484889062": {
     "context": "product status",
-    "string": "Published"
+    "string": "Available in {count} out of {allCount}"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
@@ -3834,14 +3844,6 @@
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
-  },
-  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_1815688500": {
-    "context": "product",
-    "string": "since {date}"
-  },
-  "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2001551496": {
-    "context": "product",
-    "string": "will be visible from {date}"
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2706108815": {
     "string": "Add search engine title and description to make this product easier to find"
@@ -4096,25 +4098,9 @@
     "context": "publish product, button",
     "string": "Publish"
   },
-  "src_dot_products_dot_views_dot_ProductList_dot_2036051956": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to unpublish this product?} other{Are you sure you want to unpublish {displayQuantity} products?}}"
-  },
   "src_dot_products_dot_views_dot_ProductList_dot_2237014112": {
     "context": "unpublish product, button",
     "string": "Unpublish"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_2946646245": {
-    "context": "dialog header",
-    "string": "Publish Products"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_3362608461": {
-    "context": "dialog header",
-    "string": "Unpublish Products"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_3518737068": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to publish this product?} other{Are you sure you want to publish {displayQuantity} products?}}"
   },
   "src_dot_products_dot_views_dot_ProductList_dot_400629795": {
     "context": "dialog header",
@@ -4128,9 +4114,16 @@
     "context": "dialog header",
     "string": "Delete Product Variants"
   },
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_1982389039": {
+    "context": "channels availability text",
+    "string": "Available at {productChannels} out of {allChannels} channels"
+  },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",
     "string": "Are you sure you want to delete {name}?"
+  },
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_3423943948": {
+    "string": "Manage Products Channel Availability"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_4108890645": {
     "string": "Product removed"
@@ -5278,6 +5271,9 @@
   },
   "src_dot_utils_dot_errors_dot_channelUnique": {
     "string": "Slug must be unique"
+  },
+  "src_dot_utils_dot_errors_dot_duplicated": {
+    "string": "The same object cannot be in both lists"
   },
   "src_dot_utils_dot_errors_dot_duplicatedInputItem": {
     "string": "Cannot add and remove group the same time"
