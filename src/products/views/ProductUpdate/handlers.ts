@@ -9,6 +9,7 @@ import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
 import { SimpleProductUpdateVariables } from "@saleor/products/types/SimpleProductUpdate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { ReorderEvent } from "@saleor/types";
+import { diff } from "fast-array-diff";
 import { arrayMove } from "react-sortable-hoc";
 
 export function createUpdateHandler(
@@ -56,24 +57,24 @@ export function createUpdateHandler(
     const productChannels = createChannelsDataFromProduct(
       product.channelListing
     );
-
-    const removed = productChannels.filter(
-      productChannel => !data.channelListing.includes(productChannel)
-    );
-    const added = data.channelListing.filter(channel =>
-      productChannels.some(productChannel => productChannel.id !== channel.id)
+    const diffChannels = diff(
+      productChannels,
+      data.channelListing,
+      (a, b) => a.id === b.id
     );
 
     updateChannels({
       variables: {
         id: product.id,
         input: {
-          addChannels: added?.map(channel => ({
+          addChannels: data.channelListing.map(channel => ({
             channelId: channel.id,
             isPublished: channel.isPublished,
             publicationDate: channel.publicationDate
           })),
-          removeChannels: removed?.map(removedChannel => removedChannel.id)
+          removeChannels: diffChannels.removed?.map(
+            removedChannel => removedChannel.id
+          )
         }
       }
     });

@@ -1,4 +1,3 @@
-import { ChannelData } from "@saleor/components/ChannelsAvailability";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
@@ -51,13 +50,13 @@ export function createAttributeChangeHandler(
 export function createChannelsChangeHandler(
   data: ProductUpdatePageFormData,
   updateChannels: (data: ProductUpdatePageFormData) => void,
-  channels: ChannelData[],
   triggerChange: () => void
 ) {
   return (index: number) => (channelData: {
     isPublished: boolean;
     publicationDate: string | null;
   }) => {
+    const channels = data.channelListing;
     const newChannels = [...channels];
     newChannels[index] = {
       ...channels[index],

@@ -6,6 +6,7 @@ import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
 import {
   ChannelData,
+  createChannelsData,
   createChannelsDataFromProduct
 } from "@saleor/components/ChannelsAvailability";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
@@ -92,12 +93,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   });
   const product = data?.product;
 
-  const allChannels: ChannelData[] = channelsData?.channels?.map(channel => ({
-    id: channel.id,
-    isPublished: false,
-    name: channel.name,
-    publicationDate: null
-  }));
+  const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
 
   const productChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
     product?.channelListing
@@ -197,19 +193,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     }
   };
 
-  const channelsAvailabilityText = (
-    <FormattedMessage
-      defaultMessage={
-        "Available at {productChannels} out of {allChannels} channels"
-      }
-      description={"channels availability text"}
-      values={{
-        allChannels: allChannels?.length,
-        productChannels: productChannelsChoices?.length
-      }}
-    />
-  );
-
   return product === null ? (
     <NotFoundPage onBack={handleBack} />
   ) : (
@@ -295,7 +278,18 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
               />
             )}
             <ProductUpdatePage
-              channelsAvailabilityText={channelsAvailabilityText}
+              channelsAvailabilityText={intl.formatMessage(
+                {
+                  defaultMessage:
+                    "Available at {productChannels} out of {allChannels} channels",
+
+                  description: "channels availability text"
+                },
+                {
+                  allChannels: allChannels?.length,
+                  productChannels: productChannelsChoices?.length
+                }
+              )}
               categories={categories}
               collections={collections}
               currentChannels={currentChannels}

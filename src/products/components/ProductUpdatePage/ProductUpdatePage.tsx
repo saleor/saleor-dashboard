@@ -232,7 +232,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         const handleChannelsChange = createChannelsChangeHandler(
           data,
           set,
-          data.channelListing,
           triggerChange
         );
 
