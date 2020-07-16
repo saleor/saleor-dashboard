@@ -3530,6 +3530,7 @@ enum PermissionEnum {
   MANAGE_SETTINGS
   MANAGE_TRANSLATIONS
   MANAGE_CHECKOUTS
+  MANAGE_WEBHOOKS
 }
 
 type PermissionGroupCreate {
