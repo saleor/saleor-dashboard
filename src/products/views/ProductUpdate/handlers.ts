@@ -1,5 +1,7 @@
+import { createChannelsDataFromProduct } from "@saleor/components/ChannelsAvailability";
 import { decimal } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
+import { ProductChannelListingUpdateVariables } from "@saleor/products/types/ProductChannelListingUpdate";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
 import { ProductImageReorderVariables } from "@saleor/products/types/ProductImageReorder";
@@ -12,7 +14,10 @@ import { arrayMove } from "react-sortable-hoc";
 export function createUpdateHandler(
   product: ProductDetails_product,
   updateProduct: (variables: ProductUpdateVariables) => void,
-  updateSimpleProduct: (variables: SimpleProductUpdateVariables) => void
+  updateSimpleProduct: (variables: SimpleProductUpdateVariables) => void,
+  updateChannels: (options: {
+    variables: ProductChannelListingUpdateVariables;
+  }) => void
 ) {
   return (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
@@ -48,6 +53,30 @@ export function createUpdateHandler(
         updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
       });
     }
+    const productChannels = createChannelsDataFromProduct(
+      product.channelListing
+    );
+
+    const removed = productChannels.filter(
+      productChannel => !data.channelListing.includes(productChannel)
+    );
+    const added = data.channelListing.filter(channel =>
+      productChannels.some(productChannel => productChannel.id !== channel.id)
+    );
+
+    updateChannels({
+      variables: {
+        id: product.id,
+        input: {
+          addChannels: added?.map(channel => ({
+            channelId: channel.id,
+            isPublished: channel.isPublished,
+            publicationDate: channel.publicationDate
+          })),
+          removeChannels: removed?.map(removedChannel => removedChannel.id)
+        }
+      }
+    });
   };
 }
 

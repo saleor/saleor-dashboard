@@ -34,6 +34,13 @@ export const channelsList: Channels_channels[] = [
     id: "Q2hhbn5lbDoy",
     name: "Channel test",
     slug: "channeltest"
+  },
+  {
+    __typename: "Channel",
+    currencyCode: "euro",
+    id: "Q2hhbm5lbDo5",
+    name: "Channel USD",
+    slug: "channel-usd"
   }
 ];
 

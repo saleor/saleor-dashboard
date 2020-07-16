@@ -2,13 +2,23 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(
   theme => ({
-    children: {
-      "& button": {
-        margin: "0 9px"
+    arrow: {
+      transition: theme.transitions.duration.short + "ms"
+    },
+    channelBtn: {
+      "&:focus": {
+        outline: "none"
       },
-      "& label": {
-        marginTop: theme.spacing(2.5)
-      }
+      background: "transparent",
+      border: "none",
+      cursor: "pointer",
+      textAlign: "left"
+    },
+    channelName: {
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: theme.spacing(0.5)
     },
     date: {
       "& svg": {
@@ -19,6 +29,9 @@ export const useStyles = makeStyles(
     label: {
       lineHeight: 1,
       margin: 0
+    },
+    rotate: {
+      transform: "rotate(180deg)"
     },
     secondLabel: {
       fontSize: 12

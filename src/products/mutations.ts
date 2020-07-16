@@ -20,6 +20,10 @@ import {
   productBulkPublish,
   productBulkPublishVariables
 } from "./types/productBulkPublish";
+import {
+  ProductChannelListingUpdate,
+  ProductChannelListingUpdateVariables
+} from "./types/ProductChannelListingUpdate";
 import { ProductCreate, ProductCreateVariables } from "./types/ProductCreate";
 import { ProductDelete, ProductDeleteVariables } from "./types/ProductDelete";
 import {
@@ -130,7 +134,7 @@ export const productUpdateMutation = gql`
   mutation ProductUpdate(
     $id: ID!
     $attributes: [AttributeValueInput]
-    $publicationDate: Date
+    # $publicationDate: Date
     $category: ID
     $chargeTaxes: Boolean!
     $collections: [ID]
@@ -144,7 +148,7 @@ export const productUpdateMutation = gql`
       id: $id
       input: {
         attributes: $attributes
-        publicationDate: $publicationDate
+        # publicationDate: $publicationDate
         category: $category
         chargeTaxes: $chargeTaxes
         collections: $collections
@@ -178,7 +182,7 @@ export const simpleProductUpdateMutation = gql`
   mutation SimpleProductUpdate(
     $id: ID!
     $attributes: [AttributeValueInput]
-    $publicationDate: Date
+    # $publicationDate: Date
     $category: ID
     $chargeTaxes: Boolean!
     $collections: [ID]
@@ -197,7 +201,7 @@ export const simpleProductUpdateMutation = gql`
       id: $id
       input: {
         attributes: $attributes
-        publicationDate: $publicationDate
+        # publicationDate: $publicationDate
         category: $category
         chargeTaxes: $chargeTaxes
         collections: $collections
@@ -268,7 +272,7 @@ export const productCreateMutation = gql`
   ${productFragmentDetails}
   mutation ProductCreate(
     $attributes: [AttributeValueInput]
-    $publicationDate: Date
+    # $publicationDate: Date
     $category: ID!
     $chargeTaxes: Boolean!
     $collections: [ID]
@@ -285,7 +289,7 @@ export const productCreateMutation = gql`
     productCreate(
       input: {
         attributes: $attributes
-        publicationDate: $publicationDate
+        # publicationDate: $publicationDate
         category: $category
         chargeTaxes: $chargeTaxes
         collections: $collections
@@ -514,20 +518,20 @@ export const TypedProductBulkDeleteMutation = TypedMutation<
   productBulkDeleteVariables
 >(productBulkDeleteMutation);
 
-export const productBulkPublishMutation = gql`
-  ${productErrorFragment}
-  mutation productBulkPublish($ids: [ID!]!) {
-    productBulkPublish(ids: $ids) {
-      errors: productErrors {
-        ...ProductErrorFragment
-      }
-    }
-  }
-`;
-export const TypedProductBulkPublishMutation = TypedMutation<
-  productBulkPublish,
-  productBulkPublishVariables
->(productBulkPublishMutation);
+// export const productBulkPublishMutation = gql`
+//   ${productErrorFragment}
+//   mutation productBulkPublish($ids: [ID!]!) {
+//     productBulkPublish(ids: $ids) {
+//       errors: productErrors {
+//         ...ProductErrorFragment
+//       }
+//     }
+//   }
+// `;
+// export const TypedProductBulkPublishMutation = TypedMutation<
+//   productBulkPublish,
+//   productBulkPublishVariables
+// >(productBulkPublishMutation);
 
 export const ProductVariantBulkCreateMutation = gql`
   ${bulkProductErrorFragment}
@@ -561,3 +565,28 @@ export const TypedProductVariantBulkDeleteMutation = TypedMutation<
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 >(ProductVariantBulkDeleteMutation);
+
+export const ProductChannelListingUpdateMutation = gql`
+  ${productFragmentDetails}
+  mutation ProductChannelListingUpdate(
+    $id: ID!
+    $input: ProductChannelListingUpdateInput!
+  ) {
+    productChannelListingUpdate(id: $id, input: $input) {
+      product {
+        ...Product
+      }
+      errors: productsErrors {
+        field
+        message
+        code
+        channels
+      }
+    }
+  }
+`;
+
+export const useProductChannelListingUpdate = makeMutation<
+  ProductChannelListingUpdate,
+  ProductChannelListingUpdateVariables
+>(ProductChannelListingUpdateMutation);

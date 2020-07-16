@@ -168,6 +168,11 @@ export const TypedProductDetailsQuery = TypedQuery<
   ProductDetailsVariables
 >(productDetailsQuery);
 
+export const useProductDetailsQuery = makeQuery<
+  ProductDetails,
+  ProductDetailsVariables
+>(productDetailsQuery);
+
 const productVariantQuery = gql`
   ${fragmentVariant}
   query ProductVariantDetails($id: ID!) {

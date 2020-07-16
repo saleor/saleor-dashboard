@@ -1,6 +1,7 @@
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
+import { ChannelData } from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -40,7 +41,8 @@ import {
 } from "../../utils/data";
 import {
   createAttributeChangeHandler,
-  createAttributeMultiChangeHandler
+  createAttributeMultiChangeHandler,
+  createChannelsChangeHandler
 } from "../../utils/handlers";
 import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
@@ -52,6 +54,8 @@ import ProductVariants from "../ProductVariants";
 
 export interface ProductUpdatePageProps extends ListActions {
   errors: ProductErrorFragment[];
+  channelsAvailabilityText: React.ReactNode;
+  currentChannels: ChannelData[];
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
@@ -69,6 +73,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onVariantsAdd: () => void;
   onVariantShow: (id: string) => () => void;
   onImageDelete: (id: string) => () => void;
+  openChannelsModal: () => void;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -90,6 +95,8 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   disabled,
   categories: categoryChoiceList,
+  channelsAvailabilityText,
+  currentChannels = [],
   collections: collectionChoiceList,
   errors,
   fetchCategories,
@@ -109,6 +116,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageEdit,
   onImageReorder,
   onImageUpload,
+  openChannelsModal,
   onSeoClick,
   onSubmit,
   onVariantAdd,
@@ -150,13 +158,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     getChoices(maybe(() => product.collections, []))
   );
 
-  const initialData = getProductUpdatePageFormData(product, variants);
+  const initialData = getProductUpdatePageFormData(
+    product,
+    variants,
+    currentChannels
+  );
   const initialDescription = maybe<RawDraftContentState>(() =>
     JSON.parse(product.descriptionJson)
   );
-
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
+
   const currency =
     product?.variants?.length && product.variants[0].price.currency;
   const hasVariants = maybe(() => product.productType.hasVariants, false);
@@ -183,7 +195,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
+      {({
+        change,
+        data,
+        hasChanged,
+        set,
+        submit,
+        triggerChange,
+        toggleValue
+      }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,
@@ -207,6 +227,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           setSelectedAttributes,
           selectedAttributes,
           attributes,
+          triggerChange
+        );
+        const handleChannelsChange = createChannelsChangeHandler(
+          data,
+          set,
+          data.channelListing,
           triggerChange
         );
 
@@ -343,10 +369,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   />
                   <CardSpacer />
                   <ChannelsAvailability
-                    channels={product?.channelListing}
+                    channelsAvailabilityText={channelsAvailabilityText}
+                    channels={data.channelListing}
                     errors={errors}
                     disabled={disabled}
-                    onChange={change}
+                    onChange={handleChannelsChange}
+                    openModal={openChannelsModal}
                   />
                 </div>
               </Grid>

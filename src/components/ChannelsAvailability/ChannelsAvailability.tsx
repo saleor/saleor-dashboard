@@ -1,3 +1,4 @@
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
@@ -5,45 +6,69 @@ import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import { ProductUpdate_productUpdate_product_channelListing } from "@saleor/product/types/ProductUpdate";
+import ArrowDropdown from "@saleor/icons/ArrowDropdown";
+import { ProductDetails_product_channelListing } from "@saleor/products/types/ProductDetails";
 import { UserError } from "@saleor/types";
-import React from "react";
+import classNames from "classnames";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { DateContext } from "../Date/DateContext";
 import { useStyles } from "./styles";
 
+export interface ChannelData {
+  id: string;
+  name: string;
+  publicationDate: string | null;
+  isPublished: boolean;
+}
+
 interface ChannelsAvailabilityProps {
-  channels: ProductUpdate_productUpdate_product_channelListing[];
+  channels: ChannelData[];
+  channelsAvailabilityText: React.ReactNode;
   errors: UserError[];
   disabled?: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (
+    index: number
+  ) => (channelData: {
+    isPublished: boolean;
+    publicationDate: string | null;
+  }) => void;
+  openModal: () => void;
 }
 
 interface ChannelProps {
   disabled?: boolean;
-  data: ProductUpdate_productUpdate_product_channelListing;
+  data: ChannelData;
   errors: UserError[];
-  onChange?: (event: React.ChangeEvent<any>) => void;
+  onChange: (data: {
+    isPublished: boolean;
+    publicationDate: string | null;
+  }) => void;
 }
 
-const Channel: React.FC<ChannelProps> = ({ data, disabled }) => {
-  const { isPublished, publicationDate, channel } = data;
+export const createChannelsDataFromProduct = (
+  productData?: ProductDetails_product_channelListing[]
+) =>
+  productData?.map(option => ({
+    id: option.channel.id,
+    isPublished: option.isPublished,
+    name: option.channel.name,
+    publicationDate: option.publicationDate
+  })) || [];
+
+const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
+  const { isPublished, publicationDate, id, name } = data;
 
   const dateNow = React.useContext(DateContext);
-  // const [isPublicationDate, setPublicationDate] = React.useState(
-  //   publicationDate === null ? true : false
-  // );
-  const [isVisible, setVisible] = React.useState(
-    Date.parse(publicationDate) <= dateNow
-  );
-  const [isOpen, setOpen] = React.useState(false);
+
+  const [isOpen, setOpen] = useState(false);
   const localizeDate = useDateLocalize();
   const intl = useIntl();
   const classes = useStyles({});
 
-  const hiddenSecondLabel = publicationDate
-    ? isPublished
+  const availableDateText = publicationDate
+    ? !isPublished
       ? intl.formatMessage(
           {
             defaultMessage: "Will become available on {date}",
@@ -55,10 +80,8 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled }) => {
         )
       : null
     : null;
-  const visibleSecondLabel = publicationDate
-    ? isPublished
-      ? null
-      : Date.parse(publicationDate) > dateNow
+  const visibleLabel =
+    publicationDate && Date.parse(publicationDate) <= dateNow
       ? intl.formatMessage(
           {
             defaultMessage: "since {date}",
@@ -68,13 +91,26 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled }) => {
             date: localizeDate(publicationDate)
           }
         )
-      : null
-    : null;
+      : null;
+
   return (
     <>
-      <Typography onClick={() => setOpen(open => !open)}>
-        {channel.name}
-      </Typography>
+      <div
+        role="button"
+        className={classes.channelBtn}
+        onClick={() => setOpen(open => !open)}
+      >
+        <div className={classes.channelName}>
+          <Typography>{name}</Typography>
+          <ArrowDropdown
+            className={classNames(classes.arrow, {
+              [classes.rotate]: isOpen
+            })}
+            color="primary"
+          />
+        </div>
+        <Typography variant="caption">{availableDateText}</Typography>
+      </div>
       {isOpen && (
         <>
           <RadioSwitchField
@@ -86,45 +122,43 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled }) => {
                     defaultMessage: "Visible"
                   })}
                 </p>
-                <span className={classes.secondLabel}>
-                  {visibleSecondLabel}
-                </span>
-              </>
-            }
-            name={"isPublished"}
-            secondOptionLabel={
-              <>
-                <p className={classes.label}>
-                  {intl.formatMessage({
-                    defaultMessage: "Hidden"
-                  })}
-                </p>
-                {isVisible && (
-                  <span className={classes.secondLabel}>
-                    {hiddenSecondLabel}
-                  </span>
+                {isPublished && (
+                  <span className={classes.secondLabel}>{visibleLabel}</span>
                 )}
               </>
             }
-            value={isVisible}
-            onChange={() => setVisible(visible => !visible)}
+            name={`channel:${id}`}
+            secondOptionLabel={
+              <p className={classes.label}>
+                {intl.formatMessage({
+                  defaultMessage: "Hidden"
+                })}
+              </p>
+            }
+            value={isPublished}
+            onChange={() => {
+              onChange({ isPublished: !isPublished, publicationDate });
+            }}
           />
 
-          {!isVisible && (
+          {!isPublished && (
             <TextField
               disabled={disabled}
               label={intl.formatMessage({
                 defaultMessage: "Publish on",
                 description: "publish on date"
               })}
-              name="publicationDate"
+              name={`channel:publicationDate:${id}`}
               type="date"
               fullWidth={true}
-              value={publicationDate ? publicationDate : ""}
+              value={publicationDate || ""}
               className={classes.date}
               InputLabelProps={{
                 shrink: true
               }}
+              onChange={e =>
+                onChange({ isPublished, publicationDate: e.target.value })
+              }
             />
           )}
         </>
@@ -134,28 +168,45 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled }) => {
 };
 
 export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props => {
-  const { channels, errors, onChange } = props;
+  const {
+    channelsAvailabilityText,
+    channels,
+    errors,
+    openModal,
+    onChange
+  } = props;
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Availability",
-          description: "section header"
-        })}
-      />
-      <CardContent>
-        {channels?.map(data => (
-          <Channel
-            key={data.channel.id}
-            data={data}
-            errors={errors}
-            onChange={onChange}
-          />
-        ))}
-      </CardContent>
-    </Card>
+    <>
+      <Card>
+        <CardTitle
+          title={intl.formatMessage({
+            defaultMessage: "Availability",
+            description: "section header"
+          })}
+          toolbar={
+            <Button color="primary" onClick={openModal}>
+              {intl.formatMessage({
+                defaultMessage: "Manage",
+                description: "section header button"
+              })}
+            </Button>
+          }
+        />
+        <CardContent>
+          <Typography>{channelsAvailabilityText}</Typography>
+          {channels?.map((data, index) => (
+            <Channel
+              key={data.id}
+              data={data}
+              errors={errors}
+              onChange={onChange(index)}
+            />
+          ))}
+        </CardContent>
+      </Card>
+    </>
   );
 };
 ChannelsAvailability.displayName = "ChannelsAvailability";

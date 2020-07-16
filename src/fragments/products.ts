@@ -140,6 +140,7 @@ export const productFragmentDetails = gql`
     chargeTaxes
     channelListing {
       channel {
+        id
         name
       }
       isPublished

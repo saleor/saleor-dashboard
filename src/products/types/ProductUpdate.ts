@@ -137,6 +137,7 @@ export interface ProductUpdate_productUpdate_product_purchaseCost {
 
 export interface ProductUpdate_productUpdate_product_channelListing_channel {
   __typename: "Channel";
+  id: string;
   name: string;
 }
 

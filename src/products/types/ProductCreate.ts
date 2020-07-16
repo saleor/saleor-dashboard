@@ -137,6 +137,7 @@ export interface ProductCreate_productCreate_product_purchaseCost {
 
 export interface ProductCreate_productCreate_product_channelListing_channel {
   __typename: "Channel";
+  id: string;
   name: string;
 }
 

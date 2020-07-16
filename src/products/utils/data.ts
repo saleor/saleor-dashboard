@@ -1,3 +1,4 @@
+import { ChannelData } from "@saleor/components/ChannelsAvailability";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
@@ -5,7 +6,6 @@ import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import {
   ProductDetails_product,
-  ProductDetails_product_channelListing,
   ProductDetails_product_collections,
   ProductDetails_product_variants
 } from "@saleor/products/types/ProductDetails";
@@ -172,7 +172,7 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
 export interface ProductUpdatePageFormData {
   basePrice: number;
   category: string | null;
-  channelListing: ProductDetails_product_channelListing[];
+  channelListing: ChannelData[];
   collections: string[];
   chargeTaxes: boolean;
   description: RawDraftContentState;
@@ -185,12 +185,13 @@ export interface ProductUpdatePageFormData {
 
 export function getProductUpdatePageFormData(
   product: ProductDetails_product,
-  variants: ProductDetails_product_variants[]
+  variants: ProductDetails_product_variants[],
+  currentChannels: ChannelData[]
 ): ProductUpdatePageFormData {
   return {
     basePrice: maybe(() => product.variants[0].price.amount, 0),
     category: maybe(() => product.category.id, ""),
-    channelListing: product?.channelListing || [],
+    channelListing: currentChannels,
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),
