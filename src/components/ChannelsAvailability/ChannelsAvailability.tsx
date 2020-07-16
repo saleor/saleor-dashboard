@@ -3,12 +3,13 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { Channels_channels } from "@saleor/channels/types/Channels";
 import CardTitle from "@saleor/components/CardTitle";
+import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { ProductDetails_product_channelListing } from "@saleor/products/types/ProductDetails";
-import { UserError } from "@saleor/types";
 import classNames from "classnames";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -23,10 +24,9 @@ export interface ChannelData {
   isPublished: boolean;
 }
 
-interface ChannelsAvailabilityProps {
+export interface ChannelsAvailabilityProps {
   channels: ChannelData[];
   channelsAvailabilityText: React.ReactNode;
-  errors: UserError[];
   disabled?: boolean;
   onChange: (
     index: number
@@ -40,12 +40,19 @@ interface ChannelsAvailabilityProps {
 interface ChannelProps {
   disabled?: boolean;
   data: ChannelData;
-  errors: UserError[];
   onChange: (data: {
     isPublished: boolean;
     publicationDate: string | null;
   }) => void;
 }
+
+export const createChannelsData = (data?: Channels_channels[]) =>
+  data?.map(channel => ({
+    id: channel.id,
+    isPublished: false,
+    name: channel.name,
+    publicationDate: null
+  })) || [];
 
 export const createChannelsDataFromProduct = (
   productData?: ProductDetails_product_channelListing[]
@@ -95,87 +102,85 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
 
   return (
     <>
-      <div
-        role="button"
-        className={classes.channelBtn}
-        onClick={() => setOpen(open => !open)}
-      >
-        <div className={classes.channelName}>
-          <Typography>{name}</Typography>
-          <ArrowDropdown
-            className={classNames(classes.arrow, {
-              [classes.rotate]: isOpen
-            })}
-            color="primary"
-          />
+      <div className={classes.channelItem}>
+        <div
+          role="button"
+          className={classes.channelBtn}
+          onClick={() => setOpen(open => !open)}
+        >
+          <div className={classes.channelName}>
+            <Typography>{name}</Typography>
+            <ArrowDropdown
+              className={classNames(classes.arrow, {
+                [classes.rotate]: isOpen
+              })}
+              color="primary"
+            />
+          </div>
+          <Typography variant="caption">{availableDateText}</Typography>
         </div>
-        <Typography variant="caption">{availableDateText}</Typography>
-      </div>
-      {isOpen && (
-        <>
-          <RadioSwitchField
-            disabled={disabled}
-            firstOptionLabel={
-              <>
+        {isOpen && (
+          <>
+            <RadioSwitchField
+              disabled={disabled}
+              firstOptionLabel={
+                <>
+                  <p className={classes.label}>
+                    {intl.formatMessage({
+                      defaultMessage: "Visible"
+                    })}
+                  </p>
+                  {isPublished && (
+                    <span className={classes.secondLabel}>{visibleLabel}</span>
+                  )}
+                </>
+              }
+              name={`channel:${id}`}
+              secondOptionLabel={
                 <p className={classes.label}>
                   {intl.formatMessage({
-                    defaultMessage: "Visible"
+                    defaultMessage: "Hidden"
                   })}
                 </p>
-                {isPublished && (
-                  <span className={classes.secondLabel}>{visibleLabel}</span>
-                )}
-              </>
-            }
-            name={`channel:${id}`}
-            secondOptionLabel={
-              <p className={classes.label}>
-                {intl.formatMessage({
-                  defaultMessage: "Hidden"
-                })}
-              </p>
-            }
-            value={isPublished}
-            onChange={() => {
-              onChange({ isPublished: !isPublished, publicationDate });
-            }}
-          />
-
-          {!isPublished && (
-            <TextField
-              disabled={disabled}
-              label={intl.formatMessage({
-                defaultMessage: "Publish on",
-                description: "publish on date"
-              })}
-              name={`channel:publicationDate:${id}`}
-              type="date"
-              fullWidth={true}
-              value={publicationDate || ""}
-              className={classes.date}
-              InputLabelProps={{
-                shrink: true
-              }}
-              onChange={e =>
-                onChange({ isPublished, publicationDate: e.target.value })
               }
+              value={isPublished}
+              onChange={() => {
+                onChange({ isPublished: !isPublished, publicationDate });
+              }}
             />
-          )}
-        </>
-      )}
+
+            {!isPublished && (
+              <TextField
+                disabled={disabled}
+                label={intl.formatMessage({
+                  defaultMessage: "Publish on",
+                  description: "publish on date"
+                })}
+                name={`channel:publicationDate:${id}`}
+                type="date"
+                fullWidth={true}
+                value={publicationDate || ""}
+                className={classes.date}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                onChange={e =>
+                  onChange({ isPublished, publicationDate: e.target.value })
+                }
+              />
+            )}
+          </>
+        )}
+      </div>
+      <Hr className={classes.hr} />
     </>
   );
 };
 
 export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props => {
-  const {
-    channelsAvailabilityText,
-    channels,
-    errors,
-    openModal,
-    onChange
-  } = props;
+  const { channelsAvailabilityText, channels, openModal, onChange } = props;
   const intl = useIntl();
+  const classes = useStyles({});
 
   return (
     <>
@@ -194,15 +199,13 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
             </Button>
           }
         />
-        <CardContent>
-          <Typography>{channelsAvailabilityText}</Typography>
+        <CardContent className={classes.card}>
+          <Typography className={classes.channelInfo}>
+            {channelsAvailabilityText}
+          </Typography>
+          <Hr className={classes.hr} />
           {channels?.map((data, index) => (
-            <Channel
-              key={data.id}
-              data={data}
-              errors={errors}
-              onChange={onChange(index)}
-            />
+            <Channel key={data.id} data={data} onChange={onChange(index)} />
           ))}
         </CardContent>
       </Card>

@@ -188,7 +188,6 @@ const unassignCollectionProduct = gql`
           edges {
             node {
               id
-              isPublished
               name
               productType {
                 id

@@ -5,6 +5,12 @@ export const useStyles = makeStyles(
     arrow: {
       transition: theme.transitions.duration.short + "ms"
     },
+    card: {
+      "&:last-child": {
+        paddingBottom: 0
+      },
+      paddingTop: 0
+    },
     channelBtn: {
       "&:focus": {
         outline: "none"
@@ -13,6 +19,16 @@ export const useStyles = makeStyles(
       border: "none",
       cursor: "pointer",
       textAlign: "left"
+    },
+    channelInfo: {
+      fontSize: 14,
+      padding: theme.spacing(2, 0)
+    },
+    channelItem: {
+      "&:last-child hr": {
+        display: "none"
+      },
+      padding: theme.spacing(2, 0)
     },
     channelName: {
       alignItems: "center",
@@ -24,7 +40,12 @@ export const useStyles = makeStyles(
       "& svg": {
         fill: theme.palette.primary.main
       },
-      marginTop: theme.spacing(3)
+      marginTop: theme.spacing(1)
+    },
+    hr: {
+      left: theme.spacing(-3),
+      position: "relative",
+      width: `calc(100% + ${theme.spacing(6)}px)`
     },
     label: {
       lineHeight: 1,
@@ -35,14 +56,7 @@ export const useStyles = makeStyles(
     },
     secondLabel: {
       fontSize: 12
-    },
-    setPublicationDate: {
-      color: theme.palette.primary.main,
-      cursor: "pointer",
-      fontSize: "14px",
-      paddingTop: "15px",
-      textDecoration: "underline"
     }
   }),
-  { name: "AvailabilityCard" }
+  { name: "ChannelsAvailabilityCard" }
 );

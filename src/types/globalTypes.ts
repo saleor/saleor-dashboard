@@ -611,7 +611,6 @@ export enum PermissionEnum {
   MANAGE_STAFF = "MANAGE_STAFF",
   MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
   MANAGE_USERS = "MANAGE_USERS",
-  MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
 }
 
 export enum PermissionGroupErrorCode {
@@ -644,6 +643,7 @@ export enum ProductErrorCode {
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
   NOT_PRODUCTS_IMAGE = "NOT_PRODUCTS_IMAGE",
+  PRODUCT_WITHOUT_CATEGORY = "PRODUCT_WITHOUT_CATEGORY",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
   VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT",
@@ -817,7 +817,9 @@ export enum WebhookErrorCode {
 
 export enum WebhookEventTypeEnum {
   ANY_EVENTS = "ANY_EVENTS",
+  CHECKOUT_CREATED = "CHECKOUT_CREATED",
   CHECKOUT_QUANTITY_CHANGED = "CHECKOUT_QUANTITY_CHANGED",
+  CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
   INVOICE_DELETED = "INVOICE_DELETED",
@@ -1224,6 +1226,17 @@ export interface PluginUpdateInput {
 export interface PriceRangeInput {
   gte?: number | null;
   lte?: number | null;
+}
+
+export interface ProductChannelListingAddInput {
+  channelId: string;
+  isPublished: boolean;
+  publicationDate?: any | null;
+}
+
+export interface ProductChannelListingUpdateInput {
+  addChannels?: ProductChannelListingAddInput[] | null;
+  removeChannels?: string[] | null;
 }
 
 export interface ProductFilterInput {

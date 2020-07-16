@@ -80,13 +80,8 @@ export const ProductCreateView: React.FC = () => {
               chargeTaxes: formData.chargeTaxes,
               collections: formData.collections,
               descriptionJson: JSON.stringify(formData.description),
-              isPublished: formData.isPublished,
               name: formData.name,
               productType: formData.productType,
-              publicationDate:
-                formData.publicationDate !== ""
-                  ? formData.publicationDate
-                  : null,
               seo: {
                 description: formData.seoDescription,
                 title: formData.seoTitle
