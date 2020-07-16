@@ -26,7 +26,7 @@ export interface ChannelData {
 
 export interface ChannelsAvailabilityProps {
   channels: ChannelData[];
-  channelsAvailabilityText: React.ReactNode;
+  channelsAvailabilityText?: React.ReactNode;
   disabled?: boolean;
   onChange: (
     index: number
@@ -200,10 +200,14 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
           }
         />
         <CardContent className={classes.card}>
-          <Typography className={classes.channelInfo}>
-            {channelsAvailabilityText}
-          </Typography>
-          <Hr className={classes.hr} />
+          {!!channelsAvailabilityText && (
+            <>
+              <Typography className={classes.channelInfo}>
+                {channelsAvailabilityText}
+              </Typography>
+              <Hr className={classes.hr} />
+            </>
+          )}
           {channels?.map((data, index) => (
             <Channel key={data.id} data={data} onChange={onChange(index)} />
           ))}

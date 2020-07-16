@@ -24,7 +24,6 @@ export interface ProductList_products_edges_node_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
-  slug: string;
 }
 
 export interface ProductList_products_edges_node_channelListing {

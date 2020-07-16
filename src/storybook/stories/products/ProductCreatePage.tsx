@@ -1,3 +1,5 @@
+import { channelsList } from "@saleor/channels/fixtures";
+import { createChannelsData } from "@saleor/components/ChannelsAvailability";
 import { fetchMoreProps } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -12,11 +14,13 @@ import { productTypes } from "../../../productTypes/fixtures";
 import Decorator from "../../Decorator";
 
 const product = productFixture("");
+const channels = createChannelsData(channelsList);
 
 storiesOf("Views / Products / Create product", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <ProductCreatePage
+      channels={channels}
       currency="USD"
       disabled={false}
       errors={[]}
@@ -38,6 +42,7 @@ storiesOf("Views / Products / Create product", module)
   ))
   .add("When loading", () => (
     <ProductCreatePage
+      channels={channels}
       currency="USD"
       disabled={true}
       errors={[]}
@@ -59,6 +64,7 @@ storiesOf("Views / Products / Create product", module)
   ))
   .add("form errors", () => (
     <ProductCreatePage
+      channels={channels}
       currency="USD"
       disabled={false}
       errors={(["name", "productType", "category", "sku"] as Array<

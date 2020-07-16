@@ -11,7 +11,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
+// import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
@@ -190,7 +190,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell className={classes.colPublished}>
+                  {/* <TableCell className={classes.colPublished}>
                     {maybe(
                       () => (
                         <StatusLabel
@@ -210,7 +210,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                       ),
                       <Skeleton />
                     )}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell className={classes.colActions}>
                     <IconButton
                       disabled={!product}

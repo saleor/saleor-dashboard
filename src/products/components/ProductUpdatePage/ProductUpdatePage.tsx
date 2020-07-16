@@ -371,7 +371,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   <ChannelsAvailability
                     channelsAvailabilityText={channelsAvailabilityText}
                     channels={data.channelListing}
-                    errors={errors}
                     disabled={disabled}
                     onChange={handleChannelsChange}
                     openModal={openChannelsModal}

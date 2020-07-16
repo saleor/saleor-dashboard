@@ -22,7 +22,6 @@ export interface ProductFragment_channelListing_channel {
   __typename: "Channel";
   id: string;
   name: string;
-  slug: string;
 }
 
 export interface ProductFragment_channelListing {

@@ -45,7 +45,6 @@ export const productFragment = gql`
       channel {
         id
         name
-        slug
       }
       isPublished
       publicationDate

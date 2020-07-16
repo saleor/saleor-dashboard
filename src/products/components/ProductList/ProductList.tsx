@@ -106,11 +106,13 @@ interface ProductListProps
   activeAttributeSortId: string;
   gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
+  channelsCount: number;
 }
 
 export const ProductList: React.FC<ProductListProps> = props => {
   const {
     activeAttributeSortId,
+    channelsCount,
     settings,
     disabled,
     isChecked,
@@ -191,7 +193,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <DisplayColumn column="productType" displayColumns={settings.columns}>
             <col className={classes.colType} />
           </DisplayColumn>
-          <DisplayColumn column="isPublished" displayColumns={settings.columns}>
+          <DisplayColumn
+            column="availability"
+            displayColumns={settings.columns}
+          >
             <col className={classes.colPublished} />
           </DisplayColumn>
           {gridAttributesFromSettings.map(gridAttribute => (
@@ -241,7 +246,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
               />
             </TableCellHeader>
           </DisplayColumn>
-          <DisplayColumn column="isPublished" displayColumns={settings.columns}>
+          <DisplayColumn
+            column="availability"
+            displayColumns={settings.columns}
+          >
             <TableCellHeader
               className={classes.colPublished}
               direction={
@@ -252,8 +260,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
               onClick={() => onSort(ProductListUrlSortField.status)}
             >
               <FormattedMessage
-                defaultMessage="Published"
-                description="product status"
+                defaultMessage="Availability"
+                description="product channels"
               />
             </TableCellHeader>
           </DisplayColumn>
@@ -387,29 +395,28 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     </TableCell>
                   </DisplayColumn>
                   <DisplayColumn
-                    column="isPublished"
+                    column="availability"
                     displayColumns={settings.columns}
                   >
                     <TableCell
                       className={classes.colPublished}
-                      data-test="isPublished"
-                      data-test-is-published={maybe(() => product.isPublished)}
+                      data-test="availability"
+                      data-test-availability={product?.channelListing}
                     >
-                      {product &&
-                      maybe(() => product.isPublished !== undefined) ? (
+                      {product?.channelListing !== undefined ? (
                         <StatusLabel
-                          label={
-                            product.isPublished
-                              ? intl.formatMessage({
-                                  defaultMessage: "Published",
-                                  description: "product status"
-                                })
-                              : intl.formatMessage({
-                                  defaultMessage: "Not published",
-                                  description: "product status"
-                                })
-                          }
-                          status={product.isPublished ? "success" : "error"}
+                          label={intl.formatMessage(
+                            {
+                              defaultMessage:
+                                "Available in {count} out of {allCount}",
+                              description: "product status"
+                            },
+                            {
+                              allCount: channelsCount,
+                              count: product.channelListing.length
+                            }
+                          )}
+                          status={product.channelListing ? "success" : "error"}
                         />
                       ) : (
                         <Skeleton />

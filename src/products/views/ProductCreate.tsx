@@ -1,3 +1,5 @@
+import { useChannelsList } from "@saleor/channels/queries";
+import { createChannelsData } from "@saleor/components/ChannelsAvailability";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -50,6 +52,8 @@ export const ProductCreateView: React.FC = () => {
       first: 50
     }
   });
+
+  const { data: channelsData } = useChannelsList({});
 
   const handleBack = () => navigate(productListUrl());
 
@@ -105,6 +109,7 @@ export const ProductCreateView: React.FC = () => {
               })}
             />
             <ProductCreatePage
+              channels={createChannelsData(channelsData?.channels)}
               currency={maybe(() => shop.defaultCurrency)}
               categories={maybe(
                 () => searchCategoryOpts.data.search.edges,
