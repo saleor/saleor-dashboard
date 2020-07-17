@@ -68,6 +68,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   const onWebhookDelete = (data: WebhookDelete) => {
     if (data.webhookDelete.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       navigate(customAppUrl(id));
@@ -91,6 +92,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   const onAppUpdate = (data: AppUpdate) => {
     if (data?.appUpdate?.errors?.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
     }
@@ -110,6 +112,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   const onTokenDelete = (data: AppTokenDelete) => {
     if (data?.appTokenDelete?.errors.length === 0) {
       notify({
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
       refetch();
