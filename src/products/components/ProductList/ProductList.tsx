@@ -9,7 +9,6 @@ import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellAvatar, {
   AVATAR_MARGIN
 } from "@saleor/components/TableCellAvatar";
@@ -35,7 +34,7 @@ import TDisplayColumn, {
 import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -133,7 +132,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
   } = props;
 
   const classes = useStyles(props);
-  const intl = useIntl();
 
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue
