@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 
+import { weightFragment } from "./weight";
+
 export const stockFragment = gql`
   fragment StockFragment on Stock {
     id
@@ -102,6 +104,7 @@ export const productFragmentDetails = gql`
   ${fragmentMoney}
   ${productVariantAttributesFragment}
   ${stockFragment}
+  ${weightFragment}
   fragment Product on Product {
     ...ProductVariantAttributesFragment
     name
@@ -167,6 +170,9 @@ export const productFragmentDetails = gql`
       name
       hasVariants
     }
+    weight {
+      ...WeightFragment
+    }
   }
 `;
 
@@ -174,6 +180,7 @@ export const fragmentVariant = gql`
   ${fragmentMoney}
   ${fragmentProductImage}
   ${stockFragment}
+  ${weightFragment}
   fragment ProductVariant on ProductVariant {
     id
     attributes {
@@ -229,5 +236,8 @@ export const fragmentVariant = gql`
       ...StockFragment
     }
     trackInventory
+    weight {
+      ...WeightFragment
+    }
   }
 `;

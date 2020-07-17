@@ -9,6 +9,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
@@ -75,6 +76,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       first: 50
     }
   });
+  const shop = useShop();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
@@ -217,6 +219,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                   <ProductUpdatePage
                     categories={categories}
                     collections={collections}
+                    defaultWeightUnit={shop?.defaultWeightUnit}
                     disabled={disableFormSave}
                     errors={errors}
                     fetchCategories={searchCategories}

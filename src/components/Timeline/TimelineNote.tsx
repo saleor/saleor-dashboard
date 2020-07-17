@@ -79,14 +79,16 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
 
   return (
     <div className={classes.root}>
-      <Avatar
-        className={classes.avatar}
-        style={{ background: palette[CRC.str(user.email) % palette.length] }}
-      >
-        <PersonIcon />
-      </Avatar>
+      {user && (
+        <Avatar
+          className={classes.avatar}
+          style={{ background: palette[CRC.str(user.email) % palette.length] }}
+        >
+          <PersonIcon />
+        </Avatar>
+      )}
       <div className={classes.title}>
-        <Typography>{user.email}</Typography>
+        <Typography>{user?.email}</Typography>
         <Typography>
           <DateTime date={date} />
         </Typography>

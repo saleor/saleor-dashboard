@@ -174,6 +174,12 @@ export interface ProductImageCreate_productImageCreate_product_variants {
   trackInventory: boolean;
 }
 
+export interface ProductImageCreate_productImageCreate_product_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
+}
+
 export interface ProductImageCreate_productImageCreate_product {
   __typename: "Product";
   id: string;
@@ -194,6 +200,7 @@ export interface ProductImageCreate_productImageCreate_product {
   publicationDate: any | null;
   images: (ProductImageCreate_productImageCreate_product_images | null)[] | null;
   variants: (ProductImageCreate_productImageCreate_product_variants | null)[] | null;
+  weight: ProductImageCreate_productImageCreate_product_weight | null;
 }
 
 export interface ProductImageCreate_productImageCreate {

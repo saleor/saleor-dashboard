@@ -3704,6 +3704,14 @@
   "src_dot_products_dot_components_dot_ProductPricing_dot_3015886868": {
     "string": "Charge taxes for this item"
   },
+  "src_dot_products_dot_components_dot_ProductShipping_dot_1325966144": {
+    "context": "product shipping",
+    "string": "Shipping"
+  },
+  "src_dot_products_dot_components_dot_ProductShipping_dot_746695941": {
+    "context": "product weight",
+    "string": "Weight"
+  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2585918415": {
     "string": "SKU (Stock Keeping Unit)"
   },
@@ -3740,14 +3748,6 @@
   },
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_2706108815": {
     "string": "Add search engine title and description to make this product easier to find"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_1536841622": {
-    "context": "product attribute error",
-    "string": "All attributes should have value"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantAttributes_dot_258966189": {
-    "context": "product attribute error",
-    "string": "This variant already exists"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_2853608829": {
     "context": "button",
@@ -5134,6 +5134,10 @@
   "src_dot_utils_dot_errors_dot_attributeCannotBeAssigned": {
     "string": "This attribute cannot be assigned to this product type"
   },
+  "src_dot_utils_dot_errors_dot_attributeRequired": {
+    "context": "product attribute error",
+    "string": "All attributes should have value"
+  },
   "src_dot_utils_dot_errors_dot_attributeVariantsDisabled": {
     "string": "Variants are disabled in this product type"
   },
@@ -5261,6 +5265,10 @@
   },
   "src_dot_utils_dot_errors_dot_variantNoDigitalContent": {
     "string": "This variant does not have any digital content"
+  },
+  "src_dot_utils_dot_errors_dot_variantUnique": {
+    "context": "product attribute error",
+    "string": "This variant already exists"
   },
   "src_dot_vouchers": {
     "context": "vouchers section name",

@@ -8,7 +8,7 @@ import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { decimal } from "../../misc";
+import { decimal, weight } from "../../misc";
 import ProductVariantCreatePage, {
   ProductVariantCreatePageSubmitData
 } from "../components/ProductVariantCreatePage";
@@ -83,7 +83,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
                         quantity: parseInt(stock.value, 0),
                         warehouse: stock.id
                       })),
-                      trackInventory: true
+                      trackInventory: true,
+                      weight: weight(formData.weight)
                     }
                   }
                 });
@@ -121,6 +122,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
                         edge => edge.node
                       ) || []
                     }
+                    weightUnit={shop?.defaultWeightUnit}
                   />
                 </>
               );

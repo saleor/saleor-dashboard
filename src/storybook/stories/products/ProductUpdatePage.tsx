@@ -19,6 +19,7 @@ const props: ProductUpdatePageProps = {
   ...listActionsProps,
   categories: [product.category],
   collections,
+  defaultWeightUnit: "kg",
   disabled: false,
   errors: [],
   fetchCategories: () => undefined,

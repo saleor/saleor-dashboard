@@ -199,7 +199,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
               <ProductTypeShipping
                 disabled={disabled}
                 data={data}
-                defaultWeightUnit={defaultWeightUnit}
+                weightUnit={productType?.weight?.unit || defaultWeightUnit}
                 onChange={change}
               />
             </div>

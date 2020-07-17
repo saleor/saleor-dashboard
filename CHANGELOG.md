@@ -12,6 +12,11 @@ All notable, unreleased changes to this project will be documented in this file.
 - Move fragments to separate directory to avoid circular imports - #592 by @dominik-zeglen
 - Add order invoices management - #570 by @orzechdev
 
+## 2.10.1
+
+- Add weight field and fix warehouse country selection - #597 by @dominik-zeglen
+- Fix weight based rate update - #604 by @dominik-zeglen
+
 ## 2.10.0
 
 - Fix minor bugs - #244 by @dominik-zeglen

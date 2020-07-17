@@ -111,6 +111,12 @@ export interface VariantImageAssign_variantImageAssign_productVariant_stocks {
   warehouse: VariantImageAssign_variantImageAssign_productVariant_stocks_warehouse;
 }
 
+export interface VariantImageAssign_variantImageAssign_productVariant_weight {
+  __typename: "Weight";
+  unit: string;
+  value: number;
+}
+
 export interface VariantImageAssign_variantImageAssign_productVariant {
   __typename: "ProductVariant";
   id: string;
@@ -123,6 +129,7 @@ export interface VariantImageAssign_variantImageAssign_productVariant {
   sku: string;
   stocks: (VariantImageAssign_variantImageAssign_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
+  weight: VariantImageAssign_variantImageAssign_productVariant_weight | null;
 }
 
 export interface VariantImageAssign_variantImageAssign {

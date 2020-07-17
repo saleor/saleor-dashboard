@@ -105,7 +105,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
               <ProductTypeShipping
                 disabled={disabled}
                 data={data}
-                defaultWeightUnit={defaultWeightUnit}
+                weightUnit={defaultWeightUnit}
                 onChange={change}
               />
             </div>

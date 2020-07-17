@@ -18,6 +18,7 @@ import { useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { ProductVariantCreateData_product } from "../../types/ProductVariantCreateData";
+import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductVariantAttributes, {
   VariantAttributeInputData
@@ -32,6 +33,7 @@ interface ProductVariantCreatePageFormData {
   quantity: string;
   sku: string;
   trackInventory: boolean;
+  weight: string;
 }
 
 export interface ProductVariantCreatePageSubmitData
@@ -48,6 +50,7 @@ interface ProductVariantCreatePageProps {
   product: ProductVariantCreateData_product;
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: SearchWarehouses_search_edges_node[];
+  weightUnit: string;
   onBack: () => void;
   onSubmit: (data: ProductVariantCreatePageSubmitData) => void;
   onVariantClick: (variantId: string) => void;
@@ -61,6 +64,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   product,
   saveButtonBarState,
   warehouses,
+  weightUnit,
   onBack,
   onSubmit,
   onVariantClick
@@ -86,7 +90,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
     price: "",
     quantity: "0",
     sku: "",
-    trackInventory: true
+    trackInventory: true,
+    weight: ""
   };
 
   const handleSubmit = (data: ProductVariantCreatePageFormData) =>
@@ -134,6 +139,14 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   currencySymbol={currencySymbol}
                   costPrice={data.costPrice}
                   loading={disabled}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <ProductShipping
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  weightUnit={weightUnit}
                   onChange={change}
                 />
                 <CardSpacer />
