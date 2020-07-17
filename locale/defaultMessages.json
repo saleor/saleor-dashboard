@@ -426,10 +426,6 @@
     "context": "button",
     "string": "Back to homepage"
   },
-  "src_dot_apps_dot_components_dot_AppInstallPage_dot_1100803171": {
-    "context": "install app privacy",
-    "string": "Uninstalling the app will remove all your customer’s personal data stored by {name}. After x hours, request will be sent to {name} to erase all of the data. "
-  },
   "src_dot_apps_dot_components_dot_AppInstallPage_dot_127674832": {
     "context": "app data privacy link",
     "string": "Learn more about data privacy"
@@ -441,6 +437,10 @@
   "src_dot_apps_dot_components_dot_AppInstallPage_dot_2936990163": {
     "context": "install app permissions",
     "string": "Installing this app will give it following permissions:"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_3436300370": {
+    "context": "install app privacy",
+    "string": "Uninstalling the app will remove all your customer’s personal data stored by {name}. "
   },
   "src_dot_apps_dot_components_dot_AppInstallPage_dot_3688014441": {
     "context": "section header",
