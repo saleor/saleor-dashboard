@@ -1,5 +1,5 @@
 import { channelsList } from "@saleor/channels/fixtures";
-import { createChannelsData } from "@saleor/components/ChannelsAvailability";
+import { createChannelsData } from "@saleor/channels/utils";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";

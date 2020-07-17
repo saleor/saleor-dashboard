@@ -1,5 +1,5 @@
 import { useChannelsList } from "@saleor/channels/queries";
-import { createChannelsData } from "@saleor/components/ChannelsAvailability";
+import { createChannelsData } from "@saleor/channels/utils";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";

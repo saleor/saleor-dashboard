@@ -4,6 +4,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
+import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -404,19 +405,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       data-test-availability={product?.channelListing}
                     >
                       {product?.channelListing !== undefined ? (
-                        <StatusLabel
-                          label={intl.formatMessage(
-                            {
-                              defaultMessage:
-                                "Available in {count} out of {allCount}",
-                              description: "product status"
-                            },
-                            {
-                              allCount: channelsCount,
-                              count: product.channelListing.length
-                            }
-                          )}
-                          status={product.channelListing ? "success" : "error"}
+                        <ChannelsAvailabilityDropdown
+                          allChannelsCount={channelsCount}
+                          currentChannel={product?.channelListing[0]}
+                          channels={product?.channelListing}
                         />
                       ) : (
                         <Skeleton />

@@ -16,10 +16,10 @@ import {
   productBulkDelete,
   productBulkDeleteVariables
 } from "./types/productBulkDelete";
-import {
-  productBulkPublish,
-  productBulkPublishVariables
-} from "./types/productBulkPublish";
+// import {
+//   productBulkPublish,
+//   productBulkPublishVariables
+// } from "./types/productBulkPublish";
 import {
   ProductChannelListingUpdate,
   ProductChannelListingUpdateVariables
@@ -134,12 +134,10 @@ export const productUpdateMutation = gql`
   mutation ProductUpdate(
     $id: ID!
     $attributes: [AttributeValueInput]
-    # $publicationDate: Date
     $category: ID
     $chargeTaxes: Boolean!
     $collections: [ID]
     $descriptionJson: JSONString
-    # $isPublished: Boolean!
     $name: String
     $basePrice: Decimal
     $seo: SeoInput
@@ -148,12 +146,10 @@ export const productUpdateMutation = gql`
       id: $id
       input: {
         attributes: $attributes
-        # publicationDate: $publicationDate
         category: $category
         chargeTaxes: $chargeTaxes
         collections: $collections
         descriptionJson: $descriptionJson
-        # isPublished: $isPublished
         name: $name
         basePrice: $basePrice
         seo: $seo
@@ -187,7 +183,6 @@ export const simpleProductUpdateMutation = gql`
     $chargeTaxes: Boolean!
     $collections: [ID]
     $descriptionJson: JSONString
-    # $isPublished: Boolean!
     $name: String
     $basePrice: Decimal
     $productVariantId: ID!
@@ -201,12 +196,10 @@ export const simpleProductUpdateMutation = gql`
       id: $id
       input: {
         attributes: $attributes
-        # publicationDate: $publicationDate
         category: $category
         chargeTaxes: $chargeTaxes
         collections: $collections
         descriptionJson: $descriptionJson
-        # isPublished: $isPublished
         name: $name
         basePrice: $basePrice
         seo: $seo
@@ -272,12 +265,10 @@ export const productCreateMutation = gql`
   ${productFragmentDetails}
   mutation ProductCreate(
     $attributes: [AttributeValueInput]
-    # $publicationDate: Date
     $category: ID!
     $chargeTaxes: Boolean!
     $collections: [ID]
     $descriptionJson: JSONString
-    # $isPublished: Boolean!
     $name: String!
     $basePrice: Decimal
     $productType: ID!
@@ -289,12 +280,10 @@ export const productCreateMutation = gql`
     productCreate(
       input: {
         attributes: $attributes
-        # publicationDate: $publicationDate
         category: $category
         chargeTaxes: $chargeTaxes
         collections: $collections
         descriptionJson: $descriptionJson
-        # isPublished: $isPublished
         name: $name
         basePrice: $basePrice
         productType: $productType

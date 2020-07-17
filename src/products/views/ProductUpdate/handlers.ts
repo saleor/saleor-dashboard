@@ -1,4 +1,4 @@
-import { createChannelsDataFromProduct } from "@saleor/components/ChannelsAvailability";
+import { createChannelsDataFromProduct } from "@saleor/channels/utils";
 import { decimal } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import { ProductChannelListingUpdateVariables } from "@saleor/products/types/ProductChannelListingUpdate";
@@ -62,7 +62,6 @@ export function createUpdateHandler(
       data.channelListing,
       (a, b) => a.id === b.id
     );
-
     updateChannels({
       variables: {
         id: product.id,

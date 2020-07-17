@@ -1,5 +1,5 @@
+import { ChannelData } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { ChannelData } from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import React from "react";
@@ -37,7 +37,7 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
       title={title}
     >
       <div>
-        <div className={classes.select}>
+        <div className={classes.dialog}>
           {channels.map(option => (
             <div key={option.id}>
               <ControlledCheckbox

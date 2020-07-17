@@ -1,4 +1,4 @@
-import { ChannelData } from "@saleor/components/ChannelsAvailability";
+import { ChannelData } from "@saleor/channels/utils";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";

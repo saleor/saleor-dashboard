@@ -1113,13 +1113,32 @@
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "No results"
   },
-  "src_dot_components_dot_ChannelsAvailability_dot_1815688500": {
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1043589445": {
+    "string": "hidden"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1316050857": {
+    "context": "product status",
+    "string": "Available in {count} out of {allCount} channels"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1702481199": {
     "context": "product channel",
-    "string": "since {date}"
+    "string": "published since {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3257060829": {
+    "context": "product status title",
+    "string": "Available in {count}"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3285520461": {
+    "context": "product channel",
+    "string": "Will become available on {date}"
   },
   "src_dot_components_dot_ChannelsAvailability_dot_2060790769": {
     "context": "publish on date",
     "string": "Publish on"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_2162667201": {
+    "context": "product channel",
+    "string": "Visible since {date}"
   },
   "src_dot_components_dot_ChannelsAvailability_dot_3285520461": {
     "context": "product channel",
@@ -3775,10 +3794,6 @@
     "context": "product channels",
     "string": "Availability"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_484889062": {
-    "context": "product status",
-    "string": "Available in {count} out of {allCount}"
-  },
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
     "string": "Name"
@@ -4124,6 +4139,9 @@
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_3423943948": {
     "string": "Manage Products Channel Availability"
+  },
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_3576216025": {
+    "string": "Channels updated"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_4108890645": {
     "string": "Product removed"

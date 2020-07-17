@@ -27,6 +27,7 @@ const props: ProductUpdatePageProps = {
   fetchCollections: () => undefined,
   fetchMoreCategories: fetchMoreProps,
   fetchMoreCollections: fetchMoreProps,
+  hasChannelChanged: false,
   header: product.name,
   images: product.images,
   onBack: () => undefined,

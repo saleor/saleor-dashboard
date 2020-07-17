@@ -1,7 +1,7 @@
+import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
-import { ChannelData } from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -64,6 +64,7 @@ export interface ProductUpdatePageProps extends ListActions {
   fetchMoreCollections: FetchMoreProps;
   variants: ProductDetails_product_variants[];
   images: ProductDetails_product_images[];
+  hasChannelChanged: boolean;
   product: ProductDetails_product;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -104,6 +105,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   images,
+  hasChannelChanged,
   header,
   placeholderImage,
   product,
@@ -381,7 +383,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onDelete={onDelete}
                 onSave={submit}
                 state={saveButtonBarState}
-                disabled={disabled || !hasChanged}
+                disabled={disabled || (!hasChanged && !hasChannelChanged)}
               />
             </Container>
           </>

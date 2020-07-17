@@ -1,11 +1,11 @@
 import { productChannels } from "@saleor/channels/fixtures";
+import { createChannelsDataFromProduct } from "@saleor/channels/utils";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsAvailability, {
-  ChannelsAvailabilityProps,
-  createChannelsDataFromProduct
+  ChannelsAvailabilityProps
 } from "./ChannelsAvailability";
 
 const props: ChannelsAvailabilityProps = {

@@ -3,26 +3,18 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { Channels_channels } from "@saleor/channels/types/Channels";
+import { ChannelData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
-import { ProductDetails_product_channelListing } from "@saleor/products/types/ProductDetails";
 import classNames from "classnames";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { DateContext } from "../Date/DateContext";
 import { useStyles } from "./styles";
-
-export interface ChannelData {
-  id: string;
-  name: string;
-  publicationDate: string | null;
-  isPublished: boolean;
-}
 
 export interface ChannelsAvailabilityProps {
   channels: ChannelData[];
@@ -46,59 +38,39 @@ interface ChannelProps {
   }) => void;
 }
 
-export const createChannelsData = (data?: Channels_channels[]) =>
-  data?.map(channel => ({
-    id: channel.id,
-    isPublished: false,
-    name: channel.name,
-    publicationDate: null
-  })) || [];
-
-export const createChannelsDataFromProduct = (
-  productData?: ProductDetails_product_channelListing[]
-) =>
-  productData?.map(option => ({
-    id: option.channel.id,
-    isPublished: option.isPublished,
-    name: option.channel.name,
-    publicationDate: option.publicationDate
-  })) || [];
-
 const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
   const { isPublished, publicationDate, id, name } = data;
-
   const dateNow = React.useContext(DateContext);
+  const localizeData = useDateLocalize();
 
   const [isOpen, setOpen] = useState(false);
-  const localizeDate = useDateLocalize();
   const intl = useIntl();
   const classes = useStyles({});
 
-  const availableDateText = publicationDate
-    ? !isPublished
+  const todayDate = localizeData(new Date(dateNow).toString(), "YYYY-MM-DD");
+
+  const availableDateText =
+    publicationDate && !isPublished
       ? intl.formatMessage(
           {
             defaultMessage: "Will become available on {date}",
             description: "product channel"
           },
           {
-            date: localizeDate(data.publicationDate)
+            date: localizeData(publicationDate, "DD/MM/YYYY")
           }
         )
-      : null
-    : null;
-  const visibleLabel =
-    publicationDate && Date.parse(publicationDate) <= dateNow
+      : publicationDate
       ? intl.formatMessage(
           {
-            defaultMessage: "since {date}",
+            defaultMessage: "Visible since {date}",
             description: "product channel"
           },
           {
-            date: localizeDate(publicationDate)
+            date: localizeData(publicationDate, "DD/MM/YYYY")
           }
         )
-      : null;
+      : intl.formatMessage({ defaultMessage: "Hidden" });
 
   return (
     <>
@@ -124,16 +96,11 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
             <RadioSwitchField
               disabled={disabled}
               firstOptionLabel={
-                <>
-                  <p className={classes.label}>
-                    {intl.formatMessage({
-                      defaultMessage: "Visible"
-                    })}
-                  </p>
-                  {isPublished && (
-                    <span className={classes.secondLabel}>{visibleLabel}</span>
-                  )}
-                </>
+                <p className={classes.label}>
+                  {intl.formatMessage({
+                    defaultMessage: "Visible"
+                  })}
+                </p>
               }
               name={`channel:${id}`}
               secondOptionLabel={
@@ -145,7 +112,13 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
               }
               value={isPublished}
               onChange={() => {
-                onChange({ isPublished: !isPublished, publicationDate });
+                onChange({
+                  isPublished: !isPublished,
+                  publicationDate:
+                    !isPublished && !publicationDate
+                      ? todayDate
+                      : publicationDate
+                });
               }}
             />
 

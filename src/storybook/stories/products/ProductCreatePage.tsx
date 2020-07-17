@@ -1,5 +1,5 @@
 import { channelsList } from "@saleor/channels/fixtures";
-import { createChannelsData } from "@saleor/components/ChannelsAvailability";
+import { createChannelsData } from "@saleor/channels/utils";
 import { fetchMoreProps } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
