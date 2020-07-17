@@ -3,28 +3,28 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useChannelsList } from "@saleor/channels/queries";
-import ActionDialog from "@saleor/components/ActionDialog";
 import {
   ChannelData,
   createChannelsData,
   createChannelsDataFromProduct
-} from "@saleor/components/ChannelsAvailability";
+} from "@saleor/channels/utils";
+import ActionDialog from "@saleor/components/ActionDialog";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListActions from "@saleor/hooks/useListActions";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import getProductErrorMessage from "@saleor/utils/errors/product";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { useWarehouseList } from "@saleor/warehouses/queries";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState, maybe } from "../../../misc";
@@ -98,27 +98,32 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const productChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
     product?.channelListing
   );
+  const [currentChannels, setCurrentChannels] = useLocalStorage<ChannelData[]>(
+    "channels",
+    productChannelsChoices
+  );
 
   const {
     isSelected: isChannelSelected,
     listElements: channelListElements,
     set: setChannels,
     toggle: channelsToggle
-  } = useListActions<ChannelData>(
-    productChannelsChoices,
-    (a, b) => a.id === b.id
-  );
+  } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
 
-  const [currentChannels, setCurrentChannels] = useStateFromProps<
-    ChannelData[]
-  >(productChannelsChoices);
+  useEffect(() => {
+    if (!currentChannels.length && productChannelsChoices.length) {
+      setCurrentChannels(productChannelsChoices);
+    }
+  }, [productChannelsChoices]);
 
   const [updateChannels] = useProductChannelListingUpdate({
     onCompleted: data => {
       if (data.productChannelListingUpdate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage({
+            defaultMessage: "Channels updated"
+          })
         });
       } else {
         data.productChannelListingUpdate.errors.map(error =>
@@ -139,7 +144,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const handleChannelsModalClose = () => {
     setChannelsModalOpen(false);
-    setChannels(productChannelsChoices || []);
+    setChannels(currentChannels);
   };
 
   const handleChannelsConfirm = () => {
@@ -287,9 +292,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                 },
                 {
                   allChannels: allChannels?.length,
-                  productChannels: productChannelsChoices?.length
+                  productChannels: currentChannels?.length
                 }
               )}
+              hasChannelChanged={
+                productChannelsChoices?.length !== currentChannels?.length
+              }
               categories={categories}
               collections={collections}
               currentChannels={currentChannels}
