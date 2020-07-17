@@ -104,6 +104,16 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
           generatedBy: event.user ? event.user.email : null
         }
       );
+    case OrderEventsEnum.INVOICE_UPDATED:
+      return intl.formatMessage(
+        {
+          defaultMessage: "Invoice no. {invoiceNumber} was updated",
+          description: "order history message"
+        },
+        {
+          invoiceNumber: event.invoiceNumber
+        }
+      );
     case OrderEventsEnum.INVOICE_SENT:
       return intl.formatMessage(
         {
