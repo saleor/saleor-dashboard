@@ -153,7 +153,8 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   >(navigate, appsListUrl, params);
 
   const onAppRemove = (data: AppDelete) => {
-    if (data.appDelete.errors.length === 0) {
+    const errors = data.appDelete.errors;
+    if (errors.length === 0) {
       if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
         customAppsRefetch();
       } else {
@@ -161,6 +162,13 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       }
       closeModal();
       removeAppNotify();
+    } else {
+      errors.forEach(error =>
+        notify({
+          status: "error",
+          text: getAppErrorMessage(error, intl)
+        })
+      );
     }
   };
 
@@ -251,10 +259,18 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   };
 
   const onAppInProgressRemove = (data: AppDeleteFailedInstallation) => {
-    if (data.appDeleteFailedInstallation.errors.length === 0) {
+    const errors = data.appDeleteFailedInstallation.errors;
+    if (errors.length === 0) {
       removeAppNotify();
       appsInProgressRefetch();
       closeModal();
+    } else {
+      errors.forEach(error =>
+        notify({
+          status: "error",
+          text: getAppErrorMessage(error, intl)
+        })
+      );
     }
   };
   const onAppInstallRetry = (id: string) =>

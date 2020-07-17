@@ -109,7 +109,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                 className={classes.installPrivacyText}
               >
                 <FormattedMessage
-                  defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. After x hours, request will be sent to {name} to erase all of the data. "
+                  defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. "
                   description="install app privacy"
                   values={{ name }}
                 />

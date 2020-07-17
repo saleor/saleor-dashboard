@@ -8,8 +8,6 @@ import { AppsInstallations } from "./types/AppsInstallations";
 import { AppsList, AppsListVariables } from "./types/AppsList";
 
 const appsList = gql`
-  ${appFragment}
-  ${webhooksFragment}
   query AppsList(
     $before: String
     $after: String
@@ -35,7 +33,10 @@ const appsList = gql`
       totalCount
       edges {
         node {
-          ...AppFragment
+          id
+          name
+          isActive
+          type
         }
       }
     }

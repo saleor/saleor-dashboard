@@ -1,4 +1,5 @@
 import { appFragment } from "@saleor/fragments/apps";
+import { appErrorFragment } from "@saleor/fragments/errors";
 import { webhooksFragment } from "@saleor/fragments/webhooks";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
@@ -27,19 +28,10 @@ import {
 } from "./types/AppTokenDelete";
 import { AppUpdate, AppUpdateVariables } from "./types/AppUpdate";
 
-export const appError = gql`
-  fragment AppErrorFragment on AppError {
-    field
-    message
-    code
-    permissions
-  }
-`;
-
 export const appCreateMutation = gql`
   ${appFragment}
   ${webhooksFragment}
-  ${appError}
+  ${appErrorFragment}
   mutation AppCreate($input: AppInput!) {
     appCreate(input: $input) {
       authToken
@@ -56,7 +48,7 @@ export const appCreateMutation = gql`
 export const appDeleteMutation = gql`
   ${appFragment}
   ${webhooksFragment}
-  ${appError}
+  ${appErrorFragment}
   mutation AppDelete($id: ID!) {
     appDelete(id: $id) {
       app {
@@ -70,7 +62,7 @@ export const appDeleteMutation = gql`
 `;
 
 export const appDeleteFailedInstallationMutation = gql`
-  ${appError}
+  ${appErrorFragment}
   mutation AppDeleteFailedInstallation($id: ID!) {
     appDeleteFailedInstallation(id: $id) {
       appInstallation {
@@ -107,16 +99,14 @@ export const appFetchMutation = gql`
         }
       }
       errors: appErrors {
-        field
-        message
-        code
+        ...AppErrorFragment
       }
     }
   }
 `;
 
 export const appInstallMutation = gql`
-  ${appError}
+  ${appErrorFragment}
   mutation AppInstall($input: AppInstallInput!) {
     appInstall(input: $input) {
       appInstallation {
@@ -133,7 +123,7 @@ export const appInstallMutation = gql`
 `;
 
 export const appRetryInstallMutation = gql`
-  ${appError}
+  ${appErrorFragment}
   mutation AppRetryInstall($id: ID!) {
     appRetryInstall(id: $id) {
       appInstallation {
@@ -150,7 +140,7 @@ export const appRetryInstallMutation = gql`
 `;
 
 export const appActivateMutation = gql`
-  ${appError}
+  ${appErrorFragment}
   mutation AppActivate($id: ID!) {
     appActivate(id: $id) {
       errors: appErrors {
@@ -161,7 +151,7 @@ export const appActivateMutation = gql`
 `;
 
 export const appDeactivateMutation = gql`
-  ${appError}
+  ${appErrorFragment}
   mutation AppDeactivate($id: ID!) {
     appDeactivate(id: $id) {
       errors: appErrors {
@@ -172,7 +162,7 @@ export const appDeactivateMutation = gql`
 `;
 
 export const appUpdateMutation = gql`
-  ${appError}
+  ${appErrorFragment}
   ${appFragment}
   ${webhooksFragment}
   mutation AppUpdate($id: ID!, $input: AppInput!) {
@@ -194,7 +184,7 @@ export const appUpdateMutation = gql`
 `;
 
 export const appTokenCreateMutation = gql`
-  ${appError}
+  ${appErrorFragment}
   mutation AppTokenCreate($input: AppTokenInput!) {
     appTokenCreate(input: $input) {
       appToken {
@@ -211,7 +201,7 @@ export const appTokenCreateMutation = gql`
 `;
 
 export const appTokenDeleteMutation = gql`
-  ${appError}
+  ${appErrorFragment}
   mutation AppTokenDelete($id: ID!) {
     appTokenDelete(id: $id) {
       appToken {

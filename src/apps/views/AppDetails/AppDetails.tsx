@@ -1,5 +1,6 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import getAppErrorMessage from "@saleor/utils/errors/app";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -36,17 +37,47 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
   const mutationOpts = { variables: { id } };
   const [activateApp, activateAppResult] = useAppActivateMutation({
     onCompleted: data => {
-      if (data?.appActivate?.errors.length === 0) {
+      const errors = data?.appActivate?.errors;
+      if (errors?.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "App activated",
+            description: "snackbar text"
+          })
+        });
         refetch();
         closeModal();
+      } else {
+        errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getAppErrorMessage(error, intl)
+          })
+        );
       }
     }
   });
   const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
     onCompleted: data => {
-      if (data?.appDeactivate?.errors.length === 0) {
+      const errors = data?.appDeactivate?.errors;
+      if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "App deactivated",
+            description: "snackbar text"
+          })
+        });
         refetch();
         closeModal();
+      } else {
+        errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getAppErrorMessage(error, intl)
+          })
+        );
       }
     }
   });
@@ -58,23 +89,9 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
 
   const handleActivateConfirm = () => {
     activateApp(mutationOpts);
-    notify({
-      status: "success",
-      text: intl.formatMessage({
-        defaultMessage: "App activated",
-        description: "snackbar text"
-      })
-    });
   };
   const handleDeactivateConfirm = () => {
     deactivateApp(mutationOpts);
-    notify({
-      status: "success",
-      text: intl.formatMessage({
-        defaultMessage: "App deactivated",
-        description: "snackbar text"
-      })
-    });
   };
 
   return (

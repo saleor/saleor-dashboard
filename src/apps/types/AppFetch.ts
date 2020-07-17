@@ -35,6 +35,7 @@ export interface AppFetch_appFetchManifest_errors {
   field: string | null;
   message: string | null;
   code: AppErrorCode;
+  permissions: PermissionEnum[] | null;
 }
 
 export interface AppFetch_appFetchManifest {

@@ -13,42 +13,20 @@ export const appsList: AppsList_apps_edges[] = [
     __typename: "AppCountableEdge",
     node: {
       __typename: "App",
-      accessToken: "token",
-      appUrl: "http://localhost:8888/app",
-      configurationUrl: "htpp://localhost:8888/configuration",
-      created: "2020-05-01T11:24:54.937261+00:00",
-      homepageUrl: "http://localhost:8888/homepage",
       id: "QXBwOjE3Ng==",
       isActive: true,
-      metadata: [],
       name: "app",
-      privateMetadata: [],
-      supportUrl: "http://localhost:8888/support",
-      tokens: [],
-      type: AppTypeEnum.THIRDPARTY,
-      version: "1.0.0",
-      webhooks: []
+      type: AppTypeEnum.THIRDPARTY
     }
   },
   {
     __typename: "AppCountableEdge",
     node: {
       __typename: "App",
-      accessToken: "token",
-      appUrl: "http://localhost:8888/app",
-      configurationUrl: "htpp://localhost:8888/configuration",
-      created: "2020-06-01T11:24:54.937261+00:00",
-      homepageUrl: "http://localhost:8888/homepage",
       id: "QXBwOjE3Ng==",
       isActive: false,
-      metadata: [],
       name: "app1",
-      privateMetadata: [],
-      supportUrl: "http://localhost:8888/support",
-      tokens: [],
-      type: AppTypeEnum.THIRDPARTY,
-      version: "1.0.0",
-      webhooks: []
+      type: AppTypeEnum.THIRDPARTY
     }
   }
 ];
@@ -58,21 +36,10 @@ export const customAppsList: AppsList_apps_edges[] = [
     __typename: "AppCountableEdge",
     node: {
       __typename: "App",
-      accessToken: "token",
-      appUrl: "http://localhost:8888/app",
-      configurationUrl: "htpp://localhost:8888/configuration",
-      created: "2020-05-02T11:24:54.937261+00:00",
-      homepageUrl: "http://localhost:8888/homepage",
       id: "QXBwOjE3Ng==",
       isActive: true,
-      metadata: [],
       name: "app custom",
-      privateMetadata: [],
-      supportUrl: "http://localhost:8888/support",
-      tokens: [],
-      type: AppTypeEnum.LOCAL,
-      version: "1.0.0",
-      webhooks: []
+      type: AppTypeEnum.LOCAL
     }
   }
 ];

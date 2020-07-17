@@ -2,6 +2,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import getAppErrorMessage from "@saleor/utils/errors/app";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps } from "react-router-dom";
@@ -36,7 +37,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
         data.appFetchManifest.errors.forEach(error => {
           notify({
             status: "error",
-            text: error.message
+            text: getAppErrorMessage(error, intl)
           });
         });
       }
@@ -54,7 +55,8 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
       } else {
         data.appInstall.errors.forEach(error => {
           notify({
-            text: error.message
+            status: "error",
+            text: getAppErrorMessage(error, intl)
           });
         });
       }
