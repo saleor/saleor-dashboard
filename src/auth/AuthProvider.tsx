@@ -1,7 +1,7 @@
 import { DEMO_MODE } from "@saleor/config";
 import { User } from "@saleor/fragments/types/User";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationStatus, maybe } from "@saleor/misc";
+import { getMutationStatus } from "@saleor/misc";
 import {
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
@@ -27,6 +27,8 @@ import {
   setAuthToken
 } from "./utils";
 
+const persistToken = false;
+
 interface AuthProviderProps {
   children: React.ReactNode;
 }
@@ -35,17 +37,55 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const intl = useIntl();
   const notify = useNotifier();
 
+  const [userContext, setUserContext] = useState<undefined | User>(undefined);
+
+  const logout = () => {
+    setUserContext(undefined);
+    if (isCredentialsManagementAPISupported) {
+      navigator.credentials.preventSilentAccess();
+    }
+    removeAuthToken();
+  };
+
   const [tokenAuth, tokenAuthResult] = useMutation<
     TokenAuth,
     TokenAuthVariables
-  >(tokenAuthMutation);
+  >(tokenAuthMutation, {
+    onCompleted: result => {
+      const user = result.tokenCreate.user;
+
+      // FIXME: Now we set state also when auth fails and returned user is
+      // `null`, because the LoginView uses this `null` to display error.
+      setUserContext(user);
+      if (user) {
+        setAuthToken(result.tokenCreate.token, persistToken);
+      }
+    },
+    onError: logout
+  });
   const [tokenRefresh] = useMutation<RefreshToken, RefreshTokenVariables>(
-    tokenRefreshMutation
+    tokenRefreshMutation,
+    {
+      onError: logout
+    }
   );
   const [tokenVerify, tokenVerifyResult] = useMutation<
     VerifyToken,
     VerifyTokenVariables
-  >(tokenVerifyMutation);
+  >(tokenVerifyMutation, {
+    onCompleted: result => {
+      if (result.tokenVerify === null) {
+        logout();
+      } else {
+        const user = result.tokenVerify?.user;
+
+        if (!!user) {
+          setUserContext(user);
+        }
+      }
+    },
+    onError: logout
+  });
 
   const tokenAuthOpts = {
     ...tokenAuthResult,
@@ -56,38 +96,11 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     status: getMutationStatus(tokenVerifyResult)
   };
 
-  const [userContext, setUserContext] = useState<undefined | User>(undefined);
-  const [persistToken] = useState<boolean>(false);
-
   const onLogin = () => {
     if (DEMO_MODE) {
       displayDemoMessage(intl, notify);
     }
   };
-
-  useEffect(() => {
-    if (tokenAuthOpts.error || tokenVerifyOpts.error) {
-      logout();
-    }
-    if (tokenAuthOpts.data) {
-      const user = tokenAuthOpts.data.tokenCreate.user;
-      // FIXME: Now we set state also when auth fails and returned user is
-      // `null`, because the LoginView uses this `null` to display error.
-      setUserContext(user);
-      if (user) {
-        setAuthToken(tokenAuthOpts.data.tokenCreate.token, persistToken);
-      }
-    } else {
-      if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
-        logout();
-      } else {
-        const user = maybe(() => tokenVerifyOpts.data.tokenVerify.user);
-        if (!!user) {
-          setUserContext(user);
-        }
-      }
-    }
-  }, [tokenAuthOpts, tokenVerifyOpts]);
 
   useEffect(() => {
     const token = getAuthToken();
@@ -112,14 +125,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const loginByToken = (token: string, user: User) => {
     setUserContext(user);
     setAuthToken(token, persistToken);
-  };
-
-  const logout = () => {
-    setUserContext(undefined);
-    if (isCredentialsManagementAPISupported) {
-      navigator.credentials.preventSilentAccess();
-    }
-    removeAuthToken();
   };
 
   const verifyToken = (token: string) => tokenVerify({ variables: { token } });
