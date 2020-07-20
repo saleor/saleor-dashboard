@@ -451,6 +451,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                             </>
                           }
                           onClick={() => setMenuState(!isMenuOpened)}
+                          data-test="userMenu"
                         />
                         <Popper
                           className={classes.popover}
@@ -478,6 +479,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                                     <MenuItem
                                       className={classes.userMenuItem}
                                       onClick={handleViewerProfile}
+                                      data-test="accountSettingsButton"
                                     >
                                       <FormattedMessage
                                         defaultMessage="Account Settings"
@@ -487,6 +489,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                                     <MenuItem
                                       className={classes.userMenuItem}
                                       onClick={handleLogout}
+                                      data-test="logOutButton"
                                     >
                                       <FormattedMessage
                                         defaultMessage="Log out"

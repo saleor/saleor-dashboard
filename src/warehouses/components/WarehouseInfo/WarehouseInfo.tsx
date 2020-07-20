@@ -28,7 +28,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Card>
+    <Card data-test="generalInformationSection">
       <CardTitle
         title={intl.formatMessage(commonMessages.generalInformations)}
       />

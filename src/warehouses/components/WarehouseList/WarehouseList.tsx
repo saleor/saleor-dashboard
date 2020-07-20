@@ -83,7 +83,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <ResponsiveTable>
+    <ResponsiveTable data-test="warehouseList">
       <TableHead>
         <TableRow>
           <TableCellHeader
@@ -130,8 +130,8 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               hover={!!warehouse}
               onClick={warehouse ? onRowClick(warehouse.id) : undefined}
               key={warehouse ? warehouse.id : "skeleton"}
-              data-test="id"
-              data-test-id={maybe(() => warehouse.id)}
+              data-test="warehouseEntry"
+              data-testid={warehouse?.name.toLowerCase().replace(" ", "")}
             >
               <TableCell className={classes.colName} data-test="name">
                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
@@ -147,7 +147,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               </TableCell>
               <TableCell className={classes.colActions}>
                 <div className={classes.actions}>
-                  <IconButton color="primary">
+                  <IconButton color="primary" data-test="editButton">
                     <EditIcon />
                   </IconButton>
                   <IconButton
@@ -161,7 +161,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
             </TableRow>
           ),
           () => (
-            <TableRow>
+            <TableRow data-test="emptyListMessage">
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage defaultMessage="No warehouses found" />
               </TableCell>

@@ -30,7 +30,11 @@ const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
 
   return (
     <div className={classes.headerContainer} data-test="home-header">
-      <Typography className={classes.pageHeader} variant="h4">
+      <Typography
+        className={classes.pageHeader}
+        variant="h4"
+        data-test="welcomeHeader"
+      >
         {userName ? (
           <FormattedMessage
             defaultMessage="Hello there, {userName}"

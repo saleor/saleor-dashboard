@@ -89,7 +89,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
             <AppHeader onBack={onBack}>
               <FormattedMessage {...sectionNames.warehouses} />
             </AppHeader>
-            <PageHeader title={maybe(() => warehouse.name)} />
+            <PageHeader title={warehouse?.name} />
             <Grid>
               <div>
                 <WarehouseInfo

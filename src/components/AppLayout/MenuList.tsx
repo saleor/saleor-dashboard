@@ -193,7 +193,7 @@ const MenuList: React.FC<MenuListProps> = props => {
   });
   const intl = useIntl();
 
-  const configutationMenu = createConfigurationMenu(intl).map(menu => {
+  const configurationMenu = createConfigurationMenu(intl).map(menu => {
     menu.menuItems.map(item =>
       user.userPermissions.map(perm => perm.code).includes(item.permission)
     );
@@ -224,6 +224,7 @@ const MenuList: React.FC<MenuListProps> = props => {
       className={classNames(className, {
         [classes.menuIsActive]: activeSubMenu.isActive
       })}
+      data-test="mainMenu"
     >
       {/* FIXME: this .split("?")[0] looks gross */}
       {menuItems.map(menuItem => {
@@ -257,6 +258,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                 [classes.menuListItemActive]: isAnyChildActive
               })}
               key={menuItem.label}
+              data-testid={menuItem.label.toLowerCase()}
             >
               <div
                 className={classNames(classes.menuItemHover, {
@@ -332,7 +334,7 @@ const MenuList: React.FC<MenuListProps> = props => {
           </a>
         );
       })}
-      {renderConfigure && configutationMenu.length > 0 && (
+      {renderConfigure && configurationMenu.length > 0 && (
         <a
           className={classes.menuListItem}
           href={createHref(configurationMenuUrl)}

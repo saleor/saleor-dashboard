@@ -126,6 +126,8 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                     className={item.url ? classes.card : classes.cardDisabled}
                     onClick={() => onSectionClick(item.url)}
                     key={itemIndex}
+                    data-test="settingsSubsection"
+                    data-testid={item.title.toLowerCase()}
                   >
                     <CardContent className={classes.cardContent}>
                       <div className={classes.icon}>{item.icon}</div>
