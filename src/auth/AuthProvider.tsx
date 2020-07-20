@@ -52,6 +52,10 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     TokenAuthVariables
   >(tokenAuthMutation, {
     onCompleted: result => {
+      if (result.tokenCreate.errors.length > 0) {
+        logout();
+      }
+
       const user = result.tokenCreate.user;
 
       // FIXME: Now we set state also when auth fails and returned user is
