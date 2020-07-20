@@ -1,3 +1,4 @@
+import { IMessageContext } from "@saleor/components/messages";
 import { DEMO_MODE } from "@saleor/config";
 import { User } from "@saleor/fragments/types/User";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -7,9 +8,10 @@ import {
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
+import ApolloClient from "apollo-client";
 import React, { useContext, useEffect, useState } from "react";
-import { useMutation } from "react-apollo";
-import { useIntl } from "react-intl";
+import { useApolloClient, useMutation } from "react-apollo";
+import { IntlShape, useIntl } from "react-intl";
 
 import { UserContext } from "./";
 import {
@@ -29,14 +31,11 @@ import {
 
 const persistToken = false;
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
-
-const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const intl = useIntl();
-  const notify = useNotifier();
-
+function useAuthProvider(
+  intl: IntlShape,
+  notify: IMessageContext,
+  apolloClient: ApolloClient<any>
+) {
   const [userContext, setUserContext] = useState<undefined | User>(undefined);
 
   const logout = () => {
@@ -51,6 +50,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     TokenAuth,
     TokenAuthVariables
   >(tokenAuthMutation, {
+    client: apolloClient,
     onCompleted: result => {
       if (result.tokenCreate.errors.length > 0) {
         logout();
@@ -70,6 +70,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [tokenRefresh] = useMutation<RefreshToken, RefreshTokenVariables>(
     tokenRefreshMutation,
     {
+      client: apolloClient,
       onError: logout
     }
   );
@@ -77,6 +78,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     VerifyToken,
     VerifyTokenVariables
   >(tokenVerifyMutation, {
+    client: apolloClient,
     onCompleted: result => {
       if (result.tokenVerify === null) {
         logout();
@@ -140,6 +142,36 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     setAuthToken(refreshData.data.tokenRefresh.token, persistToken);
   };
+
+  return {
+    login,
+    loginByToken,
+    logout,
+    refreshToken,
+    tokenAuthOpts,
+    tokenVerifyOpts,
+    userContext
+  };
+}
+
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
+
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const apolloClient = useApolloClient();
+  const intl = useIntl();
+  const notify = useNotifier();
+
+  const {
+    login,
+    loginByToken,
+    logout,
+    tokenAuthOpts,
+    refreshToken,
+    tokenVerifyOpts,
+    userContext
+  } = useAuthProvider(intl, notify, apolloClient);
 
   return (
     <UserContext.Provider
