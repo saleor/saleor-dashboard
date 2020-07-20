@@ -128,7 +128,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
             {notFormErrors.length > 0 && (
               <DialogContent>
                 {notFormErrors.map(err => (
-                  <Typography color="error">
+                  <Typography color="error" key={err.field + err.code}>
                     {getExportErrorMessage(err, intl)}
                   </Typography>
                 ))}
