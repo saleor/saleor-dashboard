@@ -8,23 +8,18 @@ import fetch from "node-fetch";
 import path from "path";
 import { setupPolly } from "setup-polly-jest";
 
+Polly.register(NodeHttpAdapter);
+Polly.register(FSPersister);
+
 function setupApi() {
-  Polly.register(NodeHttpAdapter);
-  Polly.register(FSPersister);
   setupPolly({
-    adapterOptions: {
-      fetch: {
-        context: global
-      }
-    },
     adapters: ["node-http"],
     persister: "fs",
     persisterOptions: {
       fs: {
         recordingsDir: path.resolve(__dirname, "../recordings")
       }
-    },
-    recordIfMissing: true
+    }
   });
   const cache = new InMemoryCache();
   const link = new BatchHttpLink({
