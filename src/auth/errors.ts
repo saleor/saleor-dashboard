@@ -2,8 +2,9 @@ import { findValueInEnum } from "@saleor/misc";
 import { GraphQLError } from "graphql";
 
 export enum JWTError {
-  invalid = "JSONWebTokenError",
-  expired = "JSONWebTokenExpired"
+  invalid = "InvalidTokenError",
+  invalidSignature = "InvalidSignatureError",
+  expired = "ExpiredSignatureError"
 }
 
 export function isJwtError(error: GraphQLError): boolean {
