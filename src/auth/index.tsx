@@ -3,7 +3,6 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
-import LoginLoading from "./components/LoginLoading";
 import {
   newPasswordPath,
   passwordResetPath,
@@ -33,20 +32,12 @@ export const UserContext = React.createContext<UserContext>({
   tokenVerifyLoading: false
 });
 
-interface AuthRouterProps {
-  hasToken: boolean;
-}
-
-const AuthRouter: React.FC<AuthRouterProps> = ({ hasToken }) => (
+const AuthRouter: React.FC = () => (
   <Layout>
     <Switch>
       <Route path={passwordResetSuccessPath} component={ResetPasswordSuccess} />
       <Route path={passwordResetPath} component={ResetPassword} />
-      {!hasToken ? (
-        <Route path={newPasswordPath} component={NewPassword} />
-      ) : (
-        <LoginLoading />
-      )}
+      <Route path={newPasswordPath} component={NewPassword} />
       <Route component={LoginView} />
     </Switch>
   </Layout>
