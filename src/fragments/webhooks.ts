@@ -5,7 +5,7 @@ export const webhooksFragment = gql`
     id
     name
     isActive
-    serviceAccount {
+    app {
       id
       name
     }

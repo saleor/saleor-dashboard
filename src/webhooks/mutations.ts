@@ -1,8 +1,8 @@
 import { webhookErrorFragment } from "@saleor/fragments/errors";
 import { webhooksDetailsFragment } from "@saleor/fragments/webhooks";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import { TypedMutation } from "../mutations";
 import { WebhookCreate, WebhookCreateVariables } from "./types/WebhookCreate";
 import { WebhookDelete, WebhookDeleteVariables } from "./types/WebhookDelete";
 import { WebhookUpdate, WebhookUpdateVariables } from "./types/WebhookUpdate";
@@ -21,10 +21,6 @@ const webhookCreate = gql`
     }
   }
 `;
-export const TypedWebhookCreate = TypedMutation<
-  WebhookCreate,
-  WebhookCreateVariables
->(webhookCreate);
 
 const webhookUpdate = gql`
   ${webhooksDetailsFragment}
@@ -40,10 +36,6 @@ const webhookUpdate = gql`
     }
   }
 `;
-export const TypedWebhookUpdate = TypedMutation<
-  WebhookUpdate,
-  WebhookUpdateVariables
->(webhookUpdate);
 
 const webhookDelete = gql`
   ${webhookErrorFragment}
@@ -55,7 +47,18 @@ const webhookDelete = gql`
     }
   }
 `;
-export const TypedWebhookDelete = TypedMutation<
+
+export const useWebhookCreateMutation = makeMutation<
+  WebhookCreate,
+  WebhookCreateVariables
+>(webhookCreate);
+
+export const useWebhookDeleteMutation = makeMutation<
   WebhookDelete,
   WebhookDeleteVariables
 >(webhookDelete);
+
+export const useWebhookUpdateMutation = makeMutation<
+  WebhookUpdate,
+  WebhookUpdateVariables
+>(webhookUpdate);

@@ -12,6 +12,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Move fragments to separate directory to avoid circular imports - #592 by @dominik-zeglen
 - Add order invoices management - #570 by @orzechdev
 - Add Cypress e2e runner - #584 by @krzysztofwolski
+- create Apps - #599 by @AlicjaSzu
 
 ## 2.10.1
 

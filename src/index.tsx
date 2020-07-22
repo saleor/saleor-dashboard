@@ -15,6 +15,8 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import AppsSection from "./apps";
+import { appsSection } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth, { getAuthToken, removeAuthToken } from "./auth";
@@ -49,8 +51,6 @@ import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
-import ServiceSection from "./services";
-import { serviceSection } from "./services/urls";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
@@ -59,7 +59,6 @@ import TranslationsSection from "./translations";
 import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
-import WebhooksSection from "./webhooks";
 
 interface ResponseError extends ErrorResponse {
   networkError?: Error & {
@@ -258,11 +257,6 @@ const Routes: React.FC = () => {
                     component={TranslationsSection}
                   />
                   <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_WEBHOOKS]}
-                    path="/webhooks"
-                    component={WebhooksSection}
-                  />
-                  <SectionRoute
                     permissions={[PermissionEnum.MANAGE_MENUS]}
                     path={navigationSection}
                     component={NavigationSection}
@@ -274,8 +268,8 @@ const Routes: React.FC = () => {
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_APPS]}
-                    path={serviceSection}
-                    component={ServiceSection}
+                    path={appsSection}
+                    component={AppsSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PRODUCTS]}

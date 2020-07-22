@@ -44,6 +44,32 @@ export enum AddressTypeEnum {
   SHIPPING = "SHIPPING",
 }
 
+export enum AppErrorCode {
+  FORBIDDEN = "FORBIDDEN",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  INVALID_MANIFEST_FORMAT = "INVALID_MANIFEST_FORMAT",
+  INVALID_PERMISSION = "INVALID_PERMISSION",
+  INVALID_STATUS = "INVALID_STATUS",
+  INVALID_URL_FORMAT = "INVALID_URL_FORMAT",
+  MANIFEST_URL_CANT_CONNECT = "MANIFEST_URL_CANT_CONNECT",
+  NOT_FOUND = "NOT_FOUND",
+  OUT_OF_SCOPE_APP = "OUT_OF_SCOPE_APP",
+  OUT_OF_SCOPE_PERMISSION = "OUT_OF_SCOPE_PERMISSION",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
+export enum AppSortField {
+  CREATION_DATE = "CREATION_DATE",
+  NAME = "NAME",
+}
+
+export enum AppTypeEnum {
+  LOCAL = "LOCAL",
+  THIRDPARTY = "THIRDPARTY",
+}
+
 export enum AttributeInputTypeEnum {
   DROPDOWN = "DROPDOWN",
   MULTISELECT = "MULTISELECT",
@@ -605,7 +631,6 @@ export enum PermissionEnum {
   MANAGE_STAFF = "MANAGE_STAFF",
   MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
   MANAGE_USERS = "MANAGE_USERS",
-  MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
 }
 
 export enum PermissionGroupErrorCode {
@@ -679,11 +704,6 @@ export enum SaleSortField {
 export enum SaleType {
   FIXED = "FIXED",
   PERCENTAGE = "PERCENTAGE",
-}
-
-export enum ServiceAccountSortField {
-  CREATION_DATE = "CREATION_DATE",
-  NAME = "NAME",
 }
 
 export enum ShippingErrorCode {
@@ -851,6 +871,35 @@ export interface AddressInput {
   country?: CountryCode | null;
   countryArea?: string | null;
   phone?: string | null;
+}
+
+export interface AppFilterInput {
+  search?: string | null;
+  isActive?: boolean | null;
+  type?: AppTypeEnum | null;
+}
+
+export interface AppInput {
+  name?: string | null;
+  isActive?: boolean | null;
+  permissions?: (PermissionEnum | null)[] | null;
+}
+
+export interface AppInstallInput {
+  appName?: string | null;
+  manifestUrl?: string | null;
+  activateAfterInstallation?: boolean | null;
+  permissions?: (PermissionEnum | null)[] | null;
+}
+
+export interface AppSortingInput {
+  direction: OrderDirection;
+  field: AppSortField;
+}
+
+export interface AppTokenInput {
+  name?: string | null;
+  app: string;
 }
 
 export interface AttributeAssignInput {
@@ -1320,27 +1369,6 @@ export interface SaleSortingInput {
 export interface SeoInput {
   title?: string | null;
   description?: string | null;
-}
-
-export interface ServiceAccountFilterInput {
-  search?: string | null;
-  isActive?: boolean | null;
-}
-
-export interface ServiceAccountInput {
-  name?: string | null;
-  isActive?: boolean | null;
-  permissions?: (PermissionEnum | null)[] | null;
-}
-
-export interface ServiceAccountSortingInput {
-  direction: OrderDirection;
-  field: ServiceAccountSortField;
-}
-
-export interface ServiceAccountTokenInput {
-  name?: string | null;
-  serviceAccount: string;
 }
 
 export interface ShippingPriceInput {

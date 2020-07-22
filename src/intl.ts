@@ -7,6 +7,9 @@ export const commonMessages = defineMessages({
   catalog: {
     defaultMessage: "Catalog"
   },
+  customApps: {
+    defaultMessage: "Local Apps"
+  },
   dashboard: {
     defaultMessage: "Dashboard"
   },
@@ -156,6 +159,10 @@ export const buttonMessages = defineMessages({
 });
 
 export const sectionNames = defineMessages({
+  apps: {
+    defaultMessage: "Apps",
+    description: "apps section name"
+  },
   attributes: {
     defaultMessage: "Attributes",
     description: "attributes section name"

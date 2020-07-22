@@ -298,6 +298,357 @@
     "context": "button",
     "string": "Accept"
   },
+  "src_dot_apps": {
+    "context": "apps section name",
+    "string": "Apps"
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_1499521723": {
+    "context": "dialog header",
+    "string": "Activate App"
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3356885734": {
+    "context": "activate app",
+    "string": "Are you sure you want to activate {name}? Activating will start gathering events."
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3761045983": {
+    "context": "activate app",
+    "string": "Are you sure you want to activate this app? Activating will start gathering events"
+  },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3865193889": {
+    "context": "button label",
+    "string": "Activate"
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_1782042241": {
+    "context": "button label",
+    "string": "Deactivate"
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_2031792590": {
+    "context": "dialog header",
+    "string": "Dectivate App"
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_2955925498": {
+    "context": "deactivate app",
+    "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app. You will be still billed for the app."
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_329373780": {
+    "context": "deactivate app",
+    "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app. You will be still billed for the app."
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_1347203024": {
+    "context": "delete custom app",
+    "string": "Deleting {name}, you will delete all the data and webhooks regarding this app. Are you sure you want to do that?"
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_1462011531": {
+    "context": "dialog header",
+    "string": "Delete App"
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_330001535": {
+    "context": "delete app",
+    "string": "Are you sure you want to delete this app?"
+  },
+  "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_3817179919": {
+    "context": "delete app",
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_1782042241": {
+    "context": "link",
+    "string": "Deactivate"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_2432433023": {
+    "context": "app privacy policy link",
+    "string": "View this app’s privacy policy"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_2973480575": {
+    "context": "link",
+    "string": "Edit settings"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3744068622": {
+    "context": "section header",
+    "string": "Data privacy"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3768793197": {
+    "context": "link",
+    "string": "Get Support"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3817397882": {
+    "context": "button",
+    "string": "Open App"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3865193889": {
+    "context": "link",
+    "string": "Activate"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_3916538164": {
+    "context": "section header",
+    "string": "App permissions"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_846582072": {
+    "context": "apps about permissions",
+    "string": "This app has permissions to:"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsPage_dot_85811128": {
+    "context": "section header",
+    "string": "About this app"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_198187074": {
+    "context": "button",
+    "string": "Support/FAQ"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_3302125406": {
+    "context": "button",
+    "string": "My App"
+  },
+  "src_dot_apps_dot_components_dot_AppDetailsSettingsPage_dot_3662390044": {
+    "context": "button",
+    "string": "Dashboard"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_1462011531": {
+    "context": "dialog header",
+    "string": "Delete App"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_330001535": {
+    "context": "delete app",
+    "string": "Are you sure you want to delete this app?"
+  },
+  "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_3817179919": {
+    "context": "delete app",
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_1152717819": {
+    "context": "title",
+    "string": "There’s a problem with app."
+  },
+  "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_1261716527": {
+    "context": "content",
+    "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
+  },
+  "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_3375237564": {
+    "context": "button",
+    "string": "Back to homepage"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_127674832": {
+    "context": "app data privacy link",
+    "string": "Learn more about data privacy"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_2538706256": {
+    "context": "install button",
+    "string": "Install App"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_2936990163": {
+    "context": "install app permissions",
+    "string": "Installing this app will give it following permissions:"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_3436300370": {
+    "context": "install app privacy",
+    "string": "Uninstalling the app will remove all your customer’s personal data stored by {name}. "
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_3688014441": {
+    "context": "section header",
+    "string": "You are about to install {name}"
+  },
+  "src_dot_apps_dot_components_dot_AppInstallPage_dot_3916538164": {
+    "context": "section header",
+    "string": "App permissions"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_1675189051": {
+    "context": "section header",
+    "string": "Ongoing Installations"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_2398081356": {
+    "context": "retry installation",
+    "string": "Retry"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_2868351060": {
+    "context": "app installation error",
+    "string": "There was a problem during installation"
+  },
+  "src_dot_apps_dot_components_dot_AppsInProgress_dot_3733091754": {
+    "context": "app installation",
+    "string": "Installing app..."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_1414896555": {
+    "context": "checkbox label",
+    "string": "Grant this app full access to the store"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_3076071936": {
+    "context": "card description",
+    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_3189779214": {
+    "context": "header",
+    "string": "Create New App"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_570656367": {
+    "context": "checkbox label",
+    "string": "App is active"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_1336855942": {
+    "string": "Generated Token"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_2080322626": {
+    "string": "This token gives you access to your shop's API, which you'll find here: {url}"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_2864204643": {
+    "context": "button",
+    "string": "Copied"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_3406541221": {
+    "context": "button",
+    "string": "Copy token"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_4189999598": {
+    "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_1414896555": {
+    "context": "checkbox label",
+    "string": "Grant this app full access to the store"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_3076071936": {
+    "context": "card description",
+    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_570656367": {
+    "context": "checkbox label",
+    "string": "App is active"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppInformation_dot_2860466085": {
+    "context": "header",
+    "string": "App Information"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppInformation_dot_3001692357": {
+    "context": "custom app name",
+    "string": "App Name"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_2446088470": {
+    "context": "custom app token key",
+    "string": "Key"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_2639089057": {
+    "string": "No tokens found"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_3209034045": {
+    "context": "header",
+    "string": "Tokens"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_3875340101": {
+    "context": "button",
+    "string": "Create Token"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_4017491013": {
+    "string": "Token Note"
+  },
+  "src_dot_apps_dot_components_dot_CustomAppTokens_dot_4190792473": {
+    "context": "table actions",
+    "string": "Actions"
+  },
+  "src_dot_apps_dot_components_dot_CustomApps_dot_3152347892": {
+    "context": "custom apps content",
+    "string": "Your custom created apps will be shown here."
+  },
+  "src_dot_apps_dot_components_dot_CustomApps_dot_3230241731": {
+    "context": "create app button",
+    "string": "Create App"
+  },
+  "src_dot_apps_dot_components_dot_DeactivatedText_dot_3064552173": {
+    "context": "app deactivated",
+    "string": "Deactivated"
+  },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_1636202177": {
+    "context": "about app",
+    "string": "About"
+  },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_186286611": {
+    "context": "apps content",
+    "string": "You don’t have any installed apps in your dashboard"
+  },
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_2008086393": {
+    "context": "section header",
+    "string": "Thirdparty Apps"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_2932910073": {
+    "context": "section header",
+    "string": "Saleor Marketplace"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_3259214524": {
+    "context": "marketplace content",
+    "string": "Marketplace is coming soon"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_3910026447": {
+    "context": "marketplace button",
+    "string": "Visit Marketplace"
+  },
+  "src_dot_apps_dot_components_dot_Marketplace_dot_52985091": {
+    "context": "marketplace content",
+    "string": "Discover great free and paid apps in our Saleor Marketplace."
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_1336855942": {
+    "string": "Generated Token"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_2530792168": {
+    "string": "Access token is used to authenticate service accounts"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_3009959880": {
+    "string": "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_3406541221": {
+    "context": "button",
+    "string": "Copy token"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_3875340101": {
+    "context": "header",
+    "string": "Create Token"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_4017491013": {
+    "string": "Token Note"
+  },
+  "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_4120989039": {
+    "context": "create service token, button",
+    "string": "Create"
+  },
+  "src_dot_apps_dot_components_dot_TokenDeleteDialog_dot_2164262076": {
+    "context": "dialog title",
+    "string": "Delete Token"
+  },
+  "src_dot_apps_dot_components_dot_TokenDeleteDialog_dot_981802752": {
+    "context": "delete token",
+    "string": "Are you sure you want to delete token {token}?"
+  },
+  "src_dot_apps_dot_views_dot_AppDetailsSettings_dot_2140018198": {
+    "context": "app settings error",
+    "string": "Failed to fetch app settings"
+  },
+  "src_dot_apps_dot_views_dot_AppDetails_dot_2021043385": {
+    "context": "snackbar text",
+    "string": "App activated"
+  },
+  "src_dot_apps_dot_views_dot_AppDetails_dot_3791371350": {
+    "context": "snackbar text",
+    "string": "App deactivated"
+  },
+  "src_dot_apps_dot_views_dot_AppInstall_dot_2538706256": {
+    "context": "window title",
+    "string": "Install App"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_1180774955": {
+    "context": "app has been installed",
+    "string": "{name} is ready to be used"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_3076215778": {
+    "context": "app has been removed",
+    "string": "App successfully removed"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_539268521": {
+    "context": "message title",
+    "string": "Couldn’t Install {name}"
+  },
+  "src_dot_apps_dot_views_dot_AppsList_dot_966773578": {
+    "context": "message title",
+    "string": "App installed"
+  },
+  "src_dot_apps_dot_views_dot_CustomAppCreate_dot_3230241731": {
+    "context": "window title",
+    "string": "Create App"
+  },
   "src_dot_attributes": {
     "context": "attributes section name",
     "string": "Attributes"
@@ -931,13 +1282,6 @@
     "context": "permission list item description",
     "string": "This group is last source of that permission"
   },
-  "src_dot_components_dot_AccountStatus_dot_2183517419": {
-    "context": "section header",
-    "string": "Account Status"
-  },
-  "src_dot_components_dot_AccountStatus_dot_2683780981": {
-    "string": "If you want to disable this account uncheck the box below"
-  },
   "src_dot_components_dot_AddressEdit_dot_1139500589": {
     "string": "Country"
   },
@@ -969,6 +1313,13 @@
   "src_dot_components_dot_AppLayout_dot_248888005": {
     "context": "button",
     "string": "Account Settings"
+  },
+  "src_dot_components_dot_AppStatus_dot_1624959454": {
+    "string": "If you want to disable this App please uncheck the box below."
+  },
+  "src_dot_components_dot_AppStatus_dot_1750277107": {
+    "context": "section header",
+    "string": "App Status"
   },
   "src_dot_components_dot_AssignCategoryDialog_dot_1305061437": {
     "string": "Search Categories"
@@ -1442,14 +1793,8 @@
   "src_dot_configuration_dot_1440737903": {
     "string": "Shipping Settings"
   },
-  "src_dot_configuration_dot_1639245766": {
-    "string": "View and update your webhook and their settings"
-  },
   "src_dot_configuration_dot_1742602794": {
     "string": "Attributes and Product Types"
-  },
-  "src_dot_configuration_dot_2387898569": {
-    "string": "Manage external integrations accounts"
   },
   "src_dot_configuration_dot_3140151600": {
     "string": "Staff Settings"
@@ -1475,6 +1820,9 @@
   "src_dot_create": {
     "context": "button",
     "string": "Create"
+  },
+  "src_dot_customApps": {
+    "string": "Local Apps"
   },
   "src_dot_customers": {
     "context": "customers section name",
@@ -4090,159 +4438,6 @@
     "context": "service accounts section name",
     "string": "Service Accounts"
   },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_1848599267": {
-    "context": "checkbox label",
-    "string": "User has full access to the store"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_248507553": {
-    "context": "header",
-    "string": "Create New Account"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_27827485": {
-    "context": "checkbox label",
-    "string": "Service account is active"
-  },
-  "src_dot_services_dot_components_dot_ServiceCreatePage_dot_3639008725": {
-    "context": "card description",
-    "string": "Expand or restrict user's permissions to access certain part of saleor system."
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_1336855942": {
-    "string": "Generated Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_2080322626": {
-    "string": "This token gives you access to your shop's API, which you'll find here: {url}"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_2864204643": {
-    "context": "button",
-    "string": "Copied"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_3406541221": {
-    "context": "button",
-    "string": "Copy token"
-  },
-  "src_dot_services_dot_components_dot_ServiceDefaultToken_dot_4189999598": {
-    "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
-  },
-  "src_dot_services_dot_components_dot_ServiceDeleteDialog_dot_1534767622": {
-    "context": "dialog header",
-    "string": "Delete Service Account"
-  },
-  "src_dot_services_dot_components_dot_ServiceDeleteDialog_dot_2297471173": {
-    "context": "delete service account",
-    "string": "Are you sure you want to delete {name}?"
-  },
-  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_1848599267": {
-    "context": "checkbox label",
-    "string": "User has full access to the store"
-  },
-  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_27827485": {
-    "context": "checkbox label",
-    "string": "Service account is active"
-  },
-  "src_dot_services_dot_components_dot_ServiceDetailsPage_dot_3639008725": {
-    "context": "card description",
-    "string": "Expand or restrict user's permissions to access certain part of saleor system."
-  },
-  "src_dot_services_dot_components_dot_ServiceInfo_dot_3789449123": {
-    "context": "service account",
-    "string": "Account Name"
-  },
-  "src_dot_services_dot_components_dot_ServiceInfo_dot_426959482": {
-    "context": "header",
-    "string": "Service Account Information"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_1895355592": {
-    "string": "Search Service Accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_4040605455": {
-    "context": "tab name",
-    "string": "All Service Accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_624280156": {
-    "context": "button",
-    "string": "Create account"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_active": {
-    "context": "service account",
-    "string": "Active"
-  },
-  "src_dot_services_dot_components_dot_ServiceListPage_dot_deactivated": {
-    "context": "service account",
-    "string": "Inactive"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_1342308051": {
-    "string": "No service accounts found"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_31853942": {
-    "context": "account status",
-    "string": "active"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_3239722049": {
-    "context": "account status",
-    "string": "inactive"
-  },
-  "src_dot_services_dot_components_dot_ServiceList_dot_636461959": {
-    "context": "service name",
-    "string": "Name"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_1336855942": {
-    "string": "Generated Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_2530792168": {
-    "string": "Access token is used to authenticate service accounts"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3009959880": {
-    "string": "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3406541221": {
-    "context": "button",
-    "string": "Copy token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_3875340101": {
-    "context": "header",
-    "string": "Create Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_4017491013": {
-    "string": "Token Note"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenCreateDialog_dot_4120989039": {
-    "context": "create service token, button",
-    "string": "Create"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenDeleteDialog_dot_1534767622": {
-    "context": "dialog title",
-    "string": "Delete Service Account"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokenDeleteDialog_dot_981802752": {
-    "context": "delete token",
-    "string": "Are you sure you want to delete token {token}?"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_2446088470": {
-    "context": "service account key",
-    "string": "Key"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_2639089057": {
-    "string": "No tokens found"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_3875340101": {
-    "context": "button",
-    "string": "Create Token"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_4017491013": {
-    "string": "Token Note"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_4190792473": {
-    "context": "table actions",
-    "string": "Actions"
-  },
-  "src_dot_services_dot_components_dot_ServiceTokens_dot_426959482": {
-    "context": "header",
-    "string": "Service Account Information"
-  },
-  "src_dot_services_dot_views_dot_ServiceCreate_dot_3167211165": {
-    "context": "window title",
-    "string": "Create Service Account"
-  },
   "src_dot_sessionExpired": {
     "string": "Your session has expired. Please log in again to continue."
   },
@@ -5189,12 +5384,21 @@
   "src_dot_utils_dot_errors_dot_invalid": {
     "string": "Invalid value"
   },
+  "src_dot_utils_dot_errors_dot_invalidManifestFormat": {
+    "string": "Invalid manifest format"
+  },
   "src_dot_utils_dot_errors_dot_invalidPassword": {
     "string": "Invalid password"
   },
+  "src_dot_utils_dot_errors_dot_invalidPermission": {
+    "string": "Permission is invalid"
+  },
   "src_dot_utils_dot_errors_dot_invalidStatus": {
     "context": "error message",
-    "string": "Cannot request an invoice for draft order"
+    "string": "Status is invalid"
+  },
+  "src_dot_utils_dot_errors_dot_invalidUrlFormat": {
+    "string": "Url has invalid format"
   },
   "src_dot_utils_dot_errors_dot_noShippingAddress": {
     "context": "error message",
@@ -5216,8 +5420,14 @@
     "context": "error message",
     "string": "Number not set for an invoice"
   },
+  "src_dot_utils_dot_errors_dot_outOfScopeApp": {
+    "string": "App is out of your permissions scope"
+  },
   "src_dot_utils_dot_errors_dot_outOfScopeGroup": {
     "string": "Group is out of your permission scope"
+  },
+  "src_dot_utils_dot_errors_dot_outOfScopePermission": {
+    "string": "Permission is out of your scope"
   },
   "src_dot_utils_dot_errors_dot_outOfScopeUser": {
     "string": "User is out of your permissions scope"
@@ -5448,9 +5658,6 @@
     "context": "webhook specific information",
     "string": "Webhook specific information"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_819389696": {
-    "string": "Assign to Service Account"
-  },
   "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_2772025990": {
     "context": "webhooks active",
     "string": "Webhook is active"
@@ -5471,31 +5678,16 @@
     "context": "header",
     "string": "{webhookName} Details"
   },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_1432828311": {
-    "string": "Search Webhooks"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_2295583901": {
-    "context": "button",
-    "string": "Create webhook"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_3300314452": {
-    "context": "tab name",
-    "string": "All Webhooks"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_active": {
-    "context": "webhook",
-    "string": "Active"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksListPage_dot_inactive": {
-    "context": "webhook",
-    "string": "Inactive"
-  },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_1153324159": {
     "string": "No webhooks found"
   },
-  "src_dot_webhooks_dot_components_dot_WebhooksList_dot_2487865635": {
-    "context": "webhook service account",
-    "string": "Service Account"
+  "src_dot_webhooks_dot_components_dot_WebhooksList_dot_3493926696": {
+    "context": "button",
+    "string": "Create Webhook"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhooksList_dot_3861572549": {
+    "context": "header",
+    "string": "Webhooks"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_4120604650": {
     "context": "user action bar",

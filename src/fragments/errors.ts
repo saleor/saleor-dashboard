@@ -111,3 +111,12 @@ export const invoiceErrorFragment = gql`
     field
   }
 `;
+
+export const appErrorFragment = gql`
+  fragment AppErrorFragment on AppError {
+    field
+    message
+    code
+    permissions
+  }
+`;
