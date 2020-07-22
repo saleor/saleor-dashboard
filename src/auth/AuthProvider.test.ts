@@ -47,7 +47,7 @@ describe("User", () => {
     const hook = renderAuthProvider(apolloClient);
 
     await act(() =>
-      hook.current.login(credentials.email, credentials.password + "1")
+      hook.current.login(credentials.email, "NotAValidPassword123!")
     );
     expect(hook.current.userContext).toBe(null);
 
@@ -65,7 +65,7 @@ describe("User", () => {
   });
 
   it("will not be logged if has invalid token", async done => {
-    setAuthToken(credentials.token + "1", false);
+    setAuthToken("NotAToken", false);
     const hook = renderAuthProvider(apolloClient);
 
     await act(() => hook.current.autologinPromise.current);
