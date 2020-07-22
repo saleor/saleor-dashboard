@@ -2659,6 +2659,10 @@
     "context": "order history message",
     "string": "Products were added to draft order"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_393045022": {
+    "context": "order history message",
+    "string": "Invoice no. {invoiceNumber} was updated"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3990160018": {
     "string": "Order History"
   },
