@@ -9,7 +9,7 @@ import {
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
 import ApolloClient from "apollo-client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useApolloClient, useMutation } from "react-apollo";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -31,12 +31,13 @@ import {
 
 const persistToken = false;
 
-function useAuthProvider(
+export function useAuthProvider(
   intl: IntlShape,
   notify: IMessageContext,
   apolloClient: ApolloClient<any>
 ) {
   const [userContext, setUserContext] = useState<undefined | User>(undefined);
+  const autologinPromise = useRef<Promise<any>>();
 
   const logout = () => {
     setUserContext(undefined);
@@ -111,29 +112,31 @@ function useAuthProvider(
   useEffect(() => {
     const token = getAuthToken();
     if (!!token && !userContext) {
-      verifyToken(token);
+      autologinPromise.current = tokenVerify({ variables: { token } });
     } else {
-      loginWithCredentialsManagementAPI(login);
+      autologinPromise.current = loginWithCredentialsManagementAPI(login);
     }
   }, []);
 
   const login = async (email: string, password: string) => {
-    tokenAuth({ variables: { email, password } }).then(result => {
-      if (result && !result.data.tokenCreate.errors.length) {
-        if (!!onLogin) {
-          onLogin();
-        }
-        saveCredentials(result.data.tokenCreate.user, password);
+    const result = await tokenAuth({ variables: { email, password } });
+
+    if (result && !result.data.tokenCreate.errors.length) {
+      if (!!onLogin) {
+        onLogin();
       }
-    });
+      saveCredentials(result.data.tokenCreate.user, password);
+
+      return result.data.tokenCreate.user;
+    }
+
+    return null;
   };
 
   const loginByToken = (token: string, user: User) => {
     setUserContext(user);
     setAuthToken(token, persistToken);
   };
-
-  const verifyToken = (token: string) => tokenVerify({ variables: { token } });
 
   const refreshToken = async () => {
     const token = getAuthToken();
@@ -144,6 +147,7 @@ function useAuthProvider(
   };
 
   return {
+    autologinPromise,
     login,
     loginByToken,
     logout,
