@@ -24,9 +24,10 @@ import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 import {
   displayDemoMessage,
-  getAuthToken,
-  removeAuthToken,
-  setAuthToken
+  getTokens,
+  removeTokens,
+  setAuthToken,
+  setTokens
 } from "./utils";
 
 const persistToken = false;
@@ -38,13 +39,14 @@ export function useAuthProvider(
 ) {
   const [userContext, setUserContext] = useState<undefined | User>(undefined);
   const autologinPromise = useRef<Promise<any>>();
+  const refreshPromise = useRef<Promise<boolean>>();
 
   const logout = () => {
     setUserContext(undefined);
     if (isCredentialsManagementAPISupported) {
       navigator.credentials.preventSilentAccess();
     }
-    removeAuthToken();
+    removeTokens();
   };
 
   const [tokenAuth, tokenAuthResult] = useMutation<
@@ -63,7 +65,11 @@ export function useAuthProvider(
       // `null`, because the LoginView uses this `null` to display error.
       setUserContext(user);
       if (user) {
-        setAuthToken(result.tokenCreate.token, persistToken);
+        setTokens(
+          result.tokenCreate.token,
+          result.tokenCreate.csrfToken,
+          persistToken
+        );
       }
     },
     onError: logout
@@ -110,7 +116,7 @@ export function useAuthProvider(
   };
 
   useEffect(() => {
-    const token = getAuthToken();
+    const token = getTokens().auth;
     if (!!token && !userContext) {
       autologinPromise.current = tokenVerify({ variables: { token } });
     } else {
@@ -133,17 +139,28 @@ export function useAuthProvider(
     return null;
   };
 
-  const loginByToken = (token: string, user: User) => {
+  const loginByToken = (auth: string, refresh: string, user: User) => {
     setUserContext(user);
-    setAuthToken(token, persistToken);
+    setTokens(auth, refresh, persistToken);
   };
 
-  const refreshToken = async () => {
-    const token = getAuthToken();
+  const refreshToken = (): Promise<boolean> => {
+    if (!!refreshPromise.current) {
+      return refreshPromise.current;
+    }
 
-    const refreshData = await tokenRefresh({ variables: { token } });
+    return new Promise(resolve => {
+      const token = getTokens().refresh;
 
-    setAuthToken(refreshData.data.tokenRefresh.token, persistToken);
+      return tokenRefresh({ variables: { token } }).then(refreshData => {
+        if (!!refreshData.data.tokenRefresh?.token) {
+          setAuthToken(refreshData.data.tokenRefresh.token, persistToken);
+          return resolve(true);
+        }
+
+        return resolve(false);
+      });
+    });
   };
 
   return {
@@ -199,7 +216,7 @@ export const useAuth = () => {
   const isAuthenticated = !!user.user;
 
   return {
-    hasToken: !!getAuthToken(),
+    hasToken: !!getTokens(),
     isAuthenticated,
     tokenAuthLoading: user.tokenAuthLoading,
     tokenVerifyLoading: user.tokenVerifyLoading,

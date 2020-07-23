@@ -4,8 +4,6 @@ import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
 import { BatchHttpLink } from "apollo-link-batch-http";
-import { setContext } from "apollo-link-context";
-import { ErrorResponse, onError } from "apollo-link-error";
 import { createUploadLink } from "apollo-upload-client";
 import React from "react";
 import { ApolloProvider } from "react-apollo";
@@ -19,11 +17,11 @@ import AppsSection from "./apps";
 import { appsSection } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
-import Auth, { getAuthToken, removeAuthToken } from "./auth";
+import Auth from "./auth";
 import AuthProvider, { useAuth } from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
-import { isJwtError } from "./auth/errors";
+import authLink from "./auth/link";
 import { hasPermission } from "./auth/misc";
 import CategorySection from "./categories";
 import CollectionSection from "./collections";
@@ -60,43 +58,15 @@ import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
 
-interface ResponseError extends ErrorResponse {
-  networkError?: Error & {
-    statusCode?: number;
-    bodyText?: string;
-  };
-}
-
 if (process.env.GTM_ID !== undefined) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
-
-const invalidTokenLink = onError((error: ResponseError) => {
-  if (
-    (error.networkError && error.networkError.statusCode === 401) ||
-    error.graphQLErrors?.some(isJwtError)
-  ) {
-    removeAuthToken();
-  }
-});
-
-const authLink = setContext((_, context) => {
-  const authToken = getAuthToken();
-
-  return {
-    ...context,
-    headers: {
-      ...context.headers,
-      Authorization: authToken ? `JWT ${authToken}` : null
-    }
-  };
-});
 
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
 // so we need to explicitly set them
 const linkOptions = {
-  credentials: "same-origin",
+  credentials: "include",
   uri: API_URI
 };
 const uploadLink = createUploadLink(linkOptions);
@@ -122,7 +92,7 @@ const apolloClient = new ApolloClient({
       return defaultDataIdFromObject(obj);
     }
   }),
-  link: invalidTokenLink.concat(authLink.concat(link))
+  link: authLink.concat(link)
 });
 
 const App: React.FC = () => {
