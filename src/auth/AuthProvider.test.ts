@@ -29,6 +29,7 @@ const credentials = {
 
 beforeEach(() => {
   localStorage.clear();
+  sessionStorage.clear();
 });
 
 describe("User", () => {

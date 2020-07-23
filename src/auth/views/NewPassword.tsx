@@ -19,7 +19,11 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
 
   const handleSetPassword = async (data: SetPassword) => {
     if (data.setPassword.errors.length === 0) {
-      loginByToken(data.setPassword.token, data.setPassword.user);
+      loginByToken(
+        data.setPassword.token,
+        data.setPassword.csrfToken,
+        data.setPassword.user
+      );
       navigate("/", true);
     }
   };

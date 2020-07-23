@@ -13,11 +13,12 @@ export const tokenAuthMutation = gql`
   ${fragmentUser}
   mutation TokenAuth($email: String!, $password: String!) {
     tokenCreate(email: $email, password: $password) {
-      token
       errors: accountErrors {
         field
         message
       }
+      csrfToken
+      token
       user {
         ...User
       }
@@ -68,6 +69,8 @@ export const setPassword = gql`
       errors: accountErrors {
         ...AccountErrorFragment
       }
+      csrfToken
+      refreshToken
       token
       user {
         ...User

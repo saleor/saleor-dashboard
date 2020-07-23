@@ -1,10 +1,10 @@
-import { ApolloQueryResult } from "apollo-client";
+import { ApolloError, ApolloQueryResult } from "apollo-client";
 import { DocumentNode } from "graphql";
 import React from "react";
 import { Query, QueryResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
-import { isJwtError } from "./auth/errors";
+import { isJwtError, isJwtExpiredError } from "./auth/errors";
 import useAppState from "./hooks/useAppState";
 import useNotifier from "./hooks/useNotifier";
 import useUser from "./hooks/useUser";
@@ -79,29 +79,40 @@ export function TypedQuery<TData, TVariables>(
         skip={skip}
         context={{ useBatching: true }}
         errorPolicy="all"
-      >
-        {(queryData: QueryResult<TData, TVariables>) => {
-          if (queryData.error) {
-            if (queryData.error.graphQLErrors.some(isJwtError)) {
+        onError={async (error: ApolloError) => {
+          if (error.graphQLErrors.some(isJwtError)) {
+            if (error.graphQLErrors.every(isJwtExpiredError)) {
+              const success = await user.tokenRefresh();
+
+              if (!success) {
+                user.logout();
+                notify({
+                  status: "error",
+                  text: intl.formatMessage(commonMessages.sessionExpired)
+                });
+              }
+            } else {
               user.logout();
-              notify({
-                status: "error",
-                text: intl.formatMessage(commonMessages.sessionExpired)
-              });
-            } else if (
-              !queryData.error.graphQLErrors.every(
-                err =>
-                  maybe(() => err.extensions.exception.code) ===
-                  "PermissionDenied"
-              )
-            ) {
               notify({
                 status: "error",
                 text: intl.formatMessage(commonMessages.somethingWentWrong)
               });
             }
+          } else if (
+            !error.graphQLErrors.every(
+              err =>
+                maybe(() => err.extensions.exception.code) ===
+                "PermissionDenied"
+            )
+          ) {
+            notify({
+              status: "error",
+              text: intl.formatMessage(commonMessages.somethingWentWrong)
+            });
           }
-
+        }}
+      >
+        {(queryData: QueryResult<TData, TVariables>) => {
           const loadMore = (
             mergeFunc: (
               previousResults: TData,

@@ -15,10 +15,10 @@ import ResetPasswordSuccess from "./views/ResetPasswordSuccess";
 
 interface UserContext {
   login: (username: string, password: string) => void;
-  loginByToken: (token: string, user: User) => void;
+  loginByToken: (auth: string, csrf: string, user: User) => void;
   logout: () => void;
   tokenAuthLoading: boolean;
-  tokenRefresh: () => Promise<void>;
+  tokenRefresh: () => Promise<boolean>;
   tokenVerifyLoading: boolean;
   user?: User;
 }
