@@ -31,7 +31,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ProductExportDialogInfo, {
   attributeNamePrefix
 } from "./ProductExportDialogInfo";
-import ProductExportDialogSettings from "./ProductExportDialogSettings";
+import ProductExportDialogSettings, {
+  ProductQuantity
+} from "./ProductExportDialogSettings";
 
 export enum ProductExportStep {
   INFO,
@@ -74,6 +76,7 @@ export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
   attributes: SearchAttributes_search_edges_node[];
   confirmButtonState: ConfirmButtonTransitionState;
   errors: ExportErrorFragment[];
+  productQuantity: ProductQuantity;
   selectedProducts: number;
   onFetch: (query: string) => void;
   onSubmit: (data: ExportProductsInput) => void;
@@ -83,6 +86,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   attributes,
   confirmButtonState,
   errors,
+  productQuantity,
   onClose,
   onSubmit,
   open,
@@ -159,6 +163,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
                   <ProductExportDialogSettings
                     data={data}
                     errors={dialogErrors}
+                    productQuantity={productQuantity}
                     selectedProducts={selectedProducts}
                     onChange={change}
                   />

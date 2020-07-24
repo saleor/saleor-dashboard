@@ -27,9 +27,11 @@ const useStyles = makeStyles(
   }
 );
 
+export type ProductQuantity = Record<"all" | "filter", number>;
 export interface ProductExportDialogSettingsProps {
   data: ExportProductsInput;
   errors: ExportErrorFragment[];
+  productQuantity: ProductQuantity;
   selectedProducts: number;
   onChange: (event: ChangeEvent) => void;
 }
@@ -40,6 +42,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
   data,
   errors,
   onChange,
+  productQuantity,
   selectedProducts
 }) => {
   const classes = useStyles({});
@@ -49,10 +52,15 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
 
   const productsToExportChoices: Array<RadioGroupFieldChoice<ExportScope>> = [
     {
-      label: intl.formatMessage({
-        defaultMessage: "All products",
-        description: "export all products to csv file"
-      }),
+      label: intl.formatMessage(
+        {
+          defaultMessage: "All products ({number})",
+          description: "export all products to csv file"
+        },
+        {
+          number: productQuantity.all || "..."
+        }
+      ),
       value: ExportScope.ALL
     },
     {
@@ -69,10 +77,15 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
       value: ExportScope.IDS
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "Current search",
-        description: "export filtered products to csv file"
-      }),
+      label: intl.formatMessage(
+        {
+          defaultMessage: "Current search ({number})",
+          description: "export filtered products to csv file"
+        },
+        {
+          number: productQuantity.filter || "..."
+        }
+      ),
       value: ExportScope.FILTER
     }
   ];

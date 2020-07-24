@@ -26,6 +26,10 @@ const props: ProductExportDialogProps = {
   onFetchMore: () => undefined,
   onSubmit: () => undefined,
   open: true,
+  productQuantity: {
+    all: 100,
+    filter: 32
+  },
   selectedProducts: 18
 };
 

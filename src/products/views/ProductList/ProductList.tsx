@@ -51,6 +51,7 @@ import {
 import {
   AvailableInGridAttributesQuery,
   TypedProductListQuery,
+  useCountAllProducts,
   useInitialProductFilterDataQuery
 } from "../../queries";
 import { productBulkDelete } from "../../types/productBulkDelete";
@@ -149,6 +150,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlDialog,
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
+  const countAllProducts = useCountAllProducts({});
 
   const [exportProducts, exportProductsOpts] = useProductExport({
     onCompleted: data => {
@@ -544,6 +546,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           errors={
                             exportProductsOpts.data?.exportProducts.errors || []
                           }
+                          productQuantity={{
+                            all: countAllProducts.data?.products.totalCount,
+                            filter: data?.products.totalCount
+                          }}
                           selectedProducts={listElements.length}
                           onClose={closeModal}
                           onSubmit={data =>
