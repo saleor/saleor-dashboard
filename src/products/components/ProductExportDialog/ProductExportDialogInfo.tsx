@@ -17,7 +17,7 @@ import {
   ExportProductsInput,
   ProductFieldEnum
 } from "@saleor/types/globalTypes";
-import { toggle } from "@saleor/utils/lists";
+import { add, toggle } from "@saleor/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
@@ -89,7 +89,8 @@ const FieldAccordion: React.FC<AccordionProps & {
   data: ExportProductsInput;
   fields: ProductFieldEnum[];
   onChange: (event: ChangeEvent) => void;
-}> = ({ data, fields, onChange, ...props }) => {
+  onToggleAll: (field: ProductFieldEnum[], setTo: boolean) => void;
+}> = ({ data, fields, onChange, onToggleAll, ...props }) => {
   const intl = useIntl();
 
   const fieldNames: Record<ProductFieldEnum, string> = {
@@ -151,14 +152,22 @@ const FieldAccordion: React.FC<AccordionProps & {
     })
   };
 
+  const selectedAll = fields.every(field =>
+    data.exportInfo.fields.includes(field)
+  );
+
   return (
-    <Accordion
-      title={intl.formatMessage({
-        defaultMessage: "SEO Information",
-        description: "informations about product seo, header"
-      })}
-      {...props}
-    >
+    <Accordion {...props}>
+      <Option
+        checked={selectedAll}
+        name="all"
+        onChange={() => onToggleAll(fields, !selectedAll)}
+      >
+        <FormattedMessage
+          defaultMessage="Select All"
+          description="selectt all options"
+        />
+      </Option>
       {fields.map(field => (
         <Option
           checked={data.exportInfo.fields.includes(field)}
@@ -212,6 +221,24 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
       }
     });
 
+  const handleToggleAllFields = (fields: ProductFieldEnum[], setTo: boolean) =>
+    onChange({
+      target: {
+        name: "exportInfo",
+        value: {
+          ...data.exportInfo,
+          fields: setTo
+            ? [
+                ...data.exportInfo.fields,
+                ...fields.filter(
+                  field => !data.exportInfo.fields.includes(field)
+                )
+              ]
+            : data.exportInfo.fields.filter(field => !fields.includes(field))
+        }
+      }
+    });
+
   return (
     <>
       <Typography className={classes.dialogLabel}>
@@ -233,6 +260,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           ProductFieldEnum.PRODUCT_TYPE
         ]}
         onChange={handleFieldChange}
+        onToggleAll={handleToggleAllFields}
       />
       <Accordion
         className={classes.accordion}
@@ -310,6 +338,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           ProductFieldEnum.VISIBLE
         ]}
         onChange={handleFieldChange}
+        onToggleAll={handleToggleAllFields}
       />
       <FieldAccordion
         className={classes.accordion}
@@ -324,6 +353,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           ProductFieldEnum.VARIANT_WEIGHT
         ]}
         onChange={handleFieldChange}
+        onToggleAll={handleToggleAllFields}
       />
       <FieldAccordion
         title={intl.formatMessage({
@@ -338,6 +368,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           ProductFieldEnum.VARIANT_IMAGES
         ]}
         onChange={handleFieldChange}
+        onToggleAll={handleToggleAllFields}
       />
     </>
   );
