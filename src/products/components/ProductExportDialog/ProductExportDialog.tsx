@@ -9,7 +9,9 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
 import Form from "@saleor/components/Form";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
+import { FormChange } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useWizard from "@saleor/hooks/useWizard";
 import { buttonMessages } from "@saleor/intl";
@@ -21,10 +23,14 @@ import {
   FileTypesEnum
 } from "@saleor/types/globalTypes";
 import getExportErrorMessage from "@saleor/utils/errors/export";
+import { toggle } from "@saleor/utils/lists";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ProductExportDialogInfo from "./ProductExportDialogInfo";
+import ProductExportDialogInfo, {
+  attributeNamePrefix
+} from "./ProductExportDialogInfo";
 import ProductExportDialogSettings from "./ProductExportDialogSettings";
 
 export enum ProductExportStep {
@@ -74,6 +80,7 @@ export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
 }
 
 const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
+  attributes,
   confirmButtonState,
   errors,
   onClose,
@@ -90,82 +97,116 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   const dialogErrors = useModalDialogErrors(errors, open);
   const notFormErrors = dialogErrors.filter(err => !err.field);
   const intl = useIntl();
+  const [selectedAttributes, setSelectedAttributes] = React.useState<
+    MultiAutocompleteChoiceType[]
+  >([]);
+
+  const attributeChoices = mapNodeToChoice(attributes);
 
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
       <Form initial={initialForm} onSubmit={onSubmit}>
-        {({ change, data }) => (
-          <>
-            <DialogTitle>
-              <FormattedMessage
-                defaultMessage="Export Information"
-                description="export products to csv file, dialog header"
-              />
-            </DialogTitle>
-            <DialogContent>
-              <ProductExportSteps
-                currentStep={step}
-                steps={steps}
-                onStepClick={setStep}
-              />
-              {step === ProductExportStep.INFO && (
-                <ProductExportDialogInfo
-                  data={data}
-                  onChange={change}
-                  {...fetchMoreProps}
-                />
-              )}
-              {step === ProductExportStep.SETTINGS && (
-                <ProductExportDialogSettings
-                  data={data}
-                  errors={dialogErrors}
-                  selectedProducts={selectedProducts}
-                  onChange={change}
-                />
-              )}
-            </DialogContent>
+        {({ change, data }) => {
+          const handleAttributeSelect: FormChange = event => {
+            const id = event.target.name.substr(attributeNamePrefix.length);
 
-            {notFormErrors.length > 0 && (
+            change({
+              target: {
+                name: "exportInfo",
+                value: {
+                  ...data.exportInfo,
+                  attributes: toggle(
+                    id,
+                    data.exportInfo.attributes,
+                    (a, b) => a === b
+                  )
+                }
+              }
+            });
+
+            const choice = attributeChoices.find(choice => choice.value === id);
+
+            setSelectedAttributes(
+              toggle(choice, selectedAttributes, (a, b) => a.value === b.value)
+            );
+          };
+
+          return (
+            <>
+              <DialogTitle>
+                <FormattedMessage
+                  defaultMessage="Export Information"
+                  description="export products to csv file, dialog header"
+                />
+              </DialogTitle>
               <DialogContent>
-                {notFormErrors.map(err => (
-                  <Typography color="error" key={err.field + err.code}>
-                    {getExportErrorMessage(err, intl)}
-                  </Typography>
-                ))}
-              </DialogContent>
-            )}
-
-            <DialogActions>
-              {step === ProductExportStep.INFO && (
-                <Button onClick={onClose}>
-                  <FormattedMessage {...buttonMessages.cancel} />
-                </Button>
-              )}
-              {step === ProductExportStep.SETTINGS && (
-                <Button onClick={prev}>
-                  <FormattedMessage {...buttonMessages.back} />
-                </Button>
-              )}
-              {step === ProductExportStep.INFO && (
-                <Button color="primary" variant="contained" onClick={next}>
-                  <FormattedMessage {...buttonMessages.nextStep} />
-                </Button>
-              )}
-              {step === ProductExportStep.SETTINGS && (
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  variant="contained"
-                  type="submit"
-                >
-                  <FormattedMessage
-                    defaultMessage="export products"
-                    description="export products to csv file, button"
+                <ProductExportSteps
+                  currentStep={step}
+                  steps={steps}
+                  onStepClick={setStep}
+                />
+                {step === ProductExportStep.INFO && (
+                  <ProductExportDialogInfo
+                    attributes={attributeChoices}
+                    data={data}
+                    selectedAttributes={selectedAttributes}
+                    onAttrtibuteSelect={handleAttributeSelect}
+                    onChange={change}
+                    {...fetchMoreProps}
                   />
-                </ConfirmButton>
+                )}
+                {step === ProductExportStep.SETTINGS && (
+                  <ProductExportDialogSettings
+                    data={data}
+                    errors={dialogErrors}
+                    selectedProducts={selectedProducts}
+                    onChange={change}
+                  />
+                )}
+              </DialogContent>
+
+              {notFormErrors.length > 0 && (
+                <DialogContent>
+                  {notFormErrors.map(err => (
+                    <Typography color="error" key={err.field + err.code}>
+                      {getExportErrorMessage(err, intl)}
+                    </Typography>
+                  ))}
+                </DialogContent>
               )}
-            </DialogActions>
-          </>
-        )}
+
+              <DialogActions>
+                {step === ProductExportStep.INFO && (
+                  <Button onClick={onClose}>
+                    <FormattedMessage {...buttonMessages.cancel} />
+                  </Button>
+                )}
+                {step === ProductExportStep.SETTINGS && (
+                  <Button onClick={prev}>
+                    <FormattedMessage {...buttonMessages.back} />
+                  </Button>
+                )}
+                {step === ProductExportStep.INFO && (
+                  <Button color="primary" variant="contained" onClick={next}>
+                    <FormattedMessage {...buttonMessages.nextStep} />
+                  </Button>
+                )}
+                {step === ProductExportStep.SETTINGS && (
+                  <ConfirmButton
+                    transitionState={confirmButtonState}
+                    variant="contained"
+                    type="submit"
+                  >
+                    <FormattedMessage
+                      defaultMessage="export products"
+                      description="export products to csv file, button"
+                    />
+                  </ConfirmButton>
+                )}
+              </DialogActions>
+            </>
+          );
+        }}
       </Form>
     </Dialog>
   );

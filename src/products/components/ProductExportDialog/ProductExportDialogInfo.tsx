@@ -6,11 +6,12 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Accordion, { AccordionProps } from "@saleor/components/Accordion";
+import Chip from "@saleor/components/Chip";
 import Hr from "@saleor/components/Hr";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { sectionNames } from "@saleor/intl";
-import { SearchAttributes_search_edges_node } from "@saleor/searches/types/SearchAttributes";
 import { FetchMoreProps } from "@saleor/types";
 import {
   ExportProductsInput,
@@ -21,7 +22,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
 
-const attributeNamePrefix = "attribute-";
+export const attributeNamePrefix = "attribute-";
 
 const useStyles = makeStyles(
   theme => ({
@@ -173,8 +174,10 @@ const FieldAccordion: React.FC<AccordionProps & {
 };
 
 export interface ProductExportDialogInfoProps extends FetchMoreProps {
-  attributes: SearchAttributes_search_edges_node[];
+  attributes: MultiAutocompleteChoiceType[];
   data: ExportProductsInput;
+  selectedAttributes: MultiAutocompleteChoiceType[];
+  onAttrtibuteSelect: (event: ChangeEvent) => void;
   onChange: (event: ChangeEvent) => void;
   onFetch: (query: string) => void;
 }
@@ -183,7 +186,9 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
   attributes,
   data,
   hasMore,
+  selectedAttributes,
   loading,
+  onAttrtibuteSelect,
   onChange,
   onFetch,
   onFetchMore
@@ -201,21 +206,6 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           fields: toggle(
             event.target.name,
             data.exportInfo.fields,
-            (a, b) => a === b
-          )
-        }
-      }
-    });
-
-  const handleAtrtibuteChange = (event: ChangeEvent) =>
-    onChange({
-      target: {
-        name: "exportInfo",
-        value: {
-          ...data.exportInfo,
-          attributes: toggle(
-            event.target.name.substr(attributeNamePrefix.length),
-            data.exportInfo.attributes,
             (a, b) => a === b
           )
         }
@@ -247,6 +237,22 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
       <Accordion
         className={classes.accordion}
         title={intl.formatMessage(sectionNames.attributes)}
+        quickPeek={
+          selectedAttributes.length > 0 &&
+          selectedAttributes.map(attribute => (
+            <Chip
+              label={attribute.label}
+              onClose={() =>
+                onAttrtibuteSelect({
+                  target: {
+                    name: attributeNamePrefix + attribute.value,
+                    value: undefined
+                  }
+                })
+              }
+            />
+          ))
+        }
       >
         <TextField
           name="query"
@@ -268,12 +274,12 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         <Hr className={classes.hr} />
         {attributes.map(attribute => (
           <Option
-            checked={data.exportInfo.attributes.includes(attribute.id)}
-            name={attributeNamePrefix + attribute.id}
-            onChange={handleAtrtibuteChange}
-            key={attribute.id}
+            checked={data.exportInfo.attributes.includes(attribute.value)}
+            name={attributeNamePrefix + attribute.value}
+            onChange={onAttrtibuteSelect}
+            key={attribute.value}
           >
-            {attribute.name}
+            {attribute.label}
           </Option>
         ))}
         {(hasMore || loading) && (
