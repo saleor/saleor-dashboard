@@ -17,7 +17,7 @@ import {
   ExportProductsInput,
   ProductFieldEnum
 } from "@saleor/types/globalTypes";
-import { add, toggle } from "@saleor/utils/lists";
+import { toggle } from "@saleor/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
