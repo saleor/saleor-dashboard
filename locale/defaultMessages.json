@@ -3736,12 +3736,6 @@
   "src_dot_productTypes_dot_components_dot_AssignAttributeDialog_dot_902296540": {
     "string": "Search Attributes"
   },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributeEditDialog_dot_1228425832": {
-    "string": "Attribute name"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributeEditDialog_dot_335542212": {
-    "string": "Attribute values"
-  },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributeUnassignDialog_dot_404238501": {
     "context": "dialog header",
     "string": "Unassign Attribute From Product Type"
@@ -3933,10 +3927,6 @@
     "context": "button",
     "string": "Load More"
   },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1198255427": {
-    "context": "export all products to csv file",
-    "string": "All products"
-  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_1459686496": {
     "context": "product field",
     "string": "Visibility"
@@ -3973,6 +3963,10 @@
     "context": "export products to csv file, choice field label",
     "string": "Export information for:"
   },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2355065897": {
+    "context": "export all products to csv file",
+    "string": "All products ({number})"
+  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2659464408": {
     "context": "product export to csv file, header",
     "string": "Information exported"
@@ -3980,10 +3974,6 @@
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2693217446": {
     "context": "export products as csv or spreadsheet file",
     "string": "Export as:"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2726203891": {
-    "context": "export filtered products to csv file",
-    "string": "Current search"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2883720012": {
     "context": "export products to csv file, button",
@@ -4008,6 +3998,10 @@
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3441755345": {
     "context": "product field",
     "string": "Charge Taxes"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3443345452": {
+    "context": "selectt all options",
+    "string": "Select All"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3518309850": {
     "context": "export products as spreadsheet",
@@ -4047,6 +4041,10 @@
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_693960049": {
     "context": "product field",
     "string": "SKU"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_700651641": {
+    "context": "export filtered products to csv file",
+    "string": "Current search ({number})"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_734825715": {
     "context": "informations about product prices etc, header",
