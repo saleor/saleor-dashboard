@@ -11,7 +11,7 @@ interface ResponseError extends ErrorResponse {
   };
 }
 
-export const invalidTokenLink = onError((error: ResponseError) => {
+export const invalidateTokenLink = onError((error: ResponseError) => {
   if (
     (error.networkError && error.networkError.statusCode === 401) ||
     error.graphQLErrors?.some(isJwtError)
@@ -34,6 +34,6 @@ export const tokenLink = setContext((_, context) => {
   };
 });
 
-const link = invalidTokenLink.concat(tokenLink);
+const link = invalidateTokenLink.concat(tokenLink);
 
 export default link;

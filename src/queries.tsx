@@ -1,15 +1,14 @@
-import { ApolloError, ApolloQueryResult } from "apollo-client";
+import { ApolloQueryResult } from "apollo-client";
 import { DocumentNode } from "graphql";
 import React from "react";
 import { Query, QueryResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
-import { isJwtError, isJwtExpiredError } from "./auth/errors";
+import { handleQueryAuthError } from "./auth";
 import useAppState from "./hooks/useAppState";
 import useNotifier from "./hooks/useNotifier";
 import useUser from "./hooks/useUser";
-import { commonMessages } from "./intl";
-import { maybe, RequireAtLeastOne } from "./misc";
+import { RequireAtLeastOne } from "./misc";
 
 export interface LoadMore<TData, TVariables> {
   loadMore: (
@@ -79,38 +78,15 @@ export function TypedQuery<TData, TVariables>(
         skip={skip}
         context={{ useBatching: true }}
         errorPolicy="all"
-        onError={async (error: ApolloError) => {
-          if (error.graphQLErrors.some(isJwtError)) {
-            if (error.graphQLErrors.every(isJwtExpiredError)) {
-              const success = await user.tokenRefresh();
-
-              if (!success) {
-                user.logout();
-                notify({
-                  status: "error",
-                  text: intl.formatMessage(commonMessages.sessionExpired)
-                });
-              }
-            } else {
-              user.logout();
-              notify({
-                status: "error",
-                text: intl.formatMessage(commonMessages.somethingWentWrong)
-              });
-            }
-          } else if (
-            !error.graphQLErrors.every(
-              err =>
-                maybe(() => err.extensions.exception.code) ===
-                "PermissionDenied"
-            )
-          ) {
-            notify({
-              status: "error",
-              text: intl.formatMessage(commonMessages.somethingWentWrong)
-            });
-          }
-        }}
+        onError={error =>
+          handleQueryAuthError(
+            error,
+            notify,
+            user.tokenRefresh,
+            user.logout,
+            intl
+          )
+        }
       >
         {(queryData: QueryResult<TData, TVariables>) => {
           const loadMore = (
