@@ -1,7 +1,6 @@
-import { isJwtError, isJwtExpiredError } from "@saleor/auth/errors";
-import { commonMessages } from "@saleor/intl";
-import { maybe, RequireAtLeastOne } from "@saleor/misc";
-import { ApolloError, ApolloQueryResult } from "apollo-client";
+import { handleQueryAuthError } from "@saleor/auth";
+import { RequireAtLeastOne } from "@saleor/misc";
+import { ApolloQueryResult } from "apollo-client";
 import { DocumentNode } from "graphql";
 import { useEffect } from "react";
 import { QueryResult, useQuery as useBaseQuery } from "react-apollo";
@@ -48,37 +47,14 @@ function makeQuery<TData, TVariables>(
       },
       errorPolicy: "all",
       fetchPolicy: "cache-and-network",
-      onError: async (error: ApolloError) => {
-        if (error.graphQLErrors.some(isJwtError)) {
-          if (error.graphQLErrors.every(isJwtExpiredError)) {
-            const success = await user.tokenRefresh();
-
-            if (!success) {
-              user.logout();
-              notify({
-                status: "error",
-                text: intl.formatMessage(commonMessages.sessionExpired)
-              });
-            }
-          } else {
-            user.logout();
-            notify({
-              status: "error",
-              text: intl.formatMessage(commonMessages.somethingWentWrong)
-            });
-          }
-        } else if (
-          !error.graphQLErrors.every(
-            err =>
-              maybe(() => err.extensions.exception.code) === "PermissionDenied"
-          )
-        ) {
-          notify({
-            status: "error",
-            text: intl.formatMessage(commonMessages.somethingWentWrong)
-          });
-        }
-      },
+      onError: error =>
+        handleQueryAuthError(
+          error,
+          notify,
+          user.tokenRefresh,
+          user.logout,
+          intl
+        ),
       skip,
       variables
     });
