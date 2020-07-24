@@ -3715,6 +3715,13 @@ type ProductBulkPublish {
   productErrors: [ProductError!]!
 }
 
+type VariantChannelListing implements Node {
+  id: ID!
+  price: Money!
+  costPrice: Money!
+  channel: Channel!
+}
+
 type ProductChannelListing implements Node {
   id: ID!
   publicationDate: Date
@@ -4137,6 +4144,7 @@ type ProductVariant implements Node & ObjectWithMetadata {
   stockQuantity: Int! @deprecated(reason: "Use the quantityAvailable field instead. This field will be removed after 2020-07-31.")
   price: Money
   pricing: VariantPricingInfo
+  channelListing: [VariantChannelListing!] 
   isAvailable: Boolean @deprecated(reason: "Use the stock field instead. This field will be removed after 2020-07-31.")
   attributes: [SelectedAttribute!]!
   costPrice: Money

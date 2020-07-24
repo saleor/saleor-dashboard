@@ -1,40 +1,66 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography
+} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import { ProductVariant_channelListing } from "@saleor/fragments/types/ProductVariant";
+import { renderCollection } from "@saleor/misc";
+import { ICONBUTTON_SIZE } from "@saleor/theme";
+// import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
+    colAction: {
+      padding: 0,
+      width: ICONBUTTON_SIZE + theme.spacing()
+    },
+    colQuantity: {
+      textAlign: "right",
+      width: 200
+    },
     grid: {
       display: "grid",
       gridColumnGap: theme.spacing(2),
       gridTemplateColumns: "1fr 1fr"
+    },
+
+    input: {
+      padding: theme.spacing(1.5),
+      textAlign: "right"
+    },
+    inputComponent: {
+      width: 100
     }
   }),
   { name: "ProductVariantPrice" }
 );
 
 interface ProductVariantPriceProps {
-  currencySymbol?: string;
-  price?: string;
-  costPrice?: string;
+  variantChannelListings: ProductVariant_channelListing[];
   errors: ProductErrorFragment[];
   loading?: boolean;
   onChange(event: any);
 }
 
 const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
-  const { currencySymbol, costPrice, errors, price, loading, onChange } = props;
+  const { variantChannelListings, loading, onChange } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["price", "cost_price"], errors);
+  // FIXME: Waiting for working mutations
+  // const formErrors = getFormErrors(["price", "cost_price"], errors);
 
   return (
     <Card>
@@ -45,50 +71,47 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
         })}
       />
       <CardContent>
-        <div className={classes.grid}>
-          <div>
-            <PriceField
-              error={!!formErrors.price}
-              name="price"
-              label={intl.formatMessage({
-                defaultMessage: "Selling price override"
-              })}
-              hint={
-                getProductErrorMessage(formErrors.price, intl) ||
-                intl.formatMessage({
-                  defaultMessage: "Optional",
-                  description: "optional field",
-                  id: "productVariantPriceOptionalPriceField"
-                })
-              }
-              value={price}
-              currencySymbol={currencySymbol}
-              onChange={onChange}
-              disabled={loading}
-            />
-          </div>
-          <div>
-            <PriceField
-              error={!!formErrors.cost_price}
-              name="costPrice"
-              label={intl.formatMessage({
-                defaultMessage: "Cost price override"
-              })}
-              hint={
-                getProductErrorMessage(formErrors.cost_price, intl) ||
-                intl.formatMessage({
-                  defaultMessage: "Optional",
-                  description: "optional field",
-                  id: "productVariantPriceOptionalCostPriceField"
-                })
-              }
-              value={costPrice}
-              currencySymbol={currencySymbol}
-              onChange={onChange}
-              disabled={loading}
-            />
-          </div>
-        </div>
+        <Typography>
+          {intl.formatMessage({
+            defaultMessage:
+              "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency"
+          })}
+        </Typography>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <FormattedMessage
+                  defaultMessage="Channel Name"
+                  description="tabel column header"
+                />
+              </TableCell>
+              <TableCell className={classes.colQuantity}>
+                <FormattedMessage
+                  defaultMessage="Price"
+                  description="tabel column header"
+                />
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {renderCollection(variantChannelListings, listing => (
+              <TableRow key={listing.channel.id}>
+                <TableCell>{listing.channel.name}</TableCell>
+                <TableCell className={classes.colQuantity}>
+                  <PriceField
+                    error={false}
+                    name={`${listing.channel.id}-channel-price`}
+                    value={listing.price.amount}
+                    currencySymbol={listing.price.currency}
+                    onChange={onChange}
+                    disabled={loading}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </CardContent>
     </Card>
   );

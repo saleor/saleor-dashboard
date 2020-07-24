@@ -3,6 +3,7 @@ import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
 import { content } from "../storybook/stories/components/RichTextEditor";
+import { fakeListings } from "./components/ProductVariantPage";
 import { ProductDetails_product } from "./types/ProductDetails";
 import { ProductList_products_edges_node } from "./types/ProductList";
 import { ProductVariantCreateData_product } from "./types/ProductVariantCreateData";
@@ -1911,6 +1912,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       ]
     }
   ],
+  channelListing: fakeListings,
   costPrice: {
     __typename: "Money",
     amount: 12,

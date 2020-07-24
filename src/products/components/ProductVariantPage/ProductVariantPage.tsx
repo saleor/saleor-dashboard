@@ -6,7 +6,10 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
+import {
+  ProductVariant,
+  ProductVariant_channelListing
+} from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, {
   FormsetChange,
@@ -20,7 +23,6 @@ import {
 import { diff } from "fast-array-diff";
 import React from "react";
 
-import { maybe } from "../../../misc";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductVariantAttributes, {
   VariantAttributeInputData
@@ -61,6 +63,48 @@ interface ProductVariantPageProps {
   onVariantClick(variantId: string);
 }
 
+// TODO: Remove test data
+const fakeListings: ProductVariant_channelListing[] = [
+  {
+    __typename: "VariantChannelListing",
+    channel: {
+      __typename: "Channel",
+      currencyCode: "USD",
+      id: "1",
+      name: "Sationary in USA"
+    },
+    costPrice: {
+      __typename: "Money",
+      amount: 42,
+      currency: "USD"
+    },
+    price: {
+      __typename: "Money",
+      amount: 420,
+      currency: "USD"
+    }
+  },
+  {
+    __typename: "VariantChannelListing",
+    channel: {
+      __typename: "Channel",
+      currencyCode: "EUR",
+      id: "1",
+      name: "Internet in Europe"
+    },
+    costPrice: {
+      __typename: "Money",
+      amount: 11,
+      currency: "USD"
+    },
+    price: {
+      __typename: "Money",
+      amount: 320,
+      currency: "USD"
+    }
+  }
+];
+
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   errors,
   loading,
@@ -96,22 +140,19 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
-  const variantImages = maybe(() => variant.images.map(image => image.id), []);
-  const productImages = maybe(() =>
-    variant.product.images.sort((prev, next) =>
+  const variantImages = variant?.images.map(image => image.id) || [];
+  const productImages =
+    variant?.product.images.sort((prev, next) =>
       prev.sortOrder > next.sortOrder ? 1 : -1
-    )
-  );
-  const images = maybe(() =>
-    productImages
-      .filter(image => variantImages.indexOf(image.id) !== -1)
-      .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1))
-  );
+    ) || [];
+  const images = productImages
+    .filter(image => variantImages.indexOf(image.id) !== -1)
+    .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
 
   const initialForm: ProductVariantPageFormData = {
-    costPrice: maybe(() => variant.costPrice.amount.toString(), ""),
-    price: maybe(() => variant.price.amount.toString(), ""),
-    sku: maybe(() => variant.sku, ""),
+    costPrice: variant?.costPrice.amount.toString() || "",
+    price: variant?.price.amount.toString() || "",
+    sku: variant?.sku || "",
     trackInventory: variant?.trackInventory
   };
 
@@ -136,9 +177,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <AppHeader onBack={onBack}>
-          {maybe(() => variant.product.name)}
-        </AppHeader>
+        <AppHeader onBack={onBack}>{variant?.product.name}</AppHeader>
         <PageHeader title={header} />
         <Form initial={initialForm} onSubmit={handleSubmit} confirmLeave>
           {({ change, data, hasChanged, submit, triggerChange }) => {
@@ -153,10 +192,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   <div>
                     <ProductVariantNavigation
                       current={variant ? variant.id : undefined}
-                      fallbackThumbnail={maybe(
-                        () => variant.product.thumbnail.url
-                      )}
-                      variants={maybe(() => variant.product.variants)}
+                      fallbackThumbnail={variant?.product.thumbnail.url}
+                      variants={variant?.product.variants}
                       onAdd={onAdd}
                       onRowClick={(variantId: string) => {
                         if (variant) {
@@ -182,15 +219,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     <CardSpacer />
                     <ProductVariantPrice
                       errors={errors}
-                      price={data.price}
-                      currencySymbol={
-                        variant && variant.price
-                          ? variant.price.currency
-                          : variant && variant.costPrice
-                          ? variant.costPrice.currency
-                          : ""
-                      }
-                      costPrice={data.costPrice}
+                      variantChannelListings={fakeListings}
                       loading={loading}
                       onChange={change}
                     />
@@ -242,7 +271,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           onImageSelect={onImageSelect}
           open={isModalOpened}
           images={productImages}
-          selectedImages={maybe(() => variant.images.map(image => image.id))}
+          selectedImages={variant?.images.map(image => image.id)}
         />
       )}
     </>

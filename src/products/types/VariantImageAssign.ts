@@ -97,6 +97,32 @@ export interface VariantImageAssign_variantImageAssign_productVariant_product {
   variants: (VariantImageAssign_variantImageAssign_productVariant_product_variants | null)[] | null;
 }
 
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListing_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface VariantImageAssign_variantImageAssign_productVariant_channelListing {
+  __typename: "VariantChannelListing";
+  channel: VariantImageAssign_variantImageAssign_productVariant_channelListing_channel;
+  costPrice: VariantImageAssign_variantImageAssign_productVariant_channelListing_costPrice;
+  price: VariantImageAssign_variantImageAssign_productVariant_channelListing_price;
+}
+
 export interface VariantImageAssign_variantImageAssign_productVariant_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -120,6 +146,7 @@ export interface VariantImageAssign_variantImageAssign_productVariant {
   name: string;
   price: VariantImageAssign_variantImageAssign_productVariant_price | null;
   product: VariantImageAssign_variantImageAssign_productVariant_product;
+  channelListing: VariantImageAssign_variantImageAssign_productVariant_channelListing[] | null;
   sku: string;
   stocks: (VariantImageAssign_variantImageAssign_productVariant_stocks | null)[] | null;
   trackInventory: boolean;

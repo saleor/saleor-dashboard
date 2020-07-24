@@ -237,6 +237,19 @@ export const fragmentVariant = gql`
         }
       }
     }
+    channelListing {
+      channel {
+        id
+        name
+        currencyCode
+      }
+      costPrice {
+        ...Money
+      }
+      price {
+        ...Money
+      }
+    }
     sku
     stocks {
       ...StockFragment

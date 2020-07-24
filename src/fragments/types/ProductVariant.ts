@@ -89,6 +89,32 @@ export interface ProductVariant_product {
   variants: (ProductVariant_product_variants | null)[] | null;
 }
 
+export interface ProductVariant_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface ProductVariant_channelListing_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariant_channelListing_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface ProductVariant_channelListing {
+  __typename: "VariantChannelListing";
+  channel: ProductVariant_channelListing_channel;
+  costPrice: ProductVariant_channelListing_costPrice;
+  price: ProductVariant_channelListing_price;
+}
+
 export interface ProductVariant_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -112,6 +138,7 @@ export interface ProductVariant {
   name: string;
   price: ProductVariant_price | null;
   product: ProductVariant_product;
+  channelListing: ProductVariant_channelListing[] | null;
   sku: string;
   stocks: (ProductVariant_stocks | null)[] | null;
   trackInventory: boolean;
