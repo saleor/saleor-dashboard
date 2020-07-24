@@ -39,6 +39,7 @@ const useStyles = makeStyles(
 export interface AccordionProps {
   className?: string;
   initialExpand?: boolean;
+  quickPeek?: React.ReactNode;
   title: string;
 }
 
@@ -46,6 +47,7 @@ const Accordion: React.FC<AccordionProps> = ({
   children,
   className,
   initialExpand,
+  quickPeek,
   title,
   ...props
 }) => {
@@ -62,10 +64,12 @@ const Accordion: React.FC<AccordionProps> = ({
           </IconButton>
         </div>
       </div>
-      {expanded && (
+      {(expanded || !!quickPeek) && (
         <>
           <Hr />
-          <div className={classes.content}>{children}</div>
+          <div className={classes.content}>
+            {quickPeek ? (expanded ? children : quickPeek) : children}
+          </div>
         </>
       )}
     </div>

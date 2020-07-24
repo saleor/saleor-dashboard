@@ -13,4 +13,9 @@ storiesOf("Generics / Accordion", module)
     <Accordion title="Title" initialExpand={true}>
       Content
     </Accordion>
+  ))
+  .add("with quick peek", () => (
+    <Accordion title="Title" quickPeek="Quick Peek">
+      Content
+    </Accordion>
   ));
