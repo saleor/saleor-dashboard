@@ -15,7 +15,6 @@ import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { DraftOrderInput } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
@@ -103,7 +102,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       <PageHeader
         className={classes.header}
         inline
-        title={maybe(() => order.number) ? "#" + order.number : undefined}
+        title={order?.number ? "#" + order?.number : undefined}
       >
         <CardMenu
           menuItems={[
@@ -135,10 +134,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
             onOrderLineRemove={onOrderLineRemove}
             onShippingMethodEdit={onShippingMethodEdit}
           />
-          <OrderHistory
-            history={maybe(() => order.events)}
-            onNoteAdd={onNoteAdd}
-          />
+          <OrderHistory history={order?.events} onNoteAdd={onNoteAdd} />
         </div>
         <div>
           <OrderCustomer
@@ -160,7 +156,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       </Grid>
       <SaveButtonBar
         state={saveButtonBarState}
-        disabled={disabled || !maybe(() => order.canFinalize)}
+        disabled={disabled || !order?.canFinalize}
         onCancel={onBack}
         onSave={onDraftFinalize}
         labels={{
