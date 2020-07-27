@@ -23,6 +23,7 @@ import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
 
 export const attributeNamePrefix = "attribute-";
+const maxChips = 4;
 
 const useStyles = makeStyles(
   theme => ({
@@ -177,7 +178,7 @@ const FieldAccordion: React.FC<AccordionProps & {
       quickPeek={
         selectedFields.length > 0 && (
           <div className={classes.quickPeekContainer}>
-            {selectedFields.slice(0, 5).map(field => (
+            {selectedFields.slice(0, maxChips).map(field => (
               <Chip
                 className={classes.chip}
                 label={fieldNames[field]}
@@ -191,13 +192,13 @@ const FieldAccordion: React.FC<AccordionProps & {
                 }
               />
             ))}
-            {selectedFields.length > 5 && (
+            {selectedFields.length > maxChips && (
               <Typography className={classes.moreLabel} variant="caption">
                 <FormattedMessage
                   defaultMessage="and {number} more"
                   description="there are more elements of list that are hidden"
                   values={{
-                    number: selectedFields.length - 5
+                    number: selectedFields.length - maxChips
                   }}
                 />
               </Typography>
@@ -317,7 +318,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         quickPeek={
           selectedAttributes.length > 0 && (
             <div className={classes.quickPeekContainer}>
-              {selectedAttributes.slice(0, 5).map(attribute => (
+              {selectedAttributes.slice(0, maxChips).map(attribute => (
                 <Chip
                   className={classes.chip}
                   label={attribute.label}
@@ -331,13 +332,13 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                   }
                 />
               ))}
-              {selectedAttributes.length > 5 && (
+              {selectedAttributes.length > maxChips && (
                 <Typography className={classes.moreLabel} variant="caption">
                   <FormattedMessage
                     defaultMessage="and {number} more"
                     description="there are more elements of list that are hidden"
                     values={{
-                      number: selectedAttributes.length - 5
+                      number: selectedAttributes.length - maxChips
                     }}
                   />
                 </Typography>
