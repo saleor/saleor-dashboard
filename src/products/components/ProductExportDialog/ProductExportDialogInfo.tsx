@@ -33,6 +33,10 @@ const useStyles = makeStyles(
       position: "relative",
       right: -theme.spacing(1.5)
     },
+    chip: {
+      marginBottom: theme.spacing(1),
+      marginRight: theme.spacing()
+    },
     dialogLabel: {
       marginBottom: theme.spacing(2)
     },
@@ -52,6 +56,13 @@ const useStyles = makeStyles(
       display: "flex",
       justifyContent: "center",
       marginTop: theme.spacing(2)
+    },
+    moreLabel: {
+      display: "inline-block",
+      marginBottom: theme.spacing()
+    },
+    quickPeekContainer: {
+      marginBottom: theme.spacing(-1)
     }
   }),
   {
@@ -91,6 +102,7 @@ const FieldAccordion: React.FC<AccordionProps & {
   onChange: (event: ChangeEvent) => void;
   onToggleAll: (field: ProductFieldEnum[], setTo: boolean) => void;
 }> = ({ data, fields, onChange, onToggleAll, ...props }) => {
+  const classes = useStyles({});
   const intl = useIntl();
 
   const fieldNames: Record<ProductFieldEnum, string> = {
@@ -156,8 +168,45 @@ const FieldAccordion: React.FC<AccordionProps & {
     data.exportInfo.fields.includes(field)
   );
 
+  const selectedFields = data.exportInfo.fields.filter(field =>
+    fields.includes(field)
+  );
+
   return (
-    <Accordion {...props}>
+    <Accordion
+      quickPeek={
+        selectedFields.length > 0 && (
+          <div className={classes.quickPeekContainer}>
+            {selectedFields.slice(0, 5).map(field => (
+              <Chip
+                className={classes.chip}
+                label={fieldNames[field]}
+                onClose={() =>
+                  onChange({
+                    target: {
+                      name: field,
+                      value: false
+                    }
+                  })
+                }
+              />
+            ))}
+            {selectedFields.length > 5 && (
+              <Typography className={classes.moreLabel} variant="caption">
+                <FormattedMessage
+                  defaultMessage="and {number} more"
+                  description="there are more elements of list that are hidden"
+                  values={{
+                    number: selectedFields.length - 5
+                  }}
+                />
+              </Typography>
+            )}
+          </div>
+        )
+      }
+      {...props}
+    >
       <Option
         checked={selectedAll}
         name="all"
@@ -266,20 +315,35 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         className={classes.accordion}
         title={intl.formatMessage(sectionNames.attributes)}
         quickPeek={
-          selectedAttributes.length > 0 &&
-          selectedAttributes.map(attribute => (
-            <Chip
-              label={attribute.label}
-              onClose={() =>
-                onAttrtibuteSelect({
-                  target: {
-                    name: attributeNamePrefix + attribute.value,
-                    value: undefined
+          selectedAttributes.length > 0 && (
+            <div className={classes.quickPeekContainer}>
+              {selectedAttributes.slice(0, 5).map(attribute => (
+                <Chip
+                  className={classes.chip}
+                  label={attribute.label}
+                  onClose={() =>
+                    onAttrtibuteSelect({
+                      target: {
+                        name: attributeNamePrefix + attribute.value,
+                        value: undefined
+                      }
+                    })
                   }
-                })
-              }
-            />
-          ))
+                />
+              ))}
+              {selectedAttributes.length > 5 && (
+                <Typography className={classes.moreLabel} variant="caption">
+                  <FormattedMessage
+                    defaultMessage="and {number} more"
+                    description="there are more elements of list that are hidden"
+                    values={{
+                      number: selectedAttributes.length - 5
+                    }}
+                  />
+                </Typography>
+              )}
+            </div>
+          )
         }
       >
         <TextField
