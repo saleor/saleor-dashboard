@@ -17,6 +17,7 @@ import { useIntl } from "react-intl";
 
 import { DraftOrderInput } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
+import OrderChannelSectionCard from "../OrderChannelSelectionCard";
 import OrderCustomer from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
@@ -151,6 +152,12 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
             onFetchMore={onFetchMore}
             onProfileView={onProfileView}
             onShippingAddressEdit={onShippingAddressEdit}
+          />
+        </div>
+        <div>
+          <OrderChannelSectionCard
+            onSelectClick={() => undefined}
+            disabled={disabled}
           />
         </div>
       </Grid>
