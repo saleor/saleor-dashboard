@@ -11,10 +11,6 @@ export function isJwtError(error: GraphQLError): boolean {
   return !!findValueInEnum(error.extensions.exception.code, JWTError);
 }
 
-export function isJwtExpiredError(error: GraphQLError): boolean {
-  return error.extensions.exception.code === JWTError.expired;
-}
-
 export function isTokenExpired(error: GraphQLError): boolean {
   return error.extensions.exception.code === JWTError.expired;
 }
