@@ -129,9 +129,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                 defaultMessage: "Export Products",
                 description: "export products to csv file, button"
               }),
-              onSelect: onExport
+              onSelect: onExport,
+              testId: "export"
             }
           ]}
+          data-test="menu"
         />
         <ColumnPicker
           className={classes.columnPicker}

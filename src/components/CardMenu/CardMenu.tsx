@@ -13,6 +13,7 @@ const ITEM_HEIGHT = 48;
 
 export interface CardMenuItem {
   label: string;
+  testId?: string;
   onSelect: () => void;
 }
 
@@ -40,7 +41,7 @@ const useStyles = makeStyles(
 );
 
 const CardMenu: React.FC<CardMenuProps> = props => {
-  const { className, disabled, menuItems } = props;
+  const { className, disabled, menuItems, ...rest } = props;
   const classes = useStyles(props);
 
   const anchorRef = React.useRef<HTMLButtonElement | null>(null);
@@ -81,7 +82,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
   };
 
   return (
-    <div className={className}>
+    <div className={className} {...rest}>
       <IconButton
         aria-label="More"
         aria-owns={open ? "long-menu" : null}
@@ -119,6 +120,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                     <MenuItem
                       onClick={() => handleMenuClick(menuItemIndex)}
                       key={menuItem.label}
+                      data-test={menuItem.testId}
                     >
                       {menuItem.label}
                     </MenuItem>
