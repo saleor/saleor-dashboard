@@ -311,6 +311,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         ]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
+        data-test="organization"
       />
       <Accordion
         className={classes.accordion}
@@ -346,6 +347,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
             </div>
           )
         }
+        data-test="attributes"
       >
         <TextField
           name="query"
@@ -404,6 +406,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         ]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
+        data-test="financial"
       />
       <FieldAccordion
         className={classes.accordion}
@@ -419,6 +422,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         ]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
+        data-test="inventory"
       />
       <FieldAccordion
         title={intl.formatMessage({
@@ -434,6 +438,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         ]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
+        data-test="seo"
       />
     </>
   );
