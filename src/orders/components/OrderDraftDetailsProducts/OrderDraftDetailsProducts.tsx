@@ -151,6 +151,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                             type="number"
                             value={data.quantity}
                             onChange={debounce}
+                            onBlur={submit}
                           />
                         )}
                       </DebounceForm>
