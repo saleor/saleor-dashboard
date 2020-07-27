@@ -4,7 +4,7 @@ import { commonMessages } from "@saleor/intl";
 import { ApolloError } from "apollo-client";
 import { IntlShape } from "react-intl";
 
-import { isJwtError, isJwtExpiredError } from "./errors";
+import { isJwtError, isTokenExpired } from "./errors";
 
 export enum TOKEN_STORAGE_KEY {
   AUTH = "auth",
@@ -60,7 +60,7 @@ export async function handleQueryAuthError(
   intl: IntlShape
 ) {
   if (error.graphQLErrors.some(isJwtError)) {
-    if (error.graphQLErrors.every(isJwtExpiredError)) {
+    if (error.graphQLErrors.every(isTokenExpired)) {
       const success = await tokenRefresh();
 
       if (!success) {
