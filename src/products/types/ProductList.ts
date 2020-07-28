@@ -80,7 +80,6 @@ export interface ProductList_products_edges_node {
   productType: ProductList_products_edges_node_productType;
   attributes: ProductList_products_edges_node_attributes[];
   pricing: ProductList_products_edges_node_pricing | null;
-  updatedAt: any
 }
 
 export interface ProductList_products_edges {

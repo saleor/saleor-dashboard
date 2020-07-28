@@ -75,7 +75,6 @@ export const productFragment = gql`
       name
       hasVariants
     }
-    updatedAt
   }
 `;
 
