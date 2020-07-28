@@ -12,6 +12,10 @@ Polly.register(NodeHttpAdapter);
 Polly.register(FSPersister);
 
 function setupApi() {
+  if (!process.env.API_URI) {
+    throw new Error("Environment variable API_URI not set");
+  }
+
   setupPolly({
     adapters: ["node-http"],
     persister: "fs",
