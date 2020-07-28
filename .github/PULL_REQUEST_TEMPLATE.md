@@ -18,6 +18,7 @@ greatly reduce the amount of work needed to review your work. -->
 1. [ ] Translated strings are extracted.
 1. [ ] Number of API calls is optimized.
 1. [ ] The changes are tested.
+1. [ ] Data-test are added for new elements.
 1. [ ] Type definitions are up to date.
 1. [ ] Changes are mentioned in the changelog.
 
