@@ -25,7 +25,7 @@ function setupApi() {
   const link = new BatchHttpLink({
     // @ts-ignore
     fetch,
-    uri: "http://localhost:8000/graphql/"
+    uri: process.env.API_URI
   });
   const apolloClient = new ApolloClient({
     cache,
