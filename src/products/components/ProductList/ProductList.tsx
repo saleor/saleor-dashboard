@@ -50,6 +50,9 @@ const useStyles = makeStyles(
       },
       colType: {
         width: 200
+      },
+      colUpdatedAt: {
+        width: 200
       }
     },
     colAttribute: {
@@ -200,6 +203,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <col className={classes.colPrice} />
           </DisplayColumn>
+          <DisplayColumn column="updatedAt" displayColumns={settings.columns}>
+            <col className={classes.colupdatedAt} />
+          </DisplayColumn>
         </colgroup>
         <TableHead
           colSpan={numberOfColumns}
@@ -254,6 +260,22 @@ export const ProductList: React.FC<ProductListProps> = props => {
               <FormattedMessage
                 defaultMessage="Published"
                 description="product status"
+              />
+            </TableCellHeader>
+          </DisplayColumn>
+          <DisplayColumn column="updatedAt" displayColumns={settings.columns}>
+            <TableCellHeader
+              className={classes.colUpdatedAt}
+              direction={
+                sort.sort === ProductListUrlSortField.updatedAt
+                  ? getArrowDirection(sort.asc)
+                  : undefined
+              }
+              onClick={() => onSort(ProductListUrlSortField.updatedAt)}
+            >
+              <FormattedMessage
+                defaultMessage="Data aktualizacji"
+                description="Data aktualizacji"
               />
             </TableCellHeader>
           </DisplayColumn>
@@ -411,6 +433,22 @@ export const ProductList: React.FC<ProductListProps> = props => {
                           }
                           status={product.isPublished ? "success" : "error"}
                         />
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                  </DisplayColumn>
+                  <DisplayColumn
+                    column="updatedAt"
+                    displayColumns={settings.columns}
+                  >
+                    <TableCell className={classes.colUpdatedAt}>
+                      {product && product.updatedAt ? (
+                        new Intl.DateTimeFormat("en-GB", {
+                          year: "numeric",
+                          month: "long",
+                          day: "2-digit"
+                        }).format(new Date(product.updatedAt))
                       ) : (
                         <Skeleton />
                       )}

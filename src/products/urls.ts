@@ -49,7 +49,8 @@ export enum ProductListUrlSortField {
   name = "name",
   productType = "productType",
   status = "status",
-  price = "price"
+  price = "price",
+  updatedAt = "updatedAt"
 }
 export type ProductListUrlSort = Sort<ProductListUrlSortField>;
 export interface ProductListUrlQueryParams
