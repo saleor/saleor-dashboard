@@ -322,6 +322,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Nebula Night Sky Paint",
+    updatedAt: "2018-08-25T18:45:54.125Z",
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -362,6 +363,7 @@ export const products = (
     isAvailable: true,
     isPublished: false,
     name: "Light Speed Yellow Paint",
+    updatedAt: "2018-08-25T18:45:54.125Z",
     pricing: {
       __typename: "ProductPricingInfo",
       priceRangeUndiscounted: {
@@ -402,6 +404,7 @@ export const products = (
     isAvailable: true,
     isPublished: false,
     name: "Hyperspace Turquoise Paint",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -458,6 +461,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Pineapple Juice",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -514,6 +518,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Coconut Juice",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -570,6 +575,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Apple Juice",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -626,6 +632,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Orange Juice",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -682,6 +689,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Banana Juice",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -738,6 +746,7 @@ export const products = (
     isAvailable: true,
     isPublished: false,
     name: "Bean Juice",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -794,6 +803,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Carrot Juice",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -850,6 +860,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Green Juice",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -906,6 +917,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Code Division T-shirt",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -962,6 +974,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Polo Shirt",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -1018,6 +1031,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Polo Shirt",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -1074,6 +1088,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Polo Shirt",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -1130,6 +1145,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Polo Shirt",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -1186,6 +1202,7 @@ export const products = (
     isAvailable: true,
     isPublished: false,
     name: "Black Hoodie",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -1242,6 +1259,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Blue Hoodie",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -1298,6 +1316,7 @@ export const products = (
     isAvailable: true,
     isPublished: true,
     name: "Mustard Hoodie",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",
@@ -1354,6 +1373,7 @@ export const products = (
     isAvailable: true,
     isPublished: false,
     name: "Colored Parrot Cushion",
+    updatedAt: "2018-08-25T18:45:54.125Z",
 
     pricing: {
       __typename: "ProductPricingInfo",

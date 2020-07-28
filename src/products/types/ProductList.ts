@@ -78,6 +78,7 @@ export interface ProductList_products_edges_node {
   isAvailable: boolean | null;
   isPublished: boolean;
   productType: ProductList_products_edges_node_productType;
+  updatedAt: any | null;
   attributes: ProductList_products_edges_node_attributes[];
   pricing: ProductList_products_edges_node_pricing | null;
   updatedAt: any

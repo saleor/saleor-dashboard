@@ -26,4 +26,5 @@ export interface ProductFragment {
   isAvailable: boolean | null;
   isPublished: boolean;
   productType: ProductFragment_productType;
+  updatedAt: any | null;
 }
