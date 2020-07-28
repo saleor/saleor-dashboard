@@ -206,6 +206,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <DisplayColumn column="updatedAt" displayColumns={settings.columns}>
             <col className={classes.colupdatedAt} />
           </DisplayColumn>
+          <DisplayColumn column="updatedAt" displayColumns={settings.columns}>
+            <col className={classes.colupdatedAt} />
+          </DisplayColumn>
         </colgroup>
         <TableHead
           colSpan={numberOfColumns}
