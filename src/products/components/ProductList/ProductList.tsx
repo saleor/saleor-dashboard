@@ -43,7 +43,7 @@ const useStyles = makeStyles(
         width: "auto"
       },
       colPrice: {
-        width: 300
+        width: 100
       },
       colPublished: {
         width: 200
@@ -448,9 +448,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     <TableCell className={classes.colUpdatedAt}>
                       {product && product.updatedAt ? (
                         new Intl.DateTimeFormat("en-GB", {
-                          year: "numeric",
-                          month: "long",
-                          day: "2-digit"
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric"
                         }).format(new Date(product.updatedAt))
                       ) : (
                         <Skeleton />
