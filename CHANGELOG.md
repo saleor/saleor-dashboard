@@ -14,6 +14,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add Cypress e2e runner - #584 by @krzysztofwolski
 - create Apps - #599 by @AlicjaSzu
 - Refactor authorization - #624 by @dominik-zeglen
+- Fix minor bugs - #628 by @dominik-zeglen
 
 ## 2.10.1
 
