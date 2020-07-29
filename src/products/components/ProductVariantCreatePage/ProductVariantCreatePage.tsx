@@ -11,6 +11,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { fakeListings } from "@saleor/products/fixtures";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import React from "react";
@@ -23,7 +24,6 @@ import ProductVariantAttributes, {
   VariantAttributeInputData
 } from "../ProductVariantAttributes";
 import ProductVariantNavigation from "../ProductVariantNavigation";
-import { fakeListings } from "../ProductVariantPage";
 import ProductVariantPrice from "../ProductVariantPrice";
 
 interface ProductVariantCreatePageFormData {

@@ -6,15 +6,13 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import {
-  ProductVariant,
-  ProductVariant_channelListing
-} from "@saleor/fragments/types/ProductVariant";
+import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { fakeListings } from "@saleor/products/fixtures";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import {
   getAttributeInputFromVariant,
@@ -62,48 +60,6 @@ interface ProductVariantPageProps {
   onImageSelect(id: string);
   onVariantClick(variantId: string);
 }
-
-// TODO: Remove test data
-const fakeListings: ProductVariant_channelListing[] = [
-  {
-    __typename: "VariantChannelListing",
-    channel: {
-      __typename: "Channel",
-      currencyCode: "USD",
-      id: "1",
-      name: "Sationary in USA"
-    },
-    costPrice: {
-      __typename: "Money",
-      amount: 42,
-      currency: "USD"
-    },
-    price: {
-      __typename: "Money",
-      amount: 420,
-      currency: "USD"
-    }
-  },
-  {
-    __typename: "VariantChannelListing",
-    channel: {
-      __typename: "Channel",
-      currencyCode: "EUR",
-      id: "1",
-      name: "Internet in Europe"
-    },
-    costPrice: {
-      __typename: "Money",
-      amount: 11,
-      currency: "USD"
-    },
-    price: {
-      __typename: "Money",
-      amount: 320,
-      currency: "USD"
-    }
-  }
-];
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   errors,

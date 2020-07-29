@@ -1,12 +1,74 @@
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
+import {
+  ProductVariant,
+  ProductVariant_channelListing
+} from "@saleor/fragments/types/ProductVariant";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
 import { content } from "../storybook/stories/components/RichTextEditor";
-import { fakeListings } from "./components/ProductVariantPage";
 import { ProductDetails_product } from "./types/ProductDetails";
 import { ProductList_products_edges_node } from "./types/ProductList";
 import { ProductVariantCreateData_product } from "./types/ProductVariantCreateData";
+
+export const fakeListings: ProductVariant_channelListing[] = [
+  {
+    __typename: "VariantChannelListing",
+    channel: {
+      __typename: "Channel",
+      currencyCode: "USD",
+      id: "1",
+      name: "Online store"
+    },
+    costPrice: {
+      __typename: "Money",
+      amount: 12,
+      currency: "USD"
+    },
+    price: {
+      __typename: "Money",
+      amount: 14,
+      currency: "USD"
+    }
+  },
+  {
+    __typename: "VariantChannelListing",
+    channel: {
+      __typename: "Channel",
+      currencyCode: "EUR",
+      id: "1",
+      name: "Facebook"
+    },
+    costPrice: {
+      __typename: "Money",
+      amount: 10,
+      currency: "USD"
+    },
+    price: {
+      __typename: "Money",
+      amount: 15,
+      currency: "USD"
+    }
+  },
+  {
+    __typename: "VariantChannelListing",
+    channel: {
+      __typename: "Channel",
+      currencyCode: "EUR",
+      id: "1",
+      name: "Instagram"
+    },
+    costPrice: {
+      __typename: "Money",
+      amount: 10,
+      currency: "USD"
+    },
+    price: {
+      __typename: "Money",
+      amount: 15,
+      currency: "USD"
+    }
+  }
+];
 
 export const product: (
   placeholderImage: string

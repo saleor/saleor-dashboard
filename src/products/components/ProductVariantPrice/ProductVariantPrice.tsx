@@ -25,7 +25,11 @@ const useStyles = makeStyles(
       padding: 0,
       width: ICONBUTTON_SIZE + theme.spacing()
     },
-    colQuantity: {
+    colCostPrice: {
+      textAlign: "right",
+      width: 200
+    },
+    colSellingPrice: {
       textAlign: "right",
       width: 200
     },
@@ -34,13 +38,15 @@ const useStyles = makeStyles(
       gridColumnGap: theme.spacing(2),
       gridTemplateColumns: "1fr 1fr"
     },
-
     input: {
       padding: theme.spacing(1.5),
       textAlign: "right"
     },
     inputComponent: {
       width: 100
+    },
+    pricingNote: {
+      padding: theme.spacing(1)
     }
   }),
   { name: "ProductVariantPrice" }
@@ -71,7 +77,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
         })}
       />
       <CardContent>
-        <Typography>
+        <Typography color="textSecondary" className={classes.pricingNote}>
           {intl.formatMessage({
             defaultMessage:
               "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency"
@@ -86,9 +92,15 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                   description="tabel column header"
                 />
               </TableCell>
-              <TableCell className={classes.colQuantity}>
+              <TableCell className={classes.colSellingPrice}>
                 <FormattedMessage
-                  defaultMessage="Price"
+                  defaultMessage="Selling Price"
+                  description="tabel column header"
+                />
+              </TableCell>
+              <TableCell className={classes.colCostPrice}>
+                <FormattedMessage
+                  defaultMessage="Cost Price"
                   description="tabel column header"
                 />
               </TableCell>
@@ -98,12 +110,22 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
             {renderCollection(variantChannelListings, listing => (
               <TableRow key={listing.channel.id}>
                 <TableCell>{listing.channel.name}</TableCell>
-                <TableCell className={classes.colQuantity}>
+                <TableCell className={classes.colSellingPrice}>
                   <PriceField
                     error={false}
                     name={`${listing.channel.id}-channel-price`}
                     value={listing.price.amount}
                     currencySymbol={listing.price.currency}
+                    onChange={onChange}
+                    disabled={loading}
+                  />
+                </TableCell>
+                <TableCell className={classes.colCostPrice}>
+                  <PriceField
+                    error={false}
+                    name={`${listing.channel.id}-channel-price`}
+                    value={listing.costPrice.amount}
+                    currencySymbol={listing.costPrice.currency}
                     onChange={onChange}
                     disabled={loading}
                   />
