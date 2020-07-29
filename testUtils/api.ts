@@ -18,6 +18,19 @@ function setupApi() {
 
   setupPolly({
     adapters: ["node-http"],
+    matchRequestsBy: {
+      headers: false,
+      url: {
+        hash: false,
+        hostname: false,
+        password: false,
+        pathname: false,
+        port: false,
+        protocol: false,
+        query: false,
+        username: false
+      }
+    },
     persister: "fs",
     persisterOptions: {
       fs: {
