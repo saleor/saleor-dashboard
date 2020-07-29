@@ -250,10 +250,6 @@
     "context": "optional field",
     "string": "Optional"
   },
-  "productVariantPriceOptionalPriceField": {
-    "context": "optional field",
-    "string": "Optional"
-  },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",
     "string": "Categories ({quantity})"
@@ -4393,11 +4389,11 @@
     "context": "product pricing, section header",
     "string": "Pricing"
   },
-  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1416480328": {
-    "string": "Cost price override"
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1134347598": {
+    "string": "Price"
   },
-  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_2238565650": {
-    "string": "Selling price override"
+  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_819659341": {
+    "string": "Cost price"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_1001303107": {
     "context": "product variant inventory",
