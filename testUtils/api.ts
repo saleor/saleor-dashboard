@@ -12,10 +12,6 @@ Polly.register(NodeHttpAdapter);
 Polly.register(FSPersister);
 
 function setupApi() {
-  if (!process.env.API_URI) {
-    throw new Error("Environment variable API_URI not set");
-  }
-
   setupPolly({
     adapters: ["node-http"],
     matchRequestsBy: {
@@ -42,7 +38,7 @@ function setupApi() {
   const link = new BatchHttpLink({
     // @ts-ignore
     fetch,
-    uri: process.env.API_URI
+    uri: process.env.API_URI || "http://localhost:8000/graphql/"
   });
   const apolloClient = new ApolloClient({
     cache,
