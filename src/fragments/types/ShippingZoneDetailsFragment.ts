@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ShippingMethodTypeEnum } from "./../../types/globalTypes";
+import { WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ShippingZoneDetailsFragment
@@ -22,7 +22,7 @@ export interface ShippingZoneDetailsFragment_shippingMethods_minimumOrderPrice {
 
 export interface ShippingZoneDetailsFragment_shippingMethods_minimumOrderWeight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
@@ -34,7 +34,7 @@ export interface ShippingZoneDetailsFragment_shippingMethods_maximumOrderPrice {
 
 export interface ShippingZoneDetailsFragment_shippingMethods_maximumOrderWeight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
