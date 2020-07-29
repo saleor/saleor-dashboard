@@ -3931,6 +3931,10 @@
     "context": "product field",
     "string": "Visibility"
   },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1547327218": {
+    "context": "there are more elements of list that are hidden",
+    "string": "and {number} more"
+  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_1755013298": {
     "context": "product field",
     "string": "Category"
