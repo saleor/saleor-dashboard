@@ -38,9 +38,14 @@ const useStyles = makeStyles(
       gridColumnGap: theme.spacing(2),
       gridTemplateColumns: "1fr 1fr"
     },
+    // input: {
+    //   padding: theme.spacing(1.5),
+    //   textAlign: "right"
+    // },
     input: {
-      padding: theme.spacing(1.5),
-      textAlign: "right"
+      "& input": {
+        padding: "16px 12px 17px"
+      }
     },
     inputComponent: {
       width: 100
@@ -112,6 +117,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                 <TableCell>{listing.channel.name}</TableCell>
                 <TableCell className={classes.colSellingPrice}>
                   <PriceField
+                    className={classes.input}
                     error={false}
                     name={`${listing.channel.id}-channel-price`}
                     value={listing.price.amount}
@@ -122,6 +128,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                 </TableCell>
                 <TableCell className={classes.colCostPrice}>
                   <PriceField
+                    className={classes.input}
                     error={false}
                     name={`${listing.channel.id}-channel-price`}
                     value={listing.costPrice.amount}
