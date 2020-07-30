@@ -2,7 +2,7 @@
 describe("Warehouse settings", () => {
   beforeEach(() => {
     cy.clearSessionData();
-    cy.loginUser("admin@example.com", "admin");
+    cy.loginUser();
 
     // Wait for log in
     cy.get("[data-test=welcomeHeader]").contains("Hello there");
