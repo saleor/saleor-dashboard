@@ -4,12 +4,11 @@ import React from "react";
 import { Query, QueryResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
-import { isJwtError } from "./auth/errors";
+import { handleQueryAuthError } from "./auth";
 import useAppState from "./hooks/useAppState";
 import useNotifier from "./hooks/useNotifier";
 import useUser from "./hooks/useUser";
-import { commonMessages } from "./intl";
-import { maybe, RequireAtLeastOne } from "./misc";
+import { RequireAtLeastOne } from "./misc";
 
 export interface LoadMore<TData, TVariables> {
   loadMore: (
@@ -79,29 +78,17 @@ export function TypedQuery<TData, TVariables>(
         skip={skip}
         context={{ useBatching: true }}
         errorPolicy="all"
+        onError={error =>
+          handleQueryAuthError(
+            error,
+            notify,
+            user.tokenRefresh,
+            user.logout,
+            intl
+          )
+        }
       >
         {(queryData: QueryResult<TData, TVariables>) => {
-          if (queryData.error) {
-            if (queryData.error.graphQLErrors.some(isJwtError)) {
-              user.logout();
-              notify({
-                status: "error",
-                text: intl.formatMessage(commonMessages.sessionExpired)
-              });
-            } else if (
-              !queryData.error.graphQLErrors.every(
-                err =>
-                  maybe(() => err.extensions.exception.code) ===
-                  "PermissionDenied"
-              )
-            ) {
-              notify({
-                status: "error",
-                text: intl.formatMessage(commonMessages.somethingWentWrong)
-              });
-            }
-          }
-
           const loadMore = (
             mergeFunc: (
               previousResults: TData,

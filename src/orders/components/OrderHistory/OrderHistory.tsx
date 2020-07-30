@@ -100,8 +100,8 @@ const getEventMessage = (event: OrderDetails_order_events, intl: IntlShape) => {
           description: "order history message"
         },
         {
-          invoiceNumber: event.invoiceNumber,
-          generatedBy: event.user ? event.user.email : null
+          generatedBy: event.user ? event.user.email : null,
+          invoiceNumber: event.invoiceNumber
         }
       );
     case OrderEventsEnum.INVOICE_UPDATED:

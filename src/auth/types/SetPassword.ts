@@ -38,6 +38,8 @@ export interface SetPassword_setPassword_user {
 export interface SetPassword_setPassword {
   __typename: "SetPassword";
   errors: SetPassword_setPassword_errors[];
+  csrfToken: string | null;
+  refreshToken: string | null;
   token: string | null;
   user: SetPassword_setPassword_user | null;
 }
