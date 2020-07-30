@@ -13,6 +13,8 @@ import {
   defaultListSettings,
   ProductListColumns
 } from "@saleor/config";
+import { Task } from "@saleor/containers/BackgroundTasks/types";
+import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -23,11 +25,13 @@ import usePaginator, {
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import ProductExportDialog from "@saleor/products/components/ProductExportDialog";
 import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue
 } from "@saleor/products/components/ProductListPage/utils";
 import { ProductListVariables } from "@saleor/products/types/ProductList";
+import useAttributeSearch from "@saleor/searches/useAttributeSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -41,11 +45,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ProductListPage from "../../components/ProductListPage";
 import {
   TypedProductBulkDeleteMutation,
-  TypedProductBulkPublishMutation
+  TypedProductBulkPublishMutation,
+  useProductExport
 } from "../../mutations";
 import {
   AvailableInGridAttributesQuery,
   TypedProductListQuery,
+  useCountAllProducts,
   useInitialProductFilterDataQuery
 } from "../../queries";
 import { productBulkDelete } from "../../types/productBulkDelete";
@@ -78,6 +84,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
+  const { queue } = useBackgroundTask();
   const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
@@ -111,6 +118,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       first: 5
     }
   });
+  const searchAttributes = useAttributeSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 10
+    }
+  });
 
   React.useEffect(
     () =>
@@ -137,6 +150,29 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlDialog,
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
+  const countAllProducts = useCountAllProducts({});
+
+  const [exportProducts, exportProductsOpts] = useProductExport({
+    onCompleted: data => {
+      if (data.exportProducts.errors.length === 0) {
+        notify({
+          text: intl.formatMessage({
+            defaultMessage:
+              "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
+          }),
+          title: intl.formatMessage({
+            defaultMessage: "Exporting CSV",
+            description: "waiting for export to end, header"
+          })
+        });
+        queue(Task.EXPORT, {
+          id: data.exportProducts.exportFile.id
+        });
+        closeModal();
+        reset();
+      }
+    }
+  });
 
   const [
     changeFilters,
@@ -398,6 +434,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           onTabChange={handleTabChange}
                           initialSearch={params.query || ""}
                           tabs={getFilterTabs().map(tab => tab.name)}
+                          onExport={() => openModal("export")}
                         />
                         <ActionDialog
                           open={params.action === "delete"}
@@ -493,6 +530,40 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                             />
                           </DialogContentText>
                         </ActionDialog>
+                        <ProductExportDialog
+                          attributes={(
+                            searchAttributes.result.data?.search.edges || []
+                          ).map(edge => edge.node)}
+                          hasMore={
+                            searchAttributes.result.data?.search.pageInfo
+                              .hasNextPage
+                          }
+                          loading={searchAttributes.result.loading}
+                          onFetch={searchAttributes.search}
+                          onFetchMore={searchAttributes.loadMore}
+                          open={params.action === "export"}
+                          confirmButtonState={exportProductsOpts.status}
+                          errors={
+                            exportProductsOpts.data?.exportProducts.errors || []
+                          }
+                          productQuantity={{
+                            all: countAllProducts.data?.products.totalCount,
+                            filter: data?.products.totalCount
+                          }}
+                          selectedProducts={listElements.length}
+                          onClose={closeModal}
+                          onSubmit={data =>
+                            exportProducts({
+                              variables: {
+                                input: {
+                                  ...data,
+                                  filter,
+                                  ids: listElements
+                                }
+                              }
+                            })
+                          }
+                        />
                         <SaveFilterTabDialog
                           open={params.action === "save-search"}
                           confirmButtonState="default"

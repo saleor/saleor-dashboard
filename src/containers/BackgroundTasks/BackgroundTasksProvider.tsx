@@ -1,13 +1,18 @@
 import { IMessageContext } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { checkOrderInvoicesStatus } from "@saleor/orders/queries";
 import ApolloClient from "apollo-client";
 import React from "react";
 import { useApolloClient } from "react-apollo";
 import { IntlShape, useIntl } from "react-intl";
 
 import BackgroundTasksContext from "./context";
-import { handleTask, queueCustom, queueInvoiceGenerate } from "./tasks";
+import { checkExportFileStatus, checkOrderInvoicesStatus } from "./queries";
+import {
+  handleTask,
+  queueCustom,
+  queueExport,
+  queueInvoiceGenerate
+} from "./tasks";
 import { QueuedTask, Task, TaskData, TaskStatus } from "./types";
 
 export const backgroundTasksRefreshTime = 15 * 1000;
@@ -75,6 +80,22 @@ export function useBackgroundTasks(
               query: checkOrderInvoicesStatus,
               variables: {
                 id: data.generateInvoice.orderId
+              }
+            }),
+          notify,
+          intl
+        );
+        break;
+      case Task.EXPORT:
+        queueExport(
+          idCounter.current,
+          tasks,
+          () =>
+            apolloClient.query({
+              fetchPolicy: "network-only",
+              query: checkExportFileStatus,
+              variables: {
+                id: data.id
               }
             }),
           notify,

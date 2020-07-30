@@ -401,6 +401,23 @@ export enum DiscountValueTypeEnum {
   PERCENTAGE = "PERCENTAGE",
 }
 
+export enum ExportErrorCode {
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+}
+
+export enum ExportScope {
+  ALL = "ALL",
+  FILTER = "FILTER",
+  IDS = "IDS",
+}
+
+export enum FileTypesEnum {
+  CSV = "CSV",
+  XLSX = "XLSX",
+}
+
 export enum FulfillmentStatus {
   CANCELED = "CANCELED",
   FULFILLED = "FULFILLED",
@@ -666,6 +683,23 @@ export enum ProductErrorCode {
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
   VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT",
+}
+
+export enum ProductFieldEnum {
+  CATEGORY = "CATEGORY",
+  CHARGE_TAXES = "CHARGE_TAXES",
+  COLLECTIONS = "COLLECTIONS",
+  COST_PRICE = "COST_PRICE",
+  DESCRIPTION = "DESCRIPTION",
+  NAME = "NAME",
+  PRODUCT_IMAGES = "PRODUCT_IMAGES",
+  PRODUCT_TYPE = "PRODUCT_TYPE",
+  PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
+  VARIANT_IMAGES = "VARIANT_IMAGES",
+  VARIANT_PRICE = "VARIANT_PRICE",
+  VARIANT_SKU = "VARIANT_SKU",
+  VARIANT_WEIGHT = "VARIANT_WEIGHT",
+  VISIBLE = "VISIBLE",
 }
 
 export enum ProductOrderField {
@@ -1077,6 +1111,20 @@ export interface DraftOrderInput {
   shippingMethod?: string | null;
   voucher?: string | null;
   customerNote?: string | null;
+}
+
+export interface ExportInfoInput {
+  attributes?: string[] | null;
+  warehouses?: string[] | null;
+  fields?: ProductFieldEnum[] | null;
+}
+
+export interface ExportProductsInput {
+  scope: ExportScope;
+  filter?: ProductFilterInput | null;
+  ids?: string[] | null;
+  exportInfo?: ExportInfoInput | null;
+  fileType: FileTypesEnum;
 }
 
 export interface FulfillmentCancelInput {

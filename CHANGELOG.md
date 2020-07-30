@@ -19,6 +19,7 @@ All notable, unreleased changes to this project will be documented in this file.
 
 - Add weight field and fix warehouse country selection - #597 by @dominik-zeglen
 - Fix weight based rate update - #604 by @dominik-zeglen
+- Add product export - #620 by @dominik-zeglen
 
 ## 2.10.0
 

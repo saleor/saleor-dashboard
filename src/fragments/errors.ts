@@ -120,3 +120,10 @@ export const appErrorFragment = gql`
     permissions
   }
 `;
+
+export const exportErrorFragment = gql`
+  fragment ExportErrorFragment on ExportError {
+    code
+    field
+  }
+`;

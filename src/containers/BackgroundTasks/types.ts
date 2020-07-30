@@ -1,5 +1,6 @@
 export enum Task {
   CUSTOM,
+  EXPORT,
   INVOICE_GENERATE
 }
 export enum TaskStatus {

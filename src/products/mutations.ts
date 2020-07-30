@@ -1,10 +1,12 @@
 import {
   bulkProductErrorFragment,
   bulkStockErrorFragment,
+  exportErrorFragment,
   productErrorFragment,
   stockErrorFragment
 } from "@saleor/fragments/errors";
 import {
+  exportFileFragment,
   fragmentVariant,
   productFragmentDetails
 } from "@saleor/fragments/products";
@@ -22,6 +24,7 @@ import {
 } from "./types/productBulkPublish";
 import { ProductCreate, ProductCreateVariables } from "./types/ProductCreate";
 import { ProductDelete, ProductDeleteVariables } from "./types/ProductDelete";
+import { ProductExport, ProductExportVariables } from "./types/ProductExport";
 import {
   ProductImageCreate,
   ProductImageCreateVariables
@@ -567,3 +570,22 @@ export const TypedProductVariantBulkDeleteMutation = TypedMutation<
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 >(ProductVariantBulkDeleteMutation);
+
+export const productExportMutation = gql`
+  ${exportFileFragment}
+  ${exportErrorFragment}
+  mutation ProductExport($input: ExportProductsInput!) {
+    exportProducts(input: $input) {
+      exportFile {
+        ...ExportFileFragment
+      }
+      errors: exportErrors {
+        ...ExportErrorFragment
+      }
+    }
+  }
+`;
+export const useProductExport = makeMutation<
+  ProductExport,
+  ProductExportVariables
+>(productExportMutation);

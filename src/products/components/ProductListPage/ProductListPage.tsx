@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
 } from "@saleor/components/ColumnPicker";
@@ -44,12 +45,13 @@ export interface ProductListPageProps
   gridAttributes: GridAttributes_grid_edges_node[];
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
+  onExport: () => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
     columnPicker: {
-      marginRight: theme.spacing(3)
+      margin: theme.spacing(0, 3)
     }
   }),
   { name: "ProductListPage" }
@@ -71,6 +73,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     totalGridAttributes,
     onAdd,
     onAll,
+    onExport,
     onFetchMore,
     onFilterChange,
     onSearchChange,
@@ -119,6 +122,19 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.products)}>
+        <CardMenu
+          menuItems={[
+            {
+              label: intl.formatMessage({
+                defaultMessage: "Export Products",
+                description: "export products to csv file, button"
+              }),
+              onSelect: onExport,
+              testId: "export"
+            }
+          ]}
+          data-test="menu"
+        />
         <ColumnPicker
           className={classes.columnPicker}
           columns={columns}

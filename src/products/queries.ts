@@ -11,6 +11,7 @@ import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
 import { TypedQuery } from "../queries";
+import { CountAllProducts } from "./types/CountAllProducts";
 import {
   CreateMultipleVariantsData,
   CreateMultipleVariantsDataVariables
@@ -145,6 +146,7 @@ const productListQuery = gql`
         startCursor
         endCursor
       }
+      totalCount
     }
   }
 `;
@@ -152,6 +154,17 @@ export const TypedProductListQuery = TypedQuery<
   ProductList,
   ProductListVariables
 >(productListQuery);
+
+const countAllProductsQuery = gql`
+  query CountAllProducts {
+    products {
+      totalCount
+    }
+  }
+`;
+export const useCountAllProducts = makeQuery<CountAllProducts, null>(
+  countAllProductsQuery
+);
 
 const productDetailsQuery = gql`
   ${productFragmentDetails}

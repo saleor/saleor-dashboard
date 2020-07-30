@@ -1,4 +1,4 @@
-import { messages } from "@saleor/containers/BackgroundTasks/tasks";
+import messages from "@saleor/containers/BackgroundTasks/messages";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";

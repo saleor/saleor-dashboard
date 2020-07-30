@@ -1,8 +1,5 @@
 import { fragmentAddress } from "@saleor/fragments/address";
-import {
-  fragmentOrderDetails,
-  invoiceFragment
-} from "@saleor/fragments/orders";
+import { fragmentOrderDetails } from "@saleor/fragments/orders";
 import makeQuery from "@saleor/hooks/makeQuery";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import gql from "graphql-tag";
@@ -231,15 +228,3 @@ export const useOrderFulfillData = makeQuery<
   OrderFulfillData,
   OrderFulfillDataVariables
 >(orderFulfillData);
-
-export const checkOrderInvoicesStatus = gql`
-  ${invoiceFragment}
-  query CheckOrderInvoicesStatus($id: ID!) {
-    order(id: $id) {
-      id
-      invoices {
-        ...InvoiceFragment
-      }
-    }
-  }
-`;
