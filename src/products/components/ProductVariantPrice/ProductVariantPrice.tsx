@@ -51,16 +51,8 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               error={!!formErrors.price}
               name="price"
               label={intl.formatMessage({
-                defaultMessage: "Selling price override"
+                defaultMessage: "Price"
               })}
-              hint={
-                getProductErrorMessage(formErrors.price, intl) ||
-                intl.formatMessage({
-                  defaultMessage: "Optional",
-                  description: "optional field",
-                  id: "productVariantPriceOptionalPriceField"
-                })
-              }
               value={price}
               currencySymbol={currencySymbol}
               onChange={onChange}
@@ -72,7 +64,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               error={!!formErrors.cost_price}
               name="costPrice"
               label={intl.formatMessage({
-                defaultMessage: "Cost price override"
+                defaultMessage: "Cost price"
               })}
               hint={
                 getProductErrorMessage(formErrors.cost_price, intl) ||

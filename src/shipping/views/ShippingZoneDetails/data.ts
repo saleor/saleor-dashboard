@@ -28,7 +28,7 @@ export function getCreateShippingRateVariables(
 
       minimumOrderPrice:
         params.type === ShippingMethodTypeEnum.PRICE
-          ? getValue(data.maxValue, data.noLimits)
+          ? getValue(data.minValue, data.noLimits)
           : null,
       minimumOrderWeight:
         params.type === ShippingMethodTypeEnum.WEIGHT
