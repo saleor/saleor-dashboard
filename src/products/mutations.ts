@@ -52,6 +52,10 @@ import {
   ProductVariantBulkDeleteVariables
 } from "./types/ProductVariantBulkDelete";
 import {
+  ProductVariantChannelListingUpdate,
+  ProductVariantChannelListingUpdateVariables
+} from "./types/ProductVariantChannelListingUpdate";
+import {
   SimpleProductUpdate,
   SimpleProductUpdateVariables
 } from "./types/SimpleProductUpdate";
@@ -579,3 +583,27 @@ export const useProductChannelListingUpdate = makeMutation<
   ProductChannelListingUpdate,
   ProductChannelListingUpdateVariables
 >(ProductChannelListingUpdateMutation);
+
+export const ProductVariantChannelListingUpdateMutation = gql`
+  ${fragmentVariant}
+  mutation ProductVariantChannelListingUpdate(
+    $input: [ProductVariantChannelListingInput!]!
+  ) {
+    productVariantChannelListingUpdate(input: $input) {
+      productVariant {
+        ...ProductVariant
+      }
+      errors: productsErrors {
+        field
+        message
+        code
+        channels
+      }
+    }
+  }
+`;
+
+export const useProductVariantChannelListingUpdate = makeMutation<
+  ProductVariantChannelListingUpdate,
+  ProductVariantChannelListingUpdateVariables
+>(ProductVariantChannelListingUpdateMutation);

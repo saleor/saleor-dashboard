@@ -130,7 +130,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 <CardSpacer />
                 <ProductVariantPrice
                   errors={errors}
-                  variantChannelListings={fakeListings}
+                  ProductVariantChannelListings={fakeListings}
                   loading={disabled}
                   onChange={change}
                 />

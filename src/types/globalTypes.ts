@@ -1300,6 +1300,11 @@ export interface ProductVariantBulkCreateInput {
   stocks?: StockInput[] | null;
 }
 
+export interface ProductVariantChannelListingInput {
+  channelId: string;
+  price: any;
+}
+
 export interface ProductVariantCreateInput {
   attributes: (AttributeValueInput | null)[];
   costPrice?: any | null;

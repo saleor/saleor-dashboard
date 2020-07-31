@@ -38,10 +38,6 @@ const useStyles = makeStyles(
       gridColumnGap: theme.spacing(2),
       gridTemplateColumns: "1fr 1fr"
     },
-    // input: {
-    //   padding: theme.spacing(1.5),
-    //   textAlign: "right"
-    // },
     input: {
       "& input": {
         padding: "16px 12px 17px"
@@ -58,14 +54,14 @@ const useStyles = makeStyles(
 );
 
 interface ProductVariantPriceProps {
-  variantChannelListings: ProductVariant_channelListing[];
+  ProductVariantChannelListings: ProductVariant_channelListing[];
   errors: ProductErrorFragment[];
   loading?: boolean;
   onChange(event: any);
 }
 
 const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
-  const { variantChannelListings, loading, onChange } = props;
+  const { ProductVariantChannelListings, loading, onChange } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -112,7 +108,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {renderCollection(variantChannelListings, listing => (
+            {renderCollection(ProductVariantChannelListings, listing => (
               <TableRow key={listing.channel.id}>
                 <TableCell>{listing.channel.name}</TableCell>
                 <TableCell className={classes.colSellingPrice}>

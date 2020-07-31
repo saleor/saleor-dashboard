@@ -18,6 +18,7 @@ import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
+import { ProductVariantChannelListingInput } from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
 import React from "react";
 
@@ -43,6 +44,9 @@ export interface ProductVariantPageSubmitData
   addStocks: ProductStockInput[];
   updateStocks: ProductStockInput[];
   removeStocks: string[];
+}
+export interface ProductVariantPagePricingFormData {
+  variantPricings: ProductVariantChannelListingInput[];
 }
 
 interface ProductVariantPageProps {
@@ -112,6 +116,14 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     trackInventory: variant?.trackInventory
   };
 
+  const initialPricingForm: ProductVariantPagePricingFormData = {
+    variantPricings:
+      variant?.channelListing.map(l => ({
+        channelId: l.channel.id,
+        price: l.price
+      })) || []
+  };
+
   const handleSubmit = (data: ProductVariantPageFormData) => {
     const dataStocks = stocks.map(stock => stock.id);
     const variantStocks = variant.stocks.map(stock => stock.warehouse.id);
@@ -174,8 +186,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     />
                     <CardSpacer />
                     <ProductVariantPrice
+                      data={pricingData}
                       errors={errors}
-                      variantChannelListings={fakeListings}
+                      ProductVariantChannelListings={fakeListings}
                       loading={loading}
                       onChange={change}
                     />

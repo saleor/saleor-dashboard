@@ -12,7 +12,7 @@ import { ProductVariantCreateData_product } from "./types/ProductVariantCreateDa
 
 export const fakeListings: ProductVariant_channelListing[] = [
   {
-    __typename: "VariantChannelListing",
+    __typename: "ProductVariantChannelListing",
     channel: {
       __typename: "Channel",
       currencyCode: "USD",
@@ -31,7 +31,7 @@ export const fakeListings: ProductVariant_channelListing[] = [
     }
   },
   {
-    __typename: "VariantChannelListing",
+    __typename: "ProductVariantChannelListing",
     channel: {
       __typename: "Channel",
       currencyCode: "EUR",
@@ -50,7 +50,7 @@ export const fakeListings: ProductVariant_channelListing[] = [
     }
   },
   {
-    __typename: "VariantChannelListing",
+    __typename: "ProductVariantChannelListing",
     channel: {
       __typename: "Channel",
       currencyCode: "EUR",
