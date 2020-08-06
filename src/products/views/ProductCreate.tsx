@@ -12,7 +12,7 @@ import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { decimal, maybe } from "../../misc";
+import { maybe } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
@@ -79,7 +79,6 @@ export const ProductCreateView: React.FC = () => {
                 id: attribute.id,
                 values: attribute.value
               })),
-              basePrice: decimal(formData.basePrice),
               category: formData.category,
               chargeTaxes: formData.chargeTaxes,
               collections: formData.collections,
@@ -89,13 +88,7 @@ export const ProductCreateView: React.FC = () => {
               seo: {
                 description: formData.seoDescription,
                 title: formData.seoTitle
-              },
-              sku: formData.sku,
-              stocks: formData.stocks.map(stock => ({
-                quantity: parseInt(stock.value, 0),
-                warehouse: stock.id
-              })),
-              trackInventory: formData.trackInventory
+              }
             }
           });
         };

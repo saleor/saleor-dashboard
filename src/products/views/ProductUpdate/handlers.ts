@@ -1,5 +1,4 @@
 import { createChannelsDataFromProduct } from "@saleor/channels/utils";
-import { decimal } from "@saleor/misc";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import { ProductChannelListingUpdateVariables } from "@saleor/products/types/ProductChannelListingUpdate";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
@@ -26,7 +25,6 @@ export function createUpdateHandler(
         id: attribute.id,
         values: attribute.value[0] === "" ? [] : attribute.value
       })),
-      basePrice: decimal(data.basePrice),
       category: data.category,
       chargeTaxes: data.chargeTaxes,
       collections: data.collections,

@@ -139,7 +139,7 @@ export const productUpdateMutation = gql`
     $collections: [ID]
     $descriptionJson: JSONString
     $name: String
-    $basePrice: Decimal
+    # $basePrice: Decimal
     $seo: SeoInput
   ) {
     productUpdate(
@@ -151,7 +151,6 @@ export const productUpdateMutation = gql`
         collections: $collections
         descriptionJson: $descriptionJson
         name: $name
-        basePrice: $basePrice
         seo: $seo
       }
     ) {
@@ -184,7 +183,7 @@ export const simpleProductUpdateMutation = gql`
     $collections: [ID]
     $descriptionJson: JSONString
     $name: String
-    $basePrice: Decimal
+    # $basePrice: Decimal
     $productVariantId: ID!
     $productVariantInput: ProductVariantInput!
     $seo: SeoInput
@@ -201,7 +200,7 @@ export const simpleProductUpdateMutation = gql`
         collections: $collections
         descriptionJson: $descriptionJson
         name: $name
-        basePrice: $basePrice
+        # basePrice: $basePrice
         seo: $seo
       }
     ) {
@@ -270,13 +269,12 @@ export const productCreateMutation = gql`
     $collections: [ID]
     $descriptionJson: JSONString
     $name: String!
-    $basePrice: Decimal
+    # $basePrice: Decimal
     $productType: ID!
-    $sku: String
-    $seo: SeoInput
-    $stocks: [StockInput!]!
-    $trackInventory: Boolean!
-  ) {
+    # $sku: String
+    $seo: SeoInput # $stocks: [StockInput!]!
+  ) # $trackInventory: Boolean!
+  {
     productCreate(
       input: {
         attributes: $attributes
@@ -285,12 +283,12 @@ export const productCreateMutation = gql`
         collections: $collections
         descriptionJson: $descriptionJson
         name: $name
-        basePrice: $basePrice
+        # basePrice: $basePrice
         productType: $productType
-        sku: $sku
+        # sku: $sku
         seo: $seo
-        stocks: $stocks
-        trackInventory: $trackInventory
+        # stocks: $stocks
+        # trackInventory: $trackInventory
       }
     ) {
       errors: productErrors {

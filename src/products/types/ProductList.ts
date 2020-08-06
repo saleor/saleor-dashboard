@@ -125,5 +125,5 @@ export interface ProductListVariables {
   before?: string | null;
   filter?: ProductFilterInput | null;
   sort?: ProductOrder | null;
-  channelSlug?: string | null;
+  channel?: string | null;
 }

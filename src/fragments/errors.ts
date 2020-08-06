@@ -111,3 +111,10 @@ export const invoiceErrorFragment = gql`
     field
   }
 `;
+
+export const collectionsErrorFragment = gql`
+  fragment CollectionErrorFragment on CollectionProductError {
+    code
+    field
+  }
+`;

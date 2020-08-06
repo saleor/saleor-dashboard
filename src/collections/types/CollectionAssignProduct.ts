@@ -53,7 +53,7 @@ export interface CollectionAssignProduct_collectionAddProducts_collection {
 }
 
 export interface CollectionAssignProduct_collectionAddProducts_errors {
-  __typename: "ProductError";
+  __typename: "CollectionProductError";
   code: ProductErrorCode;
   field: string | null;
 }

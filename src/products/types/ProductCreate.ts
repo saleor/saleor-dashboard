@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueInput, SeoInput, StockInput, ProductErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeValueInput, SeoInput, ProductErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductCreate
@@ -225,10 +225,6 @@ export interface ProductCreateVariables {
   collections?: (string | null)[] | null;
   descriptionJson?: any | null;
   name: string;
-  basePrice?: any | null;
   productType: string;
-  sku?: string | null;
   seo?: SeoInput | null;
-  stocks: StockInput[];
-  trackInventory: boolean;
 }

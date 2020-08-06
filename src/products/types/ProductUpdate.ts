@@ -226,6 +226,5 @@ export interface ProductUpdateVariables {
   collections?: (string | null)[] | null;
   descriptionJson?: any | null;
   name?: string | null;
-  basePrice?: any | null;
   seo?: SeoInput | null;
 }

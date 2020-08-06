@@ -86,6 +86,7 @@ export enum CategorySortField {
 
 export enum ChannelErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
+  CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -366,6 +367,7 @@ export enum CountryCode {
 
 export enum DiscountErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = "CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -528,6 +530,10 @@ export enum OrderEventsEnum {
   FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
   FULFILLMENT_FULFILLED_ITEMS = "FULFILLMENT_FULFILLED_ITEMS",
   FULFILLMENT_RESTOCKED_ITEMS = "FULFILLMENT_RESTOCKED_ITEMS",
+  INVOICE_GENERATED = "INVOICE_GENERATED",
+  INVOICE_REQUESTED = "INVOICE_REQUESTED",
+  INVOICE_SENT = "INVOICE_SENT",
+  INVOICE_UPDATED = "INVOICE_UPDATED",
   NOTE_ADDED = "NOTE_ADDED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_MARKED_AS_PAID = "ORDER_MARKED_AS_PAID",
@@ -611,7 +617,6 @@ export enum PermissionEnum {
   MANAGE_STAFF = "MANAGE_STAFF",
   MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
   MANAGE_USERS = "MANAGE_USERS",
-  MANAGE_WEBHOOKS = "MANAGE_WEBHOOKS",
 }
 
 export enum PermissionGroupErrorCode {
@@ -639,6 +644,7 @@ export enum ProductErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = "ATTRIBUTE_ALREADY_ASSIGNED",
   ATTRIBUTE_CANNOT_BE_ASSIGNED = "ATTRIBUTE_CANNOT_BE_ASSIGNED",
   ATTRIBUTE_VARIANTS_DISABLED = "ATTRIBUTE_VARIANTS_DISABLED",
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = "CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
@@ -965,6 +971,10 @@ export interface ChannelCreateInput {
   currencyCode: string;
 }
 
+export interface ChannelDeleteInput {
+  targetChannel: string;
+}
+
 export interface ChannelUpdateInput {
   name?: string | null;
   slug?: string | null;
@@ -1048,6 +1058,7 @@ export interface DraftOrderInput {
   shippingMethod?: string | null;
   voucher?: string | null;
   customerNote?: string | null;
+  channel?: string | null;
 }
 
 export interface FulfillmentCancelInput {

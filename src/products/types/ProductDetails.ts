@@ -208,5 +208,5 @@ export interface ProductDetails {
 
 export interface ProductDetailsVariables {
   id: string;
-  channelSlug?: string | null;
+  channel?: string | null;
 }

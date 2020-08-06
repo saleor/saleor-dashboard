@@ -15,7 +15,7 @@ export interface ChannelDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: (taregtChannelId: string) => void;
 }
 
 const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
@@ -36,7 +36,7 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
-      onConfirm={onConfirm}
+      onConfirm={() => onConfirm(choice)}
       title={intl.formatMessage({
         defaultMessage: "Delete Channel",
         description: "dialog header"
