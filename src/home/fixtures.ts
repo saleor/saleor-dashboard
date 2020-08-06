@@ -199,6 +199,28 @@ export const shop: (placeholderImage: string) => Home = (
           __typename: "OrderEvent",
           amount: null,
           composedId: null,
+          date: "2018-10-12T15:51:11.665838+00:00",
+          email: null,
+          emailType: null,
+          id: "T3JkZXJFdmVudDo3Nw==",
+          message: null,
+          orderNumber: "15",
+          oversoldItems: null,
+          quantity: null,
+          type: OrderEventsEnum.PLACED_FROM_DRAFT,
+          user: {
+            __typename: "User",
+            email: null,
+            id: "VXNlcjoyMQ=="
+          }
+        }
+      },
+      {
+        __typename: "OrderEventCountableEdge",
+        node: {
+          __typename: "OrderEvent",
+          amount: null,
+          composedId: null,
           date: "2018-10-25T11:25:58.843860+00:00",
           email: null,
           emailType: null,
