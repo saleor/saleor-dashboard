@@ -340,7 +340,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   onClick={product && onRowClick(product.id)}
                   className={classes.link}
                   data-test="id"
-                  data-test-id={maybe(() => product.id)}
+                  data-test-id={product?.id}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -386,11 +386,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       className={classes.colType}
                       data-test="product-type"
                     >
-                      {product && product.productType ? (
-                        product.productType.name
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {product?.productType?.name || <Skeleton />}
                     </TableCell>
                   </DisplayColumn>
                   <DisplayColumn
@@ -400,7 +396,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     <TableCell
                       className={classes.colPublished}
                       data-test="availability"
-                      data-test-availability={product?.channelListing}
+                      data-test-availability={!!product?.channelListing?.length}
                     >
                       {product?.channelListing !== undefined ? (
                         <ChannelsAvailabilityDropdown

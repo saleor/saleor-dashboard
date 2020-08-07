@@ -23,7 +23,6 @@ import { useStyles } from "./styles";
 export interface ChannelsListPageProps {
   channelsList: Channels_channels[] | undefined;
   navigateToChannelCreate: () => void;
-  disabled: boolean;
   onBack: () => void;
   onRowClick: (id: string) => () => void;
   onRemove: (id: string) => void;

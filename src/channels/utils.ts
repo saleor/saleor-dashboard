@@ -3,12 +3,14 @@ import { ProductDetails_product_channelListing } from "@saleor/products/types/Pr
 
 export interface ChannelData {
   id: string;
+  isPublished: boolean;
   name: string;
   publicationDate: string | null;
-  isPublished: boolean;
 }
 
-export const createChannelsData = (data?: Channels_channels[]) =>
+export const createChannelsData = (
+  data?: Channels_channels[]
+): ChannelData[] | [] =>
   data?.map(channel => ({
     id: channel.id,
     isPublished: false,

@@ -67,7 +67,8 @@ export interface ProductCreatePageSubmitData extends FormData {
 
 interface ProductCreatePageProps {
   errors: ProductErrorFragment[];
-  channels: ChannelData[];
+  channelsAvailabilityText: string;
+  currentChannels: ChannelData[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
   currency: string;
@@ -81,19 +82,22 @@ interface ProductCreatePageProps {
     hasVariants: boolean;
     productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
   }>;
+  hasChannelChanged: boolean;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: SearchWarehouses_search_edges_node[];
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
+  openChannelsModal: () => void;
   onBack?();
   onSubmit?(data: ProductCreatePageSubmitData);
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
-  channels,
+  channelsAvailabilityText,
   currency,
+  currentChannels = [],
   disabled,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
@@ -103,13 +107,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   fetchMoreProductTypes,
+  hasChannelChanged,
   header,
   productTypes: productTypeChoiceList,
   saveButtonBarState,
   warehouses,
   onBack,
   fetchProductTypes,
-  onSubmit
+  onSubmit,
+  openChannelsModal
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   // Form values
@@ -133,7 +139,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const initialData: FormData = {
     basePrice: 0,
     category: "",
-    channelListing: channels,
+    channelListing: currentChannels,
     chargeTaxes: false,
     collections: [],
     description: {} as any,
@@ -324,10 +330,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 />
                 <CardSpacer />
                 <ChannelsAvailability
+                  channelsAvailabilityText={channelsAvailabilityText}
                   channels={data.channelListing}
                   disabled={disabled}
                   onChange={handleChannelsChange}
-                  openModal={() => null}
+                  openModal={openChannelsModal}
                 />
               </div>
             </Grid>
@@ -335,7 +342,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={disabled || !onSubmit || !hasChanged}
+              disabled={
+                disabled || !onSubmit || (!hasChanged && !hasChannelChanged)
+              }
             />
           </Container>
         );

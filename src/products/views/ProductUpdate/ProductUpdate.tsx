@@ -125,6 +125,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             defaultMessage: "Channels updated"
           })
         });
+        const updatedProductChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
+          data.productChannelListingUpdate.product.channelListing
+        );
+        setCurrentChannels(updatedProductChannelsChoices);
       } else {
         data.productChannelListingUpdate.errors.map(error =>
           notify({
@@ -286,7 +290,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
               channelsAvailabilityText={intl.formatMessage(
                 {
                   defaultMessage:
-                    "Available at {productChannels} out of {allChannels} channels",
+                    "Available at {productChannels} out of {allChannels, plural, one {# channel} other {# channels}}",
 
                   description: "channels availability text"
                 },

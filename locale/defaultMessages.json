@@ -830,6 +830,9 @@
     "context": "window title",
     "string": "Channel details"
   },
+  "src_dot_channels_dot_views_dot_ChannelsList_dot_3499322424": {
+    "string": "Channel deleted"
+  },
   "src_dot_clear": {
     "context": "button",
     "string": "Clear"
@@ -1116,10 +1119,6 @@
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1043589445": {
     "string": "hidden"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1316050857": {
-    "context": "product status",
-    "string": "Available in {count} out of {allCount} channels"
-  },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1702481199": {
     "context": "product channel",
     "string": "published since {date}"
@@ -1131,6 +1130,10 @@
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3285520461": {
     "context": "product channel",
     "string": "Will become available on {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_802058289": {
+    "context": "product status",
+    "string": "Available in {count} out of {allCount, plural, one {# channel} other {# channels}}"
   },
   "src_dot_components_dot_ChannelsAvailability_dot_2060790769": {
     "context": "publish on date",
@@ -4084,6 +4087,10 @@
     "context": "page header",
     "string": "New Product"
   },
+  "src_dot_products_dot_views_dot_1695039566": {
+    "context": "channels availability text",
+    "string": "Available at {productChannels} out of {allChannels, plural, one {# channel} other {# channels}}"
+  },
   "src_dot_products_dot_views_dot_1731766393": {
     "context": "dialog header",
     "string": "Delete Image"
@@ -4100,6 +4107,9 @@
   },
   "src_dot_products_dot_views_dot_2899821092": {
     "string": "Product created"
+  },
+  "src_dot_products_dot_views_dot_3423943948": {
+    "string": "Manage Products Channel Availability"
   },
   "src_dot_products_dot_views_dot_3989383405": {
     "context": "window title",
@@ -4129,9 +4139,9 @@
     "context": "dialog header",
     "string": "Delete Product Variants"
   },
-  "src_dot_products_dot_views_dot_ProductUpdate_dot_1982389039": {
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_1695039566": {
     "context": "channels availability text",
-    "string": "Available at {productChannels} out of {allChannels} channels"
+    "string": "Available at {productChannels} out of {allChannels, plural, one {# channel} other {# channels}}"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",

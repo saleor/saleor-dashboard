@@ -1,10 +1,13 @@
 import { useChannelsList } from "@saleor/channels/queries";
-import { createChannelsData } from "@saleor/channels/utils";
+import { ChannelData, createChannelsData } from "@saleor/channels/utils";
+import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import useListActions from "@saleor/hooks/useListActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -54,6 +57,27 @@ export const ProductCreateView: React.FC = () => {
   });
 
   const { data: channelsData } = useChannelsList({});
+  const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
+  const [currentChannels, setCurrentChannels] = useStateFromProps(allChannels);
+
+  const {
+    isSelected: isChannelSelected,
+    listElements: channelListElements,
+    set: setChannels,
+    toggle: channelsToggle
+  } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
+
+  const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
+
+  const handleChannelsModalClose = () => {
+    setChannelsModalOpen(false);
+    setChannels(currentChannels);
+  };
+
+  const handleChannelsConfirm = () => {
+    setCurrentChannels(channelListElements);
+    setChannelsModalOpen(false);
+  };
 
   const handleBack = () => navigate(productListUrl());
 
@@ -101,9 +125,38 @@ export const ProductCreateView: React.FC = () => {
                 description: "window title"
               })}
             />
+            {!!allChannels?.length && (
+              <ChannelsAvailabilityDialog
+                isSelected={isChannelSelected}
+                channels={allChannels}
+                onChange={channelsToggle}
+                onClose={handleChannelsModalClose}
+                open={isChannelsModalOpen}
+                title={intl.formatMessage({
+                  defaultMessage: "Manage Products Channel Availability"
+                })}
+                confirmButtonState="default"
+                onConfirm={handleChannelsConfirm}
+              />
+            )}
             <ProductCreatePage
-              channels={createChannelsData(channelsData?.channels)}
-              currency={maybe(() => shop.defaultCurrency)}
+              channelsAvailabilityText={intl.formatMessage(
+                {
+                  defaultMessage:
+                    "Available at {productChannels} out of {allChannels, plural, one {# channel} other {# channels}}",
+
+                  description: "channels availability text"
+                },
+                {
+                  allChannels: allChannels?.length,
+                  productChannels: currentChannels?.length
+                }
+              )}
+              currentChannels={currentChannels}
+              hasChannelChanged={
+                allChannels?.length !== currentChannels?.length
+              }
+              currency={shop?.defaultCurrency}
               categories={maybe(
                 () => searchCategoryOpts.data.search.edges,
                 []
@@ -121,36 +174,34 @@ export const ProductCreateView: React.FC = () => {
                 defaultMessage: "New Product",
                 description: "page header"
               })}
-              productTypes={maybe(() =>
-                searchProductTypesOpts.data.search.edges.map(edge => edge.node)
+              productTypes={searchProductTypesOpts?.data?.search?.edges?.map(
+                edge => edge.node
               )}
               onBack={handleBack}
               onSubmit={handleSubmit}
               saveButtonBarState={productCreateOpts.status}
               fetchMoreCategories={{
-                hasMore: maybe(
-                  () => searchCategoryOpts.data.search.pageInfo.hasNextPage
-                ),
+                hasMore:
+                  searchCategoryOpts?.data?.search?.pageInfo?.hasNextPage,
                 loading: searchCategoryOpts.loading,
                 onFetchMore: loadMoreCategories
               }}
               fetchMoreCollections={{
-                hasMore: maybe(
-                  () => searchCollectionOpts.data.search.pageInfo.hasNextPage
-                ),
+                hasMore:
+                  searchCollectionOpts?.data?.search?.pageInfo?.hasNextPage,
                 loading: searchCollectionOpts.loading,
                 onFetchMore: loadMoreCollections
               }}
               fetchMoreProductTypes={{
-                hasMore: maybe(
-                  () => searchProductTypesOpts.data.search.pageInfo.hasNextPage
-                ),
+                hasMore:
+                  searchProductTypesOpts?.data?.search?.pageInfo?.hasNextPage,
                 loading: searchProductTypesOpts.loading,
                 onFetchMore: loadMoreProductTypes
               }}
               warehouses={
                 warehouses.data?.warehouses.edges.map(edge => edge.node) || []
               }
+              openChannelsModal={() => setChannelsModalOpen(true)}
             />
           </>
         );

@@ -16,10 +16,6 @@ import {
   productBulkDelete,
   productBulkDeleteVariables
 } from "./types/productBulkDelete";
-// import {
-//   productBulkPublish,
-//   productBulkPublishVariables
-// } from "./types/productBulkPublish";
 import {
   ProductChannelListingUpdate,
   ProductChannelListingUpdateVariables
@@ -139,7 +135,6 @@ export const productUpdateMutation = gql`
     $collections: [ID]
     $descriptionJson: JSONString
     $name: String
-    # $basePrice: Decimal
     $seo: SeoInput
   ) {
     productUpdate(
@@ -177,13 +172,11 @@ export const simpleProductUpdateMutation = gql`
   mutation SimpleProductUpdate(
     $id: ID!
     $attributes: [AttributeValueInput]
-    # $publicationDate: Date
     $category: ID
     $chargeTaxes: Boolean!
     $collections: [ID]
     $descriptionJson: JSONString
     $name: String
-    # $basePrice: Decimal
     $productVariantId: ID!
     $productVariantInput: ProductVariantInput!
     $seo: SeoInput
@@ -200,7 +193,6 @@ export const simpleProductUpdateMutation = gql`
         collections: $collections
         descriptionJson: $descriptionJson
         name: $name
-        # basePrice: $basePrice
         seo: $seo
       }
     ) {
@@ -269,12 +261,9 @@ export const productCreateMutation = gql`
     $collections: [ID]
     $descriptionJson: JSONString
     $name: String!
-    # $basePrice: Decimal
     $productType: ID!
-    # $sku: String
-    $seo: SeoInput # $stocks: [StockInput!]!
-  ) # $trackInventory: Boolean!
-  {
+    $seo: SeoInput
+  ) {
     productCreate(
       input: {
         attributes: $attributes
@@ -283,12 +272,8 @@ export const productCreateMutation = gql`
         collections: $collections
         descriptionJson: $descriptionJson
         name: $name
-        # basePrice: $basePrice
         productType: $productType
-        # sku: $sku
         seo: $seo
-        # stocks: $stocks
-        # trackInventory: $trackInventory
       }
     ) {
       errors: productErrors {
@@ -504,21 +489,6 @@ export const TypedProductBulkDeleteMutation = TypedMutation<
   productBulkDelete,
   productBulkDeleteVariables
 >(productBulkDeleteMutation);
-
-// export const productBulkPublishMutation = gql`
-//   ${productErrorFragment}
-//   mutation productBulkPublish($ids: [ID!]!) {
-//     productBulkPublish(ids: $ids) {
-//       errors: productErrors {
-//         ...ProductErrorFragment
-//       }
-//     }
-//   }
-// `;
-// export const TypedProductBulkPublishMutation = TypedMutation<
-//   productBulkPublish,
-//   productBulkPublishVariables
-// >(productBulkPublishMutation);
 
 export const ProductVariantBulkCreateMutation = gql`
   ${bulkProductErrorFragment}

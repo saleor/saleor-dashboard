@@ -20,7 +20,9 @@ storiesOf("Views / Products / Create product", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <ProductCreatePage
-      channels={channels}
+      currentChannels={channels}
+      channelsAvailabilityText=""
+      hasChannelChanged={false}
       currency="USD"
       disabled={false}
       errors={[]}
@@ -36,13 +38,16 @@ storiesOf("Views / Products / Create product", module)
       categories={[product.category]}
       onBack={() => undefined}
       onSubmit={() => undefined}
+      openChannelsModal={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
     />
   ))
   .add("When loading", () => (
     <ProductCreatePage
-      channels={channels}
+      currentChannels={channels}
+      channelsAvailabilityText=""
+      hasChannelChanged={false}
       currency="USD"
       disabled={true}
       errors={[]}
@@ -58,13 +63,16 @@ storiesOf("Views / Products / Create product", module)
       categories={[product.category]}
       onBack={() => undefined}
       onSubmit={() => undefined}
+      openChannelsModal={() => undefined}
       saveButtonBarState="default"
       warehouses={undefined}
     />
   ))
   .add("form errors", () => (
     <ProductCreatePage
-      channels={channels}
+      currentChannels={channels}
+      channelsAvailabilityText=""
+      hasChannelChanged={false}
       currency="USD"
       disabled={false}
       errors={(["name", "productType", "category", "sku"] as Array<
@@ -86,6 +94,7 @@ storiesOf("Views / Products / Create product", module)
       categories={[product.category]}
       onBack={() => undefined}
       onSubmit={() => undefined}
+      openChannelsModal={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
     />

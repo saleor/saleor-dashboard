@@ -1,6 +1,7 @@
 import { configurationMenuUrl } from "@saleor/configuration";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { useOrderListQuery } from "@saleor/orders/queries";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -28,6 +29,11 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
+  const { data, refetch } = useChannelsList({ displayLoader: true });
+  const { data: ordersData } = useOrderListQuery({
+    variables: { channel: params.id, first: 1 }
+  });
+
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelsListUrlDialog,
     ChannelsListUrlQueryParams
@@ -42,6 +48,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
           defaultMessage: "Channel deleted"
         })
       });
+      refetch();
       closeModal();
     } else {
       errors.map(error =>
@@ -53,7 +60,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     }
   };
 
-  const { data, loading } = useChannelsList({ displayLoader: true });
   const [deleteChannel, deleteChannelOpts] = useChannelDeleteMutation({
     onCompleted
   });
@@ -78,7 +84,6 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     <>
       <ChannelsListPage
         channelsList={data?.channels}
-        disabled={loading}
         navigateToChannelCreate={navigateToChannelCreate}
         onBack={() => navigate(configurationMenuUrl)}
         onRowClick={id => () => navigate(channelUrl(id))}
@@ -91,6 +96,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
       {!!channelsChoices?.length && (
         <ChannelDeleteDialog
           channelsChoices={channelsChoices}
+          hasChannelOrders={!!ordersData?.orders?.edges?.length}
           open={params.action === "remove"}
           confirmButtonState={deleteChannelOpts.status}
           onClose={closeModal}

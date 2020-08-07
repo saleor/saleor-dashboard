@@ -72,7 +72,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
       >
         <Typography className={classes.title}>
           <FormattedMessage
-            defaultMessage="Available in {count} out of {allCount} channels"
+            defaultMessage="Available in {count} out of {allCount, plural, one {# channel} other {# channels}}"
             description="product status"
             values={{
               allCount: allChannelsCount,

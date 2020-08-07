@@ -364,7 +364,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     fetchCollections={fetchCollections}
                     fetchMoreCategories={fetchMoreCategories}
                     fetchMoreCollections={fetchMoreCollections}
-                    productType={maybe(() => product.productType)}
+                    productType={product?.productType}
                     onCategoryChange={handleCategorySelect}
                     onCollectionChange={handleCollectionSelect}
                   />
