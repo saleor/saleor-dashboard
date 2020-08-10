@@ -41,6 +41,7 @@ import {
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
+  ProductListUrlFiltersAsDictWithMultipleValues,
   ProductListUrlFiltersEnum,
   ProductListUrlFiltersWithMultipleValues,
   ProductListUrlQueryParams
@@ -295,4 +296,8 @@ export const {
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
   ProductListUrlQueryParams,
   ProductListUrlFilters
->(ProductListUrlFiltersEnum);
+>({
+  ...ProductListUrlFiltersEnum,
+  ...ProductListUrlFiltersWithMultipleValues,
+  ...ProductListUrlFiltersAsDictWithMultipleValues
+});
