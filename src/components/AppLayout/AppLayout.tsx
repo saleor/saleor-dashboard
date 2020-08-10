@@ -29,6 +29,7 @@ import useRouter from "use-react-router";
 import Container from "../Container";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
+import NavigatorButton from "../NavigatorButton/NavigatorButton";
 import AppActionContext from "./AppActionContext";
 import AppHeaderContext from "./AppHeaderContext";
 import { appLoaderHeight, drawerWidth, drawerWidthExpanded } from "./consts";
@@ -438,9 +439,12 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                           checked={isDark}
                           onClick={toggleTheme}
                         />
-                        <button onClick={() => setNavigatorVisibility(true)}>
-                          naviigator
-                        </button>
+                        <NavigatorButton
+                          isMac={navigator.platform
+                            .toLowerCase()
+                            .includes("mac")}
+                          onClick={() => setNavigatorVisibility(true)}
+                        />
                         <div className={classes.userMenuContainer} ref={anchor}>
                           <Chip
                             avatar={
