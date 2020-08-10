@@ -4111,6 +4111,9 @@
   "src_dot_products_dot_views_dot_3423943948": {
     "string": "Manage Products Channel Availability"
   },
+  "src_dot_products_dot_views_dot_3576216025": {
+    "string": "Channels updated"
+  },
   "src_dot_products_dot_views_dot_3989383405": {
     "context": "window title",
     "string": "Create variant"

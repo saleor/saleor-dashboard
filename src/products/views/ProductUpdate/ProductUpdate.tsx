@@ -99,7 +99,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     product?.channelListing
   );
   const [currentChannels, setCurrentChannels] = useLocalStorage<ChannelData[]>(
-    "channels",
+    `productChannels-${id}`,
     productChannelsChoices
   );
 

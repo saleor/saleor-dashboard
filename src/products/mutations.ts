@@ -285,7 +285,7 @@ export const productCreateMutation = gql`
     }
   }
 `;
-export const TypedProductCreateMutation = TypedMutation<
+export const useProductCreateMutation = makeMutation<
   ProductCreate,
   ProductCreateVariables
 >(productCreateMutation);
