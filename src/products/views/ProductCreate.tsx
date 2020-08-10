@@ -103,7 +103,7 @@ export const ProductCreateView: React.FC = () => {
 
   const handleBack = () => navigate(productListUrl());
 
-  const handleSuccess = (data: ProductCreate) => {
+  const handleSuccess = (data: ProductCreate, channelsData: ChannelData[]) => {
     if (data.productCreate.errors.length === 0) {
       notify({
         status: "success",
@@ -115,7 +115,7 @@ export const ProductCreateView: React.FC = () => {
         variables: {
           id: data.productCreate.product.id,
           input: {
-            addChannels: currentChannels.map(channel => ({
+            addChannels: channelsData.map(channel => ({
               channelId: channel.id,
               isPublished: channel.isPublished,
               publicationDate: channel.publicationDate
@@ -126,12 +126,9 @@ export const ProductCreateView: React.FC = () => {
     }
   };
 
-  const [productCreate, productCreateOpts] = useProductCreateMutation({
-    onCompleted: handleSuccess
-  });
+  const [productCreate, productCreateOpts] = useProductCreateMutation({});
 
   const handleSubmit = (formData: ProductCreatePageSubmitData) => {
-    setCurrentChannels(formData.channelListing);
     productCreate({
       variables: {
         attributes: formData.attributes.map(attribute => ({
@@ -149,7 +146,7 @@ export const ProductCreateView: React.FC = () => {
           title: formData.seoTitle
         }
       }
-    });
+    }).then(response => handleSuccess(response.data, formData.channelListing));
   };
 
   return (
