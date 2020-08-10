@@ -15,6 +15,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - create Apps - #599 by @AlicjaSzu
 - Refactor authorization - #624 by @dominik-zeglen
 - Fix minor bugs - #628 by @dominik-zeglen
+- Add navigator button - #635 by @dominik-zeglen
 
 ## 2.10.1
 

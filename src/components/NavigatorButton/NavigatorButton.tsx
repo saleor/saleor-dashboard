@@ -108,6 +108,7 @@ const NavigatorButton: React.FC<NavigatorButtonProps> = ({
     <>
       <IconButton
         className={classNames(className, classes.root)}
+        data-test="navigator"
         onMouseEnter={setHelper}
         onMouseLeave={clearHelper}
         {...props}
