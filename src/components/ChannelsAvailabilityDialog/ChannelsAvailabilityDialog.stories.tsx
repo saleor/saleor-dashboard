@@ -11,6 +11,7 @@ import ChannelsAvailabilityDialog, {
 const props: ChannelsAvailabilityDialogProps = {
   channels: createChannelsData(channelsList),
   confirmButtonState: "default",
+  disabled: false,
   isSelected: () => undefined,
   onChange: () => undefined,
   onClose: () => undefined,
@@ -21,4 +22,7 @@ const props: ChannelsAvailabilityDialogProps = {
 
 storiesOf("Generics / ChannelsAvailabilityDialog", module)
   .addDecorator(Decorator)
-  .add("default", () => <ChannelsAvailabilityDialog {...props} />);
+  .add("default", () => <ChannelsAvailabilityDialog {...props} />)
+  .add("disabled", () => (
+    <ChannelsAvailabilityDialog {...props} disabled={true} />
+  ));

@@ -109,7 +109,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     set: setChannels,
     toggle: channelsToggle
   } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
-
   useEffect(() => {
     if (!currentChannels.length && productChannelsChoices.length) {
       setCurrentChannels(productChannelsChoices);
@@ -152,11 +151,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   };
 
   const handleChannelsConfirm = () => {
-    if (channelListElements.length) {
-      setCurrentChannels(channelListElements);
-    } else {
-      setChannels(currentChannels);
-    }
+    setCurrentChannels(channelListElements);
     setChannelsModalOpen(false);
   };
 
@@ -277,6 +272,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             {!!allChannels?.length && (
               <ChannelsAvailabilityDialog
                 isSelected={isChannelSelected}
+                disabled={!channelListElements.length}
                 channels={allChannels}
                 onChange={channelsToggle}
                 onClose={handleChannelsModalClose}

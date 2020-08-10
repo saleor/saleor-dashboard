@@ -31,6 +31,7 @@ interface ActionDialogProps extends DialogProps {
   children?: React.ReactNode;
   confirmButtonLabel?: string;
   confirmButtonState: ConfirmButtonTransitionState;
+  disabled?: boolean;
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
   title: string;
   variant?: "default" | "delete";
@@ -42,6 +43,7 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
     children,
     confirmButtonLabel,
     confirmButtonState,
+    disabled,
     open,
     title,
     variant,
@@ -62,6 +64,7 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
           <FormattedMessage {...buttonMessages.back} />
         </Button>
         <ConfirmButton
+          disabled={disabled}
           transitionState={confirmButtonState}
           color="primary"
           variant="contained"

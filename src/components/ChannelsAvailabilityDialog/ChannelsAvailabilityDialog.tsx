@@ -10,6 +10,7 @@ export interface ChannelsAvailabilityDialogProps {
   isSelected: (option: ChannelData) => boolean;
   channels: ChannelData[];
   confirmButtonState: ConfirmButtonTransitionState;
+  disabled: boolean;
   open: boolean;
   onClose: () => void;
   onChange: (option: ChannelData) => void;
@@ -21,6 +22,7 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
   isSelected,
   channels,
   confirmButtonState,
+  disabled,
   open,
   onClose,
   onChange,
@@ -35,6 +37,7 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
       onClose={onClose}
       onConfirm={onConfirm}
       title={title}
+      disabled={disabled}
     >
       <div>
         <div className={classes.dialog}>

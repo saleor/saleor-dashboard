@@ -74,11 +74,7 @@ export const ProductCreateView: React.FC = () => {
   };
 
   const handleChannelsConfirm = () => {
-    if (channelListElements.length) {
-      setCurrentChannels(channelListElements);
-    } else {
-      setChannels(currentChannels);
-    }
+    setCurrentChannels(channelListElements);
     setChannelsModalOpen(false);
   };
 
@@ -131,6 +127,7 @@ export const ProductCreateView: React.FC = () => {
             {!!allChannels?.length && (
               <ChannelsAvailabilityDialog
                 isSelected={isChannelSelected}
+                disabled={!channelListElements.length}
                 channels={allChannels}
                 onChange={channelsToggle}
                 onClose={handleChannelsModalClose}
