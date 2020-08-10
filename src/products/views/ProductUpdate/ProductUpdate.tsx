@@ -27,7 +27,7 @@ import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getMutationState, maybe } from "../../../misc";
+import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import ProductUpdateOperations from "../../containers/ProductUpdateOperations";
 import { useProductChannelListingUpdate } from "../../mutations";
@@ -152,7 +152,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   };
 
   const handleChannelsConfirm = () => {
-    setCurrentChannels(channelListElements);
+    if (channelListElements.length) {
+      setCurrentChannels(channelListElements);
+    } else {
+      setChannels(currentChannels);
+    }
     setChannelsModalOpen(false);
   };
 
@@ -251,27 +255,25 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         const formTransitionState = getMutationState(
           updateProduct.opts.called || updateSimpleProduct.opts.called,
           updateProduct.opts.loading || updateSimpleProduct.opts.loading,
-          maybe(() => updateProduct.opts.data.productUpdate.errors),
-          maybe(() => updateSimpleProduct.opts.data.productUpdate.errors),
-          maybe(() => updateSimpleProduct.opts.data.productVariantUpdate.errors)
+          updateProduct?.opts?.data?.productUpdate?.errors,
+          updateSimpleProduct?.opts?.data?.productUpdate?.errors,
+          updateSimpleProduct?.opts?.data?.productVariantUpdate?.errors
         );
 
-        const categories = maybe(
-          () => searchCategoriesOpts.data.search.edges,
-          []
-        ).map(edge => edge.node);
-        const collections = maybe(
-          () => searchCollectionsOpts.data.search.edges,
-          []
-        ).map(edge => edge.node);
+        const categories =
+          searchCategoriesOpts?.data?.search?.edges ||
+          [].map(edge => edge.node);
+        const collections =
+          searchCollectionsOpts?.data?.search?.edges ||
+          [].map(edge => edge.node);
         const errors = [
-          ...maybe(() => updateProduct.opts.data.productUpdate.errors, []),
-          ...maybe(() => updateSimpleProduct.opts.data.productUpdate.errors, [])
+          ...(updateProduct?.opts?.data?.productUpdate?.errors || []),
+          ...(updateSimpleProduct?.opts?.data?.productUpdate?.errors || [])
         ];
 
         return (
           <>
-            <WindowTitle title={maybe(() => data.product.name)} />
+            <WindowTitle title={data?.product?.name} />
             {!!allChannels?.length && (
               <ChannelsAvailabilityDialog
                 isSelected={isChannelSelected}
@@ -287,18 +289,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
               />
             )}
             <ProductUpdatePage
-              channelsAvailabilityText={intl.formatMessage(
-                {
-                  defaultMessage:
-                    "Available at {productChannels} out of {allChannels, plural, one {# channel} other {# channels}}",
-
-                  description: "channels availability text"
-                },
-                {
-                  allChannels: allChannels?.length,
-                  productChannels: currentChannels?.length
-                }
-              )}
+              allChannelsCount={allChannels?.length}
               hasChannelChanged={
                 productChannelsChoices?.length !== currentChannels?.length
               }
@@ -317,7 +308,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
               warehouses={
                 warehouses.data?.warehouses.edges.map(edge => edge.node) || []
               }
-              variants={maybe(() => product.variants)}
+              variants={product?.variants}
               onBack={handleBack}
               onDelete={() => openModal("remove")}
               onImageReorder={handleImageReorder}
@@ -346,16 +337,14 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
               toggle={toggle}
               toggleAll={toggleAll}
               fetchMoreCategories={{
-                hasMore: maybe(
-                  () => searchCategoriesOpts.data.search.pageInfo.hasNextPage
-                ),
+                hasMore:
+                  searchCategoriesOpts?.data?.search?.pageInfo?.hasNextPage,
                 loading: searchCategoriesOpts.loading,
                 onFetchMore: loadMoreCategories
               }}
               fetchMoreCollections={{
-                hasMore: maybe(
-                  () => searchCollectionsOpts.data.search.pageInfo.hasNextPage
-                ),
+                hasMore:
+                  searchCollectionsOpts?.data?.search?.pageInfo?.hasNextPage,
                 loading: searchCollectionsOpts.loading,
                 onFetchMore: loadMoreCollections
               }}
@@ -402,10 +391,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                   defaultMessage="{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}"
                   description="dialog content"
                   values={{
-                    counter: maybe(() => params.ids.length),
-                    displayQuantity: (
-                      <strong>{maybe(() => params.ids.length)}</strong>
-                    )
+                    counter: params?.ids?.length,
+                    displayQuantity: <strong>{params?.ids?.length}</strong>
                   }}
                 />
               </DialogContentText>

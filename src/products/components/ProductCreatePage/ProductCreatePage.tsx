@@ -67,7 +67,7 @@ export interface ProductCreatePageSubmitData extends FormData {
 
 interface ProductCreatePageProps {
   errors: ProductErrorFragment[];
-  channelsAvailabilityText: string;
+  allChannelsCount: number;
   currentChannels: ChannelData[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
@@ -95,7 +95,7 @@ interface ProductCreatePageProps {
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
-  channelsAvailabilityText,
+  allChannelsCount,
   currency,
   currentChannels = [],
   disabled,
@@ -330,7 +330,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 />
                 <CardSpacer />
                 <ChannelsAvailability
-                  channelsAvailabilityText={channelsAvailabilityText}
+                  selectedChannelsCount={data.channelListing.length}
+                  allChannelsCount={allChannelsCount}
                   channels={data.channelListing}
                   disabled={disabled}
                   onChange={handleChannelsChange}

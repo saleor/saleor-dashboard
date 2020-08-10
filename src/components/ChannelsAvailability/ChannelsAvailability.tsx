@@ -18,7 +18,8 @@ import { useStyles } from "./styles";
 
 export interface ChannelsAvailabilityProps {
   channels: ChannelData[];
-  channelsAvailabilityText?: React.ReactNode;
+  selectedChannelsCount: number;
+  allChannelsCount: number;
   disabled?: boolean;
   onChange: (
     index: number
@@ -151,10 +152,27 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
 };
 
 export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props => {
-  const { channelsAvailabilityText, channels, openModal, onChange } = props;
+  const {
+    selectedChannelsCount,
+    allChannelsCount,
+    channels,
+    openModal,
+    onChange
+  } = props;
   const intl = useIntl();
   const classes = useStyles({});
+  const channelsAvailabilityText = intl.formatMessage(
+    {
+      defaultMessage:
+        "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}",
 
+      description: "channels availability text"
+    },
+    {
+      allChannelsCount,
+      selectedChannelsCount
+    }
+  );
   return (
     <>
       <Card>

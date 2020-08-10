@@ -21,7 +21,7 @@ storiesOf("Views / Products / Create product", module)
   .add("default", () => (
     <ProductCreatePage
       currentChannels={channels}
-      channelsAvailabilityText=""
+      allChannelsCount={5}
       hasChannelChanged={false}
       currency="USD"
       disabled={false}
@@ -46,7 +46,7 @@ storiesOf("Views / Products / Create product", module)
   .add("When loading", () => (
     <ProductCreatePage
       currentChannels={channels}
-      channelsAvailabilityText=""
+      allChannelsCount={5}
       hasChannelChanged={false}
       currency="USD"
       disabled={true}
@@ -71,7 +71,7 @@ storiesOf("Views / Products / Create product", module)
   .add("form errors", () => (
     <ProductCreatePage
       currentChannels={channels}
-      channelsAvailabilityText=""
+      allChannelsCount={5}
       hasChannelChanged={false}
       currency="USD"
       disabled={false}

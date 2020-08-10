@@ -1,4 +1,6 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
+import { channelsList } from "@saleor/channels/fixtures";
+import { createChannelsData } from "@saleor/channels/utils";
 import { collections } from "@saleor/collections/fixtures";
 import { fetchMoreProps, listActionsProps } from "@saleor/fixtures";
 import ProductUpdatePage, {
@@ -14,11 +16,12 @@ import React from "react";
 import Decorator from "../../Decorator";
 
 const product = productFixture(placeholderImage);
+const channels = createChannelsData(channelsList);
 
 const props: ProductUpdatePageProps = {
   ...listActionsProps,
+  allChannelsCount: 5,
   categories: [product.category],
-  channelsAvailabilityText: "channels text",
   collections,
   currentChannels: [],
   disabled: false,
@@ -132,4 +135,7 @@ storiesOf("Views / Products / Product edit", module)
         field
       }))}
     />
+  ))
+  .add("with channels", () => (
+    <ProductUpdatePage {...props} currentChannels={channels} />
   ));

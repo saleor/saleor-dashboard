@@ -9,10 +9,11 @@ import ChannelsAvailability, {
 } from "./ChannelsAvailability";
 
 const props: ChannelsAvailabilityProps = {
+  allChannelsCount: 4,
   channels: createChannelsDataFromProduct(productChannels),
-  channelsAvailabilityText: "Channels text",
   onChange: () => undefined,
-  openModal: () => undefined
+  openModal: () => undefined,
+  selectedChannelsCount: 3
 };
 
 storiesOf("Generics / ChannelsAvailability", module)

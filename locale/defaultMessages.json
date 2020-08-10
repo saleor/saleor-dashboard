@@ -1151,6 +1151,10 @@
     "context": "section header",
     "string": "Availability"
   },
+  "src_dot_components_dot_ChannelsAvailability_dot_370220662": {
+    "context": "channels availability text",
+    "string": "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
+  },
   "src_dot_components_dot_ChannelsAvailability_dot_4037103586": {
     "context": "section header button",
     "string": "Manage"
@@ -4087,10 +4091,6 @@
     "context": "page header",
     "string": "New Product"
   },
-  "src_dot_products_dot_views_dot_1695039566": {
-    "context": "channels availability text",
-    "string": "Available at {productChannels} out of {allChannels, plural, one {# channel} other {# channels}}"
-  },
   "src_dot_products_dot_views_dot_1731766393": {
     "context": "dialog header",
     "string": "Delete Image"
@@ -4138,10 +4138,6 @@
   "src_dot_products_dot_views_dot_ProductUpdate_dot_1454532689": {
     "context": "dialog header",
     "string": "Delete Product Variants"
-  },
-  "src_dot_products_dot_views_dot_ProductUpdate_dot_1695039566": {
-    "context": "channels availability text",
-    "string": "Available at {productChannels} out of {allChannels, plural, one {# channel} other {# channels}}"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",

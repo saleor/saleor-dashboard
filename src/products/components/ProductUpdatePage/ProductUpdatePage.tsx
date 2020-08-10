@@ -54,7 +54,7 @@ import ProductVariants from "../ProductVariants";
 
 export interface ProductUpdatePageProps extends ListActions {
   errors: ProductErrorFragment[];
-  channelsAvailabilityText: React.ReactNode;
+  allChannelsCount: number;
   currentChannels: ChannelData[];
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
@@ -96,7 +96,7 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   disabled,
   categories: categoryChoiceList,
-  channelsAvailabilityText,
+  allChannelsCount,
   currentChannels = [],
   collections: collectionChoiceList,
   errors,
@@ -370,7 +370,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   />
                   <CardSpacer />
                   <ChannelsAvailability
-                    channelsAvailabilityText={channelsAvailabilityText}
+                    selectedChannelsCount={data.channelListing.length}
+                    allChannelsCount={allChannelsCount}
                     channels={data.channelListing}
                     disabled={disabled}
                     onChange={handleChannelsChange}

@@ -15,7 +15,6 @@ import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
 import ProductCreatePage, {
   ProductCreatePageSubmitData
 } from "../components/ProductCreatePage";
@@ -75,7 +74,11 @@ export const ProductCreateView: React.FC = () => {
   };
 
   const handleChannelsConfirm = () => {
-    setCurrentChannels(channelListElements);
+    if (channelListElements.length) {
+      setCurrentChannels(channelListElements);
+    } else {
+      setChannels(currentChannels);
+    }
     setChannelsModalOpen(false);
   };
 
@@ -140,31 +143,20 @@ export const ProductCreateView: React.FC = () => {
               />
             )}
             <ProductCreatePage
-              channelsAvailabilityText={intl.formatMessage(
-                {
-                  defaultMessage:
-                    "Available at {productChannels} out of {allChannels, plural, one {# channel} other {# channels}}",
-
-                  description: "channels availability text"
-                },
-                {
-                  allChannels: allChannels?.length,
-                  productChannels: currentChannels?.length
-                }
-              )}
+              allChannelsCount={allChannels?.length}
               currentChannels={currentChannels}
               hasChannelChanged={
                 allChannels?.length !== currentChannels?.length
               }
               currency={shop?.defaultCurrency}
-              categories={maybe(
-                () => searchCategoryOpts.data.search.edges,
-                []
-              ).map(edge => edge.node)}
-              collections={maybe(
-                () => searchCollectionOpts.data.search.edges,
-                []
-              ).map(edge => edge.node)}
+              categories={
+                searchCategoryOpts?.data?.search?.edges ||
+                [].map(edge => edge.node)
+              }
+              collections={
+                searchCollectionOpts?.data?.search?.edges ||
+                [].map(edge => edge.node)
+              }
               disabled={productCreateOpts.loading}
               errors={productCreateOpts.data?.productCreate.errors || []}
               fetchCategories={searchCategory}
