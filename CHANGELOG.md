@@ -15,6 +15,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - create Apps - #599 by @AlicjaSzu
 - Refactor authorization - #624 by @dominik-zeglen
 - Fix minor bugs - #628 by @dominik-zeglen
+- Removed confirm button in MembersErrorDialog - #498 by @eaglesemanation
 
 ## 2.10.1
 
