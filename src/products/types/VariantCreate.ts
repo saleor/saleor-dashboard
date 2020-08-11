@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductVariantCreateInput, ProductErrorCode } from "./../../types/globalTypes";
+import { ProductVariantCreateInput, ProductErrorCode, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantCreate
@@ -113,7 +113,7 @@ export interface VariantCreate_productVariantCreate_productVariant_stocks {
 
 export interface VariantCreate_productVariantCreate_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 

@@ -1,5 +1,8 @@
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
+import {
+  AttributeInputTypeEnum,
+  WeightUnitsEnum
+} from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
 import { content } from "../storybook/stories/components/RichTextEditor";
@@ -281,7 +284,7 @@ export const product: (
       trackInventory: true,
       weight: {
         __typename: "Weight",
-        unit: "kg",
+        unit: WeightUnitsEnum.KG,
         value: 3
       }
     },
@@ -316,14 +319,14 @@ export const product: (
       trackInventory: false,
       weight: {
         __typename: "Weight",
-        unit: "kg",
+        unit: WeightUnitsEnum.KG,
         value: 4
       }
     }
   ],
   weight: {
     __typename: "Weight",
-    unit: "kg",
+    unit: WeightUnitsEnum.KG,
     value: 5
   }
 });
@@ -1672,7 +1675,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
   trackInventory: true,
   weight: {
     __typename: "Weight",
-    unit: "kg",
+    unit: WeightUnitsEnum.KG,
     value: 6
   }
 });

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode } from "./../../types/globalTypes";
+import { ProductErrorCode, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantImageAssign
@@ -113,7 +113,7 @@ export interface VariantImageAssign_variantImageAssign_productVariant_stocks {
 
 export interface VariantImageAssign_variantImageAssign_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 

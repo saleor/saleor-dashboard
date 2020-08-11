@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueInput, SeoInput, StockInput, ProductErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { AttributeValueInput, SeoInput, StockInput, ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductCreate
@@ -176,7 +176,7 @@ export interface ProductCreate_productCreate_product_variants {
 
 export interface ProductCreate_productCreate_product_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
