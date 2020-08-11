@@ -44,6 +44,9 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           name={"name" as keyof typeof data}
           value={data.name}
           onChange={onChange}
+          InputProps={{
+            autoComplete: "address"
+          }}
         />
       </CardContent>
     </Card>
