@@ -14,11 +14,6 @@ export interface PermissionGroupCreate_permissionGroupCreate_errors {
   field: string | null;
 }
 
-export interface PermissionGroupCreate_permissionGroupCreate_group_users_avatar {
-  __typename: "Image";
-  url: string;
-}
-
 export interface PermissionGroupCreate_permissionGroupCreate_group_users {
   __typename: "User";
   id: string;
@@ -26,7 +21,6 @@ export interface PermissionGroupCreate_permissionGroupCreate_group_users {
   lastName: string;
   email: string;
   isActive: boolean;
-  avatar: PermissionGroupCreate_permissionGroupCreate_group_users_avatar | null;
 }
 
 export interface PermissionGroupCreate_permissionGroupCreate_group_permissions {
