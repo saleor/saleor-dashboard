@@ -175,6 +175,9 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           onChange={onChange}
           value={data.countryArea}
           fullWidth
+          InputProps={{
+            autoComplete: "region"
+          }}
         />
       </Grid>
       <FormSpacer />
