@@ -60,8 +60,12 @@ const useStyles = makeStyles(
   }
 );
 
-const Navigator: React.FC = () => {
-  const [visible, setVisible] = React.useState(false);
+export interface NavigatorProps {
+  visible: boolean;
+  setVisibility: (state: boolean) => void;
+}
+
+const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
   const input = React.useRef(null);
   const [query, mode, change, actions] = useQuickSearch(visible, input);
   const intl = useIntl();
@@ -76,7 +80,7 @@ const Navigator: React.FC = () => {
   React.useEffect(() => {
     hotkeys(navigatorHotkey, event => {
       event.preventDefault();
-      setVisible(!visible);
+      setVisibility(!visible);
     });
 
     if (cmp(APP_VERSION, "2.1.0") !== 1 && !notifiedAboutNavigator) {
@@ -110,7 +114,7 @@ const Navigator: React.FC = () => {
     <Modal
       className={classes.modal}
       open={visible}
-      onClose={() => setVisible(false)}
+      onClose={() => setVisibility(false)}
     >
       <Fade appear in={visible} timeout={theme.transitions.duration.short}>
         <div className={classes.root}>
@@ -122,7 +126,7 @@ const Navigator: React.FC = () => {
               onSelect={(item: QuickSearchAction) => {
                 const shouldRemainVisible = item.onClick();
                 if (!shouldRemainVisible) {
-                  setVisible(false);
+                  setVisibility(false);
                 }
               }}
               onInputValueChange={value =>

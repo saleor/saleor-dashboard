@@ -1,4 +1,3 @@
-import Navigator from "@saleor/components/Navigator";
 import useAppState from "@saleor/hooks/useAppState";
 import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
@@ -139,7 +138,6 @@ const Routes: React.FC = () => {
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
       {isAuthenticated && !tokenAuthLoading && !tokenVerifyLoading ? (
         <AppLayout>
-          <Navigator />
           <ErrorBoundary
             onError={() =>
               dispatchAppState({
