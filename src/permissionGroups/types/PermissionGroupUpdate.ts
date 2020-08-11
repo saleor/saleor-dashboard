@@ -14,6 +14,11 @@ export interface PermissionGroupUpdate_permissionGroupUpdate_errors {
   field: string | null;
 }
 
+export interface PermissionGroupUpdate_permissionGroupUpdate_group_users_avatar {
+  __typename: "Image";
+  url: string;
+}
+
 export interface PermissionGroupUpdate_permissionGroupUpdate_group_users {
   __typename: "User";
   id: string;
@@ -21,6 +26,7 @@ export interface PermissionGroupUpdate_permissionGroupUpdate_group_users {
   lastName: string;
   email: string;
   isActive: boolean;
+  avatar: PermissionGroupUpdate_permissionGroupUpdate_group_users_avatar | null;
 }
 
 export interface PermissionGroupUpdate_permissionGroupUpdate_group_permissions {
