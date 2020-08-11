@@ -14,7 +14,7 @@ jobs:
       - name: Set domain
         # Set test instance domain based on branch name slug
         run: |
-          echo "::set-env name=domain::${{ env.GITHUB_HEAD_REF_SLUG }}.dashboard.saleor.rocks"
+          echo "::set-env name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -34,4 +34,4 @@ jobs:
         with:
           step: deactivate-env
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: ${{ env.GITHUB_HEAD_REF_SLUG }}
+          env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
