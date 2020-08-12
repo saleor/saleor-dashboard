@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { WeightUnitsEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL fragment: ProductTypeDetailsFragment
 // ====================================================
@@ -34,7 +36,7 @@ export interface ProductTypeDetailsFragment_variantAttributes {
 
 export interface ProductTypeDetailsFragment_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 

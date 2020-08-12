@@ -5734,6 +5734,10 @@
     "context": "dialog header",
     "string": "Delete Webhook"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1087314240": {
+    "context": "event",
+    "string": "Checkout updated"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368317066": {
     "context": "event",
     "string": "Invoice deleted"
@@ -5745,6 +5749,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1606361075": {
     "context": "event",
     "string": "Order updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2240725235": {
+    "context": "event",
+    "string": "Checkout created"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",

@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { WeightUnitsEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: UnassignAttribute
 // ====================================================
@@ -40,7 +42,7 @@ export interface UnassignAttribute_attributeUnassign_productType_variantAttribut
 
 export interface UnassignAttribute_attributeUnassign_productType_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 

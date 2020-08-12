@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeAssignInput } from "./../../types/globalTypes";
+import { AttributeAssignInput, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AssignAttribute
@@ -42,7 +42,7 @@ export interface AssignAttribute_attributeAssign_productType_variantAttributes {
 
 export interface AssignAttribute_attributeAssign_productType_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 

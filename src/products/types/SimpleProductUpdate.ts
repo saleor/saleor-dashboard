@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueInput, ProductVariantInput, SeoInput, StockInput, ProductErrorCode, AttributeInputTypeEnum, StockErrorCode } from "./../../types/globalTypes";
+import { AttributeValueInput, ProductVariantInput, SeoInput, StockInput, ProductErrorCode, AttributeInputTypeEnum, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: SimpleProductUpdate
@@ -176,7 +176,7 @@ export interface SimpleProductUpdate_productUpdate_product_variants {
 
 export interface SimpleProductUpdate_productUpdate_product_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
@@ -314,7 +314,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_stocks 
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
@@ -445,7 +445,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_s
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
@@ -575,7 +575,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_s
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
@@ -706,7 +706,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_s
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_weight {
   __typename: "Weight";
-  unit: string;
+  unit: WeightUnitsEnum;
   value: number;
 }
 
