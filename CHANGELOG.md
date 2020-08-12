@@ -17,6 +17,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix minor bugs - #628 by @dominik-zeglen
 - Add navigator button - #635 by @dominik-zeglen
 - Update to newest schema - #638 by @dominik-zeglen
+- Fix missing save button - #636 by @dominik-zeglen
 
 ## 2.10.1
 
