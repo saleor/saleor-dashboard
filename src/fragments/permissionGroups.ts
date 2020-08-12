@@ -33,6 +33,9 @@ export const permissionGroupDetailsFragment = gql`
     }
     users {
       ...StaffMemberFragment
+      avatar(size: 48) {
+        url
+      }
     }
   }
 `;

@@ -7,9 +7,6 @@ export const staffMemberFragment = gql`
     firstName
     isActive
     lastName
-    avatar {
-      url
-    }
   }
 `;
 export const staffMemberDetailsFragment = gql`
@@ -24,6 +21,9 @@ export const staffMemberDetailsFragment = gql`
     userPermissions {
       code
       name
+    }
+    avatar(size: 120) {
+      url
     }
   }
 `;

@@ -8,11 +8,6 @@ import { PermissionEnum } from "./../../types/globalTypes";
 // GraphQL query operation: StaffMemberDetails
 // ====================================================
 
-export interface StaffMemberDetails_user_avatar {
-  __typename: "Image";
-  url: string;
-}
-
 export interface StaffMemberDetails_user_permissionGroups {
   __typename: "Group";
   id: string;
@@ -26,6 +21,11 @@ export interface StaffMemberDetails_user_userPermissions {
   name: string;
 }
 
+export interface StaffMemberDetails_user_avatar {
+  __typename: "Image";
+  url: string;
+}
+
 export interface StaffMemberDetails_user {
   __typename: "User";
   id: string;
@@ -33,9 +33,9 @@ export interface StaffMemberDetails_user {
   firstName: string;
   isActive: boolean;
   lastName: string;
-  avatar: StaffMemberDetails_user_avatar | null;
   permissionGroups: (StaffMemberDetails_user_permissionGroups | null)[] | null;
   userPermissions: (StaffMemberDetails_user_userPermissions | null)[] | null;
+  avatar: StaffMemberDetails_user_avatar | null;
 }
 
 export interface StaffMemberDetails {

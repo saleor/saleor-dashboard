@@ -34,6 +34,9 @@ const staffList = gql`
         cursor
         node {
           ...StaffMemberFragment
+          avatar(size: 48) {
+            url
+          }
         }
       }
       pageInfo {
