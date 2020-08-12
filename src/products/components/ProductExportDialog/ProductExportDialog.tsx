@@ -8,11 +8,11 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
-import Form from "@saleor/components/Form";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
-import { FormChange } from "@saleor/hooks/useForm";
+import useForm, { FormChange } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useWizard from "@saleor/hooks/useWizard";
 import { buttonMessages } from "@saleor/intl";
 import { SearchAttributes_search_edges_node } from "@saleor/searches/types/SearchAttributes";
@@ -104,121 +104,120 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   const [selectedAttributes, setSelectedAttributes] = React.useState<
     MultiAutocompleteChoiceType[]
   >([]);
+  const { change, data, reset, submit } = useForm(initialForm, onSubmit);
+
+  useModalDialogOpen(open, {
+    onClose: () => {
+      reset();
+      setStep(ProductExportStep.INFO);
+    }
+  });
 
   const attributeChoices = mapNodeToChoice(attributes);
 
+  const handleAttributeSelect: FormChange = event => {
+    const id = event.target.name.substr(attributeNamePrefix.length);
+
+    change({
+      target: {
+        name: "exportInfo",
+        value: {
+          ...data.exportInfo,
+          attributes: toggle(id, data.exportInfo.attributes, (a, b) => a === b)
+        }
+      }
+    });
+
+    const choice = attributeChoices.find(choice => choice.value === id);
+
+    setSelectedAttributes(
+      toggle(choice, selectedAttributes, (a, b) => a.value === b.value)
+    );
+  };
+
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
-      <Form initial={initialForm} onSubmit={onSubmit}>
-        {({ change, data }) => {
-          const handleAttributeSelect: FormChange = event => {
-            const id = event.target.name.substr(attributeNamePrefix.length);
+      <>
+        <DialogTitle>
+          <FormattedMessage
+            defaultMessage="Export Information"
+            description="export products to csv file, dialog header"
+          />
+        </DialogTitle>
+        <DialogContent>
+          <ProductExportSteps
+            currentStep={step}
+            steps={steps}
+            onStepClick={setStep}
+          />
+          {step === ProductExportStep.INFO && (
+            <ProductExportDialogInfo
+              attributes={attributeChoices}
+              data={data}
+              selectedAttributes={selectedAttributes}
+              onAttrtibuteSelect={handleAttributeSelect}
+              onChange={change}
+              {...fetchMoreProps}
+            />
+          )}
+          {step === ProductExportStep.SETTINGS && (
+            <ProductExportDialogSettings
+              data={data}
+              errors={dialogErrors}
+              productQuantity={productQuantity}
+              selectedProducts={selectedProducts}
+              onChange={change}
+            />
+          )}
+        </DialogContent>
 
-            change({
-              target: {
-                name: "exportInfo",
-                value: {
-                  ...data.exportInfo,
-                  attributes: toggle(
-                    id,
-                    data.exportInfo.attributes,
-                    (a, b) => a === b
-                  )
-                }
-              }
-            });
+        {notFormErrors.length > 0 && (
+          <DialogContent>
+            {notFormErrors.map(err => (
+              <Typography color="error" key={err.field + err.code}>
+                {getExportErrorMessage(err, intl)}
+              </Typography>
+            ))}
+          </DialogContent>
+        )}
 
-            const choice = attributeChoices.find(choice => choice.value === id);
-
-            setSelectedAttributes(
-              toggle(choice, selectedAttributes, (a, b) => a.value === b.value)
-            );
-          };
-
-          return (
-            <>
-              <DialogTitle>
-                <FormattedMessage
-                  defaultMessage="Export Information"
-                  description="export products to csv file, dialog header"
-                />
-              </DialogTitle>
-              <DialogContent>
-                <ProductExportSteps
-                  currentStep={step}
-                  steps={steps}
-                  onStepClick={setStep}
-                />
-                {step === ProductExportStep.INFO && (
-                  <ProductExportDialogInfo
-                    attributes={attributeChoices}
-                    data={data}
-                    selectedAttributes={selectedAttributes}
-                    onAttrtibuteSelect={handleAttributeSelect}
-                    onChange={change}
-                    {...fetchMoreProps}
-                  />
-                )}
-                {step === ProductExportStep.SETTINGS && (
-                  <ProductExportDialogSettings
-                    data={data}
-                    errors={dialogErrors}
-                    productQuantity={productQuantity}
-                    selectedProducts={selectedProducts}
-                    onChange={change}
-                  />
-                )}
-              </DialogContent>
-
-              {notFormErrors.length > 0 && (
-                <DialogContent>
-                  {notFormErrors.map(err => (
-                    <Typography color="error" key={err.field + err.code}>
-                      {getExportErrorMessage(err, intl)}
-                    </Typography>
-                  ))}
-                </DialogContent>
-              )}
-
-              <DialogActions>
-                {step === ProductExportStep.INFO && (
-                  <Button onClick={onClose} data-test="cancel">
-                    <FormattedMessage {...buttonMessages.cancel} />
-                  </Button>
-                )}
-                {step === ProductExportStep.SETTINGS && (
-                  <Button onClick={prev} data-test="back">
-                    <FormattedMessage {...buttonMessages.back} />
-                  </Button>
-                )}
-                {step === ProductExportStep.INFO && (
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={next}
-                    data-test="next"
-                  >
-                    <FormattedMessage {...buttonMessages.nextStep} />
-                  </Button>
-                )}
-                {step === ProductExportStep.SETTINGS && (
-                  <ConfirmButton
-                    transitionState={confirmButtonState}
-                    variant="contained"
-                    type="submit"
-                    data-test="submit"
-                  >
-                    <FormattedMessage
-                      defaultMessage="export products"
-                      description="export products to csv file, button"
-                    />
-                  </ConfirmButton>
-                )}
-              </DialogActions>
-            </>
-          );
-        }}
-      </Form>
+        <DialogActions>
+          {step === ProductExportStep.INFO && (
+            <Button onClick={onClose} data-test="cancel">
+              <FormattedMessage {...buttonMessages.cancel} />
+            </Button>
+          )}
+          {step === ProductExportStep.SETTINGS && (
+            <Button onClick={prev} data-test="back">
+              <FormattedMessage {...buttonMessages.back} />
+            </Button>
+          )}
+          {step === ProductExportStep.INFO && (
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={next}
+              data-test="next"
+            >
+              <FormattedMessage {...buttonMessages.nextStep} />
+            </Button>
+          )}
+          {step === ProductExportStep.SETTINGS && (
+            <ConfirmButton
+              transitionState={confirmButtonState}
+              variant="contained"
+              type="submit"
+              data-test="submit"
+              onClick={submit}
+            >
+              <FormattedMessage
+                defaultMessage="export products"
+                description="export products to csv file, button"
+              />
+            </ConfirmButton>
+          )}
+        </DialogActions>
+      </>
     </Dialog>
   );
 };
