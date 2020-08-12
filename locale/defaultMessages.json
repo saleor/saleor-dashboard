@@ -557,9 +557,9 @@
     "context": "apps content",
     "string": "You don’t have any installed apps in your dashboard"
   },
-  "src_dot_apps_dot_components_dot_InstalledApps_dot_2008086393": {
+  "src_dot_apps_dot_components_dot_InstalledApps_dot_3504763431": {
     "context": "section header",
-    "string": "Thirdparty Apps"
+    "string": "Third-party Apps"
   },
   "src_dot_apps_dot_components_dot_Marketplace_dot_2932910073": {
     "context": "section header",
@@ -1054,6 +1054,9 @@
   "src_dot_categories_dot_views_dot_2507763081": {
     "context": "dialog title",
     "string": "Delete products"
+  },
+  "src_dot_categories_dot_views_dot_3296953393": {
+    "string": "Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
   },
   "src_dot_categories_dot_views_dot_3488150607": {
     "string": "Remember this will also delete all products assigned to this category."
