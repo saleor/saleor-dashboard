@@ -20,6 +20,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix missing save button - #636 by @dominik-zeglen
 - Fix user avatars - #639 by @dominik-zeglen
 - Reset modal state after closing - #644 by @dominik-zeglen
+- Fix incorrect messages - #643 by @dominik-zeglen
 
 ## 2.10.1
 
