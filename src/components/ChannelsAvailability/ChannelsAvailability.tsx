@@ -42,13 +42,13 @@ interface ChannelProps {
 const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
   const { isPublished, publicationDate, id, name } = data;
   const dateNow = React.useContext(DateContext);
-  const localizeData = useDateLocalize();
+  const localizeDate = useDateLocalize();
 
   const [isOpen, setOpen] = useState(false);
   const intl = useIntl();
   const classes = useStyles({});
 
-  const todayDate = localizeData(new Date(dateNow).toString(), "YYYY-MM-DD");
+  const todayDate = localizeDate(new Date(dateNow).toString());
 
   const availableDateText =
     publicationDate && !isPublished
@@ -58,7 +58,7 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
             description: "product channel"
           },
           {
-            date: localizeData(publicationDate, "DD/MM/YYYY")
+            date: localizeDate(publicationDate)
           }
         )
       : publicationDate
@@ -68,10 +68,13 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
             description: "product channel"
           },
           {
-            date: localizeData(publicationDate, "DD/MM/YYYY")
+            date: localizeDate(publicationDate)
           }
         )
-      : intl.formatMessage({ defaultMessage: "Hidden" });
+      : intl.formatMessage({
+          defaultMessage: "Hidden",
+          description: "channel publication status"
+        });
 
   return (
     <>

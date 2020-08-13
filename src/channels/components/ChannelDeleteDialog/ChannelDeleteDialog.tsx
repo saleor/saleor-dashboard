@@ -16,7 +16,7 @@ export interface ChannelDeleteDialogProps {
   hasChannelOrders: boolean;
   open: boolean;
   onClose: () => void;
-  onConfirm: (taregtChannelId: string) => void;
+  onConfirm: (targetChannelId: string) => void;
 }
 
 const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
