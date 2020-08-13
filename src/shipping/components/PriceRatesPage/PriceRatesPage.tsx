@@ -10,7 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import OrderWeight from "@saleor/shipping/components/OrderWeight";
+import OrderValue from "@saleor/shipping/components/OrderValue";
 import PricingCard from "@saleor/shipping/components/PricingCard";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
@@ -22,11 +22,9 @@ import ShippingZoneInfo from "../ShippingZoneInfo";
 export interface FormData {
   name: string;
   noLimits: boolean;
-  maxValue: string;
-  minValue: string;
 }
 
-export interface WeightRatesPageProps {
+export interface PriceRatesPageProps {
   channels: any[];
   shippingChannels: ChannelData[];
   disabled: boolean;
@@ -35,12 +33,13 @@ export interface WeightRatesPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onDelete?: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData, channelsData: any) => void;
   openChannelsModal: () => void;
 }
 
-export const WeightRatesPage: React.FC<WeightRatesPageProps> = ({
+export const PriceRatesPage: React.FC<PriceRatesPageProps> = ({
   channels,
+  shippingChannels,
   disabled,
   errors,
   onBack,
@@ -48,14 +47,11 @@ export const WeightRatesPage: React.FC<WeightRatesPageProps> = ({
   onSubmit,
   openChannelsModal,
   rate,
-  saveButtonBarState,
-  shippingChannels
+  saveButtonBarState
 }) => {
   const intl = useIntl();
 
   const initialForm: FormData = {
-    maxValue: rate?.maximumOrderWeight?.value.toString() || "0",
-    minValue: rate?.minimumOrderWeight?.value.toString() || "0",
     name: rate?.name || "",
     noLimits: false
   };
@@ -63,13 +59,17 @@ export const WeightRatesPage: React.FC<WeightRatesPageProps> = ({
   const [selectedChannels, setSelectedChannels] = useStateFromProps(channels);
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form
+      initial={initialForm}
+      onSubmit={data => onSubmit(data, selectedChannels)}
+    >
       {({ change, data, hasChanged, submit, triggerChange }) => {
         const handleChannelsChange = createChannelsChangeHandler(
           selectedChannels,
           setSelectedChannels,
           triggerChange
         );
+
         return (
           <Container>
             <AppHeader onBack={onBack}>
@@ -79,7 +79,7 @@ export const WeightRatesPage: React.FC<WeightRatesPageProps> = ({
               title={
                 rate?.name ||
                 intl.formatMessage({
-                  defaultMessage: "Weight Rate Name",
+                  defaultMessage: "Price Rate Name",
                   description: "page title"
                 })
               }
@@ -93,17 +93,16 @@ export const WeightRatesPage: React.FC<WeightRatesPageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                <OrderWeight
+                <OrderValue
+                  channels={selectedChannels}
                   noLimits={data.noLimits}
                   disabled={disabled}
-                  minValue={data.minValue}
-                  maxValue={data.maxValue}
                   onChange={change}
-                  errors={errors}
+                  onChannelsChange={handleChannelsChange}
                 />
                 <CardSpacer />
                 <PricingCard
-                  channels={channels}
+                  channels={shippingChannels}
                   onChange={handleChannelsChange}
                   disabled={disabled}
                 />
@@ -113,7 +112,7 @@ export const WeightRatesPage: React.FC<WeightRatesPageProps> = ({
                 <ChannelsAvailability
                   allChannelsCount={channels?.length}
                   selectedChannelsCount={shippingChannels?.length}
-                  channels={shippingChannels}
+                  channels={channels}
                   openModal={openChannelsModal}
                 />
               </div>
@@ -132,4 +131,4 @@ export const WeightRatesPage: React.FC<WeightRatesPageProps> = ({
   );
 };
 
-export default WeightRatesPage;
+export default PriceRatesPage;
