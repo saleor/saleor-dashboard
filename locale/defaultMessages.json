@@ -205,6 +205,62 @@
     "context": "vat not included in order price",
     "string": "does not apply"
   },
+  "productExportFieldCategory": {
+    "context": "product field",
+    "string": "Category"
+  },
+  "productExportFieldCollections": {
+    "context": "product field",
+    "string": "Collections"
+  },
+  "productExportFieldDescription": {
+    "context": "product field",
+    "string": "Description"
+  },
+  "productExportFieldName": {
+    "context": "product field",
+    "string": "Name"
+  },
+  "productExportFieldPrice": {
+    "context": "product field",
+    "string": "Cost Price"
+  },
+  "productExportFieldProductImages": {
+    "context": "product field",
+    "string": "Product Images"
+  },
+  "productExportFieldProductWeight": {
+    "context": "product field",
+    "string": "Export Product Weight"
+  },
+  "productExportFieldTaxes": {
+    "context": "product field",
+    "string": "Charge Taxes"
+  },
+  "productExportFieldType": {
+    "context": "product field",
+    "string": "Type"
+  },
+  "productExportFieldVariantImages": {
+    "context": "product field",
+    "string": "Variant Images"
+  },
+  "productExportFieldVariantPrice": {
+    "context": "product field",
+    "string": "Variant Price"
+  },
+  "productExportFieldVariantSku": {
+    "context": "product field",
+    "string": "Export Variant SKU"
+  },
+  "productExportFieldVariantWeight": {
+    "context": "product field",
+    "string": "Export Variant Weight"
+  },
+  "productExportFieldVisibility": {
+    "context": "product field",
+    "string": "Visibility"
+  },
   "productStatusLabel": {
     "context": "product",
     "string": "Published"
@@ -3928,33 +3984,21 @@
     "context": "product name",
     "string": "Name"
   },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1004476569": {
+    "context": "option",
+    "string": "Export stock for all warehouses"
+  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_108342258": {
     "context": "button",
     "string": "Load More"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1459686496": {
-    "context": "product field",
-    "string": "Visibility"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_1547327218": {
     "context": "there are more elements of list that are hidden",
     "string": "and {number} more"
   },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1755013298": {
-    "context": "product field",
-    "string": "Category"
-  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_1890035856": {
     "context": "informations about product organization, header",
     "string": "Product Organization"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_1952810469": {
-    "context": "product field",
-    "string": "Type"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2051669917": {
-    "context": "product field",
-    "string": "Cost Price"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2119710854": {
     "context": "informations about product seo, header",
@@ -3964,10 +4008,6 @@
     "context": "export selected products to csv file",
     "string": "Selected products ({number})"
   },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_222873645": {
-    "context": "product field",
-    "string": "Collections"
-  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2318723509": {
     "context": "export products to csv file, choice field label",
     "string": "Export information for:"
@@ -3975,6 +4015,10 @@
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2355065897": {
     "context": "export all products to csv file",
     "string": "All products ({number})"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2474350154": {
+    "context": "list of warehouses",
+    "string": "Warehouses A to Z"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2659464408": {
     "context": "product export to csv file, header",
@@ -3988,10 +4032,6 @@
     "context": "export products to csv file, button",
     "string": "export products"
   },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2949617129": {
-    "context": "product field",
-    "string": "Product Images"
-  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3012202273": {
     "context": "export products to csv file, dialog header",
     "string": "Export Information"
@@ -3999,14 +4039,6 @@
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3365843236": {
     "context": "product export to csv file, header",
     "string": "Export Settings"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3374163063": {
-    "context": "product field",
-    "string": "Description"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3441755345": {
-    "context": "product field",
-    "string": "Charge Taxes"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3443345452": {
     "context": "selectt all options",
@@ -4016,12 +4048,11 @@
     "context": "export products as spreadsheet",
     "string": "Spreadsheet for Excel, Numbers etc."
   },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3544554440": {
-    "context": "product field",
-    "string": "Variant Weight"
-  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3599582104": {
     "string": "Search Atrtibuttes"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3902059658": {
+    "string": "Export Product Stock Quantity to CSV"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3919525499": {
     "context": "informations about product stock, header",
@@ -4031,10 +4062,6 @@
     "context": "export products as csv file",
     "string": "Plain CSV file"
   },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_4160582036": {
-    "context": "product field",
-    "string": "Variant Price"
-  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_472026385": {
     "context": "select product informations to be exported",
     "string": "Information exported:"
@@ -4043,14 +4070,6 @@
     "context": "input helper text, search attributes",
     "string": "Search by attribute name"
   },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_636461959": {
-    "context": "product field",
-    "string": "Name"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_693960049": {
-    "context": "product field",
-    "string": "SKU"
-  },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_700651641": {
     "context": "export filtered products to csv file",
     "string": "Current search ({number})"
@@ -4058,14 +4077,6 @@
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_734825715": {
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_746695941": {
-    "context": "product field",
-    "string": "Weight"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_897437458": {
-    "context": "product field",
-    "string": "Variant Images"
   },
   "src_dot_products_dot_components_dot_ProductImageNavigation_dot_3060635772": {
     "context": "section header",

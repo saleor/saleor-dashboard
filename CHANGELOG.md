@@ -24,6 +24,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Do not use devserver to run cypress tests - #650 by @dominik-zeglen
 - Fix updating product that has no variants - #649 by @dominik-zeglen
 - Update checkbox design - #651 by @dominik-zeglen
+- Add warehouse choice - #646 by @dominik-zeglen
 
 ## 2.10.1
 

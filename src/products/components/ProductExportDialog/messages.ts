@@ -5,79 +5,79 @@ function useProductExportFieldMessages() {
   const intl = useIntl();
 
   const messages = {
-    [ProductFieldEnum.CATEGORY]: {
+    [ProductFieldEnum.CATEGORY]: intl.formatMessage({
       defaultMessage: "Category",
       description: "product field",
       id: "productExportFieldCategory"
-    },
-    [ProductFieldEnum.CHARGE_TAXES]: {
+    }),
+    [ProductFieldEnum.CHARGE_TAXES]: intl.formatMessage({
       defaultMessage: "Charge Taxes",
       description: "product field",
       id: "productExportFieldTaxes"
-    },
-    [ProductFieldEnum.COLLECTIONS]: {
+    }),
+    [ProductFieldEnum.COLLECTIONS]: intl.formatMessage({
       defaultMessage: "Collections",
       description: "product field",
       id: "productExportFieldCollections"
-    },
-    [ProductFieldEnum.COST_PRICE]: {
+    }),
+    [ProductFieldEnum.COST_PRICE]: intl.formatMessage({
       defaultMessage: "Cost Price",
       description: "product field",
       id: "productExportFieldPrice"
-    },
-    [ProductFieldEnum.DESCRIPTION]: {
+    }),
+    [ProductFieldEnum.DESCRIPTION]: intl.formatMessage({
       defaultMessage: "Description",
       description: "product field",
       id: "productExportFieldDescription"
-    },
-    [ProductFieldEnum.NAME]: {
+    }),
+    [ProductFieldEnum.NAME]: intl.formatMessage({
       defaultMessage: "Name",
       description: "product field",
       id: "productExportFieldName"
-    },
-    [ProductFieldEnum.PRODUCT_IMAGES]: {
+    }),
+    [ProductFieldEnum.PRODUCT_IMAGES]: intl.formatMessage({
       defaultMessage: "Product Images",
       description: "product field",
       id: "productExportFieldProductImages"
-    },
-    [ProductFieldEnum.PRODUCT_TYPE]: {
+    }),
+    [ProductFieldEnum.PRODUCT_TYPE]: intl.formatMessage({
       defaultMessage: "Type",
       description: "product field",
       id: "productExportFieldType"
-    },
-    [ProductFieldEnum.PRODUCT_WEIGHT]: {
+    }),
+    [ProductFieldEnum.PRODUCT_WEIGHT]: intl.formatMessage({
       defaultMessage: "Export Product Weight",
       description: "product field",
       id: "productExportFieldProductWeight"
-    },
-    [ProductFieldEnum.VARIANT_IMAGES]: {
+    }),
+    [ProductFieldEnum.VARIANT_IMAGES]: intl.formatMessage({
       defaultMessage: "Variant Images",
       description: "product field",
       id: "productExportFieldVariantImages"
-    },
-    [ProductFieldEnum.VARIANT_PRICE]: {
+    }),
+    [ProductFieldEnum.VARIANT_PRICE]: intl.formatMessage({
       defaultMessage: "Variant Price",
       description: "product field",
       id: "productExportFieldVariantPrice"
-    },
-    [ProductFieldEnum.VARIANT_SKU]: {
+    }),
+    [ProductFieldEnum.VARIANT_SKU]: intl.formatMessage({
       defaultMessage: "Export Variant SKU",
       description: "product field",
       id: "productExportFieldVariantSku"
-    },
-    [ProductFieldEnum.VARIANT_WEIGHT]: {
+    }),
+    [ProductFieldEnum.VARIANT_WEIGHT]: intl.formatMessage({
       defaultMessage: "Export Variant Weight",
       description: "product field",
       id: "productExportFieldVariantWeight"
-    },
-    [ProductFieldEnum.VISIBLE]: {
+    }),
+    [ProductFieldEnum.VISIBLE]: intl.formatMessage({
       defaultMessage: "Visibility",
       description: "product field",
       id: "productExportFieldVisibility"
-    }
+    })
   };
 
-  return (field: ProductFieldEnum) => intl.formatMessage(messages[field]);
+  return (field: ProductFieldEnum) => messages[field];
 }
 
 export default useProductExportFieldMessages;
