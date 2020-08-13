@@ -1117,10 +1117,11 @@
     "string": "No results"
   },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1043589445": {
+    "context": "product channel publication status",
     "string": "hidden"
   },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1702481199": {
-    "context": "product channel",
+    "context": "product channel  publication date",
     "string": "published since {date}"
   },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3257060829": {
@@ -1128,7 +1129,7 @@
     "string": "Available in {count}"
   },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3285520461": {
-    "context": "product channel",
+    "context": "product channel publication date",
     "string": "Will become available on {date}"
   },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_802058289": {
@@ -1140,11 +1141,11 @@
     "string": "Publish on"
   },
   "src_dot_components_dot_ChannelsAvailability_dot_2162667201": {
-    "context": "product channel",
+    "context": "channel publication date",
     "string": "Visible since {date}"
   },
   "src_dot_components_dot_ChannelsAvailability_dot_3285520461": {
-    "context": "product channel",
+    "context": "channel publication date",
     "string": "Will become available on {date}"
   },
   "src_dot_components_dot_ChannelsAvailability_dot_3326160357": {
@@ -1160,9 +1161,11 @@
     "string": "Manage"
   },
   "src_dot_components_dot_ChannelsAvailability_dot_643174786": {
+    "context": "channel publication status",
     "string": "Visible"
   },
   "src_dot_components_dot_ChannelsAvailability_dot_77815154": {
+    "context": "channel publication status",
     "string": "Hidden"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {

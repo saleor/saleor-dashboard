@@ -23,7 +23,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
-  const localizeData = useDateLocalize();
+  const localizeDate = useDateLocalize();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = event => setAnchorEl(event.currentTarget);
@@ -83,20 +83,20 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
           const notPublishedText = intl.formatMessage(
             {
               defaultMessage: "Will become available on {date}",
-              description: "product channel"
+              description: "product channel publication date"
             },
             {
-              date: localizeData(channelData.publicationDate, "DD/MM/YYYY")
+              date: localizeDate(channelData.publicationDate, "L")
             }
           );
 
           const publishedText = intl.formatMessage(
             {
               defaultMessage: "published since {date}",
-              description: "product channel"
+              description: "product channel  publication date"
             },
             {
-              date: localizeData(channelData.publicationDate, "DD/MM/YYYY")
+              date: localizeDate(channelData.publicationDate, "L")
             }
           );
 
@@ -112,7 +112,10 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
                     ? publishedText
                     : channelData.publicationDate && !channelData.isPublished
                     ? notPublishedText
-                    : intl.formatMessage({ defaultMessage: "hidden" })}
+                    : intl.formatMessage({
+                        defaultMessage: "hidden",
+                        description: "product channel publication status"
+                      })}
                 </Typography>
               </div>
             </MenuItem>

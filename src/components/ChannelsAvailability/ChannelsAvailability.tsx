@@ -48,27 +48,27 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  const todayDate = localizeDate(new Date(dateNow).toString());
+  const todayDate = localizeDate(new Date(dateNow).toString(), "L");
 
   const availableDateText =
     publicationDate && !isPublished
       ? intl.formatMessage(
           {
             defaultMessage: "Will become available on {date}",
-            description: "product channel"
+            description: "channel publication date"
           },
           {
-            date: localizeDate(publicationDate)
+            date: localizeDate(publicationDate, "L")
           }
         )
       : publicationDate
       ? intl.formatMessage(
           {
             defaultMessage: "Visible since {date}",
-            description: "product channel"
+            description: "channel publication date"
           },
           {
-            date: localizeDate(publicationDate)
+            date: localizeDate(publicationDate, "L")
           }
         )
       : intl.formatMessage({
@@ -102,7 +102,8 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
               firstOptionLabel={
                 <p className={classes.label}>
                   {intl.formatMessage({
-                    defaultMessage: "Visible"
+                    defaultMessage: "Visible",
+                    description: "channel publication status"
                   })}
                 </p>
               }
@@ -110,7 +111,8 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
               secondOptionLabel={
                 <p className={classes.label}>
                   {intl.formatMessage({
-                    defaultMessage: "Hidden"
+                    defaultMessage: "Hidden",
+                    description: "channel publication status"
                   })}
                 </p>
               }
