@@ -190,6 +190,7 @@ const FieldAccordion: React.FC<AccordionProps & {
                     }
                   })
                 }
+                key={field}
               />
             ))}
             {selectedFields.length > maxChips && (
@@ -331,6 +332,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
                       }
                     })
                   }
+                  key={attribute.value}
                 />
               ))}
               {selectedAttributes.length > maxChips && (
