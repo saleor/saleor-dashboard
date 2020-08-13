@@ -21,7 +21,7 @@ export interface ChannelsAvailabilityProps {
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
-  onChange: (
+  onChange?: (
     index: number
   ) => (channelData: {
     isPublished: boolean;
@@ -33,7 +33,7 @@ export interface ChannelsAvailabilityProps {
 interface ChannelProps {
   disabled?: boolean;
   data: ChannelData;
-  onChange: (data: {
+  onChange?: (data: {
     isPublished: boolean;
     publicationDate: string | null;
   }) => void;
@@ -83,14 +83,18 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
         >
           <div className={classes.channelName}>
             <Typography>{name}</Typography>
-            <ArrowDropdown
-              className={classNames(classes.arrow, {
-                [classes.rotate]: isOpen
-              })}
-              color="primary"
-            />
+            {!!onChange && (
+              <ArrowDropdown
+                className={classNames(classes.arrow, {
+                  [classes.rotate]: isOpen
+                })}
+                color="primary"
+              />
+            )}
           </div>
-          <Typography variant="caption">{availableDateText}</Typography>
+          {!!onChange && (
+            <Typography variant="caption">{availableDateText}</Typography>
+          )}
         </div>
         {isOpen && (
           <>
@@ -112,15 +116,16 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
                 </p>
               }
               value={isPublished}
-              onChange={() => {
+              onChange={() =>
+                !!onChange &&
                 onChange({
                   isPublished: !isPublished,
                   publicationDate:
                     !isPublished && !publicationDate
                       ? todayDate
                       : publicationDate
-                });
-              }}
+                })
+              }
             />
 
             {!isPublished && (
@@ -139,6 +144,7 @@ const Channel: React.FC<ChannelProps> = ({ data, disabled, onChange }) => {
                   shrink: true
                 }}
                 onChange={e =>
+                  !!onChange &&
                   onChange({ isPublished, publicationDate: e.target.value })
                 }
               />
@@ -191,7 +197,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
           }
         />
         <CardContent className={classes.card}>
-          {!!channelsAvailabilityText && (
+          {!!allChannelsCount && (
             <>
               <Typography className={classes.channelInfo}>
                 {channelsAvailabilityText}
@@ -200,7 +206,11 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
             </>
           )}
           {channels?.map((data, index) => (
-            <Channel key={data.id} data={data} onChange={onChange(index)} />
+            <Channel
+              key={data.id}
+              data={data}
+              onChange={onChange ? onChange(index) : undefined}
+            />
           ))}
         </CardContent>
       </Card>
