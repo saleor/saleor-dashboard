@@ -3,6 +3,7 @@ import {
   ExportErrorCode,
   ExportProductsInput
 } from "@saleor/types/globalTypes";
+import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -30,7 +31,8 @@ const props: ProductExportDialogProps = {
     all: 100,
     filter: 32
   },
-  selectedProducts: 18
+  selectedProducts: 18,
+  warehouses: warehouseList
 };
 
 storiesOf("Views / Products / Export / Export settings", module)
