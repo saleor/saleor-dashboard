@@ -225,6 +225,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
               defaultMessage: "Country area"
             })}
             name="countryArea"
+            autoComplete="region"
             onChange={onChange}
             value={data.countryArea}
             fullWidth
