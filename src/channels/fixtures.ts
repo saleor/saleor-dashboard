@@ -45,6 +45,30 @@ export const channelsList: Channels_channels[] = [
   }
 ];
 
+export const channelsList1: Channels_channels[] = [
+  {
+    __typename: "Channel",
+    currencyCode: "euro",
+    id: "Q2hhbm7lbDoy",
+    name: "Channel",
+    slug: "channel"
+  },
+  {
+    __typename: "Channel",
+    currencyCode: "euro",
+    id: "Q2hhbn5lbDoy",
+    name: "Channel test",
+    slug: "channeltest"
+  },
+  {
+    __typename: "Channel",
+    currencyCode: "euro",
+    id: "Q2hhbm5lbDo5",
+    name: "Channel USD",
+    slug: "channel-usd"
+  }
+];
+
 export const channel: Channel_channel = {
   __typename: "Channel",
   currencyCode: "zl",

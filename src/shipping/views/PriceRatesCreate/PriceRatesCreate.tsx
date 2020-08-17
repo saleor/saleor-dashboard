@@ -1,55 +1,58 @@
-import { useChannelsList } from "@saleor/channels/queries";
-import { ChannelData, createChannelsData } from "@saleor/channels/utils";
+import { channelsList, channelsList1 } from "@saleor/channels/fixtures";
+// import { useChannelsList } from "@saleor/channels/queries";
+import {
+  ChannelShippingData,
+  createShippingChannels
+} from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useListActions from "@saleor/hooks/useListActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
-import PriceRatesPage from "@saleor/shipping/components/PriceRatesPage";
+import { sectionNames } from "@saleor/intl";
+import { FormData } from "@saleor/shipping/components/ShippingZoneRatesPage";
+import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
 import { useShippingRateCreate } from "@saleor/shipping/mutations";
-import { useShippingZone } from "@saleor/shipping/queries";
 import { shippingZoneUrl } from "@saleor/shipping/urls";
-import React from "react";
+import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { getCreateShippingRateVariables } from "./data";
-
-const channels = [
-  { id: "1", maxValue: 0, minValue: 0, name: "channel", price: 0 },
-  { id: "2", maxValue: 0, minValue: 0, name: "test", price: 0 }
-];
 export interface PriceRatesCreateProps {
   id: string;
-  params: any;
 }
 
-export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
-  id,
-  params
-}) => {
+export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({ id }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const shop = useShop();
 
-  const { data } = useShippingZone({
-    displayLoader: true,
-    variables: { id }
-  });
-
-  const { data: channelsData } = useChannelsList({});
-  const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
-  const [currentChannels, setCurrentChannels] = useStateFromProps(allChannels);
+  //  const {
+  //    data: channelsData
+  //  } = useChannelsList(
+  //    {}
+  //  );
+  const shippingChannels = createShippingChannels(channelsList1);
+  const allChannels = createShippingChannels(channelsList); // channelsData?.channels
+  const [currentChannels, setCurrentChannels] = useStateFromProps<
+    ChannelShippingData[]
+  >(shippingChannels);
 
   const {
     isSelected: isChannelSelected,
     listElements: channelListElements,
     set: setChannels,
     toggle: channelsToggle
-  } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
+  } = useListActions<ChannelShippingData>(
+    currentChannels,
+    (a, b) => a.id === b.id
+  );
 
-  const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
+  const [isChannelsModalOpen, setChannelsModalOpen] = useState(false);
 
   const handleChannelsModalClose = () => {
     setChannelsModalOpen(false);
@@ -64,6 +67,10 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
   const [createShippingRate, createShippingRateOpts] = useShippingRateCreate({
     onCompleted: data => {
       if (data.shippingPriceCreate.errors.length === 0) {
+        // shippingMethodChannelListingCreate({variables: input: {
+        //   id: data.id
+        //   addChannels: currentChannels
+        // }})
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
@@ -72,15 +79,22 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
     }
   });
 
-  const handleSubmit = (data: any) =>
+  const handleSubmit = (data: FormData) =>
     createShippingRate({
-      variables: getCreateShippingRateVariables(data, params, id)
+      variables: {
+        input: {
+          name: data.name,
+          shippingZone: id,
+          type: ShippingMethodTypeEnum.PRICE
+        }
+      }
     });
+
   const handleBack = () => navigate(shippingZoneUrl(id));
 
   return (
     <>
-      <WindowTitle title={"price rates"} />
+      <WindowTitle title={intl.formatMessage(sectionNames.shipping)} />
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
@@ -96,28 +110,21 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
           onConfirm={handleChannelsConfirm}
         />
       )}
-      <PriceRatesPage
-        channels={channels}
-        shippingChannels={[
-          {
-            id: "1",
-            isPublished: true,
-            name: "channel",
-            publicationDate: null
-          },
-          {
-            id: "2",
-            isPublished: true,
-            name: "test",
-            publicationDate: null
-          }
-        ]}
+
+      <ShippingZoneRatesPage
+        allChannelsCount={allChannels?.length}
+        onChannelsChange={(data: ChannelShippingData[]) =>
+          setCurrentChannels(data)
+        }
+        defaultCurrency={shop?.defaultCurrency}
+        shippingChannels={currentChannels}
         disabled={false}
         saveButtonBarState={createShippingRateOpts?.status}
         onSubmit={handleSubmit}
         onBack={handleBack}
         errors={createShippingRateOpts.data?.shippingPriceCreate.errors || []}
         openChannelsModal={() => setChannelsModalOpen(true)}
+        variant={ShippingMethodTypeEnum.PRICE}
       />
     </>
   );

@@ -11,6 +11,7 @@ const channels = [
 
 const props: PricingCardProps = {
   channels,
+  defaultCurrency: "USD",
   disabled: false,
   onChange: () => undefined
 };

@@ -15,14 +15,19 @@ import { useStyles } from "./styles";
 
 export interface PricingCardProps {
   channels: any[];
+  defaultCurrency: string;
   disabled: boolean;
-  onChange: (channelId: string, value: { price: number }) => void;
+  onChange: (
+    channelId: string,
+    value: { maxValue: number; minValue: number; price: number }
+  ) => void;
 }
 
 const numberOfColumns = 2;
 
 export const PricingCard: React.FC<PricingCardProps> = ({
   channels,
+  defaultCurrency,
   disabled,
   onChange
 }) => {
@@ -86,6 +91,9 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                         price: e.target.value
                       })
                     }
+                    InputProps={{
+                      endAdornment: defaultCurrency
+                    }}
                   />
                 </TableCell>
               </TableRow>

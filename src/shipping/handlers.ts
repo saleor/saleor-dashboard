@@ -4,7 +4,7 @@ export const createChannelsChangeHandler = (
   triggerChange: () => void
 ) => (
   channelId: string,
-  value: { maxValue: number; minValue: number; price: string }
+  value: { maxValue: number; minValue: number; price: number }
 ) => {
   const itemIndex = selectedChannels.findIndex(item => item.id === channelId);
   const channel = selectedChannels[itemIndex];

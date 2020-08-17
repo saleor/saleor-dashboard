@@ -1,50 +1,51 @@
-import { useChannelsList } from "@saleor/channels/queries";
-import { ChannelData, createChannelsData } from "@saleor/channels/utils";
+// import { useChannelsList } from "@saleor/channels/queries";
+import { channelsList, channelsList1 } from "@saleor/channels/fixtures";
+import {
+  ChannelShippingData,
+  createShippingChannels
+} from "@saleor/channels/utils";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useListActions from "@saleor/hooks/useListActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
-import WeightRatesPage from "@saleor/shipping/components/WeightRatesPage";
+import { FormData } from "@saleor/shipping/components/ShippingZoneRatesPage";
+import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
 import { useShippingRateCreate } from "@saleor/shipping/mutations";
-// import { useShippingZone } from "@saleor/shipping/queries";
 import { shippingZoneUrl } from "@saleor/shipping/urls";
+import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getCreateShippingRateVariables } from "./data";
-
-const channels = [
-  { id: "1", maxValue: 12, minValue: 1, name: "channel", price: 23 },
-  { id: "2", maxValue: 30, minValue: 10, name: "test", price: 11 }
-];
 export interface WeightRatesCreateProps {
   id: string;
-  params: any;
 }
 
 export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const shop = useShop();
 
-  // const { data, loading } = useShippingZone({
-  //   displayLoader: true,
-  //   variables: { id }
-  // });
-
-  const { data: channelsData } = useChannelsList({});
-  const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
-  const [currentChannels, setCurrentChannels] = useStateFromProps(allChannels);
-
+  // const { data: channelsData } = useChannelsList({});
+  const shippingChannels = createShippingChannels(channelsList1);
+  const allChannels = createShippingChannels(channelsList); // channelsData?.channels
+  const [currentChannels, setCurrentChannels] = useStateFromProps<
+    ChannelShippingData[]
+  >(shippingChannels);
   const {
     isSelected: isChannelSelected,
     listElements: channelListElements,
     set: setChannels,
     toggle: channelsToggle
-  } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
+  } = useListActions<ChannelShippingData>(
+    currentChannels,
+    (a, b) => a.id === b.id
+  );
 
   const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
 
@@ -69,15 +70,23 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
     }
   });
 
-  const handleSubmit = (data: any) =>
+  const handleSubmit = (data: FormData) =>
     createShippingRate({
-      variables: getCreateShippingRateVariables(data, id)
+      variables: {
+        input: {
+          maximumOrderWeight: data.noLimits ? null : parseFloat(data.maxValue),
+          minimumOrderWeight: data.noLimits ? null : parseFloat(data.minValue),
+          name: data.name,
+          shippingZone: id,
+          type: ShippingMethodTypeEnum.WEIGHT
+        }
+      }
     });
   const handleBack = () => navigate(shippingZoneUrl(id));
 
   return (
     <>
-      <WindowTitle title={"price rates"} />
+      <WindowTitle title={intl.formatMessage(sectionNames.shipping)} />
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
@@ -93,28 +102,20 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({ id }) => {
           onConfirm={handleChannelsConfirm}
         />
       )}
-      <WeightRatesPage
-        channels={channels}
-        shippingChannels={[
-          {
-            id: "1",
-            isPublished: true,
-            name: "channel",
-            publicationDate: null
-          },
-          {
-            id: "2",
-            isPublished: true,
-            name: "test",
-            publicationDate: null
-          }
-        ]}
+      <ShippingZoneRatesPage
+        allChannelsCount={allChannels?.length}
+        onChannelsChange={(data: ChannelShippingData[]) =>
+          setCurrentChannels(data)
+        }
+        shippingChannels={currentChannels}
+        defaultCurrency={shop?.defaultCurrency}
         disabled={false}
         saveButtonBarState={createShippingRateOpts?.status}
         onSubmit={handleSubmit}
         onBack={handleBack}
         errors={createShippingRateOpts.data?.shippingPriceCreate.errors || []}
         openChannelsModal={() => setChannelsModalOpen(true)}
+        variant={ShippingMethodTypeEnum.WEIGHT}
       />
     </>
   );

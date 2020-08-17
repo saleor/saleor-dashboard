@@ -5,7 +5,7 @@ import { getStringOrPlaceholder } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-interface DeleteShippingRateDialogProps {
+export interface DeleteShippingRateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name?: string;

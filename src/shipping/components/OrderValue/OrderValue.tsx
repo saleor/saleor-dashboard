@@ -17,6 +17,7 @@ import { useStyles } from "./styles";
 
 export interface OrderValueProps {
   channels: any[];
+  defaultCurrency: string;
   disabled: boolean;
   noLimits: boolean;
   onChange: (event: ChangeEvent) => void;
@@ -30,6 +31,7 @@ const numberOfColumns = 3;
 
 export const OrderValue: React.FC<OrderValueProps> = ({
   channels,
+  defaultCurrency,
   noLimits,
   disabled,
   onChannelsChange,
@@ -125,6 +127,9 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                           minValue: e.target.value
                         })
                       }
+                      InputProps={{
+                        endAdornment: defaultCurrency
+                      }}
                     />
                   </TableCell>
                   <TableCell>
@@ -143,6 +148,9 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                           maxValue: e.target.value
                         })
                       }
+                      InputProps={{
+                        endAdornment: defaultCurrency
+                      }}
                     />
                   </TableCell>
                 </TableRow>

@@ -1,4 +1,4 @@
-import { ChannelData } from "@saleor/channels/utils";
+import { ChannelShippingData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
@@ -9,37 +9,45 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import OrderValue from "@saleor/shipping/components/OrderValue";
+import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
+import ShippingZoneInfo from "@saleor/shipping/components/ShippingZoneInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import { ShippingZone_shippingZone_shippingMethods } from "@saleor/shipping/types/ShippingZone";
+import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import ShippingZoneInfo from "../ShippingZoneInfo";
 
 export interface FormData {
   name: string;
   noLimits: boolean;
+  minValue: string;
+  maxValue: string;
+  price: string;
+  type: ShippingMethodTypeEnum;
 }
 
-export interface PriceRatesPageProps {
-  channels: any[];
-  shippingChannels: ChannelData[];
+export interface ShippingZoneRatesPageProps {
+  allChannelsCount?: number;
+  shippingChannels: ChannelShippingData[];
+  defaultCurrency: string;
   disabled: boolean;
   rate?: ShippingZone_shippingZone_shippingMethods;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onDelete?: () => void;
-  onSubmit: (data: FormData, channelsData: any) => void;
+  onSubmit: (data: FormData) => void;
   openChannelsModal: () => void;
+  onChannelsChange: (data: ChannelShippingData[]) => void;
+  variant: ShippingMethodTypeEnum;
 }
 
-export const PriceRatesPage: React.FC<PriceRatesPageProps> = ({
-  channels,
+export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
+  allChannelsCount,
   shippingChannels,
+  defaultCurrency,
   disabled,
   errors,
   onBack,
@@ -47,26 +55,26 @@ export const PriceRatesPage: React.FC<PriceRatesPageProps> = ({
   onSubmit,
   openChannelsModal,
   rate,
-  saveButtonBarState
+  saveButtonBarState,
+  onChannelsChange,
+  variant
 }) => {
   const intl = useIntl();
 
-  const initialForm: FormData = {
+  const initialForm = {
+    maxValue: rate?.maximumOrderWeight?.value.toString() || "0",
+    minValue: rate?.minimumOrderWeight?.value.toString() || "0",
     name: rate?.name || "",
-    noLimits: false
+    noLimits: false,
+    type: rate?.type || null
   };
 
-  const [selectedChannels, setSelectedChannels] = useStateFromProps(channels);
-
   return (
-    <Form
-      initial={initialForm}
-      onSubmit={data => onSubmit(data, selectedChannels)}
-    >
+    <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, triggerChange }) => {
         const handleChannelsChange = createChannelsChangeHandler(
-          selectedChannels,
-          setSelectedChannels,
+          shippingChannels,
+          onChannelsChange,
           triggerChange
         );
 
@@ -79,7 +87,7 @@ export const PriceRatesPage: React.FC<PriceRatesPageProps> = ({
               title={
                 rate?.name ||
                 intl.formatMessage({
-                  defaultMessage: "Price Rate Name",
+                  defaultMessage: "Price Rate Create",
                   description: "page title"
                 })
               }
@@ -93,26 +101,39 @@ export const PriceRatesPage: React.FC<PriceRatesPageProps> = ({
                   onChange={change}
                 />
                 <CardSpacer />
-                <OrderValue
-                  channels={selectedChannels}
-                  noLimits={data.noLimits}
-                  disabled={disabled}
-                  onChange={change}
-                  onChannelsChange={handleChannelsChange}
-                />
+                {variant === ShippingMethodTypeEnum.PRICE ? (
+                  <OrderValue
+                    channels={shippingChannels}
+                    noLimits={data.noLimits}
+                    disabled={disabled}
+                    defaultCurrency={defaultCurrency}
+                    onChange={change}
+                    onChannelsChange={handleChannelsChange}
+                  />
+                ) : (
+                  <OrderWeight
+                    noLimits={data.noLimits}
+                    disabled={disabled}
+                    minValue={data.minValue}
+                    maxValue={data.maxValue}
+                    onChange={change}
+                    errors={errors}
+                  />
+                )}
                 <CardSpacer />
                 <PricingCard
                   channels={shippingChannels}
                   onChange={handleChannelsChange}
                   disabled={disabled}
+                  defaultCurrency={defaultCurrency}
                 />
                 <CardSpacer />
               </div>
               <div>
                 <ChannelsAvailability
-                  allChannelsCount={channels?.length}
+                  allChannelsCount={allChannelsCount}
                   selectedChannelsCount={shippingChannels?.length}
-                  channels={channels}
+                  channels={shippingChannels}
                   openModal={openChannelsModal}
                 />
               </div>
@@ -131,4 +152,4 @@ export const PriceRatesPage: React.FC<PriceRatesPageProps> = ({
   );
 };
 
-export default PriceRatesPage;
+export default ShippingZoneRatesPage;

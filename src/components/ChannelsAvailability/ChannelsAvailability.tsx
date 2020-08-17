@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { ChannelData } from "@saleor/channels/utils";
+import { ChannelData, ChannelShippingData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
@@ -16,8 +16,9 @@ import { useIntl } from "react-intl";
 import { DateContext } from "../Date/DateContext";
 import { useStyles } from "./styles";
 
+type ChannelOption = ChannelData | ChannelShippingData;
 export interface ChannelsAvailabilityProps {
-  channels: ChannelData[];
+  channels: Partial<ChannelOption[]>;
   selectedChannelsCount: number;
   allChannelsCount: number;
   disabled?: boolean;
@@ -32,8 +33,8 @@ export interface ChannelsAvailabilityProps {
 
 interface ChannelProps {
   disabled?: boolean;
-  data: ChannelData;
-  onChange?: (data: {
+  data: Partial<ChannelData>;
+  onChange: (data: {
     isPublished: boolean;
     publicationDate: string | null;
   }) => void;
@@ -205,13 +206,20 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityProps> = props =
               <Hr className={classes.hr} />
             </>
           )}
-          {channels?.map((data, index) => (
-            <Channel
-              key={data.id}
-              data={data}
-              onChange={onChange ? onChange(index) : undefined}
-            />
-          ))}
+          {channels?.map((data, index) =>
+            onChange ? (
+              <Channel key={data.id} data={data} onChange={onChange(index)} />
+            ) : (
+              <>
+                <div key={data.id} className={classes.channelItem}>
+                  <div className={classes.channelName}>
+                    <Typography>{data.name}</Typography>
+                  </div>
+                </div>
+                <Hr className={classes.hr} />
+              </>
+            )
+          )}
         </CardContent>
       </Card>
     </>

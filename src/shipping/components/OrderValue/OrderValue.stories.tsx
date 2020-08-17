@@ -11,6 +11,7 @@ const channels = [
 
 const props: OrderValueProps = {
   channels,
+  defaultCurrency: "USD",
   disabled: false,
   noLimits: false,
   onChange: () => undefined,

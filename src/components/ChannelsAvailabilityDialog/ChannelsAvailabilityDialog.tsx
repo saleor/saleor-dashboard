@@ -1,19 +1,30 @@
-import { ChannelData } from "@saleor/channels/utils";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import { ChannelData, ChannelShippingData } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import React from "react";
 
-import { useStyles } from "./styles";
+const useStyles = makeStyles(
+  theme => ({
+    dialog: {
+      marginBottom: theme.spacing(2),
+      marginTop: theme.spacing(2)
+    }
+  }),
+  { name: "ChannelsAvailabilityDialog" }
+);
+
+type ChannelOption = ChannelData | ChannelShippingData;
 
 export interface ChannelsAvailabilityDialogProps {
-  isSelected: (option: ChannelData) => boolean;
-  channels: ChannelData[];
+  isSelected: (option: ChannelOption) => boolean;
+  channels: ChannelOption[];
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   open: boolean;
   onClose: () => void;
-  onChange: (option: ChannelData) => void;
+  onChange: (option: ChannelOption) => void;
   onConfirm: () => void;
   title: string;
 }

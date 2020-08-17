@@ -1,5 +1,5 @@
-// import { useChannelsList } from "@saleor/channels/queries";
 import { channelsList, channelsList1 } from "@saleor/channels/fixtures";
+// import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelShippingData,
   createShippingChannels
@@ -24,15 +24,15 @@ import {
 import { useShippingZone } from "@saleor/shipping/queries";
 import { shippingZoneUrl } from "@saleor/shipping/urls";
 import { ShippingMethodTypeEnum } from "@saleor/types/globalTypes";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-export interface WeightRatesUpdateProps {
+export interface PriceRatesUpdateProps {
   id: string;
   rateId: string;
 }
 
-export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
+export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   id,
   rateId
 }) => {
@@ -52,10 +52,11 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
 
   // const { data: channelsData } = useChannelsList({});
   const shippingChannels = createShippingChannels(channelsList1);
-  const allChannels = createShippingChannels(channelsList); // channelsData?.channels
-  const [currentChannels, setCurrentChannels] = useStateFromProps<
-    ChannelShippingData[]
-  >(shippingChannels);
+  const allChannels = createShippingChannels(channelsList);
+  // channelsData?.channels
+  const [currentChannels, setCurrentChannels] = useStateFromProps(
+    shippingChannels
+  );
 
   const {
     isSelected: isChannelSelected,
@@ -67,7 +68,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     (a, b) => a.id === b.id
   );
 
-  const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
+  const [isChannelsModalOpen, setChannelsModalOpen] = useState(false);
 
   const handleChannelsModalClose = () => {
     setChannelsModalOpen(false);
@@ -84,6 +85,11 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
   const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate({
     onCompleted: data => {
       if (data.shippingPriceUpdate.errors.length === 0) {
+        //   shippingMethodChannelListingUpdate({variables: input: {
+        //   id: data.id
+        //   addChannels: currentChannels,
+        //   removeChannels: ?
+        // }})
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
@@ -91,7 +97,6 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       }
     }
   });
-
   const [deleteShippingRate, deleteShippingRateOpts] = useShippingRateDelete({
     onCompleted: data => {
       if (data.shippingPriceDelete.errors.length === 0) {
@@ -105,23 +110,18 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
   });
 
   const handleDelete = () => setOpenModal(true);
-  const handleSubmit = (data: FormData) => {
-    const parsedMinValue = parseFloat(data.minValue);
-    const parsedMaxValue = parseFloat(data.maxValue);
+  const handleSubmit = (data: FormData) =>
     updateShippingRate({
       variables: {
         id,
         input: {
-          maximumOrderWeight: parsedMaxValue,
-          minimumOrderWeight: parsedMinValue,
           name: data.name,
-          price: parseFloat(data.price),
-          shippingZone: rateId,
-          type: ShippingMethodTypeEnum.WEIGHT
+          shippingZone: id,
+          type: ShippingMethodTypeEnum.PRICE
         }
       }
     });
-  };
+
   const handleBack = () => navigate(shippingZoneUrl(id));
 
   return (
@@ -136,7 +136,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
-            defaultMessage: "Manage Channels Availability"
+            defaultMessage: "Manage Channel Availability"
           })}
           confirmButtonState="default"
           onConfirm={handleChannelsConfirm}
@@ -157,10 +157,8 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       />
       <ShippingZoneRatesPage
         allChannelsCount={allChannels?.length}
-        onChannelsChange={(data: ChannelShippingData[]) =>
-          setCurrentChannels(data)
-        }
         shippingChannels={currentChannels}
+        onChannelsChange={setCurrentChannels}
         defaultCurrency={shop?.defaultCurrency}
         disabled={loading}
         saveButtonBarState={updateShippingRateOpts.status}
@@ -170,10 +168,10 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         rate={rate}
         errors={updateShippingRateOpts.data?.shippingPriceUpdate.errors || []}
         openChannelsModal={() => setChannelsModalOpen(true)}
-        variant={ShippingMethodTypeEnum.WEIGHT}
+        variant={ShippingMethodTypeEnum.PRICE}
       />
     </>
   );
 };
 
-export default WeightRatesUpdate;
+export default PriceRatesUpdate;
