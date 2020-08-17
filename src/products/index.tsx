@@ -52,7 +52,10 @@ const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
   return (
     <ProductUpdateComponent
       id={decodeURIComponent(match.params.id)}
-      params={params}
+      params={{
+        ...params,
+        ids: getArrayQueryParam(qs.ids)
+      }}
     />
   );
 };
