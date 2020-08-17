@@ -1,4 +1,5 @@
 import Card from "@material-ui/core/Card";
+import Checkbox from "@material-ui/core/Checkbox";
 import { createMuiTheme, Theme } from "@material-ui/core/styles";
 import { darken, fade } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
@@ -561,4 +562,8 @@ Card.defaultProps = {
 
 Typography.defaultProps = {
   component: "div"
+};
+
+Checkbox.defaultProps = {
+  color: "primary"
 };
