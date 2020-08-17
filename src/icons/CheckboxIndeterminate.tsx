@@ -1,7 +1,7 @@
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import React from "react";
 
-const Checkbox = createSvgIcon(
+const CheckboxIndeterminate = createSvgIcon(
   <>
     <rect
       x="5"
@@ -11,8 +11,9 @@ const Checkbox = createSvgIcon(
       stroke="currentColor"
       fill="none"
     />
+    <rect x="8" y="11" width="8" height="2" fill="currentColor" />
   </>,
-  "Checkbox"
+  "CheckboxIndeterminate"
 );
 
-export default Checkbox;
+export default CheckboxIndeterminate;

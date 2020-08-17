@@ -1,11 +1,11 @@
 import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Accordion, { AccordionProps } from "@saleor/components/Accordion";
+import Checkbox from "@saleor/components/Checkbox";
 import Chip from "@saleor/components/Chip";
 import Hr from "@saleor/components/Hr";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
@@ -85,7 +85,6 @@ const Option: React.FC<{
         <Checkbox
           className={classes.checkbox}
           checked={checked}
-          color="primary"
           name={name}
           onChange={onChange}
         />
