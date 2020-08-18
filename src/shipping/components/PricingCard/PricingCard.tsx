@@ -81,7 +81,8 @@ export const PricingCard: React.FC<PricingCardProps> = ({
                     disabled={disabled}
                     fullWidth
                     label={intl.formatMessage({
-                      defaultMessage: "Price"
+                      defaultMessage: "Price",
+                      description: "column title"
                     })}
                     name="price"
                     type="number"
