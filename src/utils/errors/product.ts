@@ -24,6 +24,9 @@ const messages = defineMessages({
   attributeVariantsDisabled: {
     defaultMessage: "Variants are disabled in this product type"
   },
+  duplicated: {
+    defaultMessage: "The same object cannot be in both lists"
+  },
   duplicatedInputItem: {
     defaultMessage: "Variant with these attributes already exists"
   },

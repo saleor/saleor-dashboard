@@ -1,7 +1,8 @@
 import { OutputData } from "@editorjs/editorjs";
+import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -12,7 +13,6 @@ import SeoForm from "@saleor/components/SeoForm";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -43,6 +43,8 @@ import ProductUpdateForm from "./form";
 export interface ProductUpdatePageProps extends ListActions {
   defaultWeightUnit: string;
   errors: ProductErrorWithAttributesFragment[];
+  allChannelsCount: number;
+  currentChannels: ChannelData[];
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
@@ -51,6 +53,7 @@ export interface ProductUpdatePageProps extends ListActions {
   fetchMoreCollections: FetchMoreProps;
   variants: ProductDetails_product_variants[];
   images: ProductDetails_product_images[];
+  hasChannelChanged: boolean;
   product: ProductDetails_product;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -63,6 +66,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onVariantReorder: ReorderAction;
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
+  openChannelsModal: () => void;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -87,6 +91,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   defaultWeightUnit,
   disabled,
   categories: categoryChoiceList,
+  allChannelsCount,
+  currentChannels = [],
   collections: collectionChoiceList,
   errors,
   fetchCategories,
@@ -94,6 +100,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   images,
+  hasChannelChanged,
   header,
   placeholderImage,
   product,
@@ -107,6 +114,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageEdit,
   onImageReorder,
   onImageUpload,
+  openChannelsModal,
   onSeoClick,
   onSubmit,
   onVariantAdd,
@@ -122,7 +130,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   toolbar
 }) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || ""
@@ -158,6 +165,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       setSelectedTaxType={setSelectedTaxType}
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
+      currentChannels={currentChannels}
     >
       {({ change, data, handlers, hasChanged, submit }) => (
         <>
@@ -292,30 +300,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onCollectionChange={handlers.selectCollection}
                 />
                 <CardSpacer />
-                <AvailabilityCard
-                  data={data}
-                  errors={errors}
+                <ChannelsAvailability
+                  selectedChannelsCount={data.channelListing.length}
+                  allChannelsCount={allChannelsCount}
+                  channels={data.channelListing}
                   disabled={disabled}
-                  messages={{
-                    hiddenLabel: intl.formatMessage({
-                      defaultMessage: "Not published",
-                      description: "product label"
-                    }),
-                    hiddenSecondLabel: intl.formatMessage(
-                      {
-                        defaultMessage: "will become published on {date}",
-                        description: "product publication date label"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate, "L")
-                      }
-                    ),
-                    visibleLabel: intl.formatMessage({
-                      defaultMessage: "Published",
-                      description: "product label"
-                    })
-                  }}
-                  onChange={change}
+                  onChange={handlers.changeChannels}
+                  openModal={openChannelsModal}
                 />
                 <CardSpacer />
                 <ProductTaxes
@@ -333,7 +324,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               onDelete={onDelete}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={disabled || !hasChanged}
+              disabled={disabled || (!hasChanged && !hasChannelChanged)}
             />
           </Container>
         </>

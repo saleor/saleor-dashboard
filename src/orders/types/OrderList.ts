@@ -83,4 +83,5 @@ export interface OrderListVariables {
   before?: string | null;
   filter?: OrderFilterInput | null;
   sort?: OrderSortingInput | null;
+  channel?: string | null;
 }

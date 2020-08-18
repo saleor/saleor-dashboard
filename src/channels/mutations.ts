@@ -6,6 +6,7 @@ import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import { ChannelCreate, ChannelCreateVariables } from "./types/ChannelCreate";
+import { ChannelDelete, ChannelDeleteVariables } from "./types/ChannelDelete";
 import { ChannelUpdate, ChannelUpdateVariables } from "./types/ChannelUpdate";
 
 export const channelCreateMutation = gql`
@@ -38,6 +39,21 @@ export const channelUpdateMutation = gql`
   }
 `;
 
+export const channelDeleteMutation = gql`
+  ${channelErrorFragment}
+  ${channelDetailsFragment}
+  mutation ChannelDelete($id: ID!, $input: ChannelDeleteInput!) {
+    channelDelete(id: $id, input: $input) {
+      channel {
+        ...ChannelDetailsFragment
+      }
+      errors: channelErrors {
+        ...ChannelErrorFragment
+      }
+    }
+  }
+`;
+
 export const useChannelCreateMutation = makeMutation<
   ChannelCreate,
   ChannelCreateVariables
@@ -47,3 +63,8 @@ export const useChannelUpdateMutation = makeMutation<
   ChannelUpdate,
   ChannelUpdateVariables
 >(channelUpdateMutation);
+
+export const useChannelDeleteMutation = makeMutation<
+  ChannelDelete,
+  ChannelDeleteVariables
+>(channelDeleteMutation);

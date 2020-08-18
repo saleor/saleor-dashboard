@@ -2,23 +2,30 @@ import placeholderImg from "@assets/images/placeholder255x255.png";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useChannelsList } from "@saleor/channels/queries";
+import {
+  ChannelData,
+  createChannelsData,
+  createChannelsDataFromProduct
+} from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
+import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useListActions from "@saleor/hooks/useListActions";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
 import {
   useProductDeleteMutation,
   useProductImageCreateMutation,
   useProductImageDeleteMutation,
   useProductImagesReorder,
-  useProductSetAvailabilityForPurchase,
   useProductUpdateMutation,
   useProductVariantBulkDeleteMutation,
   useProductVariantReorderMutation,
@@ -26,6 +33,7 @@ import {
 } from "@saleor/products/mutations";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
+import getProductErrorMessage from "@saleor/utils/errors/product";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
@@ -34,11 +42,12 @@ import {
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getMutationState, maybe } from "../../../misc";
+import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
+import { useProductChannelListingUpdate } from "../../mutations";
 import { useProductDetails } from "../../queries";
 import { ProductImageCreateVariables } from "../../types/ProductImageCreate";
 import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
@@ -94,6 +103,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const shop = useShop();
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+  const { data: channelsData } = useChannelsList({});
 
   const { data, loading, refetch } = useProductDetails({
     displayLoader: true,
@@ -175,43 +186,75 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     }
   });
 
-  const [
-    setProductAvailability,
-    productAvailabilityOpts
-  ] = useProductSetAvailabilityForPurchase({
+  const product = data?.product;
+
+  const allChannels: ChannelData[] = createChannelsData(channelsData?.channels);
+
+  const productChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
+    product?.channelListing
+  );
+  const [currentChannels, setCurrentChannels] = useLocalStorage<ChannelData[]>(
+    `productChannels-${id}`,
+    productChannelsChoices
+  );
+
+  const {
+    isSelected: isChannelSelected,
+    listElements: channelListElements,
+    set: setChannels,
+    toggle: channelsToggle
+  } = useListActions<ChannelData>(currentChannels, (a, b) => a.id === b.id);
+  useEffect(() => {
+    if (!currentChannels.length && productChannelsChoices.length) {
+      setCurrentChannels(productChannelsChoices);
+    }
+  }, [productChannelsChoices]);
+
+  const [updateChannels] = useProductChannelListingUpdate({
     onCompleted: data => {
-      const errors = data?.productSetAvailabilityForPurchase?.errors;
-      if (errors?.length === 0) {
-        const updatedProduct = data?.productSetAvailabilityForPurchase?.product;
-        setProduct(product => ({
-          ...product,
-          availableForPurchase: updatedProduct.availableForPurchase,
-          isAvailableForPurchase: updatedProduct.isAvailableForPurchase
-        }));
+      if (data.productChannelListingUpdate.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
-            defaultMessage: "Product availability updated",
-            description: "snackbar text"
+            defaultMessage: "Channels updated"
           })
         });
+        const updatedProductChannelsChoices: ChannelData[] = createChannelsDataFromProduct(
+          data.productChannelListingUpdate.product.channelListing
+        );
+        setCurrentChannels(updatedProductChannelsChoices);
+      } else {
+        data.productChannelListingUpdate.errors.map(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl)
+          })
+        );
       }
     }
   });
 
+  const [isChannelsModalOpen, setChannelsModalOpen] = React.useState(false);
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
 
-  const handleBack = () => navigate(productListUrl());
+  const handleChannelsModalClose = () => {
+    setChannelsModalOpen(false);
+    setChannels(currentChannels);
+  };
 
-  const [product, setProduct] = useStateFromProps(data?.product);
+  const handleChannelsConfirm = () => {
+    setCurrentChannels(channelListElements);
+    setChannelsModalOpen(false);
+  };
+
+  const handleBack = () => navigate(productListUrl());
 
   if (product === null) {
     return <NotFoundPage onBack={handleBack} />;
   }
-
   const handleVariantAdd = () => navigate(productVariantAddUrl(id));
 
   const handleImageDelete = (id: string) => () =>
@@ -224,11 +267,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       product,
       variables => updateProduct({ variables }),
       variables => updateSimpleProduct({ variables }),
-      variables => setProductAvailability({ variables })
+      variables => updateChannels({ variables })
     ),
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables })
   );
+
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables })
   );
@@ -250,29 +294,24 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
     updateProductOpts.loading ||
-    productAvailabilityOpts.loading ||
     reorderProductVariantsOpts.loading ||
     loading;
 
   const formTransitionState = getMutationState(
     updateProductOpts.called || updateSimpleProductOpts.called,
     updateProductOpts.loading || updateSimpleProductOpts.loading,
-    maybe(() => updateProductOpts.data.productUpdate.errors),
-    maybe(() => updateSimpleProductOpts.data.productUpdate.errors),
-    maybe(() => updateSimpleProductOpts.data.productVariantUpdate.errors)
+    updateProductOpts.data.productUpdate.errors,
+    updateSimpleProductOpts.data.productUpdate.errors,
+    updateSimpleProductOpts.data.productVariantUpdate.errors
   );
 
-  const categories = maybe(
-    () => searchCategoriesOpts.data.search.edges,
-    []
-  ).map(edge => edge.node);
-  const collections = maybe(
-    () => searchCollectionsOpts.data.search.edges,
-    []
-  ).map(edge => edge.node);
+  const categories =
+    searchCategoriesOpts?.data?.search?.edges || [].map(edge => edge.node);
+  const collections =
+    searchCollectionsOpts?.data?.search?.edges || [].map(edge => edge.node);
   const errors = [
-    ...maybe(() => updateProductOpts.data.productUpdate.errors, []),
-    ...maybe(() => updateSimpleProductOpts.data.productUpdate.errors, [])
+    ...(updateProductOpts.data.productUpdate.errors || []),
+    ...(updateSimpleProductOpts.data.productUpdate.errors || [])
   ];
   const onSetDefaultVariant = useOnSetDefaultVariant(
     product ? product.id : null,
@@ -281,10 +320,30 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   return (
     <>
-      <WindowTitle title={maybe(() => data.product.name)} />
+      <WindowTitle title={data?.product?.name} />
+      {!!allChannels?.length && (
+        <ChannelsAvailabilityDialog
+          isSelected={isChannelSelected}
+          disabled={!channelListElements.length}
+          channels={allChannels}
+          onChange={channelsToggle}
+          onClose={handleChannelsModalClose}
+          open={isChannelsModalOpen}
+          title={intl.formatMessage({
+            defaultMessage: "Manage Products Channel Availability"
+          })}
+          confirmButtonState="default"
+          onConfirm={handleChannelsConfirm}
+        />
+      )}
       <ProductUpdatePage
+        allChannelsCount={allChannels?.length}
+        hasChannelChanged={
+          productChannelsChoices?.length !== currentChannels?.length
+        }
         categories={categories}
         collections={collections}
+        currentChannels={currentChannels}
         defaultWeightUnit={shop?.defaultWeightUnit}
         disabled={disableFormSave}
         onSetDefaultVariant={onSetDefaultVariant}
@@ -292,20 +351,19 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         saveButtonBarState={formTransitionState}
-        images={maybe(() => data.product.images)}
-        header={maybe(() => product.name)}
+        images={data?.product?.images}
+        header={product?.name}
         placeholderImage={placeholderImg}
         product={product}
         warehouses={
           warehouses.data?.warehouses.edges.map(edge => edge.node) || []
         }
         taxTypes={data?.taxTypes}
-        variants={maybe(() => product.variants)}
+        variants={product?.variants}
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
         onSubmit={handleSubmit}
-        onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}
         onVariantShow={variantId => () =>
@@ -331,19 +389,16 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         toggle={toggle}
         toggleAll={toggleAll}
         fetchMoreCategories={{
-          hasMore: maybe(
-            () => searchCategoriesOpts.data.search.pageInfo.hasNextPage
-          ),
+          hasMore: searchCategoriesOpts?.data?.search?.pageInfo?.hasNextPage,
           loading: searchCategoriesOpts.loading,
           onFetchMore: loadMoreCategories
         }}
         fetchMoreCollections={{
-          hasMore: maybe(
-            () => searchCollectionsOpts.data.search.pageInfo.hasNextPage
-          ),
+          hasMore: searchCollectionsOpts?.data?.search?.pageInfo?.hasNextPage,
           loading: searchCollectionsOpts.loading,
           onFetchMore: loadMoreCollections
         }}
+        openChannelsModal={() => setChannelsModalOpen(true)}
       />
       <ActionDialog
         open={params.action === "remove"}
@@ -388,8 +443,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}"
             description="dialog content"
             values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+              counter: params?.ids?.length,
+              displayQuantity: <strong>{params?.ids?.length}</strong>
             }}
           />
         </DialogContentText>

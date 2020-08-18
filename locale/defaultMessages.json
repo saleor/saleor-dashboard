@@ -1252,6 +1252,9 @@
     "context": "window title",
     "string": "Channel details"
   },
+  "src_dot_channels_dot_views_dot_ChannelsList_dot_3499322424": {
+    "string": "Channel deleted"
+  },
   "src_dot_clear": {
     "context": "button",
     "string": "Clear"
@@ -1356,10 +1359,6 @@
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1952810469": {
     "context": "product type",
     "string": "Type"
-  },
-  "src_dot_collections_dot_components_dot_CollectionProducts_dot_2341910657": {
-    "context": "product is not published",
-    "string": "Not published"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_3640454975": {
     "context": "product is published",
@@ -1543,21 +1542,57 @@
   "src_dot_components_dot_AutocompleteSelectMenu_dot_2332404293": {
     "string": "No results"
   },
-  "src_dot_components_dot_AvailabilityCard_dot_1306298759": {
-    "context": "product availability",
-    "string": "Available for purchase"
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1043589445": {
+    "context": "product channel publication status",
+    "string": "hidden"
   },
-  "src_dot_components_dot_AvailabilityCard_dot_2938074852": {
-    "context": "product available for purchase date",
-    "string": "will become available on {date}"
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1702481199": {
+    "context": "product channel  publication date",
+    "string": "published since {date}"
   },
-  "src_dot_components_dot_AvailabilityCard_dot_570524410": {
-    "context": "product availability date label",
-    "string": "Set availability date"
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3257060829": {
+    "context": "product status title",
+    "string": "Available in {count}"
   },
-  "src_dot_components_dot_AvailabilityCard_dot_825317195": {
-    "context": "product unavailability",
-    "string": "Unavailable for purchase"
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3285520461": {
+    "context": "product channel publication date",
+    "string": "Will become available on {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_802058289": {
+    "context": "product status",
+    "string": "Available in {count} out of {allCount, plural, one {# channel} other {# channels}}"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_2060790769": {
+    "context": "publish on date",
+    "string": "Publish on"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_2162667201": {
+    "context": "channel publication date",
+    "string": "Visible since {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_3285520461": {
+    "context": "channel publication date",
+    "string": "Will become available on {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_3326160357": {
+    "context": "section header",
+    "string": "Availability"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_370220662": {
+    "context": "channels availability text",
+    "string": "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_4037103586": {
+    "context": "section header button",
+    "string": "Manage"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_643174786": {
+    "context": "channel publication status",
+    "string": "Visible"
+  },
+  "src_dot_components_dot_ChannelsAvailability_dot_77815154": {
+    "context": "channel publication status",
+    "string": "Hidden"
   },
   "src_dot_components_dot_ColumnPicker_dot_1483881697": {
     "context": "button",
@@ -2367,10 +2402,6 @@
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2100305525": {
     "context": "button",
     "string": "Assign products"
-  },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2341910657": {
-    "context": "product is not published",
-    "string": "Not published"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2697405188": {
     "string": "Product Name"
@@ -4125,14 +4156,6 @@
     "context": "product organization, header",
     "string": "Organization"
   },
-  "src_dot_products_dot_components_dot_ProductCreatePage_dot_2232321263": {
-    "context": "product publication date label",
-    "string": "will become published on {date}"
-  },
-  "src_dot_products_dot_components_dot_ProductCreatePage_dot_2341910657": {
-    "context": "product label",
-    "string": "Not published"
-  },
   "src_dot_products_dot_components_dot_ProductCreatePage_dot_2706108815": {
     "string": "Add search engine title and description to make this product easier to find"
   },
@@ -4331,17 +4354,13 @@
     "context": "product type",
     "string": "Type"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_2341910657": {
-    "context": "product status",
-    "string": "Not published"
-  },
   "src_dot_products_dot_components_dot_ProductList_dot_2754779425": {
     "context": "product type",
     "string": "Configurable"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_3640454975": {
-    "context": "product status",
-    "string": "Published"
+  "src_dot_products_dot_components_dot_ProductList_dot_3326160357": {
+    "context": "product channels",
+    "string": "Availability"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
@@ -4683,6 +4702,12 @@
   "src_dot_products_dot_views_dot_2899821092": {
     "string": "Product created"
   },
+  "src_dot_products_dot_views_dot_3423943948": {
+    "string": "Manage Products Channel Availability"
+  },
+  "src_dot_products_dot_views_dot_3576216025": {
+    "string": "Channels updated"
+  },
   "src_dot_products_dot_views_dot_3989383405": {
     "context": "window title",
     "string": "Create variant"
@@ -4699,25 +4724,9 @@
     "context": "publish product, button",
     "string": "Publish"
   },
-  "src_dot_products_dot_views_dot_ProductList_dot_2036051956": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to unpublish this product?} other{Are you sure you want to unpublish {displayQuantity} products?}}"
-  },
   "src_dot_products_dot_views_dot_ProductList_dot_2237014112": {
     "context": "unpublish product, button",
     "string": "Unpublish"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_2946646245": {
-    "context": "dialog header",
-    "string": "Publish Products"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_3362608461": {
-    "context": "dialog header",
-    "string": "Unpublish Products"
-  },
-  "src_dot_products_dot_views_dot_ProductList_dot_3518737068": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to publish this product?} other{Are you sure you want to publish {displayQuantity} products?}}"
   },
   "src_dot_products_dot_views_dot_ProductList_dot_400629795": {
     "context": "dialog header",
@@ -4737,6 +4746,12 @@
   "src_dot_products_dot_views_dot_ProductUpdate_dot_2297471173": {
     "context": "delete product",
     "string": "Are you sure you want to delete {name}?"
+  },
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_3423943948": {
+    "string": "Manage Products Channel Availability"
+  },
+  "src_dot_products_dot_views_dot_ProductUpdate_dot_3576216025": {
+    "string": "Channels updated"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_4108890645": {
     "string": "Product removed"
@@ -5743,6 +5758,9 @@
   },
   "src_dot_utils_dot_errors_dot_channelUnique": {
     "string": "Slug must be unique"
+  },
+  "src_dot_utils_dot_errors_dot_duplicated": {
+    "string": "The same object cannot be in both lists"
   },
   "src_dot_utils_dot_errors_dot_duplicatedInputItem": {
     "string": "Cannot add and remove group the same time"

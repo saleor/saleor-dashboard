@@ -1,4 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
+import { ChannelData } from "@saleor/channels/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -16,7 +17,8 @@ import {
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
-  createAttributeMultiChangeHandler
+  createAttributeMultiChangeHandler,
+  createChannelsChangeHandler
 } from "@saleor/products/utils/handlers";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
@@ -32,24 +34,20 @@ import { ProductAttributeInput } from "../ProductAttributes";
 import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductUpdateFormData extends MetadataFormData {
-  availableForPurchase: string;
   basePrice: number;
   category: string | null;
   changeTaxCode: boolean;
+  channelListing: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
-  isAvailableForPurchase: boolean;
-  isPublished: boolean;
   name: string;
   slug: string;
-  publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   sku: string;
   taxCode: string;
   trackInventory: boolean;
-  visibleInListings: boolean;
   weight: string;
 }
 export interface ProductUpdateData extends ProductUpdateFormData {
@@ -75,7 +73,10 @@ interface ProductUpdateHandlers
       FormChange
     >,
     Record<
-      "changeStock" | "selectAttribute" | "selectAttributeMultiple",
+      | "changeStock"
+      | "selectAttribute"
+      | "selectAttributeMultiple"
+      | "changeChannels",
       FormsetChange<string>
     >,
     Record<"addStock" | "deleteStock", (id: string) => void> {
@@ -102,6 +103,7 @@ export interface UseProductUpdateFormOpts
   setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
   selectedCollections: MultiAutocompleteChoiceType[];
   warehouses: SearchWarehouses_search_edges_node[];
+  currentChannels: ChannelData[];
 }
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
@@ -109,16 +111,6 @@ export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   product: ProductDetails_product;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
 }
-
-const getAvailabilityData = ({
-  availableForPurchase,
-  isAvailableForPurchase,
-  isPublished,
-  publicationDate
-}: ProductUpdateFormData) => ({
-  isAvailableForPurchase: isAvailableForPurchase || !!availableForPurchase,
-  isPublished: isPublished || !!publicationDate
-});
 
 const getStocksData = (
   product: ProductDetails_product,
@@ -153,7 +145,11 @@ function useProductUpdateForm(
   const triggerChange = () => setChanged(true);
 
   const form = useForm(
-    getProductUpdatePageFormData(product, product?.variants)
+    getProductUpdatePageFormData(
+      product,
+      product?.variants,
+      opts.currentChannels
+    )
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const stocks = useFormset(getStockInputFromProduct(product));
@@ -215,6 +211,7 @@ function useProductUpdateForm(
     opts.taxTypes
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
+  const handleChannelsChange = (id: string) => (data: any) => null;
 
   const data: ProductUpdateData = {
     ...form.data,
@@ -225,7 +222,6 @@ function useProductUpdateForm(
   // Need to make it function to always have description.current up to date
   const getSubmitData = (): ProductUpdateSubmitData => ({
     ...data,
-    ...getAvailabilityData(data),
     ...getStocksData(product, stocks.data),
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
     addStocks: [],
@@ -240,6 +236,7 @@ function useProductUpdateForm(
     data,
     handlers: {
       addStock: handleStockAdd,
+      changeChannels: handleChannelsChange,
       changeDescription,
       changeMetadata,
       changeStock: handleStockChange,

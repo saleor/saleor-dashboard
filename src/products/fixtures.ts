@@ -109,6 +109,28 @@ export const product: (
     id: "Q2F0ZWdvcnk6MQ==",
     name: "Apparel"
   },
+  channelListing: [
+    {
+      __typename: "ProductChannelListing",
+      channel: {
+        __typename: "Channel",
+        id: "123",
+        name: "Channel1"
+      },
+      isPublished: true,
+      publicationDate: "2020-07-14"
+    },
+    {
+      __typename: "ProductChannelListing",
+      channel: {
+        __typename: "Channel",
+        id: "124",
+        name: "Channel2"
+      },
+      isPublished: false,
+      publicationDate: "2020-07-30"
+    }
+  ],
   chargeTaxes: true,
   collections: [
     {
@@ -160,7 +182,6 @@ export const product: (
   isAvailable: false,
   isAvailableForPurchase: false,
   isFeatured: false,
-  isPublished: true,
   margin: { __typename: "Margin", start: 2, stop: 7 },
   metadata: [
     {
@@ -363,9 +384,30 @@ export const products = (
   {
     __typename: "Product",
     attributes: [],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo2MQ==",
     isAvailable: true,
-    isPublished: true,
     name: "Nebula Night Sky Paint",
     pricing: {
       __typename: "ProductPricingInfo",
@@ -403,9 +445,30 @@ export const products = (
   {
     __typename: "Product",
     attributes: [],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo2NA==",
     isAvailable: true,
-    isPublished: false,
     name: "Light Speed Yellow Paint",
     pricing: {
       __typename: "ProductPricingInfo",
@@ -443,9 +506,30 @@ export const products = (
   {
     __typename: "Product",
     attributes: [],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo2NQ==",
     isAvailable: true,
-    isPublished: false,
     name: "Hyperspace Turquoise Paint",
 
     pricing: {
@@ -499,9 +583,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo3NQ==",
     isAvailable: true,
-    isPublished: true,
     name: "Pineapple Juice",
 
     pricing: {
@@ -555,9 +660,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo3Ng==",
     isAvailable: true,
-    isPublished: true,
     name: "Coconut Juice",
 
     pricing: {
@@ -611,9 +737,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo3Mg==",
     isAvailable: true,
-    isPublished: true,
     name: "Apple Juice",
 
     pricing: {
@@ -667,9 +814,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo3MQ==",
     isAvailable: true,
-    isPublished: true,
     name: "Orange Juice",
 
     pricing: {
@@ -723,9 +891,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo3NA==",
     isAvailable: true,
-    isPublished: true,
     name: "Banana Juice",
 
     pricing: {
@@ -779,9 +968,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo3OQ==",
     isAvailable: true,
-    isPublished: false,
     name: "Bean Juice",
 
     pricing: {
@@ -835,9 +1045,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo3Mw==",
     isAvailable: true,
-    isPublished: true,
     name: "Carrot Juice",
 
     pricing: {
@@ -891,9 +1122,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo3OA==",
     isAvailable: true,
-    isPublished: true,
     name: "Green Juice",
 
     pricing: {
@@ -947,9 +1199,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo4OQ==",
     isAvailable: true,
-    isPublished: true,
     name: "Code Division T-shirt",
 
     pricing: {
@@ -1003,9 +1276,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDoxMDc=",
     isAvailable: true,
-    isPublished: true,
     name: "Polo Shirt",
 
     pricing: {
@@ -1057,11 +1351,32 @@ export const products = (
             name: "Cotton"
           }
         ]
+      }
+    ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDoxMDg=",
     isAvailable: true,
-    isPublished: true,
     name: "Polo Shirt",
 
     pricing: {
@@ -1113,11 +1428,32 @@ export const products = (
             name: "Cotton"
           }
         ]
+      }
+    ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDoxMDk=",
     isAvailable: true,
-    isPublished: true,
     name: "Polo Shirt",
 
     pricing: {
@@ -1169,11 +1505,32 @@ export const products = (
             name: "Cotton"
           }
         ]
+      }
+    ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
       }
     ],
     id: "UHJvZHVjdDoxMTA=",
     isAvailable: true,
-    isPublished: true,
     name: "Polo Shirt",
 
     pricing: {
@@ -1227,9 +1584,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDoxMTU=",
     isAvailable: true,
-    isPublished: false,
     name: "Black Hoodie",
 
     pricing: {
@@ -1283,9 +1661,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDoxMTY=",
     isAvailable: true,
-    isPublished: true,
     name: "Blue Hoodie",
 
     pricing: {
@@ -1339,9 +1738,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDoxMTc=",
     isAvailable: true,
-    isPublished: true,
     name: "Mustard Hoodie",
 
     pricing: {
@@ -1395,9 +1815,30 @@ export const products = (
         ]
       }
     ],
+    channelListing: [
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "123",
+          name: "Channel1"
+        },
+        isPublished: true,
+        publicationDate: "2020-07-14"
+      },
+      {
+        __typename: "ProductChannelListing",
+        channel: {
+          __typename: "Channel",
+          id: "124",
+          name: "Channel2"
+        },
+        isPublished: false,
+        publicationDate: "2020-07-30"
+      }
+    ],
     id: "UHJvZHVjdDo4NQ==",
     isAvailable: true,
-    isPublished: false,
     name: "Colored Parrot Cushion",
 
     pricing: {

@@ -1,4 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
+import { ChannelData } from "@saleor/channels/utils";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -30,19 +31,16 @@ import {
 import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
-  availableForPurchase: string;
   basePrice: number;
   category: string;
   changeTaxCode: boolean;
+  channelListing: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   description: OutputData;
   isAvailable: boolean;
-  isAvailableForPurchase: boolean;
-  isPublished: boolean;
   name: string;
   productType: ProductType;
-  publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   sku: string;
@@ -50,7 +48,6 @@ export interface ProductCreateFormData extends MetadataFormData {
   stockQuantity: number;
   taxCode: string;
   trackInventory: boolean;
-  visibleInListings: boolean;
   weight: string;
 }
 export interface ProductCreateData extends ProductCreateFormData {
@@ -68,7 +65,10 @@ interface ProductCreateHandlers
       FormChange
     >,
     Record<
-      "changeStock" | "selectAttribute" | "selectAttributeMultiple",
+      | "changeStock"
+      | "selectAttribute"
+      | "selectAttributeMultiple"
+      | "changeChannels",
       FormsetChange<string>
     >,
     Record<"addStock" | "deleteStock", (id: string) => void> {
@@ -105,21 +105,18 @@ export interface ProductCreateFormProps extends UseProductCreateFormOpts {
 
 const defaultInitialFormData: ProductCreateFormData &
   Record<"productType", string> = {
-  availableForPurchase: "",
   basePrice: 0,
   category: "",
   changeTaxCode: false,
+  channelListing: [],
   chargeTaxes: false,
   collections: [],
   description: null,
   isAvailable: false,
-  isAvailableForPurchase: false,
-  isPublished: false,
   metadata: [],
   name: "",
   privateMetadata: [],
   productType: null,
-  publicationDate: "",
   seoDescription: "",
   seoTitle: "",
   sku: "",
@@ -127,7 +124,6 @@ const defaultInitialFormData: ProductCreateFormData &
   stockQuantity: null,
   taxCode: null,
   trackInventory: false,
-  visibleInListings: false,
   weight: ""
 };
 
@@ -219,6 +215,7 @@ function useProductCreateForm(
     opts.taxTypes
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
+  const handleChannelsChange = (id: string) => (data: any) => null;
 
   const getData = (): ProductCreateData => ({
     ...form.data,
@@ -234,6 +231,7 @@ function useProductCreateForm(
     data: getData(),
     handlers: {
       addStock: handleStockAdd,
+      changeChannels: handleChannelsChange,
       changeDescription,
       changeMetadata,
       changeStock: handleStockChange,

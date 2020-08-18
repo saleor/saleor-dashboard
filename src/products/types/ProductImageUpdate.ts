@@ -159,6 +159,19 @@ export interface ProductImageUpdate_productImageUpdate_product_purchaseCost {
   stop: ProductImageUpdate_productImageUpdate_product_purchaseCost_stop | null;
 }
 
+export interface ProductImageUpdate_productImageUpdate_product_channelListing_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+}
+
+export interface ProductImageUpdate_productImageUpdate_product_channelListing {
+  __typename: "ProductChannelListing";
+  channel: ProductImageUpdate_productImageUpdate_product_channelListing_channel;
+  isPublished: boolean;
+  publicationDate: any | null;
+}
+
 export interface ProductImageUpdate_productImageUpdate_product_images {
   __typename: "ProductImage";
   id: string;
@@ -230,9 +243,8 @@ export interface ProductImageUpdate_productImageUpdate_product {
   purchaseCost: ProductImageUpdate_productImageUpdate_product_purchaseCost | null;
   isAvailableForPurchase: boolean | null;
   isAvailable: boolean | null;
-  isPublished: boolean;
   chargeTaxes: boolean;
-  publicationDate: any | null;
+  channelListing: ProductImageUpdate_productImageUpdate_product_channelListing[] | null;
   images: (ProductImageUpdate_productImageUpdate_product_images | null)[] | null;
   variants: (ProductImageUpdate_productImageUpdate_product_variants | null)[] | null;
   weight: ProductImageUpdate_productImageUpdate_product_weight | null;

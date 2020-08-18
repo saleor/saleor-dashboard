@@ -23,7 +23,6 @@ export const saleDetailsFragment = gql`
         node {
           id
           name
-          isPublished
           productType {
             id
             name
@@ -112,7 +111,6 @@ export const voucherDetailsFragment = gql`
             id
             name
           }
-          isPublished
           thumbnail {
             url
           }

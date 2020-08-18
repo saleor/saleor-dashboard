@@ -1,6 +1,7 @@
+import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -11,7 +12,6 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { getChoices } from "@saleor/products/utils/data";
@@ -37,6 +37,8 @@ import ProductCreateForm, {
 
 interface ProductCreatePageProps {
   errors: ProductErrorWithAttributesFragment[];
+  allChannelsCount: number;
+  currentChannels: ChannelData[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
   currency: string;
@@ -46,6 +48,7 @@ interface ProductCreatePageProps {
   fetchMoreProductTypes: FetchMoreProps;
   initial?: Partial<ProductCreateFormData>;
   productTypes?: SearchProductTypes_search_edges_node[];
+  hasChannelChanged: boolean;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
@@ -55,12 +58,13 @@ interface ProductCreatePageProps {
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
   onWarehouseConfigure: () => void;
+  openChannelsModal: () => void;
   onBack?();
   onSubmit?(data: ProductCreateData);
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
-  currency,
+  allChannelsCount,
   disabled,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
@@ -70,6 +74,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   fetchMoreProductTypes,
+  hasChannelChanged,
   header,
   initial,
   productTypes: productTypeChoiceList,
@@ -80,10 +85,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchProductTypes,
   weightUnit,
   onSubmit,
+  openChannelsModal,
   onWarehouseConfigure
 }: ProductCreatePageProps) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
 
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
@@ -162,7 +167,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     />
                     <CardSpacer />
                     <ProductPricing
-                      currency={currency}
                       data={data}
                       disabled={disabled}
                       errors={errors}
@@ -227,30 +231,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   collectionsInputDisplayValue={selectedCollections}
                 />
                 <CardSpacer />
-                <AvailabilityCard
-                  data={data}
-                  errors={errors}
+                <ChannelsAvailability
+                  selectedChannelsCount={data.channelListing.length}
+                  allChannelsCount={allChannelsCount}
+                  channels={data.channelListing}
                   disabled={disabled}
-                  messages={{
-                    hiddenLabel: intl.formatMessage({
-                      defaultMessage: "Not published",
-                      description: "product label"
-                    }),
-                    hiddenSecondLabel: intl.formatMessage(
-                      {
-                        defaultMessage: "will become published on {date}",
-                        description: "product publication date label"
-                      },
-                      {
-                        date: localizeDate(data.publicationDate, "L")
-                      }
-                    ),
-                    visibleLabel: intl.formatMessage({
-                      defaultMessage: "Published",
-                      description: "product label"
-                    })
-                  }}
-                  onChange={change}
+                  onChange={handlers.changeChannels}
+                  openModal={openChannelsModal}
                 />
                 <CardSpacer />
                 <ProductTaxes
@@ -267,7 +254,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               onCancel={onBack}
               onSave={submit}
               state={saveButtonBarState}
-              disabled={disabled || !onSubmit || !hasChanged}
+              disabled={
+                disabled || !onSubmit || (!hasChanged && !hasChannelChanged)
+              }
             />
           </Container>
         );
