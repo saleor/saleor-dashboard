@@ -29,7 +29,6 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_sale_products_edges_node {
   __typename: "Product";
   id: string;
   name: string;
-  isPublished: boolean;
   productType: SaleCataloguesAdd_saleCataloguesAdd_sale_products_edges_node_productType;
   thumbnail: SaleCataloguesAdd_saleCataloguesAdd_sale_products_edges_node_thumbnail | null;
 }

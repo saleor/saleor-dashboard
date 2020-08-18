@@ -23,7 +23,6 @@ export interface SaleDetailsFragment_products_edges_node {
   __typename: "Product";
   id: string;
   name: string;
-  isPublished: boolean;
   productType: SaleDetailsFragment_products_edges_node_productType;
   thumbnail: SaleDetailsFragment_products_edges_node_thumbnail | null;
 }

@@ -38,7 +38,6 @@ export interface CollectionDetails_collection_products_edges_node_thumbnail {
 export interface CollectionDetails_collection_products_edges_node {
   __typename: "Product";
   id: string;
-  isPublished: boolean;
   name: string;
   productType: CollectionDetails_collection_products_edges_node_productType;
   thumbnail: CollectionDetails_collection_products_edges_node_thumbnail | null;
