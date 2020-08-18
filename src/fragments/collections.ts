@@ -36,7 +36,6 @@ export const collectionDetailsFragment = gql`
 export const collectionProductFragment = gql`
   fragment CollectionProductFragment on Product {
     id
-    isPublished
     name
     productType {
       id

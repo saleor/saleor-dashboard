@@ -111,6 +111,7 @@ export enum CategorySortField {
 
 export enum ChannelErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
+  CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -393,6 +394,7 @@ export enum CountryCode {
 
 export enum DiscountErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = "CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -713,12 +715,14 @@ export enum ProductErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = "ATTRIBUTE_ALREADY_ASSIGNED",
   ATTRIBUTE_CANNOT_BE_ASSIGNED = "ATTRIBUTE_CANNOT_BE_ASSIGNED",
   ATTRIBUTE_VARIANTS_DISABLED = "ATTRIBUTE_VARIANTS_DISABLED",
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = "CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
   NOT_PRODUCTS_IMAGE = "NOT_PRODUCTS_IMAGE",
   NOT_PRODUCTS_VARIANT = "NOT_PRODUCTS_VARIANT",
+  PRODUCT_WITHOUT_CATEGORY = "PRODUCT_WITHOUT_CATEGORY",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
   VARIANT_NO_DIGITAL_CONTENT = "VARIANT_NO_DIGITAL_CONTENT",
@@ -1077,6 +1081,10 @@ export interface ChannelCreateInput {
   currencyCode: string;
 }
 
+export interface ChannelDeleteInput {
+  targetChannel: string;
+}
+
 export interface ChannelUpdateInput {
   name?: string | null;
   slug?: string | null;
@@ -1160,6 +1168,7 @@ export interface DraftOrderInput {
   shippingMethod?: string | null;
   voucher?: string | null;
   customerNote?: string | null;
+  channel?: string | null;
 }
 
 export interface ExportInfoInput {
@@ -1381,6 +1390,16 @@ export interface ProductCreateInput {
   visibleInListings?: boolean | null;
   productType: string;
   stocks?: StockInput[] | null;
+}
+export interface ProductChannelListingAddInput {
+  channelId: string;
+  isPublished: boolean;
+  publicationDate?: any | null;
+}
+
+export interface ProductChannelListingUpdateInput {
+  addChannels?: ProductChannelListingAddInput[] | null;
+  removeChannels?: string[] | null;
 }
 
 export interface ProductFilterInput {

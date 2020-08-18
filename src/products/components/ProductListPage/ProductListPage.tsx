@@ -41,6 +41,7 @@ export interface ProductListPageProps
     SortPage<ProductListUrlSortField> {
   activeAttributeSortId: string;
   availableInGridAttributes: GridAttributes_availableInGrid_edges_node[];
+  channelsCount: number;
   currencySymbol: string;
   gridAttributes: GridAttributes_grid_edges_node[];
   totalGridAttributes: number;
@@ -59,6 +60,7 @@ const useStyles = makeStyles(
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
+    channelsCount,
     currencySymbol,
     currentTab,
     defaultSettings,
@@ -188,6 +190,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           loading={loading}
           gridAttributes={gridAttributes}
           settings={settings}
+          channelsCount={channelsCount}
           onUpdateListSettings={onUpdateListSettings}
         />
       </Card>

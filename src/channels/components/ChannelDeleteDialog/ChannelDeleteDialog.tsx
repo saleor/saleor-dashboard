@@ -13,14 +13,16 @@ import { useStyles } from "../styles";
 export interface ChannelDeleteDialogProps {
   channelsChoices: Choices;
   confirmButtonState: ConfirmButtonTransitionState;
+  hasChannelOrders: boolean;
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: (targetChannelId: string) => void;
 }
 
 const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
   channelsChoices = [],
   confirmButtonState,
+  hasChannelOrders,
   open,
   onClose,
   onConfirm
@@ -36,7 +38,7 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
-      onConfirm={onConfirm}
+      onConfirm={() => onConfirm(choice)}
       title={intl.formatMessage({
         defaultMessage: "Delete Channel",
         description: "dialog header"
@@ -44,24 +46,28 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
       variant="delete"
     >
       <div>
-        <Typography>
-          <FormattedMessage
-            defaultMessage="All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:."
-            description="delete channel"
-          />
-        </Typography>
-        <div className={classes.select}>
-          <SingleSelectField
-            choices={channelsChoices}
-            name="channels"
-            label={intl.formatMessage({
-              defaultMessage: "Select Channel",
-              description: "dialog header"
-            })}
-            value={choice}
-            onChange={e => setChoice(e.target.value)}
-          />
-        </div>
+        {hasChannelOrders && (
+          <>
+            <Typography>
+              <FormattedMessage
+                defaultMessage="All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:."
+                description="delete channel"
+              />
+            </Typography>
+            <div className={classes.select}>
+              <SingleSelectField
+                choices={channelsChoices}
+                name="channels"
+                label={intl.formatMessage({
+                  defaultMessage: "Select Channel",
+                  description: "dialog header"
+                })}
+                value={choice}
+                onChange={e => setChoice(e.target.value)}
+              />
+            </div>
+          </>
+        )}
         <Typography>
           <FormattedMessage
             defaultMessage="Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?"

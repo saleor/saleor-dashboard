@@ -1,3 +1,5 @@
+import { channelsList } from "@saleor/channels/fixtures";
+import { createChannelsData } from "@saleor/channels/utils";
 import { fetchMoreProps } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -13,11 +15,15 @@ import Decorator from "../../Decorator";
 import { taxTypes } from "../taxes/fixtures";
 
 const product = productFixture("");
+const channels = createChannelsData(channelsList);
 
 storiesOf("Views / Products / Create product", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <ProductCreatePage
+      currentChannels={channels}
+      allChannelsCount={5}
+      hasChannelChanged={false}
       currency="USD"
       disabled={false}
       errors={[]}
@@ -33,6 +39,7 @@ storiesOf("Views / Products / Create product", module)
       categories={[product.category]}
       onBack={() => undefined}
       onSubmit={() => undefined}
+      openChannelsModal={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
@@ -42,6 +49,9 @@ storiesOf("Views / Products / Create product", module)
   ))
   .add("When loading", () => (
     <ProductCreatePage
+      currentChannels={channels}
+      allChannelsCount={5}
+      hasChannelChanged={false}
       currency="USD"
       disabled={true}
       errors={[]}
@@ -57,6 +67,7 @@ storiesOf("Views / Products / Create product", module)
       categories={[product.category]}
       onBack={() => undefined}
       onSubmit={() => undefined}
+      openChannelsModal={() => undefined}
       saveButtonBarState="default"
       warehouses={undefined}
       onWarehouseConfigure={() => undefined}
@@ -66,6 +77,9 @@ storiesOf("Views / Products / Create product", module)
   ))
   .add("form errors", () => (
     <ProductCreatePage
+      currentChannels={channels}
+      allChannelsCount={5}
+      hasChannelChanged={false}
       currency="USD"
       disabled={false}
       errors={([
@@ -98,6 +112,7 @@ storiesOf("Views / Products / Create product", module)
       categories={[product.category]}
       onBack={() => undefined}
       onSubmit={() => undefined}
+      openChannelsModal={() => undefined}
       saveButtonBarState="default"
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}

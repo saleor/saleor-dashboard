@@ -1,3 +1,4 @@
+import { ChannelData } from "@saleor/channels/utils";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
@@ -172,44 +173,40 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   basePrice: number;
   category: string | null;
   changeTaxCode: boolean;
+  channelListing: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
-  isAvailableForPurchase: boolean;
-  isPublished: boolean;
   name: string;
   slug: string;
-  publicationDate: string;
   seoDescription: string;
   seoTitle: string;
   sku: string;
   taxCode: string;
   trackInventory: boolean;
-  visibleInListings: boolean;
   weight: string;
 }
 
 export function getProductUpdatePageFormData(
   product: ProductDetails_product,
-  variants: ProductDetails_product_variants[]
+  variants: ProductDetails_product_variants[],
+  currentChannels: ChannelData[]
 ): ProductUpdatePageFormData {
   return {
     availableForPurchase: product?.availableForPurchase,
     basePrice: maybe(() => product.variants[0].price.amount, 0),
     category: maybe(() => product.category.id, ""),
     changeTaxCode: !!product?.taxType.taxCode,
+    channelListing: currentChannels,
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),
       []
     ),
     isAvailable: !!product?.isAvailable,
-    isAvailableForPurchase: !!product?.isAvailableForPurchase,
-    isPublished: maybe(() => product.isPublished, false),
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
     privateMetadata: product?.privateMetadata?.map(mapMetadataItemToInput),
-    publicationDate: maybe(() => product.publicationDate, ""),
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),
     sku: maybe(
@@ -224,7 +221,6 @@ export function getProductUpdatePageFormData(
     slug: product?.slug || "",
     taxCode: product?.taxType.taxCode,
     trackInventory: !!product?.variants[0]?.trackInventory,
-    visibleInListings: !!product?.visibleInListings,
     weight: product?.weight?.value.toString() || ""
   };
 }

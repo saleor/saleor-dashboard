@@ -149,3 +149,10 @@ export const metadataErrorFragment = gql`
     field
   }
 `;
+
+export const collectionsErrorFragment = gql`
+  fragment CollectionErrorFragment on CollectionProductError {
+    code
+    field
+  }
+`;

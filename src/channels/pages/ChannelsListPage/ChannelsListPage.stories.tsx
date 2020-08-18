@@ -7,7 +7,6 @@ import ChannelsListPage, { ChannelsListPageProps } from "./ChannelsListPage";
 
 const props: ChannelsListPageProps = {
   channelsList,
-  disabled: false,
   navigateToChannelCreate: () => undefined,
   onBack: () => undefined,
   onRemove: () => undefined,
@@ -17,5 +16,4 @@ const props: ChannelsListPageProps = {
 storiesOf("Views / Channels / Channels list", module)
   .addDecorator(Decorator)
   .add("default", () => <ChannelsListPage {...props} />)
-  .add("disabled", () => <ChannelsListPage {...props} disabled={true} />)
   .add("empty", () => <ChannelsListPage {...props} channelsList={[]} />);
