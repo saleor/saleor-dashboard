@@ -1,6 +1,7 @@
+import { ChannelData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
-import AvailabilityCard from "@saleor/components/AvailabilityCard";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -12,7 +13,6 @@ import SeoForm from "@saleor/components/SeoForm";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useFormset from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -42,7 +42,8 @@ import {
 } from "../../utils/data";
 import {
   createAttributeChangeHandler,
-  createAttributeMultiChangeHandler
+  createAttributeMultiChangeHandler,
+  createChannelsChangeHandler
 } from "../../utils/handlers";
 import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
@@ -57,6 +58,8 @@ import ProductVariants from "../ProductVariants";
 export interface ProductUpdatePageProps extends ListActions {
   defaultWeightUnit: string;
   errors: ProductErrorWithAttributesFragment[];
+  allChannelsCount: number;
+  currentChannels: ChannelData[];
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
@@ -65,6 +68,7 @@ export interface ProductUpdatePageProps extends ListActions {
   fetchMoreCollections: FetchMoreProps;
   variants: ProductDetails_product_variants[];
   images: ProductDetails_product_images[];
+  hasChannelChanged: boolean;
   product: ProductDetails_product;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -76,6 +80,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onVariantShow: (id: string) => () => void;
   onVariantReorder: ReorderAction;
   onImageDelete: (id: string) => () => void;
+  openChannelsModal: () => void;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -100,6 +105,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   defaultWeightUnit,
   disabled,
   categories: categoryChoiceList,
+  allChannelsCount,
+  currentChannels = [],
   collections: collectionChoiceList,
   errors,
   fetchCategories,
@@ -107,6 +114,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   images,
+  hasChannelChanged,
   header,
   placeholderImage,
   product,
@@ -120,6 +128,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageEdit,
   onImageReorder,
   onImageUpload,
+  openChannelsModal,
   onSeoClick,
   onSubmit,
   onVariantAdd,
@@ -135,7 +144,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   toolbar
 }) => {
   const intl = useIntl();
-  const localizeDate = useDateLocalize();
   const attributeInput = React.useMemo(
     () => getAttributeInputFromProduct(product),
     [product]
@@ -171,13 +179,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const initialData = getProductUpdatePageFormData(product, variants);
+  const initialData = getProductUpdatePageFormData(
+    product,
+    variants,
+    currentChannels
+  );
   const initialDescription = maybe<RawDraftContentState>(() =>
     JSON.parse(product.descriptionJson)
   );
-
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
+
   const currency =
     product?.variants?.length && product.variants[0].price.currency;
   const hasVariants = maybe(() => product.productType.hasVariants, false);
@@ -228,7 +240,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
+      {({
+        change,
+        data,
+        hasChanged,
+        set,
+        submit,
+        triggerChange,
+        toggleValue
+      }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,
@@ -254,6 +274,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           change,
           setSelectedTaxType,
           taxTypeChoices
+        );
+        const handleChannelsChange = createChannelsChangeHandler(
+          data,
+          set,
+          triggerChange
         );
 
         return (
@@ -404,35 +429,18 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     fetchCollections={fetchCollections}
                     fetchMoreCategories={fetchMoreCategories}
                     fetchMoreCollections={fetchMoreCollections}
-                    productType={maybe(() => product.productType)}
+                    productType={product?.productType}
                     onCategoryChange={handleCategorySelect}
                     onCollectionChange={handleCollectionSelect}
                   />
                   <CardSpacer />
-                  <AvailabilityCard
-                    data={data}
-                    errors={errors}
+                  <ChannelsAvailability
+                    selectedChannelsCount={data.channelListing.length}
+                    allChannelsCount={allChannelsCount}
+                    channels={data.channelListing}
                     disabled={disabled}
-                    messages={{
-                      hiddenLabel: intl.formatMessage({
-                        defaultMessage: "Not published",
-                        description: "product label"
-                      }),
-                      hiddenSecondLabel: intl.formatMessage(
-                        {
-                          defaultMessage: "will become published on {date}",
-                          description: "product publication date label"
-                        },
-                        {
-                          date: localizeDate(data.publicationDate, "L")
-                        }
-                      ),
-                      visibleLabel: intl.formatMessage({
-                        defaultMessage: "Published",
-                        description: "product label"
-                      })
-                    }}
-                    onChange={change}
+                    onChange={handleChannelsChange}
+                    openModal={openChannelsModal}
                   />
                   <CardSpacer />
                   <ProductTaxes
@@ -450,7 +458,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onDelete={onDelete}
                 onSave={submit}
                 state={saveButtonBarState}
-                disabled={disabled || !hasChanged}
+                disabled={disabled || (!hasChanged && !hasChannelChanged)}
               />
             </Container>
           </>

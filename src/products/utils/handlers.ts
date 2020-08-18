@@ -1,6 +1,7 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
+import { ProductUpdatePageFormData } from "@saleor/products/utils/data";
 import { toggle } from "@saleor/utils/lists";
 
 import { ProductAttributeInputData } from "../components/ProductAttributes";
@@ -13,6 +14,27 @@ export function createAttributeChangeHandler(
   return (attributeId: string, value: string) => {
     triggerChange();
     changeAttributeData(attributeId, value === "" ? [] : [value]);
+  };
+}
+
+export function createChannelsChangeHandler(
+  data: ProductUpdatePageFormData,
+  updateChannels: (data: ProductUpdatePageFormData) => void,
+  triggerChange: () => void
+) {
+  return (index: number) => (channelData: {
+    isPublished: boolean;
+    publicationDate: string | null;
+  }) => {
+    const channels = data.channelListing;
+    const newChannels = [...channels];
+    newChannels[index] = {
+      ...channels[index],
+      isPublished: channelData.isPublished,
+      publicationDate: channelData.publicationDate
+    };
+    updateChannels({ ...data, channelListing: newChannels });
+    triggerChange();
   };
 }
 

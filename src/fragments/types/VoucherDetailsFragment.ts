@@ -36,7 +36,6 @@ export interface VoucherDetailsFragment_products_edges_node {
   id: string;
   name: string;
   productType: VoucherDetailsFragment_products_edges_node_productType;
-  isPublished: boolean;
   thumbnail: VoucherDetailsFragment_products_edges_node_thumbnail | null;
 }
 

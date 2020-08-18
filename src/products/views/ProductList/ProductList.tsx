@@ -1,7 +1,7 @@
-import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -46,7 +46,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ProductListPage from "../../components/ProductListPage";
 import {
   useProductBulkDeleteMutation,
-  useProductBulkPublishMutation,
   useProductExport
 } from "../../mutations";
 import {
@@ -128,6 +127,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       first: 100
     }
   });
+  const { data: channelsData } = useChannelsList({});
 
   React.useEffect(
     () =>
@@ -264,23 +264,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }
   });
 
-  const [
-    productBulkPublish,
-    productBulkPublishOpts
-  ] = useProductBulkPublishMutation({
-    onCompleted: data => {
-      if (data.productBulkPublish.errors.length === 0) {
-        closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        reset();
-        refetch();
-      }
-    }
-  });
-
   const filterOpts = getFilterOpts(
     params,
     maybe(() => initialFilterData.attributes.edges.map(edge => edge.node), []),
@@ -380,44 +363,16 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onRowClick={id => () => navigate(productUrl(id))}
         onAll={resetFilters}
         toolbar={
-          <>
-            <Button
-              color="primary"
-              onClick={() =>
-                openModal("unpublish", {
-                  ids: listElements
-                })
-              }
-            >
-              <FormattedMessage
-                defaultMessage="Unpublish"
-                description="unpublish product, button"
-              />
-            </Button>
-            <Button
-              color="primary"
-              onClick={() =>
-                openModal("publish", {
-                  ids: listElements
-                })
-              }
-            >
-              <FormattedMessage
-                defaultMessage="Publish"
-                description="publish product, button"
-              />
-            </Button>
-            <IconButton
-              color="primary"
-              onClick={() =>
-                openModal("delete", {
-                  ids: listElements
-                })
-              }
-            >
-              <DeleteIcon />
-            </IconButton>
-          </>
+          <IconButton
+            color="primary"
+            onClick={() =>
+              openModal("delete", {
+                ids: listElements
+              })
+            }
+          >
+            <DeleteIcon />
+          </IconButton>
         }
         isChecked={isSelected}
         selected={listElements.length}
@@ -431,6 +386,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
+        channelsCount={channelsData?.channels?.length}
       />
       <ActionDialog
         open={params.action === "delete"}
@@ -450,62 +406,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         <DialogContentText>
           <FormattedMessage
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
-            description="dialog content"
-            values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "publish"}
-        confirmButtonState={productBulkPublishOpts.status}
-        onClose={closeModal}
-        onConfirm={() =>
-          productBulkPublish({
-            variables: {
-              ids: params.ids,
-              isPublished: true
-            }
-          })
-        }
-        title={intl.formatMessage({
-          defaultMessage: "Publish Products",
-          description: "dialog header"
-        })}
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="{counter,plural,one{Are you sure you want to publish this product?} other{Are you sure you want to publish {displayQuantity} products?}}"
-            description="dialog content"
-            values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
-            }}
-          />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "unpublish"}
-        confirmButtonState={productBulkPublishOpts.status}
-        onClose={closeModal}
-        onConfirm={() =>
-          productBulkPublish({
-            variables: {
-              ids: params.ids,
-              isPublished: false
-            }
-          })
-        }
-        title={intl.formatMessage({
-          defaultMessage: "Unpublish Products",
-          description: "dialog header"
-        })}
-      >
-        <DialogContentText>
-          <FormattedMessage
-            defaultMessage="{counter,plural,one{Are you sure you want to unpublish this product?} other{Are you sure you want to unpublish {displayQuantity} products?}}"
             description="dialog content"
             values={{
               counter: maybe(() => params.ids.length),

@@ -22,7 +22,6 @@ export interface UnassignCollectionProduct_collectionRemoveProducts_collection_p
 export interface UnassignCollectionProduct_collectionRemoveProducts_collection_products_edges_node {
   __typename: "Product";
   id: string;
-  isPublished: boolean;
   name: string;
   productType: UnassignCollectionProduct_collectionRemoveProducts_collection_products_edges_node_productType;
   thumbnail: UnassignCollectionProduct_collectionRemoveProducts_collection_products_edges_node_thumbnail | null;

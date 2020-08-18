@@ -42,7 +42,6 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edge
   id: string;
   name: string;
   productType: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_productType;
-  isPublished: boolean;
   thumbnail: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products_edges_node_thumbnail | null;
 }
 
