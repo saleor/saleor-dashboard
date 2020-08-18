@@ -23,6 +23,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix incorrect messages - #643 by @dominik-zeglen
 - Do not use devserver to run cypress tests - #650 by @dominik-zeglen
 - Fix updating product that has no variants - #649 by @dominik-zeglen
+- Update checkbox design - #651 by @dominik-zeglen
 
 ## 2.10.1
 
